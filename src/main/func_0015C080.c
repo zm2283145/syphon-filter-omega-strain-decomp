@@ -6,9 +6,12 @@
 
 #include "types.h"
 
+extern char D_004EA778[];
 extern char D_004EA780[];
+extern char D_00555070[];
 extern int func_003CC830(void);
 extern void func_003D9440(int, int);
+extern int func_003E1AA0(int, int, int);
 
 void func_0015C080(void) {
 }
@@ -34,4 +37,34 @@ void func_0015C0D0(void) {
     tmp2 = *(int*)D_004EA780;
     tmp3 = *(int*)(char*)tmp0;
     func_003D9440(tmp2, tmp3);
+}
+
+int func_0015C100(int a0) {
+    int loc[1];
+    int v0;
+
+    *(int*)(char*)loc = a0;
+    v0 = *(int*)(char*)loc;
+    goto ret;
+ret:
+    return v0;
+}
+
+void* func_0015C120(void* self) {
+    return self;
+}
+
+int func_0015C130(void) {
+    return (int)D_004EA778;
+}
+
+int func_0015C140(void) {
+    int tmp0;
+
+    tmp0 = *(int*)D_004EA778;
+    return tmp0;
+}
+
+int func_0015C150(int a0, int a1) {
+    return func_003E1AA0((int)D_00555070, a0, a1);
 }

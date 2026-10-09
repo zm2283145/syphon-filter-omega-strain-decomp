@@ -7,6 +7,8 @@
 #include "types.h"
 
 extern int func_00268740(int);
+extern int func_002689F0(int);
+extern int func_00269090(int);
 extern int func_002690C0(int);
 
 Word* func_00268680(Word* dst, Word* src) {
@@ -45,4 +47,19 @@ int func_002686E0(int a0) {
     tmp1 = func_002690C0(tmp0);
     func_00268740(tmp1);
     return 0;
+}
+
+int func_00268710(int a0) {
+    int loc[1];
+    int v0;
+
+    v0 = *(int*)(char*)a0;
+    *(int*)(char*)loc = v0;
+    a0 = *(int*)(char*)loc;
+    v0 = func_002689F0(a0);
+    a0 = v0;
+    v0 = func_00269090(a0);
+    goto ret;
+ret:
+    return v0;
 }

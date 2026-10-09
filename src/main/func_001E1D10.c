@@ -6,6 +6,8 @@
 
 #include "types.h"
 
+extern int func_00183B10(int, int);
+
 float func_001E1D10(char* self) {
     return *(float*)(self + 60);
 }
@@ -33,4 +35,22 @@ int func_001E1D60(int a0) {
 
 void* func_001E1D70(char* self) {
     return self + 12;
+}
+
+int func_001E1D80(int a0, int a1) {
+    int loc[1];
+    int s0, v0, v1;
+
+    v0 = *(int*)(char*)(a0 + 4);
+    s0 = a1;
+    a1 = (int)loc;
+    a0 = *(int*)(char*)v0;
+    v0 = *(int*)(char*)(a0 + 32);
+    *(int*)(char*)loc = v0;
+    v0 = func_00183B10(a0, a1);
+    v1 = s0 << 4;
+    v0 = v0 + v1;
+    goto ret;
+ret:
+    return v0;
 }

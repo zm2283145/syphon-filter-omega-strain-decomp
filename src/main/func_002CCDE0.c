@@ -6,6 +6,8 @@
 
 #include "types.h"
 
+extern int func_00138EA0(int, int, int, int);
+
 Word* func_002CCDE0(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
@@ -31,4 +33,20 @@ void func_002CCE30(Iter* out, PtrVec* v) {
 
 void* func_002CCE40(void* self) {
     return self;
+}
+
+int func_002CCE50(int a0, int a1) {
+    int loc[2];
+    int a2, a3, v0;
+
+    a3 = a1;
+    v0 = a0 + 4;
+    a1 = a0;
+    *(int*)(char*)loc = v0;
+    a0 = (int)((char*)loc + 4);
+    a2 = (int)loc;
+    v0 = func_00138EA0(a0, a1, a2, a3);
+    goto ret;
+ret:
+    return v0;
 }

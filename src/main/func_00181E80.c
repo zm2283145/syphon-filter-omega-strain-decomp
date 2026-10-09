@@ -6,6 +6,21 @@
 
 #include "types.h"
 
+extern int func_00182260(int, int);
+
 int func_00181E80(void* self, char* p) {
     return *(int*)(p + 0);
+}
+
+int func_00181E90(int a0, int a1) {
+    int loc[1];
+    int v0;
+
+    v0 = *(int*)(char*)a1;
+    *(int*)(char*)loc = v0;
+    a1 = (int)loc;
+    v0 = func_00182260(a0, a1);
+    goto ret;
+ret:
+    return v0;
 }

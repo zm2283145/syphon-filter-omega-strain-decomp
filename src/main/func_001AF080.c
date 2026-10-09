@@ -12,6 +12,7 @@ extern char D_004DA380[];
 extern char D_004DA840[];
 extern int Curve_Bind(int, int);
 extern int Curve_InitConstant(int, int, int, float);
+extern void func_001BB100(int, int, int);
 
 int func_001AF080(int a0) {
     float tmp0;
@@ -46,4 +47,17 @@ int func_001AF130(Iter* a, Iter* b) {
 
 void func_001AF150(Iter* out, Tree* t) {
     out->p = &t->header;
+}
+
+void func_001AF160(int a0) {
+    int loc[1];
+    int a1, a2, s0, v1;
+
+    s0 = a0;
+    a0 = (int)loc;
+    func_001BB100(a0, a1, a2);
+    v1 = *(int*)(char*)loc;
+    *(int*)(char*)s0 = v1;
+    goto ret;
+ret:;
 }

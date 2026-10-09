@@ -20,3 +20,15 @@ int func_0014A280(int a0) {
     func_00157800(tmp0, tmp2);
     return 0;
 }
+
+int func_0014A2C0(int a0) {
+    int a1, v0;
+
+    a0 = *(int*)(char*)a0;
+    a1 = 0;
+    v0 = func_00157800(a0, a1);
+    v0 = 0;
+    goto ret;
+ret:
+    return v0;
+}

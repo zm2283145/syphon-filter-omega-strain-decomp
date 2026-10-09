@@ -11,3 +11,14 @@ void func_00104430(int a0, int a1) {
     *(int*)((char*)a0 + 8) = 0;
     *(int*)((char*)a0 + 4) = a1;
 }
+
+int func_00104440(int a0) {
+    int v0;
+
+    v0 = *(int*)(char*)(a0 + 4);
+    *(int*)(char*)(a0 + 8) = 0;
+    *(int*)(char*)a0 = v0;
+    goto ret;
+ret:
+    return v0;
+}

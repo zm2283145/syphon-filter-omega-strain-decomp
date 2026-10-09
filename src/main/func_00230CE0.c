@@ -8,8 +8,10 @@
 
 extern char D_005061D0[];
 extern int func_002307B0(int, int, int);
+extern int func_00230DE0(int, int, int);
 extern void func_00282020(int);
 extern int func_00282160(int);
+extern int func_003CC820(int);
 
 int func_00230CE0(int a0) {
     int tmp2;
@@ -42,4 +44,23 @@ void func_00230D40(int a0) {
     *(char*)((char*)tmp4) = tmp3;
     tmp5 = *(int*)D_005061D0;
     *(int*)D_005061D0 = (tmp5 + 1);
+}
+
+int func_00230D90(int a0) {
+    int a1, a2, s0, v0;
+
+    s0 = a0;
+    a0 = *(int*)(char*)a0;
+    v0 = func_003CC820(a0);
+    a0 = *(int*)(char*)(s0 + 4);
+    s0 = v0;
+    v0 = func_003CC820(a0);
+    a0 = s0;
+    a1 = v0;
+    a2 = 0;
+    v0 = func_00230DE0(a0, a1, a2);
+    v0 = 0;
+    goto ret;
+ret:
+    return v0;
 }

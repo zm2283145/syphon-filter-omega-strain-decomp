@@ -21,3 +21,16 @@ void func_003700B0(void) {
 
 void func_003700C0(void) {
 }
+
+int func_003700D0(int a0, int a1) {
+    int v0, v1;
+
+    v0 = a1 << 2;
+    v1 = a0 + v0;
+    v1 = *(int*)(char*)v1;
+    v0 = 0x14000000;
+    v0 = v1 | v0;
+    goto ret;
+ret:
+    return v0;
+}

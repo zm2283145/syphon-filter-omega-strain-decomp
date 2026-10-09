@@ -20,3 +20,17 @@ int func_00224F30(int a0) {
     func_00228050(tmp1, ((unsigned int)(0) < (unsigned int)(tmp3)));
     return 0;
 }
+
+int func_00224F70(int a0) {
+    int a1, v0;
+
+    a0 = *(int*)(char*)a0;
+    v0 = func_00225790(a0);
+    a0 = v0;
+    a1 = 0;
+    v0 = func_00228050(a0, a1);
+    v0 = 0;
+    goto ret;
+ret:
+    return v0;
+}

@@ -17,3 +17,19 @@ int func_003AD330(int a0, float f12) {
     *(float*)((char*)a0 + 12) = f12;
     return a0;
 }
+
+int func_003AD370(int a0) {
+    int v0, v1;
+
+    *(int*)(char*)a0 = 0;
+    v0 = 0x7f7f0000;
+    v1 = v0 | 0xffff;
+    *(int*)(char*)(a0 + 4) = 0;
+    *(int*)(char*)(a0 + 8) = v1;
+    v0 = a0;
+    *(int*)(char*)(a0 + 12) = v1;
+    *(int*)(char*)(a0 + 16) = 0;
+    goto ret;
+ret:
+    return v0;
+}

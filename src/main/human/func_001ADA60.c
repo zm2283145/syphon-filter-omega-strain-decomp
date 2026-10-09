@@ -5,11 +5,13 @@
  */
 
 #include "types.h"
+#include "human_types.h"
 
-int func_001ADA60(int a0, int a1, float f12) {
-    *(float*)((char*)a0) = *(float*)(char*)a1;
-    *(float*)((char*)a0 + 4) = *(float*)((char*)a1 + 4);
-    *(float*)((char*)a0 + 8) = *(float*)((char*)a1 + 8);
-    *(float*)((char*)a0 + 12) = f12;
-    return a0;
+/* Copy xyz from src and set w. */
+Vec4* Vec4_SetXYZ_W(Vec4* dst, Vec4* src, float w) {
+    dst->x = src->x;
+    dst->y = src->y;
+    dst->z = src->z;
+    dst->w = w;
+    return dst;
 }

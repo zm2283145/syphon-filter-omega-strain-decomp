@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_00198880(int a0, int a1) {
-    return (((unsigned int)((*(int*)((char*)a0 + 16) ^ *(int*)((char*)a1 + 16))) < (unsigned int)(1)) ^ 1);
+int func_00198880(char* a, char* b) {
+    return !(*(int*)(a + 16) == *(int*)(b + 16));
 }

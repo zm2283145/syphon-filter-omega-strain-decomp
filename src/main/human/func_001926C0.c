@@ -5,38 +5,35 @@
  */
 
 #include "types.h"
+#include "human_types.h"
 
-extern void func_001BADD0(int, int, int);
-extern int func_001BDA10(int, int, int, int);
+extern void func_001BADD0(int*, int, int);
+extern int func_001BDA10(PtrVec*, char*, int, int);
 
-int func_001926C0(int a0) {
-    return (*(int*)(char*)a0 + 48);
+/* Tree iterator dereference: value stored at node +0x30. */
+char* func_001926C0(Iter* it) {
+    return (char*)it->p + 48;
 }
 
-void func_001926D0(int a0) {
-    int loc[1];
-    int a1, a2, s0, v1;
+/* Tree lookup wrapper returning the found iterator through out. */
+void func_001926D0(int* out) {
+    int it[1];
+    int a1, a2;
 
-    s0 = a0;
-    a0 = (int)loc;
-    func_001BADD0(a0, a1, a2);
-    v1 = *(int*)(char*)loc;
-    *(int*)(char*)s0 = v1;
-    goto ret;
-ret:;
+    func_001BADD0(it, a1, a2);
+    *out = it[0];
 }
 
-int func_00192700(int a0, int a1) {
-    int tmp0;
-    int tmp1;
+/* push_back for a vector of 20-byte elements. */
+int func_00192700(PtrVec* v, int value) {
+    char* data = (char*)v->data;
+    int count = v->count;
 
-    tmp0 = *(int*)((char*)a0 + 8);
-    tmp1 = *(int*)((char*)a0 + 4);
-    return func_001BDA10(a0, (tmp0 + (tmp1 * 20)), 1, a1);
+    return func_001BDA10(v, data + count * 20, 1, value);
 }
 
-int func_00192730(int a0, int a1, int a2) {
-    *(int*)((char*)a0) = a1;
-    *(int*)((char*)a0 + 4) = a2;
-    return a0;
+int* func_00192730(int* pair, int first, int second) {
+    pair[0] = first;
+    pair[1] = second;
+    return pair;
 }

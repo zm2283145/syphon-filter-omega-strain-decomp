@@ -5,38 +5,30 @@
  */
 
 #include "types.h"
+#include "human_types.h"
 
-extern void func_001BB080(int, int, int);
-extern int func_001BE870(int, int);
+extern void func_001BB080(int*, int, int);
+extern int func_001BE870(void*, int*);
 
-int ReceiverMap_Erase(int a0, int a1) {
-    int loc[1];
-    int v0;
+/* Erase by key: pass a local copy of the key to the tree erase routine. */
+int ReceiverMap_Erase(void* map, int* key) {
+    int k[1];
 
-    v0 = *(int*)(char*)a1;
-    *(int*)(char*)loc = v0;
-    a1 = (int)loc;
-    v0 = func_001BE870(a0, a1);
-    goto ret;
-ret:
-    return v0;
+    k[0] = *key;
+    return func_001BE870(map, k);
 }
 
 int func_001B3150(Iter* a, Iter* b) {
     return !(a->p == b->p);
 }
 
-void func_001B3170(int a0) {
-    int loc[1];
-    int a1, a2, s0, v1;
+/* Tree lookup wrapper returning the found iterator through out. */
+void func_001B3170(int* out) {
+    int it[1];
+    int a1, a2;
 
-    s0 = a0;
-    a0 = (int)loc;
-    func_001BB080(a0, a1, a2);
-    v1 = *(int*)(char*)loc;
-    *(int*)(char*)s0 = v1;
-    goto ret;
-ret:;
+    func_001BB080(it, a1, a2);
+    *out = it[0];
 }
 
 void func_001B31A0(Iter* out, Tree* t) {

@@ -1,11 +1,11 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Translation unit: npc.cc (cNPC script commands and vtable methods).
  */
 
-#include "types.h"
+#include "npc_types.h"
 
-int cNPC_v2A(char* self) {
-    return *(int*)(self + 428);
+/* vtable slot 0x2A: returns the AI controller. */
+NpcAi* cNPC_v2A(cNPC* self) {
+    return self->ai;
 }

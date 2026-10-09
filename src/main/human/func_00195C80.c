@@ -5,15 +5,16 @@
  */
 
 #include "types.h"
+#include "human_types.h"
 
-extern char D_004E0840[];
-extern char D_0055D480[];
-extern int Event_Construct(int, int);
+extern char D_004E0840[];   /* ArgMsg vtable */
+extern char D_0055D480[];   /* CAS action message type */
+extern Message* Event_Construct(Message*, void*);
 
-int Actor_SendCasAction(int a0, int a1, int a2) {
-    Event_Construct(a0, (int)D_0055D480);
-    *(int*)((char*)a0) = (int)D_004E0840;
-    *(int*)((char*)a0 + 36) = a1;
-    *(char*)((char*)a0 + 40) = a2;
-    return a0;
+ArgMsg* Actor_SendCasAction(ArgMsg* self, int action, int flag) {
+    Event_Construct(&self->base, D_0055D480);
+    self->base.vtable = D_004E0840;
+    self->arg0 = action;
+    self->arg1 = flag;
+    return self;
 }

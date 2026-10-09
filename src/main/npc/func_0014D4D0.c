@@ -1,18 +1,18 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Translation unit: npc.cc (cNPC script commands and vtable methods).
  */
 
-#include "types.h"
+#include "npc_types.h"
 
-extern int func_0014D510(int, int, int);
+extern int func_0014D510(cNPC* npc, int a1, int a2);
 
-int cNPC_v53(int a0, int a1, float f12) {
-    int tmp0;
+/* vtable slot 0x53: StopMovement. */
+int cNPC_StopMovement(cNPC* self, int a1, float f12) {
+    int result;
 
-    tmp0 = func_0014D510(a0, 0, a1);
-    *(float*)((char*)a0 + 124) = f12;
-    *(char*)((char*)a0 + 360) = 0;
-    return tmp0;
+    result = func_0014D510(self, 0, a1);
+    self->unk07C = f12;
+    self->unk168 = 0;
+    return result;
 }

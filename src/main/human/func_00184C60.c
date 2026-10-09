@@ -5,16 +5,12 @@
  */
 
 #include "types.h"
+#include "human_types.h"
 
-void func_00184C60(int a0, int a1) {
-    int v1;
-    int cond;
+void func_00184C60(Actor* actor, int value) {
+    ActorLink3584* link = actor->unk3584;
 
-    v1 = *(int*)(char*)(a0 + 13700);
-    cond = v1 == 0;
-    if (cond) goto L00184C70;
-    *(char*)(char*)(v1 + 50) = a1;
-L00184C70:;
-    goto ret;
-ret:;
+    if (link != 0) {
+        link->unk32 = value;
+    }
 }

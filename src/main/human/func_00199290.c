@@ -5,15 +5,16 @@
  */
 
 #include "types.h"
+#include "human_types.h"
 
-extern char D_005061D0[];
+/* Network stream cursor shared by message (de)serializers. */
+extern signed char* D_005061D0;
 
-int func_00199290(void) {
-    int tmp0;
-    signed char tmp1;
+/* Read one signed byte from the network stream and advance. */
+int NetStream_ReadS8(void) {
+    signed char* p;
 
-    tmp0 = *(int*)D_005061D0;
-    *(int*)D_005061D0 = (tmp0 + 1);
-    tmp1 = *(signed char*)(char*)tmp0;
-    return tmp1;
+    p = D_005061D0;
+    D_005061D0 = p + 1;
+    return *p;
 }

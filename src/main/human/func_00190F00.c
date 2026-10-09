@@ -14,9 +14,9 @@ int func_00190F10(char* self) {
     return *(int*)(self + 0);
 }
 
-int func_00190F20(int a0, int a1) {
-    *(int*)((char*)a0) = a1;
-    return a0;
+int* func_00190F20(int* self, int value) {
+    *self = value;
+    return self;
 }
 
 int func_00190F30(char* self) {

@@ -1,20 +1,15 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Translation unit: npc.cc (cNPC script commands and vtable methods).
  */
 
-#include "types.h"
+#include "npc_types.h"
 
-extern int GObj_IdentityB(int);
+extern int GObj_IdentityB(int handle);
 
-int Script_LosCam(int a0) {
-    int tmp0;
-    int tmp3;
-
-    tmp0 = *(int*)((char*)a0 + 4);
-    GObj_IdentityB(tmp0);
-    tmp3 = *(int*)(char*)a0;
-    GObj_IdentityB(tmp3);
+/* Script: LosCam(a, b); resolves both handles, result unused. */
+int Script_LosCam(NpcScriptArgs* args) {
+    GObj_IdentityB(args->arg1);
+    GObj_IdentityB((int)args->npc);
     return 0;
 }

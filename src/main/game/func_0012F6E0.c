@@ -1,23 +1,23 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Script bindings and global level/stat reset helpers.
  */
 
 #include "types.h"
+#include "game_types.h"
 
 extern void AgentData_ResetMission(int);
 extern int Agent_GetSelected(int, int);
-extern char D_004FFB50[];
-extern char D_004FFC0C[];
-extern char D_004FFC2C[];
-extern char D_004FFC3C[];
-extern char D_005721C8[];
+extern char D_004FFB50[];                      /* world object */
+extern char* D_004FFC0C;                       /* world +0xBC service */
+extern GameTimerService* D_004FFC2C;           /* world +0xDC service */
+extern int D_004FFC3C;                         /* world +0xEC service */
+extern unsigned char D_005721C8;               /* multiplayer flag */
 extern int Game_IsMultiplayer(void);
 extern int Global_ResetLevel(void);
 extern void Global_ResetStats(void);
 extern int Script_ClearSchedules_3DFB20(void);
-extern void func_0013A290(int);
+extern void func_0013A290(GameTimerService*);
 extern int func_00247320(int);
 extern int func_002570C0(void);
 extern int func_0025A120(void);
@@ -29,32 +29,23 @@ int Script_ResetLevel(void) {
     return 0;
 }
 
+/* Resets world services, the selected agent's mission data and all script schedules. */
 int Global_ResetLevel(void) {
-    int tmp0;
-    int tmp7;
-    int tmp11;
-    int tmp12;
-    int tmp15;
-    int tmp18;
-    int tmp21;
+    GameTimerService* svc;
+    int agent;
 
-    tmp0 = *(int*)D_004FFC0C;
-    func_00247320((tmp0 + 80));
+    func_00247320((int)(D_004FFC0C + 0x50));
     func_002570C0();
     func_0025A120();
-    tmp7 = Agent_GetSelected((int)D_004FFB50, -1);
-    AgentData_ResetMission(tmp7);
-    tmp11 = *(int*)D_004FFC2C;
-    *(int*)((char*)tmp11 + 1756) = 0;
-    *(int*)((char*)tmp11 + 1760) = 0xbf800000;
-    tmp12 = *(int*)D_004FFC2C;
-    func_0013A290(tmp12);
-    tmp15 = *(int*)D_004FFC2C;
-    func_003FA1E0((tmp15 + 256));
-    tmp18 = *(int*)D_004FFC3C;
-    func_002795A0(tmp18);
-    tmp21 = Script_ClearSchedules_3DFB20();
-    return tmp21;
+    agent = Agent_GetSelected((int)D_004FFB50, -1);
+    AgentData_ResetMission(agent);
+    svc = D_004FFC2C;
+    svc->unk6DC = 0;
+    svc->unk6E0 = 0xbf800000; /* -1.0f */
+    func_0013A290(D_004FFC2C);
+    func_003FA1E0((int)((char*)D_004FFC2C + 0x100));
+    func_002795A0(D_004FFC3C);
+    return Script_ClearSchedules_3DFB20();
 }
 
 int Script_ResetStats(void) {
@@ -62,27 +53,22 @@ int Script_ResetStats(void) {
     return 0;
 }
 
+/* Resets the selected agent's mission data and the timer service fields. */
 void Global_ResetStats(void) {
-    int tmp0;
-    int tmp4;
+    GameTimerService* svc;
+    int agent;
 
-    tmp0 = Agent_GetSelected((int)D_004FFB50, -1);
-    AgentData_ResetMission(tmp0);
-    tmp4 = *(int*)D_004FFC2C;
-    *(int*)((char*)tmp4 + 1756) = 0;
-    *(int*)((char*)tmp4 + 1760) = 0xbf800000;
+    agent = Agent_GetSelected((int)D_004FFB50, -1);
+    AgentData_ResetMission(agent);
+    svc = D_004FFC2C;
+    svc->unk6DC = 0;
+    svc->unk6E0 = 0xbf800000; /* -1.0f */
 }
 
 int Script_IsMultiplayer(void) {
-    int tmp0;
-
-    tmp0 = Game_IsMultiplayer();
-    return (tmp0 & 255);
+    return Game_IsMultiplayer() & 0xFF;
 }
 
 int Game_IsMultiplayer(void) {
-    unsigned char tmp0;
-
-    tmp0 = *(unsigned char*)D_005721C8;
-    return tmp0;
+    return D_005721C8;
 }

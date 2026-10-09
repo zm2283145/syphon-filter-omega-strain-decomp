@@ -1,16 +1,11 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Translation unit: npc.cc (cNPC script commands and vtable methods).
  */
 
-#include "types.h"
+#include "npc_types.h"
 
-void cNPC_v44(int a0, int a1) {
-    int v1;
-
-    v1 = (signed char)a1;
-    *(int*)(char*)(a0 + 284) = v1;
-    goto ret;
-ret:;
+/* vtable slot 0x44: SetAimSubtarget. */
+void cNPC_SetAimSubtarget(cNPC* self, signed char subtarget) {
+    self->aimSubtarget = subtarget;
 }

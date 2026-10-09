@@ -6,10 +6,10 @@
 
 #include "types.h"
 
-extern int func_001396D0(int, int);
+extern int func_001396D0(void*, int);
 
-int func_001AFCF0(int a0, int a1) {
-    return func_001396D0(a0, a1);
+int func_001AFCF0(void* self, int arg) {
+    return func_001396D0(self, arg);
 }
 
 Rel* func_001AFD00(Rel* r) {
@@ -19,8 +19,8 @@ Rel* func_001AFD00(Rel* r) {
     return r;
 }
 
-int func_001AFD20(int a0, int a1) {
-    return func_001396D0(a0, a1);
+int func_001AFD20(void* self, int arg) {
+    return func_001396D0(self, arg);
 }
 
 Rel* func_001AFD30(Rel* r) {

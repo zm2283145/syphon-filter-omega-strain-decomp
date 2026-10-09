@@ -1,10 +1,10 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * cObjectiveMan script-type registration and the manager service lookup.
  */
 
 #include "types.h"
+#include "Objective_types.h"
 
 extern char D_004F7578[];
 extern char D_004F75E8[];
@@ -12,65 +12,48 @@ extern char D_004F75F0[];
 extern char D_004FFB50[];
 extern char D_00555070[];
 extern int ScriptFilter_Dispatch(int, int, int);
-extern int Service_Lookup(int, int);
-extern int func_00225C20(int);
-extern int func_00225C50(void);
-extern int func_00225CD0(void);
-extern int func_003CB1D0(void);
+extern cObjectiveMan* Service_Lookup(int, int);
+extern cObjectiveMan* func_00225C20(cObjectiveMan*);
+extern int* func_00225C50(void);
+extern cObjectiveMan* ObjMan_GetService(void);
+extern int* func_003CB1D0(void);
 extern void func_003D9440(int, int);
 
+/* Registers the cObjectiveMan script type with its parent type. */
 void ScriptType_cObjectiveMan_Init(void) {
-    int tmp0;
-    int tmp2;
-    int tmp3;
-
-    tmp0 = func_003CB1D0();
-    tmp2 = *(int*)D_004F75F0;
-    tmp3 = *(int*)(char*)tmp0;
-    func_003D9440(tmp2, tmp3);
+    int* parent = func_003CB1D0();
+    func_003D9440(*(int*)D_004F75F0, *parent);
 }
 
-int func_00225C20(int a0) {
-    int loc[1];
-    int v0;
-
-    *(int*)(char*)loc = a0;
-    v0 = *(int*)(char*)loc;
-    goto ret;
-ret:
-    return v0;
+/* Script value conversion; the volatile mirrors the original stack temporary. */
+cObjectiveMan* func_00225C20(cObjectiveMan* value) {
+    cObjectiveMan* volatile tmp = value;
+    return tmp;
 }
 
-void* func_00225C40(void* self) {
+/* Receiver resolve for cObjectiveMan natives (identity). */
+void* ObjMan_ResolveReceiver(void* self) {
     return self;
 }
 
-int func_00225C50(void) {
-    return (int)D_004F75E8;
+/* Address of the cObjectiveMan script-type key. */
+int* func_00225C50(void) {
+    return (int*)D_004F75E8;
 }
 
 int cObjectiveMan_v0B(void) {
-    int tmp0;
-    int tmp2;
-
-    tmp0 = func_00225C50();
-    tmp2 = *(int*)(char*)tmp0;
-    return tmp2;
+    return *func_00225C50();
 }
 
 int cObjectiveMan_v0C(int a0, int a1) {
     return ScriptFilter_Dispatch((int)D_00555070, a0, a1);
 }
 
-int Script_GetObjectiveManager(void) {
-    int tmp0;
-    int tmp2;
-
-    tmp0 = func_00225CD0();
-    tmp2 = func_00225C20(tmp0);
-    return tmp2;
+cObjectiveMan* Script_GetObjectiveManager(void) {
+    return func_00225C20(ObjMan_GetService());
 }
 
-int func_00225CD0(void) {
+/* Looks up the objective manager in the global service registry. */
+cObjectiveMan* ObjMan_GetService(void) {
     return Service_Lookup((int)D_004FFB50, (int)D_004F7578);
 }

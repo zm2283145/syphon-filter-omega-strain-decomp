@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-int func_001A6FC0(int a0, int a1) {
-    return ((unsigned int)((*(int*)(char*)a0 ^ *(int*)(char*)a1)) < (unsigned int)(1));
+int func_001A6FC0(Iter* a, Iter* b) {
+    return a->p == b->p;
 }
 
 int func_001A6FE0(char* self) {

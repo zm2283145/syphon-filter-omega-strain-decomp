@@ -5,10 +5,13 @@
  */
 
 #include "types.h"
+#include "human_types.h"
 
-extern int func_00198EF0(int, int);
-extern int func_00198F20(int);
+/* Deque of 248-byte elements, 8 per block: map at +0x00, start +0x10, size +0x14. */
+extern int** func_00198EF0(void* map, unsigned int block);
+extern void* func_00198F20(void*);
 
+/* Construct an iterator holding value (goes through a stack temporary). */
 int func_00198E70(int a0, int a1) {
     int loc[1];
     int v0, v1;
@@ -22,24 +25,12 @@ ret:
     return v0;
 }
 
-int func_00198E90(int a0) {
-    int a1, s0, v0, v1;
+/* back(): address of the last element. */
+char* Deque_Back(char* deque) {
+    int last;
+    int** slot;
 
-    v1 = *(int*)(char*)(a0 + 16);
-    v0 = *(int*)(char*)(a0 + 20);
-    v0 = v1 + v0;
-    s0 = v0 + -1;
-    v0 = func_00198F20(a0);
-    a1 = (unsigned int)s0 >> 3;
-    a0 = v0;
-    v0 = func_00198EF0(a0, a1);
-    a0 = s0 & 7;
-    v0 = *(int*)(char*)v0;
-    v1 = a0 << 5;
-    v1 = v1 - a0;
-    v1 = v1 << 3;
-    v0 = v0 + v1;
-    goto ret;
-ret:
-    return v0;
+    last = *(int*)(deque + 16) + *(int*)(deque + 20) - 1;
+    slot = func_00198EF0(func_00198F20(deque), (unsigned int)last >> 3);
+    return (char*)*slot + (last & 7) * 248;
 }

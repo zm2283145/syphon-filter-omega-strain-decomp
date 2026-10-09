@@ -1,12 +1,12 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Translation unit: npc.cc (cNPC script commands and vtable methods).
  */
 
-#include "types.h"
+#include "npc_types.h"
 
-int Script_cNPC_ForceOnRadar(int a0) {
-    *(char*)((char*)*(int*)(char*)a0 + 52) = ((unsigned int)(0) < (unsigned int)(*(int*)((char*)a0 + 4)));
+/* Script: cNPC.ForceOnRadar(on). */
+int Script_cNPC_ForceOnRadar(NpcScriptArgs* args) {
+    args->npc->forceOnRadar = (0U < (unsigned int)args->arg1);
     return 0;
 }

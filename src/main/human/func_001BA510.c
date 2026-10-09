@@ -5,37 +5,23 @@
  */
 
 #include "types.h"
+#include "human_types.h"
 
-extern char D_004EF010[];
-extern char D_005061D0[];
+/* Network stream cursor shared by message serializers. */
+extern signed char* D_005061D0;
+extern int D_004EF010;
 extern void func_00282020(int);
 
-void cNetUpdateStatsMsg_v04(int a0) {
-    int tmp0;
-    signed char tmp3;
-    int tmp4;
-    int tmp5;
-    signed char tmp6;
-    int tmp7;
-    int tmp8;
-
-    tmp0 = *(int*)((char*)a0 + 36);
-    func_00282020(tmp0);
-    tmp3 = *(signed char*)((char*)a0 + 40);
-    tmp4 = *(int*)D_005061D0;
-    *(char*)((char*)tmp4) = tmp3;
-    tmp5 = *(int*)D_005061D0;
-    *(int*)D_005061D0 = (tmp5 + 1);
-    tmp6 = *(signed char*)((char*)a0 + 41);
-    tmp7 = *(int*)D_005061D0;
-    *(char*)((char*)tmp7) = tmp6;
-    tmp8 = *(int*)D_005061D0;
-    *(int*)D_005061D0 = (tmp8 + 1);
+/* Serialize: write the word argument, then two bytes. */
+void cNetUpdateStatsMsg_v04(ArgMsg* msg) {
+    func_00282020(msg->arg0);
+    *D_005061D0 = msg->arg1;
+    D_005061D0 = D_005061D0 + 1;
+    *D_005061D0 = msg->arg2;
+    D_005061D0 = D_005061D0 + 1;
 }
 
+/* Message type id. */
 int cNetUpdateStatsMsg_v05(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_004EF010;
-    return tmp0;
+    return D_004EF010;
 }

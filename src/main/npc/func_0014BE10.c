@@ -1,29 +1,34 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Translation unit: npc.cc (cNPC script commands and vtable methods).
  */
 
-#include "types.h"
+#include "npc_types.h"
 
-extern int func_0016E170(int, int, int);
+extern int func_0016E170(void* obj, int a1, int a2);
 
-int cNPC_v3F(int a0, int a1) {
-    int tmp0;
+typedef struct NpcMoveGobj {
+    char pad00[0xC];
+    int id;                         /* 0x0C */
+} NpcMoveGobj;
 
-    tmp0 = *(int*)((char*)a1 + 12);
-    *(int*)((char*)a0 + 244) = tmp0;
-    *(int*)((char*)a0 + 312) = -1;
-    func_0016E170((a0 + 68), 7, 100);
+typedef struct NpcMoveNode {
+    char pad00[0x78];
+    int id;                         /* 0x78 */
+} NpcMoveNode;
+
+/* vtable slot 0x3F: MoveToGobj. */
+int cNPC_MoveToGobj(cNPC* self, NpcMoveGobj* gobj) {
+    self->moveTargetGobj = gobj->id;
+    self->moveTargetNode = -1;
+    func_0016E170(self->unk044, 7, 100);
     return 1;
 }
 
-int cNPC_v3E(int a0, int a1) {
-    int tmp2;
-
-    func_0016E170((a0 + 68), 7, 100);
-    tmp2 = *(int*)((char*)a1 + 120);
-    *(int*)((char*)a0 + 312) = tmp2;
-    *(int*)((char*)a0 + 244) = -1;
+/* vtable slot 0x3E: MoveToNode. */
+int cNPC_MoveToNode(cNPC* self, NpcMoveNode* node) {
+    func_0016E170(self->unk044, 7, 100);
+    self->moveTargetNode = node->id;
+    self->moveTargetGobj = -1;
     return 1;
 }

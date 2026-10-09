@@ -5,13 +5,12 @@
  */
 
 #include "types.h"
+#include "game_types.h"
 
-extern char D_004FFC2C[];
-extern int func_00245560(int, int, float);
+extern GameTimerService* D_004FFC2C; /* world +0xDC service */
+extern int func_00245560(GameTimerService*, int, float);
 
-int Global_StartGlobalTimer(int a0, float f12) {
-    int tmp0;
-
-    tmp0 = *(int*)D_004FFC2C;
-    return func_00245560(tmp0, a0, f12);
+/* Starts the global timer: forwards to the timer service. */
+int Global_StartGlobalTimer(int id, float value) {
+    return func_00245560(D_004FFC2C, id, value);
 }

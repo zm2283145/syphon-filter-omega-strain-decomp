@@ -10,11 +10,11 @@ float func_001AF320(char* self) {
     return *(float*)(self + 4);
 }
 
-int func_001AF330(int a0, int a1) {
-    int tmp0;
+/* Address of 464-byte skeleton node i. */
+char* func_001AF330(PtrVec* v, int i) {
+    char* data = (char*)v->data;
 
-    tmp0 = *(int*)((char*)a0 + 8);
-    return (tmp0 + (a1 * 464));
+    return data + i * 464;
 }
 
 int func_001AF350(char* self) {
@@ -37,7 +37,8 @@ int func_001AF3A0(Iter* a, Iter* b) {
     return !(a->p == b->p);
 }
 
-int func_001AF3C0(int a0) {
-    *(int*)((char*)a0) = (*(int*)(char*)a0 + 464);
-    return a0;
+/* Iterator ++ over 464-byte nodes. */
+Iter16* func_001AF3C0(Iter16* it) {
+    it->p = it->p + 464;
+    return it;
 }

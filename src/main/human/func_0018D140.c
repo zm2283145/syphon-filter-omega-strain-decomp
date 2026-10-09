@@ -5,28 +5,16 @@
  */
 
 #include "types.h"
+#include "human_types.h"
 
-extern void func_001CAE10(int);
+extern void func_001CAE10(void*);
 
-void func_0018D140(int a0) {
-    int s0, v1;
-    int cond;
+/* Release the secondary component if flagged (bit 8 of flags324C), then clear the flag. */
+void Actor_ReleaseSecondary(Actor* actor) {
+    void* secondary = actor->secondary;
 
-    s0 = a0;
-    a0 = *(int*)(char*)(a0 + 13076);
-    cond = a0 == 0;
-    if (cond) goto L0018D188;
-    v1 = *(int*)(char*)(s0 + 12876);
-    v1 = v1 >> 8;
-    v1 = v1 & 1;
-    cond = v1 == 0;
-    if (cond) goto L0018D188;
-    func_001CAE10(a0);
-    a0 = *(int*)(char*)(s0 + 12876);
-    v1 = 0 + -257;
-    v1 = a0 & v1;
-    *(int*)(char*)(s0 + 12876) = v1;
-L0018D188:;
-    goto ret;
-ret:;
+    if (secondary != 0 && ((actor->flags324C >> 8) & 1) != 0) {
+        func_001CAE10(secondary);
+        actor->flags324C &= ~0x100;
+    }
 }

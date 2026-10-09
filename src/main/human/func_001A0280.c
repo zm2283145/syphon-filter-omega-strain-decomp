@@ -6,16 +6,18 @@
 
 #include "types.h"
 
-extern int RootCollection_FindByKey(int, int);
+extern void* RootCollection_FindByKey(void*, int);
 
 int func_001A0280(char* self) {
     return *(int*)(self + 176);
 }
 
-int func_001A0290(int a0) {
-    return ((*(int*)((char*)a0 + 8) + (*(int*)((char*)a0 + 4) << 2)) + -4);
+/* back(): address of the last element. */
+int* PtrVec_Back(PtrVec* v) {
+    return v->data + v->count - 1;
 }
 
-int func_001A02B0(int a0, int a1) {
-    return RootCollection_FindByKey((a0 + 176), a1);
+/* Find in the root collection at +0xB0. */
+void* func_001A02B0(char* self, int key) {
+    return RootCollection_FindByKey(self + 176, key);
 }

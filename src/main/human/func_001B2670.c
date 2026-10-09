@@ -10,7 +10,8 @@ void ControlHistory_Clear(char* self) {
     *(int*)(self + 8) = 0;
 }
 
-void ControlHistory_Shift(int a0) {
-    *(int*)((char*)a0) = *(int*)((char*)a0 + 4);
-    *(int*)((char*)a0 + 4) = *(int*)((char*)a0 + 8);
+/* Shift the three-entry history down by one. */
+void ControlHistory_Shift(int* history) {
+    history[0] = history[1];
+    history[1] = history[2];
 }

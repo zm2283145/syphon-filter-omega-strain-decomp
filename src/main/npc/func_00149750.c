@@ -1,11 +1,11 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Translation unit: npc.cc (cNPC script commands and vtable methods).
  */
 
-#include "types.h"
+#include "npc_types.h"
 
-void func_00149750(char* self, float value) {
-    *(float*)(self + 148) = value;
+/* vtable slot 0x66: SetGrenadeThrowAngle. */
+void cNPC_SetGrenadeThrowAngle(cNPC* self, float angle) {
+    self->grenadeThrowAngle = angle;
 }

@@ -6,11 +6,12 @@
 
 #include "types.h"
 
-int func_001989E0(int a0, int a1) {
-    return ((unsigned int)(0) < (unsigned int)((*(int*)(char*)a0 ^ *(int*)(char*)a1)));
+int func_001989E0(Iter* a, Iter* b) {
+    return a->p != b->p;
 }
 
-int func_00198A00(int a0) {
-    *(int*)((char*)a0) = *(int*)((char*)*(int*)(char*)a0 + 4);
-    return a0;
+/* List iterator ++: follow the next link at node +0x04. */
+Iter* func_00198A00(Iter* it) {
+    it->p = (int*)it->p[1];
+    return it;
 }

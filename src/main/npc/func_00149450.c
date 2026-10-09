@@ -1,23 +1,17 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Translation unit: npc.cc (cNPC script commands and vtable methods).
  */
 
-#include "types.h"
+#include "npc_types.h"
 
-extern void func_0014B340(int);
+extern void cNPC_SetMaxActiveNpcCount(int count);
 
-int Script_cNPC_SetMaxActiveNpcCount(int a0) {
-    int loc[1];
-    int v0;
+/* Script: cNPC.SetMaxActiveNpcCount(count). */
+int Script_cNPC_SetMaxActiveNpcCount(NpcScriptArgs* args) {
+    int count[1]; /* staged through the stack like the other argument readers */
 
-    v0 = *(int*)(char*)(a0 + 4);
-    *(int*)(char*)loc = v0;
-    a0 = *(int*)(char*)loc;
-    func_0014B340(a0);
-    v0 = 0;
-    goto ret;
-ret:
-    return v0;
+    *(int*)(char*)count = args->arg1;
+    cNPC_SetMaxActiveNpcCount(*(int*)(char*)count);
+    return 0;
 }

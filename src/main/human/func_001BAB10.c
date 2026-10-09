@@ -5,12 +5,11 @@
  */
 
 #include "types.h"
+#include "human_types.h"
 
-extern char D_004EF080[];
+extern int D_004EF080;
 
+/* Message type id. */
 int cNetShockMsg_v05(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_004EF080;
-    return tmp0;
+    return D_004EF080;
 }

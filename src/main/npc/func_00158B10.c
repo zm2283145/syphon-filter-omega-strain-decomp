@@ -1,14 +1,13 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Translation unit: npc.cc (container helpers instantiated for cNPC).
  */
 
-#include "types.h"
+#include "npc_types.h"
 
-extern int func_0015BB90(int);
+extern void func_0015BB90(void* self);
 
-int func_00158B10(int a0) {
-    func_0015BB90(a0);
-    return a0;
+void* func_00158B10(void* self) {
+    func_0015BB90(self);
+    return self;
 }

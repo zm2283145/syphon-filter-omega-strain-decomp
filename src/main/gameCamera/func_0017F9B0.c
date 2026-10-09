@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-extern char D_004DA330[];
+extern char D_004DA330[]; /* vtable */
 
 Rel* func_0017F9B0(Rel* r) {
     r->a = 0;
@@ -15,7 +15,8 @@ Rel* func_0017F9B0(Rel* r) {
     return r;
 }
 
-int func_0017F9D0(int a0) {
-    *(int*)((char*)a0) = (int)D_004DA330;
-    return a0;
+/* Sets the vtable pointer. */
+char* func_0017F9D0(char* self) {
+    *(char**)self = D_004DA330;
+    return self;
 }

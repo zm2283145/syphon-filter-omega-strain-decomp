@@ -6,14 +6,14 @@
 
 #include "types.h"
 
-int func_00195DB0(int a0, int a1) {
-    return (a0 + a1);
+char* func_00195DB0(char* base, int i) {
+    return base + i;
 }
 
-int func_00195DC0(int a0, int a1) {
-    return (a0 + (a1 << 5));
+char* func_00195DC0(char* base, int i) {
+    return base + (i << 5);
 }
 
-int func_00195DD0(int a0, int a1) {
-    return (a0 + (a1 << 2));
+int* func_00195DD0(int* base, int i) {
+    return base + i;
 }

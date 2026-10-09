@@ -5,7 +5,8 @@
  */
 
 #include "types.h"
+#include "human_types.h"
 
-int Model_GetChannelData(int a0, int a1) {
-    return (*(int*)((char*)a0 + 8) + (((a1 << 4) - a1) << 2));
+AnimChannel* Model_GetChannelData(ChannelVec* v, int i) {
+    return &v->data[i];
 }

@@ -1,16 +1,13 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Translation unit: npc.cc (cNPC script commands and vtable methods).
  */
 
-#include "types.h"
+#include "npc_types.h"
 
-extern int func_0016C8D0(int, int);
+extern int func_0016C8D0(NpcAi* ai, int gobj);
 
-int cNPC_v38(int a0, int a1) {
-    int tmp0;
-
-    tmp0 = *(int*)((char*)a0 + 428);
-    return func_0016C8D0(tmp0, a1);
+/* vtable slot 0x38: RemoveAwareness. */
+int cNPC_RemoveAwareness(cNPC* self, int gobj) {
+    return func_0016C8D0(self->ai, gobj);
 }

@@ -14,13 +14,12 @@ int func_001A0AE0(char* self) {
     return *(int*)(self + 0);
 }
 
-void func_001A0AF0(int a0, int a1) {
-    int tmp0;
-    int tmp1;
+/* end() over 384-byte elements. */
+void func_001A0AF0(Iter16* out, PtrVec* v) {
+    int count = v->count;
+    char* data = (char*)v->data;
 
-    tmp0 = *(int*)((char*)a1 + 4);
-    tmp1 = *(int*)((char*)a1 + 8);
-    *(int*)((char*)a0) = (tmp1 + (tmp0 * 384));
+    out->p = data + count * 384;
 }
 
 void func_001A0B10(Iter* out, PtrVec* v) {

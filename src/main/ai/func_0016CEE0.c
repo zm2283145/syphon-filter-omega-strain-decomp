@@ -1,25 +1,16 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * List append: inserts value before the list end.
  */
 
 #include "types.h"
 
-extern int List_InsertBefore(int, int, int, int);
+extern int List_InsertBefore(Iter*, List*, Iter*, int);
 
-int func_0016CEE0(int a0, int a1) {
-    int loc[2];
-    int a2, a3, v0;
+int List_PushBack_16CEE0(List* list, int value) {
+    Iter pos;
+    Iter result;
 
-    a3 = a1;
-    a1 = a0;
-    v0 = *(int*)(char*)(a0 + 8);
-    a2 = (int)loc;
-    *(int*)(char*)loc = v0;
-    a0 = (int)((char*)loc + 4);
-    v0 = List_InsertBefore(a0, a1, a2, a3);
-    goto ret;
-ret:
-    return v0;
+    pos.p = list->last;
+    return List_InsertBefore(&result, list, &pos, value);
 }

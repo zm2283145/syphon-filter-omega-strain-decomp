@@ -1,32 +1,29 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Translation unit: npc.cc (cNPC script commands and vtable methods).
  */
 
-#include "types.h"
+#include "npc_types.h"
 
-extern int func_0018C9D0(int, int, int);
-extern int func_001992B0(int, int, int);
+extern int func_0018C9D0(NpcActor* actor, int a1, int a2);
+extern int func_001992B0(NpcActor* actor, int a1, int a2);
 
-void func_0014A7C0(int a0, int a1) {
-    *(char*)((char*)*(int*)((char*)a0 + 48) + 13240) = a1;
+/* vtable slot 0x7F: SetFireInvulnerability. */
+void cNPC_SetFireInvulnerability(cNPC* self, char on) {
+    self->actor->fireInvulnerable = on;
 }
 
-void func_0014A7D0(int a0) {
-    *(char*)((char*)*(int*)((char*)*(int*)((char*)a0 + 48) + 13604) + 168) = 1;
+/* vtable slot 0x7E: DontDropWeapons. */
+void cNPC_DontDropWeapons(cNPC* self) {
+    self->actor->weapons->dontDropWeapons = 1;
 }
 
-int func_0014A7F0(int a0, int a1) {
-    int tmp0;
-
-    tmp0 = *(int*)((char*)a0 + 48);
-    return func_001992B0(tmp0, a1, 0);
+/* vtable slot 0x7A: EquipGoggles. */
+int cNPC_EquipGoggles(cNPC* self, int a1) {
+    return func_001992B0(self->actor, a1, 0);
 }
 
-int func_0014A800(int a0, int a1) {
-    int tmp0;
-
-    tmp0 = *(int*)((char*)a0 + 48);
-    return func_0018C9D0(tmp0, a1, 0);
+/* vtable slot 0x79: RequestDeathAnimation. */
+int cNPC_RequestDeathAnimation(cNPC* self, int a1) {
+    return func_0018C9D0(self->actor, a1, 0);
 }

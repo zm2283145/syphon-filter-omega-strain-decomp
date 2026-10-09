@@ -5,12 +5,11 @@
  */
 
 #include "types.h"
+#include "human_types.h"
 
-extern char D_004EEED8[];
+extern int D_004EEED8;
 
+/* Message type id. */
 int cNetThrowStarMsg_v05(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_004EEED8;
-    return tmp0;
+    return D_004EEED8;
 }

@@ -8,13 +8,14 @@
 
 extern char D_0048A158[];
 extern char D_0048A160[];
-extern char D_004DA3E0[];
-extern int PhysicalBase_Construct(int, int, int);
+extern char D_004DA3E0[]; /* vtable */
+extern int PhysicalBase_Construct(char* self, char*, char*);
 
-int func_0017F2E0(int a0) {
-    PhysicalBase_Construct(a0, (int)D_0048A158, (int)D_0048A160);
-    *(int*)((char*)a0) = (int)D_004DA3E0;
-    *(int*)((char*)a0 + 56) = 0;
-    *(int*)((char*)a0 + 60) = 0;
-    return a0;
+/* Constructor: base construct, set vtable, clear words +0x38 and +0x3C. */
+char* func_0017F2E0(char* self) {
+    PhysicalBase_Construct(self, D_0048A158, D_0048A160);
+    *(char**)self = D_004DA3E0;
+    *(int*)(self + 0x38) = 0;
+    *(int*)(self + 0x3C) = 0;
+    return self;
 }

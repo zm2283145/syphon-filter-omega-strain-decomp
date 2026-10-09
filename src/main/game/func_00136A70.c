@@ -8,10 +8,8 @@
 
 extern int func_001457C0(int, int, int);
 
-int func_00136A70(int a0, int a1, int a2) {
-    int tmp0;
-
-    tmp0 = *(int*)((char*)a0 + 480);
-    func_001457C0(tmp0, a1, a2);
+/* Forwards (a1, a2) to func_001457C0 on the object at +0x1E0; always returns 1. */
+int func_00136A70(char* self, int a1, int a2) {
+    func_001457C0(*(int*)(self + 0x1E0), a1, a2);
     return 1;
 }

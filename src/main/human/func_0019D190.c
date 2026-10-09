@@ -5,6 +5,7 @@
  */
 
 #include "types.h"
+#include "human_types.h"
 
 void* func_0019D190(char* self) {
     return self + 16;
@@ -14,20 +15,21 @@ void* func_0019D1A0(void* self) {
     return self;
 }
 
-int func_0019D1B0(int a0, int a1) {
-    *(float*)((char*)a0) = *(float*)(char*)a1;
-    *(float*)((char*)a0 + 4) = *(float*)((char*)a1 + 4);
-    *(float*)((char*)a0 + 8) = *(float*)((char*)a1 + 8);
-    *(float*)((char*)a0 + 16) = *(float*)((char*)a1 + 16);
-    *(float*)((char*)a0 + 20) = *(float*)((char*)a1 + 20);
-    *(float*)((char*)a0 + 24) = *(float*)((char*)a1 + 24);
-    *(float*)((char*)a0 + 32) = *(float*)((char*)a1 + 32);
-    *(float*)((char*)a0 + 36) = *(float*)((char*)a1 + 36);
-    *(float*)((char*)a0 + 40) = *(float*)((char*)a1 + 40);
-    *(float*)((char*)a0 + 12) = *(float*)((char*)a1 + 12);
-    *(float*)((char*)a0 + 28) = *(float*)((char*)a1 + 28);
-    *(float*)((char*)a0 + 44) = *(float*)((char*)a1 + 44);
-    return a0;
+/* Copy a 3x4 block: xyz of each row first, then the w column. */
+Mtx34* Mtx34_Copy(Mtx34* dst, Mtx34* src) {
+    dst->m[0][0] = src->m[0][0];
+    dst->m[0][1] = src->m[0][1];
+    dst->m[0][2] = src->m[0][2];
+    dst->m[1][0] = src->m[1][0];
+    dst->m[1][1] = src->m[1][1];
+    dst->m[1][2] = src->m[1][2];
+    dst->m[2][0] = src->m[2][0];
+    dst->m[2][1] = src->m[2][1];
+    dst->m[2][2] = src->m[2][2];
+    dst->m[0][3] = src->m[0][3];
+    dst->m[1][3] = src->m[1][3];
+    dst->m[2][3] = src->m[2][3];
+    return dst;
 }
 
 void* func_0019D220(char* self) {
@@ -38,6 +40,6 @@ int func_0019D230(char* self) {
     return *(int*)(self + 4);
 }
 
-int func_0019D240(char* self) {
-    return *(int*)(self + 12948);
+void* Actor_GetEdgeRoot2(Actor* actor) {
+    return actor->edgeRoot;
 }

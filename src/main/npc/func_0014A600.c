@@ -1,148 +1,114 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Translation unit: npc.cc (cNPC script commands and vtable methods).
  */
 
-#include "types.h"
+#include "npc_types.h"
 
-extern char D_004EA3D0[];
-extern char D_004EA3F0[];
-extern char D_004EA3F8[];
-extern char D_00555070[];
-extern void Global_PlayerAddItem(int, int, int);
-extern int Global_PlayerGetItemCount(int, int);
-extern void Global_PlayerRemoveItem(int, int, int);
-extern int ScriptFilter_Dispatch(int, int, int);
-extern int func_0016AD70(void);
-extern int func_00198F90(int, int, int);
-extern int func_00199040(int, int, int);
-extern int func_001990F0(int, int, int);
-extern int func_00210CB0(void);
-extern int func_003D9400(int, int);
-extern void func_003D9440(int, int);
-extern int func_004080E0(void);
+extern int D_004EA3D0;          /* cAIModeChangeMsg script type */
+extern int D_004EA3F0;
+extern int D_004EA3F8;          /* cNPC script type */
+extern char D_00555070[];       /* cNPC script filter table */
+extern void Global_PlayerAddItem(int items, int item, int count);
+extern int Global_PlayerGetItemCount(int items, int item);
+extern void Global_PlayerRemoveItem(int items, int item, int count);
+extern int ScriptFilter_Dispatch(void* filter, int a1, int a2);
+extern int* func_0016AD70(void);
+extern int func_00198F90(NpcActor* actor, int on, int a2);
+extern int func_00199040(NpcActor* actor, int on, int a2);
+extern int func_001990F0(NpcActor* actor, int on, int a2);
+extern int* func_00210CB0(void);
+extern int func_003D9400(int type, int iface);
+extern void func_003D9440(int type, int base);
+extern int* func_004080E0(void);
 
+/* Registers the cNPC script type: base type, then the interfaces it accepts. */
 int ScriptType_cNPC_Init(void) {
-    int tmp0;
-    int tmp2;
-    int tmp3;
-    int tmp6;
-    int tmp8;
-    int tmp9;
-    int tmp12;
-    int tmp13;
-    int tmp16;
-    int tmp18;
-    int tmp19;
-    int tmp20;
+    int* base;
+    int* iface;
 
-    tmp0 = func_0016AD70();
-    tmp2 = *(int*)D_004EA3F8;
-    tmp3 = *(int*)(char*)tmp0;
-    func_003D9440(tmp2, tmp3);
-    tmp6 = func_00210CB0();
-    tmp8 = *(int*)D_004EA3F8;
-    tmp9 = *(int*)(char*)tmp6;
-    func_003D9400(tmp8, tmp9);
-    tmp12 = *(int*)D_004EA3F8;
-    tmp13 = *(int*)D_004EA3D0;
-    func_003D9400(tmp12, tmp13);
-    tmp16 = func_004080E0();
-    tmp18 = *(int*)D_004EA3F8;
-    tmp19 = *(int*)(char*)tmp16;
-    tmp20 = func_003D9400(tmp18, tmp19);
-    return tmp20;
+    base = func_0016AD70();
+    func_003D9440(D_004EA3F8, *base);
+    iface = func_00210CB0();
+    func_003D9400(D_004EA3F8, *iface);
+    func_003D9400(D_004EA3F8, D_004EA3D0);
+    iface = func_004080E0();
+    return func_003D9400(D_004EA3F8, *iface);
 }
 
-int func_0014A670(int a0) {
-    int loc[1];
-    int v0;
+int func_0014A670(int value) {
+    int word[1];
 
-    *(int*)(char*)loc = a0;
-    v0 = *(int*)(char*)loc;
-    goto ret;
-ret:
-    return v0;
+    *(int*)(char*)word = value;
+    return *(int*)(char*)word;
 }
 
 void* func_0014A690(void* self) {
     return self;
 }
 
-int func_0014A6A0(void) {
-    return (int)D_004EA3F0;
+int* func_0014A6A0(void) {
+    return &D_004EA3F0;
 }
 
+/* vtable slot 0x0B. */
 int func_0014A6B0(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_004EA3F0;
-    return tmp0;
+    return D_004EA3F0;
 }
 
+/* vtable slot 0x0C: forwards to the cNPC script filter. */
 int func_0014A6C0(int a0, int a1) {
-    return ScriptFilter_Dispatch((int)D_00555070, a0, a1);
+    return ScriptFilter_Dispatch(D_00555070, a0, a1);
 }
 
-int Script_cAIModeChangeMsg_GetAiMode(int a0) {
-    return *(unsigned char*)((char*)*(int*)(char*)a0 + 36);
+/* Script: cAIModeChangeMsg.GetAiMode(). */
+int Script_cAIModeChangeMsg_GetAiMode(NpcAiMsg** args) {
+    return args[0]->aiMode;
 }
 
 void func_0014A6F0(void) {
 }
 
+/* Returns the cAIModeChangeMsg script type. */
 int cAIModeChangeMsg_v03(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_004EA3D0;
-    return tmp0;
+    return D_004EA3D0;
 }
 
-int func_0014A710(int a0, int a1) {
-    int tmp0;
-    int tmp1;
+/* vtable slot 0x86: GetItemCount. */
+int cNPC_GetItemCount(cNPC* self, int item) {
+    NpcActor* actor;
 
-    tmp0 = *(int*)((char*)a0 + 48);
-    tmp1 = *(int*)((char*)tmp0 + 13608);
-    return Global_PlayerGetItemCount(tmp1, a1);
+    actor = self->actor;
+    return Global_PlayerGetItemCount(actor->items, item);
 }
 
-void func_0014A720(int a0, int a1, int a2) {
-    int tmp0;
-    int tmp1;
+/* vtable slot 0x85: RemoveItem. */
+void cNPC_RemoveItem(cNPC* self, int item, int count) {
+    NpcActor* actor;
 
-    tmp0 = *(int*)((char*)a0 + 48);
-    tmp1 = *(int*)((char*)tmp0 + 13608);
-    Global_PlayerRemoveItem(tmp1, a1, a2);
+    actor = self->actor;
+    Global_PlayerRemoveItem(actor->items, item, count);
 }
 
-void func_0014A730(int a0, int a1, int a2) {
-    int tmp0;
-    int tmp1;
+/* vtable slot 0x84: AddItem. */
+void cNPC_AddItem(cNPC* self, int item, int count) {
+    NpcActor* actor;
 
-    tmp0 = *(int*)((char*)a0 + 48);
-    tmp1 = *(int*)((char*)tmp0 + 13608);
-    Global_PlayerAddItem(tmp1, a1, a2);
+    actor = self->actor;
+    Global_PlayerAddItem(actor->items, item, count);
 }
 
-int func_0014A740(int a0, int a1) {
-    int tmp0;
-
-    tmp0 = *(int*)((char*)a0 + 48);
-    return func_001990F0(tmp0, a1, 0);
+/* vtable slot 0x83: SetNotTargetable. */
+int cNPC_SetNotTargetable(cNPC* self, int on) {
+    return func_001990F0(self->actor, on, 0);
 }
 
-int func_0014A750(int a0, int a1) {
-    int tmp0;
-
-    tmp0 = *(int*)((char*)a0 + 48);
-    return func_00199040(tmp0, a1, 0);
+/* vtable slot 0x82: SetNotGasable. */
+int cNPC_SetNotGasable(cNPC* self, int on) {
+    return func_00199040(self->actor, on, 0);
 }
 
-int func_0014A760(int a0, int a1) {
-    int tmp0;
-
-    tmp0 = *(int*)((char*)a0 + 48);
-    return func_00198F90(tmp0, a1, 0);
+/* vtable slot 0x81: SetNotTaserable. */
+int cNPC_SetNotTaserable(cNPC* self, int on) {
+    return func_00198F90(self->actor, on, 0);
 }

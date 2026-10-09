@@ -1,17 +1,19 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Wrappers around the objective enumeration ObjMan_GatherObjectives(mgr, out, max, ...),
+ * which collects up to max matching objectives (globals first, then the
+ * current stage). The trailing five arguments are filters; -1 disables one.
  */
 
 #include "types.h"
+#include "Objective_types.h"
 
-extern int func_00227170(int, int, int, int, int, int, int, int);
+extern int ObjMan_GatherObjectives(cObjectiveMan*, cObjective**, int, int, int, int, int, int);
 
-int func_002270E0(int a0, int a1, int a2) {
-    return func_00227170(a0, a1, a2, 1, 0, 1, -1, -1);
+int func_002270E0(cObjectiveMan* mgr, cObjective** out, int max) {
+    return ObjMan_GatherObjectives(mgr, out, max, 1, 0, 1, -1, -1);
 }
 
-int func_00227100(int a0, int a1, int a2) {
-    return func_00227170(a0, a1, a2, 1, 0, 0, -1, -1);
+int func_00227100(cObjectiveMan* mgr, cObjective** out, int max) {
+    return ObjMan_GatherObjectives(mgr, out, max, 1, 0, 0, -1, -1);
 }

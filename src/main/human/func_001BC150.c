@@ -5,18 +5,20 @@
  */
 
 #include "types.h"
+#include "human_types.h"
 
-void func_001BC150(int a0, int a1) {
-    *(float*)((char*)a0 + 16) = *(float*)(char*)a1;
-    *(float*)((char*)a0 + 20) = *(float*)((char*)a1 + 4);
-    *(float*)((char*)a0 + 24) = *(float*)((char*)a1 + 8);
-    *(float*)((char*)a0 + 32) = *(float*)((char*)a1 + 16);
-    *(float*)((char*)a0 + 36) = *(float*)((char*)a1 + 20);
-    *(float*)((char*)a0 + 40) = *(float*)((char*)a1 + 24);
-    *(float*)((char*)a0 + 48) = *(float*)((char*)a1 + 32);
-    *(float*)((char*)a0 + 52) = *(float*)((char*)a1 + 36);
-    *(float*)((char*)a0 + 56) = *(float*)((char*)a1 + 40);
-    *(float*)((char*)a0 + 28) = *(float*)((char*)a1 + 12);
-    *(float*)((char*)a0 + 44) = *(float*)((char*)a1 + 28);
-    *(float*)((char*)a0 + 60) = *(float*)((char*)a1 + 44);
+/* Store a 3x4 block into rows 1..3 of a 4x4 matrix (xyz first, then w). */
+void Mtx44_SetRows123FromMtx34(Mtx44* dst, Mtx34* src) {
+    dst->m[1][0] = src->m[0][0];
+    dst->m[1][1] = src->m[0][1];
+    dst->m[1][2] = src->m[0][2];
+    dst->m[2][0] = src->m[1][0];
+    dst->m[2][1] = src->m[1][1];
+    dst->m[2][2] = src->m[1][2];
+    dst->m[3][0] = src->m[2][0];
+    dst->m[3][1] = src->m[2][1];
+    dst->m[3][2] = src->m[2][2];
+    dst->m[1][3] = src->m[0][3];
+    dst->m[2][3] = src->m[1][3];
+    dst->m[3][3] = src->m[2][3];
 }

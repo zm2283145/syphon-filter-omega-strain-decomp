@@ -5,21 +5,20 @@
  */
 
 #include "types.h"
+#include "human_types.h"
 
-extern int Model_GetChannelData(int, int);
+extern AnimChannel* Model_GetChannelData(ChannelVec*, int);
 
-float AnimChannel_GetCurrentValue(int a0) {
-    int a1, v0;
-    float f0;
+/* Current value of a channel in the collection at +0x88 (index is not set by the caller-side code). */
+float AnimChannel_GetCurrentValue(char* owner) {
+    int index;
 
-    a0 = a0 + 136;
-    v0 = Model_GetChannelData(a0, a1);
-    f0 = *(float*)(char*)(v0 + 8);
-    goto ret;
-ret:
-    return f0;
+    return Model_GetChannelData((ChannelVec*)(owner + 136), index)->base.current;
 }
 
-float AnimChannel_GetCurrent(int a0, int a1) {
-    return *(float*)((char*)(*(int*)((char*)a0 + 128) + (((a1 << 4) - a1) << 2)) + 8);
+/* Current value of channel i in the collection at +0x78. */
+float AnimChannel_GetCurrent(char* owner, int i) {
+    ChannelVec* v = (ChannelVec*)(owner + 120);
+
+    return ((AnimChannel*)((char*)v->data + (((i << 4) - i) << 2)))->base.current;
 }

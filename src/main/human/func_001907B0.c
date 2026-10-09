@@ -5,15 +5,16 @@
  */
 
 #include "types.h"
+#include "human_types.h"
 
 void* func_001907B0(char* self) {
     return self + 48;
 }
 
-int func_001907C0(int a0, int a1) {
-    *(float*)((char*)a0) = *(float*)(char*)a1;
-    *(float*)((char*)a0 + 4) = *(float*)((char*)a1 + 4);
-    *(float*)((char*)a0 + 8) = *(float*)((char*)a1 + 8);
-    *(float*)((char*)a0 + 12) = *(float*)((char*)a1 + 12);
-    return a0;
+Vec4* func_001907C0(Vec4* dst, Vec4* src) {
+    dst->x = src->x;
+    dst->y = src->y;
+    dst->z = src->z;
+    dst->w = src->w;
+    return dst;
 }

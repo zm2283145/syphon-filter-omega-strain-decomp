@@ -1,11 +1,11 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Translation unit: npc.cc (cNPC script commands and vtable methods).
  */
 
-#include "types.h"
+#include "npc_types.h"
 
+/* vtable slot 0x15 (shared stub): returns 0. */
 int func_001535D0(void) {
     return 0;
 }

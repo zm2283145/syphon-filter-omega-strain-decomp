@@ -1,20 +1,16 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Translation unit: NPCInfoObject.cc.
  */
 
-#include "types.h"
+#include "npc_types.h"
 
-extern void func_00434600(int, int, int);
+extern void func_00434600(void* self, int* key);
 
-void func_004344A0(int a0, int a1) {
-    int loc[1];
-    int a2;
+/* Calls func_00434600 with the key passed by address. */
+void func_004344A0(void* self, int key) {
+    int k[1];
 
-    *(int*)(char*)loc = a1;
-    a1 = (int)loc;
-    func_00434600(a0, a1, a2);
-    goto ret;
-ret:;
+    *(int*)(char*)k = key;
+    func_00434600(self, k);
 }

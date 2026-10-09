@@ -1,17 +1,17 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Translation unit: npc.cc (container helpers instantiated for cNPC).
  */
 
-#include "types.h"
+#include "npc_types.h"
 
-int func_00159560(int a0) {
-    return (*(int*)((char*)a0 + 8) + 8);
+/* Address of the second word of the vector's first element. */
+int* func_00159560(PtrVec* v) {
+    return v->data + 2;
 }
 
-int func_00159570(char* self) {
-    return *(int*)(self + 0);
+int func_00159570(Word* self) {
+    return self->value;
 }
 
 void func_00159580(Iter* out, PtrVec* v) {

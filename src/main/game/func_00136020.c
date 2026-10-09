@@ -6,20 +6,22 @@
 
 #include "types.h"
 
-extern int func_00139BD0(int, int, int);
+extern int func_00139BD0(Rel*, int, int);
 
-int func_00136020(int a0, int a1, int a2) {
-    *(int*)((char*)a0) = 0;
-    *(int*)((char*)a0 + 4) = 0;
-    *(int*)((char*)a0 + 8) = 0;
-    func_00139BD0(a0, a1, a2);
-    return a0;
+/* Zeroes the three words, then initializes from (a1, a2) via func_00139BD0. */
+Rel* func_00136020(Rel* r, int a1, int a2) {
+    r->a = 0;
+    r->b = 0;
+    r->c = 0;
+    func_00139BD0(r, a1, a2);
+    return r;
 }
 
-int func_00136060(int a0) {
-    *(char*)((char*)a0 + 96) = 0;
-    *(char*)((char*)a0 + 98) = 0;
-    *(int*)((char*)a0 + 128) = 0;
-    *(int*)((char*)a0 + 132) = 0;
-    return a0;
+/* Clears bytes +0x60, +0x62 and words +0x80, +0x84. */
+char* func_00136060(char* self) {
+    self[96] = 0;
+    self[98] = 0;
+    *(int*)(self + 128) = 0;
+    *(int*)(self + 132) = 0;
+    return self;
 }

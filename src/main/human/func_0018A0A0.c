@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-void func_0018A0A0(int a0) {
-    *(int*)((char*)a0) = 0;
-    *(int*)((char*)a0 + 4) = 0;
+void func_0018A0A0(int* pair) {
+    pair[0] = 0;
+    pair[1] = 0;
 }

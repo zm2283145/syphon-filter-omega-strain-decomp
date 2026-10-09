@@ -6,53 +6,45 @@
 
 #include "types.h"
 
-extern int ActiveList_RemoveFirst(int);
-extern int ActiveList_RemoveObject(int, int);
-extern char D_004EE908[];
-extern char D_004FFB50[];
+extern int ActiveList_RemoveFirst(char* world);
+extern int ActiveList_RemoveObject(char* world, int camera);
+extern int D_004EE908;
+extern char D_004FFB50[]; /* world object */
 extern char D_00555070[];
-extern int ScriptFilter_Dispatch(int, int, int);
-extern int func_00131320(int, int);
+extern int ScriptFilter_Dispatch(char*, int, int);
+extern int func_00131320(char* world, int camera); /* push camera */
 extern void func_00282020(int);
 
-int Script_cGameCamera_RemoveCamera(int a0) {
-    int tmp0;
-
-    tmp0 = *(int*)(char*)a0;
-    ActiveList_RemoveObject((int)D_004FFB50, tmp0);
+/* Script binding: removes camera args[0] from the world camera stack. */
+int Script_cGameCamera_RemoveCamera(int* args) {
+    ActiveList_RemoveObject(D_004FFB50, args[0]);
     return 0;
 }
 
+/* Script binding: pops the current camera. */
 int Script_cGameCamera_PopCurrent(void) {
-    ActiveList_RemoveFirst((int)D_004FFB50);
+    ActiveList_RemoveFirst(D_004FFB50);
     return 0;
 }
 
-int Script_cGameCamera_PushCurrent(int a0) {
-    int tmp0;
-
-    tmp0 = *(int*)(char*)a0;
-    func_00131320((int)D_004FFB50, tmp0);
+/* Script binding: pushes camera args[0] as current. */
+int Script_cGameCamera_PushCurrent(int* args) {
+    func_00131320(D_004FFB50, args[0]);
     return 0;
 }
 
 void func_0017A190(void) {
 }
 
+/* Returns the value of global D_004EE908. */
 int func_0017A1A0(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_004EE908;
-    return tmp0;
+    return D_004EE908;
 }
 
 int func_0017A1B0(int a0, int a1) {
-    return ScriptFilter_Dispatch((int)D_00555070, a0, a1);
+    return ScriptFilter_Dispatch(D_00555070, a0, a1);
 }
 
-void cHumanSeenMsg_v04(int a0) {
-    int tmp0;
-
-    tmp0 = *(int*)((char*)a0 + 36);
-    func_00282020(tmp0);
+void cHumanSeenMsg_v04(char* msg) {
+    func_00282020(*(int*)(msg + 0x24));
 }

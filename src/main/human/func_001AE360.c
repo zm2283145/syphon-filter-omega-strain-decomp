@@ -5,22 +5,16 @@
  */
 
 #include "types.h"
+#include "human_types.h"
 
-extern char D_004EA0B8[];
+extern int D_004EA0B8;
 
 int func_001AE360(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_004EA0B8;
-    return tmp0;
+    return D_004EA0B8;
 }
 
-void func_001AE370(int a0) {
-    int v1;
-
-    v1 = 0x3f800000;
-    *(int*)(char*)(a0 + 60) = v1;
-    *(int*)(char*)(a0 + 76) = 0;
-    goto ret;
-ret:;
+/* Set the float at +0x3C to 1.0 and clear the word at +0x4C. */
+void func_001AE370(char* self) {
+    *(float*)(self + 60) = 1.0f;
+    *(int*)(self + 76) = 0;
 }

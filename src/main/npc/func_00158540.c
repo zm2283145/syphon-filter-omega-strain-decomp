@@ -1,11 +1,11 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Translation unit: npc.cc (container helpers instantiated for cNPC).
  */
 
-#include "types.h"
+#include "npc_types.h"
 
-int func_00158540(char* self) {
-    return *(int*)(self + 48);
+/* Returns the word at +0x30 (the owning actor if this is a cNPC). */
+NpcActor* func_00158540(cNPC* self) {
+    return self->actor;
 }

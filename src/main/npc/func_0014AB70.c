@@ -1,12 +1,11 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Translation unit: npc.cc (container helpers instantiated for cNPC).
  */
 
-#include "types.h"
+#include "npc_types.h"
 
-extern int List_InsertBefore(int, int, int, int);
+extern Iter* List_InsertBefore(Iter* out, Tree* t, Iter* hint, int value);
 
 Word* func_0014AB70(Word* dst, Word* src) {
     dst->value = src->value;
@@ -17,20 +16,12 @@ void func_0014AB80(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
-int func_0014AB90(int a0, int a1) {
-    int loc[2];
-    int a2, a3, v0;
+/* map insert(value): inserts with an end() hint, result iterator in out[1]. */
+Iter* func_0014AB90(Tree* t, int value) {
+    Iter it[2];
 
-    a3 = a1;
-    v0 = a0 + 4;
-    a1 = a0;
-    *(int*)(char*)loc = v0;
-    a0 = (int)((char*)loc + 4);
-    a2 = (int)loc;
-    v0 = List_InsertBefore(a0, a1, a2, a3);
-    goto ret;
-ret:
-    return v0;
+    it[0].p = &t->header;
+    return List_InsertBefore(&it[1], t, &it[0], value);
 }
 
 Word* func_0014ABC0(Word* dst, Word* src) {
@@ -52,26 +43,29 @@ Word* func_0014ABF0(Word* dst, Word* src) {
     return dst;
 }
 
-int func_0014AC00(int a0, int a1) {
-    return ((unsigned int)(0) < (unsigned int)((*(int*)(char*)a0 ^ *(int*)(char*)a1)));
+/* Iterator inequality. */
+int func_0014AC00(Word* a, Word* b) {
+    return (0U < (unsigned int)(a->value ^ b->value));
 }
 
 void func_0014AC20(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
-int func_0014AC30(int a0) {
-    *(int*)((char*)a0) = *(int*)((char*)*(int*)(char*)a0 + 4);
-    return a0;
+/* Linked-list iterator increment: follow node->next (+4). */
+Iter* func_0014AC30(Iter* it) {
+    it->p = (int*)it->p[1];
+    return it;
 }
 
-int func_0014AC50(int a0) {
-    return (*(int*)(char*)a0 + 8);
+/* Address of the node payload (+8). */
+int* func_0014AC50(Iter* it) {
+    return it->p + 2;
 }
 
-int func_0014AC60(int a0, int a1) {
-    *(float*)((char*)a0) = *(float*)(char*)a1;
-    return a0;
+float* func_0014AC60(float* dst, float* src) {
+    *dst = *src;
+    return dst;
 }
 
 void func_0014AC70(Iter* out, PtrVec* v) {

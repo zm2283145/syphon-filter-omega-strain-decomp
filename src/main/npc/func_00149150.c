@@ -1,11 +1,11 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Translation unit: npc.cc (cNPC script commands and vtable methods).
  */
 
-#include "types.h"
+#include "npc_types.h"
 
-float cNPC_v77(char* self) {
-    return *(float*)(self + 32);
+/* vtable slot 0x77: GetAimPercent. */
+float cNPC_GetAimPercent(cNPC* self) {
+    return self->aimPercent;
 }

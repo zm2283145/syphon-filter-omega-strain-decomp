@@ -1,11 +1,11 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Translation unit: npc.cc (cNPC script commands and vtable methods).
  */
 
-#include "types.h"
+#include "npc_types.h"
 
-int cNPC_v76(int a0) {
-    return *(int*)((char*)*(int*)((char*)a0 + 48) + 68);
+/* vtable slot 0x76: GetDarkness (read from the owning actor). */
+int cNPC_GetDarkness(cNPC* self) {
+    return self->actor->darkness;
 }

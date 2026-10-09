@@ -6,8 +6,14 @@
 
 #include "types.h"
 
-int Curve_Bind(int a0, int a1) {
-    *(int*)((char*)a0) = a1;
-    *(int*)((char*)a0 + 4) = 0;
-    return a0;
+typedef struct CurveBinding {
+    int curve;
+    int unk4;
+} CurveBinding;
+
+/* Binds a curve and clears the second word. */
+CurveBinding* Curve_Bind(CurveBinding* b, int curve) {
+    b->curve = curve;
+    b->unk4 = 0;
+    return b;
 }

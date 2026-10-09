@@ -1,22 +1,20 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Translation unit: npc.cc (cNPC script commands and vtable methods).
  */
 
-#include "types.h"
+#include "npc_types.h"
 
-extern int GObj_IdentityB(int);
-extern int cNPC_Deactivate(int, int);
+extern int GObj_IdentityB(int handle);
+extern int cNPC_Deactivate(cNPC* npc, int player);
 
-int Script_cNPC_Deactivate(int a0) {
-    int tmp0;
-    int tmp1;
-    int tmp2;
+/* Script: cNPC.Deactivate(player). */
+int Script_cNPC_Deactivate(NpcScriptArgs* args) {
+    cNPC* npc;
+    int player;
 
-    tmp0 = *(int*)(char*)a0;
-    tmp1 = *(int*)((char*)a0 + 4);
-    tmp2 = GObj_IdentityB(tmp1);
-    cNPC_Deactivate(tmp0, tmp2);
+    npc = args->npc;
+    player = GObj_IdentityB(args->arg1);
+    cNPC_Deactivate(npc, player);
     return 0;
 }

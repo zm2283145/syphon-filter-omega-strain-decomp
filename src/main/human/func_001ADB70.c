@@ -6,6 +6,7 @@
 
 #include "types.h"
 
-int func_001ADB70(int a0, int a1) {
-    return (a0 + (a1 * 160));
+/* Address of 160-byte element i. */
+char* func_001ADB70(char* base, int i) {
+    return base + i * 160;
 }

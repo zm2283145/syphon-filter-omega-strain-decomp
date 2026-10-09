@@ -1,11 +1,11 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Translation unit: npc.cc (cNPC script commands and vtable methods).
  */
 
-#include "types.h"
+#include "npc_types.h"
 
-void func_001498A0(char* self, float value) {
-    *(float*)(self + 184) = value;
+/* vtable slot 0x70: SetWeaponPreferenceDistance. */
+void cNPC_SetWeaponPreferenceDistance(cNPC* self, float distance) {
+    self->weaponPreferenceDistance = distance;
 }

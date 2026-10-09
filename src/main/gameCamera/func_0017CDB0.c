@@ -6,13 +6,16 @@
 
 #include "types.h"
 
-extern int VecRecordList_Insert(int, int, int, int);
+/* Vector of 16-byte records: +4 count, +8 data. */
+typedef struct VecRecordList {
+    int unk0;
+    int count;
+    char* data;
+} VecRecordList;
 
-int func_0017CDB0(int a0, int a1) {
-    int tmp0;
-    int tmp1;
+extern int VecRecordList_Insert(VecRecordList* list, char* pos, int n, int value);
 
-    tmp0 = *(int*)((char*)a0 + 4);
-    tmp1 = *(int*)((char*)a0 + 8);
-    return VecRecordList_Insert(a0, (tmp1 + (tmp0 << 4)), 1, a1);
+/* Appends one record at the end of the list. */
+int func_0017CDB0(VecRecordList* list, int value) {
+    return VecRecordList_Insert(list, list->data + (list->count << 4), 1, value);
 }

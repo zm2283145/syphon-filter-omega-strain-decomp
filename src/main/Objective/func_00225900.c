@@ -1,186 +1,78 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * cObjectiveMan script-native bindings: stage control, success/failure and
+ * objective lookup. args[0] is the manager receiver.
  */
 
 #include "types.h"
+#include "Objective_types.h"
 
 extern int GObj_IdentityB(int);
-extern int ObjMan_GetObjective(int, int);
-extern int ObjMan_StartStage(int, int, int);
-extern int Objective_Fail(int, int, int);
-extern int Objective_ResolveReceiver(int);
-extern int Objective_Succeed(int, int, int);
-extern int cObjectiveMan_SetPartialSuccess(int, int, int);
-extern int cObjectiveMan_SucceedPart(int, int);
-extern int func_00225770(int);
-extern int func_00225C40(int);
+extern cObjective* ObjMan_GetObjective(cObjectiveMan*, int);
+extern int ObjMan_StartStage(cObjectiveMan*, int, int);
+extern int Objective_Fail(cObjectiveMan*, cObjective*, int);
+extern cObjective* Objective_ResolveReceiver(void*);
+extern int Objective_Succeed(cObjectiveMan*, cObjective*, int);
+extern int cObjectiveMan_SetPartialSuccess(cObjectiveMan*, cObjective*, int);
+extern int cObjectiveMan_SucceedPart(cObjectiveMan*, cObjective*);
+extern int func_00225770(cObjective*);
+extern cObjectiveMan* ObjMan_ResolveReceiver(void*);
 
-int Script_cObjectiveMan_GetStage(int a0) {
-    int loc[1];
-    int v0;
-
-    a0 = *(int*)(char*)a0;
-    v0 = func_00225C40(a0);
-    v0 = *(int*)(char*)(v0 + 164);
-    *(int*)(char*)loc = v0;
-    v0 = *(int*)(char*)loc;
-    goto ret;
-ret:
-    return v0;
+int Script_cObjectiveMan_GetStage(ScriptArg* args) {
+    volatile int stage = ObjMan_ResolveReceiver(args[0].p)->stage;
+    return stage;
 }
 
-int ObjMan_ScriptStartStage(int a0) {
-    int loc[1];
-    int a1, a2, v0;
-
-    v0 = *(int*)(char*)(a0 + 4);
-    *(int*)(char*)loc = v0;
-    a0 = *(int*)(char*)a0;
-    v0 = func_00225C40(a0);
-    a1 = *(int*)(char*)loc;
-    a0 = v0;
-    a2 = 0;
-    v0 = ObjMan_StartStage(a0, a1, a2);
-    v0 = 0;
-    goto ret;
-ret:
-    return v0;
-}
-
-int Script_cObjectiveMan_Fail(int a0) {
-    int a1, a2, s0, s1, v0;
-
-    s0 = a0;
-    a0 = *(int*)(char*)a0;
-    v0 = func_00225C40(a0);
-    a0 = *(int*)(char*)(s0 + 4);
-    s1 = v0;
-    v0 = Objective_ResolveReceiver(a0);
-    a0 = *(int*)(char*)(s0 + 8);
-    s0 = v0;
-    v0 = GObj_IdentityB(a0);
-    a0 = s1;
-    a1 = s0;
-    a2 = v0;
-    v0 = Objective_Fail(a0, a1, a2);
-    v0 = 0;
-    goto ret;
-ret:
-    return v0;
-}
-
-int Script_Objective_Fail(int a0) {
-    int a1, a2, s0, v0;
-
-    s0 = a0;
-    a0 = *(int*)(char*)a0;
-    v0 = func_00225C40(a0);
-    a0 = *(int*)(char*)(s0 + 4);
-    s0 = v0;
-    v0 = Objective_ResolveReceiver(a0);
-    a0 = s0;
-    a1 = v0;
-    a2 = 0;
-    v0 = Objective_Fail(a0, a1, a2);
-    v0 = 0;
-    goto ret;
-ret:
-    return v0;
-}
-
-int Script_cObjectiveMan_SetPartialSuccess(int a0) {
-    int loc[1];
-    int a1, a2, s0, v0;
-
-    v0 = *(int*)(char*)(a0 + 8);
-    s0 = a0;
-    *(int*)(char*)loc = v0;
-    a0 = *(int*)(char*)a0;
-    v0 = func_00225C40(a0);
-    a0 = *(int*)(char*)(s0 + 4);
-    s0 = v0;
-    v0 = Objective_ResolveReceiver(a0);
-    a2 = *(int*)(char*)loc;
-    a0 = s0;
-    a1 = v0;
-    v0 = cObjectiveMan_SetPartialSuccess(a0, a1, a2);
-    v0 = 0;
-    goto ret;
-ret:
-    return v0;
-}
-
-int Script_cObjectiveMan_SucceedPart(int a0) {
-    int tmp0;
-    int tmp1;
-    int tmp3;
-    int tmp4;
-
-    tmp0 = *(int*)(char*)a0;
-    tmp1 = func_00225C40(tmp0);
-    tmp3 = *(int*)((char*)a0 + 4);
-    tmp4 = Objective_ResolveReceiver(tmp3);
-    cObjectiveMan_SucceedPart(tmp1, tmp4);
+int ObjMan_ScriptStartStage(ScriptArg* args) {
+    volatile int stage = args[1].i;
+    ObjMan_StartStage(ObjMan_ResolveReceiver(args[0].p), stage, 0);
     return 0;
 }
 
-int Script_cObjectiveMan_Succeed(int a0) {
-    int a1, a2, s0, s1, v0;
-
-    s0 = a0;
-    a0 = *(int*)(char*)a0;
-    v0 = func_00225C40(a0);
-    a0 = *(int*)(char*)(s0 + 4);
-    s1 = v0;
-    v0 = Objective_ResolveReceiver(a0);
-    a0 = *(int*)(char*)(s0 + 8);
-    s0 = v0;
-    v0 = GObj_IdentityB(a0);
-    a0 = s1;
-    a1 = s0;
-    a2 = v0;
-    v0 = Objective_Succeed(a0, a1, a2);
-    v0 = 0;
-    goto ret;
-ret:
-    return v0;
+/* Fail(objective, gobj) */
+int Script_cObjectiveMan_Fail(ScriptArg* args) {
+    cObjectiveMan* mgr = ObjMan_ResolveReceiver(args[0].p);
+    Objective_Fail(mgr, Objective_ResolveReceiver(args[1].p), GObj_IdentityB(args[2].i));
+    return 0;
 }
 
-int Script_Objective_Succeed(int a0) {
-    int a1, a2, s0, v0;
-
-    s0 = a0;
-    a0 = *(int*)(char*)a0;
-    v0 = func_00225C40(a0);
-    a0 = *(int*)(char*)(s0 + 4);
-    s0 = v0;
-    v0 = Objective_ResolveReceiver(a0);
-    a0 = s0;
-    a1 = v0;
-    a2 = 0;
-    v0 = Objective_Succeed(a0, a1, a2);
-    v0 = 0;
-    goto ret;
-ret:
-    return v0;
+/* Fail(objective) */
+int Script_Objective_Fail(ScriptArg* args) {
+    cObjectiveMan* mgr = ObjMan_ResolveReceiver(args[0].p);
+    Objective_Fail(mgr, Objective_ResolveReceiver(args[1].p), 0);
+    return 0;
 }
 
-int Script_GetObjective(int a0) {
-    int loc[1];
-    int a1, v0;
+int Script_cObjectiveMan_SetPartialSuccess(ScriptArg* args) {
+    volatile int value = args[2].i;
+    cObjectiveMan* mgr = ObjMan_ResolveReceiver(args[0].p);
+    cObjective* obj = Objective_ResolveReceiver(args[1].p);
+    cObjectiveMan_SetPartialSuccess(mgr, obj, value);
+    return 0;
+}
 
-    v0 = *(int*)(char*)(a0 + 4);
-    *(int*)(char*)loc = v0;
-    a0 = *(int*)(char*)a0;
-    v0 = func_00225C40(a0);
-    a1 = *(int*)(char*)loc;
-    a0 = v0;
-    v0 = ObjMan_GetObjective(a0, a1);
-    a0 = v0;
-    v0 = func_00225770(a0);
-    goto ret;
-ret:
-    return v0;
+int Script_cObjectiveMan_SucceedPart(ScriptArg* args) {
+    cObjectiveMan* mgr = ObjMan_ResolveReceiver(args[0].p);
+    cObjectiveMan_SucceedPart(mgr, Objective_ResolveReceiver(args[1].p));
+    return 0;
+}
+
+/* Succeed(objective, gobj) */
+int Script_cObjectiveMan_Succeed(ScriptArg* args) {
+    cObjectiveMan* mgr = ObjMan_ResolveReceiver(args[0].p);
+    Objective_Succeed(mgr, Objective_ResolveReceiver(args[1].p), GObj_IdentityB(args[2].i));
+    return 0;
+}
+
+/* Succeed(objective) */
+int Script_Objective_Succeed(ScriptArg* args) {
+    cObjectiveMan* mgr = ObjMan_ResolveReceiver(args[0].p);
+    Objective_Succeed(mgr, Objective_ResolveReceiver(args[1].p), 0);
+    return 0;
+}
+
+/* GetObjective(id): null when no objective has that ID. */
+int Script_GetObjective(ScriptArg* args) {
+    volatile int id = args[1].i;
+    return func_00225770(ObjMan_GetObjective(ObjMan_ResolveReceiver(args[0].p), id));
 }

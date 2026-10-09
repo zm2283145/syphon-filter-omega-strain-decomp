@@ -5,11 +5,12 @@
  */
 
 #include "types.h"
+#include "human_types.h"
 
-int func_001A7E40(char* self) {
-    return *(int*)(self + 12948);
+void* Actor_GetEdgeRoot(Actor* actor) {
+    return actor->edgeRoot;
 }
 
-int Actor_GetFloorRoot(char* self) {
-    return *(int*)(self + 12944);
+void* Actor_GetFloorRoot(Actor* actor) {
+    return actor->floorRoot;
 }

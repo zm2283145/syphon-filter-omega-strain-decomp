@@ -1,15 +1,15 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * cObjective virtuals that clear/set the active byte (+0x25).
  */
 
 #include "types.h"
+#include "Objective_types.h"
 
-void cObjective_v07(char* self) {
-    self[37] = 0;
+void cObjective_v07(cObjective* self) {
+    self->active = 0;
 }
 
-void cObjective_v06(int a0) {
-    *(char*)((char*)a0 + 37) = 1;
+void cObjective_v06(cObjective* self) {
+    self->active = 1;
 }

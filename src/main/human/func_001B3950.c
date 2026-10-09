@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-extern void func_00392BF0(int);
+extern void func_00392BF0(void*);
 
-void func_001B3950(int a0) {
-    func_00392BF0(a0);
+void func_001B3950(void* self) {
+    func_00392BF0(self);
 }

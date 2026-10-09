@@ -1,10 +1,9 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Translation unit: npc.cc (container helpers instantiated for cNPC).
  */
 
-#include "types.h"
+#include "npc_types.h"
 
 void func_0014F1C0(Iter* out, PtrVec* v) {
     out->p = v->data + v->count;
@@ -19,14 +18,15 @@ void func_0014F1F0(Iter* out, PtrVec* v) {
     out->p = v->data;
 }
 
-int func_0014F200(int a0) {
-    return (*(int*)((char*)a0 + 8) + (*(int*)((char*)a0 + 4) << 3));
+/* End pointer of a vector of 8-byte elements. */
+int* func_0014F200(PtrVec* v) {
+    return v->data + (v->count << 1);
 }
 
 void func_0014F220(Iter* out, void* self, Iter* src) {
     out->p = src->p;
 }
 
-int func_0014F230(char* self) {
-    return *(int*)(self + 8);
+int* func_0014F230(PtrVec* v) {
+    return v->data;
 }

@@ -5,25 +5,19 @@
  */
 
 #include "types.h"
+#include "human_types.h"
 
-extern char D_004EF038[];
-extern char D_005061D0[];
+/* Network stream cursor shared by message serializers. */
+extern signed char* D_005061D0;
+extern int D_004EF038;
 
-void cNetForceHolsterMsg_v04(int a0) {
-    unsigned char tmp0;
-    int tmp1;
-    int tmp2;
-
-    tmp0 = *(unsigned char*)((char*)a0 + 36);
-    tmp1 = *(int*)D_005061D0;
-    *(char*)((char*)tmp1) = tmp0;
-    tmp2 = *(int*)D_005061D0;
-    *(int*)D_005061D0 = (tmp2 + 1);
+/* Serialize: write the one-byte payload. */
+void cNetForceHolsterMsg_v04(FlagMsg* msg) {
+    *D_005061D0 = msg->value;
+    D_005061D0 = D_005061D0 + 1;
 }
 
+/* Message type id. */
 int cNetForceHolsterMsg_v05(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_004EF038;
-    return tmp0;
+    return D_004EF038;
 }

@@ -6,6 +6,7 @@
 
 #include "types.h"
 
-int History_At(int a0, int a1) {
-    return (*(int*)((char*)a0 + 8) + (a1 << 3));
+/* Address of the 8-byte entry i. */
+char* History_At(PtrVec* v, int i) {
+    return (char*)v->data + (i << 3);
 }

@@ -5,47 +5,40 @@
  */
 
 #include "types.h"
+#include "human_types.h"
 
-void func_001BC2B0(int a0, int a1) {
-    float tmp0;
-    float tmp1;
-    float tmp2;
-    float tmp3;
-    float tmp4;
-    float tmp5;
-    float tmp6;
-    float tmp7;
-    float tmp8;
-    float tmp9;
-    float tmp10;
-    float tmp11;
+/* Build a 4x4 matrix from a 3x4 block; last row becomes (0, 0, 0, 1). */
+void Mtx44_FromMtx34(Mtx44* dst, Mtx34* src) {
+    float m23, m22, m21, m20;
+    float m13, m12, m11, m10;
+    float m03, m02, m01, m00;
 
-    tmp0 = *(float*)((char*)a1 + 44);
-    tmp1 = *(float*)((char*)a1 + 40);
-    tmp2 = *(float*)((char*)a1 + 36);
-    tmp3 = *(float*)((char*)a1 + 32);
-    tmp4 = *(float*)((char*)a1 + 28);
-    tmp5 = *(float*)((char*)a1 + 24);
-    tmp6 = *(float*)((char*)a1 + 20);
-    tmp7 = *(float*)((char*)a1 + 16);
-    tmp8 = *(float*)((char*)a1 + 12);
-    tmp9 = *(float*)((char*)a1 + 8);
-    tmp10 = *(float*)((char*)a1 + 4);
-    tmp11 = *(float*)(char*)a1;
-    *(float*)((char*)a0) = tmp11;
-    *(float*)((char*)a0 + 4) = tmp10;
-    *(float*)((char*)a0 + 8) = tmp9;
-    *(float*)((char*)a0 + 12) = tmp8;
-    *(float*)((char*)a0 + 16) = tmp7;
-    *(float*)((char*)a0 + 20) = tmp6;
-    *(float*)((char*)a0 + 24) = tmp5;
-    *(float*)((char*)a0 + 28) = tmp4;
-    *(float*)((char*)a0 + 32) = tmp3;
-    *(float*)((char*)a0 + 36) = tmp2;
-    *(float*)((char*)a0 + 40) = tmp1;
-    *(float*)((char*)a0 + 44) = tmp0;
-    *(int*)((char*)a0 + 48) = 0;
-    *(int*)((char*)a0 + 52) = 0;
-    *(int*)((char*)a0 + 56) = 0;
-    *(int*)((char*)a0 + 60) = 1065353216;
+    m23 = src->m[2][3];
+    m22 = src->m[2][2];
+    m21 = src->m[2][1];
+    m20 = src->m[2][0];
+    m13 = src->m[1][3];
+    m12 = src->m[1][2];
+    m11 = src->m[1][1];
+    m10 = src->m[1][0];
+    m03 = src->m[0][3];
+    m02 = src->m[0][2];
+    m01 = src->m[0][1];
+    m00 = src->m[0][0];
+    dst->m[0][0] = m00;
+    dst->m[0][1] = m01;
+    dst->m[0][2] = m02;
+    dst->m[0][3] = m03;
+    dst->m[1][0] = m10;
+    dst->m[1][1] = m11;
+    dst->m[1][2] = m12;
+    dst->m[1][3] = m13;
+    dst->m[2][0] = m20;
+    dst->m[2][1] = m21;
+    dst->m[2][2] = m22;
+    dst->m[2][3] = m23;
+    dst->m[3][0] = 0.0f;
+    dst->m[3][1] = 0.0f;
+    dst->m[3][2] = 0.0f;
+    dst->m[3][3] = 1.0f;
 }

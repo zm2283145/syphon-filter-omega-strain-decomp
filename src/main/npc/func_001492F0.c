@@ -1,14 +1,14 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Translation unit: npc.cc (cNPC script commands and vtable methods).
  */
 
-#include "types.h"
+#include "npc_types.h"
 
-void cNPC_v5F(int a0, float f12) {
-    int tmp0;
+/* vtable slot 0x5F: SetViewConeAngle(degrees); stores the half angle in radians. */
+void cNPC_SetViewConeAngle(cNPC* self, float degrees) {
+    NpcAi* ai;
 
-    tmp0 = *(int*)((char*)a0 + 428);
-    *(float*)((char*)tmp0 + 20) = (0.01745329238474369f * (0.5f * f12));
+    ai = self->ai;
+    ai->viewConeHalfAngle = (0.01745329238474369f * (0.5f * degrees));
 }

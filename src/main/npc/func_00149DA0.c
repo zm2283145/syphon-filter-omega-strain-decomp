@@ -1,11 +1,11 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Translation unit: npc.cc (cNPC script commands and vtable methods).
  */
 
-#include "types.h"
+#include "npc_types.h"
 
-void cNPC_v4F(char* self) {
-    *(int*)(self + 100) = 0;
+/* vtable slot 0x4F: ResumeAITravelSpeed (drop the scripted override). */
+void cNPC_ResumeAITravelSpeed(cNPC* self) {
+    self->travelSpeedOverride = 0;
 }

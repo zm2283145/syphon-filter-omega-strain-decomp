@@ -6,18 +6,20 @@
 
 #include "types.h"
 
-extern int func_001B7A20(int);
+extern Rel* func_001B7A20(Rel*);
 
-void func_001B79C0(int a0, int a1) {
-    *(float*)((char*)a0 + 16) = *(float*)(char*)a1;
+void func_001B79C0(char* self, float* value) {
+    *(float*)(self + 16) = *value;
 }
 
-int func_001B79D0(int a0) {
-    return ((*(int*)((char*)a0 + 8) + (*(int*)((char*)a0 + 4) << 3)) + -8);
+/* back(): address of the last 8-byte element. */
+char* func_001B79D0(PtrVec* v) {
+    return (char*)v->data + (v->count << 3) - 8;
 }
 
-int func_001B79F0(int a0) {
-    func_001B7A20(a0);
-    *(char*)((char*)a0 + 12) = 1;
-    return a0;
+/* Clear the three words and set the byte at +0x0C. */
+Rel* func_001B79F0(Rel* r) {
+    func_001B7A20(r);
+    *((char*)r + 12) = 1;
+    return r;
 }

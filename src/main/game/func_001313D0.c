@@ -5,63 +5,40 @@
  */
 
 #include "types.h"
+#include "game_types.h"
 
-extern int List_InsertBefore(int, int, int, int);
-extern int func_00131440(int, int);
+extern ListIter* List_InsertBefore(ListIter* out, LinkList* list, ListIter* pos, int* value);
+extern ListIter* List_PushBack(LinkList* list, int* value);
 extern int func_002426D0(int);
 
-int func_001313D0(int a0, int a1) {
-    int loc[2];
-    int a2, a3, v0;
+/* Inserts *value at the front of the list. */
+ListIter* List_PushFront(LinkList* list, int* value) {
+    ListIter pos;
+    ListIter result;
 
-    a3 = a1;
-    a1 = a0;
-    v0 = *(int*)(char*)(a0 + 8);
-    a2 = (int)loc;
-    *(int*)(char*)loc = v0;
-    a0 = (int)((char*)loc + 4);
-    v0 = List_InsertBefore(a0, a1, a2, a3);
-    goto ret;
-ret:
-    return v0;
+    pos.node = list->first;
+    return List_InsertBefore(&result, list, &pos, value);
 }
 
-int World_RegisterActor(int a0, int a1) {
-    int v0;
-
-    *(int*)(char*)(a0 + 188) = a1;
-    v0 = *(int*)(char*)(a1 + 48);
-    a0 = v0 + 12;
-    v0 = func_002426D0(a0);
-    goto ret;
-ret:
-    return v0;
+/* Stores the actor in world +0xBC and registers actor->+0x30 (+0xC) with func_002426D0. */
+int World_RegisterActor(char* world, char* actor) {
+    *(char**)(world + 0xBC) = actor;
+    return func_002426D0(*(int*)(actor + 0x30) + 12);
 }
 
-void World_RegisterNode(int a0, int a1) {
-    int loc[1];
-    int v0;
+/* Appends node to the list at world +0x9C. */
+void World_RegisterNode(char* world, int node) {
+    int tmp;
 
-    a0 = a0 + 156;
-    *(int*)(char*)loc = a1;
-    a1 = (int)loc;
-    v0 = func_00131440(a0, a1);
-    goto ret;
-ret:;
+    tmp = node;
+    List_PushBack((LinkList*)(world + 0x9C), &tmp);
 }
 
-int func_00131440(int a0, int a1) {
-    int loc[2];
-    int a2, a3, v0;
+/* Inserts *value at the back of the list (before the header node). */
+ListIter* List_PushBack(LinkList* list, int* value) {
+    ListIter pos;
+    ListIter result;
 
-    a3 = a1;
-    v0 = a0 + 4;
-    a1 = a0;
-    *(int*)(char*)loc = v0;
-    a0 = (int)((char*)loc + 4);
-    a2 = (int)loc;
-    v0 = List_InsertBefore(a0, a1, a2, a3);
-    goto ret;
-ret:
-    return v0;
+    pos.node = &list->header;
+    return List_InsertBefore(&result, list, &pos, value);
 }

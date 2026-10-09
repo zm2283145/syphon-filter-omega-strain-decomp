@@ -5,44 +5,27 @@
  */
 
 #include "types.h"
+#include "game_types.h"
 
-int Mtx_SetBasis(int a0, int a1, int a2, int a3) {
-    float tmp0;
-    float tmp1;
-    float tmp2;
-    float tmp3;
-    float tmp4;
-    float tmp5;
-    float tmp6;
-    float tmp7;
-    float tmp8;
-    float tmp9;
-    float tmp10;
-    float tmp11;
+/* Sets the three rows of a 3x4 matrix from three 4-float vectors. */
+Mtx34* Mtx_SetBasis(Mtx34* m, Float4* r0, Float4* r1, Float4* r2) {
+    float w0 = r0->w, z0 = r0->z, y0 = r0->y, x0 = r0->x;
+    float w1, z1, y1, x1;
+    float w2, z2, y2, x2;
 
-    tmp0 = *(float*)((char*)a1 + 12);
-    tmp1 = *(float*)((char*)a1 + 8);
-    tmp2 = *(float*)((char*)a1 + 4);
-    tmp3 = *(float*)(char*)a1;
-    *(float*)((char*)a0) = tmp3;
-    *(float*)((char*)a0 + 4) = tmp2;
-    *(float*)((char*)a0 + 8) = tmp1;
-    *(float*)((char*)a0 + 12) = tmp0;
-    tmp4 = *(float*)((char*)a2 + 12);
-    tmp5 = *(float*)((char*)a2 + 8);
-    tmp6 = *(float*)((char*)a2 + 4);
-    tmp7 = *(float*)(char*)a2;
-    *(float*)((char*)a0 + 16) = tmp7;
-    *(float*)((char*)a0 + 20) = tmp6;
-    *(float*)((char*)a0 + 24) = tmp5;
-    *(float*)((char*)a0 + 28) = tmp4;
-    tmp8 = *(float*)((char*)a3 + 12);
-    tmp9 = *(float*)((char*)a3 + 8);
-    tmp10 = *(float*)((char*)a3 + 4);
-    tmp11 = *(float*)(char*)a3;
-    *(float*)((char*)a0 + 32) = tmp11;
-    *(float*)((char*)a0 + 36) = tmp10;
-    *(float*)((char*)a0 + 40) = tmp9;
-    *(float*)((char*)a0 + 44) = tmp8;
-    return a0;
+    m->row[0].x = x0;
+    m->row[0].y = y0;
+    m->row[0].z = z0;
+    m->row[0].w = w0;
+    w1 = r1->w; z1 = r1->z; y1 = r1->y; x1 = r1->x;
+    m->row[1].x = x1;
+    m->row[1].y = y1;
+    m->row[1].z = z1;
+    m->row[1].w = w1;
+    w2 = r2->w; z2 = r2->z; y2 = r2->y; x2 = r2->x;
+    m->row[2].x = x2;
+    m->row[2].y = y2;
+    m->row[2].z = z2;
+    m->row[2].w = w2;
+    return m;
 }

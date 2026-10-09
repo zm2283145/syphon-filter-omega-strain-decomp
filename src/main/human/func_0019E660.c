@@ -5,8 +5,9 @@
  */
 
 #include "types.h"
+#include "human_types.h"
 
-int func_0019E660(int a0, float f12) {
-    *(float*)((char*)a0 + 12) = f12;
-    return a0;
+Vec4* func_0019E660(Vec4* v, float w) {
+    v->w = w;
+    return v;
 }

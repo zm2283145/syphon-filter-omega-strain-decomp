@@ -5,29 +5,23 @@
  */
 
 #include "types.h"
+#include "human_types.h"
 
-extern char D_005721C8[];
+extern unsigned char D_005721C8;
 
-unsigned char func_001B8740(unsigned char* self) {
-    return self[13220];
+unsigned char func_001B8740(Actor* actor) {
+    return actor->unk33A4;
 }
 
-void func_001B8750(int a0, int a1) {
-    int v1;
-    int cond;
+/* Set unk33A4 and mirror it to the linked object when the global gate is on. */
+void func_001B8750(Actor* actor, int value) {
+    ActorLink3584* link;
 
-    *(char*)(char*)(a0 + 13220) = a1;
-    v1 = *(unsigned char*)(char*)D_005721C8;
-    cond = v1 == 0;
-    if (cond) goto L001B8780;
-    v1 = *(unsigned char*)(char*)(a0 + 20);
-    cond = v1 == 0;
-    if (cond) goto L001B8780;
-    v1 = *(int*)(char*)(a0 + 13700);
-    cond = v1 == 0;
-    if (cond) goto L001B8780;
-    *(char*)(char*)(v1 + 52) = a1;
-L001B8780:;
-    goto ret;
-ret:;
+    actor->unk33A4 = value;
+    if (D_005721C8 != 0 && actor->unk14 != 0) {
+        link = actor->unk3584;
+        if (link != 0) {
+            link->unk34 = value;
+        }
+    }
 }

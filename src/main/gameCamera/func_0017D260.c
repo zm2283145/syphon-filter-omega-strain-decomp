@@ -6,6 +6,7 @@
 
 #include "types.h"
 
-int func_0017D260(int a0, int a1) {
-    return (a0 + (a1 << 5));
+/* Address of 32-byte element i. */
+char* func_0017D260(char* base, int i) {
+    return base + (i << 5);
 }

@@ -6,10 +6,11 @@
 
 #include "types.h"
 
-extern int func_001B6A90(int);
+extern Rel* func_001B6A90(Rel*);
 
-int func_001B6A60(int a0) {
-    func_001B6A90(a0);
-    *(char*)((char*)a0 + 12) = 1;
-    return a0;
+/* Clear the three words and set the byte at +0x0C. */
+Rel* func_001B6A60(Rel* r) {
+    func_001B6A90(r);
+    *((char*)r + 12) = 1;
+    return r;
 }

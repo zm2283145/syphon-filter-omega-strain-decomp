@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_001960A0(int a0, int a1) {
-    return ((unsigned int)(0) < (unsigned int)((*(int*)(char*)a0 ^ *(int*)(char*)a1)));
+int func_001960A0(Iter* a, Iter* b) {
+    return a->p != b->p;
 }

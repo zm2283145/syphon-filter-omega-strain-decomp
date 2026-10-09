@@ -15,8 +15,8 @@ void func_0018A6F0(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
-int func_0018A700(int a0, int a1) {
-    *(int*)((char*)a0) = 0;
-    *(int*)((char*)a0 + 4) = a1;
-    return a0;
+int* func_0018A700(int* pair, int second) {
+    pair[0] = 0;
+    pair[1] = second;
+    return pair;
 }

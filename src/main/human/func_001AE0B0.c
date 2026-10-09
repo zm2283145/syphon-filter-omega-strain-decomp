@@ -5,7 +5,8 @@
  */
 
 #include "types.h"
+#include "human_types.h"
 
-int func_001AE0B0(int a0, int a1) {
-    return *(unsigned char*)((char*)(((a1 & 255) << 1) + a0) + 978);
+unsigned char func_001AE0B0(unsigned char* self, int i) {
+    return self[((i & 255) << 1) + 978];
 }

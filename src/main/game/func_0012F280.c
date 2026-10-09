@@ -26,7 +26,8 @@ int func_0012F2C0(char* self) {
     return *(int*)(self + 220);
 }
 
-int func_0012F2D0(int a0) {
-    *(char*)((char*)a0) = 0;
-    return a0;
+/* Empties a string buffer. */
+char* func_0012F2D0(char* str) {
+    str[0] = 0;
+    return str;
 }

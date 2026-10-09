@@ -5,10 +5,11 @@
  */
 
 #include "types.h"
+#include "human_types.h"
 
-extern char D_004DA930[];
-extern char D_00542B60[];
-extern int Event_Construct(int, int);
+extern char D_004DA930[];   /* AnimEvent vtable */
+extern char D_00542B60[];   /* AnimEvent message type */
+extern Message* Event_Construct(Message*, void*);
 
 float func_0018A2C0(char* self) {
     return *(float*)(self + 156);
@@ -26,21 +27,21 @@ signed char func_0018A2F0(signed char* self) {
     return self[72];
 }
 
-int AnimEvent_Construct(int a0) {
-    Event_Construct(a0, (int)D_00542B60);
-    *(int*)((char*)a0) = (int)D_004DA930;
-    *(int*)((char*)a0 + 36) = 0;
-    *(char*)((char*)a0 + 40) = 0;
-    *(int*)((char*)a0 + 44) = 0;
-    *(char*)((char*)a0 + 48) = 0;
-    *(int*)((char*)a0 + 52) = 0;
-    return a0;
+AnimEvent* AnimEvent_Construct(AnimEvent* self) {
+    Event_Construct(&self->base, D_00542B60);
+    self->base.vtable = D_004DA930;
+    self->unk24 = 0;
+    self->unk28 = 0;
+    self->unk2C = 0;
+    self->unk30 = 0;
+    self->unk34 = 0.0f;
+    return self;
 }
 
-int func_0018A350(int a0, int a1) {
-    *(float*)((char*)a0) = *(float*)(char*)a1;
-    *(float*)((char*)a0 + 4) = *(float*)((char*)a1 + 4);
-    *(float*)((char*)a0 + 8) = *(float*)((char*)a1 + 8);
-    *(float*)((char*)a0 + 12) = *(float*)((char*)a1 + 12);
-    return a0;
+Vec4* Vec4_Copy_18A350(Vec4* dst, Vec4* src) {
+    dst->x = src->x;
+    dst->y = src->y;
+    dst->z = src->z;
+    dst->w = src->w;
+    return dst;
 }

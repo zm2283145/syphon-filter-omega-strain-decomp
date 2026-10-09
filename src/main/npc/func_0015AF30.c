@@ -1,13 +1,12 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Translation unit: npc.cc (container helpers instantiated for cNPC).
  */
 
-#include "types.h"
+#include "npc_types.h"
 
-void func_0015AF30(int a0, int a1) {
-    *(int*)((char*)a0) = *(int*)(char*)a1;
+void func_0015AF30(Word* dst, Word* src) {
+    dst->value = src->value;
 }
 
 Word* func_0015AF40(Word* dst, Word* src) {

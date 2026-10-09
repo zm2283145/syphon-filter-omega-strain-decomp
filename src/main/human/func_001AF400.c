@@ -14,13 +14,12 @@ int func_001AF410(char* self) {
     return *(int*)(self + 0);
 }
 
-void func_001AF420(int a0, int a1) {
-    int tmp0;
-    int tmp1;
+/* end() over 464-byte nodes. */
+void func_001AF420(Iter16* out, PtrVec* v) {
+    int count = v->count;
+    char* data = (char*)v->data;
 
-    tmp0 = *(int*)((char*)a1 + 4);
-    tmp1 = *(int*)((char*)a1 + 8);
-    *(int*)((char*)a0) = (tmp1 + (tmp0 * 464));
+    out->p = data + count * 464;
 }
 
 void func_001AF450(Iter* out, PtrVec* v) {

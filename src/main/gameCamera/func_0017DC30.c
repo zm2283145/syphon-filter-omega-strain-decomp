@@ -10,8 +10,9 @@ void* func_0017DC30(void* self) {
     return self;
 }
 
-int func_0017DC40(int a0, int a1) {
-    return (a0 + (a1 << 5));
+/* Address of 32-byte element i. */
+char* func_0017DC40(char* base, int i) {
+    return base + (i << 5);
 }
 
 float func_0017DC50(char* self) {

@@ -1,13 +1,12 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Translation unit: npc.cc (cNPC script commands and vtable methods).
  */
 
-#include "types.h"
+#include "npc_types.h"
 
 extern char D_0055C9F0[];
 
-int func_0014B210(void) {
-    return (int)D_0055C9F0;
+void* func_0014B210(void) {
+    return D_0055C9F0;
 }

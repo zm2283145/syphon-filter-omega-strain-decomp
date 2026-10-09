@@ -10,9 +10,9 @@ void* func_0019F420(void* self) {
     return self;
 }
 
-int Skeleton_NodeAt(int a0, int a1) {
-    int tmp0;
+/* Address of 464-byte skeleton node i. */
+char* Skeleton_NodeAt(PtrVec* v, int i) {
+    char* data = (char*)v->data;
 
-    tmp0 = *(int*)((char*)a0 + 8);
-    return (tmp0 + (a1 * 464));
+    return data + i * 464;
 }

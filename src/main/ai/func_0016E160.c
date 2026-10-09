@@ -1,11 +1,15 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Copies the second word of a pair over the first.
  */
 
 #include "types.h"
 
-void func_0016E160(int a0) {
-    *(int*)((char*)a0) = *(int*)((char*)a0 + 4);
+typedef struct WordPair {
+    int first;
+    int second;
+} WordPair;
+
+void func_0016E160(WordPair* p) {
+    p->first = p->second;
 }

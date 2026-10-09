@@ -6,13 +6,13 @@
 
 #include "types.h"
 
-int func_0019F7C0(int a0, int a1) {
-    *(int*)((char*)a0) = *(int*)(char*)a1;
-    *(int*)((char*)a0 + 4) = *(int*)((char*)a1 + 4);
-    return a0;
+int* func_0019F7C0(int* dst, int* src) {
+    dst[0] = src[0];
+    dst[1] = src[1];
+    return dst;
 }
 
-void func_0019F7E0(int a0) {
-    *(int*)((char*)a0 + 12) = 0;
-    *(int*)((char*)a0 + 16) = 0;
+void func_0019F7E0(char* self) {
+    *(int*)(self + 12) = 0;
+    *(int*)(self + 16) = 0;
 }

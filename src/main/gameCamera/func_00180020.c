@@ -6,12 +6,13 @@
 
 #include "types.h"
 
-void func_00180020(int a0, int a1) {
-    *(float*)((char*)a0 + 4) = (*(float*)((char*)a0 + 4) + *(float*)(char*)a1);
-    *(float*)((char*)a0 + 8) = (*(float*)((char*)a0 + 8) + *(float*)(char*)a1);
-    *(float*)((char*)a0 + 16) = (*(float*)((char*)a0 + 16) + *(float*)(char*)a1);
-    *(float*)((char*)a0 + 24) = (*(float*)((char*)a0 + 24) + *(float*)(char*)a1);
-    *(float*)((char*)a0 + 32) = (*(float*)((char*)a0 + 32) + *(float*)(char*)a1);
+/* Adds *delta to the floats at +0x04, +0x08, +0x10, +0x18 and +0x20. */
+void func_00180020(char* self, float* delta) {
+    *(float*)(self + 4) = *(float*)(self + 4) + *delta;
+    *(float*)(self + 8) = *(float*)(self + 8) + *delta;
+    *(float*)(self + 16) = *(float*)(self + 16) + *delta;
+    *(float*)(self + 24) = *(float*)(self + 24) + *delta;
+    *(float*)(self + 32) = *(float*)(self + 32) + *delta;
 }
 
 float func_00180080(void) {

@@ -6,28 +6,30 @@
 
 #include "types.h"
 
-extern char D_005061D0[];
+extern signed char* D_005061D0; /* read cursor into a byte stream */
 
 int func_0012F370(void) {
     return 0;
 }
 
-void func_0012F380(int a0) {
-    int tmp0;
-    signed char tmp1;
+/* Reads one byte from the stream and stores it as a bool (nonzero -> 1). */
+void Stream_ReadBool(char* out) {
+    signed char* p;
+    signed char b;
 
-    tmp0 = *(int*)D_005061D0;
-    tmp1 = *(signed char*)(char*)tmp0;
-    *(int*)D_005061D0 = (tmp0 + 1);
-    *(char*)((char*)a0) = ((unsigned int)(0) < (unsigned int)(tmp1));
+    p = D_005061D0;
+    b = *p;
+    D_005061D0 = p + 1;
+    *out = b != 0;
 }
 
-void func_0012F3B0(int a0) {
-    int tmp0;
-    signed char tmp1;
+/* Reads one byte from the stream. */
+void Stream_ReadByte(char* out) {
+    signed char* p;
+    signed char b;
 
-    tmp0 = *(int*)D_005061D0;
-    tmp1 = *(signed char*)(char*)tmp0;
-    *(int*)D_005061D0 = (tmp0 + 1);
-    *(char*)((char*)a0) = tmp1;
+    p = D_005061D0;
+    b = *p;
+    D_005061D0 = p + 1;
+    *out = b;
 }

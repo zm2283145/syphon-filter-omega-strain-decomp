@@ -1,16 +1,17 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Translation unit: npc.cc (cNPC script commands and vtable methods).
  */
 
-#include "types.h"
+#include "npc_types.h"
 
+/* vtable slot 0x14. */
 int cNPC_v14(void) {
     return 1;
 }
 
-void cNPC_v47(int a0) {
-    *(char*)((char*)a0 + 318) = 1;
-    *(int*)((char*)a0 + 280) = 0;
+/* vtable slot 0x47. */
+void cNPC_v47(cNPC* self) {
+    self->unk13E = 1;
+    self->unk118 = 0;
 }

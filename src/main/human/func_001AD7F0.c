@@ -5,55 +5,36 @@
  */
 
 #include "types.h"
+#include "human_types.h"
 
-extern char D_004DCD70[];
-extern char D_004DFD80[];
-extern char D_004E0840[];
-extern int Event_Construct(int, int);
+extern char D_004DCD70[];   /* cAIGOBJMsg vtable */
+extern char D_004DFD80[];   /* Message base vtable */
+extern char D_004E0840[];   /* ArgMsg vtable */
+extern Message* Event_Construct(Message*, void*);
 
-int cMessage_ctor3(int a0, int a1) {
-    int tmp0;
-    int tmp1;
-    int tmp2;
-    int tmp3;
-    int tmp4;
-    int tmp5;
-    int tmp6;
-    signed char tmp7;
-    int tmp8;
-    signed char tmp9;
-
-    *(int*)((char*)a0) = (int)D_004DFD80;
-    tmp0 = *(int*)((char*)a1 + 4);
-    *(int*)((char*)a0 + 4) = tmp0;
-    tmp1 = *(int*)((char*)a1 + 8);
-    *(int*)((char*)a0 + 8) = tmp1;
-    tmp2 = *(int*)((char*)a1 + 12);
-    *(int*)((char*)a0 + 12) = tmp2;
-    tmp3 = *(int*)((char*)a1 + 16);
-    *(int*)((char*)a0 + 16) = tmp3;
-    tmp4 = *(int*)((char*)a1 + 20);
-    *(int*)((char*)a0 + 20) = tmp4;
-    tmp5 = *(int*)((char*)a1 + 24);
-    *(int*)((char*)a0 + 24) = tmp5;
-    tmp6 = *(int*)((char*)a1 + 28);
-    *(int*)((char*)a0 + 28) = tmp6;
-    tmp7 = *(signed char*)((char*)a1 + 32);
-    *(char*)((char*)a0 + 32) = tmp7;
-    *(int*)((char*)a0) = (int)D_004E0840;
-    tmp8 = *(int*)((char*)a1 + 36);
-    *(int*)((char*)a0 + 36) = tmp8;
-    tmp9 = *(signed char*)((char*)a1 + 40);
-    *(char*)((char*)a0 + 40) = tmp9;
-    return a0;
+/* Copy constructor for a message with an int and a byte argument. */
+ArgMsg* cMessage_ctor3(ArgMsg* self, ArgMsg* src) {
+    self->base.vtable = D_004DFD80;
+    self->base.unk04 = src->base.unk04;
+    self->base.unk08 = src->base.unk08;
+    self->base.unk0C = src->base.unk0C;
+    self->base.unk10 = src->base.unk10;
+    self->base.unk14 = src->base.unk14;
+    self->base.unk18 = src->base.unk18;
+    self->base.unk1C = src->base.unk1C;
+    self->base.unk20 = src->base.unk20;
+    self->base.vtable = D_004E0840;
+    self->arg0 = src->arg0;
+    self->arg1 = src->arg1;
+    return self;
 }
 
-int cAIGOBJMsg_ctor(int a0, int a1, int a2) {
-    Event_Construct(a0, a1);
-    *(int*)((char*)a0) = (int)D_004DCD70;
-    *(int*)((char*)a0 + 36) = a2;
-    *(char*)((char*)a0 + 32) = 2;
-    return a0;
+ArgMsg* cAIGOBJMsg_ctor(ArgMsg* self, void* type, int arg) {
+    Event_Construct(&self->base, type);
+    self->base.vtable = D_004DCD70;
+    self->arg0 = arg;
+    self->base.unk20 = 2;
+    return self;
 }
 
 int func_001AD8B0(char* self) {

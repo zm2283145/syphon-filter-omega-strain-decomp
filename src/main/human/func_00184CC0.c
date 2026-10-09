@@ -5,11 +5,12 @@
  */
 
 #include "types.h"
+#include "human_types.h"
 
 int func_00184CC0(void) {
     return 1;
 }
 
-unsigned char func_00184CD0(unsigned char* self) {
-    return self[13720];
+unsigned char func_00184CD0(Actor* actor) {
+    return actor->unk3598;
 }

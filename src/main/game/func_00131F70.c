@@ -5,56 +5,39 @@
  */
 
 #include "types.h"
+#include "game_types.h"
 
-int func_00131F70(int a0, int a1) {
-    float tmp0;
-    float tmp1;
-    float tmp2;
-    float tmp3;
+/* Sets matrix row 2. */
+Mtx34* Mtx_SetRow2(Mtx34* m, Float4* v) {
+    float w = v->w, z = v->z, y = v->y, x = v->x;
 
-    tmp0 = *(float*)((char*)a1 + 12);
-    tmp1 = *(float*)((char*)a1 + 8);
-    tmp2 = *(float*)((char*)a1 + 4);
-    tmp3 = *(float*)(char*)a1;
-    *(float*)((char*)a0 + 32) = tmp3;
-    *(float*)((char*)a0 + 36) = tmp2;
-    *(float*)((char*)a0 + 40) = tmp1;
-    *(float*)((char*)a0 + 44) = tmp0;
-    return a0;
+    m->row[2].x = x;
+    m->row[2].y = y;
+    m->row[2].z = z;
+    m->row[2].w = w;
+    return m;
 }
 
-int func_00131FA0(int a0, int a1) {
-    float tmp0;
-    float tmp1;
-    float tmp2;
-    float tmp3;
+/* Sets matrix row 1. */
+Mtx34* Mtx_SetRow1(Mtx34* m, Float4* v) {
+    float w = v->w, z = v->z, y = v->y, x = v->x;
 
-    tmp0 = *(float*)((char*)a1 + 12);
-    tmp1 = *(float*)((char*)a1 + 8);
-    tmp2 = *(float*)((char*)a1 + 4);
-    tmp3 = *(float*)(char*)a1;
-    *(float*)((char*)a0 + 16) = tmp3;
-    *(float*)((char*)a0 + 20) = tmp2;
-    *(float*)((char*)a0 + 24) = tmp1;
-    *(float*)((char*)a0 + 28) = tmp0;
-    return a0;
+    m->row[1].x = x;
+    m->row[1].y = y;
+    m->row[1].z = z;
+    m->row[1].w = w;
+    return m;
 }
 
-int func_00131FD0(int a0, int a1) {
-    float tmp0;
-    float tmp1;
-    float tmp2;
-    float tmp3;
+/* Sets matrix row 0. */
+Mtx34* Mtx_SetRow0(Mtx34* m, Float4* v) {
+    float w = v->w, z = v->z, y = v->y, x = v->x;
 
-    tmp0 = *(float*)((char*)a1 + 12);
-    tmp1 = *(float*)((char*)a1 + 8);
-    tmp2 = *(float*)((char*)a1 + 4);
-    tmp3 = *(float*)(char*)a1;
-    *(float*)((char*)a0) = tmp3;
-    *(float*)((char*)a0 + 4) = tmp2;
-    *(float*)((char*)a0 + 8) = tmp1;
-    *(float*)((char*)a0 + 12) = tmp0;
-    return a0;
+    m->row[0].x = x;
+    m->row[0].y = y;
+    m->row[0].z = z;
+    m->row[0].w = w;
+    return m;
 }
 
 Vec4* func_00132000(Vec4* v, float x, float y, float z, float w) {

@@ -5,13 +5,14 @@
  */
 
 #include "types.h"
+#include "human_types.h"
 
-extern int Curve_Bind(int, int);
-extern int Curve_InitConstant(int, int, int, float);
-extern char D_0048A1B8[];
-extern char D_0048A1C0[];
-extern char D_004DA380[];
-extern char D_004DA7D0[];
+extern int Curve_Bind(void* binding, CurveSegment* segment);
+extern int Curve_InitConstant(CurveSegment*, int, int, float);
+extern float D_0048A1B8;    /* 0.0f */
+extern float D_0048A1C0;
+extern char D_004DA380[];   /* CurveChannel base vtable */
+extern char D_004DA7D0[];   /* AngleCurve vtable */
 
 Rel* func_001B7A20(Rel* r) {
     r->a = 0;
@@ -20,26 +21,18 @@ Rel* func_001B7A20(Rel* r) {
     return r;
 }
 
-int AngleCurve_Construct(int a0) {
-    float tmp0;
-    float tmp1;
-    float tmp2;
-    float tmp3;
-
-    *(int*)((char*)a0) = (int)D_004DA380;
-    tmp0 = *(float*)D_0048A1B8;
-    *(float*)((char*)a0 + 4) = tmp0;
-    tmp1 = *(float*)D_0048A1B8;
-    *(float*)((char*)a0 + 8) = tmp1;
-    tmp2 = *(float*)D_0048A1C0;
-    *(float*)((char*)a0 + 12) = tmp2;
-    tmp3 = *(float*)D_0048A1B8;
-    *(float*)((char*)a0 + 16) = tmp3;
-    *(int*)((char*)a0 + 20) = 0;
-    Curve_InitConstant((a0 + 24), (int)D_0048A1B8, (int)D_0048A1C0, 0.0f);
-    Curve_Bind((a0 + 48), (a0 + 24));
-    *(int*)((char*)a0) = (int)D_004DA7D0;
-    return a0;
+/* Scalar angle curve constructor (actor member +0x3050). */
+CurveChannel* AngleCurve_Construct(CurveChannel* self) {
+    self->vtable = D_004DA380;
+    self->previous = D_0048A1B8;
+    self->current = D_0048A1B8;
+    self->target = D_0048A1C0;
+    self->rate = D_0048A1B8;
+    self->damping = 0.0f;
+    Curve_InitConstant(&self->segment, (int)&D_0048A1B8, (int)&D_0048A1C0, 0.0f);
+    Curve_Bind(self->binding, &self->segment);
+    self->vtable = D_004DA7D0;
+    return self;
 }
 
 Rel* func_001B7AE0(Rel* r) {

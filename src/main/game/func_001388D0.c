@@ -6,11 +6,9 @@
 
 #include "types.h"
 
-extern char D_004EA0A0[];
+extern int D_004EA0A0;
 
+/* Returns the value of global D_004EA0A0. */
 int cNetAgentUpdateMsg_v05(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_004EA0A0;
-    return tmp0;
+    return D_004EA0A0;
 }

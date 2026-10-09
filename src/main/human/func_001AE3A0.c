@@ -5,7 +5,8 @@
  */
 
 #include "types.h"
+#include "human_types.h"
 
-int func_001AE3A0(char* self) {
-    return *(int*)(self + 12944);
+void* Actor_GetFloorRoot2(Actor* actor) {
+    return actor->floorRoot;
 }

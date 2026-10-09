@@ -5,8 +5,14 @@
  */
 
 #include "types.h"
+#include "human_types.h"
 
-extern int func_001BE960(int, int, int);
+/* 24-byte iterator returned by the lookup at 0x001BE960. */
+typedef struct Iter24 {
+    int w[6];
+} Iter24;
+
+extern int func_001BE960(Iter24*, char*, int);
 
 void* func_00198BC0(char* self) {
     return self + 232;
@@ -16,50 +22,29 @@ int func_00198BD0(char* self) {
     return *(int*)(self + 16);
 }
 
-void func_00198BE0(int a0, int a1) {
-    int loc[8];
-    int a2, s0, v0, v1;
+/* Lookup using the key at src+0x14; copy the resulting iterator to out. */
+void func_00198BE0(Iter24* out, char* src) {
+    Iter24 it;
 
-    a2 = *(int*)(char*)(a1 + 20);
-    s0 = a0;
-    a0 = (int)loc;
-    v0 = func_001BE960(a0, a1, a2);
-    v1 = *(int*)(char*)loc;
-    *(int*)(char*)s0 = v1;
-    v1 = *(int*)((char*)loc + 4);
-    *(int*)(char*)(s0 + 4) = v1;
-    v1 = *(int*)((char*)loc + 8);
-    *(int*)(char*)(s0 + 8) = v1;
-    v1 = *(int*)((char*)loc + 12);
-    *(int*)(char*)(s0 + 12) = v1;
-    v1 = *(int*)((char*)loc + 16);
-    *(int*)(char*)(s0 + 16) = v1;
-    v1 = *(int*)((char*)loc + 20);
-    *(int*)(char*)(s0 + 20) = v1;
-    goto ret;
-ret:;
+    func_001BE960(&it, src, *(int*)(src + 20));
+    out->w[0] = it.w[0];
+    out->w[1] = it.w[1];
+    out->w[2] = it.w[2];
+    out->w[3] = it.w[3];
+    out->w[4] = it.w[4];
+    out->w[5] = it.w[5];
 }
 
-void func_00198C40(int a0) {
-    int loc[8];
-    int a1, a2, s0, v0, v1;
+/* Same lookup with key 0. */
+void func_00198C40(Iter24* out) {
+    Iter24 it;
+    char* src;
 
-    a2 = 0;
-    s0 = a0;
-    a0 = (int)loc;
-    v0 = func_001BE960(a0, a1, a2);
-    v1 = *(int*)(char*)loc;
-    *(int*)(char*)s0 = v1;
-    v1 = *(int*)((char*)loc + 4);
-    *(int*)(char*)(s0 + 4) = v1;
-    v1 = *(int*)((char*)loc + 8);
-    *(int*)(char*)(s0 + 8) = v1;
-    v1 = *(int*)((char*)loc + 12);
-    *(int*)(char*)(s0 + 12) = v1;
-    v1 = *(int*)((char*)loc + 16);
-    *(int*)(char*)(s0 + 16) = v1;
-    v1 = *(int*)((char*)loc + 20);
-    *(int*)(char*)(s0 + 20) = v1;
-    goto ret;
-ret:;
+    func_001BE960(&it, src, 0);
+    out->w[0] = it.w[0];
+    out->w[1] = it.w[1];
+    out->w[2] = it.w[2];
+    out->w[3] = it.w[3];
+    out->w[4] = it.w[4];
+    out->w[5] = it.w[5];
 }

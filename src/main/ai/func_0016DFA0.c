@@ -1,21 +1,23 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Initializes a few fields of an AI state record.
  */
 
 #include "types.h"
 
-extern char D_0053834C[];
-extern char D_005383C8[];
+extern char D_0053834C[]; /* float */
+extern char D_005383C8[]; /* pointer */
 
-void func_0016DFA0(int a0) {
-    float tmp0;
-    int tmp1;
+typedef struct AIStateInit {
+    char pad00[0x10];
+    float unk10;  /* 0x10 */
+    int unk14;    /* 0x14: written as the bit pattern of pi/4 */
+    char pad18[0x38];
+    int unk50;    /* 0x50 */
+} AIStateInit;
 
-    *(int*)((char*)a0 + 20) = 1061752795;
-    tmp0 = *(float*)D_0053834C;
-    *(float*)((char*)a0 + 16) = tmp0;
-    tmp1 = *(int*)D_005383C8;
-    *(int*)((char*)a0 + 80) = (tmp1 + 20);
+void func_0016DFA0(AIStateInit* self) {
+    self->unk14 = 0x3F490FDB; /* 0.7853982f */
+    self->unk10 = *(float*)D_0053834C;
+    self->unk50 = *(int*)D_005383C8 + 20;
 }

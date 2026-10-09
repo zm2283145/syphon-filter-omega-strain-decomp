@@ -5,20 +5,14 @@
  */
 
 #include "types.h"
+#include "human_types.h"
 
 void* func_001AE140(char* self) {
     return self + 96;
 }
 
-void func_001AE150(int a0, int a1) {
-    int v1;
-
-    a1 = a1 & 255;
-    v1 = a1 << 3;
-    v1 = v1 - a1;
-    v1 = v1 << 4;
-    v1 = v1 + a0;
-    *(char*)(char*)(v1 + 933) = 0;
-    goto ret;
-ret:;
+/* Clear byte +0x3A5 of the 0x70-byte record i. */
+void func_001AE150(char* self, int i) {
+    i = i & 255;
+    self[(((i << 3) - i) << 4) + 933] = 0;
 }

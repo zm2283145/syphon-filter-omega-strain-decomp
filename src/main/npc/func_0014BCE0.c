@@ -1,15 +1,15 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Translation unit: npc.cc (cNPC script commands and vtable methods).
  */
 
-#include "types.h"
+#include "npc_types.h"
 
-float cNPC_v59(int a0, float f12) {
-    float tmp0;
+/* vtable slot 0x59: SetFiringThreshold; returns the previous value. */
+float cNPC_SetFiringThreshold(cNPC* self, float threshold) {
+    float old;
 
-    tmp0 = *(float*)((char*)a0 + 120);
-    *(float*)((char*)a0 + 120) = f12;
-    return tmp0;
+    old = self->firingThreshold;
+    self->firingThreshold = threshold;
+    return old;
 }

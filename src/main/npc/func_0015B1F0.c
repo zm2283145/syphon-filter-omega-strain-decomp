@@ -1,25 +1,16 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Translation unit: npc.cc (container helpers instantiated for cNPC).
  */
 
-#include "types.h"
+#include "npc_types.h"
 
-extern int List_InsertBefore(int, int, int, int);
+extern Iter* List_InsertBefore(Iter* out, Tree* t, Iter* hint, int value);
 
-int func_0015B1F0(int a0, int a1) {
-    int loc[2];
-    int a2, a3, v0;
+/* map insert(value): inserts with an end() hint, result iterator in out[1]. */
+Iter* func_0015B1F0(Tree* t, int value) {
+    Iter it[2];
 
-    a3 = a1;
-    v0 = a0 + 4;
-    a1 = a0;
-    *(int*)(char*)loc = v0;
-    a0 = (int)((char*)loc + 4);
-    a2 = (int)loc;
-    v0 = List_InsertBefore(a0, a1, a2, a3);
-    goto ret;
-ret:
-    return v0;
+    it[0].p = &t->header;
+    return List_InsertBefore(&it[1], t, &it[0], value);
 }

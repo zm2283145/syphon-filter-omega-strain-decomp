@@ -6,11 +6,9 @@
 
 #include "types.h"
 
-extern char D_004EE938[];
+extern int D_004EE938;
 
+/* Returns the value of global D_004EE938. */
 int cHumanSeenMsg_v05(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_004EE938;
-    return tmp0;
+    return D_004EE938;
 }

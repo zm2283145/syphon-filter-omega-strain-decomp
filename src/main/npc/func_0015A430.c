@@ -1,11 +1,11 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Translation unit: npc.cc (cNPC script commands and vtable methods).
  */
 
-#include "types.h"
+#include "npc_types.h"
 
-int func_0015A430(int a0) {
-    return ((unsigned int)((*(unsigned char*)((char*)a0 + 36) ^ 3)) < (unsigned int)(1));
+/* True when the message's mode byte is 3. */
+int func_0015A430(NpcAiMsg* msg) {
+    return (unsigned int)(msg->aiMode ^ 3) < 1U;
 }

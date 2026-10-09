@@ -5,11 +5,13 @@
  */
 
 #include "types.h"
+#include "human_types.h"
 
-extern void Tree_Compare(int, int, int);
+extern void Tree_Compare(int*, int, int);
 
-int func_0018C700(int a0) {
-    return (*(int*)(char*)a0 + 64);
+/* Tree iterator dereference: value stored at node +0x40. */
+char* func_0018C700(Iter* it) {
+    return (char*)it->p + 64;
 }
 
 int func_0018C710(Iter* a, Iter* b) {
@@ -20,15 +22,11 @@ void func_0018C730(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
-void func_0018C740(int a0) {
-    int loc[1];
-    int a1, a2, s0, v1;
+/* Tree lookup wrapper returning the found iterator through out. */
+void func_0018C740(int* out) {
+    int it[1];
+    int a1, a2;
 
-    s0 = a0;
-    a0 = (int)loc;
-    Tree_Compare(a0, a1, a2);
-    v1 = *(int*)(char*)loc;
-    *(int*)(char*)s0 = v1;
-    goto ret;
-ret:;
+    Tree_Compare(it, a1, a2);
+    *out = it[0];
 }

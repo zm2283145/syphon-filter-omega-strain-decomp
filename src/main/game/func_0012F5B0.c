@@ -5,25 +5,27 @@
  */
 
 #include "types.h"
+#include "game_types.h"
 
-extern int func_00129A70(int, int, int);
+extern int func_00129A70(char* dst, const char* src, int n); /* bounded string copy */
 
-int func_0012F5B0(int a0, int a1) {
-    return *(int*)((char*)((a1 << 2) + a0) + 304);
+int func_0012F5B0(NameSlotTable* t, int i) {
+    return t->values[i];
 }
 
-void func_0012F5C0(int a0, int a1, int a2) {
-    *(int*)((char*)((a1 << 2) + a0) + 304) = a2;
+void func_0012F5C0(NameSlotTable* t, int i, int value) {
+    t->values[i] = value;
 }
 
-int func_0012F5D0(int a0, int a1) {
-    return ((a0 + (a1 << 4)) + 240);
+char* func_0012F5D0(NameSlotTable* t, int i) {
+    return t->names[i];
 }
 
-int func_0012F5E0(int a0, int a1, int a2) {
-    int tmp0;
+/* Copies up to 15 characters of name into slot i and terminates it. */
+int NameSlot_SetName(NameSlotTable* t, int i, const char* name) {
+    int ret;
 
-    tmp0 = func_00129A70(((a0 + (a1 << 4)) + 240), a2, 15);
-    *(char*)((char*)((a1 << 4) + a0) + 255) = 0;
-    return tmp0;
+    ret = func_00129A70(t->names[i], name, 15);
+    t->names[i][15] = 0;
+    return ret;
 }

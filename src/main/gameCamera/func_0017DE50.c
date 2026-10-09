@@ -6,13 +6,17 @@
 
 #include "types.h"
 
+typedef struct Float3 {
+    float x, y, z;
+} Float3;
+
 extern int Random_Next(void);
 
-int func_0017DE50(int a0, float f12, float f13, float f14) {
-    *(float*)((char*)a0) = f12;
-    *(float*)((char*)a0 + 4) = f13;
-    *(float*)((char*)a0 + 8) = f14;
-    return a0;
+Float3* func_0017DE50(Float3* v, float x, float y, float z) {
+    v->x = x;
+    v->y = y;
+    v->z = z;
+    return v;
 }
 
 int func_0017DE70(void) {

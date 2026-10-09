@@ -6,24 +6,18 @@
 
 #include "types.h"
 
-extern char D_004EE948[];
+extern int D_004EE948;
 extern int GObj_IdentityA(int);
 
-int Script_cHumanSeenMsg_Who(int a0) {
-    int tmp0;
-    int tmp1;
-
-    tmp0 = *(int*)(char*)a0;
-    tmp1 = *(int*)((char*)tmp0 + 36);
-    return GObj_IdentityA(tmp1);
+/* Script binding: args[0] is the message; returns its "who" field (+0x24). */
+int Script_cHumanSeenMsg_Who(char** args) {
+    return GObj_IdentityA(*(int*)(args[0] + 0x24));
 }
 
 void func_0017A060(void) {
 }
 
+/* Returns the value of global D_004EE948. */
 int cHumanSeenMsg_v03(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_004EE948;
-    return tmp0;
+    return D_004EE948;
 }

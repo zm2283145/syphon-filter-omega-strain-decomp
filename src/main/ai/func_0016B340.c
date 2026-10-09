@@ -1,42 +1,38 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * AI receiver and action-message constructors.
  */
 
 #include "types.h"
+#include "ai_types.h"
 
-extern char D_004D92A0[];
-extern char D_004D92C0[];
+extern char D_004D92A0[]; /* action message vtable */
+extern char D_004D92C0[]; /* action message with sender vtable */
 extern char D_004D9810[];
-extern char D_004D9870[];
+extern char D_004D9870[]; /* action message with sender and target vtable */
 extern char D_004EE5C0[];
 extern char D_004EE5C8[];
-extern int Event_Construct(int, int);
-extern int Receiver_Construct(int, int);
+extern int Event_Construct(cActionMsg*, int);
+extern int Receiver_Construct(void*, int);
 
-int func_0016B340(int a0) {
-    Receiver_Construct(a0, (int)D_004EE5C0);
-    *(int*)((char*)a0) = (int)D_004D9810;
-    return a0;
+void* func_0016B340(void* self) {
+    Receiver_Construct(self, (int)D_004EE5C0);
+    *(int*)self = (int)D_004D9810;
+    return self;
 }
 
-int func_0016B380(int a0, int a1, int a2, int a3) {
-    int tmp2;
-    int tmp3;
-
-    Event_Construct(a0, (int)D_004EE5C8);
-    *(int*)((char*)a0) = (int)D_004D92A0;
-    *(char*)((char*)a0 + 36) = 0;
-    *(char*)((char*)a0 + 37) = a3;
-    *(int*)((char*)a0 + 40) = 0;
-    *(int*)((char*)a0 + 44) = 0;
-    *(int*)((char*)a0) = (int)D_004D92C0;
-    tmp2 = *(int*)(char*)a1;
-    *(int*)((char*)a0 + 48) = tmp2;
-    *(int*)((char*)a0) = (int)D_004D9870;
-    tmp3 = *(int*)(char*)a2;
-    *(int*)((char*)a0 + 52) = tmp3;
-    *(char*)((char*)a0 + 36) = 2;
-    return a0;
+/* Builds an action message carrying sender and target identities (event byte ends as 2). */
+cActionMsg* func_0016B380(cActionMsg* msg, int* sender, int* target, int action) {
+    Event_Construct(msg, (int)D_004EE5C8);
+    msg->base.vtable = D_004D92A0;
+    msg->event = 0;
+    msg->action = action;
+    *(int*)&msg->amplitude = 0;
+    *(int*)&msg->unk2C = 0;
+    msg->base.vtable = D_004D92C0;
+    msg->sender = *sender;
+    msg->base.vtable = D_004D9870;
+    msg->target = *target;
+    msg->event = 2;
+    return msg;
 }

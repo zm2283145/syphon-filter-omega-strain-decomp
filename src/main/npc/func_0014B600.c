@@ -1,11 +1,11 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Translation unit: npc.cc (cNPC script commands and vtable methods).
  */
 
-#include "types.h"
+#include "npc_types.h"
 
-void cNPC_v42(char* self, float value) {
-    *(float*)(self + 108) = value;
+/* vtable slot 0x42: SetAggressiveness. */
+void cNPC_SetAggressiveness(cNPC* self, float value) {
+    self->aggressiveness = value;
 }

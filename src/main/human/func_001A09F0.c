@@ -10,7 +10,8 @@ int func_001A09F0(Iter* a, Iter* b) {
     return !(a->p == b->p);
 }
 
-int func_001A0A10(int a0) {
-    *(int*)((char*)a0) = (*(int*)(char*)a0 + 384);
-    return a0;
+/* Iterator ++ over 384-byte elements. */
+Iter16* func_001A0A10(Iter16* it) {
+    it->p = it->p + 384;
+    return it;
 }

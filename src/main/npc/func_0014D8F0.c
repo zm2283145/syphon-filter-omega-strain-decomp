@@ -1,13 +1,13 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Translation unit: npc.cc (cNPC script commands and vtable methods).
  */
 
-#include "types.h"
+#include "npc_types.h"
 
-extern int func_0014D900(int, int, int, float);
+extern int func_0014D900(cNPC* npc, int a1, int a2, float f12);
 
-int cNPC_v52(int a0, int a1, int a2) {
-    return func_0014D900(a0, a1, a2, 0.0f);
+/* vtable slot 0x52: RequestAction. */
+int cNPC_RequestAction(cNPC* self, int a1, int a2) {
+    return func_0014D900(self, a1, a2, 0.0f);
 }

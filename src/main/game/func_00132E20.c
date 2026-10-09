@@ -5,21 +5,15 @@
  */
 
 #include "types.h"
+#include "game_types.h"
 
-extern int List_InsertBefore(int, int, int, int);
+extern ListIter* List_InsertBefore(ListIter* out, LinkList* list, ListIter* pos, int* value);
 
-int func_00132E20(int a0, int a1) {
-    int loc[2];
-    int a2, a3, v0;
+/* Inserts *value at the back of the list (before the header node). */
+ListIter* List_PushBack_132E20(LinkList* list, int* value) {
+    ListIter pos;
+    ListIter result;
 
-    a3 = a1;
-    v0 = a0 + 4;
-    a1 = a0;
-    *(int*)(char*)loc = v0;
-    a0 = (int)((char*)loc + 4);
-    a2 = (int)loc;
-    v0 = List_InsertBefore(a0, a1, a2, a3);
-    goto ret;
-ret:
-    return v0;
+    pos.node = &list->header;
+    return List_InsertBefore(&result, list, &pos, value);
 }

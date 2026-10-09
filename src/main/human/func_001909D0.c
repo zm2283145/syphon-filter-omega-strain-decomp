@@ -6,8 +6,9 @@
 
 #include "types.h"
 
-int func_001909D0(int a0, int a1) {
-    return ((a0 + (a1 << 5)) + 16);
+/* Address of field +0x10 in 32-byte element i. */
+char* func_001909D0(char* base, int i) {
+    return base + (i << 5) + 16;
 }
 
 int func_001909E0(char* self) {

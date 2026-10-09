@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-int MotionGroup_CopyPair(int a0, int a1) {
-    *(int*)((char*)a0) = *(int*)(char*)a1;
-    *(int*)((char*)a0 + 4) = *(int*)((char*)a1 + 4);
-    return a0;
+int* MotionGroup_CopyPair(int* dst, int* src) {
+    dst[0] = src[0];
+    dst[1] = src[1];
+    return dst;
 }

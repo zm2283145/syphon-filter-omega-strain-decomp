@@ -5,27 +5,29 @@
  */
 
 #include "types.h"
+#include "human_types.h"
 
-extern int func_00198D00(int, int);
-extern int func_00198E90(int);
-extern int func_00198F70(int);
+extern int func_00198D00(char*, int);
+extern char* Deque_Back(char*);
+extern char* func_00198F70(char*);
 
 void* func_00198F20(void* self) {
     return self;
 }
 
-int func_00198F30(int a0, int a1) {
-    int tmp0;
-    int tmp2;
+int func_00198F30(char* self, int key) {
+    char* last;
+    int found;
 
-    tmp0 = func_00198F70(a0);
-    tmp2 = func_00198D00(tmp0, a1);
-    return ((unsigned int)(0) < (unsigned int)(tmp2));
+    last = func_00198F70(self);
+    found = func_00198D00(last, key);
+    return found != 0;
 }
 
-int func_00198F70(int a0) {
-    int tmp0;
+/* Last element of the deque at +0x3C, offset +0xE8 into it. */
+char* func_00198F70(char* self) {
+    char* last;
 
-    tmp0 = func_00198E90((a0 + 60));
-    return (tmp0 + 232);
+    last = Deque_Back(self + 60);
+    return last + 232;
 }

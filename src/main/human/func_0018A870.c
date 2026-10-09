@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-int func_0018A870(int a0) {
-    *(int*)((char*)a0) = -1;
-    *(int*)((char*)a0 + 4) = 0;
-    return a0;
+int* func_0018A870(int* pair) {
+    pair[0] = -1;
+    pair[1] = 0;
+    return pair;
 }

@@ -1,19 +1,18 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Translation unit: npc.cc (container helpers instantiated for cNPC).
  */
 
-#include "types.h"
+#include "npc_types.h"
 
-int func_0014EE50(int a0, int a1) {
-    *(int*)((char*)a0) = a1;
-    return a0;
+Word* func_0014EE50(Word* self, int value) {
+    self->value = value;
+    return self;
 }
 
-int func_0014EE60(int a0, int a1) {
-    *(int*)((char*)a0) = a1;
-    return a0;
+Word* func_0014EE60(Word* self, int value) {
+    self->value = value;
+    return self;
 }
 
 void* func_0014EE70(char* self) {

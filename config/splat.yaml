@@ -36,7 +36,9 @@ options:
   named_regs_for_c_funcs: False
 
   section_order: [.text, .data, .rodata, .sdata, .sbss, .bss]
-  auto_link_sections: [.data, .rodata, .sdata, .sbss, .bss]
+  # Objects are only linked for their own section type; this keeps the linker
+  # script small (linking ~2,000 objects with every section pattern was slow).
+  auto_link_sections: []
 
 segments:
   - name: main

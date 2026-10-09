@@ -5,32 +5,24 @@
  */
 
 #include "types.h"
+#include "loose01_types.h"
 
-extern int func_00201AF0(int, int);
-extern int func_00201B30(int);
-extern int func_00201C30(int, int);
+extern ObjVec* func_00201AF0(ObjVec*, ObjVec*);
+extern int func_00201B30(ObjVec*);
+extern MotionNode* func_00201C30(MotionNode*, MotionNode*);
 
-int func_00201A90(int a0, int a1) {
-    int tmp2;
-    unsigned char tmp5;
-    unsigned char tmp6;
-
-    func_00201C30(a0, a1);
-    tmp2 = *(int*)((char*)a1 + 32);
-    *(int*)((char*)a0 + 32) = tmp2;
-    func_00201AF0((a0 + 36), (a1 + 36));
-    tmp5 = *(unsigned char*)((char*)a1 + 52);
-    *(char*)((char*)a0 + 52) = tmp5;
-    tmp6 = *(unsigned char*)((char*)a1 + 53);
-    *(char*)((char*)a0 + 53) = tmp6;
-    return a0;
+/* Copy of a MotionSlider-layout node (vtable left to the caller). */
+MotionSlider* func_00201A90(MotionSlider* dst, MotionSlider* src) {
+    func_00201C30(&dst->base, &src->base);
+    dst->unk20 = src->unk20;
+    func_00201AF0(&dst->children, &src->children);
+    dst->unk34 = src->unk34;
+    dst->unk35 = src->unk35;
+    return dst;
 }
 
-int func_00201AF0(int a0, int a1) {
-    unsigned char tmp2;
-
-    func_00201B30(a0);
-    tmp2 = *(unsigned char*)((char*)a1 + 12);
-    *(char*)((char*)a0 + 12) = tmp2;
-    return a0;
+ObjVec* func_00201AF0(ObjVec* dst, ObjVec* src) {
+    func_00201B30(dst);
+    dst->owned = src->owned;
+    return dst;
 }

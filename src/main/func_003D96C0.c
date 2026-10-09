@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void func_003D96C0(char* self) {
-    *(int*)(self + 4) = 0;
+void func_003D96C0(Word* self) {
+    self[1].value = 0;
 }

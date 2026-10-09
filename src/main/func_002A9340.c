@@ -5,15 +5,17 @@
  */
 
 #include "types.h"
+#include "loose02_types.h"
 
-extern char D_004DDA50[];
-extern int func_0033F480(int);
+extern char D_004DDA50[];   /* GuiNetJoinMission vtable */
+extern GuiMenuScreen* GuiMenuScreen_ctor(GuiMenuScreen* self);
 
-int func_002A9340(int a0) {
-    func_0033F480(a0);
-    *(int*)((char*)a0) = (int)D_004DDA50;
-    *(int*)((char*)a0 + 132) = 2;
-    *(int*)((char*)a0 + 352) = 0;
-    *(int*)((char*)a0 + 356) = 0;
-    return a0;
+/* GuiNetJoinMission constructor. */
+GuiNetListScreen* GuiNetJoinMission_ctor(GuiNetListScreen* self) {
+    GuiMenuScreen_ctor(&self->base);
+    self->base.base.base.base.vtable = D_004DDA50;
+    self->base.base.screenId = 2;
+    self->unk160 = 0;
+    self->unk164 = 0;
+    return self;
 }

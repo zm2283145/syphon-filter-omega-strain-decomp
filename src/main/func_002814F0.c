@@ -6,11 +6,8 @@
 
 #include "types.h"
 
-extern char D_005061B8[];
+extern int D_005061B8;
 
 int cNetBackpackMsg_v05(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_005061B8;
-    return tmp0;
+    return D_005061B8;
 }

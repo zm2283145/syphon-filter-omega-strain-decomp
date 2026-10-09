@@ -1,17 +1,17 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * GuiOmegaStrain constructor (vtable D_004DEDE0); derives from GuiPersonnelScreen.
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
-extern char D_004DEDE0[];
-extern int func_00356FF0(int);
+extern char D_004DEDE0[];       /* vtable */
+extern int GuiPersonnelScreen_ctor(GuiPersonnelScreen*);
 
-int func_0034F070(int a0) {
-    func_00356FF0(a0);
-    *(int*)((char*)a0) = (int)D_004DEDE0;
-    *(int*)((char*)a0 + 100) = 8;
-    return a0;
+/* GuiPersonnelScreen subclass constructor (unk64 = 8). */
+GuiPersonnelScreen* GuiOmegaStrain_ctor(GuiPersonnelScreen* self) {
+    GuiPersonnelScreen_ctor(self);
+    self->base.vtable = D_004DEDE0;
+    self->unk64 = 8;
+    return self;
 }

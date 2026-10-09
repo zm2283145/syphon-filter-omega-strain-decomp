@@ -5,32 +5,24 @@
  */
 
 #include "types.h"
+#include "loose02_types.h"
 
-extern char D_004FFC04[];
-extern int func_002CAC80(int, int);
-extern void func_0033D360(int);
-extern int func_004147A0(void);
-extern int func_0044F6B0(int);
+extern GameMachine* D_004FFC04;
+extern int func_002CAC80(GameMachine* machine, int arg);
+extern void func_0033D360(GuiScreen* self);
+extern GuiManager* func_004147A0(void);
+extern int func_0044F6B0(GuiSlot* slot);
 
-int func_0029ECD0(int a0) {
-    int tmp8;
-    int tmp9;
-    int tmp11;
-    int tmp12;
-    int tmp13;
-    int tmp14;
+/* GuiOnlineConnect vtable slot 6: base call, reset the three slots, clear manager flags 0x0C. */
+int func_0029ECD0(GuiOnlineConnect* self) {
+    GuiManager* mgr;
 
-    func_0033D360(a0);
-    func_0044F6B0((a0 + 152));
-    func_0044F6B0((a0 + 180));
-    func_0044F6B0((a0 + 208));
-    tmp8 = *(int*)D_004FFC04;
-    *(char*)((char*)tmp8 + 42) = 1;
-    tmp9 = func_004147A0();
-    tmp11 = *(int*)((char*)tmp9 + 104);
-    *(int*)((char*)tmp9 + 104) = (tmp11 & -13);
-    tmp12 = *(int*)D_004FFC04;
-    tmp13 = *(int*)((char*)a0 + 72);
-    tmp14 = func_002CAC80(tmp12, tmp13);
-    return tmp14;
+    func_0033D360(&self->base);
+    func_0044F6B0(&self->slots[0]);
+    func_0044F6B0(&self->slots[1]);
+    func_0044F6B0(&self->slots[2]);
+    D_004FFC04->unk2A = 1;
+    mgr = func_004147A0();
+    mgr->flags &= ~0xC;
+    return func_002CAC80(D_004FFC04, self->base.base.unk48);
 }

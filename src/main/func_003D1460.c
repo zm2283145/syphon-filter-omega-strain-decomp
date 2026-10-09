@@ -10,10 +10,10 @@ int func_003D1460(void) {
     return 1;
 }
 
-int func_003D1470(char* self) {
-    return *(int*)(self + 0);
+int func_003D1470(Word* self) {
+    return self[0].value;
 }
 
-int func_003D1480(char* self) {
-    return *(int*)(self + 4);
+int func_003D1480(Word* self) {
+    return self[1].value;
 }

@@ -6,8 +6,9 @@
 
 #include "types.h"
 
-int func_002A8890(int a0, int a1) {
-    return ((unsigned int)(0) < (unsigned int)((*(int*)(char*)a0 ^ *(int*)(char*)a1)));
+/* Iterator inequality. */
+int func_002A8890(Iter* a, Iter* b) {
+    return a->p != b->p;
 }
 
 void func_002A88B0(Iter* out, Tree* t) {

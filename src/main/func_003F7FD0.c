@@ -5,11 +5,12 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-extern char D_0055C5B0[];
-extern char D_0055C5B8[];
+extern int D_0055C5B0;
+extern int D_0055C5B8;
 
-void func_003F7FD0(int a0, int a1) {
-    *(int*)D_0055C5B0 = a0;
-    *(int*)D_0055C5B8 = a1;
+void func_003F7FD0(int a, int b) {
+    D_0055C5B0 = a;
+    D_0055C5B8 = b;
 }

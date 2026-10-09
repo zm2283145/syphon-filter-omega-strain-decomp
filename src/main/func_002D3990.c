@@ -5,12 +5,11 @@
  */
 
 #include "types.h"
+#include "loose02_types.h"
 
-extern int func_002D7290(int, int, int, int, int, int, int);
+/* Sends message (id, 8, arg) to the owner. */
+extern int func_002D7290(ControllerOwner* owner, int id, int kind, int arg, int a4, int a5, int a6);
 
-int func_002D3990(int a0, int a1) {
-    int tmp0;
-
-    tmp0 = *(int*)((char*)a0 + 48);
-    return func_002D7290(tmp0, 56, 8, a1, 0, 0, 0);
+int func_002D3990(Controller2D* self, int arg) {
+    return func_002D7290(self->owner, 56, 8, arg, 0, 0, 0);
 }

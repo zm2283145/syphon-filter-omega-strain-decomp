@@ -5,22 +5,24 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-extern int func_003EE360(int, int);
+extern int func_003EE360(Unk3EE5E0*, Vec4*);
 
-int func_003EE5E0(int a0, int a1) {
-    float tmp0;
-    float tmp1;
-    float tmp2;
-    float tmp3;
+/* Stores a vector at +0xA0, then forwards it to func_003EE360. */
+int func_003EE5E0(Unk3EE5E0* self, Vec4* v) {
+    float x;
+    float y;
+    float z;
+    float w;
 
-    tmp0 = *(float*)(char*)a1;
-    *(float*)((char*)a0 + 160) = tmp0;
-    tmp1 = *(float*)((char*)a1 + 4);
-    *(float*)((char*)a0 + 164) = tmp1;
-    tmp2 = *(float*)((char*)a1 + 8);
-    *(float*)((char*)a0 + 168) = tmp2;
-    tmp3 = *(float*)((char*)a1 + 12);
-    *(float*)((char*)a0 + 172) = tmp3;
-    return func_003EE360(a0, a1);
+    x = v->x;
+    self->unkA0.x = x;
+    y = v->y;
+    self->unkA0.y = y;
+    z = v->z;
+    self->unkA0.z = z;
+    w = v->w;
+    self->unkA0.w = w;
+    return func_003EE360(self, v);
 }

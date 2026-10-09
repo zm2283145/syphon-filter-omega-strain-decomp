@@ -5,8 +5,9 @@
  */
 
 #include "types.h"
+#include "loose02_types.h"
 
-void func_00318C50(int a0, float f12, float f13) {
-    *(float*)((char*)a0 + 4) = f13;
-    *(float*)((char*)a0) = f12;
+void func_00318C50(Float2* self, float a, float b) {
+    self->b = b;
+    self->a = a;
 }

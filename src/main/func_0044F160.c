@@ -1,15 +1,14 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Address lies between SFOLobby_Games.cc and SFOLobby_Lobby.cc; LobbyRecord1C accessors.
  */
 
-#include "types.h"
+#include "loose05_types.h"
 
-void func_0044F160(char* self, char value) {
-    self[25] = value;
+void func_0044F160(LobbyRecord1C* self, char value) {
+    self->unk19 = value;
 }
 
-unsigned char func_0044F170(unsigned char* self) {
-    return self[25];
+unsigned char func_0044F170(LobbyRecord1C* self) {
+    return self->unk19;
 }

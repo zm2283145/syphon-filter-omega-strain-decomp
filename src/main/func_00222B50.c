@@ -5,14 +5,16 @@
  */
 
 #include "types.h"
+#include "loose01_types.h"
 
 void* func_00222B50(char* self) {
     return self + 4;
 }
 
-int func_00222B60(int a0) {
-    *(int*)((char*)a0) = 0;
-    *(int*)((char*)a0 + 8) = (a0 + 4);
-    *(int*)((char*)a0 + 4) = (a0 + 4);
-    return a0;
+/* Empty circular list: header node points to itself. */
+List* func_00222B60(List* l) {
+    l->count = 0;
+    l->last = &l->first;
+    l->first = &l->first;
+    return l;
 }

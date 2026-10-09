@@ -5,34 +5,24 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
-extern char D_004DAA10[];
-extern char D_004DF860[];
-extern int cGOBJ_ctor(int, int, int, int);
+extern char D_004DAA10[]; /* vtable of the derived object */
+extern char D_004DF860[]; /* vtable of its intermediate base */
+extern cGOBJ* cGOBJ_ctor(cGOBJ* self, int* desc, int a2, int* a3);
 
-int func_001C5950(int a0, int a1, int a2) {
-    int loc[1];
-    int a3, s0, s1, v0, v1;
+/* Constructor of a cGOBJ-derived object (two inlined constructor levels). */
+UnkGobj001C5950* func_001C5950(UnkGobj001C5950* self, int* desc, int value) {
+    int zero[1];
 
-    a3 = (int)loc;
-    s1 = a0;
-    s0 = a2;
-    *(int*)(char*)loc = 0;
-    a2 = 0 + 4;
-    v0 = cGOBJ_ctor(a0, a1, a2, a3);
-    v0 = (int)D_004DF860;
-    a1 = 0x3f800000;
-    *(int*)(char*)s1 = v0;
-    a0 = 0 + 1;
-    *(int*)(char*)(s1 + 96) = s0;
-    v1 = (int)D_004DAA10;
-    *(int*)(char*)(s1 + 100) = 0;
-    v0 = s1;
-    *(short*)(char*)(s1 + 104) = 0;
-    *(int*)(char*)(s1 + 112) = a1;
-    *(char*)(char*)(s1 + 47) = a0;
-    *(int*)(char*)s1 = v1;
-    goto ret;
-ret:
-    return v0;
+    zero[0] = 0;
+    cGOBJ_ctor(&self->base, desc, 4, zero);
+    self->base.vtable = D_004DF860;
+    self->unk60 = value;
+    self->unk64 = 0;
+    self->unk68 = 0;
+    self->unk70 = 1.0f;
+    self->base.unk2F = 1;
+    self->base.vtable = D_004DAA10;
+    return self;
 }

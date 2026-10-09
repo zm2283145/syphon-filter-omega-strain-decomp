@@ -5,6 +5,7 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
 int ColTree_IsLeaf(Leaf* l, int* addr) {
     return *addr >= l->limit;
@@ -15,6 +16,7 @@ Word* func_001821C0(Word* dst, Word* src) {
     return dst;
 }
 
-int func_001821D0(int a0, int a1) {
-    return ((unsigned int)(0) < (unsigned int)((*(int*)(char*)a0 ^ a1)));
+/* Word differs from value. */
+int func_001821D0(Word* w, int value) {
+    return (w->value ^ value) != 0;
 }

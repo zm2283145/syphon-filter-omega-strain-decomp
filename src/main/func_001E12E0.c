@@ -5,16 +5,18 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
-extern int PtrVec_Insert(int, int, int, int);
+extern int PtrVec_Insert(PtrVec* v, int* pos, int n, int value);
 
-int func_001E12E0(int a0, int a1) {
-    int tmp0;
-    int tmp1;
+/* push_back(value). */
+int func_001E12E0(PtrVec* v, int value) {
+    int count;
+    int* data;
 
-    tmp0 = *(int*)((char*)a0 + 4);
-    tmp1 = *(int*)((char*)a0 + 8);
-    return PtrVec_Insert(a0, (tmp1 + (tmp0 << 2)), 1, a1);
+    count = v->count;
+    data = v->data;
+    return PtrVec_Insert(v, data + count, 1, value);
 }
 
 Rel* func_001E1300(Rel* r) {
@@ -33,15 +35,17 @@ Iter16* func_001E1340(Iter16* it) {
     return it;
 }
 
-int func_001E1360(int a0, int a1) {
-    int tmp0;
-    int tmp1;
+/* push_back(value). */
+int func_001E1360(PtrVec* v, int value) {
+    int count;
+    int* data;
 
-    tmp0 = *(int*)((char*)a0 + 4);
-    tmp1 = *(int*)((char*)a0 + 8);
-    return PtrVec_Insert(a0, (tmp1 + (tmp0 << 2)), 1, a1);
+    count = v->count;
+    data = v->data;
+    return PtrVec_Insert(v, data + count, 1, value);
 }
 
-void func_001E1380(char* self) {
-    *(int*)(self + 4) = 0;
+/* clear(): count = 0. */
+void func_001E1380(PtrVec* v) {
+    v->count = 0;
 }

@@ -5,19 +5,20 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-int func_003F5CD0(int a0, int a1) {
-    int tmp0;
+/* Swaps in a new value and returns the old one. */
+int func_003F5CD0(Unk3F5CD0* self, int value) {
+    int old = self->unkA8;
 
-    tmp0 = *(int*)((char*)a0 + 168);
-    *(int*)((char*)a0 + 168) = a1;
-    return tmp0;
+    self->unkA8 = value;
+    return old;
 }
 
-int func_003F5CE0(char* self) {
-    return *(int*)(self + 168);
+int func_003F5CE0(Unk3F5CD0* self) {
+    return self->unkA8;
 }
 
-void func_003F5CF0(int a0) {
-    *(int*)((char*)a0 + 168) = 1;
+void func_003F5CF0(Unk3F5CD0* self) {
+    self->unkA8 = 1;
 }

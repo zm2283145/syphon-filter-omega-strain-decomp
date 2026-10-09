@@ -5,9 +5,10 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-extern char D_004938D0[];
-extern char D_00559F18[];
+extern char D_004938D0;
+extern char D_00559F18;
 extern int func_001396D0(int, int);
 
 int func_003E2D20(int a0, int a1) {
@@ -32,10 +33,11 @@ Rel* func_003E2D60(Rel* r) {
     return r;
 }
 
-void func_003E2D80(int a0) {
-    *(char*)D_00559F18 = a0;
+/* Byte flag setters. */
+void func_003E2D80(int value) {
+    D_00559F18 = value;
 }
 
-void func_003E2D90(int a0) {
-    *(char*)D_004938D0 = a0;
+void func_003E2D90(int value) {
+    D_004938D0 = value;
 }

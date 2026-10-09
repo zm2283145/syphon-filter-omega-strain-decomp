@@ -5,27 +5,27 @@
  */
 
 #include "types.h"
+#include "loose02_types.h"
 
-extern char D_004DD460[];
-extern char D_004E1220[];
-extern int func_00292E80(int);
-extern int func_0041EFA0(int);
-extern void func_0041F690(int);
+extern char D_004DD460[];   /* GuiSaveAgentWidget vtable */
+extern char D_004E1220[];   /* GuiItem vtable */
+extern int func_00292E80(GuiSaveAgentWidget* self);
+extern int func_0041EFA0(GuiWidget* self);
+extern void GuiWidget_ctor(GuiWidget* self);
 
-int func_002936E0(int a0) {
-    int tmp2;
-
-    func_00292E80(a0);
-    tmp2 = func_0041EFA0(a0);
-    return tmp2;
+/* GuiSaveAgentWidget vtable slot 5: own update, then the base widget's. */
+int func_002936E0(GuiSaveAgentWidget* self) {
+    func_00292E80(self);
+    return func_0041EFA0(&self->base.base);
 }
 
-int func_00293710(int a0, int a1) {
-    func_0041F690(a0);
-    *(int*)((char*)a0) = (int)D_004E1220;
-    *(int*)((char*)a0 + 72) = -2;
-    *(int*)((char*)a0) = (int)D_004DD460;
-    *(int*)((char*)a0 + 120) = 1092616192;
-    *(char*)((char*)a0 + 124) = a1;
-    return a0;
+/* GuiSaveAgentWidget constructor (GuiItem constructor inlined). */
+GuiSaveAgentWidget* GuiSaveAgentWidget_ctor(GuiSaveAgentWidget* self, unsigned char arg) {
+    GuiWidget_ctor(&self->base.base);
+    self->base.base.vtable = D_004E1220;
+    self->base.unk48 = -2;
+    self->base.base.vtable = D_004DD460;
+    self->unk78 = 10.0f;
+    self->unk7C = arg;
+    return self;
 }

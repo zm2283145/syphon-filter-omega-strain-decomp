@@ -1,13 +1,13 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * GuiRanks class-name getter (vtable D_004DED50 slot 19).
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
-extern char D_004BA980[];
+extern char D_004BA980[];       /* "GuiRanks" */
 
-int func_0034E490(void) {
-    return (int)D_004BA980;
+/* Returns the class name string "GuiRanks". */
+const char* GuiRanks_GetClassName(void) {
+    return D_004BA980;
 }

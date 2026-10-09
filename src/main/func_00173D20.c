@@ -5,23 +5,19 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
-extern int func_001748F0(int, int, int);
+extern int func_001748F0(PtrVec*, int, ValFlag*);
 
-int func_00173D20(int a0, int a1, int a2) {
-    int loc[2];
-    int s0, v0;
+/* Empty vector, then fill through func_001748F0 with a {value, 0} argument. */
+PtrVec* func_00173D20(PtrVec* v, int a1, int value) {
+    ValFlag arg;
 
-    *(int*)(char*)a0 = 0;
-    s0 = a0;
-    *(int*)(char*)(a0 + 4) = 0;
-    *(int*)(char*)(a0 + 8) = 0;
-    *(int*)(char*)loc = a2;
-    a2 = (int)loc;
-    *(char*)((char*)loc + 4) = 0;
-    v0 = func_001748F0(a0, a1, a2);
-    v0 = s0;
-    goto ret;
-ret:
-    return v0;
+    v->unk0 = 0;
+    v->count = 0;
+    v->data = 0;
+    arg.value = value;
+    arg.flag = 0;
+    func_001748F0(v, a1, &arg);
+    return v;
 }

@@ -5,26 +5,14 @@
  */
 
 #include "types.h"
+#include "loose01_types.h"
 
-extern int MotionGroup_CopyPair(int, int);
+extern int MotionGroup_CopyPair(int*, int);
 extern int Motion_Lookup(int, int);
-extern int func_001ADFE0(int, int);
+extern int func_001ADFE0(MotionSelNode*, int);
 
-int MotionSelNode_Ctor(int a0, int a1, int a2, int a3) {
-    int s0, s1, v0;
-
-    s1 = a0;
-    s0 = a3;
-    a0 = a2;
-    v0 = Motion_Lookup(a0, a1);
-    a1 = v0;
-    a0 = s1;
-    v0 = func_001ADFE0(a0, a1);
-    a1 = s0;
-    a0 = s1 + 4;
-    v0 = MotionGroup_CopyPair(a0, a1);
-    v0 = s1;
-    goto ret;
-ret:
-    return v0;
+MotionSelNode* MotionSelNode_Ctor(MotionSelNode* self, int a1, int a2, int a3) {
+    func_001ADFE0(self, Motion_Lookup(a2, a1));
+    MotionGroup_CopyPair(&self->pair, a3);
+    return self;
 }

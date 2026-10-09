@@ -5,28 +5,24 @@
  */
 
 #include "types.h"
+#include "loose01_types.h"
 
 extern char D_005381F0[];
-extern char D_00538C60[];
-extern int func_003E7670(int);
-extern int func_003E79C0(int, float);
+extern int D_00538C60;
+extern int func_003E7670(int*);
+extern int func_003E79C0(int*, float);
 
-int func_00271BA0(int a0, float f12) {
-    int tmp0;
-
-    tmp0 = *(int*)(char*)a0;
-    return func_003E79C0(tmp0, f12);
+int func_00271BA0(HandleHolder* self, float f) {
+    return func_003E79C0(self->handle, f);
 }
 
-int func_00271BB0(int a0) {
-    int tmp0;
-    int tmp1;
+/* Resets the current slot record (index D_00538C60) and calls func_003E7670 on the handle. */
+int func_00271BB0(HandleHolder* self) {
+    Slot110View* slot = (Slot110View*)(D_005381F0 + D_00538C60 * 272);
 
-    tmp0 = *(int*)D_00538C60;
-    *(int*)((char*)((int)D_005381F0 + (tmp0 * 272)) + 736) = 0;
-    *(int*)((char*)((int)D_005381F0 + (tmp0 * 272)) + 744) = 1120403456;
-    *(char*)((char*)((int)D_005381F0 + (tmp0 * 272)) + 758) = 1;
-    *(char*)((char*)((int)D_005381F0 + (tmp0 * 272)) + 756) = 1;
-    tmp1 = *(int*)(char*)a0;
-    return func_003E7670(tmp1);
+    slot->unk2E0 = 0;
+    slot->unk2E8 = 100.0f;
+    slot->unk2F6 = 1;
+    slot->unk2F4 = 1;
+    return func_003E7670(self->handle);
 }

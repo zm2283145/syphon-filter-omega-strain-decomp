@@ -1,10 +1,10 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * func_00370080 and func_00370090 are Obj370000 virtuals (vtable D_004DF6A0
+ * slots 14 and 16).
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
 int func_00370080(void) {
     return 0;
@@ -22,15 +22,7 @@ void func_003700B0(void) {
 void func_003700C0(void) {
 }
 
-int func_003700D0(int a0, int a1) {
-    int v0, v1;
-
-    v0 = a1 << 2;
-    v1 = a0 + v0;
-    v1 = *(int*)(char*)v1;
-    v0 = 0x14000000;
-    v0 = v1 | v0;
-    goto ret;
-ret:
-    return v0;
+/* table[index] with tag 0x14000000 or-ed in. */
+int func_003700D0(int* table, int index) {
+    return table[index] | 0x14000000;
 }

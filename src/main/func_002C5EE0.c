@@ -5,29 +5,31 @@
  */
 
 #include "types.h"
+#include "loose02_types.h"
 
-int func_002C5EE0(int a0, int a1) {
-    Q tmp0;
-    float tmp1;
-    float tmp2;
-    int tmp3;
-    int tmp4;
-    unsigned char tmp5;
-    unsigned char tmp6;
+/* Rec22 copy (assignment). */
+Rec22* func_002C5EE0(Rec22* dst, Rec22* src) {
+    Q q;
+    float unk10;
+    float unk14;
+    int unk18;
+    int unk1C;
+    unsigned char unk20;
+    unsigned char unk21;
 
-    tmp0 = *(Q*)(char*)a1;
-    *(Q*)((char*)a0) = tmp0;
-    tmp1 = *(float*)((char*)a1 + 16);
-    *(float*)((char*)a0 + 16) = tmp1;
-    tmp2 = *(float*)((char*)a1 + 20);
-    *(float*)((char*)a0 + 20) = tmp2;
-    tmp3 = *(int*)((char*)a1 + 24);
-    *(int*)((char*)a0 + 24) = tmp3;
-    tmp4 = *(int*)((char*)a1 + 28);
-    *(int*)((char*)a0 + 28) = tmp4;
-    tmp5 = *(unsigned char*)((char*)a1 + 32);
-    *(char*)((char*)a0 + 32) = tmp5;
-    tmp6 = *(unsigned char*)((char*)a1 + 33);
-    *(char*)((char*)a0 + 33) = tmp6;
-    return a0;
+    q = src->q;
+    dst->q = q;
+    unk10 = src->unk10;
+    dst->unk10 = unk10;
+    unk14 = src->unk14;
+    dst->unk14 = unk14;
+    unk18 = src->unk18;
+    dst->unk18 = unk18;
+    unk1C = src->unk1C;
+    dst->unk1C = unk1C;
+    unk20 = src->unk20;
+    dst->unk20 = unk20;
+    unk21 = src->unk21;
+    dst->unk21 = unk21;
+    return dst;
 }

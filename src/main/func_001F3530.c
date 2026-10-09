@@ -5,9 +5,10 @@
  */
 
 #include "types.h"
+#include "loose01_types.h"
 
-extern int func_001F2E20(int);
+extern char* func_001F2E20(Iter16*);
 
-int func_001F3530(int a0) {
-    return func_001F2E20(a0);
+char* func_001F3530(Iter16* it) {
+    return func_001F2E20(it);
 }

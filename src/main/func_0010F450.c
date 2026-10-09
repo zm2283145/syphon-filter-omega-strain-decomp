@@ -5,9 +5,10 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
-extern char D_004E2D58[];
+extern Unk004E2D58 D_004E2D58;
 
-int func_0010F450(void) {
-    return (int)D_004E2D58;
+Unk004E2D58* func_0010F450(void) {
+    return &D_004E2D58;
 }

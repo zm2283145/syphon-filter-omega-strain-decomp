@@ -5,7 +5,8 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-void func_00415160(int a0, int a1) {
-    *(int*)((char*)a0) = *(int*)(char*)a1;
+void func_00415160(Word* dst, Word* src) {
+    dst->value = src->value;
 }

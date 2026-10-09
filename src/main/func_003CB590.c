@@ -5,9 +5,10 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-int func_003CB590(int a0, int a1) {
-    return ((unsigned int)((a1 ^ *(int*)((char*)a0 + 12))) < (unsigned int)(1));
+int func_003CB590(Unk3CB590* self, int value) {
+    return value == self->unk0C;
 }
 
 Map* func_003CB5A0(Map* m, unsigned char* cmp) {

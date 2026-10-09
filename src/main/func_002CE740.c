@@ -6,6 +6,7 @@
 
 #include "types.h"
 
-void func_002CE740(int a0) {
-    *(int*)((char*)a0 + 4) = 0;
+/* Clears the word at +4 (the count when used as a PtrVec). */
+void func_002CE740(PtrVec* v) {
+    v->count = 0;
 }

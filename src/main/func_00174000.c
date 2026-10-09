@@ -28,12 +28,13 @@ Word* func_00174070(Word* dst, Word* src) {
     return dst;
 }
 
-int func_00174080(int a0, int a1) {
-    return ((unsigned int)((*(int*)(char*)a0 ^ *(int*)(char*)a1)) < (unsigned int)(1));
+/* Word equality. */
+int func_00174080(Word* a, Word* b) {
+    return a->value == b->value;
 }
 
-int func_001740A0(char* self) {
-    return *(int*)(self + 0);
+int* func_001740A0(Iter* it) {
+    return it->p;
 }
 
 void func_001740B0(Iter* out, PtrVec* v) {

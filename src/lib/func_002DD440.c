@@ -7,7 +7,7 @@
 #include "types.h"
 
 extern char D_004ADB58[];
-extern int func_00128BD0(int, int, int, int, int, int, int, int, float, float, float, float, float, float, float, float);
+extern int sprintf(int, int, int, int, int, int, int, int, float, float, float, float, float, float, float, float);
 
 int func_002DD440(int a0, int a1) {
     int a2, a3, t0, t1, t2, t3, v0;
@@ -24,7 +24,7 @@ int func_002DD440(int a0, int a1) {
     a1 = (int)D_004ADB58;
     a3 = *(unsigned char*)((char*)v0 + 1);
     t0 = *(unsigned char*)((char*)v0 + 2);
-    v0 = func_00128BD0(a0, a1, a2, a3, t0, t1, t2, t3, f12, f13, f14, f15, f16, f17, f18, f19);
+    v0 = sprintf(a0, a1, a2, a3, t0, t1, t2, t3, f12, f13, f14, f15, f16, f17, f18, f19);
     v0 = 0;
     goto L002DD47C;
 L002DD478:;

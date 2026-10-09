@@ -1,27 +1,19 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Address lies after GuiGameScreen.cc (ends 0x0045F090).
  */
 
-#include "types.h"
+#include "loose05_types.h"
 
-extern int func_0041D8C0(int);
+extern GuiWidget* func_0041D8C0(GuiWidget* self);
 
-int func_00463940(int a0) {
-    int s0, v0, v1;
-    int cond;
+/* Hides the widget returned by func_0041D8C0 unless it is this widget. */
+GuiWidget* func_00463940(GuiWidget* self) {
+    GuiWidget* other;
 
-    s0 = a0;
-    v0 = func_0041D8C0(a0);
-    cond = v0 == s0;
-    if (cond) goto L00463968;
-    v1 = *(unsigned short*)((char*)v0 + 20);
-    v1 = v1 & 65533;
-    *(short*)((char*)v0 + 20) = v1;
-L00463968:;
-    v0 = s0;
-    goto ret;
-ret:
-    return v0;
+    other = func_0041D8C0(self);
+    if (other != self) {
+        other->flags &= ~0x2;
+    }
+    return self;
 }

@@ -5,11 +5,12 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
-int func_001E1EF0(char* self) {
-    return *(int*)(self + 0);
+int func_001E1EF0(IntPair* p) {
+    return p->a;
 }
 
-int func_001E1F00(char* self) {
-    return *(int*)(self + 4);
+int func_001E1F00(IntPair* p) {
+    return p->b;
 }

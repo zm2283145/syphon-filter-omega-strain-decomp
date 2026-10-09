@@ -5,10 +5,11 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-int func_003F95E0(int a0, int a1) {
-    *(int*)((char*)a0) = a1;
-    return a0;
+Word* func_003F95E0(Word* self, int value) {
+    self->value = value;
+    return self;
 }
 
 void* func_003F95F0(char* self) {

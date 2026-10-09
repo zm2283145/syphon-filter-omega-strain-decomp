@@ -1,13 +1,13 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * GuiPersonnelScreen class-name getter (vtable D_004DF0B0 slot 19).
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
-extern char D_004BB430[];
+extern char D_004BB430[];       /* "GuiPersonnelScreen" */
 
-int func_00356810(void) {
-    return (int)D_004BB430;
+/* Returns the class name string "GuiPersonnelScreen". */
+const char* GuiPersonnelScreen_GetClassName(void) {
+    return D_004BB430;
 }

@@ -5,22 +5,19 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
-extern int func_00182260(int, int);
+extern int func_00182260(void* self, int* it);
 
-int func_00181E80(void* self, char* p) {
-    return *(int*)(p + 0);
+/* Iterator dereference (returns *it). */
+int func_00181E80(void* self, int* it) {
+    return it[0];
 }
 
-int func_00181E90(int a0, int a1) {
-    int loc[1];
-    int v0;
+/* Pass a copy of the iterator to func_00182260. */
+int func_00181E90(void* self, int* it) {
+    int copy[1];
 
-    v0 = *(int*)(char*)a1;
-    *(int*)(char*)loc = v0;
-    a1 = (int)loc;
-    v0 = func_00182260(a0, a1);
-    goto ret;
-ret:
-    return v0;
+    copy[0] = it[0];
+    return func_00182260(self, copy);
 }

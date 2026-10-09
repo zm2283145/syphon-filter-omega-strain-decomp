@@ -5,20 +5,15 @@
  */
 
 #include "types.h"
+#include "loose02_types.h"
 
-int func_0030EFB0(int a0, int a1) {
-    int v0;
-    int cond;
+/* Sets unk5C; returns 2 on a null argument. */
+int func_0030EFB0(RtObj5C* obj, int value) {
+    int result = 2;
 
-    cond = a0 == 0;
-    v0 = 0 + 2;
-    if (cond) goto L0030EFC8;
-    cond = a1 == 0;
-    if (cond) goto L0030EFC8;
-    *(int*)(char*)(a0 + 92) = a1;
-    v0 = 0;
-L0030EFC8:;
-    goto ret;
-ret:
-    return v0;
+    if (obj != 0 && value != 0) {
+        obj->unk5C = value;
+        result = 0;
+    }
+    return result;
 }

@@ -5,10 +5,12 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
-int func_001CFF30(int a0, int a1) {
-    int tmp0;
+/* Address of element index of a 0x1D0-byte record array. */
+Elem1D0* func_001CFF30(Vec1D0Array* v, int index) {
+    Elem1D0* data;
 
-    tmp0 = *(int*)((char*)a0 + 8);
-    return (tmp0 + (a1 * 464));
+    data = v->data;
+    return data + index;
 }

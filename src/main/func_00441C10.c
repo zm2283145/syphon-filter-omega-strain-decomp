@@ -1,7 +1,7 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Not inside a known source-file range: after guiMLTextWidget.cc (ends 0x0043E330),
+ * before SFOLobby_Mission.cc (starts 0x00442510).
  */
 
 #include "types.h"

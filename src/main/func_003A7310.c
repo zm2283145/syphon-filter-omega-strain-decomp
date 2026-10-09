@@ -1,30 +1,21 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * IOP sound command wrappers (989snd library interface).
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
-extern int snd_SendIOPCommandNoWait(int, int, int, int, int);
+extern int snd_SendIOPCommandNoWait(int cmd, int size, int* args, int a3, int t0);
 
 int func_003A7310(void) {
     return snd_SendIOPCommandNoWait(52, 0, 0, 0, 0);
 }
 
 void func_003A7330(int a0, int a1, int a2) {
-    int loc[4];
-    int a3, t0, v0;
+    int args[4];
 
-    a3 = 0;
-    t0 = 0;
-    *(int*)(char*)loc = a0;
-    *(int*)((char*)loc + 4) = a1;
-    a0 = 0 + 98;
-    *(int*)((char*)loc + 8) = a2;
-    a1 = 0 + 12;
-    a2 = (int)loc;
-    v0 = snd_SendIOPCommandNoWait(a0, a1, a2, a3, t0);
-    goto ret;
-ret:;
+    args[0] = a0;
+    args[1] = a1;
+    args[2] = a2;
+    snd_SendIOPCommandNoWait(98, 12, args, 0, 0);
 }

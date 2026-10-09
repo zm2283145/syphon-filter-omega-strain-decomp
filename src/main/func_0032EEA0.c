@@ -4,21 +4,18 @@
  * until real names are known.
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
-extern int func_00337B10(int, int, int, int);
+extern int func_00337B10(PairVec* v, Pair* pos, int count, Pair* value);
 
-int func_0032EEA0(int a0, int a1) {
-    int tmp0;
-    int tmp1;
-
-    tmp0 = *(int*)((char*)a0 + 4);
-    tmp1 = *(int*)((char*)a0 + 8);
-    return func_00337B10(a0, (tmp1 + (tmp0 << 3)), 1, a1);
+/* push_back on a vector of Pair. */
+int func_0032EEA0(PairVec* v, Pair* value) {
+    return func_00337B10(v, v->data + v->count, 1, value);
 }
 
-int func_0032EEC0(int a0, int a1, int a2) {
-    *(int*)((char*)a0) = a1;
-    *(int*)((char*)a0 + 4) = a2;
-    return a0;
+/* Pair constructor. */
+Pair* func_0032EEC0(Pair* self, int first, int second) {
+    self->first = first;
+    self->second = second;
+    return self;
 }

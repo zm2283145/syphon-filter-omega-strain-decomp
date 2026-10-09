@@ -5,7 +5,9 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-void func_0040C990(char* self, int value) {
-    *(int*)(self + 28) = value;
+/* Records the registry an object belongs to (called by Object_Register). */
+void Object_SetRegistry(L4RegObj* obj, int registry) {
+    obj->registry = registry;
 }

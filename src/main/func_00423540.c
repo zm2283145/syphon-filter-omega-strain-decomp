@@ -5,43 +5,44 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-extern int func_0041E040(int, int, int, int);
+extern int func_0041E040(Unk423540*, int, int, int);
 
-void func_00423540(int a0, int a1) {
-    *(int*)((char*)a1) = *(int*)((char*)a0 + 132);
+void func_00423540(Unk423540* self, int* out) {
+    *out = self->unk84;
 }
 
-void func_00423550(char* self, int value) {
-    *(int*)(self + 132) = value;
+void func_00423550(Unk423540* self, int value) {
+    self->unk84 = value;
 }
 
-void func_00423560(int a0, int a1, int a2) {
-    *(int*)((char*)a1) = *(int*)((char*)a0 + 120);
-    *(int*)((char*)a2) = *(int*)((char*)a0 + 124);
+void func_00423560(Unk423540* self, int* outA, int* outB) {
+    *outA = self->unk78;
+    *outB = self->unk7C;
 }
 
-void func_00423580(int a0, int a1, int a2) {
-    *(int*)((char*)a0 + 120) = a1;
-    *(int*)((char*)a0 + 124) = a2;
+void func_00423580(Unk423540* self, int a, int b) {
+    self->unk78 = a;
+    self->unk7C = b;
 }
 
-void func_00423590(int a0, int a1, int a2) {
-    *(int*)((char*)a1) = *(int*)((char*)a0 + 112);
-    *(int*)((char*)a2) = *(int*)((char*)a0 + 116);
+void func_00423590(Unk423540* self, int* outA, int* outB) {
+    *outA = self->unk70;
+    *outB = self->unk74;
 }
 
-void func_004235B0(int a0, int a1, int a2) {
-    *(int*)((char*)a0 + 112) = a1;
-    *(int*)((char*)a0 + 116) = a2;
+void func_004235B0(Unk423540* self, int a, int b) {
+    self->unk70 = a;
+    self->unk74 = b;
 }
 
-int func_004235C0(int a0, int a1, int a2) {
-    return func_0041E040(a0, 21, a1, a2);
+int func_004235C0(Unk423540* self, int a, int b) {
+    return func_0041E040(self, 21, a, b);
 }
 
-int func_004235E0(int a0, int a1, int a2) {
-    return func_0041E040(a0, 20, a1, a2);
+int func_004235E0(Unk423540* self, int a, int b) {
+    return func_0041E040(self, 20, a, b);
 }
 
 void func_00423600(void) {

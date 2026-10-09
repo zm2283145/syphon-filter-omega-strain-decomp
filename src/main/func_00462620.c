@@ -1,25 +1,25 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Address lies after GuiGameScreen.cc (ends 0x0045F090).
  */
 
-#include "types.h"
+#include "loose05_types.h"
 
-extern int func_00129A70(int, int, int);
-extern int func_00461770(int, int, int, int);
+extern int func_00129A70(void* dst, int a1, int a2);
+extern int func_00461770(Vec12* v, char* pos, int n, int value);
 
-int func_00462620(int a0, int a1) {
-    int tmp0;
-    int tmp1;
+/* Appends one 12-byte element at the end of the vector. */
+int func_00462620(Vec12* v, int value) {
+    char* data;
+    int count;
 
-    tmp0 = *(int*)((char*)a0 + 8);
-    tmp1 = *(int*)((char*)a0 + 4);
-    return func_00461770(a0, (tmp0 + (tmp1 * 12)), 1, a1);
+    data = v->data;
+    count = v->count;
+    return func_00461770(v, data + count * 12, 1, value);
 }
 
-int func_00462650(int a0, int a1, int a2) {
-    func_00129A70(a0, a1, 8);
-    *(int*)((char*)a0 + 8) = a2;
-    return a0;
+int* func_00462650(int* self, int a1, int a2) {
+    func_00129A70(self, a1, 8);
+    self[2] = a2;
+    return self;
 }

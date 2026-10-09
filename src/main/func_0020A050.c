@@ -5,14 +5,12 @@
  */
 
 #include "types.h"
+#include "loose01_types.h"
 
-extern int func_00209F60(int);
+extern char* func_00209F60(void*);
 
-int func_0020A050(int a0) {
-    int tmp0;
-
-    tmp0 = func_00209F60(a0);
-    return (tmp0 + 8);
+char* func_0020A050(void* self) {
+    return func_00209F60(self) + 8;
 }
 
 void* func_0020A070(void* self) {

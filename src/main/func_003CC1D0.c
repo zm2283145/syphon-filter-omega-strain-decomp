@@ -5,10 +5,11 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-int func_003CC1D0(int a0) {
-    *(int*)((char*)a0 + 8) = 0;
-    *(int*)((char*)a0 + 4) = 0;
-    *(char*)((char*)a0) = 0;
-    return a0;
+Unk3CC1D0* func_003CC1D0(Unk3CC1D0* self) {
+    self->unk08 = 0;
+    self->unk04 = 0;
+    self->unk00 = 0;
+    return self;
 }

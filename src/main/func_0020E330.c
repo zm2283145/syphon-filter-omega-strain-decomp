@@ -6,14 +6,11 @@
 
 #include "types.h"
 
-extern char D_004F53A8[];
+extern int D_004F53A8;
 
 void func_0020E330(void) {
 }
 
 int cEndLevelMsg_v03(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_004F53A8;
-    return tmp0;
+    return D_004F53A8;
 }

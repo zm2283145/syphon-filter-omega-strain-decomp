@@ -5,17 +5,18 @@
  */
 
 #include "types.h"
+#include "loose01_types.h"
 
-extern int func_001F3830(int, int);
-extern int func_001F3870(int);
+extern Word* func_001F3830(Word*, int);
+extern Word* func_001F3870(Word*);
 
-int func_001F3800(int a0, int a1) {
-    func_001F3830(a0, a1);
-    return a0;
+Word* func_001F3800(Word* self, int value) {
+    func_001F3830(self, value);
+    return self;
 }
 
-int func_001F3830(int a0, int a1) {
-    func_001F3870(a0);
-    *(int*)((char*)a0) = a1;
-    return a0;
+Word* func_001F3830(Word* self, int value) {
+    func_001F3870(self);
+    self->value = value;
+    return self;
 }

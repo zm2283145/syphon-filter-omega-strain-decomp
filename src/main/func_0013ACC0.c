@@ -5,12 +5,13 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
-extern char D_004EA0B8[];
+extern void* D_004EA0B8; /* LOS collision provider (research LOS_QUERY_NATIVE.md) */
 
-int LosProvider_Get(void) {
-    int tmp0;
+void* LosProvider_Get(void) {
+    void* provider;
 
-    tmp0 = *(int*)D_004EA0B8;
-    return tmp0;
+    provider = D_004EA0B8;
+    return provider;
 }

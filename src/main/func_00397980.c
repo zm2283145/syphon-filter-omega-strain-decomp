@@ -4,7 +4,7 @@
  * until real names are known.
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
 Quad* func_00397980(Quad* d, Quad* s) {
     d->a = s->a;
@@ -14,11 +14,12 @@ Quad* func_00397980(Quad* d, Quad* s) {
     return d;
 }
 
-void func_003979B0(int a0, int a1) {
-    *(int*)((char*)a0) = (*(int*)((char*)a1 + 12) + (*(int*)((char*)a1 + 8) << 2));
-    *(int*)((char*)a0 + 4) = *(int*)((char*)a1 + 12);
-    *(int*)((char*)a0 + 8) = (*(int*)((char*)a0 + 4) + (*(int*)((char*)a1 + 8) << 2));
-    *(int*)((char*)a0 + 12) = (*(int*)((char*)a0 + 4) + (*(int*)(char*)a1 << 2));
+/* Point a cursor at a word buffer. */
+void func_003979B0(WordCursor* out, WordBuf* buf) {
+    out->end = buf->data + buf->count;
+    out->begin = buf->data;
+    out->cur = out->begin + buf->count;
+    out->limit = out->begin + buf->capacity;
 }
 
 void func_00397A00(char* self) {

@@ -1,7 +1,7 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Not inside a known source-file range: after inventory.cc (ends 0x004719B0),
+ * before NetMsgThrottle.cc (starts 0x00472050).
  */
 
 #include "types.h"

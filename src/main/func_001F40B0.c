@@ -5,32 +5,28 @@
  */
 
 #include "types.h"
+#include "loose01_types.h"
 
-extern int func_001F40C0(int, int);
-extern int func_001F4110(int);
-extern int func_001F4150(int);
-extern int func_0020A080(int, int, int, int);
+extern int func_001F40C0(ObjVec*, int);
+extern char* func_001F4110(ObjVec*);
+extern char** func_001F4150(ObjVec*);
+extern int func_0020A080(ObjVec*, char*, int, int);
 
-void func_001F40B0(int a0, int a1) {
-    func_001F40C0(a0, a1);
+void func_001F40B0(ObjVec* v, int value) {
+    func_001F40C0(v, value);
 }
 
-int func_001F40C0(int a0, int a1) {
-    int tmp0;
-    int tmp2;
-
-    tmp0 = func_001F4110(a0);
-    tmp2 = func_0020A080(a0, tmp0, 1, a1);
-    return tmp2;
+/* Append one element at the end. */
+int func_001F40C0(ObjVec* v, int value) {
+    return func_0020A080(v, func_001F4110(v), 1, value);
 }
 
-int func_001F4110(int a0) {
-    int tmp0;
-    int tmp2;
-    int tmp3;
+/* End pointer for 12-byte elements. */
+char* func_001F4110(ObjVec* v) {
+    char** data;
+    int count;
 
-    tmp0 = func_001F4150(a0);
-    tmp2 = *(int*)((char*)a0 + 4);
-    tmp3 = *(int*)(char*)tmp0;
-    return (tmp3 + (tmp2 * 12));
+    data = func_001F4150(v);
+    count = v->count;
+    return *data + count * 12;
 }

@@ -5,17 +5,19 @@
  */
 
 #include "types.h"
+#include "loose01_types.h"
 
-extern char D_004DFBB0[];
-extern int MotionNode_BaseCtor(int, int, int);
-extern void func_001F2BE0(int, int);
-extern int func_001F3070(int);
+extern void* D_004DFBB0;
+extern MotionNode* MotionNode_BaseCtor(MotionNode*, int, int);
+extern void func_001F2BE0(int, ObjVec*);
+extern ObjVec* func_001F3070(ObjVec*);
 
-int func_001F2B70(int a0, int a1, int a2, int a3) {
-    MotionNode_BaseCtor(a0, 3, a3);
-    *(int*)((char*)a0) = (int)D_004DFBB0;
-    *(int*)((char*)a0 + 32) = a1;
-    func_001F3070((a0 + 36));
-    func_001F2BE0(a2, (a0 + 36));
-    return a0;
+/* Constructor of the type-3 motion node (same layout as MotionSlider up to 0x34). */
+MotionSlider* func_001F2B70(MotionSlider* self, int a1, int a2, int a3) {
+    MotionNode_BaseCtor(&self->base, 3, a3);
+    self->base.vtable = &D_004DFBB0;
+    self->unk20 = a1;
+    func_001F3070(&self->children);
+    func_001F2BE0(a2, &self->children);
+    return self;
 }

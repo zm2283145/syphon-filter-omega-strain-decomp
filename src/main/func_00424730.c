@@ -5,8 +5,10 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-void func_00424730(int a0, int a1, int a2) {
-    *(int*)((char*)a1) = *(int*)((char*)a0 + 72);
-    *(int*)((char*)a2) = *(int*)((char*)a0 + 76);
+/* Assumed to be the GuiWidget424C50 class (nearby constructor, matching offsets). */
+void func_00424730(GuiWidget424C50* self, int* outA, int* outB) {
+    *outA = self->unk48;
+    *outB = self->unk4C;
 }

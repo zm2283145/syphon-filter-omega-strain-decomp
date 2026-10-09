@@ -4,8 +4,9 @@
  * until real names are known.
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
-void func_003796C0(int a0) {
-    *(char*)((char*)a0 + 208) = 1;
+/* Sets the flag byte at +0xD0. */
+void func_003796C0(unsigned char* self) {
+    self[208] = 1;
 }

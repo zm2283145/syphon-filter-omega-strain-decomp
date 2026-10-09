@@ -5,15 +5,16 @@
  */
 
 #include "types.h"
+#include "loose01_types.h"
 
-int MotionSliderChild_CopyThresholds(int a0, int a1) {
-    *(float*)((char*)a0) = *(float*)(char*)a1;
-    *(float*)((char*)a0 + 4) = *(float*)((char*)a1 + 4);
-    return a0;
+FloatPair* MotionSliderChild_CopyThresholds(FloatPair* dst, FloatPair* src) {
+    dst->a = src->a;
+    dst->b = src->b;
+    return dst;
 }
 
-int func_001F4460(int a0, float f12, float f13) {
-    *(float*)((char*)a0) = f12;
-    *(float*)((char*)a0 + 4) = f13;
-    return a0;
+FloatPair* func_001F4460(FloatPair* self, float a, float b) {
+    self->a = a;
+    self->b = b;
+    return self;
 }

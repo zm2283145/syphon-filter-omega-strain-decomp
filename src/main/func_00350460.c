@@ -1,47 +1,35 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * GuiMissionStatList constructor (vtable D_004DEEE0).
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
-extern char D_004DEEE0[];
-extern int guiTextArrayWidget_ctor(int);
+extern char D_004DEEE0[];       /* GuiMissionStatList vtable */
+extern int guiTextArrayWidget_ctor(GuiMissionStatList*);
 
-int func_00350460(int a0) {
-    int a1, s0, v0, v1;
+/* GuiMissionStatList constructor: default layout values. */
+GuiMissionStatList* GuiMissionStatList_ctor(GuiMissionStatList* self) {
+    int flags;
 
-    s0 = a0;
-    v0 = guiTextArrayWidget_ctor(a0);
-    v1 = 0 + 110;
-    v0 = (int)D_004DEEE0;
-    a0 = 0 + 15;
-    *(int*)(char*)s0 = v0;
-    a1 = 0 + 80;
-    *(int*)((char*)s0 + 196) = v1;
-    v0 = 0 + 45;
-    *(int*)((char*)s0 + 200) = v0;
-    v1 = 0 + 50;
-    *(int*)((char*)s0 + 204) = v0;
-    *(int*)((char*)s0 + 208) = a0;
-    v0 = 0 + 20;
-    *(int*)((char*)s0 + 212) = v1;
-    a0 = 0 + 30;
-    *(int*)((char*)s0 + 216) = v1;
-    *(int*)((char*)s0 + 220) = v0;
-    v1 = 0 + 2;
-    *(int*)((char*)s0 + 224) = a1;
-    v0 = s0;
-    *(int*)((char*)s0 + 228) = a0;
-    *(int*)((char*)s0 + 232) = a1;
-    *(int*)((char*)s0 + 236) = 0;
-    *(int*)((char*)s0 + 192) = 0;
-    *(char*)((char*)s0 + 88) = v1;
-    v1 = *(unsigned short*)((char*)s0 + 20);
-    v1 = v1 | 128;
-    *(short*)((char*)s0 + 20) = v1;
-    goto ret;
-ret:
-    return v0;
+    guiTextArrayWidget_ctor(self);
+    self->base.vtable = D_004DEEE0;
+    self->unkC4 = 110;
+    self->unkC8 = 45;
+    self->unkCC = 45;
+    self->unkD0 = 15;
+    self->unkD4 = 50;
+    self->unkD8 = 50;
+    self->unkDC = 20;
+    self->unkE0 = 80;
+    self->unkE4 = 30;
+    self->unkE8 = 80;
+    self->unkEC = 0;
+    self->unkC0 = 0;
+    self->unk58 = 2;
+    /* base.flags |= 0x80; raw offsets kept: field access emits lh instead of lhu */
+    flags = *(unsigned short*)((char*)self + 0x14);
+    flags = flags | 0x80;
+    *(short*)((char*)self + 0x14) = flags;
+    return self;
 }

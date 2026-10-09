@@ -5,12 +5,14 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
-extern int LosRegion_FindLocal(int, int);
+extern int LosRegion_FindLocal(void* position, int cachedRegion);
 
-int func_0013E1A0(int a0, int a1) {
-    int tmp0;
+/* Find the region containing position, starting from the cached region (+0x08). */
+int func_0013E1A0(RegionCache* self, void* position) {
+    int cached;
 
-    tmp0 = *(int*)((char*)a0 + 8);
-    return LosRegion_FindLocal(a1, tmp0);
+    cached = self->region;
+    return LosRegion_FindLocal(position, cached);
 }

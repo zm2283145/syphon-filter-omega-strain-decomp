@@ -5,13 +5,15 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
-int func_001ED210(char* self) {
-    return *(int*)(self + 0);
+FlagElem16* func_001ED210(FlagElem16Iter* it) {
+    return it->p;
 }
 
-void func_001ED220(int a0, int a1) {
-    *(int*)((char*)a0) = (*(int*)((char*)a1 + 8) + (*(int*)((char*)a1 + 4) << 4));
+/* End iterator of an array of 16-byte elements. */
+void func_001ED220(FlagElem16Iter* out, Vec16Array* v) {
+    out->p = v->data + v->count;
 }
 
 void func_001ED240(Iter* out, PtrVec* v) {

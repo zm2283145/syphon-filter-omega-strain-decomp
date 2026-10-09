@@ -1,32 +1,33 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Original translation unit not identified yet (screen derived from the
+ * GuiLobbyScreen.cc base built by GuiScreen_ctor).
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
-extern char D_004DE8A0[];
-extern int func_0033D580(int);
-extern int func_0044FA00(int);
+extern char D_004DE8A0[];       /* L3GuiMenuScreen vtable */
+extern int GuiScreen_ctor(L3GuiMenuScreen*);
+extern int func_0044FA00(Member44FA00*);
 
-int func_0033F480(int a0) {
-    func_0033D580(a0);
-    *(int*)((char*)a0) = (int)D_004DE8A0;
-    func_0044FA00((a0 + 172));
-    func_0044FA00((a0 + 200));
-    func_0044FA00((a0 + 228));
-    *(int*)((char*)a0 + 260) = 0;
-    *(int*)((char*)a0 + 264) = 0;
-    *(int*)((char*)a0 + 268) = 0;
-    *(int*)((char*)a0 + 136) = 0;
-    *(int*)((char*)a0 + 140) = 0;
-    *(int*)((char*)a0 + 152) = 0;
-    *(int*)((char*)a0 + 156) = 0;
-    *(int*)((char*)a0 + 160) = 0;
-    *(int*)((char*)a0 + 164) = 0;
-    *(char*)((char*)a0 + 148) = 1;
-    *(int*)((char*)a0 + 168) = 0;
-    *(int*)((char*)a0 + 256) = -1;
-    return a0;
+/* L3GuiMenuScreen constructor. */
+L3GuiMenuScreen* GuiMenuScreen_ctor(L3GuiMenuScreen* self) {
+    GuiScreen_ctor(self);
+    self->base.vtable = D_004DE8A0;
+    func_0044FA00(&self->unkAC);
+    func_0044FA00(&self->unkC8);
+    func_0044FA00(&self->unkE4);
+    self->unk104 = 0;
+    self->unk108 = 0;
+    self->unk10C = 0;
+    self->unk88 = 0;
+    self->unk8C = 0;
+    self->unk98 = 0;
+    self->unk9C = 0;
+    self->unkA0 = 0;
+    self->unkA4 = 0;
+    self->unk94 = 1;
+    self->unkA8 = 0;
+    self->unk100 = -1;
+    return self;
 }

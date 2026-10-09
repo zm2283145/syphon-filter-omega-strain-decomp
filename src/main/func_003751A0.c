@@ -4,22 +4,22 @@
  * until real names are known.
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
-float func_003751A0(char* self) {
-    return *(float*)(self + 52);
+float func_003751A0(Obj3751A0* self) {
+    return self->unk34;
 }
 
-float func_003751B0(char* self) {
-    return *(float*)(self + 56);
+float func_003751B0(Obj3751A0* self) {
+    return self->unk38;
 }
 
-float func_003751C0(int a0) {
-    return *(float*)((char*)((*(int*)((char*)a0 + 136) << 2) + a0) + 120);
+float func_003751C0(Obj3751A0* self) {
+    return self->unk78[self->unk88];
 }
 
-float func_003751E0(int a0) {
-    return *(float*)((char*)((*(int*)((char*)a0 + 136) << 2) + a0) + 104);
+float func_003751E0(Obj3751A0* self) {
+    return self->unk68[self->unk88];
 }
 
 void* func_00375200(char* self) {

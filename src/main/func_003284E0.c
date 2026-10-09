@@ -5,11 +5,13 @@
  */
 
 #include "types.h"
+#include "loose02_types.h"
 
-extern int func_003285D0(int);
+extern Rel* func_003285D0(Rel* r);
 
-int func_003284E0(int a0) {
-    func_003285D0(a0);
-    *(char*)((char*)a0 + 12) = 1;
-    return a0;
+/* Owning vector constructor. */
+OwnedRel* func_003284E0(OwnedRel* self) {
+    func_003285D0(&self->vec);
+    self->owned = 1;
+    return self;
 }

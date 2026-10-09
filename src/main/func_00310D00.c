@@ -5,35 +5,26 @@
  */
 
 #include "types.h"
+#include "loose02_types.h"
 
-int func_00310D00(int a0, int a1) {
-    int v0, v1;
-    int cond;
+/* Reads unk004 into out; returns 5 on a null obj. */
+int func_00310D00(RtObj210* obj, int* out) {
+    int result = 5;
 
-    cond = a0 == 0;
-    v0 = 0 + 5;
-    if (cond) goto L00310D14;
-    v1 = *(int*)(char*)(a0 + 4);
-    v0 = 0;
-    *(int*)(char*)a1 = v1;
-L00310D14:;
-    goto ret;
-ret:
-    return v0;
+    if (obj != 0) {
+        result = 0;
+        *out = obj->unk004;
+    }
+    return result;
 }
 
-int func_00310D20(int a0, int a1) {
-    int v0, v1;
-    int cond;
+/* Reads unk210 into out; returns 5 on a null obj. */
+int func_00310D20(RtObj210* obj, int* out) {
+    int result = 5;
 
-    cond = a0 == 0;
-    v0 = 0 + 5;
-    if (cond) goto L00310D34;
-    v1 = *(int*)(char*)(a0 + 528);
-    v0 = 0;
-    *(int*)(char*)a1 = v1;
-L00310D34:;
-    goto ret;
-ret:
-    return v0;
+    if (obj != 0) {
+        result = 0;
+        *out = obj->unk210;
+    }
+    return result;
 }

@@ -5,22 +5,15 @@
  */
 
 #include "types.h"
+#include "loose01_types.h"
 
-extern char D_004FFC04[];
+extern int D_004FFC04;
 extern int func_002CA160(int);
 
-void func_0028A430(int a0) {
-    int s0, v0, v1;
-    int cond;
-
-    v1 = *(unsigned char*)(char*)(a0 + 128);
-    cond = v1 == 0;
-    s0 = a0;
-    if (cond) goto L0028A458;
-    a0 = *(int*)(char*)D_004FFC04;
-    v0 = func_002CA160(a0);
-    *(char*)(char*)(s0 + 128) = 0;
-L0028A458:;
-    goto ret;
-ret:;
+/* If the pending flag is set, call func_002CA160 on the global at D_004FFC04 and clear it. */
+void func_0028A430(Unk28A430* self) {
+    if (self->pending != 0) {
+        func_002CA160(D_004FFC04);
+        self->pending = 0;
+    }
 }

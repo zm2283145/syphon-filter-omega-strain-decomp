@@ -5,10 +5,11 @@
  */
 
 #include "types.h"
+#include "loose02_types.h"
 
-extern void func_0032A280(int);
+extern void func_0032A280(void* rec);
 
-void func_00328630(int a0) {
-    func_0032A280((a0 + 72));
-    *(int*)((char*)a0 + 88) = -1;
+void func_00328630(Obj328630* self) {
+    func_0032A280(self->unk48);
+    self->unk58 = -1;
 }

@@ -5,17 +5,19 @@
  */
 
 #include "types.h"
+#include "loose02_types.h"
 
-void func_002D79A0(int a0, int a1) {
-    float tmp0;
-    float tmp1;
-    float tmp2;
+/* Writes the object's position as a homogeneous vector (w = 1). */
+void func_002D79A0(PosObj38* self, Vec4* out) {
+    float x;
+    float y;
+    float z;
 
-    tmp0 = *(float*)((char*)a0 + 56);
-    *(float*)((char*)a1) = tmp0;
-    tmp1 = *(float*)((char*)a0 + 60);
-    *(float*)((char*)a1 + 4) = tmp1;
-    tmp2 = *(float*)((char*)a0 + 64);
-    *(float*)((char*)a1 + 8) = tmp2;
-    *(int*)((char*)a1 + 12) = 1065353216;
+    x = self->x;
+    out->x = x;
+    y = self->y;
+    out->y = y;
+    z = self->z;
+    out->z = z;
+    out->w = 1.0f;
 }

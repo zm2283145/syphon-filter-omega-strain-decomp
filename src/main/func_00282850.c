@@ -5,25 +5,18 @@
  */
 
 #include "types.h"
+#include "loose01_types.h"
 
-extern char D_00506228[];
-extern int GObj_IdentityA(int);
+extern int D_00506228;
+extern int GObj_IdentityA(void*);
 
-int Script_cBeamMsg_Who(int a0) {
-    int tmp0;
-    int tmp1;
-
-    tmp0 = *(int*)(char*)a0;
-    tmp1 = *(int*)((char*)tmp0 + 36);
-    return GObj_IdentityA(tmp1);
+int Script_cBeamMsg_Who(ScriptArg* args) {
+    return GObj_IdentityA(((PtrMsg*)args[0].p)->who);
 }
 
 void func_00282860(void) {
 }
 
 int cBeamMsg_v03(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_00506228;
-    return tmp0;
+    return D_00506228;
 }

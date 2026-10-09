@@ -1,47 +1,33 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Script type registration and accessor for cWeaponVisChangeMsg.
+ * Address lies after guiMLTextWidget.cc (ends 0x0043E330).
  */
 
-#include "types.h"
+#include "loose05_types.h"
 
-extern char D_00583970[];
-extern char D_00583978[];
-extern int Message_GetScriptTypeKeyPtr(void);
-extern void ScriptType_SetParent(int, int);
+extern int D_00583970; /* cWeaponVisChangeMsg key */
+extern int D_00583978; /* cWeaponVisChangeMsg type id */
+extern int* Message_GetScriptTypeKeyPtr(void);
+extern void ScriptType_SetParent(int type, int parent);
 
-int Script_cWeaponVisChangeMsg_Visibility(int a0) {
-    int loc[1];
-    int v0;
+/* Script native: returns the message's visibility word. */
+int Script_cWeaponVisChangeMsg_Visibility(ScriptMsg24** args) {
+    volatile int value = args[0]->value; /* stored to the stack and reloaded */
 
-    v0 = *(int*)(char*)a0;
-    v0 = *(int*)(char*)(v0 + 36);
-    *(int*)(char*)loc = v0;
-    v0 = *(int*)(char*)loc;
-    goto ret;
-ret:
-    return v0;
+    return value;
 }
 
+/* cWeaponVisChangeMsg derives from the message base type. */
 void ScriptType_cWeaponVisChangeMsg_Init(void) {
-    int tmp0;
-    int tmp2;
-    int tmp3;
-
-    tmp0 = Message_GetScriptTypeKeyPtr();
-    tmp2 = *(int*)D_00583978;
-    tmp3 = *(int*)(char*)tmp0;
-    ScriptType_SetParent(tmp2, tmp3);
+    int* parent = Message_GetScriptTypeKeyPtr();
+    ScriptType_SetParent(D_00583978, *parent);
 }
 
-int func_0043FB90(void) {
-    return (int)D_00583970;
+int* cWeaponVisChangeMsg_GetScriptTypeKeyPtr(void) {
+    return &D_00583970;
 }
 
 int cWeaponVisChangeMsg_v03(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_00583970;
-    return tmp0;
+    return D_00583970;
 }

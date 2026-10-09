@@ -5,30 +5,33 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
-int func_001E1580(char* self) {
-    return *(int*)(self + 0);
+FlagElem16* func_001E1580(FlagElem16Iter* it) {
+    return it->p;
 }
 
-int func_001E1590(char* self) {
-    return *(int*)(self + 0);
+Elem60* func_001E1590(Elem60Iter* it) {
+    return it->p;
 }
 
-void func_001E15A0(int a0, int a1) {
-    *(int*)((char*)a0) = (*(int*)((char*)a1 + 8) + (*(int*)((char*)a1 + 4) << 4));
+/* End iterator of an array of 16-byte elements. */
+void func_001E15A0(FlagElem16Iter* out, Vec16Array* v) {
+    out->p = v->data + v->count;
 }
 
 void func_001E15C0(Iter* out, PtrVec* v) {
     out->p = v->data;
 }
 
-void func_001E15D0(int a0, int a1) {
-    int tmp0;
-    int tmp1;
+/* End iterator of an array of 0x60-byte records. */
+void func_001E15D0(Elem60Iter* out, Vec60Array* v) {
+    int count;
+    Elem60* data;
 
-    tmp0 = *(int*)((char*)a1 + 4);
-    tmp1 = *(int*)((char*)a1 + 8);
-    *(int*)((char*)a0) = (tmp1 + (tmp0 * 96));
+    count = v->count;
+    data = v->data;
+    out->p = data + count;
 }
 
 void func_001E15F0(Iter* out, PtrVec* v) {

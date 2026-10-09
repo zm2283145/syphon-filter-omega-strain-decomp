@@ -5,20 +5,15 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-extern char D_00571FB0[];
-extern char D_00571FB8[];
+extern int D_00571FB0;
+extern int D_00571FB8;
 
 int func_00414790(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_00571FB8;
-    return tmp0;
+    return D_00571FB8;
 }
 
 int func_004147A0(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_00571FB0;
-    return tmp0;
+    return D_00571FB0;
 }

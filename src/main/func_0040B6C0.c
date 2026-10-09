@@ -5,7 +5,8 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-int func_0040B6C0(char* self) {
-    return *(int*)(self + 8);
+int* func_0040B6C0(PtrVec* v) {
+    return v->data;
 }

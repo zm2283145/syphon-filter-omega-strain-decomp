@@ -5,15 +5,13 @@
  */
 
 #include "types.h"
+#include "loose02_types.h"
 
-extern char D_0051EE10[];
-extern int func_002BFA90(int);
+extern GuiEquipmentModifyObj* D_0051EE10;   /* GuiEquipmentModify instance */
+extern int func_002BFA90(GuiEquipmentModifyObj* screen);
 
 int func_002C2340(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_0051EE10;
-    return func_002BFA90(tmp0);
+    return func_002BFA90(D_0051EE10);
 }
 
 void func_002C2350(void) {

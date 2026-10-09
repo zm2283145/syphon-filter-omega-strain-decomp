@@ -5,12 +5,14 @@
  */
 
 #include "types.h"
+#include "loose01_types.h"
 
 Word* func_0027AA80(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-int func_0027AA90(int a0) {
-    return (*(int*)((char*)a0 + 8) + 8);
+/* Address 8 bytes past the node stored at +8. */
+char* func_0027AA90(PtrVec* self) {
+    return (char*)self->data + 8;
 }

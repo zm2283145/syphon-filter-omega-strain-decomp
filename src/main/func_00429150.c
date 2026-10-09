@@ -5,15 +5,14 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-extern char D_005721A0[];
-extern int Event_PackHeader(int, int, int, int, int, int, int);
+extern int D_005721A0;            /* message type id */
+extern int Event_PackHeader(void* msg, int a1, int* outType, int a3, int a4, int a5, L4EventBuf* buf);
 
-int func_00429150(int a0, int a1, int a2, int a3, int t0, int t1, int t2) {
-    int tmp2;
-
-    Event_PackHeader(a0, a1, a2, a3, t0, t1, t2);
-    tmp2 = *(int*)D_005721A0;
-    *(int*)((char*)a2) = tmp2;
+/* Serializer for a message with no payload: header plus type id, 8 bytes. */
+int func_00429150(void* msg, int a1, int* outType, int a3, int a4, int a5, L4EventBuf* buf) {
+    Event_PackHeader(msg, a1, outType, a3, a4, a5, buf);
+    *outType = D_005721A0;
     return 8;
 }

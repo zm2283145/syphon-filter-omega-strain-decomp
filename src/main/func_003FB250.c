@@ -5,8 +5,9 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-extern char D_0055C7B8[];
+extern int D_0055C7B8;
 extern int func_003E5060(void);
 extern int func_003E5120(void);
 extern int func_003E51E0(void);
@@ -34,9 +35,11 @@ extern int func_00438AE0(void);
 extern int func_00440070(void);
 extern int func_004402E0(void);
 
-void func_003FB250(void) {
-    int tmp50;
-
+/*
+ * Runs the per-class registration functions of the message/event types (each
+ * callee registers one class), then stores func_0042B1A0(0) in D_0055C7B8.
+ */
+void NetMsgTypes_RegisterAll(void) {
     func_003FF210();
     func_003E5530();
     func_003E55B0();
@@ -62,6 +65,5 @@ void func_003FB250(void) {
     func_004335F0();
     func_00438AE0();
     func_004402E0();
-    tmp50 = func_0042B1A0(0);
-    *(int*)D_0055C7B8 = tmp50;
+    D_0055C7B8 = func_0042B1A0(0);
 }

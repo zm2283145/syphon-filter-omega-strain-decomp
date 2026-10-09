@@ -5,41 +5,26 @@
  */
 
 #include "types.h"
+#include "loose02_types.h"
 
-int func_003183C0(int a0) {
-    int v0, v1;
-
-    v1 = *(int*)(char*)(a0 + 72);
-    v0 = 0 + 1;
-    *(short*)(char*)(v1 + 42) = v0;
-    goto ret;
-ret:
-    return v0;
+int func_003183C0(ParamOwner* self) {
+    return self->params->unk2A = 1;
 }
 
-int func_003183D0(int a0) {
-    int tmp0;
+ParamBlock* func_003183D0(ParamOwner* self) {
+    ParamBlock* params = self->params;
 
-    tmp0 = *(int*)((char*)a0 + 72);
-    *(short*)((char*)tmp0 + 42) = 0;
-    return tmp0;
+    params->unk2A = 0;
+    return params;
 }
 
-int func_003183E0(int a0) {
-    int v0, v1;
-
-    v1 = *(int*)(char*)(a0 + 72);
-    v0 = 0 + 1;
-    *(short*)(char*)(v1 + 44) = v0;
-    goto ret;
-ret:
-    return v0;
+int func_003183E0(ParamOwner* self) {
+    return self->params->unk2C = 1;
 }
 
-int func_003183F0(int a0) {
-    int tmp0;
+ParamBlock* func_003183F0(ParamOwner* self) {
+    ParamBlock* params = self->params;
 
-    tmp0 = *(int*)((char*)a0 + 72);
-    *(short*)((char*)tmp0 + 44) = 0;
-    return tmp0;
+    params->unk2C = 0;
+    return params;
 }

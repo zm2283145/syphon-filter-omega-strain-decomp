@@ -1,29 +1,26 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Address lies after GuiGameScreen.cc (ends 0x0045F090).
  */
 
-#include "types.h"
+#include "loose05_types.h"
 
 extern char D_004C25C0[];
 extern char D_004F2CC0[];
 
-int func_00461220(int a0, int a1) {
-    int tmp0;
-
-    tmp0 = *(int*)((char*)a0 + 8);
-    return (tmp0 + (a1 * 12));
+/* Address of 12-byte element `i`. */
+char* func_00461220(Vec12* v, int i) {
+    return v->data + i * 12;
 }
 
-int func_00461240(char* self) {
-    return *(int*)(self + 4);
+int func_00461240(Vec12* v) {
+    return v->count;
 }
 
-int func_00461250(void) {
-    return (int)D_004F2CC0;
+char* func_00461250(void) {
+    return D_004F2CC0;
 }
 
-int func_00461260(void) {
-    return (int)D_004C25C0;
+char* func_00461260(void) {
+    return D_004C25C0;
 }

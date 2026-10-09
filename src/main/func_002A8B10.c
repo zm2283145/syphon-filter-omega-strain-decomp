@@ -6,8 +6,9 @@
 
 #include "types.h"
 
-extern char D_004AB700[];
+extern char D_004AB700[];   /* "GuiNetJoinMission" */
 
-int func_002A8B10(void) {
-    return (int)D_004AB700;
+/* Class name getter: "GuiNetJoinMission". */
+char* func_002A8B10(void) {
+    return D_004AB700;
 }

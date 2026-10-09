@@ -5,7 +5,9 @@
  */
 
 #include "types.h"
+#include "loose02_types.h"
 
-float func_003182E0(int a0, int a1) {
-    return (*(float*)(char*)a1 * *(float*)((char*)a0 + 56));
+/* Scales a value by the owner's scale factor. */
+float func_003182E0(ParamOwner* self, float* value) {
+    return *value * self->scale;
 }

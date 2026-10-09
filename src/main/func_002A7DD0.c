@@ -5,16 +5,13 @@
  */
 
 #include "types.h"
+#include "loose02_types.h"
 
-void func_002A7DD0(int a0, int a1) {
-    int v1;
-    int cond;
+/* Sets the screen id of the referenced screen, if any. */
+void func_002A7DD0(ScreenRefHolder* self, int screenId) {
+    GuiScreen* screen = self->screen;
 
-    v1 = *(int*)(char*)(a0 + 136);
-    cond = v1 == 0;
-    if (cond) goto L002A7DE0;
-    *(int*)(char*)(v1 + 132) = a1;
-L002A7DE0:;
-    goto ret;
-ret:;
+    if (screen != 0) {
+        screen->screenId = screenId;
+    }
 }

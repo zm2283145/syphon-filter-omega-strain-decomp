@@ -4,7 +4,7 @@
  * until real names are known.
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
 Rel* func_0034F900(Rel* r) {
     r->a = 0;
@@ -13,9 +13,9 @@ Rel* func_0034F900(Rel* r) {
     return r;
 }
 
-int func_0034F920(int a0) {
-    *(char*)((char*)a0) = 0;
-    *(int*)((char*)a0 + 4) = 0;
-    *(int*)((char*)a0 + 8) = 0;
-    return a0;
+Rec34F920* func_0034F920(Rec34F920* self) {
+    self->unk00 = 0;
+    self->unk04 = 0;
+    self->unk08 = 0;
+    return self;
 }

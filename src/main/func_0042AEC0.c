@@ -5,25 +5,21 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-extern char D_005724B0[];
-extern int func_002EAD30(int);
+extern char D_005724B0;
+extern int func_002EAD30(void* callback);
 extern int func_002EC4F8(void);
 extern int func_00429660(int, int);
 
+/* Sets D_005724B0 to 3 and installs func_00429660 via func_002EAD30; falls back to func_002EC4F8 on failure. */
 int func_0042AEC0(void) {
-    int a0, v0;
-    int cond;
+    int ret;
 
-    v0 = 0 + 3;
-    a0 = (int)func_00429660;
-    *(char*)(char*)D_005724B0 = v0;
-    v0 = func_002EAD30(a0);
-    cond = v0 != 0;
-    if (cond) goto L0042AEF0;
-    v0 = func_002EC4F8();
-L0042AEF0:;
-    goto ret;
-ret:
-    return v0;
+    D_005724B0 = 3;
+    ret = func_002EAD30(func_00429660);
+    if (ret == 0) {
+        ret = func_002EC4F8();
+    }
+    return ret;
 }

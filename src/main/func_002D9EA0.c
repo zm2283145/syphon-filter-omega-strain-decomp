@@ -5,14 +5,9 @@
  */
 
 #include "types.h"
+#include "loose02_types.h"
 
-int func_002D9EA0(int a0, int a1) {
-    int v0;
-
-    v0 = *(int*)(char*)(a0 + 112);
-    v0 = v0 | a1;
-    *(int*)(char*)(a0 + 112) = v0;
-    goto ret;
-ret:
-    return v0;
+/* Sets flag bits; returns the new flags. */
+unsigned int func_002D9EA0(Obj2D9* self, unsigned int bits) {
+    return self->flags |= bits;
 }

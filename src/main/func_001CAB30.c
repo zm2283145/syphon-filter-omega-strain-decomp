@@ -5,11 +5,14 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
-int func_001CAB30(int a0, int a1) {
-    return (a0 + (a1 << 5));
+/* Address of element index (0x20-byte records). */
+Elem20* func_001CAB30(Elem20* base, int index) {
+    return base + index;
 }
 
-int func_001CAB40(int a0, int a1) {
-    return (a0 + (((a1 << 3) - a1) << 6));
+/* Address of element index (0x1C0-byte records). */
+Elem1C0* func_001CAB40(Elem1C0* base, int index) {
+    return base + index;
 }

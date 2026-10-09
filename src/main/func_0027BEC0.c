@@ -6,11 +6,8 @@
 
 #include "types.h"
 
-extern char D_00504070[];
+extern int D_00504070;
 
 int cNetGrenadeMsg_v05(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_00504070;
-    return tmp0;
+    return D_00504070;
 }

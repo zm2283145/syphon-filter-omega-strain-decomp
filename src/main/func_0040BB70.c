@@ -5,18 +5,21 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-int func_0040BB70(char* self) {
-    return *(int*)(self + 8);
+int func_0040BB70(PtrVec* v) {
+    return (int)v->data;
 }
 
-int func_0040BB80(int a0) {
-    return (*(int*)(char*)a0 + -4);
+/* Address of the previous word (reverse-iterator dereference). */
+int* func_0040BB80(Iter* it) {
+    return it->p - 1;
 }
 
-int func_0040BB90(int a0) {
-    *(int*)((char*)a0) = (*(int*)(char*)a0 + -4);
-    return a0;
+/* Steps the pointer back one word. */
+Iter* func_0040BB90(Iter* it) {
+    it->p = it->p - 1;
+    return it;
 }
 
 int func_0040BBB0(Iter* a, Iter* b) {

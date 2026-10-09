@@ -5,13 +5,13 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-extern int func_0013BCB0(int, int);
+extern int func_0013BCB0(L4FlagVec*, int);
 
-int func_004089B0(int a0, int a1, int a2) {
-    int tmp0;
+int func_004089B0(L4FlagVec* v, int a1, int flag) {
+    int ret = func_0013BCB0(v, a1);
 
-    tmp0 = func_0013BCB0(a0, a1);
-    *(char*)((char*)a0 + 12) = a2;
-    return tmp0;
+    v->unk0C = flag;
+    return ret;
 }

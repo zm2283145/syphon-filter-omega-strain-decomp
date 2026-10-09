@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-extern char D_004FF028[];
+extern char D_004FF028;
 
-void func_0026BE70(int a0) {
-    *(char*)D_004FF028 = a0;
+void func_0026BE70(int value) {
+    D_004FF028 = value;
 }

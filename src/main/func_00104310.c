@@ -6,24 +6,13 @@
 
 #include "types.h"
 
-extern int func_00103BE8(int);
+extern int func_00103BE8(unsigned int*);
 
-int func_00104310(int a0, int a1) {
-    int v0;
-    int cond;
-
-    v0 = 0 + 1;
-    cond = a1 != v0;
-    if (cond) goto L00104330;
-    v0 = *(int*)(char*)a0;
-    v0 = (unsigned int)v0 >> 8;
-    v0 = v0 & 1;
-    goto L0010433C;
-L00104330:;
-    v0 = func_00103BE8(a0);
-    v0 = 0;
-L0010433C:;
-    goto ret;
-ret:
-    return v0;
+/* mode 1: return bit 8 of the first word; otherwise call func_00103BE8 and return 0. */
+int func_00104310(unsigned int* a0, int mode) {
+    if (mode == 1) {
+        return (*a0 >> 8) & 1;
+    }
+    func_00103BE8(a0);
+    return 0;
 }

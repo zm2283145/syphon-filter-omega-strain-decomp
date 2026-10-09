@@ -5,38 +5,25 @@
  */
 
 #include "types.h"
+#include "loose01_types.h"
 
-extern char D_005061D8[];
-extern int PtrVec_Insert(int, int, int, int);
-extern int func_00282530(int, int);
-extern int func_00282550(void);
+extern int D_005061D8;
+extern int PtrVec_Insert(PtrVec*, int*, int, int*);
+extern int PtrVec_PushBack_282530(PtrVec*, int*);
+extern PtrVec* func_00282550(void);
 
-int func_002824D0(int a0, int a1) {
-    int loc[1];
-    int s0, v0;
+/* Appends a value to the list from func_00282550 and hands out the next id from D_005061D8. */
+int func_002824D0(int value, int* outId) {
+    int tmp;
 
-    *(int*)(char*)loc = a0;
-    s0 = a1;
-    v0 = func_00282550();
-    a0 = v0;
-    a1 = (int)loc;
-    v0 = func_00282530(a0, a1);
-    v0 = *(int*)(char*)D_005061D8;
-    *(int*)(char*)s0 = v0;
-    v0 = *(int*)(char*)D_005061D8;
-    v0 = v0 + 1;
-    *(int*)(char*)D_005061D8 = v0;
-    v0 = *(int*)(char*)s0;
-    goto ret;
-ret:
-    return v0;
+    tmp = value;
+    PtrVec_PushBack_282530(func_00282550(), &tmp);
+    *outId = D_005061D8;
+    D_005061D8 = D_005061D8 + 1;
+    return *outId;
 }
 
-int func_00282530(int a0, int a1) {
-    int tmp0;
-    int tmp1;
-
-    tmp0 = *(int*)((char*)a0 + 4);
-    tmp1 = *(int*)((char*)a0 + 8);
-    return PtrVec_Insert(a0, (tmp1 + (tmp0 << 2)), 1, a1);
+/* push_back */
+int PtrVec_PushBack_282530(PtrVec* v, int* value) {
+    return PtrVec_Insert(v, v->data + v->count, 1, value);
 }

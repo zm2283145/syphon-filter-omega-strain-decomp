@@ -4,13 +4,14 @@
  * until real names are known.
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
-int func_003BB340(int a0) {
-    *(int*)((char*)a0) = -1;
-    *(int*)((char*)a0 + 4) = -1;
-    *(int*)((char*)a0 + 8) = 0;
-    *(int*)((char*)a0 + 12) = 0;
-    *(char*)((char*)a0 + 16) = 0;
-    return a0;
+/* Slot20 constructor (element ctor used by func_0037F9D0). */
+Slot20* func_003BB340(Slot20* self) {
+    self->unk00 = -1;
+    self->unk04 = -1;
+    self->unk08 = 0;
+    self->unk0C = 0;
+    self->unk10 = 0;
+    return self;
 }

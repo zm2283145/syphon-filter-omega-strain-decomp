@@ -5,34 +5,30 @@
  */
 
 #include "types.h"
+#include "loose02_types.h"
 
-extern char D_004DE670[];
-extern int func_0041E470(int);
-extern int func_0041EFA0(int);
-extern void func_0041F690(int);
+extern char D_004DE670[];   /* GuiCharacterDisplay vtable */
+extern int func_0041E470(GuiWidget* self);
+extern int func_0041EFA0(GuiWidget* self);
+extern void GuiWidget_ctor(GuiWidget* self);
 
-void func_00326810(int a0) {
-    int s0, v0, v1;
-    int cond;
-
-    s0 = a0;
-    v0 = func_0041E470(a0);
-    v1 = *(int*)(char*)(s0 + 72);
-    cond = v1 == 0;
-    if (cond) goto L00326838;
-    v0 = ((int (*)(void))v1)();
-L00326838:;
-    goto ret;
-ret:;
+/* GuiCharacterDisplay vtable slot 10: base call, then the optional callback. */
+void func_00326810(GuiCharacterDisplay* self) {
+    func_0041E470(&self->base);
+    if (self->onDestroy != 0) {
+        self->onDestroy();
+    }
 }
 
-int func_00326850(int a0) {
-    return func_0041EFA0(a0);
+/* GuiCharacterDisplay vtable slot 5: forwards to the base widget. */
+int func_00326850(GuiWidget* self) {
+    return func_0041EFA0(self);
 }
 
-int func_00326860(int a0) {
-    func_0041F690(a0);
-    *(int*)((char*)a0) = (int)D_004DE670;
-    *(int*)((char*)a0 + 72) = 0;
-    return a0;
+/* GuiCharacterDisplay constructor. */
+GuiCharacterDisplay* GuiCharacterDisplay_ctor(GuiCharacterDisplay* self) {
+    GuiWidget_ctor(&self->base);
+    self->base.vtable = D_004DE670;
+    self->onDestroy = 0;
+    return self;
 }

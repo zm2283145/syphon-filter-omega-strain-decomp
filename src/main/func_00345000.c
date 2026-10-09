@@ -4,9 +4,9 @@
  * until real names are known.
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
-extern char D_005331D0[];
+extern int D_005331D0;
 extern int func_00341F00(int);
 
 Rel* func_00345000(Rel* r) {
@@ -17,8 +17,5 @@ Rel* func_00345000(Rel* r) {
 }
 
 int func_00345020(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_005331D0;
-    return func_00341F00(tmp0);
+    return func_00341F00(D_005331D0);
 }

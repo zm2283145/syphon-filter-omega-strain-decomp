@@ -5,35 +5,28 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-extern char D_004E08D0[];
-extern int ScalarCollection_Init(int);
-extern int func_0041F690(int);
+extern char D_004E08D0[];         /* GuiWidget4160A0 vtable */
+extern int ScalarCollection_Init(L4ScalarCollection*);
+extern GuiWidget* GuiWidget_ctor(GuiWidget*);
 
-int func_004160A0(int a0) {
-    int a1, s0, v0, v1;
+/* Constructor of a GuiWidget subclass; clears flag bit 2 of the base. */
+GuiWidget4160A0* func_004160A0(GuiWidget4160A0* self) {
+    unsigned int flags;
 
-    s0 = a0;
-    v0 = func_0041F690(a0);
-    a0 = s0 + 84;
-    v0 = (int)D_004E08D0;
-    *(int*)(char*)s0 = v0;
-    v0 = ScalarCollection_Init(a0);
-    *(char*)((char*)s0 + 80) = 0;
-    a0 = 0 + 1;
-    *(int*)((char*)s0 + 72) = 0;
-    v1 = 0 | 61440;
-    *(int*)((char*)s0 + 76) = 0;
-    v0 = s0;
-    *(char*)((char*)s0 + 96) = 0;
-    *(int*)((char*)s0 + 100) = 0;
-    a1 = *(unsigned short*)((char*)s0 + 20);
-    a1 = a1 & 65531;
-    *(short*)((char*)s0 + 20) = a1;
-    *(char*)((char*)s0 + 81) = a0;
-    *(char*)((char*)s0 + 82) = a0;
-    *(int*)((char*)s0 + 104) = v1;
-    goto ret;
-ret:
-    return v0;
+    GuiWidget_ctor(&self->base);
+    self->base.vtable = D_004E08D0;
+    ScalarCollection_Init(&self->unk54);
+    self->unk50 = 0;
+    self->unk48 = 0;
+    self->unk4C = 0;
+    self->unk60 = 0;
+    self->unk64 = 0;
+    flags = self->base.flags; /* zero-extended load keeps the match */
+    self->base.flags = flags & 0xFFFB;
+    self->unk51 = 1;
+    self->unk52 = 1;
+    self->unk68 = 0xF000;
+    return self;
 }

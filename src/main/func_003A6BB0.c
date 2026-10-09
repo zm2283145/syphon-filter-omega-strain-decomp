@@ -1,15 +1,16 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Thin wrappers that pack their arguments into a stack buffer and send an
+ * IOP sound command (989snd library interface, just before 989snd.c).
  */
 
 #include "types.h"
 
-extern int func_003A7990(int, int, int);
+/* Sends IOP sound command `cmd` with `size` bytes of arguments and waits. */
+extern int func_003A7990(int cmd, int size, int *args);
 extern int func_0042B5D0(void);
 extern int func_0042B770(void);
-extern int snd_SendIOPCommandNoWait(int, int, int, int, int);
+extern int snd_SendIOPCommandNoWait(int cmd, int size, int *args, int a3, int t0);
 
 int func_003A6BB0(void) {
     return func_0042B5D0();
@@ -24,17 +25,11 @@ int func_003A6BD0(void) {
 }
 
 void func_003A6BE0(int a0, int a1) {
-    int loc[2];
-    int a2, v0;
+    int args[2];
 
-    a2 = (int)loc;
-    *(int*)(char*)loc = a0;
-    *(int*)((char*)loc + 4) = a1;
-    a0 = 0 + 90;
-    a1 = 0 + 8;
-    v0 = func_003A7990(a0, a1, a2);
-    goto ret;
-ret:;
+    args[0] = a0;
+    args[1] = a1;
+    func_003A7990(90, 8, args);
 }
 
 int func_003A6C10(void) {
@@ -42,20 +37,14 @@ int func_003A6C10(void) {
 }
 
 void func_003A6C20(int a0, int a1, int a2, int a3, int t0) {
-    int loc[8];
-    int v0;
+    int args[8];
 
-    *(int*)(char*)loc = a0;
-    *(int*)((char*)loc + 4) = a1;
-    a0 = 0 + 62;
-    *(int*)((char*)loc + 8) = a2;
-    a1 = 0 + 20;
-    *(int*)((char*)loc + 12) = a3;
-    a2 = (int)loc;
-    *(int*)((char*)loc + 16) = t0;
-    v0 = func_003A7990(a0, a1, a2);
-    goto ret;
-ret:;
+    args[0] = a0;
+    args[1] = a1;
+    args[2] = a2;
+    args[3] = a3;
+    args[4] = t0;
+    func_003A7990(62, 20, args);
 }
 
 int func_003A6C60(void) {
@@ -71,52 +60,30 @@ int func_003A6C80(void) {
 }
 
 void func_003A6C90(int a0, int a1, int a2, int a3, int t0, int t1) {
-    int loc[8];
-    int v0;
+    int args[8];
 
-    *(int*)(char*)loc = a0;
-    *(int*)((char*)loc + 4) = a1;
-    a0 = 0 + 59;
-    *(int*)((char*)loc + 8) = a2;
-    a1 = 0 + 24;
-    *(int*)((char*)loc + 12) = a3;
-    a2 = (int)loc;
-    *(int*)((char*)loc + 16) = t0;
-    *(int*)((char*)loc + 20) = t1;
-    v0 = func_003A7990(a0, a1, a2);
-    goto ret;
-ret:;
+    args[0] = a0;
+    args[1] = a1;
+    args[2] = a2;
+    args[3] = a3;
+    args[4] = t0;
+    args[5] = t1;
+    func_003A7990(59, 24, args);
 }
 
 void Global_SetReverb(int a0, int a1, int a2) {
-    int loc[4];
-    int a3, t0, v0;
+    int args[4];
 
-    a3 = 0;
-    t0 = 0;
-    *(int*)(char*)loc = a0;
-    *(int*)((char*)loc + 4) = a1;
-    a0 = 0 + 15;
-    *(int*)((char*)loc + 8) = a2;
-    a1 = 0 + 12;
-    a2 = (int)loc;
-    v0 = snd_SendIOPCommandNoWait(a0, a1, a2, a3, t0);
-    goto ret;
-ret:;
+    args[0] = a0;
+    args[1] = a1;
+    args[2] = a2;
+    snd_SendIOPCommandNoWait(15, 12, args, 0, 0);
 }
 
 void func_003A6D10(int a0, int a1) {
-    int loc[2];
-    int a2, a3, t0, v0;
+    int args[2];
 
-    a3 = 0;
-    a2 = (int)loc;
-    *(int*)(char*)loc = a0;
-    t0 = 0;
-    *(int*)((char*)loc + 4) = a1;
-    a0 = 0 + 14;
-    a1 = 0 + 8;
-    v0 = snd_SendIOPCommandNoWait(a0, a1, a2, a3, t0);
-    goto ret;
-ret:;
+    args[0] = a0;
+    args[1] = a1;
+    snd_SendIOPCommandNoWait(14, 8, args, 0, 0);
 }

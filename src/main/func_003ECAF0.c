@@ -5,21 +5,24 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-extern int func_00173970(int);
+extern int func_00173970(List*);
 
-int func_003ECAF0(int a0) {
-    *(int*)((char*)a0) = 0;
-    func_00173970(a0);
-    *(int*)((char*)a0 + 8) = (a0 + 4);
-    *(int*)((char*)a0 + 4) = (a0 + 4);
-    return a0;
+/* Constructs an empty list (sentinel at +4). */
+List* func_003ECAF0(List* l) {
+    l->count = 0;
+    func_00173970(l);
+    l->last = &l->first;
+    l->first = &l->first;
+    return l;
 }
 
-int func_003ECB30(int a0) {
-    *(int*)((char*)a0) = 0;
-    *(int*)((char*)a0 + 4) = 0;
-    *(int*)((char*)a0 + 8) = 0;
-    *(char*)((char*)a0 + 12) = 0;
-    return a0;
+/* Initializes an empty vector header. */
+L4OwnedVec* func_003ECB30(L4OwnedVec* self) {
+    self->vec.unk0 = 0;
+    self->vec.count = 0;
+    self->vec.data = 0;
+    self->owned = 0;
+    return self;
 }

@@ -1,13 +1,13 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * GuiMissionStatList class-name getter (vtable D_004DEEE0 slot 19).
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
-extern char D_004BAD40[];
+extern char D_004BAD40[];       /* "GuiMissionStatList" */
 
-int func_00350560(void) {
-    return (int)D_004BAD40;
+/* Returns the class name string "GuiMissionStatList". */
+const char* GuiMissionStatList_GetClassName(void) {
+    return D_004BAD40;
 }

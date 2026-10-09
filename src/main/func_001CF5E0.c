@@ -5,35 +5,37 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
-void* func_001CF5E0(char* self) {
-    return self + 8;
+/* Vec4 component accessors. */
+float* func_001CF5E0(Vec4* v) {
+    return &v->z;
 }
 
-void* func_001CF5F0(char* self) {
-    return self + 4;
+float* func_001CF5F0(Vec4* v) {
+    return &v->y;
 }
 
-void* func_001CF600(void* self) {
-    return self;
+float* func_001CF600(Vec4* v) {
+    return &v->x;
 }
 
-void* func_001CF610(char* self) {
-    return self + 12;
+float* func_001CF610(Vec4* v) {
+    return &v->w;
 }
 
-float func_001CF620(char* self) {
-    return *(float*)(self + 8);
+float func_001CF620(Vec4* v) {
+    return v->z;
 }
 
-float func_001CF630(char* self) {
-    return *(float*)(self + 4);
+float func_001CF630(Vec4* v) {
+    return v->y;
 }
 
-float func_001CF640(char* self) {
-    return *(float*)(self + 0);
+float func_001CF640(Vec4* v) {
+    return v->x;
 }
 
-float func_001CF650(char* self) {
-    return *(float*)(self + 12);
+float func_001CF650(Vec4* v) {
+    return v->w;
 }

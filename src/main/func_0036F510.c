@@ -4,15 +4,11 @@
  * until real names are known.
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
-extern int PtrVec_Insert(int, int, int, int);
+extern int PtrVec_Insert(PtrVec* v, int* pos, int count, int* value);
 
-int func_0036F510(int a0, int a1) {
-    int tmp0;
-    int tmp1;
-
-    tmp0 = *(int*)((char*)a0 + 4);
-    tmp1 = *(int*)((char*)a0 + 8);
-    return PtrVec_Insert(a0, (tmp1 + (tmp0 << 2)), 1, a1);
+/* push_back on a pointer vector. */
+int func_0036F510(PtrVec* v, int* value) {
+    return PtrVec_Insert(v, v->data + v->count, 1, value);
 }

@@ -5,7 +5,9 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
-int func_00183050(int a0) {
-    return ((a0 + (*(int*)(char*)a0 << 2)) + 4);
+/* End of a counted pointer array {count, items[]}. */
+void** func_00183050(PtrStack* s) {
+    return &s->items[s->count];
 }

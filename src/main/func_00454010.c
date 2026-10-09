@@ -1,31 +1,22 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Address lies after SFOLobby_Main.cc (ends 0x004534A0); probably part of it.
  */
 
-#include "types.h"
+#include "loose05_types.h"
 
-extern int func_001260F0(int, int, int);
-extern void func_0042B420(int);
-extern int func_00438A70(int, int);
+extern int memset(void* dst, int value, int size); /* memset */
+extern void func_0042B420(void* obj);
+extern int func_00438A70(int handle, int arg);
 
-void func_00454010(int a0) {
-    func_001260F0(a0, 0, 84);
-    func_0042B420(a0);
+/* Clears an 84-byte record and hands it to func_0042B420. */
+void func_00454010(void* rec) {
+    memset(rec, 0, 84);
+    func_0042B420(rec);
 }
 
-void func_00454050(int a0) {
-    int a1, v0, v1;
-    int cond;
-
-    v1 = *(unsigned char*)(char*)(a0 + 9173);
-    cond = v1 != 0;
-    if (cond) goto L00454070;
-    a0 = *(int*)(char*)(a0 + 384);
-    a1 = 0;
-    v0 = func_00438A70(a0, a1);
-L00454070:;
-    goto ret;
-ret:;
+void func_00454050(SFOLobby* self) {
+    if (self->unk23D5 == 0) {
+        func_00438A70(self->unk180, 0);
+    }
 }

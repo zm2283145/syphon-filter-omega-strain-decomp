@@ -5,8 +5,9 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-void func_003ED240(int a0) {
-    *(char*)((char*)a0 + 262) = 1;
-    *(char*)((char*)a0 + 260) = 0;
+void func_003ED240(Unk3ED240* self) {
+    self->unk106 = 1;
+    self->unk104 = 0;
 }

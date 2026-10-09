@@ -5,15 +5,13 @@
  */
 
 #include "types.h"
+#include "loose02_types.h"
 
-int func_002DA900(int a0, int a1) {
-    *(int*)((char*)a1) = *(int*)((char*)a0 + 120);
+int func_002DA900(Obj2D9* self, int* out) {
+    *out = self->unk78;
     return 0;
 }
 
-int func_002DA910(int a0) {
-    int tmp0;
-
-    tmp0 = *(int*)((char*)a0 + 152);
-    return tmp0;
+int func_002DA910(Obj2D9* self) {
+    return self->unk98;
 }

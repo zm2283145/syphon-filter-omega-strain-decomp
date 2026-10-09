@@ -5,27 +5,22 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-extern char D_004E0A40[];
-extern int func_0041C7D0(int);
+extern char D_004E0A40[];         /* Unk41ADC0 vtable */
+extern Unk41ADC0* func_0041C7D0(Unk41ADC0*);
 
-int func_0041ADC0(int a0) {
-    int s0, v0, v1;
+/* Constructor: runs the parent constructor, then sets flag bit 7. */
+Unk41ADC0* func_0041ADC0(Unk41ADC0* self) {
+    unsigned int flags;
 
-    s0 = a0;
-    v0 = func_0041C7D0(a0);
-    v1 = 0 + 100;
-    v0 = (int)D_004E0A40;
-    *(int*)(char*)s0 = v0;
-    a0 = *(unsigned short*)((char*)s0 + 20);
-    v0 = s0;
-    a0 = a0 | 128;
-    *(short*)((char*)s0 + 20) = a0;
-    *(char*)((char*)s0 + 128) = 0;
-    *(int*)((char*)s0 + 132) = v1;
-    *(int*)((char*)s0 + 140) = 0;
-    *(char*)((char*)s0 + 136) = 0;
-    goto ret;
-ret:
-    return v0;
+    func_0041C7D0(self);
+    self->vtable = D_004E0A40;
+    flags = self->flags; /* zero-extended load keeps the match */
+    self->flags = flags | 128;
+    self->unk80 = 0;
+    self->unk84 = 100;
+    self->unk8C = 0;
+    self->unk88 = 0;
+    return self;
 }

@@ -1,7 +1,7 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Not inside a known source-file range: after GuiGameScreen.cc (ends 0x0045F090),
+ * before inventory.cc (starts 0x004702A0).
  */
 
 #include "types.h"

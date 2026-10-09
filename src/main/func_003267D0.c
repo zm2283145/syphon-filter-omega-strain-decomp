@@ -6,8 +6,9 @@
 
 #include "types.h"
 
-extern char D_004B8660[];
+extern char D_004B8660[];   /* "GuiCharacterDisplay" */
 
-int func_003267D0(void) {
-    return (int)D_004B8660;
+/* Class name getter: "GuiCharacterDisplay". */
+char* func_003267D0(void) {
+    return D_004B8660;
 }

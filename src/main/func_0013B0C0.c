@@ -5,15 +5,16 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
-int func_0013B0C0(int a0) {
-    *(int*)((char*)a0) = 0;
-    *(int*)((char*)a0 + 4) = 0;
-    return a0;
+IntPair* func_0013B0C0(IntPair* p) {
+    p->a = 0;
+    p->b = 0;
+    return p;
 }
 
-int func_0013B0D0(int a0) {
-    *(char*)((char*)a0) = 0;
-    *(char*)((char*)a0 + 2) = 0;
-    return a0;
+Byte3* func_0013B0D0(Byte3* b) {
+    b->b0 = 0;
+    b->b2 = 0;
+    return b;
 }

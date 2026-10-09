@@ -5,42 +5,45 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
 extern int func_00224D80(void);
 
-int Mtx_Transpose3x3(int a0) {
-    float tmp0;
-    float tmp1;
-    float tmp2;
-    float tmp3;
-    float tmp4;
-    float tmp5;
+/* Transpose the upper 3x3 of a 4x4 matrix in place. */
+Mtx44* Mtx_Transpose3x3(Mtx44* m) {
+    float m01;
+    float m10;
+    float m02;
+    float m20;
+    float m12;
+    float m21;
 
-    tmp0 = *(float*)((char*)a0 + 4);
-    tmp1 = *(float*)((char*)a0 + 16);
-    *(float*)((char*)a0 + 4) = tmp1;
-    *(float*)((char*)a0 + 16) = tmp0;
-    tmp2 = *(float*)((char*)a0 + 8);
-    tmp3 = *(float*)((char*)a0 + 32);
-    *(float*)((char*)a0 + 8) = tmp3;
-    *(float*)((char*)a0 + 32) = tmp2;
-    tmp4 = *(float*)((char*)a0 + 24);
-    tmp5 = *(float*)((char*)a0 + 36);
-    *(float*)((char*)a0 + 24) = tmp5;
-    *(float*)((char*)a0 + 36) = tmp4;
-    return a0;
+    m01 = m->m[0][1];
+    m10 = m->m[1][0];
+    m->m[0][1] = m10;
+    m->m[1][0] = m01;
+    m02 = m->m[0][2];
+    m20 = m->m[2][0];
+    m->m[0][2] = m20;
+    m->m[2][0] = m02;
+    m12 = m->m[1][2];
+    m21 = m->m[2][1];
+    m->m[1][2] = m21;
+    m->m[2][1] = m12;
+    return m;
 }
 
 int func_0013EE60(void) {
     return 0;
 }
 
-int func_0013EE70(int a0, int a1) {
-    int tmp0;
+/* Init: owner, a value from func_00224D80 and a set flag. */
+Unk0013EE70* func_0013EE70(Unk0013EE70* self, int owner) {
+    int value;
 
-    *(int*)((char*)a0) = a1;
-    tmp0 = func_00224D80();
-    *(int*)((char*)a0 + 8) = tmp0;
-    *(char*)((char*)a0 + 4) = 1;
-    return a0;
+    self->owner = owner;
+    value = func_00224D80();
+    self->value = value;
+    self->valid = 1;
+    return self;
 }

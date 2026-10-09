@@ -1,67 +1,53 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Original translation unit not identified yet (calls into MoviePlayer.cc);
+ * functions are named by address until real names are known.
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-extern int func_0036DFB0(int, int, int);
-extern int func_0036E5D0(int);
-extern int func_003F8450(int);
-extern int func_003F8D20(int);
+extern int func_0036DFB0(void*, void*, int*);
+extern int func_0036E5D0(void*);
+extern int func_003F8450(Unk3F9380*);
+extern int func_003F8D20(Unk3F9380*);
 
-int func_003F9380(int a0, int a1, int a2) {
-    int s0, s1, s2, v0;
-
-    s2 = a0;
-    s1 = a1;
-    *(int*)(char*)a0 = 0;
-    s0 = a2;
-    *(int*)(char*)(a0 + 4) = 0;
-    *(int*)(char*)(a0 + 8) = 0;
-    *(int*)(char*)(a0 + 12) = 0;
-    *(int*)(char*)(a0 + 16) = 0;
-    *(int*)(char*)(a0 + 20) = 0;
-    *(int*)(char*)(a0 + 24) = 0;
-    *(int*)(char*)(a0 + 28) = 0;
-    *(int*)(char*)(a0 + 32) = 0;
-    *(int*)(char*)(a0 + 36) = 0;
-    *(int*)(char*)(a0 + 40) = 0;
-    *(int*)(char*)(a0 + 44) = 0;
-    *(int*)(char*)(a0 + 48) = 0;
-    *(int*)(char*)(a0 + 52) = 0;
-    *(int*)(char*)(a0 + 56) = 0;
-    *(int*)(char*)(a0 + 60) = 0;
-    *(int*)(char*)(a0 + 64) = 0;
-    *(int*)(char*)(a0 + 68) = 0;
-    *(int*)(char*)(a0 + 72) = 0;
-    *(int*)(char*)(a0 + 76) = 0;
-    a0 = s2 + 108;
-    v0 = func_0036E5D0(a0);
-    *(int*)(char*)(s2 + 392) = 0;
-    a0 = s2 + 400;
-    *(int*)(char*)(s2 + 396) = 0;
-    v0 = func_0036E5D0(a0);
-    *(int*)(char*)(s2 + 556) = s0;
-    v0 = 0 + 1;
-    *(char*)(char*)(s2 + 560) = 0;
-    a0 = s2 + 400;
-    *(char*)(char*)(s2 + 561) = 0;
-    a1 = s1 + 4;
-    *(char*)(char*)(s2 + 562) = 0;
-    a2 = s1;
-    *(char*)(char*)(s2 + 563) = 0;
-    *(char*)(char*)(s2 + 564) = 0;
-    *(char*)(char*)(s2 + 565) = 0;
-    *(char*)(char*)(s2 + 566) = v0;
-    v0 = func_0036DFB0(a0, a1, a2);
-    a0 = s2;
-    v0 = func_003F8D20(a0);
-    a0 = s2;
-    v0 = func_003F8450(a0);
-    v0 = s2;
-    goto ret;
-ret:
-    return v0;
+/* Constructor: clears the object, copies *src into the second sub-object, then runs two setup passes. */
+Unk3F9380* func_003F9380(Unk3F9380* self, int* src, int arg) {
+    self->unk00[0] = 0;
+    self->unk00[1] = 0;
+    self->unk00[2] = 0;
+    self->unk00[3] = 0;
+    self->unk00[4] = 0;
+    self->unk00[5] = 0;
+    self->unk00[6] = 0;
+    self->unk00[7] = 0;
+    self->unk00[8] = 0;
+    self->unk00[9] = 0;
+    self->unk00[10] = 0;
+    self->unk00[11] = 0;
+    self->unk00[12] = 0;
+    self->unk00[13] = 0;
+    self->unk00[14] = 0;
+    self->unk00[15] = 0;
+    self->unk00[16] = 0;
+    self->unk00[17] = 0;
+    self->unk00[18] = 0;
+    self->unk00[19] = 0;
+    func_0036E5D0(self->unk6C);
+    self->unk188 = 0;
+    self->unk18C = 0;
+    func_0036E5D0(self->unk190);
+    self->unk22C = arg;
+    self->unk230 = 0;
+    self->unk231 = 0;
+    self->unk232 = 0;
+    self->unk233 = 0;
+    self->unk234 = 0;
+    self->unk235 = 0;
+    self->unk236 = 1;
+    func_0036DFB0(self->unk190, src + 1, src);
+    func_003F8D20(self);
+    func_003F8450(self);
+    return self;
 }

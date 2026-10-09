@@ -5,14 +5,16 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
-extern int func_001D0CF0(int, int, int, int);
-extern int func_001D1140(int, int, int, int);
+extern int func_001D0CF0(int self, int a1, int a2, int a3);
+extern int func_001D1140(int self, int a1, int a2, int a3);
 
-int func_001D0C80(int a0, int a1, int a2, int a3, int t0) {
-    int tmp2;
+/* Run func_001D1140 with the first argument, then func_001D0CF0 with the second. */
+int func_001D0C80(int self, int first, int second, int a3, int t0) {
+    int result;
 
-    func_001D1140(a0, a1, a3, t0);
-    tmp2 = func_001D0CF0(a0, a2, a3, t0);
-    return tmp2;
+    func_001D1140(self, first, a3, t0);
+    result = func_001D0CF0(self, second, a3, t0);
+    return result;
 }

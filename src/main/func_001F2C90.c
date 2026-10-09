@@ -5,33 +5,36 @@
  */
 
 #include "types.h"
+#include "loose01_types.h"
 
-extern int func_001F2CA0(int, int);
-extern int func_001F2CF0(int);
-extern int func_001F2D20(int);
+extern int ListIter_NotEqual(ListIter*, ListIter*);
+extern ListIter* func_001F2CF0(ListIter*);
+extern ListIter* ListIter_Next(ListIter*);
 extern void func_001F2D50(void);
 
-int func_001F2C90(int a0, int a1) {
-    return func_001F2CA0(a0, a1);
+int func_001F2C90(ListIter* a, ListIter* b) {
+    return ListIter_NotEqual(a, b);
 }
 
-int func_001F2CA0(int a0, int a1) {
-    return ((unsigned int)(0) < (unsigned int)((*(int*)(char*)a0 ^ *(int*)(char*)a1)));
+/* Iterator inequality. */
+int ListIter_NotEqual(ListIter* a, ListIter* b) {
+    return ((unsigned int)(0) < (unsigned int)(((int)a->node ^ (int)b->node)));
 }
 
-int func_001F2CC0(int a0) {
-    func_001F2CF0(a0);
-    return a0;
+ListIter* func_001F2CC0(ListIter* it) {
+    func_001F2CF0(it);
+    return it;
 }
 
-int func_001F2CF0(int a0) {
-    func_001F2D20(a0);
-    return a0;
+ListIter* func_001F2CF0(ListIter* it) {
+    ListIter_Next(it);
+    return it;
 }
 
-int func_001F2D20(int a0) {
-    *(int*)((char*)a0) = *(int*)((char*)*(int*)(char*)a0 + 4);
-    return a0;
+/* Iterator increment: advance to the next node. */
+ListIter* ListIter_Next(ListIter* it) {
+    it->node = it->node->next;
+    return it;
 }
 
 void func_001F2D40(void) {

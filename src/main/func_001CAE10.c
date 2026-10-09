@@ -5,7 +5,9 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
-void func_001CAE10(int a0) {
-    *(char*)((char*)a0 + 786) = *(signed char*)((char*)a0 + 787);
+/* Copy byte +0x313 into +0x312. */
+void func_001CAE10(Unk001CAE10* self) {
+    self->unk312 = self->unk313;
 }

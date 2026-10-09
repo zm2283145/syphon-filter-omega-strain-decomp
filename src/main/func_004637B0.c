@@ -1,18 +1,18 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Address lies after GuiGameScreen.cc (ends 0x0045F090).
  */
 
 #include "types.h"
 
-extern int PtrVec_Insert(int, int, int, int);
+extern int PtrVec_Insert(PtrVec* v, int* pos, int n, int value);
 
-int func_004637B0(int a0, int a1) {
-    int tmp0;
-    int tmp1;
+/* Appends one value at the end of the vector. */
+int func_004637B0(PtrVec* v, int value) {
+    int count;
+    int* data;
 
-    tmp0 = *(int*)((char*)a0 + 4);
-    tmp1 = *(int*)((char*)a0 + 8);
-    return PtrVec_Insert(a0, (tmp1 + (tmp0 << 2)), 1, a1);
+    count = v->count;
+    data = v->data;
+    return PtrVec_Insert(v, data + count, 1, value);
 }

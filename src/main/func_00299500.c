@@ -6,10 +6,12 @@
 
 #include "types.h"
 
-void func_00299500(char* self) {
-    *(int*)(self + 4) = 0;
+/* Vector clear (count = 0). */
+void func_00299500(PtrVec* v) {
+    v->count = 0;
 }
 
-void func_00299510(char* self) {
-    *(int*)(self + 4) = 0;
+/* Vector clear (count = 0). */
+void func_00299510(PtrVec* v) {
+    v->count = 0;
 }

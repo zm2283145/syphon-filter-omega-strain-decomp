@@ -5,28 +5,30 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
 extern char D_004FFD30[];
 extern int Global_ReloadWeapons(void);
 extern int func_00147630(int);
-extern int func_0036E5D0(int);
-extern int func_003CC1D0(int);
+extern int func_0036E5D0(void*);
+extern int func_003CC1D0(void*);
 
-int func_00147910(int a0) {
-    func_003CC1D0(a0);
-    func_0036E5D0((a0 + 28));
-    *(int*)((char*)a0 + 20) = 0;
-    *(char*)((char*)a0 + 24) = 0;
-    *(int*)((char*)a0 + 212) = 0;
-    *(char*)((char*)a0 + 16) = 0;
-    *(int*)((char*)a0 + 184) = 0;
-    *(int*)((char*)a0 + 188) = 0;
-    *(int*)((char*)a0 + 192) = 0;
-    *(int*)((char*)a0 + 196) = 0;
-    *(int*)((char*)a0 + 200) = 0;
-    *(int*)((char*)a0 + 204) = 0;
-    *(int*)((char*)a0 + 208) = 0;
-    return a0;
+/* Constructor: base init, sub-object at +0x1C, then clear the fields. */
+Unk00147910* func_00147910(Unk00147910* self) {
+    func_003CC1D0(self);
+    func_0036E5D0(&self->unk1C);
+    self->unk14 = 0;
+    self->unk18 = 0;
+    self->unkD4 = 0;
+    self->unk10 = 0;
+    self->unkB8[0] = 0;
+    self->unkB8[1] = 0;
+    self->unkB8[2] = 0;
+    self->unkB8[3] = 0;
+    self->unkB8[4] = 0;
+    self->unkB8[5] = 0;
+    self->unkB8[6] = 0;
+    return self;
 }
 
 int Script_ReloadWeapons(void) {
@@ -35,10 +37,10 @@ int Script_ReloadWeapons(void) {
 }
 
 int Global_ReloadWeapons(void) {
-    int tmp0;
+    int db;
 
-    tmp0 = *(int*)D_004FFD30;
-    return func_00147630(tmp0);
+    db = *(int*)D_004FFD30;
+    return func_00147630(db);
 }
 
 void func_001479A0(void) {

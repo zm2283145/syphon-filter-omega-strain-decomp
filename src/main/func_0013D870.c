@@ -5,18 +5,14 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
-int func_0013D870(int a0, int a1) {
-    int loc[1];
-    int v0, v1;
+/* Iterator from a node pointer (passed through the stack). */
+Iter* func_0013D870(Iter* out, int* node) {
+    int* volatile tmp = node; /* stored to the stack and reloaded */
 
-    v0 = a0;
-    *(int*)(char*)loc = a1;
-    v1 = *(int*)(char*)loc;
-    *(int*)(char*)a0 = v1;
-    goto ret;
-ret:
-    return v0;
+    out->p = tmp;
+    return out;
 }
 
 void func_0013D890(Iter* out, Tree* t) {

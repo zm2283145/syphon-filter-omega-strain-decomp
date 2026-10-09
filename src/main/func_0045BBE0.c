@@ -1,15 +1,14 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Address lies between flashlight.cc (ends 0x0045BAD0) and GuiGameScreen.cc (starts 0x0045BC10).
  */
 
-#include "types.h"
+#include "loose05_types.h"
 
-extern char D_00497A20[];
+extern float D_00497A20;
 
-float func_0045BBE0(char* self) {
-    return *(float*)(self + 64);
+float func_0045BBE0(Float40* self) {
+    return self->unk40;
 }
 
 int func_0045BBF0(void) {
@@ -17,8 +16,5 @@ int func_0045BBF0(void) {
 }
 
 float func_0045BC00(void) {
-    float tmp0;
-
-    tmp0 = *(float*)D_00497A20;
-    return tmp0;
+    return D_00497A20;
 }

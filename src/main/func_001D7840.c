@@ -5,16 +5,18 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
-int func_001D7840(int a0, int a1) {
-    *(int*)((char*)a0) = *(int*)(char*)a1;
-    *(int*)((char*)a0 + 4) = *(int*)((char*)a1 + 4);
-    *(float*)((char*)a0 + 8) = *(float*)((char*)a1 + 8);
-    *(float*)((char*)a0 + 12) = *(float*)((char*)a1 + 12);
-    *(int*)((char*)a0 + 16) = *(int*)((char*)a1 + 16);
-    *(float*)((char*)a0 + 20) = *(float*)((char*)a1 + 20);
-    *(int*)((char*)a0 + 24) = *(int*)((char*)a1 + 24);
-    *(int*)((char*)a0 + 28) = *(int*)((char*)a1 + 28);
-    *(char*)((char*)a0 + 32) = *(unsigned char*)((char*)a1 + 32);
-    return a0;
+/* Copy a Rec24 (0x24-byte record, see func_001D86D0 for its constructor). */
+Rec24* func_001D7840(Rec24* d, Rec24* s) {
+    d->unk00 = s->unk00;
+    d->unk04 = s->unk04;
+    d->unk08 = s->unk08;
+    d->unk0C = s->unk0C;
+    d->unk10 = s->unk10;
+    d->unk14 = s->unk14;
+    d->unk18 = s->unk18;
+    d->unk1C = s->unk1C;
+    d->unk20 = s->unk20;
+    return d;
 }

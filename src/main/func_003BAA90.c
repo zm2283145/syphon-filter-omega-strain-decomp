@@ -4,8 +4,9 @@
  * until real names are known.
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
-int func_003BAA90(int a0) {
-    return ((*(int*)((char*)a0 + 8) + (*(int*)((char*)a0 + 4) << 2)) + -4);
+/* back(): address of the last element. */
+int* func_003BAA90(PtrVec* v) {
+    return v->data + v->count - 1;
 }

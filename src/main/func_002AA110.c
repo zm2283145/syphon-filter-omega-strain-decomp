@@ -5,22 +5,24 @@
  */
 
 #include "types.h"
+#include "loose02_types.h"
 
-extern char D_004DDAF0[];
-extern int func_0033D580(int);
-extern int func_0044FA00(int);
+extern char D_004DDAF0[];   /* GuiOnlineOptions vtable */
+extern GuiScreen* GuiScreen_ctor(GuiScreen* self);
+extern GuiSlot* func_0044FA00(GuiSlot* slot);
 
-int func_002AA110(int a0) {
-    func_0033D580(a0);
-    *(int*)((char*)a0) = (int)D_004DDAF0;
-    func_0044FA00((a0 + 160));
-    *(int*)((char*)a0 + 132) = 5;
-    *(int*)((char*)a0 + 136) = 0;
-    *(int*)((char*)a0 + 144) = 0;
-    *(int*)((char*)a0 + 140) = 0;
-    *(int*)((char*)a0 + 148) = 0;
-    *(int*)((char*)a0 + 156) = -1;
-    *(int*)((char*)a0 + 152) = -1;
-    *(char*)((char*)a0 + 120) = 0;
-    return a0;
+/* GuiOnlineOptions constructor. */
+GuiOnlineOptions* GuiOnlineOptions_ctor(GuiOnlineOptions* self) {
+    GuiScreen_ctor(&self->base);
+    self->base.base.base.vtable = D_004DDAF0;
+    func_0044FA00(&self->slot);
+    self->base.screenId = 5;
+    self->unk88 = 0;
+    self->unk90 = 0;
+    self->unk8C = 0;
+    self->unk94 = 0;
+    self->unk9C = -1;
+    self->unk98 = -1;
+    self->base.unk78 = 0;
+    return self;
 }

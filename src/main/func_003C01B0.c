@@ -4,15 +4,16 @@
  * until real names are known.
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
-void func_003C01B0(int a0, int a1, int a2) {
-    Q tmp0;
+/* table[index] = *value (128-bit copy). */
+void func_003C01B0(Q* table, int index, Q* value) {
+    Q tmp;
 
-    tmp0 = *(Q*)(char*)a2;
-    *(Q*)((char*)(a0 + (a1 << 4))) = tmp0;
+    tmp = *value;
+    table[index] = tmp;
 }
 
-void func_003C01D0(int a0) {
-    *(int*)((char*)a0 + 4) = (*(int*)((char*)a0 + 4) + -1);
+void func_003C01D0(Counted* self) {
+    self->count = self->count - 1;
 }

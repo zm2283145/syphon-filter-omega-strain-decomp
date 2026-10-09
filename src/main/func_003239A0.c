@@ -6,11 +6,9 @@
 
 #include "types.h"
 
-extern char D_0052ACE0[];
+extern int D_0052ACE0;
 
+/* Message type id. */
 int cNetQuickChatMsg_v05(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_0052ACE0;
-    return tmp0;
+    return D_0052ACE0;
 }

@@ -5,18 +5,15 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-extern char D_0055D4C0[];
-extern int Event_PackHeader(int, int, int, int, int, int, int);
+extern int D_0055D4C0;            /* cEnableMsg type id */
+extern int Event_PackHeader(void* msg, int a1, int* outType, int a3, int a4, int a5, L4EventBuf* buf);
 
-int cEnableMsg_v02(int a0, int a1, int a2, int a3, int t0, int t1, int t2) {
-    int tmp2;
-    int tmp3;
-
-    Event_PackHeader(a0, a1, a2, a3, t0, t1, t2);
-    tmp2 = *(int*)((char*)a0 + 36);
-    *(int*)((char*)t2 + 8) = tmp2;
-    tmp3 = *(int*)D_0055D4C0;
-    *(int*)((char*)a2) = tmp3;
+/* Serializes a cEnableMsg: header plus one word, 12 bytes. */
+int cEnableMsg_v02(L4Msg24* msg, int a1, int* outType, int a3, int a4, int a5, L4EventBuf* buf) {
+    Event_PackHeader(msg, a1, outType, a3, a4, a5, buf);
+    buf->unk08 = msg->unk24;
+    *outType = D_0055D4C0;
     return 12;
 }

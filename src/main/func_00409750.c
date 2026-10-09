@@ -5,29 +5,22 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-int func_00409750(int a0) {
-    int a1, v0, v1;
-
-    *(int*)(char*)a0 = 0;
-    v0 = 0x3e4c0000;
-    *(int*)(char*)(a0 + 4) = 0;
-    v1 = v0 | 0xcccd;
-    a1 = 0 + -1;
-    *(int*)(char*)(a0 + 8) = 0;
-    *(int*)(char*)(a0 + 12) = a1;
-    v0 = a0;
-    *(int*)(char*)(a0 + 16) = a1;
-    *(int*)(char*)(a0 + 20) = 0;
-    *(int*)(char*)(a0 + 24) = 0;
-    *(int*)(char*)(a0 + 28) = 0;
-    *(int*)(char*)(a0 + 32) = 0;
-    *(int*)(char*)(a0 + 36) = 0;
-    *(int*)(char*)(a0 + 40) = 0;
-    *(int*)(char*)(a0 + 44) = a1;
-    *(int*)(char*)(a0 + 48) = v1;
-    *(char*)(char*)(a0 + 52) = 0;
-    goto ret;
-ret:
-    return v0;
+Unk409750* func_00409750(Unk409750* self) {
+    self->unk00 = 0;
+    self->unk04 = 0;
+    self->unk08 = 0;
+    self->unk0C = -1;
+    self->unk10 = -1;
+    self->unk14 = 0;
+    self->unk18 = 0;
+    self->unk1C = 0;
+    self->unk20 = 0;
+    self->unk24 = 0;
+    self->unk28 = 0;
+    self->unk2C = -1;
+    self->unk30 = 0.2f;
+    self->unk34 = 0;
+    return self;
 }

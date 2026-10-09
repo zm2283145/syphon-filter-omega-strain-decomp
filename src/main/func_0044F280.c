@@ -1,7 +1,7 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Not inside a known source-file range: after SFOLobby_Games.cc (ends 0x0044E960),
+ * before SFOLobby_Lobby.cc (starts 0x0044FA70).
  */
 
 #include "types.h"

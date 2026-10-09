@@ -6,8 +6,9 @@
 
 #include "types.h"
 
-extern char D_004AADC0[];
+extern char D_004AADC0[];   /* "GuiOnlineConnect" */
 
-int func_0029CB50(void) {
-    return (int)D_004AADC0;
+/* Class name getter: "GuiOnlineConnect". */
+char* GuiOnlineConnect_GetClassName(void) {
+    return D_004AADC0;
 }

@@ -5,16 +5,14 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-extern char D_005435C0[];
+extern int D_005435C0;
 
 int func_003C9C10(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_005435C0;
-    return tmp0;
+    return D_005435C0;
 }
 
-int Event_GetType(char* self) {
-    return *(int*)(self + 4);
+int Event_GetType(Word* self) {
+    return self[1].value;
 }

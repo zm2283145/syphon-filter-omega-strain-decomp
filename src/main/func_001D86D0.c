@@ -5,26 +5,28 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
 extern int func_001D8730(void);
 extern int func_001D8900(void);
 
-int func_001D86D0(int a0) {
-    *(int*)((char*)a0) = 0;
-    *(int*)((char*)a0 + 4) = 0;
-    *(int*)((char*)a0 + 12) = 0;
-    *(int*)((char*)a0 + 16) = 0;
-    *(int*)((char*)a0 + 20) = 0;
-    *(int*)((char*)a0 + 24) = 0;
-    *(int*)((char*)a0 + 28) = 0;
-    *(char*)((char*)a0 + 32) = 0;
-    return a0;
+/* Rec24 constructor (+0x08 is left untouched). */
+Rec24* func_001D86D0(Rec24* r) {
+    r->unk00 = 0;
+    r->unk04 = 0;
+    r->unk0C = 0.0f;
+    r->unk10 = 0;
+    r->unk14 = 0.0f;
+    r->unk18 = 0;
+    r->unk1C = 0;
+    r->unk20 = 0;
+    return r;
 }
 
-int func_001D8700(int a0) {
-    *(int*)((char*)a0) = 0;
-    *(int*)((char*)a0 + 4) = 0;
-    return a0;
+IntPair* func_001D8700(IntPair* p) {
+    p->a = 0;
+    p->b = 0;
+    return p;
 }
 
 int func_001D8710(void) {

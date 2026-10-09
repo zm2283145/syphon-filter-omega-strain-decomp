@@ -1,41 +1,26 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Script natives forwarding a texture id to the global texture manager.
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
-extern char D_0053924C[];
-extern void Global_DecTexture(int, int);
-extern void Global_IncTexture(int, int);
+extern int D_0053924C;          /* texture manager instance */
+extern void Global_DecTexture(int mgr, int id);
+extern void Global_IncTexture(int mgr, int id);
 
-int Script_DecTexture(int a0) {
-    int loc[1];
-    int a1, v0;
+int Script_DecTexture(int* args) {
+    int part[1];
 
-    v0 = *(int*)(char*)a0;
-    *(int*)(char*)loc = v0;
-    a1 = *(int*)(char*)loc;
-    a0 = *(int*)(char*)D_0053924C;
-    Global_DecTexture(a0, a1);
-    v0 = 0;
-    goto ret;
-ret:
-    return v0;
+    part[0] = args[0];
+    Global_DecTexture(D_0053924C, *(int*)part);
+    return 0;
 }
 
-int Script_IncTexture(int a0) {
-    int loc[1];
-    int a1, v0;
+int Script_IncTexture(int* args) {
+    int part[1];
 
-    v0 = *(int*)(char*)a0;
-    *(int*)(char*)loc = v0;
-    a1 = *(int*)(char*)loc;
-    a0 = *(int*)(char*)D_0053924C;
-    Global_IncTexture(a0, a1);
-    v0 = 0;
-    goto ret;
-ret:
-    return v0;
+    part[0] = args[0];
+    Global_IncTexture(D_0053924C, *(int*)part);
+    return 0;
 }

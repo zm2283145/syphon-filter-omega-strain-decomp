@@ -5,8 +5,9 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-extern int func_003D0E40(int, int, int, int, float, float);
+extern int func_003D0E40(void* self, int a1, int first, int a2, float f0, float f1);
 
 void func_003D0D70(Iter* out, Tree* t) {
     out->p = &t->header;
@@ -21,23 +22,21 @@ void func_003D0D90(Iter* out, PtrVec* v) {
     out->p = v->data;
 }
 
-int func_003D0DA0(int a0, int a1) {
-    *(int*)((char*)a0) = a1;
-    return a0;
+Word* func_003D0DA0(Word* self, int value) {
+    self->value = value;
+    return self;
 }
 
-int func_003D0DB0(int a0, int a1) {
-    *(int*)((char*)a0) = a1;
-    return a0;
+Word* func_003D0DB0(Word* self, int value) {
+    self->value = value;
+    return self;
 }
 
 void* func_003D0DC0(char* self) {
     return self + 4;
 }
 
-int func_003D0DD0(int a0, int a1, int a2, float f12, float f13) {
-    int tmp0;
-
-    tmp0 = *(int*)(char*)a0;
-    return func_003D0E40(a0, a1, tmp0, a2, f12, f13);
+/* Forwards to func_003D0E40 with the object's first word inserted as the third argument. */
+int func_003D0DD0(Word* self, int a1, int a2, float f0, float f1) {
+    return func_003D0E40(self, a1, self->value, a2, f0, f1);
 }

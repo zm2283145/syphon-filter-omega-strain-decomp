@@ -5,33 +5,35 @@
  */
 
 #include "types.h"
+#include "loose02_types.h"
 
-extern char D_004DD620[];
-extern int func_0033D580(int);
-extern int func_0044FA00(int);
+extern char D_004DD620[];   /* GuiOnlineConnect vtable */
+extern GuiScreen* GuiScreen_ctor(GuiScreen* self);
+extern GuiSlot* func_0044FA00(GuiSlot* slot);
 
-int func_0029F2A0(int a0) {
-    func_0033D580(a0);
-    *(int*)((char*)a0) = (int)D_004DD620;
-    func_0044FA00((a0 + 152));
-    func_0044FA00((a0 + 180));
-    func_0044FA00((a0 + 208));
-    *(int*)((char*)a0 + 132) = 0;
-    *(char*)((char*)a0 + 148) = 0;
-    *(int*)((char*)a0 + 136) = 0;
-    *(int*)((char*)a0 + 140) = 0;
-    *(int*)((char*)a0 + 144) = 0;
-    *(int*)((char*)a0 + 236) = 0;
-    *(int*)((char*)a0 + 244) = 0;
-    *(int*)((char*)a0 + 248) = 0;
-    *(int*)((char*)a0 + 252) = 0;
-    *(int*)((char*)a0 + 256) = 0;
-    *(int*)((char*)a0 + 260) = 0;
-    *(int*)((char*)a0 + 268) = 0;
-    *(int*)((char*)a0 + 272) = 0;
-    *(int*)((char*)a0 + 276) = 0;
-    *(int*)((char*)a0 + 280) = 4;
-    *(int*)((char*)a0 + 284) = -2;
-    *(int*)((char*)a0 + 288) = -2;
-    return a0;
+/* GuiOnlineConnect constructor. */
+GuiOnlineConnect* GuiOnlineConnect_ctor(GuiOnlineConnect* self) {
+    GuiScreen_ctor(&self->base);
+    self->base.base.base.vtable = D_004DD620;
+    func_0044FA00(&self->slots[0]);
+    func_0044FA00(&self->slots[1]);
+    func_0044FA00(&self->slots[2]);
+    self->base.screenId = 0;
+    self->unk94 = 0;
+    self->unk88 = 0;
+    self->unk8C = 0;
+    self->unk90 = 0;
+    self->unkEC = 0;
+    self->unkF4 = 0;
+    self->unkF8 = 0;
+    self->unkFC = 0;
+    self->unk100 = 0;
+    self->unk104 = 0;
+    self->unk10C = 0;
+    self->unk110 = 0;
+    self->unk114 = 0;
+    self->unk118 = 4;
+    self->unk11C = -2;
+    self->unk120 = -2;
+    return self;
 }

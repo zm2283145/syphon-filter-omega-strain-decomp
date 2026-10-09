@@ -5,21 +5,15 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-extern int Script_ObjectToId(int);
-extern int func_003D9CC0(int, int);
+extern int Script_ObjectToId(int obj);
+extern int func_003D9CC0(void* self, int* id);
 
-void func_003D9C80(int a0, int a1) {
+/* Converts obj to its script id and passes it by address to func_003D9CC0. */
+void func_003D9C80(void* self, int obj) {
     int loc[1];
-    int s0, v0;
 
-    s0 = a0;
-    a0 = a1;
-    v0 = Script_ObjectToId(a0);
-    a0 = s0;
-    *(int*)(char*)loc = v0;
-    a1 = (int)loc;
-    v0 = func_003D9CC0(a0, a1);
-    goto ret;
-ret:;
+    loc[0] = Script_ObjectToId(obj);
+    func_003D9CC0(self, loc);
 }

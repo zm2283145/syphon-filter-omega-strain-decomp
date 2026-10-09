@@ -1,7 +1,7 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Not inside a known source-file range: after DME.cc (ends 0x0042ACD0),
+ * before nellymoser_wrapper.c (starts 0x0042C1E0).
  */
 
 #include "types.h"

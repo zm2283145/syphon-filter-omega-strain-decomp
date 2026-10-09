@@ -5,13 +5,12 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-extern char D_00572118[];
+extern L4FreeNode* D_00572118;    /* free-list head */
 
-void func_0041F9E0(int a0) {
-    int tmp0;
-
-    tmp0 = *(int*)D_00572118;
-    *(int*)((char*)a0 + 4) = tmp0;
-    *(int*)D_00572118 = a0;
+/* Pushes node onto the free list. */
+void FreeList_Push(L4FreeNode* node) {
+    node->next = D_00572118;
+    D_00572118 = node;
 }

@@ -5,25 +5,18 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
-int func_001830D0(int a0) {
+/* Byte +0x2D and byte +0x2C set and byte +0x2E clear. */
+int func_001830D0(Unk001830D0* self) {
     int v0;
-    int cond;
 
-    v0 = *(unsigned char*)(char*)(a0 + 45);
-    v0 = (unsigned int)0 < (unsigned int)v0;
-    cond = v0 == 0;
-    if (cond) goto L001830E8;
-    v0 = *(unsigned char*)(char*)(a0 + 44);
-    v0 = (unsigned int)0 < (unsigned int)v0;
-L001830E8:;
-    cond = v0 == 0;
-    if (cond) goto L001830FC;
-    v0 = *(unsigned char*)(char*)(a0 + 46);
-    v0 = (unsigned int)0 < (unsigned int)v0;
-    v0 = v0 ^ 1;
-L001830FC:;
-    goto ret;
-ret:
+    v0 = self->unk2D != 0;
+    if (v0 != 0) {
+        v0 = self->unk2C != 0;
+    }
+    if (v0 != 0) {
+        v0 = (self->unk2E != 0) ^ 1;
+    }
     return v0;
 }

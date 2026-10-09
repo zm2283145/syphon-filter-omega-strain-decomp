@@ -5,17 +5,14 @@
  */
 
 #include "types.h"
+#include "loose01_types.h"
 
-extern int func_002071B0(int);
+extern Word* func_002071B0(Word*);
 extern void func_00207200(void);
 
-int func_002071C0(int a0) {
-    int tmp0;
-    int tmp2;
-
-    tmp0 = func_002071B0(a0);
-    tmp2 = *(int*)(char*)tmp0;
-    return ((unsigned int)(0) < (unsigned int)((tmp2 & 1)));
+/* Tests bit 0 of the word. */
+int func_002071C0(Word* self) {
+    return (func_002071B0(self)->value & 1) != 0;
 }
 
 void func_002071F0(void) {

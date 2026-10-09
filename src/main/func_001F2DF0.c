@@ -5,11 +5,13 @@
  */
 
 #include "types.h"
+#include "loose01_types.h"
 
 extern void func_001F2E10(void);
 
-void* func_001F2DF0(char* self) {
-    return self + 8;
+/* Address of the data pointer. */
+char** func_001F2DF0(ObjVec* v) {
+    return &v->data;
 }
 
 void func_001F2E00(void) {

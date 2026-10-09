@@ -5,34 +5,32 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
-extern int func_00183B60(int, int);
+extern int func_00183B60(void* self, int* it);
 
-int func_00183AF0(void* self, char* p) {
-    return *(int*)(p + 0);
+/* Iterator dereferences (return *it). */
+int func_00183AF0(void* self, int* it) {
+    return it[0];
 }
 
+/* Surface index of a collision triangle (research COL_GATHER_NATIVE.md). */
 unsigned char Triangle_GetSurface(Tri* t) {
     return t->b10 >> 1;
 }
 
-int func_00183B10(void* self, char* p) {
-    return *(int*)(p + 0);
+int func_00183B10(void* self, int* it) {
+    return it[0];
 }
 
-int func_00183B20(void* self, char* p) {
-    return *(int*)(p + 0);
+int func_00183B20(void* self, int* it) {
+    return it[0];
 }
 
-int func_00183B30(int a0, int a1) {
-    int loc[1];
-    int v0;
+/* Pass a copy of the iterator to func_00183B60. */
+int func_00183B30(void* self, int* it) {
+    int copy[1];
 
-    v0 = *(int*)(char*)a1;
-    *(int*)(char*)loc = v0;
-    a1 = (int)loc;
-    v0 = func_00183B60(a0, a1);
-    goto ret;
-ret:
-    return v0;
+    copy[0] = it[0];
+    return func_00183B60(self, copy);
 }

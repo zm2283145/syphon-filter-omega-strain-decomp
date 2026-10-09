@@ -5,19 +5,22 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
-int func_001EB2F0(int a0) {
-    *(char*)((char*)a0 + 48) = 0;
-    *(int*)((char*)a0 + 80) = -1;
-    *(int*)((char*)a0 + 84) = -1;
-    *(int*)((char*)a0 + 88) = 0;
-    return a0;
+/* Reset the state block that follows a mask set (+0x30 flag, +0x50/+0x54 ids). */
+Unk001EB2F0* func_001EB2F0(Unk001EB2F0* self) {
+    self->unk30 = 0;
+    self->unk50 = -1;
+    self->unk54 = -1;
+    self->unk58 = 0;
+    return self;
 }
 
-int func_001EB310(int a0, int a1, int a2, int a3, int t0) {
-    *(int*)((char*)a0) = *(int*)(char*)a1;
-    *(int*)((char*)a0 + 4) = *(int*)(char*)a2;
-    *(int*)((char*)a0 + 8) = *(int*)(char*)a3;
-    *(int*)((char*)a0 + 12) = *(int*)(char*)t0;
-    return a0;
+/* Fill four mask words from pointers (same layout as HumanColPreset +0x04..+0x10). */
+IntQuad* func_001EB310(IntQuad* self, int* m0, int* m1, int* m2, int* m3) {
+    self->v[0] = *m0;
+    self->v[1] = *m1;
+    self->v[2] = *m2;
+    self->v[3] = *m3;
+    return self;
 }

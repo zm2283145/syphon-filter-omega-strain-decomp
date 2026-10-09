@@ -1,13 +1,13 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * GuiAgentInfo class-name getter (vtable D_004DF350 slot 19).
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
-extern char D_004BBC18[];
+extern char D_004BBC18[];       /* "GuiAgentInfo" */
 
-int func_003604D0(void) {
-    return (int)D_004BBC18;
+/* Returns the class name string "GuiAgentInfo". */
+const char* GuiAgentInfo_GetClassName(void) {
+    return D_004BBC18;
 }

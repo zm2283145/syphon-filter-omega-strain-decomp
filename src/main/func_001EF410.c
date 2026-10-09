@@ -5,14 +5,13 @@
  */
 
 #include "types.h"
+#include "loose01_types.h"
 
-extern int func_001EF450(int);
+extern ObjVec* func_001EF450(ObjVec*, ObjVec*);
 
-int func_001EF410(int a0, int a1) {
-    unsigned char tmp2;
-
-    func_001EF450(a0);
-    tmp2 = *(unsigned char*)((char*)a1 + 12);
-    *(char*)((char*)a0 + 12) = tmp2;
-    return a0;
+/* Array copy constructor: copy contents, then the owns-storage flag. */
+ObjVec* func_001EF410(ObjVec* dst, ObjVec* src) {
+    func_001EF450(dst, src);
+    dst->owned = src->owned;
+    return dst;
 }

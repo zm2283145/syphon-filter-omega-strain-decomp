@@ -5,25 +5,19 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-extern int func_00138350(int, int);
+extern int func_00138350(void* obj, int flags);
 
 void* func_0040A830(char* self) {
     return self + 4;
 }
 
-void func_0040A840(int a0, int a1) {
-    int v0;
-    int cond;
-
-    cond = a1 == 0;
-    if (cond) goto L0040A858;
-    a0 = a1;
-    a1 = 0 + -1;
-    v0 = func_00138350(a0, a1);
-L0040A858:;
-    goto ret;
-ret:;
+/* Destroys obj (flags -1) when it is non-null. */
+void func_0040A840(void* self, void* obj) {
+    if (obj != 0) {
+        func_00138350(obj, -1);
+    }
 }
 
 void* func_0040A870(void* self) {

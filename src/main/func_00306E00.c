@@ -6,8 +6,9 @@
 
 #include "types.h"
 
-extern char D_00491328[];
+extern char D_00491328[];   /* "rt_udp version: 01.02.0052" */
 
-int func_00306E00(void) {
-    return (int)D_00491328;
+/* Library version string getter: "rt_udp version: 01.02.0052". */
+char* func_00306E00(void) {
+    return D_00491328;
 }

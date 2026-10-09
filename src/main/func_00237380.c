@@ -5,9 +5,10 @@
  */
 
 #include "types.h"
+#include "loose01_types.h"
 
-int func_00237380(int a0) {
-    *(int*)((char*)a0) = -1;
-    *(char*)((char*)a0 + 4) = 0;
-    return a0;
+IdFlag* func_00237380(IdFlag* self) {
+    self->id = -1;
+    self->flag = 0;
+    return self;
 }

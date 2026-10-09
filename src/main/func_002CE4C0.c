@@ -5,17 +5,18 @@
  */
 
 #include "types.h"
+#include "loose02_types.h"
 
 int func_002CE4C0(void) {
     return 1;
 }
 
-int func_002CE4D0(char* self) {
-    return *(int*)(self + 0);
+int func_002CE4D0(WordFields* self) {
+    return self->unk00;
 }
 
-int func_002CE4E0(char* self) {
-    return *(int*)(self + 4);
+int func_002CE4E0(WordFields* self) {
+    return self->unk04;
 }
 
 List* func_002CE4F0(List* l) {

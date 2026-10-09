@@ -6,8 +6,9 @@
 
 #include "types.h"
 
-extern char D_004AA600[];
+extern char D_004AA600[];   /* "GuiCommandCenter" */
 
-int func_00294210(void) {
-    return (int)D_004AA600;
+/* Class name getter: "GuiCommandCenter". */
+char* func_00294210(void) {
+    return D_004AA600;
 }

@@ -5,20 +5,22 @@
  */
 
 #include "types.h"
+#include "loose02_types.h"
 
-extern char D_004DDD40[];
-extern int func_0033F480(int);
+extern char D_004DDD40[];   /* GuiNetAgencyCell vtable */
+extern GuiMenuScreen* GuiMenuScreen_ctor(GuiMenuScreen* self);
 
-int func_002AFF20(int a0) {
-    func_0033F480(a0);
-    *(int*)((char*)a0) = (int)D_004DDD40;
-    *(int*)((char*)a0 + 372) = 0;
-    *(int*)((char*)a0 + 376) = 0;
-    *(int*)((char*)a0 + 380) = 0;
-    *(int*)((char*)a0 + 132) = 3;
-    *(int*)((char*)a0 + 356) = 0;
-    *(int*)((char*)a0 + 360) = 0;
-    *(int*)((char*)a0 + 364) = 0;
-    *(char*)((char*)a0 + 368) = 0;
-    return a0;
+/* GuiNetAgencyCell constructor. */
+GuiNetAgencyCell* GuiNetAgencyCell_ctor(GuiNetAgencyCell* self) {
+    GuiMenuScreen_ctor(&self->base);
+    self->base.base.base.base.vtable = D_004DDD40;
+    self->unk174 = 0;
+    self->unk178 = 0;
+    self->unk17C = 0;
+    self->base.base.screenId = 3;
+    self->unk164 = 0;
+    self->unk168 = 0;
+    self->unk16C = 0;
+    self->unk170 = 0;
+    return self;
 }

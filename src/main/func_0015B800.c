@@ -5,13 +5,14 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
-int func_0015B800(char* self) {
-    return *(int*)(self + 84);
+int func_0015B800(Unk001827A0* self) {
+    return self->unk54;
 }
 
-void func_0015B810(char* self, char value) {
-    self[93] = value;
+void func_0015B810(Unk001827A0* self, char value) {
+    self->unk5D = value;
 }
 
 void func_0015B820(void) {

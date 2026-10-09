@@ -5,9 +5,10 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
 extern int func_001396D0(int, int);
-extern int func_00173970(int);
+extern int func_00173970(LinkList* list);
 
 int func_00173900(int a0, int a1) {
     return func_001396D0(a0, a1);
@@ -20,10 +21,11 @@ Rel* func_00173910(Rel* r) {
     return r;
 }
 
-int func_00173930(int a0) {
-    *(int*)((char*)a0) = 0;
-    func_00173970(a0);
-    *(int*)((char*)a0 + 8) = (a0 + 4);
-    *(int*)((char*)a0 + 4) = (a0 + 4);
-    return a0;
+/* List constructor: empty, sentinel node at +4 linked to itself. */
+LinkList* LinkList_Ctor(LinkList* list) {
+    list->count = 0;
+    func_00173970(list);
+    list->sentinel.prev = &list->sentinel;
+    list->sentinel.next = &list->sentinel;
+    return list;
 }

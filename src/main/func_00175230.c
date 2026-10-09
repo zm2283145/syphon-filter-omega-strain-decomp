@@ -6,6 +6,7 @@
 
 #include "types.h"
 
-void Actor_VirtualLeaf175230(char* self) {
-    *(int*)(self + 4) = 0;
+/* clear(): count = 0. */
+void Actor_VirtualLeaf175230(PtrVec* v) {
+    v->count = 0;
 }

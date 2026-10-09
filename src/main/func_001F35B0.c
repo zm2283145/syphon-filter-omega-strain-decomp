@@ -5,40 +5,28 @@
  */
 
 #include "types.h"
+#include "loose01_types.h"
 
-extern void func_0013D890(int, int);
-extern int func_001F2ED0(int, int);
-extern int func_001F3620(int, int);
+extern void func_0013D890(Word*, int);
+extern Word* func_001F2ED0(Word*, Word*);
+extern Word* func_001F3620(Word*, int);
 
-int func_001F35B0(int a0, int a1) {
-    func_001F2ED0(a0, a1);
-    return a0;
+Word* func_001F35B0(Word* dst, Word* src) {
+    func_001F2ED0(dst, src);
+    return dst;
 }
 
-void func_001F35E0(int a0) {
-    int loc[1];
-    int a1, s0, v0;
+void func_001F35E0(Word* self, int a1) {
+    Word tmp;
 
-    s0 = a0;
-    a0 = (int)loc;
-    func_0013D890(a0, a1);
-    a1 = *(int*)(char*)loc;
-    a0 = s0;
-    v0 = func_001F3620(a0, a1);
-    goto ret;
-ret:;
+    func_0013D890(&tmp, a1);
+    func_001F3620(self, tmp.value);
 }
 
-int func_001F3620(int a0, int a1) {
-    int loc[1];
-    int s0, v0;
+Word* func_001F3620(Word* dst, int value) {
+    Word tmp;
 
-    *(int*)(char*)loc = a1;
-    s0 = a0;
-    a1 = (int)loc;
-    v0 = func_001F2ED0(a0, a1);
-    v0 = s0;
-    goto ret;
-ret:
-    return v0;
+    tmp.value = value;
+    func_001F2ED0(dst, &tmp);
+    return dst;
 }

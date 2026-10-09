@@ -5,9 +5,10 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-extern char D_00493980[];
+extern float D_00493980;
 
-void func_003E9540(float f12) {
-    *(float*)D_00493980 = f12;
+void func_003E9540(float value) {
+    D_00493980 = value;
 }

@@ -5,15 +5,17 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
-void func_001C5650(int a0) {
-    *(char*)((char*)a0 + 44) = 1;
+/* Accessors of the object built by func_001C5950. */
+void func_001C5650(UnkGobj001C5950* self) {
+    self->base.unk2C = 1;
 }
 
-void func_001C5660(char* self) {
-    self[44] = 0;
+void func_001C5660(UnkGobj001C5950* self) {
+    self->base.unk2C = 0;
 }
 
-void func_001C5670(char* self, float value) {
-    *(float*)(self + 112) = value;
+void func_001C5670(UnkGobj001C5950* self, float value) {
+    self->unk70 = value;
 }

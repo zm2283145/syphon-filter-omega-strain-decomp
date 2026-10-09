@@ -1,20 +1,19 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Address lies after NetMsgThrottle.cc (ends 0x00472370).
  */
 
-#include "types.h"
+#include "loose05_types.h"
 
-extern int AnimChannel_SetTarget(int, int, int, float, float, float);
+extern int AnimChannel_SetTarget(void* channel, int anim, int arg, float weight, float blend, float start);
 
-int func_00475BB0(int a0) {
-    int tmp0;
-    int tmp1;
+/* Clears flag bits 25 and 26, then retargets the animation channel to anim 21. */
+int func_00475BB0(Char475BB0* self) {
+    unsigned int flags;
 
-    tmp0 = *(int*)((char*)a0 + 12872);
-    *(int*)((char*)a0 + 12872) = (tmp0 & 0xfdffffff);
-    tmp1 = *(int*)((char*)a0 + 12872);
-    *(int*)((char*)a0 + 12872) = (tmp1 & 0xfbffffff);
-    return AnimChannel_SetTarget((a0 + 11984), 21, 0, 1.0f, 0.5f, 0.0f);
+    flags = self->flags;
+    self->flags = flags & 0xfdffffff;
+    flags = self->flags;
+    self->flags = flags & 0xfbffffff;
+    return AnimChannel_SetTarget(self->animChannel, 21, 0, 1.0f, 0.5f, 0.0f);
 }

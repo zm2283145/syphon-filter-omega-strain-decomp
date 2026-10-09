@@ -1,37 +1,25 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Address lies after GuiGameScreen.cc (ends 0x0045F090); gui widget code.
  */
 
-#include "types.h"
+#include "loose05_types.h"
 
-extern char D_004C28A8[];
-extern char D_004FFC2C[];
-extern int func_0026DBC0(int);
-extern int func_0041DB80(int, int);
-extern int func_0041EFA0(int);
-extern int func_0041F150(int);
+extern char D_004C28A8[]; /* child widget name */
+extern Global4FFC2C* D_004FFC2C;
+extern int func_0026DBC0(int value);
+extern int func_0041DB80(void* self, char* name);
+extern int func_0041EFA0(void* self);
+extern int func_0041F150(void* self);
 
-int func_00464B30(int a0) {
-    int tmp2;
-    int tmp3;
-    int tmp4;
-    int tmp5;
-
-    func_0041EFA0(a0);
-    tmp2 = *(int*)D_004FFC2C;
-    tmp3 = *(int*)((char*)tmp2 + 1696);
-    *(int*)((char*)a0 + 76) = tmp3;
-    tmp4 = *(int*)((char*)a0 + 76);
-    tmp5 = func_0026DBC0(tmp4);
-    return tmp5;
+int func_00464B30(GuiWidget464B30* self) {
+    func_0041EFA0(self);
+    self->unk4C = D_004FFC2C->unk6A0;
+    return func_0026DBC0(self->unk4C);
 }
 
-void func_00464B70(int a0) {
-    int tmp2;
-
-    func_0041F150(a0);
-    tmp2 = func_0041DB80(a0, (int)D_004C28A8);
-    *(int*)((char*)a0 + 72) = tmp2;
+/* Looks up the named child widget. */
+void func_00464B70(GuiWidget464B30* self) {
+    func_0041F150(self);
+    self->child = func_0041DB80(self, D_004C28A8);
 }

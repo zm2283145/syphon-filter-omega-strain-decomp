@@ -6,8 +6,9 @@
 
 #include "types.h"
 
-extern char D_004AB070[];
+extern char D_004AB070[];   /* "GuiMissionSetup" */
 
-int func_002A0D80(void) {
-    return (int)D_004AB070;
+/* Class name getter: "GuiMissionSetup". */
+char* func_002A0D80(void) {
+    return D_004AB070;
 }

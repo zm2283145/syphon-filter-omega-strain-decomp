@@ -5,11 +5,12 @@
  */
 
 #include "types.h"
+#include "loose01_types.h"
 
-int func_00209EB0(int a0, int a1) {
-    *(float*)((char*)a0) = *(float*)(char*)a1;
-    *(float*)((char*)a0 + 4) = *(float*)((char*)a1 + 4);
-    return a0;
+FloatPair* func_00209EB0(FloatPair* dst, FloatPair* src) {
+    dst->a = src->a;
+    dst->b = src->b;
+    return dst;
 }
 
 Word* func_00209ED0(Word* dst, Word* src) {

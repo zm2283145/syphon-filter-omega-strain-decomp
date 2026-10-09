@@ -5,17 +5,19 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
-void LosResult_SetStatus(char* self, char value) {
-    self[0] = value;
+void LosResult_SetStatus(LosResult* self, char value) {
+    self->status = value;
 }
 
-int func_0013AAE0(int a0) {
-    *(char*)((char*)a0 + 64) = 0;
-    *(char*)((char*)a0 + 66) = 0;
-    *(int*)((char*)a0 + 96) = 0;
-    *(int*)((char*)a0 + 100) = 0;
-    return a0;
+/* Clear flag bytes +0x40/+0x42 and words +0x60/+0x64. */
+Unk0013AAE0* func_0013AAE0(Unk0013AAE0* self) {
+    self->unk40 = 0;
+    self->unk42 = 0;
+    self->unk60 = 0;
+    self->unk64 = 0;
+    return self;
 }
 
 void* Ptr_Identity(void* self) {

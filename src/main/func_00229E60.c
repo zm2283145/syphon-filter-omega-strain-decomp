@@ -5,16 +5,17 @@
  */
 
 #include "types.h"
+#include "loose01_types.h"
 
-extern char D_004DB810[];
-extern int func_001391E0(int);
-extern int func_003CB110(int);
+extern void* D_004DB810;
+extern int func_001391E0(int*);
+extern int func_003CB110(Unk229E60*);
 extern int func_0040F650(void);
 
-int func_00229E60(int a0) {
-    func_003CB110(a0);
-    *(int*)((char*)a0) = (int)D_004DB810;
-    func_001391E0((a0 + 44));
+Unk229E60* func_00229E60(Unk229E60* self) {
+    func_003CB110(self);
+    self->vtable = &D_004DB810;
+    func_001391E0(&self->unk2C);
     func_0040F650();
-    return a0;
+    return self;
 }

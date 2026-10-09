@@ -4,17 +4,18 @@
  * until real names are known.
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
-extern int func_00369870(int);
+extern int func_00369870(void*);
 
-int func_0036D630(int a0) {
-    func_00369870((a0 + 128));
-    *(int*)((char*)a0 + 328) = 0;
-    *(int*)((char*)a0 + 344) = 0;
-    *(int*)((char*)a0 + 348) = 0;
-    *(int*)((char*)a0 + 356) = 0;
-    *(char*)((char*)a0 + 360) = 0;
-    *(char*)((char*)a0 + 332) = 0;
-    return a0;
+/* Constructor: builds the sub-object at +0x80 and clears the remaining state. */
+Obj36D630* func_0036D630(Obj36D630* self) {
+    func_00369870(self->unk80);
+    self->unk148 = 0;
+    self->unk158 = 0;
+    self->unk15C = 0;
+    self->unk164 = 0;
+    self->unk168 = 0;
+    self->unk14C = 0;
+    return self;
 }

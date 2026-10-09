@@ -4,15 +4,12 @@
  * until real names are known.
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
-extern int func_00183D90(int, int, int, int);
+/* Inserts count copies of *value at pos (vector insert). */
+extern int func_00183D90(Vec112* v, Elem112* pos, int count, Elem112* value);
 
-int func_003BFFF0(int a0, int a1) {
-    int tmp0;
-    int tmp1;
-
-    tmp0 = *(int*)((char*)a0 + 8);
-    tmp1 = *(int*)((char*)a0 + 4);
-    return func_00183D90(a0, (tmp0 + (tmp1 * 112)), 1, a1);
+/* push_back: insert one element at the end. */
+int func_003BFFF0(Vec112* v, Elem112* value) {
+    return func_00183D90(v, &v->data[v->count], 1, value);
 }

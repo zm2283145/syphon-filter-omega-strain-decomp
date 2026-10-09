@@ -5,28 +5,24 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-extern int func_0013BCB0(int, int);
+extern int func_0013BCB0(L4Elem124Vec*, int);
 
 void func_00408DF0(Iter* out, void* self, Iter* src) {
     out->p = src->p;
 }
 
-int func_00408E00(int a0) {
-    int tmp0;
-    int tmp1;
-
-    tmp0 = *(int*)((char*)a0 + 4);
-    tmp1 = *(int*)((char*)a0 + 8);
-    return (tmp1 + (tmp0 * 292));
+/* end() of the element vector. */
+L4Elem124* func_00408E00(L4Elem124Vec* v) {
+    return v->data + v->count;
 }
 
-int func_00408E30(int a0, int a1, int a2) {
-    int tmp0;
+int func_00408E30(L4Elem124Vec* v, int a1, int value) {
+    int ret = func_0013BCB0(v, a1);
 
-    tmp0 = func_0013BCB0(a0, a1);
-    *(int*)((char*)a0 + 12) = a2;
-    return tmp0;
+    v->unk0C = value;
+    return ret;
 }
 
 Word* func_00408E70(Word* dst, Word* src) {

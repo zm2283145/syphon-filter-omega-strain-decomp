@@ -1,13 +1,13 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * GuiKeyboard class-name getter (vtable D_004DE790 slot 19).
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
-extern char D_004B8D80[];
+extern char D_004B8D80[];       /* "GuiKeyboard" */
 
-int func_0032AED0(void) {
-    return (int)D_004B8D80;
+/* Returns the class name string "GuiKeyboard". */
+const char* GuiKeyboard_GetClassName(void) {
+    return D_004B8D80;
 }

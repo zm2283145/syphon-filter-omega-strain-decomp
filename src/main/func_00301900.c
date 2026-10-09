@@ -6,20 +6,13 @@
 
 #include "types.h"
 
-int func_00301900(int a0, int a1) {
-    int v0, v1;
-    int cond;
+/* Reads one byte from src into out; returns 2 on a null argument. */
+int func_00301900(unsigned char* src, unsigned char* out) {
+    int result = 2;
 
-    cond = a0 == 0;
-    v0 = 0 + 2;
-    if (cond) goto L0030191C;
-    cond = a1 == 0;
-    if (cond) goto L0030191C;
-    v1 = *(unsigned char*)(char*)a0;
-    v0 = 0;
-    *(char*)(char*)a1 = v1;
-L0030191C:;
-    goto ret;
-ret:
-    return v0;
+    if (src != 0 && out != 0) {
+        result = 0;
+        *out = *src;
+    }
+    return result;
 }

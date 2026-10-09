@@ -5,10 +5,11 @@
  */
 
 #include "types.h"
+#include "loose01_types.h"
 
-extern int ScalarCollection_Init(int);
+extern void ScalarCollection_Init(ScalarCollection*);
 
-int func_001F39C0(int a0) {
-    ScalarCollection_Init(a0);
-    return a0;
+ScalarCollection* func_001F39C0(ScalarCollection* self) {
+    ScalarCollection_Init(self);
+    return self;
 }

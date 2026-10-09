@@ -5,24 +5,25 @@
  */
 
 #include "types.h"
+#include "loose01_types.h"
 
-extern int func_001F2CA0(int, int);
-extern int func_001F2D20(int);
-extern int func_001F4070(int);
+extern int ListIter_NotEqual(ListIter*, ListIter*);
+extern ListIter* ListIter_Next(ListIter*);
+extern ListIter* func_001F4070(ListIter*);
 extern void func_001F40B0(void);
 
-int func_001F4030(int a0, int a1) {
-    return func_001F2CA0(a0, a1);
+int func_001F4030(ListIter* a, ListIter* b) {
+    return ListIter_NotEqual(a, b);
 }
 
-int func_001F4040(int a0) {
-    func_001F4070(a0);
-    return a0;
+ListIter* func_001F4040(ListIter* it) {
+    func_001F4070(it);
+    return it;
 }
 
-int func_001F4070(int a0) {
-    func_001F2D20(a0);
-    return a0;
+ListIter* func_001F4070(ListIter* it) {
+    ListIter_Next(it);
+    return it;
 }
 
 void func_001F40A0(void) {

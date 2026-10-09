@@ -5,13 +5,15 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
-extern int func_0013BCB0(int, int);
+extern int func_0013BCB0(Unk0013BDE0* self, int a1);
 
-int func_0013BDE0(int a0, int a1, int a2) {
-    int tmp0;
+/* Base init through func_0013BCB0, then store the word at +0x0C. */
+int func_0013BDE0(Unk0013BDE0* self, int a1, int value) {
+    int result;
 
-    tmp0 = func_0013BCB0(a0, a1);
-    *(int*)((char*)a0 + 12) = a2;
-    return tmp0;
+    result = func_0013BCB0(self, a1);
+    self->unk0C = value;
+    return result;
 }

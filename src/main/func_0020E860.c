@@ -5,14 +5,15 @@
  */
 
 #include "types.h"
+#include "loose01_types.h"
 
-extern char D_004D97F0[];
+extern void* D_004D97F0;
 extern char D_004F53E8[];
-extern int Event_Construct(int, int);
+extern ByteEvent* Event_Construct(ByteEvent*, char*);
 
-int func_0020E860(int a0, int a1) {
-    Event_Construct(a0, (int)D_004F53E8);
-    *(int*)((char*)a0) = (int)D_004D97F0;
-    *(char*)((char*)a0 + 36) = a1;
-    return a0;
+ByteEvent* func_0020E860(ByteEvent* self, int value) {
+    Event_Construct(self, D_004F53E8);
+    self->vtable = &D_004D97F0;
+    self->value = value;
+    return self;
 }

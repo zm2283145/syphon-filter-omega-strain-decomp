@@ -4,25 +4,17 @@
  * until real names are known.
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
-extern int func_003527A0(int, int);
+extern int func_003527A0(Member3527A0* dst, Member3527A0* src);
 
-int func_00352320(int a0, int a1) {
-    int s0, s1, s2, v0, v1;
+/* Rec352320 copy constructor. */
+Rec352320* func_00352320(Rec352320* self, Rec352320* src) {
+    Member352320* body;
 
-    s2 = a0;
-    s1 = a1;
-    v0 = *(int*)(char*)a1;
-    s0 = s2 + 4;
-    *(int*)(char*)a0 = v0;
-    a1 = s1 + 4;
-    a0 = s0;
-    v0 = func_003527A0(a0, a1);
-    v1 = *(unsigned char*)(char*)(s1 + 16);
-    v0 = s2;
-    *(char*)(char*)(s0 + 12) = v1;
-    goto ret;
-ret:
-    return v0;
+    self->unk00 = src->unk00;
+    body = &self->unk04;
+    func_003527A0(&body->unk00, &src->unk04.unk00);
+    body->unk0C = src->unk04.unk0C;
+    return self;
 }

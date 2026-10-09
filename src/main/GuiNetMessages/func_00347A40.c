@@ -8,11 +8,11 @@
 #include "GuiNetMessages_types.h"
 
 extern char D_004DEB10[];   /* GuiNetMessages vtable */
-extern void* func_0033D580(void* self);
+extern void* GuiScreen_ctor(void* self);
 
 /* Constructor. */
 GuiNetMessages* func_00347A40(GuiNetMessages* self) {
-    func_0033D580(self);
+    GuiScreen_ctor(self);
     self->vtable = D_004DEB10;
     self->unk84 = 9;
     self->unk88 = 0;

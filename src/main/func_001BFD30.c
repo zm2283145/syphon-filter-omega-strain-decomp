@@ -5,19 +5,14 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
-extern int Global_LoadAnimation(int);
+extern int Global_LoadAnimation(int anim);
 
-int Script_LoadAnimation(int a0) {
-    int loc[1];
-    int v0;
+/* Script native: LoadAnimation(id). */
+int Script_LoadAnimation(ScriptArg* args) {
+    volatile int anim = args[0].i; /* stored to the stack and reloaded */
 
-    v0 = *(int*)(char*)a0;
-    *(int*)(char*)loc = v0;
-    a0 = *(int*)(char*)loc;
-    v0 = Global_LoadAnimation(a0);
-    v0 = 0;
-    goto ret;
-ret:
-    return v0;
+    Global_LoadAnimation(anim);
+    return 0;
 }

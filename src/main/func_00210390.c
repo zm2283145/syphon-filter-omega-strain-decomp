@@ -6,11 +6,8 @@
 
 #include "types.h"
 
-extern char D_004F5400[];
+extern int D_004F5400;
 
 int cMaxActiveNpcCountMsg_v05(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_004F5400;
-    return tmp0;
+    return D_004F5400;
 }

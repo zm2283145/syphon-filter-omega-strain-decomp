@@ -5,8 +5,9 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
-extern void Tree_Successor(int);
+extern void Tree_Successor(Iter* it);
 
 int func_0013F100(Iter* a, Iter* b) {
     return !(a->p == b->p);
@@ -16,21 +17,24 @@ void func_0013F120(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
-int func_0013F130(int a0) {
-    Tree_Successor(a0);
-    return a0;
+/* ++it on a tree iterator. */
+Iter* TreeIter_Increment(Iter* it) {
+    Tree_Successor(it);
+    return it;
 }
 
-int func_0013F160(int a0) {
-    return (*(int*)(char*)a0 + 16);
+/* Value part of the current tree node (+0x10). */
+char* func_0013F160(Iter16* it) {
+    return it->p + 16;
 }
 
 void func_0013F170(Iter* out, Tree* t) {
     out->p = t->leftmost;
 }
 
-int func_0013F180(int a0, int a1, int a2) {
-    *(float*)((char*)a0) = *(float*)(char*)a1;
-    *(int*)((char*)a0 + 4) = *(int*)(char*)a2;
-    return a0;
+/* Build a (float, int) pair from pointers. */
+FloatIntPair* func_0013F180(FloatIntPair* p, float* f, int* i) {
+    p->f = *f;
+    p->i = *i;
+    return p;
 }

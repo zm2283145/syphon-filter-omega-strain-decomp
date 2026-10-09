@@ -5,14 +5,10 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
-int Vec_SetPositionW1(int a0) {
-    int v0;
-
-    v0 = 0x3f800000;
-    *(int*)(char*)(a0 + 12) = v0;
-    v0 = a0;
-    goto ret;
-ret:
-    return v0;
+/* Set w = 1.0 (homogeneous position). */
+Vec4* Vec_SetPositionW1(Vec4* v) {
+    v->w = 1.0f;
+    return v;
 }

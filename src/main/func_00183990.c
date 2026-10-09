@@ -5,12 +5,14 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
 extern int func_00139920(int, int);
 extern int func_00183B70(int, int, int);
 
-int func_00183990(int a0) {
-    return ((*(int*)((char*)a0 + 8) + (((*(int*)((char*)a0 + 4) << 3) - *(int*)((char*)a0 + 4)) << 4)) + -112);
+/* Last element of an array of 0x70-byte records. */
+Elem70* func_00183990(Vec70Array* v) {
+    return (v->data + v->count) + -1;
 }
 
 int func_001839B0(int a0, int a1, int a2) {
@@ -21,10 +23,10 @@ int func_001839C0(int a0, int a1) {
     return func_00139920(a0, a1);
 }
 
-int func_001839D0(char* self) {
-    return *(int*)(self + 0);
+int func_001839D0(IntPair* p) {
+    return p->a;
 }
 
-int func_001839E0(char* self) {
-    return *(int*)(self + 4);
+int func_001839E0(IntPair* p) {
+    return p->b;
 }

@@ -22,6 +22,7 @@ void func_00181080(PtrVec* a, PtrVec* b) {
     }
 }
 
-void List_Clear(char* self) {
-    *(int*)(self + 4) = 0;
+/* clear(): count = 0. */
+void List_Clear(PtrVec* v) {
+    v->count = 0;
 }

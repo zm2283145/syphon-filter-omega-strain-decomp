@@ -1,7 +1,6 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Not inside a known source-file range: after NetMsgThrottle.cc (ends 0x00472370).
  */
 
 #include "types.h"

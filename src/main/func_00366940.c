@@ -4,18 +4,19 @@
  * until real names are known.
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
-float func_00366940(char* self) {
-    return *(float*)(self + 4);
+float func_00366940(Float6* self) {
+    return self->v[1];
 }
 
-int func_00366950(int a0, int a1) {
-    *(float*)((char*)a0) = *(float*)(char*)a1;
-    *(float*)((char*)a0 + 4) = *(float*)((char*)a1 + 4);
-    *(float*)((char*)a0 + 8) = *(float*)((char*)a1 + 8);
-    *(float*)((char*)a0 + 12) = *(float*)((char*)a1 + 12);
-    *(float*)((char*)a0 + 16) = *(float*)((char*)a1 + 16);
-    *(float*)((char*)a0 + 20) = *(float*)((char*)a1 + 20);
-    return a0;
+/* Float6 copy. */
+Float6* func_00366950(Float6* dst, Float6* src) {
+    dst->v[0] = src->v[0];
+    dst->v[1] = src->v[1];
+    dst->v[2] = src->v[2];
+    dst->v[3] = src->v[3];
+    dst->v[4] = src->v[4];
+    dst->v[5] = src->v[5];
+    return dst;
 }

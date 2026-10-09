@@ -5,7 +5,8 @@
  */
 
 #include "types.h"
+#include "loose01_types.h"
 
-int func_00272AC0(char* self) {
-    return *(int*)(self + 60);
+int func_00272AC0(Unk272AC0* self) {
+    return self->unk3C;
 }

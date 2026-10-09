@@ -5,13 +5,14 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-extern char D_004E00A8[];
-extern int ScalarCollection_Init(int);
+extern char D_004E00A8[];         /* Unk3D28D0 vtable */
+extern int ScalarCollection_Init(L4ScalarCollection*);
 
-int func_003D28D0(int a0) {
-    *(int*)((char*)a0 + 16) = (int)D_004E00A8;
-    ScalarCollection_Init(a0);
-    *(char*)((char*)a0 + 12) = 0;
-    return a0;
+Unk3D28D0* func_003D28D0(Unk3D28D0* self) {
+    self->vtable = D_004E00A8;
+    ScalarCollection_Init(&self->coll);
+    self->unk0C = 0;
+    return self;
 }

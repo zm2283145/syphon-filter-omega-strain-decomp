@@ -6,11 +6,8 @@
 
 #include "types.h"
 
-extern char D_004F5418[];
+extern int D_004F5418;
 
 int cAtmosphericEffectMsg_v05(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_004F5418;
-    return tmp0;
+    return D_004F5418;
 }

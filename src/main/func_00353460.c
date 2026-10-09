@@ -1,13 +1,13 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * GuiAchievementScreen class-name getter (vtable D_004DEF90 slot 19).
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
-extern char D_004BB050[];
+extern char D_004BB050[];       /* "GuiAchievementScreen" */
 
-int func_00353460(void) {
-    return (int)D_004BB050;
+/* Returns the class name string "GuiAchievementScreen". */
+const char* GuiAchievementScreen_GetClassName(void) {
+    return D_004BB050;
 }

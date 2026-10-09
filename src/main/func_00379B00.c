@@ -4,11 +4,9 @@
  * until real names are known.
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
-int func_00379B00(int a0) {
-    int tmp0;
-
-    tmp0 = *(int*)((char*)a0 + 2672);
-    return ((a0 + (tmp0 * 272)) + 496);
+/* Address of the currently selected 272-byte item. */
+char* func_00379B00(Manager37F9D0* self) {
+    return self->items[self->current];
 }

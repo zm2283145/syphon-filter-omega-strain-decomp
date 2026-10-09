@@ -6,8 +6,9 @@
 
 #include "types.h"
 
-extern char D_004AB618[];
+extern char D_004AB618[];   /* "GuiMessageBox" */
 
-int func_002A7AC0(void) {
-    return (int)D_004AB618;
+/* Class name getter: "GuiMessageBox". */
+char* func_002A7AC0(void) {
+    return D_004AB618;
 }

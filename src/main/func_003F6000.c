@@ -5,14 +5,15 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-int func_003F6000(int a0) {
-    return ((unsigned int)((*(int*)((char*)a0 + 12) ^ *(int*)((char*)a0 + 16))) < (unsigned int)(1));
+int func_003F6000(Unk3F6000* self) {
+    return self->unk0C == self->unk10;
 }
 
-void func_003F6020(int a0) {
-    *(int*)((char*)a0 + 12) = 0;
-    *(int*)((char*)a0 + 8) = 0;
+void func_003F6020(Unk3F6000* self) {
+    self->unk0C = 0;
+    self->unk08 = 0;
 }
 
 void func_003F6030(void) {

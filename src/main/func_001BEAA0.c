@@ -5,7 +5,9 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
+/* 16-byte copy. */
 Quad* func_001BEAA0(Quad* d, Quad* s) {
     d->a = s->a;
     d->b = s->b;
@@ -14,9 +16,10 @@ Quad* func_001BEAA0(Quad* d, Quad* s) {
     return d;
 }
 
-void func_001BEAD0(int a0, int a1) {
-    *(int*)((char*)a0) = (*(int*)((char*)a1 + 12) + (*(int*)((char*)a1 + 8) << 2));
-    *(int*)((char*)a0 + 4) = *(int*)((char*)a1 + 12);
-    *(int*)((char*)a0 + 8) = (*(int*)((char*)a0 + 4) + (*(int*)((char*)a1 + 8) << 2));
-    *(int*)((char*)a0 + 12) = (*(int*)((char*)a0 + 4) + (*(int*)(char*)a1 << 2));
+/* Build begin/end/capacity-end pointers from a counted int array. */
+void func_001BEAD0(IntSpan* out, IntArray* arr) {
+    out->end = arr->data + arr->size;
+    out->begin = arr->data;
+    out->end2 = out->begin + arr->size;
+    out->capEnd = out->begin + arr->capacity;
 }

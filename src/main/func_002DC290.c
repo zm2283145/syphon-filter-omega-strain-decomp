@@ -5,10 +5,8 @@
  */
 
 #include "types.h"
+#include "loose02_types.h"
 
-int func_002DC290(int a0) {
-    int tmp0;
-
-    tmp0 = *(int*)((char*)a0 + 4);
-    return tmp0;
+int func_002DC290(WordFields* self) {
+    return self->unk04;
 }

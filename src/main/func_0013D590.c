@@ -5,19 +5,21 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
-extern int PtrVec_Insert(int, int, int, int);
+extern int PtrVec_Insert(PtrVec* v, int* pos, int n, int value);
 
-int func_0013D590(int a0, int a1) {
-    int tmp0;
-    int tmp1;
+/* push_back(value). */
+int func_0013D590(PtrVec* v, int value) {
+    int count;
+    int* data;
 
-    tmp0 = *(int*)((char*)a0 + 4);
-    tmp1 = *(int*)((char*)a0 + 8);
-    return PtrVec_Insert(a0, (tmp1 + (tmp0 << 2)), 1, a1);
+    count = v->count;
+    data = v->data;
+    return PtrVec_Insert(v, data + count, 1, value);
 }
 
-int func_0013D5B0(int a0) {
-    *(int*)((char*)a0 + 16) = 3658;
-    return a0;
+Unk0013D5B0* func_0013D5B0(Unk0013D5B0* self) {
+    self->unk10 = 3658;
+    return self;
 }

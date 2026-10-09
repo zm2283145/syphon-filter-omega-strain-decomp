@@ -5,12 +5,10 @@
  */
 
 #include "types.h"
+#include "loose01_types.h"
 
-extern void func_00282020(int);
+extern void func_00282020(void*);
 
-void cBeamMsg_v04(int a0) {
-    int tmp0;
-
-    tmp0 = *(int*)((char*)a0 + 36);
-    func_00282020(tmp0);
+void cBeamMsg_v04(PtrMsg* self) {
+    func_00282020(self->who);
 }

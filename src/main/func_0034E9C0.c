@@ -1,13 +1,13 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * GuiOmegaStrain class-name getter (vtable D_004DEDE0 slot 19).
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
-extern char D_004BAA30[];
+extern char D_004BAA30[];       /* "GuiOmegaStrain" */
 
-int func_0034E9C0(void) {
-    return (int)D_004BAA30;
+/* Returns the class name string "GuiOmegaStrain". */
+const char* GuiOmegaStrain_GetClassName(void) {
+    return D_004BAA30;
 }

@@ -5,11 +5,13 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
-int func_00178B80(int a0, int a1, float f12) {
-    *(float*)((char*)a0) = *(float*)(char*)a1;
-    *(float*)((char*)a0 + 4) = *(float*)((char*)a1 + 4);
-    *(float*)((char*)a0 + 8) = *(float*)((char*)a1 + 8);
-    *(float*)((char*)a0 + 12) = f12;
-    return a0;
+/* Build a Vec4 from an xyz vector and w. */
+Vec4* Vec4_SetFromVec3W(Vec4* d, Vec4* xyz, float w) {
+    d->x = xyz->x;
+    d->y = xyz->y;
+    d->z = xyz->z;
+    d->w = w;
+    return d;
 }

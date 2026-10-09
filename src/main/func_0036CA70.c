@@ -1,22 +1,18 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Original translation unit not identified yet (code lies between the mem.cc
+ * and hog.cc ranges); functions are named by address until real names are known.
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
-extern char D_00533890[];
-extern char D_00533C90[];
+extern int D_00533890[256];     /* list storage (ends at the counter) */
+extern int D_00533C90;          /* number of entries in D_00533890 */
 
-void func_0036CA70(int a0) {
-    int tmp0;
-    int tmp1;
-
-    tmp0 = *(int*)D_00533C90;
-    *(int*)((char*)((int)D_00533890 + (tmp0 << 2))) = a0;
-    tmp1 = *(int*)D_00533C90;
-    *(int*)D_00533C90 = (tmp1 + 1);
+/* Append a value to the global list. */
+void func_0036CA70(int value) {
+    D_00533890[D_00533C90] = value;
+    D_00533C90 = D_00533C90 + 1;
 }
 
 int func_0036CAB0(char* self) {

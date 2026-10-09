@@ -5,7 +5,9 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
-void func_001CF520(int a0) {
-    *(float*)((char*)a0 + 4) = *(float*)((char*)*(int*)(char*)a0 + 64);
+/* Reset the timer from the definition's +0x40 value. */
+void func_001CF520(TimedRef* self) {
+    self->timer = self->def->unk40;
 }

@@ -5,22 +5,25 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
-extern int func_001748F0(int, int, int);
-extern int func_00174A20(int, int, int);
+extern int func_001748F0(PtrVec*, int, int);
+extern int func_00174A20(PtrVec*, int, int);
 
-int func_00174770(int a0, int a1, int a2) {
-    *(int*)((char*)a0) = 0;
-    *(int*)((char*)a0 + 4) = 0;
-    *(int*)((char*)a0 + 8) = 0;
-    func_00174A20(a0, a1, a2);
-    return a0;
+/* Empty vector, then fill through func_00174A20. */
+PtrVec* func_00174770(PtrVec* v, int a1, int a2) {
+    v->unk0 = 0;
+    v->count = 0;
+    v->data = 0;
+    func_00174A20(v, a1, a2);
+    return v;
 }
 
-int func_001747B0(int a0, int a1, int a2) {
-    *(int*)((char*)a0) = 0;
-    *(int*)((char*)a0 + 4) = 0;
-    *(int*)((char*)a0 + 8) = 0;
-    func_001748F0(a0, a1, a2);
-    return a0;
+/* Empty vector, then fill through func_001748F0. */
+PtrVec* func_001747B0(PtrVec* v, int a1, int a2) {
+    v->unk0 = 0;
+    v->count = 0;
+    v->data = 0;
+    func_001748F0(v, a1, a2);
+    return v;
 }

@@ -5,20 +5,21 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
-void func_00104430(int a0, int a1) {
-    *(int*)((char*)a0) = a1;
-    *(int*)((char*)a0 + 8) = 0;
-    *(int*)((char*)a0 + 4) = a1;
+/* Init a cursor over a buffer: start, current and offset. */
+void func_00104430(BufCursor* c, int base) {
+    c->cur = base;
+    c->pos = 0;
+    c->start = base;
 }
 
-int func_00104440(int a0) {
-    int v0;
+/* Rewind a cursor to its start. */
+int func_00104440(BufCursor* c) {
+    int start;
 
-    v0 = *(int*)(char*)(a0 + 4);
-    *(int*)(char*)(a0 + 8) = 0;
-    *(int*)(char*)a0 = v0;
-    goto ret;
-ret:
-    return v0;
+    start = c->start;
+    c->pos = 0;
+    c->cur = start;
+    return start;
 }

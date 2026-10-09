@@ -1,36 +1,25 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Script type registration for cPARTICLE_GOBJ (code follows the man.cc range).
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
-extern char D_0053B500[];
-extern char D_0053B508[];
-extern char D_00555070[];
-extern int ScriptFilter_Dispatch(int, int, int);
-extern int cGOBJ_GetScriptTypeKeyPtr(void);
-extern void ScriptType_SetParent(int, int);
+extern int D_0053B500;
+extern int D_0053B508;          /* cPARTICLE_GOBJ script type */
+extern char D_00555070[];       /* script filter context */
+extern int ScriptFilter_Dispatch(void* ctx, int a0, int a1);
+extern int* cGOBJ_GetScriptTypeKeyPtr(void);
+extern void ScriptType_SetParent(int type, int parent);
 
 void ScriptType_cPARTICLE_GOBJ_Init(void) {
-    int tmp0;
-    int tmp2;
-    int tmp3;
-
-    tmp0 = cGOBJ_GetScriptTypeKeyPtr();
-    tmp2 = *(int*)D_0053B508;
-    tmp3 = *(int*)(char*)tmp0;
-    ScriptType_SetParent(tmp2, tmp3);
+    ScriptType_SetParent(D_0053B508, *cGOBJ_GetScriptTypeKeyPtr());
 }
 
 int func_003926A0(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_0053B500;
-    return tmp0;
+    return D_0053B500;
 }
 
 int func_003926B0(int a0, int a1) {
-    return ScriptFilter_Dispatch((int)D_00555070, a0, a1);
+    return ScriptFilter_Dispatch(D_00555070, a0, a1);
 }

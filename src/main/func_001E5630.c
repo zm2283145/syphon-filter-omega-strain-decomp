@@ -6,6 +6,8 @@
 
 #include "types.h"
 
-float func_001E5630(char* self) {
-    return *(float*)(self + 0);
+/* Read a scalar (used for the physical mass at actor +0x2E0, research
+ * ACTOR_RESPONSE_PROBES.md). */
+float func_001E5630(float* value) {
+    return value[0];
 }

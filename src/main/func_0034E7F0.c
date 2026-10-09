@@ -1,17 +1,17 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * GuiRanks constructor (vtable D_004DED50); derives from GuiPersonnelScreen.
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
-extern char D_004DED50[];
-extern int func_00356FF0(int);
+extern char D_004DED50[];       /* vtable */
+extern int GuiPersonnelScreen_ctor(GuiPersonnelScreen*);
 
-int func_0034E7F0(int a0) {
-    func_00356FF0(a0);
-    *(int*)((char*)a0) = (int)D_004DED50;
-    *(int*)((char*)a0 + 100) = 6;
-    return a0;
+/* GuiPersonnelScreen subclass constructor (unk64 = 6). */
+GuiPersonnelScreen* GuiRanks_ctor(GuiPersonnelScreen* self) {
+    GuiPersonnelScreen_ctor(self);
+    self->base.vtable = D_004DED50;
+    self->unk64 = 6;
+    return self;
 }

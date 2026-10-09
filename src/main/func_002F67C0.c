@@ -5,24 +5,14 @@
  */
 
 #include "types.h"
+#include "loose02_types.h"
 
-int func_002F67C0(int a0) {
-    int v0, v1;
-    int cond;
+/* True when the record exists, both flag bytes are set and the state is below 4. */
+int func_002F67C0(RtState* s) {
+    int result = 0;
 
-    cond = a0 == 0;
-    v0 = 0;
-    if (cond) goto L002F67E8;
-    v1 = *(unsigned char*)(char*)a0;
-    cond = v1 == 0;
-    if (cond) goto L002F67E8;
-    v1 = *(unsigned char*)(char*)(a0 + 1);
-    cond = v1 == 0;
-    if (cond) goto L002F67E8;
-    v0 = *(int*)(char*)(a0 + 8);
-    v0 = (unsigned int)v0 < (unsigned int)4;
-L002F67E8:;
-    goto ret;
-ret:
-    return v0;
+    if (s != 0 && s->unk00 != 0 && s->unk01 != 0) {
+        result = s->state < 4;
+    }
+    return result;
 }

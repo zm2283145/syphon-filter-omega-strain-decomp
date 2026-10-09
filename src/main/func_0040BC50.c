@@ -5,26 +5,23 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-extern int PtrVec_Insert(int, int, int, int);
-extern int PtrVector_Resize(int, int, int);
+extern int PtrVec_Insert(PtrVec* v, int* pos, int count, int value);
+extern int PtrVector_Resize(PtrVec* v, int a1, int a2);
 extern int func_001396D0(int, int);
 
-int func_0040BC50(int a0, int a1, int a2) {
-    return PtrVector_Resize(a0, a1, a2);
+int func_0040BC50(PtrVec* v, int a1, int a2) {
+    return PtrVector_Resize(v, a1, a2);
 }
 
-int func_0040BC60(char* self) {
-    return *(int*)(self + 4);
+int func_0040BC60(PtrVec* v) {
+    return v->count;
 }
 
-int func_0040BC70(int a0, int a1) {
-    int tmp0;
-    int tmp1;
-
-    tmp0 = *(int*)((char*)a0 + 4);
-    tmp1 = *(int*)((char*)a0 + 8);
-    return PtrVec_Insert(a0, (tmp1 + (tmp0 << 2)), 1, a1);
+/* push_back: inserts one value at end(). */
+int PtrVec_PushBack_40BC70(PtrVec* v, int value) {
+    return PtrVec_Insert(v, v->data + v->count, 1, value);
 }
 
 int func_0040BC90(int a0, int a1) {

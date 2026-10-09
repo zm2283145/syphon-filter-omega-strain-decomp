@@ -4,20 +4,21 @@
  * until real names are known.
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
-int func_00377C30(int a0) {
-    *(int*)((char*)a0) = 0;
-    *(int*)((char*)a0 + 4) = 0;
-    *(int*)((char*)a0 + 8) = 0;
-    *(int*)((char*)a0 + 12) = 0;
-    *(int*)((char*)a0 + 16) = 0;
-    *(int*)((char*)a0 + 20) = 0;
-    *(int*)((char*)a0 + 24) = 0;
-    *(int*)((char*)a0 + 28) = 0;
-    *(int*)((char*)a0 + 32) = 0;
-    *(int*)((char*)a0 + 36) = 0;
-    *(int*)((char*)a0 + 40) = 0;
-    *(char*)((char*)a0 + 44) = 1;
-    return a0;
+/* Rec377C30 constructor: zero all words, set the flag byte. */
+Rec377C30* func_00377C30(Rec377C30* self) {
+    self->unk[0] = 0;
+    self->unk[1] = 0;
+    self->unk[2] = 0;
+    self->unk[3] = 0;
+    self->unk[4] = 0;
+    self->unk[5] = 0;
+    self->unk[6] = 0;
+    self->unk[7] = 0;
+    self->unk[8] = 0;
+    self->unk[9] = 0;
+    self->unk[10] = 0;
+    self->unk2C = 1;
+    return self;
 }

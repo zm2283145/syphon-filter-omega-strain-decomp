@@ -14,6 +14,6 @@ void func_00181CD0(Iter* out, void* self, Iter* src) {
     out->p = src->p;
 }
 
-int PtrArray_Begin(char* self) {
-    return *(int*)(self + 8);
+int* PtrArray_Begin(PtrVec* v) {
+    return v->data;
 }

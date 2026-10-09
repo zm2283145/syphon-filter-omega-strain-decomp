@@ -6,8 +6,9 @@
 
 #include "types.h"
 
-extern char D_004AAF50[];
+extern char D_004AAF50[];   /* "GuiOnlineOfflineSelect" */
 
-int func_002A0180(void) {
-    return (int)D_004AAF50;
+/* Class name getter: "GuiOnlineOfflineSelect". */
+char* func_002A0180(void) {
+    return D_004AAF50;
 }

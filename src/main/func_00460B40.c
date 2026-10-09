@@ -1,39 +1,34 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Address lies after GuiGameScreen.cc (ends 0x0045F090).
  */
 
 #include "types.h"
 
-extern char D_004FFC04[];
-extern int PtrVec_Insert(int, int, int, int);
+extern int D_004FFC04;
+extern int PtrVec_Insert(PtrVec* v, int* pos, int n, int value);
 extern int func_002C9E20(int);
-extern int func_0041F090(int);
+extern int func_0041F090(void* self);
 
 int* func_00460B40(PtrVec* v, int i) {
     return v->data + i;
 }
 
-int func_00460B50(char* self) {
-    return *(int*)(self + 4);
+int func_00460B50(PtrVec* v) {
+    return v->count;
 }
 
-int func_00460B60(int a0, int a1) {
-    int tmp0;
-    int tmp1;
+/* Appends one value at the end of the vector. */
+int func_00460B60(PtrVec* v, int value) {
+    int count;
+    int* data;
 
-    tmp0 = *(int*)((char*)a0 + 4);
-    tmp1 = *(int*)((char*)a0 + 8);
-    return PtrVec_Insert(a0, (tmp1 + (tmp0 << 2)), 1, a1);
+    count = v->count;
+    data = v->data;
+    return PtrVec_Insert(v, data + count, 1, value);
 }
 
-int func_00460B80(int a0) {
-    int tmp2;
-    int tmp3;
-
-    func_0041F090(a0);
-    tmp2 = *(int*)D_004FFC04;
-    tmp3 = func_002C9E20(tmp2);
-    return tmp3;
+int func_00460B80(void* self) {
+    func_0041F090(self);
+    return func_002C9E20(D_004FFC04);
 }

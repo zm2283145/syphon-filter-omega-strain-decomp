@@ -5,21 +5,16 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-extern int func_0040BF50(int);
+extern int func_0040BF50(L4Tagged*);   /* first function of GobjMan.cc */
 
-void func_003CB4F0(int a0) {
-    int a1, v0, v1;
-    int cond;
+/* Calls func_0040BF50 on the record at +0xC if its tag is 0xBEBAAFDE. */
+void func_003CB4F0(Unk3CB4F0* self) {
+    unsigned int magic = 0xBEBAAFDE;
+    L4Tagged* rec = self->unk0C;
 
-    v1 = 0xbeba0000;
-    v1 = v1 | 0xafde;
-    a0 = *(int*)(char*)(a0 + 12);
-    a1 = *(int*)(char*)(a0 + 4);
-    cond = a1 != v1;
-    if (cond) goto L003CB518;
-    v0 = func_0040BF50(a0);
-L003CB518:;
-    goto ret;
-ret:;
+    if (rec->tag == magic) {
+        func_0040BF50(rec);
+    }
 }

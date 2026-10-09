@@ -22,14 +22,17 @@ void func_001BF9E0(PtrVec* a, PtrVec* b) {
     }
 }
 
-void func_001BFA20(char* self) {
-    *(int*)(self + 4) = 0;
+/* clear(): count = 0. */
+void func_001BFA20(PtrVec* v) {
+    v->count = 0;
 }
 
-void func_001BFA30(char* self) {
-    *(int*)(self + 4) = 0;
+/* clear(): count = 0. */
+void func_001BFA30(PtrVec* v) {
+    v->count = 0;
 }
 
-void func_001BFA40(char* self) {
-    *(int*)(self + 4) = 0;
+/* clear(): count = 0. */
+void func_001BFA40(PtrVec* v) {
+    v->count = 0;
 }

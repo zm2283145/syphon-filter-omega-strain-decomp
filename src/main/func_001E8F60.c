@@ -5,9 +5,11 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
-int func_001E8F60(int a0, int a1) {
-    return ((unsigned int)((*(int*)(char*)a0 ^ *(int*)(char*)a1)) < (unsigned int)(1));
+/* Word equality. */
+int func_001E8F60(Word* a, Word* b) {
+    return a->value == b->value;
 }
 
 Iter* func_001E8F80(Iter* it) {

@@ -5,20 +5,22 @@
  */
 
 #include "types.h"
+#include "loose02_types.h"
 
-int func_002C5E20(int a0, int a1) {
-    Q tmp0;
-    int tmp1;
-    int tmp2;
-    int tmp3;
+/* Rec1C copy (assignment). */
+Rec1C* func_002C5E20(Rec1C* dst, Rec1C* src) {
+    Q q;
+    int unk10;
+    int unk14;
+    int unk18;
 
-    tmp0 = *(Q*)(char*)a1;
-    *(Q*)((char*)a0) = tmp0;
-    tmp1 = *(int*)((char*)a1 + 16);
-    *(int*)((char*)a0 + 16) = tmp1;
-    tmp2 = *(int*)((char*)a1 + 20);
-    *(int*)((char*)a0 + 20) = tmp2;
-    tmp3 = *(int*)((char*)a1 + 24);
-    *(int*)((char*)a0 + 24) = tmp3;
-    return a0;
+    q = src->q;
+    dst->q = q;
+    unk10 = src->unk10;
+    dst->unk10 = unk10;
+    unk14 = src->unk14;
+    dst->unk14 = unk14;
+    unk18 = src->unk18;
+    dst->unk18 = unk18;
+    return dst;
 }

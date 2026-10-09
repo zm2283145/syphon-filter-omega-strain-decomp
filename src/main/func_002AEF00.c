@@ -6,8 +6,9 @@
 
 #include "types.h"
 
-extern char D_004ABC60[];
+extern char D_004ABC60[];   /* "GuiChatWindow" */
 
-int func_002AEF00(void) {
-    return (int)D_004ABC60;
+/* Class name getter: "GuiChatWindow". */
+char* func_002AEF00(void) {
+    return D_004ABC60;
 }

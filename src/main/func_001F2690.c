@@ -5,14 +5,15 @@
  */
 
 #include "types.h"
+#include "loose01_types.h"
 
-extern int func_0013ADF0(int);
+extern int func_0013ADF0(void*);
 
-int func_001F2690(int a0) {
-    return func_0013ADF0((a0 + 4));
+int func_001F2690(char* self) {
+    return func_0013ADF0(self + 4);
 }
 
-int func_001F26A0(int a0, int a1) {
-    *(int*)((char*)a0) = a1;
-    return a0;
+Word* func_001F26A0(Word* self, int value) {
+    self->value = value;
+    return self;
 }

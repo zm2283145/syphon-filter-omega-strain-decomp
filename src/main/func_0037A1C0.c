@@ -4,15 +4,11 @@
  * until real names are known.
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
-extern void func_0037A370(int, int, int, int, int, int);
+extern void func_0037A370(Obj37A1C0* self, int a1, int a2, int a3, int a4, int a5);
 
-void func_0037A1C0(int a0, int a1, int a2, int a3) {
-    int tmp0;
-    int tmp1;
-
-    tmp0 = *(int*)((char*)a0 + 28);
-    tmp1 = *(int*)((char*)a0 + 32);
-    func_0037A370(a0, tmp0, tmp1, a1, a2, a3);
+/* Forwards to func_0037A370 with the object's unk1C/unk20 pair. */
+void func_0037A1C0(Obj37A1C0* self, int a1, int a2, int a3) {
+    func_0037A370(self, self->unk1C, self->unk20, a1, a2, a3);
 }

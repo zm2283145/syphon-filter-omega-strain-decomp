@@ -5,7 +5,9 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
-void func_00178C50(int a0, int a1) {
-    *(int*)((char*)a0 + 12) = (*(int*)((char*)a0 + 12) - a1);
+/* Subtract from the word at +0x0C. */
+void func_00178C50(Unk0013BDE0* self, int amount) {
+    self->unk0C = self->unk0C - amount;
 }

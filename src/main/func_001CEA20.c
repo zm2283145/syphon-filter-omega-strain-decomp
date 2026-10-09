@@ -5,25 +5,21 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
-int func_001CEA20(int a0) {
+/* True when byte +0x380 is clear and byte +0x381 is set. */
+int func_001CEA20(Unk001CEA20* self) {
     int v0;
-    int cond;
 
-    v0 = *(unsigned char*)(char*)(a0 + 896);
-    v0 = (unsigned int)0 < (unsigned int)v0;
-    v0 = v0 ^ 1;
-    cond = v0 == 0;
-    if (cond) goto L001CEA3C;
-    v0 = *(unsigned char*)(char*)(a0 + 897);
-    v0 = (unsigned int)0 < (unsigned int)v0;
-L001CEA3C:;
-    goto ret;
-ret:
+    v0 = (self->unk380 != 0) ^ 1;
+    if (v0 != 0) {
+        v0 = self->unk381 != 0;
+    }
     return v0;
 }
 
-void func_001CEA50(int a0, int a1) {
-    *(char*)((char*)a0) = a1;
-    *(char*)((char*)a0 + 1) = ((unsigned int)(0) < (unsigned int)((a1 & 255)));
+/* Store a byte and whether it is non-zero. */
+void func_001CEA50(ByteBool* self, int value) {
+    self->value = value;
+    self->nonZero = (value & 255) != 0;
 }

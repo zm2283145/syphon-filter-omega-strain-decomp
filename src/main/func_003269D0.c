@@ -6,11 +6,9 @@
 
 #include "types.h"
 
-extern char D_0052AF18[];
+extern int D_0052AF18;
 
+/* Message type id. */
 int cEnableSuperJumpMsg_v05(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_0052AF18;
-    return tmp0;
+    return D_0052AF18;
 }

@@ -1,17 +1,17 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Address lies before GuiSubTitleDisplay.cc (starts 0x00457AA0).
  */
 
-#include "types.h"
+#include "loose05_types.h"
 
-extern int func_0041EBF0(int);
+extern int func_0041EBF0(void* self);
 
-int func_00456A30(int a0) {
-    int tmp0;
+/* Shutdown: base shutdown, then clears the handle at +0x10. */
+int func_00456A30(GuiWidget* self) {
+    int ret;
 
-    tmp0 = func_0041EBF0(a0);
-    *(int*)((char*)a0 + 16) = -1;
-    return tmp0;
+    ret = func_0041EBF0(self);
+    self->unk10 = -1;
+    return ret;
 }

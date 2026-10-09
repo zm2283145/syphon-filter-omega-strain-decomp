@@ -5,9 +5,10 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-extern char D_0055C210[];
+extern int D_0055C210;
 
 void func_003F6F90(void) {
-    *(int*)D_0055C210 = 0;
+    D_0055C210 = 0;
 }

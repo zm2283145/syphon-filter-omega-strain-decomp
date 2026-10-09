@@ -1,33 +1,30 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Address lies between SFOLobby_Wrap.cc (ends 0x00443F40) and SFOLobby_Account.cc;
+ * lobby flag accessors.
  */
 
 #include "types.h"
 
-extern char D_00584240[];
-extern char D_00584241[];
-extern char D_005842C8[];
+extern unsigned char D_00584240;
+extern char D_00584241;
+extern char D_005842C8;
 extern char D_005842CC[];
-extern int func_002EBC48(int);
+extern int func_002EBC48(void* obj);
 
-int func_00444020(int a0) {
-    *(char*)D_005842C8 = a0;
-    return func_002EBC48((int)D_005842CC);
+int func_00444020(int value) {
+    D_005842C8 = value;
+    return func_002EBC48(D_005842CC);
 }
 
-void func_00444040(int a0) {
-    *(char*)D_00584241 = a0;
+void func_00444040(int value) {
+    D_00584241 = value;
 }
 
-void func_00444050(int a0) {
-    *(char*)D_00584240 = a0;
+void func_00444050(int value) {
+    D_00584240 = value;
 }
 
 int func_00444060(void) {
-    unsigned char tmp0;
-
-    tmp0 = *(unsigned char*)D_00584240;
-    return tmp0;
+    return D_00584240;
 }

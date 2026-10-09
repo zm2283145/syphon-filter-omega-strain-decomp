@@ -5,18 +5,15 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
 void func_00416F30(Iter* out, void* self, Iter* src) {
     out->p = src->p;
 }
 
-int func_00416F40(int a0) {
-    int tmp0;
-    int tmp1;
-
-    tmp0 = *(int*)((char*)a0 + 4);
-    tmp1 = *(int*)((char*)a0 + 8);
-    return (tmp1 + (tmp0 * 24));
+/* end() of the element vector. */
+L4Elem18* func_00416F40(L4Elem18Vec* v) {
+    return v->data + v->count;
 }
 
 void* func_00416F60(char* self) {

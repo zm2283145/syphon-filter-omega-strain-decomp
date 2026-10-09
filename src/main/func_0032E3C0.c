@@ -4,21 +4,18 @@
  * until real names are known.
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
-int func_0032E3C0(int a0) {
-    int tmp0;
-    int tmp1;
-
-    tmp0 = *(int*)((char*)a0 + 4);
-    tmp1 = *(int*)((char*)a0 + 8);
-    return (tmp1 + (tmp0 * 24));
+/* end() of a vector of 24-byte elements. */
+Elem24* func_0032E3C0(Vec24* v) {
+    return v->data + v->count;
 }
 
 void func_0032E3E0(Iter* out, void* self, Iter* src) {
     out->p = src->p;
 }
 
-int func_0032E3F0(char* self) {
-    return *(int*)(self + 8);
+/* begin() */
+Elem24* func_0032E3F0(Vec24* v) {
+    return v->data;
 }

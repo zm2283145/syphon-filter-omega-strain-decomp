@@ -1,37 +1,41 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Soft-float double comparison wrappers around SoftFloat_UnpackAndCompare
+ * (result < 0, 0 or > 0).
  */
 
 #include "types.h"
 
-extern int SoftFloat_UnpackAndCompare(int, int);
+extern int SoftFloat_UnpackAndCompare(int a, int b);
 
-int func_00100230(int a0, int a1) {
-    int tmp0;
+/* a >= b */
+int SoftFloat_DoubleGreaterEqual(int a, int b) {
+    int cmp;
 
-    tmp0 = SoftFloat_UnpackAndCompare(a0, a1);
-    return ((tmp0 < 0) ^ 1);
+    cmp = SoftFloat_UnpackAndCompare(a, b);
+    return ((cmp < 0) ^ 1);
 }
 
-int func_00100260(int a0, int a1) {
-    int tmp0;
+/* a > b */
+int SoftFloat_DoubleGreater(int a, int b) {
+    int cmp;
 
-    tmp0 = SoftFloat_UnpackAndCompare(a0, a1);
-    return (0 < tmp0);
+    cmp = SoftFloat_UnpackAndCompare(a, b);
+    return (0 < cmp);
 }
 
-int SoftFloat_DoubleLessEqual(int a0, int a1) {
-    int tmp0;
+/* a <= b */
+int SoftFloat_DoubleLessEqual(int a, int b) {
+    int cmp;
 
-    tmp0 = SoftFloat_UnpackAndCompare(a0, a1);
-    return ((0 < tmp0) ^ 1);
+    cmp = SoftFloat_UnpackAndCompare(a, b);
+    return ((0 < cmp) ^ 1);
 }
 
-int func_001002B0(int a0, int a1) {
-    int tmp0;
+/* a != b */
+int SoftFloat_DoubleNotEqual(int a, int b) {
+    int cmp;
 
-    tmp0 = SoftFloat_UnpackAndCompare(a0, a1);
-    return ((unsigned int)(0) < (unsigned int)(tmp0));
+    cmp = SoftFloat_UnpackAndCompare(a, b);
+    return cmp != 0;
 }

@@ -5,17 +5,20 @@
  */
 
 #include "types.h"
+#include "loose02_types.h"
 
-extern char D_004DDDE0[];
-extern int func_0041EFA0(int);
-extern void func_0041F690(int);
+extern char D_004DDDE0[];   /* GuiZeusShell vtable */
+extern int func_0041EFA0(GuiWidget* self);
+extern void GuiWidget_ctor(GuiWidget* self);
 
-int func_002B0D10(int a0) {
-    return func_0041EFA0(a0);
+/* GuiZeusShell vtable slot 5: forwards to the base widget. */
+int func_002B0D10(GuiWidget* self) {
+    return func_0041EFA0(self);
 }
 
-int func_002B0D20(int a0) {
-    func_0041F690(a0);
-    *(int*)((char*)a0) = (int)D_004DDDE0;
-    return a0;
+/* GuiZeusShell constructor. */
+GuiWidget* GuiZeusShell_ctor(GuiWidget* self) {
+    GuiWidget_ctor(self);
+    self->vtable = D_004DDDE0;
+    return self;
 }

@@ -5,51 +5,56 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
-extern int func_001C50A0(int, int);
-extern int func_001E0EF0(int);
-extern int func_001E0FE0(int, int);
+extern int func_001C50A0(void*, void*);
+extern int Vec16Array_PopBack(Vec16Array*);
+extern int func_001E0FE0(FlagElem16*, int);
 
-int func_001E0EA0(int a0) {
-    int tmp0;
-    int tmp1;
+/* End pointer of an array of 0x60-byte records. */
+Elem60* func_001E0EA0(Vec60Array* v) {
+    int count;
+    Elem60* data;
 
-    tmp0 = *(int*)((char*)a0 + 4);
-    tmp1 = *(int*)((char*)a0 + 8);
-    return (tmp1 + (tmp0 * 96));
+    count = v->count;
+    data = v->data;
+    return data + count;
 }
 
 void func_001E0EC0(Iter* out, void* self, Iter* src) {
     out->p = src->p;
 }
 
-int func_001E0ED0(char* self) {
-    return *(int*)(self + 8);
+Elem60* func_001E0ED0(Vec60Array* v) {
+    return v->data;
 }
 
-int func_001E0EE0(int a0) {
-    return func_001E0EF0(a0);
+int func_001E0EE0(Vec16Array* v) {
+    return Vec16Array_PopBack(v);
 }
 
-int func_001E0EF0(int a0) {
-    int tmp0;
-    int tmp1;
+/* Pop the last 16-byte element and destroy it. */
+int Vec16Array_PopBack(Vec16Array* v) {
+    int count;
+    FlagElem16* data;
 
-    tmp0 = *(int*)((char*)a0 + 4);
-    *(int*)((char*)a0 + 4) = (tmp0 + -1);
-    tmp1 = *(int*)((char*)a0 + 8);
-    return func_001E0FE0((tmp1 + ((tmp0 + -1) << 4)), -1);
+    count = v->count;
+    v->count = count + -1;
+    data = v->data;
+    return func_001E0FE0(data + (count + -1), -1);
 }
 
-int func_001E0F10(int a0, int a1) {
-    unsigned char tmp2;
+/* Copy-construct: base copy then the flag byte at +0x0C. */
+FlagElem16* func_001E0F10(FlagElem16* d, FlagElem16* s) {
+    unsigned char flag;
 
-    func_001C50A0(a0, a1);
-    tmp2 = *(unsigned char*)((char*)a1 + 12);
-    *(char*)((char*)a0 + 12) = tmp2;
-    return a0;
+    func_001C50A0(d, s);
+    flag = s->unk0C;
+    d->unk0C = flag;
+    return d;
 }
 
-int func_001E0F50(int a0) {
-    return ((*(int*)((char*)a0 + 8) + (*(int*)((char*)a0 + 4) << 4)) + -16);
+/* Last element of a 16-byte array. */
+FlagElem16* func_001E0F50(Vec16Array* v) {
+    return (v->data + v->count) + -1;
 }

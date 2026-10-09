@@ -1,13 +1,13 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * GuiDossiers class-name getter (vtable D_004DEC30 slot 19).
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
-extern char D_004BA650[];
+extern char D_004BA650[];       /* "GuiDossiers" */
 
-int func_00349E90(void) {
-    return (int)D_004BA650;
+/* Returns the class name string "GuiDossiers". */
+const char* GuiDossiers_GetClassName(void) {
+    return D_004BA650;
 }

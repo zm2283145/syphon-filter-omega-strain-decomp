@@ -5,23 +5,20 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-void func_0041F070(int a0) {
-    int v1;
+/* Clears GuiWidget flag bit 2. */
+void func_0041F070(GuiWidget* self) {
+    unsigned int flags;
 
-    v1 = *(unsigned short*)((char*)a0 + 20);
-    v1 = v1 & 65531;
-    *(short*)((char*)a0 + 20) = v1;
-    goto ret;
-ret:;
+    flags = self->flags; /* zero-extended load keeps the match */
+    self->flags = flags & 65531;
 }
 
-void func_0041F080(int a0) {
-    int v1;
+/* Sets GuiWidget flag bit 2. */
+void func_0041F080(GuiWidget* self) {
+    unsigned int flags;
 
-    v1 = *(unsigned short*)((char*)a0 + 20);
-    v1 = v1 | 4;
-    *(short*)((char*)a0 + 20) = v1;
-    goto ret;
-ret:;
+    flags = self->flags;
+    self->flags = flags | 4;
 }

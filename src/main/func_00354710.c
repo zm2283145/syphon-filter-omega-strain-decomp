@@ -4,12 +4,13 @@
  * until real names are known.
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
-extern int func_00354890(int);
+extern int func_00354890(FlaggedRel*);
 
-int func_00354710(int a0) {
-    func_00354890(a0);
-    *(char*)((char*)a0 + 12) = 1;
-    return a0;
+/* FlaggedRel constructor. */
+FlaggedRel* func_00354710(FlaggedRel* self) {
+    func_00354890(self);
+    self->unk0C = 1;
+    return self;
 }

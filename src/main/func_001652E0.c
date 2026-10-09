@@ -5,14 +5,16 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
 extern char D_004D9778[];
-extern char D_004D9788[];
 extern char D_004D9798[];
+extern char D_004D9788[];
 
-int func_001652E0(int a0) {
-    *(int*)((char*)a0) = (int)D_004D9778;
-    *(int*)((char*)a0) = (int)D_004D9788;
-    *(int*)((char*)a0) = (int)D_004D9798;
-    return a0;
+/* Inlined constructor chain: three vtables stored in turn (base to derived). */
+VObject* func_001652E0(VObject* self) {
+    self->vtable = D_004D9778;
+    self->vtable = D_004D9788;
+    self->vtable = D_004D9798;
+    return self;
 }

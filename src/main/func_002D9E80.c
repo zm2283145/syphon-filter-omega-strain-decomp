@@ -5,10 +5,8 @@
  */
 
 #include "types.h"
+#include "loose02_types.h"
 
-int func_002D9E80(int a0) {
-    int tmp0;
-
-    tmp0 = *(int*)((char*)a0 + 108);
-    return tmp0;
+int func_002D9E80(Obj2D9* self) {
+    return self->unk6C;
 }

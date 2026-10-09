@@ -5,20 +5,22 @@
  */
 
 #include "types.h"
+#include "loose01_types.h"
 
-void func_00272170(int a0) {
-    *(int*)((char*)a0 + 4) = 0;
-    *(int*)((char*)a0 + 8) = 0;
-    *(int*)((char*)a0 + 12) = 0;
-    *(int*)((char*)a0 + 16) = 0;
-    *(int*)((char*)a0 + 20) = 0;
-    *(int*)((char*)a0 + 24) = 0;
-    *(int*)((char*)a0 + 28) = 0;
-    *(int*)((char*)a0 + 32) = 0;
-    *(int*)((char*)a0 + 36) = 0;
-    *(int*)((char*)a0 + 40) = 0;
-    *(int*)((char*)a0 + 44) = 0;
-    *(int*)((char*)a0 + 48) = 0;
-    *(int*)((char*)a0 + 52) = 0;
-    *(int*)((char*)a0 + 56) = 0;
+/* Clears all 14 slots (handle at 0x00 is left untouched). */
+void func_00272170(SlotTable14* self) {
+    self->slots[0] = 0;
+    self->slots[1] = 0;
+    self->slots[2] = 0;
+    self->slots[3] = 0;
+    self->slots[4] = 0;
+    self->slots[5] = 0;
+    self->slots[6] = 0;
+    self->slots[7] = 0;
+    self->slots[8] = 0;
+    self->slots[9] = 0;
+    self->slots[10] = 0;
+    self->slots[11] = 0;
+    self->slots[12] = 0;
+    self->slots[13] = 0;
 }

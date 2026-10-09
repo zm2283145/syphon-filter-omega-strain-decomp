@@ -1,21 +1,17 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * cActivateBodyTossMsg method; address lies after NetMsgThrottle.cc (ends 0x00472370).
  */
 
-#include "types.h"
+#include "loose05_types.h"
 
-extern char D_005061D0[];
+extern unsigned char* D_005061D0; /* write cursor of a byte stream */
 
-void cActivateBodyTossMsg_v04(int a0) {
-    unsigned char tmp0;
-    int tmp1;
-    int tmp2;
+/* Appends the message's byte at +0x24 to the stream and advances the cursor. */
+void cActivateBodyTossMsg_v04(BodyTossMsg* self) {
+    unsigned char value;
 
-    tmp0 = *(unsigned char*)((char*)a0 + 36);
-    tmp1 = *(int*)D_005061D0;
-    *(char*)((char*)tmp1) = tmp0;
-    tmp2 = *(int*)D_005061D0;
-    *(int*)D_005061D0 = (tmp2 + 1);
+    value = self->unk24;
+    *D_005061D0 = value;
+    D_005061D0 = D_005061D0 + 1;
 }

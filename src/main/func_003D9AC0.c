@@ -5,9 +5,10 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-extern void Actor_VirtualLeaf175230(int);
+extern void Actor_VirtualLeaf175230(void*);
 
-void func_003D9AC0(int a0) {
-    Actor_VirtualLeaf175230(a0);
+void func_003D9AC0(void* self) {
+    Actor_VirtualLeaf175230(self);
 }

@@ -6,21 +6,16 @@
 
 #include "types.h"
 
-extern char D_0048C4CD[];
-extern int String_Copy(int, int);
+extern char D_0048C4CD[];   /* library version string "1.32.0089" */
+extern char* String_Copy(char* dst, const char* src);
 
-int func_002E9320(int a0) {
-    int a1, v0;
-    int cond;
+/* Copies the version string into buf; returns 23 on a null argument. */
+int func_002E9320(char* buf) {
+    int result = 23;
 
-    v0 = 0 + 23;
-    cond = a0 == 0;
-    if (cond) goto L002E9340;
-    a1 = (int)D_0048C4CD;
-    v0 = String_Copy(a0, a1);
-    v0 = 0;
-L002E9340:;
-    goto ret;
-ret:
-    return v0;
+    if (buf != 0) {
+        String_Copy(buf, D_0048C4CD);
+        result = 0;
+    }
+    return result;
 }

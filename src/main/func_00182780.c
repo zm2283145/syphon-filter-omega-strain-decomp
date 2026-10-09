@@ -5,6 +5,7 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
 void* func_00182780(char* self) {
     return self + 16;
@@ -14,10 +15,10 @@ unsigned char func_00182790(unsigned char* self) {
     return self[0];
 }
 
-int func_001827A0(char* self) {
-    return *(int*)(self + 84);
+int func_001827A0(Unk001827A0* self) {
+    return self->unk54;
 }
 
-int func_001827B0(char* self) {
-    return *(int*)(self + 0);
+int func_001827B0(Word* w) {
+    return w->value;
 }

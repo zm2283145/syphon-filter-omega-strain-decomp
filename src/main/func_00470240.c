@@ -1,28 +1,27 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Address lies just before inventory.cc (starts 0x004702A0); probably part of it.
  */
 
-#include "types.h"
+#include "loose05_types.h"
 
-extern char D_00587FF8[];
-extern int Loc_GetTextById(int);
+extern TextPairEntry* D_00587FF8; /* 44-byte entries */
+extern int Loc_GetTextById(int id);
 
-int func_00470240(int a0) {
-    int tmp0;
-    int tmp1;
+/* Localized text for the second id of entry `index`. */
+int func_00470240(int index) {
+    TextPairEntry* entry;
 
-    tmp0 = *(int*)D_00587FF8;
-    tmp1 = *(int*)((char*)(tmp0 + (a0 * 44)) + 4);
-    return Loc_GetTextById(tmp1);
+    entry = D_00587FF8 + index;
+    return Loc_GetTextById(entry->textId1);
 }
 
-int func_00470270(int a0) {
-    int tmp0;
-    int tmp1;
+/* Localized text for the first id of entry `index`. */
+int func_00470270(int index) {
+    TextPairEntry* table;
+    int id;
 
-    tmp0 = *(int*)D_00587FF8;
-    tmp1 = *(int*)(char*)(tmp0 + (a0 * 44));
-    return Loc_GetTextById(tmp1);
+    table = D_00587FF8;
+    id = table[index].textId0;
+    return Loc_GetTextById(id);
 }

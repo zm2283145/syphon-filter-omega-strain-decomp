@@ -6,11 +6,8 @@
 
 #include "types.h"
 
-extern char D_004F82A0[];
+extern int D_004F82A0;
 
-void func_00261350(int a0) {
-    int tmp0;
-
-    tmp0 = *(int*)(char*)a0;
-    *(int*)D_004F82A0 = tmp0;
+void func_00261350(Word* src) {
+    D_004F82A0 = src->value;
 }

@@ -5,14 +5,11 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-extern int PtrVec_Insert(int, int, int, int);
+extern int PtrVec_Insert(PtrVec* v, int* pos, int count, int value);
 
-int ObjRegistry_InsertOne(int a0, int a1) {
-    int tmp0;
-    int tmp1;
-
-    tmp0 = *(int*)((char*)a0 + 4);
-    tmp1 = *(int*)((char*)a0 + 8);
-    return PtrVec_Insert(a0, (tmp1 + (tmp0 << 2)), 1, a1);
+/* Appends one object to the registry vector. */
+int ObjRegistry_InsertOne(PtrVec* v, int obj) {
+    return PtrVec_Insert(v, v->data + v->count, 1, obj);
 }

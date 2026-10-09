@@ -1,20 +1,17 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * GuiPersonnelMenu virtual (vtable D_004DF020 slot 5).
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
-extern void func_00356C70(int);
-extern int func_0036B250(int);
-extern int func_0036B3B0(int, int, int);
+extern void func_00356C70(GuiPersonnelScreen*);   /* GuiPersonnelScreen slot 5 */
+extern int func_0036B250(int);                      /* mem.cc */
+extern int func_0036B3B0(int, int, int);            /* mem.cc */
 
-int func_00355790(int a0) {
-    int tmp4;
-
-    func_00356C70(a0);
+/* Calls the base implementation, then two mem.cc functions. */
+int func_00355790(GuiPersonnelScreen* self) {
+    func_00356C70(self);
     func_0036B250(1);
-    tmp4 = func_0036B3B0(1, 1048576, 2048);
-    return tmp4;
+    return func_0036B3B0(1, 0x100000, 2048);
 }

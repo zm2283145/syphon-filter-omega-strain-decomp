@@ -1,23 +1,23 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Address lies after GenInfoObject.cc (ends 0x0043BA00); gui widget code.
  */
 
-#include "types.h"
+#include "loose05_types.h"
 
-extern char D_004E0F40[];
-extern void func_0041F690(int);
+extern char D_004E0F40[]; /* vtable */
+extern void GuiWidget_ctor(void* self);
 
-int func_0043BEF0(int a0) {
-    func_0041F690(a0);
-    *(int*)((char*)a0) = (int)D_004E0F40;
-    *(char*)((char*)a0 + 84) = 0;
-    *(int*)((char*)a0 + 88) = 0;
-    *(int*)((char*)a0 + 92) = 0;
-    *(int*)((char*)a0 + 96) = 10;
-    *(char*)((char*)a0 + 72) = 0;
-    *(int*)((char*)a0 + 76) = 0;
-    *(int*)((char*)a0 + 80) = 0;
-    return a0;
+/* Constructor: base widget plus zeroed fields. */
+GuiWidget43BEF0* func_0043BEF0(GuiWidget43BEF0* self) {
+    GuiWidget_ctor(self);
+    self->base.vtable = D_004E0F40;
+    self->unk54 = 0;
+    self->unk58 = 0;
+    self->unk5C = 0;
+    self->unk60 = 10;
+    self->unk48 = 0;
+    self->unk4C = 0;
+    self->unk50 = 0;
+    return self;
 }

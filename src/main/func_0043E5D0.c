@@ -1,41 +1,42 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Address lies after guiMLTextWidget.cc (ends 0x0043E330); the vtable D_004E1040
+ * points into that file, so this is probably its widget constructor.
  */
 
-#include "types.h"
+#include "loose05_types.h"
 
-extern char D_004C0100[];
-extern char D_004C0104[];
-extern char D_004C0108[];
-extern char D_004C010C[];
-extern char D_004E1040[];
-extern int ScalarCollection_Init(int);
-extern void func_0041F690(int);
+extern float D_004C0100;
+extern float D_004C0104;
+extern float D_004C0108;
+extern float D_004C010C;
+extern char D_004E1040[]; /* vtable */
+extern int ScalarCollection_Init(List* list);
+extern void GuiWidget_ctor(void* self);
 
-int func_0043E5D0(int a0) {
-    float tmp4;
-    float tmp5;
-    float tmp6;
-    float tmp7;
+/* Constructor: base widget, empty line list, default color. */
+GuiWidget43E5D0* func_0043E5D0(GuiWidget43E5D0* self) {
+    float r;
+    float g;
+    float b;
+    float a;
 
-    func_0041F690(a0);
-    *(int*)((char*)a0) = (int)D_004E1040;
-    ScalarCollection_Init((a0 + 112));
-    *(int*)((char*)a0 + 72) = 0;
-    *(int*)((char*)a0 + 76) = 0;
-    *(int*)((char*)a0 + 96) = 0;
-    *(int*)((char*)a0 + 104) = 0;
-    *(int*)((char*)a0 + 100) = 0;
-    *(int*)((char*)a0 + 108) = 0;
-    tmp4 = *(float*)D_004C0100;
-    *(float*)((char*)a0 + 80) = tmp4;
-    tmp5 = *(float*)D_004C0104;
-    *(float*)((char*)a0 + 84) = tmp5;
-    tmp6 = *(float*)D_004C0108;
-    *(float*)((char*)a0 + 88) = tmp6;
-    tmp7 = *(float*)D_004C010C;
-    *(float*)((char*)a0 + 92) = tmp7;
-    return a0;
+    GuiWidget_ctor(self);
+    self->base.vtable = D_004E1040;
+    ScalarCollection_Init(&self->lines);
+    self->unk48 = 0;
+    self->unk4C = 0;
+    self->unk60 = 0;
+    self->unk68 = 0;
+    self->unk64 = 0;
+    self->unk6C = 0;
+    r = D_004C0100;
+    self->color[0] = r;
+    g = D_004C0104;
+    self->color[1] = g;
+    b = D_004C0108;
+    self->color[2] = b;
+    a = D_004C010C;
+    self->color[3] = a;
+    return self;
 }

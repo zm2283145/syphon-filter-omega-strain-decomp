@@ -5,14 +5,16 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
-extern int func_001EEF30(int, int, int, int);
+extern int func_001EEF30(Vec16Array* v, FlagElem16* pos, int n, int value);
 
-int func_001E1130(int a0, int a1) {
-    int tmp0;
-    int tmp1;
+/* push_back(value) on an array of 16-byte elements. */
+int func_001E1130(Vec16Array* v, int value) {
+    int count;
+    FlagElem16* data;
 
-    tmp0 = *(int*)((char*)a0 + 4);
-    tmp1 = *(int*)((char*)a0 + 8);
-    return func_001EEF30(a0, (tmp1 + (tmp0 << 4)), 1, a1);
+    count = v->count;
+    data = v->data;
+    return func_001EEF30(v, data + count, 1, value);
 }

@@ -1,20 +1,22 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Runtime support: global destructor chain registration.
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
-extern char D_004E1DB0[];
+extern DestructorChain* D_004E1DB0; /* head of the global destructor chain */
 
-int func_00100B30(int a0, int a1, int a2) {
-    int tmp0;
+/* Register a global object for destruction at exit (Metrowerks runtime
+ * __register_global_object pattern): link node, store destructor and object. */
+void* __register_global_object(void* object, void* destructor, DestructorChain* node) {
+    DestructorChain* head;
 
-    tmp0 = *(int*)D_004E1DB0;
-    *(int*)((char*)a2) = tmp0;
-    *(int*)((char*)a2 + 4) = a1;
-    *(int*)((char*)a2 + 8) = a0;
-    *(int*)D_004E1DB0 = a2;
-    return a0;
+    head = D_004E1DB0;
+    node->next = head;
+    node->destructor = destructor;
+    node->object = object;
+    D_004E1DB0 = node;
+    return object;
 }

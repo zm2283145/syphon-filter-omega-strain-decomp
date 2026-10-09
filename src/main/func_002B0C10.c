@@ -6,8 +6,9 @@
 
 #include "types.h"
 
-extern char D_004ABE98[];
+extern char D_004ABE98[];   /* "GuiZeusShell" */
 
-int func_002B0C10(void) {
-    return (int)D_004ABE98;
+/* Class name getter: "GuiZeusShell". */
+char* func_002B0C10(void) {
+    return D_004ABE98;
 }

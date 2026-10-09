@@ -1,13 +1,12 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * GuiMissionStatistics virtual (vtable D_004DEE70 slot 6).
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
-extern int func_0041EBF0(int);
+extern int func_0041EBF0(GuiMissionStatistics*);   /* GuiWidget implementation */
 
-int func_0034FB40(int a0) {
-    return func_0041EBF0(a0);
+int func_0034FB40(GuiMissionStatistics* self) {
+    return func_0041EBF0(self);
 }

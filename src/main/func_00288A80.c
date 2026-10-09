@@ -5,15 +5,16 @@
  */
 
 #include "types.h"
+#include "loose01_types.h"
 
-extern char D_004DD0A0[];
-extern void func_0041F690(int);
+extern void* D_004DD0A0;
+extern void GuiWidget_ctor(Unk288A80*);
 
-int func_00288A80(int a0) {
-    func_0041F690(a0);
-    *(int*)((char*)a0) = (int)D_004DD0A0;
-    *(char*)((char*)a0 + 72) = 0;
-    *(int*)((char*)a0 + 76) = 0;
-    *(int*)((char*)a0 + 80) = -2;
-    return a0;
+Unk288A80* func_00288A80(Unk288A80* self) {
+    GuiWidget_ctor(self);
+    self->vtable = &D_004DD0A0;
+    self->unk48 = 0;
+    self->unk4C = 0;
+    self->unk50 = -2;
+    return self;
 }

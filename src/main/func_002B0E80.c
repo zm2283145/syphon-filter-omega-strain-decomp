@@ -6,8 +6,9 @@
 
 #include "types.h"
 
-extern char D_004ABF40[];
+extern char D_004ABF40[];   /* "GuiQuickChat" */
 
-int func_002B0E80(void) {
-    return (int)D_004ABF40;
+/* Class name getter: "GuiQuickChat". */
+char* func_002B0E80(void) {
+    return D_004ABF40;
 }

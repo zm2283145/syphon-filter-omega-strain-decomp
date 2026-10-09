@@ -5,15 +5,17 @@
  */
 
 #include "types.h"
+#include "loose02_types.h"
 
-extern char D_004DDC20[];
-extern int func_0033F480(int);
+extern char D_004DDC20[];   /* GuiNetContacts vtable */
+extern GuiMenuScreen* GuiMenuScreen_ctor(GuiMenuScreen* self);
 
-int func_002ADFC0(int a0) {
-    func_0033F480(a0);
-    *(int*)((char*)a0) = (int)D_004DDC20;
-    *(int*)((char*)a0 + 132) = 4;
-    *(int*)((char*)a0 + 352) = 0;
-    *(int*)((char*)a0 + 356) = 0;
-    return a0;
+/* GuiNetContacts constructor. */
+GuiNetListScreen* GuiNetContacts_ctor(GuiNetListScreen* self) {
+    GuiMenuScreen_ctor(&self->base);
+    self->base.base.base.base.vtable = D_004DDC20;
+    self->base.base.screenId = 4;
+    self->unk160 = 0;
+    self->unk164 = 0;
+    return self;
 }

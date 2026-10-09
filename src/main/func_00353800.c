@@ -1,24 +1,19 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * GuiAchievementScreen virtual (vtable D_004DEF90 slot 5).
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
-extern int Agent_GetSelected(int, int);
-extern char D_004FFB50[];
-extern void func_00299510(int);
-extern int func_003334C0(int, int, int);
-extern void func_00356C70(int);
+extern int Agent_GetSelected(void* agents, int index);
+extern char D_004FFB50[];       /* agent list */
+extern void func_00299510(void*);
+extern int func_003334C0(int agent, int a1, void* a2);
+extern void func_00356C70(GuiAchievementScreen*);  /* GuiPersonnelScreen slot 5 */
 
-void func_00353800(int a0) {
-    int tmp2;
-    signed char tmp4;
-
-    func_00299510((a0 + 108));
-    tmp2 = Agent_GetSelected((int)D_004FFB50, -1);
-    tmp4 = *(signed char*)((char*)a0 + 124);
-    func_003334C0(tmp2, tmp4, (a0 + 108));
-    func_00356C70(a0);
+/* GuiAchievementScreen vtable slot 5: refresh unk6C, pass it with unk7C to the selected agent, then call func_00356C70. */
+void func_00353800(GuiAchievementScreen* self) {
+    func_00299510(self->unk6C);
+    func_003334C0(Agent_GetSelected(D_004FFB50, -1), self->unk7C, self->unk6C);
+    func_00356C70(self);
 }

@@ -6,6 +6,7 @@
 
 #include "types.h"
 
-void func_00292620(char* self) {
-    *(int*)(self + 4) = 0;
+/* Vector clear (count = 0). */
+void func_00292620(PtrVec* v) {
+    v->count = 0;
 }

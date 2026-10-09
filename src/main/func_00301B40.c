@@ -6,24 +6,19 @@
 
 #include "types.h"
 
-int func_00301B40(int a0, int a1) {
-    int v0, v1;
-    int cond;
+/* Reads a big-endian 16-bit value from src into out; returns 2 on a null argument. */
+int func_00301B40(unsigned char* src, short* out) {
+    int result = 2;
+    int v;
 
-    cond = a0 == 0;
-    v0 = 0 + 2;
-    if (cond) goto L00301B6C;
-    cond = a1 == 0;
-    if (cond) goto L00301B6C;
-    v1 = *(unsigned char*)(char*)a0;
-    v0 = 0;
-    v1 = v1 << 8;
-    *(short*)(char*)a1 = v1;
-    a0 = *(unsigned char*)((char*)a0 + 1);
-    v1 = v1 | a0;
-    *(short*)(char*)a1 = v1;
-L00301B6C:;
-    goto ret;
-ret:
-    return v0;
+    if (src != 0 && out != 0) {
+        v = src[0];
+        result = 0;
+        v = v << 8;
+        *out = v;
+        /* the low byte is loaded into src's register in the original */
+        src = (unsigned char*)src[1];
+        *out = v | (int)src;
+    }
+    return result;
 }

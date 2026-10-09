@@ -5,7 +5,8 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-int func_003EE500(int a0) {
-    return (0 < *(int*)((char*)a0 + 140));
+int func_003EE500(Unk3EE500* self) {
+    return 0 < self->unk8C;
 }

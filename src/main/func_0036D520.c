@@ -4,8 +4,8 @@
  * until real names are known.
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
-int func_0036D520(int a0, int a1) {
-    return *(int*)(char*)(*(int*)((char*)a0 + 352) + (a1 << 2));
+int func_0036D520(Obj36D630* self, int index) {
+    return self->unk160[index];
 }

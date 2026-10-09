@@ -5,9 +5,10 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
-int func_001DFAC0(int a0) {
-    *(char*)((char*)a0) = 0;
-    *(char*)((char*)a0 + 1) = 0;
-    return a0;
+ByteBool* func_001DFAC0(ByteBool* self) {
+    self->value = 0;
+    self->nonZero = 0;
+    return self;
 }

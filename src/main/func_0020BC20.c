@@ -5,17 +5,18 @@
  */
 
 #include "types.h"
+#include "loose01_types.h"
 
-extern int func_0020BC50(int, int, int);
-extern int func_0020BC90(int);
+extern Word* func_0020BC50(Word*, int, int);
+extern Word* func_0020BC90(Word*);
 
-int func_0020BC20(int a0, int a1, int a2) {
-    func_0020BC50(a0, a1, a2);
-    return a0;
+Word* func_0020BC20(Word* self, int unused, int value) {
+    func_0020BC50(self, unused, value);
+    return self;
 }
 
-int func_0020BC50(int a0, int a1, int a2) {
-    func_0020BC90(a0);
-    *(int*)((char*)a0) = a2;
-    return a0;
+Word* func_0020BC50(Word* self, int unused, int value) {
+    func_0020BC90(self);
+    self->value = value;
+    return self;
 }

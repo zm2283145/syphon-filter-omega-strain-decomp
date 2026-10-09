@@ -5,13 +5,15 @@
  */
 
 #include "types.h"
+#include "loose02_types.h"
 
-extern char D_004DDE60[];
-extern void func_0041F690(int);
+extern char D_004DDE60[];   /* GuiQuickChat vtable */
+extern void GuiWidget_ctor(GuiWidget* self);
 
-int func_002B1BB0(int a0) {
-    func_0041F690(a0);
-    *(int*)((char*)a0) = (int)D_004DDE60;
-    *(int*)((char*)a0 + 72) = 0;
-    return a0;
+/* GuiQuickChat constructor. */
+GuiQuickChat* GuiQuickChat_ctor(GuiQuickChat* self) {
+    GuiWidget_ctor(&self->base);
+    self->base.vtable = D_004DDE60;
+    self->unk48 = 0;
+    return self;
 }

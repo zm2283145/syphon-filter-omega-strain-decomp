@@ -1,23 +1,23 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * GuiObjectives constructor (vtable D_004DF5C0).
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
-extern char D_004DF5C0[];
-extern void func_0041F690(int);
+extern char D_004DF5C0[];       /* GuiObjectives vtable */
+extern void GuiWidget_ctor(GuiObjectives*);
 
-int func_00368E10(int a0, int a1, int a2) {
-    func_0041F690(a0);
-    *(int*)((char*)a0) = (int)D_004DF5C0;
-    *(int*)((char*)a0 + 92) = -1;
-    *(int*)((char*)a0 + 88) = 0;
-    *(int*)((char*)a0 + 120) = 0;
-    *(int*)((char*)a0 + 124) = 0;
-    *(int*)((char*)a0 + 132) = 0;
-    *(char*)((char*)a0 + 136) = a1;
-    *(char*)((char*)a0 + 137) = a2;
-    return a0;
+/* GuiObjectives constructor. */
+GuiObjectives* GuiObjectives_ctor(GuiObjectives* self, int a1, int a2) {
+    GuiWidget_ctor(self);
+    self->base.vtable = D_004DF5C0;
+    self->unk5C = -1;
+    self->unk58 = 0;
+    self->unk78 = 0;
+    self->unk7C = 0;
+    self->unk84 = 0;
+    self->unk88 = a1;
+    self->unk89 = a2;
+    return self;
 }

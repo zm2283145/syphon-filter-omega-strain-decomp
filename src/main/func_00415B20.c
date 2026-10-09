@@ -5,25 +5,19 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-extern int List_InsertBefore(int, int, int, int);
+extern L4Iter* List_InsertBefore(L4Iter* out, void* list, L4Iter* pos, int value);
 
-int func_00415B20(int a0) {
-    return (*(int*)((char*)a0 + 8) + 8);
+/* Address of the value in the node referenced by the word at +8. */
+int* func_00415B20(L4Node** self) {
+    return &self[2]->value;
 }
 
-int func_00415B30(int a0, int a1) {
-    int loc[2];
-    int a2, a3, v0;
+/* push_back on a list whose sentinel node is at +4. */
+L4Iter* func_00415B30(void* list, int value) {
+    L4Iter it[2];
 
-    a3 = a1;
-    v0 = a0 + 4;
-    a1 = a0;
-    *(int*)(char*)loc = v0;
-    a0 = (int)((char*)loc + 4);
-    a2 = (int)loc;
-    v0 = List_InsertBefore(a0, a1, a2, a3);
-    goto ret;
-ret:
-    return v0;
+    it[0].node = (L4Node*)((char*)list + 4);
+    return List_InsertBefore(&it[1], list, &it[0], value);
 }

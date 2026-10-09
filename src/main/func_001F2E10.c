@@ -5,13 +5,15 @@
  */
 
 #include "types.h"
+#include "loose01_types.h"
 
-extern int func_001F2E20(int);
+extern char* func_001F2E20(Iter16*);
 
-int func_001F2E10(int a0) {
-    return func_001F2E20(a0);
+char* func_001F2E10(Iter16* it) {
+    return func_001F2E20(it);
 }
 
-int func_001F2E20(int a0) {
-    return (*(int*)(char*)a0 + 8);
+/* Address 8 bytes past the pointed-to node. */
+char* func_001F2E20(Iter16* it) {
+    return it->p + 8;
 }

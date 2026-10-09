@@ -4,12 +4,14 @@
  * until real names are known.
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
-int func_00397820(int a0) {
-    return (*(int*)(char*)a0 + 8);
+/* Address 8 bytes past the iterator position (payload of a tree node). */
+void* func_00397820(Iter* it) {
+    return it->p + 2;
 }
 
+/* begin() */
 void func_00397830(Iter* out, PtrVec* v) {
     out->p = v->data;
 }

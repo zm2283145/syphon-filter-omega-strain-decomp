@@ -5,18 +5,17 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-extern char D_004E0960[];
-extern char D_004E09B0[];
-extern char D_00572130[];
+extern char D_004E0960[];         /* derived vtable */
+extern char D_004E09B0[];         /* GUI root vtable */
+extern int D_00572130;            /* GUI object instance counter */
 
-int func_00416A90(int a0) {
-    int tmp0;
-
-    *(int*)((char*)a0) = (int)D_004E09B0;
-    tmp0 = *(int*)D_00572130;
-    *(int*)D_00572130 = (tmp0 + 1);
-    *(int*)((char*)a0) = (int)D_004E0960;
-    *(int*)((char*)a0 + 4) = 0;
-    return a0;
+/* Constructor of a direct GuiObject subclass. */
+GuiObject* func_00416A90(GuiObject* self) {
+    self->vtable = D_004E09B0;
+    D_00572130 = D_00572130 + 1;
+    self->vtable = D_004E0960;
+    self->unk04 = 0;
+    return self;
 }

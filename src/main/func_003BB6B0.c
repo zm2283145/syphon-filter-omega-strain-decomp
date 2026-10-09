@@ -4,11 +4,12 @@
  * until real names are known.
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
-void func_003BB6B0(int a0, int a1) {
-    *(int*)((char*)a0 + 68) = a1;
-    *(int*)((char*)a0 + 72) = (*(int*)((char*)a0 + 72) | 4096);
-    *(char*)((char*)a0 + 96) = 0;
-    *(char*)((char*)a0 + 97) = 0;
+/* Attach an info header to a texture entry and mark it. */
+void func_003BB6B0(TexEntry* self, TexInfo* info) {
+    self->info = info;
+    self->flags = self->flags | 0x1000;
+    self->unk60 = 0;
+    self->unk61 = 0;
 }

@@ -6,8 +6,9 @@
 
 #include "types.h"
 
-extern char D_004ABBD8[];
+extern char D_004ABBD8[];   /* "GuiNetContacts" */
 
-int func_002AD9D0(void) {
-    return (int)D_004ABBD8;
+/* Class name getter: "GuiNetContacts". */
+char* func_002AD9D0(void) {
+    return D_004ABBD8;
 }

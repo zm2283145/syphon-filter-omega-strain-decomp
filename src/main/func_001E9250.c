@@ -14,6 +14,6 @@ void func_001E9270(Iter* out, void* self, Iter* src) {
     out->p = src->p;
 }
 
-int func_001E9280(char* self) {
-    return *(int*)(self + 8);
+int* func_001E9280(PtrVec* v) {
+    return v->data;
 }

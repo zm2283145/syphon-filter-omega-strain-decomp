@@ -5,17 +5,13 @@
  */
 
 #include "types.h"
+#include "loose02_types.h"
 
-extern char D_005061D0[];
+/* Network stream cursor shared by message serializers. */
+extern unsigned char* D_005061D0;
 
-void cEnableSuperJumpMsg_v04(int a0) {
-    unsigned char tmp0;
-    int tmp1;
-    int tmp2;
-
-    tmp0 = *(unsigned char*)((char*)a0 + 36);
-    tmp1 = *(int*)D_005061D0;
-    *(char*)((char*)tmp1) = tmp0;
-    tmp2 = *(int*)D_005061D0;
-    *(int*)D_005061D0 = (tmp2 + 1);
+/* Serialize: write the payload byte. */
+void cEnableSuperJumpMsg_v04(EnableSuperJumpMsg* msg) {
+    *D_005061D0 = msg->enable;
+    D_005061D0 = D_005061D0 + 1;
 }

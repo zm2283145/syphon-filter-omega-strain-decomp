@@ -5,33 +5,27 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-extern int func_0040F710(int, int);
+extern void func_0040F710(Tree* t, int root);
 
-void* func_0040FB40(char* self) {
-    return self + 4;
+/* Address of the tree header (end()). */
+int* func_0040FB40(Tree* t) {
+    return &t->header;
 }
 
 void* func_0040FB50(void* self) {
     return self;
 }
 
-void World_ClearPending(int a0) {
-    int a1, s0, v0, v1;
-    int cond;
-
-    a1 = *(int*)(char*)(a0 + 4);
-    cond = a1 == 0;
-    s0 = a0;
-    if (cond) goto L0040FB90;
-    v0 = func_0040F710(a0, a1);
-    *(int*)(char*)s0 = 0;
-    v1 = s0 + 4;
-    *(int*)(char*)(s0 + 4) = 0;
-    *(int*)(char*)(s0 + 12) = v1;
-L0040FB90:;
-    goto ret;
-ret:;
+/* Erases every node of the tree and resets it to empty. */
+void World_ClearPending(Tree* t) {
+    if (t->header != 0) {
+        func_0040F710(t, t->header);
+        t->unk0 = 0;
+        t->header = 0;
+        t->leftmost = &t->header;
+    }
 }
 
 Map* func_0040FBA0(Map* m, unsigned char* cmp) {

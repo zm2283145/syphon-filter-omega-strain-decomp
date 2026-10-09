@@ -1,11 +1,11 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Obj370000 virtual (vtable D_004DF6A0 slot 8).
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
-void* func_0036FFB0(char* self) {
-    return self + 16;
+/* Address of the object's 3x4 matrix. */
+Mtx34* func_0036FFB0(Obj370000* self) {
+    return &self->mtx;
 }

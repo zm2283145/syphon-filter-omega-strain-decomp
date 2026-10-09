@@ -5,23 +5,19 @@
  */
 
 #include "types.h"
+#include "loose02_types.h"
 
-int func_003071C0(int a0, int a1) {
-    int v0, v1;
-    int cond;
+/* Reads unk3C into out (0 when obj is null); returns 1 for a null out, 2 for a null obj. */
+int func_003071C0(RtObj3C* obj, int* out) {
+    int result = 1;
 
-    cond = a1 == 0;
-    v0 = 0 + 1;
-    if (cond) goto L003071E0;
-    *(int*)(char*)a1 = 0;
-    cond = a0 == 0;
-    v0 = 0 + 2;
-    if (cond) goto L003071E0;
-    v1 = *(int*)((char*)a0 + 60);
-    v0 = 0;
-    *(int*)(char*)a1 = v1;
-L003071E0:;
-    goto ret;
-ret:
-    return v0;
+    if (out != 0) {
+        *out = 0;
+        result = 2;
+        if (obj != 0) {
+            result = 0;
+            *out = obj->unk3C;
+        }
+    }
+    return result;
 }

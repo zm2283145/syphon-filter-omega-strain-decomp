@@ -5,32 +5,28 @@
  */
 
 #include "types.h"
+#include "loose01_types.h"
 
-extern int func_001F2D60(int, int);
-extern int func_001F2DB0(int);
-extern int func_001F2DF0(int);
-extern int func_0020B570(int, int, int, int);
+extern int func_001F2D60(ObjVec*, int);
+extern char* func_001F2DB0(ObjVec*);
+extern char** func_001F2DF0(ObjVec*);
+extern int func_0020B570(ObjVec*, char*, int, int);
 
-void func_001F2D50(int a0, int a1) {
-    func_001F2D60(a0, a1);
+void func_001F2D50(ObjVec* v, int value) {
+    func_001F2D60(v, value);
 }
 
-int func_001F2D60(int a0, int a1) {
-    int tmp0;
-    int tmp2;
-
-    tmp0 = func_001F2DB0(a0);
-    tmp2 = func_0020B570(a0, tmp0, 1, a1);
-    return tmp2;
+/* Append one element at the end. */
+int func_001F2D60(ObjVec* v, int value) {
+    return func_0020B570(v, func_001F2DB0(v), 1, value);
 }
 
-int func_001F2DB0(int a0) {
-    int tmp0;
-    int tmp2;
-    int tmp3;
+/* End pointer for 20-byte elements. */
+char* func_001F2DB0(ObjVec* v) {
+    char** data;
+    int count;
 
-    tmp0 = func_001F2DF0(a0);
-    tmp2 = *(int*)((char*)a0 + 4);
-    tmp3 = *(int*)(char*)tmp0;
-    return (tmp3 + (tmp2 * 20));
+    data = func_001F2DF0(v);
+    count = v->count;
+    return *data + count * 20;
 }

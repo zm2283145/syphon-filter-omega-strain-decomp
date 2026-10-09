@@ -5,10 +5,11 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-extern char D_004E0840[];
-extern char D_0055D480[];
-extern int cMessage_ctor5(int, int, int);
+extern char D_004E0840[];         /* Msg3E43D0 vtable */
+extern char D_0055D480[];         /* Msg3E43D0 type descriptor */
+extern void* cMessage_ctor5(void* self, void* type, void* arg);
 
 Vec4* func_003E4920(Vec4* v, float x, float y, float z, float w) {
     v->x = x;
@@ -18,10 +19,11 @@ Vec4* func_003E4920(Vec4* v, float x, float y, float z, float w) {
     return v;
 }
 
-int func_003E4940(int a0, int a1, int a2, int a3) {
-    cMessage_ctor5(a0, (int)D_0055D480, a1);
-    *(int*)((char*)a0) = (int)D_004E0840;
-    *(int*)((char*)a0 + 36) = a2;
-    *(char*)((char*)a0 + 40) = a3;
-    return a0;
+/* Builds the message from explicit values. */
+Msg3E43D0* func_003E4940(Msg3E43D0* self, void* arg, int a, int b) {
+    cMessage_ctor5(self, D_0055D480, arg);
+    self->vtable = D_004E0840;
+    self->unk24 = a;
+    self->unk28 = b;
+    return self;
 }

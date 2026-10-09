@@ -5,12 +5,13 @@
  */
 
 #include "types.h"
+#include "loose02_types.h"
 
-int func_00318300(int a0, float f12) {
-    int tmp0;
+/* Sets parameter unk1C and marks it dirty. */
+ParamBlock* func_00318300(ParamOwner* self, float value) {
+    ParamBlock* params = self->params;
 
-    tmp0 = *(int*)((char*)a0 + 72);
-    *(float*)((char*)tmp0 + 28) = f12;
-    *(short*)((char*)tmp0 + 40) = 1;
-    return tmp0;
+    params->unk1C = value;
+    params->unk28 = 1;
+    return params;
 }

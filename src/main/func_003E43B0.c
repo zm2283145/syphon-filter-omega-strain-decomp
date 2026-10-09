@@ -5,10 +5,11 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-extern char D_004E0840[];
-extern char D_0055D480[];
-extern int cMessage_ctor5(int, int, int);
+extern char D_004E0840[];         /* Msg3E43D0 vtable */
+extern char D_0055D480[];         /* Msg3E43D0 type descriptor */
+extern void* cMessage_ctor5(void* self, void* type, void* arg);
 
 Vec4* func_003E43B0(Vec4* v, float x, float y, float z, float w) {
     v->x = x;
@@ -18,15 +19,11 @@ Vec4* func_003E43B0(Vec4* v, float x, float y, float z, float w) {
     return v;
 }
 
-int func_003E43D0(int a0, int a1) {
-    unsigned char tmp2;
-    unsigned char tmp3;
-
-    cMessage_ctor5(a0, (int)D_0055D480, a1);
-    *(int*)((char*)a0) = (int)D_004E0840;
-    tmp2 = *(unsigned char*)((char*)a1 + 8);
-    *(int*)((char*)a0 + 36) = tmp2;
-    tmp3 = *(unsigned char*)((char*)a1 + 9);
-    *(char*)((char*)a0 + 40) = tmp3;
-    return a0;
+/* Builds the message from a source record. */
+Msg3E43D0* func_003E43D0(Msg3E43D0* self, Msg3E43D0Src* src) {
+    cMessage_ctor5(self, D_0055D480, src);
+    self->vtable = D_004E0840;
+    self->unk24 = src->unk08;
+    self->unk28 = src->unk09;
+    return self;
 }

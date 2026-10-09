@@ -5,13 +5,14 @@
  */
 
 #include "types.h"
+#include "loose02_types.h"
 
-int func_00318390(int a0, float f12, float f13) {
-    int tmp0;
+/* Sets parameters unk30/unk34 and raises flag unk2A. */
+ParamBlock* func_00318390(ParamOwner* self, float a, float b) {
+    ParamBlock* params = self->params;
 
-    tmp0 = *(int*)((char*)a0 + 72);
-    *(float*)((char*)tmp0 + 52) = f13;
-    *(short*)((char*)tmp0 + 42) = 1;
-    *(float*)((char*)tmp0 + 48) = f12;
-    return tmp0;
+    params->unk34 = b;
+    params->unk2A = 1;
+    params->unk30 = a;
+    return params;
 }

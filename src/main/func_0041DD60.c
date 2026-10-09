@@ -5,37 +5,24 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-extern int List_InsertBefore(int, int, int, int);
-extern int func_002CCE50(int, int);
+extern L4Iter* List_InsertBefore(L4Iter* out, void* list, L4Iter* pos, int value);
+extern int func_002CCE50(L4ScalarCollection* coll, GuiWidget** value);
 
-int func_0041DD60(int a0, int a1) {
-    int loc[1];
-    int v0;
+/* Adds child to the widget: sets its parent and appends it to the child collection. */
+int GuiWidget_AddChild(GuiWidget* self, GuiWidget* child) {
+    GuiWidget* loc[1];
 
-    *(int*)(char*)loc = a1;
-    v0 = *(int*)(char*)loc;
-    a1 = (int)loc;
-    *(int*)(char*)(v0 + 28) = a0;
-    a0 = a0 + 40;
-    v0 = func_002CCE50(a0, a1);
-    goto ret;
-ret:
-    return v0;
+    loc[0] = child;
+    loc[0]->parent = self;
+    return func_002CCE50(&self->children, loc);
 }
 
-int func_0041DD90(int a0, int a1) {
-    int loc[2];
-    int a2, a3, v0;
+/* push_back on a list whose sentinel node is at +4. */
+L4Iter* func_0041DD90(void* list, int value) {
+    L4Iter it[2];
 
-    a3 = a1;
-    v0 = a0 + 4;
-    a1 = a0;
-    *(int*)(char*)loc = v0;
-    a0 = (int)((char*)loc + 4);
-    a2 = (int)loc;
-    v0 = List_InsertBefore(a0, a1, a2, a3);
-    goto ret;
-ret:
-    return v0;
+    it[0].node = (L4Node*)((char*)list + 4);
+    return List_InsertBefore(&it[1], list, &it[0], value);
 }

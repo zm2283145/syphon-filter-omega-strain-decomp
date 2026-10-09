@@ -1,23 +1,19 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Script type key accessors for Message (just before message.cc).
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
-extern char D_00543610[];
+extern int D_00543610;          /* Message script type key */
 
 void func_003C8C40(void) {
 }
 
-int Message_GetScriptTypeKeyPtr(void) {
-    return (int)D_00543610;
+int* Message_GetScriptTypeKeyPtr(void) {
+    return &D_00543610;
 }
 
 int Message_GetScriptTypeKey(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_00543610;
-    return tmp0;
+    return D_00543610;
 }

@@ -4,11 +4,12 @@
  * until real names are known.
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
-extern char D_00532A70[];
-extern void func_00100440(int, int, int, int);
-extern int func_0033C280(int);
+extern FlaggedRel D_00532A70[5];
+/* Runtime array constructor without destructor: (array, ctor, element size, count). */
+extern void func_00100440(void* array, void* ctor, int size, int count);
+extern int func_0033C280(FlaggedRel*);
 extern int func_0033C2A0(int, int);
 
 Rel* func_0033C120(Rel* r) {
@@ -18,12 +19,13 @@ Rel* func_0033C120(Rel* r) {
     return r;
 }
 
+/* Static initializer: construct the five entries of D_00532A70. */
 void func_0033C140(void) {
-    func_00100440((int)D_00532A70, (int)func_0033C2A0, 16, 5);
+    func_00100440(D_00532A70, func_0033C2A0, 16, 5);
 }
 
-int func_0033C160(int a0) {
-    func_0033C280(a0);
-    *(char*)((char*)a0 + 12) = 1;
-    return a0;
+FlaggedRel* func_0033C160(FlaggedRel* self) {
+    func_0033C280(self);
+    self->unk0C = 1;
+    return self;
 }

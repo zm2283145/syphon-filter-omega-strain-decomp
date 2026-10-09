@@ -15,8 +15,8 @@ Iter* func_001E9010(Iter* it) {
     return it;
 }
 
-int func_001E9030(char* self) {
-    return *(int*)(self + 0);
+int func_001E9030(Word* w) {
+    return w->value;
 }
 
 void func_001E9040(Iter* out, PtrVec* v) {

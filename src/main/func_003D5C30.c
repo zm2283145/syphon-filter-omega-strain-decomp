@@ -5,57 +5,47 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-extern int func_001004B0(int, int, int, int, int);
-extern int func_003D5AA0(int, int);
-extern int func_003D5CD0(int);
+/* Array constructor helper: (array, ctor, dtor, element size, count). */
+extern void* func_001004B0(void* array, void* ctor, void* dtor, int size, int count);
+extern L4Elem30* func_003D5AA0(L4Elem30*, int);
+L4Elem30* func_003D5CD0(L4Elem30* self);
 
-int func_003D5C30(int a0) {
-    *(int*)((char*)a0) = 0;
-    *(int*)((char*)a0 + 4) = 0;
-    *(short*)((char*)a0 + 12) = -1;
-    return a0;
+Unk3D5C30* func_003D5C30(Unk3D5C30* self) {
+    self->unk00 = 0;
+    self->unk04 = 0;
+    self->unk0C = -1;
+    return self;
 }
 
-int func_003D5C50(int a0) {
-    int v0, v1;
-
-    *(int*)(char*)a0 = 0;
-    v1 = 0x3f800000;
-    *(int*)(char*)(a0 + 100) = 0;
-    v0 = a0;
-    *(int*)(char*)(a0 + 112) = 0;
-    *(int*)(char*)(a0 + 116) = 0;
-    *(int*)(char*)(a0 + 120) = 0;
-    *(int*)(char*)(a0 + 124) = v1;
-    goto ret;
-ret:
-    return v0;
+Unk3D5C50* func_003D5C50(Unk3D5C50* self) {
+    self->unk00 = 0;
+    self->unk64 = 0;
+    self->unk70[0] = 0.0f;
+    self->unk70[1] = 0.0f;
+    self->unk70[2] = 0.0f;
+    self->unk70[3] = 1.0f;
+    return self;
 }
 
-int func_003D5C80(int a0) {
-    *(int*)((char*)a0) = 0;
-    *(int*)((char*)a0 + 4) = 0;
-    func_001004B0((a0 + 16), (int)func_003D5CD0, (int)func_003D5AA0, 48, 6);
-    return a0;
+Unk3D5C80* func_003D5C80(Unk3D5C80* self) {
+    self->unk00 = 0;
+    self->unk04 = 0;
+    func_001004B0(self->elems, func_003D5CD0, func_003D5AA0, sizeof(L4Elem30), 6);
+    return self;
 }
 
-int func_003D5CD0(int a0) {
-    int v0, v1;
-
-    *(char*)(char*)a0 = 0;
-    v1 = 0x3f800000;
-    *(int*)(char*)(a0 + 4) = 0;
-    v0 = a0;
-    *(int*)(char*)(a0 + 16) = 0;
-    *(int*)(char*)(a0 + 20) = 0;
-    *(int*)(char*)(a0 + 24) = 0;
-    *(int*)(char*)(a0 + 28) = v1;
-    *(int*)(char*)(a0 + 32) = 0;
-    *(int*)(char*)(a0 + 36) = 0;
-    *(int*)(char*)(a0 + 40) = 0;
-    *(int*)(char*)(a0 + 44) = 0;
-    goto ret;
-ret:
-    return v0;
+L4Elem30* func_003D5CD0(L4Elem30* self) {
+    self->unk00 = 0;
+    self->unk04 = 0;
+    self->unk10[0] = 0.0f;
+    self->unk10[1] = 0.0f;
+    self->unk10[2] = 0.0f;
+    self->unk10[3] = 1.0f;
+    self->unk20[0] = 0.0f;
+    self->unk20[1] = 0.0f;
+    self->unk20[2] = 0.0f;
+    self->unk20[3] = 0.0f;
+    return self;
 }

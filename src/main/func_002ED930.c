@@ -6,6 +6,7 @@
 
 #include "types.h"
 
-int func_002ED930(int a0) {
-    return (a0 + 16);
+/* Returns the address 16 bytes into the object. */
+char* func_002ED930(char* self) {
+    return self + 16;
 }

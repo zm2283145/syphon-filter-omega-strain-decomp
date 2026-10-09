@@ -1,64 +1,35 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Script natives for the PerformAction family.
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-extern int GObj_IdentityB(int);
-extern int Global_PerformAction_WithObject(int, int, int, int, int, float);
-extern int func_003CB1C0(int);
-extern int func_003E67C0(int, int, int, int, float);
+extern int GObj_IdentityB(int handle);
+extern int Global_PerformAction_WithObject(int obj, int action, int target, int arg, int flags, float time);
+extern int func_003CB1C0(int handle);
+extern int func_003E67C0(int obj, int action, int target, int arg, float time);
 
-int Script_PerformAction_WithObject_2(int a0) {
-    int loc[1];
-    int a1, a2, a3, s0, s1, t0, v0;
-    float f12;
+/* PerformAction_WithObject(obj, action, target, arg). */
+int Script_PerformAction_WithObject_2(L4ScriptArg* args) {
+    volatile int arg = args[3].i; /* reloaded from the stack in the original */
+    int obj;
+    int action;
 
-    v0 = *(int*)(char*)(a0 + 12);
-    s0 = a0;
-    *(int*)(char*)loc = v0;
-    s1 = *(signed char*)(char*)(a0 + 4);
-    a0 = *(int*)(char*)a0;
-    v0 = func_003CB1C0(a0);
-    a0 = *(int*)(char*)(s0 + 8);
-    s0 = v0;
-    v0 = GObj_IdentityB(a0);
-    a3 = *(int*)(char*)loc;
-    a2 = v0;
-    v0 = 0xbf800000;
-    a0 = s0;
-    f12 = -1.0f;
-    a1 = s1;
-    t0 = 0;
-    v0 = Global_PerformAction_WithObject(a0, a1, a2, a3, t0, f12);
-    v0 = 0;
-    goto ret;
-ret:
-    return v0;
+    action = args[1].c;
+    obj = func_003CB1C0(args[0].i);
+    Global_PerformAction_WithObject(obj, action, GObj_IdentityB(args[2].i), arg, 0, -1.0f);
+    return 0;
 }
 
-int Script_PerformAction_WithObject(int a0) {
-    int a1, a2, a3, s0, s1, v0;
-    float f12;
+/* PerformAction_WithObject(obj, action, target). */
+int Script_PerformAction_WithObject(L4ScriptArg* args) {
+    int obj;
+    int action;
 
-    s1 = *(signed char*)(char*)(a0 + 4);
-    s0 = a0;
-    a0 = *(int*)(char*)a0;
-    v0 = func_003CB1C0(a0);
-    a0 = *(int*)(char*)(s0 + 8);
-    s0 = v0;
-    v0 = GObj_IdentityB(a0);
-    a2 = v0;
-    a0 = s0;
-    v0 = 0xbf800000;
-    a1 = s1;
-    f12 = -1.0f;
-    a3 = 0;
-    v0 = func_003E67C0(a0, a1, a2, a3, f12);
-    v0 = 0;
-    goto ret;
-ret:
-    return v0;
+    action = args[1].c;
+    obj = func_003CB1C0(args[0].i);
+    func_003E67C0(obj, action, GObj_IdentityB(args[2].i), 0, -1.0f);
+    return 0;
 }

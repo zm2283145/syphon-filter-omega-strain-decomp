@@ -5,12 +5,14 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-void func_003E4700(int a0, int a1) {
-    Q tmp0;
+/* Quadword copy. */
+void func_003E4700(Q* dst, Q* src) {
+    Q tmp;
 
-    tmp0 = *(Q*)(char*)a1;
-    *(Q*)((char*)a0) = tmp0;
+    tmp = *src;
+    *dst = tmp;
 }
 
 void func_003E4710(char* self, int value) {

@@ -5,16 +5,13 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-void func_003FA190(int a0, float f12) {
-    int v1;
-    int cond;
+/* Sets the float at +0x48 of the sub-object, if present. */
+void func_003FA190(Unk3FA190* self, float value) {
+    Unk3FA190Sub* sub = self->unk50C;
 
-    v1 = *(int*)(char*)(a0 + 1292);
-    cond = v1 == 0;
-    if (cond) goto L003FA1A0;
-    *(float*)(char*)(v1 + 72) = f12;
-L003FA1A0:;
-    goto ret;
-ret:;
+    if (sub != 0) {
+        sub->unk48 = value;
+    }
 }

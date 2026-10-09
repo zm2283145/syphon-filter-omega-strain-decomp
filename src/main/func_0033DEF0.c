@@ -4,8 +4,9 @@
  * until real names are known.
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
-int func_0033DEF0(int a0) {
-    return (*(int*)((char*)a0 + 4) + 8);
+/* Payload (+8) of the node held at +4. */
+void* func_0033DEF0(Pair* self) {
+    return (char*)self->second + 8;
 }

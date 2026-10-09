@@ -1,34 +1,38 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Container/iterator helpers; original translation unit not identified yet.
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-int func_003D20F0(int a0, int a1) {
-    return ((unsigned int)(0) < (unsigned int)((*(int*)(char*)a0 ^ *(int*)(char*)a1)));
+/* Iterator inequality. */
+int func_003D20F0(L4Iter* a, L4Iter* b) {
+    return a->node != b->node;
 }
 
+/* end(): iterator at the tree header. */
 void func_003D2110(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
-int func_003D2120(int a0) {
-    *(int*)((char*)a0) = *(int*)((char*)*(int*)(char*)a0 + 4);
-    return a0;
+/* Iterator increment. */
+L4Iter* func_003D2120(L4Iter* it) {
+    it->node = it->node->next;
+    return it;
 }
 
 void* func_003D2140(void* self) {
     return self;
 }
 
-int func_003D2150(char* self) {
-    return *(int*)(self + 0);
+int func_003D2150(Word* self) {
+    return self->value;
 }
 
-int func_003D2160(int a0) {
-    return (*(int*)(char*)a0 + 8);
+/* Iterator dereference. */
+int* func_003D2160(L4Iter* it) {
+    return &it->node->value;
 }
 
 Word* func_003D2170(Word* dst, Word* src) {
@@ -36,6 +40,7 @@ Word* func_003D2170(Word* dst, Word* src) {
     return dst;
 }
 
+/* begin() of a PtrVec. */
 void func_003D2180(Iter* out, PtrVec* v) {
     out->p = v->data;
 }

@@ -5,21 +5,20 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
 extern int func_002232C0(int, int);
 
-int func_003D1700(int a0) {
-    int tmp0;
+int func_003D1700(Unk3D1700* self) {
+    int ret = func_002232C0(0, 1);
 
-    tmp0 = func_002232C0(0, 1);
-    *(char*)((char*)a0 + 2) = 0;
-    return tmp0;
+    self->unk02 = 0;
+    return ret;
 }
 
-int func_003D1730(int a0) {
-    int tmp0;
+int func_003D1730(Unk3D1700* self) {
+    int ret = func_002232C0(0, 0);
 
-    tmp0 = func_002232C0(0, 0);
-    *(char*)((char*)a0 + 2) = 1;
-    return tmp0;
+    self->unk02 = 1;
+    return ret;
 }

@@ -5,11 +5,12 @@
  */
 
 #include "types.h"
+#include "loose01_types.h"
 
-int func_00251350(int a0) {
-    *(int*)((char*)a0 + 12) = 0;
-    *(int*)((char*)a0 + 16) = 0;
-    *(int*)((char*)a0 + 20) = 0;
-    *(int*)((char*)a0 + 24) = 0;
-    return a0;
+Unk251350* func_00251350(Unk251350* self) {
+    self->unk0C = 0;
+    self->unk10 = 0;
+    self->unk14 = 0;
+    self->unk18 = 0;
+    return self;
 }

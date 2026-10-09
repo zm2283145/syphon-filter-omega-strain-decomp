@@ -5,17 +5,19 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
-float func_001BED70(char* self) {
-    return *(float*)(self + 4);
+float func_001BED70(FloatPair* self) {
+    return self->b;
 }
 
-int func_001BED80(int a0, int a1) {
-    *(float*)((char*)a0) = *(float*)(char*)a1;
-    *(float*)((char*)a0 + 4) = *(float*)((char*)a1 + 4);
-    *(float*)((char*)a0 + 8) = *(float*)((char*)a1 + 8);
-    *(float*)((char*)a0 + 12) = *(float*)((char*)a1 + 12);
-    *(float*)((char*)a0 + 16) = *(float*)((char*)a1 + 16);
-    *(float*)((char*)a0 + 20) = *(float*)((char*)a1 + 20);
-    return a0;
+/* Copy six floats. */
+Float6* func_001BED80(Float6* d, Float6* s) {
+    d->f[0] = s->f[0];
+    d->f[1] = s->f[1];
+    d->f[2] = s->f[2];
+    d->f[3] = s->f[3];
+    d->f[4] = s->f[4];
+    d->f[5] = s->f[5];
+    return d;
 }

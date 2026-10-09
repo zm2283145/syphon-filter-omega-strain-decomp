@@ -1,64 +1,56 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Container/iterator helpers; original translation unit not identified yet.
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-extern int List_InsertBefore(int, int, int, int);
-extern int func_003D27B0(int, int);
+extern L4Iter* List_InsertBefore(L4Iter* out, Tree* t, L4Iter* pos, int* value);
+L4Iter* func_003D27B0(Tree* t, int* value);
 
 Word* func_003D2710(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-int func_003D2720(int a0, int a1) {
-    return ((unsigned int)(0) < (unsigned int)((*(int*)(char*)a0 ^ *(int*)(char*)a1)));
+/* Iterator inequality. */
+int func_003D2720(L4Iter* a, L4Iter* b) {
+    return a->node != b->node;
 }
 
-int func_003D2740(int a0) {
-    *(int*)((char*)a0) = *(int*)((char*)*(int*)(char*)a0 + 4);
-    return a0;
+/* Iterator increment. */
+L4Iter* func_003D2740(L4Iter* it) {
+    it->node = it->node->next;
+    return it;
 }
 
-int func_003D2760(int a0) {
-    return (*(int*)(char*)a0 + 8);
+/* Iterator dereference. */
+int* func_003D2760(L4Iter* it) {
+    return &it->node->value;
 }
 
-int func_003D2770(int a0, int a1) {
-    *(float*)((char*)a0) = *(float*)(char*)a1;
-    return a0;
+float* func_003D2770(float* dst, float* src) {
+    *dst = *src;
+    return dst;
 }
 
 void* func_003D2780(void* self) {
     return self;
 }
 
-void func_003D2790(int a0, int a1) {
+/* Inserts a value (by copy). */
+void func_003D2790(Tree* t, int value) {
     int loc[1];
-    int v0;
 
-    *(int*)(char*)loc = a1;
-    a1 = (int)loc;
-    v0 = func_003D27B0(a0, a1);
-    goto ret;
-ret:;
+    loc[0] = value;
+    func_003D27B0(t, loc);
 }
 
-int func_003D27B0(int a0, int a1) {
-    int loc[2];
-    int a2, a3, v0;
+/* Inserts *value using the word at +8 of the container as the position hint. */
+L4Iter* func_003D27B0(Tree* t, int* value) {
+    L4Iter it[2];
 
-    a3 = a1;
-    a1 = a0;
-    v0 = *(int*)(char*)(a0 + 8);
-    a2 = (int)loc;
-    *(int*)(char*)loc = v0;
-    a0 = (int)((char*)loc + 4);
-    v0 = List_InsertBefore(a0, a1, a2, a3);
-    goto ret;
-ret:
-    return v0;
+    it[0].node = (L4Node*)t->unk8;
+    return List_InsertBefore(&it[1], t, &it[0], value);
 }

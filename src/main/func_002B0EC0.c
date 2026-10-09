@@ -5,23 +5,16 @@
  */
 
 #include "types.h"
+#include "loose02_types.h"
 
-extern int GObj_IdentityB(int);
-extern int Global_SetLocation(int, int);
+extern void* GObj_IdentityB(void* obj);
+extern int Global_SetLocation(void* obj, int location);
 
-int Script_SetLocation(int a0) {
+/* Script native: SetLocation(object, location). */
+int Script_SetLocation(ScriptArg* args) {
     int loc[1];
-    int a1, v0;
 
-    v0 = *(int*)(char*)(a0 + 4);
-    *(int*)(char*)loc = v0;
-    a0 = *(int*)(char*)a0;
-    v0 = GObj_IdentityB(a0);
-    a1 = *(int*)(char*)loc;
-    a0 = v0;
-    v0 = Global_SetLocation(a0, a1);
-    v0 = 0;
-    goto ret;
-ret:
-    return v0;
+    loc[0] = args[1].i;
+    Global_SetLocation(GObj_IdentityB(args[0].p), STACK_COPY(loc));
+    return 0;
 }

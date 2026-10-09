@@ -6,8 +6,9 @@
 
 #include "types.h"
 
-extern char D_004AF340[];
+extern char D_004AF340[];   /* "rt_crypt version: 1.01.0024" */
 
-int func_002F7FA0(void) {
-    return (int)D_004AF340;
+/* Library version string getter: "rt_crypt version: 1.01.0024". */
+char* func_002F7FA0(void) {
+    return D_004AF340;
 }

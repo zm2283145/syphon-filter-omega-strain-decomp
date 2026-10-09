@@ -5,15 +5,18 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
-int func_00182260(void* self, char* p) {
-    return *(int*)(p + 0);
+/* Iterator dereference (returns *it). */
+int func_00182260(void* self, int* it) {
+    return it[0];
 }
 
-int func_00182270(char* self) {
-    return *(int*)(self + 0);
+int func_00182270(IntPair* self) {
+    return self->a;
 }
 
-void ColGather_SetSource(char* self, int value) {
-    *(int*)(self + 4) = value;
+/* Store the gather source word at +0x04 (research COL_GATHER_NATIVE.md). */
+void ColGather_SetSource(IntPair* self, int value) {
+    self->b = value;
 }

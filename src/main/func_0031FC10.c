@@ -5,7 +5,8 @@
  */
 
 #include "types.h"
+#include "loose02_types.h"
 
-void func_0031FC10(int a0, float f12) {
-    *(float*)((char*)a0 + 36) = f12;
+void func_0031FC10(FloatSettings* self, float value) {
+    self->unk24 = value;
 }

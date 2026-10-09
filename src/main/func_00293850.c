@@ -6,8 +6,9 @@
 
 #include "types.h"
 
-extern char D_004A9E50[];
+extern char D_004A9E50[];   /* "GuiAgentLoad" */
 
-int func_00293850(void) {
-    return (int)D_004A9E50;
+/* Class name getter: "GuiAgentLoad". */
+char* func_00293850(void) {
+    return D_004A9E50;
 }

@@ -5,20 +5,22 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
-int func_001D7AD0(int a0) {
-    int tmp0;
-    int tmp1;
+/* End pointer of an array of 0x1D0-byte records. */
+Elem1D0* func_001D7AD0(Vec1D0Array* v) {
+    int count;
+    Elem1D0* data;
 
-    tmp0 = *(int*)((char*)a0 + 4);
-    tmp1 = *(int*)((char*)a0 + 8);
-    return (tmp1 + (tmp0 * 464));
+    count = v->count;
+    data = v->data;
+    return data + count;
 }
 
 void func_001D7B00(Iter* out, void* self, Iter* src) {
     out->p = src->p;
 }
 
-int func_001D7B10(char* self) {
-    return *(int*)(self + 8);
+Elem1D0* func_001D7B10(Vec1D0Array* v) {
+    return v->data;
 }

@@ -5,25 +5,27 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
-extern char D_0055A278[];
-extern int Global_SetInterfaceFont(int);
-extern int func_001698C0(void);
+extern int D_0055A278; /* current interface font */
+extern int Global_SetInterfaceFont(int font);
+extern FontOwner* func_001698C0(void);
 
-int Script_SetInterfaceFont(int a0) {
-    unsigned char tmp0;
+/* Script native: SetInterfaceFont(byte index). */
+int Script_SetInterfaceFont(unsigned char* args) {
+    unsigned char font;
 
-    tmp0 = *(unsigned char*)(char*)a0;
-    Global_SetInterfaceFont(tmp0);
+    font = args[0];
+    Global_SetInterfaceFont(font);
     return 0;
 }
 
-int Global_SetInterfaceFont(int a0) {
-    int tmp0;
-    int tmp2;
+int Global_SetInterfaceFont(int font) {
+    FontOwner* owner;
+    int handle;
 
-    tmp0 = func_001698C0();
-    tmp2 = *(int*)((char*)(((a0 & 255) << 2) + tmp0) + 640);
-    *(int*)D_0055A278 = tmp2;
-    return tmp0;
+    owner = func_001698C0();
+    handle = owner->fonts[font & 255];
+    D_0055A278 = handle;
+    return (int)owner;
 }

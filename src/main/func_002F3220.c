@@ -5,10 +5,8 @@
  */
 
 #include "types.h"
+#include "loose02_types.h"
 
-int func_002F3220(int a0) {
-    int tmp0;
-
-    tmp0 = *(int*)((char*)a0 + 2128);
-    return tmp0;
+int func_002F3220(Obj850* self) {
+    return self->unk850;
 }

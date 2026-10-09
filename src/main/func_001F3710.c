@@ -5,11 +5,12 @@
  */
 
 #include "types.h"
+#include "loose01_types.h"
 
 extern int func_001F3030(void);
-extern int func_001F3760(int);
-extern int func_001F3790(int);
-extern int func_001F37C0(int);
+extern ObjVec* func_001F3760(ObjVec*);
+extern ObjVec* func_001F3790(ObjVec*);
+extern ObjVec* func_001F37C0(ObjVec*);
 extern int func_0020B3F0(int, int);
 
 int func_001F3710(int a0, int a1) {
@@ -20,18 +21,19 @@ int func_001F3720(void) {
     return func_001F3030();
 }
 
-int func_001F3730(int a0) {
-    func_001F3760(a0);
-    *(char*)((char*)a0 + 12) = 1;
-    return a0;
+/* Array constructor: sets the owns-storage flag. */
+ObjVec* func_001F3730(ObjVec* self) {
+    func_001F3760(self);
+    self->owned = 1;
+    return self;
 }
 
-int func_001F3760(int a0) {
-    func_001F3790(a0);
-    return a0;
+ObjVec* func_001F3760(ObjVec* self) {
+    func_001F3790(self);
+    return self;
 }
 
-int func_001F3790(int a0) {
-    func_001F37C0(a0);
-    return a0;
+ObjVec* func_001F3790(ObjVec* self) {
+    func_001F37C0(self);
+    return self;
 }

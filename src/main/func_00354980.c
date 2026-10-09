@@ -1,13 +1,13 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * GuiPersonnelMenu class-name getter (vtable D_004DF020 slot 19).
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
-extern char D_004BB200[];
+extern char D_004BB200[];       /* "GuiPersonnelMenu" */
 
-int func_00354980(void) {
-    return (int)D_004BB200;
+/* Returns the class name string "GuiPersonnelMenu". */
+const char* GuiPersonnelMenu_GetClassName(void) {
+    return D_004BB200;
 }

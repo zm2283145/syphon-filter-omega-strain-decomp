@@ -1,36 +1,32 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Object registry accessors; original translation unit not identified yet.
  */
 
 #include "types.h"
 
-extern char D_00571740[];
+extern int D_00571740;
+/* Object registry (actor array). Declared as bytes: an int declaration changes
+ * the register choice in Object_Register. */
 extern char D_00571748[];
-extern int ObjRegistry_AppendRecursive(int, int);
-extern void func_0040C990(int, int);
+extern int ObjRegistry_AppendRecursive(int registry, int obj);
+extern void Object_SetRegistry(int obj, int registry);
 
-int Object_Register(int a0) {
-    int tmp0;
-    int tmp3;
+/* Registers obj with the global registry (and its children, recursively). */
+int Object_Register(int obj) {
+    int registry;
+    int ret;
 
-    tmp0 = *(int*)D_00571748;
-    func_0040C990(a0, tmp0);
-    tmp3 = ObjRegistry_AppendRecursive(tmp0, a0);
-    return tmp3;
+    registry = *(int*)D_00571748;
+    Object_SetRegistry(obj, registry);
+    ret = ObjRegistry_AppendRecursive(registry, obj);
+    return ret;
 }
 
 int func_0040CA20(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_00571740;
-    return tmp0;
+    return D_00571740;
 }
 
 int World_GetActorArray(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_00571748;
-    return tmp0;
+    return *(int*)D_00571748;
 }

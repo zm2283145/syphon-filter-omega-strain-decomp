@@ -1,39 +1,38 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Field accessors of Obj372AC0.
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
-float func_00372AC0(char* self) {
-    return *(float*)(self + 80);
+float func_00372AC0(Obj372AC0* self) {
+    return self->unk50;
 }
 
-void* func_00372AD0(char* self) {
-    return self + 64;
+void* func_00372AD0(Obj372AC0* self) {
+    return self->unk40;
 }
 
-float func_00372AE0(char* self) {
-    return *(float*)(self + 84);
+float func_00372AE0(Obj372AC0* self) {
+    return self->unk54;
 }
 
-float func_00372AF0(char* self) {
-    return *(float*)(self + 20);
+float func_00372AF0(Obj372AC0* self) {
+    return self->unk14;
 }
 
-float func_00372B00(char* self) {
-    return *(float*)(self + 16);
+float func_00372B00(Obj372AC0* self) {
+    return self->unk10;
 }
 
-void* func_00372B10(char* self) {
-    return self + 48;
+void* func_00372B10(Obj372AC0* self) {
+    return self->unk30;
 }
 
-void* func_00372B20(char* self) {
-    return self + 64;
+void* func_00372B20(Obj372AC0* self) {
+    return self->unk40;
 }
 
-signed char func_00372B30(signed char* self) {
-    return self[30];
+signed char func_00372B30(Obj372AC0* self) {
+    return self->unk1E;
 }

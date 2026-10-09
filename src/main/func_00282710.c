@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-extern char D_00506218[];
+extern int D_00506218;
 
 Rel* func_00282710(Rel* r) {
     r->a = 0;
@@ -16,8 +16,5 @@ Rel* func_00282710(Rel* r) {
 }
 
 int cBeamMsg_v05(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_00506218;
-    return tmp0;
+    return D_00506218;
 }

@@ -5,7 +5,9 @@
  */
 
 #include "types.h"
+#include "loose00_types.h"
 
-int func_00184470(int a0) {
-    return ((unsigned int)((*(unsigned char*)((char*)a0 + 36) ^ 3)) < (unsigned int)(1));
+/* True when the type byte at +0x24 is 3. */
+int func_00184470(Unk00184470* self) {
+    return self->type == 3;
 }

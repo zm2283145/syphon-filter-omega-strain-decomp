@@ -5,9 +5,10 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-extern char D_00571CD0[];
-extern void World_ClearPending(int);
+extern Tree* D_00571CD0;
+extern void World_ClearPending(Tree*);
 
 void Tree_End(Iter* out, Tree* t) {
     out->p = &t->header;
@@ -17,15 +18,11 @@ void Tree_Begin(Iter* out, Tree* t) {
     out->p = t->leftmost;
 }
 
+/* Clears the global tree D_00571CD0 if it exists. */
 void func_0040F540(void) {
-    int a0;
-    int cond;
+    Tree* t = D_00571CD0;
 
-    a0 = *(int*)(char*)D_00571CD0;
-    cond = a0 == 0;
-    if (cond) goto L0040F560;
-    World_ClearPending(a0);
-L0040F560:;
-    goto ret;
-ret:;
+    if (t != 0) {
+        World_ClearPending(t);
+    }
 }

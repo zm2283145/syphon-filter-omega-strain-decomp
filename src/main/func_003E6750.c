@@ -6,8 +6,9 @@
 
 #include "types.h"
 
-extern int func_003E67C0(int, int, int, int, float);
+extern int func_003E67C0(int obj, int action, int target, int arg, float time);
 
-int Global_PerformAction(int a0, int a1) {
-    return func_003E67C0(a0, a1, 0, 0, -1.0f);
+/* PerformAction without a target object. */
+int Global_PerformAction(int obj, int action) {
+    return func_003E67C0(obj, action, 0, 0, -1.0f);
 }

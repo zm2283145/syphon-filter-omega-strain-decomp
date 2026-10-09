@@ -1,15 +1,15 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Address lies between NPCInfoObject.cc (ends 0x00437490) and GenInfoObject.cc.
  */
 
 #include "types.h"
 
-int func_004375B0(int a0) {
-    *(char*)((char*)a0) = 0;
-    *(char*)((char*)a0 + 1) = 0;
-    *(char*)((char*)a0 + 2) = 0;
-    *(char*)((char*)a0 + 3) = 0;
-    return a0;
+/* Clears four bytes. */
+char* func_004375B0(char* bytes) {
+    bytes[0] = 0;
+    bytes[1] = 0;
+    bytes[2] = 0;
+    bytes[3] = 0;
+    return bytes;
 }

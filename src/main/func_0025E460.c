@@ -5,29 +5,23 @@
  */
 
 #include "types.h"
+#include "loose01_types.h"
 
-extern char D_004FFC30[];
+extern FxLightSet* D_004FFC30;
 
-int Script_setFxLightDist(int a0) {
-    int loc[1];
-    int at, v0, v1;
-    float f0;
-    int cond;
+/* args[0] = light index (0..4), args[1] = distance. */
+int Script_setFxLightDist(ScriptArg* args) {
+    volatile ScriptArg d; /* argument passes through the stack */
+    FxLightSet* set;
+    unsigned int index;
+    float dist;
 
-    v0 = *(int*)(char*)(a0 + 4);
-    v1 = *(int*)(char*)D_004FFC30;
-    *(int*)(char*)loc = v0;
-    v0 = *(int*)(char*)a0;
-    at = (unsigned int)v0 < (unsigned int)5;
-    cond = at == 0;
-    f0 = *(float*)(char*)loc;
-    if (cond) goto L0025E490;
-    v0 = v0 << 6;
-    v0 = v0 + v1;
-    *(float*)(char*)(v0 + 116) = f0;
-L0025E490:;
-    v0 = 0;
-    goto ret;
-ret:
-    return v0;
+    d.i = args[1].i;
+    set = D_004FFC30;
+    index = args[0].i;
+    dist = d.f;
+    if (index < 5) {
+        set->lights[index].dist = dist;
+    }
+    return 0;
 }

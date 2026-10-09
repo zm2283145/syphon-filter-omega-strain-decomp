@@ -4,41 +4,28 @@
  * until real names are known.
  */
 
-#include "types.h"
+#include "loose03_types.h"
 
-extern int func_001004B0(int, int, int, int, int);
-extern int func_003755C0(int);
-extern int func_0037FE80(int);
+/* Runtime array constructor: (array, ctor, dtor, element size, count). */
+extern int func_001004B0(void* array, void* ctor, void* dtor, int size, int count);
+extern int func_003755C0(void*);
+extern List* func_0037FE80(List*);
 extern int func_003BB2F0(int, int);
 extern int func_003BB340(int);
 
-int func_0037F9D0(int a0) {
-    int a1, a2, a3, s0, s1, t0, v0;
-    int cond;
+/* Constructor: 8 sub-objects, two counters, six Slot20 entries. */
+Manager37F9D0* func_0037F9D0(Manager37F9D0* self) {
+    char* item;
 
-    v0 = 0 + -1;
-    s1 = a0;
-    s0 = s1 + 496;
-    *(int*)(char*)a0 = v0;
-L0037F9F0:;
-    a0 = s0;
-    v0 = func_003755C0(a0);
-    s0 = s0 + 272;
-    v0 = s1 + 2672;
-    cond = s0 != v0;
-    if (cond) goto L0037F9F0;
-    *(int*)(char*)(s1 + 4184) = 0;
-    a0 = s1 + 4200;
-    a1 = (int)func_003BB340;
-    a2 = (int)func_003BB2F0;
-    a3 = 0 + 20;
-    t0 = 0 + 6;
-    *(int*)(char*)(s1 + 4188) = 0;
-    v0 = func_001004B0(a0, a1, a2, a3, t0);
-    a0 = s1 + 4360;
-    v0 = func_0037FE80(a0);
-    v0 = s1;
-    goto ret;
-ret:
-    return v0;
+    self->unk00 = -1;
+    item = self->items[0];
+    do {
+        func_003755C0(item);
+        item += 272;
+    } while (item != self->items[8]);
+    self->unk1058 = 0;
+    self->unk105C = 0;
+    func_001004B0(self->slots, func_003BB340, func_003BB2F0, 20, 6);
+    func_0037FE80(&self->unk1108);
+    return self;
 }

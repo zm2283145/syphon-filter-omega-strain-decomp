@@ -5,12 +5,13 @@
  */
 
 #include "types.h"
+#include "loose04_types.h"
 
-void func_00400140(int a0, int a1, int a2, int a3, int t0) {
-    *(int*)((char*)a0) = 0;
-    *(short*)((char*)a0 + 4) = a1;
-    *(char*)((char*)a0 + 6) = a3;
-    *(char*)((char*)a0 + 7) = 0;
-    *(int*)((char*)a0 + 8) = a2;
-    *(int*)((char*)a0 + 12) = t0;
+void func_00400140(Unk400140* self, int a, int b, int c, int d) {
+    self->unk00 = 0;
+    self->unk04 = a;
+    self->unk06 = c;
+    self->unk07 = 0;
+    self->unk08 = b;
+    self->unk0C = d;
 }

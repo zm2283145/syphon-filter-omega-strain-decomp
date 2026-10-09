@@ -6,9 +6,10 @@
 
 #include "types.h"
 
-int func_002CAC50(int a0, int a1) {
-    *(int*)((char*)a0) = a1;
-    return a0;
+/* Single-word wrapper constructor. */
+int* func_002CAC50(int* self, int value) {
+    *self = value;
+    return self;
 }
 
 void* func_002CAC60(char* self) {

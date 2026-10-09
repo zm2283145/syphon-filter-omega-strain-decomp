@@ -6,11 +6,9 @@
 
 #include "types.h"
 
-extern char D_00585F90[];
+extern int D_00585F90;
 
+/* True when D_00585F90 is nonzero. */
 int func_00452A60(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_00585F90;
-    return ((unsigned int)(0) < (unsigned int)(tmp0));
+    return D_00585F90 != 0;
 }

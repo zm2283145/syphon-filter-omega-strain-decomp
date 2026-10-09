@@ -5,20 +5,13 @@
  */
 
 #include "types.h"
+#include "SFOLobby_Lobby_types.h"
 
-extern int func_0044F2E0(int, int);
+extern void func_0044F2E0(void* list, int index);
 
-void func_00450EC0(int a0, int a1) {
-    int at, v0, v1;
-    int cond;
-
-    v1 = *(int*)(char*)(a0 + 60);
-    at = a1 < v1;
-    cond = at == 0;
-    if (cond) goto L00450EE0;
-    a0 = a0 + 56;
-    v0 = func_0044F2E0(a0, a1);
-L00450EE0:;
-    goto ret;
-ret:;
+/* Forwards index to the list at +0x38 when it is within range. */
+void func_00450EC0(LobbyLobby* self, int index) {
+    if (index < self->count) {
+        func_0044F2E0(self->list, index);
+    }
 }

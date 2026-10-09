@@ -5,24 +5,16 @@
  */
 
 #include "types.h"
+#include "NetObj_types.h"
 
-extern int func_003FB750(int);
+extern int func_003FB750(int index);
 
-int func_003FB720(int a0) {
-    int v0, v1;
-    int cond;
-
-    v1 = *(int*)(char*)(a0 + 12);
-    v0 = 0x7f000000;
-    v0 = v1 & v0;
-    v0 = (unsigned int)v0 >> 24;
-    a0 = v0 + -1;
-    cond = a0 >= 0;
-    if (cond) goto L003FB740;
-    a0 = 0;
-L003FB740:;
-    v0 = func_003FB750(a0);
-    goto ret;
-ret:
-    return v0;
+/* Takes the 7-bit field in bits 24..30 of word +0x0C, converts it to a zero-based
+ * index (clamped at 0) and forwards it to func_003FB750. */
+int func_003FB720(NetObjFlags* obj) {
+    int index = ((obj->flags & 0x7f000000) >> 24) - 1;
+    if (index < 0) {
+        index = 0;
+    }
+    return func_003FB750(index);
 }

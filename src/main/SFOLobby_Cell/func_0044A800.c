@@ -5,12 +5,10 @@
  */
 
 #include "types.h"
+#include "SFOLobby_Cell_types.h"
 
-extern int func_0044A810(int, int);
+extern int func_0044A810(LobbyCell* cell, int value);
 
-int func_0044A800(int a0) {
-    int tmp0;
-
-    tmp0 = *(int*)((char*)a0 + 9344);
-    return func_0044A810(a0, tmp0);
+int func_0044A800(LobbyCell* cell) {
+    return func_0044A810(cell, cell->unk2480);
 }

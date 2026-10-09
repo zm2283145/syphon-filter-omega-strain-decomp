@@ -5,14 +5,11 @@
  */
 
 #include "types.h"
+#include "frontCharacter_types.h"
 
-extern int func_0022A360(int, int, int, int);
+extern int func_0022A360(FcVec* v, int* pos, int n, int value);  /* vector insert */
 
-int func_0022A200(int a0, int a1) {
-    int tmp0;
-    int tmp1;
-
-    tmp0 = *(int*)((char*)a0 + 4);
-    tmp1 = *(int*)((char*)a0 + 8);
-    return func_0022A360(a0, (tmp1 + (tmp0 << 2)), 1, a1);
+/* push_back(v, value) */
+int func_0022A200(FcVec* v, int value) {
+    return func_0022A360(v, v->data + v->count, 1, value);
 }

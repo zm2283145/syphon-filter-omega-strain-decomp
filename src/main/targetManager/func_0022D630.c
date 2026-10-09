@@ -5,11 +5,13 @@
  */
 
 #include "types.h"
+#include "targetManager_types.h"
 
-int func_0022D630(int a0) {
-    *(int*)((char*)a0 + 4) = 0;
-    *(int*)((char*)a0) = 0;
-    *(char*)((char*)a0 + 12) = 0;
-    *(char*)((char*)a0 + 13) = 0;
-    return a0;
+/* Constructor: clears the slot. */
+TargetSlot* func_0022D630(TargetSlot* self) {
+    self->unk4 = 0;
+    self->unk0 = 0;
+    self->unkC = 0;
+    self->unkD = 0;
+    return self;
 }

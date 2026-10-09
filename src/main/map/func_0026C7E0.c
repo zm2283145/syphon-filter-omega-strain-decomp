@@ -5,25 +5,15 @@
  */
 
 #include "types.h"
+#include "map_types.h"
 
-extern int func_0026C3B0(int);
-extern int func_00272AC0(int);
+extern int func_0026C3B0(MapEntry* entry);
+extern int func_00272AC0(MapItem* item);
 
-void func_0026C7E0(int a0) {
-    int s0, v0, v1;
-    int cond;
+void func_0026C7E0(MapEntry* entry) {
+    MapItem* item = entry->item;
 
-    s0 = a0;
-    a0 = *(int*)(char*)a0;
-    v1 = *(int*)(char*)(a0 + 36);
-    cond = v1 == 0;
-    if (cond) goto L0026C818;
-    v0 = func_00272AC0(a0);
-    cond = v0 != 0;
-    a0 = s0;
-    if (cond) goto L0026C818;
-    v0 = func_0026C3B0(a0);
-L0026C818:;
-    goto ret;
-ret:;
+    if (item->unk24 != 0 && func_00272AC0(item) == 0) {
+        func_0026C3B0(entry);
+    }
 }

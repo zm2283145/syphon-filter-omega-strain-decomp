@@ -5,10 +5,11 @@
  */
 
 #include "types.h"
+#include "envSettings_types.h"
 
-int func_00178420(int a0, int a1) {
-    *(float*)((char*)a0) = *(float*)(char*)a1;
-    *(float*)((char*)a0 + 4) = *(float*)((char*)a1 + 4);
-    *(float*)((char*)a0 + 8) = *(float*)((char*)a1 + 8);
-    return a0;
+EnvVec3* func_00178420(EnvVec3* dst, EnvVec3* src) {
+    dst->x = src->x;
+    dst->y = src->y;
+    dst->z = src->z;
+    return dst;
 }

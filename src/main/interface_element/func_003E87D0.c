@@ -1,18 +1,20 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * interface_element.cc
  */
 
 #include "types.h"
 
-extern char D_00538C64[];
-extern char D_00538C68[];
+/* Declared as char[] and accessed through casts: typed scalars let the
+ * compiler sink the counter load below the flag store, which breaks the match. */
+extern char D_00538C64[];   /* int counter */
+extern char D_00538C68[];   /* char flag */
 
+/* Decrement the global counter and set the companion flag. */
 void func_003E87D0(void) {
-    int tmp0;
+    int count;
 
-    tmp0 = *(int*)D_00538C64;
+    count = *(int*)D_00538C64;
     *(char*)D_00538C68 = 1;
-    *(int*)D_00538C64 = (tmp0 + -1);
+    *(int*)D_00538C64 = count - 1;
 }

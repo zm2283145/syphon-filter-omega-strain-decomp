@@ -1,31 +1,23 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Special effect base-class constructor.
  */
 
 #include "types.h"
+#include "specfx_types.h"
 
-extern char D_004E0760[];
-extern char D_004E0780[];
-extern int ScalarCollection_Init(int);
-extern void func_003EC2A0(int);
+extern char D_004E0760[];   /* SpecFx vtable */
+extern char D_004E0780[];   /* vtable installed while the base part is built */
+extern int ScalarCollection_Init(void* list);
+extern void SpecFx_Register(SpecFx* fx);
 
-int func_003EC1D0(int a0) {
-    int s0, v0;
-
-    v0 = (int)D_004E0780;
-    s0 = a0;
-    *(int*)(char*)(a0 + 20) = v0;
-    v0 = ScalarCollection_Init(a0);
-    *(char*)(char*)(s0 + 12) = 0;
-    v0 = (int)D_004E0760;
-    *(int*)(char*)(s0 + 16) = 0;
-    a0 = s0;
-    *(int*)(char*)(s0 + 20) = v0;
-    func_003EC2A0(a0);
-    v0 = s0;
-    goto ret;
-ret:
-    return v0;
+/* Builds the effect and adds it to the global effect list. */
+SpecFx* SpecFx_Construct(SpecFx* self) {
+    self->vtable = D_004E0780;
+    ScalarCollection_Init(self->list);
+    self->unk0C = 0;
+    self->unk10 = 0;
+    self->vtable = D_004E0760;
+    SpecFx_Register(self);
+    return self;
 }

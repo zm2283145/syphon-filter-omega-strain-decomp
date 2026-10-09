@@ -5,21 +5,15 @@
  */
 
 #include "types.h"
+#include "NIEvent_types.h"
 
-extern int func_0023E3D0(int, float);
+extern void func_0023E3D0(void* obj, float speed);
 
-int Script_cNIEventOBJ_SetSpeed(int a0) {
-    int loc[1];
-    int v0;
-    float f12;
+/* SetSpeed(object, speed): float argument is passed through a stack slot. */
+int Script_cNIEventOBJ_SetSpeed(NIEventScriptArg* args) {
+    NIEventScriptArg speed[1];
 
-    v0 = *(int*)(char*)(a0 + 4);
-    *(int*)(char*)loc = v0;
-    f12 = *(float*)(char*)loc;
-    a0 = *(int*)(char*)a0;
-    v0 = func_0023E3D0(a0, f12);
-    v0 = 0;
-    goto ret;
-ret:
-    return v0;
+    speed[0].i = args[1].i;
+    func_0023E3D0(args[0].p, speed[0].f);
+    return 0;
 }

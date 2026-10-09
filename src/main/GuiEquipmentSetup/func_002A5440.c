@@ -1,30 +1,23 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
+ * Original translation unit: GuiEquipmentSetup.cc. Functions are named by address
  * until real names are known.
  */
 
 #include "types.h"
+#include "GuiEquipmentSetup_types.h"
 
-extern char D_00506550[];
-extern int func_002A2590(int);
+extern void* D_00506550;
+extern int func_002A2590(void* p);
 
-void func_002A5440(int a0, int a1) {
-    int v1;
-    int cond;
+void func_002A5440(EquipSetupState* self, int value) {
+    EquipSlot* slot = self->slot;
 
-    v1 = *(int*)(char*)(a0 + 13700);
-    cond = v1 == 0;
-    if (cond) goto L002A5450;
-    *(char*)(char*)(v1 + 50) = a1;
-L002A5450:;
-    goto ret;
-ret:;
+    if (slot != 0) {
+        slot->unk32 = value;
+    }
 }
 
 int func_002A5460(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_00506550;
-    return func_002A2590(tmp0);
+    return func_002A2590(D_00506550);
 }

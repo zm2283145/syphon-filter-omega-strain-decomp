@@ -1,20 +1,21 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Receiver base-class constructor.
  */
 
 #include "types.h"
+#include "system_types.h"
 
-extern char D_004DFDE0[];
+extern char D_004DFDE0[];   /* Receiver vtable */
 
-int Receiver_Construct(int a0, int a1) {
-    *(int*)((char*)a0) = (int)D_004DFDE0;
-    *(int*)((char*)a0 + 4) = 0xbebaafde;
-    *(int*)((char*)a0 + 8) = a1;
-    *(int*)((char*)a0 + 12) = -1;
-    *(int*)((char*)a0 + 16) = -1;
-    *(char*)((char*)a0 + 20) = 1;
-    *(int*)((char*)a0 + 24) = 0;
-    return a0;
+/* Initializes the Receiver base fields; owner is stored at +8. */
+Receiver* Receiver_Construct(Receiver* self, void* owner) {
+    self->vtable = D_004DFDE0;
+    self->magic = RECEIVER_MAGIC;
+    self->owner = owner;
+    self->unk0C = -1;
+    self->unk10 = -1;
+    self->enabled = 1;
+    self->unk18 = 0;
+    return self;
 }

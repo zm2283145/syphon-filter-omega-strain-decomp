@@ -1,11 +1,11 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * globalization.cc: pointer-vector swap.
  */
 
 #include "types.h"
 
+/* Swap the contents of two pointer vectors. */
 void func_003FEC90(PtrVec* a, PtrVec* b) {
     if (a != b) {
         int t;

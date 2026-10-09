@@ -1,11 +1,11 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * interface_manager.cc
  */
 
 #include "types.h"
 
+/* Zero-initialise a three-word record. */
 Rel* func_00413E10(Rel* r) {
     r->a = 0;
     r->b = 0;

@@ -6,12 +6,14 @@
 
 #include "types.h"
 
-extern int func_004456E0(int, int);
+extern int func_004456E0(void* self, int enable);
 
-int func_004456C0(int a0) {
-    return func_004456E0(a0, 1);
+/* func_004456E0(self, 1). */
+int func_004456C0(void* self) {
+    return func_004456E0(self, 1);
 }
 
-int func_004456D0(int a0) {
-    return func_004456E0(a0, 0);
+/* func_004456E0(self, 0). */
+int func_004456D0(void* self) {
+    return func_004456E0(self, 0);
 }

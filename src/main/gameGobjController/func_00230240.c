@@ -1,19 +1,19 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Base component constructor.
  */
 
 #include "types.h"
+#include "gameGobjController_types.h"
 
-extern char D_004DBA20[];
-extern int func_003EA630(int);
+extern char D_004DBA20[];   /* component vtable */
+extern int func_003EA630(Component* self);
 
-int Component_BaseInit(int a0) {
-    func_003EA630(a0);
-    *(int*)((char*)a0) = (int)D_004DBA20;
-    *(int*)((char*)a0 + 56) = 1065353216;
-    *(int*)((char*)a0 + 60) = -1;
-    *(int*)((char*)a0 + 64) = 0;
-    return a0;
+Component* Component_BaseInit(Component* self) {
+    func_003EA630(self);
+    self->vtable = D_004DBA20;
+    self->unk38 = 1.0f;
+    self->unk3C = -1;
+    self->unk40 = 0;
+    return self;
 }

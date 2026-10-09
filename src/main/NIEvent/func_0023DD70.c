@@ -6,11 +6,10 @@
 
 #include "types.h"
 
-extern int func_0023DAD0(int, int);
+extern int func_0023DAD0(void* self, int flag);
 
-int func_0023DD70(int a0, int a1) {
-    int tmp0;
-
-    tmp0 = func_0023DAD0(a0, 1);
-    return (a1 < tmp0);
+/* True when index is below the count returned by func_0023DAD0(self, 1). */
+int func_0023DD70(void* self, int index) {
+    int count = func_0023DAD0(self, 1);
+    return index < count;
 }

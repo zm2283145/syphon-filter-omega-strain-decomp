@@ -1,95 +1,64 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
+ * Original translation unit: GuiGameScreen.cc. Functions are named by address
  * until real names are known.
  */
 
 #include "types.h"
+#include "GuiGameScreen_types.h"
 
-extern int GObj_IdentityB(int);
-extern int Global_ClearInteract(int);
-extern void Global_DisplayInteract(int, int);
-extern int Global_DisplayInteract_2(int, int, int);
+extern void* GObj_IdentityB(void* obj);
+extern int Global_ClearInteract(void* obj);
+extern void Global_DisplayInteract(int text, int flag);
+extern int Global_DisplayInteract_2(void* obj, int text, int flag);
 extern void func_0045EC60(void);
 
-int Script_ClearInteract_2(int a0) {
-    int tmp0;
-    int tmp1;
-
-    tmp0 = *(int*)(char*)a0;
-    tmp1 = GObj_IdentityB(tmp0);
-    Global_ClearInteract(tmp1);
+/* Script native: ClearInteract(obj). */
+int Script_ClearInteract_2(ScriptArg* args) {
+    Global_ClearInteract(GObj_IdentityB(args[0].p));
     return 0;
 }
 
+/* Script native: ClearInteract(). */
 int Script_ClearInteract(void) {
     func_0045EC60();
     return 0;
 }
 
-int Script_DisplayInteract_4(int a0) {
-    int loc[1];
-    int a1, a2, s0, v0;
+/* Script native: DisplayInteract(obj, text, flag). */
+int Script_DisplayInteract_4(ScriptArg* args) {
+    int text[1];
+    int flag = (unsigned char)args[2].i;
 
-    s0 = *(unsigned char*)(char*)(a0 + 8);
-    v0 = *(int*)(char*)(a0 + 4);
-    *(int*)(char*)loc = v0;
-    a0 = *(int*)(char*)a0;
-    v0 = GObj_IdentityB(a0);
-    a1 = *(int*)(char*)loc;
-    a0 = v0;
-    a2 = s0;
-    v0 = Global_DisplayInteract_2(a0, a1, a2);
-    v0 = 0;
-    goto ret;
-ret:
-    return v0;
+    text[0] = args[1].i;
+    Global_DisplayInteract_2(GObj_IdentityB(args[0].p), STACK_COPY(text), flag);
+    return 0;
 }
 
-int Script_DisplayInteract_3(int a0) {
-    int loc[1];
-    int a1, a2, v0;
+/* Script native: DisplayInteract(obj, text). */
+int Script_DisplayInteract_3(ScriptArg* args) {
+    int text[1];
 
-    v0 = *(int*)(char*)(a0 + 4);
-    *(int*)(char*)loc = v0;
-    a0 = *(int*)(char*)a0;
-    v0 = GObj_IdentityB(a0);
-    a1 = *(int*)(char*)loc;
-    a0 = v0;
-    a2 = 0 + 1;
-    v0 = Global_DisplayInteract_2(a0, a1, a2);
-    v0 = 0;
-    goto ret;
-ret:
-    return v0;
+    text[0] = args[1].i;
+    Global_DisplayInteract_2(GObj_IdentityB(args[0].p), STACK_COPY(text), 1);
+    return 0;
 }
 
-int Script_DisplayInteract_2(int a0) {
-    int loc[1];
-    int a1, v0;
+/* Script native: DisplayInteract(text, flag). */
+int Script_DisplayInteract_2(ScriptArg* args) {
+    int text[1];
+    int flag = (unsigned char)args[1].i;
 
-    a1 = *(unsigned char*)(char*)(a0 + 4);
-    v0 = *(int*)(char*)a0;
-    *(int*)(char*)loc = v0;
-    a0 = *(int*)(char*)loc;
-    Global_DisplayInteract(a0, a1);
-    v0 = 0;
-    goto ret;
-ret:
-    return v0;
+    text[0] = args[0].i;
+    Global_DisplayInteract(STACK_COPY(text), flag);
+    return 0;
 }
 
-int Script_DisplayInteract(int a0) {
-    int loc[1];
-    int a1, v0;
+/* Script native: DisplayInteract(text). */
+int Script_DisplayInteract(ScriptArg* args) {
+    int text[1];
 
-    v0 = *(int*)(char*)a0;
-    *(int*)(char*)loc = v0;
-    a0 = *(int*)(char*)loc;
-    a1 = 0 + 1;
-    Global_DisplayInteract(a0, a1);
-    v0 = 0;
-    goto ret;
-ret:
-    return v0;
+    text[0] = args[0].i;
+    Global_DisplayInteract(STACK_COPY(text), 1);
+    return 0;
 }

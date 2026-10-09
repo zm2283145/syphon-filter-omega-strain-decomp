@@ -1,17 +1,18 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Loader.cc
  */
 
 #include "types.h"
+#include "Loader_types.h"
 
-extern int func_0013BCB0(int, int);
+extern int func_0013BCB0(LoaderObj* obj, int a1);
 
-int func_001C0500(int a0, int a1, int a2) {
-    int tmp0;
+/* Initialise via func_0013BCB0, then store a2 in unk0C. */
+int func_001C0500(LoaderObj* obj, int a1, int a2) {
+    int result;
 
-    tmp0 = func_0013BCB0(a0, a1);
-    *(int*)((char*)a0 + 12) = a2;
-    return tmp0;
+    result = func_0013BCB0(obj, a1);
+    obj->unk0C = a2;
+    return result;
 }

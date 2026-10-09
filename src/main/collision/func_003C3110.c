@@ -6,7 +6,8 @@
 
 #include "types.h"
 
-int func_003C3110(int a0) {
-    *(int*)((char*)a0) = 0;
-    return a0;
+/* Constructor: null pointer wrapper. */
+int* func_003C3110(int* self) {
+    *self = 0;
+    return self;
 }

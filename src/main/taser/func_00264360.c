@@ -5,7 +5,9 @@
  */
 
 #include "types.h"
+#include "taser_types.h"
 
-int func_00264360(int a0, int a1) {
-    return (*(int*)((char*)a0 + 8) + (a1 << 6));
+/* &v->data[i] */
+TaserEntry* func_00264360(TaserVec* v, int i) {
+    return &v->data[i];
 }

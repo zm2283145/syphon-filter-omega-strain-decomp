@@ -6,7 +6,8 @@
 
 #include "types.h"
 
-int func_003C0B40(int a0, int a1) {
-    *(char*)((char*)a0) = *(unsigned char*)(char*)a1;
-    return a0;
+/* Byte copy-assign. */
+unsigned char* func_003C0B40(unsigned char* dst, unsigned char* src) {
+    *dst = *src;
+    return dst;
 }

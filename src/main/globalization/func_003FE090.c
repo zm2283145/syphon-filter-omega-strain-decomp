@@ -1,47 +1,39 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * globalization.cc: current language selection.
  */
 
 #include "types.h"
+#include "globalization_types.h"
 
-extern char D_00493A20[];
-extern char D_00493A40[];
-extern char D_0055D470[];
+/* Language names, indexed by language id. */
+extern char* D_00493A20[LANGUAGE_COUNT + 1];
+/* STRINGS<suffix>.DAT file suffixes, indexed by language id (index 0 is ""). */
+extern char* D_00493A40[LANGUAGE_COUNT + 1];
+/* Current language id. */
+extern signed char D_0055D470;
 
-int func_003FE090(void) {
-    unsigned char tmp0;
-    int tmp1;
-
-    tmp0 = *(unsigned char*)D_0055D470;
-    tmp1 = *(int*)(char*)((int)D_00493A40 + (tmp0 << 2));
-    return tmp1;
+/* File suffix of the current language. */
+char* Loc_GetLanguageSuffix(void) {
+    return D_00493A40[(unsigned char)D_0055D470];
 }
 
-int func_003FE0B0(int a0) {
-    int tmp0;
-
-    tmp0 = *(int*)(char*)((int)D_00493A20 + ((a0 & 255) << 2));
-    return tmp0;
+/* Name of language `id`. */
+char* Loc_GetLanguageName(int id) {
+    return D_00493A20[id & 255];
 }
 
-int func_003FE0D0(void) {
-    unsigned char tmp0;
-    int tmp1;
-
-    tmp0 = *(unsigned char*)D_0055D470;
-    tmp1 = *(int*)(char*)((int)D_00493A20 + (tmp0 << 2));
-    return tmp1;
+/* Name of the current language. */
+char* Loc_GetCurrentLanguageName(void) {
+    return D_00493A20[(unsigned char)D_0055D470];
 }
 
-int func_003FE0F0(void) {
-    signed char tmp0;
-
-    tmp0 = *(signed char*)D_0055D470;
-    return tmp0;
+/* Current language id. */
+int Loc_GetLanguage(void) {
+    return D_0055D470;
 }
 
-void func_003FE100(int a0) {
-    *(char*)D_0055D470 = a0;
+/* Select the current language. */
+void Loc_SetLanguage(int id) {
+    D_0055D470 = id;
 }

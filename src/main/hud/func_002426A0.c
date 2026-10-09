@@ -1,13 +1,14 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
+ * Original translation unit: hud.cc. Functions are named by address
  * until real names are known.
  */
 
 #include "types.h"
+#include "hud_types.h"
 
-extern char D_004F7DB8[];
-extern void func_00261350(int);
+extern int D_004F7DB8;
+extern void func_00261350(int* p);
 
 Word* func_002426A0(Word* dst, Word* src) {
     dst->value = src->value;
@@ -23,10 +24,8 @@ Word* func_002426C0(Word* dst, Word* src) {
     return dst;
 }
 
-void func_002426D0(int a0) {
-    int tmp0;
-
-    tmp0 = *(int*)(char*)a0;
-    *(int*)D_004F7DB8 = tmp0;
-    func_00261350(a0);
+/* Stores *p into the global at 0x004F7DB8, then forwards p. */
+void func_002426D0(int* p) {
+    D_004F7DB8 = *p;
+    func_00261350(p);
 }

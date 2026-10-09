@@ -1,15 +1,15 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * ParticleRelFlag constructor.
  */
 
 #include "types.h"
+#include "particle_types.h"
 
-extern int func_00398410(int);
+extern Rel* func_00398410(Rel* r);
 
-int func_003983E0(int a0) {
-    func_00398410(a0);
-    *(char*)((char*)a0 + 12) = 1;
-    return a0;
+ParticleRelFlag* func_003983E0(ParticleRelFlag* self) {
+    func_00398410(&self->rel);
+    self->flag = 1;
+    return self;
 }

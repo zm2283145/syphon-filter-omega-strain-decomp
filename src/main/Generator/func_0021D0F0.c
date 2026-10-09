@@ -6,14 +6,11 @@
 
 #include "types.h"
 
-extern char D_004F56D8[];
+extern int D_004F56D8;      /* NPC message base script type key */
 
 void func_0021D0F0(void) {
 }
 
 int func_0021D100(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_004F56D8;
-    return tmp0;
+    return D_004F56D8;
 }

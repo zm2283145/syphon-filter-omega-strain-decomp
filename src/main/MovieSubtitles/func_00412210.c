@@ -5,7 +5,9 @@
  */
 
 #include "types.h"
+#include "MovieSubtitles_types.h"
 
-int func_00412210(int a0) {
-    return (*(int*)((char*)a0 + 104) < *(int*)((char*)a0 + 100));
+/* True while the current row is below unk64. */
+int func_00412210(SubtitleBlock* b) {
+    return b->unk68 < b->unk64;
 }

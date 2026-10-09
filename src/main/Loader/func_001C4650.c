@@ -1,11 +1,11 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Loader.cc
  */
 
 #include "types.h"
 
+/* Construct an empty map with comparator byte *cmp. */
 Map* func_001C4650(Map* m, unsigned char* cmp) {
     m->count = 0;
     m->head = 0;

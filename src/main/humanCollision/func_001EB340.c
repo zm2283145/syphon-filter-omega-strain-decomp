@@ -5,16 +5,18 @@
  */
 
 #include "types.h"
+#include "humanCollision_types.h"
 
-int HumanColPreset_Copy(int a0, int a1) {
-    *(float*)((char*)a0) = *(float*)(char*)a1;
-    *(float*)((char*)a0 + 4) = *(float*)((char*)a1 + 4);
-    *(float*)((char*)a0 + 8) = *(float*)((char*)a1 + 8);
-    *(float*)((char*)a0 + 12) = *(float*)((char*)a1 + 12);
-    *(float*)((char*)a0 + 16) = *(float*)((char*)a1 + 16);
-    *(float*)((char*)a0 + 20) = *(float*)((char*)a1 + 20);
-    *(char*)((char*)a0 + 24) = *(unsigned char*)((char*)a1 + 24);
-    return a0;
+/* Copy-assign of a preset configuration. */
+HumanColPresetCfg* HumanColPreset_Copy(HumanColPresetCfg* dst, HumanColPresetCfg* src) {
+    dst->range0Min = src->range0Min;
+    dst->range0Max = src->range0Max;
+    dst->range1Min = src->range1Min;
+    dst->range1Max = src->range1Max;
+    dst->range2Min = src->range2Min;
+    dst->range2Max = src->range2Max;
+    dst->enabled = src->enabled;
+    return dst;
 }
 
 Word* func_001EB380(Word* dst, Word* src) {

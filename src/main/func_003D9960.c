@@ -11,7 +11,7 @@ extern char D_0055A120[];
 void func_003D9960(void) {
 }
 
-void* func_003D9970(void* self) {
+void* Group_FromHandle(void* self) {
     return self;
 }
 

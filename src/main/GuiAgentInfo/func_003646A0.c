@@ -1,6 +1,6 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
+ * Original translation unit: GuiAgentInfo.cc. Functions are named by address
  * until real names are known.
  */
 
@@ -13,8 +13,8 @@ void func_003646A0(char* self) {
 void func_003646B0(void) {
 }
 
-void func_003646C0(int a0) {
-    *(char*)((char*)a0 + 44) = 1;
+void func_003646C0(char* self) {
+    self[44] = 1;
 }
 
 void func_003646D0(char* self) {

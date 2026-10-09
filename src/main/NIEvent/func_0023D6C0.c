@@ -6,6 +6,7 @@
 
 #include "types.h"
 
-int func_0023D6C0(int a0, int a1) {
-    return (*(int*)((char*)a0 + 8) + (a1 << 6));
+/* Address of element i in an array of 0x40-byte records whose base pointer is at +8. */
+char* func_0023D6C0(char* self, int i) {
+    return *(char**)(self + 8) + (i << 6);
 }

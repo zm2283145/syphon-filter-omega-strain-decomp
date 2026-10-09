@@ -1,11 +1,11 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Texture entry reference count accessor.
  */
 
 #include "types.h"
+#include "texman_types.h"
 
-int func_00380360(char* self) {
-    return *(int*)(self + 100);
+int func_00380360(TexEntry* e) {
+    return e->refCount;
 }

@@ -5,7 +5,8 @@
  */
 
 #include "types.h"
+#include "character_types.h"
 
-float func_003E5EE0(char* self) {
-    return *(float*)(self + 12);
+float func_003E5EE0(Character* self) {
+    return self->unk0C;
 }

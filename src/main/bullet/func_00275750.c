@@ -5,27 +5,20 @@
  */
 
 #include "types.h"
+#include "bullet_types.h"
 
-extern int PtrVec_Insert(int, int, int, int);
-extern int func_00275780(int, int);
+extern int PtrVec_Insert(PtrVec* v, int* pos, int n, int* value);
+extern int func_00275780(PtrVec* v, int* value);
 
-void func_00275750(int a0, int a1) {
-    int loc[1];
-    int v0;
+/* Appends 'value' to the list at +0x78. */
+void func_00275750(BulletOwner* owner, int value) {
+    int tmp[1];
 
-    a0 = a0 + 120;
-    *(int*)(char*)loc = a1;
-    a1 = (int)loc;
-    v0 = func_00275780(a0, a1);
-    goto ret;
-ret:;
+    tmp[0] = value;
+    func_00275780(&owner->list, tmp);
 }
 
-int func_00275780(int a0, int a1) {
-    int tmp0;
-    int tmp1;
-
-    tmp0 = *(int*)((char*)a0 + 4);
-    tmp1 = *(int*)((char*)a0 + 8);
-    return PtrVec_Insert(a0, (tmp1 + (tmp0 << 2)), 1, a1);
+/* push_back(v, *value) */
+int func_00275780(PtrVec* v, int* value) {
+    return PtrVec_Insert(v, v->data + v->count, 1, value);
 }

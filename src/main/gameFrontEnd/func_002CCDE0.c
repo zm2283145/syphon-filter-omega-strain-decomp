@@ -5,26 +5,29 @@
  */
 
 #include "types.h"
+#include "gameFrontEnd_types.h"
 
-extern int List_InsertBefore(int, int, int, int);
+extern FeListPos* List_InsertBefore(FeListPos* result, void* list, FeListPos* pos, int value);
 
 Word* func_002CCDE0(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-int func_002CCDF0(int a0) {
-    *(int*)((char*)a0) = *(int*)((char*)*(int*)(char*)a0 + 4);
-    return a0;
+/* Iterator increment: advance to the next node. */
+FeListPos* func_002CCDF0(FeListPos* it) {
+    it->node = it->node->next;
+    return it;
 }
 
-int func_002CCE10(int a0) {
-    return (*(int*)(char*)a0 + 8);
+/* Iterator dereference: address of the node value. */
+int* func_002CCE10(FeListPos* it) {
+    return &it->node->value;
 }
 
-int func_002CCE20(int a0, int a1) {
-    *(float*)((char*)a0) = *(float*)(char*)a1;
-    return a0;
+float* func_002CCE20(float* dst, float* src) {
+    *dst = *src;
+    return dst;
 }
 
 void func_002CCE30(Iter* out, PtrVec* v) {
@@ -35,18 +38,11 @@ void* func_002CCE40(void* self) {
     return self;
 }
 
-int func_002CCE50(int a0, int a1) {
-    int loc[2];
-    int a2, a3, v0;
+/* push_back on a list whose sentinel node is at +4. */
+FeListPos* func_002CCE50(void* list, int value) {
+    FeListPos end;
+    FeListPos result;
 
-    a3 = a1;
-    v0 = a0 + 4;
-    a1 = a0;
-    *(int*)(char*)loc = v0;
-    a0 = (int)((char*)loc + 4);
-    a2 = (int)loc;
-    v0 = List_InsertBefore(a0, a1, a2, a3);
-    goto ret;
-ret:
-    return v0;
+    end.node = (FeListNode*)((char*)list + 4);
+    return List_InsertBefore(&result, list, &end, value);
 }

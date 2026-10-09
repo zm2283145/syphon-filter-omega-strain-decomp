@@ -1,11 +1,12 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * GobjMan.cc
  */
 
 #include "types.h"
+#include "GobjMan_types.h"
 
-void* func_0040C1E0(char* self) {
-    return self + 8;
+/* Address of the payload at +0x08. */
+void* func_0040C1E0(GobjHolder* self) {
+    return self->data;
 }

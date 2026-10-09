@@ -1,16 +1,12 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * cTimerExpiredMsg message type id.
  */
 
 #include "types.h"
 
-extern char D_004F7A10[];
+extern int D_004F7A10; /* cTimerExpiredMsg message type id */
 
 int cTimerExpiredMsg_v05(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_004F7A10;
-    return tmp0;
+    return D_004F7A10;
 }

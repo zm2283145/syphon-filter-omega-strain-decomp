@@ -6,10 +6,10 @@
 
 #include "types.h"
 
-extern char D_00532FE8[];
+extern char D_00532FE8;
 extern int func_002CCA40(int, int, int);
 
 int func_002CA6F0(void) {
-    *(char*)D_00532FE8 = 1;
+    D_00532FE8 = 1;
     return func_002CCA40(8192, 0, 0);
 }

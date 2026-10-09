@@ -5,24 +5,24 @@
  */
 
 #include "types.h"
+#include "MovieSubtitles_types.h"
 
-int func_00412150(int a0, int a1) {
-    *(float*)((char*)a0) = *(float*)(char*)a1;
-    *(float*)((char*)a0 + 4) = *(float*)((char*)a1 + 4);
-    *(float*)((char*)a0 + 8) = *(float*)((char*)a1 + 8);
-    *(float*)((char*)a0 + 12) = *(float*)((char*)a1 + 12);
-    return a0;
+/* Copies a four-float vector. */
+SubVec4* func_00412150(SubVec4* dst, SubVec4* src) {
+    dst->x = src->x;
+    dst->y = src->y;
+    dst->z = src->z;
+    dst->w = src->w;
+    return dst;
 }
 
-void* func_00412180(char* self) {
-    return self + 80;
+char* func_00412180(SubtitleBlock* b) {
+    return b->unk50;
 }
 
-int func_00412190(int a0, int a1) {
-    int tmp0;
-    int tmp1;
-
-    tmp0 = *(int*)((char*)a0 + 104);
-    tmp1 = *(int*)((char*)a0 + 96);
-    return ((tmp1 + (tmp0 * 320)) + (a1 * 100));
+/* Address of column col in the current row (rows of 320 bytes, columns of 100 bytes). */
+int func_00412190(SubtitleBlock* b, int col) {
+    int row = b->unk68;
+    int base = b->base;
+    return (base + (row * 320)) + (col * 100);
 }

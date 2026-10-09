@@ -6,6 +6,7 @@
 
 #include "types.h"
 
+/* begin(): iterator at the first element. */
 void func_003C9340(Iter* out, PtrVec* v) {
     out->p = v->data;
 }

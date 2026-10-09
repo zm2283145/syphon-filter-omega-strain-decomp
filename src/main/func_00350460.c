@@ -7,13 +7,13 @@
 #include "types.h"
 
 extern char D_004DEEE0[];
-extern int func_00426CC0(int);
+extern int guiTextArrayWidget_ctor(int);
 
 int func_00350460(int a0) {
     int a1, s0, v0, v1;
 
     s0 = a0;
-    v0 = func_00426CC0(a0);
+    v0 = guiTextArrayWidget_ctor(a0);
     v1 = 0 + 110;
     v0 = (int)D_004DEEE0;
     a0 = 0 + 15;

@@ -5,26 +5,23 @@
  */
 
 #include "types.h"
+#include "humanIk_types.h"
 
-extern void func_001DE2D0(int, int, int);
+extern void func_001DE2D0(IkIter* out, int a1, int a2);
 
-int func_001DB940(int a0, int a1) {
-    return ((unsigned int)((*(int*)(char*)a0 ^ *(int*)(char*)a1)) < (unsigned int)(1));
+/* Iterator equality. */
+int func_001DB940(IkIter* a, IkIter* b) {
+    return (unsigned int)(a->node ^ b->node) < 1u;
 }
 
 void func_001DB960(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
-void func_001DB970(int a0) {
-    int loc[1];
-    int a1, a2, s0, v1;
+/* Forwards to func_001DE2D0 through a temporary iterator. */
+void func_001DB970(IkIter* out, int a1, int a2) {
+    IkIter tmp;
 
-    s0 = a0;
-    a0 = (int)loc;
-    func_001DE2D0(a0, a1, a2);
-    v1 = *(int*)(char*)loc;
-    *(int*)(char*)s0 = v1;
-    goto ret;
-ret:;
+    func_001DE2D0(&tmp, a1, a2);
+    out->node = tmp.node;
 }

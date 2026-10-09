@@ -1,11 +1,11 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Trivial accessor.
  */
 
 #include "types.h"
+#include "particle_types.h"
 
-int func_003A6110(char* self) {
-    return *(int*)(self + 256);
+int func_003A6110(ParticleObj* self) {
+    return self->unk100;
 }

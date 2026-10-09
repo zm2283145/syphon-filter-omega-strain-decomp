@@ -1,24 +1,19 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
+ * Original translation unit: GuiGameScreen.cc. Functions are named by address
  * until real names are known.
  */
 
 #include "types.h"
+#include "GuiGameScreen_types.h"
 
-extern void Global_PlayXA(int, int);
+extern void Global_PlayXA(int track, int a1);
 
-int Script_PlayXA(int a0) {
-    int loc[1];
-    int a1, v0;
+/* Script native: PlayXA(track). */
+int Script_PlayXA(ScriptArg* args) {
+    int track[1];
 
-    v0 = *(int*)(char*)a0;
-    *(int*)(char*)loc = v0;
-    a0 = *(int*)(char*)loc;
-    a1 = 0;
-    Global_PlayXA(a0, a1);
-    v0 = 0;
-    goto ret;
-ret:
-    return v0;
+    track[0] = args[0].i;
+    Global_PlayXA(STACK_COPY(track), 0);
+    return 0;
 }

@@ -1,15 +1,17 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
+ * Original translation unit: GuiAgentInfo.cc. Functions are named by address
  * until real names are known.
  */
 
 #include "types.h"
+#include "GuiAgentInfo_types.h"
 
-void func_00364AB0(int a0, int a1) {
-    *(float*)((char*)a0 + 4) = (*(float*)((char*)a0 + 4) + *(float*)(char*)a1);
-    *(float*)((char*)a0 + 8) = (*(float*)((char*)a0 + 8) + *(float*)(char*)a1);
-    *(float*)((char*)a0 + 16) = (*(float*)((char*)a0 + 16) + *(float*)(char*)a1);
-    *(float*)((char*)a0 + 24) = (*(float*)((char*)a0 + 24) + *(float*)(char*)a1);
-    *(float*)((char*)a0 + 32) = (*(float*)((char*)a0 + 32) + *(float*)(char*)a1);
+/* Adds *delta to each float field of the range. */
+void func_00364AB0(ShiftRange* self, float* delta) {
+    self->unk04 = self->unk04 + *delta;
+    self->unk08 = self->unk08 + *delta;
+    self->unk10 = self->unk10 + *delta;
+    self->unk18 = self->unk18 + *delta;
+    self->unk20 = self->unk20 + *delta;
 }

@@ -9,12 +9,12 @@
 
 extern void* func_00269430(void* obj);
 extern int func_002697E0(void* obj);
-extern void* func_003D9970(void* obj);
+extern void* Group_FromHandle(void* obj);
 
 void func_002693F0(void) {
 }
 
 /* Script native: CreateNodeList(args[0]). */
 int Script_CreateNodeList(ScriptArg* args) {
-    return func_002697E0(func_00269430(func_003D9970(args[0].p)));
+    return func_002697E0(func_00269430(Group_FromHandle(args[0].p)));
 }

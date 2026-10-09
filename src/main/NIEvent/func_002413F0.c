@@ -6,6 +6,7 @@
 
 #include "types.h"
 
+/* Swaps the contents of two vectors. */
 void func_002413F0(PtrVec* a, PtrVec* b) {
     if (a != b) {
         int t;

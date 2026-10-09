@@ -5,23 +5,16 @@
  */
 
 #include "types.h"
+#include "NetObj_types.h"
 
-extern int func_003FC820(int, int);
+extern void func_003FC820(RbTree* tree, void* node);
 
-void NetMap_Clear(int a0) {
-    int a1, s0, v0, v1;
-    int cond;
-
-    a1 = *(int*)(char*)(a0 + 4);
-    cond = a1 == 0;
-    s0 = a0;
-    if (cond) goto L003FC230;
-    v0 = func_003FC820(a0, a1);
-    *(int*)(char*)s0 = 0;
-    v1 = s0 + 4;
-    *(int*)(char*)(s0 + 4) = 0;
-    *(int*)(char*)(s0 + 12) = v1;
-L003FC230:;
-    goto ret;
-ret:;
+/* Clears the tree: erases all nodes from the root down, then resets the header. */
+void NetMap_Clear(RbTree* tree) {
+    if (tree->root != 0) {
+        func_003FC820(tree, tree->root);
+        tree->count = 0;
+        tree->root = 0;
+        tree->leftmost = &tree->root;
+    }
 }

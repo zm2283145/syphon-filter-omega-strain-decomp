@@ -1,43 +1,26 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * cGroup script natives: indexed access and size.
  */
 
 #include "types.h"
+#include "group_types.h"
 
-extern int func_003CB1A0(int);
-extern int func_003D9970(int);
-extern int func_003D9990(int, int);
+extern int func_003CB1A0(int obj);                    /* object -> script value */
+extern cGroup* Group_FromHandle(void* handle);           /* script handle -> cGroup (identity) */
+extern int Group_GetAt(cGroup* group, int index);   /* bounds-checked member lookup */
 
-int Script_cGroup_Get(int a0) {
-    int loc[1];
-    int a1, v0;
+/* Get(group, index): returns the member at index (0 when out of range). */
+int Script_cGroup_Get(GroupScriptArg* args) {
+    volatile int index = args[1].i; /* stack temporary in the original */
 
-    v0 = *(int*)(char*)(a0 + 4);
-    *(int*)(char*)loc = v0;
-    a0 = *(int*)(char*)a0;
-    v0 = func_003D9970(a0);
-    a1 = *(int*)(char*)loc;
-    a0 = v0;
-    v0 = func_003D9990(a0, a1);
-    a0 = v0;
-    v0 = func_003CB1A0(a0);
-    goto ret;
-ret:
-    return v0;
+    return func_003CB1A0(Group_GetAt(Group_FromHandle(args[0].p), index));
 }
 
-int Script_cGroup_GetSize(int a0) {
-    int loc[1];
-    int v0;
+/* GetSize(group): number of members. */
+int Script_cGroup_GetSize(GroupScriptArg* args) {
+    volatile int size; /* the original goes through a stack temporary */
 
-    a0 = *(int*)(char*)a0;
-    v0 = func_003D9970(a0);
-    v0 = *(int*)(char*)(v0 + 4);
-    *(int*)(char*)loc = v0;
-    v0 = *(int*)(char*)loc;
-    goto ret;
-ret:
-    return v0;
+    size = Group_FromHandle(args[0].p)->count;
+    return size;
 }

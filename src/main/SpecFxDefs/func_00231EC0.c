@@ -1,25 +1,17 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Indexed access into a 16-byte element table.
  */
 
 #include "types.h"
+#include "SpecFxDefs_types.h"
 
-extern int func_00183B10(int, int);
+extern char* func_00183B10(SpecTableOwner* owner, char** it);
 
-int func_00231EC0(int a0, int a1) {
-    int loc[1];
-    int s0, v0, v1;
+/* Returns the address of element index of owner's table. */
+char* func_00231EC0(SpecTableOwner* owner, int index) {
+    char* it[1];
 
-    v0 = *(int*)(char*)(a0 + 32);
-    s0 = a1;
-    a1 = (int)loc;
-    *(int*)(char*)loc = v0;
-    v0 = func_00183B10(a0, a1);
-    v1 = s0 << 4;
-    v0 = v0 + v1;
-    goto ret;
-ret:
-    return v0;
+    it[0] = owner->table;
+    return func_00183B10(owner, it) + (index << 4);
 }

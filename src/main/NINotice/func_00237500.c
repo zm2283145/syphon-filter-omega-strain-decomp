@@ -6,29 +6,22 @@
 
 #include "types.h"
 
-extern char D_004F7D20[];
-extern char D_004F7D28[];
-extern int Message_GetScriptTypeKeyPtr(void);
-extern void ScriptType_SetParent(int, int);
+extern int D_004F7D20; /* cNINotice script type key */
+extern int D_004F7D28; /* cNINotice script type id */
+extern int* Message_GetScriptTypeKeyPtr(void); /* address of the cMessage type key */
+extern void ScriptType_SetParent(int type, int parentType);
 
-int Script_cNINotice_Action(int a0) {
-    return *(unsigned char*)((char*)*(int*)(char*)a0 + 36);
+/* Action(notice): returns the notice's action byte (+0x24). */
+int Script_cNINotice_Action(unsigned char** args) {
+    return args[0][36];
 }
 
+/* cNINotice derives from cMessage. */
 void ScriptType_cNINotice_Init(void) {
-    int tmp0;
-    int tmp2;
-    int tmp3;
-
-    tmp0 = Message_GetScriptTypeKeyPtr();
-    tmp2 = *(int*)D_004F7D28;
-    tmp3 = *(int*)(char*)tmp0;
-    ScriptType_SetParent(tmp2, tmp3);
+    int* parent = Message_GetScriptTypeKeyPtr();
+    ScriptType_SetParent(D_004F7D28, *parent);
 }
 
 int cNINotice_v03(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_004F7D20;
-    return tmp0;
+    return D_004F7D20;
 }

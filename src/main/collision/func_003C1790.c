@@ -5,8 +5,9 @@
  */
 
 #include "types.h"
+#include "collision_types.h"
 
-void func_003C1790(int a0) {
-    *(int*)((char*)a0) = 0;
-    *(char*)((char*)a0 + 4) = 1;
+void func_003C1790(ColRef* self) {
+    self->unk0 = 0;
+    self->unk4 = 1;
 }

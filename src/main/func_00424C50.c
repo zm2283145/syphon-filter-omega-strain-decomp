@@ -8,7 +8,7 @@
 
 extern char D_00494150[];
 extern char D_004E0D20[];
-extern int func_001C1080(int, int);
+extern int PtrVec_PushBack_1C1080(int, int);
 extern int func_001C10A0(int);
 extern int func_0041F690(int);
 
@@ -33,7 +33,7 @@ int func_00424C50(int a0) {
     *(int*)(char*)(s0 + 80) = 0;
     *(int*)(char*)(s0 + 84) = 0;
     *(int*)(char*)(s0 + 92) = v0;
-    v0 = func_001C1080(a0, a1);
+    v0 = PtrVec_PushBack_1C1080(a0, a1);
     v1 = *(int*)(char*)(s0 + 72);
     v0 = s0;
     *(int*)(char*)(s0 + 112) = v1;

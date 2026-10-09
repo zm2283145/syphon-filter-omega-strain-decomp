@@ -1,11 +1,11 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * LargeInt.c
  */
 
 #include "types.h"
 
-int func_002EFCC0(int a0) {
-    return ((*(int*)(char*)a0 ^ 1) & 1);
+/* Returns 1 when the low word of the large integer is even (bit 0 clear). */
+int func_002EFCC0(int* value) {
+    return (*value ^ 1) & 1;
 }

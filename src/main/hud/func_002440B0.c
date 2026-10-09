@@ -1,20 +1,16 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
+ * Original translation unit: hud.cc. Functions are named by address
  * until real names are known.
  */
 
 #include "types.h"
+#include "hud_types.h"
 
-int func_002440B0(int a0, int a1) {
-    int loc[1];
-    int v0, v1;
+/* Stores value into *dst; volatile mirrors the original stack temporary. */
+int* func_002440B0(int* dst, int value) {
+    volatile int tmp = value;
 
-    v0 = a0;
-    *(int*)(char*)loc = a1;
-    v1 = *(int*)(char*)loc;
-    *(int*)(char*)a0 = v1;
-    goto ret;
-ret:
-    return v0;
+    *dst = tmp;
+    return dst;
 }

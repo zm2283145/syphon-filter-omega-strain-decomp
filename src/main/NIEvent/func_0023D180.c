@@ -5,11 +5,13 @@
  */
 
 #include "types.h"
+#include "NIEvent_types.h"
 
-extern int func_0023D1B0(int);
+extern NIEventVec3* func_0023D1B0(NIEventVec3* vec);
 
-int func_0023D180(int a0) {
-    func_0023D1B0(a0);
-    *(char*)((char*)a0 + 12) = 1;
-    return a0;
+/* Constructs an empty vector that owns its storage. */
+NIEventOwnedVec* func_0023D180(NIEventOwnedVec* self) {
+    func_0023D1B0(&self->vec);
+    self->owned = 1;
+    return self;
 }

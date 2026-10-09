@@ -6,11 +6,13 @@
 
 #include "types.h"
 
+/* Iterator copy-assignment. */
 Word* func_0042DF00(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
+/* end(): iterator at the tree header. */
 void func_0042DF10(Iter* out, Tree* t) {
     out->p = &t->header;
 }

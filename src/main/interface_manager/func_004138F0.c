@@ -1,11 +1,12 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * interface_manager.cc
  */
 
 #include "types.h"
+#include "interface_manager_types.h"
 
-void func_004138F0(char* self, int value) {
-    *(int*)(self + 480) = value;
+/* Setter for unk1E0. */
+void func_004138F0(IfManager* mgr, int value) {
+    mgr->unk1E0 = value;
 }

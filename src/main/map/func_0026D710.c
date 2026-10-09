@@ -5,12 +5,8 @@
  */
 
 #include "types.h"
+#include "map_types.h"
 
-void func_0026D710(int a0) {
-    int v1;
-
-    v1 = 0x3e800000;
-    *(int*)(char*)(a0 + 148) = v1;
-    goto ret;
-ret:;
+void func_0026D710(MapView* self) {
+    self->unk94 = 0.25f;
 }

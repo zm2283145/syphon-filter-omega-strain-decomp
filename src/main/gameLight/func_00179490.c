@@ -1,11 +1,11 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Light parameter setter.
  */
 
 #include "types.h"
+#include "gameLight_types.h"
 
-void func_00179490(char* self, int value) {
-    *(int*)(self + 8) = value;
+void func_00179490(GameLightParams* self, int value) {
+    self->unk08 = value;
 }

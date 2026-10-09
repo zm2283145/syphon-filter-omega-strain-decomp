@@ -1,19 +1,22 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * mem.cc
  */
 
 #include "types.h"
+#include "mem_types.h"
 
-void func_0036C030(char* self, int value) {
-    *(int*)(self + 8) = value;
+/* Setter for unk08. */
+void func_0036C030(MemObj* self, int value) {
+    self->unk08 = value;
 }
 
-void func_0036C040(char* self, int value) {
-    *(int*)(self + 4) = value;
+/* Setter for unk04. */
+void func_0036C040(MemObj* self, int value) {
+    self->unk04 = value;
 }
 
-int func_0036C050(char* self) {
-    return *(int*)(self + 4);
+/* Getter for unk04. */
+int func_0036C050(MemObj* self) {
+    return self->unk04;
 }

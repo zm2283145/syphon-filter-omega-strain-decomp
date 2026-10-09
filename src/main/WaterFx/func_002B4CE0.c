@@ -1,18 +1,20 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * List helpers.
  */
 
 #include "types.h"
+#include "WaterFx_types.h"
 
-void* func_002B4CE0(char* self) {
-    return self + 4;
+/* Address of the list sentinel (end()). */
+WaterListLink* func_002B4CE0(WaterList* list) {
+    return &list->head;
 }
 
-int func_002B4CF0(int a0) {
-    *(int*)((char*)a0) = 0;
-    *(int*)((char*)a0 + 8) = (a0 + 4);
-    *(int*)((char*)a0 + 4) = (a0 + 4);
-    return a0;
+/* Initializes an empty list. */
+WaterList* List_Init(WaterList* list) {
+    list->count = 0;
+    list->head.prev = &list->head;
+    list->head.next = &list->head;
+    return list;
 }

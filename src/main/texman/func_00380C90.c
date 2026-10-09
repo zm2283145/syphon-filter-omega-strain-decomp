@@ -1,25 +1,24 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * List iterator helpers.
  */
 
 #include "types.h"
+#include "texman_types.h"
 
-int func_00380C90(int a0, int a1) {
-    return ((unsigned int)(0) < (unsigned int)((*(int*)(char*)a0 ^ *(int*)(char*)a1)));
+/* Iterator inequality. */
+int func_00380C90(TexListIter* a, TexListIter* b) {
+    return a->node != b->node;
 }
 
 void func_00380CB0(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
-void func_00380CC0(int a0, int a1) {
-    int tmp0;
-    int tmp1;
+/* Post-increment: returns the current node and advances it. */
+void func_00380CC0(TexListIter* out, TexListIter* it) {
+    TexListNode* node = it->node;
 
-    tmp0 = *(int*)(char*)a1;
-    tmp1 = *(int*)((char*)tmp0 + 4);
-    *(int*)((char*)a1) = tmp1;
-    *(int*)((char*)a0) = tmp0;
+    it->node = node->next;
+    out->node = node;
 }

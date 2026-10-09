@@ -1,16 +1,14 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * interface_element.cc
  */
 
 #include "types.h"
+#include "interface_element_types.h"
 
-extern int func_003EE740(int);
+extern int func_003EE740(int owner);
 
-int func_003E7ED0(int a0) {
-    int tmp0;
-
-    tmp0 = *(int*)((char*)a0 + 112);
-    return func_003EE740(tmp0);
+/* Forward to func_003EE740 on the element's owner. */
+int func_003E7ED0(IfElement* elem) {
+    return func_003EE740(elem->owner);
 }

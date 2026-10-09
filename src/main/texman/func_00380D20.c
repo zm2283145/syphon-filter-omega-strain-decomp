@@ -1,13 +1,14 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Iterator helpers.
  */
 
 #include "types.h"
+#include "texman_types.h"
 
-int func_00380D20(int a0) {
-    return (*(int*)(char*)a0 + 8);
+/* Address of the value held by the iterator's node. */
+int* func_00380D20(TexListIter* it) {
+    return &it->node->value;
 }
 
 void func_00380D30(Iter* out, PtrVec* v) {

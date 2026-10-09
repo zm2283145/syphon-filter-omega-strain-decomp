@@ -1,13 +1,14 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
+ * Original translation unit: hud.cc. Functions are named by address
  * until real names are known.
  */
 
 #include "types.h"
+#include "hud_types.h"
 
-extern void func_00244280(int);
+extern void func_00244280(void* self);
 
-void func_00244A00(int a0) {
-    func_00244280(a0);
+void func_00244A00(void* self) {
+    func_00244280(self);
 }

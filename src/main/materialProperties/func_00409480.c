@@ -5,18 +5,18 @@
  */
 
 #include "types.h"
+#include "materialProperties_types.h"
 
-extern void func_004097A0(int, int, int);
+extern void func_004097A0(MatIter* out, int a1, int a2);
 
-int func_00409480(int a0, int a1) {
-    int tmp0;
-
-    tmp0 = *(int*)((char*)a0 + 8);
-    return (tmp0 + (a1 * 292));
+/* &v->data[i] */
+MaterialProps* func_00409480(MaterialVec* v, int i) {
+    return &v->data[i];
 }
 
-int func_004094A0(int a0) {
-    return (*(int*)(char*)a0 + 24);
+/* Iterator dereference. */
+int* func_004094A0(MatIter* it) {
+    return &it->node->value;
 }
 
 int func_004094B0(Iter* a, Iter* b) {
@@ -27,20 +27,15 @@ void func_004094D0(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
-void func_004094E0(int a0) {
-    int loc[1];
-    int a1, a2, s0, v1;
+/* Forwards to func_004097A0 through a temporary iterator. */
+void func_004094E0(MatIter* out, int a1, int a2) {
+    MatIter tmp;
 
-    s0 = a0;
-    a0 = (int)loc;
-    func_004097A0(a0, a1, a2);
-    v1 = *(int*)(char*)loc;
-    *(int*)(char*)s0 = v1;
-    goto ret;
-ret:;
+    func_004097A0(&tmp, a1, a2);
+    out->node = tmp.node;
 }
 
-int func_00409510(int a0, int a1) {
-    *(int*)((char*)a0) = a1;
-    return a0;
+int* func_00409510(int* self, int value) {
+    *self = value;
+    return self;
 }

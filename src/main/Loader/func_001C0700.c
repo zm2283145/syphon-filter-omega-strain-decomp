@@ -1,11 +1,11 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Loader.cc
  */
 
 #include "types.h"
 
+/* Zero-initialise a three-word vector. */
 Rel* func_001C0700(Rel* r) {
     r->a = 0;
     r->b = 0;

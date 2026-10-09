@@ -5,9 +5,11 @@
  */
 
 #include "types.h"
+#include "collision_types.h"
 
-int func_003C0F30(int a0, int a1) {
-    return *(unsigned short*)((char*)((a1 << 1) + a0) + 4);
+/* Vertex index i of a raw triangle. */
+int ColTri_GetVertIndex(ColTri* tri, int i) {
+    return tri->vert[i];
 }
 
 int func_003C0F40(char* self) {
@@ -18,6 +20,7 @@ void* func_003C0F50(char* self) {
     return self + 8;
 }
 
-void* ColTri_GetEdgeFlags(char* self) {
-    return self + 11;
+/* Address of the three edge flag bytes. */
+unsigned char* ColTri_GetEdgeFlags(ColTri* tri) {
+    return tri->edgeFlags;
 }

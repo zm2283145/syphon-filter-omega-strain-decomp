@@ -5,23 +5,16 @@
  */
 
 #include "types.h"
+#include "grenade_types.h"
 
-extern char D_005716C0[];
+extern char D_005716C0[];   /* default resource */
 
-int func_0025AC20(int a0) {
-    int v0;
-    int cond;
+/* Vtable slot +0x88: resource for the projectile, or the default one. */
+char* func_0025AC20(Grenade* self) {
+    char* res = self->def->unk13C;
 
-    v0 = *(int*)(char*)(a0 + 288);
-    v0 = *(int*)(char*)(v0 + 316);
-    cond = v0 == 0;
-    if (cond) goto L0025AC38;
-    v0 = v0 + 992;
-    goto L0025AC40;
-L0025AC38:;
-    v0 = (int)D_005716C0;
-L0025AC40:;
-    goto ret;
-ret:
-    return v0;
+    if (res != 0) {
+        return res + 992;
+    }
+    return D_005716C0;
 }

@@ -1,10 +1,10 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Container iterator helpers.
  */
 
 #include "types.h"
+#include "WaterFx_types.h"
 
 Word* func_002B3920(Word* dst, Word* src) {
     dst->value = src->value;
@@ -15,11 +15,12 @@ void func_002B3930(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
-int func_002B3940(int a0, int a1) {
-    *(int*)((char*)a0) = a1;
-    return a0;
+WaterListIter* func_002B3940(WaterListIter* it, WaterListLink* node) {
+    it->node = node;
+    return it;
 }
 
-void* func_002B3950(char* self) {
-    return self + 4;
+/* Address of the list sentinel (end()). */
+WaterListLink* func_002B3950(WaterList* list) {
+    return &list->head;
 }

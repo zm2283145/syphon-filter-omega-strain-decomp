@@ -1,15 +1,15 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * GobjMan.cc: scope chain accessors used by the script object lookup.
  */
 
 #include "types.h"
+#include "GobjMan_types.h"
 
-int Scope_GetParent(char* self) {
-    return *(int*)(self + 0);
+GobjScope* Scope_GetParent(GobjScope* self) {
+    return self->parent;
 }
 
-int Object_GetScope(char* self) {
-    return *(int*)(self + 28);
+GobjScope* Object_GetScope(GobjEntry* self) {
+    return self->scope;
 }

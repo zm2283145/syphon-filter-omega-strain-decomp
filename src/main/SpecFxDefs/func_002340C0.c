@@ -1,38 +1,26 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * List push_back helper and iterator assignment.
  */
 
 #include "types.h"
+#include "SpecFxDefs_types.h"
 
-extern int List_InsertBefore(int, int, int, int);
+extern SpecListPos* List_InsertBefore(SpecListPos* result, void* list, SpecListPos* pos, int* value);
 
-int func_002340C0(int a0, int a1) {
-    int loc[2];
-    int a2, a3, v0;
+/* push_back on a list whose sentinel node is at +4. */
+SpecListPos* func_002340C0(void* list, int* value) {
+    SpecListPos end;
+    SpecListPos result;
 
-    a3 = a1;
-    v0 = a0 + 4;
-    a1 = a0;
-    *(int*)(char*)loc = v0;
-    a0 = (int)((char*)loc + 4);
-    a2 = (int)loc;
-    v0 = List_InsertBefore(a0, a1, a2, a3);
-    goto ret;
-ret:
-    return v0;
+    end.node = (char*)list + 4;
+    return List_InsertBefore(&result, list, &end, value);
 }
 
-int func_002340F0(int a0, int a1) {
-    int loc[1];
-    int v0, v1;
+/* Assigns value to *dst; volatile mirrors the original stack temporary. */
+int* func_002340F0(int* dst, int value) {
+    volatile int tmp = value;
 
-    v0 = a0;
-    *(int*)(char*)loc = a1;
-    v1 = *(int*)(char*)loc;
-    *(int*)(char*)a0 = v1;
-    goto ret;
-ret:
-    return v0;
+    *dst = tmp;
+    return dst;
 }

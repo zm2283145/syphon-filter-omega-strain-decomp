@@ -1,11 +1,12 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * globalization.cc
  */
 
 #include "types.h"
+#include "globalization_types.h"
 
-void func_003FEED0(char* self) {
-    *(int*)(self + 4) = 0;
+/* Clear unk04. */
+void func_003FEED0(LocTable* self) {
+    self->unk04 = 0;
 }

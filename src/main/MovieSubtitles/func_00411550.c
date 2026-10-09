@@ -5,45 +5,26 @@
  */
 
 #include "types.h"
+#include "MovieSubtitles_types.h"
 
-extern int func_00374DF0(int);
-extern float func_0037D9A0(int);
+extern void func_00374DF0(SubtitleEntry* entry);
+extern float func_0037D9A0(SubtitleOwner* owner);
 
-int func_00411550(int a0) {
-    func_0037D9A0(a0);
-    return (a0 + 3776);
+char* func_00411550(SubtitleOwner* owner) {
+    func_0037D9A0(owner);
+    return owner->unkEC0;
 }
 
-int func_00411580(int a0) {
-    int s0, v0, v1;
-
-    v1 = *(int*)(char*)(a0 + 2672);
-    v0 = v1 << 4;
-    v0 = v0 + v1;
-    v0 = v0 << 4;
-    v0 = a0 + v0;
-    s0 = v0 + 496;
-    a0 = s0;
-    v0 = func_00374DF0(a0);
-    v0 = s0 + 160;
-    goto ret;
-ret:
-    return v0;
+/* Updates the current entry and returns its block at +0xA0. */
+char* func_00411580(SubtitleOwner* owner) {
+    SubtitleEntry* entry = &owner->entries[owner->current];
+    func_00374DF0(entry);
+    return entry->unk0A0;
 }
 
-int func_004115C0(int a0) {
-    int s0, v0, v1;
-
-    v1 = *(int*)(char*)(a0 + 2672);
-    v0 = v1 << 4;
-    v0 = v0 + v1;
-    v0 = v0 << 4;
-    v0 = a0 + v0;
-    s0 = v0 + 496;
-    a0 = s0;
-    v0 = func_00374DF0(a0);
-    v0 = s0 + 144;
-    goto ret;
-ret:
-    return v0;
+/* Updates the current entry and returns its block at +0x90. */
+char* func_004115C0(SubtitleOwner* owner) {
+    SubtitleEntry* entry = &owner->entries[owner->current];
+    func_00374DF0(entry);
+    return entry->unk090;
 }

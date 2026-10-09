@@ -6,6 +6,7 @@
 
 #include "types.h"
 
+/* swap(a, b) */
 void func_00471250(PtrVec* a, PtrVec* b) {
     if (a != b) {
         int t;

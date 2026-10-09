@@ -1,20 +1,16 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * cGroup script native: shuffle the member order.
  */
 
 #include "types.h"
+#include "group_types.h"
 
-extern int func_003D9970(int);
-extern float func_003D9A00(int);
+extern cGroup* Group_FromHandle(void* handle);   /* script handle -> cGroup (identity) */
+extern float Group_Shuffle(cGroup* group);    /* shuffles the members */
 
-int Script_cGroup_Randomize(int a0) {
-    int tmp0;
-    int tmp1;
-
-    tmp0 = *(int*)(char*)a0;
-    tmp1 = func_003D9970(tmp0);
-    func_003D9A00(tmp1);
+/* Randomize(group) */
+int Script_cGroup_Randomize(GroupScriptArg* args) {
+    Group_Shuffle(Group_FromHandle(args[0].p));
     return 0;
 }

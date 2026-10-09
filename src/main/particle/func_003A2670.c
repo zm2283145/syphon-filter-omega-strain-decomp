@@ -1,15 +1,17 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Particle emitter helpers.
  */
 
 #include "types.h"
+#include "particle_types.h"
 
-int func_003A2670(int a0) {
-    return ((unsigned int)(0) < (unsigned int)(*(unsigned char*)((char*)a0 + 104)));
+/* Returns 1 if the emitter has a pending flag set. */
+int func_003A2670(ParticleEmitter* e) {
+    return e->pending != 0;
 }
 
-void func_003A2680(int a0, float f12) {
-    *(float*)((char*)a0 + 84) = (f12 + (f12 * *(float*)((char*)a0 + 88)));
+/* Sets the rate to base scaled by (1 + rateScale). */
+void ParticleEmitter_SetRate(ParticleEmitter* e, float base) {
+    e->rate = base + base * e->rateScale;
 }

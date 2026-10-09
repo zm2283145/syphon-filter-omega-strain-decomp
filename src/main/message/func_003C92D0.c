@@ -6,6 +6,7 @@
 
 #include "types.h"
 
-int func_003C92D0(int a0) {
-    return (*(int*)(char*)a0 + 8);
+/* Returns the address 8 bytes into the object pointed to by *self. */
+char* func_003C92D0(char** self) {
+    return *self + 8;
 }

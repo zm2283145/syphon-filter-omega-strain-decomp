@@ -1,22 +1,24 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
+ * Original translation unit: GuiAgentInfo.cc. Functions are named by address
  * until real names are known.
  */
 
 #include "types.h"
+#include "GuiAgentInfo_types.h"
 
-void func_00364150(int a0, int a1) {
-    *(float*)((char*)a0 + 16) = *(float*)(char*)a1;
-    *(float*)((char*)a0 + 20) = *(float*)((char*)a1 + 4);
-    *(float*)((char*)a0 + 24) = *(float*)((char*)a1 + 8);
-    *(float*)((char*)a0 + 32) = *(float*)((char*)a1 + 16);
-    *(float*)((char*)a0 + 36) = *(float*)((char*)a1 + 20);
-    *(float*)((char*)a0 + 40) = *(float*)((char*)a1 + 24);
-    *(float*)((char*)a0 + 48) = *(float*)((char*)a1 + 32);
-    *(float*)((char*)a0 + 52) = *(float*)((char*)a1 + 36);
-    *(float*)((char*)a0 + 56) = *(float*)((char*)a1 + 40);
-    *(float*)((char*)a0 + 28) = *(float*)((char*)a1 + 12);
-    *(float*)((char*)a0 + 44) = *(float*)((char*)a1 + 28);
-    *(float*)((char*)a0 + 60) = *(float*)((char*)a1 + 44);
+/* Copies a 3x4 block into the matrix at +0x10 (xyz of each row, then w). */
+void func_00364150(MtxHolder* self, Mtx34* src) {
+    self->m[0][0] = src->m[0][0];
+    self->m[0][1] = src->m[0][1];
+    self->m[0][2] = src->m[0][2];
+    self->m[1][0] = src->m[1][0];
+    self->m[1][1] = src->m[1][1];
+    self->m[1][2] = src->m[1][2];
+    self->m[2][0] = src->m[2][0];
+    self->m[2][1] = src->m[2][1];
+    self->m[2][2] = src->m[2][2];
+    self->m[0][3] = src->m[0][3];
+    self->m[1][3] = src->m[1][3];
+    self->m[2][3] = src->m[2][3];
 }

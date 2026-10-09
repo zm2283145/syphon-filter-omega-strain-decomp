@@ -1,28 +1,30 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
+ * Original translation unit: hud.cc. Functions are named by address
  * until real names are known.
  */
 
 #include "types.h"
+#include "hud_types.h"
 
 extern char D_004E0240[];
-extern int func_003E99B0(int, int, int);
+extern void* func_003E99B0(void* self, int a1, int a2);
 
-void func_00243480(char* self, char value) {
-    self[16] = value;
+void func_00243480(HudElement* self, char value) {
+    self->unk10 = value;
 }
 
-void func_00243490(char* self, char value) {
-    self[91] = value;
+void func_00243490(HudElement* self, char value) {
+    self->unk5B = value;
 }
 
-int func_002434A0(char* self) {
-    return *(int*)(self + 116);
+int func_002434A0(HudElement* self) {
+    return self->unk74;
 }
 
-int func_002434B0(int a0, int a1, int a2) {
-    func_003E99B0(a0, a1, a2);
-    *(int*)((char*)a0) = (int)D_004E0240;
-    return a0;
+/* Constructor: base constructor func_003E99B0, then vtable 0x004E0240. */
+void* func_002434B0(void* self, int a1, int a2) {
+    func_003E99B0(self, a1, a2);
+    *(void**)self = D_004E0240;
+    return self;
 }

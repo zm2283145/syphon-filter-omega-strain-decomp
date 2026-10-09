@@ -1,23 +1,25 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
+ * Original translation unit: hudTargets.cc. Functions are named by address
  * until real names are known.
  */
 
 #include "types.h"
+#include "hudTargets_types.h"
 
-int ObjMarkerRecord_Init(int a0) {
-    *(int*)((char*)a0) = 0;
-    *(int*)((char*)a0 + 4) = 0;
-    *(int*)((char*)a0 + 8) = 0;
-    *(char*)((char*)a0 + 12) = 0;
-    *(int*)((char*)a0 + 24) = -2;
-    *(int*)((char*)a0 + 20) = 0;
-    *(int*)((char*)a0 + 28) = 0;
-    *(int*)((char*)a0 + 32) = 0;
-    *(int*)((char*)a0 + 36) = 0;
-    *(int*)((char*)a0 + 40) = 0;
-    *(int*)((char*)a0 + 44) = 0;
-    *(int*)((char*)a0 + 48) = 0;
-    return a0;
+/* Clears a fresh marker record. */
+ObjMarkerRecord* ObjMarkerRecord_Init(ObjMarkerRecord* self) {
+    self->id = 0;
+    self->icon0 = 0;
+    self->icon1 = 0;
+    self->unk0C = 0;
+    self->unk18 = -2;
+    self->unk14 = 0;
+    self->text = 0;
+    self->unk20 = 0;
+    self->unk24 = 0;
+    self->text2 = 0;
+    self->unk2C = 0;
+    self->unk30 = 0;
+    return self;
 }

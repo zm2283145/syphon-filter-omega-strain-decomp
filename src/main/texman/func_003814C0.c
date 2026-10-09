@@ -1,11 +1,11 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Texture entry release.
  */
 
 #include "types.h"
+#include "texman_types.h"
 
-void func_003814C0(int a0) {
-    *(int*)((char*)a0 + 100) = (*(int*)((char*)a0 + 100) + -1);
+void TexEntry_Release(TexEntry* e) {
+    e->refCount = e->refCount + -1;
 }

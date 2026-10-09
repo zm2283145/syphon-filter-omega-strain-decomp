@@ -15,12 +15,12 @@ extern int func_002697E0(int value);
 extern cNodeList* func_00269810(void* obj);
 extern int* func_003CB1D0(void);
 extern void ScriptType_SetParent(int typeId, int value);
-extern float func_003D9A00(ScriptGroup* group);
-extern int func_003D9BA0(ScriptGroup* group, void* obj);
+extern float Group_Shuffle(ScriptGroup* group);
+extern int Group_AddObjectDup(ScriptGroup* group, void* obj);
 
 /* Script native: cNodeList.Randomize(). */
 int Script_cNodeList_Randomize(ScriptArg* args) {
-    func_003D9A00(func_00269810(args[0].p)->group);
+    Group_Shuffle(func_00269810(args[0].p)->group);
     return 0;
 }
 
@@ -34,7 +34,7 @@ int Script_cNodeList_Remove(ScriptArg* args) {
 /* Script native: cNodeList.AddDup(obj handle = args[1]). */
 int Script_cNodeList_AddDup(ScriptArg* args) {
     void* obj = func_0015C120(args[1].i);
-    func_003D9BA0(func_00269810(args[0].p)->group, obj);
+    Group_AddObjectDup(func_00269810(args[0].p)->group, obj);
     return 0;
 }
 

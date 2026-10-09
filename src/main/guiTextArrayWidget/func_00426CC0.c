@@ -1,38 +1,31 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
+ * Original translation unit: guiTextArrayWidget.cc. Functions are named by address
  * until real names are known.
  */
 
 #include "types.h"
+#include "guiTextArrayWidget_types.h"
 
-extern char D_004E0DC0[];
-extern int func_00424C50(int);
-extern int func_00427000(int);
+extern char D_004E0DC0[];   /* guiTextArrayWidget vtable */
+extern void* func_00424C50(void* self);
+extern Rel* func_00427000(Rel* r);
 
-int func_00426CC0(int a0) {
-    int s0, s1, v0, v1;
+/* guiTextArrayWidget constructor. */
+guiTextArrayWidget* guiTextArrayWidget_ctor(guiTextArrayWidget* self) {
+    TextArrayStore* store;
 
-    s1 = a0;
-    v0 = func_00424C50(a0);
-    s0 = s1 + 176;
-    v0 = (int)D_004E0DC0;
-    a0 = s0;
-    *(int*)(char*)s1 = v0;
-    v0 = func_00427000(a0);
-    v0 = 0 + 1;
-    a0 = 0 + 2;
-    *(char*)(char*)(s0 + 12) = v0;
-    v1 = 0x3f800000;
-    *(int*)(char*)(s1 + 144) = 0;
-    v0 = s1;
-    *(int*)(char*)(s1 + 148) = 0;
-    *(char*)(char*)(s1 + 152) = a0;
-    *(int*)(char*)(s1 + 160) = v1;
-    *(int*)(char*)(s1 + 164) = v1;
-    *(int*)(char*)(s1 + 168) = v1;
-    *(int*)(char*)(s1 + 172) = v1;
-    goto ret;
-ret:
-    return v0;
+    func_00424C50(self);
+    store = &self->store;
+    self->vtable = D_004E0DC0;
+    func_00427000((Rel*)store);
+    store->unk0C = 1;
+    self->unk90 = 0;
+    self->count = 0;
+    self->unk98 = 2;
+    self->color[0] = 1.0f;
+    self->color[1] = 1.0f;
+    self->color[2] = 1.0f;
+    self->color[3] = 1.0f;
+    return self;
 }

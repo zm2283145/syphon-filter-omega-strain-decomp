@@ -6,6 +6,7 @@
 
 #include "types.h"
 
+/* swap(a, b) */
 void func_00471960(PtrVec* a, PtrVec* b) {
     if (a != b) {
         int t;
@@ -22,6 +23,7 @@ void func_00471960(PtrVec* a, PtrVec* b) {
     }
 }
 
-void func_004719A0(char* self) {
-    *(int*)(self + 4) = 0;
+/* clear(): count = 0 */
+void func_004719A0(PtrVec* v) {
+    v->count = 0;
 }

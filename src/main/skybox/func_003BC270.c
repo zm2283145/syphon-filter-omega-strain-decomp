@@ -1,11 +1,11 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * cSKYBOX_GOBJ field setter.
  */
 
 #include "types.h"
+#include "skybox_types.h"
 
-void func_003BC270(char* self, int value) {
-    *(int*)(self + 140) = value;
+void func_003BC270(cSkyboxGobj* self, int value) {
+    self->unk8C = value;
 }

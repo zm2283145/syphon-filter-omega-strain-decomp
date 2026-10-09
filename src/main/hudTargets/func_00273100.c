@@ -1,38 +1,42 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
+ * Original translation unit: hudTargets.cc. Functions are named by address
  * until real names are known.
  */
 
 #include "types.h"
+#include "hudTargets_types.h"
 
-extern int ObjMarkerMgr_Remove(int, int, int);
+extern int ObjMarkerMgr_Remove(ObjMarkerMgr* mgr, int* id, int send);
 
 Word* func_00273100(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-int func_00273110(int a0, int a1) {
-    return ((unsigned int)(0) < (unsigned int)((*(int*)(char*)a0 ^ *(int*)(char*)a1)));
+/* List iterator inequality. */
+int func_00273110(ListPos* a, ListPos* b) {
+    return a->node != b->node;
 }
 
 void func_00273130(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
-int func_00273140(int a0) {
-    *(int*)((char*)a0) = *(int*)((char*)*(int*)(char*)a0 + 4);
-    return a0;
+/* List iterator ++. */
+ListPos* func_00273140(ListPos* it) {
+    it->node = it->node->next;
+    return it;
 }
 
-int func_00273160(int a0) {
-    return (*(int*)(char*)a0 + 8);
+/* List iterator dereference. */
+int* func_00273160(ListPos* it) {
+    return &it->node->value;
 }
 
-int func_00273170(int a0, int a1) {
-    *(float*)((char*)a0) = *(float*)(char*)a1;
-    return a0;
+float* func_00273170(float* dst, float* src) {
+    *dst = *src;
+    return dst;
 }
 
 void func_00273180(Iter* out, PtrVec* v) {
@@ -70,6 +74,7 @@ void func_002731F0(Iter* out, PtrVec* v) {
     out->p = v->data;
 }
 
-int func_00273200(int a0, int a1) {
-    return ObjMarkerMgr_Remove(a0, a1, 1);
+/* Removes the marker for object id (map marker kinds). */
+int ObjMarkerMgr_RemoveDefault(ObjMarkerMgr* mgr, int* id) {
+    return ObjMarkerMgr_Remove(mgr, id, 1);
 }

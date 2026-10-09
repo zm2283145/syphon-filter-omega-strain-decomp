@@ -1,34 +1,31 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
+ * Original translation unit: GuiAgentCreate.cc. Functions are named by address
  * until real names are known.
  */
 
 #include "types.h"
+#include "GuiAgentCreate_types.h"
 
 extern char D_0055DDA0[];
-extern int func_00403310(int);
+extern int func_00403310(void* p);
 extern void func_0040F540(void);
-extern int func_004147A0(void);
-extern int func_0041EBF0(int);
-extern int func_0041F090(int);
+extern GuiManagerState* func_004147A0(void);
+extern int func_0041EBF0(void* self);
+extern int func_0041F090(void* self);
 
-int func_0028EC00(int a0) {
-    int tmp4;
-
-    func_00403310((int)D_0055DDA0);
+int func_0028EC00(void* self) {
+    func_00403310(D_0055DDA0);
     func_0040F540();
-    tmp4 = func_0041F090(a0);
-    return tmp4;
+    return func_0041F090(self);
 }
 
-int func_0028EC40(int a0) {
-    int tmp2;
-    int tmp4;
+/* Calls the base handler, then clears bits 2-3 of the gui manager flags. */
+GuiManagerState* func_0028EC40(void* self) {
+    GuiManagerState* gui;
 
-    func_0041EBF0(a0);
-    tmp2 = func_004147A0();
-    tmp4 = *(int*)((char*)tmp2 + 104);
-    *(int*)((char*)tmp2 + 104) = (tmp4 & -13);
-    return tmp2;
+    func_0041EBF0(self);
+    gui = func_004147A0();
+    gui->flags &= ~12;
+    return gui;
 }

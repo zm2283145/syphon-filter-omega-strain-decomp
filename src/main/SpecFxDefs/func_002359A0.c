@@ -1,27 +1,20 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * List push_back helper and container accessors.
  */
 
 #include "types.h"
+#include "SpecFxDefs_types.h"
 
-extern int List_InsertBefore(int, int, int, int);
+extern SpecListPos* List_InsertBefore(SpecListPos* result, void* list, SpecListPos* pos, int* value);
 
-int func_002359A0(int a0, int a1) {
-    int loc[2];
-    int a2, a3, v0;
+/* push_back on a list whose sentinel node is at +4. */
+SpecListPos* func_002359A0(void* list, int* value) {
+    SpecListPos end;
+    SpecListPos result;
 
-    a3 = a1;
-    v0 = a0 + 4;
-    a1 = a0;
-    *(int*)(char*)loc = v0;
-    a0 = (int)((char*)loc + 4);
-    a2 = (int)loc;
-    v0 = List_InsertBefore(a0, a1, a2, a3);
-    goto ret;
-ret:
-    return v0;
+    end.node = (char*)list + 4;
+    return List_InsertBefore(&result, list, &end, value);
 }
 
 void func_002359D0(Iter* out, Tree* t) {

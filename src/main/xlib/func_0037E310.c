@@ -1,11 +1,12 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * xlib.cc
  */
 
 #include "types.h"
+#include "xlib_types.h"
 
-void func_0037E310(int a0) {
-    *(char*)((char*)a0 + 2680) = 1;
+/* Set flag unkA78. */
+void func_0037E310(XlibObj* self) {
+    self->unkA78 = 1;
 }

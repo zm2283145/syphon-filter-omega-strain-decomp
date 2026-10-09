@@ -5,9 +5,10 @@
  */
 
 #include "types.h"
+#include "humanIk_types.h"
 
-int func_001DB8A0(int a0, int a1) {
-    *(char*)((char*)a0) = *(signed char*)(char*)a1;
-    *(char*)((char*)a0 + 1) = *(signed char*)((char*)a1 + 1);
-    return a0;
+IkBytePair* func_001DB8A0(IkBytePair* dst, IkBytePair* src) {
+    dst->a = src->a;
+    dst->b = src->b;
+    return dst;
 }

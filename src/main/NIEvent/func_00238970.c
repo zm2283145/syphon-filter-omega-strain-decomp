@@ -5,10 +5,12 @@
  */
 
 #include "types.h"
+#include "NIEvent_types.h"
 
-Rel* func_00238970(Rel* r) {
-    r->a = 0;
-    r->b = 0;
-    r->c = 0;
-    return r;
+/* Constructs an empty vector. */
+NIEventVec3* func_00238970(NIEventVec3* vec) {
+    vec->begin = 0;
+    vec->end = 0;
+    vec->cap = 0;
+    return vec;
 }

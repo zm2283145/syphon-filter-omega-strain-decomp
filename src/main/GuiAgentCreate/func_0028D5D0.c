@@ -1,21 +1,16 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
+ * Original translation unit: GuiAgentCreate.cc. Functions are named by address
  * until real names are known.
  */
 
 #include "types.h"
+#include "GuiAgentCreate_types.h"
 
-int func_0028D5D0(int a0, int a1) {
-    int tmp0;
-
-    tmp0 = *(int*)((char*)a0 + 8);
-    return (tmp0 + (a1 * 464));
+AgentCreateEntry* func_0028D5D0(AgentCreateEntryVec* v, int i) {
+    return v->data + i;
 }
 
-int func_0028D5F0(int a0, int a1) {
-    int tmp0;
-
-    tmp0 = *(int*)((char*)a0 + 8);
-    return (tmp0 + (a1 * 12));
+Rec12* func_0028D5F0(Rec12Vec* v, int i) {
+    return v->data + i;
 }

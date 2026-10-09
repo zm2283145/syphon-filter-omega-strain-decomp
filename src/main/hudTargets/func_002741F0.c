@@ -1,24 +1,26 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
+ * Original translation unit: hudTargets.cc. Functions are named by address
  * until real names are known.
  */
 
 #include "types.h"
+#include "hudTargets_types.h"
 
-extern char D_0048B308[];
-extern int ScalarCollection_Init(int);
-extern int func_00222B60(int);
+extern unsigned char D_0048B308;
+extern MarkerList* ScalarCollection_Init(MarkerList* list);
+extern void* func_00222B60(void* p);
 
-int func_002741F0(int a0) {
-    ScalarCollection_Init(a0);
-    ScalarCollection_Init((a0 + 12));
-    func_00222B60((a0 + 24));
-    ScalarCollection_Init((a0 + 36));
-    *(int*)((char*)a0 + 48) = 1065353216;
-    *(int*)((char*)a0 + 56) = -2;
-    *(int*)((char*)a0 + 52) = 0;
-    *(int*)((char*)a0 + 60) = 0;
-    *(char*)D_0048B308 = 1;
-    return a0;
+/* Objective marker manager constructor. */
+ObjMarkerMgr* ObjMarkerMgr_ctor(ObjMarkerMgr* self) {
+    ScalarCollection_Init(&self->unk00);
+    ScalarCollection_Init(&self->records);
+    func_00222B60(self->unk18);
+    ScalarCollection_Init(&self->secondary);
+    self->unk30 = 1.0f;
+    self->unk38 = -2;
+    self->unk34 = 0;
+    self->selected = 0;
+    D_0048B308 = 1;
+    return self;
 }

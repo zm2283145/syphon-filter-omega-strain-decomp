@@ -5,7 +5,8 @@
  */
 
 #include "types.h"
+#include "SFOLobby_Cell_types.h"
 
-void* func_0044A060(char* self) {
-    return self + 9620;
+char* func_0044A060(LobbyCell* cell) {
+    return cell->unk2594;
 }

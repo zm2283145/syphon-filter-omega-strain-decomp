@@ -1,16 +1,16 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
+ * Original translation unit: GuiSubTitleDisplay.cc. Functions are named by address
  * until real names are known.
  */
 
 #include "types.h"
 
-extern int func_0041E3B0(int, float);
+extern int func_0041E3B0(void* self, float dt);
 
-int func_00457FB0(int a0, int a1) {
-    *(int*)((char*)a0) = a1;
-    return a0;
+int* func_00457FB0(int* self, int value) {
+    *self = value;
+    return self;
 }
 
 void* func_00457FC0(char* self) {
@@ -21,12 +21,10 @@ void* func_00457FD0(void* self) {
     return self;
 }
 
-int func_00457FE0(int a0, float f12) {
-    int tmp0;
-    float tmp2;
+/* Update: calls the base update, then advances the timer at +0x54 by dt/30. */
+int func_00457FE0(char* self, float dt) {
+    int result = func_0041E3B0(self, dt);
 
-    tmp0 = func_0041E3B0(a0, f12);
-    tmp2 = *(float*)((char*)a0 + 84);
-    *(float*)((char*)a0 + 84) = (tmp2 + (f12 / 30.0f));
-    return tmp0;
+    *(float*)(self + 84) = *(float*)(self + 84) + dt / 30.0f;
+    return result;
 }

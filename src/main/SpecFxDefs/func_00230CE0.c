@@ -1,66 +1,42 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * cNetSpawnParticleMsg serialization and the Shatter script native.
  */
 
 #include "types.h"
+#include "SpecFxDefs_types.h"
 
-extern char D_005061D0[];
-extern int GObj_IdentityB(int);
-extern int Global_Shatter(int, int, int);
-extern int Global_SpawnParticle(int, int, int);
-extern void func_00282020(int);
-extern int func_00282160(int);
+extern signed char* D_005061D0;   /* network message byte cursor */
+extern void* GObj_IdentityB(void* obj);
+extern int Global_Shatter(void* a, void* b, int c);
+extern int Global_SpawnParticle(int particle, int target, int c);
+extern void func_00282020(int handle);    /* writes an object handle to the stream */
+extern int func_00282160(int* handle);    /* reads an object handle from the stream */
 
-int func_00230CE0(int a0) {
-    int tmp2;
-    signed char tmp3;
-    signed char tmp4;
-    int tmp5;
-    int tmp6;
+/* Reads the message from the network stream and spawns the particle. */
+int cNetSpawnParticleMsg_Receive(cNetSpawnParticleMsg* msg) {
+    signed char* cursor;
+    signed char particle;
 
-    func_00282160((a0 + 36));
-    tmp2 = *(int*)D_005061D0;
-    tmp3 = *(signed char*)(char*)tmp2;
-    *(int*)D_005061D0 = (tmp2 + 1);
-    *(char*)((char*)a0 + 40) = tmp3;
-    tmp4 = *(signed char*)((char*)a0 + 40);
-    tmp5 = *(int*)((char*)a0 + 36);
-    tmp6 = Global_SpawnParticle(tmp4, tmp5, 0);
-    return tmp6;
+    func_00282160(&msg->target);
+    cursor = D_005061D0;
+    particle = *cursor;
+    D_005061D0 = cursor + 1;
+    msg->particle = particle;
+    return Global_SpawnParticle(msg->particle, msg->target, 0);
 }
 
-void cNetSpawnParticleMsg_v04(int a0) {
-    int tmp0;
-    signed char tmp3;
-    int tmp4;
-    int tmp5;
-
-    tmp0 = *(int*)((char*)a0 + 36);
-    func_00282020(tmp0);
-    tmp3 = *(signed char*)((char*)a0 + 40);
-    tmp4 = *(int*)D_005061D0;
-    *(char*)((char*)tmp4) = tmp3;
-    tmp5 = *(int*)D_005061D0;
-    *(int*)D_005061D0 = (tmp5 + 1);
+/* Writes the message to the network stream. */
+void cNetSpawnParticleMsg_v04(cNetSpawnParticleMsg* msg) {
+    func_00282020(msg->target);
+    *D_005061D0 = msg->particle;
+    D_005061D0++;
 }
 
-int Script_Shatter(int a0) {
-    int a1, a2, s0, v0;
+/* Script native: Shatter(obj0, obj1). */
+int Script_Shatter(ScriptArg* args) {
+    void* a = GObj_IdentityB(args[0].p);
 
-    s0 = a0;
-    a0 = *(int*)(char*)a0;
-    v0 = GObj_IdentityB(a0);
-    a0 = *(int*)(char*)(s0 + 4);
-    s0 = v0;
-    v0 = GObj_IdentityB(a0);
-    a0 = s0;
-    a1 = v0;
-    a2 = 0;
-    v0 = Global_Shatter(a0, a1, a2);
-    v0 = 0;
-    goto ret;
-ret:
-    return v0;
+    Global_Shatter(a, GObj_IdentityB(args[1].p), 0);
+    return 0;
 }

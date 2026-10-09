@@ -6,11 +6,8 @@
 
 #include "types.h"
 
-extern char D_0055A818[];
+extern int D_0055A818;  /* counter */
 
 void func_00165610(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_0055A818;
-    *(int*)D_0055A818 = (tmp0 + 1);
+    D_0055A818 = D_0055A818 + 1;
 }

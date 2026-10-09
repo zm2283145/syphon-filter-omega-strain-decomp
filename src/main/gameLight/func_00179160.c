@@ -1,36 +1,28 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * cGameLight script type registration and class helpers.
  */
 
 #include "types.h"
 
-extern char D_004EE898[];
-extern char D_004EE8A0[];
+extern int D_004EE898;   /* cGameLight class type id */
+extern int D_004EE8A0;   /* cGameLight script type */
 extern char D_00555070[];
-extern int ScriptFilter_Dispatch(int, int, int);
-extern int cGOBJ_GetScriptTypeKeyPtr(void);
-extern void ScriptType_SetParent(int, int);
+extern int ScriptFilter_Dispatch(void* filter, int a0, int a1);
+extern int* cGOBJ_GetScriptTypeKeyPtr(void);
+extern void ScriptType_SetParent(int type, int parentType);
 
+/* Registers the cGameLight script type under its parent type. */
 void ScriptType_cGameLight_Init(void) {
-    int tmp0;
-    int tmp2;
-    int tmp3;
+    int* parent = cGOBJ_GetScriptTypeKeyPtr();
 
-    tmp0 = cGOBJ_GetScriptTypeKeyPtr();
-    tmp2 = *(int*)D_004EE8A0;
-    tmp3 = *(int*)(char*)tmp0;
-    ScriptType_SetParent(tmp2, tmp3);
+    ScriptType_SetParent(D_004EE8A0, *parent);
 }
 
 int cGameLight_v0B(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_004EE898;
-    return tmp0;
+    return D_004EE898;
 }
 
 int cGameLight_v0C(int a0, int a1) {
-    return ScriptFilter_Dispatch((int)D_00555070, a0, a1);
+    return ScriptFilter_Dispatch(D_00555070, a0, a1);
 }

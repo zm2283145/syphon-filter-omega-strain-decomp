@@ -5,9 +5,11 @@
  */
 
 #include "types.h"
+#include "Generator_types.h"
 
-int func_00220480(int a0) {
-    return (*(int*)(char*)a0 + 8);
+/* Iterator dereference: address of the node value. */
+int* func_00220480(GenListPos* it) {
+    return &it->node->value;
 }
 
 Word* func_00220490(Word* dst, Word* src) {

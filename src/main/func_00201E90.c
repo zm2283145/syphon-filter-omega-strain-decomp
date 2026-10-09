@@ -4,6 +4,8 @@
  * until real names are known.
  */
 
+#include "types.h"
+
 void* func_00201E90(void* self) {
     return self;
 }

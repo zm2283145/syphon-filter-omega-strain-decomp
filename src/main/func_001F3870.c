@@ -4,6 +4,8 @@
  * until real names are known.
  */
 
+#include "types.h"
+
 void* func_001F3870(void* self) {
     return self;
 }

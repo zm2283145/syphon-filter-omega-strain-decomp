@@ -4,6 +4,8 @@
  * until real names are known.
  */
 
+#include "types.h"
+
 int func_001E1D50(void) {
     return 0;
 }

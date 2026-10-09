@@ -4,6 +4,8 @@
  * until real names are known.
  */
 
+#include "types.h"
+
 int func_00183B60(void* self, char* p) {
     return *(int*)(p + 0);
 }

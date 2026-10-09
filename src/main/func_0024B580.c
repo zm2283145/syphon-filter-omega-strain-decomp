@@ -4,6 +4,8 @@
  * until real names are known.
  */
 
+#include "types.h"
+
 void func_0024B580(char* self) {
     self[38] = 0;
 }

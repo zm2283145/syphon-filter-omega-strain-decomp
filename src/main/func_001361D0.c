@@ -4,6 +4,15 @@
  * until real names are known.
  */
 
+#include "types.h"
+
 int func_001361D0(char* self) {
     return *(int*)(self + 0);
+}
+
+Rel* func_001361E0(Rel* r) {
+    r->a = 0;
+    r->b = 0;
+    r->c = 0;
+    return r;
 }

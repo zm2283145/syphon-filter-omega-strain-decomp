@@ -3,7 +3,8 @@
 
 /*
  * Provisional types used by matched functions. Field names are placeholders
- * (unkXX / padding) until the real layouts are recovered.
+ * (unkXX / padding) until the real layouts are recovered; see research/ at the
+ * repository root for what is known about each structure.
  */
 
 typedef struct Vec4 {
@@ -101,5 +102,33 @@ typedef struct Leaf {
     char pad[0x10];
     int limit;
 } Leaf;
+
+typedef struct Word {
+    int value;
+} Word;
+
+typedef struct IndexedList {
+    int unk0;
+    int count;
+    int* base;
+} IndexedList;
+
+typedef struct Mtx44 {
+    float m[4][4];
+} Mtx44;
+
+typedef struct Map {
+    int count;
+    int head;
+    unsigned char cmp;
+    void* hp;
+} Map;
+
+typedef struct Quad {
+    int a, b, c, d;
+} Quad;
+
+/* Functions that are still assembly, called from matched C. */
+extern void func_00139200(IndexedList* list, int* end, int n, void* arg);
 
 #endif

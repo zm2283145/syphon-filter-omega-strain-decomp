@@ -4,6 +4,12 @@
  * until real names are known.
  */
 
+#include "types.h"
+
 int func_001E0F90(char* self) {
     return *(int*)(self + 4);
+}
+
+int func_001E0FA0(Iter* a, Iter* b) {
+    return !(a->p == b->p);
 }

@@ -4,6 +4,8 @@
  * until real names are known.
  */
 
+#include "types.h"
+
 void func_0036C030(char* self, int value) {
     *(int*)(self + 8) = value;
 }

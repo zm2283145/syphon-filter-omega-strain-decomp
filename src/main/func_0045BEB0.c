@@ -4,6 +4,8 @@
  * until real names are known.
  */
 
+#include "types.h"
+
 void func_0045BEB0(char* self, int value) {
     *(int*)(self + 236) = value;
 }

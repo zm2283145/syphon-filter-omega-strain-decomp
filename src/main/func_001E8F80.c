@@ -14,3 +14,12 @@ Iter* func_001E8F80(Iter* it) {
 void func_001E8FA0(Iter* out, PtrVec* v) {
     out->p = v->data + v->count;
 }
+
+Word* func_001E8FC0(Word* dst, Word* src) {
+    dst->value = src->value;
+    return dst;
+}
+
+void func_001E8FD0(Iter* out, PtrVec* v) {
+    out->p = v->data;
+}

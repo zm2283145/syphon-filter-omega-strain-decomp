@@ -4,6 +4,8 @@
  * until real names are known.
  */
 
+#include "types.h"
+
 float func_0045BBE0(char* self) {
     return *(float*)(self + 64);
 }

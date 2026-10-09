@@ -4,6 +4,8 @@
  * until real names are known.
  */
 
+#include "types.h"
+
 void func_0013AAD0(char* self, char value) {
     self[0] = value;
 }

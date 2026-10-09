@@ -4,6 +4,8 @@
  * until real names are known.
  */
 
+#include "types.h"
+
 void func_003EE830(char* self, char value) {
     self[97] = value;
 }

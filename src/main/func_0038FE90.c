@@ -4,6 +4,8 @@
  * until real names are known.
  */
 
+#include "types.h"
+
 void* func_0038FE90(char* self) {
     return self + 272;
 }

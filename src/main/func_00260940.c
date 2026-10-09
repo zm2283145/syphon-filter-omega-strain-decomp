@@ -4,6 +4,8 @@
  * until real names are known.
  */
 
+#include "types.h"
+
 unsigned char func_00260940(unsigned char* self) {
     return self[1];
 }

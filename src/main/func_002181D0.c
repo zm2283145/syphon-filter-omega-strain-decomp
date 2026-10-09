@@ -4,6 +4,16 @@
  * until real names are known.
  */
 
+#include "types.h"
+
 int func_002181D0(char* self) {
+    return *(int*)(self + 4);
+}
+
+int* func_002181E0(PtrVec* v, int i) {
+    return v->data + i;
+}
+
+int func_002181F0(char* self) {
     return *(int*)(self + 4);
 }

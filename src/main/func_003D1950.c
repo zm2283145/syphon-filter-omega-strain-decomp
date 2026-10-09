@@ -4,6 +4,8 @@
  * until real names are known.
  */
 
+#include "types.h"
+
 void func_003D1950(char* self) {
     *(int*)(self + 48) = 0;
 }

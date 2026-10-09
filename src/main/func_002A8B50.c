@@ -4,5 +4,7 @@
  * until real names are known.
  */
 
+#include "types.h"
+
 void func_002A8B50(void) {
 }

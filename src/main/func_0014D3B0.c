@@ -4,6 +4,8 @@
  * until real names are known.
  */
 
+#include "types.h"
+
 signed char func_0014D3B0(signed char* self) {
     return self[316];
 }

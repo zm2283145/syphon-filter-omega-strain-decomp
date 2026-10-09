@@ -4,6 +4,8 @@
  * until real names are known.
  */
 
+#include "types.h"
+
 void func_003E2140(char* self, int value) {
     *(int*)(self + 20112) = value;
 }

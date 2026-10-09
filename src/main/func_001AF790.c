@@ -4,6 +4,8 @@
  * until real names are known.
  */
 
+#include "types.h"
+
 void* func_001AF790(char* self) {
     return self + 336;
 }

@@ -4,6 +4,8 @@
  * until real names are known.
  */
 
+#include "types.h"
+
 void* func_003C9B30(char* self) {
     return self + 4;
 }

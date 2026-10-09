@@ -4,5 +4,7 @@
  * until real names are known.
  */
 
+#include "types.h"
+
 void func_001C93F0(void) {
 }

@@ -9,3 +9,8 @@
 int func_001821A0(Leaf* l, int* addr) {
     return *addr >= l->limit;
 }
+
+Word* func_001821C0(Word* dst, Word* src) {
+    dst->value = src->value;
+    return dst;
+}

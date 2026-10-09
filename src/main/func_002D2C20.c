@@ -4,6 +4,8 @@
  * until real names are known.
  */
 
+#include "types.h"
+
 int func_002D2C20(char* self) {
     return *(int*)(self + 528);
 }

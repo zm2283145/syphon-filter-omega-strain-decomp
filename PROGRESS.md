@@ -19,9 +19,9 @@
 | Item | State |
 | --- | --- |
 | Round-trip build (all asm) | **Byte-identical**, SHA-256 `9924da91…31dc6` (Windows, native tools) |
-| Build with C | **Byte-identical** with 901 functions compiled from C |
-| Functions (objdiff) | 901 / 14,119 matched (6.38 %) |
-| Code bytes (objdiff) | 7,652 / 3,563,252 (0.21 %); the matched functions are mostly tiny accessors |
+| Build with C | **Byte-identical** with 1,593 functions compiled from C |
+| Functions (objdiff) | 1,593 / 14,119 matched (11.3 %) |
+| Code bytes (objdiff) | 22,972 / 3,563,252 (0.64 %); the matched functions are mostly small accessors and C++ container helpers |
 | Data | not tracked yet (one data file from 0x00476B00) |
 
 "Matched" means the whole executable still builds with the SHA-256 of the
@@ -90,6 +90,7 @@ shift slightly as boundaries are refined.
   header offsets (0x003809B0 palette, 0x003809C0 pixels), script wrappers
   (`SetSpeed` 0x00211190), list/stack helpers (0x00139070, 0x003B1770,
   0x003ADF60), predicates (0x00190910, 0x001909A0, 0x001E9070, 0x001821A0).
+* 688 further functions are byte-for-byte duplicates of matched leaf functions (C++ template instances: container swap, iterator begin/end/compare, copy constructors) and reuse the same source.
 * Files live in `src/main/` named after their first function until real
   translation units are identified; shared provisional types in
   `include/types.h`.

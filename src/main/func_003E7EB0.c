@@ -4,6 +4,8 @@
  * until real names are known.
  */
 
+#include "types.h"
+
 void func_003E7EB0(char* self, int value) {
     *(int*)(self + 120) = value;
 }

@@ -4,6 +4,8 @@
  * until real names are known.
  */
 
+#include "types.h"
+
 void func_003E4710(char* self, int value) {
     *(int*)(self + 40) = value;
 }

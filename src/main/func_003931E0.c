@@ -4,6 +4,8 @@
  * until real names are known.
  */
 
+#include "types.h"
+
 void func_003931E0(char* self) {
     *(int*)(self + 4) = 0;
 }

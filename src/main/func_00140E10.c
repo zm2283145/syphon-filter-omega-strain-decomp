@@ -4,15 +4,12 @@
  * until real names are known.
  */
 
+#include "types.h"
+
 int func_00140E10(void) {
     return 0;
 }
 
-typedef struct Mtx44 {
-    float m[4][4];
-} Mtx44;
-
-/* Builds a 3x3 rotation/scale (stored column-wise) with zero translation. */
 Mtx44* func_00140E20(Mtx44* m, float a, float b, float c, float d, float e, float f,
                      float g, float h, float i) {
     m->m[0][0] = a;

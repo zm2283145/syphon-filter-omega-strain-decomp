@@ -4,6 +4,14 @@
  * until real names are known.
  */
 
+#include "types.h"
+
 void* func_0022DBB0(char* self) {
     return self + 4;
+}
+
+List* func_0022DBC0(List* l) {
+    l->count = 0;
+    l->first = l->last = &l->first;
+    return l;
 }

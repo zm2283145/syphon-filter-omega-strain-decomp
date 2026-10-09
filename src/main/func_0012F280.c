@@ -4,6 +4,8 @@
  * until real names are known.
  */
 
+#include "types.h"
+
 void func_0012F280(char* self, float value) {
     *(float*)(self + 212) = value;
 }

@@ -4,10 +4,24 @@
  * until real names are known.
  */
 
+#include "types.h"
+
 int func_001AF350(char* self) {
     return *(int*)(self + 0);
 }
 
 int func_001AF360(char* self) {
     return *(int*)(self + 0);
+}
+
+void func_001AF370(Iter* out, PtrVec* v) {
+    out->p = v->data + v->count;
+}
+
+void func_001AF390(Iter* out, PtrVec* v) {
+    out->p = v->data;
+}
+
+int func_001AF3A0(Iter* a, Iter* b) {
+    return !(a->p == b->p);
 }

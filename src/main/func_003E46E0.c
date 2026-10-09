@@ -4,6 +4,8 @@
  * until real names are known.
  */
 
+#include "types.h"
+
 void func_003E46E0(char* self, float value) {
     *(float*)(self + 36) = value;
 }

@@ -4,12 +4,17 @@
  * until real names are known.
  */
 
-typedef struct Word {
-    int value;
-} Word;
+#include "types.h"
 
-/* Copy assignment: *dst = *src, returns dst. */
 Word* func_00130AE0(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
+}
+
+void func_00130AF0(Iter* out, Tree* t) {
+    out->p = &t->header;
+}
+
+void func_00130B00(Iter* out, Tree* t) {
+    out->p = t->leftmost;
 }

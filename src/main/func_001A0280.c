@@ -4,6 +4,8 @@
  * until real names are known.
  */
 
+#include "types.h"
+
 int func_001A0280(char* self) {
     return *(int*)(self + 176);
 }

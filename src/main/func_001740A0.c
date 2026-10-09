@@ -4,6 +4,16 @@
  * until real names are known.
  */
 
+#include "types.h"
+
 int func_001740A0(char* self) {
     return *(int*)(self + 0);
+}
+
+void func_001740B0(Iter* out, PtrVec* v) {
+    out->p = v->data + v->count;
+}
+
+void func_001740D0(Iter* out, PtrVec* v) {
+    out->p = v->data;
 }

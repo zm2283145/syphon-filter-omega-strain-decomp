@@ -6,14 +6,14 @@
 
 #include "types.h"
 
+extern int ActiveList_RemoveFirst(int);
+extern int ActiveList_RemoveObject(int, int);
 extern char D_004EE908[];
 extern char D_004FFB50[];
 extern char D_00555070[];
-extern int ActiveList_RemoveObject(int, int);
-extern int ActiveList_RemoveFirst(int);
+extern int ScriptFilter_Dispatch(int, int, int);
 extern int func_00131320(int, int);
 extern void func_00282020(int);
-extern int ScriptFilter_Dispatch(int, int, int);
 
 int func_0017A100(int a0) {
     int tmp0;

@@ -8,12 +8,12 @@
 
 extern char D_004D91C0[];
 extern char D_005435A8[];
+extern int Event_Construct(int, int);
 extern int Vec4_Assign(int, int);
 extern int Vec4_Copy(int, int);
 extern int func_00139B00(int, int);
 extern int func_00139BA0(int, int);
 extern int func_00139BB0(int, int);
-extern int Event_Construct(int, int);
 
 int func_0013A9A0(int a0, int a1) {
     int s0, s1, s2, v0, v1;

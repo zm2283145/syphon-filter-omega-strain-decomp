@@ -7,9 +7,9 @@
 #include "types.h"
 
 extern char D_004DFBB0[];
+extern int MotionNode_BaseCtor(int, int, int);
 extern void func_001F2BE0(int, int);
 extern int func_001F3070(int);
-extern int MotionNode_BaseCtor(int, int, int);
 
 int func_001F2B70(int a0, int a1, int a2, int a3) {
     MotionNode_BaseCtor(a0, 3, a3);

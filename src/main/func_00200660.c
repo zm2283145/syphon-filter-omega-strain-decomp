@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-extern int Motion_Lookup(int, int);
 extern int MotionGroup_CopyPair(int, int);
+extern int Motion_Lookup(int, int);
 extern int func_001ADFE0(int, int);
 
 int MotionSelNode_Ctor(int a0, int a1, int a2, int a3) {

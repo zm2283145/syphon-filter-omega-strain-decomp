@@ -6,6 +6,9 @@
 
 #include "types.h"
 
+extern int GObj_IdentityB(int);
+extern int Objective_Activate(int);
+extern int Objective_Deactivate(int);
 extern int Objective_ResolveReceiver(int);
 extern int func_00228050(int, int);
 extern int func_00228190(int, int, int, int);
@@ -17,9 +20,6 @@ extern int func_00228760(int, int, int);
 extern int func_00228850(int, int, int);
 extern int func_00228940(int, int, int);
 extern int func_00228A30(int, int, int);
-extern int Objective_Activate(int);
-extern int Objective_Deactivate(int);
-extern int GObj_IdentityB(int);
 
 int func_00224F30(int a0) {
     int tmp0;

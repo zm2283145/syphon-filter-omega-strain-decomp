@@ -7,9 +7,9 @@
 #include "types.h"
 
 extern char D_004DFBF0[];
-extern int func_001325F0(int, int);
-extern int MotionSlider_CopyChildren(int, int);
 extern int MotionNode_BaseCopy(int, int);
+extern int MotionSlider_CopyChildren(int, int);
+extern int func_001325F0(int, int);
 
 int func_00201C30(int a0, int a1) {
     signed char tmp0;

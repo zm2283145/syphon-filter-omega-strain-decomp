@@ -11,12 +11,12 @@ extern char D_004F7A28[];
 extern char D_004F7A38[];
 extern char D_004F7A40[];
 extern char D_00555070[];
+extern int GObj_IdentityA(int);
+extern int ScriptFilter_Dispatch(int, int, int);
 extern int func_003C8C50(void);
 extern int func_003CB1D0(void);
-extern int GObj_IdentityA(int);
 extern int func_003D9400(int, int);
 extern void func_003D9440(int, int);
-extern int ScriptFilter_Dispatch(int, int, int);
 extern int func_0043FB90(void);
 
 int func_0022F100(int a0) {

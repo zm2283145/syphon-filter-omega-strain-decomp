@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-extern int func_003D9CC0(int, int);
 extern int Script_ObjectToId(int);
+extern int func_003D9CC0(int, int);
 
 void func_003D9C80(int a0, int a1) {
     int loc[1];

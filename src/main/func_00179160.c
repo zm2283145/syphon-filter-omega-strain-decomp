@@ -9,9 +9,9 @@
 extern char D_004EE898[];
 extern char D_004EE8A0[];
 extern char D_00555070[];
+extern int ScriptFilter_Dispatch(int, int, int);
 extern int func_003CC830(void);
 extern void func_003D9440(int, int);
-extern int ScriptFilter_Dispatch(int, int, int);
 
 void func_00179160(void) {
     int tmp0;

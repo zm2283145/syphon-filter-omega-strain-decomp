@@ -8,8 +8,8 @@
 
 extern char D_004D9960[];
 extern char D_004EE6C0[];
-extern int ScalarCollection_Init(int);
 extern int Receiver_Construct(int, int);
+extern int ScalarCollection_Init(int);
 
 int func_001716E0(int a0, int a1) {
     Receiver_Construct(a0, (int)D_004EE6C0);

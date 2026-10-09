@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-extern int func_0042D110(int);
+extern int NetObjectMgr_RemoveTransferTimer(int);
 
 int func_0042D300(int a0) {
-    return func_0042D110(a0);
+    return NetObjectMgr_RemoveTransferTimer(a0);
 }

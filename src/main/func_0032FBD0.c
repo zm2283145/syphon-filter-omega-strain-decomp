@@ -6,9 +6,9 @@
 
 #include "types.h"
 
-extern int func_003339E0(int, int);
 extern int AgentData_IsObjectiveComplete(int, int);
 extern int AgentData_SetObjectiveBit(int, int, int);
+extern int func_003339E0(int, int);
 
 int func_0032FBD0(int a0) {
     int loc[1];

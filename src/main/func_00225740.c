@@ -9,14 +9,14 @@
 extern char D_004F7668[];
 extern char D_004F7670[];
 extern char D_00555070[];
+extern int GObj_IdentityB(int);
+extern int ObjMan_DeleteAll(int);
+extern int ObjMan_SetDisplayLabel(int, int, int, int);
+extern int ScriptFilter_Dispatch(int, int, int);
 extern int func_002257A0(void);
 extern int func_00225C40(int);
-extern int ObjMan_SetDisplayLabel(int, int, int, int);
-extern int ObjMan_DeleteAll(int);
 extern int func_003CB1D0(void);
-extern int GObj_IdentityB(int);
 extern void func_003D9440(int, int);
-extern int ScriptFilter_Dispatch(int, int, int);
 
 void func_00225740(void) {
     int tmp0;

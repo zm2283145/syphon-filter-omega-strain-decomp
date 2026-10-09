@@ -13,10 +13,10 @@ extern char D_0053B508[];
 extern char D_0053BB70[];
 extern char D_00555070[];
 extern int ModelCtx_Init(int, int);
+extern int ScriptFilter_Dispatch(int, int, int);
 extern int Skel_Find(int, int);
 extern int func_003CC830(void);
 extern void func_003D9440(int, int);
-extern int ScriptFilter_Dispatch(int, int, int);
 
 void func_00392670(void) {
     int tmp0;

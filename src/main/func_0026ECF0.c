@@ -29,9 +29,9 @@ extern char D_004FF240[];
 extern char D_004FF248[];
 extern char D_004FF250[];
 extern char D_004FF258[];
+extern int GObj_IdentityA(int);
 extern int func_0015C100(int);
 extern int func_003C8C50(void);
-extern int GObj_IdentityA(int);
 extern void func_003D9440(int, int);
 
 int func_0026ECF0(int a0) {

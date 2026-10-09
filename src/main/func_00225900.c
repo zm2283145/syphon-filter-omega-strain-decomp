@@ -6,16 +6,16 @@
 
 #include "types.h"
 
-extern int func_00225770(int);
+extern int GObj_IdentityB(int);
+extern int ObjMan_GetObjective(int, int);
+extern int ObjMan_StartStage(int, int, int);
+extern int Objective_Fail(int, int, int);
 extern int Objective_ResolveReceiver(int);
+extern int Objective_Succeed(int, int, int);
+extern int func_00225770(int);
 extern int func_00225C40(int);
 extern int func_00225DF0(int, int, int);
 extern int func_00225F00(int, int);
-extern int Objective_Succeed(int, int, int);
-extern int Objective_Fail(int, int, int);
-extern int ObjMan_StartStage(int, int, int);
-extern int ObjMan_GetObjective(int, int);
-extern int GObj_IdentityB(int);
 
 int func_00225900(int a0) {
     int loc[1];

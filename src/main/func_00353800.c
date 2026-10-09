@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-extern char D_004FFB50[];
 extern int Agent_GetSelected(int, int);
+extern char D_004FFB50[];
 extern void func_00299510(int);
 extern int func_003334C0(int, int, int);
 extern void func_00356C70(int);

@@ -6,9 +6,9 @@
 
 #include "types.h"
 
-extern char D_004FFB50[];
-extern int Agent_GetSelected(int, int);
 extern int AgentData_SetObjectiveBit(int, int, int);
+extern int Agent_GetSelected(int, int);
+extern char D_004FFB50[];
 
 int Objective_AddGlobal(int a0) {
     int tmp0;

@@ -7,8 +7,8 @@
 #include "types.h"
 
 extern int PtrVec_Insert(int, int, int, int);
-extern int func_001396D0(int, int);
 extern int PtrVector_Resize(int, int, int);
+extern int func_001396D0(int, int);
 
 int func_0040BC50(int a0, int a1, int a2) {
     return PtrVector_Resize(a0, a1, a2);

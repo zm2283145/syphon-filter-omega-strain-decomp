@@ -6,14 +6,14 @@
 
 #include "types.h"
 
+extern int AgentData_IsObjectiveComplete(int, int);
 extern char D_0049D010[];
+extern int GObj_IdentityB(int);
 extern int func_00185C70(int);
 extern int func_0032F600(int, int);
 extern int func_0032F680(int, int);
 extern void func_00333050(int, int);
 extern void func_003330C0(int, int);
-extern int AgentData_IsObjectiveComplete(int, int);
-extern int GObj_IdentityB(int);
 
 int func_0032F560(int a0) {
     int loc[1];

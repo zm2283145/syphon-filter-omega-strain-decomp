@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-extern void func_003A9450(int);
 extern int SkelNodes_Construct(int);
+extern void func_003A9450(int);
 
 void func_003A9F00(int a0) {
     *(char*)((char*)a0 + 20) = 0;

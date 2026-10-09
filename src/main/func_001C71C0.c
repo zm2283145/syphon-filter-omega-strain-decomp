@@ -6,13 +6,13 @@
 
 #include "types.h"
 
+extern int GObj_IdentityB(int);
+extern int Sound_StopForObject(int, int, int);
 extern int func_001C6890(int, int);
 extern int func_001C6A00(int, int);
-extern int Sound_StopForObject(int, int, int);
 extern int func_001C6C50(int, int);
 extern int func_001C6D00(int, int, int);
 extern int func_001C6EA0(int, int);
-extern int GObj_IdentityB(int);
 
 int func_001C71C0(int a0) {
     int loc[1];

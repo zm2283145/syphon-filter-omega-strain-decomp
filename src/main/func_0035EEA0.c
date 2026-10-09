@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-extern char D_004DA840[];
 extern int AnimChannelBase_CopyCtor(int, int);
+extern char D_004DA840[];
 
 int func_0035EEA0(int a0, int a1) {
     unsigned char tmp2;

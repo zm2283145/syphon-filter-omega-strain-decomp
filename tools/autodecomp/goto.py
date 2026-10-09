@@ -33,6 +33,8 @@ def translate(name, ins, ARITY, WR, selfret):
             locoffs.append(imm(A[-1].split('(')[0]))
         elif op in ('daddu','addu') and len(A)==3 and '$sp' in A[1:] and A[0]!='$sp': locoffs.append(0)
     LX=min(locoffs) if locoffs else None
+    LMAX=max(locoffs) if locoffs else 0
+    gccstyle=(body[0][0]%16==8)
     if LX is not None and LX < 0: raise Unsupported('neg local')
     def R(r):
         if r!='$zero': used.add(r)
@@ -82,7 +84,7 @@ def translate(name, ins, ARITY, WR, selfret):
         if op=='addiu' and A[1]=='$sp':
             used.add('loc'); off=imm(A[2])-LX
             out.append(f'    {R(A[0])} = (int)((char*)loc + {off});' if off else f'    {R(A[0])} = (int)loc;'); return
-        if op in ('daddu','addu') and A[1]=='$sp' and A[2]=='$zero':
+        if op in ('daddu','addu','or') and A[1]=='$sp' and A[2]=='$zero':
             used.add('loc'); off=-LX
             out.append(f'    {R(A[0])} = (int)((char*)loc + {off});' if off else f'    {R(A[0])} = (int)loc;'); return
         if op=='addiu':
@@ -178,7 +180,19 @@ def translate(name, ins, ARITY, WR, selfret):
                 lbl=tgt.replace('.L','L')
                 out.append(f'    if (cond) goto {lbl};' if cond else f'    goto {lbl};')
             i+=2; continue
-        if op.endswith('l') and op[:-1] in list(BR2)+list(BR1)+['bc1t','bc1f']: raise Unsupported('likely')
+        if op.endswith('l') and op[:-1] in list(BR2)+list(BR1)+['bc1t','bc1f']:
+            # branch likely: the delay slot only executes when the branch is taken
+            if i+1>=n: raise Unsupported('no delay')
+            da,dx=body[i+1]
+            if da in labels: raise Unsupported('label on delay')
+            bop=op[:-1]
+            if bop in BR2: cond=f'{R(A[0])} {BR2[bop]} {R(A[1])}' if A[1]!='$zero' else f'{R(A[0])} {BR2[bop]} 0'; tgt=A[2]
+            elif bop in BR1: cond=f'{R(A[0])} {BR1[bop]}'; tgt=A[1]
+            elif bop=='bc1t': cond='fcc'; tgt=A[0]
+            else: cond='!fcc'; tgt=A[0]
+            if not tgt.startswith('.L'): raise Unsupported('branch to symbol')
+            out.append(f'    if ({cond}) {{'); emit(da,dx); out.append(f'    goto {tgt.replace(".L","L")};'); out.append('    }')
+            i+=2; continue
         emit(a,x); i+=1
     for lab in labels:
         if not any(l.startswith(f'L{lab:08X}:') for l in out): raise Unsupported('label outside')
@@ -195,7 +209,7 @@ def translate(name, ins, ARITY, WR, selfret):
     if ints: decl.append('    int '+', '.join(ints)+';')
     if flts: decl.append('    float '+', '.join(flts)+';')
     if 'loc' in used:
-        sz=max(4,((-frame)-LX)); decl.insert(0,f'    int loc[{(sz+3)//4}];')
+        sz=max(4,(LMAX+16-LX) if gccstyle else ((-frame)-LX)); decl.insert(0,f'    int loc[{(sz+3)//4}];')
     if 'fcc' in used or 'cond' in used: decl.append('    int '+', '.join(x for x in ('cond','fcc') if x in used)+';')
     retl=f'ret:\n    return {"v0" if rt=="int" else "f0"};' if rt in ('int','float') else 'ret:;'
     code=f'{rt} {name}({", ".join(params) if params else "void"}) {{\n'+'\n'.join(decl+['']+out+[retl])+'\n}\n'

@@ -10,10 +10,10 @@ extern char D_004EE700[];
 extern char D_004EE738[];
 extern char D_004EE740[];
 extern char D_00555070[];
+extern int ScriptFilter_Dispatch(int, int, int);
 extern int func_003CC830(void);
 extern int func_003D9400(int, int);
 extern void func_003D9440(int, int);
-extern int ScriptFilter_Dispatch(int, int, int);
 
 int func_0016FDF0(void) {
     int tmp0;

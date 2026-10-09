@@ -11,14 +11,14 @@ extern char D_004F5540[];
 extern char D_004F5548[];
 extern char D_004F5610[];
 extern char D_00555070[];
-extern int Lift_OpenDoors(int);
 extern int Lift_CloseDoors(int);
-extern int func_00214BD0(int);
+extern int Lift_OpenDoors(int);
 extern int Lift_SeekFloor(int, int, int, int);
+extern int ScriptFilter_Dispatch(int, int, int);
+extern int func_00214BD0(int);
 extern int func_00214FA0(int);
 extern int func_003D9400(int, int);
 extern void func_003D9440(int, int);
-extern int ScriptFilter_Dispatch(int, int, int);
 
 int func_00211000(int a0) {
     int tmp0;

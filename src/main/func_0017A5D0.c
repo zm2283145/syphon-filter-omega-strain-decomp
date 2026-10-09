@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-extern char D_004FFB50[];
 extern int ActiveList_RemoveObject(int, int);
+extern char D_004FFB50[];
 extern int func_00131320(int, int);
 
 int func_0017A5D0(int a0) {

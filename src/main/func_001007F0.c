@@ -8,6 +8,6 @@
 
 extern char D_00497F58[];
 
-int func_001007F0(void) {
+int std_exception_what(void) {
     return (int)D_00497F58;
 }

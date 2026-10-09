@@ -8,12 +8,12 @@
 
 extern char D_004EE700[];
 extern char D_004EE708[];
+extern int GObj_IdentityA(int);
+extern int GObj_IdentityB(int);
 extern int func_0014A690(int);
 extern int func_00170460(int);
 extern int func_00170520(int);
 extern int func_003C8C50(void);
-extern int GObj_IdentityA(int);
-extern int GObj_IdentityB(int);
 extern void func_003D9440(int, int);
 
 int func_0016FFC0(int a0) {

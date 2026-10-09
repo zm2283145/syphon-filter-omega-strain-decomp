@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-extern int Loc_GetTextById(int);
 extern int Loc_FindKey(int);
+extern int Loc_GetTextById(int);
 
 int Loc_FindKeyThunk(int a0) {
     return Loc_FindKey(a0);

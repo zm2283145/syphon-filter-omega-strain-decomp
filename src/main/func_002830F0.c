@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-extern int func_00285590(int, int);
 extern int GObj_IdentityB(int);
+extern int func_00285590(int, int);
 
 int func_002830F0(int a0) {
     int tmp0;

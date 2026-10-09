@@ -74,7 +74,10 @@ def parse_asm(paths):
 def all_functions():
     asm = ROOT / "asm"
     chunk_files = sorted(p for p in asm.glob("*.s"))
-    unit_files = sorted((asm / "main").glob("*.s")) if (asm / "main").exists() else []
+    unit_files = []
+    for d in ("main", "lib"):
+        if (asm / d).exists():
+            unit_files += sorted((asm / d).glob("*.s"))
     every = parse_asm(chunk_files + unit_files)
     pending = {id(f) for f in every if f["file"].parent == asm}
     return every, pending
@@ -281,8 +284,8 @@ def read_units():
         if m:
             names[m.group(1)] = int(m.group(2), 16)
     units = {}
-    paths = [(p, "cc") for p in sorted((ROOT / "src" / "main").glob("*.c"))]
-    paths += [(p, "gcc") for p in sorted((ROOT / "src" / "lib").glob("*.c"))]
+    paths = [(p, "cc") for p in sorted((ROOT / "src" / "main").rglob("*.c"))]
+    paths += [(p, "gcc") for p in sorted((ROOT / "src" / "lib").rglob("*.c"))]
     for path, kind in paths:
         text = path.read_text()
         externs = {}
@@ -331,7 +334,27 @@ HEADER = """/*
 """
 
 
+def tu_ranges():
+    path = ROOT / "config" / "tu_ranges.txt"
+    out = []
+    if path.exists():
+        for line in path.read_text().splitlines():
+            m = re.match(r"\s*(0x[0-9A-Fa-f]+)\s+(0x[0-9A-Fa-f]+)\s+(\S+)", line)
+            if m:
+                stem = re.sub(r"\.(cc|cpp|c)$", "", m.group(3))
+                out.append((int(m.group(1), 16), int(m.group(2), 16), stem))
+    return out
+
+
 def cmd_integrate(args):
+    ranges = tu_ranges()
+
+    def tu_of(addr):
+        for s, e, stem in ranges:
+            if s <= addr <= e:
+                return stem
+        return None
+
     verified = json.loads((OUT / "verified.json").read_text())
     every, _ = all_functions()
     nexts = {f["addr"]: f["next"] for f in every}
@@ -350,7 +373,9 @@ def cmd_integrate(args):
         groups = []
         for addr in sorted(units):
             nxt, name, body, refs, kind = units[addr]
-            if groups and units[groups[-1][-1]][0] == addr and units[groups[-1][-1]][4] == units[addr][4]:
+            prev = groups[-1][-1] if groups else None
+            if (prev is not None and units[prev][0] == addr and units[prev][4] == units[addr][4]
+                    and tu_of(prev) == tu_of(addr)):
                 groups[-1].append(addr)
             else:
                 groups.append([addr])
@@ -370,6 +395,8 @@ def cmd_integrate(args):
                         continue
                     chosen[t] = line
         drop = {a for a in drop if units[a][1] in verified}
+        if drop:
+            print(f"  dropping {len(drop)} new functions with conflicting declarations")
         if not drop:
             break
         for a in drop:
@@ -377,7 +404,7 @@ def cmd_integrate(args):
             added -= 1
     for d in ("main", "lib"):
         (ROOT / "src" / d).mkdir(exist_ok=True)
-        for p in (ROOT / "src" / d).glob("*.c"):
+        for p in (ROOT / "src" / d).rglob("*.c"):
             p.unlink()
     lines = ["      - [0x000000, asm]"]
     for g in groups:
@@ -389,6 +416,10 @@ def cmd_integrate(args):
         ext = "".join(refs[t] + "\n" for t in sorted(refs))
         bodies = "\n".join(units[a][2] for a in g)
         sub = "lib" if first[4] == "gcc" else "main"
+        tu = tu_of(g[0])
+        if tu:
+            sub = f"{sub}/{tu}"
+            (ROOT / "src" / sub).mkdir(parents=True, exist_ok=True)
         (ROOT / "src" / sub / f"{fname}.c").write_text(HEADER + ("\n" + ext if ext else "") + "\n" + bodies)
         off = g[0] - BASE
         if lines[-1] == f"      - [0x{off:06X}, asm]":

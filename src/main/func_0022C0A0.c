@@ -7,11 +7,11 @@
 #include "types.h"
 
 extern char D_004FFC2C[];
+extern int GObj_IdentityB(int);
+extern int ObjMarkerMgr_Remove(int, int, int);
 extern void func_0022C0D0(int);
 extern int func_0022C120(int);
 extern void func_00272D10(int, int);
-extern int ObjMarkerMgr_Remove(int, int, int);
-extern int GObj_IdentityB(int);
 
 int func_0022C0A0(int a0) {
     int tmp0;

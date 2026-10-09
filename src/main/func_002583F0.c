@@ -8,8 +8,8 @@
 
 extern char D_004F7EF8[];
 extern char D_004F7F00[];
-extern int func_003C8C50(void);
 extern int GObj_IdentityA(int);
+extern int func_003C8C50(void);
 extern void func_003D9440(int, int);
 
 int func_002583F0(int a0) {

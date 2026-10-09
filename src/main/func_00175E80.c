@@ -11,6 +11,8 @@ extern char D_004EE788[];
 extern char D_004EE790[];
 extern char D_00555070[];
 extern char D_005721C8[];
+extern int GObj_IdentityA(int);
+extern int ScriptFilter_Dispatch(int, int, int);
 extern int func_001439B0(int, int);
 extern int func_001450C0(void);
 extern int func_0014A690(int);
@@ -19,10 +21,8 @@ extern int func_0022DE00(void);
 extern int func_0022F170(void);
 extern int func_0022F1F0(void);
 extern void func_002493C0(int, int);
-extern int GObj_IdentityA(int);
 extern int func_003D9400(int, int);
 extern void func_003D9440(int, int);
-extern int ScriptFilter_Dispatch(int, int, int);
 extern int func_004080E0(void);
 
 int func_00175E80(void) {

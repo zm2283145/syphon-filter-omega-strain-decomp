@@ -9,11 +9,11 @@
 extern char D_004ED9B0[];
 extern char D_004FFB50[];
 extern char D_005721C8[];
+extern int Service_Lookup(int, int);
 extern int func_001589D0(void);
 extern int func_00158A80(void);
 extern int func_00164330(int);
 extern int func_001644B0(int);
-extern int Service_Lookup(int, int);
 
 void func_0016F490(int a0, int a1) {
     int v1;

@@ -6,11 +6,11 @@
 
 #include "types.h"
 
-extern int func_001189C0(int, int, int);
+extern int sceCdSearchFile(int, int, int);
 
 int func_00118CD8(int a0, int a1) {
     int tmp0;
 
-    tmp0 = func_001189C0(a0, a1, 0);
+    tmp0 = sceCdSearchFile(a0, a1, 0);
     return tmp0;
 }

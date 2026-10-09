@@ -7,11 +7,11 @@
 #include "types.h"
 
 extern char D_004FFC2C[];
+extern int GObj_IdentityB(int);
 extern int func_0014A690(int);
 extern int func_00242B40(int, int, int, int, int);
 extern int func_00267FC0(int);
 extern int func_00268010(int);
-extern int GObj_IdentityB(int);
 
 int func_00267F90(int a0) {
     int tmp0;

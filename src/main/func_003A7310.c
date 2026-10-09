@@ -6,10 +6,10 @@
 
 #include "types.h"
 
-extern int func_003A74E0(int, int, int, int, int);
+extern int snd_SendIOPCommandNoWait(int, int, int, int, int);
 
 int func_003A7310(void) {
-    return func_003A74E0(52, 0, 0, 0, 0);
+    return snd_SendIOPCommandNoWait(52, 0, 0, 0, 0);
 }
 
 void func_003A7330(int a0, int a1, int a2) {
@@ -24,7 +24,7 @@ void func_003A7330(int a0, int a1, int a2) {
     *(int*)((char*)loc + 8) = a2;
     a1 = 0 + 12;
     a2 = (int)loc;
-    v0 = func_003A74E0(a0, a1, a2, a3, t0);
+    v0 = snd_SendIOPCommandNoWait(a0, a1, a2, a3, t0);
     goto ret;
 ret:;
 }

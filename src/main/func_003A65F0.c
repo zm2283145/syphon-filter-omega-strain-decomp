@@ -10,16 +10,16 @@ extern char D_00537F80[];
 extern char D_0053BBB0[];
 extern int func_0036B630(void);
 extern int func_00375E50(int, int, int, int);
-extern int func_003A6940(int);
-extern int func_0045A7F0(int);
+extern int LibInitModules(int);
+extern int Overlay_Load(int);
 
 int func_003A65F0(int a0) {
     int tmp6;
 
     func_0036B630();
-    func_003A6940(a0);
+    LibInitModules(a0);
     func_00375E50((int)D_00537F80, 13312, 1075200, 204800);
-    tmp6 = func_0045A7F0(1);
+    tmp6 = Overlay_Load(1);
     return tmp6;
 }
 
@@ -32,5 +32,5 @@ int func_003A6650(int a0) {
 }
 
 int func_003A6670(int a0) {
-    return func_0045A7F0(a0);
+    return Overlay_Load(a0);
 }

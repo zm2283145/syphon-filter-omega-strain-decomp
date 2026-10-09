@@ -11,13 +11,13 @@ extern char D_004F75E8[];
 extern char D_004F75F0[];
 extern char D_004FFB50[];
 extern char D_00555070[];
+extern int ScriptFilter_Dispatch(int, int, int);
+extern int Service_Lookup(int, int);
 extern int func_00225C20(int);
 extern int func_00225C50(void);
 extern int func_00225CD0(void);
-extern int Service_Lookup(int, int);
 extern int func_003CB1D0(void);
 extern void func_003D9440(int, int);
-extern int ScriptFilter_Dispatch(int, int, int);
 
 void func_00225BF0(void) {
     int tmp0;

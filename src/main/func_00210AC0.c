@@ -16,14 +16,14 @@ extern char D_004F5640[];
 extern char D_004F5660[];
 extern char D_004F5668[];
 extern char D_00555070[];
+extern int GObj_IdentityA(int);
+extern int Object_LookupById(int);
+extern int ScriptFilter_Dispatch(int, int, int);
 extern int SoundAction_CtorVoice(int, int, int, int, int);
 extern int func_00215530(int, int, int);
 extern int func_002155F0(int, int, int);
 extern int func_003C8C50(void);
-extern int GObj_IdentityA(int);
 extern void func_003D9440(int, int);
-extern int ScriptFilter_Dispatch(int, int, int);
-extern int Object_LookupById(int);
 
 void func_00210AC0(void) {
     int tmp0;

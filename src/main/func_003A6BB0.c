@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-extern int func_003A74E0(int, int, int, int, int);
+extern int snd_SendIOPCommandNoWait(int, int, int, int, int);
 extern int func_003A7990(int, int, int);
 extern int func_0042B5D0(void);
 extern int func_0042B770(void);
@@ -100,7 +100,7 @@ void func_003A6CD0(int a0, int a1, int a2) {
     *(int*)((char*)loc + 8) = a2;
     a1 = 0 + 12;
     a2 = (int)loc;
-    v0 = func_003A74E0(a0, a1, a2, a3, t0);
+    v0 = snd_SendIOPCommandNoWait(a0, a1, a2, a3, t0);
     goto ret;
 ret:;
 }
@@ -116,7 +116,7 @@ void func_003A6D10(int a0, int a1) {
     *(int*)((char*)loc + 4) = a1;
     a0 = 0 + 14;
     a1 = 0 + 8;
-    v0 = func_003A74E0(a0, a1, a2, a3, t0);
+    v0 = snd_SendIOPCommandNoWait(a0, a1, a2, a3, t0);
     goto ret;
 ret:;
 }

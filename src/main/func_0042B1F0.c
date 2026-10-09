@@ -29,10 +29,10 @@ extern char D_00572428[];
 extern char D_0057242C[];
 extern char D_00572430[];
 extern char D_00572468[];
+extern void Net_ResetSession(void);
 extern int func_002EC340(void);
 extern int func_002EC6A0(int);
 extern int func_002EC738(int);
-extern void Net_ResetSession(void);
 extern int func_00437BF0(void);
 
 void func_0042B1F0(void) {

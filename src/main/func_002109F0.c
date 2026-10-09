@@ -10,9 +10,9 @@ extern char D_004F5680[];
 extern char D_004F5688[];
 extern char D_00555070[];
 extern int GObj_IdentityA(int);
+extern int ScriptFilter_Dispatch(int, int, int);
 extern int func_003CC830(void);
 extern void func_003D9440(int, int);
-extern int ScriptFilter_Dispatch(int, int, int);
 
 void func_002109F0(void) {
     int tmp0;

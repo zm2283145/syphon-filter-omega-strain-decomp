@@ -1,10 +1,10 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Objective registration table iterator helpers (24-byte rows).
  */
 
 #include "types.h"
+#include "AgentData_types.h"
 
 void* func_00330820(char* self) {
     return self + 8;
@@ -14,7 +14,8 @@ int func_00330830(Iter* a, Iter* b) {
     return !(a->p == b->p);
 }
 
-int func_00330850(int a0) {
-    *(int*)((char*)a0) = (*(int*)(char*)a0 + 24);
-    return a0;
+/* ++it over ObjectiveRow entries. */
+ObjectiveRow** func_00330850(ObjectiveRow** it) {
+    *it = *it + 1;
+    return it;
 }

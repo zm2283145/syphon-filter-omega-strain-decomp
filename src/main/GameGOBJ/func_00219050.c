@@ -1,15 +1,13 @@
 /*
- * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Matched functions from GameGOBJ.cc (byte-identical with the retail executable).
  */
 
-#include "types.h"
+#include "gobj_types.h"
 
-int func_00219050(int a0, int a1) {
-    return (*(int*)((char*)a0 + 8) + (a1 << 4));
+Elem16* func_00219050(Elem16Vec* v, int i) {
+    return &v->data[i];
 }
 
-int func_00219060(char* self) {
-    return *(int*)(self + 4);
+int func_00219060(Elem16Vec* v) {
+    return v->count;
 }

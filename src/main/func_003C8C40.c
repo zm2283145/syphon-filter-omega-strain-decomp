@@ -11,7 +11,7 @@ extern char D_00543610[];
 void func_003C8C40(void) {
 }
 
-int func_003C8C50(void) {
+int Message_GetScriptTypeKeyPtr(void) {
     return (int)D_00543610;
 }
 

@@ -5,29 +5,32 @@
  */
 
 #include "types.h"
+#include "interface_model_types.h"
 
-extern int func_001396D0(int, int);
-extern int func_003F1BF0(int);
+extern int func_001396D0(int a0, int a1);
+extern OwnedVec* func_003F1BF0(OwnedVec* v);
 
-Rel* func_003F1A80(Rel* r) {
-    r->a = 0;
-    r->b = 0;
-    r->c = 0;
-    return r;
+/* Clears the three vector words. */
+OwnedVec* func_003F1A80(OwnedVec* v) {
+    v->unk0 = 0;
+    v->count = 0;
+    v->data = 0;
+    return v;
 }
 
 int func_003F1AA0(int a0, int a1) {
     return func_001396D0(a0, a1);
 }
 
-int func_003F1AB0(int a0, int a1) {
-    *(int*)((char*)a1) = *(int*)(char*)*(int*)(char*)a0;
-    *(int*)((char*)a0) = (*(int*)(char*)a0 + 4);
-    return a0;
+/* Reads one word from a stream cursor. */
+int** func_003F1AB0(int** cursor, int* out) {
+    *out = **cursor;
+    *cursor = *cursor + 1;
+    return cursor;
 }
 
-int func_003F1AD0(int a0) {
-    func_003F1BF0(a0);
-    *(char*)((char*)a0 + 12) = 1;
-    return a0;
+OwnedVec* func_003F1AD0(OwnedVec* v) {
+    func_003F1BF0(v);
+    v->unk0C = 1;
+    return v;
 }

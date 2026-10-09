@@ -1,19 +1,17 @@
 /*
- * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Matched functions from gameobj.cc (byte-identical with the retail executable).
  */
 
-#include "types.h"
+#include "gobj_types.h"
 
-extern int func_00393CC0(int);
+extern Rel* func_00393CC0(Rel* r);
 
 void* func_00393C50(char* self) {
     return self + 4;
 }
 
-void func_00393C60(char* self, int value) {
-    *(int*)(self + 0) = value;
+void func_00393C60(int* self, int value) {
+    *self = value;
 }
 
 Rel* func_00393C70(Rel* r) {
@@ -23,8 +21,8 @@ Rel* func_00393C70(Rel* r) {
     return r;
 }
 
-int func_00393C90(int a0) {
-    func_00393CC0(a0);
-    *(char*)((char*)a0 + 12) = 1;
-    return a0;
+RelFlag* func_00393C90(RelFlag* r) {
+    func_00393CC0(&r->rel);
+    r->flag = 1;
+    return r;
 }

@@ -1,31 +1,30 @@
 /*
- * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Matched functions from gameobj.cc (byte-identical with the retail executable).
+ * cVUM_GOBJ overrides that forward to cGOBJ and then to the model context.
  */
 
-#include "types.h"
+#include "gobj_types.h"
 
-extern int func_0038E100(int);
-extern void func_003A9F00(int);
-extern int func_003A9F10(int);
-extern void func_003CE790(int);
-extern void func_003CE7D0(int);
-extern void func_003CE810(int);
+extern int func_0038E100(int* p);
+extern void func_003A9F00(int* ctx);
+extern int func_003A9F10(int* ctx);
+extern void func_003CE790(cVUM_GOBJ* self);
+extern void func_003CE7D0(cVUM_GOBJ* self);
+extern void func_003CE810(cVUM_GOBJ* self);
 
-void func_003928A0(int a0) {
-    func_003CE7D0(a0);
-    func_003A9F00((a0 + 11856));
+void func_003928A0(cVUM_GOBJ* self) {
+    func_003CE7D0(self);
+    func_003A9F00(&self->modelCtx);
 }
 
-void func_003928D0(int a0) {
-    func_003CE790(a0);
-    func_003A9F00((a0 + 11856));
+void func_003928D0(cVUM_GOBJ* self) {
+    func_003CE790(self);
+    func_003A9F00(&self->modelCtx);
 }
 
-void func_00392900(int a0) {
-    func_003A9F10((a0 + 11856));
-    *(int*)((char*)a0 + 11364) = (a0 + 11856);
-    func_0038E100((a0 + 96));
-    func_003CE810(a0);
+void func_00392900(cVUM_GOBJ* self) {
+    func_003A9F10(&self->modelCtx);
+    self->model = &self->modelCtx;
+    func_0038E100(&self->unk60);
+    func_003CE810(self);
 }

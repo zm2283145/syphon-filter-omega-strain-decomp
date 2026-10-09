@@ -1,15 +1,15 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Byte-vector accessors.
  */
 
 #include "types.h"
+#include "AgentData_types.h"
 
-int func_00336440(char* self) {
-    return *(int*)(self + 4);
+int func_00336440(ByteVec* v) {
+    return v->count;
 }
 
-int func_00336450(int a0, int a1) {
-    return (*(int*)((char*)a0 + 8) + a1);
+char* func_00336450(ByteVec* v, int i) {
+    return v->data + i;
 }

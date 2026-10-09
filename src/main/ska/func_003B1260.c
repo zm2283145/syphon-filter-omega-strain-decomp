@@ -1,25 +1,19 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Part of ska.cc (skeletal animation).
  */
 
-#include "types.h"
+#include "ska_types.h"
 
-extern int List_InsertBefore(int, int, int, int);
+extern int List_InsertBefore(int* result, List* list, void** pos, int value);
 
-int func_003B1260(int a0, int a1) {
-    int loc[2];
-    int a2, a3, v0;
+/* Append value at the end of the list (insert before the sentinel at +4). */
+int func_003B1260(List* list, int value) {
+    struct {
+        void* pos;
+        int result;
+    } loc;
 
-    a3 = a1;
-    v0 = a0 + 4;
-    a1 = a0;
-    *(int*)(char*)loc = v0;
-    a0 = (int)((char*)loc + 4);
-    a2 = (int)loc;
-    v0 = List_InsertBefore(a0, a1, a2, a3);
-    goto ret;
-ret:
-    return v0;
+    loc.pos = &list->first;
+    return List_InsertBefore(&loc.result, list, &loc.pos, value);
 }

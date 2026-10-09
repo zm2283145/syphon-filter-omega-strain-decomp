@@ -5,32 +5,36 @@
  */
 
 #include "types.h"
+#include "scriptUtils_types.h"
 
 Word* func_00268950(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-int func_00268960(int a0, int a1) {
-    return ((unsigned int)(0) < (unsigned int)((*(int*)(char*)a0 ^ *(int*)(char*)a1)));
+/* Iterator inequality. */
+int func_00268960(ListPos* a, ListPos* b) {
+    return a->node != b->node;
 }
 
 void func_00268980(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
-int func_00268990(int a0) {
-    *(int*)((char*)a0) = *(int*)((char*)*(int*)(char*)a0 + 4);
-    return a0;
+/* List iterator increment: node = node->next. */
+ListPos* func_00268990(ListPos* it) {
+    it->node = ((ListNode*)it->node)->next;
+    return it;
 }
 
-int func_002689B0(int a0) {
-    return (*(int*)(char*)a0 + 8);
+/* List iterator dereference: address of the node's value. */
+int* func_002689B0(ListPos* it) {
+    return &((ListNode*)it->node)->value;
 }
 
-int func_002689C0(int a0, int a1) {
-    *(float*)((char*)a0) = *(float*)(char*)a1;
-    return a0;
+float* func_002689C0(float* dst, float* src) {
+    *dst = *src;
+    return dst;
 }
 
 void func_002689D0(Iter* out, PtrVec* v) {

@@ -1,38 +1,43 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * PathLinkedPair constructor: two sub-objects that point at each other.
  */
 
 #include "types.h"
+#include "path_types.h"
 
-extern char D_004D9720[];
-extern char D_004D9730[];
-extern char D_004D9740[];
-extern char D_004D9750[];
+extern char D_004D9720[]; /* sub-object base vtable */
+extern char D_004D9730[]; /* sub-object vtable */
+extern char D_004D9740[]; /* base vtable */
+extern char D_004D9750[]; /* PathLinkedPair vtable */
 
-int func_00163970(int a0) {
-    int a1, a2, a3, v0, v1;
+/*
+ * Base constructors are inlined: each vtable slot is written with the base
+ * class vtable first, then the derived one. Locals keep the original
+ * load order.
+ */
+PathLinkedPair* func_00163970(PathLinkedPair* self) {
+    void* subVtable;
+    void* subBaseVtable;
+    void* vtable;
+    PathLinkedSub* second;
+    PathLinkedSub* first;
 
-    v0 = (int)D_004D9740;
-    *(int*)(char*)a0 = v0;
-    a1 = (int)D_004D9730;
-    a2 = a0 + 16;
-    v0 = (int)D_004D9720;
-    a3 = a0 + 4;
-    *(int*)(char*)(a0 + 4) = v0;
-    v1 = (int)D_004D9750;
-    *(int*)(char*)(a0 + 4) = a1;
-    *(int*)(char*)(a0 + 16) = v0;
-    *(int*)(char*)(a0 + 16) = a1;
-    v0 = a0;
-    *(int*)(char*)(a0 + 8) = a2;
-    *(int*)(char*)(a0 + 12) = a3;
-    *(int*)(char*)(a0 + 20) = a2;
-    *(int*)(char*)(a0 + 24) = a3;
-    *(int*)(char*)(a0 + 28) = 0;
-    *(int*)(char*)a0 = v1;
-    goto ret;
-ret:
-    return v0;
+    self->vtable = D_004D9740;
+    subVtable = D_004D9730;
+    second = &self->second;
+    subBaseVtable = D_004D9720;
+    first = &self->first;
+    self->first.vtable = subBaseVtable;
+    vtable = D_004D9750;
+    self->first.vtable = subVtable;
+    self->second.vtable = subBaseVtable;
+    self->second.vtable = subVtable;
+    self->first.unk04 = second;
+    self->first.unk08 = first;
+    self->second.unk04 = second;
+    self->second.unk08 = first;
+    self->unk1C = 0;
+    self->vtable = vtable;
+    return self;
 }

@@ -1,31 +1,20 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * cHotbox interaction volumes, cHotboxMsg and the script natives that use them.
  */
 
 #include "types.h"
+#include "hotbox_types.h"
 
-extern int PtrVec_Insert(int, int, int, int);
-extern int func_00171C70(int, int);
+extern int PtrVec_Insert(PtrVec* v, int* pos, int n, int* value);
+extern int func_00171C70(PtrVec* v, int* value);
 
-void func_00171C40(int a0, int a1) {
-    int loc[1];
-    int v0;
-
-    a0 = a0 + 96;
-    *(int*)(char*)loc = a1;
-    a1 = (int)loc;
-    v0 = func_00171C70(a0, a1);
-    goto ret;
-ret:;
+/* Appends value to the vector at +0x60. */
+void func_00171C40(cHotbox* self, int value) {
+    func_00171C70(&self->unk60, &value);
 }
 
-int func_00171C70(int a0, int a1) {
-    int tmp0;
-    int tmp1;
-
-    tmp0 = *(int*)((char*)a0 + 4);
-    tmp1 = *(int*)((char*)a0 + 8);
-    return PtrVec_Insert(a0, (tmp1 + (tmp0 << 2)), 1, a1);
+/* push_back on a pointer vector. */
+int func_00171C70(PtrVec* v, int* value) {
+    return PtrVec_Insert(v, v->data + v->count, 1, value);
 }

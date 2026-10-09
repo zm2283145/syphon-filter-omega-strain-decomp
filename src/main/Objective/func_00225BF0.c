@@ -17,12 +17,12 @@ extern cObjectiveMan* func_00225C20(cObjectiveMan*);
 extern int* func_00225C50(void);
 extern cObjectiveMan* ObjMan_GetService(void);
 extern int* func_003CB1D0(void);
-extern void func_003D9440(int, int);
+extern void ScriptType_SetParent(int, int);
 
 /* Registers the cObjectiveMan script type with its parent type. */
 void ScriptType_cObjectiveMan_Init(void) {
     int* parent = func_003CB1D0();
-    func_003D9440(*(int*)D_004F75F0, *parent);
+    ScriptType_SetParent(*(int*)D_004F75F0, *parent);
 }
 
 /* Script value conversion; the volatile mirrors the original stack temporary. */

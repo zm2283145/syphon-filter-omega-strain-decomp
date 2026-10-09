@@ -1,20 +1,16 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * cTank script class: script natives, type registration and turret helpers.
  */
 
 #include "types.h"
+#include "tank_types.h"
 
-void func_00285390(int a0, float f12) {
-    int v1;
-    int cond;
+/* Sets the turret acceleration (no-op without a turret). */
+void cTank_SetTurretAccel(cTank* tank, float accel) {
+    cTankTurret* turret = tank->turret;
 
-    v1 = *(int*)(char*)(a0 + 108);
-    cond = v1 == 0;
-    if (cond) goto L002853A0;
-    *(float*)(char*)(v1 + 44) = f12;
-L002853A0:;
-    goto ret;
-ret:;
+    if (turret != 0) {
+        turret->accel = accel;
+    }
 }

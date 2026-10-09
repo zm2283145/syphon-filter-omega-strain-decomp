@@ -5,7 +5,9 @@
  */
 
 #include "types.h"
+#include "scriptBase_types.h"
 
-int func_003D6570(int a0, int a1) {
-    return ((unsigned int)((a1 + 3)) >> 2);
+/* Number of 4-byte words needed for 'size' bytes. */
+unsigned int func_003D6570(int a0, int size) {
+    return (unsigned int)(size + 3) >> 2;
 }

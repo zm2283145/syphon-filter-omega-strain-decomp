@@ -5,21 +5,18 @@
  */
 
 #include "types.h"
+#include "scriptBase_types.h"
 
-extern int PtrVec_Insert(int, int, int, int);
-extern int func_003D8E60(int);
+extern int PtrVec_Insert(PtrVec* v, int* pos, int n, int value);
+extern OwnedVec* func_003D8E60(OwnedVec* v);
 
-int func_003D8E10(int a0, int a1) {
-    int tmp0;
-    int tmp1;
-
-    tmp0 = *(int*)((char*)a0 + 4);
-    tmp1 = *(int*)((char*)a0 + 8);
-    return PtrVec_Insert(a0, (tmp1 + (tmp0 << 2)), 1, a1);
+/* push_back: inserts one value at the end. */
+int func_003D8E10(PtrVec* v, int value) {
+    return PtrVec_Insert(v, v->data + v->count, 1, value);
 }
 
-int func_003D8E30(int a0) {
-    func_003D8E60(a0);
-    *(char*)((char*)a0 + 12) = 1;
-    return a0;
+OwnedVec* func_003D8E30(OwnedVec* v) {
+    func_003D8E60(v);
+    v->unk0C = 1;
+    return v;
 }

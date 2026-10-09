@@ -1,14 +1,14 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Player input-state helpers and small value types used by the input code.
  */
 
 #include "types.h"
+#include "playerControls_types.h"
 
-int func_00250190(int a0, float f12, float f13, float f14) {
-    *(float*)((char*)a0) = f12;
-    *(float*)((char*)a0 + 4) = f13;
-    *(float*)((char*)a0 + 8) = f14;
-    return a0;
+Vec3f* func_00250190(Vec3f* self, float x, float y, float z) {
+    self->x = x;
+    self->y = y;
+    self->z = z;
+    return self;
 }

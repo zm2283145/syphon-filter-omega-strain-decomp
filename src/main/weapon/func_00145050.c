@@ -1,37 +1,25 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Actor inventory and weapon-definition helpers, cOutOfAmmoMsg.
  */
 
 #include "types.h"
+#include "weapon_types.h"
 
-extern char D_004EA160[];
-extern int func_001450B0(int);
-extern int func_003C8C50(void);
-extern void func_003D9440(int, int);
+extern int D_004EA160;   /* cOutOfAmmoMsg script type */
+extern cOutOfAmmoMsg* func_001450B0(void* self);
+extern int* Message_GetScriptTypeKeyPtr(void);
+extern void ScriptType_SetParent(int type, int parentType);
 
-int Script_cOutOfAmmoMsg_Weapon(int a0) {
-    int loc[1];
-    int v0;
-
-    a0 = *(int*)(char*)a0;
-    v0 = func_001450B0(a0);
-    v0 = *(int*)((char*)v0 + 36);
-    *(int*)(char*)loc = v0;
-    v0 = *(int*)(char*)loc;
-    goto ret;
-ret:
-    return v0;
+/* volatile mirrors the original stack temporary. */
+int Script_cOutOfAmmoMsg_Weapon(WeaponScriptArg* args) {
+    volatile int weapon = func_001450B0(args[0].p)->weapon;
+    return weapon;
 }
 
+/* Registers the cOutOfAmmoMsg script type under its parent type. */
 void ScriptType_cOutOfAmmoMsg_Init(void) {
-    int tmp0;
-    int tmp2;
-    int tmp3;
+    int* parent = Message_GetScriptTypeKeyPtr();
 
-    tmp0 = func_003C8C50();
-    tmp2 = *(int*)D_004EA160;
-    tmp3 = *(int*)(char*)tmp0;
-    func_003D9440(tmp2, tmp3);
+    ScriptType_SetParent(D_004EA160, *parent);
 }

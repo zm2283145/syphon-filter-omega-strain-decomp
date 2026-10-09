@@ -1,69 +1,58 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * cNode virtual slots: position getters and default (empty) handlers.
  */
 
 #include "types.h"
+#include "node_types.h"
 
-extern int func_0015C170(int, int);
+extern int func_0015C170(void* a0, cNode* node);
 
-int cNode_v34(int a0, int a1) {
-    return func_0015C170(a0, a1);
+int cNode_v34(void* a0, cNode* node) {
+    return func_0015C170(a0, node);
 }
 
-void cNode_v35(int a0, int a1) {
-    float tmp0;
-    float tmp1;
-    float tmp2;
-
-    tmp0 = *(float*)((char*)a1 + 136);
-    tmp1 = *(float*)((char*)a1 + 132);
-    tmp2 = *(float*)((char*)a1 + 128);
-    *(float*)((char*)a0) = tmp2;
-    *(float*)((char*)a0 + 4) = tmp1;
-    *(float*)((char*)a0 + 8) = tmp0;
-    *(int*)((char*)a0 + 12) = 1065353216;
+/* v35..v37: write the node translation as a point (w = 1). */
+void cNode_v35(Vec4* out, cNode* node) {
+    float z = node->translation.z;
+    float y = node->translation.y;
+    float x = node->translation.x;
+    out->x = x;
+    out->y = y;
+    out->z = z;
+    out->w = 1.0f;
 }
 
-void cNode_v36(int a0, int a1) {
-    float tmp0;
-    float tmp1;
-    float tmp2;
-
-    tmp0 = *(float*)((char*)a1 + 136);
-    tmp1 = *(float*)((char*)a1 + 132);
-    tmp2 = *(float*)((char*)a1 + 128);
-    *(float*)((char*)a0) = tmp2;
-    *(float*)((char*)a0 + 4) = tmp1;
-    *(float*)((char*)a0 + 8) = tmp0;
-    *(int*)((char*)a0 + 12) = 1065353216;
+void cNode_v36(Vec4* out, cNode* node) {
+    float z = node->translation.z;
+    float y = node->translation.y;
+    float x = node->translation.x;
+    out->x = x;
+    out->y = y;
+    out->z = z;
+    out->w = 1.0f;
 }
 
-void cNode_v37(int a0, int a1) {
-    float tmp0;
-    float tmp1;
-    float tmp2;
-
-    tmp0 = *(float*)((char*)a1 + 136);
-    tmp1 = *(float*)((char*)a1 + 132);
-    tmp2 = *(float*)((char*)a1 + 128);
-    *(float*)((char*)a0) = tmp2;
-    *(float*)((char*)a0 + 4) = tmp1;
-    *(float*)((char*)a0 + 8) = tmp0;
-    *(int*)((char*)a0 + 12) = 1065353216;
+void cNode_v37(Vec4* out, cNode* node) {
+    float z = node->translation.z;
+    float y = node->translation.y;
+    float x = node->translation.x;
+    out->x = x;
+    out->y = y;
+    out->z = z;
+    out->w = 1.0f;
 }
 
-int cNode_v38(int a0, int a1) {
-    return func_0015C170(a0, a1);
+int cNode_v38(void* a0, cNode* node) {
+    return func_0015C170(a0, node);
 }
 
-int cNode_v39(int a0, int a1) {
-    return func_0015C170(a0, a1);
+int cNode_v39(void* a0, cNode* node) {
+    return func_0015C170(a0, node);
 }
 
-int cNode_v3B(int a0, int a1) {
-    return func_0015C170(a0, a1);
+int cNode_v3B(void* a0, cNode* node) {
+    return func_0015C170(a0, node);
 }
 
 void cNode_v0E(void) {
@@ -75,16 +64,16 @@ void cNode_v0F(void) {
 void Actor_VirtualNop(void) {
 }
 
-void func_0015BF80(int a0) {
-    *(char*)((char*)a0 + 44) = 1;
+void Node_SetFlag2C(cNode* self) {
+    self->flag2C = 1;
 }
 
-void func_0015BF90(char* self) {
-    self[44] = 0;
+void Node_ClearFlag2C(cNode* self) {
+    self->flag2C = 0;
 }
 
-unsigned char func_0015BFA0(unsigned char* self) {
-    return self[44];
+unsigned char Node_GetFlag2C(cNode* self) {
+    return self->flag2C;
 }
 
 int func_0015BFB0(void) {

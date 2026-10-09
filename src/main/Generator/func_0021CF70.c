@@ -15,9 +15,9 @@ extern char D_004F5710[];
 extern char D_004F5718[];
 extern char D_00555070[];
 extern int ScriptFilter_Dispatch(int, int, int);
-extern int func_003CC830(void);
-extern int func_003D9400(int, int);
-extern void func_003D9440(int, int);
+extern int cGOBJ_GetScriptTypeKeyPtr(void);
+extern int ScriptType_AddAccepted(int, int);
+extern void ScriptType_SetParent(int, int);
 
 int ScriptType_cGenerator_Init(void) {
     int tmp0;
@@ -29,16 +29,16 @@ int ScriptType_cGenerator_Init(void) {
     int tmp11;
     int tmp12;
 
-    tmp0 = func_003CC830();
+    tmp0 = cGOBJ_GetScriptTypeKeyPtr();
     tmp2 = *(int*)D_004F5718;
     tmp3 = *(int*)(char*)tmp0;
-    func_003D9440(tmp2, tmp3);
+    ScriptType_SetParent(tmp2, tmp3);
     tmp6 = *(int*)D_004F5718;
     tmp7 = *(int*)D_004F56F0;
-    func_003D9400(tmp6, tmp7);
+    ScriptType_AddAccepted(tmp6, tmp7);
     tmp10 = *(int*)D_004F5718;
     tmp11 = *(int*)D_004F5700;
-    tmp12 = func_003D9400(tmp10, tmp11);
+    tmp12 = ScriptType_AddAccepted(tmp10, tmp11);
     return tmp12;
 }
 
@@ -59,7 +59,7 @@ void ScriptType_cDespawnedNPCMsg_Init(void) {
 
     tmp0 = *(int*)D_004F5708;
     tmp1 = *(int*)D_004F56D8;
-    func_003D9440(tmp0, tmp1);
+    ScriptType_SetParent(tmp0, tmp1);
 }
 
 int cDespawnedNPCMsg_v03(void) {
@@ -75,7 +75,7 @@ void ScriptType_cSpawnedNPCMsg_Init(void) {
 
     tmp0 = *(int*)D_004F56F8;
     tmp1 = *(int*)D_004F56D8;
-    func_003D9440(tmp0, tmp1);
+    ScriptType_SetParent(tmp0, tmp1);
 }
 
 int cSpawnedNPCMsg_v03(void) {

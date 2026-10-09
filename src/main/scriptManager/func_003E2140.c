@@ -5,7 +5,8 @@
  */
 
 #include "types.h"
+#include "scriptManager_types.h"
 
-void func_003E2140(char* self, int value) {
-    *(int*)(self + 20112) = value;
+void func_003E2140(ScriptManager* self, int value) {
+    self->unk4E90 = value;
 }

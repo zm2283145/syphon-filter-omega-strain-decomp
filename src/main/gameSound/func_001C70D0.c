@@ -1,25 +1,17 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * SetReverb script native.
  */
 
 #include "types.h"
+#include "gameSound_types.h"
 
-extern void Global_SetReverb(int, int, int);
+extern void Global_SetReverb(int unk0, int level1, int level2);
 
-int Script_SetReverb(int a0) {
-    int loc[1];
-    int a1, a2, v0;
-
-    v0 = *(int*)(char*)a0;
-    *(int*)(char*)loc = v0;
-    a0 = 0 + 1;
-    a1 = *(int*)(char*)loc;
-    a2 = a1;
-    Global_SetReverb(a0, a1, a2);
-    v0 = 0;
-    goto ret;
-ret:
-    return v0;
+/* SetReverb(level): passes the level in both value slots. */
+int Script_SetReverb(SoundScriptArg* args) {
+    volatile int arg = args[0].i; /* original stack temporary */
+    int level = arg;
+    Global_SetReverb(1, level, level);
+    return 0;
 }

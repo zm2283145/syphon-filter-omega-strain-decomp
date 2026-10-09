@@ -8,7 +8,7 @@
 
 extern char D_004FFD30[];
 extern char D_0051EE10[];
-extern int func_00147840(int, int);
+extern int WeaponDb_Get(int, int);
 extern int func_002BF4B0(int, int, int);
 
 Rel* func_002C21A0(Rel* r) {
@@ -39,7 +39,7 @@ int func_002C21C0(void) {
     v0 = v0 + a1;
     a1 = *(short*)(char*)(v0 + 268);
     a0 = *(int*)(char*)D_004FFD30;
-    v0 = func_00147840(a0, a1);
+    v0 = WeaponDb_Get(a0, a1);
     s0 = *(int*)(char*)(v0 + 316);
 L002C2220:;
     cond = s0 == 0;
@@ -50,7 +50,7 @@ L002C2220:;
     if (cond) goto L002C2278;
     a0 = *(int*)(char*)D_004FFD30;
     a1 = *(short*)(char*)(s0 + 1034);
-    v0 = func_00147840(a0, a1);
+    v0 = WeaponDb_Get(a0, a1);
     a0 = *(unsigned char*)(char*)(v0 + 240);
     v1 = 0 + 7;
     cond = a0 != v1;

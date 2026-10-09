@@ -5,33 +5,31 @@
  */
 
 #include "types.h"
+#include "interface_model_types.h"
 
-extern int func_003F1940(int);
-extern int func_003F3370(int, int, int, int);
-extern int func_003F3900(int, int);
+extern OwnedVec* func_003F1940(OwnedVec* v);
+extern int func_003F3370(RawVec* v, char* pos, int n, int value);
+extern int func_003F3900(int a0, int a1);
 
-Rel* func_003F18C0(Rel* r) {
-    r->a = 0;
-    r->b = 0;
-    r->c = 0;
-    return r;
+/* Clears the three vector words. */
+OwnedVec* func_003F18C0(OwnedVec* v) {
+    v->unk0 = 0;
+    v->count = 0;
+    v->data = 0;
+    return v;
 }
 
-int func_003F18E0(int a0, int a1) {
-    int tmp0;
-    int tmp1;
-
-    tmp0 = *(int*)((char*)a0 + 4);
-    tmp1 = *(int*)((char*)a0 + 8);
-    return func_003F3370(a0, (tmp1 + (tmp0 << 4)), 1, a1);
+/* push_back on a vector of 16-byte elements. */
+int func_003F18E0(RawVec* v, int value) {
+    return func_003F3370(v, v->data + (v->count << 4), 1, value);
 }
 
 int func_003F1900(int a0, int a1) {
     return func_003F3900(a0, a1);
 }
 
-int func_003F1910(int a0) {
-    func_003F1940(a0);
-    *(char*)((char*)a0 + 12) = 1;
-    return a0;
+OwnedVec* func_003F1910(OwnedVec* v) {
+    func_003F1940(v);
+    v->unk0C = 1;
+    return v;
 }

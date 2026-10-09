@@ -5,11 +5,15 @@
  */
 
 #include "types.h"
+#include "scriptManager_types.h"
 
 int* func_003DC4C0(PtrVec* v, int i) {
     return v->data + i;
 }
 
-int func_003DC4D0(int a0, int a1) {
-    return *(int*)(char*)(*(int*)((char*)a0 + 72) + ((a1 + -10) << 2));
+/* Maps a script-local enum id (>= 10) to the global enum id. */
+int Script_RemapEnumId(Script* script, int localId) {
+    int i = localId - 10;
+
+    return script->enumMap[i];
 }

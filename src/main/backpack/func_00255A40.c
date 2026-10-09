@@ -1,11 +1,11 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * cBackpack flag setter.
  */
 
 #include "types.h"
+#include "backpack_types.h"
 
-void func_00255A40(int a0) {
-    *(int*)((char*)a0 + 780) = 1;
+void func_00255A40(cBackpack* backpack) {
+    backpack->unk30C = 1;
 }

@@ -1,11 +1,11 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Returns the list sentinel (end()).
  */
 
 #include "types.h"
+#include "path_types.h"
 
-void* func_00164B00(char* self) {
-    return self + 4;
+PathListLink* func_00164B00(PathList* list) {
+    return &list->head;
 }

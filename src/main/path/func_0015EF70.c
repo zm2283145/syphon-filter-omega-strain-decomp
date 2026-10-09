@@ -1,11 +1,11 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * List iterator dereference.
  */
 
 #include "types.h"
+#include "path_types.h"
 
-int func_0015EF70(int a0) {
-    return (*(int*)(char*)a0 + 8);
+int* func_0015EF70(PathListNode** it) {
+    return &(*it)->value;
 }

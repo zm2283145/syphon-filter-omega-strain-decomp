@@ -5,17 +5,14 @@
  */
 
 #include "types.h"
+#include "scriptManager_types.h"
 
-extern void cScriptInterpreter_ExecuteInitCode(int);
-extern int func_003E1520(int);
+extern void cScriptInterpreter_ExecuteInitCode(void* interp);
+extern void* func_003E1520(void* self);
 
-int Script_cScriptInterp_ExecuteInitCode(int a0) {
-    int tmp0;
-    int tmp1;
-
-    tmp0 = *(int*)(char*)a0;
-    tmp1 = func_003E1520(tmp0);
-    cScriptInterpreter_ExecuteInitCode(tmp1);
+/* Script native: runs the init code of interpreter args[0]. */
+int Script_cScriptInterp_ExecuteInitCode(ScriptArg* args) {
+    cScriptInterpreter_ExecuteInitCode(func_003E1520(args[0].p));
     return 0;
 }
 

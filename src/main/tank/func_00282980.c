@@ -1,16 +1,14 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * cTank script class: script natives, type registration and turret helpers.
  */
 
 #include "types.h"
+#include "tank_types.h"
 
-extern char D_00506268[];
+extern int D_00506268;
 
+/* Message type id for cNetUpdateTankMsg. */
 int cNetUpdateTankMsg_v05(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_00506268;
-    return tmp0;
+    return D_00506268;
 }

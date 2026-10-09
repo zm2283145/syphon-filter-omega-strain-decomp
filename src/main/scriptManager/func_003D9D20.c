@@ -5,39 +5,25 @@
  */
 
 #include "types.h"
+#include "scriptManager_types.h"
 
-extern char D_00555070[];
-extern int func_001294F8(int);
-extern int func_003D9DA0(int, int);
-extern int func_003E15B0(int, int, int, int);
+extern ScriptManager D_00555070;
+extern int func_001294F8(void* obj);
+extern int func_003D9DA0(ScriptBound* self, int binding);
+extern int func_003E15B0(ScriptManager* manager, void* obj, int* key, int* out);
 
-int func_003D9D20(int a0, int a1) {
-    return (*(int*)(char*)a0 + (a1 << 2));
+/* Address of slot i in a word table. */
+int* func_003D9D20(int** table, int i) {
+    return *table + i;
 }
 
-void func_003D9D30(int a0, int a1) {
-    int loc[1];
-    int a2, a3, s0, s1, v0;
-    int cond;
+/* Looks up obj's script binding in the script manager (D_00555070) and hands it to func_003D9DA0. */
+void func_003D9D30(ScriptBound* self, void* obj) {
+    int binding;
 
-    s0 = a1;
-    cond = s0 == 0;
-    s1 = a0;
-    if (cond) goto L003D9D80;
-    a0 = s0;
-    v0 = func_001294F8(a0);
-    cond = v0 == 0;
-    if (cond) goto L003D9D80;
-    a1 = s0;
-    a0 = (int)D_00555070;
-    a2 = s1 + 8;
-    a3 = (int)loc;
-    *(int*)(char*)loc = 0;
-    v0 = func_003E15B0(a0, a1, a2, a3);
-    a1 = *(int*)(char*)loc;
-    a0 = s1;
-    v0 = func_003D9DA0(a0, a1);
-L003D9D80:;
-    goto ret;
-ret:;
+    if (obj != 0 && func_001294F8(obj) != 0) {
+        binding = 0;
+        func_003E15B0(&D_00555070, obj, &self->key, &binding);
+        func_003D9DA0(self, binding);
+    }
 }

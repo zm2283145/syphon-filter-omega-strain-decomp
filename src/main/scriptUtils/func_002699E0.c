@@ -5,12 +5,11 @@
  */
 
 #include "types.h"
+#include "scriptUtils_types.h"
 
-extern char D_004F8588[];
+extern int D_004F8588;  /* script type key of cNetLocalTimerMsg */
 
+/* Returns the cNetLocalTimerMsg script type key. */
 int cNetLocalTimerMsg_v05(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_004F8588;
-    return tmp0;
+    return D_004F8588;
 }

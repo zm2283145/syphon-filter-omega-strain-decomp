@@ -1,20 +1,20 @@
 /*
- * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Matched functions from gameobj.cc (byte-identical with the retail executable).
  */
 
-#include "types.h"
+#include "gobj_types.h"
 
-int func_003938B0(int a0, int a1) {
-    return ((unsigned int)(0) < (unsigned int)((*(int*)(char*)a0 ^ *(int*)(char*)a1)));
+/* Iterator inequality. */
+int func_003938B0(Iter* a, Iter* b) {
+    return a->p != b->p;
 }
 
 void func_003938D0(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
-int func_003938E0(int a0) {
-    *(int*)((char*)a0) = *(int*)((char*)*(int*)(char*)a0 + 4);
-    return a0;
+/* Advances a linked-list iterator to the node's next pointer (+4). */
+Iter* func_003938E0(Iter* it) {
+    it->p = (int*)it->p[1];
+    return it;
 }

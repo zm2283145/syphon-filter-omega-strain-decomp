@@ -5,18 +5,15 @@
  */
 
 #include "types.h"
+#include "scriptManager_types.h"
 
-extern int PtrVec_Insert(int, int, int, int);
+extern int PtrVec_Insert(PtrVec* v, int* pos, int n, int value);
 
-int ScriptStr_AppendTracking(int a0, int a1) {
-    int tmp0;
-    int tmp1;
-
-    tmp0 = *(int*)((char*)a0 + 4);
-    tmp1 = *(int*)((char*)a0 + 8);
-    return PtrVec_Insert(a0, (tmp1 + (tmp0 << 2)), 1, a1);
+/* push_back: inserts one value at the end. */
+int ScriptStr_AppendTracking(PtrVec* v, int value) {
+    return PtrVec_Insert(v, v->data + v->count, 1, value);
 }
 
-void func_003E03F0(char* self, int value) {
-    *(int*)(self + 20072) = value;
+void func_003E03F0(ScriptManager* self, int value) {
+    self->unk4E68 = value;
 }

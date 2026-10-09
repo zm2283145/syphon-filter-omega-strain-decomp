@@ -1,24 +1,23 @@
 /*
- * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Matched functions from gameobj.cc (byte-identical with the retail executable).
  */
 
-#include "types.h"
+#include "gobj_types.h"
 
-extern int func_00393FD0(int);
-extern int func_00395EB0(int, int, int);
+extern Rel* func_00393FD0(Rel* r);
+extern int func_00395EB0(Rel* r, int a1, int a2);
 
-int func_00393F60(int a0, int a1, int a2) {
-    *(int*)((char*)a0) = 0;
-    *(int*)((char*)a0 + 4) = 0;
-    *(int*)((char*)a0 + 8) = 0;
-    func_00395EB0(a0, a1, a2);
-    return a0;
+/* Clears the record, then calls func_00395EB0 with the incoming a1/a2 unchanged. */
+Rel* func_00393F60(Rel* r, int a1, int a2) {
+    r->a = 0;
+    r->b = 0;
+    r->c = 0;
+    func_00395EB0(r, a1, a2);
+    return r;
 }
 
-int func_00393FA0(int a0) {
-    func_00393FD0(a0);
-    *(char*)((char*)a0 + 12) = 1;
-    return a0;
+RelFlag* func_00393FA0(RelFlag* r) {
+    func_00393FD0(&r->rel);
+    r->flag = 1;
+    return r;
 }

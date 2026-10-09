@@ -1,20 +1,20 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * PathReceiver constructor.
  */
 
 #include "types.h"
+#include "path_types.h"
 
-extern char D_004D96C0[];
-extern char D_004ED9B0[];
-extern int Receiver_Construct(int, int);
-extern int ScalarCollection_Init(int);
+extern char D_004D96C0[]; /* PathReceiver vtable */
+extern char D_004ED9B0[]; /* receiver registration data */
+extern void* Receiver_Construct(void* self, void* info);
+extern PathList* ScalarCollection_Init(PathList* list);
 
-int func_00164620(int a0) {
-    Receiver_Construct(a0, (int)D_004ED9B0);
-    *(int*)((char*)a0) = (int)D_004D96C0;
-    ScalarCollection_Init((a0 + 32));
-    ScalarCollection_Init((a0 + 44));
-    return a0;
+PathReceiver* func_00164620(PathReceiver* self) {
+    Receiver_Construct(self, D_004ED9B0);
+    self->vtable = D_004D96C0;
+    ScalarCollection_Init(&self->listA);
+    ScalarCollection_Init(&self->listB);
+    return self;
 }

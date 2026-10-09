@@ -1,24 +1,22 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * cTank script class: script natives, type registration and turret helpers.
  */
 
 #include "types.h"
+#include "tank_types.h"
 
-extern char D_00506250[];
+extern int D_00506250;
 
-int func_00287C10(int a0, int a1, int a2) {
-    *(int*)((char*)a0 + 4) = a2;
-    *(int*)((char*)a0) = a1;
-    *(float*)((char*)a0 + 36) = *(float*)((char*)*(int*)((char*)a0 + 4) + 324);
-    *(char*)((char*)a0 + 40) = 0;
-    return a0;
+TankLink* func_00287C10(TankLink* self, int unk00, char* source) {
+    self->source = source;
+    self->unk00 = unk00;
+    self->unk24 = *(float*)(self->source + 0x144);
+    self->unk28 = 0;
+    return self;
 }
 
+/* Message type id for cNetCreateTankMsg. */
 int cNetCreateTankMsg_v05(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_00506250;
-    return tmp0;
+    return D_00506250;
 }

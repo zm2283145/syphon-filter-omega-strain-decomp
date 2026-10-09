@@ -17,9 +17,9 @@ extern int* func_0016AD70(void);
 extern int func_00198F90(NpcActor* actor, int on, int a2);
 extern int func_00199040(NpcActor* actor, int on, int a2);
 extern int func_001990F0(NpcActor* actor, int on, int a2);
-extern int* func_00210CB0(void);
-extern int func_003D9400(int type, int iface);
-extern void func_003D9440(int type, int base);
+extern int* cGOBJTriggerEventMsg_GetScriptTypeKeyPtr(void);
+extern int ScriptType_AddAccepted(int type, int iface);
+extern void ScriptType_SetParent(int type, int base);
 extern int* func_004080E0(void);
 
 /* Registers the cNPC script type: base type, then the interfaces it accepts. */
@@ -28,12 +28,12 @@ int ScriptType_cNPC_Init(void) {
     int* iface;
 
     base = func_0016AD70();
-    func_003D9440(D_004EA3F8, *base);
-    iface = func_00210CB0();
-    func_003D9400(D_004EA3F8, *iface);
-    func_003D9400(D_004EA3F8, D_004EA3D0);
+    ScriptType_SetParent(D_004EA3F8, *base);
+    iface = cGOBJTriggerEventMsg_GetScriptTypeKeyPtr();
+    ScriptType_AddAccepted(D_004EA3F8, *iface);
+    ScriptType_AddAccepted(D_004EA3F8, D_004EA3D0);
     iface = func_004080E0();
-    return func_003D9400(D_004EA3F8, *iface);
+    return ScriptType_AddAccepted(D_004EA3F8, *iface);
 }
 
 int func_0014A670(int value) {

@@ -1,29 +1,31 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Part of ska.cc (skeletal animation).
  */
 
-#include "types.h"
+#include "ska_types.h"
 
 void* func_003B2630(char* self) {
     return self + 8;
 }
 
-int func_003B2640(int a0) {
-    return ((unsigned int)(0) < (unsigned int)(*(unsigned char*)((char*)a0 + 22)));
+/* Clip root-motion axis Z flag set. */
+int ClipHeader_HasAxisZ(SkaClipFlags* clip) {
+    return 0U < clip->axisZ;
 }
 
 void* func_003B2650(char* self) {
     return self + 4;
 }
 
-int func_003B2660(int a0) {
-    return ((unsigned int)(0) < (unsigned int)(*(unsigned char*)((char*)a0 + 21)));
+/* Clip root-motion axis Y flag set. */
+int ClipHeader_HasAxisY(SkaClipFlags* clip) {
+    return 0U < clip->axisY;
 }
 
-int func_003B2670(int a0) {
-    return ((unsigned int)(0) < (unsigned int)(*(unsigned char*)((char*)a0 + 20)));
+/* Clip root-motion axis X flag set. */
+int ClipHeader_HasAxisX(SkaClipFlags* clip) {
+    return 0U < clip->axisX;
 }
 
 void* func_003B2680(void* self) {

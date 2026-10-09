@@ -1,11 +1,9 @@
 /*
- * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Matched functions from gameobj.cc (byte-identical with the retail executable).
  */
 
-#include "types.h"
+#include "gobj_types.h"
 
-void func_00396590(char* self) {
-    *(int*)(self + 4) = 0;
+void func_00396590(PtrVec* v) {
+    v->count = 0;
 }

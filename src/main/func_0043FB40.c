@@ -8,8 +8,8 @@
 
 extern char D_00583970[];
 extern char D_00583978[];
-extern int func_003C8C50(void);
-extern void func_003D9440(int, int);
+extern int Message_GetScriptTypeKeyPtr(void);
+extern void ScriptType_SetParent(int, int);
 
 int Script_cWeaponVisChangeMsg_Visibility(int a0) {
     int loc[1];
@@ -29,10 +29,10 @@ void ScriptType_cWeaponVisChangeMsg_Init(void) {
     int tmp2;
     int tmp3;
 
-    tmp0 = func_003C8C50();
+    tmp0 = Message_GetScriptTypeKeyPtr();
     tmp2 = *(int*)D_00583978;
     tmp3 = *(int*)(char*)tmp0;
-    func_003D9440(tmp2, tmp3);
+    ScriptType_SetParent(tmp2, tmp3);
 }
 
 int func_0043FB90(void) {

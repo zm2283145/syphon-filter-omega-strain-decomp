@@ -1,22 +1,20 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * SetCheckpointFont script native and its setter.
  */
 
 #include "types.h"
+#include "Checkpoint_types.h"
 
-extern char D_004F7960[];
-extern void func_0022ED20(int);
+extern unsigned char D_004F7960; /* current checkpoint font index */
+extern void Checkpoint_SetFont(int font);
 
-int Script_SetCheckpointFont(int a0) {
-    unsigned char tmp0;
-
-    tmp0 = *(unsigned char*)(char*)a0;
-    func_0022ED20(tmp0);
+/* SetCheckpointFont(font) */
+int Script_SetCheckpointFont(CheckpointScriptArg* args) {
+    Checkpoint_SetFont(args[0].u8);
     return 0;
 }
 
-void func_0022ED20(int a0) {
-    *(char*)D_004F7960 = a0;
+void Checkpoint_SetFont(int font) {
+    D_004F7960 = font;
 }

@@ -1,18 +1,15 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Part of ska.cc (skeletal animation).
  */
 
-#include "types.h"
+#include "ska_types.h"
 
-extern int func_003B8F50(int, int);
+extern SkaFlaggedVec* func_003B8F50(SkaFlaggedVec* dst, SkaFlaggedVec* src);
 
-int func_003B8F10(int a0, int a1) {
-    unsigned char tmp2;
-
-    func_003B8F50(a0, a1);
-    tmp2 = *(unsigned char*)((char*)a1 + 12);
-    *(char*)((char*)a0 + 12) = tmp2;
-    return a0;
+/* Copy-construct: copy the array part, then the flag byte. */
+SkaFlaggedVec* NotifyRange_CopyConstruct(SkaFlaggedVec* dst, SkaFlaggedVec* src) {
+    func_003B8F50(dst, src);
+    dst->flag = src->flag;
+    return dst;
 }

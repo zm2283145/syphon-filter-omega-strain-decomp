@@ -11,7 +11,7 @@ extern char D_004EE8B8[];
 extern char D_004EE8C0[];
 extern char D_00555070[];
 extern int ScriptFilter_Dispatch(int, int, int);
-extern void func_003D9440(int, int);
+extern void ScriptType_SetParent(int, int);
 
 void ScriptType_cGameSceneLight_Init(void) {
     int tmp0;
@@ -19,7 +19,7 @@ void ScriptType_cGameSceneLight_Init(void) {
 
     tmp0 = *(int*)D_004EE8C0;
     tmp1 = *(int*)D_004EE898;
-    func_003D9440(tmp0, tmp1);
+    ScriptType_SetParent(tmp0, tmp1);
 }
 
 int cGameSceneLight_v0B(void) {

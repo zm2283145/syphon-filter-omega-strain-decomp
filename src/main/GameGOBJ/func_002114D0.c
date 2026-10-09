@@ -1,45 +1,32 @@
 /*
- * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Matched functions from GameGOBJ.cc (byte-identical with the retail executable).
+ * cGameGOBJ script type registration and accessors.
  */
 
-#include "types.h"
+#include "gobj_types.h"
 
-extern char D_004F54D0[];
-extern char D_004F54D8[];
-extern char D_004F55D8[];
+extern int D_004F54D0;   /* cGameGOBJ script-type value */
+extern int D_004F54D8;   /* cGameGOBJ script-type key */
+extern int D_004F55D8;   /* cGOBJTriggerEventMsg script-type value */
 extern char D_00555070[];
-extern int ScriptFilter_Dispatch(int, int, int);
-extern int func_003CC830(void);
-extern int func_003D9400(int, int);
-extern void func_003D9440(int, int);
+extern int ScriptFilter_Dispatch(void* filter, int a0, int a1);
+extern int* cGOBJ_GetScriptTypeKeyPtr(void);
+extern int ScriptType_AddAccepted(int type, int iface);
+extern void ScriptType_SetParent(int type, int base);
 
+/* Registers the cGameGOBJ script type under cGOBJ; accepts cGOBJTriggerEventMsg. */
 int ScriptType_cGameGOBJ_Init(void) {
-    int tmp0;
-    int tmp2;
-    int tmp3;
-    int tmp6;
-    int tmp7;
-    int tmp8;
+    int* base;
 
-    tmp0 = func_003CC830();
-    tmp2 = *(int*)D_004F54D8;
-    tmp3 = *(int*)(char*)tmp0;
-    func_003D9440(tmp2, tmp3);
-    tmp6 = *(int*)D_004F54D8;
-    tmp7 = *(int*)D_004F55D8;
-    tmp8 = func_003D9400(tmp6, tmp7);
-    return tmp8;
+    base = cGOBJ_GetScriptTypeKeyPtr();
+    ScriptType_SetParent(D_004F54D8, *base);
+    return ScriptType_AddAccepted(D_004F54D8, D_004F55D8);
 }
 
-int func_00211510(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_004F54D0;
-    return tmp0;
+int cGameGOBJ_v0B(void) {
+    return D_004F54D0;
 }
 
-int func_00211520(int a0, int a1) {
-    return ScriptFilter_Dispatch((int)D_00555070, a0, a1);
+int cGameGOBJ_v0C(int a0, int a1) {
+    return ScriptFilter_Dispatch(D_00555070, a0, a1);
 }

@@ -9,8 +9,8 @@
 extern char D_00571700[];
 extern char D_00571708[];
 extern int GObj_IdentityA(int);
-extern int func_003C8C50(void);
-extern void func_003D9440(int, int);
+extern int Message_GetScriptTypeKeyPtr(void);
+extern void ScriptType_SetParent(int, int);
 
 int Script_cDamageMsg_Type(int a0) {
     return *(unsigned char*)((char*)*(int*)(char*)a0 + 44);
@@ -47,10 +47,10 @@ void ScriptType_cDamageMsg_Init(void) {
     int tmp2;
     int tmp3;
 
-    tmp0 = func_003C8C50();
+    tmp0 = Message_GetScriptTypeKeyPtr();
     tmp2 = *(int*)D_00571708;
     tmp3 = *(int*)(char*)tmp0;
-    func_003D9440(tmp2, tmp3);
+    ScriptType_SetParent(tmp2, tmp3);
 }
 
 int func_004080E0(void) {

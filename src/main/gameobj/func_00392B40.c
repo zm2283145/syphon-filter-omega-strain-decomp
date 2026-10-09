@@ -1,13 +1,11 @@
 /*
- * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Matched functions from gameobj.cc (byte-identical with the retail executable).
  */
 
-#include "types.h"
+#include "gobj_types.h"
 
-extern void Actor_BaseLogicUpdate(int);
+extern void Actor_BaseLogicUpdate(cVUM_GOBJ* self);
 
-void func_00392B40(int a0) {
-    Actor_BaseLogicUpdate(a0);
+void func_00392B40(cVUM_GOBJ* self) {
+    Actor_BaseLogicUpdate(self);
 }

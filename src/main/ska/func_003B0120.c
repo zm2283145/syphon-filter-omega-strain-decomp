@@ -1,13 +1,13 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Part of ska.cc (skeletal animation).
  */
 
-#include "types.h"
+#include "ska_types.h"
 
-int func_003B0120(int a0, int a1) {
-    return ((unsigned int)((*(int*)(char*)a0 ^ a1)) < (unsigned int)(1));
+/* True when the stored word equals value. */
+int func_003B0120(Word* w, int value) {
+    return w->value == value;
 }
 
 int func_003B0130(char* self) {
@@ -18,21 +18,22 @@ int func_003B0140(char* self) {
     return *(int*)(self + 0);
 }
 
-int func_003B0150(int a0, int a1) {
-    return (*(int*)((char*)a1 + 144) + (*(int*)((char*)a0 + 32) << 3));
+/* Table entry of owner selected by the index stored at idx +0x20. */
+SkaPair* func_003B0150(SkaPairIndex* idx, SkaPairTableOwner* owner) {
+    return &owner->table[idx->index];
 }
 
 int func_003B0170(char* self) {
     return *(int*)(self + 0);
 }
 
-int func_003B0180(int a0, int a1) {
-    int tmp0;
-
-    tmp0 = *(int*)((char*)a0 + 8);
-    return (tmp0 + (a1 * 20));
+/* Address of element i in an array of 20-byte elements. */
+char* func_003B0180(SkaVec* v, int i) {
+    char* data = v->data;
+    return data + i * 20;
 }
 
-int func_003B01A0(int a0, int a1) {
-    return *(int*)((char*)(*(int*)((char*)a0 + 144) + (a1 << 3)) + 4);
+/* Second word of table entry i. */
+int func_003B01A0(SkaPairTableOwner* owner, int i) {
+    return ((SkaPair*)((char*)owner->table + (i << 3)))->unk4;
 }

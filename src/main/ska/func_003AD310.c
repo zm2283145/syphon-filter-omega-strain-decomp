@@ -1,35 +1,29 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Part of ska.cc (skeletal animation).
  */
 
-#include "types.h"
+#include "ska_types.h"
 
-extern int ScalarCollection_Init(int);
+extern SkaTransitionReq* ScalarCollection_Init(SkaTransitionReq* self);
 
-int func_003AD310(int a0, int a1) {
-    return ((unsigned int)((*(int*)((char*)a0 + 16) ^ *(int*)((char*)a1 + 16))) < (unsigned int)(1));
+/* True when both requests carry the same key. */
+int TransitionReq_SameKey(SkaTransitionReq* a, SkaTransitionReq* b) {
+    return a->key == b->key;
 }
 
-int TransitionReq_Construct(int a0, float f12) {
-    ScalarCollection_Init(a0);
-    *(float*)((char*)a0 + 12) = f12;
-    return a0;
+SkaTransitionReq* TransitionReq_Construct(SkaTransitionReq* self, float time) {
+    ScalarCollection_Init(self);
+    self->unk0C = time;
+    return self;
 }
 
-int func_003AD370(int a0) {
-    int v0, v1;
-
-    *(int*)(char*)a0 = 0;
-    v0 = 0x7f7f0000;
-    v1 = v0 | 0xffff;
-    *(int*)(char*)(a0 + 4) = 0;
-    *(int*)(char*)(a0 + 8) = v1;
-    v0 = a0;
-    *(int*)(char*)(a0 + 12) = v1;
-    *(int*)(char*)(a0 + 16) = 0;
-    goto ret;
-ret:
-    return v0;
+/* Reset: zero words, both limits to FLT_MAX. */
+SkaTransitionReq* TransitionReq_Reset(SkaTransitionReq* self) {
+    self->unk00 = 0;
+    self->unk04 = 0;
+    self->unk08 = 3.4028235e38f;
+    self->unk0C = 3.4028235e38f;
+    self->key = 0;
+    return self;
 }

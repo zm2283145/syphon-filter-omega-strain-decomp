@@ -1,18 +1,16 @@
 /*
- * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Matched functions from GameGOBJ.cc (byte-identical with the retail executable).
  */
 
-#include "types.h"
+#include "gobj_types.h"
 
-extern void Actor_BaseLogicUpdate(int);
-extern int func_003CEA10(int, int);
+extern void Actor_BaseLogicUpdate(void* self);
+extern int func_003CEA10(void* self, int a1);
 
-void func_0021A920(int a0) {
-    Actor_BaseLogicUpdate(a0);
+void func_0021A920(void* self) {
+    Actor_BaseLogicUpdate(self);
 }
 
-int func_0021A930(int a0, int a1) {
-    return func_003CEA10(a0, a1);
+int func_0021A930(void* self, int a1) {
+    return func_003CEA10(self, a1);
 }

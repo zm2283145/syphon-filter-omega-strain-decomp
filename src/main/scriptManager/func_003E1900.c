@@ -5,28 +5,22 @@
  */
 
 #include "types.h"
+#include "scriptManager_types.h"
 
-extern int List_InsertBefore(int, int, int, int);
-extern int func_003E1960(int);
+extern ListPos* List_InsertBefore(ListPos* result, void* list, ListPos* pos, int value);
+extern OwnedVec* func_003E1960(OwnedVec* v);
 
-int func_003E1900(int a0, int a1) {
-    int loc[2];
-    int a2, a3, v0;
+/* push_back on a list whose sentinel node is at +4. */
+ListPos* func_003E1900(void* list, int value) {
+    ListPos end;
+    ListPos result;
 
-    a3 = a1;
-    v0 = a0 + 4;
-    a1 = a0;
-    *(int*)(char*)loc = v0;
-    a0 = (int)((char*)loc + 4);
-    a2 = (int)loc;
-    v0 = List_InsertBefore(a0, a1, a2, a3);
-    goto ret;
-ret:
-    return v0;
+    end.node = (char*)list + 4;
+    return List_InsertBefore(&result, list, &end, value);
 }
 
-int func_003E1930(int a0) {
-    func_003E1960(a0);
-    *(char*)((char*)a0 + 12) = 1;
-    return a0;
+OwnedVec* func_003E1930(OwnedVec* v) {
+    func_003E1960(v);
+    v->unk0C = 1;
+    return v;
 }

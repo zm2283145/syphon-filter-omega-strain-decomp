@@ -1,17 +1,17 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * cNode script type registration and small helpers.
  */
 
 #include "types.h"
+#include "node_types.h"
 
-extern char D_004EA778[];
-extern char D_004EA780[];
-extern char D_00555070[];
-extern int ScriptFilter_Dispatch(int, int, int);
-extern int func_003CC830(void);
-extern void func_003D9440(int, int);
+extern int D_004EA778; /* cNode script type key */
+extern int D_004EA780; /* cNode script type id */
+extern char D_00555070[]; /* global script filter */
+extern int ScriptFilter_Dispatch(void* filter, int a1, int a2);
+extern int* cGOBJ_GetScriptTypeKeyPtr(void); /* address of the cGObj type key */
+extern void ScriptType_SetParent(int type, int parentType);
 
 void func_0015C080(void) {
 }
@@ -24,47 +24,36 @@ int func_0015C0A0(void) {
     return 0;
 }
 
-int Script_cNode_IsType(int a0) {
-    return ((unsigned int)(0) < (unsigned int)((*(unsigned short*)((char*)a0 + 4) & *(int*)((char*)*(int*)(char*)a0 + 100))));
+/* IsType(object, mask): nonzero when the object's type bits intersect mask. */
+int Script_cNode_IsType(NodeScriptArg* args) {
+    NodeScriptObj* obj = args[0].p;
+    return (unsigned int)(args[1].u16 & obj->typeMask) > 0u;
 }
 
+/* cNode derives from cGObj. */
 void ScriptType_cNode_Init(void) {
-    int tmp0;
-    int tmp2;
-    int tmp3;
-
-    tmp0 = func_003CC830();
-    tmp2 = *(int*)D_004EA780;
-    tmp3 = *(int*)(char*)tmp0;
-    func_003D9440(tmp2, tmp3);
+    int* parent = cGOBJ_GetScriptTypeKeyPtr();
+    ScriptType_SetParent(D_004EA780, *parent);
 }
 
-int func_0015C100(int a0) {
-    int loc[1];
-    int v0;
-
-    *(int*)(char*)loc = a0;
-    v0 = *(int*)(char*)loc;
-    goto ret;
-ret:
-    return v0;
+/* volatile mirrors the original stack temporary. */
+int func_0015C100(int value) {
+    volatile int tmp = value;
+    return tmp;
 }
 
 void* func_0015C120(void* self) {
     return self;
 }
 
-int func_0015C130(void) {
-    return (int)D_004EA778;
+int* func_0015C130(void) {
+    return &D_004EA778;
 }
 
 int cNode_v0B(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_004EA778;
-    return tmp0;
+    return D_004EA778;
 }
 
 int cNode_v0C(int a0, int a1) {
-    return ScriptFilter_Dispatch((int)D_00555070, a0, a1);
+    return ScriptFilter_Dispatch(D_00555070, a0, a1);
 }

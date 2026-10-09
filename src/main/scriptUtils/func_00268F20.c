@@ -5,19 +5,12 @@
  */
 
 #include "types.h"
+#include "scriptUtils_types.h"
 
-extern int func_002690C0(int);
+extern ScriptArray* func_002690C0(void* obj);
 
-int Script_Array_Count(int a0) {
-    int loc[1];
-    int v0;
-
-    a0 = *(int*)(char*)a0;
-    v0 = func_002690C0(a0);
-    v0 = *(int*)(char*)(v0 + 8);
-    *(int*)(char*)loc = v0;
-    v0 = *(int*)(char*)loc;
-    goto ret;
-ret:
-    return v0;
+/* Script native: Array.Count(). volatile mirrors the original stack temporary. */
+int Script_Array_Count(ScriptArg* args) {
+    volatile int count = func_002690C0(args[0].p)->count;
+    return count;
 }

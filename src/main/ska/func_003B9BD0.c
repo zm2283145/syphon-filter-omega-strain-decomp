@@ -1,33 +1,24 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Part of ska.cc (skeletal animation).
  */
 
-#include "types.h"
+#include "ska_types.h"
 
-extern char D_004BCEE8[];
-extern char D_00542C90[];
+extern int D_004BCEE8;
+extern signed char D_00542C90;
 
+/* Lazily initialised constant: 0x1800000 - 1 (guarded function-local static). */
 int func_003B9BD0(void) {
-    int loc[1];
-    int v0, v1;
-    int cond;
+    int size[1];
+    int ref;
 
-    v0 = *(signed char*)(char*)D_00542C90;
-    cond = v0 != 0;
-    if (cond) goto L003B9C08;
-    v0 = 0x1800000;
-    v1 = (int)loc;
-    *(int*)(char*)loc = v0;
-    v1 = *(int*)(char*)v1;
-    v0 = 0 + 1;
-    *(char*)(char*)D_00542C90 = v0;
-    v0 = v1 + -1;
-    *(int*)(char*)D_004BCEE8 = v0;
-L003B9C08:;
-    v0 = *(int*)(char*)D_004BCEE8;
-    goto ret;
-ret:
-    return v0;
+    if (D_00542C90 == 0) {
+        ref = (int)size; /* value is read back through its address (inlined helper) */
+        size[0] = 0x1800000;
+        ref = *(int*)ref;
+        D_00542C90 = 1;
+        D_004BCEE8 = ref - 1;
+    }
+    return D_004BCEE8;
 }

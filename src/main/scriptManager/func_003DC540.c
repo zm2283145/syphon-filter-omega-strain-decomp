@@ -5,18 +5,14 @@
  */
 
 #include "types.h"
+#include "scriptManager_types.h"
 
-extern char D_00555070[];
-extern int func_003DCF70(int, int, int, int);
+extern ScriptManager D_00555070;
+extern ScriptEnumEntry* func_003DCF70(ScriptManager* manager, int a1, int a3, int t0);
 
-int func_003DC540(int a0, int a1, int a2, int a3, int t0) {
-    int tmp0;
-    int tmp2;
-    int tmp3;
-
-    tmp0 = func_003DCF70((int)D_00555070, a1, a3, t0);
-    tmp2 = *(int*)((char*)a0 + 72);
-    tmp3 = *(int*)((char*)tmp0 + 20);
-    *(int*)((char*)(tmp2 + (a2 << 2))) = tmp3;
-    return tmp0;
+/* Resolves an enum through the script manager and stores its global id in script->enumMap[slot]. */
+ScriptEnumEntry* func_003DC540(Script* script, int a1, int slot, int a3, int t0) {
+    ScriptEnumEntry* entry = func_003DCF70(&D_00555070, a1, a3, t0);
+    script->enumMap[slot] = entry->id;
+    return entry;
 }

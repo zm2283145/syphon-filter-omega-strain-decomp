@@ -1,18 +1,17 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Part of ska.cc (skeletal animation).
  */
 
-#include "types.h"
+#include "ska_types.h"
 
-int func_003B0730(int a0, int a1) {
-    return (*(int*)((char*)a0 + 144) + (a1 << 3));
+/* Table entry i (8-byte entries at +0x90). */
+SkaPair* func_003B0730(SkaPairTableOwner* owner, int i) {
+    return &owner->table[i];
 }
 
-int func_003B0740(int a0, int a1) {
-    int tmp0;
-
-    tmp0 = *(int*)((char*)a0 + 12);
-    return (tmp0 + (a1 * 36));
+/* Address of element i in an array of 36-byte elements at +0x0C. */
+char* func_003B0740(SkaTable0C* t, int i) {
+    char* data = t->data;
+    return data + i * 36;
 }

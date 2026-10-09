@@ -1,20 +1,16 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Actor inventory and weapon-definition helpers, cOutOfAmmoMsg.
  */
 
 #include "types.h"
+#include "weapon_types.h"
 
-extern int PtrVec_Insert(int, int, int, int);
+extern int PtrVec_Insert(PtrVec* v, int* pos, int n, int* value);
 
-int func_00146000(int a0, int a1) {
-    int tmp0;
-    int tmp1;
-
-    tmp0 = *(int*)((char*)a0 + 4);
-    tmp1 = *(int*)((char*)a0 + 8);
-    return PtrVec_Insert(a0, (tmp1 + (tmp0 << 2)), 1, a1);
+/* push_back on a pointer vector. */
+int func_00146000(PtrVec* v, int* value) {
+    return PtrVec_Insert(v, v->data + v->count, 1, value);
 }
 
 Rel* func_00146020(Rel* r) {

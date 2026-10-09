@@ -1,46 +1,35 @@
 /*
- * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Matched functions from GameGOBJ.cc (byte-identical with the retail executable).
+ * cSoundGOBJ script type and cInteractGOBJ script natives.
  */
 
-#include "types.h"
+#include "gobj_types.h"
 
-extern char D_004F5680[];
-extern char D_004F5688[];
+extern int D_004F5680;   /* cSoundGOBJ script-type value */
+extern int D_004F5688;   /* cSoundGOBJ script-type key */
 extern char D_00555070[];
-extern int GObj_IdentityA(int);
-extern int ScriptFilter_Dispatch(int, int, int);
-extern int func_003CC830(void);
-extern void func_003D9440(int, int);
+extern int GObj_IdentityA(int obj);
+extern int ScriptFilter_Dispatch(void* filter, int a0, int a1);
+extern int* cGOBJ_GetScriptTypeKeyPtr(void);
+extern void ScriptType_SetParent(int type, int base);
 
+/* Registers the cSoundGOBJ script type under cGOBJ. */
 void ScriptType_cSoundGOBJ_Init(void) {
-    int tmp0;
-    int tmp2;
-    int tmp3;
+    int* base;
 
-    tmp0 = func_003CC830();
-    tmp2 = *(int*)D_004F5688;
-    tmp3 = *(int*)(char*)tmp0;
-    func_003D9440(tmp2, tmp3);
+    base = cGOBJ_GetScriptTypeKeyPtr();
+    ScriptType_SetParent(D_004F5688, *base);
 }
 
 int cSoundGOBJ_v0B(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_004F5680;
-    return tmp0;
+    return D_004F5680;
 }
 
 int cSoundGOBJ_v0C(int a0, int a1) {
-    return ScriptFilter_Dispatch((int)D_00555070, a0, a1);
+    return ScriptFilter_Dispatch(D_00555070, a0, a1);
 }
 
-int Script_cInteractGOBJ_GetLocationObj(int a0) {
-    int tmp0;
-    int tmp1;
-
-    tmp0 = *(int*)(char*)a0;
-    tmp1 = *(int*)((char*)tmp0 + 168);
-    return GObj_IdentityA(tmp1);
+/* GetLocationObj(interact): returns the object stored at +0xA8. */
+int Script_cInteractGOBJ_GetLocationObj(ScriptArg* args) {
+    return GObj_IdentityA(*(int*)((char*)args[0].p + 0xA8));
 }

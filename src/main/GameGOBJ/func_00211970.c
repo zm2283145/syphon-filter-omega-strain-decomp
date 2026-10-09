@@ -1,13 +1,11 @@
 /*
- * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Matched functions from GameGOBJ.cc (byte-identical with the retail executable).
  */
 
-#include "types.h"
+#include "gobj_types.h"
 
-extern int func_00211980(int);
+extern int func_00211980(cElevatorGOBJ* lift);
 
-int cElevatorGOBJ_v3D(int a0) {
-    return func_00211980(a0);
+int cElevatorGOBJ_v3D(cElevatorGOBJ* lift) {
+    return func_00211980(lift);
 }

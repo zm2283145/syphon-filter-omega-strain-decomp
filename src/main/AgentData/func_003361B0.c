@@ -1,19 +1,18 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * cAgentData reset.
  */
 
 #include "types.h"
+#include "AgentData_types.h"
 
-extern int AgentData_Reset(int);
+extern int AgentData_Reset(cAgentData* agent);
 
-int func_003361B0(int a0) {
-    int tmp0;
-
-    tmp0 = AgentData_Reset(a0);
-    *(char*)((char*)a0 + 2220) = 0;
-    *(char*)((char*)a0 + 2236) = 0;
-    *(char*)((char*)a0 + 2252) = 0;
-    return tmp0;
+/* Full reset plus three additional flag bytes. */
+int func_003361B0(cAgentData* agent) {
+    int result = AgentData_Reset(agent);
+    agent->unk8AC = 0;
+    agent->unk8BC = 0;
+    agent->unk8CC = 0;
+    return result;
 }

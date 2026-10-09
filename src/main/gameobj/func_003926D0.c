@@ -1,65 +1,51 @@
 /*
- * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Matched functions from gameobj.cc (byte-identical with the retail executable).
+ * cVUM_GOBJ script type registration and model-context setup.
  */
 
-#include "types.h"
+#include "gobj_types.h"
 
-extern char D_0053B4F0[];
-extern char D_0053B4F8[];
+extern int D_0053B4F0;   /* cVUM_GOBJ script-type value */
+extern int D_0053B4F8;   /* cVUM_GOBJ script-type key */
 extern char D_0053BB70[];
 extern char D_00555070[];
-extern int ModelCtx_Init(int, int);
-extern int ScriptFilter_Dispatch(int, int, int);
-extern int Skel_Find(int, int);
-extern int func_003CC830(void);
-extern void func_003D9440(int, int);
+extern int ModelCtx_Init(int* ctx, ModelCtxParams* params);
+extern int ScriptFilter_Dispatch(void* filter, int a0, int a1);
+extern int Skel_Find(void* table, int a1);
+extern int* cGOBJ_GetScriptTypeKeyPtr(void);
+extern void ScriptType_SetParent(int type, int base);
 
+/* Registers the cVUM_GOBJ script type under cGOBJ. */
 void ScriptType_cVUM_GOBJ_Init(void) {
-    int tmp0;
-    int tmp2;
-    int tmp3;
+    int* base;
 
-    tmp0 = func_003CC830();
-    tmp2 = *(int*)D_0053B4F8;
-    tmp3 = *(int*)(char*)tmp0;
-    func_003D9440(tmp2, tmp3);
+    base = cGOBJ_GetScriptTypeKeyPtr();
+    ScriptType_SetParent(D_0053B4F8, *base);
 }
 
-int func_00392700(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_0053B4F0;
-    return tmp0;
+int cVUM_GOBJ_v0B(void) {
+    return D_0053B4F0;
 }
 
-int func_00392710(int a0, int a1) {
-    return ScriptFilter_Dispatch((int)D_00555070, a0, a1);
+int cVUM_GOBJ_v0C(int a0, int a1) {
+    return ScriptFilter_Dispatch(D_00555070, a0, a1);
 }
 
-void func_00392730(int a0) {
-    int loc[12];
-    int a1, a2, a3, s0, t0, v0, v1;
+/*
+ * Looks up the skeleton and initializes the embedded model context.
+ * a1 is passed through to Skel_Find unchanged.
+ */
+void cVUM_GOBJ_InitModel(cVUM_GOBJ* self, int a1) {
+    ModelCtxParams params;
+    int skel;
 
-    s0 = a0;
-    a0 = (int)D_0053BB70;
-    v0 = Skel_Find(a0, a1);
-    t0 = *(int*)(char*)(s0 + 80);
-    v1 = 0x3e4c0000;
-    v1 = v1 | 0xcccd;
-    a3 = 0x3f800000;
-    a2 = 0x3f000000;
-    a0 = s0 + 11856;
-    a1 = (int)loc;
-    *(int*)((char*)loc + 4) = t0;
-    *(int*)((char*)loc + 16) = a3;
-    *(int*)((char*)loc + 20) = a2;
-    *(int*)(char*)loc = v0;
-    *(int*)((char*)loc + 24) = v1;
-    *(int*)((char*)loc + 28) = v1;
-    *(int*)((char*)loc + 32) = v1;
-    v0 = ModelCtx_Init(a0, a1);
-    goto ret;
-ret:;
+    skel = Skel_Find(D_0053BB70, a1);
+    params.unk04 = self->base.unk50;
+    params.unk10 = 1.0f;
+    params.unk14 = 0.5f;
+    params.skel = skel;
+    params.unk18 = 0.2f;
+    params.unk1C = 0.2f;
+    params.unk20 = 0.2f;
+    ModelCtx_Init(&self->modelCtx, &params);
 }

@@ -1,40 +1,24 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * PathReceiver list insertion (push_back on listA).
  */
 
 #include "types.h"
+#include "path_types.h"
 
-extern int List_InsertBefore(int, int, int, int);
-extern int func_00164150(int, int);
+extern int List_InsertBefore(PathListLink** out, PathList* list, PathListLink** pos, int* value);
+extern int PathList_PushBack(PathList* list, int* value);
 
-int func_00164120(int a0, int a1) {
-    int loc[1];
-    int v0;
-
-    a0 = a0 + 32;
-    *(int*)(char*)loc = a1;
-    a1 = (int)loc;
-    v0 = func_00164150(a0, a1);
-    v0 = 0 + 1;
-    goto ret;
-ret:
-    return v0;
+/* Appends value to listA; always returns 1. */
+int func_00164120(PathReceiver* self, int value) {
+    volatile int tmp = value; /* original stack temporary */
+    PathList_PushBack(&self->listA, (int*)&tmp);
+    return 1;
 }
 
-int func_00164150(int a0, int a1) {
-    int loc[2];
-    int a2, a3, v0;
-
-    a3 = a1;
-    v0 = a0 + 4;
-    a1 = a0;
-    *(int*)(char*)loc = v0;
-    a0 = (int)((char*)loc + 4);
-    a2 = (int)loc;
-    v0 = List_InsertBefore(a0, a1, a2, a3);
-    goto ret;
-ret:
-    return v0;
+/* push_back: insert before the sentinel. */
+int PathList_PushBack(PathList* list, int* value) {
+    PathListLink* end = &list->head;
+    PathListLink* result;
+    return List_InsertBefore(&result, list, &end, value);
 }

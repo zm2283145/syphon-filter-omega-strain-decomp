@@ -1,25 +1,15 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * cTank script class: script natives, type registration and turret helpers.
  */
 
 #include "types.h"
+#include "tank_types.h"
 
-extern int Global_CreateTank(int);
-extern int func_002379D0(int);
+extern int Global_CreateTank(void* gobj);
+extern void* func_002379D0(int handle);
 
-int Script_CreateTank(int a0) {
-    int loc[1];
-    int v0;
-
-    a0 = *(int*)(char*)a0;
-    v0 = func_002379D0(a0);
-    a0 = v0;
-    v0 = Global_CreateTank(a0);
-    *(int*)(char*)loc = v0;
-    v0 = *(int*)(char*)loc;
-    goto ret;
-ret:
-    return v0;
+int Script_CreateTank(TankScriptArg* args) {
+    volatile int tank = Global_CreateTank(func_002379D0(args[0].i)); /* mirrors the original stack temporary */
+    return tank;
 }

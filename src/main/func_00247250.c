@@ -8,9 +8,9 @@
 
 extern char D_004F7E58[];
 extern int func_002472E0(int);
-extern int func_003C8C50(void);
+extern int Message_GetScriptTypeKeyPtr(void);
 extern int func_003CB1A0(int);
-extern void func_003D9440(int, int);
+extern void ScriptType_SetParent(int, int);
 
 int Script_cMenuChoiceMsg_Who(int a0) {
     int tmp0;
@@ -44,8 +44,8 @@ void ScriptType_cMenuChoiceMsg_Init(void) {
     int tmp2;
     int tmp3;
 
-    tmp0 = func_003C8C50();
+    tmp0 = Message_GetScriptTypeKeyPtr();
     tmp2 = *(int*)D_004F7E58;
     tmp3 = *(int*)(char*)tmp0;
-    func_003D9440(tmp2, tmp3);
+    ScriptType_SetParent(tmp2, tmp3);
 }

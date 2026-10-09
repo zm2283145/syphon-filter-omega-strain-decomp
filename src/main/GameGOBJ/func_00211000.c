@@ -1,145 +1,86 @@
 /*
- * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Matched functions from GameGOBJ.cc (byte-identical with the retail executable).
+ * cElevatorGOBJ (lift) script natives and script type registration.
+ * "volatile" locals mirror the original stack temporaries.
  */
 
-#include "types.h"
+#include "gobj_types.h"
 
-extern char D_004F54F0[];
-extern char D_004F5540[];
-extern char D_004F5548[];
-extern char D_004F5610[];
+extern int D_004F54F0;   /* cPathedGOBJ script-type value */
+extern int D_004F5540;   /* cElevatorGOBJ script-type value */
+extern int D_004F5548;   /* cElevatorGOBJ script-type key */
+extern int D_004F5610;   /* cElevatorNotice script-type value */
 extern char D_00555070[];
-extern int Lift_CloseDoors(int);
-extern int Lift_OpenDoors(int);
-extern int Lift_SeekFloor(int, int, int, int);
-extern int ScriptFilter_Dispatch(int, int, int);
-extern int cElevatorGOBJ_ChooseFloor(int);
-extern int cElevatorGOBJ_GetState(int);
-extern int func_003D9400(int, int);
-extern void func_003D9440(int, int);
+extern unsigned char Lift_CloseDoors(cElevatorGOBJ* lift);
+extern unsigned char Lift_OpenDoors(cElevatorGOBJ* lift);
+extern int Lift_SeekFloor(cElevatorGOBJ* lift, int floor, int a2, int a3);
+extern int ScriptFilter_Dispatch(void* filter, int a0, int a1);
+extern int cElevatorGOBJ_ChooseFloor(cElevatorGOBJ* lift);
+extern unsigned char cElevatorGOBJ_GetState(cElevatorGOBJ* lift);
+extern int ScriptType_AddAccepted(int type, int iface);
+extern void ScriptType_SetParent(int type, int base);
 
-int Script_cElevatorGOBJ_ChooseFloor(int a0) {
-    int tmp0;
-
-    tmp0 = *(int*)(char*)a0;
-    cElevatorGOBJ_ChooseFloor(tmp0);
+int Script_cElevatorGOBJ_ChooseFloor(ScriptArg* args) {
+    cElevatorGOBJ_ChooseFloor(args[0].p);
     return 0;
 }
 
-int Script_cElevatorGOBJ_GetCurrentFloor(int a0) {
-    int loc[1];
-    int v0;
-
-    v0 = *(int*)(char*)a0;
-    v0 = *(int*)(char*)(v0 + 296);
-    v0 = *(int*)(char*)v0;
-    *(int*)(char*)loc = v0;
-    v0 = *(int*)(char*)loc;
-    goto ret;
-ret:
-    return v0;
+int Script_cElevatorGOBJ_GetCurrentFloor(ScriptArg* args) {
+    volatile int floor = ((cElevatorGOBJ*)args[0].p)->state->index;
+    return floor;
 }
 
-int Script_cElevatorGOBJ_GetDestFloor(int a0) {
-    int loc[1];
-    int v0;
-
-    v0 = *(int*)(char*)a0;
-    v0 = *(int*)(char*)(v0 + 296);
-    v0 = *(int*)(char*)(v0 + 32);
-    *(int*)(char*)loc = v0;
-    v0 = *(int*)(char*)loc;
-    goto ret;
-ret:
-    return v0;
+int Script_cElevatorGOBJ_GetDestFloor(ScriptArg* args) {
+    volatile int floor = ((cElevatorGOBJ*)args[0].p)->state->dest;
+    return floor;
 }
 
-int Script_cElevatorGOBJ_Passengers(int a0) {
-    int loc[1];
-    int v0;
-
-    v0 = *(int*)(char*)a0;
-    v0 = *(int*)(char*)(v0 + 136);
-    v0 = 0 < v0;
-    *(int*)(char*)loc = v0;
-    v0 = *(int*)(char*)loc;
-    goto ret;
-ret:
-    return v0;
+/* Passengers(lift): true when the passenger count is positive. */
+int Script_cElevatorGOBJ_Passengers(ScriptArg* args) {
+    volatile int any = ((cElevatorGOBJ*)args[0].p)->passengers > 0;
+    return any;
 }
 
-int Script_cElevatorGOBJ_GetState(int a0) {
-    int tmp0;
-    int tmp1;
-
-    tmp0 = *(int*)(char*)a0;
-    tmp1 = cElevatorGOBJ_GetState(tmp0);
-    return (tmp1 & 255);
+int Script_cElevatorGOBJ_GetState(ScriptArg* args) {
+    return cElevatorGOBJ_GetState(args[0].p);
 }
 
-int Script_cElevatorGOBJ_CloseDoors(int a0) {
-    int tmp0;
-    int tmp1;
-
-    tmp0 = *(int*)(char*)a0;
-    tmp1 = Lift_CloseDoors(tmp0);
-    return (tmp1 & 255);
+int Script_cElevatorGOBJ_CloseDoors(ScriptArg* args) {
+    return Lift_CloseDoors(args[0].p);
 }
 
-int Script_cElevatorGOBJ_OpenDoors(int a0) {
-    int tmp0;
-    int tmp1;
-
-    tmp0 = *(int*)(char*)a0;
-    tmp1 = Lift_OpenDoors(tmp0);
-    return (tmp1 & 255);
+int Script_cElevatorGOBJ_OpenDoors(ScriptArg* args) {
+    return Lift_OpenDoors(args[0].p);
 }
 
-int Script_cElevatorGOBJ_SeekFloor(int a0) {
-    int loc[1];
-    int a1, a2, a3, v0, v1;
+/* SeekFloor(lift, floor, flag). */
+int Script_cElevatorGOBJ_SeekFloor(ScriptArg* args) {
+    int loc[1];   /* stack copy of the floor argument (kept for matching) */
+    cElevatorGOBJ* lift;
+    int flag;
+    int floor;
 
-    a3 = 0;
-    v1 = *(int*)(char*)(a0 + 8);
-    v0 = *(int*)(char*)(a0 + 4);
-    *(int*)(char*)loc = v0;
-    a0 = *(int*)(char*)a0;
-    a1 = *(int*)(char*)loc;
-    a2 = (unsigned int)0 < (unsigned int)v1;
-    v0 = Lift_SeekFloor(a0, a1, a2, a3);
-    v0 = 0;
-    goto ret;
-ret:
-    return v0;
+    flag = args[2].i;
+    floor = args[1].i;
+    *(int*)(char*)loc = floor;
+    lift = args[0].p;
+    floor = *(int*)(char*)loc;
+    Lift_SeekFloor(lift, floor, (unsigned int)flag != 0, 0);
+    return 0;
 }
 
+/* Registers the cElevatorGOBJ script type under cPathedGOBJ; accepts cElevatorNotice. */
 int ScriptType_cElevatorGOBJ_Init(void) {
-    int tmp0;
-    int tmp1;
-    int tmp4;
-    int tmp5;
-    int tmp6;
-
-    tmp0 = *(int*)D_004F5548;
-    tmp1 = *(int*)D_004F54F0;
-    func_003D9440(tmp0, tmp1);
-    tmp4 = *(int*)D_004F5548;
-    tmp5 = *(int*)D_004F5610;
-    tmp6 = func_003D9400(tmp4, tmp5);
-    return tmp6;
+    ScriptType_SetParent(D_004F5548, D_004F54F0);
+    return ScriptType_AddAccepted(D_004F5548, D_004F5610);
 }
 
 int Lift_GetScriptType(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_004F5540;
-    return tmp0;
+    return D_004F5540;
 }
 
 int Lift_ScriptFilter(int a0, int a1) {
-    return ScriptFilter_Dispatch((int)D_00555070, a0, a1);
+    return ScriptFilter_Dispatch(D_00555070, a0, a1);
 }
 
 int Script_Mover_SetSpeed(Args* a) {

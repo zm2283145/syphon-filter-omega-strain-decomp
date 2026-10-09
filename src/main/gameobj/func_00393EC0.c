@@ -1,44 +1,36 @@
 /*
- * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Matched functions from gameobj.cc (byte-identical with the retail executable).
  */
 
-#include "types.h"
+#include "gobj_types.h"
 
-extern int func_00393EF0(int);
-extern int func_00393F60(int);
+extern Quad4* func_00393EF0(Quad4* q);
+extern RelFlag* func_00393F60(RelFlag* r);
 
-int func_00393EC0(int a0) {
-    func_00393EF0(a0);
-    return a0;
+Quad4* func_00393EC0(Quad4* q) {
+    func_00393EF0(q);
+    return q;
 }
 
-int func_00393EF0(int a0) {
-    *(int*)((char*)a0) = 0;
-    *(int*)((char*)a0 + 4) = 0;
-    *(int*)((char*)a0 + 8) = 0;
-    *(int*)((char*)a0 + 12) = 0;
-    return a0;
+Quad4* func_00393EF0(Quad4* q) {
+    q->unk0 = 0;
+    q->unk4 = 0;
+    q->unk8 = 0.0f;
+    q->unkC = 0.0f;
+    return q;
 }
 
-int func_00393F10(int a0) {
-    int v0, v1;
-
-    *(int*)(char*)a0 = 0;
-    v0 = 0x7f7f0000;
-    v1 = v0 | 0xffff;
-    *(int*)(char*)(a0 + 4) = 0;
-    *(int*)(char*)(a0 + 8) = v1;
-    v0 = a0;
-    *(int*)(char*)(a0 + 12) = v1;
-    goto ret;
-ret:
-    return v0;
+/* Clears the first two words and sets the two floats to FLT_MAX. */
+Quad4* func_00393F10(Quad4* q) {
+    q->unk0 = 0;
+    q->unk4 = 0;
+    q->unk8 = 3.4028234663852886e38f;
+    q->unkC = 3.4028234663852886e38f;
+    return q;
 }
 
-int func_00393F30(int a0) {
-    func_00393F60(a0);
-    *(char*)((char*)a0 + 12) = 1;
-    return a0;
+RelFlag* func_00393F30(RelFlag* r) {
+    func_00393F60(r);
+    r->flag = 1;
+    return r;
 }

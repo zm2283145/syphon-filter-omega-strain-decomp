@@ -1,25 +1,18 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * cHotbox interaction volumes, cHotboxMsg and the script natives that use them.
  */
 
 #include "types.h"
+#include "hotbox_types.h"
 
-extern int List_InsertBefore(int, int, int, int);
+extern int List_InsertBefore(HotboxListIter* out, Tree* list, HotboxListIter* pos, int* value);
 
-int func_00171020(int a0, int a1) {
-    int loc[2];
-    int a2, a3, v0;
+/* Inserts value with end() as the position hint; the result iterator is discarded. */
+int func_00171020(Tree* list, int* value) {
+    HotboxListIter end;
+    HotboxListIter result;
 
-    a3 = a1;
-    v0 = a0 + 4;
-    a1 = a0;
-    *(int*)(char*)loc = v0;
-    a0 = (int)((char*)loc + 4);
-    a2 = (int)loc;
-    v0 = List_InsertBefore(a0, a1, a2, a3);
-    goto ret;
-ret:
-    return v0;
+    end.node = (HotboxListNode*)&list->header;
+    return List_InsertBefore(&result, list, &end, value);
 }

@@ -1,18 +1,18 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Part of ska.cc (skeletal animation).
  */
 
-#include "types.h"
+#include "ska_types.h"
 
-extern int func_003B91B0(int, int, int);
+extern void func_003B91B0(SkaQuadWords* self, int a1, int a2);
 
-int func_003B9170(int a0, int a1, int a2) {
-    *(int*)((char*)a0) = 0;
-    *(int*)((char*)a0 + 4) = 0;
-    *(int*)((char*)a0 + 8) = 0;
-    *(int*)((char*)a0 + 12) = 0;
-    func_003B91B0(a0, a1, a2);
-    return a0;
+/* Zero the four header words, then initialise from (a1, a2). */
+SkaQuadWords* func_003B9170(SkaQuadWords* self, int a1, int a2) {
+    self->w[0] = 0;
+    self->w[1] = 0;
+    self->w[2] = 0;
+    self->w[3] = 0;
+    func_003B91B0(self, a1, a2);
+    return self;
 }

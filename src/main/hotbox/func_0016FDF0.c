@@ -1,53 +1,40 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * cHotbox interaction volumes, cHotboxMsg and the script natives that use them.
  */
 
 #include "types.h"
+#include "hotbox_types.h"
 
-extern char D_004EE700[];
-extern char D_004EE738[];
-extern char D_004EE740[];
+extern int D_004EE700;   /* cHotboxMsg type id */
+extern int D_004EE738;   /* cHotbox class type id */
+extern int D_004EE740;   /* cHotbox script type */
 extern char D_00555070[];
-extern int ScriptFilter_Dispatch(int, int, int);
-extern int func_003CC830(void);
-extern int func_003D9400(int, int);
-extern void func_003D9440(int, int);
+extern int ScriptFilter_Dispatch(void* filter, int a0, int a1);
+extern int* cGOBJ_GetScriptTypeKeyPtr(void);
+extern int ScriptType_AddAccepted(int type, int messageType);
+extern void ScriptType_SetParent(int type, int parentType);
 
+/* Registers the cHotbox script type under its parent and adds cHotboxMsg to it. */
 int ScriptType_cHotbox_Init(void) {
-    int tmp0;
-    int tmp2;
-    int tmp3;
-    int tmp6;
-    int tmp7;
-    int tmp8;
+    int* parent = cGOBJ_GetScriptTypeKeyPtr();
 
-    tmp0 = func_003CC830();
-    tmp2 = *(int*)D_004EE740;
-    tmp3 = *(int*)(char*)tmp0;
-    func_003D9440(tmp2, tmp3);
-    tmp6 = *(int*)D_004EE740;
-    tmp7 = *(int*)D_004EE700;
-    tmp8 = func_003D9400(tmp6, tmp7);
-    return tmp8;
+    ScriptType_SetParent(D_004EE740, *parent);
+    return ScriptType_AddAccepted(D_004EE740, D_004EE700);
 }
 
 void* func_0016FE30(void* self) {
     return self;
 }
 
-int func_0016FE40(void) {
-    return (int)D_004EE738;
+int* func_0016FE40(void) {
+    return &D_004EE738;
 }
 
 int func_0016FE50(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_004EE738;
-    return tmp0;
+    return D_004EE738;
 }
 
 int func_0016FE60(int a0, int a1) {
-    return ScriptFilter_Dispatch((int)D_00555070, a0, a1);
+    return ScriptFilter_Dispatch(D_00555070, a0, a1);
 }

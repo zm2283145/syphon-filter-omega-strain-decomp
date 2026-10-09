@@ -1,34 +1,26 @@
 /*
- * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Matched functions from gobj.cc (byte-identical with the retail executable).
+ * SubScript script type registration and script-type accessors.
  */
 
-#include "types.h"
+#include "gobj_types.h"
 
-extern char D_005436B8[];
-extern char D_00543720[];
-extern char D_00543728[];
+extern int D_005436B8;   /* cGOBJ script-type key */
+extern int D_00543720;   /* SubScript script-type value */
+extern int D_00543728;   /* SubScript script-type key */
 extern char D_00555070[];
-extern int ScriptFilter_Dispatch(int, int, int);
-extern void func_003D9440(int, int);
+extern int ScriptFilter_Dispatch(void* filter, int a0, int a1);
+extern void ScriptType_SetParent(int type, int base);
 
+/* Registers the SubScript script type under cGOBJ. */
 void ScriptType_SubScript_Init(void) {
-    int tmp0;
-    int tmp1;
-
-    tmp0 = *(int*)D_00543728;
-    tmp1 = *(int*)D_005436B8;
-    func_003D9440(tmp0, tmp1);
+    ScriptType_SetParent(D_00543728, D_005436B8);
 }
 
 int SubScript_v0B(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_00543720;
-    return tmp0;
+    return D_00543720;
 }
 
 int SubScript_v0C(int a0, int a1) {
-    return ScriptFilter_Dispatch((int)D_00555070, a0, a1);
+    return ScriptFilter_Dispatch(D_00555070, a0, a1);
 }

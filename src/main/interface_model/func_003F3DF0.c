@@ -5,51 +5,42 @@
  */
 
 #include "types.h"
+#include "interface_model_types.h"
 
-int func_003F3DF0(int a0, int a1) {
-    int a2, v0, v1;
-    float f0, f1, f2;
+/* Reads a float and then a 3-float vector from a stream cursor.
+ * (Local declaration order matters for register allocation.) */
+FloatVec3* func_003F3DF0(FloatVec3* dst, float** cursor) {
+    float* p;
+    float x, z, y;
 
-    a2 = *(int*)(char*)a1;
-    v0 = a0;
-    v1 = a2 + 4;
-    *(int*)(char*)a1 = v1;
-    f0 = *(float*)(char*)a2;
-    *(float*)(char*)a0 = f0;
-    a2 = *(int*)(char*)a1;
-    v1 = a2 + 12;
-    *(int*)(char*)a1 = v1;
-    f2 = *(float*)(char*)(a2 + 4);
-    f1 = *(float*)(char*)(a2 + 8);
-    f0 = *(float*)(char*)a2;
-    *(float*)(char*)(a0 + 4) = f0;
-    *(float*)(char*)(a0 + 8) = f2;
-    *(float*)(char*)(a0 + 12) = f1;
-    goto ret;
-ret:
-    return v0;
+    x = *(*cursor)++;
+    dst->f = x;
+    p = *cursor;
+    *cursor = p + 3;
+    y = p[1];
+    z = p[2];
+    x = p[0];
+    dst->v[0] = x;
+    dst->v[1] = y;
+    dst->v[2] = z;
+    return dst;
 }
 
-int func_003F3E30(int a0, int a1) {
-    int a2, v0, v1;
-    float f0, f1, f2;
+/* Reads a float and then a 3-float vector from a stream cursor.
+ * (Local declaration order matters for register allocation.) */
+FloatVec3* func_003F3E30(FloatVec3* dst, float** cursor) {
+    float* p;
+    float x, z, y;
 
-    a2 = *(int*)(char*)a1;
-    v0 = a0;
-    v1 = a2 + 4;
-    *(int*)(char*)a1 = v1;
-    f0 = *(float*)(char*)a2;
-    *(float*)(char*)a0 = f0;
-    a2 = *(int*)(char*)a1;
-    v1 = a2 + 12;
-    *(int*)(char*)a1 = v1;
-    f2 = *(float*)(char*)(a2 + 4);
-    f1 = *(float*)(char*)(a2 + 8);
-    f0 = *(float*)(char*)a2;
-    *(float*)(char*)(a0 + 4) = f0;
-    *(float*)(char*)(a0 + 8) = f2;
-    *(float*)(char*)(a0 + 12) = f1;
-    goto ret;
-ret:
-    return v0;
+    x = *(*cursor)++;
+    dst->f = x;
+    p = *cursor;
+    *cursor = p + 3;
+    y = p[1];
+    z = p[2];
+    x = p[0];
+    dst->v[0] = x;
+    dst->v[1] = y;
+    dst->v[2] = z;
+    return dst;
 }

@@ -1,66 +1,48 @@
 /*
- * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Matched functions from gobj.cc (byte-identical with the retail executable).
+ * cGOBJ script type registration, identity conversions and accessors.
  */
 
-#include "types.h"
+#include "gobj_types.h"
 
-extern char D_005436B8[];
-extern char D_005436C0[];
+extern int D_005436B8;   /* cGOBJ script-type key */
+extern int D_005436C0;   /* cGOBJ script-type value */
 extern char D_00555070[];
-extern int ScriptFilter_Dispatch(int, int, int);
-extern int func_003CB1D0(void);
-extern int func_003D9400(int, int);
-extern void func_003D9440(int, int);
-extern int func_004080E0(void);
+extern int ScriptFilter_Dispatch(void* filter, int a0, int a1);
+extern int* func_003CB1D0(void);
+extern int ScriptType_AddAccepted(int type, int iface);
+extern void ScriptType_SetParent(int type, int base);
+extern int* func_004080E0(void);
 
+/* Registers the cGOBJ script type: parent type, then one accepted interface. */
 int ScriptType_cGOBJ_Init(void) {
-    int tmp0;
-    int tmp2;
-    int tmp3;
-    int tmp6;
-    int tmp8;
-    int tmp9;
-    int tmp10;
+    int* key;
 
-    tmp0 = func_003CB1D0();
-    tmp2 = *(int*)D_005436C0;
-    tmp3 = *(int*)(char*)tmp0;
-    func_003D9440(tmp2, tmp3);
-    tmp6 = func_004080E0();
-    tmp8 = *(int*)D_005436C0;
-    tmp9 = *(int*)(char*)tmp6;
-    tmp10 = func_003D9400(tmp8, tmp9);
-    return tmp10;
+    key = func_003CB1D0();
+    ScriptType_SetParent(D_005436C0, *key);
+    key = func_004080E0();
+    return ScriptType_AddAccepted(D_005436C0, *key);
 }
 
-int GObj_IdentityA(int a0) {
-    int loc[1];
-    int v0;
-
-    *(int*)(char*)loc = a0;
-    v0 = *(int*)(char*)loc;
-    goto ret;
-ret:
-    return v0;
+/* Identity conversion of a GOBJ script value; the volatile mirrors the stack temporary. */
+int GObj_IdentityA(int obj) {
+    volatile int tmp = obj;
+    return tmp;
 }
 
 void* GObj_IdentityB(void* self) {
     return self;
 }
 
-int func_003CC830(void) {
-    return (int)D_005436B8;
+/* Address of the cGOBJ script-type key. */
+int* cGOBJ_GetScriptTypeKeyPtr(void) {
+    return &D_005436B8;
 }
 
-int func_003CC840(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_005436B8;
-    return tmp0;
+int cGOBJ_v0B(void) {
+    return D_005436B8;
 }
 
-int func_003CC850(int a0, int a1) {
-    return ScriptFilter_Dispatch((int)D_00555070, a0, a1);
+int cGOBJ_v0C(int a0, int a1) {
+    return ScriptFilter_Dispatch(D_00555070, a0, a1);
 }

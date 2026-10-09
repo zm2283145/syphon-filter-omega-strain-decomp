@@ -1,11 +1,11 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Player input-state helpers and small value types used by the input code.
  */
 
 #include "types.h"
+#include "playerControls_types.h"
 
-void func_0024FC20(char* self, float value) {
-    *(float*)(self + 3176) = value;
+void func_0024FC20(PlayerCamera* self, float value) {
+    self->fovTarget = value;
 }

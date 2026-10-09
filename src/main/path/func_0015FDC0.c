@@ -1,12 +1,12 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Writes one scalar into two fields.
  */
 
 #include "types.h"
+#include "path_types.h"
 
-void func_0015FDC0(int a0, float f12) {
-    *(float*)((char*)a0 + 8) = f12;
-    *(float*)((char*)a0 + 40) = f12;
+void func_0015FDC0(PathScalarPair* self, float value) {
+    self->unk08 = value;
+    self->unk28 = value;
 }

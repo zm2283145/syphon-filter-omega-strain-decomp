@@ -1,16 +1,11 @@
 /*
- * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Matched functions from GameGOBJ.cc (byte-identical with the retail executable).
  */
 
-#include "types.h"
+#include "gobj_types.h"
 
-extern char D_004F5480[];
+extern int D_004F5480;
 
 int func_00211DA0(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_004F5480;
-    return tmp0;
+    return D_004F5480;
 }

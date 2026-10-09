@@ -1,18 +1,14 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Actor inventory and weapon-definition helpers, cOutOfAmmoMsg.
  */
 
 #include "types.h"
+#include "weapon_types.h"
 
-extern int func_00147CD0(int, int, int, int);
+extern int func_00147CD0(WeaponRec24Vec* v, WeaponRec24* pos, int n, WeaponRec24* value);
 
-int func_00147600(int a0, int a1) {
-    int tmp0;
-    int tmp1;
-
-    tmp0 = *(int*)((char*)a0 + 8);
-    tmp1 = *(int*)((char*)a0 + 4);
-    return func_00147CD0(a0, (tmp0 + (tmp1 * 24)), 1, a1);
+/* push_back on a vector of 24-byte elements. */
+int func_00147600(WeaponRec24Vec* v, WeaponRec24* value) {
+    return func_00147CD0(v, v->data + v->count, 1, value);
 }

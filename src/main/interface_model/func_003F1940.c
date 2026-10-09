@@ -5,21 +5,19 @@
  */
 
 #include "types.h"
+#include "interface_model_types.h"
 
-extern int PtrVec_Insert(int, int, int, int);
+extern int PtrVec_Insert(PtrVec* v, int* pos, int n, int value);
 
-Rel* func_003F1940(Rel* r) {
-    r->a = 0;
-    r->b = 0;
-    r->c = 0;
-    return r;
+/* Clears the three vector words. */
+OwnedVec* func_003F1940(OwnedVec* v) {
+    v->unk0 = 0;
+    v->count = 0;
+    v->data = 0;
+    return v;
 }
 
-int func_003F1960(int a0, int a1) {
-    int tmp0;
-    int tmp1;
-
-    tmp0 = *(int*)((char*)a0 + 4);
-    tmp1 = *(int*)((char*)a0 + 8);
-    return PtrVec_Insert(a0, (tmp1 + (tmp0 << 2)), 1, a1);
+/* push_back: inserts one value at the end. */
+int func_003F1960(PtrVec* v, int value) {
+    return PtrVec_Insert(v, v->data + v->count, 1, value);
 }

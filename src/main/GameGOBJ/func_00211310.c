@@ -1,31 +1,19 @@
 /*
- * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Matched functions from GameGOBJ.cc (byte-identical with the retail executable).
+ * Pathed object (mover) script natives.
  */
 
-#include "types.h"
+#include "gobj_types.h"
 
-extern int PathObj_ResetAndTrigger(int);
+extern int PathObj_ResetAndTrigger(Mover* obj);
 
-int Script_Mover_GetPos(int a0) {
-    int loc[1];
-    int v0;
-
-    v0 = *(int*)(char*)a0;
-    v0 = *(int*)(char*)(v0 + 208);
-    v0 = *(int*)(char*)v0;
-    *(int*)(char*)loc = v0;
-    v0 = *(int*)(char*)loc;
-    goto ret;
-ret:
-    return v0;
+/* GetPos(mover): current path index (first word of the path state at +0xD0). */
+int Script_Mover_GetPos(Args* a) {
+    volatile int pos = a->obj->path[0];
+    return pos;
 }
 
-int PathObj_ScriptResetAndTrigger(int a0) {
-    int tmp0;
-
-    tmp0 = *(int*)(char*)a0;
-    PathObj_ResetAndTrigger(tmp0);
+int PathObj_ScriptResetAndTrigger(Args* a) {
+    PathObj_ResetAndTrigger(a->obj);
     return 0;
 }

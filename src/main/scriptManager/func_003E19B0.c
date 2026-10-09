@@ -5,18 +5,20 @@
  */
 
 #include "types.h"
+#include "scriptManager_types.h"
 
-extern int func_003E1A00(int);
+extern OwnedVec* func_003E1A00(OwnedVec* v);
 
-Rel* func_003E19B0(Rel* r) {
-    r->a = 0;
-    r->b = 0;
-    r->c = 0;
-    return r;
+/* Clears the three PtrVec words. */
+OwnedVec* func_003E19B0(OwnedVec* v) {
+    v->unk0 = 0;
+    v->count = 0;
+    v->data = 0;
+    return v;
 }
 
-int func_003E19D0(int a0) {
-    func_003E1A00(a0);
-    *(char*)((char*)a0 + 12) = 1;
-    return a0;
+OwnedVec* func_003E19D0(OwnedVec* v) {
+    func_003E1A00(v);
+    v->unk0C = 1;
+    return v;
 }

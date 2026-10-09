@@ -1,16 +1,13 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * cPlayQuipMsg virtual slot.
  */
 
 #include "types.h"
+#include "gameSound_types.h"
 
-extern char D_004F2D08[];
+extern int D_004F2D08; /* cPlayQuipMsg script type key */
 
 int cPlayQuipMsg_v05(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_004F2D08;
-    return tmp0;
+    return D_004F2D08;
 }

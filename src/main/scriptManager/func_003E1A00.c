@@ -5,10 +5,12 @@
  */
 
 #include "types.h"
+#include "scriptManager_types.h"
 
-Rel* func_003E1A00(Rel* r) {
-    r->a = 0;
-    r->b = 0;
-    r->c = 0;
-    return r;
+/* Clears the three PtrVec words. */
+OwnedVec* func_003E1A00(OwnedVec* v) {
+    v->unk0 = 0;
+    v->count = 0;
+    v->data = 0;
+    return v;
 }

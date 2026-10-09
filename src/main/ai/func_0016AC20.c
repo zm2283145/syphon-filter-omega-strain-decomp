@@ -22,8 +22,8 @@ extern int* func_0026F030(void);
 extern int* func_0026F080(void);
 extern int* func_0026F0B0(void);
 extern int* func_0026F0F0(void);
-extern int func_003D9400(int, int);
-extern void func_003D9440(int, int);
+extern int ScriptType_AddAccepted(int, int);
+extern void ScriptType_SetParent(int, int);
 
 /*
  * Registers the cAI script type under its parent, then registers each of the
@@ -33,31 +33,31 @@ int ScriptType_cAI_Init(void) {
     int* key;
 
     key = func_0022F170();
-    func_003D9440(*(int*)D_004EE5E0, *key);
+    ScriptType_SetParent(*(int*)D_004EE5E0, *key);
     key = func_0026F0F0();
-    func_003D9400(*(int*)D_004EE5E0, *key);
+    ScriptType_AddAccepted(*(int*)D_004EE5E0, *key);
     key = func_0026F0B0();
-    func_003D9400(*(int*)D_004EE5E0, *key);
+    ScriptType_AddAccepted(*(int*)D_004EE5E0, *key);
     key = func_0026F080();
-    func_003D9400(*(int*)D_004EE5E0, *key);
+    ScriptType_AddAccepted(*(int*)D_004EE5E0, *key);
     key = func_0026F030();
-    func_003D9400(*(int*)D_004EE5E0, *key);
+    ScriptType_AddAccepted(*(int*)D_004EE5E0, *key);
     key = func_0026EF90();
-    func_003D9400(*(int*)D_004EE5E0, *key);
+    ScriptType_AddAccepted(*(int*)D_004EE5E0, *key);
     key = func_0026EF50();
-    func_003D9400(*(int*)D_004EE5E0, *key);
+    ScriptType_AddAccepted(*(int*)D_004EE5E0, *key);
     key = func_0026EF10();
-    func_003D9400(*(int*)D_004EE5E0, *key);
+    ScriptType_AddAccepted(*(int*)D_004EE5E0, *key);
     key = func_0026EEC0();
-    func_003D9400(*(int*)D_004EE5E0, *key);
+    ScriptType_AddAccepted(*(int*)D_004EE5E0, *key);
     key = func_0026EE30();
-    func_003D9400(*(int*)D_004EE5E0, *key);
+    ScriptType_AddAccepted(*(int*)D_004EE5E0, *key);
     key = func_0026EDF0();
-    func_003D9400(*(int*)D_004EE5E0, *key);
+    ScriptType_AddAccepted(*(int*)D_004EE5E0, *key);
     key = func_0026ED70();
-    func_003D9400(*(int*)D_004EE5E0, *key);
+    ScriptType_AddAccepted(*(int*)D_004EE5E0, *key);
     key = func_0026ED30();
-    return func_003D9400(*(int*)D_004EE5E0, *key);
+    return ScriptType_AddAccepted(*(int*)D_004EE5E0, *key);
 }
 
 /* Address of the cAI script-type key. */

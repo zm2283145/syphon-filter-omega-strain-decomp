@@ -1,26 +1,16 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * cAgentData flag helper.
  */
 
 #include "types.h"
 
-extern int func_00333170(int, int, int);
+extern unsigned char* func_00333170(int a0, int a1, int a2);
 
-void func_00333130(void) {
-    int a0, a1, a2, v0, v1;
-    int cond;
-
-    v0 = func_00333170(a0, a1, a2);
-    cond = v0 == 0;
-    if (cond) goto L00333158;
-    v1 = *(unsigned char*)(char*)v0;
-    cond = v1 != 0;
-    v1 = 0 + 1;
-    if (cond) goto L00333158;
-    *(char*)(char*)v0 = v1;
-L00333158:;
-    goto ret;
-ret:;
+/* Looks up a flag byte and sets it if it is still clear. */
+void func_00333130(int a0, int a1, int a2) {
+    unsigned char* flag = func_00333170(a0, a1, a2);
+    if (flag != 0 && *flag == 0) {
+        *flag = 1;
+    }
 }

@@ -1,16 +1,16 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Part of ska.cc (skeletal animation).
  */
 
-#include "types.h"
+#include "ska_types.h"
 
-int func_003AD650(int a0, int a1) {
-    *(float*)((char*)a0) = *(float*)(char*)a1;
-    *(float*)((char*)a0 + 4) = *(float*)((char*)a1 + 4);
-    *(float*)((char*)a0 + 8) = *(float*)((char*)a1 + 8);
-    *(float*)((char*)a0 + 12) = *(float*)((char*)a1 + 12);
-    *(float*)((char*)a0 + 16) = *(float*)((char*)a1 + 16);
-    return a0;
+/* Five-float copy assignment. */
+SkaFloat5* func_003AD650(SkaFloat5* dst, SkaFloat5* src) {
+    dst->v[0] = src->v[0];
+    dst->v[1] = src->v[1];
+    dst->v[2] = src->v[2];
+    dst->v[3] = src->v[3];
+    dst->v[4] = src->v[4];
+    return dst;
 }

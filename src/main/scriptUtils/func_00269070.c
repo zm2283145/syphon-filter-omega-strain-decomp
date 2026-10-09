@@ -5,28 +5,24 @@
  */
 
 #include "types.h"
+#include "scriptUtils_types.h"
 
-extern int func_00269090(int);
-extern int func_002690C0(int);
+extern int func_00269090(int value);
+extern void* func_002690C0(void* obj);
 
 void func_00269070(void) {
 }
 
-int func_00269080(int a0) {
-    return func_00269090(a0);
+int func_00269080(int value) {
+    return func_00269090(value);
 }
 
-int func_00269090(int a0) {
-    int loc[1];
-    int v0;
-
-    *(int*)(char*)loc = a0;
-    v0 = *(int*)(char*)loc;
-    goto ret;
-ret:
-    return v0;
+/* Identity. volatile mirrors the original stack temporary. */
+int func_00269090(int value) {
+    volatile int v = value;
+    return v;
 }
 
-int func_002690B0(int a0) {
-    return func_002690C0(a0);
+void* func_002690B0(void* obj) {
+    return func_002690C0(obj);
 }

@@ -1,41 +1,25 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * cHotbox interaction volumes, cHotboxMsg and the script natives that use them.
  */
 
 #include "types.h"
+#include "hotbox_types.h"
 
-extern char D_004EE6E0[];
-extern char D_004FFBD0[];
-extern int PtrVec_Insert(int, int, int, int);
-extern int func_00170500(int, int);
-extern int func_00170E20(int, int, int, int);
+extern PtrVec D_004EE6E0;  /* list of created hotboxes */
+extern void* D_004FFBD0;
+extern int PtrVec_Insert(PtrVec* v, int* pos, int n, int* value);
+extern int func_00170E20(void* owner, void* gobj, int a2, int a3);
 
-int func_00170500(int a0, int a1) {
-    int tmp0;
-    int tmp1;
-
-    tmp0 = *(int*)((char*)a0 + 4);
-    tmp1 = *(int*)((char*)a0 + 8);
-    return PtrVec_Insert(a0, (tmp1 + (tmp0 << 2)), 1, a1);
+/* push_back on a pointer vector. */
+int func_00170500(PtrVec* v, int* value) {
+    return PtrVec_Insert(v, v->data + v->count, 1, value);
 }
 
-int Global_MakeGOBJInteractable(int a0) {
-    int loc[1];
-    int a1, a2, a3, v0;
+/* Creates a hotbox for a game object and records it in D_004EE6E0. */
+int Global_MakeGOBJInteractable(void* gobj) {
+    int hotbox = func_00170E20(D_004FFBD0, gobj, 0, 0);
 
-    a1 = a0;
-    a0 = *(int*)(char*)D_004FFBD0;
-    a2 = 0;
-    a3 = 0;
-    v0 = func_00170E20(a0, a1, a2, a3);
-    *(int*)(char*)loc = v0;
-    a0 = (int)D_004EE6E0;
-    a1 = (int)loc;
-    v0 = func_00170500(a0, a1);
-    v0 = *(int*)(char*)loc;
-    goto ret;
-ret:
-    return v0;
+    func_00170500(&D_004EE6E0, &hotbox);
+    return hotbox;
 }

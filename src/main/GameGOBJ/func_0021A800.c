@@ -1,23 +1,21 @@
 /*
- * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Matched functions from GameGOBJ.cc (byte-identical with the retail executable).
  */
 
-#include "types.h"
+#include "gobj_types.h"
 
 extern char D_004D9DE0[];
 
-int func_0021A800(int a0) {
-    *(int*)((char*)a0 + 4) = -2;
-    *(int*)((char*)a0) = 0;
-    return a0;
+Rec0C* func_0021A800(Rec0C* r) {
+    *(int*)&r->unk4 = -2;
+    r->unk0 = 0;
+    return r;
 }
 
-int func_0021A820(int a0, int a1, int a2, int a3) {
-    *(int*)((char*)a0 + 8) = (int)D_004D9DE0;
-    *(char*)((char*)a0 + 4) = a2;
-    *(int*)((char*)a0) = a1;
-    *(char*)((char*)a0 + 5) = a3;
-    return a0;
+Rec0C* func_0021A820(Rec0C* r, int a1, int a2, int a3) {
+    r->unk8 = D_004D9DE0;
+    r->unk4 = a2;
+    r->unk0 = a1;
+    r->unk5 = a3;
+    return r;
 }

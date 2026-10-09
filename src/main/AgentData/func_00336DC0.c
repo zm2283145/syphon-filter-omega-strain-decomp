@@ -1,13 +1,13 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Small constructors / forwarding helpers.
  */
 
 #include "types.h"
+#include "AgentData_types.h"
 
 extern int func_001396D0(int, int);
-extern int func_00336E40(int);
+extern Rel* func_00336E40(Rel* r);
 
 Rel* func_00336DC0(Rel* r) {
     r->a = 0;
@@ -27,8 +27,9 @@ Rel* func_00336DF0(Rel* r) {
     return r;
 }
 
-int func_00336E10(int a0) {
-    func_00336E40(a0);
-    *(char*)((char*)a0 + 12) = 1;
-    return a0;
+/* Clears the three words and sets the flag. */
+RelFlag* func_00336E10(RelFlag* self) {
+    func_00336E40(&self->rel);
+    self->flag = 1;
+    return self;
 }

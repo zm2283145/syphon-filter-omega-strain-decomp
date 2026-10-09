@@ -5,13 +5,12 @@
  */
 
 #include "types.h"
+#include "scriptUtils_types.h"
 
-extern int func_002690C0(int);
+extern ScriptArray* func_002690C0(void* obj);
 
-int Script_Array_Print(int a0) {
-    int tmp0;
-
-    tmp0 = *(int*)(char*)a0;
-    func_002690C0(tmp0);
+/* Script native: Array.Print(); the cast result is unused in this build. */
+int Script_Array_Print(ScriptArg* args) {
+    func_002690C0(args[0].p);
     return 0;
 }

@@ -1,63 +1,41 @@
 /*
- * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Matched functions from gameobj.cc (byte-identical with the retail executable).
+ * cVUM_GOBJ constructors.
  */
 
-#include "types.h"
+#include "gobj_types.h"
 
-extern char D_004DF970[];
-extern int cGOBJ_ctor(int, int, int, int);
-extern int func_0036D630(int);
+extern char D_004DF970[];   /* cVUM_GOBJ vtable */
+extern cGOBJ* cGOBJ_ctor(cGOBJ* self, int* desc, int a2, int* a3);
+extern int func_0036D630(int* p);
 
-int cVUM_GOBJ_ctor(int a0, int a1, int a2) {
-    int a3, s0, v0, v1;
-
-    a3 = a2;
-    a2 = 0 + 1;
-    s0 = a0;
-    v0 = cGOBJ_ctor(a0, a1, a2, a3);
-    a0 = s0 + 116;
-    v0 = (int)D_004DF970;
-    *(int*)(char*)s0 = v0;
-    *(int*)(char*)(s0 + 108) = s0;
-    *(int*)(char*)(s0 + 112) = 0;
-    v0 = func_0036D630(a0);
-    v1 = 0 + 1;
-    v0 = s0;
-    *(char*)(char*)(s0 + 496) = v1;
-    *(char*)(char*)(s0 + 497) = v1;
-    *(char*)(char*)(s0 + 498) = 0;
-    *(char*)(char*)(s0 + 499) = 0;
-    *(char*)(char*)(s0 + 47) = v1;
-    goto ret;
-ret:
-    return v0;
+cVUM_GOBJ* cVUM_GOBJ_ctor(cVUM_GOBJ* self, int* desc, int* a2) {
+    cGOBJ_ctor(&self->base, desc, 1, a2);
+    self->base.vtable = D_004DF970;
+    self->self = self;
+    self->unk70 = 0;
+    func_0036D630(&self->unk74);
+    self->unk1F0 = 1;
+    self->unk1F1 = 1;
+    self->unk1F2 = 0;
+    self->unk1F3 = 0;
+    self->base.unk2F = 1;
+    return self;
 }
 
-int cVUM_GOBJ_ctor2(int a0) {
-    int loc[1];
-    int a1, a2, a3, s0, v0, v1;
+/* Same as cVUM_GOBJ_ctor with a zero third constructor argument; desc is passed through. */
+cVUM_GOBJ* cVUM_GOBJ_ctor2(cVUM_GOBJ* self, int* desc) {
+    int zero = 0;
 
-    a2 = 0 + 1;
-    a3 = (int)loc;
-    s0 = a0;
-    *(int*)(char*)loc = 0;
-    v0 = cGOBJ_ctor(a0, a1, a2, a3);
-    a0 = s0 + 116;
-    v0 = (int)D_004DF970;
-    *(int*)(char*)s0 = v0;
-    *(int*)(char*)(s0 + 108) = s0;
-    *(int*)(char*)(s0 + 112) = 0;
-    v0 = func_0036D630(a0);
-    v1 = 0 + 1;
-    v0 = s0;
-    *(char*)(char*)(s0 + 496) = v1;
-    *(char*)(char*)(s0 + 497) = v1;
-    *(char*)(char*)(s0 + 498) = 0;
-    *(char*)(char*)(s0 + 499) = 0;
-    *(char*)(char*)(s0 + 47) = v1;
-    goto ret;
-ret:
-    return v0;
+    cGOBJ_ctor(&self->base, desc, 1, &zero);
+    self->base.vtable = D_004DF970;
+    self->self = self;
+    self->unk70 = 0;
+    func_0036D630(&self->unk74);
+    self->unk1F0 = 1;
+    self->unk1F1 = 1;
+    self->unk1F2 = 0;
+    self->unk1F3 = 0;
+    self->base.unk2F = 1;
+    return self;
 }

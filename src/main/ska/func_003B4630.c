@@ -1,12 +1,12 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Part of ska.cc (skeletal animation).
  */
 
-#include "types.h"
+#include "ska_types.h"
 
-void func_003B4630(int a0) {
-    *(int*)((char*)a0) = 0;
-    *(int*)((char*)a0 + 4) = -1;
+/* Reset a handle to {0, -1}. */
+void func_003B4630(SkaHandle* h) {
+    h->unk0 = 0;
+    h->index = -1;
 }

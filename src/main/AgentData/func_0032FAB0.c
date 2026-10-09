@@ -1,24 +1,15 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * cAgentData script natives (medals).
  */
 
 #include "types.h"
+#include "AgentData_types.h"
 
-extern int cAgentData_HasMedal(int, int);
+extern unsigned char cAgentData_HasMedal(cAgentData* agent, int medal);
 
-int Script_cAgentData_HasMedal(int a0) {
-    int loc[1];
-    int a1, v0;
-
-    v0 = *(int*)(char*)(a0 + 4);
-    *(int*)(char*)loc = v0;
-    a1 = *(int*)(char*)loc;
-    a0 = *(int*)(char*)a0;
-    v0 = cAgentData_HasMedal(a0, a1);
-    v0 = v0 & 255;
-    goto ret;
-ret:
-    return v0;
+int Script_cAgentData_HasMedal(AgentScriptArg* args) {
+    int medal[1];
+    medal[0] = args[1].i;
+    return cAgentData_HasMedal(args[0].p, STACK_COPY(medal));
 }

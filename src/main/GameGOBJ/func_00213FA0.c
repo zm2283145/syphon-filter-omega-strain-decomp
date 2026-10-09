@@ -1,28 +1,13 @@
 /*
- * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Matched functions from GameGOBJ.cc (byte-identical with the retail executable).
  */
 
-#include "types.h"
+#include "gobj_types.h"
 
-extern int func_00213FE0(int);
-extern int func_00214080(int);
+extern int func_00213FE0(cElevatorGOBJ* lift);
+extern int func_00214080(cElevatorGOBJ* lift);
 
-int func_00213FA0(int a0) {
-    int s0, v0;
-    int cond;
-
-    s0 = a0;
-    v0 = func_00214080(a0);
-    v0 = (unsigned int)0 < (unsigned int)v0;
-    cond = v0 != 0;
-    a0 = s0;
-    if (cond) goto L00213FCC;
-    v0 = func_00213FE0(a0);
-    v0 = (unsigned int)0 < (unsigned int)v0;
-L00213FCC:;
-    goto ret;
-ret:
-    return v0;
+/* Lift door predicate: func_00214080 OR func_00213FE0. */
+int func_00213FA0(cElevatorGOBJ* lift) {
+    return func_00214080(lift) != 0 || func_00213FE0(lift) != 0;
 }

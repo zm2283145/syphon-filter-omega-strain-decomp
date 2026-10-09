@@ -1,48 +1,38 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * In-place 4x4 matrix transpose.
  */
 
 #include "types.h"
+#include "man_types.h"
 
-int func_00384A00(int a0) {
-    float tmp0;
-    float tmp1;
-    float tmp2;
-    float tmp3;
-    float tmp4;
-    float tmp5;
-    float tmp6;
-    float tmp7;
-    float tmp8;
-    float tmp9;
-    float tmp10;
-    float tmp11;
+/* Each swap uses its own pair of locals (keeps the original scheduling). */
+ManMatrix* Matrix_TransposeInPlace(ManMatrix* mat) {
+    float a01, a10, a02, a20, a12, a21, a03, a30, a13, a31, a23, a32;
 
-    tmp0 = *(float*)((char*)a0 + 4);
-    tmp1 = *(float*)((char*)a0 + 16);
-    *(float*)((char*)a0 + 4) = tmp1;
-    *(float*)((char*)a0 + 16) = tmp0;
-    tmp2 = *(float*)((char*)a0 + 8);
-    tmp3 = *(float*)((char*)a0 + 32);
-    *(float*)((char*)a0 + 8) = tmp3;
-    *(float*)((char*)a0 + 32) = tmp2;
-    tmp4 = *(float*)((char*)a0 + 24);
-    tmp5 = *(float*)((char*)a0 + 36);
-    *(float*)((char*)a0 + 24) = tmp5;
-    *(float*)((char*)a0 + 36) = tmp4;
-    tmp6 = *(float*)((char*)a0 + 12);
-    tmp7 = *(float*)((char*)a0 + 48);
-    *(float*)((char*)a0 + 12) = tmp7;
-    *(float*)((char*)a0 + 48) = tmp6;
-    tmp8 = *(float*)((char*)a0 + 28);
-    tmp9 = *(float*)((char*)a0 + 52);
-    *(float*)((char*)a0 + 28) = tmp9;
-    *(float*)((char*)a0 + 52) = tmp8;
-    tmp10 = *(float*)((char*)a0 + 44);
-    tmp11 = *(float*)((char*)a0 + 56);
-    *(float*)((char*)a0 + 44) = tmp11;
-    *(float*)((char*)a0 + 56) = tmp10;
-    return a0;
+    a01 = mat->m[0][1];
+    a10 = mat->m[1][0];
+    mat->m[0][1] = a10;
+    mat->m[1][0] = a01;
+    a02 = mat->m[0][2];
+    a20 = mat->m[2][0];
+    mat->m[0][2] = a20;
+    mat->m[2][0] = a02;
+    a12 = mat->m[1][2];
+    a21 = mat->m[2][1];
+    mat->m[1][2] = a21;
+    mat->m[2][1] = a12;
+    a03 = mat->m[0][3];
+    a30 = mat->m[3][0];
+    mat->m[0][3] = a30;
+    mat->m[3][0] = a03;
+    a13 = mat->m[1][3];
+    a31 = mat->m[3][1];
+    mat->m[1][3] = a31;
+    mat->m[3][1] = a13;
+    a23 = mat->m[2][3];
+    a32 = mat->m[3][2];
+    mat->m[2][3] = a32;
+    mat->m[3][2] = a23;
+    return mat;
 }

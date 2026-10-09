@@ -8,18 +8,18 @@
 
 extern char D_0055D4A8[];
 extern char D_0055D4B0[];
-extern int func_003C8C50(void);
-extern void func_003D9440(int, int);
+extern int Message_GetScriptTypeKeyPtr(void);
+extern void ScriptType_SetParent(int, int);
 
 void ScriptType_cDisableMsg_Init(void) {
     int tmp0;
     int tmp2;
     int tmp3;
 
-    tmp0 = func_003C8C50();
+    tmp0 = Message_GetScriptTypeKeyPtr();
     tmp2 = *(int*)D_0055D4B0;
     tmp3 = *(int*)(char*)tmp0;
-    func_003D9440(tmp2, tmp3);
+    ScriptType_SetParent(tmp2, tmp3);
 }
 
 int cDisableMsg_v03(void) {

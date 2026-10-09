@@ -5,11 +5,12 @@
  */
 
 #include "types.h"
+#include "scriptUtils_types.h"
 
-extern int Global_RemoveArray(int);
-extern int func_002689F0(int);
-extern int func_00269090(int);
-extern int func_002690C0(int);
+extern int Global_RemoveArray(ScriptArray* array);
+extern int func_002689F0(int arg);
+extern int func_00269090(int value);
+extern ScriptArray* func_002690C0(void* obj);
 
 Word* func_00268680(Word* dst, Word* src) {
     dst->value = src->value;
@@ -39,27 +40,14 @@ Word* func_002686D0(Word* dst, Word* src) {
     return dst;
 }
 
-int Script_RemoveArray(int a0) {
-    int tmp0;
-    int tmp1;
-
-    tmp0 = *(int*)(char*)a0;
-    tmp1 = func_002690C0(tmp0);
-    Global_RemoveArray(tmp1);
+/* Script native: RemoveArray(args[0]). */
+int Script_RemoveArray(ScriptArg* args) {
+    Global_RemoveArray(func_002690C0(args[0].p));
     return 0;
 }
 
-int Script_CreateArray(int a0) {
-    int loc[1];
-    int v0;
-
-    v0 = *(int*)(char*)a0;
-    *(int*)(char*)loc = v0;
-    a0 = *(int*)(char*)loc;
-    v0 = func_002689F0(a0);
-    a0 = v0;
-    v0 = func_00269090(a0);
-    goto ret;
-ret:
-    return v0;
+/* Script native: CreateArray(args[0]). volatile mirrors the original stack temporary. */
+int Script_CreateArray(ScriptArg* args) {
+    volatile int arg = args[0].i;
+    return func_00269090(func_002689F0(arg));
 }

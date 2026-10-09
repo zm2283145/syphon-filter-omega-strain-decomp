@@ -1,17 +1,17 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Player input-state helpers and small value types used by the input code.
  */
 
 #include "types.h"
+#include "playerControls_types.h"
 
-float func_00250380(int a0) {
-    return -(*(float*)((char*)a0 + 2356));
+float func_00250380(ControlsUnk934* self) {
+    return -self->unk934;
 }
 
-int func_00250390(int a0, int a1) {
-    *(float*)((char*)a0) = *(float*)(char*)a1;
-    *(float*)((char*)a0 + 4) = *(float*)((char*)a1 + 4);
-    return a0;
+Vec2f* func_00250390(Vec2f* dst, Vec2f* src) {
+    dst->x = src->x;
+    dst->y = src->y;
+    return dst;
 }

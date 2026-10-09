@@ -5,32 +5,31 @@
  */
 
 #include "types.h"
+#include "interface_model_types.h"
 
-extern char D_004E0800[];
-extern int func_003F2020(int, int, int, int);
+extern char D_004E0800[];  /* IfModelItem vtable */
+extern int func_003F2020(RawVec* v, char* pos, int n, int value);
 
-Rel* func_003F1BF0(Rel* r) {
-    r->a = 0;
-    r->b = 0;
-    r->c = 0;
-    return r;
+/* Clears the three vector words. */
+OwnedVec* func_003F1BF0(OwnedVec* v) {
+    v->unk0 = 0;
+    v->count = 0;
+    v->data = 0;
+    return v;
 }
 
-int func_003F1C10(int a0) {
-    *(int*)((char*)a0) = (int)D_004E0800;
-    *(int*)((char*)a0 + 4) = 0;
-    *(int*)((char*)a0 + 8) = 0xbf800000;
-    *(int*)((char*)a0 + 12) = 0xbf800000;
-    *(int*)((char*)a0 + 16) = 0;
-    *(char*)((char*)a0 + 20) = 0;
-    return a0;
+/* IfModelItem constructor. */
+IfModelItem* func_003F1C10(IfModelItem* self) {
+    self->vtable = D_004E0800;
+    self->unk04 = 0;
+    self->unk08 = -1.0f;
+    self->unk0C = -1.0f;
+    self->unk10 = 0;
+    self->unk14 = 0;
+    return self;
 }
 
-int func_003F1C40(int a0, int a1) {
-    int tmp0;
-    int tmp1;
-
-    tmp0 = *(int*)((char*)a0 + 8);
-    tmp1 = *(int*)((char*)a0 + 4);
-    return func_003F2020(a0, (tmp0 + tmp1), 1, a1);
+/* push_back on a vector of bytes. */
+int func_003F1C40(RawVec* v, int value) {
+    return func_003F2020(v, v->data + v->count, 1, value);
 }

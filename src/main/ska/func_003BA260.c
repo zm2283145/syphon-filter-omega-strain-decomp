@@ -1,15 +1,15 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Part of ska.cc (skeletal animation).
  */
 
-#include "types.h"
+#include "ska_types.h"
 
-extern int func_003BA290(int);
+extern Rel* func_003BA290(Rel* r);
 
-int func_003BA260(int a0) {
-    func_003BA290(a0);
-    *(char*)((char*)a0 + 12) = 1;
-    return a0;
+/* Construct: zero the three words and set the flag byte. */
+SkaRelFlag* func_003BA260(SkaRelFlag* self) {
+    func_003BA290(&self->rel);
+    self->flag = 1;
+    return self;
 }

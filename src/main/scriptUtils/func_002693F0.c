@@ -5,23 +5,16 @@
  */
 
 #include "types.h"
+#include "scriptUtils_types.h"
 
-extern int func_00269430(int);
-extern int func_002697E0(int);
-extern int func_003D9970(int);
+extern void* func_00269430(void* obj);
+extern int func_002697E0(void* obj);
+extern void* func_003D9970(void* obj);
 
 void func_002693F0(void) {
 }
 
-int Script_CreateNodeList(int a0) {
-    int tmp0;
-    int tmp1;
-    int tmp3;
-    int tmp5;
-
-    tmp0 = *(int*)(char*)a0;
-    tmp1 = func_003D9970(tmp0);
-    tmp3 = func_00269430(tmp1);
-    tmp5 = func_002697E0(tmp3);
-    return tmp5;
+/* Script native: CreateNodeList(args[0]). */
+int Script_CreateNodeList(ScriptArg* args) {
+    return func_002697E0(func_00269430(func_003D9970(args[0].p)));
 }

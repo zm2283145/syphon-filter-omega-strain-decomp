@@ -1,30 +1,25 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Part of ska.cc (skeletal animation).
  */
 
-#include "types.h"
+#include "ska_types.h"
 
-extern int func_001C5370(int, int);
-extern int func_003B6C70(int, int);
-extern int func_003B6CB0(int, int);
+extern SkaFlaggedVec* func_001C5370(SkaFlaggedVec* dst, SkaFlaggedVec* src);
+extern SkaFlaggedVec* func_003B6C70(SkaFlaggedVec* dst, SkaFlaggedVec* src);
+extern SkaRecordB0* func_003B6CB0(SkaRecordB0* dst, SkaRecordB0* src);
 
-int func_003B6C20(int a0, int a1) {
-    int tmp2;
-
-    func_003B6CB0(a0, a1);
-    tmp2 = *(int*)((char*)a1 + 176);
-    *(int*)((char*)a0 + 176) = tmp2;
-    func_003B6C70((a0 + 180), (a1 + 180));
-    return a0;
+/* Copy-construct: base part, word +0xB0, flagged array +0xB4. */
+SkaRecordB0* func_003B6C20(SkaRecordB0* dst, SkaRecordB0* src) {
+    func_003B6CB0(dst, src);
+    dst->unkB0 = src->unkB0;
+    func_003B6C70(&dst->unkB4, &src->unkB4);
+    return dst;
 }
 
-int func_003B6C70(int a0, int a1) {
-    unsigned char tmp2;
-
-    func_001C5370(a0, a1);
-    tmp2 = *(unsigned char*)((char*)a1 + 12);
-    *(char*)((char*)a0 + 12) = tmp2;
-    return a0;
+/* Copy-construct: copy the array part, then the flag byte. */
+SkaFlaggedVec* func_003B6C70(SkaFlaggedVec* dst, SkaFlaggedVec* src) {
+    func_001C5370(dst, src);
+    dst->flag = src->flag;
+    return dst;
 }

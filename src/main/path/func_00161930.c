@@ -1,16 +1,16 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * PathCursor constructor.
  */
 
 #include "types.h"
+#include "path_types.h"
 
-int func_00161930(int a0, int a1) {
-    *(int*)((char*)a0 + 36) = a1;
-    *(int*)((char*)a0 + 32) = 0;
-    *(int*)((char*)a0 + 40) = 0;
-    *(int*)((char*)a0 + 20) = -1;
-    *(int*)((char*)a0 + 16) = -1;
-    return a0;
+PathCursor* func_00161930(PathCursor* self, int owner) {
+    self->owner = owner;
+    self->unk20 = 0;
+    self->unk28 = 0;
+    self->unk14 = -1;
+    self->unk10 = -1;
+    return self;
 }

@@ -1,30 +1,32 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Player input-state helpers and small value types used by the input code.
  */
 
 #include "types.h"
+#include "playerControls_types.h"
 
-extern int func_0024A600(int, int);
-extern int func_0024A660(int, int);
+extern int func_0024A600(InputState* self, int a1);
+extern int func_0024A660(InputState* self, int a1);
 
-void func_0024B580(char* self) {
-    self[38] = 0;
+void func_0024B580(InputState* self) {
+    self->unk26 = 0;
 }
 
-void func_0024B590(int a0, int a1, int a2) {
-    *(char*)((char*)a0 + 38) = 1;
-    *(char*)((char*)a0 + 39) = a1;
-    *(int*)((char*)a0 + 40) = *(int*)(char*)a2;
+void func_0024B590(InputState* self, int unk27, int* unk28) {
+    self->unk26 = 1;
+    self->unk27 = unk27;
+    self->unk28 = *unk28;
 }
 
-int func_0024B5B0(int a0, int a1) {
-    *(char*)((char*)a0 + 36) = 0;
-    return func_0024A600(a0, a1);
+/* Leaving a code-9 (crouch) zone. */
+int InputState_LeaveCrouchZone(InputState* self, int a1) {
+    self->crouchZone = 0;
+    return func_0024A600(self, a1);
 }
 
-int func_0024B5C0(int a0, int a1) {
-    *(char*)((char*)a0 + 36) = 1;
-    return func_0024A660(a0, a1);
+/* Entering a code-9 (crouch) zone. */
+int InputState_EnterCrouchZone(InputState* self, int a1) {
+    self->crouchZone = 1;
+    return func_0024A660(self, a1);
 }

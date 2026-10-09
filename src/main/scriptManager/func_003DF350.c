@@ -5,9 +5,10 @@
  */
 
 #include "types.h"
+#include "scriptManager_types.h"
 
-extern int PtrVec_Insert(int, int, int, int);
-extern int func_003DF3D0(int);
+extern int PtrVec_Insert(PtrVec* v, int* pos, int n, int value);
+extern OwnedVec* func_003DF3D0(OwnedVec* v);
 
 int* func_003DF350(PtrVec* v, int i) {
     return v->data + i;
@@ -21,17 +22,13 @@ int* func_003DF370(PtrVec* v, int i) {
     return v->data + i;
 }
 
-int func_003DF380(int a0, int a1) {
-    int tmp0;
-    int tmp1;
-
-    tmp0 = *(int*)((char*)a0 + 4);
-    tmp1 = *(int*)((char*)a0 + 8);
-    return PtrVec_Insert(a0, (tmp1 + (tmp0 << 2)), 1, a1);
+/* push_back: inserts one value at the end. */
+int func_003DF380(PtrVec* v, int value) {
+    return PtrVec_Insert(v, v->data + v->count, 1, value);
 }
 
-int func_003DF3A0(int a0) {
-    func_003DF3D0(a0);
-    *(char*)((char*)a0 + 12) = 1;
-    return a0;
+OwnedVec* func_003DF3A0(OwnedVec* v) {
+    func_003DF3D0(v);
+    v->unk0C = 1;
+    return v;
 }

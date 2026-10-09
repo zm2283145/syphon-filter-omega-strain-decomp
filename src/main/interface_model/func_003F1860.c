@@ -5,26 +5,23 @@
  */
 
 #include "types.h"
+#include "interface_model_types.h"
 
-extern int func_003F18C0(int);
-extern int func_003F24A0(int, int, int, int);
-extern int func_003F29B0(int, int);
+extern OwnedVec* func_003F18C0(OwnedVec* v);
+extern int func_003F24A0(RawVec* v, char* pos, int n, int value);
+extern int func_003F29B0(int a0, int a1);
 
-int func_003F1860(int a0, int a1) {
-    int tmp0;
-    int tmp1;
-
-    tmp0 = *(int*)((char*)a0 + 4);
-    tmp1 = *(int*)((char*)a0 + 8);
-    return func_003F24A0(a0, (tmp1 + (tmp0 << 3)), 1, a1);
+/* push_back on a vector of 8-byte elements. */
+int func_003F1860(RawVec* v, int value) {
+    return func_003F24A0(v, v->data + (v->count << 3), 1, value);
 }
 
 int func_003F1880(int a0, int a1) {
     return func_003F29B0(a0, a1);
 }
 
-int func_003F1890(int a0) {
-    func_003F18C0(a0);
-    *(char*)((char*)a0 + 12) = 1;
-    return a0;
+OwnedVec* func_003F1890(OwnedVec* v) {
+    func_003F18C0(v);
+    v->unk0C = 1;
+    return v;
 }

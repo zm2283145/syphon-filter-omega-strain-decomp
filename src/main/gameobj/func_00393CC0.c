@@ -1,14 +1,12 @@
 /*
- * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Matched functions from gameobj.cc (byte-identical with the retail executable).
  */
 
-#include "types.h"
+#include "gobj_types.h"
 
-extern int func_00393D10(int);
-extern int func_00393D40(int);
-extern int func_00393EC0(int);
+extern Quad4Ext* func_00393D10(Quad4Ext* q);
+extern Quad4Ext* func_00393D40(Quad4Ext* q);
+extern Quad4* func_00393EC0(Quad4* q);
 
 Rel* func_00393CC0(Rel* r) {
     r->a = 0;
@@ -17,19 +15,19 @@ Rel* func_00393CC0(Rel* r) {
     return r;
 }
 
-int func_00393CE0(int a0) {
-    func_00393D10(a0);
-    return a0;
+Quad4Ext* func_00393CE0(Quad4Ext* q) {
+    func_00393D10(q);
+    return q;
 }
 
-int func_00393D10(int a0) {
-    func_00393D40(a0);
-    return a0;
+Quad4Ext* func_00393D10(Quad4Ext* q) {
+    func_00393D40(q);
+    return q;
 }
 
-int func_00393D40(int a0) {
-    func_00393EC0(a0);
-    *(int*)((char*)a0 + 16) = 0;
-    *(int*)((char*)a0 + 20) = 0;
-    return a0;
+Quad4Ext* func_00393D40(Quad4Ext* q) {
+    func_00393EC0(&q->q);
+    q->unk10 = 0;
+    q->unk14 = 0;
+    return q;
 }

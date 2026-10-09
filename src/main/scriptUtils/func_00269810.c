@@ -5,33 +5,32 @@
  */
 
 #include "types.h"
+#include "scriptUtils_types.h"
 
-extern char D_004F83F8[];
-extern char D_00555070[];
-extern int ScriptFilter_Dispatch(int, int, int);
-extern int func_00269830(void);
+extern int D_004F83F8;  /* cNodeList script type key */
+extern char D_00555070[];  /* script manager */
+extern int ScriptFilter_Dispatch(void* manager, void* receiver, void* event);
+extern int* func_00269830(void);
 
+/* Cast from script object to cNodeList (identity). */
 void* func_00269810(void* self) {
     return self;
 }
 
-int func_00269820(void) {
+int* func_00269820(void) {
     return func_00269830();
 }
 
-int func_00269830(void) {
-    return (int)D_004F83F8;
+int* func_00269830(void) {
+    return &D_004F83F8;
 }
 
+/* Returns the cNodeList script type key. */
 int cNodeList_v0B(void) {
-    int tmp0;
-    int tmp2;
-
-    tmp0 = func_00269830();
-    tmp2 = *(int*)(char*)tmp0;
-    return tmp2;
+    return *func_00269830();
 }
 
-int cNodeList_v0C(int a0, int a1) {
-    return ScriptFilter_Dispatch((int)D_00555070, a0, a1);
+/* Script event filter: dispatches to script handlers through the script manager. */
+int cNodeList_v0C(void* self, void* event) {
+    return ScriptFilter_Dispatch(D_00555070, self, event);
 }

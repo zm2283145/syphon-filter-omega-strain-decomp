@@ -1,24 +1,16 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * cAgentData script natives.
  */
 
 #include "types.h"
+#include "AgentData_types.h"
 
-extern int cAgentData_UnlockPart(int, int);
+extern int cAgentData_UnlockPart(cAgentData* agent, int part);
 
-int Script_cAgentData_UnlockPart(int a0) {
-    int loc[1];
-    int a1, v0;
-
-    v0 = *(int*)(char*)(a0 + 4);
-    *(int*)(char*)loc = v0;
-    a1 = *(int*)(char*)loc;
-    a0 = *(int*)(char*)a0;
-    v0 = cAgentData_UnlockPart(a0, a1);
-    v0 = 0;
-    goto ret;
-ret:
-    return v0;
+int Script_cAgentData_UnlockPart(AgentScriptArg* args) {
+    int part[1];
+    part[0] = args[1].i;
+    cAgentData_UnlockPart(args[0].p, STACK_COPY(part));
+    return 0;
 }

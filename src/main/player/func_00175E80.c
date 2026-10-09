@@ -1,155 +1,99 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Player component (cPlayer): script natives, type registration and setup.
  */
 
 #include "types.h"
+#include "player_types.h"
 
-extern char D_0049D010[];
-extern char D_004EE788[];
-extern char D_004EE790[];
+extern int D_0049D010;     /* NPC class token */
+extern int D_004EE788;     /* cPlayer class type id */
+extern int D_004EE790;     /* cPlayer script type */
 extern char D_00555070[];
-extern char D_005721C8[];
-extern int GObj_IdentityA(int);
-extern int ScriptFilter_Dispatch(int, int, int);
-extern int func_001439B0(int, int);
-extern int func_001450C0(void);
-extern int func_0014A690(int);
-extern void func_001B8750(int, int);
-extern int func_0022DE00(void);
-extern int func_0022F170(void);
-extern int func_0022F1F0(void);
-extern void func_002493C0(int, int);
-extern int func_003D9400(int, int);
-extern void func_003D9440(int, int);
-extern int func_004080E0(void);
+extern unsigned char D_005721C8;
+extern int GObj_IdentityA(void*);
+extern int ScriptFilter_Dispatch(void* filter, int a0, int a1);
+extern int func_001439B0(void* inventory, int a1);
+extern int* func_001450C0(void);
+extern void* func_0014A690(int handle);
+extern void func_001B8750(PlayerActor* actor, int invulnerable);
+extern int* func_0022DE00(void);
+extern int* func_0022F170(void);
+extern int* func_0022F1F0(void);
+extern void func_002493C0(PlayerInputState* input, PlayerActor* actor);
+extern int ScriptType_AddAccepted(int type, int messageType);
+extern void ScriptType_SetParent(int type, int parentType);
+extern int* func_004080E0(void);
 
 int Script_cPlayer_RestoreBody(void) {
     return 0;
 }
 
-int Script_cPlayer_SwitchBodies(int a0) {
-    int tmp0;
-
-    tmp0 = *(int*)((char*)a0 + 4);
-    func_0014A690(tmp0);
+int Script_cPlayer_SwitchBodies(PlayerScriptArg* args) {
+    func_0014A690(args[1].i);
     return 0;
 }
 
-int Script_cPlayer_SetInvulnerable(int a0) {
-    int tmp0;
-    int tmp1;
-    int tmp2;
+int Script_cPlayer_SetInvulnerable(PlayerScriptArg* args) {
+    int flag = args[1].i;
 
-    tmp0 = *(int*)((char*)a0 + 4);
-    tmp1 = *(int*)(char*)a0;
-    tmp2 = *(int*)((char*)tmp1 + 48);
-    func_001B8750(tmp2, ((unsigned int)(0) < (unsigned int)(tmp0)));
+    func_001B8750(((PlayerComponent*)args[0].p)->actor, (unsigned int)0 < (unsigned int)flag);
     return 0;
 }
 
-int Script_cPlayer_GetPlayerObject(int a0) {
-    int tmp0;
-    int tmp1;
-
-    tmp0 = *(int*)(char*)a0;
-    tmp1 = *(int*)((char*)tmp0 + 48);
-    return GObj_IdentityA(tmp1);
+int Script_cPlayer_GetPlayerObject(PlayerScriptArg* args) {
+    return GObj_IdentityA(((PlayerComponent*)args[0].p)->actor);
 }
 
+/* Registers the cPlayer script type under its parent and adds its message types. */
 int ScriptType_cPlayer_Init(void) {
-    int tmp0;
-    int tmp2;
-    int tmp3;
-    int tmp6;
-    int tmp8;
-    int tmp9;
-    int tmp12;
-    int tmp14;
-    int tmp15;
-    int tmp18;
-    int tmp20;
-    int tmp21;
-    int tmp24;
-    int tmp26;
-    int tmp27;
-    int tmp28;
+    int* type;
 
-    tmp0 = func_0022F170();
-    tmp2 = *(int*)D_004EE790;
-    tmp3 = *(int*)(char*)tmp0;
-    func_003D9440(tmp2, tmp3);
-    tmp6 = func_0022DE00();
-    tmp8 = *(int*)D_004EE790;
-    tmp9 = *(int*)(char*)tmp6;
-    func_003D9400(tmp8, tmp9);
-    tmp12 = func_0022F1F0();
-    tmp14 = *(int*)D_004EE790;
-    tmp15 = *(int*)(char*)tmp12;
-    func_003D9400(tmp14, tmp15);
-    tmp18 = func_004080E0();
-    tmp20 = *(int*)D_004EE790;
-    tmp21 = *(int*)(char*)tmp18;
-    func_003D9400(tmp20, tmp21);
-    tmp24 = func_001450C0();
-    tmp26 = *(int*)D_004EE790;
-    tmp27 = *(int*)(char*)tmp24;
-    tmp28 = func_003D9400(tmp26, tmp27);
-    return tmp28;
+    type = func_0022F170();
+    ScriptType_SetParent(D_004EE790, *type);
+    type = func_0022DE00();
+    ScriptType_AddAccepted(D_004EE790, *type);
+    type = func_0022F1F0();
+    ScriptType_AddAccepted(D_004EE790, *type);
+    type = func_004080E0();
+    ScriptType_AddAccepted(D_004EE790, *type);
+    type = func_001450C0();
+    return ScriptType_AddAccepted(D_004EE790, *type);
 }
 
-int cHotboxMsg_WhoPlayer(int a0) {
-    int loc[1];
-    int v0;
-
-    *(int*)(char*)loc = a0;
-    v0 = *(int*)(char*)loc;
-    goto ret;
-ret:
-    return v0;
+/* volatile mirrors the original stack temporary. */
+int cHotboxMsg_WhoPlayer(int obj) {
+    volatile int tmp = obj;
+    return tmp;
 }
 
 void* func_00175FA0(void* self) {
     return self;
 }
 
-int func_00175FB0(void) {
-    return (int)D_004EE788;
+int* func_00175FB0(void) {
+    return &D_004EE788;
 }
 
 int cPlayer_v0B(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_004EE788;
-    return tmp0;
+    return D_004EE788;
 }
 
 int cPlayer_v0C(int a0, int a1) {
-    return ScriptFilter_Dispatch((int)D_00555070, a0, a1);
+    return ScriptFilter_Dispatch(D_00555070, a0, a1);
 }
 
-void func_00175FF0(int a0) {
-    int a1, s0, s1, v0, v1;
-    int cond;
+/*
+ * For an NPC-class actor: calls func_001439B0 on its inventory (a1 is passed
+ * through) and, when the D_005721C8 flag is set, func_002493C0 on the input state.
+ */
+void func_00175FF0(PlayerComponent* self, int a1) {
+    PlayerActor* actor = self->actor;
 
-    s0 = *(int*)(char*)(a0 + 48);
-    cond = s0 == 0;
-    s1 = a0;
-    if (cond) goto L00176040;
-    a0 = *(int*)(char*)(s0 + 76);
-    v1 = *(int*)(char*)D_0049D010;
-    cond = a0 != v1;
-    if (cond) goto L00176040;
-    a0 = *(int*)(char*)(s0 + 13604);
-    v0 = func_001439B0(a0, a1);
-    v1 = *(unsigned char*)(char*)D_005721C8;
-    cond = v1 == 0;
-    a0 = s1 + 80;
-    if (cond) goto L00176040;
-    a1 = s0;
-    func_002493C0(a0, a1);
-L00176040:;
-    goto ret;
-ret:;
+    if (actor != 0 && actor->classToken == D_0049D010) {
+        func_001439B0(actor->inventory, a1);
+        if (D_005721C8 != 0) {
+            func_002493C0(&self->input, actor);
+        }
+    }
 }

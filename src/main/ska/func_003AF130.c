@@ -1,10 +1,9 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Part of ska.cc (skeletal animation).
  */
 
-#include "types.h"
+#include "ska_types.h"
 
 Rel* AnimRoot_InitRelations(Rel* r) {
     r->a = 0;
@@ -13,9 +12,9 @@ Rel* AnimRoot_InitRelations(Rel* r) {
     return r;
 }
 
-int AnimRoot_CopyDirtyFlags(int a0, int a1) {
-    *(char*)((char*)a0) = *(unsigned char*)(char*)a1;
-    *(char*)((char*)a0 + 1) = *(unsigned char*)((char*)a1 + 1);
-    *(char*)((char*)a0 + 2) = *(unsigned char*)((char*)a1 + 2);
-    return a0;
+SkaDirtyFlags* AnimRoot_CopyDirtyFlags(SkaDirtyFlags* dst, SkaDirtyFlags* src) {
+    dst->f0 = src->f0;
+    dst->f1 = src->f1;
+    dst->f2 = src->f2;
+    return dst;
 }

@@ -1,37 +1,34 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Vec4 component getters and Node_GetTranslation.
  */
 
 #include "types.h"
+#include "node_types.h"
 
-float func_0015C280(char* self) {
-    return *(float*)(self + 12);
+float func_0015C280(Vec4* v) {
+    return v->w;
 }
 
-float func_0015C290(char* self) {
-    return *(float*)(self + 8);
+float func_0015C290(Vec4* v) {
+    return v->z;
 }
 
-float func_0015C2A0(char* self) {
-    return *(float*)(self + 4);
+float func_0015C2A0(Vec4* v) {
+    return v->y;
 }
 
-float func_0015C2B0(char* self) {
-    return *(float*)(self + 0);
+float func_0015C2B0(Vec4* v) {
+    return v->x;
 }
 
-void Node_GetTranslation(int a0, int a1) {
-    float tmp0;
-    float tmp1;
-    float tmp2;
-
-    tmp0 = *(float*)((char*)a1 + 136);
-    tmp1 = *(float*)((char*)a1 + 132);
-    tmp2 = *(float*)((char*)a1 + 128);
-    *(float*)((char*)a0) = tmp2;
-    *(float*)((char*)a0 + 4) = tmp1;
-    *(float*)((char*)a0 + 8) = tmp0;
-    *(int*)((char*)a0 + 12) = 1065353216;
+/* Writes the node translation as a point (w = 1). */
+void Node_GetTranslation(Vec4* out, cNode* node) {
+    float z = node->translation.z;
+    float y = node->translation.y;
+    float x = node->translation.x;
+    out->x = x;
+    out->y = y;
+    out->z = z;
+    out->w = 1.0f;
 }

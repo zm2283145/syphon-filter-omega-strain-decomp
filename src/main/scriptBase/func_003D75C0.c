@@ -5,16 +5,13 @@
  */
 
 #include "types.h"
+#include "scriptBase_types.h"
 
-extern char D_00554F30[];
+extern PtrVec* D_00554F30;  /* global enum table, ids start at 10 */
 
-int func_003D75C0(int a0) {
-    int tmp0;
-    int tmp1;
-    int tmp2;
+/* Returns the global enum descriptor for enum id 'id'. */
+int ScriptEnum_GetById(int id) {
+    int i = id - 10;
 
-    tmp0 = *(int*)D_00554F30;
-    tmp1 = *(int*)((char*)tmp0 + 8);
-    tmp2 = *(int*)(char*)(tmp1 + ((a0 + -10) << 2));
-    return tmp2;
+    return D_00554F30->data[i];
 }

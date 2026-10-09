@@ -1,13 +1,12 @@
 /*
- * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Matched functions from gameobj.cc (byte-identical with the retail executable).
  */
 
-#include "types.h"
+#include "gobj_types.h"
 
-int func_003939B0(int a0) {
-    return (*(int*)(char*)a0 + 8);
+/* Address of the value stored at +8 of the current node. */
+char* func_003939B0(Iter16* it) {
+    return it->p + 8;
 }
 
 void func_003939C0(Iter* out, PtrVec* v) {

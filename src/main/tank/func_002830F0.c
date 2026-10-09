@@ -1,22 +1,17 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * cTank script class: script natives, type registration and turret helpers.
  */
 
 #include "types.h"
+#include "tank_types.h"
 
-extern int GObj_IdentityB(int);
-extern int func_00285590(int, int);
+extern void* GObj_IdentityB(int);
+extern int func_00285590(cTank* tank, void* target);
 
-int Script_cTank_AimAt(int a0) {
-    int tmp0;
-    int tmp1;
-    int tmp2;
+int Script_cTank_AimAt(TankScriptArg* args) {
+    cTank* tank = (cTank*)args[0].p;
 
-    tmp0 = *(int*)(char*)a0;
-    tmp1 = *(int*)((char*)a0 + 4);
-    tmp2 = GObj_IdentityB(tmp1);
-    func_00285590(tmp0, tmp2);
+    func_00285590(tank, GObj_IdentityB(args[1].i));
     return 0;
 }

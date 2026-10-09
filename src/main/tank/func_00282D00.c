@@ -1,26 +1,15 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * cTank script class: script natives, type registration and turret helpers.
  */
 
 #include "types.h"
+#include "tank_types.h"
 
-extern int func_003CC990(int, int, int);
+extern int func_003CC990(void* gobj, int hitpoints, int unk);
 
-int Script_cTank_SetHitpoints(int a0) {
-    int loc[1];
-    int a1, a2, v0;
-
-    v0 = *(int*)(char*)(a0 + 4);
-    *(int*)(char*)loc = v0;
-    v0 = *(int*)(char*)a0;
-    a1 = *(int*)(char*)loc;
-    a0 = *(int*)(char*)(v0 + 96);
-    a2 = 0;
-    v0 = func_003CC990(a0, a1, a2);
-    v0 = 0;
-    goto ret;
-ret:
-    return v0;
+int Script_cTank_SetHitpoints(TankScriptArg* args) {
+    volatile int hitpoints = args[1].i; /* mirrors the original stack temporary */
+    func_003CC990(((cTank*)args[0].p)->gobj, hitpoints, 0);
+    return 0;
 }

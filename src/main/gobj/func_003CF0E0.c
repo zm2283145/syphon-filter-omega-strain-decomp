@@ -1,38 +1,32 @@
 /*
- * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Matched functions from gobj.cc (byte-identical with the retail executable).
+ * cGOBJ constructor.
  */
 
-#include "types.h"
+#include "gobj_types.h"
 
-extern char D_004DFF50[];
-extern int func_003CB090(int, int);
+extern char D_004DFF50[];   /* cGOBJ vtable */
+extern void func_003CB090(cGOBJ* self, int* desc);
 
-int cGOBJ_ctor(int a0, int a1, int a2, int a3) {
-    int tmp2;
-    int tmp3;
-
-    func_003CB090(a0, a1);
-    *(int*)((char*)a0) = (int)D_004DFF50;
-    *(char*)((char*)a0 + 44) = 1;
-    *(char*)((char*)a0 + 45) = 0;
-    *(char*)((char*)a0 + 46) = 0;
-    *(char*)((char*)a0 + 47) = 0;
-    *(int*)((char*)a0 + 48) = -1;
-    *(int*)((char*)a0 + 56) = 128;
-    *(int*)((char*)a0 + 60) = 0;
-    *(int*)((char*)a0 + 64) = 0;
-    *(int*)((char*)a0 + 68) = 0;
-    *(char*)((char*)a0 + 72) = 0;
-    *(char*)((char*)a0 + 73) = a2;
-    tmp2 = *(int*)(char*)a3;
-    *(int*)((char*)a0 + 76) = tmp2;
-    *(int*)((char*)a0 + 80) = 0;
-    *(int*)((char*)a0 + 84) = 0;
-    *(int*)((char*)a0 + 88) = 0;
-    *(int*)((char*)a0 + 92) = 0;
-    tmp3 = *(int*)(char*)a1;
-    *(int*)((char*)a0 + 16) = tmp3;
-    return a0;
+cGOBJ* cGOBJ_ctor(cGOBJ* self, int* desc, int a2, int* a3) {
+    func_003CB090(self, desc);
+    self->vtable = D_004DFF50;
+    self->unk2C = 1;
+    self->unk2D = 0;
+    self->unk2E = 0;
+    self->unk2F = 0;
+    self->unk30 = -1;
+    self->unk38 = 128;
+    self->unk3C = 0;
+    self->unk40 = 0;
+    self->darkness = 0;
+    self->unk48 = 0;
+    self->unk49 = a2;
+    self->unk4C = *a3;
+    self->unk50 = 0;
+    self->unk54 = 0;
+    self->attached = 0;
+    self->unk5C = 0;
+    self->unk10 = *desc;
+    return self;
 }

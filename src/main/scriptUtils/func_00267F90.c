@@ -5,46 +5,29 @@
  */
 
 #include "types.h"
+#include "scriptUtils_types.h"
 
-extern char D_004FFC2C[];
-extern int GObj_IdentityB(int);
-extern int Global_ClearCallout(int);
-extern int Global_ClearCallout_2(int);
-extern int func_0014A690(int);
-extern int func_00242B40(int, int, int, int, int);
+extern char* D_004FFC2C;
+extern void* GObj_IdentityB(void* obj);
+extern int Global_ClearCallout(char* obj);
+extern int Global_ClearCallout_2(CalloutOwner* obj);
+extern CalloutOwner* func_0014A690(void* obj);
+extern int func_00242B40(char* a0, char* key, int a2, int a3, int a4);
 
-int Script_ClearCallout_2(int a0) {
-    int tmp0;
-    int tmp1;
-
-    tmp0 = *(int*)(char*)a0;
-    tmp1 = func_0014A690(tmp0);
-    Global_ClearCallout_2(tmp1);
+int Script_ClearCallout_2(ScriptArg* args) {
+    Global_ClearCallout_2(func_0014A690(args[0].p));
     return 0;
 }
 
-int Global_ClearCallout_2(int a0) {
-    int tmp0;
-    int tmp1;
-
-    tmp0 = *(int*)((char*)a0 + 48);
-    tmp1 = *(int*)D_004FFC2C;
-    return func_00242B40(tmp1, (tmp0 + 12), 0, 0, 1);
+int Global_ClearCallout_2(CalloutOwner* obj) {
+    return func_00242B40(D_004FFC2C, obj->callout + 12, 0, 0, 1);
 }
 
-int Script_ClearCallout(int a0) {
-    int tmp0;
-    int tmp1;
-
-    tmp0 = *(int*)(char*)a0;
-    tmp1 = GObj_IdentityB(tmp0);
-    Global_ClearCallout(tmp1);
+int Script_ClearCallout(ScriptArg* args) {
+    Global_ClearCallout(GObj_IdentityB(args[0].p));
     return 0;
 }
 
-int Global_ClearCallout(int a0) {
-    int tmp0;
-
-    tmp0 = *(int*)D_004FFC2C;
-    return func_00242B40(tmp0, (a0 + 12), 0, 0, 1);
+int Global_ClearCallout(char* obj) {
+    return func_00242B40(D_004FFC2C, obj + 12, 0, 0, 1);
 }

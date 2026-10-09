@@ -1,11 +1,10 @@
 /*
- * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Matched functions from GameGOBJ.cc (byte-identical with the retail executable).
  */
 
-#include "types.h"
+#include "gobj_types.h"
 
+/* Swaps the contents of two vectors. */
 void func_0021C7E0(PtrVec* a, PtrVec* b) {
     if (a != b) {
         int t;
@@ -22,6 +21,6 @@ void func_0021C7E0(PtrVec* a, PtrVec* b) {
     }
 }
 
-void func_0021C820(char* self) {
-    *(int*)(self + 4) = 0;
+void func_0021C820(PtrVec* v) {
+    v->count = 0;
 }

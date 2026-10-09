@@ -5,16 +5,14 @@
  */
 
 #include "types.h"
+#include "scriptBase_types.h"
 
-extern char D_00554F28[];
+extern PtrVec* D_00554F28;  /* global script type table (ScriptType* entries, ids start at 100) */
 
-void func_003D9440(int a0, int a1) {
-    int tmp0;
-    int tmp1;
-    int tmp2;
+/* Sets field +0x40 of script type 'typeId'. */
+void ScriptType_SetParent(int typeId, int value) {
+    int i = typeId - 100;
+    ScriptType* type = (ScriptType*)D_00554F28->data[i];
 
-    tmp0 = *(int*)D_00554F28;
-    tmp1 = *(int*)((char*)tmp0 + 8);
-    tmp2 = *(int*)(char*)(tmp1 + ((a0 + -100) << 2));
-    *(int*)((char*)tmp2 + 64) = a1;
+    type->unk40 = value;
 }

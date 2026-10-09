@@ -1,78 +1,47 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * cHotbox interaction volumes, cHotboxMsg and the script natives that use them.
  */
 
 #include "types.h"
+#include "hotbox_types.h"
 
-extern char D_004EE700[];
-extern char D_004EE708[];
-extern int GObj_IdentityA(int);
-extern int GObj_IdentityB(int);
-extern int Global_MakeGOBJInteractable(int);
-extern int Global_MakeNPCInteractable(int);
-extern int func_0014A690(int);
-extern int func_003C8C50(void);
-extern void func_003D9440(int, int);
+extern int D_004EE700;   /* cHotboxMsg type id */
+extern int D_004EE708;   /* cHotboxMsg script type */
+extern int GObj_IdentityA(void*);
+extern void* GObj_IdentityB(int);
+extern int Global_MakeGOBJInteractable(void* gobj);
+extern int Global_MakeNPCInteractable(void* npc);
+extern void* func_0014A690(int handle);
+extern int* Message_GetScriptTypeKeyPtr(void);
+extern void ScriptType_SetParent(int type, int parentType);
 
-int Script_cHotboxMsg_Who(int a0) {
-    int tmp0;
-    int tmp1;
-
-    tmp0 = *(int*)(char*)a0;
-    tmp1 = *(int*)((char*)tmp0 + 48);
-    return GObj_IdentityA(tmp1);
+int Script_cHotboxMsg_Who(HotboxScriptArg* args) {
+    return GObj_IdentityA(((cHotboxMsg*)args[0].p)->who);
 }
 
-int Script_cHotboxMsg_Action(int a0) {
-    return *(unsigned char*)((char*)*(int*)(char*)a0 + 36);
+int Script_cHotboxMsg_Action(HotboxScriptArg* args) {
+    return ((cHotboxMsg*)args[0].p)->action;
 }
 
+/* Registers the cHotboxMsg script type under its parent type. */
 void ScriptType_cHotboxMsg_Init(void) {
-    int tmp0;
-    int tmp2;
-    int tmp3;
+    int* parent = Message_GetScriptTypeKeyPtr();
 
-    tmp0 = func_003C8C50();
-    tmp2 = *(int*)D_004EE708;
-    tmp3 = *(int*)(char*)tmp0;
-    func_003D9440(tmp2, tmp3);
+    ScriptType_SetParent(D_004EE708, *parent);
 }
 
 int cHotboxMsg_v03(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_004EE700;
-    return tmp0;
+    return D_004EE700;
 }
 
-int Script_MakeNPCInteractable(int a0) {
-    int loc[1];
-    int v0;
-
-    a0 = *(int*)(char*)a0;
-    v0 = func_0014A690(a0);
-    a0 = v0;
-    v0 = Global_MakeNPCInteractable(a0);
-    *(int*)(char*)loc = v0;
-    v0 = *(int*)(char*)loc;
-    goto ret;
-ret:
-    return v0;
+/* volatile mirrors the original stack temporary. */
+int Script_MakeNPCInteractable(HotboxScriptArg* args) {
+    volatile int hotbox = Global_MakeNPCInteractable(func_0014A690(args[0].i));
+    return hotbox;
 }
 
-int Script_MakeGOBJInteractable(int a0) {
-    int loc[1];
-    int v0;
-
-    a0 = *(int*)(char*)a0;
-    v0 = GObj_IdentityB(a0);
-    a0 = v0;
-    v0 = Global_MakeGOBJInteractable(a0);
-    *(int*)(char*)loc = v0;
-    v0 = *(int*)(char*)loc;
-    goto ret;
-ret:
-    return v0;
+int Script_MakeGOBJInteractable(HotboxScriptArg* args) {
+    volatile int hotbox = Global_MakeGOBJInteractable(GObj_IdentityB(args[0].i));
+    return hotbox;
 }

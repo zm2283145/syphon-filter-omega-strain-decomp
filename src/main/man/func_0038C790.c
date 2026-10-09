@@ -1,25 +1,22 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Equipment slot swap and clear; both refresh via Equip_Init.
  */
 
 #include "types.h"
+#include "man_types.h"
 
-extern void Equip_Init(int);
+extern void Equip_Init(ManEquipOwner* self);
 
-void Equip_SwapSlots(int a0, int a1, int a2) {
-    int tmp0;
-    int tmp1;
-
-    tmp0 = *(int*)((char*)((a1 << 2) + a0) + 9232);
-    tmp1 = *(int*)((char*)((a2 << 2) + a0) + 9232);
-    *(int*)((char*)((a1 << 2) + a0) + 9232) = tmp1;
-    *(int*)((char*)((a2 << 2) + a0) + 9232) = tmp0;
-    Equip_Init(a0);
+void Equip_SwapSlots(ManEquipOwner* self, int a, int b) {
+    int itemA = self->slots[a];
+    int itemB = self->slots[b];
+    self->slots[a] = itemB;
+    self->slots[b] = itemA;
+    Equip_Init(self);
 }
 
-void func_0038C7C0(int a0, int a1) {
-    *(int*)((char*)((a1 << 2) + a0) + 9232) = 0;
-    Equip_Init(a0);
+void Equip_ClearSlot(ManEquipOwner* self, int slot) {
+    self->slots[slot] = 0;
+    Equip_Init(self);
 }

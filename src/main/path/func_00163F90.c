@@ -1,10 +1,10 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Word copy.
  */
 
 #include "types.h"
+#include "path_types.h"
 
 Word* func_00163F90(Word* dst, Word* src) {
     dst->value = src->value;

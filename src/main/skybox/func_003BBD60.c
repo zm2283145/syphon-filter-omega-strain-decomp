@@ -10,18 +10,18 @@ extern char D_00542C98[];
 extern char D_00542CA0[];
 extern char D_00555070[];
 extern int ScriptFilter_Dispatch(int, int, int);
-extern int func_003CC830(void);
-extern void func_003D9440(int, int);
+extern int cGOBJ_GetScriptTypeKeyPtr(void);
+extern void ScriptType_SetParent(int, int);
 
 void ScriptType_cSKYBOX_GOBJ_Init(void) {
     int tmp0;
     int tmp2;
     int tmp3;
 
-    tmp0 = func_003CC830();
+    tmp0 = cGOBJ_GetScriptTypeKeyPtr();
     tmp2 = *(int*)D_00542CA0;
     tmp3 = *(int*)(char*)tmp0;
-    func_003D9440(tmp2, tmp3);
+    ScriptType_SetParent(tmp2, tmp3);
 }
 
 int func_003BBD90(void) {

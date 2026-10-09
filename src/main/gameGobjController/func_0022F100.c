@@ -13,10 +13,10 @@ extern char D_004F7A40[];
 extern char D_00555070[];
 extern int GObj_IdentityA(int);
 extern int ScriptFilter_Dispatch(int, int, int);
-extern int func_003C8C50(void);
+extern int Message_GetScriptTypeKeyPtr(void);
 extern int func_003CB1D0(void);
-extern int func_003D9400(int, int);
-extern void func_003D9440(int, int);
+extern int ScriptType_AddAccepted(int, int);
+extern void ScriptType_SetParent(int, int);
 extern int func_0043FB90(void);
 
 int Script_cGameGobjController_Gobj(int a0) {
@@ -42,14 +42,14 @@ int ScriptType_cGameGobjController_Init(void) {
     tmp0 = func_003CB1D0();
     tmp2 = *(int*)D_004F7A40;
     tmp3 = *(int*)(char*)tmp0;
-    func_003D9440(tmp2, tmp3);
+    ScriptType_SetParent(tmp2, tmp3);
     tmp6 = func_0043FB90();
     tmp8 = *(int*)D_004F7A40;
     tmp9 = *(int*)(char*)tmp6;
-    func_003D9400(tmp8, tmp9);
+    ScriptType_AddAccepted(tmp8, tmp9);
     tmp12 = *(int*)D_004F7A40;
     tmp13 = *(int*)D_004F7A20;
-    tmp14 = func_003D9400(tmp12, tmp13);
+    tmp14 = ScriptType_AddAccepted(tmp12, tmp13);
     return tmp14;
 }
 
@@ -77,10 +77,10 @@ void ScriptType_cTimerExpiredMsg_Init(void) {
     int tmp2;
     int tmp3;
 
-    tmp0 = func_003C8C50();
+    tmp0 = Message_GetScriptTypeKeyPtr();
     tmp2 = *(int*)D_004F7A28;
     tmp3 = *(int*)(char*)tmp0;
-    func_003D9440(tmp2, tmp3);
+    ScriptType_SetParent(tmp2, tmp3);
 }
 
 int func_0022F1F0(void) {

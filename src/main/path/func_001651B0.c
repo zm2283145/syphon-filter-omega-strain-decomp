@@ -22,6 +22,7 @@ void func_001651B0(PtrVec* a, PtrVec* b) {
     }
 }
 
-void func_001651F0(char* self) {
-    *(int*)(self + 4) = 0;
+/* Vector clear: resets the element count. */
+void func_001651F0(PtrVec* v) {
+    v->count = 0;
 }

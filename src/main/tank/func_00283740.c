@@ -1,49 +1,34 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * cTank script class: script natives, type registration and turret helpers.
  */
 
 #include "types.h"
+#include "tank_types.h"
 
-extern char D_00506278[];
-extern char D_00506280[];
+extern int D_00506278;   /* cTank class type id */
+extern int D_00506280;   /* cTank script type */
 extern char D_00555070[];
-extern int ScriptFilter_Dispatch(int, int, int);
-extern int func_003CC830(void);
-extern void func_003D9440(int, int);
+extern int ScriptFilter_Dispatch(void* filter, int a0, int a1);
+extern int* cGOBJ_GetScriptTypeKeyPtr(void);
+extern void ScriptType_SetParent(int type, int parentType);
 
+/* Registers the cTank script type under its parent type. */
 void ScriptType_cTank_Init(void) {
-    int tmp0;
-    int tmp2;
-    int tmp3;
+    int* parent = cGOBJ_GetScriptTypeKeyPtr();
 
-    tmp0 = func_003CC830();
-    tmp2 = *(int*)D_00506280;
-    tmp3 = *(int*)(char*)tmp0;
-    func_003D9440(tmp2, tmp3);
+    ScriptType_SetParent(D_00506280, *parent);
 }
 
-int func_00283770(int a0) {
-    int loc[1];
-    int v0;
-
-    *(int*)(char*)loc = a0;
-    v0 = *(int*)(char*)loc;
-    goto ret;
-ret:
-    return v0;
+/* Identity casts; volatile mirrors the original stack temporary. */
+int func_00283770(int obj) {
+    volatile int tmp = obj;
+    return tmp;
 }
 
-int func_00283790(int a0) {
-    int loc[1];
-    int v0;
-
-    *(int*)(char*)loc = a0;
-    v0 = *(int*)(char*)loc;
-    goto ret;
-ret:
-    return v0;
+int func_00283790(int obj) {
+    volatile int tmp = obj;
+    return tmp;
 }
 
 void* func_002837B0(void* self) {
@@ -54,21 +39,18 @@ void* func_002837C0(void* self) {
     return self;
 }
 
-int func_002837D0(void) {
-    return (int)D_00506278;
+int* func_002837D0(void) {
+    return &D_00506278;
 }
 
-int func_002837E0(void) {
-    return (int)D_00506278;
+int* func_002837E0(void) {
+    return &D_00506278;
 }
 
 int cTank_v0B(void) {
-    int tmp0;
-
-    tmp0 = *(int*)D_00506278;
-    return tmp0;
+    return D_00506278;
 }
 
 int cTank_v0C(int a0, int a1) {
-    return ScriptFilter_Dispatch((int)D_00555070, a0, a1);
+    return ScriptFilter_Dispatch(D_00555070, a0, a1);
 }

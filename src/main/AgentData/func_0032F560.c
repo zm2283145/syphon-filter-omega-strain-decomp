@@ -1,100 +1,51 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * cAgentData script natives (unlocks, objective queries, bonus levels).
  */
 
 #include "types.h"
+#include "AgentData_types.h"
 
-extern int AgentData_IsObjectiveComplete(int, int);
-extern char D_0049D010[];
-extern int GObj_IdentityB(int);
-extern int Global_IsObjectiveComplete(int, int);
-extern int cAgentData_HasBonusLevel(int, int);
-extern void cAgentData_UnlockLevel(int, int);
-extern void cAgentData_UnlockWeapon(int, int);
-extern int func_00185C70(int);
+extern unsigned char AgentData_IsObjectiveComplete(cAgentData* agent, int key);
+extern int D_0049D010;
+extern AgentGObj* GObj_IdentityB(int handle);
+extern unsigned char Global_IsObjectiveComplete(AgentGObj* gobj, int key);
+extern unsigned char cAgentData_HasBonusLevel(cAgentData* agent, int level);
+extern void cAgentData_UnlockLevel(cAgentData* agent, int level);
+extern void cAgentData_UnlockWeapon(cAgentData* agent, int weapon);
+extern cAgentData* func_00185C70(AgentGObj* gobj);
 
-int Script_cAgentData_UnlockWeapon(int a0) {
-    int loc[1];
-    int a1, v0;
-
-    v0 = *(int*)(char*)(a0 + 4);
-    *(int*)(char*)loc = v0;
-    a1 = *(int*)(char*)loc;
-    a0 = *(int*)(char*)a0;
-    cAgentData_UnlockWeapon(a0, a1);
-    v0 = 0;
-    goto ret;
-ret:
-    return v0;
+int Script_cAgentData_UnlockWeapon(AgentScriptArg* args) {
+    int weapon[1];
+    weapon[0] = args[1].i;
+    cAgentData_UnlockWeapon(args[0].p, STACK_COPY(weapon));
+    return 0;
 }
 
-int Script_cAgentData_UnlockLevel(int a0) {
-    int loc[1];
-    int a1, v0;
-
-    v0 = *(int*)(char*)(a0 + 4);
-    *(int*)(char*)loc = v0;
-    a1 = *(int*)(char*)loc;
-    a0 = *(int*)(char*)a0;
-    cAgentData_UnlockLevel(a0, a1);
-    v0 = 0;
-    goto ret;
-ret:
-    return v0;
+int Script_cAgentData_UnlockLevel(AgentScriptArg* args) {
+    int level[1];
+    level[0] = args[1].i;
+    cAgentData_UnlockLevel(args[0].p, STACK_COPY(level));
+    return 0;
 }
 
-int Script_IsObjectiveComplete(int a0) {
-    int loc[1];
-    int a1, v0;
-
-    v0 = *(int*)(char*)(a0 + 4);
-    *(int*)(char*)loc = v0;
-    a0 = *(int*)(char*)a0;
-    v0 = GObj_IdentityB(a0);
-    a1 = *(int*)(char*)loc;
-    a0 = v0;
-    v0 = Global_IsObjectiveComplete(a0, a1);
-    v0 = v0 & 255;
-    goto ret;
-ret:
-    return v0;
+/* game::IsObjectiveComplete(gobj, key); the volatile local mirrors the stack temporary. */
+int Script_IsObjectiveComplete(AgentScriptArg* args) {
+    volatile int key = args[1].i;
+    AgentGObj* gobj = GObj_IdentityB(args[0].i);
+    return Global_IsObjectiveComplete(gobj, key);
 }
 
-int Global_IsObjectiveComplete(int a0, int a1) {
-    int s0, v0, v1;
-    int cond;
-
-    v1 = *(int*)(char*)(a0 + 76);
-    v0 = *(int*)(char*)D_0049D010;
-    cond = v1 != v0;
-    s0 = a1;
-    if (cond) goto L0032F63C;
-    v0 = func_00185C70(a0);
-    a1 = s0;
-    a0 = v0;
-    v0 = AgentData_IsObjectiveComplete(a0, a1);
-    goto L0032F644;
-L0032F63C:;
-    v0 = 0;
-L0032F644:;
-    goto ret;
-ret:
-    return v0;
+/* Queries the agent data of an object of the agent class; other objects report false. */
+unsigned char Global_IsObjectiveComplete(AgentGObj* gobj, int key) {
+    if (gobj->classKey == D_0049D010) {
+        return AgentData_IsObjectiveComplete(func_00185C70(gobj), key);
+    }
+    return 0;
 }
 
-int Script_cAgentData_HasBonusLevel(int a0) {
-    int loc[1];
-    int a1, v0;
-
-    v0 = *(int*)(char*)(a0 + 4);
-    *(int*)(char*)loc = v0;
-    a1 = *(int*)(char*)loc;
-    a0 = *(int*)(char*)a0;
-    v0 = cAgentData_HasBonusLevel(a0, a1);
-    v0 = v0 & 255;
-    goto ret;
-ret:
-    return v0;
+int Script_cAgentData_HasBonusLevel(AgentScriptArg* args) {
+    int level[1];
+    level[0] = args[1].i;
+    return cAgentData_HasBonusLevel(args[0].p, STACK_COPY(level));
 }

@@ -1,86 +1,67 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
+ * Part of ska.cc (skeletal animation).
  */
 
-#include "types.h"
+#include "ska_types.h"
 
-extern int func_00397840(int, int, int);
+extern void func_00397840(SkaWords6* out, int a1, int a2);
 
-void AnimContext_PushTime(int a0, float f12) {
-    int at, v1;
-    int cond;
-
-    v1 = *(int*)(char*)a0;
-    at = (unsigned int)v1 < (unsigned int)4;
-    cond = at == 0;
-    if (cond) goto L003AE048;
-    v1 = v1 << 2;
-    v1 = v1 + a0;
-    *(float*)(char*)(v1 + 4) = f12;
-    v1 = *(int*)(char*)a0;
-    v1 = v1 + 1;
-    *(int*)(char*)a0 = v1;
-L003AE048:;
-    goto ret;
-ret:;
+/* Push a time value if the four-slot stack is not full. */
+void AnimContext_PushTime(SkaTimeStack* s, float t) {
+    if ((unsigned int)s->count < 4) {
+        s->times[s->count] = t;
+        s->count = s->count + 1;
+    }
 }
 
-void func_003AE050(int a0) {
-    int loc[8];
-    int a1, a2, s0, v0, v1;
+/* Fill a six-word value from func_00397840 with a zero third argument. */
+void func_003AE050(SkaWords6* self, int a1) {
+    SkaWords6 tmp;
+    int w;
 
-    a2 = 0;
-    s0 = a0;
-    a0 = (int)loc;
-    v0 = func_00397840(a0, a1, a2);
-    v1 = *(int*)(char*)loc;
-    *(int*)(char*)s0 = v1;
-    v1 = *(int*)((char*)loc + 4);
-    *(int*)(char*)(s0 + 4) = v1;
-    v1 = *(int*)((char*)loc + 8);
-    *(int*)(char*)(s0 + 8) = v1;
-    v1 = *(int*)((char*)loc + 12);
-    *(int*)(char*)(s0 + 12) = v1;
-    v1 = *(int*)((char*)loc + 16);
-    *(int*)(char*)(s0 + 16) = v1;
-    v1 = *(int*)((char*)loc + 20);
-    *(int*)(char*)(s0 + 20) = v1;
-    goto ret;
-ret:;
+    func_00397840(&tmp, a1, 0);
+    w = tmp.w[0];
+    self->w[0] = w;
+    w = tmp.w[1];
+    self->w[1] = w;
+    w = tmp.w[2];
+    self->w[2] = w;
+    w = tmp.w[3];
+    self->w[3] = w;
+    w = tmp.w[4];
+    self->w[4] = w;
+    w = tmp.w[5];
+    self->w[5] = w;
 }
 
-int func_003AE0B0(int a0, int a1) {
-    *(int*)((char*)a0) = *(int*)(char*)a1;
-    *(int*)((char*)a0 + 4) = *(int*)((char*)a1 + 4);
-    *(int*)((char*)a0 + 8) = *(int*)((char*)a1 + 8);
-    *(int*)((char*)a0 + 12) = *(int*)((char*)a1 + 12);
-    *(int*)((char*)a0 + 16) = *(int*)((char*)a1 + 16);
-    *(int*)((char*)a0 + 20) = *(int*)((char*)a1 + 20);
-    return a0;
+/* Six-word copy assignment. */
+SkaWords6* func_003AE0B0(SkaWords6* dst, SkaWords6* src) {
+    dst->w[0] = src->w[0];
+    dst->w[1] = src->w[1];
+    dst->w[2] = src->w[2];
+    dst->w[3] = src->w[3];
+    dst->w[4] = src->w[4];
+    dst->w[5] = src->w[5];
+    return dst;
 }
 
-void func_003AE0F0(int a0, int a1) {
-    int loc[8];
-    int a2, s0, v0, v1;
+/* Fill a six-word value from func_00397840, passing src and its word +0x14. */
+void func_003AE0F0(SkaWords6* self, SkaWords6* src) {
+    SkaWords6 tmp;
+    int w;
 
-    a2 = *(int*)(char*)(a1 + 20);
-    s0 = a0;
-    a0 = (int)loc;
-    v0 = func_00397840(a0, a1, a2);
-    v1 = *(int*)(char*)loc;
-    *(int*)(char*)s0 = v1;
-    v1 = *(int*)((char*)loc + 4);
-    *(int*)(char*)(s0 + 4) = v1;
-    v1 = *(int*)((char*)loc + 8);
-    *(int*)(char*)(s0 + 8) = v1;
-    v1 = *(int*)((char*)loc + 12);
-    *(int*)(char*)(s0 + 12) = v1;
-    v1 = *(int*)((char*)loc + 16);
-    *(int*)(char*)(s0 + 16) = v1;
-    v1 = *(int*)((char*)loc + 20);
-    *(int*)(char*)(s0 + 20) = v1;
-    goto ret;
-ret:;
+    func_00397840(&tmp, (int)src, src->w[5]);
+    w = tmp.w[0];
+    self->w[0] = w;
+    w = tmp.w[1];
+    self->w[1] = w;
+    w = tmp.w[2];
+    self->w[2] = w;
+    w = tmp.w[3];
+    self->w[3] = w;
+    w = tmp.w[4];
+    self->w[4] = w;
+    w = tmp.w[5];
+    self->w[5] = w;
 }

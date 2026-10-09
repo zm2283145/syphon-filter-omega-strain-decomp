@@ -5,24 +5,15 @@
  */
 
 #include "types.h"
+#include "scriptManager_types.h"
 
-extern char D_00554F30[];
-extern int func_003DC4C0(int, int);
-extern int func_003DC4D0(int, int);
+extern PtrVec* D_00554F30;  /* global enum table (ScriptEnum* entries, ids start at 10) */
+extern ScriptEnum** func_003DC4C0(PtrVec* v, int i);
+extern int Script_RemapEnumId(Script* script, int localId);
 
-int func_003DC470(int a0, int a1, int a2) {
-    int tmp0;
-    int tmp2;
-    int tmp3;
-    int tmp5;
-    int tmp6;
-    int tmp7;
-
-    tmp0 = func_003DC4D0(a0, a1);
-    tmp2 = *(int*)D_00554F30;
-    tmp3 = func_003DC4C0(tmp2, (tmp0 + -10));
-    tmp5 = *(int*)(char*)tmp3;
-    tmp6 = *(int*)((char*)tmp5 + 12);
-    tmp7 = *(int*)(char*)(tmp6 + (a2 * 12));
-    return tmp7;
+/* First word of member 'index' of the script-local enum 'localId'. */
+int func_003DC470(Script* script, int localId, int index) {
+    int id = Script_RemapEnumId(script, localId);
+    ScriptEnum* e = *func_003DC4C0(D_00554F30, id - 10);
+    return e->members[index].unk0;
 }

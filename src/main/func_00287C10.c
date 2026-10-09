@@ -6,10 +6,19 @@
 
 #include "types.h"
 
+extern char D_00506250[];
+
 int func_00287C10(int a0, int a1, int a2) {
     *(int*)((char*)a0 + 4) = a2;
     *(int*)((char*)a0) = a1;
     *(float*)((char*)a0 + 36) = *(float*)((char*)*(int*)((char*)a0 + 4) + 324);
     *(char*)((char*)a0 + 40) = 0;
     return a0;
+}
+
+int func_00287C30(void) {
+    int tmp0;
+
+    tmp0 = *(int*)D_00506250;
+    return tmp0;
 }

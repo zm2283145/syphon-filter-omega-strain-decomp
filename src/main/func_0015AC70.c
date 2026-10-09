@@ -6,6 +6,8 @@
 
 #include "types.h"
 
+extern int func_0016E170(int, int, int);
+
 int func_0015AC70(int a0) {
     *(int*)((char*)a0 + 4) = -2;
     *(int*)((char*)a0) = 0;
@@ -28,4 +30,11 @@ void* func_0015ACB0(void* self) {
 
 void* func_0015ACC0(void* self) {
     return self;
+}
+
+int func_0015ACD0(int a0) {
+    *(int*)((char*)a0) = 0;
+    *(int*)((char*)a0 + 8) = 0;
+    func_0016E170(a0, 0, 0);
+    return a0;
 }

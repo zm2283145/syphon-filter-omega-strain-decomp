@@ -133,7 +133,4 @@ typedef struct Q {
     float x, y, z, w;
 } __attribute__((aligned(16))) Q;
 
-/* Functions that are still assembly, called from matched C. */
-extern void func_00139200(IndexedList* list, int* end, int n, void* arg);
-
 #endif

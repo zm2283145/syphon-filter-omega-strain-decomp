@@ -6,6 +6,9 @@
 
 #include "types.h"
 
+extern int func_001D8730(void);
+extern int func_001D8900(void);
+
 int func_001D86D0(int a0) {
     *(int*)((char*)a0) = 0;
     *(int*)((char*)a0 + 4) = 0;
@@ -22,4 +25,12 @@ int func_001D8700(int a0) {
     *(int*)((char*)a0) = 0;
     *(int*)((char*)a0 + 4) = 0;
     return a0;
+}
+
+int func_001D8710(void) {
+    return func_001D8730();
+}
+
+int func_001D8720(void) {
+    return func_001D8900();
 }

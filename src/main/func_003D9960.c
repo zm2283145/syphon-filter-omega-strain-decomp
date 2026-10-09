@@ -6,9 +6,15 @@
 
 #include "types.h"
 
+extern char D_0055A120[];
+
 void func_003D9960(void) {
 }
 
 void* func_003D9970(void* self) {
     return self;
+}
+
+int func_003D9980(void) {
+    return (int)D_0055A120;
 }

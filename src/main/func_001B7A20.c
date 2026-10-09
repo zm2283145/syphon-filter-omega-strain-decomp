@@ -6,7 +6,43 @@
 
 #include "types.h"
 
+extern char D_0048A1B8[];
+extern char D_0048A1C0[];
+extern char D_004DA380[];
+extern char D_004DA7D0[];
+extern int func_0017F3D0(int, int);
+extern int func_0017F3E0(int, int, int, float);
+
 Rel* func_001B7A20(Rel* r) {
+    r->a = 0;
+    r->b = 0;
+    r->c = 0;
+    return r;
+}
+
+int func_001B7A40(int a0) {
+    float tmp0;
+    float tmp1;
+    float tmp2;
+    float tmp3;
+
+    *(int*)((char*)a0) = (int)D_004DA380;
+    tmp0 = *(float*)D_0048A1B8;
+    *(float*)((char*)a0 + 4) = tmp0;
+    tmp1 = *(float*)D_0048A1B8;
+    *(float*)((char*)a0 + 8) = tmp1;
+    tmp2 = *(float*)D_0048A1C0;
+    *(float*)((char*)a0 + 12) = tmp2;
+    tmp3 = *(float*)D_0048A1B8;
+    *(float*)((char*)a0 + 16) = tmp3;
+    *(int*)((char*)a0 + 20) = 0;
+    func_0017F3E0((a0 + 24), (int)D_0048A1B8, (int)D_0048A1C0, 0.0f);
+    func_0017F3D0((a0 + 48), (a0 + 24));
+    *(int*)((char*)a0) = (int)D_004DA7D0;
+    return a0;
+}
+
+Rel* func_001B7AE0(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;

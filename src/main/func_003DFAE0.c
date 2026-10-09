@@ -6,6 +6,8 @@
 
 #include "types.h"
 
+extern int func_003DFB20(void);
+
 Word* func_003DFAE0(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
@@ -13,4 +15,9 @@ Word* func_003DFAE0(Word* dst, Word* src) {
 
 void func_003DFAF0(Iter* out, Tree* t) {
     out->p = &t->header;
+}
+
+int func_003DFB00(void) {
+    func_003DFB20();
+    return 0;
 }

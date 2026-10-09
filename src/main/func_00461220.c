@@ -6,6 +6,9 @@
 
 #include "types.h"
 
+extern char D_004C25C0[];
+extern char D_004F2CC0[];
+
 int func_00461220(int a0, int a1) {
     int tmp0;
 
@@ -15,4 +18,12 @@ int func_00461220(int a0, int a1) {
 
 int func_00461240(char* self) {
     return *(int*)(self + 4);
+}
+
+int func_00461250(void) {
+    return (int)D_004F2CC0;
+}
+
+int func_00461260(void) {
+    return (int)D_004C25C0;
 }

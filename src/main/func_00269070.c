@@ -6,5 +6,11 @@
 
 #include "types.h"
 
+extern int func_00269090(int);
+
 void func_00269070(void) {
+}
+
+int func_00269080(int a0) {
+    return func_00269090(a0);
 }

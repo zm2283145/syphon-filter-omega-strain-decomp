@@ -6,9 +6,23 @@
 
 #include "types.h"
 
+extern int func_00127DD0(void);
+
 int func_0017DE50(int a0, float f12, float f13, float f14) {
     *(float*)((char*)a0) = f12;
     *(float*)((char*)a0 + 4) = f13;
     *(float*)((char*)a0 + 8) = f14;
     return a0;
+}
+
+int func_0017DE70(void) {
+    return func_00127DD0();
+}
+
+float func_0017DE80(char* self) {
+    return *(float*)(self + 8);
+}
+
+void* func_0017DE90(char* self) {
+    return self + 8;
 }

@@ -193,8 +193,8 @@ def main():
         "  description = CC $in",
         "rule ld",
         "  command = $ld -EL -T build/undefined_syms_auto.txt -T build/undefined_funcs_auto.txt "
-        "-T config/extra.ld -T build/SCUS_972.64.ld -Map build/SCUS_972.64.map "
-        "--no-check-sections -o $out",
+        "-T config/extra.ld -T build/link.ld -Map build/SCUS_972.64.map "
+        "--no-check-sections -o $out @build/link.rsp",
         "  description = LD $out",
         "rule image",
         "  command = $objcopy -O binary $in $out",
@@ -218,7 +218,7 @@ def main():
         lines.append(f"build {ninja_path(target)}: as {ninja_path(target_s)}")
     targets = " ".join(ninja_path(t) for *_, t in c_units)
     lines += [
-        f"build build/SCUS_972.64.elf: ld | {' '.join(ninja_path(o) for o in link_objs)} build/SCUS_972.64.ld config/extra.ld",
+        f"build build/SCUS_972.64.elf: ld | {' '.join(ninja_path(o) for o in link_objs)} build/link.ld build/link.rsp config/extra.ld",
         "build build/SCUS_972.64.rom: image build/SCUS_972.64.elf",
         "build build/SCUS_972.64: elf build/SCUS_972.64.rom | config/elf_layout.json tools/elf_rebuild.py",
         "build build/SCUS_972.64.ok: check build/SCUS_972.64",
@@ -229,6 +229,31 @@ def main():
         "",
     ]
     (ROOT / "build.ninja").write_text("\n".join(lines))
+
+    # Objects are passed in address order on the command line (via a response
+    # file) and collected with plain wildcards. This is equivalent to splat's
+    # per-object linker script but much faster for thousands of objects.
+    (ROOT / "build" / "link.rsp").write_text("\n".join(str(o).replace("\\", "/") for o in link_objs) + "\n")
+    gp = cfg["options"]["gp_value"]
+    seg = cfg["segments"][0]
+    (ROOT / "build" / "link.ld").write_text(f"""SECTIONS
+{{
+    _gp = {gp:#x};
+    .main {seg["vram"]:#x} : AT(0) SUBALIGN(16)
+    {{
+        FILL(0x00000000);
+        *(.text*)
+        . = ALIGN(16);
+        *(.data*)
+        . = ALIGN(16);
+        *(.rodata*)
+        . = ALIGN(16);
+        *(.sdata*)
+        . = ALIGN(16);
+    }}
+    /DISCARD/ : {{ *(*) }}
+}}
+""")
 
     objdiff_cfg = {
         "$schema": "https://raw.githubusercontent.com/encounter/objdiff/main/config.schema.json",

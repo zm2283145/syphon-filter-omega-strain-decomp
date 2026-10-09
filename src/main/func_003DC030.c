@@ -6,6 +6,25 @@
 
 #include "types.h"
 
+extern int func_00139200(int, int, int, int);
+
 int* func_003DC030(PtrVec* v, int i) {
+    return v->data + i;
+}
+
+int func_003DC040(int a0, int a1) {
+    int tmp0;
+    int tmp1;
+
+    tmp0 = *(int*)((char*)a0 + 4);
+    tmp1 = *(int*)((char*)a0 + 8);
+    return func_00139200(a0, (tmp1 + (tmp0 << 2)), 1, a1);
+}
+
+int* func_003DC060(PtrVec* v, int i) {
+    return v->data + i;
+}
+
+int* func_003DC070(PtrVec* v, int i) {
     return v->data + i;
 }

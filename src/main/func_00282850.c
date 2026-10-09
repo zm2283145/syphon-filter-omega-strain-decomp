@@ -1,0 +1,29 @@
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Original translation unit not identified yet; functions are named by address
+ * until real names are known.
+ */
+
+#include "types.h"
+
+extern char D_00506228[];
+extern int func_003CC800(int);
+
+int func_00282850(int a0) {
+    int tmp0;
+    int tmp1;
+
+    tmp0 = *(int*)(char*)a0;
+    tmp1 = *(int*)((char*)tmp0 + 36);
+    return func_003CC800(tmp1);
+}
+
+void func_00282860(void) {
+}
+
+int func_00282870(void) {
+    int tmp0;
+
+    tmp0 = *(int*)D_00506228;
+    return tmp0;
+}

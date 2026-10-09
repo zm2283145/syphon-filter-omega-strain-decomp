@@ -6,6 +6,8 @@
 
 #include "types.h"
 
+extern int func_00272D50(int, int, int);
+
 Word* func_00273100(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
@@ -66,4 +68,8 @@ Word* func_002731E0(Word* dst, Word* src) {
 
 void func_002731F0(Iter* out, PtrVec* v) {
     out->p = v->data;
+}
+
+int func_00273200(int a0, int a1) {
+    return func_00272D50(a0, a1, 1);
 }

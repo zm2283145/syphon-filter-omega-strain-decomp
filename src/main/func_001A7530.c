@@ -6,6 +6,17 @@
 
 #include "types.h"
 
+extern int func_00139200(int, int, int, int);
+
 void* func_001A7530(void* self) {
     return self;
+}
+
+int func_001A7540(int a0, int a1) {
+    int tmp0;
+    int tmp1;
+
+    tmp0 = *(int*)((char*)a0 + 4);
+    tmp1 = *(int*)((char*)a0 + 8);
+    return func_00139200(a0, (tmp1 + (tmp0 << 2)), 1, a1);
 }

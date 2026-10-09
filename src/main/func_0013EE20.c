@@ -6,6 +6,8 @@
 
 #include "types.h"
 
+extern int func_00224D80(void);
+
 int func_0013EE20(int a0) {
     float tmp0;
     float tmp1;
@@ -31,4 +33,14 @@ int func_0013EE20(int a0) {
 
 int func_0013EE60(void) {
     return 0;
+}
+
+int func_0013EE70(int a0, int a1) {
+    int tmp0;
+
+    *(int*)((char*)a0) = a1;
+    tmp0 = func_00224D80();
+    *(int*)((char*)a0 + 8) = tmp0;
+    *(char*)((char*)a0 + 4) = 1;
+    return a0;
 }

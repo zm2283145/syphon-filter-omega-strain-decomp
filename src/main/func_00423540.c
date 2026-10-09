@@ -6,6 +6,8 @@
 
 #include "types.h"
 
+extern int func_0041E040(int, int, int, int);
+
 void func_00423540(int a0, int a1) {
     *(int*)((char*)a1) = *(int*)((char*)a0 + 132);
 }
@@ -32,4 +34,15 @@ void func_00423590(int a0, int a1, int a2) {
 void func_004235B0(int a0, int a1, int a2) {
     *(int*)((char*)a0 + 112) = a1;
     *(int*)((char*)a0 + 116) = a2;
+}
+
+int func_004235C0(int a0, int a1, int a2) {
+    return func_0041E040(a0, 21, a1, a2);
+}
+
+int func_004235E0(int a0, int a1, int a2) {
+    return func_0041E040(a0, 20, a1, a2);
+}
+
+void func_00423600(void) {
 }

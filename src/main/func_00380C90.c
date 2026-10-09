@@ -13,3 +13,13 @@ int func_00380C90(int a0, int a1) {
 void func_00380CB0(Iter* out, Tree* t) {
     out->p = &t->header;
 }
+
+void func_00380CC0(int a0, int a1) {
+    int tmp0;
+    int tmp1;
+
+    tmp0 = *(int*)(char*)a1;
+    tmp1 = *(int*)((char*)tmp0 + 4);
+    *(int*)((char*)a1) = tmp1;
+    *(int*)((char*)a0) = tmp0;
+}

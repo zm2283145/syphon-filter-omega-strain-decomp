@@ -17,3 +17,12 @@ int func_00412150(int a0, int a1) {
 void* func_00412180(char* self) {
     return self + 80;
 }
+
+int func_00412190(int a0, int a1) {
+    int tmp0;
+    int tmp1;
+
+    tmp0 = *(int*)((char*)a0 + 104);
+    tmp1 = *(int*)((char*)a0 + 96);
+    return ((tmp1 + (tmp0 * 320)) + (a1 * 100));
+}

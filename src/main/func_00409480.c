@@ -6,6 +6,13 @@
 
 #include "types.h"
 
+int func_00409480(int a0, int a1) {
+    int tmp0;
+
+    tmp0 = *(int*)((char*)a0 + 8);
+    return (tmp0 + (a1 * 292));
+}
+
 int func_004094A0(int a0) {
     return (*(int*)(char*)a0 + 24);
 }

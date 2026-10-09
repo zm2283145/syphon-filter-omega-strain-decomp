@@ -6,6 +6,9 @@
 
 #include "types.h"
 
-int func_0013EE60(void) {
-    return 0;
+int func_001CFF30(int a0, int a1) {
+    int tmp0;
+
+    tmp0 = *(int*)((char*)a0 + 8);
+    return (tmp0 + (a1 * 464));
 }

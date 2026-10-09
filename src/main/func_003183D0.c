@@ -6,6 +6,10 @@
 
 #include "types.h"
 
-void func_003308D0(Iter* out, PtrVec* v) {
-    out->p = v->data;
+int func_003183D0(int a0) {
+    int tmp0;
+
+    tmp0 = *(int*)((char*)a0 + 72);
+    *(short*)((char*)tmp0 + 42) = 0;
+    return tmp0;
 }

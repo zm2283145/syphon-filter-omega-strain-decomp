@@ -6,13 +6,16 @@
 
 #include "types.h"
 
-void* func_0019F420(void* self) {
-    return self;
-}
-
-int func_0019F430(int a0, int a1) {
+int func_00341C10(int a0, int a1) {
     int tmp0;
 
     tmp0 = *(int*)((char*)a0 + 8);
     return (tmp0 + (a1 * 464));
+}
+
+int func_00341C30(int a0, int a1) {
+    int tmp0;
+
+    tmp0 = *(int*)((char*)a0 + 8);
+    return (tmp0 + (a1 * 12));
 }

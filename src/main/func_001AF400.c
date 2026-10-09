@@ -13,3 +13,16 @@ void* func_001AF400(char* self) {
 int func_001AF410(char* self) {
     return *(int*)(self + 0);
 }
+
+void func_001AF420(int a0, int a1) {
+    int tmp0;
+    int tmp1;
+
+    tmp0 = *(int*)((char*)a1 + 4);
+    tmp1 = *(int*)((char*)a1 + 8);
+    *(int*)((char*)a0) = (tmp1 + (tmp0 * 464));
+}
+
+void func_001AF450(Iter* out, PtrVec* v) {
+    out->p = v->data;
+}

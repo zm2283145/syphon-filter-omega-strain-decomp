@@ -6,11 +6,10 @@
 
 #include "types.h"
 
-Word* func_001CF140(Word* dst, Word* src) {
-    dst->value = src->value;
-    return dst;
-}
+float func_0014BCE0(int a0, float f12) {
+    float tmp0;
 
-void func_001CF150(Iter* out, PtrVec* v) {
-    out->p = v->data;
+    tmp0 = *(float*)((char*)a0 + 120);
+    *(float*)((char*)a0 + 120) = f12;
+    return tmp0;
 }

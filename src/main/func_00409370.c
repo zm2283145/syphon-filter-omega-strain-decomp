@@ -6,6 +6,11 @@
 
 #include "types.h"
 
-void func_003E4710(char* self, int value) {
-    *(int*)(self + 40) = value;
+int func_00409370(int a0) {
+    int tmp0;
+    int tmp1;
+
+    tmp0 = *(int*)((char*)a0 + 4);
+    tmp1 = *(int*)((char*)a0 + 8);
+    return ((tmp1 + (tmp0 * 292)) + -292);
 }

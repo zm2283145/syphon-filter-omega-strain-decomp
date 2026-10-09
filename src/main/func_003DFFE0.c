@@ -6,10 +6,12 @@
 
 #include "types.h"
 
-int func_003F5CE0(char* self) {
-    return *(int*)(self + 168);
-}
+int func_003DFFE0(int a0) {
+    int tmp0;
+    int tmp1;
 
-void func_003F5CF0(int a0) {
-    *(int*)((char*)a0 + 168) = 1;
+    tmp0 = *(int*)((char*)a0 + 20080);
+    *(int*)((char*)a0 + 20080) = (tmp0 + 4);
+    tmp1 = *(int*)(char*)tmp0;
+    return tmp1;
 }

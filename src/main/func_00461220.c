@@ -6,10 +6,13 @@
 
 #include "types.h"
 
-void func_0032F840(Iter* out, void* self, Iter* src) {
-    out->p = src->p;
+int func_00461220(int a0, int a1) {
+    int tmp0;
+
+    tmp0 = *(int*)((char*)a0 + 8);
+    return (tmp0 + (a1 * 12));
 }
 
-int func_0032F850(char* self) {
-    return *(int*)(self + 8);
+int func_00461240(char* self) {
+    return *(int*)(self + 4);
 }

@@ -21,3 +21,21 @@ void func_003B24E0(int a0, float f12, float f13) {
 int func_003B2500(char* self) {
     return *(int*)(self + 0);
 }
+
+void func_003B2510(int a0, int a1) {
+    float tmp0;
+    float tmp1;
+    float tmp2;
+
+    tmp0 = *(float*)((char*)a1 + 16);
+    tmp1 = *(float*)((char*)a1 + 12);
+    tmp2 = *(float*)((char*)a1 + 8);
+    *(float*)((char*)a0) = tmp2;
+    *(float*)((char*)a0 + 4) = tmp1;
+    *(float*)((char*)a0 + 8) = tmp0;
+    *(int*)((char*)a0 + 12) = 0;
+}
+
+int func_003B2530(char* self) {
+    return *(int*)(self + 192);
+}

@@ -6,10 +6,10 @@
 
 #include "types.h"
 
-void func_001A0B10(Iter* out, PtrVec* v) {
-    out->p = v->data;
-}
+int func_003183F0(int a0) {
+    int tmp0;
 
-void* func_001A0B20(char* self) {
-    return self + 160;
+    tmp0 = *(int*)((char*)a0 + 72);
+    *(short*)((char*)tmp0 + 44) = 0;
+    return tmp0;
 }

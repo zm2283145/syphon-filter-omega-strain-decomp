@@ -7,7 +7,7 @@
 #include "types.h"
 
 extern char D_004DFC10[];
-extern int func_00132020(int, int);
+extern int Vec4_Assign(int, int);
 extern int func_003B2950(int, int, int, int, int);
 
 int func_001F0540(int a0, int a1, int a2, int a3, int t0, float f12, float f13) {
@@ -16,6 +16,6 @@ int func_001F0540(int a0, int a1, int a2, int a3, int t0, float f12, float f13) 
     *(int*)((char*)a0 + 80) = a1;
     *(float*)((char*)a0 + 84) = f12;
     *(float*)((char*)a0 + 88) = f13;
-    func_00132020((a0 + 96), a3);
+    Vec4_Assign((a0 + 96), a3);
     return a0;
 }

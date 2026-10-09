@@ -10,6 +10,6 @@ void* func_00190990(char* self) {
     return self + 32;
 }
 
-int func_001909A0(G14* s) {
+int RootClip_TranslationEnabled(G14* s) {
     return s->v != 0;
 }

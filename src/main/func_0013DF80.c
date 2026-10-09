@@ -10,12 +10,12 @@ void func_0013DF80(Iter* out, PtrVec* v) {
     out->p = v->data + v->count;
 }
 
-Iter* func_0013DFA0(Iter* d, Iter* s) {
+Iter* Iter_Assign(Iter* d, Iter* s) {
     d->p = s->p;
     return d;
 }
 
-void func_0013DFB0(Iter* out, PtrVec* v) {
+void Iter_Begin(Iter* out, PtrVec* v) {
     out->p = v->data;
 }
 

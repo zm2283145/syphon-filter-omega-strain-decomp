@@ -10,8 +10,8 @@ extern char D_0048A198[];
 extern char D_0048A1A0[];
 extern char D_004DA380[];
 extern char D_004DA840[];
-extern int func_0017F3D0(int, int);
-extern int func_0017F3E0(int, int, int, float);
+extern int Curve_Bind(int, int);
+extern int Curve_InitConstant(int, int, int, float);
 
 int func_001AF080(int a0) {
     float tmp0;
@@ -29,8 +29,8 @@ int func_001AF080(int a0) {
     tmp3 = *(float*)D_0048A198;
     *(float*)((char*)a0 + 16) = tmp3;
     *(int*)((char*)a0 + 20) = 0;
-    func_0017F3E0((a0 + 24), (int)D_0048A198, (int)D_0048A1A0, 0.0f);
-    func_0017F3D0((a0 + 48), (a0 + 24));
+    Curve_InitConstant((a0 + 24), (int)D_0048A198, (int)D_0048A1A0, 0.0f);
+    Curve_Bind((a0 + 48), (a0 + 24));
     *(int*)((char*)a0) = (int)D_004DA840;
     *(char*)((char*)a0 + 56) = 0;
     return a0;

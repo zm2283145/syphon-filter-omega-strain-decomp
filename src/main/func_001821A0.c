@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-int func_001821A0(Leaf* l, int* addr) {
+int ColTree_IsLeaf(Leaf* l, int* addr) {
     return *addr >= l->limit;
 }
 

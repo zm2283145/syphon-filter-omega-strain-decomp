@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-extern int func_00127DD0(void);
+extern int Random_Next(void);
 
 int func_0017DE50(int a0, float f12, float f13, float f14) {
     *(float*)((char*)a0) = f12;
@@ -16,7 +16,7 @@ int func_0017DE50(int a0, float f12, float f13, float f14) {
 }
 
 int func_0017DE70(void) {
-    return func_00127DD0();
+    return Random_Next();
 }
 
 float func_0017DE80(char* self) {

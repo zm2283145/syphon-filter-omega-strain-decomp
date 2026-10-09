@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-extern int func_00139200(int, int, int, int);
+extern int PtrVec_Insert(int, int, int, int);
 
 Word* func_0032D040(Word* dst, Word* src) {
     dst->value = src->value;
@@ -23,7 +23,7 @@ int func_0032D070(int a0, int a1) {
 
     tmp0 = *(int*)((char*)a0 + 4);
     tmp1 = *(int*)((char*)a0 + 8);
-    return func_00139200(a0, (tmp1 + (tmp0 << 2)), 1, a1);
+    return PtrVec_Insert(a0, (tmp1 + (tmp0 << 2)), 1, a1);
 }
 
 void func_0032D090(Iter* out, void* self, Iter* src) {
@@ -40,5 +40,5 @@ int func_0032D0B0(int a0, int a1) {
 
     tmp0 = *(int*)((char*)a0 + 4);
     tmp1 = *(int*)((char*)a0 + 8);
-    return func_00139200(a0, (tmp1 + (tmp0 << 2)), 1, a1);
+    return PtrVec_Insert(a0, (tmp1 + (tmp0 << 2)), 1, a1);
 }

@@ -10,7 +10,7 @@ void* func_0019F420(void* self) {
     return self;
 }
 
-int func_0019F430(int a0, int a1) {
+int Skeleton_NodeAt(int a0, int a1) {
     int tmp0;
 
     tmp0 = *(int*)((char*)a0 + 8);

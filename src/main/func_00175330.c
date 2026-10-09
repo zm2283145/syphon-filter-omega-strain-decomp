@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_00175330(void) {
+int Player_IsPlayer(void) {
     return 1;
 }

@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-extern void func_00139200(IndexedList* list, int* end, int n, void* arg);
+extern void PtrVec_Insert(IndexedList* list, int* end, int n, void* arg);
 
 void func_00130F20(IndexedList* list, void* arg) {
-    func_00139200(list, list->base + list->count, 1, arg);
+    PtrVec_Insert(list, list->base + list->count, 1, arg);
 }

@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_00186BE0(int a0, int a1) {
+int History_At(int a0, int a1) {
     return (*(int*)((char*)a0 + 8) + (a1 << 3));
 }

@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-void** func_003B1770(PtrStack* s) {
+void** PtrStack_Top(PtrStack* s) {
     return &s->items[s->count - 1];
 }
 

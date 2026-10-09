@@ -65,7 +65,7 @@ Vec4* func_00132000(Vec4* v, float x, float y, float z, float w) {
     return v;
 }
 
-Vec4* func_00132020(Vec4* d, Vec4* s) {
+Vec4* Vec4_Assign(Vec4* d, Vec4* s) {
     *d = *s;
     return d;
 }

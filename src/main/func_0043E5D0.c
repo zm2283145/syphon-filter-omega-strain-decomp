@@ -11,7 +11,7 @@ extern char D_004C0104[];
 extern char D_004C0108[];
 extern char D_004C010C[];
 extern char D_004E1040[];
-extern int func_00139070(int);
+extern int ScalarCollection_Init(int);
 extern void func_0041F690(int);
 
 int func_0043E5D0(int a0) {
@@ -22,7 +22,7 @@ int func_0043E5D0(int a0) {
 
     func_0041F690(a0);
     *(int*)((char*)a0) = (int)D_004E1040;
-    func_00139070((a0 + 112));
+    ScalarCollection_Init((a0 + 112));
     *(int*)((char*)a0 + 72) = 0;
     *(int*)((char*)a0 + 76) = 0;
     *(int*)((char*)a0 + 96) = 0;

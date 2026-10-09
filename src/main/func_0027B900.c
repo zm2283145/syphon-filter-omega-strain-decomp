@@ -8,7 +8,7 @@
 
 extern char D_00504040[];
 extern char D_00504058[];
-extern int func_00139070(int);
+extern int ScalarCollection_Init(int);
 extern int func_00241B70(int, int);
 extern int func_003EEBE0(int, int, int);
 
@@ -17,7 +17,7 @@ int func_0027B900(int a0, int a1, int a2) {
     int tmp4;
     int tmp5;
 
-    func_00139070((a0 + 44));
+    ScalarCollection_Init((a0 + 44));
     *(int*)((char*)a0 + 80) = 3658;
     tmp2 = func_00241B70(a2, a1);
     *(int*)((char*)a0) = tmp2;

@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-float func_0019D7B0(int a0, int a1) {
+float AnimChannel_GetCurrent(int a0, int a1) {
     return *(float*)((char*)(*(int*)((char*)a0 + 128) + (((a1 << 4) - a1) << 2)) + 8);
 }

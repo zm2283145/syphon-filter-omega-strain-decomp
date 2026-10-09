@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-char* func_003BD8F0(char* base, int i) {
+char* Array16_At(char* base, int i) {
     return base + i * 16;
 }

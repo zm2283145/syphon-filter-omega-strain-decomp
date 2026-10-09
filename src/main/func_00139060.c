@@ -10,7 +10,7 @@ void* func_00139060(char* self) {
     return self + 4;
 }
 
-List* func_00139070(List* l) {
+List* ScalarCollection_Init(List* l) {
     l->count = 0;
     l->first = l->last = &l->first;
     return l;

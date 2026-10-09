@@ -42,7 +42,7 @@ int func_00211170(int a0, int a1) {
     return func_003E1AA0((int)D_00555070, a0, a1);
 }
 
-int func_00211190(Args* a) {
+int Script_Mover_SetSpeed(Args* a) {
     union { int i; float f; } u;
     u.i = a->arg1;
     a->obj->speed = u.f;

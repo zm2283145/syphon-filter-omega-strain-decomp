@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int* func_00137AA0(PtrVec* v, int i) {
+int* PtrVec_At(PtrVec* v, int i) {
     return v->data + i;
 }

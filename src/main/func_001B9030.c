@@ -10,6 +10,6 @@ float func_001B9030(void) {
     return 0.0f;
 }
 
-float func_001B9040(void) {
+float AnimChannel_DirectDerivedZero(void) {
     return 0.0f;
 }

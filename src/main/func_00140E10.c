@@ -6,14 +6,14 @@
 
 #include "types.h"
 
-extern int func_00121688(float);
-extern int func_00121928(float);
+extern int Math_Cos(float);
+extern int Math_Sin(float);
 
 int func_00140E10(void) {
     return 0;
 }
 
-Mtx44* func_00140E20(Mtx44* m, float a, float b, float c, float d, float e, float f,
+Mtx44* Mtx44_SetRotation(Mtx44* m, float a, float b, float c, float d, float e, float f,
                      float g, float h, float i) {
     m->m[0][0] = a;
     m->m[0][1] = d;
@@ -35,11 +35,11 @@ Mtx44* func_00140E20(Mtx44* m, float a, float b, float c, float d, float e, floa
 }
 
 int func_00140E70(float f12) {
-    return func_00121928(f12);
+    return Math_Sin(f12);
 }
 
 int func_00140E80(float f12) {
-    return func_00121688(f12);
+    return Math_Cos(f12);
 }
 
 int func_00140E90(void) {

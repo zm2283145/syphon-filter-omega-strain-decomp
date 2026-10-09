@@ -16,6 +16,6 @@ Vec4* func_001325F0(Vec4* d, Vec4* s) {
     return d;
 }
 
-void* func_00132600(void* self) {
+void* Root_Identity(void* self) {
     return self;
 }

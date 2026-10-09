@@ -41,7 +41,7 @@ int func_002250B0(int a0) {
     return tmp3;
 }
 
-int func_002250D0(int a0) {
+int Script_Objective_WasFailed(int a0) {
     int tmp0;
     int tmp1;
     signed char tmp3;
@@ -52,7 +52,7 @@ int func_002250D0(int a0) {
     return ((unsigned int)((tmp3 ^ 2)) < (unsigned int)(1));
 }
 
-int func_00225100(int a0) {
+int Script_Objective_IsComplete(int a0) {
     int tmp0;
     int tmp1;
     signed char tmp3;

@@ -6,9 +6,9 @@
 
 #include "types.h"
 
-extern int func_00139070(int);
+extern int ScalarCollection_Init(int);
 
 int func_001F39C0(int a0) {
-    func_00139070(a0);
+    ScalarCollection_Init(a0);
     return a0;
 }

@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-extern int func_00139200(int, int, int, int);
+extern int PtrVec_Insert(int, int, int, int);
 
 int func_0025A860(int a0, int a1) {
     int tmp0;
@@ -14,5 +14,5 @@ int func_0025A860(int a0, int a1) {
 
     tmp0 = *(int*)((char*)a0 + 4);
     tmp1 = *(int*)((char*)a0 + 8);
-    return func_00139200(a0, (tmp1 + (tmp0 << 2)), 1, a1);
+    return PtrVec_Insert(a0, (tmp1 + (tmp0 << 2)), 1, a1);
 }

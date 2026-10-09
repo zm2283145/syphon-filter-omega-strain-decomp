@@ -17,7 +17,7 @@ void func_003DFAF0(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
-int func_003DFB00(void) {
+int Script_ClearSchedules(void) {
     func_003DFB20();
     return 0;
 }

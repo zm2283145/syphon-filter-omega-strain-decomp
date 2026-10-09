@@ -6,10 +6,10 @@
 
 #include "types.h"
 
-void func_0040F520(Iter* out, Tree* t) {
+void Tree_End(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 
-void func_0040F530(Iter* out, Tree* t) {
+void Tree_Begin(Iter* out, Tree* t) {
     out->p = t->leftmost;
 }

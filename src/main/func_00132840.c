@@ -10,6 +10,6 @@ void* func_00132840(void* self) {
     return self;
 }
 
-int func_00132850(char* self) {
+int Root_GetParent(char* self) {
     return *(int*)(self + 176);
 }

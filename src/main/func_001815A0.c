@@ -10,7 +10,7 @@ int func_001815A0(Iter* a, Iter* b) {
     return !(a->p == b->p);
 }
 
-Iter* func_001815C0(Iter* it) {
+Iter* Iter_Advance4(Iter* it) {
     it->p++;
     return it;
 }

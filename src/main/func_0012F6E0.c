@@ -13,7 +13,7 @@ extern char D_004FFC3C[];
 extern char D_005721C8[];
 extern int func_0012F700(void);
 extern void func_0012F7B0(void);
-extern int func_0012F810(void);
+extern int Game_IsMultiplayer(void);
 extern int func_001314F0(int, int);
 extern void func_0013A290(int);
 extern int func_00247320(int);
@@ -73,14 +73,14 @@ void func_0012F7B0(void) {
     *(int*)((char*)tmp4 + 1760) = 0xbf800000;
 }
 
-int func_0012F7F0(void) {
+int Script_IsMultiplayer(void) {
     int tmp0;
 
-    tmp0 = func_0012F810();
+    tmp0 = Game_IsMultiplayer();
     return (tmp0 & 255);
 }
 
-int func_0012F810(void) {
+int Game_IsMultiplayer(void) {
     unsigned char tmp0;
 
     tmp0 = *(unsigned char*)D_005721C8;

@@ -26,7 +26,7 @@ void func_0015BF50(void) {
 void func_0015BF60(void) {
 }
 
-void func_0015BF70(void) {
+void Actor_VirtualNop(void) {
 }
 
 void func_0015BF80(int a0) {

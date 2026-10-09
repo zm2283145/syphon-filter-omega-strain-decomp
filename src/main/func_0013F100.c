@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-extern void func_0013A2A0(int);
+extern void Tree_Successor(int);
 
 int func_0013F100(Iter* a, Iter* b) {
     return !(a->p == b->p);
@@ -17,7 +17,7 @@ void func_0013F120(Iter* out, Tree* t) {
 }
 
 int func_0013F130(int a0) {
-    func_0013A2A0(a0);
+    Tree_Successor(a0);
     return a0;
 }
 

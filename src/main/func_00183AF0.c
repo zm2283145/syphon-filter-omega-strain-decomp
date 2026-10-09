@@ -10,7 +10,7 @@ int func_00183AF0(void* self, char* p) {
     return *(int*)(p + 0);
 }
 
-unsigned char func_00183B00(Tri* t) {
+unsigned char Triangle_GetSurface(Tri* t) {
     return t->b10 >> 1;
 }
 

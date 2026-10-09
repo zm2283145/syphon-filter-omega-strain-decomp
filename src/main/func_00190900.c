@@ -10,6 +10,6 @@ void* func_00190900(char* self) {
     return self + 64;
 }
 
-int func_00190910(G18* s) {
+int RootClip_IsEnabled(G18* s) {
     return s->v != 0;
 }

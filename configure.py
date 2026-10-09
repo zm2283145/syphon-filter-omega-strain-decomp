@@ -242,13 +242,8 @@ def main():
     .main {seg["vram"]:#x} : AT(0) SUBALIGN(16)
     {{
         FILL(0x00000000);
-        *(.text*)
-        . = ALIGN(16);
-        *(.data*)
-        . = ALIGN(16);
-        *(.rodata*)
-        . = ALIGN(16);
-        *(.sdata*)
+        /* one pattern keeps the command-line (address) order of all objects */
+        *(.text* .data* .rodata* .sdata*)
         . = ALIGN(16);
     }}
     /DISCARD/ : {{ *(*) }}

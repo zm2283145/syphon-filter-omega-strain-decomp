@@ -3175,4 +3175,12 @@ segments:
       - [0x376620, c, main/func_00476620]
       - [0x376630, asm]
       - [0x376B00, data, data]
+      # Code placed among the data by the original link: rt_crypt assembly
+      # routines and the static-initialiser functions listed at 0x004D8D10.
+      - [0x3AE1C0, asm, island_4AE1C0]
+      - [0x3AEFD0, data, data_4AEFD0]
+      - [0x3B13D0, asm, island_4B13D0]
+      - [0x3B33D0, data, data_4B33D0]
+      - [0x3C3700, asm, sinit_4C3700]
+      - [0x3D8D10, data, data_4D8D10]
   - [0x3E1D80]

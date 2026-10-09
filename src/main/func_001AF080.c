@@ -6,12 +6,12 @@
 
 #include "types.h"
 
+extern int Curve_Bind(int, int);
+extern int Curve_InitConstant(int, int, int, float);
 extern char D_0048A198[];
 extern char D_0048A1A0[];
 extern char D_004DA380[];
 extern char D_004DA840[];
-extern int Curve_Bind(int, int);
-extern int Curve_InitConstant(int, int, int, float);
 extern void func_001BB100(int, int, int);
 
 int func_001AF080(int a0) {

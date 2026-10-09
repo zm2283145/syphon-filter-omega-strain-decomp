@@ -6,6 +6,13 @@
 
 #include "types.h"
 
+extern int func_00393EF0(int);
+
+int func_00393EC0(int a0) {
+    func_00393EF0(a0);
+    return a0;
+}
+
 int func_00393EF0(int a0) {
     *(int*)((char*)a0) = 0;
     *(int*)((char*)a0 + 4) = 0;

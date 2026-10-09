@@ -6,12 +6,12 @@
 
 #include "types.h"
 
+extern int Curve_Bind(int, int);
+extern int Curve_InitConstant(int, int, int, float);
 extern char D_0048A1B8[];
 extern char D_0048A1C0[];
 extern char D_004DA380[];
 extern char D_004DA7D0[];
-extern int Curve_Bind(int, int);
-extern int Curve_InitConstant(int, int, int, float);
 
 Rel* func_001B7A20(Rel* r) {
     r->a = 0;

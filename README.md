@@ -90,6 +90,21 @@ range, assembled from splat's output; base = the compiled C) and one unit per
 remaining asm chunk (target only, counted as not yet decompiled). Open the
 repository folder in the objdiff GUI to diff functions interactively.
 
+## Automatic decompilation of simple functions
+
+`tools/autodecomp/` translates functions that are still assembly into C,
+compiles them and keeps only byte-identical results:
+
+```
+python tools/autodecomp/run.py scan       # -> build/autodecomp/candidates.c
+python tools/autodecomp/run.py verify     # compile + compare with the retail bytes
+python tools/autodecomp/run.py integrate  # add verified functions to src/main and the yaml
+python configure.py && ninja              # must still print OK
+```
+
+The output is low-level C (one variable per register, pointer arithmetic);
+treat it as a starting point for real types and names.
+
 ## Matching a function
 
 1. Pick a function from `asm/*.s` (functions must start on a 16-byte boundary,

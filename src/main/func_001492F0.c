@@ -6,12 +6,9 @@
 
 #include "types.h"
 
-int func_003DFFE0(int a0) {
+void func_001492F0(int a0, float f12) {
     int tmp0;
-    int tmp1;
 
-    tmp0 = *(int*)((char*)a0 + 20080);
-    *(int*)((char*)a0 + 20080) = (tmp0 + 4);
-    tmp1 = *(int*)(char*)tmp0;
-    return tmp1;
+    tmp0 = *(int*)((char*)a0 + 428);
+    *(float*)((char*)tmp0 + 20) = (0.01745329238474369f * (0.5f * f12));
 }

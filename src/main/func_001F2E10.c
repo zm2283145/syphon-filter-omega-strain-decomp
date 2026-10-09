@@ -6,6 +6,12 @@
 
 #include "types.h"
 
+extern int func_001F2E20(int);
+
+int func_001F2E10(int a0) {
+    return func_001F2E20(a0);
+}
+
 int func_001F2E20(int a0) {
     return (*(int*)(char*)a0 + 8);
 }

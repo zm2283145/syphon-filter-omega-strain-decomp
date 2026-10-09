@@ -7,8 +7,8 @@
 #include "types.h"
 
 extern char D_004FFD30[];
-extern int func_00147630(int);
 extern int Global_ReloadWeapons(void);
+extern int func_00147630(int);
 extern int func_0036E5D0(int);
 extern int func_003CC1D0(int);
 

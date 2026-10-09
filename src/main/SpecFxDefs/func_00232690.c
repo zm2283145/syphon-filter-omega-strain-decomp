@@ -6,11 +6,11 @@
 
 #include "types.h"
 
-extern int Global_SnowBelarus2(void);
+extern int Global_FogMyanmar(void);
 extern int Global_RainLorelei(void);
 extern int Global_RainTokyo(void);
 extern int Global_SmokeToronto3(void);
-extern int Global_FogMyanmar(void);
+extern int Global_SnowBelarus2(void);
 
 int Script_SnowBelarus2(void) {
     Global_SnowBelarus2();

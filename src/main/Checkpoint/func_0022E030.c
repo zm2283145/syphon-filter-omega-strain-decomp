@@ -7,8 +7,8 @@
 #include "types.h"
 
 extern int GObj_IdentityB(int);
-extern int func_00175FA0(int);
 extern int Global_SetCheckpoint(int, int, int);
+extern int func_00175FA0(int);
 
 int Script_SetCheckpoint(int a0) {
     int loc[1];

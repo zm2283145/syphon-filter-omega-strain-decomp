@@ -8,8 +8,8 @@
 
 extern char D_005061D0[];
 extern int GObj_IdentityB(int);
-extern int Global_SpawnParticle(int, int, int);
 extern int Global_Shatter(int, int, int);
+extern int Global_SpawnParticle(int, int, int);
 extern void func_00282020(int);
 extern int func_00282160(int);
 

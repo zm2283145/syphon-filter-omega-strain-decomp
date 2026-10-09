@@ -7,15 +7,15 @@
 #include "types.h"
 
 extern char D_004F8400[];
+extern void Group_AddObject(int, int);
+extern int Group_RemoveObject(int, int);
 extern int func_0015C120(int);
 extern int func_002697E0(int);
 extern int func_00269810(int);
 extern int func_003CB1D0(void);
 extern void func_003D9440(int, int);
 extern float func_003D9A00(int);
-extern int Group_RemoveObject(int, int);
 extern int func_003D9BA0(int, int);
-extern void Group_AddObject(int, int);
 
 int Script_cNodeList_Randomize(int a0) {
     int tmp0;

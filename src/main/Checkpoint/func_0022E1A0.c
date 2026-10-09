@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-extern int func_00175FA0(int);
 extern int Global_ReSpawn(int);
+extern int func_00175FA0(int);
 
 int Script_ReSpawn(int a0) {
     int tmp0;

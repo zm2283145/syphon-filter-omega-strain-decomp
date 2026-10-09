@@ -8,9 +8,9 @@
 
 extern char D_004FFC2C[];
 extern int GObj_IdentityB(int);
-extern int ObjMarkerMgr_Remove(int, int, int);
-extern void Global_SetWaypoint(int);
 extern int Global_ClearRadarBlip(int);
+extern void Global_SetWaypoint(int);
+extern int ObjMarkerMgr_Remove(int, int, int);
 extern void func_00272D10(int, int);
 
 int Script_SetWaypoint(int a0) {

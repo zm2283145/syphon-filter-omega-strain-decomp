@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-extern int func_002379D0(int);
 extern int Global_CreateTank(int);
+extern int func_002379D0(int);
 
 int Script_CreateTank(int a0) {
     int loc[1];

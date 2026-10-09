@@ -8,9 +8,9 @@
 
 extern int GObj_IdentityB(int);
 extern int Global_ClearInteract(int);
+extern void Global_DisplayInteract(int, int);
 extern int Global_DisplayInteract_2(int, int, int);
 extern void func_0045EC60(void);
-extern void Global_DisplayInteract(int, int);
 
 int Script_ClearInteract_2(int a0) {
     int tmp0;

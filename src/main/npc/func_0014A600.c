@@ -10,6 +10,9 @@ extern char D_004EA3D0[];
 extern char D_004EA3F0[];
 extern char D_004EA3F8[];
 extern char D_00555070[];
+extern void Global_PlayerAddItem(int, int, int);
+extern int Global_PlayerGetItemCount(int, int);
+extern void Global_PlayerRemoveItem(int, int, int);
 extern int ScriptFilter_Dispatch(int, int, int);
 extern int func_0016AD70(void);
 extern int func_00198F90(int, int, int);
@@ -19,9 +22,6 @@ extern int func_00210CB0(void);
 extern int func_003D9400(int, int);
 extern void func_003D9440(int, int);
 extern int func_004080E0(void);
-extern int Global_PlayerGetItemCount(int, int);
-extern void Global_PlayerRemoveItem(int, int, int);
-extern void Global_PlayerAddItem(int, int, int);
 
 int ScriptType_cNPC_Init(void) {
     int tmp0;

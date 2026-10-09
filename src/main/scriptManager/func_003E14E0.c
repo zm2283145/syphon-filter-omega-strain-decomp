@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-extern int func_003E1520(int);
 extern void cScriptInterpreter_ExecuteInitCode(int);
+extern int func_003E1520(int);
 
 int Script_cScriptInterp_ExecuteInitCode(int a0) {
     int tmp0;

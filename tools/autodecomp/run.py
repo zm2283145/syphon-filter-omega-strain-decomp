@@ -341,7 +341,8 @@ def tu_ranges():
         for line in path.read_text().splitlines():
             m = re.match(r"\s*(0x[0-9A-Fa-f]+)\s+(0x[0-9A-Fa-f]+)\s+(\S+)", line)
             if m:
-                stem = re.sub(r"\.(cc|cpp|c)$", "", m.group(3))
+                # a trailing '?' marks a file name inferred without a file-name string
+                stem = re.sub(r"\.(cc|cpp|c)\??$", "", m.group(3))
                 out.append((int(m.group(1), 16), int(m.group(2), 16), stem))
     return out
 

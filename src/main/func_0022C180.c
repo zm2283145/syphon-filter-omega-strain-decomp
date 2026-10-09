@@ -9,8 +9,8 @@
 extern char D_004A64A0[];
 extern char D_004FFC2C[];
 extern int GObj_IdentityB(int);
-extern int func_00127358(int, int, int, int, int, int, int, int, float, float, float, float, float, float, float, float);
 extern int Global_SetRadarBlip(int);
+extern int func_00127358(int, int, int, int, int, int, int, int, float, float, float, float, float, float, float, float);
 extern int func_00273890(int, int, int);
 
 int Script_SetRadarBlip(int a0) {

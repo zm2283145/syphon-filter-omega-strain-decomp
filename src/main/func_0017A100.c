@@ -9,22 +9,22 @@
 extern char D_004EE908[];
 extern char D_004FFB50[];
 extern char D_00555070[];
-extern int func_001310F0(int, int);
-extern int func_00131240(int);
+extern int ActiveList_RemoveObject(int, int);
+extern int ActiveList_RemoveFirst(int);
 extern int func_00131320(int, int);
 extern void func_00282020(int);
-extern int func_003E1AA0(int, int, int);
+extern int ScriptFilter_Dispatch(int, int, int);
 
 int func_0017A100(int a0) {
     int tmp0;
 
     tmp0 = *(int*)(char*)a0;
-    func_001310F0((int)D_004FFB50, tmp0);
+    ActiveList_RemoveObject((int)D_004FFB50, tmp0);
     return 0;
 }
 
 int func_0017A130(void) {
-    func_00131240((int)D_004FFB50);
+    ActiveList_RemoveFirst((int)D_004FFB50);
     return 0;
 }
 
@@ -47,7 +47,7 @@ int func_0017A1A0(void) {
 }
 
 int func_0017A1B0(int a0, int a1) {
-    return func_003E1AA0((int)D_00555070, a0, a1);
+    return ScriptFilter_Dispatch((int)D_00555070, a0, a1);
 }
 
 void func_0017A1D0(int a0) {

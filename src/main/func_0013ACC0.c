@@ -8,7 +8,7 @@
 
 extern char D_004EA0B8[];
 
-int func_0013ACC0(void) {
+int LosProvider_Get(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004EA0B8;

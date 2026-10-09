@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-extern int func_00138EA0(int, int, int, int);
+extern int List_InsertBefore(int, int, int, int);
 extern int func_003D27B0(int, int);
 
 Word* func_003D2710(Word* dst, Word* src) {
@@ -57,7 +57,7 @@ int func_003D27B0(int a0, int a1) {
     a2 = (int)loc;
     *(int*)(char*)loc = v0;
     a0 = (int)((char*)loc + 4);
-    v0 = func_00138EA0(a0, a1, a2, a3);
+    v0 = List_InsertBefore(a0, a1, a2, a3);
     goto ret;
 ret:
     return v0;

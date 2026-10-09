@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void* func_0020E210(char* self) {
+void* VecList_GetData(char* self) {
     return self + 8;
 }

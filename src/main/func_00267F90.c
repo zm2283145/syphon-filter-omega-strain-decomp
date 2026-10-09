@@ -11,7 +11,7 @@ extern int func_0014A690(int);
 extern int func_00242B40(int, int, int, int, int);
 extern int func_00267FC0(int);
 extern int func_00268010(int);
-extern int func_003CC820(int);
+extern int GObj_IdentityB(int);
 
 int func_00267F90(int a0) {
     int tmp0;
@@ -37,7 +37,7 @@ int func_00267FE0(int a0) {
     int tmp1;
 
     tmp0 = *(int*)(char*)a0;
-    tmp1 = func_003CC820(tmp0);
+    tmp1 = GObj_IdentityB(tmp0);
     func_00268010(tmp1);
     return 0;
 }

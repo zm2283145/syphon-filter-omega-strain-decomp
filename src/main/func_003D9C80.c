@@ -7,7 +7,7 @@
 #include "types.h"
 
 extern int func_003D9CC0(int, int);
-extern int func_003E04C0(int);
+extern int Script_ObjectToId(int);
 
 void func_003D9C80(int a0, int a1) {
     int loc[1];
@@ -15,7 +15,7 @@ void func_003D9C80(int a0, int a1) {
 
     s0 = a0;
     a0 = a1;
-    v0 = func_003E04C0(a0);
+    v0 = Script_ObjectToId(a0);
     a0 = s0;
     *(int*)(char*)loc = v0;
     a1 = (int)loc;

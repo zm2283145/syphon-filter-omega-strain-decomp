@@ -7,8 +7,8 @@
 #include "types.h"
 
 extern int func_003339E0(int, int);
-extern int func_00333B10(int, int);
-extern int func_00333B90(int, int, int);
+extern int AgentData_IsObjectiveComplete(int, int);
+extern int AgentData_SetObjectiveBit(int, int, int);
 
 int func_0032FBD0(int a0) {
     int loc[1];
@@ -25,7 +25,7 @@ ret:
     return v0;
 }
 
-int func_0032FC00(int a0) {
+int Game_IsObjectiveComplete(int a0) {
     int loc[1];
     int a1, v0;
 
@@ -33,14 +33,14 @@ int func_0032FC00(int a0) {
     *(int*)(char*)loc = v0;
     a1 = *(int*)(char*)loc;
     a0 = *(int*)(char*)a0;
-    v0 = func_00333B10(a0, a1);
+    v0 = AgentData_IsObjectiveComplete(a0, a1);
     v0 = v0 & 255;
     goto ret;
 ret:
     return v0;
 }
 
-int func_0032FC30(int a0) {
+int AgentData_AddObjective(int a0) {
     int loc[1];
     int a1, a2, v0;
 
@@ -49,7 +49,7 @@ int func_0032FC30(int a0) {
     a0 = *(int*)(char*)a0;
     a1 = *(int*)(char*)loc;
     a2 = 0;
-    v0 = func_00333B90(a0, a1, a2);
+    v0 = AgentData_SetObjectiveBit(a0, a1, a2);
     v0 = 0;
     goto ret;
 ret:

@@ -6,10 +6,10 @@
 
 #include "types.h"
 
-int func_0040C460(char* self) {
+int Scope_GetParent(char* self) {
     return *(int*)(self + 0);
 }
 
-int func_0040C470(char* self) {
+int Object_GetScope(char* self) {
     return *(int*)(self + 28);
 }

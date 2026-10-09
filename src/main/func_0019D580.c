@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_0019D580(int a0, int a1) {
+int Model_GetChannelData(int a0, int a1) {
     return (*(int*)((char*)a0 + 8) + (((a1 << 4) - a1) << 2));
 }

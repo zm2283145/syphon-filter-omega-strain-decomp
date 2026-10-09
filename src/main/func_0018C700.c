@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-extern void func_001BACB0(int, int, int);
+extern void Tree_Compare(int, int, int);
 
 int func_0018C700(int a0) {
     return (*(int*)(char*)a0 + 64);
@@ -26,7 +26,7 @@ void func_0018C740(int a0) {
 
     s0 = a0;
     a0 = (int)loc;
-    func_001BACB0(a0, a1, a2);
+    Tree_Compare(a0, a1, a2);
     v1 = *(int*)(char*)loc;
     *(int*)(char*)s0 = v1;
     goto ret;

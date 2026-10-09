@@ -7,11 +7,11 @@
 #include "types.h"
 
 extern char D_004FFC2C[];
-extern void func_00242B00(int, int);
+extern void Hud_PostNotification(int, int);
 
-void func_00227C50(int a0, int a1) {
+void ObjMan_Notify(int a0, int a1) {
     int tmp0;
 
     tmp0 = *(int*)D_004FFC2C;
-    func_00242B00(tmp0, a1);
+    Hud_PostNotification(tmp0, a1);
 }

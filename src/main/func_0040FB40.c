@@ -16,7 +16,7 @@ void* func_0040FB50(void* self) {
     return self;
 }
 
-void func_0040FB60(int a0) {
+void World_ClearPending(int a0) {
     int a1, s0, v0, v1;
     int cond;
 

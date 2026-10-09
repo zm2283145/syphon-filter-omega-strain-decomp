@@ -22,6 +22,6 @@ float func_001E5260(char* self) {
     return *(float*)(self + 12);
 }
 
-void func_001E5270(int a0) {
+void AnimScalar_RestartTimer(int a0) {
     *(float*)((char*)a0 + 4) = *(float*)((char*)*(int*)(char*)a0 + 16);
 }

@@ -7,7 +7,7 @@
 #include "types.h"
 
 extern char D_00571CD0[];
-extern void func_0040FB60(int);
+extern void World_ClearPending(int);
 
 void Tree_End(Iter* out, Tree* t) {
     out->p = &t->header;
@@ -24,7 +24,7 @@ void func_0040F540(void) {
     a0 = *(int*)(char*)D_00571CD0;
     cond = a0 == 0;
     if (cond) goto L0040F560;
-    func_0040FB60(a0);
+    World_ClearPending(a0);
 L0040F560:;
     goto ret;
 ret:;

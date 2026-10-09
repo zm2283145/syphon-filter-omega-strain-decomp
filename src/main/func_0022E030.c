@@ -8,7 +8,7 @@
 
 extern int func_00175FA0(int);
 extern int func_0022E080(int, int, int);
-extern int func_003CC820(int);
+extern int GObj_IdentityB(int);
 
 int func_0022E030(int a0) {
     int loc[1];
@@ -21,7 +21,7 @@ int func_0022E030(int a0) {
     v0 = func_00175FA0(a0);
     a0 = *(int*)(char*)(s0 + 4);
     s0 = v0;
-    v0 = func_003CC820(a0);
+    v0 = GObj_IdentityB(a0);
     a2 = *(int*)(char*)loc;
     a0 = s0;
     a1 = v0;

@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-void* func_001340B0(char* self) {
+void* Physical_GetPositionPtr(char* self) {
     return self + 16;
 }
 

@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-extern int func_003DFB20(void);
+extern int Script_ClearSchedules_3DFB20(void);
 
 Word* func_003DFAE0(Word* dst, Word* src) {
     dst->value = src->value;
@@ -18,6 +18,6 @@ void func_003DFAF0(Iter* out, Tree* t) {
 }
 
 int Script_ClearSchedules(void) {
-    func_003DFB20();
+    Script_ClearSchedules_3DFB20();
     return 0;
 }

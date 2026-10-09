@@ -32,7 +32,7 @@ extern char D_00572468[];
 extern int func_002EC340(void);
 extern int func_002EC6A0(int);
 extern int func_002EC738(int);
-extern void func_0042B230(void);
+extern void Net_ResetSession(void);
 extern int func_00437BF0(void);
 
 void func_0042B1F0(void) {
@@ -40,10 +40,10 @@ void func_0042B1F0(void) {
     func_00437BF0();
     func_002EC6A0(0);
     func_002EC738(0);
-    func_0042B230();
+    Net_ResetSession();
 }
 
-void func_0042B230(void) {
+void Net_ResetSession(void) {
     *(char*)D_005721D8 = 0;
     *(char*)D_005723B8 = 0;
     *(int*)D_005721A8 = -1;

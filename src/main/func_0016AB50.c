@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-extern int func_003CC800(int);
+extern int GObj_IdentityA(int);
 
 int func_0016AB50(int a0) {
     int loc[1];
@@ -30,7 +30,7 @@ int Script_GetGOBJ_AI(int a0) {
 
     tmp0 = *(int*)(char*)a0;
     tmp1 = *(int*)((char*)tmp0 + 48);
-    return func_003CC800(tmp1);
+    return GObj_IdentityA(tmp1);
 }
 
 int func_0016AB90(int a0) {

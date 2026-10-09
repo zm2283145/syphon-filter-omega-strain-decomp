@@ -14,10 +14,10 @@ extern char D_00555070[];
 extern int func_00225C20(int);
 extern int func_00225C50(void);
 extern int func_00225CD0(void);
-extern int func_003CAA50(int, int);
+extern int Service_Lookup(int, int);
 extern int func_003CB1D0(void);
 extern void func_003D9440(int, int);
-extern int func_003E1AA0(int, int, int);
+extern int ScriptFilter_Dispatch(int, int, int);
 
 void func_00225BF0(void) {
     int tmp0;
@@ -59,7 +59,7 @@ int func_00225C60(void) {
 }
 
 int func_00225C80(int a0, int a1) {
-    return func_003E1AA0((int)D_00555070, a0, a1);
+    return ScriptFilter_Dispatch((int)D_00555070, a0, a1);
 }
 
 int func_00225CA0(void) {
@@ -72,5 +72,5 @@ int func_00225CA0(void) {
 }
 
 int func_00225CD0(void) {
-    return func_003CAA50((int)D_004FFB50, (int)D_004F7578);
+    return Service_Lookup((int)D_004FFB50, (int)D_004F7578);
 }

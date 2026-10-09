@@ -14,7 +14,7 @@ extern char D_004DA380[];
 extern char D_004DA840[];
 extern void func_001BB100(int, int, int);
 
-int func_001AF080(int a0) {
+int AnimChannel_Construct(int a0) {
     float tmp0;
     float tmp1;
     float tmp2;

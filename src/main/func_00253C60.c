@@ -17,7 +17,7 @@ extern int func_002570C0(void);
 extern int func_003CC830(void);
 extern int func_003D9400(int, int);
 extern void func_003D9440(int, int);
-extern int func_003E1AA0(int, int, int);
+extern int ScriptFilter_Dispatch(int, int, int);
 
 int func_00253C60(void) {
     func_00253C80();
@@ -100,5 +100,5 @@ int func_00253DA0(void) {
 }
 
 int func_00253DB0(int a0, int a1) {
-    return func_003E1AA0((int)D_00555070, a0, a1);
+    return ScriptFilter_Dispatch((int)D_00555070, a0, a1);
 }

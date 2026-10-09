@@ -12,8 +12,8 @@ extern int func_0014A690(int);
 extern int func_00170460(int);
 extern int func_00170520(int);
 extern int func_003C8C50(void);
-extern int func_003CC800(int);
-extern int func_003CC820(int);
+extern int GObj_IdentityA(int);
+extern int GObj_IdentityB(int);
 extern void func_003D9440(int, int);
 
 int func_0016FFC0(int a0) {
@@ -22,7 +22,7 @@ int func_0016FFC0(int a0) {
 
     tmp0 = *(int*)(char*)a0;
     tmp1 = *(int*)((char*)tmp0 + 48);
-    return func_003CC800(tmp1);
+    return GObj_IdentityA(tmp1);
 }
 
 int func_0016FFD0(int a0) {
@@ -67,7 +67,7 @@ int func_00170050(int a0) {
     int v0;
 
     a0 = *(int*)(char*)a0;
-    v0 = func_003CC820(a0);
+    v0 = GObj_IdentityB(a0);
     a0 = v0;
     v0 = func_00170520(a0);
     *(int*)(char*)loc = v0;

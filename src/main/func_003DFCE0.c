@@ -6,16 +6,16 @@
 
 #include "types.h"
 
-extern void func_003DFD10(int);
+extern void Script_Unschedule(int);
 
-int func_003DFCE0(int a0) {
+int Script_UnscheduleThunk(int a0) {
     int loc[1];
     int v0;
 
     v0 = *(int*)(char*)a0;
     *(int*)(char*)loc = v0;
     a0 = *(int*)(char*)loc;
-    func_003DFD10(a0);
+    Script_Unschedule(a0);
     v0 = 0;
     goto ret;
 ret:

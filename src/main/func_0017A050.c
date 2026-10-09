@@ -7,7 +7,7 @@
 #include "types.h"
 
 extern char D_004EE948[];
-extern int func_003CC800(int);
+extern int GObj_IdentityA(int);
 
 int func_0017A050(int a0) {
     int tmp0;
@@ -15,7 +15,7 @@ int func_0017A050(int a0) {
 
     tmp0 = *(int*)(char*)a0;
     tmp1 = *(int*)((char*)tmp0 + 36);
-    return func_003CC800(tmp1);
+    return GObj_IdentityA(tmp1);
 }
 
 void func_0017A060(void) {

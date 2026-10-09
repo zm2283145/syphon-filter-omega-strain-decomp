@@ -6,11 +6,11 @@
 
 #include "types.h"
 
-extern void func_003FDB50(void);
+extern void Loc_LookupText(void);
 
 void func_003FD2C0(void) {
 
-    func_003FDB50();
+    Loc_LookupText();
     goto ret;
 ret:;
 }

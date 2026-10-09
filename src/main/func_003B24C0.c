@@ -14,7 +14,7 @@ int func_003B24D0(char* self) {
     return *(int*)(self + 0);
 }
 
-void func_003B24E0(int a0, float f12, float f13) {
+void AnimRoot_AccumAngular(int a0, float f12, float f13) {
     *(float*)((char*)a0 + 256) = (*(float*)((char*)a0 + 256) + (f12 * f13));
 }
 

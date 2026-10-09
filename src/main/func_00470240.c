@@ -7,7 +7,7 @@
 #include "types.h"
 
 extern char D_00587FF8[];
-extern int func_003FDB80(int);
+extern int Loc_GetTextById(int);
 
 int func_00470240(int a0) {
     int tmp0;
@@ -15,7 +15,7 @@ int func_00470240(int a0) {
 
     tmp0 = *(int*)D_00587FF8;
     tmp1 = *(int*)((char*)(tmp0 + (a0 * 44)) + 4);
-    return func_003FDB80(tmp1);
+    return Loc_GetTextById(tmp1);
 }
 
 int func_00470270(int a0) {
@@ -24,5 +24,5 @@ int func_00470270(int a0) {
 
     tmp0 = *(int*)D_00587FF8;
     tmp1 = *(int*)(char*)(tmp0 + (a0 * 44));
-    return func_003FDB80(tmp1);
+    return Loc_GetTextById(tmp1);
 }

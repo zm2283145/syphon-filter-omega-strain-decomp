@@ -15,6 +15,6 @@ int func_003C9C10(void) {
     return tmp0;
 }
 
-int func_003C9C20(char* self) {
+int Event_GetType(char* self) {
     return *(int*)(self + 4);
 }

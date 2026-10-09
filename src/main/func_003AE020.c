@@ -8,7 +8,7 @@
 
 extern int func_00397840(int, int, int);
 
-void func_003AE020(int a0, float f12) {
+void AnimContext_PushTime(int a0, float f12) {
     int at, v1;
     int cond;
 

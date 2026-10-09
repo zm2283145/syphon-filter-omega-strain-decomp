@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-int func_001F4440(int a0, int a1) {
+int MotionSliderChild_CopyThresholds(int a0, int a1) {
     *(float*)((char*)a0) = *(float*)(char*)a1;
     *(float*)((char*)a0 + 4) = *(float*)((char*)a1 + 4);
     return a0;

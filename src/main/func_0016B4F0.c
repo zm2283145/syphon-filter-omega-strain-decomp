@@ -9,12 +9,12 @@
 extern char D_004D92A0[];
 extern char D_004D92C0[];
 extern char D_004EE5C8[];
-extern int func_003C9E30(int, int);
+extern int Event_Construct(int, int);
 
 int func_0016B4F0(int a0, int a1, int a2, float f12, float f13) {
     int tmp2;
 
-    func_003C9E30(a0, (int)D_004EE5C8);
+    Event_Construct(a0, (int)D_004EE5C8);
     *(int*)((char*)a0) = (int)D_004D92A0;
     *(char*)((char*)a0 + 36) = 0;
     *(char*)((char*)a0 + 37) = a2;

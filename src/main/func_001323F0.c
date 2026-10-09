@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void* func_001323F0(void* self) {
+void* Placement_GetQuat(void* self) {
     return self;
 }

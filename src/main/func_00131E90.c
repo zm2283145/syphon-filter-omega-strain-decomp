@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-int func_00131E90(int a0, int a1, int a2, int a3) {
+int Mtx_SetBasis(int a0, int a1, int a2, int a3) {
     float tmp0;
     float tmp1;
     float tmp2;

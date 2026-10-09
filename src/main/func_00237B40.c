@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-extern void func_003CE980(int);
+extern void Object_Activate(int);
 
 void func_00237B40(int a0) {
-    func_003CE980(a0);
+    Object_Activate(a0);
 }

@@ -9,7 +9,7 @@
 extern char D_004DBA20[];
 extern int func_003EA630(int);
 
-int func_00230240(int a0) {
+int Component_BaseInit(int a0) {
     func_003EA630(a0);
     *(int*)((char*)a0) = (int)D_004DBA20;
     *(int*)((char*)a0 + 56) = 1065353216;

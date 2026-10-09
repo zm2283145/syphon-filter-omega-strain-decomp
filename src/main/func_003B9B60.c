@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-List* func_003B9B60(List* l) {
+List* List_Construct(List* l) {
     l->count = 0;
     l->first = l->last = &l->first;
     return l;

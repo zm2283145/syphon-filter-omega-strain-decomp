@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-int func_00274B20(int a0) {
+int ObjMarkerRecord_Init(int a0) {
     *(int*)((char*)a0) = 0;
     *(int*)((char*)a0 + 4) = 0;
     *(int*)((char*)a0 + 8) = 0;

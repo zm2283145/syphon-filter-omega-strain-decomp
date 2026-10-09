@@ -9,7 +9,7 @@
 extern char D_004FFD30[];
 extern int func_00147840(int, int);
 
-int func_00143510(int a0) {
+int Inventory_GetEquipMode(int a0) {
     int a1, v0, v1;
     int cond;
 

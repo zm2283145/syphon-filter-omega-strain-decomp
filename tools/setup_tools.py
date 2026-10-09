@@ -5,6 +5,7 @@
   * Metrowerks CodeWarrior PS2 compiler builds as archived by decomp.me
     (decompme/compilers). These are proprietary Metrowerks tools; only fetch
     them if you are entitled to use them. They are never committed.
+  * EE-GCC 2.95.3 (decompme/compilers, ps2_compilers archive) for library code
   * objdiff-cli (encounter/objdiff)
   * wibo (Linux only, runs the Windows compiler)
 """
@@ -59,6 +60,14 @@ def main():
         data = fetch(f"https://github.com/decompme/compilers/releases/download/compilers/{comp}.tar.gz")
         dest.mkdir(parents=True)
         tarfile.open(fileobj=io.BytesIO(data)).extractall(dest)
+
+    # EE-GCC for the SDK/middleware units (src/lib); GPL compiler, Windows build
+    # from decomp.me's archive (runs through wibo on Linux).
+    if not (TOOLS / "eegcc" / "ee-gcc2.95.3-136").exists():
+        data = fetch("https://github.com/decompme/compilers/releases/download/compilers/ps2_compilers.tar.xz")
+        with tarfile.open(fileobj=io.BytesIO(data)) as t:
+            members = [m for m in t.getmembers() if m.name.startswith("ee-gcc2.95.3-136/")]
+            t.extractall(TOOLS / "eegcc", members=members)
 
     exe = {"Windows": "objdiff-cli-windows-x86_64.exe", "Linux": "objdiff-cli-linux-x86_64",
            "Darwin": "objdiff-cli-macos-arm64"}[sysname]

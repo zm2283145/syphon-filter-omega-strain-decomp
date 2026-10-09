@@ -21,10 +21,10 @@
 | Item | State |
 | --- | --- |
 | Round-trip build | **Byte-identical**, SHA-256 `9924da91…31dc6` (Windows, native tools) |
-| Build with C | **Byte-identical** with 3,405 functions compiled from C |
-| Functions (objdiff) | 3,405 / 14,327 matched (23.8 %) |
-| Code bytes (objdiff) | 87,332 / ~3.66 MB (2.39 %) |
-| Named functions | 152 (from the port project's research notes) |
+| Build with C | **Byte-identical** with 3,942 functions compiled from C (Metrowerks + EE-GCC) |
+| Functions (objdiff) | 3,942 / 14,327 matched (27.5 %) |
+| Code bytes (objdiff) | ~100 KB / ~3.66 MB (2.74 %) |
+| Named functions | 911 (from the port project's research notes) |
 | Data | not tracked yet (data stays in assembly) |
 | decomp.dev | listed: https://decomp.dev/zm2283145/syphon-filter-omega-strain-decomp |
 
@@ -49,6 +49,10 @@ Most of `src/main/` is machine-generated and then verified, not hand-written:
   `goto`s; Metrowerks' optimizer reproduces the original code for many small
   functions.
 * **Hand-written (≈40):** container, vector and script helpers.
+* **Library code with EE-GCC (src/lib/):** Sony SDK and middleware functions
+  are GCC-built; the translators' output compiled with EE-GCC 2.95.3-136
+  (`-O2 -G0`) matches several hundred of them. GCC 2.96 (Linux-only build)
+  matches somewhat more; it is not used so the build stays Windows-native.
 
 Every candidate is compiled with `mwccps2 -O4,p`, compared with the retail
 bytes (relocations masked), and finally checked by the full byte-identical
@@ -100,8 +104,8 @@ replacing it with real structs, types and names is ongoing work.
    objectives).
 2. Find translation-unit boundaries (`.cc` strings, function order, vtables)
    and move functions into real source files.
-3. Split game code from SDK/middleware and add objdiff progress categories;
-   libraries need EE-GCC (decomp.me has ee-gcc 2.9x builds).
+3. Add objdiff progress categories (game vs. SDK/middleware); src/lib/ already
+   holds the GCC-matched library functions.
 4. Split data/rodata by unit so data progress can be tracked.
 5. Resolve the compiler-build question (decision 1); with a 2003 build most
    larger functions should become matchable.

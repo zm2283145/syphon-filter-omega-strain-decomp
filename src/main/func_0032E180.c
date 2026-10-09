@@ -7,14 +7,14 @@
 #include "types.h"
 
 extern char D_004FFB50[];
-extern int func_001314F0(int, int);
-extern int func_00333B90(int, int, int);
+extern int Agent_GetSelected(int, int);
+extern int AgentData_SetObjectiveBit(int, int, int);
 
-int func_0032E180(int a0) {
+int Objective_AddGlobal(int a0) {
     int tmp0;
     int tmp2;
 
-    tmp0 = func_001314F0((int)D_004FFB50, -1);
-    tmp2 = func_00333B90(tmp0, a0, 1);
+    tmp0 = Agent_GetSelected((int)D_004FFB50, -1);
+    tmp2 = AgentData_SetObjectiveBit(tmp0, a0, 1);
     return tmp2;
 }

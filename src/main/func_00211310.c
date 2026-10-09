@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-extern int func_002186F0(int);
+extern int PathObj_ResetAndTrigger(int);
 
 int Script_Mover_GetPos(int a0) {
     int loc[1];
@@ -22,10 +22,10 @@ ret:
     return v0;
 }
 
-int func_00211330(int a0) {
+int PathObj_ScriptResetAndTrigger(int a0) {
     int tmp0;
 
     tmp0 = *(int*)(char*)a0;
-    func_002186F0(tmp0);
+    PathObj_ResetAndTrigger(tmp0);
     return 0;
 }

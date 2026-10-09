@@ -7,11 +7,11 @@
 #include "types.h"
 
 extern char D_004FFB50[];
-extern int func_001310F0(int, int);
+extern int ActiveList_RemoveObject(int, int);
 extern int func_00131320(int, int);
 
 int func_0017A5D0(int a0) {
-    return func_001310F0((int)D_004FFB50, a0);
+    return ActiveList_RemoveObject((int)D_004FFB50, a0);
 }
 
 int func_0017A5E0(int a0) {

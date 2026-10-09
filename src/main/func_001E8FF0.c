@@ -27,6 +27,6 @@ void func_001E9060(Iter* out, PtrVec* v) {
     out->p = v->data;
 }
 
-int func_001E9070(Node* n) {
+int RelNode_HasChildren(Node* n) {
     return !(n->count == 0);
 }

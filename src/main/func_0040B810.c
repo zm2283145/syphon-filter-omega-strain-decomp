@@ -8,7 +8,7 @@
 
 extern int PtrVec_Insert(int, int, int, int);
 
-int func_0040B810(int a0, int a1) {
+int ObjRegistry_InsertOne(int a0, int a1) {
     int tmp0;
     int tmp1;
 

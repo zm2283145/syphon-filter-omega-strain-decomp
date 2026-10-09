@@ -8,7 +8,7 @@
 
 extern int PtrVec_Insert(int, int, int, int);
 
-int func_003E03D0(int a0, int a1) {
+int ScriptStr_AppendTracking(int a0, int a1) {
     int tmp0;
     int tmp1;
 

@@ -9,7 +9,7 @@
 extern char D_004F7EB8[];
 extern char D_004F7EC0[];
 extern int func_003C8C50(void);
-extern int func_003CC800(int);
+extern int GObj_IdentityA(int);
 extern void func_003D9440(int, int);
 
 int func_002587D0(int a0) {
@@ -18,7 +18,7 @@ int func_002587D0(int a0) {
 
     tmp0 = *(int*)(char*)a0;
     tmp1 = *(int*)((char*)tmp0 + 44);
-    return func_003CC800(tmp1);
+    return GObj_IdentityA(tmp1);
 }
 
 int func_002587E0(int a0) {

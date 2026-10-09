@@ -19,6 +19,6 @@ void Iter_Begin(Iter* out, PtrVec* v) {
     out->p = v->data;
 }
 
-void* func_0013DFC0(char* self) {
+void* Terrain_GetBounds(char* self) {
     return self + 560;
 }

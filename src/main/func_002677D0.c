@@ -7,7 +7,7 @@
 #include "types.h"
 
 extern int func_00267860(int, int, float);
-extern int func_003CC820(int);
+extern int GObj_IdentityB(int);
 
 int func_002677D0(int a0) {
     int loc[1];
@@ -17,7 +17,7 @@ int func_002677D0(int a0) {
     v0 = *(int*)(char*)(a0 + 4);
     *(int*)(char*)loc = v0;
     a0 = *(int*)(char*)a0;
-    v0 = func_003CC820(a0);
+    v0 = GObj_IdentityB(a0);
     f12 = *(float*)(char*)loc;
     a0 = v0;
     a1 = 0;

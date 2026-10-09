@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void* func_00201C00(char* self) {
+void* MotionChildArr_GetData(char* self) {
     return self + 8;
 }

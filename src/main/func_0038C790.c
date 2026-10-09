@@ -6,9 +6,9 @@
 
 #include "types.h"
 
-extern void func_0038C5E0(int);
+extern void Equip_Init(int);
 
-void func_0038C790(int a0, int a1, int a2) {
+void Equip_SwapSlots(int a0, int a1, int a2) {
     int tmp0;
     int tmp1;
 
@@ -16,10 +16,10 @@ void func_0038C790(int a0, int a1, int a2) {
     tmp1 = *(int*)((char*)((a2 << 2) + a0) + 9232);
     *(int*)((char*)((a1 << 2) + a0) + 9232) = tmp1;
     *(int*)((char*)((a2 << 2) + a0) + 9232) = tmp0;
-    func_0038C5E0(a0);
+    Equip_Init(a0);
 }
 
 void func_0038C7C0(int a0, int a1) {
     *(int*)((char*)((a1 << 2) + a0) + 9232) = 0;
-    func_0038C5E0(a0);
+    Equip_Init(a0);
 }

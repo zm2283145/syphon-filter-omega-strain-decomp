@@ -10,6 +10,6 @@ int func_003B1710(int a0, int a1) {
     return ((unsigned int)((*(int*)(char*)a0 ^ *(int*)(char*)a1)) < (unsigned int)(1));
 }
 
-void* func_003B1730(char* self) {
+void* AnimBlend_GetGroupCollection(char* self) {
     return self + 232;
 }

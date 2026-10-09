@@ -6,14 +6,14 @@
 
 #include "types.h"
 
-Rel* func_003AF130(Rel* r) {
+Rel* AnimRoot_InitRelations(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;
     return r;
 }
 
-int func_003AF150(int a0, int a1) {
+int AnimRoot_CopyDirtyFlags(int a0, int a1) {
     *(char*)((char*)a0) = *(unsigned char*)(char*)a1;
     *(char*)((char*)a0 + 1) = *(unsigned char*)((char*)a1 + 1);
     *(char*)((char*)a0 + 2) = *(unsigned char*)((char*)a1 + 2);

@@ -22,7 +22,7 @@ open decisions, and [DECOMP_DEV.md](DECOMP_DEV.md) for listing on decomp.dev.
 | SDK / middleware | prebuilt Sony libraries (libgraph/libpad2 "2800" = SDK 2.8), Medius 1.50, lgaud, 989snd — built with EE-GCC |
 | Here: split | [splat](https://github.com/ethteck/splat) (`config/splat.yaml`) |
 | Here: assemble/link | GNU binutils for MIPS (`binutils-mips-ps2-decompals`) |
-| Here: compile | `mwccps2.exe` build `mwcps2-3.0.3-020716` from decomp.me's compiler archive |
+| Here: compile | `mwccps2.exe` build `mwcps2-3.0.3-020716` (game code, `src/main/`) and EE-GCC 2.95.3-136 (libraries, `src/lib/`), both from decomp.me's compiler archive |
 | Here: diff/progress | [objdiff](https://github.com/encounter/objdiff) |
 
 ## Layout

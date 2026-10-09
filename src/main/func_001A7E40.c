@@ -10,6 +10,6 @@ int func_001A7E40(char* self) {
     return *(int*)(self + 12948);
 }
 
-int func_001A7E50(char* self) {
+int Actor_GetFloorRoot(char* self) {
     return *(int*)(self + 12944);
 }

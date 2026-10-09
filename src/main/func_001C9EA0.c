@@ -11,10 +11,10 @@ extern char D_004F2CC0[];
 extern int func_001004B0(int, int, int, int, int);
 extern int func_001C9F10(int, int);
 extern int func_001C9F80(int);
-extern int func_003CB4B0(int, int);
+extern int Receiver_Construct(int, int);
 
 int func_001C9EA0(int a0) {
-    func_003CB4B0(a0, (int)D_004F2CC0);
+    Receiver_Construct(a0, (int)D_004F2CC0);
     *(int*)((char*)a0) = (int)D_004DACB0;
     func_001004B0((a0 + 48), (int)func_001C9F80, (int)func_001C9F10, 432, 50);
     *(int*)((char*)a0 + 21672) = 0;

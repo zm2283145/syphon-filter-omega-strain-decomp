@@ -10,3 +10,10 @@ int func_002DA900(int a0, int a1) {
     *(int*)((char*)a1) = *(int*)((char*)a0 + 120);
     return 0;
 }
+
+int func_002DA910(int a0) {
+    int tmp0;
+
+    tmp0 = *(int*)((char*)a0 + 152);
+    return tmp0;
+}

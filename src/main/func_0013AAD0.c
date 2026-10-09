@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-void func_0013AAD0(char* self, char value) {
+void LosResult_SetStatus(char* self, char value) {
     self[0] = value;
 }
 
@@ -18,6 +18,6 @@ int func_0013AAE0(int a0) {
     return a0;
 }
 
-void* func_0013AB00(void* self) {
+void* Ptr_Identity(void* self) {
     return self;
 }

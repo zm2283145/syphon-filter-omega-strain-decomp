@@ -10,7 +10,7 @@ void** PtrStack_Top(PtrStack* s) {
     return &s->items[s->count - 1];
 }
 
-int func_003B1790(char* self) {
+int AnimContext_GetCount(char* self) {
     return *(int*)(self + 0);
 }
 

@@ -16,14 +16,14 @@ extern char D_004F5640[];
 extern char D_004F5660[];
 extern char D_004F5668[];
 extern char D_00555070[];
-extern int func_001CA010(int, int, int, int, int);
+extern int SoundAction_CtorVoice(int, int, int, int, int);
 extern int func_00215530(int, int, int);
 extern int func_002155F0(int, int, int);
 extern int func_003C8C50(void);
-extern int func_003CC800(int);
+extern int GObj_IdentityA(int);
 extern void func_003D9440(int, int);
-extern int func_003E1AA0(int, int, int);
-extern int func_0040C540(int);
+extern int ScriptFilter_Dispatch(int, int, int);
+extern int Object_LookupById(int);
 
 void func_00210AC0(void) {
     int tmp0;
@@ -42,7 +42,7 @@ int func_00210AE0(void) {
 }
 
 int func_00210AF0(int a0, int a1) {
-    return func_003E1AA0((int)D_00555070, a0, a1);
+    return ScriptFilter_Dispatch((int)D_00555070, a0, a1);
 }
 
 int func_00210B10(int a0) {
@@ -58,7 +58,7 @@ ret:
     return v0;
 }
 
-int func_00210B30(int a0) {
+int PathedNotice_GetAction(int a0) {
     return *(unsigned char*)((char*)*(int*)(char*)a0 + 36);
 }
 
@@ -73,7 +73,7 @@ void func_00210B40(void) {
     func_003D9440(tmp2, tmp3);
 }
 
-int func_00210B70(void) {
+int PathedNotice_GetScriptType(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004F5638;
@@ -123,9 +123,9 @@ int func_00210BF0(int a0) {
     v0 = *(int*)(char*)(v0 + 44);
     a0 = (int)loc;
     *(int*)(char*)loc = v0;
-    v0 = func_0040C540(a0);
+    v0 = Object_LookupById(a0);
     a0 = v0;
-    v0 = func_003CC800(a0);
+    v0 = GObj_IdentityA(a0);
     goto ret;
 ret:
     return v0;
@@ -139,9 +139,9 @@ int func_00210C20(int a0) {
     v0 = *(int*)(char*)(v0 + 48);
     a0 = (int)loc;
     *(int*)(char*)loc = v0;
-    v0 = func_0040C540(a0);
+    v0 = Object_LookupById(a0);
     a0 = v0;
-    v0 = func_003CC800(a0);
+    v0 = GObj_IdentityA(a0);
     goto ret;
 ret:
     return v0;
@@ -179,7 +179,7 @@ int func_00210CB0(void) {
     return (int)D_004F55D8;
 }
 
-int func_00210CC0(void) {
+int TriggerEvent_GetScriptType(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004F55D8;
@@ -229,7 +229,7 @@ int func_00210D30(int a0) {
     a3 = *(int*)(char*)a0;
     a2 = *(int*)(char*)loc;
     a0 = a3 + 736;
-    v0 = func_001CA010(a0, a1, a2, a3, t0);
+    v0 = SoundAction_CtorVoice(a0, a1, a2, a3, t0);
     v0 = 0;
     goto ret;
 ret:
@@ -247,7 +247,7 @@ int func_00210D70(int a0) {
     a3 = *(int*)(char*)a0;
     a2 = *(int*)(char*)loc;
     a0 = a3 + 1536;
-    v0 = func_001CA010(a0, a1, a2, a3, t0);
+    v0 = SoundAction_CtorVoice(a0, a1, a2, a3, t0);
     v0 = 0;
     goto ret;
 ret:
@@ -265,7 +265,7 @@ int func_00210DB0(int a0) {
     a3 = *(int*)(char*)a0;
     a2 = *(int*)(char*)loc;
     a0 = a3 + 1136;
-    v0 = func_001CA010(a0, a1, a2, a3, t0);
+    v0 = SoundAction_CtorVoice(a0, a1, a2, a3, t0);
     v0 = 0;
     goto ret;
 ret:
@@ -283,7 +283,7 @@ int func_00210DF0(int a0) {
     a3 = *(int*)(char*)a0;
     a2 = *(int*)(char*)loc;
     a0 = a3 + 336;
-    v0 = func_001CA010(a0, a1, a2, a3, t0);
+    v0 = SoundAction_CtorVoice(a0, a1, a2, a3, t0);
     v0 = 0;
     goto ret;
 ret:

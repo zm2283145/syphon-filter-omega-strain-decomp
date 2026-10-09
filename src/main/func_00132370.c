@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void* func_00132370(char* self) {
+void* Placement_GetPosition(char* self) {
     return self + 16;
 }

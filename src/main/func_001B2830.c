@@ -10,6 +10,6 @@ void* func_001B2830(char* self) {
     return self + 16;
 }
 
-void* func_001B2840(char* self) {
+void* VecCurve_GetCurrent(char* self) {
     return self + 32;
 }

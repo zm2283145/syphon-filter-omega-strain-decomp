@@ -12,7 +12,7 @@ extern char D_00543640[];
 extern char D_00543650[];
 extern char D_00555070[];
 extern int ScalarCollection_Init(int);
-extern int func_003E1AA0(int, int, int);
+extern int ScriptFilter_Dispatch(int, int, int);
 
 int func_003CB090(int a0, int a1) {
     int tmp0;
@@ -73,10 +73,10 @@ int func_003CB1E0(void) {
 }
 
 int func_003CB1F0(int a0, int a1) {
-    return func_003E1AA0((int)D_00555070, a0, a1);
+    return ScriptFilter_Dispatch((int)D_00555070, a0, a1);
 }
 
-int func_003CB210(void) {
+int Receiver_HandleEventBase(void) {
     return 0;
 }
 

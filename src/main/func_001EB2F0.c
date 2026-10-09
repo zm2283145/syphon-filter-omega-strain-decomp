@@ -22,7 +22,7 @@ int func_001EB310(int a0, int a1, int a2, int a3, int t0) {
     return a0;
 }
 
-int func_001EB340(int a0, int a1) {
+int HumanColPreset_Copy(int a0, int a1) {
     *(float*)((char*)a0) = *(float*)(char*)a1;
     *(float*)((char*)a0 + 4) = *(float*)((char*)a1 + 4);
     *(float*)((char*)a0 + 8) = *(float*)((char*)a1 + 8);

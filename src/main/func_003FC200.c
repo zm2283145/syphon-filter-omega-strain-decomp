@@ -8,7 +8,7 @@
 
 extern int func_003FC820(int, int);
 
-void func_003FC200(int a0) {
+void NetMap_Clear(int a0) {
     int a1, s0, v0, v1;
     int cond;
 

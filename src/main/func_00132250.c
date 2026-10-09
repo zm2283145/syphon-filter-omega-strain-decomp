@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-float func_00132250(char* self) {
+float Vec4_GetZ(char* self) {
     return *(float*)(self + 8);
 }
 

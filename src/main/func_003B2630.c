@@ -30,7 +30,7 @@ void* func_003B2680(void* self) {
     return self;
 }
 
-Iter16* func_003B2690(Iter16* it) {
+Iter16* SkaClip_AdvanceFrame16(Iter16* it) {
     it->p += 16;
     return it;
 }

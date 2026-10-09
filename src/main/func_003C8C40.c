@@ -15,7 +15,7 @@ int func_003C8C50(void) {
     return (int)D_00543610;
 }
 
-int func_003C8C60(void) {
+int Message_GetScriptTypeKey(void) {
     int tmp0;
 
     tmp0 = *(int*)D_00543610;

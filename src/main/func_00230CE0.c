@@ -11,7 +11,7 @@ extern int func_002307B0(int, int, int);
 extern int func_00230DE0(int, int, int);
 extern void func_00282020(int);
 extern int func_00282160(int);
-extern int func_003CC820(int);
+extern int GObj_IdentityB(int);
 
 int func_00230CE0(int a0) {
     int tmp2;
@@ -51,10 +51,10 @@ int func_00230D90(int a0) {
 
     s0 = a0;
     a0 = *(int*)(char*)a0;
-    v0 = func_003CC820(a0);
+    v0 = GObj_IdentityB(a0);
     a0 = *(int*)(char*)(s0 + 4);
     s0 = v0;
-    v0 = func_003CC820(a0);
+    v0 = GObj_IdentityB(a0);
     a0 = s0;
     a1 = v0;
     a2 = 0;

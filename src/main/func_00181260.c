@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-extern int func_00181270(int, int, int, int);
+extern int Collision_GatherScene(int, int, int, int);
 
 int func_00181260(int a0, int a1, int a2, int a3) {
-    return func_00181270(a0, a1, a2, a3);
+    return Collision_GatherScene(a0, a1, a2, a3);
 }

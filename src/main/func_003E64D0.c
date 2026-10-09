@@ -7,7 +7,7 @@
 #include "types.h"
 
 extern int func_003CB1C0(int);
-extern int func_003CC820(int);
+extern int GObj_IdentityB(int);
 extern int func_003E67C0(int, int, int, int, float);
 extern int func_003E6910(int, int, int, int, int, float);
 
@@ -24,7 +24,7 @@ int func_003E64D0(int a0) {
     v0 = func_003CB1C0(a0);
     a0 = *(int*)(char*)(s0 + 8);
     s0 = v0;
-    v0 = func_003CC820(a0);
+    v0 = GObj_IdentityB(a0);
     a3 = *(int*)(char*)loc;
     a2 = v0;
     v0 = 0xbf800000;
@@ -49,7 +49,7 @@ int func_003E6540(int a0) {
     v0 = func_003CB1C0(a0);
     a0 = *(int*)(char*)(s0 + 8);
     s0 = v0;
-    v0 = func_003CC820(a0);
+    v0 = GObj_IdentityB(a0);
     a2 = v0;
     a0 = s0;
     v0 = 0xbf800000;

@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-int func_00183A10(void) {
+int ColTri_FilterStub(void) {
     int loc[1];
     int v0, v1;
     int cond;

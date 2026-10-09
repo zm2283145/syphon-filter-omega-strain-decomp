@@ -11,14 +11,14 @@ extern char D_004FFC2C[];
 extern int func_00127358(int, int, int, int, int, int, int, int, float, float, float, float, float, float, float, float);
 extern int func_0022C1F0(int);
 extern int func_00273890(int, int, int);
-extern int func_003CC820(int);
+extern int GObj_IdentityB(int);
 
 int func_0022C180(int a0) {
     int tmp0;
     int tmp1;
 
     tmp0 = *(int*)(char*)a0;
-    tmp1 = func_003CC820(tmp0);
+    tmp1 = GObj_IdentityB(tmp0);
     func_0022C1F0(tmp1);
     return 0;
 }

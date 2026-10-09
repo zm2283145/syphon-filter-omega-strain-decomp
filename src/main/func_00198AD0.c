@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-int func_00198AD0(int a0, int a1) {
+int MotionGroup_CopyPair(int a0, int a1) {
     *(int*)((char*)a0) = *(int*)(char*)a1;
     *(int*)((char*)a0 + 4) = *(int*)((char*)a1 + 4);
     return a0;

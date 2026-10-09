@@ -31,7 +31,7 @@ extern char D_004FF250[];
 extern char D_004FF258[];
 extern int func_0015C100(int);
 extern int func_003C8C50(void);
-extern int func_003CC800(int);
+extern int GObj_IdentityA(int);
 extern void func_003D9440(int, int);
 
 int func_0026ECF0(int a0) {
@@ -40,7 +40,7 @@ int func_0026ECF0(int a0) {
 
     tmp0 = *(int*)(char*)a0;
     tmp1 = *(int*)((char*)tmp0 + 36);
-    return func_003CC800(tmp1);
+    return GObj_IdentityA(tmp1);
 }
 
 void func_0026ED00(void) {
@@ -104,7 +104,7 @@ int func_0026EDB0(int a0) {
 
     tmp0 = *(int*)(char*)a0;
     tmp1 = *(int*)((char*)tmp0 + 36);
-    return func_003CC800(tmp1);
+    return GObj_IdentityA(tmp1);
 }
 
 void func_0026EDC0(void) {
@@ -288,7 +288,7 @@ int func_0026EFE0(int a0) {
 
     tmp0 = *(int*)(char*)a0;
     tmp1 = *(int*)((char*)tmp0 + 36);
-    return func_003CC800(tmp1);
+    return GObj_IdentityA(tmp1);
 }
 
 int func_0026EFF0(int a0) {
@@ -297,7 +297,7 @@ int func_0026EFF0(int a0) {
 
     tmp0 = *(int*)(char*)a0;
     tmp1 = *(int*)((char*)tmp0 + 36);
-    return func_003CC800(tmp1);
+    return GObj_IdentityA(tmp1);
 }
 
 void func_0026F000(void) {
@@ -334,7 +334,7 @@ int func_0026F060(int a0) {
 
     tmp0 = *(int*)(char*)a0;
     tmp1 = *(int*)((char*)tmp0 + 36);
-    return func_003CC800(tmp1);
+    return GObj_IdentityA(tmp1);
 }
 
 void func_0026F070(void) {

@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void* func_003BF250(char* self) {
+void* ColCandidate_GetNormal(char* self) {
     return self + 48;
 }

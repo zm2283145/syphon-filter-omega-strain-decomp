@@ -22,7 +22,7 @@ float func_0015C2B0(char* self) {
     return *(float*)(self + 0);
 }
 
-void func_0015C2C0(int a0, int a1) {
+void Node_GetTranslation(int a0, int a1) {
     float tmp0;
     float tmp1;
     float tmp2;

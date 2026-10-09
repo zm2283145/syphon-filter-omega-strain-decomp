@@ -8,7 +8,7 @@
 
 extern char D_004DA930[];
 extern char D_00542B60[];
-extern int func_003C9E30(int, int);
+extern int Event_Construct(int, int);
 
 float func_0018A2C0(char* self) {
     return *(float*)(self + 156);
@@ -27,7 +27,7 @@ signed char func_0018A2F0(signed char* self) {
 }
 
 int AnimEvent_Construct(int a0) {
-    func_003C9E30(a0, (int)D_00542B60);
+    Event_Construct(a0, (int)D_00542B60);
     *(int*)((char*)a0) = (int)D_004DA930;
     *(int*)((char*)a0 + 36) = 0;
     *(char*)((char*)a0 + 40) = 0;

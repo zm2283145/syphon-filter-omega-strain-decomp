@@ -9,7 +9,7 @@
 extern char D_004DCD70[];
 extern char D_004DFD80[];
 extern char D_004E0840[];
-extern int func_003C9E30(int, int);
+extern int Event_Construct(int, int);
 
 int func_001AD7F0(int a0, int a1) {
     int tmp0;
@@ -49,7 +49,7 @@ int func_001AD7F0(int a0, int a1) {
 }
 
 int func_001AD860(int a0, int a1, int a2) {
-    func_003C9E30(a0, a1);
+    Event_Construct(a0, a1);
     *(int*)((char*)a0) = (int)D_004DCD70;
     *(int*)((char*)a0 + 36) = a2;
     *(char*)((char*)a0 + 32) = 2;

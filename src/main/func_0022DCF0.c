@@ -21,10 +21,10 @@ extern int func_0022DE00(void);
 extern int func_0022DE60(void);
 extern int func_0022DED0(int, int);
 extern int func_003C8C50(void);
-extern int func_003CC820(int);
+extern int GObj_IdentityB(int);
 extern int func_003CC830(void);
 extern void func_003D9440(int, int);
-extern int func_003E1AA0(int, int, int);
+extern int ScriptFilter_Dispatch(int, int, int);
 
 void func_0022DCF0(void) {
     int tmp0;
@@ -51,7 +51,7 @@ int func_0022DD30(void) {
 }
 
 int func_0022DD50(int a0, int a1) {
-    return func_003E1AA0((int)D_00555070, a0, a1);
+    return ScriptFilter_Dispatch((int)D_00555070, a0, a1);
 }
 
 void func_0022DD70(void) {
@@ -126,14 +126,14 @@ int func_0022DE70(void) {
     return tmp2;
 }
 
-int func_0022DE90(int a0) {
+int Script_SetPlayersCheckpoint(int a0) {
     int loc[1];
     int a1, v0;
 
     v0 = *(int*)(char*)(a0 + 4);
     *(int*)(char*)loc = v0;
     a0 = *(int*)(char*)a0;
-    v0 = func_003CC820(a0);
+    v0 = GObj_IdentityB(a0);
     a1 = *(int*)(char*)loc;
     a0 = v0;
     v0 = func_0022DED0(a0, a1);

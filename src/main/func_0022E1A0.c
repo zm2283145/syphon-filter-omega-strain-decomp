@@ -9,7 +9,7 @@
 extern int func_00175FA0(int);
 extern int func_0022E1D0(int);
 
-int func_0022E1A0(int a0) {
+int Script_ReSpawn(int a0) {
     int tmp0;
     int tmp1;
 

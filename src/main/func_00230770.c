@@ -7,14 +7,14 @@
 #include "types.h"
 
 extern int func_002307B0(int, int, int);
-extern int func_003CC820(int);
+extern int GObj_IdentityB(int);
 
 int func_00230770(int a0) {
     int a1, a2, s0, v0;
 
     s0 = *(signed char*)(char*)a0;
     a0 = *(int*)(char*)(a0 + 4);
-    v0 = func_003CC820(a0);
+    v0 = GObj_IdentityB(a0);
     a0 = s0;
     a1 = v0;
     a2 = 0 + 1;

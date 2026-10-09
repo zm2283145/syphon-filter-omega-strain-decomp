@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-extern int func_00272D50(int, int, int);
+extern int ObjMarkerMgr_Remove(int, int, int);
 
 Word* func_00273100(Word* dst, Word* src) {
     dst->value = src->value;
@@ -71,5 +71,5 @@ void func_002731F0(Iter* out, PtrVec* v) {
 }
 
 int func_00273200(int a0, int a1) {
-    return func_00272D50(a0, a1, 1);
+    return ObjMarkerMgr_Remove(a0, a1, 1);
 }

@@ -14,6 +14,6 @@ int func_00182270(char* self) {
     return *(int*)(self + 0);
 }
 
-void func_00182280(char* self, int value) {
+void ColGather_SetSource(char* self, int value) {
     *(int*)(self + 4) = value;
 }

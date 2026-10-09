@@ -14,7 +14,7 @@ Quad* func_001EAF30(Quad* d, Quad* s) {
     return d;
 }
 
-int func_001EAF60(int a0, int a1, int a2, int a3, int t0, int t1, int t2, int t3) {
+int HumanColPreset_SetConfig(int a0, int a1, int a2, int a3, int t0, int t1, int t2, int t3) {
     int v0, v1;
     float f0;
 

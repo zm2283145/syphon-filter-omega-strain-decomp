@@ -11,7 +11,7 @@ extern char D_004EA780[];
 extern char D_00555070[];
 extern int func_003CC830(void);
 extern void func_003D9440(int, int);
-extern int func_003E1AA0(int, int, int);
+extern int ScriptFilter_Dispatch(int, int, int);
 
 void func_0015C080(void) {
 }
@@ -66,5 +66,5 @@ int func_0015C140(void) {
 }
 
 int func_0015C150(int a0, int a1) {
-    return func_003E1AA0((int)D_00555070, a0, a1);
+    return ScriptFilter_Dispatch((int)D_00555070, a0, a1);
 }

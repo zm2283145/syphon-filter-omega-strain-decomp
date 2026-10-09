@@ -31,6 +31,10 @@ IS_WINDOWS = platform.system() == "Windows"
 EXE = ".exe" if IS_WINDOWS else ""
 
 DEFAULT_COMPILER = "mwcps2-3.0.3-020716"
+# Sony SDK / middleware libraries were built with EE-GCC; units under src/lib/
+# are compiled with this GCC build (Windows executable from decomp.me's archive).
+DEFAULT_GCC = "ee-gcc2.95.3-136"
+GCCFLAGS = "-c -O2 -G0 -w"
 # Flags reproduced by test compiles against retail code (see PROGRESS.md).
 CFLAGS = "-c -O4,p -nostdinc -sdatathreshold 0 -char signed -lang c"
 ASFLAGS = "-EL -march=r5900 -mabi=eabi -no-pad-sections -G0 -Iinclude"
@@ -106,6 +110,8 @@ def main():
     ap.add_argument("--binutils", help="binutils prefix, e.g. mips-linux-gnu-")
     ap.add_argument("--compiler", default=DEFAULT_COMPILER,
                     help=f"compiler directory under .tools/mwcc (default {DEFAULT_COMPILER})")
+    ap.add_argument("--gcc", default=DEFAULT_GCC,
+                    help=f"EE-GCC directory under .tools/eegcc (default {DEFAULT_GCC})")
     ap.add_argument("--wrapper", default=None,
                     help="program used to run the Windows compiler on Linux/macOS (wibo or wine)")
     ap.add_argument("--objdiff", default=None, help="path to objdiff-cli")
@@ -142,7 +148,9 @@ def main():
     if wrapper is None and not IS_WINDOWS:
         local_wibo = ROOT / ".tools" / "wibo"
         wrapper = (str(local_wibo) if local_wibo.exists() else None) or shutil.which("wibo") or shutil.which("wine") or "wibo"
-    cc = (f"{cmd_path(wrapper) if Path(wrapper).exists() else wrapper} " if wrapper else "") + cmd_path(mwcc)
+    wrap = (f"{cmd_path(wrapper) if Path(wrapper).exists() else wrapper} " if wrapper else "")
+    cc = wrap + cmd_path(mwcc)
+    gcc = wrap + cmd_path(ROOT / ".tools" / "eegcc" / args.gcc / "bin" / "ee-gcc.exe")
     objdiff = args.objdiff or str(ROOT / ".tools" / ("objdiff-cli" + EXE))
 
     subs = subsegments(cfg)
@@ -154,7 +162,7 @@ def main():
             if typ in ("rodata",):
                 src = Path("asm") / "data" / (uname + ".rodata.s")
             obj = Path("build") / src.with_suffix(".o")
-            asm_objs.append((src, obj))
+            asm_objs.append((src, obj, next(a for a in (16, 8, 4) if (start + 0x100000) % a == 0)))
             link_objs.append(obj)
             if typ in ("asm", "hasm"):
                 units.append({"name": f"asm/{start + 0x100000:06X}", "target_path": str(obj).replace("\\", "/"),
@@ -166,7 +174,8 @@ def main():
             # unit to asm/<unit>.s; it is assembled as the objdiff target.
             target_s = Path("asm") / (name + ".s")
             target = Path("build") / "target" / (name + ".o")
-            c_units.append((src, obj, target_s, target))
+            c_units.append((src, obj, target_s, target, "gcc" if name.startswith("lib/") else "cc",
+                            next(a for a in (16, 8, 4) if (start + 0x100000) % a == 0)))
             link_objs.append(obj)
             units.append({"name": name, "target_path": str(target).replace("\\", "/"),
                           "base_path": str(obj).replace("\\", "/"),
@@ -181,16 +190,21 @@ def main():
         f"ld = {tool('ld')}",
         f"objcopy = {tool('objcopy')}",
         f"cc = {cc}",
+        f"gcc = {gcc}",
+        f"gccflags = {GCCFLAGS} -Iinclude -Isrc",
         f"python = {py}",
         f"asflags = {ASFLAGS}",
         f"cflags = {CFLAGS} -Iinclude -Isrc",
         "",
         "rule as",
-        "  command = $as $asflags -o $out $in",
+        "  command = $python tools/assemble.py $as $objcopy $align $out $in $asflags",
         "  description = AS $in",
         "rule cc",
         "  command = $cc $cflags -o $out $in",
         "  description = CC $in",
+        "rule gcc",
+        "  command = $python tools/compile_aligned.py $objcopy $align $out $in -- $gcc $gccflags",
+        "  description = GCC $in",
         "rule ld",
         "  command = $ld -EL -T build/undefined_syms_auto.txt -T build/undefined_funcs_auto.txt "
         "-T config/extra.ld -T build/link.ld -Map build/SCUS_972.64.map "
@@ -211,12 +225,16 @@ def main():
         "  pool = console",
         "",
     ]
-    for src, obj in asm_objs:
+    for src, obj, align in asm_objs:
         lines.append(f"build {ninja_path(obj)}: as {ninja_path(src)}")
-    for src, obj, target_s, target in c_units:
-        lines.append(f"build {ninja_path(obj)}: cc {ninja_path(src)}")
+        lines.append(f"  align = {align}")
+    for src, obj, target_s, target, rule, align in c_units:
+        lines.append(f"build {ninja_path(obj)}: {rule} {ninja_path(src)}")
+        if rule == "gcc":
+            lines.append(f"  align = {align}")
         lines.append(f"build {ninja_path(target)}: as {ninja_path(target_s)}")
-    targets = " ".join(ninja_path(t) for *_, t in c_units)
+        lines.append("  align = 16")
+    targets = " ".join(ninja_path(u[3]) for u in c_units)
     lines += [
         f"build build/SCUS_972.64.elf: ld | {' '.join(ninja_path(o) for o in link_objs)} build/link.ld build/link.rsp config/extra.ld",
         "build build/SCUS_972.64.rom: image build/SCUS_972.64.elf",
@@ -239,7 +257,7 @@ def main():
     (ROOT / "build" / "link.ld").write_text(f"""SECTIONS
 {{
     _gp = {gp:#x};
-    .main {seg["vram"]:#x} : AT(0) SUBALIGN(16)
+    .main {seg["vram"]:#x} : AT(0)
     {{
         FILL(0x00000000);
         /* one pattern keeps the command-line (address) order of all objects */

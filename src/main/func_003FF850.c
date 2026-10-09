@@ -7,13 +7,13 @@
 #include "types.h"
 
 extern char D_0055D4C0[];
-extern int func_003C9CA0(int, int, int, int, int, int, int);
+extern int Event_PackHeader(int, int, int, int, int, int, int);
 
 int func_003FF850(int a0, int a1, int a2, int a3, int t0, int t1, int t2) {
     int tmp2;
     int tmp3;
 
-    func_003C9CA0(a0, a1, a2, a3, t0, t1, t2);
+    Event_PackHeader(a0, a1, a2, a3, t0, t1, t2);
     tmp2 = *(int*)((char*)a0 + 36);
     *(int*)((char*)t2 + 8) = tmp2;
     tmp3 = *(int*)D_0055D4C0;

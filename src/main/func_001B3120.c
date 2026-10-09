@@ -9,7 +9,7 @@
 extern void func_001BB080(int, int, int);
 extern int func_001BE870(int, int);
 
-int func_001B3120(int a0, int a1) {
+int ReceiverMap_Erase(int a0, int a1) {
     int loc[1];
     int v0;
 

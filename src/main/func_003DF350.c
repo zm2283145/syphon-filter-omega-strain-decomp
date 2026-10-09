@@ -12,7 +12,7 @@ int* func_003DF350(PtrVec* v, int i) {
     return v->data + i;
 }
 
-int* func_003DF360(PtrVec* v, int i) {
+int* Script_GetStringTableEntry(PtrVec* v, int i) {
     return v->data + i;
 }
 

@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-extern int func_00138EA0(int, int, int, int);
+extern int List_InsertBefore(int, int, int, int);
 
 Word* func_002CCDE0(Word* dst, Word* src) {
     dst->value = src->value;
@@ -45,7 +45,7 @@ int func_002CCE50(int a0, int a1) {
     *(int*)(char*)loc = v0;
     a0 = (int)((char*)loc + 4);
     a2 = (int)loc;
-    v0 = func_00138EA0(a0, a1, a2, a3);
+    v0 = List_InsertBefore(a0, a1, a2, a3);
     goto ret;
 ret:
     return v0;

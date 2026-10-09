@@ -7,10 +7,10 @@
 #include "types.h"
 
 extern char D_00582550[];
-extern int func_003FB020(int, int, int, int);
+extern int Transport_Send(int, int, int, int);
 
 int func_00429200(int a0, int a1, int a2) {
-    return func_003FB020(a1, a0, -1, a2);
+    return Transport_Send(a1, a0, -1, a2);
 }
 
 void func_00429220(int a0) {

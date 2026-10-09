@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-extern void func_003CE650(int);
+extern void Actor_BaseLogicUpdate(int);
 
 void func_00392B40(int a0) {
-    func_003CE650(a0);
+    Actor_BaseLogicUpdate(a0);
 }

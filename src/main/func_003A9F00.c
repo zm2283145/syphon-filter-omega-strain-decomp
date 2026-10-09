@@ -7,7 +7,7 @@
 #include "types.h"
 
 extern void func_003A9450(int);
-extern int func_003A94E0(int);
+extern int SkelNodes_Construct(int);
 
 void func_003A9F00(int a0) {
     *(char*)((char*)a0 + 20) = 0;
@@ -16,5 +16,5 @@ void func_003A9F00(int a0) {
 
 int func_003A9F10(int a0) {
     *(char*)((char*)a0 + 20) = 1;
-    return func_003A94E0(a0);
+    return SkelNodes_Construct(a0);
 }

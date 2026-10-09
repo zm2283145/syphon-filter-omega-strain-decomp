@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-float func_003ADFE0(char* self) {
+float AnimPhase_GetCurrent(char* self) {
     return *(float*)(self + 4);
 }

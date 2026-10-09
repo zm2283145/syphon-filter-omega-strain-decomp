@@ -7,7 +7,7 @@
 #include "types.h"
 
 extern int func_003DFFE0(int);
-extern void func_003E0020(int, int);
+extern void ScriptStack_Push(int, int);
 
 float func_003DFFB0(void) {
     int loc[1];
@@ -38,12 +38,12 @@ void func_003E0000(float f12) {
 
     *(float*)(char*)loc = f12;
     a1 = *(int*)(char*)loc;
-    func_003E0020(a0, a1);
+    ScriptStack_Push(a0, a1);
     goto ret;
 ret:;
 }
 
-void func_003E0020(int a0, int a1) {
+void ScriptStack_Push(int a0, int a1) {
     *(int*)((char*)a0 + 20080) = (*(int*)((char*)a0 + 20080) + -4);
     *(int*)((char*)*(int*)((char*)a0 + 20080)) = a1;
 }

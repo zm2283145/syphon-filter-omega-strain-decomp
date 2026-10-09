@@ -20,7 +20,7 @@ Rel* func_001B7A20(Rel* r) {
     return r;
 }
 
-int func_001B7A40(int a0) {
+int AngleCurve_Construct(int a0) {
     float tmp0;
     float tmp1;
     float tmp2;

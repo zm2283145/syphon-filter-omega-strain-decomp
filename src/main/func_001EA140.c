@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-Rec* func_001EA140(Rec* r) {
+Rec* Vec4_ClearW(Rec* r) {
     r->v = 0;
     return r;
 }

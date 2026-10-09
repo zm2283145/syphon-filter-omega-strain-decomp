@@ -19,10 +19,10 @@ extern int func_0022DE00(void);
 extern int func_0022F170(void);
 extern int func_0022F1F0(void);
 extern void func_002493C0(int, int);
-extern int func_003CC800(int);
+extern int GObj_IdentityA(int);
 extern int func_003D9400(int, int);
 extern void func_003D9440(int, int);
-extern int func_003E1AA0(int, int, int);
+extern int ScriptFilter_Dispatch(int, int, int);
 extern int func_004080E0(void);
 
 int func_00175E80(void) {
@@ -55,7 +55,7 @@ int func_00175EE0(int a0) {
 
     tmp0 = *(int*)(char*)a0;
     tmp1 = *(int*)((char*)tmp0 + 48);
-    return func_003CC800(tmp1);
+    return GObj_IdentityA(tmp1);
 }
 
 int func_00175EF0(void) {
@@ -126,7 +126,7 @@ int func_00175FC0(void) {
 }
 
 int func_00175FD0(int a0, int a1) {
-    return func_003E1AA0((int)D_00555070, a0, a1);
+    return ScriptFilter_Dispatch((int)D_00555070, a0, a1);
 }
 
 void func_00175FF0(int a0) {

@@ -11,14 +11,14 @@ extern char D_004F5540[];
 extern char D_004F5548[];
 extern char D_004F5610[];
 extern char D_00555070[];
-extern int func_00213DC0(int);
-extern int func_00213EE0(int);
+extern int Lift_OpenDoors(int);
+extern int Lift_CloseDoors(int);
 extern int func_00214BD0(int);
-extern int func_00214C90(int, int, int, int);
+extern int Lift_SeekFloor(int, int, int, int);
 extern int func_00214FA0(int);
 extern int func_003D9400(int, int);
 extern void func_003D9440(int, int);
-extern int func_003E1AA0(int, int, int);
+extern int ScriptFilter_Dispatch(int, int, int);
 
 int func_00211000(int a0) {
     int tmp0;
@@ -84,7 +84,7 @@ int func_002110A0(int a0) {
     int tmp1;
 
     tmp0 = *(int*)(char*)a0;
-    tmp1 = func_00213EE0(tmp0);
+    tmp1 = Lift_CloseDoors(tmp0);
     return (tmp1 & 255);
 }
 
@@ -93,7 +93,7 @@ int func_002110C0(int a0) {
     int tmp1;
 
     tmp0 = *(int*)(char*)a0;
-    tmp1 = func_00213DC0(tmp0);
+    tmp1 = Lift_OpenDoors(tmp0);
     return (tmp1 & 255);
 }
 
@@ -108,7 +108,7 @@ int func_002110E0(int a0) {
     a0 = *(int*)(char*)a0;
     a1 = *(int*)(char*)loc;
     a2 = (unsigned int)0 < (unsigned int)v1;
-    v0 = func_00214C90(a0, a1, a2, a3);
+    v0 = Lift_SeekFloor(a0, a1, a2, a3);
     v0 = 0;
     goto ret;
 ret:
@@ -131,15 +131,15 @@ int func_00211120(void) {
     return tmp6;
 }
 
-int func_00211160(void) {
+int Lift_GetScriptType(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004F5540;
     return tmp0;
 }
 
-int func_00211170(int a0, int a1) {
-    return func_003E1AA0((int)D_00555070, a0, a1);
+int Lift_ScriptFilter(int a0, int a1) {
+    return ScriptFilter_Dispatch((int)D_00555070, a0, a1);
 }
 
 int Script_Mover_SetSpeed(Args* a) {

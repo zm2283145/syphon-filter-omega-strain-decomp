@@ -8,7 +8,7 @@
 
 extern int func_00224D80(void);
 
-int func_0013EE20(int a0) {
+int Mtx_Transpose3x3(int a0) {
     float tmp0;
     float tmp1;
     float tmp2;

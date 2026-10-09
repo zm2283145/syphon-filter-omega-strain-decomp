@@ -13,7 +13,7 @@ extern int func_001589D0(void);
 extern int func_00158A80(void);
 extern int func_00164330(int);
 extern int func_001644B0(int);
-extern int func_003CAA50(int, int);
+extern int Service_Lookup(int, int);
 
 void func_0016F490(int a0, int a1) {
     int v1;
@@ -40,7 +40,7 @@ int func_0016F4D0(void) {
     int tmp4;
 
     func_001589D0();
-    tmp2 = func_003CAA50((int)D_004FFB50, (int)D_004ED9B0);
+    tmp2 = Service_Lookup((int)D_004FFB50, (int)D_004ED9B0);
     tmp4 = func_00164330(tmp2);
     return tmp4;
 }
@@ -49,7 +49,7 @@ int func_0016F510(void) {
     int tmp0;
     int tmp4;
 
-    tmp0 = func_003CAA50((int)D_004FFB50, (int)D_004ED9B0);
+    tmp0 = Service_Lookup((int)D_004FFB50, (int)D_004ED9B0);
     func_001644B0(tmp0);
     tmp4 = func_00158A80();
     return tmp4;

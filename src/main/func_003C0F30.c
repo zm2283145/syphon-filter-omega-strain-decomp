@@ -18,6 +18,6 @@ void* func_003C0F50(char* self) {
     return self + 8;
 }
 
-void* func_003C0F60(char* self) {
+void* ColTri_GetEdgeFlags(char* self) {
     return self + 11;
 }

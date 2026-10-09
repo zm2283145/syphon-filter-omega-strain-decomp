@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-extern int func_001BD980(int, int, int);
+extern int ChannelVector_Resize(int, int, int);
 extern int func_001BE020(int, int, int);
 
 int func_00393B80(int a0, int a1, int a2) {
@@ -24,7 +24,7 @@ int func_00393BA0(int a0) {
 }
 
 int func_00393BB0(int a0, int a1, int a2) {
-    return func_001BD980(a0, a1, a2);
+    return ChannelVector_Resize(a0, a1, a2);
 }
 
 int func_00393BC0(char* self) {

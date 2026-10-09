@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-extern int func_003C3450(int);
+extern int ColQuery_Execute(int);
 
-int func_003BF460(int a0) {
-    return func_003C3450(a0);
+int ColQuery_ExecuteThunk(int a0) {
+    return ColQuery_Execute(a0);
 }

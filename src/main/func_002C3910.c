@@ -7,12 +7,12 @@
 #include "types.h"
 
 extern char D_004DA840[];
-extern int func_001BF3A0(int, int);
+extern int AnimChannelBase_CopyCtor(int, int);
 
 int func_002C3910(int a0, int a1) {
     unsigned char tmp2;
 
-    func_001BF3A0(a0, a1);
+    AnimChannelBase_CopyCtor(a0, a1);
     *(int*)((char*)a0) = (int)D_004DA840;
     tmp2 = *(unsigned char*)((char*)a1 + 56);
     *(char*)((char*)a0 + 56) = tmp2;

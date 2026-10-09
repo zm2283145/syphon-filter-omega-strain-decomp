@@ -92,7 +92,7 @@ def cmd_scan(args):
     res = {}
     stats = {}
     for f in every:
-        if id(f) not in pending or f["addr"] % 16 or not f["next"] or f["next"] % 16:
+        if id(f) not in pending or f["addr"] % 8 or not f["next"] or f["next"] % 8:
             continue
         if f["addr"] >= text_end() or len(f["ins"]) > args.max_insns:
             continue
@@ -176,14 +176,19 @@ def own_signature(body, name):
     return f'extern {m.group(1)} {name}({", ".join(ps) if ps else "void"});'
 
 
-def compiler_command():
+def compiler_command(kind):
     import configure  # noqa: F401  (constants only)
-    exe = ROOT / ".tools" / "mwcc" / configure.DEFAULT_COMPILER / "mwccps2.exe"
+    if kind == "gcc":
+        exe = ROOT / ".tools" / "eegcc" / configure.DEFAULT_GCC / "bin" / "ee-gcc.exe"
+        flags = configure.GCCFLAGS.split()
+    else:
+        exe = ROOT / ".tools" / "mwcc" / configure.DEFAULT_COMPILER / "mwccps2.exe"
+        flags = configure.CFLAGS.split() + ["-w", "off"]
     cmd = [str(exe)]
     if not configure.IS_WINDOWS:
         wibo = ROOT / ".tools" / "wibo"
         cmd = [str(wibo) if wibo.exists() else "wibo"] + cmd
-    return cmd + configure.CFLAGS.split() + ["-w", "off"]
+    return cmd + flags
 
 
 def cmd_verify(args):
@@ -191,21 +196,33 @@ def cmd_verify(args):
     from elftools.elf.relocation import RelocationSection
 
     cands = json.loads((OUT / "candidates.json").read_text())
-    obj = OUT / "candidates.o"
-    if obj.exists():
-        obj.unlink()
-    r = subprocess.run(compiler_command() + ["-o", str(obj), str(OUT / "candidates.c")],
-                       capture_output=True, text=True)
-    if not obj.exists():
-        sys.exit("compile failed:\n" + r.stdout[-3000:] + r.stderr[-3000:])
     rom = (ROOT / "build" / "orig" / "SCUS_972.64.rom").read_bytes()
+    ok = {}
+    for kind in ("cc", "gcc"):
+        obj = OUT / f"candidates_{kind}.o"
+        if obj.exists():
+            obj.unlink()
+        r = subprocess.run(compiler_command(kind) + ["-o", obj.name, "candidates.c"],
+                           capture_output=True, text=True, cwd=OUT)
+        if not obj.exists():
+            sys.exit(f"{kind} compile failed:\n" + r.stdout[-3000:] + r.stderr[-3000:])
+        for n in compare(obj, cands, rom, ELFFile, RelocationSection):
+            if n in ok:
+                continue
+            if kind == "cc" and cands[n]["addr"] % 16:
+                continue
+            ok[n] = dict(cands[n], compiler=kind)
+    finish_verify(ok, cands, rom)
+
+
+def compare(obj, cands, rom, ELFFile, RelocationSection):
     elf = ELFFile(open(obj, "rb"))
     masks = {}
     for sec in elf.iter_sections():
         if isinstance(sec, RelocationSection):
             for rel in sec.iter_relocations():
                 masks[(sec["sh_info"], rel["r_offset"])] = 0xFC000000 if rel["r_info_type"] == 4 else 0xFFFF0000
-    ok = {}
+    good = []
     for sym in elf.get_section_by_name(".symtab").iter_symbols():
         if sym["st_info"]["type"] != "STT_FUNC" or sym["st_shndx"] == "SHN_UNDEF" or sym.name not in cands:
             continue
@@ -222,7 +239,11 @@ def cmd_verify(args):
                 same = False
                 break
         if same:
-            ok[sym.name] = cands[sym.name]
+            good.append(sym.name)
+    return good
+
+
+def finish_verify(ok, cands, rom):
     # clones: unmatched leaf functions byte-identical to a verified leaf function
     every, pending = all_functions()
     lib = {}
@@ -232,18 +253,21 @@ def cmd_verify(args):
             lib.setdefault(rom[c["addr"] - BASE:c["addr"] - BASE + size], n)
     clones = 0
     for f in every:
-        if id(f) not in pending or f["name"] in ok or f["addr"] % 16 or not f["next"] or f["next"] % 16:
+        if id(f) not in pending or f["name"] in ok or f["addr"] % 8 or not f["next"] or f["next"] % 8:
             continue
         if any(x.split()[0] in ("jal", "j", "jalr", "lui") or "%" in x for _, x in f["ins"]):
             continue
         key = rom[f["addr"] - BASE:f["next"] - BASE]
         if key in lib:
             src = lib[key]
+            if ok[src]["compiler"] == "cc" and f["addr"] % 16:
+                continue
             ok[f["name"]] = dict(ok[src], addr=f["addr"], next=f["next"],
                                  code=re.sub(r"\b" + src + r"\b", f["name"], ok[src]["code"]))
             clones += 1
     (OUT / "verified.json").write_text(json.dumps(ok, indent=1))
-    print(f"verified {len(ok) - clones} of {len(cands)} candidates, plus {clones} clones -> build/autodecomp/verified.json")
+    kinds = {k: sum(1 for c in ok.values() if c["compiler"] == k) for k in ("cc", "gcc")}
+    print(f"verified {len(ok) - clones} of {len(cands)} candidates ({kinds} incl. clones), plus {clones} clones -> build/autodecomp/verified.json")
 
 
 FUNC_START = re.compile(r"^[A-Za-z_][\w \t\*]*?\b(\w+)\(([^;{]*)\)\s*\{", re.M)
@@ -257,7 +281,9 @@ def read_units():
         if m:
             names[m.group(1)] = int(m.group(2), 16)
     units = {}
-    for path in sorted((ROOT / "src" / "main").glob("*.c")):
+    paths = [(p, "cc") for p in sorted((ROOT / "src" / "main").glob("*.c"))]
+    paths += [(p, "gcc") for p in sorted((ROOT / "src" / "lib").glob("*.c"))]
+    for path, kind in paths:
         text = path.read_text()
         externs = {}
         for line in text.splitlines():
@@ -291,7 +317,7 @@ def read_units():
             if addr is None:
                 raise SystemExit(f"{path}: cannot resolve the address of {name}")
             refs = {t: l for t, l in externs.items() if re.search(r"\b" + t + r"\b", body)}
-            units[addr] = [None, name, body, refs]
+            units[addr] = [None, name, body, refs, kind]
     return units
 
 
@@ -317,14 +343,14 @@ def cmd_integrate(args):
     added = 0
     for n, c in verified.items():
         if c["addr"] not in units:
-            units[c["addr"]] = [c["next"], n, c["code"], dict(c["refs"])]
+            units[c["addr"]] = [c["next"], n, c["code"], dict(c["refs"]), c.get("compiler", "cc")]
             added += 1
     # group adjacent functions; drop new functions whose declarations conflict
     while True:
         groups = []
         for addr in sorted(units):
-            nxt, name, body, refs = units[addr]
-            if groups and units[groups[-1][-1]][0] == addr:
+            nxt, name, body, refs, kind = units[addr]
+            if groups and units[groups[-1][-1]][0] == addr and units[groups[-1][-1]][4] == units[addr][4]:
                 groups[-1].append(addr)
             else:
                 groups.append([addr])
@@ -349,8 +375,10 @@ def cmd_integrate(args):
         for a in drop:
             del units[a]
             added -= 1
-    for p in (ROOT / "src" / "main").glob("*.c"):
-        p.unlink()
+    for d in ("main", "lib"):
+        (ROOT / "src" / d).mkdir(exist_ok=True)
+        for p in (ROOT / "src" / d).glob("*.c"):
+            p.unlink()
     lines = ["      - [0x000000, asm]"]
     for g in groups:
         first = units[g[0]]
@@ -360,11 +388,12 @@ def cmd_integrate(args):
             refs.update(units[a][3])
         ext = "".join(refs[t] + "\n" for t in sorted(refs))
         bodies = "\n".join(units[a][2] for a in g)
-        (ROOT / "src" / "main" / f"{fname}.c").write_text(HEADER + ("\n" + ext if ext else "") + "\n" + bodies)
+        sub = "lib" if first[4] == "gcc" else "main"
+        (ROOT / "src" / sub / f"{fname}.c").write_text(HEADER + ("\n" + ext if ext else "") + "\n" + bodies)
         off = g[0] - BASE
         if lines[-1] == f"      - [0x{off:06X}, asm]":
             lines.pop()
-        lines.append(f"      - [0x{off:06X}, c, main/{fname}]")
+        lines.append(f"      - [0x{off:06X}, c, {sub}/{fname}]")
         lines.append(f"      - [0x{units[g[-1]][0] - BASE:06X}, asm]")
     ypath = ROOT / "config" / "splat.yaml"
     y = ypath.read_text()

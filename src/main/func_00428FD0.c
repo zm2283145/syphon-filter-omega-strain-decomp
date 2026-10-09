@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-extern int func_003FB020(int, int, int, int);
+extern int Transport_Send(int, int, int, int);
 
 int func_00428FD0(int a0, int a1) {
-    return func_003FB020(a1, a0, -1, -1);
+    return Transport_Send(a1, a0, -1, -1);
 }

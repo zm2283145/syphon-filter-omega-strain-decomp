@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-Vec4* func_001325E0(Vec4* d, Vec4* s) {
+Vec4* Vec4_Copy(Vec4* d, Vec4* s) {
     *d = *s;
     return d;
 }

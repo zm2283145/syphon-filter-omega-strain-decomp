@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-Vec4* func_001E5830(Vec4* v, float z) {
+Vec4* Vec4_SetZ(Vec4* v, float z) {
     v->z = z;
     return v;
 }

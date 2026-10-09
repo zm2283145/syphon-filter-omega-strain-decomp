@@ -6,12 +6,12 @@
 
 #include "types.h"
 
-extern int func_00148600(int);
+extern int Global_ResetNpc(int);
 
-int func_001485E0(int a0) {
+int Script_ResetNpc(int a0) {
     int tmp0;
 
     tmp0 = *(int*)(char*)a0;
-    func_00148600(tmp0);
+    Global_ResetNpc(tmp0);
     return 0;
 }

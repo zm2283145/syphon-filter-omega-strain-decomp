@@ -15,7 +15,7 @@ Rel* func_00282710(Rel* r) {
     return r;
 }
 
-int func_00282730(void) {
+int cBeamMsg_v05(void) {
     int tmp0;
 
     tmp0 = *(int*)D_00506218;

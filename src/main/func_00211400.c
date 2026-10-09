@@ -15,7 +15,7 @@ extern int ScriptFilter_Dispatch(int, int, int);
 extern int func_003D9400(int, int);
 extern void func_003D9440(int, int);
 
-int func_00211400(void) {
+int ScriptType_cPathedGOBJ_Init(void) {
     int tmp0;
     int tmp1;
     int tmp4;
@@ -31,7 +31,7 @@ int func_00211400(void) {
     return tmp6;
 }
 
-int func_00211440(void) {
+int cPathedGOBJ_v0B(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004F54F0;

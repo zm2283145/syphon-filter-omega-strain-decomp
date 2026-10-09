@@ -6,11 +6,11 @@
 
 #include "types.h"
 
-void func_00261BD0(void) {
+void cFireObj_v0E(void) {
 }
 
-void func_00261BE0(void) {
+void cFireObj_v0F(void) {
 }
 
-void func_00261BF0(void) {
+void cFireObj_v14(void) {
 }

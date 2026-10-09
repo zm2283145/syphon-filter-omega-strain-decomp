@@ -6,12 +6,12 @@
 
 #include "types.h"
 
-void func_0022EF40(void) {
+void cCheckpoint_v0E(void) {
 }
 
-void func_0022EF50(void) {
+void cCheckpoint_v0F(void) {
 }
 
-int func_0022EF60(void) {
+int cCheckpoint_v01(void) {
     return 0;
 }

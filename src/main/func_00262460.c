@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_00262460(void) {
+int cFireObj_v01(void) {
     return 0;
 }

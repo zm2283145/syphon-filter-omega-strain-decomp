@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_00149190(int a0) {
+int cNPC_v76(int a0) {
     return *(int*)((char*)*(int*)((char*)a0 + 48) + 68);
 }

@@ -77,7 +77,7 @@ def all_functions():
     unit_files = []
     for d in ("main", "lib"):
         if (asm / d).exists():
-            unit_files += sorted((asm / d).glob("*.s"))
+            unit_files += sorted((asm / d).rglob("*.s"))
     every = parse_asm(chunk_files + unit_files)
     pending = {id(f) for f in every if f["file"].parent == asm}
     return every, pending
@@ -368,39 +368,36 @@ def cmd_integrate(args):
         if c["addr"] not in units:
             units[c["addr"]] = [c["next"], n, c["code"], dict(c["refs"]), c.get("compiler", "cc")]
             added += 1
-    # group adjacent functions; drop new functions whose declarations conflict
-    while True:
-        groups = []
-        for addr in sorted(units):
-            nxt, name, body, refs, kind = units[addr]
-            prev = groups[-1][-1] if groups else None
-            if (prev is not None and units[prev][0] == addr and units[prev][4] == units[addr][4]
-                    and tu_of(prev) == tu_of(addr)):
-                groups[-1].append(addr)
-            else:
-                groups.append([addr])
-        drop = set()
-        for g in groups:
-            defined = {units[a][1]: a for a in g}
-            chosen = {}
-            for a in g:
-                for t, line in units[a][3].items():
-                    if t in defined:
-                        own = own_signature(units[defined[t]][2], t)
-                        if own is None or norm(own) != norm(line):
-                            drop.add(a)
-                            continue
-                    if t in chosen and norm(chosen[t]) != norm(line):
-                        drop.add(a)
-                        continue
-                    chosen[t] = line
-        drop = {a for a in drop if units[a][1] in verified}
-        if drop:
-            print(f"  dropping {len(drop)} new functions with conflicting declarations")
-        if not drop:
-            break
-        for a in drop:
-            del units[a]
+    # group adjacent functions with the same compiler and source file; start a
+    # new unit where declarations would conflict inside one file
+    def conflicts(group, addr):
+        defined = {units[a][1]: a for a in group}
+        defined[units[addr][1]] = addr
+        chosen = {}
+        for a in group + [addr]:
+            for t, line in units[a][3].items():
+                if t in defined:
+                    own = own_signature(units[defined[t]][2], t)
+                    if own is None or norm(own) != norm(line):
+                        return True
+                if t in chosen and norm(chosen[t]) != norm(line):
+                    return True
+                chosen[t] = line
+        return False
+
+    groups = []
+    for addr in sorted(units):
+        prev = groups[-1][-1] if groups else None
+        if (prev is not None and units[prev][0] == addr and units[prev][4] == units[addr][4]
+                and tu_of(prev) == tu_of(addr) and not conflicts(groups[-1], addr)):
+            groups[-1].append(addr)
+        else:
+            groups.append([addr])
+    bad = [g for g in groups if len(g) == 1 and conflicts([], g[0])]
+    for g in bad:
+        if units[g[0]][1] in verified:
+            groups.remove(g)
+            del units[g[0]]
             added -= 1
     for d in ("main", "lib"):
         (ROOT / "src" / d).mkdir(exist_ok=True)

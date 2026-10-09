@@ -11,7 +11,7 @@ extern char D_004F53A8[];
 void func_0020E330(void) {
 }
 
-int func_0020E340(void) {
+int cEndLevelMsg_v03(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004F53A8;

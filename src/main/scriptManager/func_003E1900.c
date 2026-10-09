@@ -7,6 +7,7 @@
 #include "types.h"
 
 extern int List_InsertBefore(int, int, int, int);
+extern int func_003E1960(int);
 
 int func_003E1900(int a0, int a1) {
     int loc[2];
@@ -22,4 +23,10 @@ int func_003E1900(int a0, int a1) {
     goto ret;
 ret:
     return v0;
+}
+
+int func_003E1930(int a0) {
+    func_003E1960(a0);
+    *(char*)((char*)a0 + 12) = 1;
+    return a0;
 }

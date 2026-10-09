@@ -8,7 +8,7 @@
 
 extern char D_004DFD80[];
 
-int func_001387C0(int a0, int a1) {
+int cMessage_ctor(int a0, int a1) {
     int tmp0;
     int tmp1;
     int tmp2;

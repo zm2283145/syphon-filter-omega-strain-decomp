@@ -8,7 +8,7 @@
 
 extern int AgentData_TotalPoints(int);
 
-int func_0032FD30(int a0) {
+int Script_cAgentData_GetClearancePoints(int a0) {
     int loc[1];
     int v0;
 

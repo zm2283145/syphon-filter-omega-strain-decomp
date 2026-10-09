@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_003CC700(void) {
+int Script_cGOBJ_CreateBlast(void) {
     return 0;
 }

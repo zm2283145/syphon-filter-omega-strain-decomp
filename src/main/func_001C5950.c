@@ -8,7 +8,7 @@
 
 extern char D_004DAA10[];
 extern char D_004DF860[];
-extern int func_003CF0E0(int, int, int, int);
+extern int cGOBJ_ctor(int, int, int, int);
 
 int func_001C5950(int a0, int a1, int a2) {
     int loc[1];
@@ -19,7 +19,7 @@ int func_001C5950(int a0, int a1, int a2) {
     s0 = a2;
     *(int*)(char*)loc = 0;
     a2 = 0 + 4;
-    v0 = func_003CF0E0(a0, a1, a2, a3);
+    v0 = cGOBJ_ctor(a0, a1, a2, a3);
     v0 = (int)D_004DF860;
     a1 = 0x3f800000;
     *(int*)(char*)s1 = v0;

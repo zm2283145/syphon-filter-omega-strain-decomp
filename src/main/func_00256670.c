@@ -10,7 +10,7 @@ extern char D_004FFBD0[];
 extern void func_00171050(int, int, int, int);
 extern void func_003CDBE0(int);
 
-void func_00256670(int a0) {
+void cBackpack_v28(int a0) {
     int a1, a2, a3, s0;
     int cond;
 

@@ -13,7 +13,7 @@ extern int func_003D9970(int);
 void func_002693F0(void) {
 }
 
-int func_00269400(int a0) {
+int Script_CreateNodeList(int a0) {
     int tmp0;
     int tmp1;
     int tmp3;

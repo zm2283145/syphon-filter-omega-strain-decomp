@@ -8,7 +8,7 @@
 
 extern char D_0052ACE0[];
 
-int func_003239A0(void) {
+int cNetQuickChatMsg_v05(void) {
     int tmp0;
 
     tmp0 = *(int*)D_0052ACE0;

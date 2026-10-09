@@ -6,9 +6,9 @@
 
 #include "types.h"
 
-extern void func_0045EDB0(int, int);
+extern void Global_PlayXA(int, int);
 
-int func_0045ED80(int a0) {
+int Script_PlayXA(int a0) {
     int loc[1];
     int a1, v0;
 
@@ -16,7 +16,7 @@ int func_0045ED80(int a0) {
     *(int*)(char*)loc = v0;
     a0 = *(int*)(char*)loc;
     a1 = 0;
-    func_0045EDB0(a0, a1);
+    Global_PlayXA(a0, a1);
     v0 = 0;
     goto ret;
 ret:

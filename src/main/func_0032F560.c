@@ -10,12 +10,12 @@ extern int AgentData_IsObjectiveComplete(int, int);
 extern char D_0049D010[];
 extern int GObj_IdentityB(int);
 extern int func_00185C70(int);
-extern int func_0032F600(int, int);
-extern int func_0032F680(int, int);
-extern void func_00333050(int, int);
-extern void func_003330C0(int, int);
+extern int Global_IsObjectiveComplete(int, int);
+extern int cAgentData_HasBonusLevel(int, int);
+extern void cAgentData_UnlockWeapon(int, int);
+extern void cAgentData_UnlockLevel(int, int);
 
-int func_0032F560(int a0) {
+int Script_cAgentData_UnlockWeapon(int a0) {
     int loc[1];
     int a1, v0;
 
@@ -23,14 +23,14 @@ int func_0032F560(int a0) {
     *(int*)(char*)loc = v0;
     a1 = *(int*)(char*)loc;
     a0 = *(int*)(char*)a0;
-    func_00333050(a0, a1);
+    cAgentData_UnlockWeapon(a0, a1);
     v0 = 0;
     goto ret;
 ret:
     return v0;
 }
 
-int func_0032F590(int a0) {
+int Script_cAgentData_UnlockLevel(int a0) {
     int loc[1];
     int a1, v0;
 
@@ -38,14 +38,14 @@ int func_0032F590(int a0) {
     *(int*)(char*)loc = v0;
     a1 = *(int*)(char*)loc;
     a0 = *(int*)(char*)a0;
-    func_003330C0(a0, a1);
+    cAgentData_UnlockLevel(a0, a1);
     v0 = 0;
     goto ret;
 ret:
     return v0;
 }
 
-int func_0032F5C0(int a0) {
+int Script_IsObjectiveComplete(int a0) {
     int loc[1];
     int a1, v0;
 
@@ -55,14 +55,14 @@ int func_0032F5C0(int a0) {
     v0 = GObj_IdentityB(a0);
     a1 = *(int*)(char*)loc;
     a0 = v0;
-    v0 = func_0032F600(a0, a1);
+    v0 = Global_IsObjectiveComplete(a0, a1);
     v0 = v0 & 255;
     goto ret;
 ret:
     return v0;
 }
 
-int func_0032F600(int a0, int a1) {
+int Global_IsObjectiveComplete(int a0, int a1) {
     int s0, v0, v1;
     int cond;
 
@@ -84,7 +84,7 @@ ret:
     return v0;
 }
 
-int func_0032F650(int a0) {
+int Script_cAgentData_HasBonusLevel(int a0) {
     int loc[1];
     int a1, v0;
 
@@ -92,7 +92,7 @@ int func_0032F650(int a0) {
     *(int*)(char*)loc = v0;
     a1 = *(int*)(char*)loc;
     a0 = *(int*)(char*)a0;
-    v0 = func_0032F680(a0, a1);
+    v0 = cAgentData_HasBonusLevel(a0, a1);
     v0 = v0 & 255;
     goto ret;
 ret:

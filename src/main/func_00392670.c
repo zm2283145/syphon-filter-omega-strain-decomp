@@ -18,7 +18,7 @@ extern int Skel_Find(int, int);
 extern int func_003CC830(void);
 extern void func_003D9440(int, int);
 
-void func_00392670(void) {
+void ScriptType_cPARTICLE_GOBJ_Init(void) {
     int tmp0;
     int tmp2;
     int tmp3;
@@ -40,7 +40,7 @@ int func_003926B0(int a0, int a1) {
     return ScriptFilter_Dispatch((int)D_00555070, a0, a1);
 }
 
-void func_003926D0(void) {
+void ScriptType_cVUM_GOBJ_Init(void) {
     int tmp0;
     int tmp2;
     int tmp3;

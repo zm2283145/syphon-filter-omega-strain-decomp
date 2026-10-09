@@ -10,16 +10,16 @@ extern char D_004A64A0[];
 extern char D_004FFC2C[];
 extern int GObj_IdentityB(int);
 extern int func_00127358(int, int, int, int, int, int, int, int, float, float, float, float, float, float, float, float);
-extern int func_0022C1F0(int);
+extern int Global_SetRadarBlip(int);
 extern int func_00273890(int, int, int);
 
-int func_0022C180(int a0) {
+int Script_SetRadarBlip(int a0) {
     int tmp0;
     int tmp1;
 
     tmp0 = *(int*)(char*)a0;
     tmp1 = GObj_IdentityB(tmp0);
-    func_0022C1F0(tmp1);
+    Global_SetRadarBlip(tmp1);
     return 0;
 }
 
@@ -27,11 +27,11 @@ int Radar_SetBlipDeprecated(int a0, int a1, int a2, int a3, int t0, int t1, int 
     int tmp2;
 
     func_00127358((int)D_004A64A0, a1, a2, a3, t0, t1, t2, t3, f12, f13, f14, f15, f16, f17, f18, f19);
-    tmp2 = func_0022C1F0(a0);
+    tmp2 = Global_SetRadarBlip(a0);
     return tmp2;
 }
 
-int func_0022C1F0(int a0) {
+int Global_SetRadarBlip(int a0) {
     int tmp0;
 
     tmp0 = *(int*)D_004FFC2C;

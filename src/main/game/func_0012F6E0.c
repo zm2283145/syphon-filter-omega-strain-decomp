@@ -15,8 +15,8 @@ extern char D_004FFC3C[];
 extern char D_005721C8[];
 extern int Game_IsMultiplayer(void);
 extern int Script_ClearSchedules_3DFB20(void);
-extern int func_0012F700(void);
-extern void func_0012F7B0(void);
+extern int Global_ResetLevel(void);
+extern void Global_ResetStats(void);
 extern void func_0013A290(int);
 extern int func_00247320(int);
 extern int func_002570C0(void);
@@ -24,12 +24,12 @@ extern int func_0025A120(void);
 extern void func_002795A0(int);
 extern int func_003FA1E0(int);
 
-int func_0012F6E0(void) {
-    func_0012F700();
+int Script_ResetLevel(void) {
+    Global_ResetLevel();
     return 0;
 }
 
-int func_0012F700(void) {
+int Global_ResetLevel(void) {
     int tmp0;
     int tmp7;
     int tmp11;
@@ -57,12 +57,12 @@ int func_0012F700(void) {
     return tmp21;
 }
 
-int func_0012F790(void) {
-    func_0012F7B0();
+int Script_ResetStats(void) {
+    Global_ResetStats();
     return 0;
 }
 
-void func_0012F7B0(void) {
+void Global_ResetStats(void) {
     int tmp0;
     int tmp4;
 

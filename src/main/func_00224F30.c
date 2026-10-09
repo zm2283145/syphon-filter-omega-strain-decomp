@@ -10,18 +10,18 @@ extern int GObj_IdentityB(int);
 extern int Objective_Activate(int);
 extern int Objective_Deactivate(int);
 extern int Objective_ResolveReceiver(int);
-extern int func_00228050(int, int);
-extern int func_00228190(int, int, int, int);
-extern int func_002283A0(int, int, int);
-extern int func_00228490(int, int, int);
-extern int func_00228580(int, int, int);
-extern int func_00228670(int, int, int);
-extern int func_00228760(int, int, int);
-extern int func_00228850(int, int, int);
-extern int func_00228940(int, int, int);
-extern int func_00228A30(int, int, int);
+extern int cObjective_ClearMapObject(int, int);
+extern int cObjective_SetMapObject(int, int, int, int);
+extern int cObjective_SetPluralLabel(int, int, int);
+extern int cObjective_SetSingleLabel(int, int, int);
+extern int cObjective_SetFailLabel(int, int, int);
+extern int cObjective_SetCompleteLabel(int, int, int);
+extern int cObjective_SetAddLabel(int, int, int);
+extern int cObjective_SetMapLabel(int, int, int);
+extern int cObjective_SetMenuLabel(int, int, int);
+extern int cObjective_SetNameLabel(int, int, int);
 
-int func_00224F30(int a0) {
+int Script_cObjective_ClearMapObject_2(int a0) {
     int tmp0;
     int tmp1;
     int tmp3;
@@ -29,25 +29,25 @@ int func_00224F30(int a0) {
     tmp0 = *(int*)(char*)a0;
     tmp1 = Objective_ResolveReceiver(tmp0);
     tmp3 = *(int*)((char*)a0 + 4);
-    func_00228050(tmp1, ((unsigned int)(0) < (unsigned int)(tmp3)));
+    cObjective_ClearMapObject(tmp1, ((unsigned int)(0) < (unsigned int)(tmp3)));
     return 0;
 }
 
-int func_00224F70(int a0) {
+int Script_cObjective_ClearMapObject(int a0) {
     int a1, v0;
 
     a0 = *(int*)(char*)a0;
     v0 = Objective_ResolveReceiver(a0);
     a0 = v0;
     a1 = 0;
-    v0 = func_00228050(a0, a1);
+    v0 = cObjective_ClearMapObject(a0, a1);
     v0 = 0;
     goto ret;
 ret:
     return v0;
 }
 
-int func_00224FA0(int a0) {
+int Script_cObjective_SetMapObject_2(int a0) {
     int loc[1];
     int a1, a2, a3, s0, v0;
 
@@ -63,14 +63,14 @@ int func_00224FA0(int a0) {
     a0 = s0;
     a1 = v0;
     a3 = 0;
-    v0 = func_00228190(a0, a1, a2, a3);
+    v0 = cObjective_SetMapObject(a0, a1, a2, a3);
     v0 = 0;
     goto ret;
 ret:
     return v0;
 }
 
-int func_00225000(int a0) {
+int Script_cObjective_SetMapObject(int a0) {
     int a1, a2, a3, s0, v0;
 
     s0 = a0;
@@ -83,7 +83,7 @@ int func_00225000(int a0) {
     a1 = v0;
     a2 = 0;
     a3 = 0;
-    v0 = func_00228190(a0, a1, a2, a3);
+    v0 = cObjective_SetMapObject(a0, a1, a2, a3);
     v0 = 0;
     goto ret;
 ret:
@@ -110,7 +110,7 @@ int Objective_ScriptActivate(int a0) {
     return 0;
 }
 
-int func_002250B0(int a0) {
+int Script_cObjective_IsActive(int a0) {
     int tmp0;
     int tmp1;
     unsigned char tmp3;
@@ -143,7 +143,7 @@ int Script_Objective_IsComplete(int a0) {
     return ((unsigned int)((tmp3 ^ 1)) < (unsigned int)(1));
 }
 
-int func_00225130(int a0) {
+int Script_cObjective_SetState(int a0) {
     unsigned char tmp0;
     int tmp1;
     int tmp2;
@@ -155,7 +155,7 @@ int func_00225130(int a0) {
     return 0;
 }
 
-int func_00225160(int a0) {
+int Script_cObjective_GetState(int a0) {
     int tmp0;
     int tmp1;
     unsigned char tmp3;
@@ -166,7 +166,7 @@ int func_00225160(int a0) {
     return tmp3;
 }
 
-int func_00225180(int a0) {
+int Script_cObjective_SetPluralLabel(int a0) {
     int loc[1];
     int a1, a2, v0;
 
@@ -177,14 +177,14 @@ int func_00225180(int a0) {
     a1 = *(int*)(char*)loc;
     a0 = v0;
     a2 = 0;
-    v0 = func_002283A0(a0, a1, a2);
+    v0 = cObjective_SetPluralLabel(a0, a1, a2);
     v0 = 0;
     goto ret;
 ret:
     return v0;
 }
 
-int func_002251C0(int a0) {
+int Script_cObjective_SetSingleLabel(int a0) {
     int loc[1];
     int a1, a2, v0;
 
@@ -195,14 +195,14 @@ int func_002251C0(int a0) {
     a1 = *(int*)(char*)loc;
     a0 = v0;
     a2 = 0;
-    v0 = func_00228490(a0, a1, a2);
+    v0 = cObjective_SetSingleLabel(a0, a1, a2);
     v0 = 0;
     goto ret;
 ret:
     return v0;
 }
 
-int func_00225200(int a0) {
+int Script_cObjective_SetFailLabel(int a0) {
     int loc[1];
     int a1, a2, v0;
 
@@ -213,14 +213,14 @@ int func_00225200(int a0) {
     a1 = *(int*)(char*)loc;
     a0 = v0;
     a2 = 0;
-    v0 = func_00228580(a0, a1, a2);
+    v0 = cObjective_SetFailLabel(a0, a1, a2);
     v0 = 0;
     goto ret;
 ret:
     return v0;
 }
 
-int func_00225240(int a0) {
+int Script_cObjective_SetCompleteLabel(int a0) {
     int loc[1];
     int a1, a2, v0;
 
@@ -231,14 +231,14 @@ int func_00225240(int a0) {
     a1 = *(int*)(char*)loc;
     a0 = v0;
     a2 = 0;
-    v0 = func_00228670(a0, a1, a2);
+    v0 = cObjective_SetCompleteLabel(a0, a1, a2);
     v0 = 0;
     goto ret;
 ret:
     return v0;
 }
 
-int func_00225280(int a0) {
+int Script_cObjective_SetAddLabel(int a0) {
     int loc[1];
     int a1, a2, v0;
 
@@ -249,14 +249,14 @@ int func_00225280(int a0) {
     a1 = *(int*)(char*)loc;
     a0 = v0;
     a2 = 0;
-    v0 = func_00228760(a0, a1, a2);
+    v0 = cObjective_SetAddLabel(a0, a1, a2);
     v0 = 0;
     goto ret;
 ret:
     return v0;
 }
 
-int func_002252C0(int a0) {
+int Script_cObjective_SetMapLabel(int a0) {
     int loc[1];
     int a1, a2, v0;
 
@@ -267,14 +267,14 @@ int func_002252C0(int a0) {
     a1 = *(int*)(char*)loc;
     a0 = v0;
     a2 = 0;
-    v0 = func_00228850(a0, a1, a2);
+    v0 = cObjective_SetMapLabel(a0, a1, a2);
     v0 = 0;
     goto ret;
 ret:
     return v0;
 }
 
-int func_00225300(int a0) {
+int Script_cObjective_SetMenuLabel(int a0) {
     int loc[1];
     int a1, a2, v0;
 
@@ -285,14 +285,14 @@ int func_00225300(int a0) {
     a1 = *(int*)(char*)loc;
     a0 = v0;
     a2 = 0;
-    v0 = func_00228940(a0, a1, a2);
+    v0 = cObjective_SetMenuLabel(a0, a1, a2);
     v0 = 0;
     goto ret;
 ret:
     return v0;
 }
 
-int func_00225340(int a0) {
+int Script_cObjective_SetNameLabel(int a0) {
     int loc[1];
     int a1, a2, v0;
 
@@ -303,7 +303,7 @@ int func_00225340(int a0) {
     a1 = *(int*)(char*)loc;
     a0 = v0;
     a2 = 0;
-    v0 = func_00228A30(a0, a1, a2);
+    v0 = cObjective_SetNameLabel(a0, a1, a2);
     v0 = 0;
     goto ret;
 ret:

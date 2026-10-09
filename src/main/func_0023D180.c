@@ -6,15 +6,10 @@
 
 #include "types.h"
 
-extern char D_0055A120[];
+extern int func_0023D1B0(int);
 
-void func_003D9960(void) {
-}
-
-void* func_003D9970(void* self) {
-    return self;
-}
-
-int func_003D9980(void) {
-    return (int)D_0055A120;
+int func_0023D180(int a0) {
+    func_0023D1B0(a0);
+    *(char*)((char*)a0 + 12) = 1;
+    return a0;
 }

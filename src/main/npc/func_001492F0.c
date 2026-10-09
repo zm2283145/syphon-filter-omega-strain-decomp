@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-void func_001492F0(int a0, float f12) {
+void cNPC_v5F(int a0, float f12) {
     int tmp0;
 
     tmp0 = *(int*)((char*)a0 + 428);

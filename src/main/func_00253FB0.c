@@ -9,7 +9,7 @@
 extern char D_004FFD30[];
 extern char D_005716C0[];
 
-int func_00253FB0(void) {
+int cBackpack_v20(void) {
     int v0;
     int cond;
 

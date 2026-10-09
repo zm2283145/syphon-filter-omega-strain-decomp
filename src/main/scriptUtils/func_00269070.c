@@ -7,6 +7,7 @@
 #include "types.h"
 
 extern int func_00269090(int);
+extern int func_002690C0(int);
 
 void func_00269070(void) {
 }
@@ -24,4 +25,8 @@ int func_00269090(int a0) {
     goto ret;
 ret:
     return v0;
+}
+
+int func_002690B0(int a0) {
+    return func_002690C0(a0);
 }

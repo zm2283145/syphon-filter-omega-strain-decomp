@@ -18,7 +18,7 @@ extern int func_00225C40(int);
 extern int func_003CB1D0(void);
 extern void func_003D9440(int, int);
 
-void func_00225740(void) {
+void ScriptType_cObjective_Init(void) {
     int tmp0;
     int tmp2;
     int tmp3;
@@ -48,7 +48,7 @@ int func_002257A0(void) {
     return (int)D_004F7668;
 }
 
-int func_002257B0(void) {
+int cObjective_v0B(void) {
     int tmp0;
     int tmp2;
 
@@ -61,7 +61,7 @@ int Objective_ScriptFilter(int a0, int a1) {
     return ScriptFilter_Dispatch((int)D_00555070, a0, a1);
 }
 
-int func_002257F0(int a0) {
+int Script_cObjectiveMan_DestroyObjectives(int a0) {
     int tmp0;
     int tmp1;
 

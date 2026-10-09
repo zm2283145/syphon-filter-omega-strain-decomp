@@ -15,7 +15,7 @@ Word* func_0016F7E0(Word* dst, Word* src) {
     return dst;
 }
 
-int func_0016F7F0(int a0, int a1) {
+int cMessage_ctor2(int a0, int a1) {
     int tmp0;
     int tmp1;
     int tmp2;

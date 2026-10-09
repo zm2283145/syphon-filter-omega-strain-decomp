@@ -8,7 +8,7 @@
 
 extern char D_00506268[];
 
-int func_00282980(void) {
+int cNetUpdateTankMsg_v05(void) {
     int tmp0;
 
     tmp0 = *(int*)D_00506268;

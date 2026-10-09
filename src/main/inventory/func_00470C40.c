@@ -9,7 +9,7 @@
 extern char D_005061D0[];
 extern char D_00587FC8[];
 
-void func_00470C40(int a0) {
+void cNetInventoryMsg_v04(int a0) {
     short tmp0;
     int tmp1;
     int tmp2;
@@ -43,7 +43,7 @@ void func_00470C40(int a0) {
     *(int*)D_005061D0 = (tmp10 + 1);
 }
 
-int func_00470CE0(void) {
+int cNetInventoryMsg_v05(void) {
     int tmp0;
 
     tmp0 = *(int*)D_00587FC8;

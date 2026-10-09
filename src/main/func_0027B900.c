@@ -40,7 +40,7 @@ int func_0027B900(int a0, int a1, int a2) {
     return a0;
 }
 
-int func_0027B9B0(void) {
+int cNetTaserMsg_v05(void) {
     int tmp0;
 
     tmp0 = *(int*)D_00504058;

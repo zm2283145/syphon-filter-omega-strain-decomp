@@ -8,7 +8,7 @@
 
 extern char D_005329C8[];
 
-int func_00337020(void) {
+int cNetAddObjectiveMsg_v05(void) {
     int tmp0;
 
     tmp0 = *(int*)D_005329C8;

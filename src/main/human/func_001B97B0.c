@@ -9,7 +9,7 @@
 extern char D_004EEE88[];
 extern char D_005061D0[];
 
-void func_001B97B0(int a0) {
+void cEquipGogglesMsg_v04(int a0) {
     signed char tmp0;
     int tmp1;
     int tmp2;
@@ -21,7 +21,7 @@ void func_001B97B0(int a0) {
     *(int*)D_005061D0 = (tmp2 + 1);
 }
 
-int func_001B97E0(void) {
+int cEquipGogglesMsg_v05(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004EEE88;

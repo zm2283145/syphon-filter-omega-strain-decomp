@@ -9,7 +9,7 @@
 extern char D_004F7D40[];
 extern void func_002467C0(int);
 
-int func_002467A0(int a0) {
+int Script_SetInfoBarFont(int a0) {
     unsigned char tmp0;
 
     tmp0 = *(unsigned char*)(char*)a0;

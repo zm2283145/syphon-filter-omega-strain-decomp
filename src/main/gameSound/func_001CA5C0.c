@@ -8,7 +8,7 @@
 
 extern char D_004F2D08[];
 
-int func_001CA5C0(void) {
+int cPlayQuipMsg_v05(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004F2D08;

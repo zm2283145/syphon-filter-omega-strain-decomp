@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-float func_00149150(char* self) {
+float cNPC_v77(char* self) {
     return *(float*)(self + 32);
 }

@@ -8,7 +8,7 @@
 
 extern char D_004EE938[];
 
-int func_00179F30(void) {
+int cHumanSeenMsg_v05(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004EE938;

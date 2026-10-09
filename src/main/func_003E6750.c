@@ -8,6 +8,6 @@
 
 extern int func_003E67C0(int, int, int, int, float);
 
-int func_003E6750(int a0, int a1) {
+int Global_PerformAction(int a0, int a1) {
     return func_003E67C0(a0, a1, 0, 0, -1.0f);
 }

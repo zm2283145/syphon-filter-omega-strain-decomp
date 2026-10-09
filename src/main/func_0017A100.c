@@ -15,7 +15,7 @@ extern int ScriptFilter_Dispatch(int, int, int);
 extern int func_00131320(int, int);
 extern void func_00282020(int);
 
-int func_0017A100(int a0) {
+int Script_cGameCamera_RemoveCamera(int a0) {
     int tmp0;
 
     tmp0 = *(int*)(char*)a0;
@@ -23,12 +23,12 @@ int func_0017A100(int a0) {
     return 0;
 }
 
-int func_0017A130(void) {
+int Script_cGameCamera_PopCurrent(void) {
     ActiveList_RemoveFirst((int)D_004FFB50);
     return 0;
 }
 
-int func_0017A160(int a0) {
+int Script_cGameCamera_PushCurrent(int a0) {
     int tmp0;
 
     tmp0 = *(int*)(char*)a0;
@@ -50,7 +50,7 @@ int func_0017A1B0(int a0, int a1) {
     return ScriptFilter_Dispatch((int)D_00555070, a0, a1);
 }
 
-void func_0017A1D0(int a0) {
+void cHumanSeenMsg_v04(int a0) {
     int tmp0;
 
     tmp0 = *(int*)((char*)a0 + 36);

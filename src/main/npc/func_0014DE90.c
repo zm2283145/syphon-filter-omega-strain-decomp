@@ -6,5 +6,5 @@
 
 #include "types.h"
 
-void func_0014DE90(void) {
+void cNPC_v4A(void) {
 }

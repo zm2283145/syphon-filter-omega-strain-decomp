@@ -7,14 +7,14 @@
 #include "types.h"
 
 extern char D_004FFB50[];
-extern int func_0012F9C0(void);
+extern int Global_RequestLevelEnd(void);
 extern int func_0012FA60(int, int);
 
-int func_0012F9A0(void) {
-    func_0012F9C0();
+int Script_RequestLevelEnd(void) {
+    Global_RequestLevelEnd();
     return 0;
 }
 
-int func_0012F9C0(void) {
+int Global_RequestLevelEnd(void) {
     return func_0012FA60((int)D_004FFB50, 0);
 }

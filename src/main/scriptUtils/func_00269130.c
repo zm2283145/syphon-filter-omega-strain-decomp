@@ -6,9 +6,9 @@
 
 #include "types.h"
 
-extern int func_00269230(void);
+extern int Global_Randomize(void);
 
-int func_00269130(void) {
-    func_00269230();
+int Script_Randomize(void) {
+    Global_Randomize();
     return 0;
 }

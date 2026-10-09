@@ -7,8 +7,15 @@
 #include "types.h"
 
 extern int func_001F3830(int, int);
+extern int func_001F3870(int);
 
 int func_001F3800(int a0, int a1) {
     func_001F3830(a0, a1);
+    return a0;
+}
+
+int func_001F3830(int a0, int a1) {
+    func_001F3870(a0);
+    *(int*)((char*)a0) = a1;
     return a0;
 }

@@ -9,7 +9,7 @@
 extern char D_004DFF50[];
 extern int func_003CB090(int, int);
 
-int func_003CF0E0(int a0, int a1, int a2, int a3) {
+int cGOBJ_ctor(int a0, int a1, int a2, int a3) {
     int tmp2;
     int tmp3;
 

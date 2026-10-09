@@ -8,10 +8,10 @@
 
 extern char D_004FFC04[];
 extern char D_005721C8[];
+extern int NetMsgThrottle_SendMsg(void);
 extern void func_002CA580(int);
 extern int func_004294C0(void);
 extern int func_00429D30(void);
-extern int NetMsgThrottle_SendMsg(void);
 
 void func_00169390(void) {
     int a0, v0, v1;

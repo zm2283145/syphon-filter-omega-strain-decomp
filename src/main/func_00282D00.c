@@ -8,7 +8,7 @@
 
 extern int func_003CC990(int, int, int);
 
-int func_00282D00(int a0) {
+int Script_cTank_SetHitpoints(int a0) {
     int loc[1];
     int a1, a2, v0;
 

@@ -6,11 +6,11 @@
 
 #include "types.h"
 
-int func_0015B7E0(void) {
+int cNPC_v14(void) {
     return 1;
 }
 
-void func_0015B7F0(int a0) {
+void cNPC_v47(int a0) {
     *(char*)((char*)a0 + 318) = 1;
     *(int*)((char*)a0 + 280) = 0;
 }

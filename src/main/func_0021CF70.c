@@ -19,7 +19,7 @@ extern int func_003CC830(void);
 extern int func_003D9400(int, int);
 extern void func_003D9440(int, int);
 
-int func_0021CF70(void) {
+int ScriptType_cGenerator_Init(void) {
     int tmp0;
     int tmp2;
     int tmp3;
@@ -42,18 +42,18 @@ int func_0021CF70(void) {
     return tmp12;
 }
 
-int func_0021CFD0(void) {
+int cGenerator_v0B(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004F5710;
     return tmp0;
 }
 
-int func_0021CFE0(int a0, int a1) {
+int cGenerator_v0C(int a0, int a1) {
     return ScriptFilter_Dispatch((int)D_00555070, a0, a1);
 }
 
-void func_0021D000(void) {
+void ScriptType_cDespawnedNPCMsg_Init(void) {
     int tmp0;
     int tmp1;
 
@@ -62,14 +62,14 @@ void func_0021D000(void) {
     func_003D9440(tmp0, tmp1);
 }
 
-int func_0021D020(void) {
+int cDespawnedNPCMsg_v03(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004F5700;
     return tmp0;
 }
 
-void func_0021D030(void) {
+void ScriptType_cSpawnedNPCMsg_Init(void) {
     int tmp0;
     int tmp1;
 
@@ -78,7 +78,7 @@ void func_0021D030(void) {
     func_003D9440(tmp0, tmp1);
 }
 
-int func_0021D050(void) {
+int cSpawnedNPCMsg_v03(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004F56F0;

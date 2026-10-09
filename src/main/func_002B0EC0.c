@@ -7,9 +7,9 @@
 #include "types.h"
 
 extern int GObj_IdentityB(int);
-extern int func_002B0F00(int, int);
+extern int Global_SetLocation(int, int);
 
-int func_002B0EC0(int a0) {
+int Script_SetLocation(int a0) {
     int loc[1];
     int a1, v0;
 
@@ -19,7 +19,7 @@ int func_002B0EC0(int a0) {
     v0 = GObj_IdentityB(a0);
     a1 = *(int*)(char*)loc;
     a0 = v0;
-    v0 = func_002B0F00(a0, a1);
+    v0 = Global_SetLocation(a0, a1);
     v0 = 0;
     goto ret;
 ret:

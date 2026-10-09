@@ -8,7 +8,7 @@
 
 extern char D_004F5400[];
 
-int func_00210390(void) {
+int cMaxActiveNpcCountMsg_v05(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004F5400;

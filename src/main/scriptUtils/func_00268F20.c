@@ -8,7 +8,7 @@
 
 extern int func_002690C0(int);
 
-int func_00268F20(int a0) {
+int Script_Array_Count(int a0) {
     int loc[1];
     int v0;
 

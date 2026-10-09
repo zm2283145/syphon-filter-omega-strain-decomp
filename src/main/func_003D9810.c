@@ -9,7 +9,7 @@
 extern int func_003D9970(int);
 extern float func_003D9A00(int);
 
-int func_003D9810(int a0) {
+int Script_cGroup_Randomize(int a0) {
     int tmp0;
     int tmp1;
 

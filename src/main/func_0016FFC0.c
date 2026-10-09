@@ -11,12 +11,12 @@ extern char D_004EE708[];
 extern int GObj_IdentityA(int);
 extern int GObj_IdentityB(int);
 extern int func_0014A690(int);
-extern int func_00170460(int);
-extern int func_00170520(int);
+extern int Global_MakeNPCInteractable(int);
+extern int Global_MakeGOBJInteractable(int);
 extern int func_003C8C50(void);
 extern void func_003D9440(int, int);
 
-int func_0016FFC0(int a0) {
+int Script_cHotboxMsg_Who(int a0) {
     int tmp0;
     int tmp1;
 
@@ -25,11 +25,11 @@ int func_0016FFC0(int a0) {
     return GObj_IdentityA(tmp1);
 }
 
-int func_0016FFD0(int a0) {
+int Script_cHotboxMsg_Action(int a0) {
     return *(unsigned char*)((char*)*(int*)(char*)a0 + 36);
 }
 
-void func_0016FFE0(void) {
+void ScriptType_cHotboxMsg_Init(void) {
     int tmp0;
     int tmp2;
     int tmp3;
@@ -40,21 +40,21 @@ void func_0016FFE0(void) {
     func_003D9440(tmp2, tmp3);
 }
 
-int func_00170010(void) {
+int cHotboxMsg_v03(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004EE700;
     return tmp0;
 }
 
-int func_00170020(int a0) {
+int Script_MakeNPCInteractable(int a0) {
     int loc[1];
     int v0;
 
     a0 = *(int*)(char*)a0;
     v0 = func_0014A690(a0);
     a0 = v0;
-    v0 = func_00170460(a0);
+    v0 = Global_MakeNPCInteractable(a0);
     *(int*)(char*)loc = v0;
     v0 = *(int*)(char*)loc;
     goto ret;
@@ -62,14 +62,14 @@ ret:
     return v0;
 }
 
-int func_00170050(int a0) {
+int Script_MakeGOBJInteractable(int a0) {
     int loc[1];
     int v0;
 
     a0 = *(int*)(char*)a0;
     v0 = GObj_IdentityB(a0);
     a0 = v0;
-    v0 = func_00170520(a0);
+    v0 = Global_MakeGOBJInteractable(a0);
     *(int*)(char*)loc = v0;
     v0 = *(int*)(char*)loc;
     goto ret;

@@ -8,7 +8,7 @@
 
 extern int func_002690C0(int);
 
-int func_00268E80(int a0) {
+int Script_Array_Print(int a0) {
     int tmp0;
 
     tmp0 = *(int*)(char*)a0;

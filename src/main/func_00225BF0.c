@@ -19,7 +19,7 @@ extern int func_00225CD0(void);
 extern int func_003CB1D0(void);
 extern void func_003D9440(int, int);
 
-void func_00225BF0(void) {
+void ScriptType_cObjectiveMan_Init(void) {
     int tmp0;
     int tmp2;
     int tmp3;
@@ -49,7 +49,7 @@ int func_00225C50(void) {
     return (int)D_004F75E8;
 }
 
-int func_00225C60(void) {
+int cObjectiveMan_v0B(void) {
     int tmp0;
     int tmp2;
 
@@ -58,11 +58,11 @@ int func_00225C60(void) {
     return tmp2;
 }
 
-int func_00225C80(int a0, int a1) {
+int cObjectiveMan_v0C(int a0, int a1) {
     return ScriptFilter_Dispatch((int)D_00555070, a0, a1);
 }
 
-int func_00225CA0(void) {
+int Script_GetObjectiveManager(void) {
     int tmp0;
     int tmp2;
 

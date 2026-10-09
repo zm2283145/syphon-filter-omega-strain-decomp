@@ -23,7 +23,7 @@ int func_00269830(void) {
     return (int)D_004F83F8;
 }
 
-int func_00269840(void) {
+int cNodeList_v0B(void) {
     int tmp0;
     int tmp2;
 
@@ -32,6 +32,6 @@ int func_00269840(void) {
     return tmp2;
 }
 
-int func_00269860(int a0, int a1) {
+int cNodeList_v0C(int a0, int a1) {
     return ScriptFilter_Dispatch((int)D_00555070, a0, a1);
 }

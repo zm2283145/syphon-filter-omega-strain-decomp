@@ -8,10 +8,10 @@
 
 extern char D_004F2CF0[];
 
-void func_001CA340(void) {
+void cStopAllQuipsMsg_v04(void) {
 }
 
-int func_001CA350(void) {
+int cStopAllQuipsMsg_v05(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004F2CF0;

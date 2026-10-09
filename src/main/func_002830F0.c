@@ -9,7 +9,7 @@
 extern int GObj_IdentityB(int);
 extern int func_00285590(int, int);
 
-int func_002830F0(int a0) {
+int Script_cTank_AimAt(int a0) {
     int tmp0;
     int tmp1;
     int tmp2;

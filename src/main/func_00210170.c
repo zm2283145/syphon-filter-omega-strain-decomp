@@ -11,7 +11,7 @@ extern char D_004DCF10[];
 extern char D_004F5410[];
 extern int Event_Construct(int, int);
 
-int func_00210170(int a0, int a1) {
+int cAtmosphericEffectMsg_ctor(int a0, int a1) {
     Event_Construct(a0, (int)D_004F5410);
     *(int*)((char*)a0) = (int)D_004DCF10;
     *(int*)((char*)a0) = (int)D_004DAE50;

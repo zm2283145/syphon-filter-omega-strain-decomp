@@ -8,6 +8,6 @@
 
 extern int func_00211980(int);
 
-int func_00211970(int a0) {
+int cElevatorGOBJ_v3D(int a0) {
     return func_00211980(a0);
 }

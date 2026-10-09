@@ -8,7 +8,7 @@
 
 extern int GObj_IdentityA(int);
 
-int func_00282AE0(int a0) {
+int Script_cTank_GetGobj(int a0) {
     int tmp0;
     int tmp1;
 

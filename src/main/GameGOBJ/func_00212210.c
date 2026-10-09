@@ -8,6 +8,6 @@
 
 extern int func_00212220(int);
 
-int func_00212210(int a0) {
+int cPathedGOBJ_v3D(int a0) {
     return func_00212220(a0);
 }

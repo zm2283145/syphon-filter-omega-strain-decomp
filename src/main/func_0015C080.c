@@ -24,11 +24,11 @@ int func_0015C0A0(void) {
     return 0;
 }
 
-int func_0015C0B0(int a0) {
+int Script_cNode_IsType(int a0) {
     return ((unsigned int)(0) < (unsigned int)((*(unsigned short*)((char*)a0 + 4) & *(int*)((char*)*(int*)(char*)a0 + 100))));
 }
 
-void func_0015C0D0(void) {
+void ScriptType_cNode_Init(void) {
     int tmp0;
     int tmp2;
     int tmp3;
@@ -58,13 +58,13 @@ int func_0015C130(void) {
     return (int)D_004EA778;
 }
 
-int func_0015C140(void) {
+int cNode_v0B(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004EA778;
     return tmp0;
 }
 
-int func_0015C150(int a0, int a1) {
+int cNode_v0C(int a0, int a1) {
     return ScriptFilter_Dispatch((int)D_00555070, a0, a1);
 }

@@ -16,7 +16,7 @@ int func_00287C10(int a0, int a1, int a2) {
     return a0;
 }
 
-int func_00287C30(void) {
+int cNetCreateTankMsg_v05(void) {
     int tmp0;
 
     tmp0 = *(int*)D_00506250;

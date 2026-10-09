@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_001489C0(void) {
+int cNPC_v20(void) {
     return 1;
 }

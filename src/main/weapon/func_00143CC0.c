@@ -8,7 +8,7 @@
 
 extern void func_00143B60(int);
 
-void func_00143CC0(int a0) {
+void Global_ForceHolster(int a0) {
     int a1, v1;
     int cond;
 

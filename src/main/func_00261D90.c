@@ -13,7 +13,7 @@ extern int ScriptFilter_Dispatch(int, int, int);
 extern int func_003CC830(void);
 extern void func_003D9440(int, int);
 
-void func_00261D90(void) {
+void ScriptType_cFireObj_Init(void) {
     int tmp0;
     int tmp2;
     int tmp3;
@@ -24,13 +24,13 @@ void func_00261D90(void) {
     func_003D9440(tmp2, tmp3);
 }
 
-int func_00261DC0(void) {
+int cFireObj_v0B(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004F8310;
     return tmp0;
 }
 
-int func_00261DD0(int a0, int a1) {
+int cFireObj_v0C(int a0, int a1) {
     return ScriptFilter_Dispatch((int)D_00555070, a0, a1);
 }

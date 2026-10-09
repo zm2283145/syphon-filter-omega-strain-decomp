@@ -6,6 +6,12 @@
 
 #include "types.h"
 
+extern void func_001F4170(void);
+
 void* func_001F4150(char* self) {
     return self + 8;
+}
+
+void func_001F4160(void) {
+    func_001F4170();
 }

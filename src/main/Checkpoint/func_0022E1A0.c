@@ -7,7 +7,7 @@
 #include "types.h"
 
 extern int func_00175FA0(int);
-extern int func_0022E1D0(int);
+extern int Global_ReSpawn(int);
 
 int Script_ReSpawn(int a0) {
     int tmp0;
@@ -15,6 +15,6 @@ int Script_ReSpawn(int a0) {
 
     tmp0 = *(int*)(char*)a0;
     tmp1 = func_00175FA0(tmp0);
-    func_0022E1D0(tmp1);
+    Global_ReSpawn(tmp1);
     return 0;
 }

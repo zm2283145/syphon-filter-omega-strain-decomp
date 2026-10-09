@@ -7,6 +7,7 @@
 #include "types.h"
 
 extern int func_00393EF0(int);
+extern int func_00393F60(int);
 
 int func_00393EC0(int a0) {
     func_00393EF0(a0);
@@ -34,4 +35,10 @@ int func_00393F10(int a0) {
     goto ret;
 ret:
     return v0;
+}
+
+int func_00393F30(int a0) {
+    func_00393F60(a0);
+    *(char*)((char*)a0 + 12) = 1;
+    return a0;
 }

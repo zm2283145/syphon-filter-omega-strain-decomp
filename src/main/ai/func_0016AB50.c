@@ -8,7 +8,7 @@
 
 extern int GObj_IdentityA(int);
 
-int func_0016AB50(int a0) {
+int Script_cAI_SendTimeElapsedMessage(int a0) {
     int loc[1];
     int v0, v1;
     float f0;
@@ -33,6 +33,6 @@ int Script_GetGOBJ_AI(int a0) {
     return GObj_IdentityA(tmp1);
 }
 
-int func_0016AB90(int a0) {
+int Script_cAI_IsVisible(int a0) {
     return ((unsigned int)(0) < (unsigned int)((*(int*)((char*)*(int*)((char*)*(int*)(char*)a0 + 48) + 56) ^ 128)));
 }

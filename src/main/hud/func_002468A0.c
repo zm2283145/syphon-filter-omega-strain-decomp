@@ -8,7 +8,7 @@
 
 extern char D_004F7DC8[];
 
-int func_002468A0(void) {
+int cNetTimerMsg_v05(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004F7DC8;

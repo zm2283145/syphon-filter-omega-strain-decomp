@@ -8,7 +8,7 @@
 
 extern char D_004E0840[];
 extern char D_0055D480[];
-extern int func_003C9DB0(int, int, int);
+extern int cMessage_ctor5(int, int, int);
 
 Vec4* func_003E43B0(Vec4* v, float x, float y, float z, float w) {
     v->x = x;
@@ -22,7 +22,7 @@ int func_003E43D0(int a0, int a1) {
     unsigned char tmp2;
     unsigned char tmp3;
 
-    func_003C9DB0(a0, (int)D_0055D480, a1);
+    cMessage_ctor5(a0, (int)D_0055D480, a1);
     *(int*)((char*)a0) = (int)D_004E0840;
     tmp2 = *(unsigned char*)((char*)a1 + 8);
     *(int*)((char*)a0 + 36) = tmp2;

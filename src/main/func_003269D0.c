@@ -8,7 +8,7 @@
 
 extern char D_0052AF18[];
 
-int func_003269D0(void) {
+int cEnableSuperJumpMsg_v05(void) {
     int tmp0;
 
     tmp0 = *(int*)D_0052AF18;

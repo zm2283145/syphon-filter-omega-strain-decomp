@@ -8,7 +8,7 @@
 
 extern int func_00176060(int, int);
 
-int func_00175BC0(int a0) {
+int Script_cPlayer_RemoveWeapon(int a0) {
     int loc[1];
     int a1, v0;
 

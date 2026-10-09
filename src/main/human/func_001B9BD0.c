@@ -10,7 +10,7 @@ extern char D_004EEEF0[];
 extern char D_005061D0[];
 extern void func_00282020(int);
 
-void func_001B9BD0(int a0) {
+void cNetMeleeAttackMsg_v04(int a0) {
     int tmp0;
     signed char tmp3;
     int tmp4;
@@ -25,7 +25,7 @@ void func_001B9BD0(int a0) {
     *(int*)D_005061D0 = (tmp5 + 1);
 }
 
-int func_001B9C20(void) {
+int cNetMeleeAttackMsg_v05(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004EEEF0;

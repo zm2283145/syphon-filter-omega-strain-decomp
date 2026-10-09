@@ -13,7 +13,7 @@ extern int ScriptFilter_Dispatch(int, int, int);
 extern int func_003CC830(void);
 extern void func_003D9440(int, int);
 
-void func_003BBD60(void) {
+void ScriptType_cSKYBOX_GOBJ_Init(void) {
     int tmp0;
     int tmp2;
     int tmp3;

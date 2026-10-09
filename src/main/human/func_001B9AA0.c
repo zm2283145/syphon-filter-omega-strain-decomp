@@ -8,7 +8,7 @@
 
 extern char D_004EEED8[];
 
-int func_001B9AA0(void) {
+int cNetThrowStarMsg_v05(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004EEED8;

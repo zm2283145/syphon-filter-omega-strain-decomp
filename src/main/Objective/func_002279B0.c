@@ -9,6 +9,6 @@
 extern char D_004F7590[];
 extern float func_00227A40(int, int, int, int, float);
 
-float func_002279B0(int a0, int a1, int a2, float f12) {
+float Global_SetObjectiveCurrColor(int a0, int a1, int a2, float f12) {
     return func_00227A40((int)D_004F7590, a0, a1, a2, f12);
 }

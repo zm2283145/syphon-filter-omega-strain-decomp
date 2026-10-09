@@ -9,7 +9,7 @@
 extern char D_004EE948[];
 extern int GObj_IdentityA(int);
 
-int func_0017A050(int a0) {
+int Script_cHumanSeenMsg_Who(int a0) {
     int tmp0;
     int tmp1;
 
@@ -21,7 +21,7 @@ int func_0017A050(int a0) {
 void func_0017A060(void) {
 }
 
-int func_0017A070(void) {
+int cHumanSeenMsg_v03(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004EE948;

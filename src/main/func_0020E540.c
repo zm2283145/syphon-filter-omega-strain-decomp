@@ -11,7 +11,7 @@ extern char D_004F5388[];
 void func_0020E540(void) {
 }
 
-int func_0020E550(void) {
+int cStartLevelMsg_v03(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004F5388;

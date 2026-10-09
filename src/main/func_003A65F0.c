@@ -8,10 +8,10 @@
 
 extern char D_00537F80[];
 extern char D_0053BBB0[];
-extern int func_0036B630(void);
-extern int func_00375E50(int, int, int, int);
 extern int LibInitModules(int);
 extern int Overlay_Load(int);
+extern int func_0036B630(void);
+extern int func_00375E50(int, int, int, int);
 
 int func_003A65F0(int a0) {
     int tmp6;

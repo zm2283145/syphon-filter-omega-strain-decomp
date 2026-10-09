@@ -8,7 +8,7 @@
 
 extern char D_005061D0[];
 
-void func_00326C90(int a0) {
+void cEnableSuperJumpMsg_v04(int a0) {
     unsigned char tmp0;
     int tmp1;
     int tmp2;

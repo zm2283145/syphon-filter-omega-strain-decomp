@@ -11,7 +11,7 @@ extern char D_004DFD80[];
 extern char D_004E0840[];
 extern int Event_Construct(int, int);
 
-int func_001AD7F0(int a0, int a1) {
+int cMessage_ctor3(int a0, int a1) {
     int tmp0;
     int tmp1;
     int tmp2;
@@ -48,7 +48,7 @@ int func_001AD7F0(int a0, int a1) {
     return a0;
 }
 
-int func_001AD860(int a0, int a1, int a2) {
+int cAIGOBJMsg_ctor(int a0, int a1, int a2) {
     Event_Construct(a0, a1);
     *(int*)((char*)a0) = (int)D_004DCD70;
     *(int*)((char*)a0 + 36) = a2;

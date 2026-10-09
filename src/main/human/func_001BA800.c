@@ -9,7 +9,7 @@
 extern char D_004EEEA0[];
 extern char D_005061D0[];
 
-void func_001BA800(int a0) {
+void cNetSetFlagMsg_v04(int a0) {
     signed char tmp0;
     int tmp1;
     int tmp2;
@@ -29,7 +29,7 @@ void func_001BA800(int a0) {
     *(int*)D_005061D0 = (tmp5 + 1);
 }
 
-int func_001BA850(void) {
+int cNetSetFlagMsg_v05(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004EEEA0;

@@ -7,18 +7,18 @@
 #include "types.h"
 
 extern char D_0055A278[];
-extern int func_001653E0(int);
+extern int Global_SetInterfaceFont(int);
 extern int func_001698C0(void);
 
-int func_001653C0(int a0) {
+int Script_SetInterfaceFont(int a0) {
     unsigned char tmp0;
 
     tmp0 = *(unsigned char*)(char*)a0;
-    func_001653E0(tmp0);
+    Global_SetInterfaceFont(tmp0);
     return 0;
 }
 
-int func_001653E0(int a0) {
+int Global_SetInterfaceFont(int a0) {
     int tmp0;
     int tmp2;
 

@@ -8,6 +8,6 @@
 
 extern void Object_Activate(int);
 
-void func_00237B40(int a0) {
+void cNIEventLight_v15(int a0) {
     Object_Activate(a0);
 }

@@ -6,12 +6,12 @@
 
 #include "types.h"
 
-void func_00222850(void) {
+void cGenerator_v0E(void) {
 }
 
-void func_00222860(void) {
+void cGenerator_v0F(void) {
 }
 
-int func_00222870(void) {
+int cGenerator_v04(void) {
     return 1;
 }

@@ -7,12 +7,12 @@
 #include "types.h"
 
 extern char D_00532AB8[];
-extern int func_00332C20(int, int);
-extern int func_00332DA0(int, int);
-extern int func_00332E60(int, int);
+extern int cAgentData_HasCommendation(int, int);
+extern int cAgentData_HasSpecialRating(int, int);
+extern int cAgentData_HasRating(int, int);
 extern int func_00335350(int, int, int, int);
 
-int func_0032F8E0(int a0) {
+int Script_cAgentData_HasSpecialRating(int a0) {
     int loc[1];
     int a1, v0;
 
@@ -20,14 +20,14 @@ int func_0032F8E0(int a0) {
     *(int*)(char*)loc = v0;
     a1 = *(int*)(char*)loc;
     a0 = *(int*)(char*)a0;
-    v0 = func_00332DA0(a0, a1);
+    v0 = cAgentData_HasSpecialRating(a0, a1);
     v0 = v0 & 255;
     goto ret;
 ret:
     return v0;
 }
 
-int func_0032F910(int a0) {
+int Script_cAgentData_HasCommendation(int a0) {
     int loc[1];
     int a1, v0;
 
@@ -35,14 +35,14 @@ int func_0032F910(int a0) {
     *(int*)(char*)loc = v0;
     a1 = *(int*)(char*)loc;
     a0 = *(int*)(char*)a0;
-    v0 = func_00332C20(a0, a1);
+    v0 = cAgentData_HasCommendation(a0, a1);
     v0 = v0 & 255;
     goto ret;
 ret:
     return v0;
 }
 
-int func_0032F940(int a0) {
+int Script_cAgentData_HasRating(int a0) {
     int loc[1];
     int a1, v0;
 
@@ -50,14 +50,14 @@ int func_0032F940(int a0) {
     *(int*)(char*)loc = v0;
     a1 = *(int*)(char*)loc;
     a0 = *(int*)(char*)a0;
-    v0 = func_00332E60(a0, a1);
+    v0 = cAgentData_HasRating(a0, a1);
     v0 = v0 & 255;
     goto ret;
 ret:
     return v0;
 }
 
-int func_0032F970(int a0) {
+int Script_cAgentData_HasOmega(int a0) {
     int a1, a2, a3, s0, v0;
     int cond;
 

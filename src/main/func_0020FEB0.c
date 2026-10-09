@@ -8,7 +8,7 @@
 
 extern char D_004F5418[];
 
-int func_0020FEB0(void) {
+int cAtmosphericEffectMsg_v05(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004F5418;

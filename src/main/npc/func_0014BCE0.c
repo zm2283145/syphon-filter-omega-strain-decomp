@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-float func_0014BCE0(int a0, float f12) {
+float cNPC_v59(int a0, float f12) {
     float tmp0;
 
     tmp0 = *(float*)((char*)a0 + 120);

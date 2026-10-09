@@ -8,6 +8,6 @@
 
 extern int func_0014D900(int, int, int, float);
 
-int func_0014D8F0(int a0, int a1, int a2) {
+int cNPC_v52(int a0, int a1, int a2) {
     return func_0014D900(a0, a1, a2, 0.0f);
 }

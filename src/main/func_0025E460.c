@@ -8,7 +8,7 @@
 
 extern char D_004FFC30[];
 
-int func_0025E460(int a0) {
+int Script_setFxLightDist(int a0) {
     int loc[1];
     int at, v0, v1;
     float f0;

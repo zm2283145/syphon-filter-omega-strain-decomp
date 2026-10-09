@@ -13,13 +13,13 @@ extern char D_004F7F80[];
 extern char D_00555070[];
 extern int ScriptFilter_Dispatch(int, int, int);
 extern int func_00253C80(void);
-extern int func_00253DD0(int, int, int, int);
+extern int cBackpack_StealPlayerWeapons(int, int, int, int);
 extern int func_002570C0(void);
 extern int func_003CC830(void);
 extern int func_003D9400(int, int);
 extern void func_003D9440(int, int);
 
-int func_00253C60(void) {
+int Script_RemoveAllBackpacks(void) {
     func_00253C80();
     return 0;
 }
@@ -28,7 +28,7 @@ int func_00253C80(void) {
     return func_002570C0();
 }
 
-int func_00253C90(int a0) {
+int Script_cBackpack_StealPlayerWeapons_3(int a0) {
     unsigned char tmp0;
     unsigned char tmp1;
     unsigned char tmp2;
@@ -38,11 +38,11 @@ int func_00253C90(int a0) {
     tmp1 = *(unsigned char*)((char*)a0 + 8);
     tmp2 = *(unsigned char*)((char*)a0 + 12);
     tmp3 = *(int*)(char*)a0;
-    func_00253DD0(tmp3, tmp0, tmp1, tmp2);
+    cBackpack_StealPlayerWeapons(tmp3, tmp0, tmp1, tmp2);
     return 0;
 }
 
-int func_00253CC0(int a0) {
+int Script_cBackpack_StealPlayerWeapons_2(int a0) {
     unsigned char tmp0;
     unsigned char tmp1;
     int tmp2;
@@ -50,26 +50,26 @@ int func_00253CC0(int a0) {
     tmp0 = *(unsigned char*)((char*)a0 + 4);
     tmp1 = *(unsigned char*)((char*)a0 + 8);
     tmp2 = *(int*)(char*)a0;
-    func_00253DD0(tmp2, tmp0, tmp1, 8);
+    cBackpack_StealPlayerWeapons(tmp2, tmp0, tmp1, 8);
     return 0;
 }
 
-int func_00253CF0(int a0) {
+int Script_cBackpack_StealPlayerWeapons(int a0) {
     unsigned char tmp0;
     int tmp1;
 
     tmp0 = *(unsigned char*)((char*)a0 + 4);
     tmp1 = *(int*)(char*)a0;
-    func_00253DD0(tmp1, tmp0, 8, 8);
+    cBackpack_StealPlayerWeapons(tmp1, tmp0, 8, 8);
     return 0;
 }
 
-int func_00253D20(int a0) {
+int Script_cBackpack_SetAutoPickup(int a0) {
     *(char*)((char*)*(int*)(char*)a0 + 752) = ((unsigned int)(0) < (unsigned int)(*(int*)((char*)a0 + 4)));
     return 0;
 }
 
-int func_00253D40(void) {
+int ScriptType_cBackpack_Init(void) {
     int tmp0;
     int tmp2;
     int tmp3;
@@ -92,13 +92,13 @@ int func_00253D40(void) {
     return tmp12;
 }
 
-int func_00253DA0(void) {
+int cBackpack_v0B(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004F7F78;
     return tmp0;
 }
 
-int func_00253DB0(int a0, int a1) {
+int cBackpack_v0C(int a0, int a1) {
     return ScriptFilter_Dispatch((int)D_00555070, a0, a1);
 }

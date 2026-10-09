@@ -6,6 +6,7 @@
 
 #include "types.h"
 
+extern int func_003F18C0(int);
 extern int func_003F24A0(int, int, int, int);
 extern int func_003F29B0(int, int);
 
@@ -20,4 +21,10 @@ int func_003F1860(int a0, int a1) {
 
 int func_003F1880(int a0, int a1) {
     return func_003F29B0(a0, a1);
+}
+
+int func_003F1890(int a0) {
+    func_003F18C0(a0);
+    *(char*)((char*)a0 + 12) = 1;
+    return a0;
 }

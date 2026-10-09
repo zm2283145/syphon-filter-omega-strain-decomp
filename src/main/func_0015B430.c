@@ -8,7 +8,7 @@
 
 extern int GObj_IdentityB(int);
 
-int func_0015B430(int a0) {
+int Script_LosCam(int a0) {
     int tmp0;
     int tmp3;
 

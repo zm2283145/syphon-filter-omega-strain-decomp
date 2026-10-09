@@ -9,7 +9,7 @@
 extern char D_0055D4A0[];
 extern int Event_PackHeader(int, int, int, int, int, int, int);
 
-int func_003FF570(int a0, int a1, int a2, int a3, int t0, int t1, int t2) {
+int cDisableMsg_v02(int a0, int a1, int a2, int a3, int t0, int t1, int t2) {
     int tmp2;
     int tmp3;
 

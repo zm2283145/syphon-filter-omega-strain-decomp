@@ -6,33 +6,33 @@
 
 #include "types.h"
 
-extern int func_00232730(void);
-extern int func_00232810(void);
-extern int func_002328F0(void);
-extern int func_002329D0(void);
-extern int func_00232A90(void);
+extern int Global_SnowBelarus2(void);
+extern int Global_RainLorelei(void);
+extern int Global_RainTokyo(void);
+extern int Global_SmokeToronto3(void);
+extern int Global_FogMyanmar(void);
 
-int func_00232690(void) {
-    func_00232730();
+int Script_SnowBelarus2(void) {
+    Global_SnowBelarus2();
     return 0;
 }
 
-int func_002326B0(void) {
-    func_00232810();
+int Script_RainLorelei(void) {
+    Global_RainLorelei();
     return 0;
 }
 
-int func_002326D0(void) {
-    func_002328F0();
+int Script_RainTokyo(void) {
+    Global_RainTokyo();
     return 0;
 }
 
-int func_002326F0(void) {
-    func_002329D0();
+int Script_SmokeToronto3(void) {
+    Global_SmokeToronto3();
     return 0;
 }
 
-int func_00232710(void) {
-    func_00232A90();
+int Script_FogMyanmar(void) {
+    Global_FogMyanmar();
     return 0;
 }

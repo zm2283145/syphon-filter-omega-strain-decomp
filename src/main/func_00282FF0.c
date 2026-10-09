@@ -8,7 +8,7 @@
 
 extern int func_00285590(int, int);
 
-int func_00282FF0(int a0) {
+int Script_cTank_ClearEnemy(int a0) {
     int a1, v0;
 
     a0 = *(int*)(char*)a0;

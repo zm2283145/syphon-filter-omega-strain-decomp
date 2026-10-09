@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-void func_0014A130(int a0) {
+void cNPC_v45(int a0) {
     *(int*)((char*)a0 + 288) = 0;
     *(char*)((char*)a0 + 317) = 1;
     *(int*)((char*)a0 + 284) = -1;

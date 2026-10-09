@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-extern int func_00268740(int);
+extern int Global_RemoveArray(int);
 extern int func_002689F0(int);
 extern int func_00269090(int);
 extern int func_002690C0(int);
@@ -39,17 +39,17 @@ Word* func_002686D0(Word* dst, Word* src) {
     return dst;
 }
 
-int func_002686E0(int a0) {
+int Script_RemoveArray(int a0) {
     int tmp0;
     int tmp1;
 
     tmp0 = *(int*)(char*)a0;
     tmp1 = func_002690C0(tmp0);
-    func_00268740(tmp1);
+    Global_RemoveArray(tmp1);
     return 0;
 }
 
-int func_00268710(int a0) {
+int Script_CreateArray(int a0) {
     int loc[1];
     int v0;
 

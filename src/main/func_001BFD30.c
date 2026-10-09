@@ -6,16 +6,16 @@
 
 #include "types.h"
 
-extern int func_001BFD60(int);
+extern int Global_LoadAnimation(int);
 
-int func_001BFD30(int a0) {
+int Script_LoadAnimation(int a0) {
     int loc[1];
     int v0;
 
     v0 = *(int*)(char*)a0;
     *(int*)(char*)loc = v0;
     a0 = *(int*)(char*)loc;
-    v0 = func_001BFD60(a0);
+    v0 = Global_LoadAnimation(a0);
     v0 = 0;
     goto ret;
 ret:

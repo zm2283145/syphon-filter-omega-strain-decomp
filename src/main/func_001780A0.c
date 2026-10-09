@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-void func_001780A0(void) {
+void cEnvSettings_v0E(void) {
 }
 
-void func_001780B0(void) {
+void cEnvSettings_v0F(void) {
 }

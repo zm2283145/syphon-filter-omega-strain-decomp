@@ -14,7 +14,7 @@ void func_003D96C0(char* self) {
     *(int*)(self + 4) = 0;
 }
 
-int func_003D96D0(int a0) {
+int Script_cGroup_Get(int a0) {
     int loc[1];
     int a1, v0;
 
@@ -32,7 +32,7 @@ ret:
     return v0;
 }
 
-int func_003D9710(int a0) {
+int Script_cGroup_GetSize(int a0) {
     int loc[1];
     int v0;
 

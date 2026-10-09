@@ -9,7 +9,7 @@
 extern char D_004F7960[];
 extern void func_0022ED20(int);
 
-int func_0022ED00(int a0) {
+int Script_SetCheckpointFont(int a0) {
     unsigned char tmp0;
 
     tmp0 = *(unsigned char*)(char*)a0;

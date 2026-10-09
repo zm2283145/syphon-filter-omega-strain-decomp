@@ -15,7 +15,7 @@ extern int func_003CC830(void);
 extern int func_003D9400(int, int);
 extern void func_003D9440(int, int);
 
-int func_00237990(void) {
+int ScriptType_cNIEventOBJ_Init(void) {
     int tmp0;
     int tmp2;
     int tmp3;
@@ -41,13 +41,13 @@ int func_002379E0(void) {
     return (int)D_004F7CA0;
 }
 
-int func_002379F0(void) {
+int cNIEventOBJ_v0B(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004F7CA0;
     return tmp0;
 }
 
-int func_00237A00(int a0, int a1) {
+int cNIEventOBJ_v0C(int a0, int a1) {
     return ScriptFilter_Dispatch((int)D_00555070, a0, a1);
 }

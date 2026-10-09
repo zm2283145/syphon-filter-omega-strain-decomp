@@ -9,7 +9,7 @@
 extern int GObj_IdentityB(int);
 extern int func_0016DDB0(int, int, int);
 
-int func_0014A1C0(int a0) {
+int Script_cNPC_ResumeAITargeting(int a0) {
     int v0, v1;
 
     v1 = *(int*)(char*)a0;
@@ -21,7 +21,7 @@ ret:
     return v0;
 }
 
-int func_0014A1E0(int a0) {
+int Script_cNPC_ClearTarget(int a0) {
     int a1, a2, v0;
 
     a1 = 0;
@@ -35,7 +35,7 @@ ret:
     return v0;
 }
 
-int func_0014A210(int a0) {
+int Script_cNPC_SetTarget(int a0) {
     int tmp0;
     int tmp1;
     int tmp3;

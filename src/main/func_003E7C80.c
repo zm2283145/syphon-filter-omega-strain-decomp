@@ -7,23 +7,23 @@
 #include "types.h"
 
 extern char D_00493970[];
-extern void func_003E7CB0(int);
+extern void Global_SetCursorChar(int);
 
-int func_003E7C80(int a0) {
+int Script_SetCursorChar(int a0) {
     int loc[1];
     int v0;
 
     v0 = *(int*)(char*)a0;
     *(int*)(char*)loc = v0;
     a0 = *(int*)(char*)loc;
-    func_003E7CB0(a0);
+    Global_SetCursorChar(a0);
     v0 = 0;
     goto ret;
 ret:
     return v0;
 }
 
-void func_003E7CB0(int a0) {
+void Global_SetCursorChar(int a0) {
     signed char tmp0;
     int tmp1;
 

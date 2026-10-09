@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-void func_0014A180(int a0, int a1) {
+void cNPC_v44(int a0, int a1) {
     int v1;
 
     v1 = (signed char)a1;

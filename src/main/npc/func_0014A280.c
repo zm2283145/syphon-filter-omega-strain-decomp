@@ -9,7 +9,7 @@
 extern int GObj_IdentityB(int);
 extern int func_00157800(int, int);
 
-int func_0014A280(int a0) {
+int Script_cNPC_Activate(int a0) {
     int tmp0;
     int tmp1;
     int tmp2;
@@ -21,7 +21,7 @@ int func_0014A280(int a0) {
     return 0;
 }
 
-int func_0014A2C0(int a0) {
+int Script_cNPC_ActivateAnon(int a0) {
     int a1, v0;
 
     a0 = *(int*)(char*)a0;

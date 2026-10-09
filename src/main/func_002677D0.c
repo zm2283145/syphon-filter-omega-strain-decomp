@@ -7,9 +7,9 @@
 #include "types.h"
 
 extern int GObj_IdentityB(int);
-extern int func_00267860(int, int, float);
+extern int Global_SetPersonalTimer(int, int, float);
 
-int func_002677D0(int a0) {
+int Script_SetPersonalTimer_2(int a0) {
     int loc[1];
     int a1, v0;
     float f12;
@@ -21,7 +21,7 @@ int func_002677D0(int a0) {
     f12 = *(float*)(char*)loc;
     a0 = v0;
     a1 = 0;
-    v0 = func_00267860(a0, a1, f12);
+    v0 = Global_SetPersonalTimer(a0, a1, f12);
     v0 = 0;
     goto ret;
 ret:

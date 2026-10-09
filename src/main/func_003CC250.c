@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-void func_003CC250(void) {
+void SubScript_v0E(void) {
 }
 
-void func_003CC260(void) {
+void SubScript_v0F(void) {
 }

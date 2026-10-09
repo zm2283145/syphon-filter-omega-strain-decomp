@@ -9,7 +9,7 @@
 extern char D_004EF038[];
 extern char D_005061D0[];
 
-void func_001BA6B0(int a0) {
+void cNetForceHolsterMsg_v04(int a0) {
     unsigned char tmp0;
     int tmp1;
     int tmp2;
@@ -21,7 +21,7 @@ void func_001BA6B0(int a0) {
     *(int*)D_005061D0 = (tmp2 + 1);
 }
 
-int func_001BA6E0(void) {
+int cNetForceHolsterMsg_v05(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004EF038;

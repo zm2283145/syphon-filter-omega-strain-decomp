@@ -27,7 +27,7 @@ ret:
     return v0;
 }
 
-int func_00269560(int a0) {
+int Script_cNodeList_Get(int a0) {
     int loc[1];
     int a1, s0, v0;
 
@@ -46,7 +46,7 @@ ret:
     return v0;
 }
 
-int func_002695B0(int a0) {
+int Script_cNodeList_GetSize(int a0) {
     int loc[1];
     int v0;
 

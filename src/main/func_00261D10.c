@@ -6,10 +6,10 @@
 
 #include "types.h"
 
-void func_00261D10(int a0) {
+void cFireObj_v08(int a0) {
     *(char*)((char*)a0 + 44) = 1;
 }
 
-void func_00261D20(char* self) {
+void cFireObj_v09(char* self) {
     self[44] = 0;
 }

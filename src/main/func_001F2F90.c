@@ -9,6 +9,7 @@
 extern void func_0016E880(int, int);
 extern int func_001F2F20(int, int);
 extern void func_001F2FE0(void);
+extern void func_001F2FF0(void);
 
 void func_001F2F90(int a0) {
     int loc[1];
@@ -26,4 +27,8 @@ ret:;
 
 void func_001F2FD0(void) {
     func_001F2FE0();
+}
+
+void func_001F2FE0(void) {
+    func_001F2FF0();
 }

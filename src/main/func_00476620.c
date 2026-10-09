@@ -8,7 +8,7 @@
 
 extern char D_00588040[];
 
-int func_00476620(void) {
+int cActivateBodyTossMsg_v05(void) {
     int tmp0;
 
     tmp0 = *(int*)D_00588040;

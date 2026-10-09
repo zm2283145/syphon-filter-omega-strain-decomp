@@ -12,7 +12,7 @@ extern int GObj_IdentityA(int);
 extern int func_003C8C50(void);
 extern void func_003D9440(int, int);
 
-int func_002587D0(int a0) {
+int Script_cCrateInteractMsg_Who(int a0) {
     int tmp0;
     int tmp1;
 
@@ -21,7 +21,7 @@ int func_002587D0(int a0) {
     return GObj_IdentityA(tmp1);
 }
 
-int func_002587E0(int a0) {
+int Script_cCrateInteractMsg_Taken(int a0) {
     int loc[1];
     int v0;
 
@@ -34,7 +34,7 @@ ret:
     return v0;
 }
 
-int func_00258800(int a0) {
+int Script_cCrateInteractMsg_Given(int a0) {
     int loc[1];
     int v0;
 
@@ -47,7 +47,7 @@ ret:
     return v0;
 }
 
-void func_00258820(void) {
+void ScriptType_cCrateInteractMsg_Init(void) {
     int tmp0;
     int tmp2;
     int tmp3;
@@ -58,7 +58,7 @@ void func_00258820(void) {
     func_003D9440(tmp2, tmp3);
 }
 
-int func_00258850(void) {
+int cCrateInteractMsg_v03(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004F7EB8;

@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-int func_0014D390(int a0, int a1) {
+int cNPC_v28(int a0, int a1) {
     int v0, v1;
 
     v1 = a1 & 255;
@@ -20,10 +20,10 @@ ret:
     return v0;
 }
 
-signed char func_0014D3B0(signed char* self) {
+signed char cNPC_v27(signed char* self) {
     return self[316];
 }
 
-float func_0014D3C0(char* self) {
+float cNPC_v34(char* self) {
     return *(float*)(self + 96);
 }

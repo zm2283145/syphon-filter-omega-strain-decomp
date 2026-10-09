@@ -8,7 +8,7 @@
 
 extern char D_005061D0[];
 
-void func_0022F2A0(int a0) {
+void cTimerExpiredMsg_v04(int a0) {
     int v1;
 
     a0 = *(int*)(char*)(a0 + 36);

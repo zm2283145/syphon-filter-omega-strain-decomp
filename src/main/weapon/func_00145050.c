@@ -6,36 +6,32 @@
 
 #include "types.h"
 
-extern char D_004F7E50[];
-extern char D_004F7E58[];
-extern int func_002472F0(void);
+extern char D_004EA160[];
+extern int func_001450B0(int);
 extern int func_003C8C50(void);
 extern void func_003D9440(int, int);
 
-void func_002472B0(void) {
+int Script_cOutOfAmmoMsg_Weapon(int a0) {
+    int loc[1];
+    int v0;
+
+    a0 = *(int*)(char*)a0;
+    v0 = func_001450B0(a0);
+    v0 = *(int*)((char*)v0 + 36);
+    *(int*)(char*)loc = v0;
+    v0 = *(int*)(char*)loc;
+    goto ret;
+ret:
+    return v0;
+}
+
+void ScriptType_cOutOfAmmoMsg_Init(void) {
     int tmp0;
     int tmp2;
     int tmp3;
 
     tmp0 = func_003C8C50();
-    tmp2 = *(int*)D_004F7E58;
+    tmp2 = *(int*)D_004EA160;
     tmp3 = *(int*)(char*)tmp0;
     func_003D9440(tmp2, tmp3);
-}
-
-void* func_002472E0(void* self) {
-    return self;
-}
-
-int func_002472F0(void) {
-    return (int)D_004F7E50;
-}
-
-int func_00247300(void) {
-    int tmp0;
-    int tmp2;
-
-    tmp0 = func_002472F0();
-    tmp2 = *(int*)(char*)tmp0;
-    return tmp2;
 }

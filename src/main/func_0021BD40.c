@@ -6,13 +6,13 @@
 
 #include "types.h"
 
-void func_0021BD40(void) {
+void cSoundGOBJ_v0E(void) {
 }
 
-void func_0021BD50(void) {
+void cSoundGOBJ_v0F(void) {
 }
 
-int func_0021BD60(void) {
+int cElevatorGOBJ_v04(void) {
     return 1;
 }
 

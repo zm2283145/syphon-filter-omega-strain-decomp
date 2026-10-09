@@ -8,6 +8,7 @@
 
 extern int func_001F2D60(int, int);
 extern int func_001F2DB0(int);
+extern int func_001F2DF0(int);
 extern int func_0020B570(int, int, int, int);
 
 void func_001F2D50(int a0, int a1) {
@@ -21,4 +22,15 @@ int func_001F2D60(int a0, int a1) {
     tmp0 = func_001F2DB0(a0);
     tmp2 = func_0020B570(a0, tmp0, 1, a1);
     return tmp2;
+}
+
+int func_001F2DB0(int a0) {
+    int tmp0;
+    int tmp2;
+    int tmp3;
+
+    tmp0 = func_001F2DF0(a0);
+    tmp2 = *(int*)((char*)a0 + 4);
+    tmp3 = *(int*)(char*)tmp0;
+    return (tmp3 + (tmp2 * 20));
 }

@@ -9,7 +9,7 @@
 extern char D_00506228[];
 extern int GObj_IdentityA(int);
 
-int func_00282850(int a0) {
+int Script_cBeamMsg_Who(int a0) {
     int tmp0;
     int tmp1;
 
@@ -21,7 +21,7 @@ int func_00282850(int a0) {
 void func_00282860(void) {
 }
 
-int func_00282870(void) {
+int cBeamMsg_v03(void) {
     int tmp0;
 
     tmp0 = *(int*)D_00506228;

@@ -8,7 +8,7 @@
 
 extern char D_004F7EE8[];
 
-int func_00258BB0(void) {
+int cInventoryMsg_v05(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004F7EE8;

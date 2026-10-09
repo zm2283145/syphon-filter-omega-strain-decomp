@@ -19,7 +19,7 @@ extern int func_003D9400(int, int);
 extern void func_003D9440(int, int);
 extern int func_0043FB90(void);
 
-int func_0022F100(int a0) {
+int Script_cGameGobjController_Gobj(int a0) {
     int tmp0;
     int tmp1;
 
@@ -28,7 +28,7 @@ int func_0022F100(int a0) {
     return GObj_IdentityA(tmp1);
 }
 
-int func_0022F110(void) {
+int ScriptType_cGameGobjController_Init(void) {
     int tmp0;
     int tmp2;
     int tmp3;
@@ -68,11 +68,11 @@ int func_0022F190(int a0, int a1) {
     return ScriptFilter_Dispatch((int)D_00555070, a0, a1);
 }
 
-int func_0022F1B0(int a0) {
+int Script_cTimerExpiredMsg_IsPersonal(int a0) {
     return ((unsigned int)(0) < (unsigned int)(*(int*)((char*)*(int*)(char*)a0 + 36)));
 }
 
-void func_0022F1C0(void) {
+void ScriptType_cTimerExpiredMsg_Init(void) {
     int tmp0;
     int tmp2;
     int tmp3;
@@ -87,7 +87,7 @@ int func_0022F1F0(void) {
     return (int)D_004F7A20;
 }
 
-int func_0022F200(void) {
+int cTimerExpiredMsg_v03(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004F7A20;

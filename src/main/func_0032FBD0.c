@@ -8,9 +8,9 @@
 
 extern int AgentData_IsObjectiveComplete(int, int);
 extern int AgentData_SetObjectiveBit(int, int, int);
-extern int func_003339E0(int, int);
+extern int cAgentData_AreObjectivesComplete(int, int);
 
-int func_0032FBD0(int a0) {
+int Script_cAgentData_AreObjectivesComplete(int a0) {
     int loc[1];
     int a1, v0;
 
@@ -18,7 +18,7 @@ int func_0032FBD0(int a0) {
     *(int*)(char*)loc = v0;
     a1 = *(int*)(char*)loc;
     a0 = *(int*)(char*)a0;
-    v0 = func_003339E0(a0, a1);
+    v0 = cAgentData_AreObjectivesComplete(a0, a1);
     v0 = v0 & 255;
     goto ret;
 ret:
@@ -56,7 +56,7 @@ ret:
     return v0;
 }
 
-int func_0032FC60(int a0) {
+int Script_cAgentData_GetStat(int a0) {
     int loc[1];
     int at, v0, v1;
     int cond;

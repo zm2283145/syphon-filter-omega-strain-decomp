@@ -8,7 +8,7 @@
 
 extern int func_0023E3D0(int, float);
 
-int func_00237840(int a0) {
+int Script_cNIEventOBJ_SetSpeed(int a0) {
     int loc[1];
     int v0;
     float f12;

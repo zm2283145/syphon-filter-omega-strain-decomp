@@ -8,7 +8,7 @@
 
 extern void func_0014B340(int);
 
-int func_00149450(int a0) {
+int Script_cNPC_SetMaxActiveNpcCount(int a0) {
     int loc[1];
     int v0;
 

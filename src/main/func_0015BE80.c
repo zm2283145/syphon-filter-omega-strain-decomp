@@ -8,11 +8,11 @@
 
 extern int func_0015C170(int, int);
 
-int func_0015BE80(int a0, int a1) {
+int cNode_v34(int a0, int a1) {
     return func_0015C170(a0, a1);
 }
 
-void func_0015BE90(int a0, int a1) {
+void cNode_v35(int a0, int a1) {
     float tmp0;
     float tmp1;
     float tmp2;
@@ -26,7 +26,7 @@ void func_0015BE90(int a0, int a1) {
     *(int*)((char*)a0 + 12) = 1065353216;
 }
 
-void func_0015BEC0(int a0, int a1) {
+void cNode_v36(int a0, int a1) {
     float tmp0;
     float tmp1;
     float tmp2;
@@ -40,7 +40,7 @@ void func_0015BEC0(int a0, int a1) {
     *(int*)((char*)a0 + 12) = 1065353216;
 }
 
-void func_0015BEF0(int a0, int a1) {
+void cNode_v37(int a0, int a1) {
     float tmp0;
     float tmp1;
     float tmp2;
@@ -54,22 +54,22 @@ void func_0015BEF0(int a0, int a1) {
     *(int*)((char*)a0 + 12) = 1065353216;
 }
 
-int func_0015BF20(int a0, int a1) {
+int cNode_v38(int a0, int a1) {
     return func_0015C170(a0, a1);
 }
 
-int func_0015BF30(int a0, int a1) {
+int cNode_v39(int a0, int a1) {
     return func_0015C170(a0, a1);
 }
 
-int func_0015BF40(int a0, int a1) {
+int cNode_v3B(int a0, int a1) {
     return func_0015C170(a0, a1);
 }
 
-void func_0015BF50(void) {
+void cNode_v0E(void) {
 }
 
-void func_0015BF60(void) {
+void cNode_v0F(void) {
 }
 
 void Actor_VirtualNop(void) {

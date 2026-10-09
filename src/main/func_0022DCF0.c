@@ -21,12 +21,12 @@ extern int func_0022DD20(void);
 extern int func_0022DDA0(void);
 extern int func_0022DE00(void);
 extern int func_0022DE60(void);
-extern int func_0022DED0(int, int);
+extern int Global_SetPlayersCheckpoint(int, int);
 extern int func_003C8C50(void);
 extern int func_003CC830(void);
 extern void func_003D9440(int, int);
 
-void func_0022DCF0(void) {
+void ScriptType_cCheckpoint_Init(void) {
     int tmp0;
     int tmp2;
     int tmp3;
@@ -41,7 +41,7 @@ int func_0022DD20(void) {
     return (int)D_004F79D0;
 }
 
-int func_0022DD30(void) {
+int cCheckpoint_v0B(void) {
     int tmp0;
     int tmp2;
 
@@ -50,11 +50,11 @@ int func_0022DD30(void) {
     return tmp2;
 }
 
-int func_0022DD50(int a0, int a1) {
+int cCheckpoint_v0C(int a0, int a1) {
     return ScriptFilter_Dispatch((int)D_00555070, a0, a1);
 }
 
-void func_0022DD70(void) {
+void ScriptType_cRespawnMsg_Init(void) {
     int tmp0;
     int tmp2;
     int tmp3;
@@ -69,7 +69,7 @@ int func_0022DDA0(void) {
     return (int)D_004F79C0;
 }
 
-int func_0022DDB0(void) {
+int cRespawnMsg_v03(void) {
     int tmp0;
     int tmp2;
 
@@ -78,7 +78,7 @@ int func_0022DDB0(void) {
     return tmp2;
 }
 
-void func_0022DDD0(void) {
+void ScriptType_cNotifyCheckpointMsg_Init(void) {
     int tmp0;
     int tmp2;
     int tmp3;
@@ -93,7 +93,7 @@ int func_0022DE00(void) {
     return (int)D_004F79B0;
 }
 
-int func_0022DE10(void) {
+int cNotifyCheckpointMsg_v03(void) {
     int tmp0;
     int tmp2;
 
@@ -102,7 +102,7 @@ int func_0022DE10(void) {
     return tmp2;
 }
 
-void func_0022DE30(void) {
+void ScriptType_cAddCheckpointMsg_Init(void) {
     int tmp0;
     int tmp2;
     int tmp3;
@@ -117,7 +117,7 @@ int func_0022DE60(void) {
     return (int)D_004F79A0;
 }
 
-int func_0022DE70(void) {
+int cAddCheckpointMsg_v03(void) {
     int tmp0;
     int tmp2;
 
@@ -136,7 +136,7 @@ int Script_SetPlayersCheckpoint(int a0) {
     v0 = GObj_IdentityB(a0);
     a1 = *(int*)(char*)loc;
     a0 = v0;
-    v0 = func_0022DED0(a0, a1);
+    v0 = Global_SetPlayersCheckpoint(a0, a1);
     v0 = 0;
     goto ret;
 ret:

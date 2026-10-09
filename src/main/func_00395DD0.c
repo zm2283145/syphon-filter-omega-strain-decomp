@@ -8,15 +8,15 @@
 
 extern char D_004DF970[];
 extern int func_0036D630(int);
-extern int func_003CF0E0(int, int, int, int);
+extern int cGOBJ_ctor(int, int, int, int);
 
-int func_00395DD0(int a0, int a1, int a2) {
+int cVUM_GOBJ_ctor(int a0, int a1, int a2) {
     int a3, s0, v0, v1;
 
     a3 = a2;
     a2 = 0 + 1;
     s0 = a0;
-    v0 = func_003CF0E0(a0, a1, a2, a3);
+    v0 = cGOBJ_ctor(a0, a1, a2, a3);
     a0 = s0 + 116;
     v0 = (int)D_004DF970;
     *(int*)(char*)s0 = v0;
@@ -35,7 +35,7 @@ ret:
     return v0;
 }
 
-int func_00395E40(int a0) {
+int cVUM_GOBJ_ctor2(int a0) {
     int loc[1];
     int a1, a2, a3, s0, v0, v1;
 
@@ -43,7 +43,7 @@ int func_00395E40(int a0) {
     a3 = (int)loc;
     s0 = a0;
     *(int*)(char*)loc = 0;
-    v0 = func_003CF0E0(a0, a1, a2, a3);
+    v0 = cGOBJ_ctor(a0, a1, a2, a3);
     a0 = s0 + 116;
     v0 = (int)D_004DF970;
     *(int*)(char*)s0 = v0;

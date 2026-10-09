@@ -8,7 +8,7 @@
 
 extern char D_004F7A10[];
 
-int func_0022EFE0(void) {
+int cTimerExpiredMsg_v05(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004F7A10;

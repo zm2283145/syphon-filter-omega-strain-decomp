@@ -20,12 +20,12 @@ extern int GObj_IdentityA(int);
 extern int Object_LookupById(int);
 extern int ScriptFilter_Dispatch(int, int, int);
 extern int SoundAction_CtorVoice(int, int, int, int, int);
-extern int func_00215530(int, int, int);
-extern int func_002155F0(int, int, int);
+extern int cElevatorGOBJ_UnlockFloor(int, int, int);
+extern int cElevatorGOBJ_LockFloor(int, int, int);
 extern int func_003C8C50(void);
 extern void func_003D9440(int, int);
 
-void func_00210AC0(void) {
+void ScriptType_cInteractGOBJ_Init(void) {
     int tmp0;
     int tmp1;
 
@@ -34,18 +34,18 @@ void func_00210AC0(void) {
     func_003D9440(tmp0, tmp1);
 }
 
-int func_00210AE0(void) {
+int cInteractGOBJ_v0B(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004F5660;
     return tmp0;
 }
 
-int func_00210AF0(int a0, int a1) {
+int cInteractGOBJ_v0C(int a0, int a1) {
     return ScriptFilter_Dispatch((int)D_00555070, a0, a1);
 }
 
-int func_00210B10(int a0) {
+int Script_cPathedNotice_Data(int a0) {
     int loc[1];
     int v0;
 
@@ -62,7 +62,7 @@ int PathedNotice_GetAction(int a0) {
     return *(unsigned char*)((char*)*(int*)(char*)a0 + 36);
 }
 
-void func_00210B40(void) {
+void ScriptType_cPathedNotice_Init(void) {
     int tmp0;
     int tmp2;
     int tmp3;
@@ -80,7 +80,7 @@ int PathedNotice_GetScriptType(void) {
     return tmp0;
 }
 
-int func_00210B80(int a0) {
+int Script_cElevatorNotice_Data(int a0) {
     int loc[1];
     int v0;
 
@@ -93,11 +93,11 @@ ret:
     return v0;
 }
 
-int func_00210BA0(int a0) {
+int Script_cElevatorNotice_Action(int a0) {
     return *(unsigned char*)((char*)*(int*)(char*)a0 + 36);
 }
 
-void func_00210BB0(void) {
+void ScriptType_cElevatorNotice_Init(void) {
     int tmp0;
     int tmp2;
     int tmp3;
@@ -108,14 +108,14 @@ void func_00210BB0(void) {
     func_003D9440(tmp2, tmp3);
 }
 
-int func_00210BE0(void) {
+int cElevatorNotice_v03(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004F5610;
     return tmp0;
 }
 
-int func_00210BF0(int a0) {
+int Script_cGOBJTriggerEventMsg_Box(int a0) {
     int loc[1];
     int v0;
 
@@ -131,7 +131,7 @@ ret:
     return v0;
 }
 
-int func_00210C20(int a0) {
+int Script_cGOBJTriggerEventMsg_Who(int a0) {
     int loc[1];
     int v0;
 
@@ -147,7 +147,7 @@ ret:
     return v0;
 }
 
-int func_00210C50(int a0) {
+int Script_cGOBJTriggerEventMsg_Data(int a0) {
     int loc[1];
     int v0;
 
@@ -160,11 +160,11 @@ ret:
     return v0;
 }
 
-int func_00210C70(int a0) {
+int Script_cGOBJTriggerEventMsg_Action(int a0) {
     return *(unsigned char*)((char*)*(int*)(char*)a0 + 36);
 }
 
-void func_00210C80(void) {
+void ScriptType_cGOBJTriggerEventMsg_Init(void) {
     int tmp0;
     int tmp2;
     int tmp3;
@@ -186,7 +186,7 @@ int TriggerEvent_GetScriptType(void) {
     return tmp0;
 }
 
-int func_00210CD0(int a0) {
+int Script_cElevatorGOBJ_UnlockFloor(int a0) {
     int loc[1];
     int a1, a2, v0;
 
@@ -195,14 +195,14 @@ int func_00210CD0(int a0) {
     a0 = *(int*)(char*)a0;
     a1 = *(int*)(char*)loc;
     a2 = 0;
-    v0 = func_00215530(a0, a1, a2);
+    v0 = cElevatorGOBJ_UnlockFloor(a0, a1, a2);
     v0 = 0;
     goto ret;
 ret:
     return v0;
 }
 
-int func_00210D00(int a0) {
+int Script_cElevatorGOBJ_LockFloor(int a0) {
     int loc[1];
     int a1, a2, v0;
 
@@ -211,14 +211,14 @@ int func_00210D00(int a0) {
     a0 = *(int*)(char*)a0;
     a1 = *(int*)(char*)loc;
     a2 = 0;
-    v0 = func_002155F0(a0, a1, a2);
+    v0 = cElevatorGOBJ_LockFloor(a0, a1, a2);
     v0 = 0;
     goto ret;
 ret:
     return v0;
 }
 
-int func_00210D30(int a0) {
+int Script_cElevatorGOBJ_SetLoopSound(int a0) {
     int loc[1];
     int a1, a2, a3, t0, v0;
 
@@ -236,7 +236,7 @@ ret:
     return v0;
 }
 
-int func_00210D70(int a0) {
+int Script_cElevatorGOBJ_SetStopSound(int a0) {
     int loc[1];
     int a1, a2, a3, t0, v0;
 
@@ -254,7 +254,7 @@ ret:
     return v0;
 }
 
-int func_00210DB0(int a0) {
+int Script_cElevatorGOBJ_SetStartSound(int a0) {
     int loc[1];
     int a1, a2, a3, t0, v0;
 
@@ -272,7 +272,7 @@ ret:
     return v0;
 }
 
-int func_00210DF0(int a0) {
+int Script_cElevatorGOBJ_SetDingSound(int a0) {
     int loc[1];
     int a1, a2, a3, t0, v0;
 

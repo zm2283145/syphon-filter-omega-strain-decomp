@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_0014D2E0(char* self) {
+int cNPC_v2A(char* self) {
     return *(int*)(self + 428);
 }

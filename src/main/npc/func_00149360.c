@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void func_00149360(int a0, float f12) {
+void cNPC_v5E(int a0, float f12) {
     *(float*)((char*)*(int*)((char*)a0 + 428) + 16) = f12;
 }

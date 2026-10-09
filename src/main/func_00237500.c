@@ -11,11 +11,11 @@ extern char D_004F7D28[];
 extern int func_003C8C50(void);
 extern void func_003D9440(int, int);
 
-int func_00237500(int a0) {
+int Script_cNINotice_Action(int a0) {
     return *(unsigned char*)((char*)*(int*)(char*)a0 + 36);
 }
 
-void func_00237510(void) {
+void ScriptType_cNINotice_Init(void) {
     int tmp0;
     int tmp2;
     int tmp3;
@@ -26,7 +26,7 @@ void func_00237510(void) {
     func_003D9440(tmp2, tmp3);
 }
 
-int func_00237540(void) {
+int cNINotice_v03(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004F7D20;

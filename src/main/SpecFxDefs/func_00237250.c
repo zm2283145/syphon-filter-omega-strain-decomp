@@ -8,7 +8,7 @@
 
 extern char D_004F7BF0[];
 
-int func_00237250(void) {
+int cNetSpawnParticleMsg_v05(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004F7BF0;

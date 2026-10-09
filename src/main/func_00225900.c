@@ -14,10 +14,10 @@ extern int Objective_ResolveReceiver(int);
 extern int Objective_Succeed(int, int, int);
 extern int func_00225770(int);
 extern int func_00225C40(int);
-extern int func_00225DF0(int, int, int);
-extern int func_00225F00(int, int);
+extern int cObjectiveMan_SetPartialSuccess(int, int, int);
+extern int cObjectiveMan_SucceedPart(int, int);
 
-int func_00225900(int a0) {
+int Script_cObjectiveMan_GetStage(int a0) {
     int loc[1];
     int v0;
 
@@ -49,7 +49,7 @@ ret:
     return v0;
 }
 
-int func_00225970(int a0) {
+int Script_cObjectiveMan_Fail(int a0) {
     int a1, a2, s0, s1, v0;
 
     s0 = a0;
@@ -90,7 +90,7 @@ ret:
     return v0;
 }
 
-int func_00225A20(int a0) {
+int Script_cObjectiveMan_SetPartialSuccess(int a0) {
     int loc[1];
     int a1, a2, s0, v0;
 
@@ -105,14 +105,14 @@ int func_00225A20(int a0) {
     a2 = *(int*)(char*)loc;
     a0 = s0;
     a1 = v0;
-    v0 = func_00225DF0(a0, a1, a2);
+    v0 = cObjectiveMan_SetPartialSuccess(a0, a1, a2);
     v0 = 0;
     goto ret;
 ret:
     return v0;
 }
 
-int func_00225A70(int a0) {
+int Script_cObjectiveMan_SucceedPart(int a0) {
     int tmp0;
     int tmp1;
     int tmp3;
@@ -122,11 +122,11 @@ int func_00225A70(int a0) {
     tmp1 = func_00225C40(tmp0);
     tmp3 = *(int*)((char*)a0 + 4);
     tmp4 = Objective_ResolveReceiver(tmp3);
-    func_00225F00(tmp1, tmp4);
+    cObjectiveMan_SucceedPart(tmp1, tmp4);
     return 0;
 }
 
-int func_00225AC0(int a0) {
+int Script_cObjectiveMan_Succeed(int a0) {
     int a1, a2, s0, s1, v0;
 
     s0 = a0;

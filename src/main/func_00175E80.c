@@ -25,11 +25,11 @@ extern int func_003D9400(int, int);
 extern void func_003D9440(int, int);
 extern int func_004080E0(void);
 
-int func_00175E80(void) {
+int Script_cPlayer_RestoreBody(void) {
     return 0;
 }
 
-int func_00175E90(int a0) {
+int Script_cPlayer_SwitchBodies(int a0) {
     int tmp0;
 
     tmp0 = *(int*)((char*)a0 + 4);
@@ -37,7 +37,7 @@ int func_00175E90(int a0) {
     return 0;
 }
 
-int func_00175EB0(int a0) {
+int Script_cPlayer_SetInvulnerable(int a0) {
     int tmp0;
     int tmp1;
     int tmp2;
@@ -49,7 +49,7 @@ int func_00175EB0(int a0) {
     return 0;
 }
 
-int func_00175EE0(int a0) {
+int Script_cPlayer_GetPlayerObject(int a0) {
     int tmp0;
     int tmp1;
 
@@ -58,7 +58,7 @@ int func_00175EE0(int a0) {
     return GObj_IdentityA(tmp1);
 }
 
-int func_00175EF0(void) {
+int ScriptType_cPlayer_Init(void) {
     int tmp0;
     int tmp2;
     int tmp3;
@@ -99,7 +99,7 @@ int func_00175EF0(void) {
     return tmp28;
 }
 
-int func_00175F80(int a0) {
+int cHotboxMsg_WhoPlayer(int a0) {
     int loc[1];
     int v0;
 
@@ -118,14 +118,14 @@ int func_00175FB0(void) {
     return (int)D_004EE788;
 }
 
-int func_00175FC0(void) {
+int cPlayer_v0B(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004EE788;
     return tmp0;
 }
 
-int func_00175FD0(int a0, int a1) {
+int cPlayer_v0C(int a0, int a1) {
     return ScriptFilter_Dispatch((int)D_00555070, a0, a1);
 }
 

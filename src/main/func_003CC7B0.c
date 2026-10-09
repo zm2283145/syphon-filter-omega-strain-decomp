@@ -15,7 +15,7 @@ extern int func_003D9400(int, int);
 extern void func_003D9440(int, int);
 extern int func_004080E0(void);
 
-int func_003CC7B0(void) {
+int ScriptType_cGOBJ_Init(void) {
     int tmp0;
     int tmp2;
     int tmp3;

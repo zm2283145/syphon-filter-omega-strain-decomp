@@ -13,7 +13,7 @@ extern char D_00555070[];
 extern int ScriptFilter_Dispatch(int, int, int);
 extern void func_003D9440(int, int);
 
-void func_001790B0(void) {
+void ScriptType_cGameSceneLight_Init(void) {
     int tmp0;
     int tmp1;
 
@@ -22,13 +22,13 @@ void func_001790B0(void) {
     func_003D9440(tmp0, tmp1);
 }
 
-int func_001790D0(void) {
+int cGameSceneLight_v0B(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004EE8B8;
     return tmp0;
 }
 
-int func_001790E0(int a0, int a1) {
+int cGameSceneLight_v0C(int a0, int a1) {
     return ScriptFilter_Dispatch((int)D_00555070, a0, a1);
 }

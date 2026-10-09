@@ -15,7 +15,7 @@ extern int func_003CC830(void);
 extern int func_003D9400(int, int);
 extern void func_003D9440(int, int);
 
-int func_0016FDF0(void) {
+int ScriptType_cHotbox_Init(void) {
     int tmp0;
     int tmp2;
     int tmp3;

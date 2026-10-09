@@ -26,7 +26,7 @@ extern int func_0026F0F0(void);
 extern int func_003D9400(int, int);
 extern void func_003D9440(int, int);
 
-int func_0016AC20(void) {
+int ScriptType_cAI_Init(void) {
     int tmp0;
     int tmp2;
     int tmp3;
@@ -127,13 +127,13 @@ int func_0016AD70(void) {
     return (int)D_004EE5D8;
 }
 
-int func_0016AD80(void) {
+int cAI_v0B(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004EE5D8;
     return tmp0;
 }
 
-int func_0016AD90(int a0, int a1) {
+int cAI_v0C(int a0, int a1) {
     return ScriptFilter_Dispatch((int)D_00555070, a0, a1);
 }

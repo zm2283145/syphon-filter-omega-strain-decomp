@@ -9,38 +9,38 @@
 extern char D_004FFC2C[];
 extern int GObj_IdentityB(int);
 extern int ObjMarkerMgr_Remove(int, int, int);
-extern void func_0022C0D0(int);
-extern int func_0022C120(int);
+extern void Global_SetWaypoint(int);
+extern int Global_ClearRadarBlip(int);
 extern void func_00272D10(int, int);
 
-int func_0022C0A0(int a0) {
+int Script_SetWaypoint(int a0) {
     int tmp0;
     int tmp1;
 
     tmp0 = *(int*)(char*)a0;
     tmp1 = GObj_IdentityB(tmp0);
-    func_0022C0D0(tmp1);
+    Global_SetWaypoint(tmp1);
     return 0;
 }
 
-void func_0022C0D0(int a0) {
+void Global_SetWaypoint(int a0) {
     int tmp0;
 
     tmp0 = *(int*)D_004FFC2C;
     func_00272D10((tmp0 + 144), a0);
 }
 
-int func_0022C0F0(int a0) {
+int Script_ClearRadarBlip(int a0) {
     int tmp0;
     int tmp1;
 
     tmp0 = *(int*)(char*)a0;
     tmp1 = GObj_IdentityB(tmp0);
-    func_0022C120(tmp1);
+    Global_ClearRadarBlip(tmp1);
     return 0;
 }
 
-int func_0022C120(int a0) {
+int Global_ClearRadarBlip(int a0) {
     int tmp0;
 
     tmp0 = *(int*)D_004FFC2C;

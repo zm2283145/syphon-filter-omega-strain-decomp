@@ -19,11 +19,11 @@ extern int func_00210CB0(void);
 extern int func_003D9400(int, int);
 extern void func_003D9440(int, int);
 extern int func_004080E0(void);
-extern int func_004705D0(int, int);
-extern void func_004709C0(int, int, int);
-extern void func_00470A70(int, int, int);
+extern int Global_PlayerGetItemCount(int, int);
+extern void Global_PlayerRemoveItem(int, int, int);
+extern void Global_PlayerAddItem(int, int, int);
 
-int func_0014A600(void) {
+int ScriptType_cNPC_Init(void) {
     int tmp0;
     int tmp2;
     int tmp3;
@@ -85,14 +85,14 @@ int func_0014A6C0(int a0, int a1) {
     return ScriptFilter_Dispatch((int)D_00555070, a0, a1);
 }
 
-int func_0014A6E0(int a0) {
+int Script_cAIModeChangeMsg_GetAiMode(int a0) {
     return *(unsigned char*)((char*)*(int*)(char*)a0 + 36);
 }
 
 void func_0014A6F0(void) {
 }
 
-int func_0014A700(void) {
+int cAIModeChangeMsg_v03(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004EA3D0;
@@ -105,7 +105,7 @@ int func_0014A710(int a0, int a1) {
 
     tmp0 = *(int*)((char*)a0 + 48);
     tmp1 = *(int*)((char*)tmp0 + 13608);
-    return func_004705D0(tmp1, a1);
+    return Global_PlayerGetItemCount(tmp1, a1);
 }
 
 void func_0014A720(int a0, int a1, int a2) {
@@ -114,7 +114,7 @@ void func_0014A720(int a0, int a1, int a2) {
 
     tmp0 = *(int*)((char*)a0 + 48);
     tmp1 = *(int*)((char*)tmp0 + 13608);
-    func_004709C0(tmp1, a1, a2);
+    Global_PlayerRemoveItem(tmp1, a1, a2);
 }
 
 void func_0014A730(int a0, int a1, int a2) {
@@ -123,7 +123,7 @@ void func_0014A730(int a0, int a1, int a2) {
 
     tmp0 = *(int*)((char*)a0 + 48);
     tmp1 = *(int*)((char*)tmp0 + 13608);
-    func_00470A70(tmp1, a1, a2);
+    Global_PlayerAddItem(tmp1, a1, a2);
 }
 
 int func_0014A740(int a0, int a1) {

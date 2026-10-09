@@ -8,7 +8,7 @@
 
 extern char D_00586160[];
 
-int func_0045EF40(void) {
+int cDisplayClientInteractMsg_v05(void) {
     int tmp0;
 
     tmp0 = *(int*)D_00586160;

@@ -6,9 +6,9 @@
 
 #include "types.h"
 
-extern int func_00332CE0(int, int);
+extern int cAgentData_HasMedal(int, int);
 
-int func_0032FAB0(int a0) {
+int Script_cAgentData_HasMedal(int a0) {
     int loc[1];
     int a1, v0;
 
@@ -16,7 +16,7 @@ int func_0032FAB0(int a0) {
     *(int*)(char*)loc = v0;
     a1 = *(int*)(char*)loc;
     a0 = *(int*)(char*)a0;
-    v0 = func_00332CE0(a0, a1);
+    v0 = cAgentData_HasMedal(a0, a1);
     v0 = v0 & 255;
     goto ret;
 ret:

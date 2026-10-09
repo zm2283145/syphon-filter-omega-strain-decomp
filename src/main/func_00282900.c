@@ -8,7 +8,7 @@
 
 extern void func_00282020(int);
 
-void func_00282900(int a0) {
+void cBeamMsg_v04(int a0) {
     int tmp0;
 
     tmp0 = *(int*)((char*)a0 + 36);

@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void func_00149DA0(char* self) {
+void cNPC_v4F(char* self) {
     *(int*)(self + 100) = 0;
 }

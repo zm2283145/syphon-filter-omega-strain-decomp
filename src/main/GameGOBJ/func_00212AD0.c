@@ -6,5 +6,5 @@
 
 #include "types.h"
 
-void func_00212AD0(void) {
+void cSoundGOBJ_v10(void) {
 }

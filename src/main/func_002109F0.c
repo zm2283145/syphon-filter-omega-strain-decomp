@@ -14,7 +14,7 @@ extern int ScriptFilter_Dispatch(int, int, int);
 extern int func_003CC830(void);
 extern void func_003D9440(int, int);
 
-void func_002109F0(void) {
+void ScriptType_cSoundGOBJ_Init(void) {
     int tmp0;
     int tmp2;
     int tmp3;
@@ -25,18 +25,18 @@ void func_002109F0(void) {
     func_003D9440(tmp2, tmp3);
 }
 
-int func_00210A20(void) {
+int cSoundGOBJ_v0B(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004F5680;
     return tmp0;
 }
 
-int func_00210A30(int a0, int a1) {
+int cSoundGOBJ_v0C(int a0, int a1) {
     return ScriptFilter_Dispatch((int)D_00555070, a0, a1);
 }
 
-int func_00210A50(int a0) {
+int Script_cInteractGOBJ_GetLocationObj(int a0) {
     int tmp0;
     int tmp1;
 

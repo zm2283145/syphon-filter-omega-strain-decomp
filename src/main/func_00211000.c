@@ -15,20 +15,20 @@ extern int Lift_CloseDoors(int);
 extern int Lift_OpenDoors(int);
 extern int Lift_SeekFloor(int, int, int, int);
 extern int ScriptFilter_Dispatch(int, int, int);
-extern int func_00214BD0(int);
-extern int func_00214FA0(int);
+extern int cElevatorGOBJ_ChooseFloor(int);
+extern int cElevatorGOBJ_GetState(int);
 extern int func_003D9400(int, int);
 extern void func_003D9440(int, int);
 
-int func_00211000(int a0) {
+int Script_cElevatorGOBJ_ChooseFloor(int a0) {
     int tmp0;
 
     tmp0 = *(int*)(char*)a0;
-    func_00214BD0(tmp0);
+    cElevatorGOBJ_ChooseFloor(tmp0);
     return 0;
 }
 
-int func_00211020(int a0) {
+int Script_cElevatorGOBJ_GetCurrentFloor(int a0) {
     int loc[1];
     int v0;
 
@@ -42,7 +42,7 @@ ret:
     return v0;
 }
 
-int func_00211040(int a0) {
+int Script_cElevatorGOBJ_GetDestFloor(int a0) {
     int loc[1];
     int v0;
 
@@ -56,7 +56,7 @@ ret:
     return v0;
 }
 
-int func_00211060(int a0) {
+int Script_cElevatorGOBJ_Passengers(int a0) {
     int loc[1];
     int v0;
 
@@ -70,16 +70,16 @@ ret:
     return v0;
 }
 
-int func_00211080(int a0) {
+int Script_cElevatorGOBJ_GetState(int a0) {
     int tmp0;
     int tmp1;
 
     tmp0 = *(int*)(char*)a0;
-    tmp1 = func_00214FA0(tmp0);
+    tmp1 = cElevatorGOBJ_GetState(tmp0);
     return (tmp1 & 255);
 }
 
-int func_002110A0(int a0) {
+int Script_cElevatorGOBJ_CloseDoors(int a0) {
     int tmp0;
     int tmp1;
 
@@ -88,7 +88,7 @@ int func_002110A0(int a0) {
     return (tmp1 & 255);
 }
 
-int func_002110C0(int a0) {
+int Script_cElevatorGOBJ_OpenDoors(int a0) {
     int tmp0;
     int tmp1;
 
@@ -97,7 +97,7 @@ int func_002110C0(int a0) {
     return (tmp1 & 255);
 }
 
-int func_002110E0(int a0) {
+int Script_cElevatorGOBJ_SeekFloor(int a0) {
     int loc[1];
     int a1, a2, a3, v0, v1;
 
@@ -115,7 +115,7 @@ ret:
     return v0;
 }
 
-int func_00211120(void) {
+int ScriptType_cElevatorGOBJ_Init(void) {
     int tmp0;
     int tmp1;
     int tmp4;

@@ -8,7 +8,7 @@
 
 extern int func_0016C8D0(int, int);
 
-int func_0014A400(int a0, int a1) {
+int cNPC_v38(int a0, int a1) {
     int tmp0;
 
     tmp0 = *(int*)((char*)a0 + 428);

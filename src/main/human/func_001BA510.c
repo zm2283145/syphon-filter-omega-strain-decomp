@@ -10,7 +10,7 @@ extern char D_004EF010[];
 extern char D_005061D0[];
 extern void func_00282020(int);
 
-void func_001BA510(int a0) {
+void cNetUpdateStatsMsg_v04(int a0) {
     int tmp0;
     signed char tmp3;
     int tmp4;
@@ -33,7 +33,7 @@ void func_001BA510(int a0) {
     *(int*)D_005061D0 = (tmp8 + 1);
 }
 
-int func_001BA580(void) {
+int cNetUpdateStatsMsg_v05(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004EF010;

@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-int func_00282D90(int a0) {
+int Script_cTank_SetTurretAccel(int a0) {
     int loc[1];
     int v0;
     float f0;

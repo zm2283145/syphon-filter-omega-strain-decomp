@@ -11,7 +11,7 @@ extern char D_0055D4B0[];
 extern int func_003C8C50(void);
 extern void func_003D9440(int, int);
 
-void func_003FF4B0(void) {
+void ScriptType_cDisableMsg_Init(void) {
     int tmp0;
     int tmp2;
     int tmp3;
@@ -22,7 +22,7 @@ void func_003FF4B0(void) {
     func_003D9440(tmp2, tmp3);
 }
 
-int func_003FF4E0(void) {
+int cDisableMsg_v03(void) {
     int tmp0;
 
     tmp0 = *(int*)D_0055D4A8;

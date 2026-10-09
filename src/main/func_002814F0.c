@@ -8,7 +8,7 @@
 
 extern char D_005061B8[];
 
-int func_002814F0(void) {
+int cNetBackpackMsg_v05(void) {
     int tmp0;
 
     tmp0 = *(int*)D_005061B8;

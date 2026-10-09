@@ -21,7 +21,7 @@ int func_00170500(int a0, int a1) {
     return PtrVec_Insert(a0, (tmp1 + (tmp0 << 2)), 1, a1);
 }
 
-int func_00170520(int a0) {
+int Global_MakeGOBJInteractable(int a0) {
     int loc[1];
     int a1, a2, a3, v0;
 

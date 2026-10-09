@@ -12,15 +12,15 @@ extern int GObj_IdentityA(int);
 extern int func_003C8C50(void);
 extern void func_003D9440(int, int);
 
-int func_00408060(int a0) {
+int Script_cDamageMsg_Type(int a0) {
     return *(unsigned char*)((char*)*(int*)(char*)a0 + 44);
 }
 
-int func_00408070(int a0) {
+int Script_cDamageMsg_Where(int a0) {
     return *(unsigned char*)((char*)*(int*)(char*)a0 + 45);
 }
 
-int func_00408080(int a0) {
+int Script_cDamageMsg_Attacker(int a0) {
     int tmp0;
     int tmp1;
 
@@ -29,7 +29,7 @@ int func_00408080(int a0) {
     return GObj_IdentityA(tmp1);
 }
 
-int func_00408090(int a0) {
+int Script_cDamageMsg_Damage(int a0) {
     int loc[1];
     int v0;
 
@@ -42,7 +42,7 @@ ret:
     return v0;
 }
 
-void func_004080B0(void) {
+void ScriptType_cDamageMsg_Init(void) {
     int tmp0;
     int tmp2;
     int tmp3;
@@ -57,7 +57,7 @@ int func_004080E0(void) {
     return (int)D_00571700;
 }
 
-int func_004080F0(void) {
+int cDamageMsg_v03(void) {
     int tmp0;
 
     tmp0 = *(int*)D_00571700;

@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-extern int snd_SendIOPCommandNoWait(int, int, int, int, int);
 extern int func_003A7990(int, int, int);
+extern int snd_SendIOPCommandNoWait(int, int, int, int, int);
 
 void func_003A81A0(int a0) {
     int loc[1];

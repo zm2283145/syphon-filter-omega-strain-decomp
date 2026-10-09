@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-int func_003CC460(int a0) {
+int Script_cGOBJ_GetDarkness(int a0) {
     int loc[1];
     int v0;
 
@@ -19,7 +19,7 @@ ret:
     return v0;
 }
 
-int func_003CC480(int a0) {
+int Script_cGOBJ_SetDarkness(int a0) {
     int loc[1];
     int v0, v1;
 

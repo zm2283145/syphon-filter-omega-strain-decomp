@@ -34,7 +34,7 @@ extern int func_0015C100(int);
 extern int func_003C8C50(void);
 extern void func_003D9440(int, int);
 
-int func_0026ECF0(int a0) {
+int Script_cAIUnconsciousMsg_Who(int a0) {
     int tmp0;
     int tmp1;
 
@@ -43,7 +43,7 @@ int func_0026ECF0(int a0) {
     return GObj_IdentityA(tmp1);
 }
 
-void func_0026ED00(void) {
+void ScriptType_cAIUnconsciousMsg_Init(void) {
     int tmp0;
     int tmp2;
     int tmp3;
@@ -58,14 +58,14 @@ int func_0026ED30(void) {
     return (int)D_004FF250;
 }
 
-int func_0026ED40(void) {
+int cAIUnconsciousMsg_v03(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004FF250;
     return tmp0;
 }
 
-void func_0026ED50(void) {
+void ScriptType_cAIDisguiseTakenMsg_Init(void) {
     int tmp0;
     int tmp1;
 
@@ -78,14 +78,14 @@ int func_0026ED70(void) {
     return (int)D_004FF240;
 }
 
-int func_0026ED80(void) {
+int cAIDisguiseTakenMsg_v03(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004FF240;
     return tmp0;
 }
 
-int func_0026ED90(int a0) {
+int Script_cAIBodyMovedMsg_PickedUp(int a0) {
     int loc[1];
     int v0;
 
@@ -98,7 +98,7 @@ ret:
     return v0;
 }
 
-int func_0026EDB0(int a0) {
+int Script_cAIBodyMovedMsg_Who(int a0) {
     int tmp0;
     int tmp1;
 
@@ -107,7 +107,7 @@ int func_0026EDB0(int a0) {
     return GObj_IdentityA(tmp1);
 }
 
-void func_0026EDC0(void) {
+void ScriptType_cAIBodyMovedMsg_Init(void) {
     int tmp0;
     int tmp2;
     int tmp3;
@@ -122,14 +122,14 @@ int func_0026EDF0(void) {
     return (int)D_004FF220;
 }
 
-int func_0026EE00(void) {
+int cAIBodyMovedMsg_v03(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004FF220;
     return tmp0;
 }
 
-void func_0026EE10(void) {
+void ScriptType_cAIPickupableAwarenessMsg_Ini(void) {
     int tmp0;
     int tmp1;
 
@@ -142,18 +142,18 @@ int func_0026EE30(void) {
     return (int)D_004FF210;
 }
 
-int func_0026EE40(void) {
+int cAIPickupableAwarenessMsg_v03(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004FF210;
     return tmp0;
 }
 
-int func_0026EE50(int a0) {
+int Script_cAIWeaponFiredMsg_IsThrownWeapon(int a0) {
     return *(unsigned char*)((char*)*(int*)(char*)a0 + 48);
 }
 
-int func_0026EE60(int a0) {
+int Script_cAIWeaponFiredMsg_Count(int a0) {
     int loc[1];
     int v0;
 
@@ -166,7 +166,7 @@ ret:
     return v0;
 }
 
-int func_0026EE80(int a0) {
+int Script_cAIWeaponFiredMsg_WeaponId(int a0) {
     int loc[1];
     int v0;
 
@@ -179,7 +179,7 @@ ret:
     return v0;
 }
 
-void func_0026EEA0(void) {
+void ScriptType_cAIWeaponFiredMsg_Init(void) {
     int tmp0;
     int tmp1;
 
@@ -192,18 +192,18 @@ int func_0026EEC0(void) {
     return (int)D_004FF1E8;
 }
 
-int func_0026EED0(void) {
+int cAIWeaponFiredMsg_v03(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004FF1E8;
     return tmp0;
 }
 
-int func_0026EEE0(int a0) {
+int Script_cAINewAwarenessMsg_Cause(int a0) {
     return *(unsigned char*)((char*)*(int*)(char*)a0 + 40);
 }
 
-void func_0026EEF0(void) {
+void ScriptType_cAINewAwarenessMsg_Init(void) {
     int tmp0;
     int tmp1;
 
@@ -216,14 +216,14 @@ int func_0026EF10(void) {
     return (int)D_004FF1D0;
 }
 
-int func_0026EF20(void) {
+int cAINewAwarenessMsg_v03(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004FF1D0;
     return tmp0;
 }
 
-void func_0026EF30(void) {
+void ScriptType_cAIDestinationReachedMsg_Init(void) {
     int tmp0;
     int tmp1;
 
@@ -236,14 +236,14 @@ int func_0026EF50(void) {
     return (int)D_004FF1C0;
 }
 
-int func_0026EF60(void) {
+int cAIDestinationReachedMsg_v03(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004FF1C0;
     return tmp0;
 }
 
-void func_0026EF70(void) {
+void ScriptType_cAIWaypointReachedMsg_Init(void) {
     int tmp0;
     int tmp1;
 
@@ -256,14 +256,14 @@ int func_0026EF90(void) {
     return (int)D_004FF1B0;
 }
 
-int func_0026EFA0(void) {
+int cAIWaypointReachedMsg_v03(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004FF1B0;
     return tmp0;
 }
 
-int func_0026EFB0(int a0) {
+int Script_cAINodeMsg_GetNode(int a0) {
     int tmp0;
     int tmp1;
 
@@ -275,14 +275,14 @@ int func_0026EFB0(int a0) {
 void func_0026EFC0(void) {
 }
 
-int func_0026EFD0(void) {
+int cAINodeMsg_v03(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004FF198;
     return tmp0;
 }
 
-int func_0026EFE0(int a0) {
+int Script_cAIGOBJMsg_Who(int a0) {
     int tmp0;
     int tmp1;
 
@@ -291,7 +291,7 @@ int func_0026EFE0(int a0) {
     return GObj_IdentityA(tmp1);
 }
 
-int func_0026EFF0(int a0) {
+int Script_cAIGOBJMsg_GetGOBJ(int a0) {
     int tmp0;
     int tmp1;
 
@@ -303,7 +303,7 @@ int func_0026EFF0(int a0) {
 void func_0026F000(void) {
 }
 
-int func_0026F010(void) {
+int cAIGOBJMsg_v03(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004FF178;
@@ -317,18 +317,18 @@ int func_0026F030(void) {
     return (int)D_004FF168;
 }
 
-int func_0026F040(void) {
+int cAITimeElapsedMsg_v03(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004FF168;
     return tmp0;
 }
 
-int func_0026F050(int a0) {
+int Script_cAIDeadMsg_DamageType(int a0) {
     return *(unsigned char*)((char*)*(int*)(char*)a0 + 40);
 }
 
-int func_0026F060(int a0) {
+int Script_cAIDeadMsg_Attacker(int a0) {
     int tmp0;
     int tmp1;
 
@@ -344,7 +344,7 @@ int func_0026F080(void) {
     return (int)D_004FF148;
 }
 
-int func_0026F090(void) {
+int cAIDeadMsg_v03(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004FF148;
@@ -358,14 +358,14 @@ int func_0026F0B0(void) {
     return (int)D_004FF138;
 }
 
-int func_0026F0C0(void) {
+int cAIDeactivatedMsg_v03(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004FF138;
     return tmp0;
 }
 
-void func_0026F0D0(void) {
+void ScriptType_cAIActivatedMsg_Init(void) {
     int tmp0;
     int tmp1;
 
@@ -378,7 +378,7 @@ int func_0026F0F0(void) {
     return (int)D_004FF128;
 }
 
-int func_0026F100(void) {
+int cAIActivatedMsg_v03(void) {
     int tmp0;
 
     tmp0 = *(int*)D_004FF128;

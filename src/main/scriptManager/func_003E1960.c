@@ -6,9 +6,17 @@
 
 #include "types.h"
 
+extern int func_003E19B0(int);
+
 Rel* func_003E1960(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;
     return r;
+}
+
+int func_003E1980(int a0) {
+    func_003E19B0(a0);
+    *(char*)((char*)a0 + 12) = 1;
+    return a0;
 }

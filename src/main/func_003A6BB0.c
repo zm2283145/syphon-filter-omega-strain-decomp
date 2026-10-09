@@ -6,10 +6,10 @@
 
 #include "types.h"
 
-extern int snd_SendIOPCommandNoWait(int, int, int, int, int);
 extern int func_003A7990(int, int, int);
 extern int func_0042B5D0(void);
 extern int func_0042B770(void);
+extern int snd_SendIOPCommandNoWait(int, int, int, int, int);
 
 int func_003A6BB0(void) {
     return func_0042B5D0();
@@ -88,7 +88,7 @@ void func_003A6C90(int a0, int a1, int a2, int a3, int t0, int t1) {
 ret:;
 }
 
-void func_003A6CD0(int a0, int a1, int a2) {
+void Global_SetReverb(int a0, int a1, int a2) {
     int loc[4];
     int a3, t0, v0;
 

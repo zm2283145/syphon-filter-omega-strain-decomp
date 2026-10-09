@@ -1,0 +1,13 @@
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Original translation unit not identified yet; functions are named by address
+ * until real names are known.
+ */
+
+void* func_00132840(void* self) {
+    return self;
+}
+
+int func_00132850(char* self) {
+    return *(int*)(self + 176);
+}

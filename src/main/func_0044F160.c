@@ -1,0 +1,13 @@
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Original translation unit not identified yet; functions are named by address
+ * until real names are known.
+ */
+
+void func_0044F160(char* self, char value) {
+    self[25] = value;
+}
+
+unsigned char func_0044F170(unsigned char* self) {
+    return self[25];
+}

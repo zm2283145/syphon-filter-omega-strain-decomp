@@ -1,0 +1,14 @@
+{
+  "comment": "Container layout of the retail SCUS_972.64 (mwldps2 output). Only header metadata; the program image comes from the build.",
+  "entry": "0x00100008",
+  "e_flags": "0x20924000",
+  "loads": [
+    {"vaddr": "0x00100000", "memsz": "0x0", "flags": 6, "align": "0x10", "image": false},
+    {"vaddr": "0x00100000", "memsz": "0x498980", "flags": 7, "align": "0x80", "image": true},
+    {"vaddr": "0x00598980", "memsz": "0x0", "flags": 6, "align": "0x10", "image": false},
+    {"vaddr": "0x01E68000", "memsz": "0x180000", "flags": 7, "align": "0x80", "image": false},
+    {"vaddr": "0x70000000", "memsz": "0x0", "flags": 6, "align": "0x10", "image": false}
+  ],
+  "comment_section": ["MW MIPS C Compiler (2.4.1.01)", "PlayStation2"],
+  "reginfo": {"gprmask": "0xF7FFFFFE", "cprmask": ["0x0", "0xFFFFFFFF", "0x0", "0x0"], "gp_value": "0x004E9B70"}
+}

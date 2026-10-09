@@ -1,0 +1,29 @@
+# Everything derived from the retail executable or downloaded tools stays local.
+/orig/
+/asm/
+/build/
+/.tools/
+/.venv/
+/build.ninja
+/.ninja_*
+/objdiff.json
+/include/include_asm.h
+/include/labels.inc
+/include/macro.inc
+__pycache__/
+*.pyc
+
+# Never commit retail executables, disc images or other binaries.
+SCUS_*
+*.[eE][lL][fF]
+*.[iI][sS][oO]
+*.[bB][iI][nN]
+*.[iI][rR][xX]
+*.rom
+*.o
+*.[eE][xX][eE]
+*.[dD][lL][lL]
+*.[zZ][iI][pP]
+*.tar
+*.tar.gz
+*.tar.xz

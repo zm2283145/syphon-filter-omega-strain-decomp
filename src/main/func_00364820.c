@@ -1,0 +1,16 @@
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Original translation unit not identified yet; functions are named by address
+ * until real names are known.
+ */
+
+void func_00364820(void) {
+}
+
+int func_00364830(void) {
+    return 1;
+}
+
+int func_00364840(void) {
+    return 0;
+}

@@ -6,6 +6,11 @@
 
 #include "types.h"
 
-void func_00452F60(char* self, int value) {
-    *(int*)(self + 9556) = value;
+void func_0014A180(int a0, int a1) {
+    int v1;
+
+    v1 = (signed char)a1;
+    *(int*)(char*)(a0 + 284) = v1;
+    goto ret;
+ret:;
 }

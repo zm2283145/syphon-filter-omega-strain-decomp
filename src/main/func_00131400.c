@@ -6,14 +6,15 @@
 
 #include "types.h"
 
-extern int func_001F2EA0(int);
+extern int func_002426D0(int);
 
-int func_001F2E70(int a0) {
-    int s0, v0;
+int World_RegisterActor(int a0, int a1) {
+    int v0;
 
-    s0 = a0;
-    v0 = func_001F2EA0(a0);
-    v0 = s0;
+    *(int*)(char*)(a0 + 188) = a1;
+    v0 = *(int*)(char*)(a1 + 48);
+    a0 = v0 + 12;
+    v0 = func_002426D0(a0);
     goto ret;
 ret:
     return v0;

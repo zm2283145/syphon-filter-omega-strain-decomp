@@ -19,9 +19,9 @@
 | Item | State |
 | --- | --- |
 | Round-trip build (all asm) | **Byte-identical**, SHA-256 `9924da91…31dc6` (Windows, native tools) |
-| Build with C | **Byte-identical** with 3,018 functions compiled from C |
-| Functions (objdiff) | 3,018 / 14,327 matched (21.1 %) |
-| Code bytes (objdiff) | 66,000 / ~3.66 MB (1.80 %); mostly small accessors, container helpers and straight-line call wrappers |
+| Build with C | **Byte-identical** with 3,187 functions compiled from C |
+| Functions (objdiff) | 3,187 / 14,327 matched (22.2 %) |
+| Code bytes (objdiff) | 76,580 / ~3.66 MB (2.09 %) |
 | Data | not tracked yet (one data file from 0x00476B00) |
 
 "Matched" means the whole executable still builds with the SHA-256 of the

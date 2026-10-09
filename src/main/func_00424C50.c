@@ -10,7 +10,7 @@ extern char D_00494150[];
 extern char D_004E0D20[];
 extern int func_001C1080(int, int);
 extern int func_001C10A0(int);
-extern void func_0041F690(int);
+extern int func_0041F690(int);
 
 int func_00424C50(int a0) {
     int a1, s0, s1, v0, v1;

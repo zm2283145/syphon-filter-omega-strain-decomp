@@ -26,7 +26,7 @@ signed char func_0018A2F0(signed char* self) {
     return self[72];
 }
 
-int func_0018A300(int a0) {
+int AnimEvent_Construct(int a0) {
     func_003C9E30(a0, (int)D_00542B60);
     *(int*)((char*)a0) = (int)D_004DA930;
     *(int*)((char*)a0 + 36) = 0;

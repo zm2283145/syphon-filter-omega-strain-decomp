@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-extern void func_00175230(int);
+extern void Actor_VirtualLeaf175230(int);
 
 void func_003D9AC0(int a0) {
-    func_00175230(a0);
+    Actor_VirtualLeaf175230(a0);
 }

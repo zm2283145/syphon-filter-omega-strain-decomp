@@ -18,6 +18,6 @@ float func_00180080(void) {
     return 0.0f;
 }
 
-float func_00180090(void) {
+float Curve_ReturnZero(void) {
     return 0.0f;
 }

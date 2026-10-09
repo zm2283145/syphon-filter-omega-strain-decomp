@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-float func_0018A410(char* self) {
+float Model_GetFirstFloat(char* self) {
     return *(float*)(self + 0);
 }

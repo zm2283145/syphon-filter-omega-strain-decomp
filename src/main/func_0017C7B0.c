@@ -6,5 +6,5 @@
 
 #include "types.h"
 
-void func_0017C7B0(void) {
+void Curve_VirtualNop(void) {
 }

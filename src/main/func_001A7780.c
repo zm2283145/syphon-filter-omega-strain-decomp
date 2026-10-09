@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-void* func_001A7780(void* self) {
+void* Ptr_IdentityCast(void* self) {
     return self;
 }
 

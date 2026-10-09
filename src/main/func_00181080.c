@@ -22,6 +22,6 @@ void func_00181080(PtrVec* a, PtrVec* b) {
     }
 }
 
-void func_001810C0(char* self) {
+void List_Clear(char* self) {
     *(int*)(self + 4) = 0;
 }

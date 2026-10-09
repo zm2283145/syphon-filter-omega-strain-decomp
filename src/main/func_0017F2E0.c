@@ -9,10 +9,10 @@
 extern char D_0048A158[];
 extern char D_0048A160[];
 extern char D_004DA3E0[];
-extern int func_0017F480(int, int, int);
+extern int PhysicalBase_Construct(int, int, int);
 
 int func_0017F2E0(int a0) {
-    func_0017F480(a0, (int)D_0048A158, (int)D_0048A160);
+    PhysicalBase_Construct(a0, (int)D_0048A158, (int)D_0048A160);
     *(int*)((char*)a0) = (int)D_004DA3E0;
     *(int*)((char*)a0 + 56) = 0;
     *(int*)((char*)a0 + 60) = 0;

@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void func_00175230(char* self) {
+void Actor_VirtualLeaf175230(char* self) {
     *(int*)(self + 4) = 0;
 }

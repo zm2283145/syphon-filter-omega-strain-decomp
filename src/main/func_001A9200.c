@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-float func_001A9200(char* self) {
+float Root_GetWeightCached(char* self) {
     return *(float*)(self + 208);
 }

@@ -6,10 +6,10 @@
 
 #include "types.h"
 
-void func_001753D0(void) {
+void Actor_VirtualNop1753D0(void) {
 }
 
-void func_001753E0(void) {
+void Actor_VirtualNop1753E0(void) {
 }
 
 void func_001753F0(void) {

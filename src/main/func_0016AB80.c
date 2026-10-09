@@ -8,7 +8,7 @@
 
 extern int func_003CC800(int);
 
-int func_0016AB80(int a0) {
+int Script_GetGOBJ_AI(int a0) {
     int tmp0;
     int tmp1;
 

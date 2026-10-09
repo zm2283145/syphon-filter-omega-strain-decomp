@@ -9,7 +9,7 @@
 extern char D_004DA930[];
 extern char D_004DFD80[];
 
-int func_001ADF50(int a0, int a1) {
+int AnimEvent_Copy(int a0, int a1) {
     int tmp0;
     int tmp1;
     int tmp2;

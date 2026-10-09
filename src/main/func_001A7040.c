@@ -14,6 +14,6 @@ int func_001A7060(char* self) {
     return *(int*)(self + 8);
 }
 
-void* func_001A7070(void* self) {
+void* Root_IdentityAccessor(void* self) {
     return self;
 }

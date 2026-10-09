@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int* func_0018A660(PtrVec* v, int i) {
+int* Registry_At(PtrVec* v, int i) {
     return v->data + i;
 }

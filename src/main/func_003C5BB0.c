@@ -10,3 +10,7 @@ Word* func_003C5BB0(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
+
+int func_003C5BC0(int a0, int a1) {
+    return *(int*)(char*)(a0 + (a1 << 2));
+}

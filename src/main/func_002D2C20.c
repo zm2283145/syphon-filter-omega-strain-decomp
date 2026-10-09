@@ -24,3 +24,7 @@ void func_002D2C60(void) {
 
 void func_002D2C70(void) {
 }
+
+int func_002D2C80(int a0) {
+    return *(int*)((char*)*(int*)((char*)a0 + 48) + 68);
+}

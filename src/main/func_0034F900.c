@@ -12,3 +12,10 @@ Rel* func_0034F900(Rel* r) {
     r->c = 0;
     return r;
 }
+
+int func_0034F920(int a0) {
+    *(char*)((char*)a0) = 0;
+    *(int*)((char*)a0 + 4) = 0;
+    *(int*)((char*)a0 + 8) = 0;
+    return a0;
+}

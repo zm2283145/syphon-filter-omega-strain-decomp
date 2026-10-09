@@ -9,3 +9,11 @@
 void func_00452FC0(char* self, int value) {
     *(int*)(self + 9552) = value;
 }
+
+int func_00452FD0(int a0) {
+    return ((unsigned int)((*(unsigned char*)((char*)a0 + 9572) ^ 5)) < (unsigned int)(1));
+}
+
+int func_00452FE0(char* self) {
+    return *(int*)(self + 9584);
+}

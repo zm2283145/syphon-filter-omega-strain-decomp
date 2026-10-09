@@ -25,3 +25,8 @@ void* func_0012F2B0(char* self) {
 int func_0012F2C0(char* self) {
     return *(int*)(self + 220);
 }
+
+int func_0012F2D0(int a0) {
+    *(char*)((char*)a0) = 0;
+    return a0;
+}

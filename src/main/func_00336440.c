@@ -9,3 +9,7 @@
 int func_00336440(char* self) {
     return *(int*)(self + 4);
 }
+
+int func_00336450(int a0, int a1) {
+    return (*(int*)((char*)a0 + 8) + a1);
+}

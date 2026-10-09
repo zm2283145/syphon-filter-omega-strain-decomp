@@ -14,3 +14,7 @@ Word* func_001821C0(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
+
+int func_001821D0(int a0, int a1) {
+    return ((unsigned int)(0) < (unsigned int)((*(int*)(char*)a0 ^ a1)));
+}

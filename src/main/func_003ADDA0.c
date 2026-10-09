@@ -9,3 +9,8 @@
 int func_003ADDA0(Iter* a, Iter* b) {
     return !(a->p == b->p);
 }
+
+int func_003ADDC0(int a0) {
+    *(int*)((char*)a0) = (*(int*)(char*)a0 + 32);
+    return a0;
+}

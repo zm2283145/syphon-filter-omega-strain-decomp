@@ -13,3 +13,14 @@ Quad* func_00397980(Quad* d, Quad* s) {
     d->d = s->d;
     return d;
 }
+
+void func_003979B0(int a0, int a1) {
+    *(int*)((char*)a0) = (*(int*)((char*)a1 + 12) + (*(int*)((char*)a1 + 8) << 2));
+    *(int*)((char*)a0 + 4) = *(int*)((char*)a1 + 12);
+    *(int*)((char*)a0 + 8) = (*(int*)((char*)a0 + 4) + (*(int*)((char*)a1 + 8) << 2));
+    *(int*)((char*)a0 + 12) = (*(int*)((char*)a0 + 4) + (*(int*)(char*)a1 << 2));
+}
+
+void func_00397A00(char* self) {
+    *(int*)(self + 4) = 0;
+}

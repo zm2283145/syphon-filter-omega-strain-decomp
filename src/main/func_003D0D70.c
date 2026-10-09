@@ -18,3 +18,17 @@ Word* func_003D0D80(Word* dst, Word* src) {
 void func_003D0D90(Iter* out, PtrVec* v) {
     out->p = v->data;
 }
+
+int func_003D0DA0(int a0, int a1) {
+    *(int*)((char*)a0) = a1;
+    return a0;
+}
+
+int func_003D0DB0(int a0, int a1) {
+    *(int*)((char*)a0) = a1;
+    return a0;
+}
+
+void* func_003D0DC0(char* self) {
+    return self + 4;
+}

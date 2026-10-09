@@ -9,3 +9,7 @@
 void* func_0018C6A0(char* self) {
     return self + 52;
 }
+
+int func_0018C6B0(int a0, int a1) {
+    return *(int*)(char*)(*(int*)((char*)a0 + 60) + (a1 << 2));
+}

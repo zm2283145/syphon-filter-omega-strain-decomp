@@ -13,3 +13,10 @@ Quad* func_001BEAA0(Quad* d, Quad* s) {
     d->d = s->d;
     return d;
 }
+
+void func_001BEAD0(int a0, int a1) {
+    *(int*)((char*)a0) = (*(int*)((char*)a1 + 12) + (*(int*)((char*)a1 + 8) << 2));
+    *(int*)((char*)a0 + 4) = *(int*)((char*)a1 + 12);
+    *(int*)((char*)a0 + 8) = (*(int*)((char*)a0 + 4) + (*(int*)((char*)a1 + 8) << 2));
+    *(int*)((char*)a0 + 12) = (*(int*)((char*)a0 + 4) + (*(int*)(char*)a1 << 2));
+}

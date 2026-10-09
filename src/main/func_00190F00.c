@@ -13,3 +13,16 @@ int func_00190F00(char* self) {
 int func_00190F10(char* self) {
     return *(int*)(self + 0);
 }
+
+int func_00190F20(int a0, int a1) {
+    *(int*)((char*)a0) = a1;
+    return a0;
+}
+
+int func_00190F30(char* self) {
+    return *(int*)(self + 0);
+}
+
+int func_00190F40(char* self) {
+    return *(int*)(self + 32);
+}

@@ -14,3 +14,12 @@ Word* func_002B3920(Word* dst, Word* src) {
 void func_002B3930(Iter* out, Tree* t) {
     out->p = &t->header;
 }
+
+int func_002B3940(int a0, int a1) {
+    *(int*)((char*)a0) = a1;
+    return a0;
+}
+
+void* func_002B3950(char* self) {
+    return self + 4;
+}

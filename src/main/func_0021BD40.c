@@ -15,3 +15,11 @@ void func_0021BD50(void) {
 int func_0021BD60(void) {
     return 1;
 }
+
+void func_0021BD70(int a0) {
+    *(char*)((char*)a0 + 44) = 1;
+}
+
+void func_0021BD80(char* self) {
+    self[44] = 0;
+}

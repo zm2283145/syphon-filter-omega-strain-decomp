@@ -14,3 +14,11 @@ void func_0016F9F0(void) {
 
 void func_0016FA00(void) {
 }
+
+int func_0016FA10(int a0, int a1) {
+    return a1;
+}
+
+int func_0016FA20(void) {
+    return 0;
+}

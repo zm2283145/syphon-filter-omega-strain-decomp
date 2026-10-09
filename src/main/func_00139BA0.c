@@ -15,3 +15,7 @@ Vec4* func_00139BB0(Vec4* d, Vec4* s) {
     *d = *s;
     return d;
 }
+
+int func_00139BC0(int a0, int a1) {
+    return a1;
+}

@@ -9,3 +9,7 @@
 int func_00190EA0(char* self) {
     return *(int*)(self + 8);
 }
+
+int func_00190EB0(int a0) {
+    return ((unsigned int)(0) < (unsigned int)(*(int*)((char*)a0 + 16)));
+}

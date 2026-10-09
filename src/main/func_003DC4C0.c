@@ -9,3 +9,7 @@
 int* func_003DC4C0(PtrVec* v, int i) {
     return v->data + i;
 }
+
+int func_003DC4D0(int a0, int a1) {
+    return *(int*)(char*)(*(int*)((char*)a0 + 72) + ((a1 + -10) << 2));
+}

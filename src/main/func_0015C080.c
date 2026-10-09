@@ -16,3 +16,7 @@ int func_0015C090(void) {
 int func_0015C0A0(void) {
     return 0;
 }
+
+int func_0015C0B0(int a0) {
+    return ((unsigned int)(0) < (unsigned int)((*(unsigned short*)((char*)a0 + 4) & *(int*)((char*)*(int*)(char*)a0 + 100))));
+}

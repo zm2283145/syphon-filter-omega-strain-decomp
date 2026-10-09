@@ -9,3 +9,7 @@
 int func_003F5CE0(char* self) {
     return *(int*)(self + 168);
 }
+
+void func_003F5CF0(int a0) {
+    *(int*)((char*)a0 + 168) = 1;
+}

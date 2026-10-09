@@ -9,3 +9,8 @@
 int func_001A09F0(Iter* a, Iter* b) {
     return !(a->p == b->p);
 }
+
+int func_001A0A10(int a0) {
+    *(int*)((char*)a0) = (*(int*)(char*)a0 + 384);
+    return a0;
+}

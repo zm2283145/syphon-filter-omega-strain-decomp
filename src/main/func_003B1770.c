@@ -17,3 +17,7 @@ int func_003B1790(char* self) {
 float func_003B17A0(char* self) {
     return *(float*)(self + 8);
 }
+
+int func_003B17B0(int a0, int a1) {
+    return (*(int*)((char*)a0 + 8) + (((a1 << 4) - a1) << 2));
+}

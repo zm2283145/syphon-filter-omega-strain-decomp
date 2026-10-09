@@ -9,3 +9,13 @@
 float func_0035E8C0(char* self) {
     return *(float*)(self + 4);
 }
+
+int func_0035E8D0(int a0, int a1) {
+    *(float*)((char*)a0) = *(float*)(char*)a1;
+    *(float*)((char*)a0 + 4) = *(float*)((char*)a1 + 4);
+    *(float*)((char*)a0 + 8) = *(float*)((char*)a1 + 8);
+    *(float*)((char*)a0 + 12) = *(float*)((char*)a1 + 12);
+    *(float*)((char*)a0 + 16) = *(float*)((char*)a1 + 16);
+    *(float*)((char*)a0 + 20) = *(float*)((char*)a1 + 20);
+    return a0;
+}

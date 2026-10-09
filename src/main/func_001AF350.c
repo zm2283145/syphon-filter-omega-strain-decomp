@@ -25,3 +25,8 @@ void func_001AF390(Iter* out, PtrVec* v) {
 int func_001AF3A0(Iter* a, Iter* b) {
     return !(a->p == b->p);
 }
+
+int func_001AF3C0(int a0) {
+    *(int*)((char*)a0) = (*(int*)(char*)a0 + 464);
+    return a0;
+}

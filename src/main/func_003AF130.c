@@ -12,3 +12,10 @@ Rel* func_003AF130(Rel* r) {
     r->c = 0;
     return r;
 }
+
+int func_003AF150(int a0, int a1) {
+    *(char*)((char*)a0) = *(unsigned char*)(char*)a1;
+    *(char*)((char*)a0 + 1) = *(unsigned char*)((char*)a1 + 1);
+    *(char*)((char*)a0 + 2) = *(unsigned char*)((char*)a1 + 2);
+    return a0;
+}

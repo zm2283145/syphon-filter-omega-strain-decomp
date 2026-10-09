@@ -21,3 +21,7 @@ void* func_001ADD60(char* self) {
 void* func_001ADD70(char* self) {
     return self + 36;
 }
+
+int func_001ADD80(int a0) {
+    return ((unsigned int)(0) < (unsigned int)(*(int*)((char*)a0 + 48)));
+}

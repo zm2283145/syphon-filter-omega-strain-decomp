@@ -9,3 +9,29 @@
 int func_0015B7E0(void) {
     return 1;
 }
+
+void func_0015B7F0(int a0) {
+    *(char*)((char*)a0 + 318) = 1;
+    *(int*)((char*)a0 + 280) = 0;
+}
+
+int func_0015B800(char* self) {
+    return *(int*)(self + 84);
+}
+
+void func_0015B810(char* self, char value) {
+    self[93] = value;
+}
+
+void func_0015B820(void) {
+}
+
+void func_0015B830(void) {
+}
+
+int func_0015B840(void) {
+    return 0;
+}
+
+void func_0015B850(void) {
+}

@@ -13,3 +13,8 @@ void* func_00330820(char* self) {
 int func_00330830(Iter* a, Iter* b) {
     return !(a->p == b->p);
 }
+
+int func_00330850(int a0) {
+    *(int*)((char*)a0) = (*(int*)(char*)a0 + 24);
+    return a0;
+}

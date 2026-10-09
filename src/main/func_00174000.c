@@ -27,3 +27,19 @@ Word* func_00174070(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
+
+int func_00174080(int a0, int a1) {
+    return ((unsigned int)((*(int*)(char*)a0 ^ *(int*)(char*)a1)) < (unsigned int)(1));
+}
+
+int func_001740A0(char* self) {
+    return *(int*)(self + 0);
+}
+
+void func_001740B0(Iter* out, PtrVec* v) {
+    out->p = v->data + v->count;
+}
+
+void func_001740D0(Iter* out, PtrVec* v) {
+    out->p = v->data;
+}

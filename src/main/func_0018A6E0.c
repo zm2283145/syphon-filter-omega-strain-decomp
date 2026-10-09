@@ -14,3 +14,9 @@ Word* func_0018A6E0(Word* dst, Word* src) {
 void func_0018A6F0(Iter* out, Tree* t) {
     out->p = &t->header;
 }
+
+int func_0018A700(int a0, int a1) {
+    *(int*)((char*)a0) = 0;
+    *(int*)((char*)a0 + 4) = a1;
+    return a0;
+}

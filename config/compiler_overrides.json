@@ -551,5 +551,10 @@
   "main/scriptManager/func_003E09C0": "cwps2-3.0b38",
   "main/scriptManager/func_003E1AA0": "cwps2-3.0b38",
   "main/NetObj/func_003FB650": "cwps2-3.0b38",
-  "main/NetObj/func_003FBB10": "cwps2-3.0b38"
+  "main/NetObj/func_003FBB10": "cwps2-3.0b38",
+  "main/sinit/func_004CCB00": "cwps2-3.0b38",
+  "main/sinit/func_004D33D0": "cwps2-3.0b38",
+  "main/sinit/func_004D5260": "cwps2-3.0b38",
+  "main/sinit/func_004D5860": "cwps2-3.04",
+  "main/sinit/func_004D5890": "cwps2-3.0b38"
 }

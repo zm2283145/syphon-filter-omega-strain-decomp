@@ -33,7 +33,10 @@ typedef struct TextArrayWidgetChild {
 /* guiTextArrayWidget (derives from the widget built by func_00424C50). */
 typedef struct guiTextArrayWidget {
     void* vtable;                   /* 0x00 */
-    char pad04[0x8C];
+    char pad04[0x44];
+    unsigned int columns;          /* 0x48 */
+    unsigned int rows;             /* 0x4C */
+    char pad50[0x40];
     TextArrayWidgetChild* unk90;    /* 0x90 child widget */
     int count;                      /* 0x94 */
     unsigned char unk98;            /* 0x98 */

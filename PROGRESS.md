@@ -64,27 +64,30 @@ All 24 are identical in objdiff, and the mixed-compiler whole build prints
 | Item | State |
 | --- | --- |
 | Round-trip build | **Byte-identical**, SHA-256 `9924da91…31dc6` (Windows, native tools) |
-| Build with C | **Byte-identical** with 5,909 matched functions (Metrowerks 3.0.3 / 3.0 build 38 / 3.04 + EE-GCC 2.95.3 / 2.96) |
-| Functions (objdiff) | 5,909 / 14,845 matched (39.80 %) |
-| Code bytes (objdiff) | 277,236 / 3,663,320 (7.57 %) |
-| Linked code | 7.57 % — every matched C unit is fully linked |
+| Build with C | **Byte-identical** with 5,915 matched functions (Metrowerks 3.0.3 / 3.0 build 38 / 3.04 + EE-GCC 2.95.3 / 2.96) |
+| Functions (objdiff) | 5,915 / 14,845 matched (39.85 %) |
+| Code bytes (objdiff) | 277,904 / 3,663,320 (7.59 %) |
+| Linked code | 7.59 % — every matched C unit is fully linked |
 | Named functions | ~2,700 in `config/symbol_addrs.txt` |
 | Data | 339,552 bytes counted separately; not linked from C |
 | decomp.dev | listed: https://decomp.dev/zm2283145/syphon-filter-omega-strain-decomp |
 
 ### Additional reserved-range matches using CodeWarrior 3.0 build 38
 
-Fifteen readable functions (848 code bytes) were added in the reserved range:
+Twenty-one readable functions (1,516 code bytes) were added in the reserved range:
 `0x00412110`, `0x0041C0D0`, `0x0041C0F0`, `0x0041DA60`, `0x00421670`,
 `0x00425E00`, `0x0042AFC0`, `0x00431850`, `0x00436BA0`, `0x004375D0`,
-`0x00444E10`, `0x0044A070`, `0x00452C70`, `0x0045A968`, and `0x0045EC60`.
-All fifteen are identical in objdiff. Thirteen use CodeWarrior 3.0 build 38 overrides;
+`0x00444E10`, `0x0044A070`, `0x00452C70`, `0x0045A968`, `0x0045EC60`,
+`0x0041ACE0`, `0x00426350`, `0x004320F0`, `0x00437830`, `0x004459D0`,
+and `0x00448270`.
+All twenty-one are identical in objdiff. Nineteen use CodeWarrior 3.0 build 38 overrides;
 `0x00412110` and `0x0045A968` also match with the default 3.0.3 compiler. The
 complete clean mixed build printed the retail SHA-256 OK line without any
 compiler falling back to assembly. The latest six-function addition accounts
-for 448 bytes: network-state setup and callback, lobby payload copying and
-cleanup, cached cell refresh, and interaction-prompt dispatch. Its final
-objects also match with 3.04 but differ with default 3.0.3.
+for 668 bytes: widget stream parsing and dimension changes, network-object
+update dispatch, session lookup caching, account-field submission and pool
+completion handling. Its final objects also match with 3.04 but differ with
+default 3.0.3.
 
 "Matched" means the whole executable still builds with the SHA-256 of the
 retail file and objdiff reports the function as identical. Function totals

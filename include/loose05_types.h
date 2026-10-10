@@ -176,7 +176,8 @@ typedef struct SFOLobby {
     int unk1C8;                     /* 0x1C8 */
     char pad01CC[0x1D0 - 0x1CC];
     int unk1D0;                     /* 0x1D0 */
-    char pad01D4[0x1F8 - 0x1D4];
+    char pad01D4[0x1F4 - 0x1D4];
+    int unk1F4;                     /* 0x1F4 callback completion flag */
     int unk1F8;                     /* 0x1F8 */
     int unk1FC;                     /* 0x1FC */
     int unk200;                     /* 0x200 */

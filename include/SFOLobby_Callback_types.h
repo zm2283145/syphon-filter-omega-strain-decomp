@@ -34,4 +34,11 @@ typedef struct LobbyPayloadResult {
     char payload[0x9C];
 } LobbyPayloadResult;
 
+typedef struct LobbyPoolResult {
+    char pad00[0x18];
+    int status;                    /* 0x18 zero indicates success */
+    char pad1C[0x110 - 0x1C];
+    signed char complete;          /* 0x110 */
+} LobbyPoolResult;
+
 #endif

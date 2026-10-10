@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-extern int func_0043A8B0(void);
+extern void func_0043A8B0(void);
 
-int func_0043AA30(void) {
-    return func_0043A8B0();
+void func_0043AA30(void) {
+    func_0043A8B0();
 }

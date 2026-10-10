@@ -5725,6 +5725,8 @@ segments:
       - [0x31C8F0, asm]
       - [0x31D300, c, main/func_0041D300]
       - [0x31D350, asm]
+      - [0x31D400, c, main/func_0041D400]
+      - [0x31DA00, asm]
       - [0x31DA60, c, main/func_0041DA60]
       - [0x31DAA0, asm]
       - [0x31DD60, c, main/func_0041DD60]

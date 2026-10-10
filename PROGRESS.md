@@ -64,36 +64,35 @@ All 24 are identical in objdiff, and the mixed-compiler whole build prints
 | Item | State |
 | --- | --- |
 | Round-trip build | **Byte-identical**, SHA-256 `9924da91…31dc6` (Windows, native tools) |
-| Build with C | **Byte-identical** with 5,925 matched functions (Metrowerks 3.0.3 / 3.0 build 38 / 3.04 + EE-GCC 2.95.3 / 2.96) |
-| Functions (objdiff) | 5,925 / 14,845 matched (39.91 %) |
-| Code bytes (objdiff) | 279,944 / 3,663,320 (7.64 %) |
-| Linked code | 7.64 % — every matched C unit is fully linked |
+| Build with C | **Byte-identical** with 5,929 matched functions (Metrowerks 3.0.3 / 3.0 build 38 / 3.04 + EE-GCC 2.95.3 / 2.96) |
+| Functions (objdiff) | 5,929 / 14,845 matched (39.94 %) |
+| Code bytes (objdiff) | 281,464 / 3,663,320 (7.68 %) |
+| Linked code | 7.68 % — every matched C unit is fully linked |
 | Named functions | ~2,700 in `config/symbol_addrs.txt` |
 | Data | 339,552 bytes counted separately; not linked from C |
 | decomp.dev | listed: https://decomp.dev/zm2283145/syphon-filter-omega-strain-decomp |
 
 ### Additional reserved-range matches using CodeWarrior 3.0 build 38
 
-Thirty-one readable functions (3,556 code bytes) were added in the reserved range:
+Thirty-five readable functions (5,076 code bytes) were added in the reserved range:
 `0x00412110`, `0x0041C0D0`, `0x0041C0F0`, `0x0041DA60`, `0x00421670`,
 `0x00425E00`, `0x0042AFC0`, `0x00431850`, `0x00436BA0`, `0x004375D0`,
 `0x00444E10`, `0x0044A070`, `0x00452C70`, `0x0045A968`, `0x0045EC60`,
 `0x0041ACE0`, `0x00426350`, `0x004320F0`, `0x00437830`, `0x004459D0`,
 `0x00448270`, `0x0043A810`, `0x00457040`, `0x00457110`, `0x0040BBD0`,
 `0x00421480`, `0x004214C0`, `0x00421500`, `0x00434740`, `0x00434920`,
-and `0x0043A8B0`.
-All thirty-one are identical in objdiff. Twenty-nine use CodeWarrior 3.0 build 38 overrides;
+`0x0043A8B0`, `0x0041D400`, `0x0041D5C0`, `0x0041D780`, and `0x0041D8C0`.
+All thirty-five are identical in objdiff. Thirty-three use CodeWarrior 3.0 build 38 overrides;
 `0x00412110` and `0x0045A968` also match with the default 3.0.3 compiler. The
 complete clean mixed build printed the retail SHA-256 OK line without any
-compiler falling back to assembly. The latest addition targets two larger
-blocks: `0x00434740`-`0x00434AA0` (two NPC request-service functions, 856 code
-bytes plus eight padding bytes) and `0x0043A8B0`-`0x0043AA30` (one 384-byte
-session polling function). Together they add 1,240 matched code bytes.
-Typed inline helpers preserve the five independent polling intervals and
-fresh clock/peer lookups without adding extra linked functions or data.
-The existing `0x0043AA30` forwarding wrapper now has a consistent void return
-contract and retains identical machine code. Both blocks also match with
-3.04 but differ with default 3.0.3.
+compiler falling back to assembly. The latest addition is the contiguous
+`0x0041D400`-`0x0041DA00` GUI traversal unit: four routines totaling 1,520
+code bytes plus 16 padding bytes. Forward/backward searches preserve
+restart state, virtual dispatch, child-list mutation visibility and selection
+flags. Shared typed predicates inline without adding extra linked functions.
+The compiler's exception-index metadata is discarded by the existing linker
+script; no duplicate retail data is linked. This block also matches with
+3.04 but differs with default 3.0.3.
 
 "Matched" means the whole executable still builds with the SHA-256 of the
 retail file and objdiff reports the function as identical. Function totals

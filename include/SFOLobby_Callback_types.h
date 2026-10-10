@@ -27,4 +27,11 @@ typedef struct LobbyStatusResult {
     int value;                     /* 0x18 */
 } LobbyStatusResult;
 
+typedef struct LobbyPayloadResult {
+    char pad00[0x15];
+    signed char status;
+    char pad16[2];
+    char payload[0x9C];
+} LobbyPayloadResult;
+
 #endif

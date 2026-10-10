@@ -4,7 +4,9 @@
 /* Lobby cell object (partial). Cached data is refreshed by func_00449A00 once
  * the refresh interval D_00497800 has elapsed since lastUpdate. */
 typedef struct LobbyCell {
-    char pad0000[0x2480];
+    char pad0000[0xE8C];
+    char unk0E8C[1];        /* 0xE8C embedded sub-object, size not yet known */
+    char pad0E8D[0x2480 - 0xE8D];
     int unk2480;            /* 0x2480 */
     char pad2484[0x2588 - 0x2484];
     int lastUpdate;         /* 0x2588 time of last refresh, 0 = never */

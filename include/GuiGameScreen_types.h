@@ -36,6 +36,11 @@ typedef struct GuiGameScreen {
     int unkEC;                      /* 0xEC */
 } GuiGameScreen;
 
+typedef struct GameHudOwner {
+    char pad0000[0x6A4];
+    void* hud;
+} GameHudOwner;
+
 #define STACK_COPY(arr) (*(int*)(arr))
 
 #endif

@@ -115,6 +115,8 @@ def compare(obj, rom, names, starts):
         masks, relinfo = {}, {}
         for sec in e.iter_sections():
             if isinstance(sec, RelocationSection):
+                if not e.get_section(sec["sh_info"]).name.startswith(".text"):
+                    continue  # e.g. a guard dtor sent to a discarded section
                 rels = list(sec.iter_relocations())
                 for j, rel in enumerate(rels):
                     t = rel["r_info_type"]
@@ -130,6 +132,8 @@ def compare(obj, rom, names, starts):
         for s in symtab.iter_symbols():
             if s["st_info"]["type"] != "STT_FUNC" or s["st_shndx"] == "SHN_UNDEF":
                 continue
+            if not e.get_section(s["st_shndx"]).name.startswith(".text"):
+                continue  # not linked (the link script discards non-.text code)
             n = s.name
             a = names.get(n)
             if a is None and re.fullmatch(r"func_[0-9A-F]{8}", n):

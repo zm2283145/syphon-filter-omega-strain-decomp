@@ -64,17 +64,17 @@ All 24 are identical in objdiff, and the mixed-compiler whole build prints
 | Item | State |
 | --- | --- |
 | Round-trip build | **Byte-identical**, SHA-256 `9924da91…31dc6` (Windows, native tools) |
-| Build with C | **Byte-identical** with 5,942 matched functions (Metrowerks 3.0.3 / 3.0 build 38 / 3.04 + EE-GCC 2.95.3 / 2.96) |
-| Functions (objdiff) | 5,942 / 14,845 matched (40.03 %) |
-| Code bytes (objdiff) | 284,300 / 3,663,320 (7.76 %) |
-| Linked code | 7.76 % — every matched C unit is fully linked |
+| Build with C | **Byte-identical** with 5,948 matched functions (Metrowerks 3.0.3 / 3.0 build 38 / 3.04 + EE-GCC 2.95.3 / 2.96) |
+| Functions (objdiff) | 5,948 / 14,845 matched (40.07 %) |
+| Code bytes (objdiff) | 285,656 / 3,663,320 (7.80 %) |
+| Linked code | 7.80 % — every matched C unit is fully linked |
 | Named functions | ~2,700 in `config/symbol_addrs.txt` |
 | Data | 339,552 bytes counted separately; not linked from C |
 | decomp.dev | listed: https://decomp.dev/zm2283145/syphon-filter-omega-strain-decomp |
 
 ### Additional reserved-range matches using CodeWarrior 3.0 build 38
 
-Forty-eight readable functions (7,912 code bytes) were added in the reserved range:
+Fifty-four readable functions (9,268 code bytes) were added in the reserved range:
 `0x00412110`, `0x0041C0D0`, `0x0041C0F0`, `0x0041DA60`, `0x00421670`,
 `0x00425E00`, `0x0042AFC0`, `0x00431850`, `0x00436BA0`, `0x004375D0`,
 `0x00444E10`, `0x0044A070`, `0x00452C70`, `0x0045A968`, `0x0045EC60`,
@@ -84,27 +84,30 @@ Forty-eight readable functions (7,912 code bytes) were added in the reserved ran
 `0x0043A8B0`, `0x0041D400`, `0x0041D5C0`, `0x0041D780`, `0x0041D8C0`,
 `0x0041DAA0`, `0x0041DB80`, `0x0041DC70`, `0x0041DDC0`, `0x0041DF00`,
 `0x0041E040`, `0x0041E130`, `0x0041E230`, `0x0041E2B0`, `0x0041E330`,
-`0x0041E3B0`, `0x0041E470`, and `0x0041EBF0`.
-All forty-eight are identical in objdiff. Forty-six use CodeWarrior 3.0 build 38 overrides;
+`0x0041E3B0`, `0x0041E470`, `0x0041EBF0`, `0x0041C560`, `0x0041EE50`,
+`0x0041EF10`, `0x0041EFA0`, `0x0041F090`, and `0x0041F210`.
+All fifty-four are identical in objdiff. Fifty-two use CodeWarrior 3.0 build 38 overrides;
 `0x00412110` and `0x0045A968` also match with the default 3.0.3 compiler. The
 complete clean mixed build printed the retail SHA-256 OK line without any
-compiler falling back to assembly. The latest addition comprises the
-`0x0041E130`-`0x0041E560` GUI lifecycle block and `0x0041EBF0`-`0x0041ED20`
-state-propagation routine: seven functions totaling 1,344 code bytes plus
-32 padding bytes. Focus changes preserve the manager's current selection,
-parent-message bubbling stops at the first accepting handler, and child
-updates/draws retain live end-iterator queries. State propagation preserves
-the original flag-update order and final completion call. The companion
-`0x0041ED20` routine remains assembly because its draft still differs.
+compiler falling back to assembly. The latest addition comprises two layered
+widget stream loaders and four GUI state/registration routines: six functions
+totaling 1,356 code bytes plus 52 padding bytes. The loaders preserve
+NUL-terminated string scanning, temporary string lifetime, four-byte stream
+alignment, numeric fields and flag updates. State notifications preserve
+flag-update order and live end-iterator queries after child callbacks. The
+companion `0x0041ED20` routine remains assembly because its draft still differs.
 
 The existing helper at `0x001C43A0` forwards `String_Compare`'s integer
 result, rather than assigning a string. Its return declaration and comment
 were corrected for the new name-search consumer while retaining the legacy
 symbol and identical machine code; this is not counted as a new match.
-The clean build also confirms the extended shared GUI virtual-slot declarations
-leave the previous traversal, lookup and dispatch blocks unchanged. Compiler
-exception metadata is discarded by the existing linker script. All seven new
-functions match with 3.04 but differ with default 3.0.3.
+The clean build also confirms the extended shared GUI layouts and virtual-slot
+declarations leave the previous traversal, lookup, dispatch and lifecycle blocks
+unchanged. Compiler exception metadata is discarded by the existing linker
+script. The two new stream loaders match with build 38 but differ with both
+3.04 and default 3.0.3 for the same source and flags; the four state/registration
+routines also match with 3.04. This is further evidence of build 38's practical
+code-generation advantage, not proof of the original compiler's provenance.
 
 "Matched" means the whole executable still builds with the SHA-256 of the
 retail file and objdiff reports the function as identical. Function totals

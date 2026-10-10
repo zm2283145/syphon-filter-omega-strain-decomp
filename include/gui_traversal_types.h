@@ -6,10 +6,10 @@ struct TraversalWidget;
 struct GuiMessageHandler {
     virtual void slot00();
     virtual void slot01();
-    virtual void slot02();
+    virtual void on_unregistered();
     virtual void slot03();
     virtual void slot04();
-    virtual void slot05();
+    virtual void request_state();
     virtual void propagate_state();
     virtual void slot07();
     virtual void slot08();

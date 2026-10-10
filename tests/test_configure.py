@@ -77,6 +77,9 @@ class CompilerSelectionTests(unittest.TestCase):
         with self.assertRaisesRegex(SystemExit, "--compiler-dir"):
             configure.mwcc_path("missing", {"missing": self.root})
 
+    def test_optional_missing_compiler_falls_back(self):
+        self.assertIsNone(configure.mwcc_path("missing", {"missing": self.root}, required=False))
+
     def test_native_relative_executable_path(self):
         compiler = configure.ROOT / ".venv" / "Scripts" / "python.exe"
         expected = str(Path(".venv") / "Scripts" / "python.exe")

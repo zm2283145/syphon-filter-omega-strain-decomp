@@ -23,6 +23,31 @@
 
 ## Current status (2026-10-10)
 
+### Library batch and build fixes
+
+56 more EE-GCC library functions (C library, SDK, MPEG, network helpers)
+and one Metrowerks MPEG parser stub are matched. Two build changes go with
+them:
+
+- A Metrowerks unit that starts on an 8-byte (not 16-byte) boundary gets its
+  `.text` alignment from its retail address, as the GCC units already did.
+- Without a licensed CodeWarrior 3.04, `configure.py` now prints a warning and
+  builds the units assigned to it from their retail assembly, so the
+  license-free build still matches (those functions then count as unmatched
+  in a local report).
+
+`tools/check_match.py FILE.c -c mw,mw304,gcc` compiles a candidate with each
+compiler and reports per function which one reproduces the retail bytes.
+
+### Toolchain fingerprints in the unmatched code
+
+A scan of the 7,873 unmatched functions outside `0x00400000`–`0x00476B00`:
+573 contain a single-precision compare followed directly by `bc1t`/`bc1f`
+(3.04 emits this; 3.0.3 always inserts a `nop`), against 7 with the 3.0.3
+form; and 1,452 of 2,302 functions with loops have loop heads padded to an
+8-byte boundary by a `nop`, which 3.04 also produces. Most of the remaining
+game code therefore looks like 3.04 output, while existing matches show some
+units need 3.0.3, so the compiler stays a per-unit choice.
 ### CodeWarrior 3.04 batch
 
 This batch adds 24 functions (1,612 code bytes) in the reserved
@@ -40,10 +65,10 @@ The table below is the earlier progress snapshot.
 | Item | State |
 | --- | --- |
 | Round-trip build | **Byte-identical**, SHA-256 `9924da91…31dc6` (Windows, native tools) |
-| Build with C | **Byte-identical** with 5,122 functions compiled from C (Metrowerks + EE-GCC) |
-| Functions (objdiff) | 5,122 / 14,328 matched (35.7 %) |
-| Code bytes (objdiff) | 191,704 / 3,661,248 (5.24 %) |
-| Linked code | 5.24 % — every C unit is fully matched and linked, so units are marked complete |
+| Build with C | **Byte-identical** with 5,202 functions compiled from C (Metrowerks 3.0.3 / 3.04 + EE-GCC) |
+| Functions (objdiff) | 5,202 / 14,364 matched (36.2 %) |
+| Code bytes (objdiff) | 196,148 / 3,661,392 (5.36 %) |
+| Linked code | 5.36 % — every C unit is fully matched and linked, so units are marked complete |
 | Named functions | ~2,700 in `config/symbol_addrs.txt` |
 | Data | not tracked yet (data stays in assembly) |
 | decomp.dev | listed: https://decomp.dev/zm2283145/syphon-filter-omega-strain-decomp |

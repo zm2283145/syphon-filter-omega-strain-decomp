@@ -135,10 +135,12 @@ def compiler_overrides(path, subs):
     return overrides
 
 
-def mwcc_path(version, directories):
+def mwcc_path(version, directories, required=True):
     directory = directories.get(version, ROOT / ".tools" / "mwcc" / version)
     compiler = directory / "mwccps2.exe"
     if not compiler.is_file():
+        if not required:
+            return None
         sys.exit(f"Compiler {version!r} not found at {compiler}. "
                  f"Run tools/setup_tools.py for the default compiler, or supply your "
                  f"licensed installation with --compiler-dir {version}=DIRECTORY.")
@@ -181,8 +183,15 @@ def main():
     cfg = yaml.safe_load(SPLAT_YAML.read_text())
     subs = subsegments(cfg)
     overrides = compiler_overrides(CONFIG / "compiler_overrides.json", subs)
-    compilers = {version: mwcc_path(version, compiler_dirs)
+    # The default compiler is required. A per-unit compiler that is not
+    # installed (a licensed CodeWarrior build, say) is optional: its units are
+    # then built from their retail assembly, so the build still matches.
+    compilers = {version: mwcc_path(version, compiler_dirs, required=version == args.compiler)
                  for version in {args.compiler, *overrides.values()}}
+    for version in sorted(v for v, c in compilers.items() if c is None):
+        count = sum(1 for v in overrides.values() if v == version)
+        print(f"warning: compiler {version!r} not found; building its {count} units from assembly "
+              f"(supply it with --compiler-dir {version}=DIRECTORY)")
     stamp = ROOT / "build" / "splat.stamp"
     want = hashlib.sha256(SPLAT_YAML.read_bytes() + (CONFIG / "symbol_addrs.txt").read_bytes()).hexdigest()
     if not args.no_split and (not stamp.exists() or stamp.read_text() != want or not (ROOT / "asm").exists()):
@@ -224,6 +233,14 @@ def main():
             # unit to asm/<unit>.s; it is assembled as the objdiff target.
             target_s = Path("asm") / (name + ".s")
             target = Path("build") / "target" / (name + ".o")
+            align = next(a for a in (16, 8, 4) if (start + 0x100000) % a == 0)
+            if name in overrides and compilers[overrides[name]] is None:
+                obj = Path("build") / "fallback" / (name + ".o")
+                asm_objs.append((target_s, obj, align))
+                link_objs.append(obj)
+                units.append({"name": name, "target_path": str(obj).replace("\\", "/"),
+                              "metadata": {"progress_categories": ["main"], "auto_generated": True}})
+                continue
             c_units.append((src, obj, target_s, target, "gcc" if name.startswith("lib/") else "cc",
                             next(a for a in (16, 8, 4) if (start + 0x100000) % a == 0)))
             link_objs.append(obj)
@@ -252,6 +269,9 @@ def main():
         "rule cc",
         "  command = $cc $cflags -o $out $in",
         "  description = CC $in",
+        "rule cc_aligned",
+        "  command = $python tools/compile_aligned.py $objcopy $align $out $in -- $cc $cflags",
+        "  description = CC $in",
         "rule gcc",
         "  command = $python tools/compile_aligned.py $objcopy $align $out $in -- $gcc $gccflags",
         "  description = GCC $in",
@@ -279,10 +299,14 @@ def main():
         lines.append(f"build {ninja_path(obj)}: as {ninja_path(src)}")
         lines.append(f"  align = {align}")
     for src, obj, target_s, target, rule, align in c_units:
+        # Metrowerks aligns .text to 16; a unit starting on an 8-byte boundary
+        # gets the alignment its retail address implies, like the GCC units.
+        if rule == "cc" and align != 16:
+            rule = "cc_aligned"
         lines.append(f"build {ninja_path(obj)}: {rule} {ninja_path(src)}")
-        if rule == "gcc":
+        if rule != "cc":
             lines.append(f"  align = {align}")
-        else:
+        if rule != "gcc":
             name = src.relative_to("src").with_suffix("").as_posix()
             if name in overrides:
                 lines.append(f"  cc = {wrap}{cmd_path(compilers[overrides[name]])}")

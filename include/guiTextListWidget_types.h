@@ -20,4 +20,9 @@ typedef struct TextListEntryVec {
     TextListEntry* data;
 } TextListEntryVec;
 
+typedef struct TextListWidget {
+    char pad00[0x90];
+    TextListEntryVec entries;       /* 0x90 count at 0x94, data at 0x98 */
+} TextListWidget;
+
 #endif

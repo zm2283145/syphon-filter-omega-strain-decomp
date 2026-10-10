@@ -25,14 +25,17 @@
 
 ### CodeWarrior 3.04 batch
 
-Per-unit 3.04 build 22 selection adds 13 functions (768 code bytes) in the
-reserved `0x00400000`–`0x00476B00` range: object-registry lookup and collision
-checking, local-player publication, a text-array setter, and lobby helpers.
-All 13 are identical in objdiff, and the mixed-compiler whole build prints
+This batch adds 24 functions (1,612 code bytes) in the reserved
+`0x00400000`–`0x00476B00` range: object-registry lookup and collision checking,
+local-player publication, GUI and menu helpers, lobby callbacks, destructors,
+and initialization routines. Per-unit 3.04 build 22 selection enables all 24.
+The independently recovered `func_0045A7A0` landed upstream during the rebase;
+its upstream implementation is preserved and is not counted in this batch.
+All 24 are identical in objdiff, and the mixed-compiler whole build prints
 `OK: build/SCUS_972.64 matches retail SCUS_972.64` with SHA-256
 `9924da91767c8145411f37fa6c14c9d77208264c17f1ce9ee157d51abdd31dc6`.
-The same authored sources do not reproduce those functions with the default
-3.0.3 compiler. The table below is the earlier progress snapshot.
+The 24 selected functions do not reproduce with the default 3.0.3 compiler.
+The table below is the earlier progress snapshot.
 
 | Item | State |
 | --- | --- |

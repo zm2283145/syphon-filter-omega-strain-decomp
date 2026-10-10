@@ -31,7 +31,10 @@ typedef struct GobjMapNode {
     GobjEntry* object;
 } GobjMapNode;
 
-typedef struct GobjMap GobjMap;
+typedef struct GobjMap {
+    int unk00;
+    GobjMapNode* root;             /* 0x04 also identifies the end sentinel */
+} GobjMap;
 
 /* Container whose payload starts at +0x08 (size unknown). */
 typedef struct GobjHolder {

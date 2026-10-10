@@ -298,4 +298,22 @@ typedef struct Word4 {
     int unk04;                      /* 0x04 */
 } Word4;
 
+/* Multi-line text widget with an optional range-control widget. */
+typedef struct MLTextWidget {
+    char pad00[0x64];
+    int unk64;                     /* 0x64 */
+    int unk68;                     /* 0x68 */
+    char pad6C[4];
+    int unk70;                     /* 0x70 */
+    char pad74[8];
+    GuiWidget43BEF0* rangeWidget;   /* 0x7C */
+} MLTextWidget;
+
+/* Lookup object with 256 byte-page pointers and separate inline storage. */
+typedef struct Lookup43FDD0 {
+    int count;                     /* 0x000 */
+    char pad004[0x5C0 - 4];
+    unsigned char* pages[256];      /* 0x5C0 */
+} Lookup43FDD0;
+
 #endif

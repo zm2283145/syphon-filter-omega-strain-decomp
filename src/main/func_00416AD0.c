@@ -2,7 +2,7 @@
 
 extern char D_004E09B0[];
 extern int D_00572130;
-extern void func_00100740(void* allocation);
+extern void operator_delete(void* allocation);
 
 /* Restore the base vtable, release the instance count, and optionally delete. */
 GuiObject* func_00416AD0(GuiObject* self, short deleteFlag) {
@@ -10,7 +10,7 @@ GuiObject* func_00416AD0(GuiObject* self, short deleteFlag) {
         self->vtable = D_004E09B0;
         D_00572130--;
         if (deleteFlag > 0) {
-            func_00100740(self);
+            operator_delete(self);
         }
     }
     return self;

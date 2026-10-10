@@ -8,16 +8,14 @@
    straight-line functions, but differ systematically from the retail code in
    instruction scheduling around calls and branch targets (an extra `nop`
    before branch targets and after calls, different delay-slot filling). The
-   2003 builds (`3.0b38`…`3.0.1b87`), which very likely match, need a valid
-   license. A previously checked CodeWarrior 3.0.1 installation was identical
-   to `3.0.1-020123`. The 3.04 installation reports `Version 3.0 build 22`,
-   built September 26, 2002, and now compiles as installed, with no licensing
-   changes or workaround. This supersedes the earlier assumption that an
-   expired evaluation license prevented testing it. It reproduces instruction
-   sequences that the default compiler does not, but a global switch breaks
-   the full retail hash. `config/compiler_overrides.json` therefore selects it
-   only for individual units; see README.md for licensed-installation setup.
-   These results do not establish the exact compiler used for every retail unit.
+   The owner-licensed CodeWarrior PS2 3.0 build 38 installation reports
+   `Version 3.0 build 38`, built March 7, 2003, and is now the primary game
+   compiler for units selected in `config/compiler_overrides.json`. CodeWarrior
+   3.04 build 22 remains selected for one static initializer, with default
+   3.0.3 and EE-GCC 2.95.3/2.96 used for their own matched units. A clean full
+   build with these per-unit choices reproduces the retail executable byte for
+   byte. This establishes code-generation compatibility, not proof of the
+   exact compiler used for every retail unit.
 2. **CI access to the executable** — not needed for decomp.dev: reports are
    generated locally and uploaded by CI (see [DECOMP_DEV.md](DECOMP_DEV.md)).
 
@@ -31,13 +29,14 @@ them:
 
 - A Metrowerks unit that starts on an 8-byte (not 16-byte) boundary gets its
   `.text` alignment from its retail address, as the GCC units already did.
-- Without a licensed CodeWarrior 3.04, `configure.py` now prints a warning and
-  builds the units assigned to it from their retail assembly, so the
+- Without a licensed override compiler, `configure.py` now prints a warning
+  and builds its assigned units from their retail assembly, so the
   license-free build still matches (those functions then count as unmatched
   in a local report).
 
-`tools/check_match.py FILE.c -c mw,mw304,gcc` compiles a candidate with each
-compiler and reports per function which one reproduces the retail bytes.
+`tools/check_match.py FILE.c -c mw,mw38,mw304,gcc,gcc296` compiles a candidate
+with each selected compiler and reports per function which one reproduces the
+retail bytes.
 
 ### Toolchain fingerprints in the unmatched code
 
@@ -48,30 +47,37 @@ form; and 1,452 of 2,302 functions with loops have loop heads padded to an
 8-byte boundary by a `nop`, which 3.04 also produces. Most of the remaining
 game code therefore looks like 3.04 output, while existing matches show some
 units need 3.0.3, so the compiler stays a per-unit choice.
-### CodeWarrior 3.04 batch
+### Earlier CodeWarrior 3.04 batch
 
 This batch adds 24 functions (1,612 code bytes) in the reserved
 `0x00400000`–`0x00476B00` range: object-registry lookup and collision checking,
 local-player publication, GUI and menu helpers, lobby callbacks, destructors,
-and initialization routines. Per-unit 3.04 build 22 selection enables all 24.
+and initialization routines. These original matches were made with 3.04 and
+have since been retested with CodeWarrior 3.0 build 38 overrides.
 The independently recovered `func_0045A7A0` landed upstream during the rebase;
 its upstream implementation is preserved and is not counted in this batch.
 All 24 are identical in objdiff, and the mixed-compiler whole build prints
 `OK: build/SCUS_972.64 matches retail SCUS_972.64` with SHA-256
 `9924da91767c8145411f37fa6c14c9d77208264c17f1ce9ee157d51abdd31dc6`.
-The 24 selected functions do not reproduce with the default 3.0.3 compiler.
-The table below is the earlier progress snapshot.
-
 | Item | State |
 | --- | --- |
 | Round-trip build | **Byte-identical**, SHA-256 `9924da91…31dc6` (Windows, native tools) |
-| Build with C | **Byte-identical** with 5,202 functions compiled from C (Metrowerks 3.0.3 / 3.04 + EE-GCC) |
-| Functions (objdiff) | 5,202 / 14,364 matched (36.2 %) |
-| Code bytes (objdiff) | 196,148 / 3,661,392 (5.36 %) |
-| Linked code | 5.36 % — every C unit is fully matched and linked, so units are marked complete |
+| Build with C | **Byte-identical** with 5,903 matched functions (Metrowerks 3.0.3 / 3.0 build 38 / 3.04 + EE-GCC 2.95.3 / 2.96) |
+| Functions (objdiff) | 5,903 / 14,845 matched (39.76 %) |
+| Code bytes (objdiff) | 276,788 / 3,663,320 (7.56 %) |
+| Linked code | 7.56 % — every matched C unit is fully linked |
 | Named functions | ~2,700 in `config/symbol_addrs.txt` |
-| Data | not tracked yet (data stays in assembly) |
+| Data | 339,552 bytes counted separately; not linked from C |
 | decomp.dev | listed: https://decomp.dev/zm2283145/syphon-filter-omega-strain-decomp |
+
+### Additional reserved-range matches using CodeWarrior 3.0 build 38
+
+Nine readable functions (400 code bytes) were added in the reserved range:
+`0x00412110`, `0x0041C0D0`, `0x0041C0F0`, `0x0041DA60`, `0x00421670`,
+`0x00425E00`, `0x00436BA0`, `0x004375D0`, and `0x0045A968`. All nine are
+identical in objdiff. Seven use CodeWarrior 3.0 build 38 overrides;
+`0x00412110` and `0x0045A968` also match with the default 3.0.3 compiler. The
+complete mixed build printed the retail SHA-256 OK line.
 
 "Matched" means the whole executable still builds with the SHA-256 of the
 retail file and objdiff reports the function as identical. Function totals

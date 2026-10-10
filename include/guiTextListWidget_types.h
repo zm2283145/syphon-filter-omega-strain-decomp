@@ -20,9 +20,17 @@ typedef struct TextListEntryVec {
     TextListEntry* data;
 } TextListEntryVec;
 
+typedef struct TextListWidgetChild {
+    char pad00[0x10];
+    unsigned char state;
+} TextListWidgetChild;
+
 typedef struct TextListWidget {
     char pad00[0x90];
     TextListEntryVec entries;       /* 0x90 count at 0x94, data at 0x98 */
+    char pad9C[4];
+    TextListWidgetChild* child;     /* 0xA0 */
+    unsigned char state;            /* 0xA4 */
 } TextListWidget;
 
 #endif

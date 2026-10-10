@@ -25,11 +25,16 @@ typedef struct TextArrayStore {
     unsigned char unk0C;            /* +0x0C */
 } TextArrayStore;
 
+typedef struct TextArrayWidgetChild {
+    char pad00[0x10];
+    unsigned char state;
+} TextArrayWidgetChild;
+
 /* guiTextArrayWidget (derives from the widget built by func_00424C50). */
 typedef struct guiTextArrayWidget {
     void* vtable;                   /* 0x00 */
     char pad04[0x8C];
-    int unk90;                      /* 0x90 */
+    TextArrayWidgetChild* child;    /* 0x90 */
     int count;                      /* 0x94 */
     unsigned char unk98;            /* 0x98 */
     char pad99[0x7];

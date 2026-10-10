@@ -45,4 +45,17 @@ typedef struct SubtitleOwner {
     char unkEC0[4];             /* 0xEC0 */
 } SubtitleOwner;
 
+typedef struct SubtitleTransformEntry {
+    char pad00[0x134];
+    float unk134;
+    char pad138[8];
+} SubtitleTransformEntry;
+
+typedef struct SubtitleTransformTable {
+    char pad00[0x60];
+    SubtitleTransformEntry* entries;
+    char pad64[4];
+    int current;
+} SubtitleTransformTable;
+
 #endif

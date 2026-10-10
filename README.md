@@ -22,7 +22,7 @@ open decisions, and [DECOMP_DEV.md](DECOMP_DEV.md) for listing on decomp.dev.
 | SDK / middleware | prebuilt Sony libraries (libgraph/libpad2 "2800" = SDK 2.8), Medius 1.50, lgaud, 989snd — built with EE-GCC |
 | Here: split | [splat](https://github.com/ethteck/splat) (`config/splat.yaml`) |
 | Here: assemble/link | GNU binutils for MIPS (`binutils-mips-ps2-decompals`) |
-| Here: compile | `mwcps2-3.0.3-020716` by default; selected game units use CodeWarrior PS2 3.04 build 22; libraries use EE-GCC 2.95.3-136 |
+| Here: compile | `mwcps2-3.0.3-020716` by default; per-unit overrides use CodeWarrior PS2 3.0 build 38 and 3.04 build 22; libraries use EE-GCC 2.95.3-136 and 2.96 |
 | Here: diff/progress | [objdiff](https://github.com/encounter/objdiff) |
 
 ## Layout
@@ -65,19 +65,19 @@ or wine.
    (Linux) wibo. The compiler is proprietary Metrowerks software archived by
    decomp.me; download it only if you are entitled to use it. It is never
    committed.
-4. **Additional compiler.** Units listed in `config/compiler_overrides.json`
-   need a licensed CodeWarrior PS2 3.04 installation. Its `mwccps2.exe` reports
-   `Version 3.0 build 22`, built September 26, 2002. The setup script does not
-   download this installation or supply a license. Point the `cwps2-3.04`
-   compiler name at its command-line tools directory when configuring:
+4. **Additional compilers.** Units listed in `config/compiler_overrides.json`
+   use CodeWarrior PS2 3.0 build 38 and, for one retained static initializer,
+   3.04 build 22. Both installations are licensed tools and are not included
+   or downloaded by the setup script. Pass their command-line tools directories
+   when configuring:
    ```
-   python configure.py --compiler-dir "cwps2-3.04=<licensed compiler directory>"
+   python configure.py --compiler-dir "cwps2-3.0b38=<licensed build 38 directory>" --compiler-dir "cwps2-3.04=<licensed build 3.04 directory>"
    ninja
    ```
-   Replace the placeholder with the directory containing `mwccps2.exe` and
-   its normal runtime/license files. Alternatively, provide that installation
-   under `.tools/mwcc/cwps2-3.04/` and use plain `python configure.py`.
-   All compiler files and generated configuration remain ignored.
+   Replace each placeholder with its compiler directory containing `mwccps2.exe`
+   and its normal runtime/license files. Alternatively, put installations under
+   `.tools/mwcc/cwps2-3.0b38/` and `.tools/mwcc/cwps2-3.04/`. Compiler files and
+   generated configuration remain ignored.
    `configure.py` checks your executable's hash, extracts the program image,
    runs splat (about a minute; reruns only when the yaml or symbols change)
    and writes `build.ninja` and `objdiff.json`. `ninja` assembles the asm,
@@ -97,10 +97,10 @@ units retain the default compiler, and `src/lib/` units retain EE-GCC.
 `--compiler-dir NAME=DIRECTORY` supplies a local installation without committing
 machine-specific paths. The option is repeatable and must be supplied again
 when configuring unless the installation lives under `.tools/mwcc/NAME/`.
-Missing compilers, unknown units and attempted GCC-unit overrides are errors.
-Do not globally switch existing game units to 3.04: the resulting executable
-does not match retail. New compiler selections still require the full build's
-SHA-256 check, not just an object comparison.
+Missing override compilers fall back to the matching retail assembly with a
+warning; unknown units and attempted GCC-unit overrides are errors. Keep
+compiler choices per-unit: the exact retail hash is the final check, not an
+object comparison or compiler-version guess.
 
 The configuration tests run with
 `python -m unittest discover -s tests -p "test_configure.py"`.

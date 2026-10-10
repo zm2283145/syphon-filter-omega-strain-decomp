@@ -6,6 +6,8 @@
     (decompme/compilers). These are proprietary Metrowerks tools; only fetch
     them if you are entitled to use them. They are never committed.
   * EE-GCC 2.95.3 (decompme/compilers, ps2_compilers archive) for library code
+  * EE-GCC 2.96 (decompme/compilers), a 32-bit Linux build, for the library code
+    that 2.95.3 does not reproduce; on Windows it runs through WSL
   * objdiff-cli (encounter/objdiff)
   * wibo (Linux only, runs the Windows compiler)
 """
@@ -68,6 +70,19 @@ def main():
         with tarfile.open(fileobj=io.BytesIO(data)) as t:
             members = [m for m in t.getmembers() if m.name.startswith("ee-gcc2.95.3-136/")]
             t.extractall(TOOLS / "eegcc", members=members)
+
+    # EE-GCC 2.96 (GPL), 32-bit Linux build. On Windows, configure.py runs it
+    # through WSL (tools/wsl_gcc.py); Ubuntu needs the i386 C library
+    # (dpkg --add-architecture i386; apt install libc6:i386).
+    if not (TOOLS / "eegcc" / "ee-gcc2.96").exists():
+        data = fetch("https://github.com/decompme/compilers/releases/download/compilers/ee-gcc2.96.tar.xz")
+        dest = TOOLS / "eegcc" / "ee-gcc2.96"
+        dest.mkdir(parents=True)
+        with tarfile.open(fileobj=io.BytesIO(data)) as t:
+            t.extractall(dest)
+        for f in dest.rglob("*"):
+            if f.is_file():
+                f.chmod(f.stat().st_mode | stat.S_IEXEC)
 
     exe = {"Windows": "objdiff-cli-windows-x86_64.exe", "Linux": "objdiff-cli-linux-x86_64",
            "Darwin": "objdiff-cli-macos-arm64"}[sysname]

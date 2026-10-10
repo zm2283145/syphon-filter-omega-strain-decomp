@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Compile a C file and report, per function, whether it matches the retail code.
 
-usage: python tools/check_match.py FILE.c [-c mw,mw304,gcc] [-I DIR ...]
+usage: python tools/check_match.py FILE.c [-c mw,mw304,gcc,gcc296] [-I DIR ...]
 
 Run from the repository root after a configure + build (it reads
 build/orig/SCUS_972.64.rom and splat's asm/). Each compiler in -c is tried in
@@ -12,6 +12,7 @@ compiler (if any) produces the retail bytes:
   mw304  a licensed CodeWarrior 3.04 install (build 22): --cw304 DIR or the
          CW304_DIR environment variable (its PS2_Tools/Command_Line_Tools dir)
   gcc    EE-GCC 2.95.3 (-O2 -G0), for library code under src/lib/
+  gcc296 EE-GCC 2.96 (-O2), Linux build; through WSL on Windows
 
 Relocated fields are masked, then call targets and %hi/%lo pairs are checked
 against the retail addresses (template clones are not interchangeable).
@@ -79,6 +80,17 @@ def compile_with(kind, src, incs, dirs):
         cc = Path(dirs[kind]) / "mwccps2.exe"; flags = MWFLAGS
     elif kind == "gcc":
         cc = ROOT / ".tools" / "eegcc" / "ee-gcc2.95.3-136" / "bin" / "ee-gcc.exe"; flags = GCCFLAGS
+    elif kind == "gcc296":
+        d = ROOT / ".tools" / "eegcc" / "ee-gcc2.96"
+        if not (d / "bin" / "ee-gcc").exists():
+            return None, "ee-gcc2.96 not installed (tools/setup_tools.py)"
+        flags = ["-c", "-O2", "-w"]
+        fd, out = tempfile.mkstemp(suffix=".o", dir=ROOT / "build"); os.close(fd); os.unlink(out)
+        cmd = ([sys.executable, str(ROOT / "tools" / "wsl_gcc.py"), str(d)] if IS_WINDOWS else [str(d / "bin" / "ee-gcc")])
+        r = subprocess.run(cmd + flags + incs + ["-o", out, str(src)], capture_output=True, text=True, cwd=ROOT)
+        if r.returncode or not os.path.exists(out):
+            return None, (r.stdout[-3000:] + r.stderr[-1500:]).strip()
+        return out, None
     else:
         return None, f"unknown compiler {kind}"
     fd, out = tempfile.mkstemp(suffix=".o", dir=ROOT / "build"); os.close(fd); os.unlink(out)
@@ -185,7 +197,7 @@ def compare(obj, rom, names, starts):
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawTextHelpFormatter)
     ap.add_argument("source")
-    ap.add_argument("-c", "--compilers", default="mw", help="comma list of mw, mw304, gcc (default mw)")
+    ap.add_argument("-c", "--compilers", default="mw", help="comma list of mw, mw304, gcc, gcc296 (default mw)")
     ap.add_argument("-I", dest="incs", action="append", default=[])
     ap.add_argument("--cw304", default=os.environ.get("CW304_DIR"))
     ap.add_argument("--json", action="store_true", help="print one JSON object instead of text")

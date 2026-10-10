@@ -130,7 +130,10 @@ def compiler_overrides(path, subs):
     for name in overrides:
         if name not in units:
             sys.exit(f"{path}: compiler override names unknown C unit {name}")
-        if name.startswith("lib/"):
+        is_gcc = overrides[name].startswith("ee-gcc")
+        if name.startswith("lib/") != is_gcc:
+            if is_gcc:
+                sys.exit(f"{path}: cannot assign an EE-GCC compiler to Metrowerks unit {name}")
             sys.exit(f"{path}: cannot assign a Metrowerks compiler to GCC unit {name}")
     return overrides
 
@@ -145,6 +148,28 @@ def mwcc_path(version, directories, required=True):
                  f"Run tools/setup_tools.py for the default compiler, or supply your "
                  f"licensed installation with --compiler-dir {version}=DIRECTORY.")
     return compiler
+
+
+# Flags for EE-GCC builds other than the default 2.95.3 (GCCFLAGS).
+GCC_VERSION_FLAGS = {"ee-gcc2.96": "-c -O2 -w"}
+
+
+def gcc_command(version, wrap):
+    """Command for an EE-GCC build under .tools/eegcc, or None if unavailable.
+
+    Windows builds run directly (or under wibo/wine elsewhere). The decomp.me
+    ee-gcc2.96 is a 32-bit Linux program: it runs directly on Linux and through
+    WSL (tools/wsl_gcc.py) on Windows."""
+    directory = ROOT / ".tools" / "eegcc" / version
+    exe, elf = directory / "bin" / "ee-gcc.exe", directory / "bin" / "ee-gcc"
+    if exe.is_file():
+        return wrap + cmd_path(exe)
+    if elf.is_file():
+        if not IS_WINDOWS:
+            return cmd_path(elf)
+        if shutil.which("wsl"):
+            return f"{cmd_path(sys.executable)} tools/wsl_gcc.py {cmd_path(directory)}"
+    return None
 
 
 def main():
@@ -187,7 +212,7 @@ def main():
     # installed (a licensed CodeWarrior build, say) is optional: its units are
     # then built from their retail assembly, so the build still matches.
     compilers = {version: mwcc_path(version, compiler_dirs, required=version == args.compiler)
-                 for version in {args.compiler, *overrides.values()}}
+                 for version in {args.compiler, *overrides.values()} if not version.startswith("ee-gcc")}
     for version in sorted(v for v, c in compilers.items() if c is None):
         count = sum(1 for v in overrides.values() if v == version)
         print(f"warning: compiler {version!r} not found; building its {count} units from assembly "
@@ -210,6 +235,12 @@ def main():
         wrapper = (str(local_wibo) if local_wibo.exists() else None) or shutil.which("wibo") or shutil.which("wine") or "wibo"
     wrap = (f"{cmd_path(wrapper) if Path(wrapper).exists() else wrapper} " if wrapper else "")
     cc = wrap + cmd_path(compilers[args.compiler])
+    gccs = {version: gcc_command(version, wrap) for version in set(overrides.values()) if version.startswith("ee-gcc")}
+    for version in sorted(v for v, c in gccs.items() if c is None):
+        count = sum(1 for v in overrides.values() if v == version)
+        print(f"warning: EE-GCC {version!r} not found or not runnable; building its {count} units from assembly "
+              f"(run tools/setup_tools.py; on Windows it needs WSL)")
+    compilers.update(gccs)
     gcc = wrap + cmd_path(ROOT / ".tools" / "eegcc" / args.gcc / "bin" / "ee-gcc.exe")
     objdiff = args.objdiff or str(ROOT / ".tools" / ("objdiff-cli" + EXE))
 
@@ -306,10 +337,14 @@ def main():
         lines.append(f"build {ninja_path(obj)}: {rule} {ninja_path(src)}")
         if rule != "cc":
             lines.append(f"  align = {align}")
+        name = src.relative_to("src").with_suffix("").as_posix()
         if rule != "gcc":
-            name = src.relative_to("src").with_suffix("").as_posix()
             if name in overrides:
                 lines.append(f"  cc = {wrap}{cmd_path(compilers[overrides[name]])}")
+        elif name in overrides:
+            lines.append(f"  gcc = {compilers[overrides[name]]}")
+            flags = GCC_VERSION_FLAGS.get(overrides[name], GCCFLAGS)
+            lines.append(f"  gccflags = {flags} -Iinclude -Isrc")
         lines.append(f"build {ninja_path(target)}: as {ninja_path(target_s)}")
         lines.append("  align = 16")
     targets = " ".join(ninja_path(u[3]) for u in c_units)

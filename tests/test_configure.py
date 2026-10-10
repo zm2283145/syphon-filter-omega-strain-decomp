@@ -39,6 +39,20 @@ class CompilerSelectionTests(unittest.TestCase):
         with self.assertRaisesRegex(SystemExit, "GCC unit"):
             configure.compiler_overrides(self.config, self.subs)
 
+    def test_eegcc_override_on_gcc_unit(self):
+        overrides = {"lib/example": "ee-gcc2.96"}
+        self.write_overrides(overrides)
+        self.assertEqual(configure.compiler_overrides(self.config, self.subs), overrides)
+
+    def test_eegcc_override_on_metrowerks_unit_rejected(self):
+        self.write_overrides({"main/example": "ee-gcc2.96"})
+        with self.assertRaisesRegex(SystemExit, "Metrowerks unit"):
+            configure.compiler_overrides(self.config, self.subs)
+
+    def test_missing_eegcc_build_is_optional(self):
+        with patch.object(configure, "ROOT", self.root):
+            self.assertIsNone(configure.gcc_command("ee-gcc2.96", ""))
+
     def test_invalid_shapes_rejected(self):
         for value in ([], {"main/example": 3}, {"main/example": "../compiler"}):
             with self.subTest(value=value):

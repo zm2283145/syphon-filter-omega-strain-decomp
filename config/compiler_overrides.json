@@ -614,5 +614,19 @@
   "main/gobj/func_003CE2A0": "cwps2-3.0b38",
   "main/func_003D5260": "cwps2-3.0b38",
   "main/scriptManager/func_003DC720": "cwps2-3.0b38",
-  "main/callback/func_003EA0E0": "cwps2-3.0b38"
+  "main/callback/func_003EA0E0": "cwps2-3.0b38",
+  "main/npc/func_0015AF50": "cwps2-3.0b38",
+  "main/func_0016FA30": "cwps2-3.0b38",
+  "main/func_001EECB0": "cwps2-3.0b38",
+  "main/gameGobjController/func_002300D0": "cwps2-3.0b38",
+  "main/playerControls/func_00247320": "cwps2-3.0b38",
+  "main/WaterFx/func_002B20E0": "cwps2-3.0b38",
+  "main/fileman/func_0036E220": "cwps2-3.0b38",
+  "main/func_003975F0": "cwps2-3.0b38",
+  "main/func_00397730": "cwps2-3.0b38",
+  "main/gobj/func_003CCE30": "cwps2-3.0b38",
+  "main/gobj/func_003CDE40": "cwps2-3.0b38",
+  "main/scriptBase/func_003D75E0": "cwps2-3.0b38",
+  "main/scriptManager/func_003DF920": "cwps2-3.0b38",
+  "main/callback/func_003EA1D0": "cwps2-3.0b38"
 }

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Compile a C file and report, per function, whether it matches the retail code.
 
-usage: python tools/check_match.py FILE.c [-c mw,mw304,gcc] [-I DIR ...] [--cw304 DIR]
+usage: python tools/check_match.py FILE.c [-c mw,mw304,mw303j,gcc] [-I DIR ...]
 
 Run from the repository root after a configure + build (it reads
 build/orig/SCUS_972.64.rom and splat's asm/). Each compiler in -c is tried in
@@ -11,6 +11,7 @@ compiler (if any) produces the retail bytes:
   mw     Metrowerks mwccps2 3.0.3 (.tools/mwcc/mwcps2-3.0.3-020716), the default
   mw304  a licensed CodeWarrior 3.04 install (build 22): --cw304 DIR or the
          CW304_DIR environment variable (its PS2_Tools/Command_Line_Tools dir)
+  mw303j a licensed CodeWarrior 3.03J install: --cw303j DIR or CW303J_DIR
   gcc    EE-GCC 2.95.3 (-O2 -G0), for library code under src/lib/
 
 Relocated fields are masked, then call targets and %hi/%lo pairs are checked
@@ -70,13 +71,13 @@ def wrapper():
     return [str(w)] if w.exists() else [shutil.which("wibo") or shutil.which("wine") or "wibo"]
 
 
-def compile_with(kind, src, incs, cw304):
+def compile_with(kind, src, incs, dirs):
     if kind == "mw":
         cc = ROOT / ".tools" / "mwcc" / "mwcps2-3.0.3-020716" / "mwccps2.exe"; flags = MWFLAGS
-    elif kind == "mw304":
-        if not cw304:
-            return None, "no CodeWarrior 3.04 directory (--cw304 or CW304_DIR)"
-        cc = Path(cw304) / "mwccps2.exe"; flags = MWFLAGS
+    elif kind in dirs:
+        if not dirs[kind]:
+            return None, f"no directory for {kind} (--cw{kind[2:]} or CW{kind[2:].upper()}_DIR)"
+        cc = Path(dirs[kind]) / "mwccps2.exe"; flags = MWFLAGS
     elif kind == "gcc":
         cc = ROOT / ".tools" / "eegcc" / "ee-gcc2.95.3-136" / "bin" / "ee-gcc.exe"; flags = GCCFLAGS
     else:
@@ -188,6 +189,7 @@ def main():
     ap.add_argument("-c", "--compilers", default="mw", help="comma list of mw, mw304, gcc (default mw)")
     ap.add_argument("-I", dest="incs", action="append", default=[])
     ap.add_argument("--cw304", default=os.environ.get("CW304_DIR"))
+    ap.add_argument("--cw303j", default=os.environ.get("CW303J_DIR"))
     ap.add_argument("--json", action="store_true", help="print one JSON object instead of text")
     args = ap.parse_args()
     rom = (ROOT / "build" / "orig" / "SCUS_972.64.rom").read_bytes()
@@ -195,7 +197,8 @@ def main():
     incs = [f"-I{d}" for d in args.incs + ["include", "src"]]
     report = {}
     for kind in args.compilers.split(","):
-        obj, err = compile_with(kind, Path(args.source).resolve(), incs, args.cw304)
+        obj, err = compile_with(kind, Path(args.source).resolve(), incs,
+                                {"mw304": args.cw304, "mw303j": args.cw303j})
         if obj is None:
             report[kind] = {"error": err}
         else:

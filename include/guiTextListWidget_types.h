@@ -49,19 +49,38 @@ typedef struct TextRenderChild {
     int y;
     int width;
     int height;
+    unsigned char state;           /* 0x10 */
+    unsigned char pad11;
+    unsigned char enabled;         /* 0x12 */
+    unsigned char pad13;
+    char text[0xC];                 /* 0x14 */
+    char pad20[0x38];
+    unsigned char active;          /* 0x58 */
+    char pad59[2];
+    unsigned char mode;            /* 0x5B */
+    char pad5C[4];
 } TextRenderChild;
 
 typedef struct TextRenderWidget {
-    char pad00[0x54];
+    void* vtable;
+    char pad04[0x38];
+    float width;                   /* 0x3C */
+    float height;                  /* 0x40 */
+    char pad44[0x10];
     unsigned int selected;         /* 0x54 */
-    char pad58[0x38];
+    char pad58[8];
+    char baseState[0x30];           /* 0x60 */
     TextListEntryVec entries;       /* 0x90 */
     char pad9C[4];
     TextRenderChild* child;         /* 0xA0 */
-    char padA4[0xC];
+    unsigned char state;           /* 0xA4 */
+    char padA5[3];
+    void* resource;                /* 0xA8 */
+    char padAC[4];
     TextRenderStyle styles[3];      /* 0xB0 */
     TextRenderStyle highlight;      /* 0xE0 */
     unsigned char highlighted;     /* 0xF0 */
+    unsigned char mode;            /* 0xF1 */
 } TextRenderWidget;
 
 #endif

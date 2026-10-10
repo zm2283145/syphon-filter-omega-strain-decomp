@@ -64,17 +64,17 @@ All 24 are identical in objdiff, and the mixed-compiler whole build prints
 | Item | State |
 | --- | --- |
 | Round-trip build | **Byte-identical**, SHA-256 `9924da91…31dc6` (Windows, native tools) |
-| Build with C | **Byte-identical** with 5,951 matched functions (Metrowerks 3.0.3 / 3.0 build 38 / 3.04 + EE-GCC 2.95.3 / 2.96) |
-| Functions (objdiff) | 5,951 / 14,845 matched (40.09 %) |
-| Code bytes (objdiff) | 286,448 / 3,663,320 (7.82 %) |
-| Linked code | 7.82 % — every matched C unit is fully linked |
+| Build with C | **Byte-identical** with 5,952 matched functions (Metrowerks 3.0.3 / 3.0 build 38 / 3.04 + EE-GCC 2.95.3 / 2.96) |
+| Functions (objdiff) | 5,952 / 14,845 matched (40.09 %) |
+| Code bytes (objdiff) | 286,760 / 3,663,320 (7.83 %) |
+| Linked code | 7.83 % — every matched C unit is fully linked |
 | Named functions | ~2,700 in `config/symbol_addrs.txt` |
 | Data | 339,552 bytes counted separately; not linked from C |
 | decomp.dev | listed: https://decomp.dev/zm2283145/syphon-filter-omega-strain-decomp |
 
 ### Additional reserved-range matches using CodeWarrior 3.0 build 38
 
-Fifty-seven readable functions (10,060 code bytes) were added in the reserved range:
+Fifty-eight readable functions (10,372 code bytes) were added in the reserved range:
 `0x00412110`, `0x0041C0D0`, `0x0041C0F0`, `0x0041DA60`, `0x00421670`,
 `0x00425E00`, `0x0042AFC0`, `0x00431850`, `0x00436BA0`, `0x004375D0`,
 `0x00444E10`, `0x0044A070`, `0x00452C70`, `0x0045A968`, `0x0045EC60`,
@@ -86,8 +86,8 @@ Fifty-seven readable functions (10,060 code bytes) were added in the reserved ra
 `0x0041E040`, `0x0041E130`, `0x0041E230`, `0x0041E2B0`, `0x0041E330`,
 `0x0041E3B0`, `0x0041E470`, `0x0041EBF0`, `0x0041C560`, `0x0041EE50`,
 `0x0041EF10`, `0x0041EFA0`, `0x0041F090`, `0x0041F210`, `0x0041F370`,
-`0x0041F5B0`, and `0x0041F610`.
-All fifty-seven are identical in objdiff. Fifty-five use CodeWarrior 3.0 build 38 overrides;
+`0x0041F5B0`, `0x0041F610`, and `0x00420E50`.
+All fifty-eight are identical in objdiff. Fifty-six use CodeWarrior 3.0 build 38 overrides;
 `0x00412110` and `0x0045A968` also match with the default 3.0.3 compiler. The
 complete mixed build printed the retail SHA-256 OK line without any
 compiler falling back to assembly. The preceding addition comprises two layered
@@ -98,7 +98,7 @@ alignment, numeric fields and flag updates. State notifications preserve
 flag-update order and live end-iterator queries after child callbacks. The
 companion `0x0041ED20` routine remains assembly because its draft still differs.
 
-The latest addition recovers the contiguous `0x0041F370`-`0x0041F690`
+The preceding destruction addition recovers the contiguous `0x0041F370`-`0x0041F690`
 destruction block: a 576-byte widget destructor and two list cleanup routines,
 totaling 792 code bytes plus 8 padding bytes. It preserves scoped allocator
 locking and depth accounting, virtual child/handler destruction, live child-list
@@ -108,6 +108,14 @@ deallocation. Aggregate-return iterator temporaries and caller-scoped
 All three routines match both build 38 and 3.04; default 3.0.3 differs. The
 existing `.dtors_drop` mechanism discards the extra allocator-guard destructor
 and its compiler delete reference; no additional code or data is linked.
+
+The latest addition is the 312-byte text-row renderer at `0x00420E50`.
+It selects the highlighted or per-entry style, converts rectangle coordinates
+in pairs, updates the child text and draws it, then always calls the base row
+renderer. Typed entry access and staged conversions preserve the original
+load/store ordering. It matches build 38 and 3.04, but not default 3.0.3.
+A clean whole build verifies the expanded rendering layout declarations leave
+every previously complete unit unchanged.
 
 The existing helper at `0x001C43A0` forwards `String_Compare`'s integer
 result, rather than assigning a string. Its return declaration and comment

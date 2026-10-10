@@ -33,4 +33,35 @@ typedef struct TextListWidget {
     unsigned char state;            /* 0xA4 */
 } TextListWidget;
 
+typedef struct TextRenderStyle {
+    unsigned char data[16];
+} TextRenderStyle;
+
+typedef struct TextRenderRect {
+    float x;
+    float y;
+    float width;
+    float height;
+} TextRenderRect;
+
+typedef struct TextRenderChild {
+    int x;
+    int y;
+    int width;
+    int height;
+} TextRenderChild;
+
+typedef struct TextRenderWidget {
+    char pad00[0x54];
+    unsigned int selected;         /* 0x54 */
+    char pad58[0x38];
+    TextListEntryVec entries;       /* 0x90 */
+    char pad9C[4];
+    TextRenderChild* child;         /* 0xA0 */
+    char padA4[0xC];
+    TextRenderStyle styles[3];      /* 0xB0 */
+    TextRenderStyle highlight;      /* 0xE0 */
+    unsigned char highlighted;     /* 0xF0 */
+} TextRenderWidget;
+
 #endif

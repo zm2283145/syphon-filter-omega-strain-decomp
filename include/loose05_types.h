@@ -151,7 +151,10 @@ typedef struct SFOLobby {
     LobbyRecord1C pool134;          /* 0x134 elem 80 bytes */
     LobbyRecord1C pool150;          /* 0x150 elem 80 bytes */
     char sessionBlock[1];           /* 0x16C start of the 0x950-byte block cleared by the reset */
-    char pad016D[0x180 - 0x16D];
+    char pad016D[0x174 - 0x16D];
+    int rangeStart;                 /* 0x174 nonnegative lower bound */
+    int rangeEnd;                   /* 0x178 at least rangeStart */
+    char pad017C[0x180 - 0x17C];
     int unk180;                     /* 0x180 handle, -1 = none */
     int unk184;                     /* 0x184 */
     char pad0188[0x18C - 0x188];
@@ -181,7 +184,11 @@ typedef struct SFOLobby {
     int unk208;                     /* 0x208 */
     char pad020C[0x210 - 0x20C];
     int unk210;                     /* 0x210 */
-    char pad0214[0x26C - 0x214];
+    char pad0214[0x21C - 0x214];
+    int unk21C;                     /* 0x21C */
+    char pad0220[0x230 - 0x220];
+    int unk230;                     /* 0x230 */
+    char pad0234[0x26C - 0x234];
     int unk26C;                     /* 0x26C -1 = none */
     char pad0270[0x330 - 0x270];
     int unk330;                     /* 0x330 -1 = none */

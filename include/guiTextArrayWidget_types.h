@@ -12,7 +12,8 @@
 typedef struct TextArrayCell {
     char pad00[0xC];
     unsigned int flags;             /* 0x0C bit0/bit2 cleared by setters, bit1 = has text */
-    char pad10[0x4];
+    unsigned char attribute;       /* 0x10 valid when flags bit0 is set */
+    char pad11[0x3];
     int text;                       /* 0x14 string handle from the gui string table */
 } TextArrayCell;
 

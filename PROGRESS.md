@@ -9,14 +9,30 @@
    instruction scheduling around calls and branch targets (an extra `nop`
    before branch targets and after calls, different delay-slot filling). The
    2003 builds (`3.0b38`…`3.0.1b87`), which very likely match, need a valid
-   license. The owner's CodeWarrior 3.0.1 install is identical to
-   `3.0.1-020123`; the 3.0.4 (build 22) install came with an evaluation
-   license that expired in November 2002. Only a genuine permanent license
-   would let us test those builds; no license workaround is used.
+   license. A previously checked CodeWarrior 3.0.1 installation was identical
+   to `3.0.1-020123`. The 3.04 installation reports `Version 3.0 build 22`,
+   built September 26, 2002, and now compiles as installed, with no licensing
+   changes or workaround. This supersedes the earlier assumption that an
+   expired evaluation license prevented testing it. It reproduces instruction
+   sequences that the default compiler does not, but a global switch breaks
+   the full retail hash. `config/compiler_overrides.json` therefore selects it
+   only for individual units; see README.md for licensed-installation setup.
+   These results do not establish the exact compiler used for every retail unit.
 2. **CI access to the executable** — not needed for decomp.dev: reports are
    generated locally and uploaded by CI (see [DECOMP_DEV.md](DECOMP_DEV.md)).
 
 ## Current status (2026-10-10)
+
+### CodeWarrior 3.04 batch
+
+Per-unit 3.04 build 22 selection adds 13 functions (768 code bytes) in the
+reserved `0x00400000`–`0x00476B00` range: object-registry lookup and collision
+checking, local-player publication, a text-array setter, and lobby helpers.
+All 13 are identical in objdiff, and the mixed-compiler whole build prints
+`OK: build/SCUS_972.64 matches retail SCUS_972.64` with SHA-256
+`9924da91767c8145411f37fa6c14c9d77208264c17f1ce9ee157d51abdd31dc6`.
+The same authored sources do not reproduce those functions with the default
+3.0.3 compiler. The table below is the earlier progress snapshot.
 
 | Item | State |
 | --- | --- |

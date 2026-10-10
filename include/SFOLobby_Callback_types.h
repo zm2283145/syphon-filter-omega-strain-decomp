@@ -19,4 +19,12 @@ typedef struct LobbyCallbackInfo {
     int unk2C;              /* 0x2C name is copied only when this is 0 */
 } LobbyCallbackInfo;
 
+/* Status result supplied as the fourth argument to lobby callbacks. */
+typedef struct LobbyStatusResult {
+    char pad00[0x15];
+    signed char status;            /* 0x15 zero indicates success */
+    char pad16[2];
+    int value;                     /* 0x18 */
+} LobbyStatusResult;
+
 #endif

@@ -16,9 +16,22 @@ typedef struct GobjScope {
 
 /* Registered object as seen by the lookup (size unknown). */
 typedef struct GobjEntry {
-    char pad00[0x1C];
+    char pad00[0x0C];
+    GobjId id;                    /* 0x0C */
+    char pad10[0x0C];
     GobjScope* scope;           /* 0x1C */
 } GobjEntry;
+
+/* Registry map node, with an unsigned ID key and object payload. */
+typedef struct GobjMapNode {
+    struct GobjMapNode* left;
+    struct GobjMapNode* right;
+    struct GobjMapNode* parent;
+    unsigned int key;
+    GobjEntry* object;
+} GobjMapNode;
+
+typedef struct GobjMap GobjMap;
 
 /* Container whose payload starts at +0x08 (size unknown). */
 typedef struct GobjHolder {

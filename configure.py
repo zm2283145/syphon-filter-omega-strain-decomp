@@ -15,6 +15,7 @@ import hashlib
 import json
 import os
 import platform
+import re
 import shutil
 import subprocess
 import sys
@@ -96,12 +97,52 @@ def cmd_path(p):
     """Path usable inside a ninja command: relative to the repository root when possible, quoted otherwise."""
     p = Path(p)
     try:
-        q = p.resolve().relative_to(ROOT).as_posix()
+        relative = p.resolve().relative_to(ROOT)
+        q = str(relative) if IS_WINDOWS else relative.as_posix()
     except (ValueError, OSError):
-        q = str(p).replace("\\", "/")
+        q = str(p) if IS_WINDOWS else str(p).replace("\\", "/")
     if " " in q:
         q = f'"{q}"'
     return q.replace("$", "$$")
+
+
+def compiler_directory(value):
+    name, separator, directory = value.partition("=")
+    if not separator or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]*", name) or not directory:
+        raise argparse.ArgumentTypeError("expected NAME=DIRECTORY for --compiler-dir")
+    return name, Path(directory)
+
+
+def compiler_overrides(path, subs):
+    if not path.exists():
+        return {}
+    try:
+        overrides = json.loads(path.read_text())
+    except (OSError, ValueError) as error:
+        sys.exit(f"Cannot read {path}: {error}")
+    if not isinstance(overrides, dict) or any(
+        not isinstance(name, str) or not isinstance(version, str)
+        or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]*", version)
+        for name, version in overrides.items()
+    ):
+        sys.exit(f"{path}: expected a JSON object mapping C unit names to compiler names")
+    units = {name for _, typ, name in subs if typ == "c"}
+    for name in overrides:
+        if name not in units:
+            sys.exit(f"{path}: compiler override names unknown C unit {name}")
+        if name.startswith("lib/"):
+            sys.exit(f"{path}: cannot assign a Metrowerks compiler to GCC unit {name}")
+    return overrides
+
+
+def mwcc_path(version, directories):
+    directory = directories.get(version, ROOT / ".tools" / "mwcc" / version)
+    compiler = directory / "mwccps2.exe"
+    if not compiler.is_file():
+        sys.exit(f"Compiler {version!r} not found at {compiler}. "
+                 f"Run tools/setup_tools.py for the default compiler, or supply your "
+                 f"licensed installation with --compiler-dir {version}=DIRECTORY.")
+    return compiler
 
 
 def main():
@@ -110,6 +151,9 @@ def main():
     ap.add_argument("--binutils", help="binutils prefix, e.g. mips-linux-gnu-")
     ap.add_argument("--compiler", default=DEFAULT_COMPILER,
                     help=f"compiler directory under .tools/mwcc (default {DEFAULT_COMPILER})")
+    ap.add_argument("--compiler-dir", action="append", type=compiler_directory, default=[],
+                    metavar="NAME=DIRECTORY",
+                    help="local installation for a compiler named in config/compiler_overrides.json; repeatable")
     ap.add_argument("--gcc", default=DEFAULT_GCC,
                     help=f"EE-GCC directory under .tools/eegcc (default {DEFAULT_GCC})")
     ap.add_argument("--wrapper", default=None,
@@ -117,6 +161,11 @@ def main():
     ap.add_argument("--objdiff", default=None, help="path to objdiff-cli")
     ap.add_argument("--no-split", action="store_true", help="do not (re)run splat")
     args = ap.parse_args()
+    compiler_dirs = {}
+    for name, directory in args.compiler_dir:
+        if name in compiler_dirs:
+            ap.error(f"duplicate --compiler-dir for {name}")
+        compiler_dirs[name] = directory
 
     os.chdir(ROOT)
     elf = find_elf(args.elf)
@@ -130,6 +179,10 @@ def main():
         subprocess.check_call([sys.executable, "tools/extract_rom.py", str(elf), str(rom)])
 
     cfg = yaml.safe_load(SPLAT_YAML.read_text())
+    subs = subsegments(cfg)
+    overrides = compiler_overrides(CONFIG / "compiler_overrides.json", subs)
+    compilers = {version: mwcc_path(version, compiler_dirs)
+                 for version in {args.compiler, *overrides.values()}}
     stamp = ROOT / "build" / "splat.stamp"
     want = hashlib.sha256(SPLAT_YAML.read_bytes() + (CONFIG / "symbol_addrs.txt").read_bytes()).hexdigest()
     if not args.no_split and (not stamp.exists() or stamp.read_text() != want or not (ROOT / "asm").exists()):
@@ -142,18 +195,15 @@ def main():
         tool = lambda t: cmd_path(prefix + t + EXE)
     else:
         tool = lambda t: prefix + t + EXE
-    compiler_dir = ROOT / ".tools" / "mwcc" / args.compiler
-    mwcc = compiler_dir / "mwccps2.exe"
     wrapper = args.wrapper
     if wrapper is None and not IS_WINDOWS:
         local_wibo = ROOT / ".tools" / "wibo"
         wrapper = (str(local_wibo) if local_wibo.exists() else None) or shutil.which("wibo") or shutil.which("wine") or "wibo"
     wrap = (f"{cmd_path(wrapper) if Path(wrapper).exists() else wrapper} " if wrapper else "")
-    cc = wrap + cmd_path(mwcc)
+    cc = wrap + cmd_path(compilers[args.compiler])
     gcc = wrap + cmd_path(ROOT / ".tools" / "eegcc" / args.gcc / "bin" / "ee-gcc.exe")
     objdiff = args.objdiff or str(ROOT / ".tools" / ("objdiff-cli" + EXE))
 
-    subs = subsegments(cfg)
     asm_objs, c_units, link_objs, units = [], [], [], []
     for start, typ, name in subs:
         if typ in ("asm", "hasm", "data", "rodata", "bss"):
@@ -232,6 +282,10 @@ def main():
         lines.append(f"build {ninja_path(obj)}: {rule} {ninja_path(src)}")
         if rule == "gcc":
             lines.append(f"  align = {align}")
+        else:
+            name = src.relative_to("src").with_suffix("").as_posix()
+            if name in overrides:
+                lines.append(f"  cc = {wrap}{cmd_path(compilers[overrides[name]])}")
         lines.append(f"build {ninja_path(target)}: as {ninja_path(target_s)}")
         lines.append("  align = 16")
     targets = " ".join(ninja_path(u[3]) for u in c_units)

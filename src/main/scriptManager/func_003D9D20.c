@@ -8,7 +8,7 @@
 #include "scriptManager_types.h"
 
 extern ScriptManager D_00555070;
-extern int func_001294F8(void* obj);
+extern int strlen(void* obj);
 extern int func_003D9DA0(ScriptBound* self, int binding);
 extern int func_003E15B0(ScriptManager* manager, void* obj, int* key, int* out);
 
@@ -21,7 +21,7 @@ int* func_003D9D20(int** table, int i) {
 void func_003D9D30(ScriptBound* self, void* obj) {
     int binding;
 
-    if (obj != 0 && func_001294F8(obj) != 0) {
+    if (obj != 0 && strlen(obj) != 0) {
         binding = 0;
         func_003E15B0(&D_00555070, obj, &self->key, &binding);
         func_003D9DA0(self, binding);

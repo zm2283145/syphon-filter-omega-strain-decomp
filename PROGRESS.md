@@ -16,15 +16,16 @@
 2. **CI access to the executable** — not needed for decomp.dev: reports are
    generated locally and uploaded by CI (see [DECOMP_DEV.md](DECOMP_DEV.md)).
 
-## Current status (2026-10-09)
+## Current status (2026-10-10)
 
 | Item | State |
 | --- | --- |
 | Round-trip build | **Byte-identical**, SHA-256 `9924da91…31dc6` (Windows, native tools) |
-| Build with C | **Byte-identical** with 3,942 functions compiled from C (Metrowerks + EE-GCC) |
-| Functions (objdiff) | 3,942 / 14,327 matched (27.5 %) |
-| Code bytes (objdiff) | ~100 KB / ~3.66 MB (2.74 %) |
-| Named functions | 911 (from the port project's research notes) |
+| Build with C | **Byte-identical** with 5,122 functions compiled from C (Metrowerks + EE-GCC) |
+| Functions (objdiff) | 5,122 / 14,328 matched (35.7 %) |
+| Code bytes (objdiff) | 191,704 / 3,661,248 (5.24 %) |
+| Linked code | 5.24 % — every C unit is fully matched and linked, so units are marked complete |
+| Named functions | ~2,700 in `config/symbol_addrs.txt` |
 | Data | not tracked yet (data stays in assembly) |
 | decomp.dev | listed: https://decomp.dev/zm2283145/syphon-filter-omega-strain-decomp |
 
@@ -35,29 +36,35 @@ are refined.
 
 ## How the matched C was produced
 
-Most of `src/main/` is machine-generated and then verified, not hand-written:
-
-* **Templates (≈1,750 functions):** two-instruction accessors and other leaf
-  patterns, plus byte-for-byte duplicates of any matched leaf function (C++
-  template instances such as container swap, iterator begin/end/compare,
-  copy constructors) reuse the same source.
-* **Symbolic translator (≈1,300):** branch-free functions, with or without
-  calls and global data, become C expressions; callee arity and return kind
-  are inferred from the callee's code.
-* **Register-level translator (≈350):** functions with branches, stack locals,
-  virtual calls and tail jumps become C with one variable per register and
-  `goto`s; Metrowerks' optimizer reproduces the original code for many small
-  functions.
-* **Hand-written (≈40):** container, vector and script helpers.
+* **Automatic translators (≈3,400):** templates for leaf patterns and clones,
+  a symbolic translator for branch-free code and a register-level translator
+  for small branchy functions, each verified against the retail bytes.
+* **Readability pass (all of `src/main/`):** the generated code was rewritten
+  with typed structs (`include/*_types.h`), named fields and locals and
+  structured control flow, file by file, re-verifying every function.
+* **Hand matching (≈1,100):** functions the translators could not reproduce,
+  written as readable C. Techniques that the retail code turned out to need:
+  per-file optimizer pragmas (`optimization_level 1` for areas built at -O1,
+  `peephole off`, `opt_propagation off`, `opt_common_subs off`), C++ mode
+  (`#pragma cplusplus on`) with class declarations for virtual calls through
+  `$t9`, empty allocator/tag structs passed by value, the SSO string layout,
+  and staging of script arguments through stack slots.
 * **Library code with EE-GCC (src/lib/):** Sony SDK and middleware functions
-  are GCC-built; the translators' output compiled with EE-GCC 2.95.3-136
-  (`-O2 -G0`) matches several hundred of them. GCC 2.96 (Linux-only build)
-  matches somewhat more; it is not used so the build stays Windows-native.
+  matched with EE-GCC 2.95.3-136 (`-O2 -G0`).
 
-Every candidate is compiled with `mwccps2 -O4,p`, compared with the retail
-bytes (relocations masked), and finally checked by the full byte-identical
-build. Generated code is deliberately low-level (`*(int*)((char*)p + 8)`);
-replacing it with real structs, types and names is ongoing work.
+Every candidate is compiled, compared with the retail bytes (call targets and
+`%hi/%lo` data addresses included) and finally checked by the full
+byte-identical build.
+
+## What blocks the rest (14,328 − 5,122)
+
+| Group | Functions | Reason |
+| --- | ---: | --- |
+| Branch targets padded to 8 bytes | ~4,500 | the retail Metrowerks build inserts a `nop` so branch targets are 8-byte aligned; the license-free 2002 builds never do (decision 1) |
+| Other branchy/scheduling differences | ~1,700 | delay-slot filling, `nop` after FP compares, `beql`, `cvt.w.s`, destructor epilogues — also compiler-build differences |
+| GCC library code, 8-byte aligned | ~1,250 | EE-GCC 2.95.3 matches part; the rest needs per-function work |
+| `sd`-saving library code | ~860 | built with EE-GCC 2.96 (or 2.9-991111), which only exists as a Linux binary; usable on Windows only through WSL |
+| VU0 macro code | ~600 | needs inline assembly |
 
 ## Toolchain identification — evidence
 
@@ -99,13 +106,14 @@ replacing it with real structs, types and names is ongoing work.
 
 ## Next steps
 
-1. Replace generated pointer arithmetic with real structs and names, starting
-   with the classes the research notes describe (actors, curves, transforms,
-   objectives).
-2. Find translation-unit boundaries (`.cc` strings, function order, vtables)
-   and move functions into real source files.
-3. Add objdiff progress categories (game vs. SDK/middleware); src/lib/ already
-   holds the GCC-matched library functions.
-4. Split data/rodata by unit so data progress can be tracked.
-5. Resolve the compiler-build question (decision 1); with a 2003 build most
-   larger functions should become matchable.
+1. Keep hand-matching the remaining compiler-compatible functions (agents in
+   parallel; the address range 0x00400000–0x00476B00 is reserved for a second
+   contributor working through pull requests).
+2. EE-GCC 2.96 for the `sd`-saving libraries (optional WSL path in
+   `configure.py`), which would unlock ~860 functions.
+3. Recover more structures and merge single-function files into real
+   translation units (`config/tu_ranges.txt`).
+4. Add objdiff progress categories (game vs. SDK/middleware).
+5. Split data/rodata by unit so data progress can be tracked.
+6. Resolve the compiler-build question (decision 1): the 8-byte branch-target
+   padding is the single largest blocker.

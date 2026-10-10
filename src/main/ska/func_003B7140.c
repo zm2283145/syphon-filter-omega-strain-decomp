@@ -1,0 +1,28 @@
+#include "types.h"
+
+/* Short-string-optimized string: bit 0 of the first byte marks heap storage. */
+typedef struct SsoString {
+    union {
+        struct { unsigned char isLong : 1; unsigned char shortLen : 7; } s;
+        int flags;
+    } h;
+    int longLen;
+    char* longData;
+} SsoString;
+
+typedef struct { char unused; } Allocator; /* empty allocator object passed by value */
+
+/* Replaces count characters at pos with the range [first, last). */
+extern void* String_Replace(SsoString* str, int pos, int count, const char* first, const char* last, Allocator alloc);
+
+/* Appends one character to the string. */
+void* String_PushBack(SsoString* str, char c)
+{
+    Allocator alloc;
+    int len;
+    if (!(str->h.flags & 1))
+        len = (unsigned char)str->h.s.shortLen;
+    else
+        len = str->longLen;
+    return String_Replace(str, len, 0, &c, &c + 1, alloc);
+}

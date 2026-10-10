@@ -3,7 +3,7 @@
 
 /*
  * Provisional types for src/main/playerControls (player input state and the
- * small helpers around the input helper func_0024B5D0). Field names are
+ * small helpers around the input helper PlayerInput_Update). Field names are
  * placeholders (unkXX) unless the research notes justify them.
  */
 

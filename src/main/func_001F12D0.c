@@ -7,11 +7,11 @@
 #include "types.h"
 #include "loose01_types.h"
 
-extern int func_0013B480(int, int);
+extern int String_CtorCStr_13B480(int, int);
 extern float func_001D10A0(float, float);
 
 int func_001F12D0(int a0, int a1) {
-    func_0013B480(a0, a1);
+    String_CtorCStr_13B480(a0, a1);
     return a0;
 }
 

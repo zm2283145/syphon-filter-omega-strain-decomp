@@ -7,7 +7,7 @@
 #include "types.h"
 
 /* Array constructor helper: (array, ctor, dtor, element size, count). */
-extern void* func_001004B0(void*, void*, void*, int, int);
+extern void* __construct_array(void*, void*, void*, int, int);
 extern int func_0018A210(int, int);
 extern int* func_0018A870(int*);
 
@@ -20,6 +20,6 @@ Rel* func_0018A8F0(Rel* r) {
 
 /* Construct an array of seven 8-byte pairs. */
 void* func_0018A910(void* array) {
-    func_001004B0(array, func_0018A870, func_0018A210, 8, 7);
+    __construct_array(array, func_0018A870, func_0018A210, 8, 7);
     return array;
 }

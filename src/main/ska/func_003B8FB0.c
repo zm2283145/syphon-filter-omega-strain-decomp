@@ -5,13 +5,13 @@
 
 #include "ska_types.h"
 
-extern void func_001004B0(void* array, void* ctor, void* dtor, int elemSize, int count);
+extern void __construct_array(void* array, void* ctor, void* dtor, int elemSize, int count);
 extern int func_0018A210(int, int);
 extern int func_0018A870(int);
 
 /* Copy-construct the notification table: construct seven 8-byte entries, then copy all fourteen words. */
 SkaNotifyTable* NotifyTable_CopyConstruct(SkaNotifyTable* dst, SkaNotifyTable* src) {
-    func_001004B0(dst, (void*)func_0018A870, (void*)func_0018A210, 8, 7);
+    __construct_array(dst, (void*)func_0018A870, (void*)func_0018A210, 8, 7);
     dst->words[0] = src->words[0];
     dst->words[1] = src->words[1];
     dst->words[2] = src->words[2];

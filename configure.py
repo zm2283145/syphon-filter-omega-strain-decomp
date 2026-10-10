@@ -179,7 +179,7 @@ def main():
             link_objs.append(obj)
             units.append({"name": name, "target_path": str(target).replace("\\", "/"),
                           "base_path": str(obj).replace("\\", "/"),
-                          "metadata": {"progress_categories": ["main"], "complete": False,
+                          "metadata": {"progress_categories": ["main"], "complete": True,
                                        "source_path": str(src).replace("\\", "/")}})
 
     py = cmd_path(sys.executable)

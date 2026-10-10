@@ -5,7 +5,7 @@
 
 #include "loose05_types.h"
 
-extern int func_00129A70(void* dst, int a1, int a2);
+extern int strncpy(void* dst, int a1, int a2);
 extern int func_00461770(Vec12* v, char* pos, int n, int value);
 
 /* Appends one 12-byte element at the end of the vector. */
@@ -19,7 +19,7 @@ int func_00462620(Vec12* v, int value) {
 }
 
 int* func_00462650(int* self, int a1, int a2) {
-    func_00129A70(self, a1, 8);
+    strncpy(self, a1, 8);
     self[2] = a2;
     return self;
 }

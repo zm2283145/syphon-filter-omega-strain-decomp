@@ -8,7 +8,7 @@
 #include "human_types.h"
 
 /* Deque of 248-byte elements, 8 per block: map at +0x00, start +0x10, size +0x14. */
-extern int** func_00198EF0(void* map, unsigned int block);
+extern int** RingBuffer_At(void* map, unsigned int block);
 extern void* func_00198F20(void*);
 
 /* Construct an iterator holding value (goes through a stack temporary). */
@@ -31,6 +31,6 @@ char* Deque_Back(char* deque) {
     int** slot;
 
     last = *(int*)(deque + 16) + *(int*)(deque + 20) - 1;
-    slot = func_00198EF0(func_00198F20(deque), (unsigned int)last >> 3);
+    slot = RingBuffer_At(func_00198F20(deque), (unsigned int)last >> 3);
     return (char*)*slot + (last & 7) * 248;
 }

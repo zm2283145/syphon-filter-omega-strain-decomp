@@ -8,7 +8,7 @@
 
 extern FlaggedRel D_00532A70[5];
 /* Runtime array constructor without destructor: (array, ctor, element size, count). */
-extern void func_00100440(void* array, void* ctor, int size, int count);
+extern void __destroy_array(void* array, void* ctor, int size, int count);
 extern int func_0033C280(FlaggedRel*);
 extern int func_0033C2A0(int, int);
 
@@ -21,7 +21,7 @@ Rel* func_0033C120(Rel* r) {
 
 /* Static initializer: construct the five entries of D_00532A70. */
 void func_0033C140(void) {
-    func_00100440(D_00532A70, func_0033C2A0, 16, 5);
+    __destroy_array(D_00532A70, func_0033C2A0, 16, 5);
 }
 
 FlaggedRel* func_0033C160(FlaggedRel* self) {

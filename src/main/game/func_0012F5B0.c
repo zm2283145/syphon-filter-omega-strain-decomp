@@ -7,7 +7,7 @@
 #include "types.h"
 #include "game_types.h"
 
-extern int func_00129A70(char* dst, const char* src, int n); /* bounded string copy */
+extern int strncpy(char* dst, const char* src, int n); /* bounded string copy */
 
 int func_0012F5B0(NameSlotTable* t, int i) {
     return t->values[i];
@@ -25,7 +25,7 @@ char* func_0012F5D0(NameSlotTable* t, int i) {
 int NameSlot_SetName(NameSlotTable* t, int i, const char* name) {
     int ret;
 
-    ret = func_00129A70(t->names[i], name, 15);
+    ret = strncpy(t->names[i], name, 15);
     t->names[i][15] = 0;
     return ret;
 }

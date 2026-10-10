@@ -8,7 +8,7 @@
 #include "loose04_types.h"
 
 /* Array constructor helper: (array, ctor, dtor, element size, count). */
-extern void* func_001004B0(void* array, void* ctor, void* dtor, int size, int count);
+extern void* __construct_array(void* array, void* ctor, void* dtor, int size, int count);
 extern L4Elem30* func_003D5AA0(L4Elem30*, int);
 L4Elem30* func_003D5CD0(L4Elem30* self);
 
@@ -32,7 +32,7 @@ Unk3D5C50* func_003D5C50(Unk3D5C50* self) {
 Unk3D5C80* func_003D5C80(Unk3D5C80* self) {
     self->unk00 = 0;
     self->unk04 = 0;
-    func_001004B0(self->elems, func_003D5CD0, func_003D5AA0, sizeof(L4Elem30), 6);
+    __construct_array(self->elems, func_003D5CD0, func_003D5AA0, sizeof(L4Elem30), 6);
     return self;
 }
 

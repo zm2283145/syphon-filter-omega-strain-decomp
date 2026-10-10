@@ -10,7 +10,9 @@ typedef struct NetObjectUpdate {
 } NetObjectUpdate;
 
 typedef struct NetSessionEntry {
-    char pad00[0x1C];
+    int unk00;
+    int id;                        /* 0x04 */
+    char pad08[0x14];
     int value;                     /* 0x1C */
 } NetSessionEntry;
 

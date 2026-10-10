@@ -257,6 +257,12 @@ def main():
             if typ in ("asm", "hasm"):
                 units.append({"name": f"asm/{start + 0x100000:06X}", "target_path": str(obj).replace("\\", "/"),
                               "metadata": {"progress_categories": ["main"], "auto_generated": True}})
+            else:
+                # Data still in assembly counts toward the data total (not
+                # linked from source yet), so the report's data progress is
+                # real instead of an empty 100 %.
+                units.append({"name": f"{typ}/{start + 0x100000:06X}", "target_path": str(obj).replace("\\", "/"),
+                              "metadata": {"progress_categories": ["main"], "auto_generated": True}})
         elif typ == "c":
             src = Path("src") / (name + ".c")
             obj = Path("build") / "src" / (name + ".o")

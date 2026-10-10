@@ -161,5 +161,7 @@
   "main/func_003EE740": "cwps2-3.04",
   "main/func_003F44E0": "cwps2-3.04",
   "main/func_003FCFB0": "cwps2-3.04",
-  "main/func_003FFA20": "cwps2-3.04"
+  "main/func_003FFA20": "cwps2-3.04",
+  "main/gameCamera/func_0017D540": "cwps2-3.04",
+  "main/human/func_001B8B40": "cwps2-3.04"
 }

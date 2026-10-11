@@ -1,0 +1,44 @@
+#ifndef NET_REGISTER_TYPE_H
+#define NET_REGISTER_TYPE_H
+
+/*
+ * Network message type registration: describe each payload field of a
+ * prototype (func_002E9A98(desc, &field, size, count)) and register the
+ * type with its factory. Returns 1 on success.
+ *   NETREG_BEGIN(name, Proto)   first check returns early
+ *   NETREG_BEGIN_KEEP(name, Proto)  the base check result is kept and
+ *                                   tested again (inlined base class)
+ *   NETREG_FIELD(member, size, count)
+ *   NETREG_END(typeSym, factory)
+ */
+extern int func_002E9A10(void* reg);
+extern int func_003C9C30(void* desc);
+extern int func_002E9A98(void* desc, void* field, int size, int count);
+extern int NetMsg_RegisterType(void* type, int version, void* factory);
+
+#define NETREG_BEGIN(name, Proto)                                             \
+    unsigned char name(void* reg)                                             \
+    {                                                                         \
+        struct { long long file; Proto p; } L;                                \
+        unsigned char ok = 0;                                                 \
+        if (func_002E9A10(reg) == 0 && func_003C9C30(&L.file) != 0
+
+#define NETREG_BEGIN_KEEP(name, Proto)                                        \
+    unsigned char name(void* reg)                                             \
+    {                                                                         \
+        struct { long long file; Proto p; } L;                                \
+        int base;                                                             \
+        unsigned char ok = 0;                                                 \
+        base = func_002E9A10(reg);                                            \
+        if (base == 0 && func_003C9C30(&L.file) != 0 && base == 0
+
+#define NETREG_FIELD(member, size, count)                                     \
+        && func_002E9A98(&L.file, &L.p.member, (size), (count)) == 0
+
+#define NETREG_END(typeSym, factory)                                          \
+        && NetMsg_RegisterType(typeSym, 2, factory) == 0)                     \
+            ok = 1;                                                           \
+        return ok;                                                            \
+    }
+
+#endif /* NET_REGISTER_TYPE_H */

@@ -64,17 +64,17 @@ All 24 are identical in objdiff, and the mixed-compiler whole build prints
 | Item | State |
 | --- | --- |
 | Round-trip build | **Byte-identical**, SHA-256 `9924da91…31dc6` (Windows, native tools) |
-| Build with C | **Byte-identical** with 5,978 matched functions (Metrowerks 3.0.3 / 3.0 build 38 / 3.04 + EE-GCC 2.95.3 / 2.96) |
-| Functions (objdiff) | 5,978 / 14,845 matched (40.27 %) |
-| Code bytes (objdiff) | 291,180 / 3,663,320 (7.95 %) |
-| Linked code | 7.95 % — every matched C unit is fully linked |
+| Build with C | **Byte-identical** with 5,981 matched functions (Metrowerks 3.0.3 / 3.0 build 38 / 3.04 + EE-GCC 2.95.3 / 2.96) |
+| Functions (objdiff) | 5,981 / 14,845 matched (40.29 %) |
+| Code bytes (objdiff) | 293,080 / 3,663,320 (8.00 %) |
+| Linked code | 8.00 % — every matched C unit is fully linked |
 | Named functions | ~2,700 in `config/symbol_addrs.txt` |
 | Data | 339,552 bytes counted separately; not linked from C |
 | decomp.dev | listed: https://decomp.dev/zm2283145/syphon-filter-omega-strain-decomp |
 
 ### Additional reserved-range matches using CodeWarrior 3.0 build 38
 
-Eighty-four readable functions (14,792 code bytes) were added in the reserved range:
+Eighty-seven readable functions (16,692 code bytes) were added in the reserved range:
 `0x00412110`, `0x0041C0D0`, `0x0041C0F0`, `0x0041DA60`, `0x00421670`,
 `0x00425E00`, `0x0042AFC0`, `0x00431850`, `0x00436BA0`, `0x004375D0`,
 `0x00444E10`, `0x0044A070`, `0x00452C70`, `0x0045A968`, `0x0045EC60`,
@@ -91,8 +91,9 @@ Eighty-four readable functions (14,792 code bytes) were added in the reserved ra
 `0x004210C0`, `0x00421290`, `0x00421380`, `0x00421CD0`, `0x00421D40`,
 `0x00421DA0`, `0x00421E20`, `0x00422F10`, `0x00422F80`, `0x00423000`,
 `0x00423080`, `0x00423160`, `0x004231F0`, `0x00424430`, `0x004245D0`,
-`0x00424670`, `0x00424820`, `0x004248C0`, and `0x004249A0`.
-All eighty-four are identical in objdiff. Eighty-two use CodeWarrior 3.0 build 38 overrides;
+`0x00424670`, `0x00424820`, `0x004248C0`, `0x004249A0`, `0x00423670`,
+`0x00423BE0`, and `0x00424A90`.
+All eighty-seven are identical in objdiff. Eighty-five use CodeWarrior 3.0 build 38 overrides;
 `0x00412110` and `0x0045A968` also match with the default 3.0.3 compiler. The
 complete mixed build printed the retail SHA-256 OK line without any
 compiler falling back to assembly. The preceding addition comprises two layered
@@ -154,7 +155,7 @@ default 3.0.3; the whole build leaves every prior complete unit unchanged.
 The larger insertion implementation at `0x00422A50` remains assembly because
 its draft still differs in pointer register allocation.
 
-The latest addition recovers six grid-selection and sizing routines in
+The preceding addition recovers six grid-selection and sizing routines in
 `0x00424430`-`0x00424730` and `0x00424820`-`0x004249D0`: 1,172 code bytes
 plus 28 padding bytes. Selection changes preserve old/new virtual callbacks,
 live state reads, viewport adjustment, marker positioning and scrollbar
@@ -168,6 +169,17 @@ metric, not a pointer. Its return type and the text-list caller's declaration
 now use the integer ABI, and `0x00424820` receives the padded numeric height.
 Both existing units retain their identical instructions and are not counted
 as new matches. The whole build confirms every prior complete unit is unchanged.
+
+The latest addition recovers the 1,380-byte grid drawing routine, its 224-byte
+fixed-viewport row mapper and the 296-byte grid activation routine: 1,900 code
+bytes plus 20 padding bytes. Drawing preserves separate column, row and cell
+passes, live dimensions after callbacks, signed column-width conversions and
+unsigned row-height conversions. Fixed-viewport mapping retains the original
+wrap limits; activation resets selection, refreshes visible dimensions and
+notifies the selected cell. Distinct cell-pass coordinate locals preserve the
+original floating-point register lifetimes. All three match build 38 and 3.04,
+but differ with default 3.0.3. The clean whole build leaves every prior complete
+unit unchanged and brings code progress just above 8 percent (8.000393 %).
 
 The existing helper at `0x001C43A0` forwards `String_Compare`'s integer
 result, rather than assigning a string. Its return declaration and comment

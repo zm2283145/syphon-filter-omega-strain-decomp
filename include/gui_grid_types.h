@@ -1,6 +1,13 @@
 #ifndef GUI_GRID_TYPES_H
 #define GUI_GRID_TYPES_H
 
+struct GuiGridRect {
+    float x;
+    float y;
+    float width;
+    float height;
+};
+
 struct GuiGridWidget {
     virtual void slot00();
     virtual void slot01();
@@ -24,9 +31,9 @@ struct GuiGridWidget {
     virtual void slot19();
     virtual void slot20();
     virtual void set_extent(unsigned int columns, unsigned int rows);
-    virtual void slot22();
-    virtual void slot23();
-    virtual void slot24();
+    virtual void draw_column(unsigned int column, GuiGridRect* rect);
+    virtual void draw_row(unsigned int row, GuiGridRect* rect);
+    virtual void draw_cell(unsigned int column, unsigned int row, GuiGridRect* rect);
     virtual void on_selected(unsigned int column, unsigned int row);   /* vtable +0x6C */
     virtual void on_deselected(unsigned int column, unsigned int row); /* vtable +0x70 */
     char pad04[0x30];
@@ -49,9 +56,11 @@ struct GuiGridWidget {
     unsigned int visibleRows;     /* 0x74 */
     unsigned int firstColumn;     /* 0x78 */
     unsigned int firstRow;        /* 0x7C */
-    char pad80[2];
+    unsigned char pageNavigation; /* 0x80 */
+    unsigned char wrapRows;       /* 0x81 */
     unsigned char fixedViewport;  /* 0x82 */
-    char pad83[5];
+    char pad83;
+    unsigned int centerRow;       /* 0x84 */
     GuiGridWidget* marker;        /* 0x88 */
     void* scrollbar;              /* 0x8C */
 };

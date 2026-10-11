@@ -5796,7 +5796,7 @@ segments:
       - [0x323610, c, main/func_00423610]
       - [0x323660, c, main/func_00423660]
       - [0x323670, c, main/func_00423670]
-      - [0x323CC0, asm]
+      - [0x323CC0, c, main/func_00423CC0]
       - [0x324410, c, main/func_00424410]
       - [0x324430, c, main/func_00424430]
       - [0x324730, c, main/func_00424730]

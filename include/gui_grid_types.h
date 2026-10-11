@@ -8,6 +8,14 @@ struct GuiGridRect {
     float height;
 };
 
+struct GuiGridInput {
+    unsigned short type;          /* 0x00 */
+    unsigned short device;        /* 0x02 */
+    unsigned short unused;
+    unsigned short action;        /* 0x06 */
+    unsigned short button;        /* 0x08 */
+};
+
 struct GuiGridWidget {
     virtual void slot00();
     virtual void slot01();

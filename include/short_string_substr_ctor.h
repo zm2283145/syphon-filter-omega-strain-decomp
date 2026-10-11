@@ -29,7 +29,7 @@ template <class T> inline const T& ShortStrSub_min(const T& a, const T& b)
         self->u.l.data = 0;                                                   \
         size = ShortStr_IsLong(src) ? src->u.l.length                         \
                                     : ShortStr_ShortLen(src);                 \
-        String_Reserve(self, size >= pos ? ShortStrSub_min(n, size - pos)      \
+        String_Reserve(self, pos <= size ? ShortStrSub_min(n, size - pos)      \
                                          : 0);                                \
         func_003B9310(self, 0, 0, src, pos, n);                               \
         return self;                                                          \

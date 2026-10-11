@@ -5913,6 +5913,8 @@ segments:
       - [0x32F510, asm]
       - [0x32F720, c, main/NetObjectMgr/func_0042F720]
       - [0x32F760, asm]
+      - [0x32F970, c, main/NetObjectMgr/func_0042F970]
+      - [0x3304F0, asm]
       - [0x3307B0, c, main/NetObjectMgr/func_004307B0]
       - [0x3307E0, asm]
       - [0x330A20, c, main/NetObjectMgr/func_00430A20]

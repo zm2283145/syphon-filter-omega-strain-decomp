@@ -5845,6 +5845,8 @@ segments:
       - [0x3289C0, c, main/func_004289C0]
       - [0x328A00, c, main/func_00428A00]
       - [0x328B90, asm]
+      - [0x328CD0, c, main/func_00428CD0]
+      - [0x328EF0, asm]
       - [0x328FD0, c, main/func_00428FD0]
       - [0x328FF0, asm]
       - [0x3290F0, c, main/func_004290F0]

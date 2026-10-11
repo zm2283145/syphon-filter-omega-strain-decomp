@@ -1,0 +1,6 @@
+#include "types.h"
+#pragma cplusplus on
+#include "vector_init_range.h"
+
+struct VRElem20 { float a; float b; unsigned char c; int d; int e; };
+DEFINE_VECTOR_INIT_RANGE(func_002A57F0, VRElem20, 0x4CCCCC, D_004AB2C0, D_0049ED58, 0x5C)

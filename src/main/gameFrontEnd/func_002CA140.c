@@ -1,0 +1,9 @@
+#include "types.h"
+extern char* D_0048C140;
+typedef struct { char pad[0x26C]; char name[0x40]; } NameObjA140;
+char* func_002CA140(NameObjA140* o)
+{
+    if (o->name[0])
+        return o->name;
+    return D_0048C140;
+}

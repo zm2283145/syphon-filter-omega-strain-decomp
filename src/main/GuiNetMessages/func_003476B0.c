@@ -1,0 +1,36 @@
+#include "types.h"
+#pragma cplusplus on
+#include "vslot_pad.h"
+class W3476B0 {
+public:
+    VPAD16(a) VPAD4(b)
+    virtual bool IsA(void* type);
+};
+struct S3476B0 { char pad[0x78]; unsigned char a78; char pad79[7]; unsigned char a80; };
+extern "C" {
+extern char* D_00492B88;
+extern char* D_00492B90;
+extern char D_004A7520[];
+extern char D_004FFB50[];
+W3476B0* func_0041DB80(void* self, char* name);
+void* Agent_GetSelected(void* list, int idx);
+char* func_00336170(void* ag);
+char* func_00336110(void* ag);
+void func_0041BEB0(W3476B0* w, char* text, int flags);
+void func_003476B0(S3476B0* o);
+}
+static inline W3476B0* cast3476B0(W3476B0* w)
+{
+    return (w && w->IsA(D_004A7520)) ? w : 0;
+}
+void func_003476B0(S3476B0* o)
+{
+    W3476B0* w;
+    if (o->a80) return;
+    w = cast3476B0(func_0041DB80(o, D_00492B88));
+    if (w) func_0041BEB0(w, func_00336170(Agent_GetSelected(D_004FFB50, -1)), 0);
+    w = cast3476B0(func_0041DB80(o, D_00492B90));
+    if (w) func_0041BEB0(w, func_00336110(Agent_GetSelected(D_004FFB50, -1)), 0);
+    o->a78 = 1;
+    o->a80 = 1;
+}

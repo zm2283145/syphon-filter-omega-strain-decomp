@@ -53,6 +53,13 @@ class CompilerSelectionTests(unittest.TestCase):
         with patch.object(configure, "ROOT", self.root):
             self.assertIsNone(configure.gcc_command("ee-gcc2.96", ""))
 
+    def test_eegcc_flag_profile_uses_its_build(self):
+        overrides = {"lib/example": "ee-gcc2.96-G0"}
+        self.write_overrides(overrides)
+        self.assertEqual(configure.compiler_overrides(self.config, self.subs), overrides)
+        self.assertEqual(configure.GCC_PROFILE_BUILDS["ee-gcc2.96-G0"], "ee-gcc2.96")
+        self.assertIn("-G0", configure.GCC_VERSION_FLAGS["ee-gcc2.96-G0"])
+
     def test_invalid_shapes_rejected(self):
         for value in ([], {"main/example": 3}, {"main/example": "../compiler"}):
             with self.subTest(value=value):

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Compile a C file and report, per function, whether it matches the retail code.
 
-usage: python tools/check_match.py FILE.c [-c mw,mw304,mw38,gcc,gcc296] [-I DIR ...]
+usage: python tools/check_match.py FILE.c [-c mw,mw304,mw38,gcc,gcc296,gcc296g0] [-I DIR ...]
 
 Run from the repository root after a configure + build (it reads
 build/orig/SCUS_972.64.rom and splat's asm/). Each compiler in -c is tried in
@@ -14,6 +14,7 @@ compiler (if any) produces the retail bytes:
   mw38   CodeWarrior PS2 3.0 build 38 (2003-03-07): --cw38 DIR or CW38_DIR
   gcc    EE-GCC 2.95.3 (-O2 -G0), for library code under src/lib/
   gcc296 EE-GCC 2.96 (-O2), Linux build; through WSL on Windows
+  gcc296g0 the same with -G0 (no gp-relative data), as used by part of the library
 
 Relocated fields are masked, then call targets and %hi/%lo pairs are checked
 against the retail addresses (template clones are not interchangeable).
@@ -81,11 +82,11 @@ def compile_with(kind, src, incs, dirs):
         cc = Path(dirs[kind]) / "mwccps2.exe"; flags = MWFLAGS
     elif kind == "gcc":
         cc = ROOT / ".tools" / "eegcc" / "ee-gcc2.95.3-136" / "bin" / "ee-gcc.exe"; flags = GCCFLAGS
-    elif kind == "gcc296":
+    elif kind in ("gcc296", "gcc296g0"):
         d = ROOT / ".tools" / "eegcc" / "ee-gcc2.96"
         if not (d / "bin" / "ee-gcc").exists():
             return None, "ee-gcc2.96 not installed (tools/setup_tools.py)"
-        flags = ["-c", "-O2", "-w"]
+        flags = ["-c", "-O2", "-w"] + (["-G0"] if kind == "gcc296g0" else [])
         fd, out = tempfile.mkstemp(suffix=".o", dir=ROOT / "build"); os.close(fd); os.unlink(out)
         cmd = ([sys.executable, str(ROOT / "tools" / "wsl_gcc.py"), str(d)] if IS_WINDOWS else [str(d / "bin" / "ee-gcc")])
         r = subprocess.run(cmd + flags + incs + ["-o", out, str(src)], capture_output=True, text=True, cwd=ROOT)

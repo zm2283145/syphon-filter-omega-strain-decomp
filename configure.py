@@ -151,7 +151,9 @@ def mwcc_path(version, directories, required=True):
 
 
 # Flags for EE-GCC builds other than the default 2.95.3 (GCCFLAGS).
-GCC_VERSION_FLAGS = {"ee-gcc2.96": "-c -O2 -w"}
+GCC_VERSION_FLAGS = {"ee-gcc2.96": "-c -O2 -w", "ee-gcc2.96-G0": "-c -O2 -G0 -w"}
+# Override values that are a flag profile of an installed build, not a build of their own.
+GCC_PROFILE_BUILDS = {"ee-gcc2.96-G0": "ee-gcc2.96"}
 
 
 def gcc_command(version, wrap):
@@ -160,7 +162,7 @@ def gcc_command(version, wrap):
     Windows builds run directly (or under wibo/wine elsewhere). The decomp.me
     ee-gcc2.96 is a 32-bit Linux program: it runs directly on Linux and through
     WSL (tools/wsl_gcc.py) on Windows."""
-    directory = ROOT / ".tools" / "eegcc" / version
+    directory = ROOT / ".tools" / "eegcc" / GCC_PROFILE_BUILDS.get(version, version)
     exe, elf = directory / "bin" / "ee-gcc.exe", directory / "bin" / "ee-gcc"
     if exe.is_file():
         return wrap + cmd_path(exe)

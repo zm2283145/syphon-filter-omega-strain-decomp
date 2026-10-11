@@ -64,17 +64,17 @@ All 24 are identical in objdiff, and the mixed-compiler whole build prints
 | Item | State |
 | --- | --- |
 | Round-trip build | **Byte-identical**, SHA-256 `9924da91…31dc6` (Windows, native tools) |
-| Build with C | **Byte-identical** with 5,982 matched functions (Metrowerks 3.0.3 / 3.0 build 38 / 3.04 + EE-GCC 2.95.3 / 2.96) |
-| Functions (objdiff) | 5,982 / 14,845 matched (40.30 %) |
-| Code bytes (objdiff) | 294,944 / 3,663,320 (8.05 %) |
-| Linked code | 8.05 % — every matched C unit is fully linked |
+| Build with C | **Byte-identical** with 5,989 matched functions (Metrowerks 3.0.3 / 3.0 build 38 / 3.04 + EE-GCC 2.95.3 / 2.96) |
+| Functions (objdiff) | 5,989 / 14,845 matched (40.34 %) |
+| Code bytes (objdiff) | 296,240 / 3,663,320 (8.09 %) |
+| Linked code | 8.09 % — every matched C unit is fully linked |
 | Named functions | ~2,700 in `config/symbol_addrs.txt` |
 | Data | 339,552 bytes counted separately; not linked from C |
 | decomp.dev | listed: https://decomp.dev/zm2283145/syphon-filter-omega-strain-decomp |
 
 ### Additional reserved-range matches using CodeWarrior 3.0 build 38
 
-Eighty-eight readable functions (18,556 code bytes) were added in the reserved range:
+Ninety-five readable functions (19,852 code bytes) were added in the reserved range:
 `0x00412110`, `0x0041C0D0`, `0x0041C0F0`, `0x0041DA60`, `0x00421670`,
 `0x00425E00`, `0x0042AFC0`, `0x00431850`, `0x00436BA0`, `0x004375D0`,
 `0x00444E10`, `0x0044A070`, `0x00452C70`, `0x0045A968`, `0x0045EC60`,
@@ -92,8 +92,9 @@ Eighty-eight readable functions (18,556 code bytes) were added in the reserved r
 `0x00421DA0`, `0x00421E20`, `0x00422F10`, `0x00422F80`, `0x00423000`,
 `0x00423080`, `0x00423160`, `0x004231F0`, `0x00424430`, `0x004245D0`,
 `0x00424670`, `0x00424820`, `0x004248C0`, `0x004249A0`, `0x00423670`,
-`0x00423BE0`, `0x00424A90`, and `0x00423CC0`.
-All eighty-eight are identical in objdiff. Eighty-six use CodeWarrior 3.0 build 38 overrides;
+`0x00423BE0`, `0x00424A90`, `0x00423CC0`, `0x00426100`, `0x004261D0`,
+`0x004262D0`, `0x00426590`, `0x00426600`, `0x004267B0`, and `0x00426810`.
+All ninety-five are identical in objdiff. Ninety-three use CodeWarrior 3.0 build 38 overrides;
 `0x00412110` and `0x0045A968` also match with the default 3.0.3 compiler. The
 complete mixed build printed the retail SHA-256 OK line without any
 compiler falling back to assembly. The preceding addition comprises two layered
@@ -181,7 +182,7 @@ original floating-point register lifetimes. All three match build 38 and 3.04,
 but differ with default 3.0.3. The clean whole build leaves every prior complete
 unit unchanged and brings code progress just above 8 percent (8.000393 %).
 
-The latest addition is the 1,864-byte grid input handler at `0x00423CC0`
+The preceding addition is the 1,864-byte grid input handler at `0x00423CC0`
 (plus 8 padding bytes). It preserves confirmation messages, directional
 selection, page movement, row wrapping, event consumption and change
 notifications. The original horizontal edge behavior reselects the boundary
@@ -190,6 +191,18 @@ Direct Boolean predicates, byte-valued event classification and explicit
 page-boundary branches reproduce the original control flow without a jump
 table. The routine matches build 38 and 3.04, but differs with default 3.0.3.
 The clean whole build leaves every previously complete unit unchanged.
+
+The latest addition recovers text-array row construction and child lifecycle
+in `0x00426100`-`0x00426350` and `0x00426590`-`0x00426870`: seven routines
+totaling 1,296 code bytes plus 32 padding bytes. The 432-byte row builder
+allocates independently owned rows, initializes default string/color cells and
+appends each row after copying its cells. Keeping the allocation lifetime
+separate from the stored row pointer reproduces the original register and
+stack layout. Typed row/store pointers and the complete 48-byte cell layout
+preserve existing field offsets. Child activation, cleanup and resource reset
+retain the original allocation and state-update order. All seven match build
+38 and 3.04, but differ with default 3.0.3. A clean whole build verifies every
+previously complete unit remains unchanged with the expanded shared layouts.
 
 The existing helper at `0x001C43A0` forwards `String_Compare`'s integer
 result, rather than assigning a string. Its return declaration and comment

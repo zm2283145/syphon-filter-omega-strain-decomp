@@ -134,6 +134,61 @@ treat it as a starting point for real types and names.
 
 ## Matching a function
 
+### Prioritize families and byte gains
+
+Rank unowned functions before choosing the next matching task:
+
+```
+python tools\rank_candidates.py --start 0x00400000 --end 0x00476B00
+python tools\rank_candidates.py --start 0x00400000 --end 0x00476B00 --json > build\candidate-ranking.json
+```
+
+The ranking uses ordered `splat.yaml` ownership and section-relative objdiff
+addresses, so secondary functions in an existing C unit are not offered as new
+work. Function sizes count toward potential gains; gaps and crossing functions
+do not. With generated `asm/` available, it groups repeated instruction patterns
+while preserving registers, constants, external calls and relocation expressions.
+Groups are heuristic candidates, not matches or measured completion-time estimates.
+Warnings identify missing inventory, incomplete signatures and stale ownership.
+
+`--input-root`, `--config`, `--report` and `--asm-root` select read-only snapshots.
+An optional `--research-index` points to a port research `ADDRESS_INDEX.md` and
+adds document citations and research-supported byte totals. Native-port behavior
+is useful evidence for readable source, but does not establish a compiler match.
+
+### Run bounded compiler experiments
+
+After configuring and generating a current `check_match.py` symbol cache, compare
+a candidate with a small, explicitly selected compiler/profile matrix:
+
+```
+python tools\try_match.py candidate.c -c mw,mw38 --profiles source,no-peephole --compiler-dir "mw38=<licensed build 38 directory>" --keep exact --json
+```
+
+The default is one serial `mw`/`source` trial. Plans are limited to six trials
+unless `--max-trials` is explicitly raised, with a hard ceiling of 15 and a
+per-compiler timeout. Available profiles are `source`, `no-peephole`,
+`no-common-subs`, `no-propagation` and `no-strength-reduction`.
+Profiles request compiler prefix pragmas; source/header pragmas remain intact
+and may override them, so an effective per-function setting is not guaranteed.
+Use `-I` for source-relative header directories.
+
+The runner leaves sources unchanged and creates isolated scratch directories
+under `build/`. `--keep exact` retains objects with at least one exact function;
+other functions and undefined-symbol diagnostics still require review.
+`--keep all` retains every successfully compared object. `near` means the
+existing checker's actual `DIFF` result, not a similarity score. Compile failures
+and unknown addresses are separate outcomes. `--rom` and `--symbols` select
+existing reference inputs; use a consistent snapshot, since the runner never
+regenerates the symbol cache.
+
+For parallel work, assign non-overlapping functions and isolated output/input
+snapshots. Keep shared configuration, whole builds and publication under one
+integrator. Batch compatible candidates into the final full-image check; neither
+ranking nor compiler-trial output authorizes a match claim.
+
+### Integrate a candidate
+
 1. Pick a function from `asm/*.s` (functions must start on a 16-byte boundary,
    and so must the next function, because every object is 16-byte aligned).
 2. In `config/splat.yaml`, insert a `c` subsegment at its start and an
@@ -145,6 +200,9 @@ treat it as a starting point for real types and names.
 3. Write `src/main/func_00130AE0.c`, run `python configure.py` and `ninja`.
    The SHA-256 check is the final word; use objdiff to find differences.
    Only commit functions that build byte-identically.
+
+Tooling and configuration tests run with
+`python -m unittest discover -s tests -p "test_*.py"`.
 
 Name functions in `config/symbol_addrs.txt` (`name = 0xADDRESS; // type:func`)
 once their purpose is known.

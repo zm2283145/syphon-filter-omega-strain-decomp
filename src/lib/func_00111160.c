@@ -1,0 +1,13 @@
+typedef struct { int currentCount; int maxCount; int initCount; int numWaitThreads; unsigned int attr; unsigned int option; } SemaParam1160;
+extern int CreateSema(SemaParam1160 *);
+extern int D_00486244;
+void func_00111160(void)
+{
+    SemaParam1160 p;
+    if (D_00486244 == -1) {
+        p.option = 0;
+        p.initCount = 1;
+        p.maxCount = 1;
+        D_00486244 = CreateSema(&p);
+    }
+}

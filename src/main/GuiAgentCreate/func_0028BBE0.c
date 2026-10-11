@@ -1,0 +1,127 @@
+#pragma cplusplus on
+#include "types.h"
+struct W_0028BBE0 {
+    virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+    virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+    virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+    virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+    virtual int IsA(char* type);
+    char pad4[0x10]; unsigned short flags;
+};
+struct Src_0028BBE0 { char pad[4]; char name[4]; };
+struct Ui_0028BBE0 { char pad[0x2E]; unsigned char b2E; };
+struct Self_0028BBE0 {
+    char pad0[0x4C]; void* f4C; void* f50; W_0028BBE0* f54; char pad58[0xCC - 0x58]; int fCC; int fD0; char padD4[4]; int fD8;
+};
+extern "C" {
+extern char D_004A9970[];
+extern char D_004A9978[];
+extern char D_004A9988[];
+extern char D_004A9990[];
+extern char D_004A9998[];
+extern char D_004A99B0[];
+extern char D_004A7520[];
+extern char D_004FFB50[];
+extern unsigned char D_004FFBB8;
+extern int D_004FFBBC;
+extern Ui_0028BBE0* D_004FFC04;
+extern char D_004A99D0[];
+extern char D_004A99E8[];
+extern char D_004A9A00[];
+extern char D_004A9A18[];
+char* func_001692D0(void* s);
+void func_0028D610(Self_0028BBE0* self, char* n);
+int strcmp(const char* a, const char* b);
+void func_0028C1D0(void* p);
+void func_0028CB20(Self_0028BBE0* self, int a, int b);
+void func_0028C2A0(Src_0028BBE0* w);
+void* Agent_GetSelected(void* a, int b);
+void func_003340B0(void* ag, char* text);
+void* func_0041DB80(Self_0028BBE0* self, char* name);
+void func_0041BEB0(W_0028BBE0* w, char* s, int a);
+void func_0028BA90(Self_0028BBE0* self);
+void* func_004147A0(void);
+void func_00414B30(void* ui, void* w);
+void func_00333F60(void* ag, int a, int b);
+void* func_00414790(void);
+void* func_00418A80(void* a, char* b, char* c);
+void func_00414AC0(void* ui, Self_0028BBE0* self, void* pg);
+int func_0041EF10(Self_0028BBE0* self, Src_0028BBE0* w, int msg, int sub, char* text);
+}
+static inline W_0028BBE0* FindAs_0028BBE0(Self_0028BBE0* self, char* name, char* type)
+{
+    W_0028BBE0* w = (W_0028BBE0*)func_0041DB80(self, name);
+    return (w && w->IsA(type)) ? w : 0;
+}
+extern "C" int func_0028BBE0(Self_0028BBE0* self, Src_0028BBE0* w, int msg, int sub, char* text)
+{
+    unsigned short m = msg;
+    if (m == 0x10 && sub == 1)
+        return 1;
+    if (m == 0) {
+        char* n;
+        self->fD0 = 0;
+        n = func_001692D0(w->name);
+        func_0028D610(self, n);
+        if (!strcmp(n, D_004A9970)) {
+            self->fCC = 0;
+            self->fD0 = 1;
+        }
+        if (!strcmp(n, D_004A9978)) {
+            func_0028C1D0(self->f4C);
+            self->fCC = 1;
+            self->fD0 = 1;
+            func_0028CB20(self, 1, 0);
+        }
+        if (!strcmp(n, D_004A9988)) {
+            func_0028C2A0(w);
+            func_0028C1D0(self->f50);
+            self->fCC = 2;
+            self->fD0 = 1;
+        }
+        if (!strcmp(n, D_004A9990)) {
+            func_0028C2A0(w);
+            func_0028C1D0(self->f4C);
+            if (!self->fD8 && self->f54)
+                self->f54->flags &= ~2;
+            self->fCC = 3;
+            self->fD0 = 1;
+        }
+        if (!strcmp(n, D_004A9998)) {
+            func_0028C1D0(self->f50);
+            self->fCC = 4;
+            self->fD0 = 1;
+        }
+    }
+    if (m == 0x1A) {
+        if (sub == 1 || sub == 2) {
+            W_0028BBE0* x;
+            if (text && *text) {
+                W_0028BBE0* t;
+                func_003340B0(Agent_GetSelected(D_004FFB50, -1), text);
+                t = FindAs_0028BBE0(self, D_004A99B0, D_004A7520);
+                if (t)
+                    func_0041BEB0(t, text, 0);
+            }
+            if (sub == 2 && text && *text) {
+                func_0028BA90(self);
+                return 1;
+            }
+            x = (W_0028BBE0*)func_0041DB80(self, D_004A9998);
+            if (x)
+                func_00414B30(func_004147A0(), x);
+            return 1;
+        } else if (sub == 3) {
+            void* pg;
+            D_004FFBB8 = 0;
+            D_004FFBBC = -1;
+            func_00333F60(Agent_GetSelected(D_004FFB50, -1), 0, 1);
+            if (D_004FFC04->b2E)
+                pg = func_00418A80(func_00414790(), D_004A99D0, D_004A99E8);
+            else
+                pg = func_00418A80(func_00414790(), D_004A9A00, D_004A9A18);
+            func_00414AC0(func_004147A0(), self, pg);
+        }
+    }
+    return func_0041EF10(self, w, msg, sub, text);
+}

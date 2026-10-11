@@ -1,0 +1,56 @@
+#include "types.h"
+typedef struct { int w[8]; } Pop_1C4190;
+extern char D_0048B2F8[];
+extern char D_0049F290[];
+extern char D_0049F2A8[];
+extern char D_004FFB50[];
+extern char D_004FFC90[];
+extern void func_00165E60(void* a, char* name, int x);
+extern void* func_001698C0(void);
+extern int sprintf(char* buf, const char* fmt, ...);
+extern int Archive_Open(void* a, char* name, int b, int c);
+extern void Population_Load(Pop_1C4190* p, char* name, int h);
+extern void func_00136A70(void* w, Pop_1C4190* p, void* arc);
+extern void Loader_AllocateLights(void* l, Pop_1C4190* p);
+extern void Loader_InitLights(void* l, Pop_1C4190* p);
+extern void Loader_InitPopulatedCameras(void* l, Pop_1C4190* p);
+extern void func_001C1E40(void* l, Pop_1C4190* p, void* arc);
+extern void Pop_LoadMissionSections(void* l, int h, Pop_1C4190* p, void* arc);
+extern void func_001C1470(void* l, Pop_1C4190* p);
+extern void Loader_InitEnvironmentSettings(void* l, Pop_1C4190* p);
+extern void Loader_LoadGeneratorDefs(void* l, Pop_1C4190* p);
+extern void Loader_LoadInventoryDefs(void* l, Pop_1C4190* p);
+extern void func_0036B070(void);
+extern void Loader_InitNodeGroups(void* l, Pop_1C4190* p);
+extern void func_0036B080(void);
+extern void Loader_InitHotboxes(void* l, Pop_1C4190* p);
+extern void Loader_InitFireObjects(void* l, Pop_1C4190* p);
+extern void Pop_FinalizeTerrainList(void* l);
+extern void func_00178C60(Pop_1C4190* p, int f);
+void Loader_LoadLevelData(void* l, void* arc)
+{
+    char name[128];
+    Pop_1C4190 pop;
+    int h;
+    func_00165E60(func_001698C0(), D_0049F290, 0);
+    sprintf(name, D_0049F2A8, D_0048B2F8, D_004FFC90, D_004FFC90);
+    h = Archive_Open(arc, name, 1, 0);
+    Population_Load(&pop, D_004FFC90, h);
+    func_00136A70(D_004FFB50, &pop, arc);
+    Loader_AllocateLights(l, &pop);
+    Loader_InitLights(l, &pop);
+    Loader_InitPopulatedCameras(l, &pop);
+    func_001C1E40(l, &pop, arc);
+    Pop_LoadMissionSections(l, h, &pop, arc);
+    func_001C1470(l, &pop);
+    Loader_InitEnvironmentSettings(l, &pop);
+    Loader_LoadGeneratorDefs(l, &pop);
+    Loader_LoadInventoryDefs(l, &pop);
+    func_0036B070();
+    Loader_InitNodeGroups(l, &pop);
+    func_0036B080();
+    Loader_InitHotboxes(l, &pop);
+    Loader_InitFireObjects(l, &pop);
+    Pop_FinalizeTerrainList(l);
+    func_00178C60(&pop, -1);
+}

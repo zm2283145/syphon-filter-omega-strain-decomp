@@ -1,0 +1,38 @@
+#ifndef EVENT_SOUND_CHECK_H
+#define EVENT_SOUND_CHECK_H
+
+/*
+ * Event handlers: when the event is type 1 / sub 0 / id 0x10 / arg 0,
+ * look up a sound by two names and play it on self; returns whether the
+ * event was handled. C++ only (#pragma cplusplus on before including).
+ */
+typedef struct EvtSndEvent {
+    unsigned short type;
+    unsigned short sub;
+    short pad4;
+    unsigned short arg6;
+    unsigned short id;
+} EvtSndEvent;
+
+extern "C" {
+void* func_00414790(void);
+void* func_004147A0(void);
+int func_00418A80(void* mgr, char* a, char* b);
+void func_00414AC0(void* mgr, void* self, int snd);
+}
+
+#define DEFINE_EVENT_SOUND_CHECK(name, nameA, nameB)                          \
+    extern "C" char nameA[];                                                  \
+    extern "C" char nameB[];                                                  \
+    extern "C" bool name(void* self, EvtSndEvent* e)                          \
+    {                                                                         \
+        bool b = e->type == 1 && e->sub == 0 && e->id == 0x10 && e->arg6 == 0; \
+        if (b) {                                                              \
+            int s = func_00418A80(func_00414790(), nameA, nameB);             \
+            func_00414AC0(func_004147A0(), self, s);                          \
+            return 1;                                                         \
+        }                                                                     \
+        return 0;                                                             \
+    }
+
+#endif /* EVENT_SOUND_CHECK_H */

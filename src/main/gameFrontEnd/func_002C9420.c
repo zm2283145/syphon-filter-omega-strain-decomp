@@ -1,0 +1,29 @@
+#include "types.h"
+typedef struct { char pad[0x39]; char names[8][32]; char pad2[0x13C - 0x139]; int count; } Menu9420;
+extern char D_004ACF38[];
+extern char D_004ACF40[];
+extern char* D_0048C1A0;
+extern char D_004FFB50[];
+extern int sprintf(char* buf, const char* fmt, ...);
+extern void String_Copy(char* dst, const char* src);
+extern void* Agent_GetSelected(char* name, int index);
+extern int func_003329B0(void* agent, int a, int b, int i);
+void func_002C9420(Menu9420* m)
+{
+    char num[8];
+    char buf[0x28];
+    int n = 0;
+    void* agent;
+    int i;
+    sprintf(buf, D_004ACF38, D_0048C1A0);
+    n++;
+    String_Copy(m->names[0], buf);
+    agent = Agent_GetSelected(D_004FFB50, -1);
+    for (i = 0; i < 10 && n < 8; i++) {
+        if (func_003329B0(agent, 0, 0x63, i)) {
+            sprintf(num, D_004ACF40, 0x11, i + 1);
+            String_Copy(m->names[n++], num);
+        }
+    }
+    m->count = n;
+}

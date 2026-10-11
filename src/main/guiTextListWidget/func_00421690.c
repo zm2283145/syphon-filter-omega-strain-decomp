@@ -10,8 +10,8 @@ extern char D_004E0C80[];
 extern char D_004E0D20[];
 void* func_00414790(void);
 void* func_00418420(void* manager, const char* name);
-char* func_0036A2F0(void* resource);
-void func_00424820(TextRenderWidget* self, void* dimensions);
+unsigned int func_0036A2F0(void* resource);
+void func_00424820(TextRenderWidget* self, unsigned int height);
 void func_00424A50(TextRenderWidget* self);
 void func_00424A90(TextRenderWidget* self);
 void func_00424BC0(TextRenderWidget* self);
@@ -74,7 +74,7 @@ static inline void destroy_widget_base(TextRenderWidget* self)
     }
 }
 
-/* Resolve the named text resource and apply its dimensions when available. */
+/* Resolve the named text resource and apply its padded row height when available. */
 extern "C" void func_00421690(TextRenderWidget* self, const char* name)
 {
     self->resource = func_00418420(func_00414790(), name);

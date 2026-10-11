@@ -64,17 +64,17 @@ All 24 are identical in objdiff, and the mixed-compiler whole build prints
 | Item | State |
 | --- | --- |
 | Round-trip build | **Byte-identical**, SHA-256 `9924da91…31dc6` (Windows, native tools) |
-| Build with C | **Byte-identical** with 5,995 matched functions (Metrowerks 3.0.3 / 3.0 build 38 / 3.04 + EE-GCC 2.95.3 / 2.96) |
-| Functions (objdiff) | 5,995 / 14,845 matched (40.38 %) |
-| Code bytes (objdiff) | 297,448 / 3,663,320 (8.12 %) |
-| Linked code | 8.12 % — every matched C unit is fully linked |
+| Build with C | **Byte-identical** with 6,000 matched functions (Metrowerks 3.0.3 / 3.0 build 38 / 3.04 + EE-GCC 2.95.3 / 2.96) |
+| Functions (objdiff) | 6,000 / 14,845 matched (40.42 %) |
+| Code bytes (objdiff) | 298,244 / 3,663,320 (8.14 %) |
+| Linked code | 8.14 % — every matched C unit is fully linked |
 | Named functions | ~2,700 in `config/symbol_addrs.txt` |
 | Data | 339,552 bytes counted separately; not linked from C |
 | decomp.dev | listed: https://decomp.dev/zm2283145/syphon-filter-omega-strain-decomp |
 
 ### Additional reserved-range matches using CodeWarrior 3.0 build 38
 
-One hundred and one readable functions (21,060 code bytes) were added in the reserved range:
+One hundred and six readable functions (21,856 code bytes) were added in the reserved range:
 `0x00412110`, `0x0041C0D0`, `0x0041C0F0`, `0x0041DA60`, `0x00421670`,
 `0x00425E00`, `0x0042AFC0`, `0x00431850`, `0x00436BA0`, `0x004375D0`,
 `0x00444E10`, `0x0044A070`, `0x00452C70`, `0x0045A968`, `0x0045EC60`,
@@ -95,8 +95,9 @@ One hundred and one readable functions (21,060 code bytes) were added in the res
 `0x00423BE0`, `0x00424A90`, `0x00423CC0`, `0x00426100`, `0x004261D0`,
 `0x004262D0`, `0x00426590`, `0x00426600`, `0x004267B0`, `0x00426810`,
 `0x004263C0`, `0x004268E0`, `0x00426940`, `0x00426A80`, `0x00426AE0`,
-and `0x00426BD0`.
-All 101 are identical in objdiff. Ninety-nine use CodeWarrior 3.0 build 38 overrides;
+`0x00426BD0`, `0x004282A0`, `0x004283C0`, `0x00428A00`, `0x00428A80`,
+and `0x00428B10`.
+All 106 are identical in objdiff. 104 use CodeWarrior 3.0 build 38 overrides;
 `0x00412110` and `0x0045A968` also match with the default 3.0.3 compiler. The
 complete mixed build printed the retail SHA-256 OK line without any
 compiler falling back to assembly. The preceding addition comprises two layered
@@ -206,7 +207,7 @@ retain the original allocation and state-update order. All seven match build
 38 and 3.04, but differ with default 3.0.3. A clean whole build verifies every
 previously complete unit remains unchanged with the expanded shared layouts.
 
-The latest addition recovers the text-array row-release loop and the contiguous
+The preceding addition recovers the text-array row-release loop and the contiguous
 `0x004268E0`-`0x00426CC0` destruction block: six routines totaling 1,208 code
 bytes plus 40 padding bytes. The row loop retains live count queries until its
 final reset. The 316-byte widget destructor releases rows, the rendering child,
@@ -215,6 +216,18 @@ Nested base null checks and allocator guards retain the retail control flow;
 no call into discarded allocator-destructor code remains. All six match
 build 38 and 3.04, but differ with default 3.0.3. The clean whole build confirms
 all previously complete units remain unchanged.
+
+The latest addition recovers five cell-range routines in
+`0x004282A0`-`0x00428450` and `0x00428A00`-`0x00428B90`: 796 code bytes
+plus 36 padding bytes. Erasure compacts surviving cells and destroys the vacated
+tail; forward/backward copying and repeated assignment preserve string
+ownership and bitwise quadword color transfers. Clearing destroys cells in
+reverse order before resetting the count. A shared inline cell-assignment
+helper preserves the retail signed-byte load and aligned color copy. All five
+match build 38 and 3.04, but differ with default 3.0.3. The clean whole build
+leaves every prior complete unit unchanged and reaches 6,000 matched functions.
+The larger string-storage reservation draft at `0x00427700` remains assembly
+because its saved-register allocation still differs.
 
 The existing helper at `0x001C43A0` forwards `String_Compare`'s integer
 result, rather than assigning a string. Its return declaration and comment

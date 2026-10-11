@@ -63,4 +63,18 @@ typedef struct guiTextArrayWidget {
     TextArrayStore store;           /* 0xB0 */
 } guiTextArrayWidget;
 
+#ifdef __cplusplus
+extern "C" void func_00329930(void* destination, const void* source);
+
+static inline void copy_text_array_cell(TextArrayCell* destination, const TextArrayCell* source)
+{
+    func_00329930(destination->string, source->string);
+    destination->flags = source->flags;
+    destination->attribute = *(const signed char*)&source->attribute;
+    destination->text = source->text;
+    /* Retail assignment copies the aligned color as one quadword, preserving its bits. */
+    *(__int128*)&destination->color = *(const __int128*)&source->color;
+}
+#endif
+
 #endif

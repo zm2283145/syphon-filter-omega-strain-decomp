@@ -53,7 +53,8 @@ typedef struct guiTextArrayWidget {
     char pad04[0x44];
     unsigned int columns;          /* 0x48 */
     unsigned int rows;             /* 0x4C */
-    char pad50[0x40];
+    char pad50[0x10];
+    char baseState[0x30];           /* 0x60 */
     TextArrayWidgetChild* unk90;    /* 0x90 child widget */
     int count;                      /* 0x94 resource handle */
     unsigned char unk98;            /* 0x98 */

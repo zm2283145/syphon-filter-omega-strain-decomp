@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Compile a C file and report, per function, whether it matches the retail code.
 
-usage: python tools/check_match.py FILE.c [-c mw,mw304,mw38,gcc,gcc296,gcc296g0] [-I DIR ...]
+usage: python tools/check_match.py FILE.c [-c mw,mw304,mw38,mw50,gcc,gcc296,gcc296g0] [-I DIR ...]
 
 Run from the repository root after a configure + build (it reads
 build/orig/SCUS_972.64.rom and splat's asm/). Each compiler in -c is tried in
@@ -12,6 +12,7 @@ compiler (if any) produces the retail bytes:
   mw304  a licensed CodeWarrior 3.04 install (build 22): --cw304 DIR or the
          CW304_DIR environment variable (its PS2_Tools/Command_Line_Tools dir)
   mw38   CodeWarrior PS2 3.0 build 38 (2003-03-07): --cw38 DIR or CW38_DIR
+  mw50   CodeWarrior PS2 3.0 build 50 (2003-05-27): --cw50 DIR or CW50_DIR
   gcc    EE-GCC 2.95.3 (-O2 -G0), for library code under src/lib/
   gcc296 EE-GCC 2.96 (-O2), Linux build; through WSL on Windows
   gcc296g0 the same with -G0 (no gp-relative data), as used by part of the library
@@ -207,6 +208,7 @@ def main():
     ap.add_argument("-I", dest="incs", action="append", default=[])
     ap.add_argument("--cw304", default=os.environ.get("CW304_DIR"))
     ap.add_argument("--cw38", default=os.environ.get("CW38_DIR"))
+    ap.add_argument("--cw50", default=os.environ.get("CW50_DIR"))
     ap.add_argument("--json", action="store_true", help="print one JSON object instead of text")
     args = ap.parse_args()
     rom = (ROOT / "build" / "orig" / "SCUS_972.64.rom").read_bytes()
@@ -215,7 +217,7 @@ def main():
     report = {}
     for kind in args.compilers.split(","):
         obj, err = compile_with(kind, Path(args.source).resolve(), incs,
-                                {"mw304": args.cw304, "mw38": args.cw38})
+                                {"mw304": args.cw304, "mw38": args.cw38, "mw50": args.cw50})
         if obj is None:
             report[kind] = {"error": err}
         else:

@@ -1,0 +1,34 @@
+#include "types.h"
+#define F_(b, o, T) (*(T*)((char*)(b) + (o)))
+#define NULL 0
+#pragma mpwc_relax on
+int String_Copy(int, char *);                              
+int func_00128E80(char *, int);                        
+char * func_003D1020();                              
+extern signed char D_00493948;
+extern char D_004BDE78;
+extern char D_004BDE80;
+extern char D_004BDE90;
+extern char D_004BDEB0;
+
+#pragma push
+#pragma opt_propagation off
+int func_003E75A0(int arg0, int *arg1, int arg2) {
+    if (arg0 == 1) {
+        if (func_00128E80(&D_004BDE78, *arg1) == 0) {
+            D_00493948 = 1;
+            { int r; char *o = func_003D1020(); r = 1; F_(o, 0x1C, signed char) = r; return r; }
+        }
+        if (func_00128E80(&D_004BDE80, *arg1) == 0) {
+            D_00493948 = 0;
+            F_(func_003D1020(), 0x1C, signed char) = 0;
+            return 1;
+        }
+        String_Copy(arg2, &D_004BDE90);
+        return 0;
+    }
+    String_Copy(arg2, &D_004BDEB0);
+    return 0;
+}
+
+#pragma pop

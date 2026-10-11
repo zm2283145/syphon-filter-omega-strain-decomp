@@ -1,0 +1,11 @@
+#include "types.h"
+#include "npc_auth.h"
+typedef struct { char pad[0x30]; void* net; char pad2[0x178]; void* body; } Npc3E20;
+typedef struct { char pad[0xC]; int id; } Arg3E20;
+extern void func_0016C9D0(void* body, Arg3E20* a, int f, float t);
+void func_002D3E20(Npc3E20* o, Arg3E20* a)
+{
+    if (NpcAuth_IsLocal())
+        func_0016C9D0(o->body, a, 1, 0.0f);
+    NetEvent_Send(o->net, 3, 8, a->id, 0, 0, 0);
+}

@@ -5896,7 +5896,7 @@ segments:
       - [0x32D770, c, main/NetObjectMgr/func_0042D770]
       - [0x32D790, c, main/NetObjectMgr/func_0042D790]
       - [0x32DA10, c, main/NetObjectMgr/func_0042DA10]
-      - [0x32DA30, asm]
+      - [0x32DA30, c, main/NetObjectMgr/func_0042DA30]
       - [0x32DF00, c, main/NetObjectMgr/func_0042DF00]
       - [0x32DF20, asm]
       - [0x32EAF0, c, main/NetObjectMgr/func_0042EAF0]

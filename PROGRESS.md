@@ -64,17 +64,17 @@ All 24 are identical in objdiff, and the mixed-compiler whole build prints
 | Item | State |
 | --- | --- |
 | Round-trip build | **Byte-identical**, SHA-256 `9924da91…31dc6` (Windows, native tools) |
-| Build with C | **Byte-identical** with 6,005 matched functions (Metrowerks 3.0.3 / 3.0 build 38 / 3.04 + EE-GCC 2.95.3 / 2.96) |
-| Functions (objdiff) | 6,005 / 14,845 matched (40.45 %) |
-| Code bytes (objdiff) | 299,300 / 3,663,320 (8.17 %) |
-| Linked code | 8.17 % — every matched C unit is fully linked |
+| Build with C | **Byte-identical** with 6,008 matched functions (Metrowerks 3.0.3 / 3.0 build 38 / 3.04 + EE-GCC 2.95.3 / 2.96) |
+| Functions (objdiff) | 6,008 / 14,845 matched (40.47 %) |
+| Code bytes (objdiff) | 299,940 / 3,663,320 (8.19 %) |
+| Linked code | 8.19 % — every matched C unit is fully linked |
 | Named functions | ~2,700 in `config/symbol_addrs.txt` |
 | Data | 339,552 bytes counted separately; not linked from C |
 | decomp.dev | listed: https://decomp.dev/zm2283145/syphon-filter-omega-strain-decomp |
 
 ### Additional reserved-range matches using CodeWarrior 3.0 build 38
 
-One hundred and eleven readable functions (22,912 code bytes) were added in the reserved range:
+One hundred and fourteen readable functions (23,552 code bytes) were added in the reserved range:
 `0x00412110`, `0x0041C0D0`, `0x0041C0F0`, `0x0041DA60`, `0x00421670`,
 `0x00425E00`, `0x0042AFC0`, `0x00431850`, `0x00436BA0`, `0x004375D0`,
 `0x00444E10`, `0x0044A070`, `0x00452C70`, `0x0045A968`, `0x0045EC60`,
@@ -97,8 +97,8 @@ One hundred and eleven readable functions (22,912 code bytes) were added in the 
 `0x004263C0`, `0x004268E0`, `0x00426940`, `0x00426A80`, `0x00426AE0`,
 `0x00426BD0`, `0x004282A0`, `0x004283C0`, `0x00428A00`, `0x00428A80`,
 `0x00428B10`, `0x00428CD0`, `0x00428DE0`, `0x00428E70`, `0x0042A520`,
-and `0x0042A680`.
-All 111 are identical in objdiff. 109 use CodeWarrior 3.0 build 38 overrides;
+`0x0042A680`, `0x0042B320`, `0x0042B4E0`, and `0x0042B770`.
+All 114 are identical in objdiff. 112 use CodeWarrior 3.0 build 38 overrides;
 `0x00412110` and `0x0045A968` also match with the default 3.0.3 compiler. The
 complete mixed build printed the retail SHA-256 OK line without any
 compiler falling back to assembly. The preceding addition comprises two layered
@@ -241,7 +241,7 @@ build leaves every prior complete unit unchanged. The receive callback and
 the larger integer-vector insertion draft remain assembly because their
 register lifetimes and scheduling still differ.
 
-The latest addition recovers game-address enumeration at `0x0042A520` and
+The preceding addition recovers game-address enumeration at `0x0042A520` and
 worker-stop coordination at `0x0042A680`: two routines totaling 528 code bytes,
 with no padding. Enumeration preserves iterator reset at the end and the
 16-byte name copy; worker shutdown retains priority comparison, wake/delay
@@ -249,6 +249,16 @@ ordering, live completion-flag polling and final flag resets. Both match
 build 38 and 3.04, but differ with default 3.0.3. The whole build leaves every
 prior complete unit unchanged. The larger leave-session routine remains
 assembly because its request initialization and host predicate still differ.
+
+The latest addition recovers peer-sample averaging, retry-slot status and
+admission-capacity checks: three routines totaling 640 code bytes with no
+padding. Averaging includes only nonzero samples and preserves the retail
+unordered floating-point comparison behavior. Retry status retains the exact
+software floating-point helper calls and sentinel comparisons; admission
+retains flag normalization and live player-count queries. All three match
+build 38 and 3.04, but differ with default 3.0.3. The whole build leaves every
+prior complete unit unchanged. Slot reservation at `0x0042B5D0` remains
+assembly because its predicate/result register allocation still differs.
 
 The existing helper at `0x001C43A0` forwards `String_Compare`'s integer
 result, rather than assigning a string. Its return declaration and comment

@@ -25,7 +25,7 @@ typedef struct Screen {
 extern int D_0048BC28;
 extern char D_004ABAB0[];
 extern char D_004AB9D0[]; /* fallback text */
-extern char D_004AB9D8[]; /* key formats */
+/* key formats */
 extern "C" void func_00424BC0(Screen* self);
 extern "C" Widget* func_0041DB80(Screen* self, int id);
 extern "C" int sprintf(char* buf, const char* fmt, ...);
@@ -48,7 +48,7 @@ extern "C" void func_002ACCF0(Screen* self)
     Screen* p;
     unsigned int i;
     for (i = 0, p = self; i < 4; i++, p = (Screen*)((char*)p + 4)) {
-    sprintf(key1, D_004AB9D8, i);
+    sprintf(key1, "AgentStatus%d", i);
     p->textA[0] = Loc_LookupText(key1);
     if (!p->textA[0])
     p->textA[0] = D_004AB9D0;

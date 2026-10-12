@@ -11,7 +11,6 @@ struct W_0028ED60 {
 struct Self_0028ED60 { char pad0[0x48]; void* f48; W_0028ED60* f4C; W_0028ED60* f50; W_0028ED60* f54; W_0028ED60* f58; W_0028ED60* f5C; };
 struct Aw_0028ED60 { char pad[0xC]; unsigned char bC; char padD[3]; };
 extern "C" {
-extern char D_004A9A50[];
 extern char D_004A9BF0[];
 extern Self_0028ED60* D_00506390;
 extern char D_004A9988[];
@@ -42,7 +41,7 @@ extern "C" void func_0028ED60(Self_0028ED60* self)
     W_0028ED60* w;
     Aw_0028ED60 a;
     func_0041F150(self);
-    w = FindAs_0028ED60(self, D_004A9A50, D_004A9BF0);
+    w = FindAs_0028ED60(self, "playercharacter", D_004A9BF0);
     if (w) {
         D_00506390 = self;
         w->f48 = (void*)func_00290BC0;

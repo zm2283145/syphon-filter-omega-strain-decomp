@@ -24,7 +24,9 @@ become main/sinit/func_<ADDR> units, as with integrate_island.py.
 
 A file for a function that is already a C unit replaces that unit's source
 when it brings data the unit does not link yet (an extern D_ symbol turned
-back into the literal or table it stands for); otherwise it is skipped.
+back into the literal or table it stands for); otherwise it is skipped. If
+the unit links a data block already, the new block must contain it; it grows
+into the unnamed asm data next to it.
 """
 import json
 import os
@@ -186,11 +188,30 @@ def main():
         bad += [f"{p['section']}: not linkable from C yet" for p in pieces if p["section"] not in PIECE_TYPES]
         if bad:
             skipped.append((f.name, "data " + "; ".join(bad))); continue
+        saved = None
         if existing:
             if not pieces:
                 skipped.append((f.name, "exists (and brings no data)")); continue
             if have:
-                skipped.append((f.name, "exists (its data is linked from C already)")); continue
+                # The unit's block grows: give its old subsegment back to the
+                # asm data, merged with the unnamed data around it, and cut
+                # the new (larger) block out of that below. Undone if the new
+                # block does not fit.
+                d = next(j for j, s in enumerate(segs) if s[2] == path and s[1].startswith("."))
+                os_, oe = segs[d][0], nxt_of(d)
+                R, RE = pieces[0]["start"] - BASE, pieces[0]["start"] - BASE + pieces[0]["size"]
+                if (R, RE, pieces[0]["section"]) == (os_, oe, segs[d][1]):
+                    skipped.append((f.name, "exists (its data is linked from C already)")); continue
+                if not (R <= os_ and RE >= oe):
+                    skipped.append((f.name, f"data {R + BASE:08X}+{RE - R:#x} does not contain the linked "
+                                            f"block {os_ + BASE:08X}+{oe - os_:#x}")); continue
+                saved = [list(s) for s in segs]
+                segs[d] = [os_, "data", None, segs[d][3]]
+                while d + 1 < len(segs) and segs[d + 1][1] == "data" and segs[d + 1][2] is None \
+                        and segs[d + 1][0] < RE:
+                    segs[d][3] += segs[d + 1][3]; del segs[d + 1]
+                if R < os_ and d > 0 and segs[d - 1][1] == "data":
+                    segs[d - 1][3] += segs[d][3]; del segs[d]
         cuts = []
         for p in pieces:
             R, RE = p["start"] - BASE, p["start"] - BASE + p["size"]
@@ -200,6 +221,8 @@ def main():
                            f"({segs[j][:3]})")
             cuts.append((R, RE, p["section"]))
         if bad:
+            if saved is not None:
+                segs[:] = saved
             skipped.append((f.name, "data " + "; ".join(bad))); continue
 
         text = f.read_text()

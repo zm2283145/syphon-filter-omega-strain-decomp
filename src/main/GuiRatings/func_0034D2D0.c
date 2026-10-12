@@ -18,8 +18,7 @@ typedef struct { char pad[0x20]; Sel_34D2D0* f20; } M_34D2D0;
 typedef struct { char pad[0x25C]; int f25C; } G_34D2D0;
 extern "C" {
 extern G_34D2D0* D_004FFC04;
-char D_004BA818[] = "GuiSlideShow"; extern char D_004BA828[]; extern char D_004BA838[]; extern char D_004BA848[];
-void func_0034D770(O_34D2D0* o, int k);
+char D_004BA818[] = "GuiSlideShow"; void func_0034D770(O_34D2D0* o, int k);
 M_34D2D0* func_004147A0(void);
 void* func_00414790(void);
 void func_0041E0F0(void* a, void* b, int kind, int v, int f);
@@ -56,7 +55,7 @@ int func_0034D2D0(O_34D2D0* o, Ev_34D2D0* ev)
         E_34D2D0** ep = &o->ents;
         if (((E_34D2D0*)((char*)o->ents + idx * 20))->b8) {
             func_0041E0F0(o, func_004147A0(), 0x10, 1, 0);
-            w = func_00418A80(func_00414790(), D_004BA818, D_004BA828);
+            w = func_00418A80(func_00414790(), D_004BA818, "ZEUSHELL");
             if (w) {
                 char b0[16];
                 char b1[16];
@@ -65,9 +64,9 @@ int func_0034D2D0(O_34D2D0* o, Ev_34D2D0* ev)
                 func_00327C70(w, o->v19(), s, idx);
                 func_00328630(w);
                 r = func_00328310(w, (*ep)[idx].f0);
-                sprintf(b0, D_004BA838, o->f64, idx + 1);
+                sprintf(b0, "0_%d_%d.tdx", o->f64, idx + 1);
                 if (idx % 4 == 2) idx--;
-                sprintf(b1, D_004BA848, o->f64, idx + 1);
+                sprintf(b1, "0_%d_%d", o->f64, idx + 1);
                 func_00328140(w, r, b0, D_004FFC04->f25C, b1);
                 func_00414AC0(func_004147A0(), o, w);
             }

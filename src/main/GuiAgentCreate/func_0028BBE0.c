@@ -14,7 +14,6 @@ struct Self_0028BBE0 {
     char pad0[0x4C]; void* f4C; void* f50; W_0028BBE0* f54; char pad58[0xCC - 0x58]; int fCC; int fD0; char padD4[4]; int fD8;
 };
 extern "C" {
-extern char D_004A9970[];
 extern char D_004A7520[];
 extern char D_004FFB50[];
 extern unsigned char D_004FFBB8;
@@ -54,7 +53,7 @@ extern "C" int func_0028BBE0(Self_0028BBE0* self, Src_0028BBE0* w, int msg, int 
         self->fD0 = 0;
         n = func_001692D0(w->name);
         func_0028D610(self, n);
-        if (!strcmp(n, D_004A9970)) {
+        if (!strcmp(n, "gender")) {
             self->fCC = 0;
             self->fD0 = 1;
         }

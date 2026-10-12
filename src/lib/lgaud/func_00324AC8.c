@@ -6,14 +6,13 @@ extern int func_0010D1A0(int sema);
 extern int func_0010D180(int sema);
 extern int func_00110528(void* cd, int rpc, int mode, void* send, int ssize, void* recv, int rsize, void* end, void* param);
 extern int func_00127358(const char* fmt, ...);
-extern void *memcpy(void *, const void *, unsigned int);extern char D_004B8168[];
-int lgAudWriteVag(int dev, int flag, void *src, int *len)
+extern void *memcpy(void *, const void *, unsigned int);int lgAudWriteVag(int dev, int flag, void *src, int *len)
 {
     int ret;
     if (D_0049147C == -1)
         return 0x8000000A;
     if (src == 0) {
-        func_00127358(D_004B8168);
+        func_00127358("lgAudWriteVag: invalid parameter (src)\n");
         return 0x80000004;
     }
     if (len == 0 || *len > D_0049146C) {

@@ -72,6 +72,15 @@ def end_of_segments(lines, last):
     return int(m.group(1), 16)
 
 
+def dump_segments(segs, indent):
+    """Subsegment lines for segs (the inverse of load_segments)."""
+    out = []
+    for s, t, n, comments in segs:
+        out += comments
+        out.append(f"{indent}- [0x{s:06X}, {t}" + (f", {n}]" if n else "]"))
+    return out
+
+
 def find(segs, off):
     return max(i for i, s in enumerate(segs) if s[0] <= off)
 
@@ -216,16 +225,21 @@ def main():
         else:
             overrides.pop(path, None)
 
-    out = []
-    for s, t, n, comments in segs:
-        out += comments
-        out.append(f"{indent}- [0x{s:06X}, {t}" + (f", {n}]" if n else "]"))
-    y[i0:i1] = out
+    # A new unit ends at its last instruction; the alignment padding after it
+    # would open the next asm subsegment as a one-nop "function". Fold it into
+    # the unit (tools/fold_padding.py; also repairs older layouts).
+    import fold_padding  # noqa: E402  (tools/ is on sys.path)
+    if rom is None:
+        rom = (repo / "build" / "orig" / "SCUS_972.64.rom").read_bytes()
+    segs, folded = fold_padding.fold(segs, end_off, rom)
+    y[i0:i1] = dump_segments(segs, indent)
     yp.write_text("\n".join(y), newline="\n")
     op.write_text(json.dumps(overrides, indent=2) + "\n", newline="\n")
     print("added", len(added), "bytes", sum(x[2] for x in added))
     for x in added:
         print("  +", *[v for v in x if v != ""])
+    if folded:
+        print("folded padding at", len(folded), "subsegment starts")
     print("skipped", len(skipped))
     for x in skipped:
         print("  -", *x)

@@ -1,0 +1,43 @@
+typedef struct { void *src; void *dest; int size; int attr; } DmaC440;
+typedef struct { int pending; char pad[8]; int state; char pad2[8]; int cap; void *buf; int ack; char pad3[8]; int dest; } BufC440;
+typedef struct { char pad[0x24]; BufC440 *b; } CdC440;
+extern char D_004BA7D0[];
+extern void func_0010D3E0(int mode);
+extern void *memcpy(void *d, const void *s, unsigned int n);
+extern unsigned int func_0010D520(DmaC440 *d, int n);
+extern int func_0010D500(unsigned int id);
+extern int func_00127358(const char *fmt, ...);
+int func_0034C440(int a, int b, CdC440 *cd, void *data, int len)
+{
+    BufC440 *p;
+    DmaC440 dma;
+    unsigned int id;
+    int n;
+    if (cd == 0) return -0x200;
+    p = cd->b;
+    func_0010D3E0(0);
+    if (p->state != 0) return p->state != 3 ? 0 : -0x1F5;
+    if (p->pending > 0) return 0;
+    if (p->pending < 0) return p->pending;
+    n = len;
+    if (p->cap < n) n = p->cap;
+    memcpy(p->buf, data, n);
+    func_0010D3E0(0);
+    dma.src = p->buf;
+    dma.dest = (void *)p->dest;
+    dma.size = n;
+    dma.attr = 0;
+    id = func_0010D520(&dma, 1);
+    if (id == 0) func_00127358(D_004BA7D0);
+    while (func_0010D500(id) >= 0);
+    p->pending = n;
+    func_0010D3E0(0);
+    dma.src = p;
+    dma.dest = (void *)p->ack;
+    dma.size = 4;
+    dma.attr = 0;
+    id = func_0010D520(&dma, 1);
+    if (id == 0) func_00127358(D_004BA7D0);
+    while (func_0010D500(id) >= 0);
+    return n;
+}

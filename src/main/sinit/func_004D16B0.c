@@ -1,0 +1,63 @@
+#include "types.h"
+#define F_(b, o, T) (*(T*)((char*)(b) + (o)))
+#define NULL 0
+#pragma mpwc_relax on
+extern int D_004FF070;
+extern int D_004FF074;
+extern int D_004FF078;
+extern int D_004FF07C;
+extern int D_004FF080;
+extern int D_004FF084;
+extern int D_004FF088;
+extern int D_004FF08C;
+extern int D_004FF090;
+extern int D_004FF094;
+extern int D_004FF098;
+extern int D_004FF09C;
+extern int D_004FF0A0;
+extern int D_004FF0A4;
+extern int D_004FF0A8;
+extern int D_004FF0AC;
+extern int D_004FF0B0;
+extern int D_004FF0B4;
+extern int D_004FF0B8;
+extern int D_004FF0BC;
+extern int D_004FF0C0;
+extern int D_004FF0C4;
+extern int D_004FF0C8;
+extern int D_004FF0CC;
+extern int D_004FF0D0;
+extern int D_004FF0D4;
+extern int D_004FF0D8;
+extern int D_004FF0DC;
+
+void func_004D16B0(void) {
+    D_004FF074 = 0;
+    D_004FF078 = 0;
+    D_004FF07C = 0;
+    D_004FF070 = 0x3EB33333;
+    D_004FF084 = 0xC2B40000;
+    D_004FF080 = 0;
+    D_004FF088 = 0;
+    D_004FF08C = 0x3F800000;
+    D_004FF090 = 0x3F800000;
+    D_004FF094 = 0x3F800000;
+    D_004FF098 = 0x3F800000;
+    D_004FF09C = 0x3F800000;
+    D_004FF0A0 = 0x3F800000;
+    D_004FF0A4 = 0x3F800000;
+    D_004FF0A8 = 0x3F800000;
+    D_004FF0AC = 0x3F800000;
+    D_004FF0B0 = 0x3F800000;
+    D_004FF0B4 = 0x3F800000;
+    D_004FF0B8 = 0x3F800000;
+    D_004FF0BC = 0x3F800000;
+    D_004FF0C0 = 0x3F800000;
+    D_004FF0C4 = 0x3F800000;
+    D_004FF0C8 = 0x3F800000;
+    D_004FF0CC = 0x3F800000;
+    D_004FF0D0 = 0x3F800000;
+    D_004FF0D4 = 0x3F800000;
+    D_004FF0D8 = 0x3F800000;
+    D_004FF0DC = 0x3F800000;
+}

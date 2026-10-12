@@ -1,0 +1,25 @@
+#include "types.h"
+typedef struct { char p0[0x255C]; int state; char p2560[0x2C]; int last; } S449800;
+extern int func_00443E70(void);
+extern void func_00449D20(S449800*, int);
+extern void func_0044A290(S449800*);
+extern int D_00497800;
+extern int D_00497818;
+#pragma push
+#pragma opt_common_subs off
+void func_00449800(S449800* s, int arg1)
+{
+    int last = s->last;
+    int dt = func_00443E70() - last;
+    if (s->state == 7) {
+        if (last == 0 || dt > D_00497800) {
+            func_00449D20(s, arg1);
+            func_0044A290(s);
+            s->last = func_00443E70();
+        }
+    } else if (last == 0 || dt > D_00497818) {
+        func_00449D20(s, arg1);
+        s->last = func_00443E70();
+    }
+}
+#pragma pop

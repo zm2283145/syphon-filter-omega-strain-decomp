@@ -6,8 +6,7 @@
 
 #include "types.h"
 
-extern char D_004BFFE0[];
 
 char* func_0043BB80(void) {
-    return D_004BFFE0;
+    return "GuiScrollBarWidget";
 }

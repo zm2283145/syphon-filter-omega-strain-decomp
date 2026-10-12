@@ -5,18 +5,22 @@ extern unsigned char D_005721C8;
 void Event_Construct(Msg_1C5680* msg, void* type);
 void cMessage_dtor(Msg_1C5680* msg, int flags);
 extern char g_cDisableMsgClass[];
-extern char D_004E0860[];
+extern void cDisableMsg_dtor();
+extern void cDisableMsg_v01();
+extern void cDisableMsg_v02();
+extern void cDisableMsg_v03();
+void * const D_004E0860[8] = { (void*)0x0, (void*)0x0, (void*)cDisableMsg_dtor, (void*)cDisableMsg_v01, (void*)cDisableMsg_v02, (void*)cDisableMsg_v03, (void*)0x0, (void*)0x0 };
 void func_003FF650(Msg_1C5680* msg, int id, int x);
 void func_0016FBE0(S_1C5680* self)
 {
     if (D_005721C8) {
         Msg_1C5680 msg;
         Event_Construct(&msg, g_cDisableMsgClass);
-        msg.vtable = D_004E0860;
+        msg.vtable = ((char*)D_004E0860);
         msg.target = -1;
         msg.size = 0x40;
         func_003FF650(&msg, self->id, -1);
-        msg.vtable = D_004E0860;
+        msg.vtable = ((char*)D_004E0860);
         cMessage_dtor(&msg, 0);
     }
     self->state = 0;

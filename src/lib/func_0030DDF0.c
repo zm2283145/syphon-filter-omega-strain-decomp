@@ -6,11 +6,12 @@
 
 #include "types.h"
 
-extern char D_00491348[];
+extern char D_004AF8B0[];
+static void * const dat_00491348[1] = { (void*)D_004AF8B0 };
 
 int func_0030DDF0(void) {
     int tmp0;
 
-    tmp0 = *(int*)D_00491348;
+    tmp0 = *(int*)((char*)dat_00491348);
     return tmp0;
 }

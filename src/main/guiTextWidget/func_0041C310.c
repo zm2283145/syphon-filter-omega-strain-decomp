@@ -5,7 +5,6 @@
 
 /* Release the owned record at +0xDC (string member at +0x14) under the allocator guard, reset +0x10. */
 extern "C" {
-extern char D_004BF2D0[];
 void Mem_Free(int pool, void* allocation, char* file, int line);
 void* func_00138B70(void* self, short flags);
 void func_0041EBF0(void* self);
@@ -24,7 +23,7 @@ extern "C" void func_0041C310(O34DB10* o)
                 if (s)
                     func_00138B70(s, 0);
             }
-            Mem_Free(0, p, D_004BF2D0, 0x56);
+            Mem_Free(0, p, "guiTextWidget.cc", 0x56);
         }
         o->aDC = 0;
     }

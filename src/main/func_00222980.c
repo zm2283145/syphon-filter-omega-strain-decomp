@@ -13,7 +13,6 @@
 #include "alloc_guard.h"
 
 extern "C" {
-extern char D_004A4C68[];
 extern char D_0049CD60[];
 void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
 void Mem_Free(int pool, void* allocation, char* file, int line);
@@ -65,7 +64,7 @@ struct ListI8_00222980Holder {
         ListI8_00222980Flag flag;                                                  \
         {                                                                     \
             AllocGuard guard;                                                 \
-            n = (ListI8_00222980Node*)Mem_Alloc(0, 16, D_004A4C68, 0x5C);            \
+            n = (ListI8_00222980Node*)Mem_Alloc(0, 16, "allocator.hh", 0x5C);            \
         }                                                                     \
         ListI8_00222980Holder h;                                                     \
         h.alloc = alloc;                                                      \

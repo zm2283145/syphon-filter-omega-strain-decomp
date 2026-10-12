@@ -4,7 +4,6 @@
 #pragma mpwc_relax on
 int func_004505C0();                                
 int func_00451B00(char * , int, char *, int);                 
-extern char D_004C0D10;
 extern char * D_00585E60;
 
 void func_00447D90(int d0, int d1, int d2, char * arg3) {
@@ -21,7 +20,7 @@ void func_00447D90(int d0, int d1, int d2, char * arg3) {
         case -0x3DD:
         case -0x3DE:
         case -0x3DC:
-            func_00451B00(D_00585E60, 1, &D_004C0D10, 0x9F1);
+            func_00451B00(D_00585E60, 1, "SFOLobby_Cell.cc", 0x9F1);
             break;
         }
     }

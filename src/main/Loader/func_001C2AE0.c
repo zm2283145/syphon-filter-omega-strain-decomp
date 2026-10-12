@@ -25,7 +25,6 @@ struct Gen_1C2AE0 {
 };
 extern "C" {
 extern char D_0049EE88[];
-extern char D_0049F110[];
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void Object_Register(void* o);
 int Pop_FindTag(PopReader_1C2AE0* r, int tag);
@@ -43,7 +42,7 @@ extern "C" void Loader_LoadGeneratorDefs(void* a0, PopReader_1C2AE0* r)
         int mis;
         n = *(int*)r->cur;
         r->cur += 4;
-        func_00165E60(func_001698C0(), D_0049F110, 0);
+        func_00165E60(func_001698C0(), "Loading Generator defs...", 0);
         for (i = 0; i < n; i++) {
             Gen_1C2AE0* p;
             {

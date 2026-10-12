@@ -7,7 +7,10 @@ struct Pt2_TimedEv { int time; unsigned char b4; unsigned char b5; char pad6[2];
 extern "C" {
 extern char D_004BD1A8[];
 extern char D_004D9DE0[];
-extern char D_004DFE20[];
+extern "C" void func_003CB4F0();
+extern "C" void func_003CB530();
+extern "C" void func_003CB590();
+void * const D_004DFE20[8] = { (void*)0x0, (void*)0x0, (void*)func_003CB530, (void*)func_003CB590, (void*)func_003CB4F0, (void*)0x0, (void*)0x0, (void*)0x0 };
 void* Mem_Alloc(int, int, char*, int);
 void EventQueue_Admit(Pt2_TimedEv*);
 }
@@ -22,7 +25,7 @@ extern "C" void func_003CB230(void* target, float secs) {
         e->b4 = 1;
         e->time = 1000.0f * secs;
         e->b5 = 1;
-        e->vt = D_004DFE20;
+        e->vt = ((char*)D_004DFE20);
         e->target = target;
     }
     EventQueue_Admit(e);

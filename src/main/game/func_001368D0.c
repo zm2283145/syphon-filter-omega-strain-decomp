@@ -1,6 +1,6 @@
 #include "types.h"
 
-extern char D_0049AAF0[]; /* format */
+char D_0049AAF0[] = "%s\\COMMON\\PAR.HOG"; /* format */
 extern char D_0048B2F8[];
 extern char D_0053B540[];
 extern int sprintf(char* buf, const char* fmt, ...); /* sprintf */

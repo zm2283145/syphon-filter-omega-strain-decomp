@@ -19,9 +19,12 @@ typedef struct Screen {
 } Screen;
 
 extern char D_004A9870[];
-extern const char* D_0048BBB0;
-extern const char* D_0048BBB8;
-extern const char* D_0048BBC0;
+extern "C" char D_004AB648[];
+extern "C" char D_004AB658[];
+extern "C" char D_004AB668[];
+static void * const dat_0048BBB0[2] = { (void*)D_004AB648, (void*)0x0 };
+static void * const dat_0048BBB8[2] = { (void*)D_004AB658, (void*)0x0 };
+static void * const dat_0048BBC0[2] = { (void*)D_004AB668, (void*)0x0 };
 extern "C" void func_0033F250(Screen* self);
 extern "C" Obj* func_0041DB80(Screen* self, const char* name);
 
@@ -37,7 +40,7 @@ static inline Obj* AsLabel(Obj* obj)
 extern "C" void func_002A9240(Screen* self)
 {
     func_0033F250(self);
-    self->item0 = AsLabel(func_0041DB80(self, D_0048BBB0));
-    self->item1 = AsLabel(func_0041DB80(self, D_0048BBB8));
-    self->item2 = AsLabel(func_0041DB80(self, D_0048BBC0));
+    self->item0 = AsLabel(func_0041DB80(self, (*(const char**)dat_0048BBB0)));
+    self->item1 = AsLabel(func_0041DB80(self, (*(const char**)dat_0048BBB8)));
+    self->item2 = AsLabel(func_0041DB80(self, (*(const char**)dat_0048BBC0)));
 }

@@ -6,8 +6,7 @@
 
 #include "types.h"
 
-extern char D_004ABA90[];
 
 int func_002AAD00(void) {
-    return (int)D_004ABA90;
+    return (int)"GuiMissionList";
 }

@@ -1,9 +1,8 @@
 #pragma cplusplus on
 #include "msg_clone.h"
-extern "C" char D_004BFC80[];
 extern "C" char D_004E0F20[];
 extern "C" char D_004DFD80[];
-MSG_CLONE_BEGIN(func_00431F30, 0x2C, D_004BFC80, 0x19)
+MSG_CLONE_BEGIN(func_00431F30, 0x2C, "NetTransferMsg.hh", 0x19)
     p->vt = D_004DFD80;
     F(int, 0x4) = S(int, 0x4);
     F(int, 0x8) = S(int, 0x8);

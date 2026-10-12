@@ -8,7 +8,6 @@ int func_001361C0(int , int);
 int func_001361D0(int *);                           
 int func_001361E0(int );                            
 int func_00139920(int , int);                       
-extern int D_0049AEE0;
 extern int D_004EA0C0;
 extern unsigned char D_00533880;
 extern int D_00533888;
@@ -22,7 +21,7 @@ void func_001360D0(int arg0) {
             Alloc_Lock(9);
         }
         D_00533888 += 1;
-        temp_s1 = Mem_Alloc(0, 0x10, &D_0049AEE0, 0xAE6);
+        temp_s1 = Mem_Alloc(0, 0x10, ((int*)"collision.hh"), 0xAE6);
         if (D_00533880 != 0) {
             Alloc_Unlock(9);
         }

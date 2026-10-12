@@ -1,9 +1,8 @@
 #pragma cplusplus on
 #include "msg_clone.h"
-extern "C" char D_004A7980[];
 extern "C" char D_004DC330[];
 extern "C" char D_004DFD80[];
-MSG_CLONE_BEGIN(cMenuChoiceMsg_v01, 0x2C, D_004A7980, 0x23)
+MSG_CLONE_BEGIN(cMenuChoiceMsg_v01, 0x2C, "playerControls.hh", 0x23)
     p->vt = D_004DFD80;
     F(int, 0x4) = S(int, 0x4);
     F(int, 0x8) = S(int, 0x8);

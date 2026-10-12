@@ -5,7 +5,6 @@ int Loc_LookupText(signed char *);
 signed char *func_001692D0(int);                             
 int func_00274A60();                                
 int sprintf(int, int *, int, int);                      
-extern int D_004A8F78;
 
 int func_002749B0(int arg0, int arg1) {
     int temp_v0;
@@ -25,7 +24,7 @@ int func_002749B0(int arg0, int arg1) {
         var_a3 = Loc_LookupText(temp_v0_2);
     }
     if (var_a3 != 0) {
-        sprintf(arg1, &D_004A8F78, temp_v0, var_a3);
+        sprintf(arg1, ((int*)"%s %s"), temp_v0, var_a3);
         return arg1;
     }
     return temp_v0;

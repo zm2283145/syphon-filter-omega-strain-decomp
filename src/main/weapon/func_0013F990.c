@@ -3,7 +3,6 @@
 #include "alloc_guard.h"
 extern "C" {
 void* Mem_Alloc(int pool, int size, char* file, int line);
-extern char D_0049B428[];
 extern char D_004DFD80[];
 extern char D_004D91E0[];
 }
@@ -13,7 +12,7 @@ extern "C" M1EEDC0* cOutOfAmmoMsg_v01(M1EEDC0* self)
     M1EEDC0* p;
     {
         AllocGuard guard;
-        p = (M1EEDC0*)Mem_Alloc(0, 0x28, D_0049B428, 0x112);
+        p = (M1EEDC0*)Mem_Alloc(0, 0x28, "weapon.hh", 0x112);
     }
     if (p) {
         p->vtable = D_004DFD80;

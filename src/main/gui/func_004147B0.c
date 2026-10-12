@@ -11,7 +11,6 @@ struct VC004147B0 { virtual int v0(...); };
 extern "C" {
 int Mem_Free(...);                     
 int func_00419590(...);                        
-extern char D_004BEFB0;
 extern unsigned char D_00533880;
 extern void **D_00571FB0;
 extern void **D_00571FB8;
@@ -26,14 +25,14 @@ extern "C" void func_004147B0(void) {
         {
             AllocGuard g;
         ((VC004147B0 *)(temp_s0))->v0(-1);
-        Mem_Free(0, temp_s0, &D_004BEFB0, 0x27);
+        Mem_Free(0, temp_s0, "gui.cc", 0x27);
         }
         D_00571FB0 = NULL;
         temp_s0_2 = D_00571FB8;
         {
             AllocGuard g;
         func_00419590(temp_s0_2, -1);
-        Mem_Free(0, temp_s0_2, &D_004BEFB0, 0x2A);
+        Mem_Free(0, temp_s0_2, "gui.cc", 0x2A);
         }
         D_00571FB8 = NULL;
     }

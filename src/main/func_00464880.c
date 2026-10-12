@@ -6,8 +6,7 @@
 
 #include "types.h"
 
-extern char D_004C28D8[];
 
 char* func_00464880(void) {
-    return D_004C28D8;
+    return "GuiMapScreen";
 }

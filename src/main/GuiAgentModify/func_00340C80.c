@@ -5,7 +5,7 @@ typedef struct {
     char pad[0x88]; W_340C80* f88; char pad8C[0xEC - 0x8C]; int fEC; int fF0; char padF4[4]; int fF8;
     char padFC[0x144 - 0xFC]; int f144; int f148; int f14C; int f150;
 } O_340C80;
-extern char D_004B9F50[]; extern char D_004B9F58[]; extern char D_004B9F60[]; extern char D_004B9F68[];
+char D_004B9F50[] = "head"; extern char D_004B9F58[]; extern char D_004B9F60[]; extern char D_004B9F68[];
 extern char D_0055DDA0[]; extern char D_004B9ED0[]; extern char D_004B9EE8[];
 char* func_001692D0(void* s);
 void func_00341C50(O_340C80* o, char* s);

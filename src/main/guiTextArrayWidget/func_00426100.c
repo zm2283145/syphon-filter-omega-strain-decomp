@@ -5,7 +5,6 @@
 
 extern "C" {
 extern char D_004BF790[];
-extern char D_004BF7A8[];
 void func_00424A50(guiTextArrayWidget* self);
 void func_00424A90(guiTextArrayWidget* self);
 void func_00424BC0(guiTextArrayWidget* self);
@@ -71,7 +70,7 @@ extern "C" void func_004261D0(guiTextArrayWidget* self)
 extern "C" void func_004262D0(guiTextArrayWidget* self)
 {
     func_00424BC0(self);
-    self->count = func_00418420(func_00414790(), D_004BF7A8);
+    self->count = func_00418420(func_00414790(), "callout");
     if (self->count) {
         func_00424820(self, func_0036A2F0(self->count) + 4);
         if (self->unk90)

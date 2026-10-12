@@ -4,7 +4,6 @@
 struct Val_1C4F20 { int a, b, c; int d; };
 extern "C" {
 extern char D_0049ADA0[];
-extern char D_0049ADC0[];
 void func_0013BCB0(void* d, const void* s);
 void func_0013CD40(void* node, void* root);
 }
@@ -14,7 +13,7 @@ extern "C" TONode* func_0013C570(TOTree* tree, TONode* parent, int left, int fir
         func_00123BE8(D_00489738->stream, D_0049ADA0);
         func_00121B60();
     }
-    TONode* node = (TONode*)TStr_Alloc(0x1C, D_0049ADC0, 0x5C);
+    TONode* node = (TONode*)TStr_Alloc(0x1C, "allocator.hh", 0x5C);
     Val_1C4F20* v = (Val_1C4F20*)node->value;
     if (v) {
         func_0013BCB0(v, src);

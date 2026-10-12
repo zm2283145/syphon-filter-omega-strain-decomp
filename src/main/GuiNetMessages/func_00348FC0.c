@@ -5,7 +5,6 @@ typedef struct {
     int a90; int a94; int a98; int a9C; int padA0; int aA4; Str348FC0 sA8;
 } S348FC0;
 extern char D_004DEB80[];
-extern char D_004BA400[];
 extern char D_004BA338[];
 extern void func_00424C50(S348FC0* self);
 extern char* Loc_LookupText(char* key);
@@ -27,7 +26,7 @@ S348FC0* func_00348FC0(S348FC0* self)
     self->a9C = 0;
     self->a58 = 2;
     self->aA4 = 0;
-    t = Loc_LookupText(D_004BA400);
+    t = Loc_LookupText("TOSSystem");
     { Str348FC0* p = &tmp; String_CtorCStr_13B480(p, t ? t : D_004BA338); }
     func_0013D680(&self->sA8, &tmp);
     func_00138B70(&tmp, 0);

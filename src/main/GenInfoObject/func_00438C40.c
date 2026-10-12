@@ -12,7 +12,6 @@ Raw_8C40 func_00438E00(void*);
 void func_00438E10(char**, const Raw_8C40&);
 void func_00438DF0(char**, const Raw_8C40&);
 void func_0015AF40(int*, char**);
-extern char D_004BFD60;
 extern char D_005838D8;
 }
 #define Begin_8C40(o) func_00438E10(o, func_0013B180(&D_005838D8))
@@ -35,7 +34,7 @@ extern "C" void func_00438C40(Ent_8C40* tbl) {
             if (i < 55) { Ent_8C40* t = &tbl[i]; t->lo = ((Ent_8C40*)e)->lo; }
             {
                 AllocGuard g;
-                Mem_Free(0, e, &D_004BFD60, 0x32A);
+                Mem_Free(0, e, "GenInfoObject.cc", 0x32A);
             }
             {
                 char* c;

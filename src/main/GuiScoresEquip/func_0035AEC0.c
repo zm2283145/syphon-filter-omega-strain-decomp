@@ -12,9 +12,6 @@ struct Ev_35AEC0 { unsigned short type; unsigned short b2; char pad4[2]; unsigne
 struct G_35AEC0 { char pad[0x6A8]; unsigned char b6A8; };
 extern "C" {
 extern char D_004BB4D8[];
-extern char D_004BB4E8[];
-extern char D_004BB500[];
-extern char D_004BB520[];
 extern char D_004BB530[];
 extern char D_004A9870[];
 extern G_35AEC0* D_004FFC2C;
@@ -49,12 +46,12 @@ int func_0035AEC0(S_35AEC0* o, Ev_35AEC0* ev)
         }
         o->a224 = 0;
         a = func_0041DB80(o, D_004BB4D8);
-        b = func_0041DB80(o, D_004BB4E8);
+        b = func_0041DB80(o, "equipment_grp");
         if (a) a->a14 |= 2;
         if (b) b->a14 &= ~2;
-        c = cast_35AEC0(func_0041DB80(o, D_004BB500));
+        c = cast_35AEC0(func_0041DB80(o, "button_equip_score"));
         if (c) {
-            char* t = Loc_LookupText(D_004BB520);
+            char* t = Loc_LookupText("ScoresEquipScr0");
             func_0041BEB0(c, t ? t : D_004BB530, 0);
         }
         return 1;

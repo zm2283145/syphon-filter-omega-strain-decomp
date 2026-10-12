@@ -10,7 +10,6 @@ extern "C" {
 extern G_7C60* D_004FFC38;
 extern char D_004F7940[];
 extern char D_004DB890[];
-extern char D_0049CD70[];
 extern char D_004D9DE0[];
 extern char D_004D9DC0[];
 void Event_Construct(Ev_7C60* e, void* type);
@@ -49,7 +48,7 @@ extern "C" void Player_RespawnPollEvent(S_7C60* self)
     if (D_00533880)
         Alloc_Lock(9);
     D_00533888++;
-    q = (Q_7C60*)Mem_Alloc(0, 0x10, D_0049CD70, 0x1AA);
+    q = (Q_7C60*)Mem_Alloc(0, 0x10, "player.cc", 0x1AA);
     if (D_00533880)
         Alloc_Unlock(9);
     D_00533888--;

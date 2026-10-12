@@ -10,7 +10,6 @@ extern unsigned char D_005721D0;
 extern unsigned char D_005721C0;
 extern unsigned char D_00583880;
 extern T_439670* D_00583888;
-extern char D_004BFD38[];
 extern char D_004BFD60[];
 extern int D_00497570;
 extern int D_00497578;
@@ -23,7 +22,7 @@ void func_00439670(void);
 static inline void Reg_439670(int* key, T_439670** out)
 {
     P_439670* p;
-    if (!func_002EAF28(key, 2, 4, 0, 0, 0, 0, *out, D_004BFD38, D_00497570) && !func_002EB650(&p, *key)) *out = p->f1C;
+    if (!func_002EAF28(key, 2, 4, 0, 0, 0, 0, *out, "cGenInfoObject", D_00497570) && !func_002EB650(&p, *key)) *out = p->f1C;
 }
 static inline int NetOk_439670(void) { return D_005721C8 ? D_005721C0 : 1; }
 static inline void RegAll_439670(void) { if (D_005721D0 && NetOk_439670()) Reg_439670(&D_00497578, &D_00583888); }

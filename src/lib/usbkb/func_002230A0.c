@@ -4,7 +4,6 @@ extern S30A0 D_004F5780;
 extern unsigned char D_004F5880[];
 extern char D_004F5820[];
 extern char D_004F58C0[];
-extern char D_004A4DD8[];
 extern void func_00223400(void);
 extern void func_0010D1A0(int);
 extern int func_00110528(void *cd, int fno, int mode, void *send, int ssize, void *recv, int rsize, void *endf, void *endp);
@@ -19,7 +18,8 @@ int sceUsbKbSetLEDStatus(int a, unsigned char b)
     func_0010D1A0(D_0048AB18);
     r = func_00110528(D_004F5820, 4, 1, D_004F5880, 0x10, D_004F58C0, 0x10, func_00223400, 0);
     if (r) {
-        func_0010F388(D_004A4DD8, r);
+        func_0010F388("sceUsbKbSetLEDStatus: sceSifCallRpc -> %d
+", r);
         return -2;
     }
     D_004F5780.x94 = a;

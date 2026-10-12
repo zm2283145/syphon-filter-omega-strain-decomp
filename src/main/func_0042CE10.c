@@ -6,7 +6,11 @@ int Event_Construct(char **, char *);
 int Transport_Send(int, char **, int, int);                    
 int cMessage_dtor(char **, int);                           
 int func_0042D300(int *);                             
-extern char D_004E1160;
+extern void Message_GetScriptTypeKey();
+extern void func_0042CED0();
+extern void func_0043FF70();
+extern void func_00440160();
+void * const D_004E1160[8] = { (void*)0x0, (void*)0x0, (void*)func_0042CED0, (void*)func_0043FF70, (void*)func_00440160, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
 extern unsigned char D_005721C0;
 extern unsigned char D_005721C8;
 extern char D_00583990;
@@ -25,11 +29,11 @@ void func_0042CE10(int *arg0) {
         return;
     }
     Event_Construct(sl.f20, &D_00583990);
-    sl.f20[0] = &D_004E1160;
+    sl.f20[0] = &(*(char*)D_004E1160);
     sl.f44[0] = *arg0;
     sl.f3C = 0x40;
     sl.f40[0] = 2;
     Transport_Send(0, sl.f20, 0, 0);
-    sl.f20[0] = &D_004E1160;
+    sl.f20[0] = &(*(char*)D_004E1160);
     cMessage_dtor(sl.f20, 0);
 }

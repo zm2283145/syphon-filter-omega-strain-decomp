@@ -5,7 +5,7 @@
 
 #include "loose05_types.h"
 
-extern char D_004C2460[]; /* resource name */
+char D_004C2460[] = "GuiAutoSaver"; /* resource name */
 extern int func_00414790(void);
 extern int func_004147A0(void);
 extern void func_00414AC0(int mgr, void* owner, int res);

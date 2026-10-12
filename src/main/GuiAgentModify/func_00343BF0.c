@@ -5,7 +5,6 @@ struct V00343BF0 { virtual void v0(int f); virtual int v1(); virtual int v2(); v
 struct O00343BF0 { void* vt; char pad[0x88]; V00343BF0* p8C; V00343BF0* p90; };
 extern "C" {
 
-extern char D_004BA0A0[];
 extern char D_0055DDA0[];
 extern char D_004DE920[];
 extern char D_004E1220[];
@@ -21,7 +20,7 @@ static inline void Del00343BF0(V00343BF0* o, int line)
 {
     AllocGuard g;
     o->v0(-1);
-    Mem_Free(0, o, D_004BA0A0, line);
+    Mem_Free(0, o, "GuiAgentModify.cc", line);
 }
 extern "C" O00343BF0* func_00343BF0(O00343BF0* self, short del)
 {

@@ -7,7 +7,6 @@ int Alloc_Unlock(int);
 int Mem_Free(int, int, char *, int);                         
 int PtrVector_Resize(char *, int, int *);                
 int func_003FEEE0(int, int);                            
-extern char D_004BE440;
 extern unsigned char D_00533880;
 extern int D_00533888;
 extern int D_0055CA50;
@@ -29,7 +28,7 @@ void func_003FDBB0(void) {
         if ((temp_s0 != 0) && (temp_s0 != 0) && (temp_s0 != 0)) {
             func_003FEEE0(temp_s0, 0);
         }
-        Mem_Free(0, temp_s0, &D_004BE440, 0x9B);
+        Mem_Free(0, temp_s0, "globalization.cc", 0x9B);
         if (D_00533880 != 0) {
             Alloc_Unlock(9);
         }

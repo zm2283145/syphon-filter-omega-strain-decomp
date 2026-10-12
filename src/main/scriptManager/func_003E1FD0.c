@@ -10,24 +10,20 @@ int cScriptInterpreter_ExecuteInitCode(int );
 int func_003D7930();                               
 int func_003D7E30();                                  
 extern unsigned char D_004938D0;
-extern int D_004BD988;
-extern int D_004BD990;
-extern int D_004BD9A0;
-extern int D_004BD9C0;
 
 int ScriptMgr_InitClient(int arg0) {
     int var_s0;
 
     var_s0 = 0;
-    if ((D_004938D0 != 0) && (ScriptMgr_LoadScript(arg0, &D_004BD988, 1) != 0)) {
+    if ((D_004938D0 != 0) && (ScriptMgr_LoadScript(arg0, ((int*)"client"), 1) != 0)) {
         cScriptInterpreter_ExecuteInitCode(arg0);
-        var_s0 = ScriptMgr_CallFunction(arg0, &D_004BD990, 0) != 0;
+        var_s0 = ScriptMgr_CallFunction(arg0, ((int*)"client::Init"), 0) != 0;
         if (var_s0 == 0) {
-            func_003D7930(&D_004BD9A0);
+            func_003D7930(((int*)"script client::Init() failed"));
         } else {
             var_s0 = cScriptInterpreter_CheckAllReferences(arg0) & 0xFF;
             if (var_s0 == 0) {
-                func_003D7930(&D_004BD9C0);
+                func_003D7930(((int*)"client init reference check failed..."));
             }
         }
         func_003D7E30();

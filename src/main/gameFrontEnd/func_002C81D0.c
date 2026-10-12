@@ -6,7 +6,6 @@ extern int D_0048C358;
 extern int D_0048C350;
 extern int D_0048C348;
 extern void* D_0051EF70;
-extern char D_004ACF10[];
 void func_0010CE60(int id, int sema);
 void func_0010CFB0(int thread);
 void func_0010CF70(int thread);
@@ -28,7 +27,7 @@ extern "C" void func_002C81D0(Obj81D0* o)
         {
             void* p = D_0051EF70;
             AllocGuard guard;
-            Mem_Free(0, p, D_004ACF10, 0x89C);
+            Mem_Free(0, p, "gameFrontEnd.cc", 0x89C);
         }
         D_0051EF70 = 0;
         o->active = 0;

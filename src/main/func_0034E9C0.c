@@ -5,7 +5,7 @@
 
 #include "loose03_types.h"
 
-extern char D_004BAA30[];       /* "GuiOmegaStrain" */
+char D_004BAA30[] = "GuiOmegaStrain";       /* "GuiOmegaStrain" */
 
 /* Returns the class name string "GuiOmegaStrain". */
 const char* GuiOmegaStrain_GetClassName(void) {

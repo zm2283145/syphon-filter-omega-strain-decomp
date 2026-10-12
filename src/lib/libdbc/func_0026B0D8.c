@@ -1,7 +1,6 @@
 typedef struct { int x0, x4, x8; unsigned char data[0x200]; int x20C; } DbcRD;
 extern char D_004F85C8[];
 extern DbcRD D_004F8640;
-extern char D_004A8780[];
 extern int func_00110528(void *cd, unsigned int fno, int mode, void *send, int ssize, void *recv, int rsize, void *endf, void *endp);
 extern int func_0026B1C8(const char *, ...);
 
@@ -13,7 +12,8 @@ int sceDbcReceiveData(int a, int b, int *len, unsigned char *out)
     p->x4 = b;
     p->x8 = *len;
     if (func_00110528(D_004F85C8, 0x8000131A, 0, &D_004F8640, 0x280, &D_004F8640, 0x280, 0, 0) < 0) {
-        func_0026B1C8(D_004A8780);
+        func_0026B1C8("sceDbcReceiveData: rpc error
+");
         return 0;
     }
     if (p->x20C >= 0) {

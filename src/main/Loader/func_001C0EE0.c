@@ -2,7 +2,6 @@
 typedef struct { int unk0; int size; unsigned int base; char* cur; } PopReader_1C0EE0;
 typedef struct { int a, b, c; char f; } Inner_1C0EE0;
 typedef struct { int cap; int count; char* data; } VV_1C0EE0;
-extern char D_0049EF50[];
 extern int D_004FFBE4;
 extern VV_1C0EE0* D_004FFBE8;
 extern int Pop_FindTag(PopReader_1C0EE0* r, int tag);
@@ -19,7 +18,7 @@ void Loader_InitNodeGroups(void* a0, PopReader_1C0EE0* r)
     D_004FFBE4 = 0;
     if (r->cur) {
         int mis;
-        func_00165E60(func_001698C0(), D_0049EF50, 0);
+        func_00165E60(func_001698C0(), "Initializing Node Groups...", 0);
         mis = (int)((unsigned long long)(unsigned int)r->cur & 3);
         if (mis)
             r->cur += 4 - mis;

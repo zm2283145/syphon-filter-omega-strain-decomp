@@ -6,8 +6,7 @@
 
 #include "types.h"
 
-extern char D_004BF510[];
 
 int func_00420BA0(void) {
-    return (int)D_004BF510;
+    return (int)"GuiButtonWidget";
 }

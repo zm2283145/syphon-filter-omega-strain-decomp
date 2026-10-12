@@ -5,7 +5,7 @@
 
 #include "loose03_types.h"
 
-extern char D_004BBDB0[];       /* "GuiObjectives" */
+char D_004BBDB0[] = "GuiObjectives";       /* "GuiObjectives" */
 
 /* Returns the class name string "GuiObjectives". */
 const char* GuiObjectives_GetClassName(void) {

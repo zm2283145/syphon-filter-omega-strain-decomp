@@ -2,7 +2,6 @@ extern int func_00106B08(int *,int,int *,int *,int *),func_001064A0(int *),func_
 extern int func_00106EF8(int *,int *,int *,int *,int *,int *,int *),func_00106E38(int *,int *,int *,int *,int *);
 extern int func_00104730(int *,int,int,int,int,int *,int *,int *);
 extern void func_001054A8(int *,int),func_0010BD90(int *,void *);
-extern char D_004984D8[];
 int func_00106C38(int *m,int limit){
  int state[8],vec0[4],vec1[4],n=0,skip=0,a,b,c;
  int result=func_00106B08(m,limit,&n,&skip,state);
@@ -17,7 +16,7 @@ int func_00106C38(int *m,int limit){
    skip=func_001068E0(m);
    if(m[0x134/4]){m[0x134/4]=0;return 1;}
   }
-  if(n>=limit){func_0010BD90(m,D_004984D8);return 2;}
+  if(n>=limit){func_0010BD90(m,"Too many macroblocks in picture");return 2;}
   if(skip==1){
    if(!func_00106EF8(m,&a,&b,&c,state,vec0,vec1)){m[0x134/4]=0;return 1;}
   }else{

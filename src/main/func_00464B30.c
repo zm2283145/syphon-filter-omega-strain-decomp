@@ -5,7 +5,7 @@
 
 #include "loose05_types.h"
 
-extern char D_004C28A8[]; /* child widget name */
+char D_004C28A8[] = "backdark"; /* child widget name */
 extern Global4FFC2C* D_004FFC2C;
 extern int func_0026DBC0(int value);
 extern int func_0041DB80(void* self, char* name);

@@ -1,9 +1,8 @@
 #pragma cplusplus on
 #include "msg_clone.h"
-extern "C" char D_004BE9F0[];
 extern "C" char D_004DFD80[];
 extern "C" char D_004E08A0[];
-MSG_CLONE_BEGIN(cDamageMsg_v01, 0x30, D_004BE9F0, 0x20)
+MSG_CLONE_BEGIN(cDamageMsg_v01, 0x30, "DamageMsg.hh", 0x20)
     p->vt = D_004DFD80;
     F(int, 0x4) = S(int, 0x4);
     F(int, 0x8) = S(int, 0x8);

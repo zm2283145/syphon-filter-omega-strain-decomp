@@ -7,9 +7,9 @@
 #include "loose05_types.h"
 
 extern float D_004C0100;
-extern float D_004C0104;
-extern float D_004C0108;
-extern float D_004C010C;
+unsigned int D_004C0104[1] = { 0x0 };
+unsigned int D_004C0108[1] = { 0x0 };
+unsigned int D_004C010C[1] = { 0x0 };
 extern char D_004E1040[]; /* vtable */
 extern int ScalarCollection_Init(List* list);
 extern void GuiWidget_ctor(void* self);
@@ -32,11 +32,11 @@ GuiWidget43E5D0* func_0043E5D0(GuiWidget43E5D0* self) {
     self->unk6C = 0;
     r = D_004C0100;
     self->color[0] = r;
-    g = D_004C0104;
+    g = (*(float*)D_004C0104);
     self->color[1] = g;
-    b = D_004C0108;
+    b = (*(float*)D_004C0108);
     self->color[2] = b;
-    a = D_004C010C;
+    a = (*(float*)D_004C010C);
     self->color[3] = a;
     return self;
 }

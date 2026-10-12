@@ -12,7 +12,6 @@ Raw_2750 func_00432730(void*);
 void func_00432740(char**, const Raw_2750&);
 void func_00432720(char**, const Raw_2750&);
 void func_0015AF40(int*, char**);
-extern char D_004BFCA0;
 extern char D_00582B30;
 extern unsigned char D_005721C0;
 extern unsigned char D_005721C8;
@@ -45,7 +44,7 @@ extern "C" void func_00432510(int d0, Ent_2750* tbl, int key) {
                 }
                 {
                     AllocGuard g;
-                    Mem_Free(0, e, &D_004BFCA0, 0x78B);
+                    Mem_Free(0, e, "NPCInfoObject.cc", 0x78B);
                 }
                 {
                     char* c;

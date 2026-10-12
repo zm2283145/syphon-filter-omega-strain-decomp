@@ -4,7 +4,6 @@ extern char D_004F5820[];
 extern unsigned char D_004F5880[];
 extern char D_004F58C0[];
 extern KbState D_004F5780;
-extern char D_004A4D80[];
 extern int func_0010D1A0(int);
 extern int func_0010F388(const char *, ...);
 extern void func_00223400(void *);
@@ -21,7 +20,8 @@ int sceUsbKbRead(unsigned int port, void *data)
     func_0010D1A0(D_0048AB18);
     r = func_00110528(D_004F5820, 2, 1, D_004F5880, 0x10, D_004F58C0, 0x50, func_00223400, 0);
     if (r != 0) {
-        func_0010F388(D_004A4D80, r);
+        func_0010F388("sceUsbKbRead: sceSifCallRpc -> %d
+", r);
         return -2;
     }
     st->x98 = data;

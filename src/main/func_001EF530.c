@@ -5,7 +5,6 @@
 struct E1EF530 { int w[4]; };
 struct V1EF530 { unsigned int cap; unsigned int count; E1EF530* data; };
 extern "C" {
-extern char D_004A04E0[];
 extern char D_004A0558[];
 void* func_00139BC0(unsigned int size, void* p);
 void func_001EF4F0(void* dst, const E1EF530* src);
@@ -16,7 +15,7 @@ extern "C" void func_001EF530(V1EF530* v, unsigned int n)
 {
     if (v->cap < n) {
         if (n > 0x600000) {
-            func_00123BE8(D_00489738->stream, D_004A04E0);
+            func_00123BE8(D_00489738->stream, "vector::reserve length error\n");
             func_00121B60();
         }
         V1EF530 tmp;

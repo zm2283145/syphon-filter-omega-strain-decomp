@@ -7,7 +7,7 @@
 #include "types.h"
 
 extern char D_0048C3E4[];
-extern char D_0048C400[];
+unsigned int D_0048C400[1] = { 0x0 };
 
 int func_002CF018(void) {
     int v0;
@@ -28,7 +28,7 @@ int func_002CF048(void) {
     int v0;
     int cond;
 
-    v0 = *(int*)(char*)D_0048C400;
+    v0 = *(int*)(char*)((char*)D_0048C400);
     cond = v0 == 0;
     if (cond) goto L002CF064;
     v0 = ((int (*)(void))v0)();

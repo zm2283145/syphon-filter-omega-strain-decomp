@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-extern char D_00485EA0[];
+static const unsigned int dat_00485EA0[4] = { 0x20001, 0x30001, 0x0, 0x0 };
 
 int func_00102A18(void) {
-    return (int)D_00485EA0;
+    return (int)((char*)dat_00485EA0);
 }

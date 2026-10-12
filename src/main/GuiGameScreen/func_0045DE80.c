@@ -12,7 +12,6 @@ int Mem_Free(int, int, char *, int);
 int func_00138B70(int, int);                            
 int func_0038CC70(int);                               
 int func_0041F090();                                  
-extern char D_004C2290;
 extern unsigned char D_00533880;
 }
 extern "C" void func_0045DE80(char * arg0) {
@@ -31,7 +30,7 @@ extern "C" void func_0045DE80(char * arg0) {
             func_00138B70(temp_a0, 0);
         }
     }
-    Mem_Free(0, temp_s1, &D_004C2290, 0x152);
+    Mem_Free(0, temp_s1, "GuiGameScreen.cc", 0x152);
     }
     temp_a0_2 = F_(arg0, 0xD8, int);
     if (temp_a0_2 != 0) {
@@ -39,7 +38,7 @@ extern "C" void func_0045DE80(char * arg0) {
         temp_s1_2 = F_(arg0, 0xD8, int);
         {
             AllocGuard g;
-        Mem_Free(0, temp_s1_2, &D_004C2290, 0x157);
+        Mem_Free(0, temp_s1_2, "GuiGameScreen.cc", 0x157);
         }
         F_(arg0, 0xD8, int) = 0;
     }

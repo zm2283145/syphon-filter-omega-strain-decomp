@@ -2,7 +2,6 @@
 extern unsigned int func_00107A38(void *,int);
 extern int func_00107CA8(void *,int),func_00107DC8(void *,int);
 extern int func_0010BD58(void *,const char *,int);
-extern char D_00498438[];
 int func_001068E0(void *ctx)
 {
  int sum=0, again;
@@ -15,7 +14,7 @@ int func_001068E0(void *ctx)
    case 0:
     {int v=func_00107CA8(ctx,11);
      if(FIELD(ctx,0x860) && v==15){func_00107DC8(ctx,11);again=1;}
-     else{func_0010BD58(ctx,D_00498438,code);FIELD(ctx,0x134)=1;return 1;}}
+     else{func_0010BD58(ctx,"Invalid macroblock_address_increment code(0x%08x)",code);FIELD(ctx,0x134)=1;return 1;}}
     break;
    default:sum+=code;again=0;break;
   }

@@ -6,7 +6,6 @@ struct VRElem20 { float a; float b; unsigned char c; int d; int e; };
 struct V3521A0 { unsigned int cap; unsigned int count; VRElem20* data; };
 extern "C" {
 extern char D_004BABF0[];
-extern char D_004BAC88[];
 void* func_00139BC0(unsigned int size, void* p);
 void func_00352320(void* dst, const VRElem20* src);
 }
@@ -19,7 +18,7 @@ extern "C" void func_003521A0(V3521A0* v, const VRElem20* first, const VRElem20*
     }
     if (n) {
         VRElem20** pdata = &v->data;
-        *pdata = (VRElem20*)TStr_Alloc(n * sizeof(VRElem20), D_004BAC88, 0x5C);
+        *pdata = (VRElem20*)TStr_Alloc(n * sizeof(VRElem20), "allocator.hh", 0x5C);
         v->cap = n;
         VRElem20* p = v->data;
         for (; first != last; first++, p++) {

@@ -6,9 +6,9 @@
 
 #include "types.h"
 
-extern char D_0048B370[];
+unsigned int D_0048B370[1] = { 0x0 };
 
 int func_0027C618(int a0) {
-    *(int*)D_0048B370 = a0;
+    *(int*)((char*)D_0048B370) = a0;
     return 0;
 }

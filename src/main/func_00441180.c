@@ -10,18 +10,19 @@ struct Widget {
     virtual int IsA(void* type); /* +0x58 */
 };
 
-extern int D_004976C8;
+extern "C" char D_004C03A0[];
+static void * const dat_004976C8[2] = { (void*)D_004C03A0, (void*)0x0 };
 extern char D_004A7520[];
 extern "C" void func_0041F150(void* self);
 extern "C" Widget* func_0041DB80(void* self, int id);
 typedef struct Screen { char pad[0xA0]; Widget* child; /* +0xA0 */ } Screen;
 
-/* func_0041F150, then caches the D_004976C8 child at +0xA0 if it is of type D_004A7520 (virtual +0x58), else 0. */
+/* func_0041F150, then caches the (*(int*)dat_004976C8) child at +0xA0 if it is of type D_004A7520 (virtual +0x58), else 0. */
 extern "C" void func_00441180(Screen* self)
 {
     Widget* child;
     func_0041F150(self);
-    child = func_0041DB80(self, D_004976C8);
+    child = func_0041DB80(self, (*(int*)dat_004976C8));
     if (!child || !child->IsA(D_004A7520))
     child = 0;
     self->child = child;

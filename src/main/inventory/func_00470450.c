@@ -3,7 +3,7 @@
 typedef struct { int nameHash; int keyHash; char name[0x20]; int unk28; } InvItem; /* size 0x2C */
 typedef struct { int unk0; int count; InvItem* data; } InvVector;
 extern InvVector D_00587FF0;
-extern char D_004C3358[]; /* key format */
+char D_004C3358[] = "D_%s"; /* key format */
 extern char* String_Copy(char* dst, const char* src);         /* String_Copy */
 extern int sprintf(char* buf, const char* fmt, ...);      /* sprintf */
 extern int Loc_FindKeyThunk(const char* s);                        /* string hash */

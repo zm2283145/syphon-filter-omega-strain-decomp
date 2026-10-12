@@ -1,6 +1,32 @@
 #include "types.h"
 typedef struct { void* vt; char pad[0x5C]; char m60[0xAC]; char m10C[4]; } O2AAC60;
-extern char D_004DDB80[];
+extern void func_002AAD00();
+extern void func_002AAD10();
+extern void func_002AAD40();
+extern void func_002AB2A0();
+extern void func_002ABC90();
+extern void func_002ABD50();
+extern void func_002AC300();
+extern void func_002ACCA0();
+extern void func_002ACCF0();
+extern void func_0041D400();
+extern void func_0041D5C0();
+extern void func_0041D780();
+extern void func_0041D8C0();
+extern void func_0041E230();
+extern void func_0041EF10();
+extern void func_0041F070();
+extern void func_0041F080();
+extern void func_0041F090();
+extern void func_0041F210();
+extern void func_004235C0();
+extern void func_00423660();
+extern void func_00423670();
+extern void func_00423CC0();
+extern void func_00424750();
+extern void func_004249D0();
+extern void func_00424A10();
+extern void * const D_004DDB80[];
 extern char D_004E0D20[];
 extern void func_002AD780(void* p, int f);
 extern void func_0013B2E0(void* p, int f);
@@ -20,7 +46,7 @@ static inline void Base2AAC60(O2AAC60* p)
 O2AAC60* func_002AAC60(O2AAC60* self, short del)
 {
     if (self) {
-        self->vt = D_004DDB80;
+        self->vt = ((char*)D_004DDB80);
         A2AAC60(self->m10C);
         Base2AAC60(self);
         if (del > 0)
@@ -28,3 +54,4 @@ O2AAC60* func_002AAC60(O2AAC60* self, short del)
     }
     return self;
 }
+void * const D_004DDB80[30] = { (void*)0x0, (void*)0x0, (void*)func_002AAC60, (void*)func_002ACCF0, (void*)func_0041F090, (void*)func_0041F080, (void*)func_0041F070, (void*)func_002ABD50, (void*)func_002ABC90, (void*)func_00424A10, (void*)func_004249D0, (void*)func_00423CC0, (void*)func_00423670, (void*)func_0041E230, (void*)func_002ACCA0, (void*)func_0041EF10, (void*)func_0041F210, (void*)func_0041D8C0, (void*)func_0041D780, (void*)func_0041D5C0, (void*)func_0041D400, (void*)func_002AAD00, (void*)func_002AAD10, (void*)func_00424750, (void*)func_00423660, (void*)func_002AB2A0, (void*)func_002AAD40, (void*)func_002AC300, (void*)func_004235C0, (void*)0x0 };

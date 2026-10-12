@@ -7,8 +7,8 @@
 #include "types.h"
 #include "loose04_types.h"
 
-extern float D_00493980;
+unsigned int D_00493980[2] = { 0x3F800000, 0x0 };
 
 void func_003E9540(float value) {
-    D_00493980 = value;
+    (*(float*)D_00493980) = value;
 }

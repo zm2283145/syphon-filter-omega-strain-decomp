@@ -12,8 +12,6 @@ typedef struct { char pad[0x25C]; int f25C; } Cfg_355490;
 extern char D_004FFB50[];
 extern char D_004DADF0[];
 extern char D_004DAE10[];
-extern char D_004BB0E0[];
-extern char D_004BB0F0[];
 extern Cfg_355490* D_004FFC04;
 extern void SoundEvent_Ctor(SoundEventMsg_355490* msg, void* action, int flags);
 extern void Event_Send(void* msg, void* target, int flags);
@@ -60,10 +58,10 @@ void func_00355490(Self_355490* self, int on)
         if (self->wA0) self->wA0->flags |= 2;
         if (self->w9C) self->w9C->flags &= ~2;
         if (self->w98) {
-            sprintf(buf, D_004BB0E0, self->f8C, self->f90);
+            sprintf(buf, "0_%d_%d.tdx", self->f8C, self->f90);
             func_0043C890(self->w98, buf, D_004FFC04->f25C);
             self->w98->flags |= 2;
-            sprintf(buf, D_004BB0F0, self->f8C, self->f90);
+            sprintf(buf, "0_%d_%d", self->f8C, self->f90);
             PlayVoice_355490(self, buf);
         }
     } else {

@@ -27,4 +27,5 @@
         }                                                                     \
         return p;                                                             \
     }
+extern "C" { char D_0049EDE0[] = "charEventMsg.hh"; }
 DEFINE_NET_MSG_CLONE1(func_001B9FC0, 0x30, D_0049EDE0, 0x4D, D_004DA950, NMC_W(0x24); NMC_W(0x28); NMC_W(0x2C))

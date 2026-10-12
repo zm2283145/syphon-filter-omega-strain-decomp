@@ -2,7 +2,6 @@
 typedef struct Pop_001C0C00 { int version; int size; unsigned int base; char* cur; } Pop_001C0C00;
 extern unsigned char D_00533880;
 extern int D_00533888;
-extern char D_0049EF30[];
 extern char D_0049EE88[];
 extern char D_004EE688[];
 void Alloc_Lock(int id);
@@ -40,7 +39,7 @@ static inline void* Alloc_001C0C00(int size, int line)
 void Loader_InitHotboxes(void* self, Pop_001C0C00* r)
 {
     if (r->cur) {
-        func_00165E60(func_001698C0(), D_0049EF30, 0);
+        func_00165E60(func_001698C0(), "Initializing Hotboxes...", 0);
         Align_001C0C00(r);
         if ((unsigned char)Pop_FindTag(r, 0x3A584F42)) {
             int n = ReadInt_001C0C00(r);

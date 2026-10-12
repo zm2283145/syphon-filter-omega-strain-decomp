@@ -9,7 +9,6 @@ int func_0012F530(char *, int);
 int func_00136DA0(char *);                               
 int func_00408FB0(int, int);                            
 int func_0040A210(int, int);                            
-extern char D_004BEB80;
 extern unsigned char D_00533880;
 extern int D_00533888;
 
@@ -23,7 +22,7 @@ void func_00408EA0(PS0_00408EA0 *arg0) {
         temp_s1 = arg0->f0;
         func_00136DA0(sp38);
         func_00408FB0(temp_s1, -1);
-        Mem_Free(0, temp_s1, &D_004BEB80, 0x75);
+        Mem_Free(0, temp_s1, "materialProperties.cc", 0x75);
         func_0012F530(sp38, -1);
         arg0->f0 = 0;
         temp_s1_2 = arg0->f4;
@@ -34,7 +33,7 @@ void func_00408EA0(PS0_00408EA0 *arg0) {
         if ((temp_s1_2 != 0) && (temp_s1_2 != 0) && (temp_s1_2 != 0)) {
             func_0040A210(temp_s1_2, 0);
         }
-        Mem_Free(0, temp_s1_2, &D_004BEB80, 0x78);
+        Mem_Free(0, temp_s1_2, "materialProperties.cc", 0x78);
         if (D_00533880 != 0) {
             Alloc_Unlock(9);
         }

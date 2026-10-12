@@ -5,7 +5,6 @@ typedef struct G4PopReader {
     unsigned int base;
     int* cur;
 } G4PopReader;
-extern char D_0049EFE0[];
 extern char D_00535D20[];
 extern void* func_001698C0(void);
 extern void func_00165E60(void* h, void* s, int f);
@@ -24,7 +23,7 @@ void Loader_AllocateLights(void* level, G4PopReader* r)
     if (r->cur == 0) {
         return;
     }
-    func_00165E60(func_001698C0(), D_0049EFE0, 0);
+    func_00165E60(func_001698C0(), "Allocating Lights...", 0);
     G4_Align(r);
     if (!(unsigned char)Pop_FindTag(r, 0x3A544E50)) {
         return;

@@ -1,7 +1,7 @@
 #include "types.h"
 
 extern char D_0053BB70[];
-extern char D_004A62F0[]; /* format string */
+char D_004A62F0[] = "%s\\COMMON\\SKEL.HOG"; /* format string */
 extern char D_0048B2F8[];
 extern void func_003AA320(void* obj);
 extern void sprintf(char* buf, const char* fmt, const char* arg); /* sprintf */

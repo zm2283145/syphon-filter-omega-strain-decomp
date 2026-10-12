@@ -6,8 +6,7 @@
 
 #include "types.h"
 
-extern char D_004980F0[];
 
 int std_bad_exception_what(void) {
-    return (int)D_004980F0;
+    return (int)"bad_exception";
 }

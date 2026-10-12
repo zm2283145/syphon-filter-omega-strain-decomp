@@ -3,7 +3,6 @@
 #include "alloc_guard.h"
 
 extern "C" {
-extern char D_004BE200[];
 extern char D_0049AE60[];
 void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
 void Mem_Free(int pool, void* allocation, char* file, int line);
@@ -50,7 +49,7 @@ extern "C" int func_003F9B30(Node_3F9B30** result, List_3F9B30* list, Node_3F9B3
     Flag_3F9B30 flag;
     {
         AllocGuard guard;
-        n = (Node_3F9B30*)Mem_Alloc(0, 0x174, D_004BE200, 0x5C);
+        n = (Node_3F9B30*)Mem_Alloc(0, 0x174, "allocator.hh", 0x5C);
     }
     {
     Holder_3F9B30 h;

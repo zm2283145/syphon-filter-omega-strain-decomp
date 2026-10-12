@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-extern char D_004B8660[];   /* "GuiCharacterDisplay" */
+char D_004B8660[] = "GuiCharacterDisplay";   /* "GuiCharacterDisplay" */
 
 /* Class name getter: "GuiCharacterDisplay". */
 char* func_003267D0(void) {

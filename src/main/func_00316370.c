@@ -27,4 +27,5 @@
         }                                                                     \
         return p;                                                             \
     }
+extern "C" { char D_004B3560[] = "NetScoreMsg.hh"; }
 DEFINE_NET_MSG_CLONE1(func_00316370, 0x30, D_004B3560, 0x17, D_004DE5D0, NMC_W(0x24); NMC_W(0x28); NMC_W(0x2C))

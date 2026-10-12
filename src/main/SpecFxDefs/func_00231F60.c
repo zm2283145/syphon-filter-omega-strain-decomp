@@ -3,7 +3,10 @@ typedef struct { float x, y, z, w; } V4_f4;
 typedef struct { float pos[4]; float dir[4]; float a; float b; float c; } LDesc_f4;
 typedef struct { char pad[0x14]; void* vt; } LFx_f4;
 typedef struct { int pad0; void* vt; } LObj_f4;
-extern char D_004DBB20[];
+extern void func_002371F0();
+extern void func_003EC5E0();
+extern void func_003EC6C0();
+void * const D_004DBB20[8] = { (void*)0x0, (void*)0x0, (void*)func_002371F0, (void*)func_003EC6C0, (void*)func_003EC5E0, (void*)0x0, (void*)0x0, (void*)0x0 };
 extern char D_00535D20[];
 extern char D_004D9200[];
 extern void SpecFx_Construct(LFx_f4*);
@@ -17,7 +20,7 @@ LFx_f4* func_00231F60(LFx_f4* self, LDesc_f4* d)
 {
     LObj_f4* o;
     SpecFx_Construct(self);
-    self->vt = D_004DBB20;
+    self->vt = ((char*)D_004DBB20);
     o = LightMgr_AllocPoint(D_00535D20, 4);
     if (o) {
         float a, b;

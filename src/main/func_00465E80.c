@@ -6,8 +6,7 @@
 
 #include "types.h"
 
-extern char D_004C2B90[];
 
 char* func_00465E80(void) {
-    return D_004C2B90;
+    return "GuiFrontendCanvas";
 }

@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-extern char D_004AB070[];   /* "GuiMissionSetup" */
+char D_004AB070[] = "GuiMissionSetup";   /* "GuiMissionSetup" */
 
 /* Class name getter: "GuiMissionSetup". */
 char* func_002A0D80(void) {

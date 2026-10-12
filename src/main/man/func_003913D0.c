@@ -8,7 +8,6 @@ typedef struct { char pad0[4]; char bones[0x10]; unsigned char hasMorph; char pa
 typedef struct { char pad0[0x40]; char name[0x2BC4]; Pt2_Skl* skel; char pad2C08[8]; unsigned char preset; } Pt2_App;
 extern Pt2_PresetTbl D_00571300;
 extern Pt2_Sc* D_00571484[];
-extern char D_004BC410[];
 extern int strcmp(const char*, const char*);
 extern void* memcpy(void*, const void*, unsigned int);
 extern float* func_0028D5F0(void*, int);
@@ -25,7 +24,7 @@ int Skel_ApplyScalePreset(Pt2_App* a, int preset) {
             if (!strcmp(a->name, D_00571300.e[preset].name)) break;
         }
         if ((unsigned int)preset >= D_00571300.count) {
-            strcmp(a->name, D_004BC410);
+            strcmp(a->name, "BONENOSCALE");
             return 0;
         }
     }

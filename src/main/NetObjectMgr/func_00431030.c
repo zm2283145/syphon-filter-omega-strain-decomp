@@ -4,7 +4,7 @@
 #include "transfer_tree_allocator.h"
 
 extern "C" {
-extern char D_004BFB48[];
+char D_004BFB48[] = "allocator.hh";
 extern char D_004BFB88[];
 }
 

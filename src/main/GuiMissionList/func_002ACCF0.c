@@ -26,9 +26,6 @@ extern int D_0048BC28;
 extern char D_004ABAB0[];
 extern char D_004AB9D0[]; /* fallback text */
 extern char D_004AB9D8[]; /* key formats */
-extern char D_004AB9E8[];
-extern char D_004AB9F8[];
-extern char D_004ABA10[];
 extern "C" void func_00424BC0(Screen* self);
 extern "C" Widget* func_0041DB80(Screen* self, int id);
 extern "C" int sprintf(char* buf, const char* fmt, ...);
@@ -61,7 +58,7 @@ extern "C" void func_002ACCF0(Screen* self)
     Screen* p;
     unsigned int i;
     for (i = 0, p = self; i < 5; i++, p = (Screen*)((char*)p + 4)) {
-    sprintf(key2, D_004AB9E8, i);
+    sprintf(key2, "PingResult%d", i);
     p->textB[0] = Loc_LookupText(key2);
     if (!p->textB[0])
     p->textB[0] = D_004AB9D0;
@@ -71,7 +68,7 @@ extern "C" void func_002ACCF0(Screen* self)
     Screen* p;
     unsigned int i;
     for (i = 0, p = self; i < 5; i++, p = (Screen*)((char*)p + 4)) {
-    sprintf(key3, D_004AB9F8, i);
+    sprintf(key3, "FilterType%d", i);
     p->textC[0] = Loc_LookupText(key3);
     if (!p->textC[0])
     p->textC[0] = D_004AB9D0;
@@ -81,7 +78,7 @@ extern "C" void func_002ACCF0(Screen* self)
     Screen* p;
     int i;
     for (i = 0, p = self; i < 6; i++, p = (Screen*)((char*)p + 4)) {
-    sprintf(key4, D_004ABA10, i);
+    sprintf(key4, "MisListHeader%d", i);
     p->textE[0] = Loc_LookupText(key4);
     }
     }

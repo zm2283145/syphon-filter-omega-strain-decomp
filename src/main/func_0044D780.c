@@ -9,7 +9,6 @@ int func_004534A0(char * , int, int, int);
 int func_0046C7A0(char *, char *);                        
 int memset(char *, int, int);                                
 extern int D_00497890;
-extern char D_004C0EC0;
 extern char func_00446740;
 
 typedef struct { char p0[552]; int f228; int f22C; char p230[28]; int f24C; } PS0_0044D780;
@@ -20,7 +19,7 @@ void func_0044D780(PS0_0044D780 *arg0) {
     if (arg0->f228 == 0) {
         arg0->f228 = 1;
         memset(sp30, 0, 0x15);
-        String_Copy(sp30, &D_004C0EC0);
+        String_Copy(sp30, "1");
         arg0->f24C = func_0046C7A0(sp30, &func_00446740);
         if (arg0->f24C == 0) {
             temp_v0 = func_00443E70();

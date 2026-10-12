@@ -5,19 +5,6 @@
 int String_Copy(char * , int);
 int func_00121BC8(int);
 int String_CompareNoCase(int, char *);
-extern char D_004C0618;
-extern char D_004C0620;
-extern char D_004C0630;
-extern char D_004C0638;
-extern char D_004C0648;
-extern char D_004C0650;
-extern char D_004C0660;
-extern char D_004C0670;
-extern char D_004C0680;
-extern char D_004C06A0;
-extern char D_004C06C0;
-extern char D_004C06E0;
-extern char D_004C0700;
 
 void func_00443260(char * arg0, int arg1, int arg2) {
     signed char temp_s1;
@@ -29,57 +16,57 @@ void func_00443260(char * arg0, int arg1, int arg2) {
         var_v0 = 0;
     }
     temp_s1 = var_v0 != 0;
-    if (String_CompareNoCase(arg1, &D_004C0618) == 0) {
+    if (String_CompareNoCase(arg1, "MAS_IP") == 0) {
         String_Copy(arg0 + 0x1FFC, arg2);
         return;
     }
-    if (String_CompareNoCase(arg1, &D_004C0620) == 0) {
+    if (String_CompareNoCase(arg1, "MAS_PORT") == 0) {
         F_(arg0, 0x207C, int) = var_v0;
         return;
     }
-    if (String_CompareNoCase(arg1, &D_004C0630) == 0) {
+    if (String_CompareNoCase(arg1, "MUIS_IP") == 0) {
         String_Copy(arg0 + 0x2100, arg2);
         return;
     }
-    if (String_CompareNoCase(arg1, &D_004C0638) == 0) {
+    if (String_CompareNoCase(arg1, "MUIS_DNS") == 0) {
         String_Copy(arg0 + 0x2080, arg2);
         return;
     }
-    if (String_CompareNoCase(arg1, &D_004C0648) == 0) {
+    if (String_CompareNoCase(arg1, "MAS_DNS") == 0) {
         String_Copy(arg0 + 0x1F7C, arg2);
         return;
     }
-    if (String_CompareNoCase(arg1, &D_004C0650) == 0) {
+    if (String_CompareNoCase(arg1, "MUIS_PORT") == 0) {
         F_(arg0, 0x2180, int) = var_v0;
         return;
     }
-    if (String_CompareNoCase(arg1, &D_004C0660) == 0) {
+    if (String_CompareNoCase(arg1, "MUIS_SKIP") == 0) {
         F_(arg0, 0x2184, signed char) = temp_s1;
         return;
     }
-    if (String_CompareNoCase(arg1, &D_004C0670) == 0) {
+    if (String_CompareNoCase(arg1, "MAX_CHAT") == 0) {
         if (var_v0 > 1) {
             F_(arg0, 0x1EA4, int) = var_v0;
         }
     } else {
-        if (String_CompareNoCase(arg1, &D_004C0680) == 0) {
+        if (String_CompareNoCase(arg1, "FORCE_LOBBY_REFRESH") == 0) {
             F_(arg0, 0x1E98, int) = 0;
             F_(arg0, 0x1E9C, int) = 0;
             return;
         }
-        if (String_CompareNoCase(arg1, &D_004C06A0) == 0) {
+        if (String_CompareNoCase(arg1, "DEFAULT_LOBBY_NAME") == 0) {
             String_Copy(arg0 + 0x23B5, arg2);
             return;
         }
-        if (String_CompareNoCase(arg1, &D_004C06C0) == 0) {
+        if (String_CompareNoCase(arg1, "LOBBY_DISABLE_HEADSETS") == 0) {
             F_(arg0, 0x23D5, signed char) = temp_s1;
             return;
         }
-        if (String_CompareNoCase(arg1, &D_004C06E0) == 0) {
+        if (String_CompareNoCase(arg1, "DISABLE_SECURITY") == 0) {
             F_(arg0, 0x23D6, signed char) = temp_s1;
             return;
         }
-        if (String_CompareNoCase(arg1, &D_004C0700) == 0) {
+        if (String_CompareNoCase(arg1, "DISABLE_PAGED_GAMELISTS") == 0) {
             F_(arg0, 0x17C, signed char) = temp_s1;
         }
     }

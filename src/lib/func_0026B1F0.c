@@ -2,13 +2,13 @@
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-extern int D_0048B250;
+unsigned int D_0048B250[4] = { 0x0, 0x0, 0x0, 0x0 };
 extern char D_004FBB88;
 
 int func_0026B1F0(void) {
     char *var_a0;
 
-    D_0048B250 = 1;
+    (*(int*)D_0048B250) = 1;
     var_a0 = &D_004FBB88;
     do {
         F_(var_a0, 0x0, int) = 0;

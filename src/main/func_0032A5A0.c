@@ -5,7 +5,6 @@
 struct VRElem20 { int w[11]; };
 struct V32A5A0 { unsigned int cap; unsigned int count; VRElem20* data; };
 extern "C" {
-extern char D_004B8830[];
 extern char D_004B88C0[];
 void* func_00139BC0(unsigned int size, void* p);
 void func_0032A730(void* dst, const VRElem20* src);
@@ -14,7 +13,7 @@ extern "C" void func_0032A5A0(V32A5A0* v, const VRElem20* first, const VRElem20*
 {
     unsigned int n = last - first;
     if (v->count > 0x22E8BA) {
-        func_00123BE8(D_00489738->stream, D_004B8830);
+        func_00123BE8(D_00489738->stream, "vector length error\n");
         func_00121B60();
     }
     if (n) {

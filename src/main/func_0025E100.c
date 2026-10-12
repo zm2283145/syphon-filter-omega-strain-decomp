@@ -3,7 +3,6 @@
 #include "alloc_guard.h"
 extern "C" {
 void* Mem_Alloc(int pool, int size, char* file, int line);
-extern char D_004A7D90[];
 extern char D_004DFD80[];
 extern char D_004DC7F0[];
 }
@@ -14,7 +13,7 @@ extern "C" Msg2530* func_0025E100(Msg2530* src)
     Msg2530* p;
     {
         AllocGuard guard;
-        p = (Msg2530*)Mem_Alloc(0, 0x34, D_004A7D90, 0x18);
+        p = (Msg2530*)Mem_Alloc(0, 0x34, "SwitchBodiesMsg.hh", 0x18);
     }
     if (p) {
         p->vtable = D_004DFD80;

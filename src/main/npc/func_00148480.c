@@ -2,12 +2,16 @@
 #include "types.h"
 #include "message_clone.h"
 
-extern "C" char D_004D92E0[];
+extern "C" void Event_PackHeader();
+extern "C" void cAIModeChangeMsg_dtor();
+extern "C" void cAIModeChangeMsg_v03();
+extern void * const D_004D92E0[];
 
 struct Msg_0023FF50 : ClonedMessageBase {
     char b24;
 };
 
-#define CLONE_BODY(p, s) p->vtable = D_004D92E0; p->b24 = s->b24;
+#define CLONE_BODY(p, s) p->vtable = ((char*)D_004D92E0); p->b24 = s->b24;
 
 DEFINE_MESSAGE_CLONE(cAIModeChangeMsg_v01, Msg_0023FF50, 0x28, D_0049C070, 0x2D5, CLONE_BODY)
+void * const D_004D92E0[8] = { (void*)0x0, (void*)0x0, (void*)cAIModeChangeMsg_dtor, (void*)cAIModeChangeMsg_v01, (void*)Event_PackHeader, (void*)cAIModeChangeMsg_v03, (void*)0x0, (void*)0x0 };

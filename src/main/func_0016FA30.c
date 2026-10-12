@@ -9,7 +9,6 @@ typedef struct {
     int c[4];
 } Hotbox16F;
 extern "C" {
-extern char D_0049CA48[];
 extern char D_004DFD80[];
 extern char D_004D9940[];
 void* Mem_Alloc(int, int, char*, int);
@@ -21,7 +20,7 @@ static inline void* AllocL_16F(int size, char* file, int line)
 }
 extern "C" Hotbox16F* cHotboxMsg_v01(Hotbox16F* self)
 {
-    Hotbox16F* p = (Hotbox16F*)AllocL_16F(0x34, D_0049CA48, 0x4D);
+    Hotbox16F* p = (Hotbox16F*)AllocL_16F(0x34, "hotbox.hh", 0x4D);
     if (p) {
         p->vt = D_004DFD80;
         p->a[0] = self->a[0];

@@ -7,7 +7,6 @@ int func_002CF648(int *, int *);
 int func_002EB910(char *);                               
 int func_00476998();                                
 int memset(int *, int, int);                              
-extern char D_004C0B40;
 extern signed char D_00584231;
 extern char D_00584242;
 extern char D_00584262;
@@ -50,9 +49,9 @@ int func_00444EC0(void) {
     D_00584231 = 1;
     func_002EB910(sl.f20);
     String_Copy(&D_00584242, sl.f20);
-    String_Copy(&D_00584262, &D_004C0B40);
+    String_Copy(&D_00584262, "2002");
     String_Copy(&D_00584282, sl.f20);
-    String_Copy(&D_005842A2, &D_004C0B40);
+    String_Copy(&D_005842A2, "2002");
     D_00584518 = (D_005842C4 = 1); 
     return temp_v0;
 }

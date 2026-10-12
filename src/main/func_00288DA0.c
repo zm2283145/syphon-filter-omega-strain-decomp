@@ -6,8 +6,7 @@
 
 #include "types.h"
 
-extern char D_004A98B0[];
 
 int func_00288DA0(void) {
-    return (int)D_004A98B0;
+    return (int)"GuiAccountLogin";
 }

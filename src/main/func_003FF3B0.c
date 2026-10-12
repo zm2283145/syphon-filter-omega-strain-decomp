@@ -3,7 +3,6 @@
 #include "alloc_guard.h"
 extern "C" {
 void* Mem_Alloc(int pool, int size, char* file, int line);
-extern char D_004BE5A0[];
 extern char D_004DFD80[];
 extern char D_004E0860[];
 }
@@ -13,7 +12,7 @@ extern "C" M1EEDC0* cDisableMsg_v01(M1EEDC0* self)
     M1EEDC0* p;
     {
         AllocGuard guard;
-        p = (M1EEDC0*)Mem_Alloc(0, 0x28, D_004BE5A0, 0x21);
+        p = (M1EEDC0*)Mem_Alloc(0, 0x28, "DisableMsg.hh", 0x21);
     }
     if (p) {
         p->vtable = D_004DFD80;

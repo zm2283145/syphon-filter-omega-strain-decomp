@@ -7,8 +7,8 @@
 #include "types.h"
 #include "hudTargets_types.h"
 
-extern float D_0048B310;
+const float D_0048B310[2] = { 1.25f, 0.0f };
 
 float func_00272CC0(void) {
-    return D_0048B310;
+    return (*(float*)D_0048B310);
 }

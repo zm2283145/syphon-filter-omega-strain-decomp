@@ -31,9 +31,6 @@ extern char D_004AA640[];
 extern char D_004A7520[];
 extern char D_004AAE20[];
 extern char D_004AAE00[];
-extern char D_004AAC90[];
-extern char D_004AAC98[];
-extern char D_004AACA8[];
 void func_0033D3F0(Self_0029EF90* self);
 void* func_0041DB80(Self_0029EF90* self, char* name);
 void func_004235B0(W_0029EF90* w, int a, int b);
@@ -67,14 +64,14 @@ extern "C" void func_0029EF90(Self_0029EF90* self)
     self->f104 = func_0041DB80(self, D_0048B978);
     if (self->fF4) {
         self->fF4->f7C = FindAs_0029EF90(self, D_0048B960, D_004AAE00);
-        func_0043E200(self->fF4, D_004AAC90);
+        func_0043E200(self->fF4, "callout");
         self->fF4->f60 = 0;
     }
     if (self->f100) {
         self->f100->f7C = FindAs_0029EF90(self, D_0048B980, D_004AAE00);
-        func_0043E200(self->f100, D_004AAC90);
+        func_0043E200(self->f100, "callout");
         self->f100->f60 = 0;
     }
-    self->f108 = func_00418A80(func_00414790(), D_004AAC98, D_004AACA8);
+    self->f108 = func_00418A80(func_00414790(), "GuiWidget", "DNASLOGO");
     self->f108->flags &= ~0x20;
 }

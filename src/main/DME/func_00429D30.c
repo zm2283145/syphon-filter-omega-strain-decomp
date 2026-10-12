@@ -4,9 +4,7 @@
 typedef struct { void* vt; char base[0x18]; int size; char pad20[4]; int value; char rest[0x30 - 0x28]; } Msg_429D30;
 extern char D_004E1180[];
 extern char D_005839A0[];
-extern char D_004BF9E0[];
 extern char D_004BF9B0[];
-extern char D_004BFA00[];
 extern char D_005721E0[];
 extern char D_00572408[];
 extern int D_00494198;
@@ -71,7 +69,7 @@ int func_00429D30(void)
             r = NetLevelInfoMsg_Send(&m, 0, &out, 0, 0, 0x20, buf);
             if (r > -1) {
                 int e = Net_SendLocked((signed char)m.size, D_005721A8, i + 1, 2, out, r, buf);
-                if (e) func_00127358(D_004BF9E0, D_004BF9B0, 0x528, e);
+                if (e) func_00127358("%s : %d SHIT - %d\n", D_004BF9B0, 0x528, e);
             }
             D_00572428[i] = -1;
             m.vt = D_004E1180;
@@ -119,7 +117,7 @@ int func_00429D30(void)
                             if (v != 2) D_005723B8 = 1;
                         } else if (v != 0xC) {
                             D_005721D8 = 1;
-                            snprintf(D_005721E0, 0x10, D_004BFA00);
+                            snprintf(D_005721E0, 0x10, "GAME_DISCONNECT");
                         }
                     }
                 }

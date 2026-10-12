@@ -6,8 +6,7 @@
 
 #include "types.h"
 
-extern char D_004C2598[];
 
 char* func_0045F2C0(void) {
-    return D_004C2598;
+    return "GuiAutoSaver";
 }

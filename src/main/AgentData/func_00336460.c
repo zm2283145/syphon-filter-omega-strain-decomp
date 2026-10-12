@@ -13,7 +13,6 @@ int func_002887C0(char * , int);
 int func_00336610(char * , int);                         
 int func_0033A330(char * , int);                         
 int operator_delete(char * );                          
-extern char D_004B9308;
 extern unsigned char D_00533880;
 extern char func_003365A0;
 }
@@ -27,7 +26,7 @@ extern "C" char * func_00336460(char * arg0, long long arg1) {
         temp_s2 = F_(arg0, 0x9A4, int);
         {
             AllocGuard g;
-        Mem_Free(0, temp_s2, &D_004B9308, 0xE0);
+        Mem_Free(0, temp_s2, "AgentData.cc", 0xE0);
         }
         temp_a0 = arg0 + 0xB58;
         if (temp_a0 != NULL) {

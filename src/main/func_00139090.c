@@ -2,7 +2,6 @@
 #include "types.h"
 #include "alloc_guard.h"
 extern "C" {
-extern char D_0049AE60[];
 void Mem_Free(int pool, void* allocation, char* file, int line);
 void func_0036D5D0(void* p, int flags);
 }
@@ -25,7 +24,7 @@ extern "C" void func_00139090(LN_9090** result, L_9090* list, LN_9090** first, L
         *first = (*first)->next;
         if (n) {
             AllocGuard guard;
-            Mem_Free(0, n, D_0049AE60, 0x64);
+            Mem_Free(0, n, "allocator.hh", 0x64);
         }
         list->count--;
     }

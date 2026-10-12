@@ -6,7 +6,27 @@ int func_00138B70(char * , int);
 int func_0013A040(char * , int);                         
 int func_0041F370(char **, int);                           
 int operator_delete(char **);                            
-extern char D_004E1620;
+extern void func_0041D400();
+extern void func_0041D5C0();
+extern void func_0041D780();
+extern void func_0041D8C0();
+extern void func_0041E230();
+extern void func_0041E2B0();
+extern void func_0041E330();
+extern void func_0041EBF0();
+extern void func_0041EFA0();
+extern void func_0041F070();
+extern void func_0041F080();
+extern void func_0041F210();
+extern void func_0045BCC0();
+extern void func_0045BCD0();
+extern void func_0045D3D0();
+extern void func_0045D420();
+extern void func_0045D8D0();
+extern void func_0045D960();
+extern void func_0045DE80();
+extern void func_0045DFD0();
+extern void * const D_004E1620[];
 
 char **func_0045BC10(char **arg0, long long arg1) {
     char * temp_a0;
@@ -15,7 +35,7 @@ char **func_0045BC10(char **arg0, long long arg1) {
 
     if (arg0 != NULL) {
         temp_a0 = (char *)arg0 + 0x80;
-        *arg0 = &D_004E1620;
+        *arg0 = &(*(char*)D_004E1620);
         if (temp_a0 != NULL) {
             func_0013A040(temp_a0, -1);
         }
@@ -34,3 +54,4 @@ char **func_0045BC10(char **arg0, long long arg1) {
     }
     return arg0;
 }
+void * const D_004E1620[24] = { (void*)0x0, (void*)0x0, (void*)func_0045BC10, (void*)func_0045DFD0, (void*)func_0045DE80, (void*)func_0041F080, (void*)func_0041F070, (void*)func_0041EFA0, (void*)func_0041EBF0, (void*)func_0041E330, (void*)func_0041E2B0, (void*)func_0045D420, (void*)func_0045D8D0, (void*)func_0041E230, (void*)func_0045D960, (void*)func_0045D3D0, (void*)func_0041F210, (void*)func_0041D8C0, (void*)func_0041D780, (void*)func_0041D5C0, (void*)func_0041D400, (void*)func_0045BCC0, (void*)func_0045BCD0, (void*)0x0 };

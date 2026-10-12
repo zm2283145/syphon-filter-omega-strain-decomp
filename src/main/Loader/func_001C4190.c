@@ -1,8 +1,6 @@
 #include "types.h"
 typedef struct { int w[8]; } Pop_1C4190;
 extern char D_0048B2F8[];
-extern char D_0049F290[];
-extern char D_0049F2A8[];
 extern char D_004FFB50[];
 extern char D_004FFC90[];
 extern void func_00165E60(void* a, char* name, int x);
@@ -32,8 +30,8 @@ void Loader_LoadLevelData(void* l, void* arc)
     char name[128];
     Pop_1C4190 pop;
     int h;
-    func_00165E60(func_001698C0(), D_0049F290, 0);
-    sprintf(name, D_0049F2A8, D_0048B2F8, D_004FFC90, D_004FFC90);
+    func_00165E60(func_001698C0(), "Loading Level Data...", 0);
+    sprintf(name, "%s\\%s\\DATA.HOG", D_0048B2F8, D_004FFC90, D_004FFC90);
     h = Archive_Open(arc, name, 1, 0);
     Population_Load(&pop, D_004FFC90, h);
     func_00136A70(D_004FFB50, &pop, arc);

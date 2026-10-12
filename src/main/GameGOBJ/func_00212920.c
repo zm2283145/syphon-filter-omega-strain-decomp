@@ -2,7 +2,6 @@
 
 typedef struct { int unk0; int unk4; char pad[4]; unsigned char unkC; char pad2[0x1F]; } NetInit;
 
-extern char D_004A45A8[];
 extern int D_004F5480;
 extern int func_002E9B60(void);
 extern int func_002129A0(NetInit* init);
@@ -24,7 +23,7 @@ void func_00212920(void)
         return;
     if (!func_002129A0(&init))
         return;
-    if (func_002E9CD0(&handle, D_004A45A8, 0x20))
+    if (func_002E9CD0(&handle, "NetPathedGobj", 0x20))
         return;
     D_004F5480 = handle;
     func_002E9D88(handle, func_00212700, func_00212540, func_002128A0);

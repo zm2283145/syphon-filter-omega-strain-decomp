@@ -15,7 +15,6 @@ typedef struct {
     E4Str s114;
     char pad1B0[0x10];
 } __attribute__((aligned(16))) E4Ev;
-extern char D_0049D900[];
 extern char D_004FFB50[];
 extern char D_004DAE30[];
 extern void SoundRequest_Ctor(E4Req* r, int a, char* b, int c, int d);
@@ -27,7 +26,7 @@ void func_00188F00(int preset)
 {
     E4Req req;
     E4Ev ev;
-    SoundRequest_Ctor(&req, 0, D_0049D900, 0, 0);
+    SoundRequest_Ctor(&req, 0, "F_LADDER_M", 0, 0);
     SoundEvent_CtorFromPreset(&ev, &req, preset);
     ev.flag = 1;
     Event_Send(&ev, D_004FFB50, 1);

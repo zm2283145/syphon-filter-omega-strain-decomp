@@ -18,7 +18,7 @@ typedef struct { char pad[0x20]; Sel_34D2D0* f20; } M_34D2D0;
 typedef struct { char pad[0x25C]; int f25C; } G_34D2D0;
 extern "C" {
 extern G_34D2D0* D_004FFC04;
-extern char D_004BA818[]; extern char D_004BA828[]; extern char D_004BA838[]; extern char D_004BA848[];
+char D_004BA818[] = "GuiSlideShow"; extern char D_004BA828[]; extern char D_004BA838[]; extern char D_004BA848[];
 void func_0034D770(O_34D2D0* o, int k);
 M_34D2D0* func_004147A0(void);
 void* func_00414790(void);

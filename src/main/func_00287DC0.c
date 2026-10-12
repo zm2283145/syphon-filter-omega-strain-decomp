@@ -6,8 +6,7 @@
 
 #include "types.h"
 
-extern char D_004A9670[];
 
 int func_00287DC0(void) {
-    return (int)D_004A9670;
+    return (int)"GuiTitleScreen";
 }

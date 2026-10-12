@@ -104,4 +104,5 @@
 
 
 union E_002AD1F0 { struct { int a, b, c; } w; struct { char b[12]; } c; };
+extern "C" { char D_004ABA20[] = "vector::insert length error\n"; }
 DEFINE_VIF_UF(func_002AD1F0, E_002AD1F0, 0x800000, 0x400000, D_004ABA20, D_004ABA70, 0x5C, func_002AD730, D_004ABA60, 0x64)

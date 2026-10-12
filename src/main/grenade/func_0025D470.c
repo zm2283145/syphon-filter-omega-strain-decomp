@@ -1,7 +1,7 @@
 #include "types.h"
-extern float D_0048AF60;
-extern float D_0048AF68;
+static const float dat_0048AF60[2] = { 5.0f, 0.0f };
+static const float dat_0048AF68[2] = { 100.0f, 0.0f };
 float Throw_GetRange(float t) {
     if (t > 1.0f) t = 1.0f;
-    return D_0048AF60 + t * (D_0048AF68 - D_0048AF60);
+    return (*(float*)dat_0048AF60) + t * ((*(float*)dat_0048AF68) - (*(float*)dat_0048AF60));
 }

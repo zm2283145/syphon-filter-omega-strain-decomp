@@ -30,7 +30,7 @@ extern "C" {
 extern char D_004C2290[]; extern char D_004C22A8[]; extern char D_00587D80[];
 extern char D_004C22B0[]; extern char D_004C22C0[]; extern char D_004C22D0[]; extern char D_004C22E0[];
 extern char D_004C22F0[]; extern char D_004C22F8[]; extern char D_004C2300[]; extern char D_004C2310[];
-extern char D_004C2328[]; extern char D_004C2340[]; extern char D_004C2350[]; extern char D_004C2360[];
+char D_004C2328[] = "value_timer"; extern char D_004C2340[]; extern char D_004C2350[]; extern char D_004C2360[];
 extern char D_004C2370[]; extern char D_004C2380[]; extern char D_004C2268[];
 extern char D_004C2430[]; extern char D_004A7520[]; extern char D_004C1D10[]; extern char D_004AA640[];
 extern char D_004FFB50[];

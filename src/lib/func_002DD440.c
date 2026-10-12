@@ -6,7 +6,6 @@
 
 #include "types.h"
 
-extern char D_004ADB58[];
 extern int sprintf(int, int, int, int, int, int, int, int, float, float, float, float, float, float, float, float);
 
 int func_002DD440(int a0, int a1) {
@@ -21,7 +20,7 @@ int func_002DD440(int a0, int a1) {
     if (cond) goto L002DD478;
     t1 = *(unsigned char*)((char*)v0 + 3);
     a2 = *(unsigned char*)(char*)v0;
-    a1 = (int)D_004ADB58;
+    a1 = (int)"%u.%u.%u.%u";
     a3 = *(unsigned char*)((char*)v0 + 1);
     t0 = *(unsigned char*)((char*)v0 + 2);
     v0 = sprintf(a0, a1, a2, a3, t0, t1, t2, t3, f12, f13, f14, f15, f16, f17, f18, f19);

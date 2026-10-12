@@ -11,7 +11,6 @@ Raw_DB80 func_0043DB60(void*);
 void func_0043DB70(char**, const Raw_DB80&);
 void func_0043DB50(char**, const Raw_DB80&);
 void func_0043BC70(void*, int, int, int, int);
-extern char D_004C0110;
 }
 struct S_DB80 { char pad[0x64]; int f64; int f68; int f6C; int f70; int f74; int f78; void* f7C; };
 static inline void Upd_DB80(S_DB80* s) { func_0043BC70(s->f7C, 0, s->f68, 0, s->f70 - s->f64); }
@@ -27,7 +26,7 @@ extern "C" void func_0043DB80(char* self) {
                 void* e = F_(n, 0x8, void*);
                 {
                     AllocGuard g;
-                    Mem_Free(0, e, &D_004C0110, 0xCB);
+                    Mem_Free(0, e, "guiMLTextWidget.cc", 0xCB);
                 }
                 n = F_(n, 0x4, char*);
             }

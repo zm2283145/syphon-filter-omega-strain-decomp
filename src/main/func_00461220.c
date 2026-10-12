@@ -5,7 +5,6 @@
 
 #include "loose05_types.h"
 
-extern char D_004C25C0[];
 extern char D_004F2CC0[];
 
 /* Address of 12-byte element `i`. */
@@ -22,5 +21,5 @@ char* func_00461250(void) {
 }
 
 char* func_00461260(void) {
-    return D_004C25C0;
+    return "GuiEndGameAwards";
 }

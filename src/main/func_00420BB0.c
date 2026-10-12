@@ -1,9 +1,8 @@
 #include "types.h"
 
-extern int D_004BF520;
 extern int strcmp(void*);
 
-/* Returns whether strcmp(&D_004BF520) returned 0. */
+/* Returns whether strcmp(((int*)"GuiButtonWidget")) returned 0. */
 int func_00420BB0(void) {
-    return strcmp(&D_004BF520) == 0;
+    return strcmp(((int*)"GuiButtonWidget")) == 0;
 }

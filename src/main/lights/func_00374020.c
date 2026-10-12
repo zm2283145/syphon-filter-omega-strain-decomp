@@ -3,13 +3,12 @@
 #include "alloc_guard.h"
 struct S374020 { void* p[4]; int n[4]; };
 extern "C" {
-extern char D_004BC150[];
 void Mem_Free(int pool, void* p, char* file, int line);
 }
 static inline void Rel374020(void* p, int line)
 {
     AllocGuard g;
-    Mem_Free(0, p, D_004BC150, line);
+    Mem_Free(0, p, "lights.cc", line);
 }
 extern "C" void LightMgr_FreePools(S374020* s)
 {

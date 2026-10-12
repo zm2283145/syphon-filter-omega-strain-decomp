@@ -5,7 +5,7 @@ struct Txt_00288E90 { char pad[0x48]; char s48[4]; };
 struct S_00288E90 { char pad0[0x8C]; Txt_00288E90* p8C; char pad90[4]; Txt_00288E90* p94; char pad98[0x10]; int fA8; };
 extern "C" {
 extern void* D_004FFC04;
-extern char D_004A9730[];
+const unsigned int D_004A9730[4] = { 0x0, 0x0, 0x0, 0x0 };
 void* func_004294C0(void);
 char* func_001692D0(void* s);
 int strlen(const char* s);
@@ -37,12 +37,12 @@ extern "C" void func_00288E90(S_00288E90* self)
     }
     {
         void* ui = D_004FFC04;
-        self->fA8 = func_002CAE30(ui, 0, D_004A9730, func_0033CE30(self, 0x26, 0, 0, 0, 0), 0, 0);
+        self->fA8 = func_002CAE30(ui, 0, ((char*)D_004A9730), func_0033CE30(self, 0x26, 0, 0, 0, 0), 0, 0);
     }
     pw = func_001692D0(self->p94->s48);
     if ((unsigned char)func_00445B90(g, func_001692D0(self->p8C->s48), pw)) {
         void* ui = D_004FFC04;
-        func_002CAE30(ui, 2, D_004A9730, func_0033CE30(self, 0x25, 0, 0, 0, 0), self, 0x23);
+        func_002CAE30(ui, 2, ((char*)D_004A9730), func_0033CE30(self, 0x25, 0, 0, 0, 0), self, 0x23);
     } else {
         int cb;
         int code;

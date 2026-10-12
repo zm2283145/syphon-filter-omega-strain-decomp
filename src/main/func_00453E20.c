@@ -13,7 +13,6 @@ typedef struct {
     char pad2418[0x26AC - 0x2418];
 } Game;
 extern Game* D_00585E60;
-extern char D_004C1940[];
 extern void func_0044FA00(Slot* slot);
 extern void* memset(void* p, int c, int n);
 extern void func_0044F880(Slot* slot, int a, int b, int c);
@@ -44,6 +43,6 @@ Game* func_00453E20(Game* self)
     func_0044F880(&self->slots[1], 0x40, 0, 0xAC);
     func_0044F880(&self->slots[2], 8, 0, 0x214);
     func_0044F880(&self->slots[3], 0x10, 0, 9);
-    String_Copy(self->name, D_004C1940);
+    String_Copy(self->name, "MediusLobby");
     return self;
 }

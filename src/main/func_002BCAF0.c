@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-extern char D_004AC7F0[];   /* "GuiEquipmentModify" */
+char D_004AC7F0[] = "GuiEquipmentModify";   /* "GuiEquipmentModify" */
 extern int func_0027C4D8(void);
 
 int func_002BCAF0(void) {

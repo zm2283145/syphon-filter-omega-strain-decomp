@@ -43,7 +43,6 @@ static inline void QCopy_89D0(void* dst, void* src, int n0)
 typedef struct { char pad[0x74]; void* obj; int arg; } Sub_89D0;
 typedef struct { char pad[0x1AC]; int id; Sub_89D0* sub; } Src_89D0;
 extern "C" {
-extern char D_0049C080[];
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void func_0016EFE0(void* dst, Src_89D0* obj);
 void func_0016E890(void* a, int id, void* b, void* c);
@@ -66,7 +65,7 @@ extern "C" void func_001489D0(char* self, Src_89D0* obj)
         void* p;
         {
             AllocGuard g;
-            p = Mem_Alloc(0, 0x30, D_0049C080, 0x1CC);
+            p = Mem_Alloc(0, 0x30, "path.hh", 0x1CC);
         }
         if (p)
             p = func_00161930(p, s->arg);

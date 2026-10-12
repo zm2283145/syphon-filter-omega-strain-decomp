@@ -7,13 +7,13 @@
 #include "types.h"
 
 extern char D_0048C3DC[];
-extern char D_0048C3F0[];
+unsigned int D_0048C3F0[1] = { 0x0 };
 
 int func_002CEF30(void) {
     int v0;
     int cond;
 
-    v0 = *(int*)(char*)D_0048C3F0;
+    v0 = *(int*)(char*)((char*)D_0048C3F0);
     cond = v0 == 0;
     if (cond) goto L002CEF4C;
     v0 = ((int (*)(void))v0)();

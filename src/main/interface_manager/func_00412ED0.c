@@ -3,7 +3,6 @@
 typedef struct { char data[0xA0]; } TextObj;
 typedef struct { char pad[0xC]; void* target; void* enabled; int color; } Label412; /* 0x18 bytes */
 
-extern char D_004BEF48[];
 extern void* func_001692D0(Label412* label);
 extern int sprintf(char* buf, const char* fmt, ...);
 extern void func_0036E5D0(TextObj* obj);
@@ -22,7 +21,7 @@ void func_00412ED0(Label412* self)
         if (p->enabled && p->target) {
             TextObj obj;
             char buf[0x20];
-            sprintf(buf, D_004BEF48, func_001692D0(p));
+            sprintf(buf, "%s.IE", func_001692D0(p));
             func_0036E5D0(&obj);
             Hog_Register(&obj, buf, p->color, 0);
             func_003E7AD0(p->target, &obj);

@@ -13,16 +13,16 @@ typedef struct LabelSet {
     Label14 labels[4];     /* 0x58 */
 } LabelSet;
 
-extern char D_004AB580[];
+const unsigned int D_004AB580[4] = { 0x0, 0x0, 0x0, 0x0 };
 extern void func_0041BEB0(void* widget, const char* text, int flags);
 
 /* Sets the title/body text of the current label, using "" for null strings. */
 void func_002A7DF0(LabelSet* set, const char* title, const char* body) {
     Label14* label = &set->labels[set->current];
     if (label->title) {
-        func_0041BEB0(label->title, title ? title : D_004AB580, 0);
+        func_0041BEB0(label->title, title ? title : ((char*)D_004AB580), 0);
     }
     if (label->body) {
-        func_0041BEB0(label->body, body ? body : D_004AB580, 0);
+        func_0041BEB0(label->body, body ? body : ((char*)D_004AB580), 0);
     }
 }

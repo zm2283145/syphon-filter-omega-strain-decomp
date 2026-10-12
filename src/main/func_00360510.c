@@ -5,7 +5,7 @@
 int String_CtorCStr_13B480(char *, char *);                 
 int func_00138B70(char *, int);                            
 int func_0013D680(char * , char *);                       
-extern char D_004BB868;
+const unsigned int D_004BB868[2] = { 0x0, 0x0 };
 
 void func_00360510(char * arg0) {
     int sp30[4];
@@ -27,10 +27,10 @@ void func_00360510(char * arg0) {
         F_(var_v1, 0x14, int) = 0;
         var_v1 += 0x18;
     } while (var_a0 < 0xC);
-    String_CtorCStr_13B480(sp30, &D_004BB868);
+    String_CtorCStr_13B480(sp30, &(*(char*)D_004BB868));
     func_0013D680(arg0 + 0x30, sp30);
     func_00138B70(sp30, 0);
-    String_CtorCStr_13B480(sp20, &D_004BB868);
+    String_CtorCStr_13B480(sp20, &(*(char*)D_004BB868));
     func_0013D680(arg0 + 0x3C, sp20);
     func_00138B70(sp20, 0);
     F_(arg0, 0x48, int) = 0;

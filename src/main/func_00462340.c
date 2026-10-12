@@ -6,8 +6,7 @@
 
 #include "types.h"
 
-extern char D_004C2740[];
 
 char* func_00462340(void) {
-    return D_004C2740;
+    return "GuiEndGameObjectives";
 }

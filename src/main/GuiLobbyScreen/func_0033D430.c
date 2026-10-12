@@ -5,7 +5,6 @@ struct O33D430 { void* vt; };
 extern "C" {
 extern char D_004DE830[];
 extern char D_004E1220[];
-extern char D_004B9BB0[];
 extern int D_00532FD8;
 extern void* D_00532FE0;
 void func_00138B70(void* p, int f);
@@ -25,7 +24,7 @@ extern "C" O33D430* func_0033D430(O33D430* self, short del)
                     AllocGuard g;
                     if (p)
                         func_00138B70(p, 0);
-                    Mem_Free(0, p, D_004B9BB0, 0x6F);
+                    Mem_Free(0, p, "GuiLobbyScreen.cc", 0x6F);
                 }
                 D_00532FE0 = 0;
             }

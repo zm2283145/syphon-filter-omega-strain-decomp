@@ -4,7 +4,7 @@
 
 extern "C" {
 extern signed char D_005724C0;
-extern unsigned char D_004941A0;
+static unsigned int dat_004941A0[4] = { 0x1, 0x0, 0x0, 0x0 };
 extern NetworkGameList D_005724A0;
 extern NetworkGameIterator D_005724C8;
 void func_0042A670(NetworkGameIterator* result, NetworkGameList* list);
@@ -28,11 +28,11 @@ extern "C" bool func_0042A520(NetworkGameAddress* destination)
     if (!D_005724C0)
         D_005724C0 = 1;
     bool found = false;
-    if (D_004941A0) {
+    if ((*(unsigned char*)dat_004941A0)) {
         func_0042A670(&rawBegin, &D_005724A0);
         func_0042A660(&begin, &rawBegin);
         D_005724C8 = begin;
-        D_004941A0 = 0;
+        (*(unsigned char*)dat_004941A0) = 0;
     }
     func_0042A640(&rawEnd, &D_005724A0);
     func_0042A660(&end, &rawEnd);
@@ -42,7 +42,7 @@ extern "C" bool func_0042A520(NetworkGameAddress* destination)
         ++D_005724C8.entry;
         found = true;
     } else {
-        D_004941A0 = 1;
+        (*(unsigned char*)dat_004941A0) = 1;
     }
     return found;
 }

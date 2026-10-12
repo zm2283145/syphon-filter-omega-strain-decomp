@@ -6,8 +6,7 @@
 
 #include "types.h"
 
-extern char D_004C1DC0[];
 
 char* func_00457380(void) {
-    return D_004C1DC0;
+    return "GuiBriefingPane";
 }

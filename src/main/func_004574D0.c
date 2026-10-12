@@ -6,8 +6,7 @@
 
 #include "types.h"
 
-extern char D_004C1E10[];
 
 char* func_004574D0(void) {
-    return D_004C1E10;
+    return "GuiStartMenuBackdrop";
 }

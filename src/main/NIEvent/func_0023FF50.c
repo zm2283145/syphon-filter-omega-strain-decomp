@@ -10,4 +10,5 @@ struct Msg_0023FF50 : ClonedMessageBase {
 
 #define CLONE_BODY(p, s) p->vtable = D_004DC2D0; p->b24 = s->b24;
 
+extern "C" { char D_004A71B8[] = "NIEvent.hh"; }
 DEFINE_MESSAGE_CLONE(func_0023FF50, Msg_0023FF50, 40, D_004A71B8, 105, CLONE_BODY)

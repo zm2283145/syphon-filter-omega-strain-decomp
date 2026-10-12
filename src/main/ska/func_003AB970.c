@@ -6,7 +6,11 @@ typedef struct { char pad[0x18]; char arr[1]; } F6Host;
 extern void BlockArray_Append(void* arr, void* item);
 extern F6Slot* Array_GetLast(void* arr);
 extern char D_00542B68[];
-extern char D_004DFBD0[];
+extern void Event_PackHeader();
+extern void Message_GetScriptTypeKey();
+extern void func_003ABA60();
+extern void func_003B6740();
+void * const D_004DFBD0[8] = { (void*)0x0, (void*)0x0, (void*)func_003ABA60, (void*)func_003B6740, (void*)Event_PackHeader, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
 extern void Event_Construct(F6Msg* m, void* type);
 extern void Event_Send(F6Msg* m, int target, int immediate);
 extern void cMessage_dtor(F6Msg* m, int flags);
@@ -26,10 +30,10 @@ void func_003AB970(float w, F6Host* h, void* req, int stop)
                 int v = l->id;
                 F6Msg msg;
                 Event_Construct(&msg, D_00542B68);
-                msg.vtable = D_004DFBD0;
+                msg.vtable = ((char*)D_004DFBD0);
                 msg.value = v;
                 Event_Send(&msg, l->target, 1);
-                msg.vtable = D_004DFBD0;
+                msg.vtable = ((char*)D_004DFBD0);
                 cMessage_dtor(&msg, 0);
             }
         }

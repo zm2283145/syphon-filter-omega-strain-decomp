@@ -13,7 +13,6 @@ int func_001AF7A0(...);
 int func_0036CD80(...);                            
 int func_003B62E0(...);                            
 int func_00404FD0(...);                            
-extern char D_004A6320;
 extern int D_004F77A0;
 extern unsigned char D_00533880;
 extern char D_0055DDA0;
@@ -61,7 +60,7 @@ extern "C" void func_00229EB0(char * arg0) {
     {
         AllocGuard g;
     func_003B62E0(temp_s0, -1);
-    Mem_Free(0, temp_s0, &D_004A6320, 0x8F);
+    Mem_Free(0, temp_s0, "frontCharacter.cc", 0x8F);
     }
     D_004F77A0 = 0;
     func_001AF7A0();

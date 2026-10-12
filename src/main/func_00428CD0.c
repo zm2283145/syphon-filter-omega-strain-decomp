@@ -4,7 +4,6 @@
 #include "alloc_guard.h"
 
 extern "C" {
-extern char D_004BF940[];
 extern char D_004DFD80[];
 extern char D_004E0E60[];
 extern int D_00572190;
@@ -37,7 +36,7 @@ extern "C" NetworkValueEvent* func_00428CD0(const NetworkValueEvent* source)
     NetworkValueEvent* result;
     {
         AllocGuard guard;
-        result = (NetworkValueEvent*)Mem_Alloc(0, sizeof(NetworkValueEvent), D_004BF940, 0x18);
+        result = (NetworkValueEvent*)Mem_Alloc(0, sizeof(NetworkValueEvent), "ActivateMsg.hh", 0x18);
     }
     if (result) {
         copy_event_base(result, source);

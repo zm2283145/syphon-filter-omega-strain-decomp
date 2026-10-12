@@ -9,15 +9,6 @@ struct W_002BDF90 {
 };
 extern "C" {
 extern char D_004AC370[];
-extern char D_004AC390[];
-extern char D_004AC3A0[];
-extern char D_004AC3B0[];
-extern char D_004AC3D0[];
-extern char D_004AC3F0[];
-extern char D_004AC410[];
-extern char D_004AC420[];
-extern char D_004AC430[];
-extern char D_004AC450[];
 extern char D_004A7520[];
 extern char D_004AC388[];
 void* func_0041DB80(void* self, char* name);
@@ -37,13 +28,13 @@ static inline void Clear_002BDF90(void* self, char* name)
 extern "C" void func_002BDF90(void* self)
 {
     Clear_002BDF90(self, D_004AC370);
-    Clear_002BDF90(self, D_004AC390);
-    Clear_002BDF90(self, D_004AC3A0);
-    Clear_002BDF90(self, D_004AC3B0);
-    Clear_002BDF90(self, D_004AC3D0);
-    Clear_002BDF90(self, D_004AC3F0);
-    Clear_002BDF90(self, D_004AC410);
-    Clear_002BDF90(self, D_004AC420);
-    Clear_002BDF90(self, D_004AC430);
-    Clear_002BDF90(self, D_004AC450);
+    Clear_002BDF90(self, "value_firerate1");
+    Clear_002BDF90(self, "value_damage1");
+    Clear_002BDF90(self, "value_clip_size1");
+    Clear_002BDF90(self, "value_max_rounds1");
+    Clear_002BDF90(self, "value_weaponname2");
+    Clear_002BDF90(self, "value_firerate2");
+    Clear_002BDF90(self, "value_damage2");
+    Clear_002BDF90(self, "value_clip_size2");
+    Clear_002BDF90(self, "value_max_rounds2");
 }

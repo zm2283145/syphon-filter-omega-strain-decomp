@@ -6,8 +6,7 @@
 
 #include "types.h"
 
-extern char D_004BB7E8[];
 
 int func_0035AE80(void) {
-    return (int)D_004BB7E8;
+    return (int)"GuiScoresEquip";
 }

@@ -6,7 +6,11 @@ extern "C" {
 void* Mem_Alloc(int pool, int size, char* file, int line);
 extern char D_0049B670[];
 extern char D_0051EE58[];
-extern char D_004DE110[];
+extern "C" void Message_GetScriptTypeKey();
+extern "C" void func_002C5460();
+extern "C" void func_002C54C0();
+extern "C" void func_002C5C80();
+void * const D_004DE110[8] = { (void*)0x0, (void*)0x0, (void*)func_002C5460, (void*)func_002C54C0, (void*)func_002C5C80, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
 extern unsigned char D_005721C8;
 void Event_Construct(void* p, char* name);
 void func_001584B0(void* p);
@@ -23,7 +27,7 @@ typedef struct { void* vt; char pad[0x20]; int x24; } Ev_8350;
 static inline void Ev_Init(Ev_8350* p, Ctl_8350* c)
 {
     Event_Construct(p, D_0051EE58);
-    p->vt = D_004DE110;
+    p->vt = ((char*)D_004DE110);
     func_001584B0((char*)p + 0x30);
     p->x24 = func_001584A0(func_0012F2B0(c));
 }

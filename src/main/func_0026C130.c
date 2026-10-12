@@ -7,7 +7,7 @@
 #include "types.h"
 #include "loose01_types.h"
 
-extern float D_0048B2A8;
+unsigned int D_0048B2A8[2] = { 0x3F490FDB, 0x0 };
 extern float D_0048B2B0;
 extern int D_004FF070;
 extern int D_004FF074;
@@ -19,7 +19,7 @@ void func_0026C130(Unk26C130* self) {
     D_004FF078 = 0;
     D_004FF07C = 0;
     D_004FF070 = 0x3EB33333; /* 0.35f */
-    D_0048B2B0 = D_0048B2A8;
+    D_0048B2B0 = (*(float*)D_0048B2A8);
     self->unk60 = 0;
     self->unk64 = 0;
     self->unk90 = 0;

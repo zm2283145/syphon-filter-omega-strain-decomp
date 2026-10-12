@@ -22,7 +22,7 @@ extern "C" {
 extern char D_004B9F88[]; extern char D_004B9F90[]; extern char D_004B9F98[]; extern char D_004B9FA0[]; extern char D_004B9FA8[]; extern char D_004B9FB0[];
 extern char D_004B9FB8[]; extern char D_004B9FC0[]; extern char D_004B9FD0[]; extern char D_004B9FD8[]; extern char D_004B9FE8[]; extern char D_004B9FF8[];
 extern char D_004B9F58[]; extern char D_004B9F50[]; extern char D_004B9F60[]; extern char D_004B9F68[];
-extern char D_004BA000[]; extern char D_004BA010[]; extern char D_004BA020[]; extern char D_004BA030[]; extern char D_004BA038[]; extern char D_004BA048[];
+char D_004BA000[] = "createagent_grp"; extern char D_004BA010[]; extern char D_004BA020[]; extern char D_004BA030[]; extern char D_004BA038[]; extern char D_004BA048[];
 extern char D_004BA060[]; extern char D_004BA070[]; extern char D_004BA080[]; extern char D_004BA090[]; extern char D_004BA098[]; extern char D_004B9F20[];
 extern char D_004A9870[]; extern char D_004A9C40[]; extern char D_004A7520[]; extern char D_004B88F0[]; extern char D_004A9BF0[];
 extern char D_004FFB50[];

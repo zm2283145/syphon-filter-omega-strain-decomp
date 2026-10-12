@@ -13,7 +13,6 @@ int func_0036E5D0();
 int func_003E7B00();                        
 int sprintf();                      
 extern char D_0048B2F8;
-extern char D_004A71F0;
 extern char D_004A7208;
 extern char D_004A7210;
 extern unsigned char D_00533880;
@@ -26,7 +25,7 @@ int func_00241C70(char *arg0, int arg1) {
     int var_s0;
 
     func_0036E5D0(sp30);
-    sprintf(spF0, &D_004A71F0, &D_0048B2F8, arg0);
+    sprintf(spF0, "%s\\COMMON\\%s.HOG", &D_0048B2F8, arg0);
     sprintf(spD0, &D_004A7208, arg0);
     Hog_Register(sp30, spD0, Archive_Open(arg1, spF0, 0, 0), 0);
     if (D_00533880 != 0) {

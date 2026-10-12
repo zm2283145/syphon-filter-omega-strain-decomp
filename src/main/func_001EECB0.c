@@ -3,7 +3,6 @@
 #include "alloc_guard.h"
 typedef struct { void* vt; int f[7]; char b20; char pad21[3]; char b24; char pad25[3]; int w28; } CEv_f4;
 extern "C" {
-extern char D_004A0590[];
 extern char D_004DFD80[];
 extern char D_004DAD20[];
 void* Mem_Alloc(int, int, char*, int);
@@ -15,7 +14,7 @@ static inline void* AllocL_f4(int size, char* file, int line)
 }
 extern "C" CEv_f4* ContactEvent_Clone(CEv_f4* src)
 {
-    CEv_f4* e = (CEv_f4*)AllocL_f4(sizeof(CEv_f4), D_004A0590, 0x2C);
+    CEv_f4* e = (CEv_f4*)AllocL_f4(sizeof(CEv_f4), "gameEventMsg.hh", 0x2C);
     if (e) {
         e->vt = D_004DFD80;
         e->f[0] = src->f[0];

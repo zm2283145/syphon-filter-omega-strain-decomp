@@ -3,7 +3,6 @@ typedef struct F1Los136 { void* vt; char pad4[0x1C]; int x20; char pad24[0xC]; V
 extern unsigned char D_00533880;
 extern int D_00533888;
 extern F1Los136* D_004EA0B8;
-extern char D_0049AEA8[];
 extern char D_004DA2F0[];
 extern void Alloc_Lock(int);
 extern void Alloc_Unlock(int);
@@ -25,7 +24,7 @@ static inline void* f1_Alloc136(int size, char* file, int line)
 void LosProvider_Create(int arg)
 {
     if (D_004EA0B8 == 0) {
-        F1Los136* p = f1_Alloc136(0x70, D_0049AEA8, 0xAE);
+        F1Los136* p = f1_Alloc136(0x70, "los.hh", 0xAE);
         if (p) {
             int b[1];
             int a[1];

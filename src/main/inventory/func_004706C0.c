@@ -19,7 +19,13 @@ typedef struct {
 } InvMsg_h5;
 extern unsigned char D_005721C8;
 extern char D_00587FC0[];
-extern char D_004E1AC0[];
+extern void Message_GetScriptTypeKey();
+extern void cNetInventoryMsg_dtor();
+extern void cNetInventoryMsg_v01();
+extern void cNetInventoryMsg_v04();
+extern void cNetInventoryMsg_v05();
+extern void func_002823E0();
+void * const D_004E1AC0[8] = { (void*)0x0, (void*)0x0, (void*)cNetInventoryMsg_dtor, (void*)cNetInventoryMsg_v01, (void*)func_002823E0, (void*)Message_GetScriptTypeKey, (void*)cNetInventoryMsg_v04, (void*)cNetInventoryMsg_v05 };
 extern char D_004DCF10[];
 extern void Event_Construct(InvMsg_h5* msg, void* name);
 extern void Event_Send(InvMsg_h5* msg, void* target, int flags);
@@ -42,7 +48,7 @@ int ItemInv_Remove(Inventory_h5* inv, int item, int n, int silent)
             if (D_005721C8 && !silent) {
                 InvMsg_h5 msg;
                 Event_Construct(&msg, D_00587FC0);
-                msg.vtable = D_004E1AC0;
+                msg.vtable = ((char*)D_004E1AC0);
                 msg.b20 = 4;
                 msg.kind = 0x40;
                 msg.item = item;

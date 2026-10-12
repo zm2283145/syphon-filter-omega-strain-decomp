@@ -5,7 +5,6 @@
 
 extern "C" {
 extern RbTree D_005826E0;
-extern char D_004BFB00[];
 extern unsigned char D_005721C8;
 extern unsigned char D_005721C0;
 cGOBJ* Object_LookupById(const GobjId* id);
@@ -28,7 +27,7 @@ static inline PendingTransferController* controller(cGOBJ* object)
 static inline void release_message(TransferMessage* message, int line)
 {
     message->~TransferMessage();
-    Mem_Free(0, message, D_004BFB00, line);
+    Mem_Free(0, message, "NetObjectMgr.cc", line);
 }
 
 static inline bool needs_transfer_update(cGOBJ* object)

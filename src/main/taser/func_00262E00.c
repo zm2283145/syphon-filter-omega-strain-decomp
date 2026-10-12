@@ -4,7 +4,7 @@ struct A2V262 { virtual void v00(); virtual void v01(); virtual void v02(); virt
 typedef struct { char pad[0x58]; A2V262* v; } A2P262;
 typedef struct { int pad0; A2P262* p; char b8; char pad9[7]; int f10; int n14; } A2S262;
 extern int D_0048B168;
-extern float D_0048B140;
+static const float dat_0048B140[2] = { 50.0f, 0.0f };
 extern "C" void* func_00262F20(void* p);
 extern "C" void func_00264720(A2S262* s, void* b);
 extern "C" void func_00262F30(A2S262* s, float dt);
@@ -26,7 +26,7 @@ extern "C" void func_00262E00(A2S262* s, float dt) {
         s->p->v->f64(buf, 0, 0);
         po = out;
         func_00264720(s, po);
-        if ((float)n < D_0048B140) func_00262F30(s, dt);
+        if ((float)n < (*(float*)dat_0048B140)) func_00262F30(s, dt);
         func_00264530(s, po);
     }
     func_00265790(s, 1.0f, 1);

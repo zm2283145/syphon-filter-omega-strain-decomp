@@ -10,12 +10,11 @@ struct WidgetChild {
 
 typedef struct GuiWidget { int unk0; WidgetChild* child; } GuiWidget;
 
-extern char D_004BF0C8[];
 extern "C" void func_00416D10(GuiWidget* self, const char* name);
 
-/* Forwards Sleep to the child widget (virtual +0x20), then posts the D_004BF0C8 event to self. */
+/* Forwards Sleep to the child widget (virtual +0x20), then posts the "onSleep" event to self. */
 extern "C" void GuiWidget_OnSleep(GuiWidget* self)
 {
     self->child->Sleep();
-    func_00416D10(self, D_004BF0C8);
+    func_00416D10(self, "onSleep");
 }

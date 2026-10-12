@@ -12,7 +12,10 @@ extern int D_005721A8;
 extern int D_00494178;
 extern char D_00582770[];
 extern char D_00572198[];
-extern char D_004E0F20[];
+extern "C" void Message_GetScriptTypeKey();
+extern "C" void func_00431F30();
+extern "C" void func_00432150();
+extern void * const D_004E0F20[];
 extern char D_004E0E80[];
 void func_0042EDF0(TransferObjectIterator* result, RbTree* tree, const GobjId* id);
 void func_0042DF10(TransferObjectIterator* result, RbTree* tree);
@@ -60,13 +63,13 @@ static inline void request_transfer(cGOBJ* object, int peer, int owner)
 {
     TransferRequestNotice notice;
     Event_Construct(&notice, D_00582770);
-    notice.vtable = D_004E0F20;
+    notice.vtable = ((char*)D_004E0F20);
     notice.id.word = object_id(object)->word;
     notice.peer = peer;
     notice.flags = 0x40;
     Transport_Send(object_id(object)->word, &notice, 0, owner);
     NetObjectMgr_AddTransferTimer(object_id(object));
-    notice.vtable = D_004E0F20;
+    notice.vtable = ((char*)D_004E0F20);
     cMessage_dtor(&notice, 0);
 }
 
@@ -141,10 +144,11 @@ extern "C" void func_0042DA30(cGOBJ* object, int previousPeer, int nextPeer)
 extern "C" TransferRequestNotice* func_0042DEA0(TransferRequestNotice* notice, int flags)
 {
     if (notice) {
-        notice->vtable = D_004E0F20;
+        notice->vtable = ((char*)D_004E0F20);
         cMessage_dtor(notice, 0);
         if ((short)flags > 0)
             operator_delete(notice);
     }
     return notice;
 }
+void * const D_004E0F20[8] = { (void*)0x0, (void*)0x0, (void*)func_0042DEA0, (void*)func_00431F30, (void*)func_00432150, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };

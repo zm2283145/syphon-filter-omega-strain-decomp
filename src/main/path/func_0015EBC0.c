@@ -44,7 +44,11 @@ typedef struct Pt1NsRouter { char pad0[0x20]; char queue[0x10]; } Pt1NsRouter;
 typedef struct { int i; } Pt1NsIt;
 extern "C" {
 extern char D_004ED9B8[];
-extern char D_004D9760[];
+extern "C" void Event_PackHeader();
+extern "C" void Message_GetScriptTypeKey();
+extern "C" void func_0015EF10();
+extern "C" void func_00164670();
+void * const D_004D9760[6] = { (void*)0x0, (void*)0x0, (void*)func_0015EF10, (void*)func_00164670, (void*)Event_PackHeader, (void*)Message_GetScriptTypeKey };
 void Event_Construct(void* msg, void* name);
 void Event_Send(void* msg, void* target, int immediate);
 void cMessage_dtor(void* msg, int flags);
@@ -84,24 +88,24 @@ extern "C" unsigned char NpcRoute_NodeSearch(Pt1NsRouter* r, Pt1NsActor* actor, 
                     node2 = res->node2;
                     mp = &m;
                     Event_Construct(mp, D_004ED9B8);
-                    mp->vt = D_004D9760;
+                    mp->vt = ((char*)D_004D9760);
                     mp->found = 0;
                     mp->node = node;
                     mp->node2 = node2;
                     actor = Pt1Ns_Root(actor);
                     Event_Send(&m, actor, 1);
-                    m.vt = D_004D9760;
+                    m.vt = ((char*)D_004D9760);
                     cMessage_dtor(&m, 0);
                 } else {
                     Pt1NsMsg m;
                     Pt1NsMsg* mp = &m;
                     Event_Construct(mp, D_004ED9B8);
-                    mp->vt = D_004D9760;
+                    mp->vt = ((char*)D_004D9760);
                     mp->found = 1;
                     mp->node = -1;
                     actor = Pt1Ns_Root(actor);
                     Event_Send(&m, actor, 1);
-                    m.vt = D_004D9760;
+                    m.vt = ((char*)D_004D9760);
                     cMessage_dtor(&m, 0);
                 }
                 return 1;
@@ -134,12 +138,12 @@ extern "C" unsigned char NpcRoute_NodeSearch(Pt1NsRouter* r, Pt1NsActor* actor, 
         Pt1NsMsg m;
         Pt1NsMsg* mp = &m;
         Event_Construct(mp, D_004ED9B8);
-        mp->vt = D_004D9760;
+        mp->vt = ((char*)D_004D9760);
         mp->found = 1;
         mp->node = -1;
         actor = Pt1Ns_Root(actor);
         Event_Send(&m, actor, 1);
-        m.vt = D_004D9760;
+        m.vt = ((char*)D_004D9760);
         cMessage_dtor(&m, 0);
     }
     return result;

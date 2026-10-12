@@ -15,20 +15,11 @@ struct Self_0028BBE0 {
 };
 extern "C" {
 extern char D_004A9970[];
-extern char D_004A9978[];
-extern char D_004A9988[];
-extern char D_004A9990[];
-extern char D_004A9998[];
-extern char D_004A99B0[];
 extern char D_004A7520[];
 extern char D_004FFB50[];
 extern unsigned char D_004FFBB8;
 extern int D_004FFBBC;
 extern Ui_0028BBE0* D_004FFC04;
-extern char D_004A99D0[];
-extern char D_004A99E8[];
-extern char D_004A9A00[];
-extern char D_004A9A18[];
 char* func_001692D0(void* s);
 void func_0028D610(Self_0028BBE0* self, char* n);
 int strcmp(const char* a, const char* b);
@@ -67,19 +58,19 @@ extern "C" int func_0028BBE0(Self_0028BBE0* self, Src_0028BBE0* w, int msg, int 
             self->fCC = 0;
             self->fD0 = 1;
         }
-        if (!strcmp(n, D_004A9978)) {
+        if (!strcmp(n, "randomize")) {
             func_0028C1D0(self->f4C);
             self->fCC = 1;
             self->fD0 = 1;
             func_0028CB20(self, 1, 0);
         }
-        if (!strcmp(n, D_004A9988)) {
+        if (!strcmp(n, "body")) {
             func_0028C2A0(w);
             func_0028C1D0(self->f50);
             self->fCC = 2;
             self->fD0 = 1;
         }
-        if (!strcmp(n, D_004A9990)) {
+        if (!strcmp(n, "head")) {
             func_0028C2A0(w);
             func_0028C1D0(self->f4C);
             if (!self->fD8 && self->f54)
@@ -87,7 +78,7 @@ extern "C" int func_0028BBE0(Self_0028BBE0* self, Src_0028BBE0* w, int msg, int 
             self->fCC = 3;
             self->fD0 = 1;
         }
-        if (!strcmp(n, D_004A9998)) {
+        if (!strcmp(n, "agentname")) {
             func_0028C1D0(self->f50);
             self->fCC = 4;
             self->fD0 = 1;
@@ -99,7 +90,7 @@ extern "C" int func_0028BBE0(Self_0028BBE0* self, Src_0028BBE0* w, int msg, int 
             if (text && *text) {
                 W_0028BBE0* t;
                 func_003340B0(Agent_GetSelected(D_004FFB50, -1), text);
-                t = FindAs_0028BBE0(self, D_004A99B0, D_004A7520);
+                t = FindAs_0028BBE0(self, "value_agent_name", D_004A7520);
                 if (t)
                     func_0041BEB0(t, text, 0);
             }
@@ -107,7 +98,7 @@ extern "C" int func_0028BBE0(Self_0028BBE0* self, Src_0028BBE0* w, int msg, int 
                 func_0028BA90(self);
                 return 1;
             }
-            x = (W_0028BBE0*)func_0041DB80(self, D_004A9998);
+            x = (W_0028BBE0*)func_0041DB80(self, "agentname");
             if (x)
                 func_00414B30(func_004147A0(), x);
             return 1;
@@ -117,9 +108,9 @@ extern "C" int func_0028BBE0(Self_0028BBE0* self, Src_0028BBE0* w, int msg, int 
             D_004FFBBC = -1;
             func_00333F60(Agent_GetSelected(D_004FFB50, -1), 0, 1);
             if (D_004FFC04->b2E)
-                pg = func_00418A80(func_00414790(), D_004A99D0, D_004A99E8);
+                pg = func_00418A80(func_00414790(), "GuiCommandCenter", "CMDCENTR");
             else
-                pg = func_00418A80(func_00414790(), D_004A9A00, D_004A9A18);
+                pg = func_00418A80(func_00414790(), "GuiOnlineOfflineSelect", "onoffsel");
             func_00414AC0(func_004147A0(), self, pg);
         }
     }

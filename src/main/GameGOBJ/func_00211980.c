@@ -9,8 +9,6 @@ struct Seg_00211980 { char pad[0x1C]; Shm_00211980* p1C; };
 struct Self_00211980 { char pad0[0xC]; unsigned int fC; int f10; char pad14[0xD0 - 0x14]; Shm_00211980* pD0; char padD4[0x128 - 0xD4]; Shm_00211980* p128; };
 extern "C" {
 extern unsigned char D_005721D0;
-extern char D_004A4550[];
-extern char D_004A4560[];
 extern int D_004F5478;
 void* Mem_Alloc(int heap, int size, char* file, int line);
 void Mem_Free(int heap, void* p, char* file, int line);
@@ -28,7 +26,7 @@ static inline int IsHost_00211980(void)
 static inline void* New_00211980(int size, int line)
 {
     AllocGuard g;
-    return Mem_Alloc(0, size, D_004A4550, line);
+    return Mem_Alloc(0, size, "GameGOBJ.cc", line);
 }
 static inline void ReleaseD0_00211980(Self_00211980* self)
 {
@@ -38,7 +36,7 @@ static inline void ReleaseD0_00211980(Self_00211980* self)
             func_002EC2A8(func_00211DA0());
         } else {
             AllocGuard g;
-            Mem_Free(0, p, D_004A4550, 0xB83);
+            Mem_Free(0, p, "GameGOBJ.cc", 0xB83);
         }
         self->pD0 = 0;
     }
@@ -63,7 +61,7 @@ extern "C" void func_00211980(Self_00211980* self)
         self->p128 = p;
         return;
     }
-    if (func_002EAF28(&h, 1, 3, 0, 0, 0, 0, self->p128, D_004A4560, D_004F5478))
+    if (func_002EAF28(&h, 1, 3, 0, 0, 0, 0, self->p128, "ElevatorInfoObject", D_004F5478))
         return;
     {
         Shm_00211980* p = self->p128;
@@ -72,7 +70,7 @@ extern "C" void func_00211980(Self_00211980* self)
                 func_002EC2A8(p->f1C);
             } else {
                 AllocGuard g;
-                Mem_Free(0, p, D_004A4550, 0xCAD);
+                Mem_Free(0, p, "GameGOBJ.cc", 0xCAD);
             }
             self->p128 = 0;
         }

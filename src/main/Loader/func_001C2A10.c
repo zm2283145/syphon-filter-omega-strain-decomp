@@ -1,6 +1,5 @@
 #include "types.h"
 typedef struct { int unk0; int size; unsigned int base; char* cur; } PopReader_1C2A10;
-extern char D_0049F0F0[];
 extern int Pop_FindTag(PopReader_1C2A10* r, int tag);
 extern void func_00165E60(void* a, char* name, int x);
 extern void* func_001698C0(void);
@@ -13,7 +12,7 @@ void Loader_LoadInventoryDefs(void* a0, PopReader_1C2A10* r)
         int mis;
         n = *(int*)r->cur;
         r->cur += 4;
-        func_00165E60(func_001698C0(), D_0049F0F0, 0);
+        func_00165E60(func_001698C0(), "Loading Inventory defs...", 0);
         for (i = 0; i < n; i++)
             func_00257480(r);
         mis = (int)((unsigned long long)(unsigned int)r->cur & 3);

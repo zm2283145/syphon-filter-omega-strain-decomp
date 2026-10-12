@@ -5,8 +5,6 @@ struct PopReader_1C1B60 { int unk0; int size; unsigned int base; char* cur; };
 struct Sky_1C1B60 { char pad[0x90]; int count; };
 extern "C" {
 extern char D_0049EE88[];
-extern char D_0049F000[];
-extern char D_0049F018[];
 extern char D_0048B2F8[];
 extern char D_004FFC90[];
 void* Mem_Alloc(int pool, int size, char* file, int line);
@@ -24,8 +22,8 @@ extern "C" void Loader_InitSkybox(void* a0, void* a1, PopReader_1C1B60* r, void*
         char name[128];
         int h;
         int n;
-        func_00165E60(func_001698C0(), D_0049F000, 0);
-        sprintf(name, D_0049F018, D_0048B2F8, D_004FFC90, D_004FFC90);
+        func_00165E60(func_001698C0(), "Initializing Skybox...", 0);
+        sprintf(name, "%s\\%s\\TEX.HOG", D_0048B2F8, D_004FFC90, D_004FFC90);
         h = Archive_Open(arc, name, 0, 0);
         n = *(int*)r->cur;
         r->cur += 4;

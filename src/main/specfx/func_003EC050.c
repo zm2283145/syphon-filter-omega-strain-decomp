@@ -12,12 +12,14 @@ int Mem_Free(...);
 int func_003EC130(...);                            
 int func_003EC8E0(...);                         
 extern int D_004BE020;
-extern int D_004E0760;
+extern "C" void func_003EC5E0();
+extern "C" void func_003EC6C0();
+extern void * const D_004E0760[];
 extern unsigned char D_00533880;
 }
 extern "C" int func_003EC050(int arg0, long long arg1) {
     if (arg0 != NULL) {
-        F_(arg0, 0x14, int) = (int)(&D_004E0760);
+        F_(arg0, 0x14, int) = (int)(&(*(int*)D_004E0760));
         func_003EC130(arg0, arg0);
         func_003EC8E0(arg0, 0);
         if (((long long) (arg1 << 0x30) >> 0x30) > 0) {
@@ -29,3 +31,4 @@ extern "C" int func_003EC050(int arg0, long long arg1) {
     }
     return arg0;
 }
+void * const D_004E0760[8] = { (void*)0x0, (void*)0x0, (void*)func_003EC050, (void*)func_003EC6C0, (void*)func_003EC5E0, (void*)0x0, (void*)0x0, (void*)0x0 };

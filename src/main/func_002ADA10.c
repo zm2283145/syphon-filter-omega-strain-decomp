@@ -4,7 +4,7 @@ typedef struct { char b[0xC]; } String;
 typedef struct { int id; char name[1]; } NameRec;
 typedef struct { char pad[0x100]; int id; String name; } Obj2AD;
 extern void* D_004FFC04;
-extern char D_004ABB08[];
+const unsigned int D_004ABB08[2] = { 0x0, 0x0 };
 extern void String_CtorCStr_13B480(String* s, const char* text);
 extern void func_0013D680(String* dst, String* src);
 extern void func_00138B70(String* s, int flag);
@@ -24,5 +24,5 @@ void func_002ADA10(Obj2AD* o, NameRec* rec)
     func_00138B70(&tmp, 0);
     h = func_001692D0(&o->name);
     mgr = D_004FFC04;
-    func_002CAE30(mgr, 5, D_004ABB08, func_0033CE30(o, 0x35, h, 0, 0, 0), o, 0xD);
+    func_002CAE30(mgr, 5, ((char*)D_004ABB08), func_0033CE30(o, 0x35, h, 0, 0, 0), o, 0xD);
 }

@@ -14,8 +14,6 @@ void **func_0041DB80(...);
 int sprintf(...);                           
 extern int D_004A7520;
 extern int D_004C1A38;
-extern int D_004C1C60;
-extern int D_004C1C70;
 }
 extern "C" void func_00456600(int arg0, int arg1) {
     int sp30[4];
@@ -23,10 +21,10 @@ extern "C" void func_00456600(int arg0, int arg1) {
     void **var_s0;
 
     F_(arg0, 0xB0, int) = arg1;
-    var_s0 = func_0041DB80(arg0, &D_004C1C60);
+    var_s0 = func_0041DB80(arg0, ((int*)"label_to_map"));
     var_s0 = ((var_s0 != NULL) && (((VC00456600 *)(var_s0))->v20(&D_004A7520) != 0)) ? var_s0 : NULL;
     if (var_s0 != NULL) {
-        sprintf(sp30, &D_004C1C70, arg1);
+        sprintf(sp30, ((int*)"StartMenuOpt%d"), arg1);
         temp_v0 = Loc_LookupText(sp30);
         if (temp_v0 != NULL) {
             func_0041BEB0(var_s0, temp_v0, 0);

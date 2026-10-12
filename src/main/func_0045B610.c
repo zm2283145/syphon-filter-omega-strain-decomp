@@ -54,7 +54,18 @@ extern char D_00535D20[];
 extern char D_004D9280[];
 extern char D_004D9240[];
 extern char D_004D9200[];
-extern char D_004E15E0[];
+extern "C" void FlashGlare_GetCoronaFlag();
+extern "C" void FlashGlare_GetCoronaSize();
+extern "C" void FlashGlare_GetRange();
+extern "C" void Flashlight_ReleaseGlare();
+extern "C" void func_00144980();
+extern "C" void func_00144B10();
+extern "C" void func_00144B80();
+extern "C" void func_001479A0();
+extern "C" void func_001479D0();
+extern "C" void func_00147A00();
+extern "C" void func_00147A10();
+void * const D_004E15E0[16] = { (void*)0x0, (void*)0x0, (void*)Flashlight_ReleaseGlare, (void*)func_001479D0, (void*)0x1479E0, (void*)func_00147A00, (void*)func_00147A10, (void*)func_001479A0, (void*)FlashGlare_GetCoronaSize, (void*)FlashGlare_GetCoronaFlag, (void*)func_00144B10, (void*)func_00144B80, (void*)func_00144980, (void*)FlashGlare_GetRange, (void*)0x0, (void*)0x0 };
 extern char g_TargetVisMgr[];
 extern signed char D_004979B0;
 extern unsigned char D_00535D62;
@@ -116,7 +127,7 @@ extern "C" void Flashlight_SetState(Pt1FsSelf* self, int on)
             Pt1FsV4 color;
             Pt1FsV4 pos;
             LevelLight_InitPoint(l, 0x40, func_00426890(&color, 1.0f, 1.0f, 1.0f, 1.0f), func_00132000(&pos, 0.0f, 0.0f, 0.0f, 0.0f), 0x10);
-            *(void**)((char*)l + 4) = D_004E15E0;
+            *(void**)((char*)l + 4) = ((char*)D_004E15E0);
             l->extra = 0;
         }
         self->glow = l;

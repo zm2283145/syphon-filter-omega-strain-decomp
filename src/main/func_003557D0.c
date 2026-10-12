@@ -15,10 +15,14 @@ int func_00355490(...);
 int func_00356CD0(...);                                  
 void **func_0041DB80(...);                  
 int func_00424820(...);                       
-extern int D_00492C50;
-extern int D_00492C58;
-extern int D_00492C60;
-extern int D_00492C68;
+extern "C" char D_004BB098[];
+extern "C" char D_004BB0A8[];
+extern "C" char D_004BB0B8[];
+extern "C" char D_004BB0C8[];
+static void * const dat_00492C50[2] = { (void*)D_004BB098, (void*)0x0 };
+static void * const dat_00492C58[2] = { (void*)D_004BB0A8, (void*)0x0 };
+static void * const dat_00492C60[2] = { (void*)D_004BB0B8, (void*)0x0 };
+static void * const dat_00492C68[2] = { (void*)D_004BB0C8, (void*)0x0 };
 extern char D_004B88F0;
 extern char D_004BB0F8;
 }
@@ -40,15 +44,15 @@ extern "C" void func_003557D0(char * arg0) {
     F_(arg0, 0x88, int) = -1;
     F_(arg0, 0x8C, int) = 0;
     F_(arg0, 0x90, int) = 0;
-    var_s0 = func_0041DB80(arg0, D_00492C60);
+    var_s0 = func_0041DB80(arg0, (*(int*)dat_00492C60));
     F_(arg0, 0x98, int) = (int)(((var_s0 != NULL) && (((VC003557D0 *)(var_s0))->v20(&D_004B88F0) != 0)) ? var_s0 : NULL);
     temp_v1 = (void **)(F_(arg0, 0x98, int));
     if (temp_v1 != NULL) {
         F_(temp_v1, 0x70, int) = 0x42B40000;
     }
-    F_(arg0, 0x9C, int) = (int)(func_0041DB80(arg0, D_00492C50));
-    F_(arg0, 0xA0, int) = (int)(func_0041DB80(arg0, D_00492C58));
-    F_(arg0, 0xA4, int) = (int)(func_0041DB80(arg0, D_00492C68));
+    F_(arg0, 0x9C, int) = (int)(func_0041DB80(arg0, (*(int*)dat_00492C50)));
+    F_(arg0, 0xA0, int) = (int)(func_0041DB80(arg0, (*(int*)dat_00492C58)));
+    F_(arg0, 0xA4, int) = (int)(func_0041DB80(arg0, (*(int*)dat_00492C68)));
     F_(arg0, 0xF4, signed char) = 0;
     temp_a0 = (char *)(F_(arg0, 0x48, int));
     func_00424820(temp_a0, F_(temp_a0, 0x5C, int) - 2);

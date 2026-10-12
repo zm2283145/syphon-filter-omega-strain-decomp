@@ -18,8 +18,6 @@ int func_003E1980(char * );
 int func_003E19D0(char * );                            
 extern char D_004BD4C0;
 extern char D_004BD890;
-extern char D_004BD8B0;
-extern char D_004BD8C0;
 extern unsigned char D_00533880;
 extern int D_00533888;
 
@@ -56,7 +54,7 @@ int ScriptMgr_LoadScript(char * arg0, int arg1, int arg2) {
         sp5C = temp_s2;
         var_s2 = Script_Load(temp_s2, F_(arg0, 0x4E90, int), temp_s0);
         func_003E1900(arg0 + 0xC, &sp5C);
-        if (var_s2) func_003D7930(&D_004BD8B0, temp_s0); else func_003D7930(&D_004BD8C0, temp_s0);
+        if (var_s2) func_003D7930("loaded %s...", temp_s0); else func_003D7930("couldn't load script %s...", temp_s0);
     }
     return var_s2;
 }

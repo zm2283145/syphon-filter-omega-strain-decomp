@@ -6,8 +6,7 @@
 
 #include "types.h"
 
-extern char D_004C2B68[];
 
 char* func_00464CE0(void) {
-    return D_004C2B68;
+    return "GuiGameCanvas";
 }

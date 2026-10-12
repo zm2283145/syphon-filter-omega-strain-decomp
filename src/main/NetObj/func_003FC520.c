@@ -52,4 +52,6 @@ struct TIValueII { int a; int b; };
 #endif /* TREE_INSERT_V8X_H */
 struct TIV_003FC520 { int w0; int w1; int w2; };
 
+extern "C" { char D_004BE370[] = "tree::insert length error\n"; }
+extern "C" { char D_004BE390[] = "allocator.hh"; }
 DEFINE_TREE_INSERT_V8X(func_003FC520, TIV_003FC520, D_004BE370, D_004BE390, 0x5C, func_0013CD40)

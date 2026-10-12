@@ -5,8 +5,6 @@
 
 extern "C" {
 extern RbTree D_00582720;
-extern char D_004BFAB0[];
-extern char D_004BFAE0[];
 void func_0042EF70(TransferTimerIterator* result, RbTree* tree, const GobjId* id);
 void func_0042D0F0(TransferTimerIterator* result, RbTree* tree);
 void func_0042D0E0(TransferTimerIterator* result, const TransferTimerIterator* source);
@@ -26,7 +24,7 @@ extern "C" void NetObjectMgr_RemoveTransferTimer(const GobjId* id)
     key.word = id->word;
     func_0042EF70(&found, &D_00582720, &key);
     TransferTimerNode* node = found.node;
-    func_00127358(D_004BFAB0, id->word);
+    func_00127358("RemoveTransferTimer timer for %.8X\n", id->word);
     func_0042D0F0(&rawEnd, &D_00582720);
     func_0042D0E0(&end, &rawEnd);
     if ((node == end.node) ^ 1) {
@@ -47,7 +45,7 @@ extern "C" void NetObjectMgr_AddTransferTimer(const GobjId* id)
     key.word = id->word;
     func_0042EF70(&found, &D_00582720, &key);
     TransferTimerNode* node = found.node;
-    func_00127358(D_004BFAE0, id->word);
+    func_00127358("Adding transfer timer for %.8X\n", id->word);
     func_0042D0F0(&rawEnd, &D_00582720);
     func_0042D0E0(&end, &rawEnd);
     if (node == end.node) {

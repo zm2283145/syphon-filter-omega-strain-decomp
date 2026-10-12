@@ -8,7 +8,6 @@ int Mem_Free(int, int, char *, int);
 int func_0012F530(char *, int);                            
 int func_00136DA0(char *);                               
 int func_001D8830(int, int);                            
-extern char D_004A0170;
 extern int D_004F2D80;
 extern int D_004F2D88;
 extern unsigned char D_00533880;
@@ -25,7 +24,7 @@ void func_001D8730(void) {
             Alloc_Lock(9);
         }
         D_00533888 += 1;
-        Mem_Free(0, temp_s0, &D_004A0170, 0x27E);
+        Mem_Free(0, temp_s0, "humanIk.cc", 0x27E);
         if (D_00533880 != 0) {
             Alloc_Unlock(9);
         }
@@ -36,7 +35,7 @@ void func_001D8730(void) {
     if (temp_s0_2 != 0) {
         func_00136DA0(sp28);
         func_001D8830(temp_s0_2, -1);
-        Mem_Free(0, temp_s0_2, &D_004A0170, 0x283);
+        Mem_Free(0, temp_s0_2, "humanIk.cc", 0x283);
         func_0012F530(sp28, -1);
         D_004F2D88 = 0;
     }

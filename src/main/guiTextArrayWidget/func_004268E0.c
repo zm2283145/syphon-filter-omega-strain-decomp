@@ -8,7 +8,33 @@
 extern "C" {
 extern char D_004BF790[];
 extern char D_0049AF00[];
-extern char D_004E0DC0[];
+extern "C" void GuiTextArrayWidget_IsType();
+extern "C" void func_0041D400();
+extern "C" void func_0041D5C0();
+extern "C" void func_0041D780();
+extern "C" void func_0041D8C0();
+extern "C" void func_0041E230();
+extern "C" void func_0041E3B0();
+extern "C" void func_0041EF10();
+extern "C" void func_0041F070();
+extern "C" void func_0041F080();
+extern "C" void func_0041F090();
+extern "C" void func_0041F210();
+extern "C" void func_004235C0();
+extern "C" void func_004235E0();
+extern "C" void func_00423610();
+extern "C" void func_00423660();
+extern "C" void func_00423670();
+extern "C" void func_00423CC0();
+extern "C" void func_004249D0();
+extern "C" void func_00424A10();
+extern "C" void func_00425BB0();
+extern "C" void func_00425EA0();
+extern "C" void func_00426100();
+extern "C" void func_004261D0();
+extern "C" void func_004262D0();
+extern "C" void func_00426350();
+extern void * const D_004E0DC0[];
 extern char D_004E0D20[];
 void func_00428090(TextArrayRow* row, int flags);
 void func_004263C0(guiTextArrayWidget* self);
@@ -70,7 +96,7 @@ static inline void destroy_widget_base(guiTextArrayWidget* self)
 extern "C" guiTextArrayWidget* func_00426940(guiTextArrayWidget* self, short deleteFlag)
 {
     if (self) {
-        self->vtable = D_004E0DC0;
+        self->vtable = ((char*)D_004E0DC0);
         func_004263C0(self);
         TextArrayWidgetChild* child = self->unk90;
         if (child)
@@ -144,3 +170,4 @@ extern "C" TextArrayStore* func_00426BD0(TextArrayStore* self, short deleteFlag)
     }
     return self;
 }
+void * const D_004E0DC0[30] = { (void*)0x0, (void*)0x0, (void*)func_00426940, (void*)func_004262D0, (void*)func_0041F090, (void*)func_0041F080, (void*)func_0041F070, (void*)func_004261D0, (void*)func_00426100, (void*)func_00424A10, (void*)func_004249D0, (void*)func_00423CC0, (void*)func_00423670, (void*)func_0041E230, (void*)func_0041E3B0, (void*)func_0041EF10, (void*)func_0041F210, (void*)func_0041D8C0, (void*)func_0041D780, (void*)func_0041D5C0, (void*)func_0041D400, (void*)func_00425BB0, (void*)GuiTextArrayWidget_IsType, (void*)func_00426350, (void*)func_00423660, (void*)func_00423610, (void*)func_00425EA0, (void*)func_004235E0, (void*)func_004235C0, (void*)0x0 };

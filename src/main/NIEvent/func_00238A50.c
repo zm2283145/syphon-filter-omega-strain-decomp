@@ -10,7 +10,6 @@ void* Mem_Alloc(int heap, int size, char* file, int line);
 void PtrVector_Resize(Vec_00238A50* v, int n, void** fill);
 void* func_00239610(void* p, Pop_00238A50* r, int owner);
 void* func_002397F0(void* p, Pop_00238A50* r, int owner);
-extern char D_004A6FA8[];
 extern char D_004DC028[];
 extern char D_004DC038[];
 }
@@ -23,7 +22,7 @@ static inline float ReadF_00238A50(Pop_00238A50* r)
 static inline void* Alloc_00238A50(int size, int line)
 {
     AllocGuard g;
-    return Mem_Alloc(0, size, D_004A6FA8, line);
+    return Mem_Alloc(0, size, "NIEvent.cc", line);
 }
 #pragma push
 #pragma opt_strength_reduction off

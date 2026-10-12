@@ -16,8 +16,6 @@ extern char D_004A9708[];
 extern char D_004A9718[];
 extern char D_004A9720[];
 extern char D_004A9730[];
-extern char D_004A9770[];
-extern char D_004A9788[];
 int func_0033CF90(S_00289C80* self, void* w, int msg, int sub);
 void func_0028A230(S_00289C80* self);
 void func_0028A180(S_00289C80* self);
@@ -126,7 +124,7 @@ extern "C" int func_00289C80(S_00289C80* self, void* w, int msg, int sub, char* 
             if (sub == 0x1E) {
                 void* pg;
                 func_002CA640(D_004FFC04, 1);
-                pg = func_00418A80(func_00414790(), D_004A9770, D_004A9788);
+                pg = func_00418A80(func_00414790(), "GuiOnlineOfflineSelect", "ONOFFSEL");
                 func_00414AC0(func_004147A0(), self, pg);
                 return 1;
             }

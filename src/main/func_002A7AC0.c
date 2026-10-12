@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-extern char D_004AB618[];   /* "GuiMessageBox" */
+char D_004AB618[] = "GuiMessageBox";   /* "GuiMessageBox" */
 
 /* Class name getter: "GuiMessageBox". */
 char* func_002A7AC0(void) {

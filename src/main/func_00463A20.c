@@ -13,7 +13,6 @@ int func_00414790(...);
 void **func_004147A0(...);                             
 int func_004191D0(...);                     
 int func_00463390(...);                            
-extern char D_004C27B0;
 }
 #pragma push
 #pragma opt_common_subs off
@@ -21,7 +20,7 @@ extern "C" void func_00463A20(char * arg0) {
     int temp_s0;
     void **temp_v0;
 
-    F_(arg0, 0x250, int) = func_004191D0(func_00414790(), &D_004C27B0, 0);
+    F_(arg0, 0x250, int) = func_004191D0(func_00414790(), "ENDBACK", 0);
     F_(arg0, 0x256, signed char) = 0;
     F_(arg0, 0x255, signed char) = 0;
     F_(arg0, 0x254, signed char) = 0;

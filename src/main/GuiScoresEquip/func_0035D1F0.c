@@ -5,7 +5,6 @@ struct V0035D1F0 { virtual void v0(int f); virtual int v1(); virtual int v2(); v
 struct O0035D1F0 { void* vt; char pad[0x1A0]; V0035D1F0* items[4]; V0035D1F0* p1B4; };
 extern "C" {
 
-extern char D_004BB600[];
 extern char D_0055DDA0[];
 extern char D_004DF140[];
 extern char D_004E1220[];
@@ -21,7 +20,7 @@ static inline void Del0035D1F0(V0035D1F0* o, int line)
 {
     AllocGuard g;
     o->v0(-1);
-    Mem_Free(0, o, D_004BB600, line);
+    Mem_Free(0, o, "GuiScoresEquip.cc", line);
 }
 extern "C" O0035D1F0* func_0035D1F0(O0035D1F0* self, short del)
 {

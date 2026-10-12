@@ -3,7 +3,6 @@
 #include "alloc_guard.h"
 extern "C" {
 extern char D_004BC430[];
-extern char D_004BC540[];
 extern char D_004DF970[];
 void Mem_Free(int heap, void* p, char* file, int line);
 void cGOBJ_dtor(void* self, int flag);
@@ -31,7 +30,7 @@ extern "C" S_00395950* cVUM_GOBJ_dtor(S_00395950* self, short flag)
         }
         if (self->i60 == 0) {
             DelB_00395950(self->p68, 0x44);
-            { void* q = self->p70; if (q) { { AllocGuard g; if (q) func_003C1790(q); Mem_Free(0, q, D_004BC540, 0x506); } self->p70 = 0; } }
+            { void* q = self->p70; if (q) { { AllocGuard g; if (q) func_003C1790(q); Mem_Free(0, q, "collision.hh", 0x506); } self->p70 = 0; } }
             if (self->p1E0) DelA_00395950(self->p1E0, 0x49);
             DelA_00395950(self->p1E8, 0x4B);
             DelA_00395950(self->p1E4, 0x4C);

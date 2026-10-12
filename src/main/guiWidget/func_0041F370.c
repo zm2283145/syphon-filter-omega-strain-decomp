@@ -10,7 +10,6 @@ struct GuiOwnedObject {
 extern "C" {
 extern char D_004E0B40[];
 extern char D_004E09B0[];
-extern char D_004BF3D0[];
 extern int D_00572130;
 ChildIterator func_0013B180(ChildList* list);
 void func_0028C0B0(ChildIterator* result, const ChildIterator& source);
@@ -25,7 +24,7 @@ void operator_delete(void* allocation);
 static inline void destroy_owned(GuiOwnedObject* object, int line)
 {
     object->~GuiOwnedObject();
-    Mem_Free(0, object, D_004BF3D0, line);
+    Mem_Free(0, object, "guiWidget.cc", line);
 }
 
 static inline bool has_child(ChildNode* node, ChildList* list, ChildIterator* end)

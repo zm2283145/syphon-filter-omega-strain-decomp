@@ -33,7 +33,7 @@ typedef struct NetGameOut_h5 {
     int handle;
     int unkC;
 } NetGameOut_h5;
-extern int D_00494180;
+unsigned int D_00494180[2] = { 0x4, 0x0 };
 extern int D_00494198;
 extern int D_005721A8;
 extern unsigned char D_005721C0;
@@ -89,7 +89,7 @@ void Net_CreateGame(void)
     }
     err = func_002EA6F0(&cfg);
     cfg.onConnect = func_00429790;
-    cfg.port = D_00494180;
+    cfg.port = (*(int*)D_00494180);
     cfg.onLost = func_00429A90;
     cfg.onMsg = func_00429920;
     MemClear_h5(&cfg.sess, 0x54);

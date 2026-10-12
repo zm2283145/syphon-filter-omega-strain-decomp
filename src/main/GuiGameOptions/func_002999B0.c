@@ -3,8 +3,6 @@
 #define NULL 0
 int Loc_LookupText(int *, int );                    
 int func_0041BEB0(int, int, int);                       
-extern int D_004AA770;
-extern int D_004AA778;
 
 #pragma opt_common_subs off
 void func_002999B0(int arg0) {
@@ -31,9 +29,9 @@ void func_002999B0(int arg0) {
         }
         if (F_(arg0, 0x88, int) != 0) {
             if (F_(arg0, 0xB4, int) == 3) {
-                var_a0 = &D_004AA770;
+                var_a0 = ((int*)"ToKick");
             } else {
-                var_a0 = &D_004AA778;
+                var_a0 = ((int*)"ToSave");
             }
             func_0041BEB0(F_(arg0, 0x88, int), Loc_LookupText(var_a0, temp_a1_2), 0);
         }

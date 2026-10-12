@@ -10,7 +10,13 @@ struct Ent_E730 { char pad[0xC]; unsigned int h; char pad10[0x48]; Ctl_E730* ctl
 typedef struct { char* vt; char pad[0x18]; int f1C; signed char f20; char pad21[0xF]; } Msg_E730;
 extern "C" {
 extern char D_00586170[];
-extern char D_004E16A0[];
+extern "C" void Message_GetScriptTypeKey();
+extern "C" void cClearClientInteractMsg_dtor();
+extern "C" void cClearClientInteractMsg_v01();
+extern "C" void cClearClientInteractMsg_v04();
+extern "C" void cClearClientInteractMsg_v05();
+extern "C" void func_002823E0();
+void * const D_004E16A0[8] = { (void*)0x0, (void*)0x0, (void*)cClearClientInteractMsg_dtor, (void*)cClearClientInteractMsg_v01, (void*)func_002823E0, (void*)Message_GetScriptTypeKey, (void*)cClearClientInteractMsg_v04, (void*)cClearClientInteractMsg_v05 };
 extern char D_004DCF10[];
 void Event_Construct(Msg_E730* m, void* type);
 void Transport_Send(int to, Msg_E730* m, int a, int b);
@@ -33,7 +39,7 @@ extern "C" void Global_ClearInteract(Ent_E730* e)
     Msg_E730 m;
     if (D_005721C8) {
         Event_Construct(&m, D_00586170);
-        m.vt = D_004E16A0;
+        m.vt = ((char*)D_004E16A0);
         m.f1C = 0x40;
         if (!e) {
             m.f20 = 4;

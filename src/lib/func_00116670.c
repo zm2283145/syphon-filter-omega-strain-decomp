@@ -1,6 +1,7 @@
 typedef struct { int a; int b; } Pair6670;
 extern char *D_004865E0;
-extern Pair6670 D_00487098;
+extern void func_00116630();
+static void * const dat_00487098[2] = { (void*)0x5A, (void*)func_00116630 };
 extern void func_00116660(int, int);
 extern int func_00116620(void *, void *, int);
 extern int strlen(const char *);
@@ -11,7 +12,7 @@ char *func_00116670(char *name, int argc, char **argv)
     char *strp = base + 0x40;
     char *ret = strp;
     int len;
-    func_00116660(D_00487098.a, D_00487098.b);
+    func_00116660((*(Pair6670*)dat_00487098).a, (*(Pair6670*)dat_00487098).b);
     if (argc >= 16) argc = 15;
     func_00116620(base, &strp, 4);
     base += 4;

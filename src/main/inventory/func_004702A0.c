@@ -7,7 +7,6 @@ extern "C" {
 extern int D_00587FF4;
 extern Pt2_ItemDef* D_00587FF8;
 extern char D_00587FF0[];
-extern char D_004C3348[];
 void func_0038CC70(void*);
 void Mem_Free(int, void*, char*, int);
 void func_004719A0(void*);
@@ -16,7 +15,7 @@ void func_004719A0(void*);
 
 static inline void Pt2_Free(void* p) {
     AllocGuard g;
-    Mem_Free(0, p, D_004C3348, 0xD8);
+    Mem_Free(0, p, "inventory.cc", 0xD8);
 }
 #pragma opt_strength_reduction off
 extern "C" void func_004702A0(void) {

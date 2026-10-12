@@ -1,10 +1,9 @@
 #pragma cplusplus on
 #include "msg_clone.h"
-extern "C" char D_0049C060[];
 extern "C" char D_004D9320[];
 extern "C" char D_004DFD80[];
 extern "C" char D_004E0840[];
-MSG_CLONE_BEGIN(func_0015B570, 0x30, D_0049C060, 0x1C5)
+MSG_CLONE_BEGIN(func_0015B570, 0x30, "character.hh", 0x1C5)
     p->vt = D_004DFD80;
     F(int, 0x4) = S(int, 0x4);
     F(int, 0x8) = S(int, 0x8);

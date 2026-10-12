@@ -6,8 +6,7 @@
 
 #include "types.h"
 
-extern char D_004AAA58[];
 
 int func_00299690(void) {
-    return (int)D_004AAA58;
+    return (int)"GuiGameOptions";
 }

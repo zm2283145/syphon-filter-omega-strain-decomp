@@ -7,7 +7,6 @@ struct Self_00211DE0 { char pad0[0x10]; int f10; unsigned char b14; char pad15[0
 extern "C" {
 extern unsigned char D_005723C8;
 extern char D_004A4550[];
-extern char D_004A4A18[];
 void Mem_Free(int heap, void* p, char* file, int line);
 int func_002EB650(Seg_00211DE0** o, int h);
 int func_00211DA0(void);
@@ -50,7 +49,7 @@ extern "C" void func_00211DE0(void* unused, int h)
                 Shm_00211DE0* old = o->p128;
                 if (old && p) {
                     AllocGuard g;
-                    Mem_Free(0, old, D_004A4A18, 0x247);
+                    Mem_Free(0, old, "gamegobj.hh", 0x247);
                 }
             }
             o->p128 = p;

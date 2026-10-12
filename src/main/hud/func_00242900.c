@@ -13,8 +13,6 @@ int func_0036A240(...);
 int func_00414790(...);                                
 void **func_004147A0(...);                             
 int func_00418980(...);                        
-extern char D_004A7248;
-extern char D_004A7260;
 extern char D_004FFB50;
 extern unsigned char D_004FFBB7;
 extern char D_0055A300;
@@ -28,12 +26,12 @@ extern "C" void func_00242900(char * arg0) {
     void **temp_v0_4;
 
     if (F_(arg0, 0x6A8, unsigned char) != 0) {
-        temp_v0 = func_00418980(func_00414790(), &D_004A7248);
+        temp_v0 = func_00418980(func_00414790(), "GuiStartMenu");
         if (temp_v0 != 0) {
             temp_v0_2 = func_004147A0();
             ((VC00242900 *)(temp_v0_2))->v24(temp_v0);
         }
-        temp_v0_3 = func_00418980(func_00414790(), &D_004A7260);
+        temp_v0_3 = func_00418980(func_00414790(), "GuiStartMenuBackdrop");
         if (temp_v0_3 != 0) {
             temp_v0_4 = func_004147A0();
             ((VC00242900 *)(temp_v0_4))->v24(temp_v0_3);

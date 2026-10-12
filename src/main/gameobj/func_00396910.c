@@ -16,7 +16,6 @@ int func_00396B00(...);
 int func_00396B10(...);                      
 int func_00396C10(...);                            
 int operator_delete(...);                             
-extern char D_004BC528;
 extern unsigned char D_00533880;
 }
 #pragma inline_depth(10)
@@ -44,7 +43,7 @@ extern "C" int func_00396910(int arg0, long long arg1) {
                         func_00396C10(temp_a0, 0);
                     }
                 }
-                Mem_Free(0, temp_s1, &D_004BC528, 0xCD);
+                Mem_Free(0, temp_s1, "ska.icc", 0xCD);
                 }
                 var_s0 = (char *)(F_(var_s0, 0x4, int));
         }

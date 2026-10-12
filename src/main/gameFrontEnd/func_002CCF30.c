@@ -3,7 +3,6 @@
 #include "alloc_guard.h"
 extern "C" {
 void* Mem_Alloc(int pool, int size, char* file, int line);
-extern char D_004AD1C8[];
 extern char D_004DFD80[];
 extern char D_004DE200[];
 }
@@ -13,7 +12,7 @@ extern "C" MsgCF30* func_002CCF30(MsgCF30* src)
     MsgCF30* p;
     {
         AllocGuard guard;
-        p = (MsgCF30*)Mem_Alloc(0, 0x24, D_004AD1C8, 0x2D);
+        p = (MsgCF30*)Mem_Alloc(0, 0x24, "game_msg.hh", 0x2D);
     }
     if (p) {
         p->vtable = D_004DFD80;

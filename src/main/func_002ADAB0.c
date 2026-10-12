@@ -6,8 +6,6 @@ struct S_002ADAB0 {
 extern "C" {
 extern void* D_004FFC04;
 extern char D_004ABB08[];
-extern char D_004ABB10[];
-extern char D_004ABB20[];
 void* func_00414790(void);
 void* func_00418A80(void* a, char* b, char* c);
 int func_0033CE30(S_002ADAB0* self, int a, char* b, int c, int d, int e);
@@ -27,7 +25,7 @@ extern "C" int func_002ADAB0(S_002ADAB0* self, void* w, int msg, int sub, char* 
 {
     unsigned short m = msg;
     if (m == 2 && w == self->p160) {
-        void* pg = func_00418A80(func_00414790(), D_004ABB10, D_004ABB20);
+        void* pg = func_00418A80(func_00414790(), "GuiKeyboard", "KEYBOARD");
         if (pg)
             func_0032B4F0(pg, func_0033CE30(self, 0x40, 0, 0, 0, 0), D_004ABB08, self, 0xF, 0xC, 0);
         return 1;

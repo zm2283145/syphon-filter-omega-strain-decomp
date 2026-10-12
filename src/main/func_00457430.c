@@ -6,8 +6,7 @@
 
 #include "types.h"
 
-extern char D_004C1E78[];
 
 char* func_00457430(void) {
-    return D_004C1E78;
+    return "GuiStartMenu";
 }

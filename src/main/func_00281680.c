@@ -9,7 +9,6 @@ extern int D_005721A8;
 extern int D_00494178;
 extern int D_004FFC0C;
 extern int D_004FFC2C;
-extern char D_004A9350[];
 extern char D_005061B0[];
 extern char D_004DCEF0[];
 extern char D_004DCF10[];
@@ -93,7 +92,7 @@ extern "C" void func_00281680(S_00281680* p, T_00281680* t) {
         if (p->owner != LocalId_00281680()) p->obj->owner = p->owner;
     } else if (ty == 5) {
         p->obj->owner = p->owner;
-        Hud_PostNotification(D_004FFC2C, D_004A9350);
+        Hud_PostNotification(D_004FFC2C, "Backpack already in use");
     } else if (ty == 3) {
         int o = p->obj->owner; if (o != LocalId_00281680()) {
             p->obj->owner = LocalId_00281680();

@@ -6,8 +6,7 @@
 
 #include "types.h"
 
-extern char D_004C1CF0[];
 
 char* func_00454110(void) {
-    return D_004C1CF0;
+    return "GuiRadioLog";
 }

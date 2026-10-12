@@ -11,7 +11,13 @@ int WeaponInv_MoveItemsToBackpack(int, int);
 int func_00255A50(int, int, int);
 int Backpack_Construct(char * , int, int);
 int ItemInv_Any(int);
-extern char D_004DCEF0;
+extern "C" void Message_GetScriptTypeKey();
+extern "C" void cNetBackpackMsg_dtor();
+extern "C" void cNetBackpackMsg_v01();
+extern "C" void cNetBackpackMsg_v04();
+extern "C" void cNetBackpackMsg_v05();
+extern "C" void func_002823E0();
+void * const D_004DCEF0[8] = { (void*)0x0, (void*)0x0, (void*)cNetBackpackMsg_dtor, (void*)cNetBackpackMsg_v01, (void*)func_002823E0, (void*)Message_GetScriptTypeKey, (void*)cNetBackpackMsg_v04, (void*)cNetBackpackMsg_v05 };
 extern char D_004DCF10;
 extern char D_005061B0;
 }
@@ -32,7 +38,7 @@ extern "C" void Npc_DeadStateDrop(char * arg0) {
             unsigned char on = *(volatile unsigned char*)&D_005721C8; if (on != 0) { int h; int id; int a = D_005721A8; if (on) { if (D_00494178 == -1) func_002EBAF8(&D_00494178, a); id = D_00494178; } else id = 0;
                 h = F_(arg0, 0x3464, int);
                 Event_Construct(sp40, &D_005061B0);
-                sp40[0] = &D_004DCEF0;
+                sp40[0] = &(*(char*)D_004DCEF0);
                 F_(sp40, 0x28, int) = h;
                 F_(sp40, 0x20, signed char) = 4;
                 F_(sp40, 0x2C, int) = id;

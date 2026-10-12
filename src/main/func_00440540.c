@@ -6,8 +6,7 @@
 
 #include "types.h"
 
-extern char D_004C0400[];
 
 char* func_00440540(void) {
-    return D_004C0400;
+    return "GuiWeaponDisplay";
 }

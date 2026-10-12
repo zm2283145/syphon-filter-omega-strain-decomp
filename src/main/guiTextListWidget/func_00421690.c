@@ -4,7 +4,6 @@
 #include "alloc_guard.h"
 
 extern "C" {
-extern char D_004BF530[];
 extern char D_0049AF00[];
 extern char D_004E0C80[];
 extern char D_004E0D20[];
@@ -44,7 +43,7 @@ static inline void release_child(TextRenderChild* child, int line)
 {
     AllocGuard guard;
     destroy_child(child);
-    Mem_Free(0, child, D_004BF530, line);
+    Mem_Free(0, child, "guiTextListWidget.cc", line);
 }
 
 static inline void destroy_entry_storage(TextListEntryVec* entries)
@@ -102,7 +101,7 @@ extern "C" void func_004217D0(TextRenderWidget* self)
         {
             AllocGuard guard;
             child = (TextRenderChild*)Mem_Alloc(0, sizeof(TextRenderChild),
-                                              D_004BF530, 0x37);
+                                              "guiTextListWidget.cc", 0x37);
         }
         if (child)
             child = func_003D0940(child, 0, 0, (int)self->width, (int)self->height,

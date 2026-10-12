@@ -10,12 +10,11 @@ struct WidgetChild {
 
 typedef struct GuiWidget { int unk0; WidgetChild* child; } GuiWidget;
 
-extern char D_004BF100[];
 extern "C" void func_00416D10(GuiWidget* self, const char* name);
 
-/* Forwards Deactivate to the child widget (virtual +0x18), then posts the D_004BF100 event to self. */
+/* Forwards Deactivate to the child widget (virtual +0x18), then posts the "onDeactivate" event to self. */
 extern "C" void GuiWidget_OnDeactivate(GuiWidget* self)
 {
     self->child->Deactivate();
-    func_00416D10(self, D_004BF100);
+    func_00416D10(self, "onDeactivate");
 }

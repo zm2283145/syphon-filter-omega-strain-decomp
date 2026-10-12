@@ -4,7 +4,7 @@
 #pragma mpwc_relax on
 int String_Copy(char *, char *);                            
 int memset(char *, int, int);                                
-extern char D_004C0B48;
+static const unsigned int dat_004C0B48[2] = { 0x0, 0x0 };
 extern char D_00584220;
 extern signed char D_00584231;
 extern signed char D_00584232;
@@ -34,7 +34,7 @@ extern short D_00584390;
 
 int func_00444FF0(short arg0, short arg1, short arg2, short arg3) {
     memset(&D_00584220, 0, 0x2F8);
-    String_Copy(&D_00584220, &D_004C0B48);
+    String_Copy(&D_00584220, &(*(char*)dat_004C0B48));
     D_0058438A = arg0;
     D_005842C4 = -1;
     D_0058438C = arg1;

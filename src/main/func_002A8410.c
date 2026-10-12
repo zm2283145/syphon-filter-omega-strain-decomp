@@ -10,7 +10,6 @@ struct W_002A8410 {
 struct Row_002A8410 { void* text; W_002A8410* a; W_002A8410* b; W_002A8410* c; W_002A8410* d; };
 struct Self_002A8410 { char pad0[0x58]; Row_002A8410 rows[3]; };
 extern "C" {
-extern char D_004AB5B0[];
 extern char* D_0048BB58;
 extern char* D_0048BB60;
 extern char* D_0048BB68;
@@ -35,22 +34,22 @@ extern "C" void func_002A8410(Self_002A8410* self)
     char buf[0x80];
     int i;
     for (i = 0; i < 3; i++) {
-        sprintf(buf, D_004AB5B0, D_0048BB58, i);
+        sprintf(buf, "%s%d", D_0048BB58, i);
         self->rows[i].text = func_0041DC70(self, buf);
-        sprintf(buf, D_004AB5B0, D_0048BB60, i);
+        sprintf(buf, "%s%d", D_0048BB60, i);
         self->rows[i].a = FindAs_002A8410(self, buf, D_004A7520);
         if (i == 2) {
-            sprintf(buf, D_004AB5B0, D_0048BB68, i);
+            sprintf(buf, "%s%d", D_0048BB68, i);
             self->rows[i].b = FindAs_002A8410(self, buf, D_004A9880);
         } else {
-            sprintf(buf, D_004AB5B0, D_0048BB68, i);
+            sprintf(buf, "%s%d", D_0048BB68, i);
             self->rows[i].b = FindAs_002A8410(self, buf, D_004A7520);
         }
         if (i == 1 && self->rows[i].b)
             func_0041C110(self->rows[i].b, 0);
-        sprintf(buf, D_004AB5B0, D_0048BB70, i);
+        sprintf(buf, "%s%d", D_0048BB70, i);
         self->rows[i].c = FindAs_002A8410(self, buf, D_004A9870);
-        sprintf(buf, D_004AB5B0, D_0048BB78, i);
+        sprintf(buf, "%s%d", D_0048BB78, i);
         self->rows[i].d = FindAs_002A8410(self, buf, D_004A9870);
     }
     func_0041F150(self);

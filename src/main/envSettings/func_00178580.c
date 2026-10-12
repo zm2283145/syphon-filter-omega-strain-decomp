@@ -3,7 +3,16 @@
 #include "types.h"
 #include "vslot_pad.h"
 extern "C" {
-extern char D_004D9F10[];
+extern "C" void func_00144980();
+extern "C" void func_00144B10();
+extern "C" void func_00144B80();
+extern "C" void func_001479A0();
+extern "C" void func_001479B0();
+extern "C" void func_001479C0();
+extern "C" void func_001479D0();
+extern "C" void func_00147A00();
+extern "C" void func_00147A10();
+extern void * const D_004D9F10[];
 extern char D_004D9240[];
 extern char D_004D9280[];
 extern char D_00535D20[];
@@ -23,7 +32,7 @@ extern "C" S_8580* func_00178580(S_8580* self, short flag)
 {
     S_8580* s = self;
     if (s) {
-        VT(s) = D_004D9F10;
+        VT(s) = ((char*)D_004D9F10);
         if (s) {
             VT(s) = D_004D9240;
             s->id = -1;
@@ -38,3 +47,4 @@ extern "C" S_8580* func_00178580(S_8580* self, short flag)
     return s;
 }
 #pragma opt_common_subs reset
+void * const D_004D9F10[16] = { (void*)0x0, (void*)0x0, (void*)func_00178580, (void*)func_001479D0, (void*)0x1479E0, (void*)func_00147A00, (void*)func_00147A10, (void*)func_001479A0, (void*)func_001479B0, (void*)func_001479C0, (void*)func_00144B10, (void*)func_00144B80, (void*)func_00144980, (void*)0x1479F0, (void*)0x0, (void*)0x0 };

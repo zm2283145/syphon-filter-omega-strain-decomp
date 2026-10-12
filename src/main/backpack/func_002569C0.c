@@ -10,7 +10,6 @@ Raw_69C0 func_0013B180(void*);
 Raw_69C0 func_00256B20(void*);
 void func_00256B30(char**, const Raw_69C0&);
 void func_00256B10(char**, const Raw_69C0&);
-extern char D_004A7B50;
 extern int D_004F7F48;
 extern char D_004F7F4C;
 extern char* D_004F7F50;
@@ -28,7 +27,7 @@ extern "C" void func_002569C0(void) {
                 void* e = F_(n, 0x8, void*);
                 {
                     AllocGuard g;
-                    Mem_Free(0, e, &D_004A7B50, 0x202);
+                    Mem_Free(0, e, "backpack.cc", 0x202);
                 }
                 n = F_(n, 0x4, char*);
             }

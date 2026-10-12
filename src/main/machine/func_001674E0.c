@@ -15,8 +15,6 @@ int func_0036E4B0();
 int sprintf();                           
 extern char D_0048B2F8;
 extern char D_0049C390;
-extern char D_0049C430;
-extern char D_0049C448;
 extern char D_004FFB8C;
 extern unsigned char D_00533880;
 extern int D_00533888;
@@ -29,7 +27,7 @@ void func_001674E0(char * arg0) {
     char * var_s2;
 
     if (F_(arg0, 0x27C, int) == NULL) {
-        sprintf(spE0, &D_0049C430, &D_0048B2F8);
+        sprintf(spE0, "%s\\COMMON\\IALOBBYN.HOG", &D_0048B2F8);
         func_0036E4B0(sp40, spE0, 0, 0);
         if (!(func_0036DEF0(sp40) & 0xFF)) {
             temp_s0 = Archive_Open(&D_004FFB8C, spE0, 0, 0);
@@ -43,7 +41,7 @@ void func_001674E0(char * arg0) {
             }
             D_00533888 -= 1;
             if (var_s2 != NULL) {
-                var_s2 = (char *)(func_0027B900(var_s2, temp_s0, &D_0049C448));
+                var_s2 = (char *)(func_0027B900(var_s2, temp_s0, "IALOBBYN"));
             }
             F_(arg0, 0x27C, int) = (int)(var_s2);
             F_(F_(arg0, 0x27C, int), 0x56, signed char) = 1;

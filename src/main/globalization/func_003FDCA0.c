@@ -17,8 +17,6 @@ int func_003FEEE0(char * , int);
 int sprintf(char *, char *, int);                           
 extern char D_00493A40;
 extern char D_004BE440;
-extern char D_004BE458;
-extern char D_004BE460;
 extern unsigned char D_00533880;
 extern int D_00533888;
 extern char * D_0055CA50;
@@ -35,9 +33,9 @@ void Loc_LoadMissionPool(int arg0, char *arg1) {
     char * temp_s0_2;
 
     String_Copy(sp30, arg0);
-    func_00128F58(sp30, &D_004BE458);
+    func_00128F58(sp30, "\\");
     func_00128F58(sp30, arg1);
-    sprintf(sp20, &D_004BE460, F_(&D_00493A40, (D_0055D470 * 4), int));
+    sprintf(sp20, "\\STRINGS%s.DAT", F_(&D_00493A40, (D_0055D470 * 4), int));
     func_00128F58(sp30, sp20);
     temp_s0 = D_0055CA50;
     if (temp_s0 != NULL) {

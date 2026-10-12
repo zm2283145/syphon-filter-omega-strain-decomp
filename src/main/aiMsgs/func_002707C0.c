@@ -1,9 +1,8 @@
 #pragma cplusplus on
 #include "msg_clone.h"
-extern "C" char D_004A8CB0[];
 extern "C" char D_004DCC10[];
 extern "C" char D_004DFD80[];
-MSG_CLONE_BEGIN(cAITimeElapsedMsg_v01, 0x24, D_004A8CB0, 0x9D)
+MSG_CLONE_BEGIN(cAITimeElapsedMsg_v01, 0x24, "aiMsgs.hh", 0x9D)
     p->vt = D_004DFD80;
     F(int, 0x4) = S(int, 0x4);
     F(int, 0x8) = S(int, 0x8);

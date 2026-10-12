@@ -12,7 +12,6 @@ struct Ui_002A12F0 {
 };
 struct S_002A12F0 { char pad0[0x20]; void* f20; char pad24[0xDC - 0x24]; void* pDC; void* pE0; };
 extern "C" {
-extern char D_004AB000[];
 void func_002A1590(S_002A12F0* self, int a);
 void func_002A1600(S_002A12F0* self, int a);
 void* func_00414790(void);
@@ -60,7 +59,7 @@ extern "C" int func_002A12F0(S_002A12F0* self, Ev_002A12F0* ev)
         }
     }
     if (Press_002A12F0(ev, 0x10)) {
-        Pg_002A12F0* p = func_00418980(func_00414790(), D_004AB000);
+        Pg_002A12F0* p = func_00418980(func_00414790(), "GuiNetJoinMission");
         if (p) {
             func_004147A0()->Hide(self);
             p->flags |= 2;

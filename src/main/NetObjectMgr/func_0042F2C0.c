@@ -7,7 +7,7 @@
 #include "transfer_tree_mutations.h"
 
 extern "C" {
-extern char D_004BFBA8[];
+char D_004BFBA8[] = "allocator.hh";
 extern unsigned char D_00494200;
 extern unsigned char D_00494208;
 PendingTransferNode* func_00430A50(RbTree* tree, TransferTreeNode* parent,

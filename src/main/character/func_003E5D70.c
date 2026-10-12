@@ -3,7 +3,6 @@
 #include "alloc_guard.h"
 extern "C" {
 void* Mem_Alloc(int pool, int size, char* file, int line);
-extern char D_004BDDE8[];
 extern char D_004E0100[];
 void func_003E5E40(void* dst, void* src);
 void cMessage_ctor3(void* self, void* other);
@@ -14,7 +13,7 @@ extern "C" PM5D70* func_003E5D70(PM5D70* self)
     PM5D70* p;
     {
         AllocGuard guard;
-        p = (PM5D70*)Mem_Alloc(0, 0x60, D_004BDDE8, 0x40E);
+        p = (PM5D70*)Mem_Alloc(0, 0x60, "character.hh", 0x40E);
     }
     if (p) {
         cMessage_ctor3(p, self);

@@ -10,7 +10,7 @@
 extern int Curve_Bind(void* binding, CurveSegment* segment);
 extern int Curve_InitConstant(CurveSegment*, int, int, float);
 extern float D_0048A198;    /* 0.0f */
-extern float D_0048A1A0;
+static const float dat_0048A1A0[2] = { 0.0f, 0.0f };
 extern char D_004DA380[];   /* CurveChannel base vtable */
 extern char D_004DA840[];   /* AnimChannel vtable */
 extern void func_001BB100(int*, int, int);
@@ -20,10 +20,10 @@ AnimChannel* AnimChannel_Construct(AnimChannel* self) {
     self->base.vtable = D_004DA380;
     self->base.previous = D_0048A198;
     self->base.current = D_0048A198;
-    self->base.target = D_0048A1A0;
+    self->base.target = (*(float*)dat_0048A1A0);
     self->base.rate = D_0048A198;
     self->base.damping = 0.0f;
-    Curve_InitConstant(&self->base.segment, (int)&D_0048A198, (int)&D_0048A1A0, 0.0f);
+    Curve_InitConstant(&self->base.segment, (int)&D_0048A198, (int)&(*(float*)dat_0048A1A0), 0.0f);
     Curve_Bind(self->base.binding, &self->base.segment);
     self->base.vtable = D_004DA840;
     self->wrap = 0;

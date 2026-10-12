@@ -7,7 +7,6 @@ typedef struct {
 typedef struct { char pad[0x6C]; int list; } AnimSel_f3;
 extern unsigned char D_00533880;
 extern int D_00533888;
-extern char D_004BCFE0[];
 extern void Alloc_Lock(int);
 extern void Alloc_Unlock(int);
 extern void* Mem_Alloc(int, int, char*, int);
@@ -26,7 +25,7 @@ AnimTrans_f3* AnimSelector_BeginTransition(AnimSel_f3* sel, int a, int b, int ta
 {
     AnimTrans_f3* t[1];
     AnimTrans_f3* p;
-    p = AllocL_f3(0x28, D_004BCFE0, 0x47F);
+    p = AllocL_f3(0x28, "ska.icc", 0x47F);
     if (p) {
         p->target = target;
         p->f4 = 0;

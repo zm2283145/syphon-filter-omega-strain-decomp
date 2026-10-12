@@ -18,7 +18,6 @@ typedef struct {
 extern "C" {
 extern char D_004BB978[]; extern char D_004BB988[]; extern char D_004BB998[]; extern char D_004BB9A8[];
 extern char D_004BB9B8[]; extern char D_004BB9C8[]; extern char D_004BB9D0[]; extern char D_004BB9D8[];
-extern char D_004BB9F0[];
 extern char D_004A7520[]; extern char D_004ABAB0[]; extern char D_004A9870[]; extern char D_004B88F0[]; extern char D_004BBBB0[];
 extern void* D_004FFC04;
 void func_0033D3F0(O_361AA0* o);
@@ -42,7 +41,7 @@ void func_00361AA0(O_361AA0* o)
     o->f114 = Cast_361AA0(func_0041DB80(o, D_004BB9C8), D_004A9870);
     o->f118 = Cast_361AA0(func_0041DB80(o, D_004BB9D0), D_004A9870);
     o->f11C = Cast_361AA0(func_0041DB80(o, D_004BB9D8), D_004B88F0);
-    o->f120 = Cast_361AA0(func_0041DB80(o, D_004BB9F0), D_004BBBB0);
+    o->f120 = Cast_361AA0(func_0041DB80(o, "playercharacter"), D_004BBBB0);
     o->f10C->flags &= ~0x80;
     o->f110->flags &= ~0x80;
     func_00424820(o->f110, o->f110->f5C - 2);

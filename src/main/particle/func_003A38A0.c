@@ -4,4 +4,15 @@
 #include "vtable_chain_dtor.h"
 
 /* Deleting destructor: restore the vtable chain, optionally delete. */
-DEFINE_VTABLE_CHAIN_DTOR1(func_003A38A0, D_004DFAA0)
+extern void * const D_004DFAA0[];
+extern "C" VtableChainObject* func_003A38A0(VtableChainObject* self,
+                                   short deleteFlag)
+{
+    if (self) {
+        self->vtable = ((char*)D_004DFAA0);
+        if (deleteFlag > 0)
+            operator_delete(self);
+    }
+    return self;
+}
+void * const D_004DFAA0[6] = { (void*)0x0, (void*)0x0, (void*)func_003A38A0, (void*)0x0, (void*)0x0, (void*)0x0 };

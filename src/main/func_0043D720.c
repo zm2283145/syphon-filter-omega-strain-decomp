@@ -6,8 +6,7 @@
 
 #include "types.h"
 
-extern char D_004C01A0[];
 
 char* func_0043D720(void) {
-    return D_004C01A0;
+    return "GuiMLTextWidget";
 }

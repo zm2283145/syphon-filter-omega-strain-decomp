@@ -4,9 +4,9 @@
 extern "C" {
 extern char D_004BDC18[];
 extern char D_004BDC28[];
-extern char D_004BDC38[];
-extern char D_004BDC48[];
-extern char D_004BDC58[];
+char D_004BDC38[] = "scriptFile.hh";
+char D_004BDC48[] = "scriptFile.hh";
+char D_004BDC58[] = "scriptFile.hh";
 void* Mem_Alloc(int heap, int size, char* file, int line);
 void Mem_Free(int heap, void* p, char* file, int line);
 void func_00369700(void* p, int flag);

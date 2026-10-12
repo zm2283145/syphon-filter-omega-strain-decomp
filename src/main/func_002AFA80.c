@@ -20,8 +20,6 @@ struct Self_002AFA80 {
 extern "C" {
 extern char D_004FFB50[];
 extern char D_004ABCD0[];
-extern char D_004ABCF8[];
-extern char D_004ABD08[];
 extern char* D_0048BCF0;
 extern char D_004A7520[];
 extern void* D_004FFC04;
@@ -100,7 +98,7 @@ extern "C" void func_002AFA80(Self_002AFA80* self)
     SetVis_002AFA80(self, self->p16C);
     SetVis_002AFA80(self, self->pA4);
     if (self->p164) {
-        char* t = Loc_LookupText(self->b170 ? D_004ABCF8 : D_004ABD08);
+        char* t = Loc_LookupText(self->b170 ? "DestroyCell" : "ResignCell");
         func_0041BEB0(self->p164, t ? t : D_004ABCD0, 0);
     }
     if (self->p88) {

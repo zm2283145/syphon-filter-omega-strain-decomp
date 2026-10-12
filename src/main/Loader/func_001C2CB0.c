@@ -7,7 +7,6 @@ struct Ter_1C2CB0 { char pad[0x1C]; void* reg; };
 struct Level_1C2CB0 { char pad[0xC]; TerList_1C2CB0* ters; };
 extern "C" {
 extern char D_0049EE88[];
-extern char D_0049F130[];
 extern char D_0049F018[];
 extern char D_0048B2F8[];
 extern char D_004FFC90[];
@@ -35,7 +34,7 @@ extern "C" void Pop_LoadTER(Level_1C2CB0* l, void* a1, PopReader_1C2CB0* r, void
         int mis;
         n = *(int*)r->cur;
         r->cur += 4;
-        func_00165E60(func_001698C0(), D_0049F130, 0);
+        func_00165E60(func_001698C0(), "Initializing Terrain Data...", 0);
         sprintf(name, D_0049F018, D_0048B2F8, D_004FFC90, D_004FFC90);
         h = Archive_Open(arc, name, 0, 0);
         {

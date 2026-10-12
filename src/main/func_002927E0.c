@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-extern char D_004A9E30[];   /* "GuiAgentSave" */
+char D_004A9E30[] = "GuiAgentSave";   /* "GuiAgentSave" */
 
 /* Class name getter: "GuiAgentSave". */
 char* func_002927E0(void) {

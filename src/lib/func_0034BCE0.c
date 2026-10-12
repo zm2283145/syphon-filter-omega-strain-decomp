@@ -6,7 +6,8 @@
 
 #include "types.h"
 
-extern char D_00492BB0[];
+extern char D_004BA740[];
+static void * const dat_00492BB0[2] = { (void*)D_004BA740, (void*)0x0 };
 extern int func_0034BAE8(int, int, int, int, int);
 extern int func_0034BB80(int, int, int, int, int);
 
@@ -29,6 +30,6 @@ ret:;
 int func_0034BD18(void) {
     int tmp0;
 
-    tmp0 = *(int*)D_00492BB0;
+    tmp0 = *(int*)((char*)dat_00492BB0);
     return tmp0;
 }

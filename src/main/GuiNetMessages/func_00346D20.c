@@ -6,8 +6,7 @@
 
 #include "types.h"
 
-extern char D_004BA4D8[];
 
 int func_00346D20(void) {
-    return (int)D_004BA4D8;
+    return (int)"GuiNetMessages";
 }

@@ -5,7 +5,6 @@ typedef struct Color4 {
 } Color4;
 
 extern char* D_004FFC2C;
-extern int D_0049A8E0;
 extern void func_003FA190(void*);
 extern void Notify_Insert(void*, void*, Color4*, int, int);
 
@@ -18,5 +17,5 @@ void Global_SetScrollDelay(void) {
     white.g = 1.0f;
     white.b = 1.0f;
     white.a = 1.0f;
-    Notify_Insert(hud + 0x100, &D_0049A8E0, &white, 1, 0);
+    Notify_Insert(hud + 0x100, ((int*)"this is a test..only a test"), &white, 1, 0);
 }

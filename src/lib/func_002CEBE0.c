@@ -6,11 +6,11 @@
 
 #include "types.h"
 
-extern char D_0048C410[];
+unsigned int D_0048C410[1] = { 0x0 };
 
 int func_002CEBE0(void) {
     int tmp0;
 
-    tmp0 = *(int*)D_0048C410;
+    tmp0 = *(int*)((char*)D_0048C410);
     return tmp0;
 }

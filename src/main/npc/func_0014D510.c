@@ -21,7 +21,11 @@ public:
 };
 extern "C" {
 extern char D_004EE550[];
-extern char D_004D9340[];
+extern "C" void Event_PackHeader();
+extern "C" void Message_GetScriptTypeKey();
+extern "C" void func_0014D610();
+extern "C" void func_0015B690();
+void * const D_004D9340[8] = { (void*)0x0, (void*)0x0, (void*)func_0014D610, (void*)func_0015B690, (void*)Event_PackHeader, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
 extern void Event_Construct(AiMsg_f3* m, void* type);
 extern void Event_Send(AiMsg_f3* m, void* target, int immediate);
 extern void cMessage_dtor(AiMsg_f3* m, int flags);
@@ -39,11 +43,11 @@ void NpcAi_SetMovementState(AiChar_f3* c, unsigned char state, int prio)
         c->state = state;
         if (state == 0) {
             Event_Construct(&msg, D_004EE550);
-            msg.vtable = D_004D9340;
+            msg.vtable = ((char*)D_004D9340);
             msg.kind = 5;
             msg.node = -1;
             Event_Send(&msg, c, 0);
-            msg.vtable = D_004D9340;
+            msg.vtable = ((char*)D_004D9340);
             cMessage_dtor(&msg, 0);
             if (!c->b13D) {
                 c->SetAnim(1, 0x14);

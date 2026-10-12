@@ -1,4 +1,38 @@
 #pragma cplusplus on
 #include "vtable_base_dtor.h"
 
-DEFINE_VTABLE_BASE_DTOR(func_004404E0, D_004E11A0, func_0041F370)
+extern "C" {
+extern "C" void func_00293950();
+extern "C" void func_0041D400();
+extern "C" void func_0041D5C0();
+extern "C" void func_0041D780();
+extern "C" void func_0041D8C0();
+extern "C" void func_0041E230();
+extern "C" void func_0041E2B0();
+extern "C" void func_0041E330();
+extern "C" void func_0041EBF0();
+extern "C" void func_0041EF10();
+extern "C" void func_0041EFA0();
+extern "C" void func_0041F070();
+extern "C" void func_0041F080();
+extern "C" void func_0041F090();
+extern "C" void func_0041F210();
+extern "C" void func_00440540();
+extern "C" void func_00440550();
+extern "C" void func_00440580();
+extern "C" void func_00440EE0();
+extern "C" void func_00441180();
+extern void * const D_004E11A0[];
+void* func_0041F370(void* self, short deleteFlag);
+}
+extern "C" VtableObject* func_004404E0(VtableObject* self, short deleteFlag)
+{
+    if (self) {
+        self->vtable = ((char*)D_004E11A0);
+        func_0041F370(self, 0);
+        if (deleteFlag > 0)
+            operator_delete(self);
+    }
+    return self;
+}
+void * const D_004E11A0[24] = { (void*)0x0, (void*)0x0, (void*)func_004404E0, (void*)func_00441180, (void*)func_0041F090, (void*)func_0041F080, (void*)func_0041F070, (void*)func_0041EFA0, (void*)func_0041EBF0, (void*)func_0041E330, (void*)func_0041E2B0, (void*)func_00293950, (void*)func_00440580, (void*)func_0041E230, (void*)func_00440EE0, (void*)func_0041EF10, (void*)func_0041F210, (void*)func_0041D8C0, (void*)func_0041D780, (void*)func_0041D5C0, (void*)func_0041D400, (void*)func_00440540, (void*)func_00440550, (void*)0x0 };

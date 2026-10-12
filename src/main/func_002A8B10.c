@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-extern char D_004AB700[];   /* "GuiNetJoinMission" */
+char D_004AB700[] = "GuiNetJoinMission";   /* "GuiNetJoinMission" */
 
 /* Class name getter: "GuiNetJoinMission". */
 char* func_002A8B10(void) {

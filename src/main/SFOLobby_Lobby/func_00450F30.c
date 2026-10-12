@@ -6,8 +6,6 @@ int func_00446560(char * , char * , int);
 int func_00449360(char * , int, int, char *);               
 char * func_0044F290(char * );                        
 int func_0044F2E0(char * , int);                       
-extern char D_004C0F88;
-extern char D_004C0F90;
 
 int func_00450F30(char * arg0, int arg1, int arg2) {
     int temp_v1;
@@ -19,9 +17,9 @@ int func_00450F30(char * arg0, int arg1, int arg2) {
         switch (temp_v1) {                          
         case 0:
             if (arg2 != 0) {
-                func_00449360(arg0, F_(temp_v0, 0x8, int), 1, &D_004C0F88);
+                func_00449360(arg0, F_(temp_v0, 0x8, int), 1, "Accept");
             } else {
-                func_00449360(arg0, F_(temp_v0, 0x8, int), 2, &D_004C0F90);
+                func_00449360(arg0, F_(temp_v0, 0x8, int), 2, "Decline");
             }
             break;
         case 1:

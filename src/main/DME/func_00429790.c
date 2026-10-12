@@ -7,7 +7,6 @@ extern unsigned char D_005723C8;
 extern int D_00572470;
 extern int D_00572478;
 extern signed char D_005724B0;
-extern char D_004BF9B8[];
 extern int func_004147A0(void);
 extern void func_0041E0F0(int a, int b, int c, int d, int e);
 extern void func_002EBAF8(int* out, int session);
@@ -32,7 +31,7 @@ void func_00429790(NetConnInfo_h5* info)
     if (info->status == 3) {
         D_005724B0 = 7;
         if (func_004147A0()) {
-            func_0041E0F0(func_004147A0(), func_004147A0(), 0x1E, 0, (int)D_004BF9B8);
+            func_0041E0F0(func_004147A0(), func_004147A0(), 0x1E, 0, (int)"F_TO_CONNECT");
         }
     } else {
         D_005724B0 = 6;

@@ -6,8 +6,7 @@
 
 #include "types.h"
 
-extern char D_004C0210[];
 
 char* func_0043EEC0(void) {
-    return D_004C0210;
+    return "GuiSliderWidget";
 }

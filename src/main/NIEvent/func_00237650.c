@@ -6,7 +6,11 @@ int Event_Construct(char **, char *);
 int Transport_Send(int, char **, int, int);                  
 int cMessage_dtor(char **, int);                           
 int cNIEventOBJ_DeactivateCamera(int);                
-extern char D_004DC2D0;
+extern void Message_GetScriptTypeKey();
+extern void func_00237720();
+extern void func_0023F920();
+extern void func_0023FF50();
+void * const D_004DC2D0[8] = { (void*)0x0, (void*)0x0, (void*)func_00237720, (void*)func_0023FF50, (void*)func_0023F920, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
 extern char D_004F7C38;
 extern unsigned char D_005721C0;
 extern unsigned char D_005721C8;
@@ -30,10 +34,10 @@ int Script_cNIEventOBJ_DeactivateCamera(void **arg0) {
                 }
                 if (var_v0 != 0) {
                     Event_Construct(sl.f20, &D_004F7C38);
-                    sl.f20[0] = &D_004DC2D0;
+                    sl.f20[0] = &(*(char*)D_004DC2D0);
                     sl.f44[0] = 1;
                     Transport_Send(F_(temp_s0, 0xC, int), sl.f20, -1, -1);
-                    sl.f20[0] = &D_004DC2D0;
+                    sl.f20[0] = &(*(char*)D_004DC2D0);
                     cMessage_dtor(sl.f20, 0);
                 }
             }

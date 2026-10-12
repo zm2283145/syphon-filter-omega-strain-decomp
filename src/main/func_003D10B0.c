@@ -5,7 +5,6 @@
 #pragma mpwc_relax on
 int func_003D0DE0();                            
 int func_003D11A0(void **, int, int, char *, int);                
-extern char D_004BD328;
 
 void func_003D10B0(void ***arg0, int *arg1, void ***arg2, void ***arg3) {
     void **temp_a0;
@@ -28,7 +27,7 @@ void func_003D10B0(void ***arg0, int *arg1, void ***arg2, void ***arg3) {
             temp_a0 = *arg2;
             *arg2 = (void **)(F_(temp_a0, 0x4, int));
             if (temp_a0 != NULL) {
-                func_003D11A0(temp_a0, 0, 0, &D_004BD328, 100);
+                func_003D11A0(temp_a0, 0, 0, "allocator.hh", 100);
             }
             *arg1 -= 1;
         } while (*arg2 != *arg3);

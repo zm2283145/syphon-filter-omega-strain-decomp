@@ -8,7 +8,6 @@ typedef struct {
     int value;
 } Request;
 typedef struct { char pad[0x2418]; char label[1]; } Obj;
-extern char D_004C0F18[];
 extern void* memset(void* p, int c, int n);
 extern int sprintf(char* buf, const char* fmt, ...);
 extern char* String_Copy(char* dst, const char* src);
@@ -21,14 +20,14 @@ void func_0044E1A0(Obj* self, int value)
     Request b;
     Request a;
     memset(&a, 0, sizeof(Request));
-    sprintf(a.name, D_004C0F18, 4);
+    sprintf(a.name, "%d", 4);
     String_Copy(a.label, self->label);
     a.id = 4;
     a.kind = 2;
     a.value = value;
     func_0046AC78(&a, func_00446CA0);
     memset(&b, 0, sizeof(Request));
-    sprintf(b.name, D_004C0F18, 7);
+    sprintf(b.name, "%d", 7);
     String_Copy(b.label, self->label);
     b.id = 7;
     b.kind = 2;

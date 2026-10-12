@@ -22,8 +22,6 @@ typedef struct LightState_h5 {
 extern LightState_h5* D_004FFC0C;
 extern char D_004FFB50[];
 extern char D_004F2CC0[];
-extern char D_004C1FD8[];
-extern char D_004C1FE8[];
 extern int D_005383C0;
 extern void func_0026BE70(int v);
 extern void* Service_Lookup(char* a, char* b);
@@ -82,7 +80,7 @@ void func_0045A3A0(LightCfg_h5* cfg, unsigned int mask)
         D_005383C0 = (unsigned char)(int)(191.25f * cfg->level);
     }
     if (mask & 0x800) {
-        int same = String_CompareNoCase(func_003CBA90(D_004C1FD8), D_004C1FE8) == 0;
+        int same = String_CompareNoCase(func_003CBA90("BOOT_VIDEOMODE"), "PAL") == 0;
         int mode;
         mode = cfg->alt == 0 ? (same ? 2 : 0) : 4;
         func_00165420(func_001698C0(), mode);

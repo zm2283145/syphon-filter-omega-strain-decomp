@@ -12,7 +12,6 @@ Raw_EE70 func_003ED850(void*);
 void func_003EF000(char**, const Raw_EE70&);
 void func_003ED860(char**, const Raw_EE70&);
 void func_0015AF40(int*, char**);
-extern char D_004BE030;
 }
 extern "C" void func_003EEE70(char* self, VC_EE70* obj) {
     char* end;
@@ -31,7 +30,7 @@ extern "C" void func_003EEE70(char* self, VC_EE70* obj) {
                 {
                     AllocGuard g;
                     e->v0(-1);
-                    Mem_Free(0, e, &D_004BE030, 0x218);
+                    Mem_Free(0, e, "interface_model.cc", 0x218);
                 }
                 {
                     char* c;

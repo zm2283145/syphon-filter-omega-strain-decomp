@@ -36,7 +36,13 @@ typedef struct Pt1StActor {
     char shockFlag;
 } Pt1StActor;
 extern char D_004EF078[];
-extern char D_004DA9F0[];
+extern void Message_GetScriptTypeKey();
+extern void cNetShockMsg_dtor();
+extern void cNetShockMsg_v01();
+extern void cNetShockMsg_v04();
+extern void cNetShockMsg_v05();
+extern void func_002823E0();
+void * const D_004DA9F0[8] = { (void*)0x0, (void*)0x0, (void*)cNetShockMsg_dtor, (void*)cNetShockMsg_v01, (void*)func_002823E0, (void*)Message_GetScriptTypeKey, (void*)cNetShockMsg_v04, (void*)cNetShockMsg_v05 };
 extern char D_004DCF10[];
 extern char D_004F12D0[];
 extern char D_004FFB50[];
@@ -60,7 +66,7 @@ void Global_ShockToDeath(Pt1StActor* a, char flag, int notify, float time, float
         if (notify) {
             Pt1StShockMsg m;
             Event_Construct(&m, D_004EF078);
-            m.vt = D_004DA9F0;
+            m.vt = ((char*)D_004DA9F0);
             m.arg = arg;
             m.flag = flag;
             m.time = time;

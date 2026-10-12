@@ -7,7 +7,14 @@
 #include "globalization_types.h"
 
 /* Language names, indexed by language id. */
-extern char* D_00493A20[LANGUAGE_COUNT + 1];
+extern char D_004BE3C0[];
+extern char D_004BE3C8[];
+extern char D_004BE3D0[];
+extern char D_004BE3D8[];
+extern char D_004BE3E0[];
+extern char D_004BE3E8[];
+extern char D_004BE3F0[];
+static void * const dat_00493A20[8] = { (void*)D_004BE3C0, (void*)D_004BE3C8, (void*)D_004BE3D0, (void*)D_004BE3D8, (void*)D_004BE3E0, (void*)D_004BE3E8, (void*)D_004BE3F0, (void*)0x0 };
 /* STRINGS<suffix>.DAT file suffixes, indexed by language id (index 0 is ""). */
 extern char* D_00493A40[LANGUAGE_COUNT + 1];
 /* Current language id. */
@@ -20,12 +27,12 @@ char* Loc_GetLanguageSuffix(void) {
 
 /* Name of language `id`. */
 char* Loc_GetLanguageName(int id) {
-    return D_00493A20[id & 255];
+    return ((char**)dat_00493A20)[id & 255];
 }
 
 /* Name of the current language. */
 char* Loc_GetCurrentLanguageName(void) {
-    return D_00493A20[(unsigned char)D_0055D470];
+    return ((char**)dat_00493A20)[(unsigned char)D_0055D470];
 }
 
 /* Current language id. */

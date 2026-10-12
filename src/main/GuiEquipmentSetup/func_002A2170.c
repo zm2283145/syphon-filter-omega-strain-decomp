@@ -22,11 +22,6 @@ struct G_002A2170 { char pad[0x26A0]; unsigned char b26A0; };
 struct S_002A2170 { char pad0[0xC0]; int fC0; char padC4[0x14]; unsigned char bD8; };
 extern "C" {
 extern char D_004AB0B0[];
-extern char D_004AB100[];
-extern char D_004AB110[];
-extern char D_004AB120[];
-extern char D_004AB130[];
-extern char D_004AB148[];
 extern char D_004A9870[];
 extern unsigned char D_005721C8;
 extern unsigned char D_005721C0;
@@ -94,13 +89,13 @@ extern "C" int func_002A2170(S_002A2170* self, W_002A2170* w, int msg, int sub, 
                 } else if (D_004FFC0C->p30->GetState() == 1) {
                     char* t;
                     D_004FFC0C->p30->SetState(2);
-                    t = Loc_LookupText(D_004AB100);
+                    t = Loc_LookupText("EQS_WAITING");
                     if (t)
                         func_0041BEB0(w, t, 0);
                 } else {
                     char* t;
                     D_004FFC0C->p30->SetState(1);
-                    t = Loc_LookupText(D_004AB110);
+                    t = Loc_LookupText("EQS_EQUIP");
                     if (t)
                         func_0041BEB0(w, t, 0);
                 }
@@ -111,8 +106,8 @@ extern "C" int func_002A2170(S_002A2170* self, W_002A2170* w, int msg, int sub, 
             }
             return 1;
         }
-        if (!strcmp(n, D_004AB120)) {
-            void* pg = func_00418A80(func_00414790(), D_004AB130, D_004AB148);
+        if (!strcmp(n, "equipbutton")) {
+            void* pg = func_00418A80(func_00414790(), "GuiEquipmentModify", "eqmodify");
             D_004FFC0C->p30->SetState(1);
             func_00414AC0(func_004147A0(), self, pg);
             return 1;

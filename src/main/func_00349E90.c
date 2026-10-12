@@ -5,7 +5,7 @@
 
 #include "loose03_types.h"
 
-extern char D_004BA650[];       /* "GuiDossiers" */
+char D_004BA650[] = "GuiDossiers";       /* "GuiDossiers" */
 
 /* Returns the class name string "GuiDossiers". */
 const char* GuiDossiers_GetClassName(void) {

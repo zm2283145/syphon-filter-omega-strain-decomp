@@ -17,7 +17,6 @@ struct Ev_3617C0 { unsigned short type; unsigned short b2; char pad4[2]; unsigne
 typedef struct { void* n; } It_3617C0;
 extern "C" {
 extern char D_004BB958[];
-extern char D_004BB968[];
 L_3617C0* func_00414790(void);
 M_3617C0* func_004147A0(void);
 void* func_00418A80(void* mgr, char* a, char* b);
@@ -39,7 +38,7 @@ int func_003617C0(S_3617C0* o, Ev_3617C0* ev)
 {
     if (Plain_3617C0(ev, 0x10)) {
         if (o->fFC == 0) {
-            void* w = func_00418A80(func_00414790(), D_004BB958, D_004BB968);
+            void* w = func_00418A80(func_00414790(), D_004BB958, "DOSSIERS");
             func_00414AC0(func_004147A0(), o, w);
         } else {
             W_3617C0* w = o->w10;

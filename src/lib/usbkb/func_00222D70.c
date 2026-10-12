@@ -6,8 +6,6 @@ extern int func_0010D170(int);
 extern int func_0010F388(const char *, ...);
 extern int D_004F581C;
 extern int D_0048AB18;
-extern char D_004A4D00[];
-extern char D_004A4D30[];
 
 int sceUsbKbEnd(void)
 {
@@ -18,12 +16,14 @@ int sceUsbKbEnd(void)
     if (s) func_001161F8();
     if (r < 0) {
         err = 1;
-        func_0010F388(D_004A4D00);
+        func_0010F388("libusbkb.a : RemoveIntcHandler() --> error
+");
     }
     if (D_0048AB18 != -1) {
         if (func_0010D170(D_0048AB18) < 0) {
             err++;
-            func_0010F388(D_004A4D30);
+            func_0010F388("libusbkb.a : DeleteSema() --> error
+");
         } else {
             D_0048AB18 = -1;
         }

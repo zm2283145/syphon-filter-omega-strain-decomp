@@ -4,7 +4,6 @@
 struct PopReader_1C12A0 { int unk0; int size; unsigned int base; char* cur; };
 extern "C" {
 extern char D_0049EE88[];
-extern char D_0049EF90[];
 extern void* D_004FFBD4;
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void Object_Register(void* o);
@@ -23,7 +22,7 @@ extern "C" void Loader_InitEnvironmentSettings(void* a0, PopReader_1C12A0* r)
     int n;
     void* list;
     int i;
-    func_00165E60(func_001698C0(), D_0049EF90, 0);
+    func_00165E60(func_001698C0(), "Initializing Environment Settings...", 0);
     mis = (int)((unsigned long long)(unsigned int)r->cur & 3);
     if (mis)
         r->cur += 4 - mis;

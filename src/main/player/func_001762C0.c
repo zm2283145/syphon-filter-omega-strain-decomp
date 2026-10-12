@@ -3,7 +3,6 @@
 #include "alloc_guard.h"
 extern "C" {
 void* Mem_Alloc(int pool, int size, char* file, int line);
-extern char D_0049CAE8[];
 void func_00254DA0(void* o, void* c);
 void* func_00253070(void* p, void* s, void* o, void* c, int a, int b);
 }
@@ -32,7 +31,7 @@ extern "C" void func_001762C0(S_62C0* self, Obj_62C0* o)
         s = D_004FFC2C->list->first;
         {
             AllocGuard g;
-            p = Mem_Alloc(0, 0xB8, D_0049CAE8, 0x27A);
+            p = Mem_Alloc(0, 0xB8, "player.cc", 0x27A);
         }
         if (p)
             p = func_00253070(p, s, o, c, self->x184 <= 0, 0);

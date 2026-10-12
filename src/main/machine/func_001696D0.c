@@ -1,6 +1,18 @@
 #include "types.h"
 typedef struct { void* vt; char pad[0x28]; char sub[0x18]; char a44[0x108]; char a14C[0x12D]; char m279[4]; } S_96D0;
-extern char D_004D97B0[];
+extern void func_0012ECE0();
+extern void func_0012ECF0();
+extern void func_0012ED00();
+extern void func_0012ED10();
+extern void func_0012ED20();
+extern void func_0012ED30();
+extern void func_0012ED40();
+extern void func_0012ED50();
+extern void func_001383D0();
+extern void func_003CACA0();
+extern void func_003CB1E0();
+extern void func_003CB1F0();
+extern void * const D_004D97B0[];
 void func_0042B800(void* p, int f);
 void func_00138350(void* p, int f);
 void __destroy_array(void* arr, void* dtor, int size, int n);
@@ -9,7 +21,7 @@ void operator_delete(void* p);
 S_96D0* func_001696D0(S_96D0* self, short del)
 {
     if (self) {
-        self->vt = D_004D97B0;
+        self->vt = ((char*)D_004D97B0);
         func_0042B800(self->m279, -1);
         if (self->sub) {
             __destroy_array(self->a14C, func_00138350, 0xC, 0x14);
@@ -21,3 +33,4 @@ S_96D0* func_001696D0(S_96D0* self, short del)
     }
     return self;
 }
+void * const D_004D97B0[16] = { (void*)0x0, (void*)0x0, (void*)func_001696D0, (void*)func_003CACA0, (void*)func_0012ECE0, (void*)func_0012ECF0, (void*)func_001383D0, (void*)func_0012ED00, (void*)func_0012ED10, (void*)func_0012ED20, (void*)func_0012ED30, (void*)func_0012ED40, (void*)func_0012ED50, (void*)func_003CB1E0, (void*)func_003CB1F0, (void*)0x0 };

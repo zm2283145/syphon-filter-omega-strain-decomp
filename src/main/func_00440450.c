@@ -1,7 +1,6 @@
 #include "types.h"
 #include "message_pack.h"
 extern int D_00583998;
-extern char D_004C0330[];
 extern void func_00127358(char* s);
 int NetLevelInfoMsg_Send(void* e, int a1, int* type, int a3, int a4, unsigned int sz, void* buf)
 {
@@ -15,6 +14,6 @@ int NetLevelInfoMsg_Send(void* e, int a1, int* type, int a3, int a4, unsigned in
             *type = D_00583998;
         }
     }
-    func_00127358(D_004C0330);
+    func_00127358("\n\n*** cNetLevelInfoMsg: sending\n");
     return r;
 }

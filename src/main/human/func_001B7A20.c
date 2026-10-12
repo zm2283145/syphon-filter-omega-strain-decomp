@@ -10,7 +10,7 @@
 extern int Curve_Bind(void* binding, CurveSegment* segment);
 extern int Curve_InitConstant(CurveSegment*, int, int, float);
 extern float D_0048A1B8;    /* 0.0f */
-extern float D_0048A1C0;
+static const float dat_0048A1C0[2] = { 0.0f, 0.0f };
 extern char D_004DA380[];   /* CurveChannel base vtable */
 extern char D_004DA7D0[];   /* AngleCurve vtable */
 
@@ -26,10 +26,10 @@ CurveChannel* AngleCurve_Construct(CurveChannel* self) {
     self->vtable = D_004DA380;
     self->previous = D_0048A1B8;
     self->current = D_0048A1B8;
-    self->target = D_0048A1C0;
+    self->target = (*(float*)dat_0048A1C0);
     self->rate = D_0048A1B8;
     self->damping = 0.0f;
-    Curve_InitConstant(&self->segment, (int)&D_0048A1B8, (int)&D_0048A1C0, 0.0f);
+    Curve_InitConstant(&self->segment, (int)&D_0048A1B8, (int)&(*(float*)dat_0048A1C0), 0.0f);
     Curve_Bind(self->binding, &self->segment);
     self->vtable = D_004DA7D0;
     return self;

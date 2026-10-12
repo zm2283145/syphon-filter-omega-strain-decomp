@@ -16,7 +16,7 @@ struct Thp82F0 {
     int wakeupCount;
 };
 extern "C" {
-extern int D_0048C340;
+static const unsigned int dat_0048C340[2] = { 0x18000, 0x0 };
 extern int D_0048C348;
 extern int D_0048C350;
 extern int D_0048C358;
@@ -38,7 +38,7 @@ extern "C" void func_002C82F0(Obj82F0* o)
     if (!o->active) {
         Thp82F0 tp;
         void* p;
-        int size = D_0048C340 + 0x10;
+        int size = (*(int*)dat_0048C340) + 0x10;
         {
             AllocGuard guard;
             p = Mem_Alloc(0, size, D_004ACF10, 0x862);
@@ -51,7 +51,7 @@ extern "C" void func_002C82F0(Obj82F0* o)
         tp.wakeupCount = 0;
         tp.gpReg = D_004E9B70;
         tp.initPriority = 5;
-        tp.stackSize = D_0048C340;
+        tp.stackSize = (*(int*)dat_0048C340);
         D_0048C348 = func_0010D050();
         func_0010CFF0(D_0048C348, 10);
         D_0048C350 = func_0010CF60(&tp);

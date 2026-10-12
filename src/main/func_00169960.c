@@ -1,9 +1,8 @@
 #pragma cplusplus on
 #include "msg_clone.h"
-extern "C" char D_0049C570[];
 extern "C" char D_004D97F0[];
 extern "C" char D_004DFD80[];
-MSG_CLONE_BEGIN(func_00169960, 0x28, D_0049C570, 0x9C)
+MSG_CLONE_BEGIN(func_00169960, 0x28, "gameSound_msg.hh", 0x9C)
     p->vt = D_004DFD80;
     F(int, 0x4) = S(int, 0x4);
     F(int, 0x8) = S(int, 0x8);

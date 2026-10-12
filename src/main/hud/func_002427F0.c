@@ -10,11 +10,10 @@ void* func_00414790(void);
 Mgr2427* func_004147A0(void);
 void* func_00418980(void* a, void* b);
 void* func_00418A80(void* a, void* b, void* c);
-extern char D_004A7230[];
 extern char D_004A7240[];
 }extern "C" void func_002427F0(Obj2426* s) {
     if (s->b6A9) {
-        void* x = func_00418980(func_00414790(), D_004A7230);
+        void* x = func_00418980(func_00414790(), "GuiMapScreen");
         if (x) func_004147A0()->s24(x);
         s->b6A9 = 0;
     }

@@ -8,7 +8,11 @@ typedef struct {
 } E3AIMsgF0;
 typedef struct { char pad[0x30]; void* owner; char pad2[0x29]; unsigned char disabled; } E3cAIF0;
 extern char g_ScriptAIDeactivatedMsgKey[];
-extern char D_004DCD10[];
+extern void cAIDeactivatedMsg_dtor();
+extern void cAIDeactivatedMsg_v01();
+extern void cAIDeactivatedMsg_v02();
+extern void cAIDeactivatedMsg_v03();
+void * const D_004DCD10[8] = { (void*)0x0, (void*)0x0, (void*)cAIDeactivatedMsg_dtor, (void*)cAIDeactivatedMsg_v01, (void*)cAIDeactivatedMsg_v02, (void*)cAIDeactivatedMsg_v03, (void*)0x0, (void*)0x0 };
 extern void Event_Construct(E3AIMsgF0* msg, void* name);
 extern void Event_Send(E3AIMsgF0* msg, void* target, int flags);
 extern void cMessage_dtor(E3AIMsgF0* msg, int flags);
@@ -20,12 +24,12 @@ void cAI_v11(E3cAIF0* self)
         E3AIMsgF0 msg;
         unsigned char* kind;
         Event_Construct(&msg, g_ScriptAIDeactivatedMsgKey);
-        msg.vtable = D_004DCD10;
+        msg.vtable = ((char*)D_004DCD10);
         kind = &msg.kind;
         *kind = 2;
         *kind = 2;
         Event_Send(&msg, self->owner, 0);
-        msg.vtable = D_004DCD10;
+        msg.vtable = ((char*)D_004DCD10);
         cMessage_dtor(&msg, 0);
     }
 }

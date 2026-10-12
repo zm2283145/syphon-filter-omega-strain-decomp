@@ -2,7 +2,6 @@
 #include "types.h"
 /* Group_RemoveObject */
 typedef struct { int pad0; int count; int* ids; } Pt2_Group;
-extern char D_004BD460[];
 extern int Script_ObjectToId(void*);
 extern void func_003D7930(char*);
 extern void func_003E2FF0(Pt2_Group*, int, int*);
@@ -25,5 +24,5 @@ void Group_RemoveObject(Pt2_Group* g, void* obj) {
             return;
         }
     }
-    func_003D7930(D_004BD460);
+    func_003D7930("warning: obj to remove is not in group");
 }

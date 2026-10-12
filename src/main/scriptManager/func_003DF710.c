@@ -14,7 +14,6 @@ struct Pt2_Interp { char pad[0x4EA0]; int ctx; };
 struct Pt2_TInfo { char pad[0x45]; unsigned char owned; char pad46[6]; unsigned char isObj; };
 struct Pt2_RObj { virtual void Destroy(int); };
 extern "C" {
-extern char D_004BD7C0[];
 extern char D_004BD4C0[];
 void Script_InvalidArgNop(Pt2_Interp*, char*, char*);
 Pt2_TInfo* func_003D7590(int);
@@ -34,7 +33,7 @@ extern "C" int ScriptEvent_Replay(Pt2_Interp* in, Pt2_Handler* h, int* args, int
     int j;
     int i;
     if (ctx >= 0 && ctx != in->ctx) {
-        Script_InvalidArgNop(in, D_004BD7C0, h->name);
+        Script_InvalidArgNop(in, "ignoring scheduled %s call (scheduled before reload)", h->name);
     } else {
         i = 0;
         if (i < n) {

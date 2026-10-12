@@ -21,8 +21,6 @@ struct S_002A9BA0 {
 extern "C" {
 extern void* D_004FFC04;
 extern char D_004AB808[];
-extern char D_004AB810[];
-extern char D_004AB820[];
 extern char* D_0048BBF8;
 extern char* D_0048BBE8;
 extern char D_004A7520[];
@@ -79,7 +77,7 @@ extern "C" void func_002A9BA0(S_002A9BA0* self)
     self->b80 = 1;
     if (self->p88) {
         func_0041C0F0(self->p88, 1);
-        func_0041BEB0(self->p88, Loc_LookupText(D_004AB810), 0);
+        func_0041BEB0(self->p88, Loc_LookupText("GameTitle"), 0);
     }
     w = FindAs_002A9BA0(self, D_0048BBF8, D_004A7520);
     if (w)
@@ -121,7 +119,7 @@ extern "C" void func_002A9BA0(S_002A9BA0* self)
         void* ui = D_004FFC04;
         func_002CAE30(ui, 2, D_004AB808, func_0033CE30(self, 0x6F, 0, 0, 0, 0), 0, 0);
         if (self->p8C)
-            func_0041BEB0(self->p8C, Loc_LookupText(D_004AB820), 0);
+            func_0041BEB0(self->p8C, Loc_LookupText("NotSet"), 0);
         pr->fC4 = -1;
         String_Copy(pr->name, D_004AB808);
     } else {

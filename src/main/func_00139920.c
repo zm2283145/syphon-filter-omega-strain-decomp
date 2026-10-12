@@ -6,7 +6,6 @@ struct E00139920 { int w[28]; };
 struct V00139920 { unsigned int cap; unsigned int count; E00139920* data; };
 extern "C" {
 extern char D_0049AB90[];
-extern char D_0049AE40[];
 void* func_00139BC0(unsigned int size, void* p);
 void func_00139B00(void* dst, const E00139920* src);
 void func_00139AC0(V00139920* a, V00139920* b);
@@ -23,7 +22,7 @@ extern "C" void func_00139920(V00139920* v, unsigned int n)
         tmp.cap = 0;
         tmp.count = 0;
         tmp.data = 0;
-        tmp.data = (E00139920*)TStr_Alloc(n * sizeof(E00139920), D_0049AE40, 0x5C);
+        tmp.data = (E00139920*)TStr_Alloc(n * sizeof(E00139920), "allocator.hh", 0x5C);
         tmp.cap = n;
         E00139920* d = tmp.data;
         E00139920* s = v->data;

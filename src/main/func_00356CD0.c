@@ -23,7 +23,6 @@ extern char D_004A7520[];
 extern char D_004AA640[];
 extern char D_004AAE00[];
 extern char D_004B88F0[];
-extern char D_004BB368[];
 extern char D_004BB3D0[];
 extern char D_004FFB50[];
 extern QCol_356CD0 D_00587BA0;
@@ -55,7 +54,7 @@ void func_00356CD0(S_356CD0* o)
         Put_356CD0(&o->w48->cB0, D_00587BA0);
         Put_356CD0(&o->w48->cC0, D_00587BB0);
         Put_356CD0(&o->w48->cD0, D_00587BC0);
-        if (o->w48) o->w48->link8C = cast_356CD0(func_0041DB80(o, D_004BB368), D_004AAE00);
+        if (o->w48) o->w48->link8C = cast_356CD0(func_0041DB80(o, "vscrollbar"), D_004AAE00);
     }
     o->w50 = cast_356CD0(func_0041DB80(o, D_00492C98), D_004B88F0);
     w = cast_356CD0(func_0041DB80(o, D_00492C80), D_004A7520);

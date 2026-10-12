@@ -26,7 +26,10 @@ struct Pt1FnSelf {
 };
 extern unsigned int D_005383C8; /* frame clock */
 static inline int Pt1Fn_Diff(int a, int b) { int d = a - b; return d > 0 ? d : -d; }
-extern char D_004DCD70[];
+extern "C" void cAIGOBJMsg_dtor();
+extern "C" void cAIGOBJMsg_v03();
+extern "C" void func_00270630();
+void * const D_004DCD70[6] = { (void*)0x0, (void*)0x0, (void*)cAIGOBJMsg_dtor, (void*)0x0, (void*)func_00270630, (void*)cAIGOBJMsg_v03 };
 extern "C" void cAIWeaponFiredMsg_ctor(Pt1FnMsg* msg, int unused, int weapon, int shots);
 extern "C" void Event_Send(Pt1FnMsg* msg, void* target, int flags);
 extern "C" void cMessage_dtor(Pt1FnMsg* msg, int flags);
@@ -39,7 +42,7 @@ extern "C" void NpcAttack_FireNotice(Pt1FnSelf* self, int unused, int quiet)
             Pt1FnMsg msg;
             cAIWeaponFiredMsg_ctor(&msg, unused, self->owner->weaponId, self->fire->shots);
             Event_Send(&msg, self, 0);
-            msg.vtable = D_004DCD70;
+            msg.vtable = ((char*)D_004DCD70);
             cMessage_dtor(&msg, 0);
             self->fire->shots = 0;
             self->fire->lastTime = D_005383C8;

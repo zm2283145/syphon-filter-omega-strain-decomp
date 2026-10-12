@@ -1,6 +1,6 @@
 #include "types.h"
 
-extern char D_004BF900[]; /* "GuiTextArrayWidget" */
+char D_004BF900[] = "GuiTextArrayWidget"; /* "GuiTextArrayWidget" */
 extern int strcmp(const char* a, const char* b); /* strcmp */
 
 /* GuiTextArrayWidget::IsA: returns 1 if the given class name is "GuiTextArrayWidget". */

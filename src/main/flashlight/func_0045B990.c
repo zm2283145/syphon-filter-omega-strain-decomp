@@ -13,7 +13,6 @@ extern "C" {
 int Mem_Free(...);
 int TargetVis_Unregister(...);
 int operator_delete(...);
-extern char D_004C2018;
 extern char g_TargetVisMgr;
 extern unsigned char D_00533880;
 typedef struct { char p0[8]; int f8; int fC; char p10[8]; int f18; } PS0_0045B990;
@@ -37,7 +36,7 @@ extern "C" char * Flashlight_Destroy(PS0_0045B990 *arg0, long long arg1) {
         {
             AllocGuard g;
         ((VD0045B990 *)(temp_s1))->v0(-1);
-        Mem_Free(0, temp_s1, &D_004C2018, 0x58);
+        Mem_Free(0, temp_s1, "flashlight.cc", 0x58);
         }
         if (((long long) (arg1 << 0x30) >> 0x30) > 0) {
             operator_delete(arg0);

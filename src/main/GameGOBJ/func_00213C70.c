@@ -2,7 +2,11 @@
 typedef struct { void* vt; char base[0x1C]; unsigned char action; char pad21[3]; int floor; unsigned char locked; char pad29[3]; } LiftMsg_f4;
 typedef struct { char pad[0x10]; int transport; char pad14[0xF8]; int nfloors; int* locks; } Lift_f4;
 extern char D_004F54C8[];
-extern char D_004DAEF0[];
+extern void Message_GetScriptTypeKey();
+extern void func_00211680();
+extern void func_00213D60();
+extern void func_0021BA80();
+void * const D_004DAEF0[8] = { (void*)0x0, (void*)0x0, (void*)func_00213D60, (void*)func_0021BA80, (void*)func_00211680, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
 extern void Event_Construct(LiftMsg_f4*, void*);
 extern void Transport_Send(int, LiftMsg_f4*, int, int);
 extern void cMessage_dtor(LiftMsg_f4*, int);
@@ -14,12 +18,12 @@ int Lift_PublishFloorLocks(Lift_f4* self, void* dest)
     for (i = 0; i != self->nfloors; i++) {
         if (self->locks[i] != 0) {
             Event_Construct(&msg, D_004F54C8);
-            msg.vt = D_004DAEF0;
+            msg.vt = ((char*)D_004DAEF0);
             msg.floor = i;
             msg.locked = 1;
             msg.action = 4;
             Transport_Send(self->transport, &msg, 0, (int)(void*)dest);
-            msg.vt = D_004DAEF0;
+            msg.vt = ((char*)D_004DAEF0);
             cMessage_dtor(&msg, 0);
         }
     }

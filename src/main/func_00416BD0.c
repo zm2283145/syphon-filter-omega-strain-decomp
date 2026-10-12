@@ -10,12 +10,11 @@ struct WidgetChild {
 
 typedef struct GuiWidget { int unk0; WidgetChild* child; } GuiWidget;
 
-extern char D_004BF0D0[];
 extern "C" void func_00416D10(GuiWidget* self, const char* name);
 
-/* Notifies the child widget (virtual +0x24), then posts the D_004BF0D0 event to self. */
+/* Notifies the child widget (virtual +0x24), then posts the "onGainFocus" event to self. */
 extern "C" void GuiWidget_OnGainFocus(GuiWidget* self)
 {
     self->child->GainFocus();
-    func_00416D10(self, D_004BF0D0);
+    func_00416D10(self, "onGainFocus");
 }

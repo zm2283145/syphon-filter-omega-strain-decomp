@@ -11,7 +11,6 @@ int func_00118870(char *, int);
 extern int D_004934C8;
 extern int D_004934D0;
 extern int D_004934D8;
-extern char D_004BC670;
 extern char D_0053BBC0;
 extern char func_003A6450;
 extern char func_003A6460;
@@ -19,7 +18,7 @@ extern char func_003A6460;
 void func_003A6390(void) {
     struct { int f10; int f14; int f18[3]; int f24[3]; int f30; char * f34; char * f38; int f3C; int f40; int f44[7]; } sl;
 
-    if (func_00114F20(&D_004BC670) >= 0) {
+    if (func_00114F20("dev9") >= 0) {
         sl.f14 = 1;
         sl.f18[0] = 0;
         sl.f24[0] = 0;

@@ -18,9 +18,12 @@ struct Obj : ObjBase {
 };
 
 extern char D_004E0080[];
-extern char D_004E0090[];
+extern "C" void func_003D1C80();
+extern "C" void func_003D1E70();
+extern "C" void func_003D2910();
+void * const D_004E0090[6] = { (void*)0x0, (void*)0x0, (void*)func_003D1C80, (void*)func_003D1E70, (void*)func_003D2910, (void*)0x0 };
 
-/* Constructor: installs the base vtable D_004E0080, stores the leading fields, installs vtable D_004E0090, copies pos[0..1] and calls virtual +0xC. */
+/* Constructor: installs the base vtable D_004E0080, stores the leading fields, installs vtable ((char*)D_004E0090), copies pos[0..1] and calls virtual +0xC. */
 extern "C" Obj* func_003D1E90(Obj* self, float* pos, int a2, int a3, int a0)
 {
     *(void**)((char*)self + 0x10) = D_004E0080;
@@ -28,7 +31,7 @@ extern "C" Obj* func_003D1E90(Obj* self, float* pos, int a2, int a3, int a0)
     self->pos = pos;
     self->unk8 = a2;
     self->unkC = a3;
-    *(void**)((char*)self + 0x10) = D_004E0090;
+    *(void**)((char*)self + 0x10) = ((char*)D_004E0090);
     self->x = pos[0];
     self->y = pos[1];
     self->Init();

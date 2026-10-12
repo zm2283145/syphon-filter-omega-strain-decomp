@@ -18,10 +18,8 @@ extern void func_001C00C0(It_1BFF40* out, void* tree);
 extern void func_003B54C0(void* anim, Str_1BFF40* name, void* r);
 extern void Tree_Successor(It_1BFF40* it);
 extern void func_0036E220(File_1BFF40* f, int x);
-extern char D_0049EE30[];
 extern char D_0048B2F8[];
 extern char D_004FFB8C[];
-extern char D_0049EE48[];
 extern char D_004FFBC0[];
 static inline int Eq_1BFF40(void* a, void* b) { return a == b; }
 void func_001BFF40(void* mgr, char* name)
@@ -37,11 +35,11 @@ void func_001BFF40(void* mgr, char* name)
     void* h;
     void* r;
     if (func_001C3E90(mgr, name)) return;
-    sprintf(buf, D_0049EE30, D_0048B2F8);
+    sprintf(buf, "%s\\COMMON\\SKALEVEL.HOG", D_0048B2F8);
     h = func_003F9600(D_004FFB8C, buf);
     if (!h) return;
     String_CtorCStr_13B480(&s1, name);
-    func_001C00D0(&s2, &s1, D_0049EE48);
+    func_001C00D0(&s2, &s1, ".ska");
     func_0036E540(&file, func_001692D0(&s2), h, 0);
     func_00138B70(&s2, 0);
     func_00138B70(&s1, 0);

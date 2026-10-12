@@ -11,12 +11,11 @@ struct WidgetChild {
 
 typedef struct GuiWidget { int unk0; WidgetChild* child; } GuiWidget;
 
-extern char D_004BF0E0[];
 extern "C" void func_00416D10(GuiWidget* self, const char* name);
 
-/* Forwards LoseFocus to the child widget (virtual +0x28), then posts the D_004BF0E0 event to self. */
+/* Forwards LoseFocus to the child widget (virtual +0x28), then posts the "onLoseFocus" event to self. */
 extern "C" void GuiWidget_OnLoseFocus(GuiWidget* self)
 {
     self->child->LoseFocus();
-    func_00416D10(self, D_004BF0E0);
+    func_00416D10(self, "onLoseFocus");
 }

@@ -13,7 +13,6 @@ int func_0036AFC0(...);
 int func_003CB110(...);                                  
 int func_003E7D60(...);                     
 int func_0042B850(...);                            
-extern char D_0048B2F0;
 extern char D_0049C390;
 extern char D_004D97B0;
 extern unsigned char D_00533880;
@@ -27,7 +26,7 @@ extern "C" char * func_00169780(char * arg0) {
 
     func_003CB110();
     F_(arg0, 0x0, int) = (int)(&D_004D97B0);
-    func_003E7D60(arg0 + 0x2C, &D_0048B2F0, &D_0055A700);
+    func_003E7D60(arg0 + 0x2C, "1.0", &D_0055A700);
     func_0042B850(arg0 + 0x279);
     F_(arg0, 0x268, int) = 0;
     F_(arg0, 0x264, int) = 0;

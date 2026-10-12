@@ -9,7 +9,11 @@ extern unsigned char D_005721C8;
 extern unsigned char D_00489D70[];
 extern unsigned char D_00489D78[];
 extern char D_0052ACC8[];
-extern char D_004DE610[];
+extern void Message_GetScriptTypeKey();
+extern void func_001425C0();
+extern void func_00316A80();
+extern void func_00316C80();
+void * const D_004DE610[8] = { (void*)0x0, (void*)0x0, (void*)func_001425C0, (void*)func_00316A80, (void*)func_00316C80, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
 W_2450* WeaponDb_Get(void* db, int id);
 void Equip_ClearSlot(void* eq, unsigned char kind, int slot);
 void func_00145630(void* db, int id, int a);
@@ -42,11 +46,11 @@ void WeaponInv_RemoveSlot(S_2450* self, int slot, int unused, int drop, int remo
         e.slot = slot;
         e.drop = (unsigned char)drop;
         e.b2C = 0;
-        e.vt = D_004DE610;
+        e.vt = ((char*)D_004DE610);
         e.size = 0x40;
         e.kind = 4;
         Event_Send(&e, self->own, 0);
-        e.vt = D_004DE610;
+        e.vt = ((char*)D_004DE610);
         cMessage_dtor(&e, 0);
     }
 }

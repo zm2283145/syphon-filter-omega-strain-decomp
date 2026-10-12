@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-extern char D_00497CB0[];
+static const unsigned int dat_00497CB0[1] = { 0x0 };
 
 int func_0046DFC8(void) {
     return 141;
@@ -16,7 +16,7 @@ int func_0046DFD0(void) {
     int v0;
     int cond;
 
-    v0 = *(int*)(char*)D_00497CB0;
+    v0 = *(int*)(char*)((char*)dat_00497CB0);
     cond = v0 == 0;
     if (cond) goto L0046DFEC;
     v0 = ((int (*)(void))v0)();

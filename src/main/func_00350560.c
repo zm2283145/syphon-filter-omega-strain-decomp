@@ -5,7 +5,7 @@
 
 #include "loose03_types.h"
 
-extern char D_004BAD40[];       /* "GuiMissionStatList" */
+char D_004BAD40[] = "GuiMissionStatList";       /* "GuiMissionStatList" */
 
 /* Returns the class name string "GuiMissionStatList". */
 const char* GuiMissionStatList_GetClassName(void) {

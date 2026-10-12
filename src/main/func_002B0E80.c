@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-extern char D_004ABF40[];   /* "GuiQuickChat" */
+char D_004ABF40[] = "GuiQuickChat";   /* "GuiQuickChat" */
 
 /* Class name getter: "GuiQuickChat". */
 char* func_002B0E80(void) {

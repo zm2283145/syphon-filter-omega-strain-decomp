@@ -15,10 +15,6 @@ extern char* D_0048C160[];
 extern char D_004FFC90[];
 extern Mgr_00294C60* D_004FFC04;
 extern char D_004AA200[];
-extern char D_004AA290[];
-extern char D_004AA298[];
-extern char D_004AA2A8[];
-extern char D_004AA2B8[];
 void func_0041BEB0(void* w, char* s, int a);
 char* strncpy(char* d, const char* s, int n);
 char* Loc_LookupText(char* key);
@@ -88,12 +84,12 @@ extern "C" void func_00294C60(S_00294C60* self)
     if (self->pA0) {
         int k = ((S2_00294C60*)self)->f1D0;
         if (k == self->fA8)
-            func_0041BEB0(self->pA0, Loc_LookupText(D_004AA290), 0);
+            func_0041BEB0(self->pA0, Loc_LookupText("Online"), 0);
         else if (k == self->fA4)
-            func_0041BEB0(self->pA0, Loc_LookupText(D_004AA298), 0);
+            func_0041BEB0(self->pA0, Loc_LookupText("Personnel"), 0);
         else if (k == self->fAC)
-            func_0041BEB0(self->pA0, Loc_LookupText(D_004AA2A8), 0);
+            func_0041BEB0(self->pA0, Loc_LookupText("UnlockedMedia"), 0);
         else if (k == self->fB0)
-            func_00294B20(self, Loc_LookupText(D_004AA2B8));
+            func_00294B20(self, Loc_LookupText("Training"));
     }
 }

@@ -6,8 +6,7 @@
 
 #include "types.h"
 
-extern char D_00497F58[];
 
 int std_exception_what(void) {
-    return (int)D_00497F58;
+    return (int)"exception";
 }

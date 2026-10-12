@@ -13,7 +13,6 @@ typedef struct {
 extern char D_004FFB50[];
 extern char D_004DADF0[];
 extern char D_004DAE10[];
-extern char D_004B8788[];
 extern char D_004B8790[];
 extern void SoundEvent_Ctor(SoundEventMsg_327530* msg, void* action, int flags);
 extern void Event_Send(void* msg, void* target, int flags);
@@ -73,7 +72,7 @@ void func_00327530(Self_327530* self, int sel, int sub)
         if (func_002071F0(item->sound)) PlayVoice_327530(self, func_001692D0(item->sound));
         if (self->w60) func_0041BEB0(self->w60, func_001692D0(g), 0);
         if (self->w64) {
-            sprintf(buf, D_004B8788, sub + 1, g->n);
+            sprintf(buf, "%d/%d", sub + 1, g->n);
             func_0041BEB0(self->w64, buf, 0);
         }
         if (item->b1C) {

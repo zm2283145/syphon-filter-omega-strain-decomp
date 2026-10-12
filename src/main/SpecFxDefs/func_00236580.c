@@ -3,7 +3,6 @@
 #include "alloc_guard.h"
 extern "C" {
 extern char D_004A6E38[];
-extern char D_004A6F58[];
 extern char D_004DBD80[];
 extern char D_004DF860[];
 void Mem_Free(int heap, void* p, char* file, int line);
@@ -26,7 +25,7 @@ extern "C" S_00236580* func_00236580(S_00236580* self, short flag)
             E_00236580* e = self->arr[i];
             AllocGuard g;
             if (e) {
-                if (e->a) { void* q = e->a; AllocGuard g2; func_003A2BA0(q, -1); Mem_Free(0, q, D_004A6F58, 0x10A); }
+                if (e->a) { void* q = e->a; AllocGuard g2; func_003A2BA0(q, -1); Mem_Free(0, q, "specFxDefs.hh", 0x10A); }
             }
             Mem_Free(0, e, D_004A6E38, 0x1A8);
         }

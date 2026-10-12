@@ -5,8 +5,6 @@ int Hud_PostNotification(int, char *);
 int Loc_LookupText(char *);
 char *WeaponDb_Get(int, int);
 int sprintf(char *, char *, int, int);
-extern char D_0049B1B8;
-extern char D_0049B1C0;
 extern int D_004FFC2C;
 extern int D_004FFD30;
 typedef struct { int f0; int id; int f8; int ammo; } Slot13F;
@@ -29,7 +27,7 @@ char buf[128];
         if (s->ammo <= 0) continue;
         if (arg0->f88 != NULL && F_(arg0->f88, 0x14, unsigned char) != 0) {
             int t = Loc_LookupText(w + 0x80);
-            sprintf(buf, &D_0049B1B8, t, Loc_LookupText(&D_0049B1C0));
+            sprintf(buf, "%s %s", t, Loc_LookupText("TransferAmmo"));
             Hud_PostNotification(D_004FFC2C, buf);
         }
         { int a = s->ammo; if (arg1 < a) { total += arg1; s->ammo = a - arg1; break; } s->ammo = 0; arg1 -= a; total += a; }

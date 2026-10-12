@@ -11,7 +11,6 @@ extern "C" {
 char * Mem_Alloc(int, int, char *, int);                      
 int Vec4_Assign(...);                      
 int cMessage_ctor(...);                    
-extern char D_0049AED8;
 extern char D_004D9180;
 extern unsigned char D_00533880;
 }
@@ -20,7 +19,7 @@ extern "C" char * func_001386B0(char * arg0) {
 
     {
         AllocGuard g;
-    temp_s0 = (char *)(Mem_Alloc(0, 0x60, &D_0049AED8, 0x181));
+    temp_s0 = (char *)(Mem_Alloc(0, 0x60, "los.hh", 0x181));
     }
     if (temp_s0 != NULL) {
         cMessage_ctor(temp_s0, arg0);

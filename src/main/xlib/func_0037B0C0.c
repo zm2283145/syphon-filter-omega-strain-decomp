@@ -13,7 +13,6 @@ int func_0037B2C0(...);
 int func_0037B2D0(...);                          
 char * func_0037B2E0(...);                        
 int func_0037FBA0(...);              
-extern char D_004BC200;
 extern unsigned char D_00533880;
 }
 #pragma inline_depth(10)
@@ -40,13 +39,13 @@ temp_s0 = F_(temp_s1, 0xC, int);
                         temp_s0_2 = F_(temp_s1, 0x8, int);
                         {
                             AllocGuard g;
-                        Mem_Free(0, temp_s0_2, &D_004BC200, 0x812);
+                        Mem_Free(0, temp_s0_2, "xlib.cc", 0x812);
                         }
                     } else {
                         temp_s3 = F_(temp_s1, 0x8, int);
                         {
                             AllocGuard g;
-                        Mem_Free(temp_s0, temp_s3, &D_004BC200, 0x814);
+                        Mem_Free(temp_s0, temp_s3, "xlib.cc", 0x814);
                         }
                     }
                     er0(arg0 + 0x1108, temp_s1);

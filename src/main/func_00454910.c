@@ -31,10 +31,7 @@ typedef struct Screen {
     Obj* list;    /* +0x4C */
 } Screen;
 
-extern char D_004C19F8[];
 extern char D_004C19B0[];
-extern char D_004C1A10[];
-extern char D_004C1A28[];
 extern char D_004AA640[];
 extern char D_004AAE00[];
 extern char D_004C1D10[];
@@ -72,16 +69,16 @@ static inline void SetColor(Panel* panel, Color color)
 extern "C" void func_00454910(Screen* self)
 {
     func_0041F150(self);
-    self->panel = (Panel*)AsPanel(func_0041DB80(self, D_004C19F8));
+    self->panel = (Panel*)AsPanel(func_0041DB80(self, "radio_log_list"));
     if (self->panel) {
         Obj* widget;
         self->panel->visible = 1;
         SetColor(self->panel, D_00587D40);
         self->panel->icon = AsIcon(func_0041DB80(self, D_004C19B0));
-        widget = func_0041DB80(self, D_004C1A10);
+        widget = func_0041DB80(self, "select_config_select");
         self->panel->label = widget;
         if (widget)
             widget->flags &= ~0x80;
     }
-    self->list = AsList(func_0041DB80(self, D_004C1A28));
+    self->list = AsList(func_0041DB80(self, "sub_titles"));
 }

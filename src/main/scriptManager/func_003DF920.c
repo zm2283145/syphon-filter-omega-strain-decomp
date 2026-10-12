@@ -4,7 +4,10 @@
 typedef struct F1SEv { int owner; unsigned char b4; unsigned char b5; char pad6[2]; void* vt; int* args; int count; int x14; int x18; } F1SEv;
 extern "C" {
 extern char D_004D9DE0[];
-extern char D_004E00C0[];
+extern "C" void ScriptEvent_Destruct();
+extern "C" void ScriptEvent_Execute();
+extern "C" void func_00177E20();
+void * const D_004E00C0[8] = { (void*)0x0, (void*)0x0, (void*)ScriptEvent_Destruct, (void*)func_00177E20, (void*)ScriptEvent_Execute, (void*)0x0, (void*)0x0, (void*)0x0 };
 extern char D_004BD4C0[];
 void* Mem_Alloc(int, int, char*, int);
 void* memcpy(void*, const void*, unsigned int);
@@ -20,7 +23,7 @@ extern "C" F1SEv* ScriptEvent_Construct(F1SEv* self, int owner, int x14, int* ar
     self->b4 = 1;
     self->owner = owner;
     self->b5 = 0;
-    self->vt = D_004E00C0;
+    self->vt = ((char*)D_004E00C0);
     self->x14 = x14;
     self->count = count;
     self->x18 = x18;

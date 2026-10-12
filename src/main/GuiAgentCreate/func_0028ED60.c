@@ -14,15 +14,11 @@ extern "C" {
 extern char D_004A9A50[];
 extern char D_004A9BF0[];
 extern Self_0028ED60* D_00506390;
-extern char D_004A9A60[];
 extern char D_004A9988[];
 extern char D_004A9870[];
 extern char D_004A9990[];
-extern char D_004A9A70[];
 extern char D_004A9C40[];
-extern char D_004A9A80[];
 extern char D_004A7520[];
-extern char D_004A9A90[];
 extern char D_004A9A40[];
 extern char D_004FFB50[];
 extern char D_0055DDA0[];
@@ -51,12 +47,12 @@ extern "C" void func_0028ED60(Self_0028ED60* self)
         D_00506390 = self;
         w->f48 = (void*)func_00290BC0;
     }
-    self->f48 = func_0041DB80(self, D_004A9A60);
+    self->f48 = func_0041DB80(self, "createagent_grp");
     self->f4C = FindAs_0028ED60(self, D_004A9988, D_004A9870);
     self->f50 = FindAs_0028ED60(self, D_004A9990, D_004A9870);
-    self->f58 = FindAs_0028ED60(self, D_004A9A70, D_004A9C40);
-    self->f5C = FindAs_0028ED60(self, D_004A9A80, D_004A7520);
-    self->f54 = FindAs_0028ED60(self, D_004A9A90, D_004A9870);
+    self->f58 = FindAs_0028ED60(self, "selectindicator", D_004A9C40);
+    self->f5C = FindAs_0028ED60(self, "value_slot", D_004A7520);
+    self->f54 = FindAs_0028ED60(self, "beard", D_004A9870);
     if (self->f5C)
         func_0041BEB0(self->f5C, D_004A9A40, 0);
     func_002888C0(&a);

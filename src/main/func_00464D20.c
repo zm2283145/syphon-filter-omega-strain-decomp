@@ -9,7 +9,7 @@ typedef struct { char pad[0x178]; int f178; } P_464D20;
 typedef struct { char pad[0x6C]; unsigned char b6C; unsigned char b6D; char pad6E[2]; int f70; void* f74; } O_464D20;
 extern void* D_00582CF0;
 extern unsigned char D_00582B88;
-extern int D_00497BF0;
+unsigned int D_00497BF0[2] = { 0xFFFFFFFF, 0x0 };
 extern unsigned char D_004FFC29;
 extern void* D_004FFC04;
 extern G_464D20* D_004FFC2C;
@@ -41,7 +41,7 @@ void func_00464D20(O_464D20* o, float dt)
             if (!D_00582B88 || !act) {
                 if (IsMine_464D20()) {
                     func_00437950(0);
-                    D_00497BF0 = -1;
+                    (*(int*)D_00497BF0) = -1;
                     act = 0;
                     o->b6C = 0;
                     o->f70 = 0;
@@ -65,7 +65,7 @@ void func_00464D20(O_464D20* o, float dt)
             if (o->b6D) {
                 if (!func_004651F0() || o->f70 < func_0042B1A0(1)) {
                     func_00437950(0);
-                    D_00497BF0 = -1;
+                    (*(int*)D_00497BF0) = -1;
                 } else if (!D_004FFC29 && !func_002CAB70(D_004FFC04) && !D_004FFC2C->b6A9 && !D_004FFC2C->b6A8
                            && !D_004FFC2C->b6AA && !func_0045BD00(D_004FFC2C->f6A4) && !D_004FFC0C->f178) {
                     func_00242740(D_004FFC2C);
@@ -75,18 +75,18 @@ void func_00464D20(O_464D20* o, float dt)
             o->b6D = 0;
         }
         if (IsMine_464D20()) {
-            int t = D_00497BF0;
+            int t = (*(int*)D_00497BF0);
             if (t > -1) {
                 if (t < func_0042B1A0(1)) {
                     func_00437950(0);
-                    D_00497BF0 = -1;
+                    (*(int*)D_00497BF0) = -1;
                     o->b6C = 0;
                 }
             } else {
-                D_00497BF0 = func_0042B1A0(1) + 15000;
+                (*(int*)D_00497BF0) = func_0042B1A0(1) + 15000;
             }
         } else {
-            D_00497BF0 = -1;
+            (*(int*)D_00497BF0) = -1;
         }
         {
             M_464D20* m = func_004147A0();

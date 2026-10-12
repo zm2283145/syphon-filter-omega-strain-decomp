@@ -10,7 +10,6 @@ struct Self_00212220 { char pad0[0xC]; unsigned int fC; int f10; char pad14[0xCC
 extern "C" {
 extern unsigned char D_005721D0;
 extern char D_004A4550[];
-extern char D_004A4590[];
 extern int D_004F5480;
 void* Mem_Alloc(int heap, int size, char* file, int line);
 void Mem_Free(int heap, void* p, char* file, int line);
@@ -47,7 +46,7 @@ extern "C" void func_00212220(Self_00212220* self)
         int h;
         Seg_00212220* seg;
         Shm_00212220* p;
-        if (func_002EAF28(&h, 1, 3, 0, 0, 0, 0, self->pD0, D_004A4590, D_004F5480))
+        if (func_002EAF28(&h, 1, 3, 0, 0, 0, 0, self->pD0, "PathedGobjInfoObject", D_004F5480))
             return;
         p = self->pD0;
         if (p) {

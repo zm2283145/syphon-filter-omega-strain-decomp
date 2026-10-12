@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-extern char D_004AA600[];   /* "GuiCommandCenter" */
+char D_004AA600[] = "GuiCommandCenter";   /* "GuiCommandCenter" */
 
 /* Class name getter: "GuiCommandCenter". */
 char* func_00294210(void) {

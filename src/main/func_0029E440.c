@@ -26,7 +26,8 @@ extern char D_004FFB50[];
 extern char D_004F2CC0[];
 extern int* D_0055A830;
 extern char D_004FFBA4[];
-extern char* D_0048B988;
+extern "C" char D_004AABC8[];
+static void * const dat_0048B988[2] = { (void*)D_004AABC8, (void*)0x0 };
 void* func_004294C0(void);
 int func_00452FE0(void* g);
 void func_0029CBB0(S_0029E440* self, int a);
@@ -109,7 +110,7 @@ extern "C" int func_0029E440(S_0029E440* self, void* w, int msg, int sub, char* 
                 if (id != -1)
                     func_002B4FA8(id);
                 func_002B4E50();
-                func_0044B970(func_00189540(D_004FFBA4), D_0048B988);
+                func_0044B970(func_00189540(D_004FFBA4), (*(char**)dat_0048B988));
             } else if (sub == 0x1F) {
                 self->f88 = 5;
             } else {

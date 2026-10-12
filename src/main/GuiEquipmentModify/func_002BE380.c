@@ -21,7 +21,8 @@ extern char D_004AC468[];
 extern char D_004AC470[];
 extern char D_004AC480[];
 extern char D_004A7520[];
-extern char* D_0048C0A8;
+extern "C" char D_004AC280[];
+void * const D_0048C0A8[2] = { (void*)D_004AC280, (void*)0x0 };
 Wpn_002BE380* WeaponDb_Get(int db, int id);
 void* func_0041DB80(void* self, char* name);
 char* Loc_LookupText(char* key);
@@ -60,7 +61,7 @@ extern "C" void func_002BE380(S_002BE380* self)
         if (wp->p60)
             func_002C8EC0(func_002C9020(wp->p60), buf, 0x20);
         else
-            String_Copy(buf, D_0048C0A8);
+            String_Copy(buf, (*(char**)D_0048C0A8));
         if (w)
             func_0041BEB0(w, buf, 0);
         w = FindAs_002BE380(self, D_004AC420, D_004A7520);
@@ -69,14 +70,14 @@ extern "C" void func_002BE380(S_002BE380* self)
         else if (wp->p64)
             func_002C8EC0(func_002C8FD0(wp->p64), buf, 0x20);
         else
-            String_Copy(buf, D_0048C0A8);
+            String_Copy(buf, (*(char**)D_0048C0A8));
         if (w)
             func_0041BEB0(w, buf, 0);
         w = FindAs_002BE380(self, D_004AC430, D_004A7520);
         if (wp->f70)
             sprintf(buf, D_004AC480, wp->f70);
         else
-            String_Copy(buf, D_0048C0A8);
+            String_Copy(buf, (*(char**)D_0048C0A8));
         if (w)
             func_0041BEB0(w, buf, 0);
         w = FindAs_002BE380(self, D_004AC450, D_004A7520);
@@ -84,7 +85,7 @@ extern "C" void func_002BE380(S_002BE380* self)
         if (n)
             sprintf(buf, D_004AC480, n);
         else
-            String_Copy(buf, D_0048C0A8);
+            String_Copy(buf, (*(char**)D_0048C0A8));
         if (w)
             func_0041BEB0(w, buf, 0);
     } else {

@@ -10,7 +10,6 @@ extern "C" {
 int Mem_Free(...);                         
 int func_003A2BA0(...);                            
 int func_003CE790(...);                         
-extern char D_004BC430;
 extern unsigned char D_00533880;
 }
 #pragma opt_common_subs off
@@ -22,7 +21,7 @@ extern "C" void func_003941A0(char * arg0, int arg1) {
         {
             AllocGuard g;
         func_003A2BA0(temp_s2, -1);
-        Mem_Free(0, temp_s2, &D_004BC430, 0x286);
+        Mem_Free(0, temp_s2, "gameobj.cc", 0x286);
         }
         F_(arg0, 0x64, int) = 0;
     }

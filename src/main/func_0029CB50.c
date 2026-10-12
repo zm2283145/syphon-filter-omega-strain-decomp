@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-extern char D_004AADC0[];   /* "GuiOnlineConnect" */
+char D_004AADC0[] = "GuiOnlineConnect";   /* "GuiOnlineConnect" */
 
 /* Class name getter: "GuiOnlineConnect". */
 char* GuiOnlineConnect_GetClassName(void) {

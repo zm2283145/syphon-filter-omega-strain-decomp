@@ -5,7 +5,7 @@
 
 #include "loose05_types.h"
 
-extern float FlashDazzleSize;
+const float FlashDazzleSize[4] = { 8.0f, 0.0f, 0.0f, 0.0f };
 
 float FlashGlare_GetCoronaSize(Float40* self) {
     return self->unk40;
@@ -16,5 +16,5 @@ int FlashGlare_GetCoronaFlag(void) {
 }
 
 float FlashGlare_GetRange(void) {
-    return FlashDazzleSize;
+    return (*(float*)FlashDazzleSize);
 }

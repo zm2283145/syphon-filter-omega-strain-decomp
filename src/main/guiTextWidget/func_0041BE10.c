@@ -6,8 +6,7 @@
 
 #include "types.h"
 
-extern char D_004BF398[];
 
 int func_0041BE10(void) {
-    return (int)D_004BF398;
+    return (int)"GuiTextWidget";
 }

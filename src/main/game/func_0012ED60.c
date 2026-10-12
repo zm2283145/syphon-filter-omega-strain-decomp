@@ -2,7 +2,7 @@
 unsigned char* Agent_GetSelected(int, int);
 int func_002EBAF8(int*, int);
 int func_003FB8D0(int);
-extern int D_00494178;
+unsigned int D_00494178[2] = { 0xFFFFFFFF, 0x0 };
 extern int D_005721A8;
 extern unsigned char D_005721C8;
 int func_0012ED60(int arg0)
@@ -13,8 +13,8 @@ int func_0012ED60(int arg0)
         int v;
         int a = D_005721A8; /* read before the flag test: retail loads it ahead of the branch */
         if (D_005721C8) {
-            if (D_00494178 == -1) func_002EBAF8(&D_00494178, a);
-            v = D_00494178;
+            if ((*(int*)D_00494178) == -1) func_002EBAF8(&(*(int*)D_00494178), a);
+            v = (*(int*)D_00494178);
         } else v = 0;
         if (i != v && func_003FB8D0(i)) {
             unsigned char* p = Agent_GetSelected(arg0, i);

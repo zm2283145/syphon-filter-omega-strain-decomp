@@ -3,7 +3,6 @@
 #include "tstr_types.h"
 struct TENode_func_003CA530 { TENode_func_003CA530* left; TENode_func_003CA530* right; int parentColor; };
 extern "C" {
-extern char D_004BD178[];
 void* func_003CAA40(void* t);
 void* func_003CAA00(void* t);
 void func_003CAA10(void* a, void* v);
@@ -34,7 +33,7 @@ static inline void L1_func_003CA530(void* t, TENode_func_003CA530* c)
     func_003CA940((char*)c + 0xC, -1);
     func_003CAA00(t);
     if (c)
-        func_003CA860(c, 0, 0, D_004BD178, 0x64);
+        func_003CA860(c, 0, 0, "allocator.hh", 0x64);
 }
 static inline void D3_func_003CA530(void* p) { if (p) { if (p) func_003CA3F0(p, 0); } }
 static inline void D2_func_003CA530(void* p) { if (p) D3_func_003CA530(p); }
@@ -48,5 +47,5 @@ extern "C" void func_003CA530(void* t, TENode_func_003CA530* x)
         L1_func_003CA530(t, c);
     D1_func_003CA530((char*)x + 0xC);
     if (x)
-        TStr_Free((char*)x, D_004BD178, 0x64);
+        TStr_Free((char*)x, "allocator.hh", 0x64);
 }

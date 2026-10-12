@@ -12,7 +12,6 @@ int Mem_Alloc(int, int, char *, int);
 int Mem_Free(int, int, char *, int);                         
 int String_Copy(int, int);                            
 int strlen(int);                                    
-extern char D_0049A890;
 extern unsigned char D_00533880;
 }
 extern "C" void func_0012F3D0(char * arg0, int arg1) {
@@ -24,7 +23,7 @@ extern "C" void func_0012F3D0(char * arg0, int arg1) {
     if (temp_s2 != 0) {
         {
             AllocGuard g;
-        Mem_Free(0, temp_s2, &D_0049A890, 0xC1A);
+        Mem_Free(0, temp_s2, "game.cc", 0xC1A);
         }
         F_(arg0, 0x1C0, int) = 0;
     }
@@ -32,7 +31,7 @@ extern "C" void func_0012F3D0(char * arg0, int arg1) {
         temp_s2_2 = strlen(arg1) + 1;
         {
             AllocGuard g;
-        temp_s2_3 = Mem_Alloc(0, temp_s2_2, &D_0049A890, 0xC20);
+        temp_s2_3 = Mem_Alloc(0, temp_s2_2, "game.cc", 0xC20);
         }
         F_(arg0, 0x1C0, int) = temp_s2_3;
         String_Copy(F_(arg0, 0x1C0, int), arg1);

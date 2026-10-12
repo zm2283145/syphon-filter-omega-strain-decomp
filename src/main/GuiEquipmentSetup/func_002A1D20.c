@@ -12,8 +12,6 @@ struct S_002A1D20 {
 };
 extern "C" {
 extern void* D_004FFC04;
-extern char D_004AB0E0[];
-extern char D_004AB0F0[];
 Ui_002A1D20* func_004147A0(void);
 void func_0041E0F0(void* a, void* b, int c, int d, int e);
 void func_00414B30(void* ui, void* w);
@@ -79,8 +77,8 @@ extern "C" int func_002A1D20(S_002A1D20* self, Ev_002A1D20* ev)
     {
         bool b = ev->type == 1 && ev->f2 == 0 && ev->btn == 0x10 && ev->f6 == 0;
         if (b) {
-            char* a = Loc_LookupText(D_004AB0E0);
-            char* c = Loc_LookupText(D_004AB0F0);
+            char* a = Loc_LookupText("QuitTitle");
+            char* c = Loc_LookupText("QuitMessage");
             if (a && c)
                 func_002CAE30(D_004FFC04, 5, a, c, self, 0);
             return 1;

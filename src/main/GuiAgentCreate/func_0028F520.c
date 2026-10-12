@@ -5,7 +5,6 @@ struct V28F520 { virtual void v0(int f); virtual int v1(); virtual int v2(); vir
 struct O28F520 { void* vt; char pad[0x5C]; V28F520* items[4]; char pad70[4]; V28F520* p74; };
 extern "C" {
 extern char D_004DD1B0[];
-extern char D_004A9AA0[];
 extern char D_0055DDA0[];
 void Mem_Free(int pool, void* p, char* file, int line);
 void func_00403310(void* p);
@@ -17,7 +16,7 @@ static inline void Del28F520(V28F520* o, int line)
 {
     AllocGuard g;
     o->v0(-1);
-    Mem_Free(0, o, D_004A9AA0, line);
+    Mem_Free(0, o, "GuiAgentCreate.cc", line);
 }
 extern "C" O28F520* func_0028F520(O28F520* self, short del)
 {

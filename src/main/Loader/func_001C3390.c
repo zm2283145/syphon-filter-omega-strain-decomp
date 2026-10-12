@@ -4,7 +4,6 @@
 struct PopReader_1C3390 { int unk0; int size; unsigned int base; char* cur; };
 extern "C" {
 extern char D_0049EE88[];
-extern char D_0049F1A0[];
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void Object_Register(void* o);
 int Pop_FindTag(PopReader_1C3390* r, int tag);
@@ -21,7 +20,7 @@ extern "C" void Loader_InitSoundGOBJs(void* a0, PopReader_1C3390* r)
         if (n) {
             int i;
             int mis;
-            func_00165E60(func_001698C0(), D_0049F1A0, 0);
+            func_00165E60(func_001698C0(), "Initializing SoundGOBJs...", 0);
             for (i = 0; i < n; i++) {
                 int kind;
                 void* p;

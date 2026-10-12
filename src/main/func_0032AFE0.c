@@ -1,7 +1,7 @@
 #include "types.h"
 typedef struct { char pad[0xE4]; int fE4; } S_32AFE0;
 typedef struct { char pad[0x20]; void* f20; } M_32AFE0;
-extern char D_004B8CB8[]; extern char D_004B8CC8[]; extern char D_004B8CD8[]; extern char D_004B8CE8[];
+char D_004B8CB8[] = "onGainFocus"; extern char D_004B8CC8[]; extern char D_004B8CD8[]; extern char D_004B8CE8[];
 void* func_0032B260(S_32AFE0* o, int id);
 void func_0041E0F0(void* a, void* b, int kind, int v, int f);
 M_32AFE0* func_004147A0(void);

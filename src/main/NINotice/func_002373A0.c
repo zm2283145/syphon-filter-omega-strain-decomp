@@ -3,7 +3,6 @@
 #include "alloc_guard.h"
 extern "C" {
 void* Mem_Alloc(int pool, int size, char* file, int line);
-extern char D_004A71D8[];
 extern char D_004DFD80[];
 extern char D_004DBEB0[];
 }
@@ -13,7 +12,7 @@ extern "C" M1EEDC0* cNINotice_v01(M1EEDC0* self)
     M1EEDC0* p;
     {
         AllocGuard guard;
-        p = (M1EEDC0*)Mem_Alloc(0, 0x28, D_004A71D8, 0x28);
+        p = (M1EEDC0*)Mem_Alloc(0, 0x28, "NIEvent.hh", 0x28);
     }
     if (p) {
         p->vtable = D_004DFD80;

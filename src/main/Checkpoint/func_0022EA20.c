@@ -13,7 +13,6 @@ int Mem_Free(...);
 int String_Copy(...);                            
 int strlen(...);                                    
 extern char D_004A6698;
-extern char D_004A66A8;
 extern unsigned char D_00533880;
 }
 #pragma opt_common_subs off
@@ -33,7 +32,7 @@ extern "C" void func_0022EA20(char * arg0, int arg1) {
     if (arg1 != 0) {
         F_(arg0, 0x70, int) = arg1;
     } else {
-        temp_v0 = Loc_LookupText(&D_004A66A8);
+        temp_v0 = Loc_LookupText("Checkpoint");
         temp_s2_2 = strlen(temp_v0) + 1;
         {
             AllocGuard g;

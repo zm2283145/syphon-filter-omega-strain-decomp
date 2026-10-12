@@ -5,7 +5,7 @@
 
 #include "loose03_types.h"
 
-extern char D_004B8D80[];       /* "GuiKeyboard" */
+char D_004B8D80[] = "GuiKeyboard";       /* "GuiKeyboard" */
 
 /* Returns the class name string "GuiKeyboard". */
 const char* GuiKeyboard_GetClassName(void) {

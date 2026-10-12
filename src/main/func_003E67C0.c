@@ -4,8 +4,8 @@ typedef struct { void* vt; char pad04[0x18]; int x1C; char pad20[4]; int cat; si
 typedef struct { char pad0[0x30]; void* owner; } Pt2_Tgt;
 typedef struct { char pad0[0xC]; int id; } Pt2_Hd;
 extern int D_0055A840;
-extern float D_00493938;
-extern float D_00493940;
+const float D_00493938[2] = { -1.0f, 0.0f };
+const float D_00493940[2] = { -2.0f, 0.0f };
 extern char D_0055D480[];
 extern char D_004E0160[];
 extern char D_004E0840[];
@@ -19,8 +19,8 @@ void func_003E67C0(Pt2_Tgt* t, char cat, Pt2_Hd* h, unsigned char flag, float va
     int* idp;
     Msg_3E67C0 m;
     { int k = *func_003CB220(); if (k == D_0055A840) t = (Pt2_Tgt*)t->owner; }
-    if (val == D_00493938) val = -1.0f;
-    else if (val == D_00493940) val = 3.4028235e38f;
+    if (val == (*(float*)D_00493938)) val = -1.0f;
+    else if (val == (*(float*)D_00493940)) val = 3.4028235e38f;
     if (h) idp = &h->id;
     else { tmp[0] = -1; idp = tmp; }
     Event_Construct(&m, D_0055D480);

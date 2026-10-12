@@ -8,7 +8,6 @@ typedef struct Text {
     char b[0x80];
 } Text;
 
-extern int D_004BE988;
 extern int D_0055D4F8;
 extern void func_0036D630(Msg*);
 extern void sprintf(Text*, void*, int, int);
@@ -22,7 +21,7 @@ void func_00407D10(int a, int b) {
     Msg msg;
     Text text;
     func_0036D630(&msg);
-    sprintf(&text, &D_004BE988, a, b);
+    sprintf(&text, ((int*)"%s\\%s\\SKL.HOG"), a, b);
     Hog_Load(&msg, &text, 0, 0);
     func_00407830(&D_0055D4F8, &msg);
     func_0036CD80(&msg);

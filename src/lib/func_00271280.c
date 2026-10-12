@@ -1,5 +1,5 @@
 typedef struct { int f0; void* f4; int f8; int fc; int f10; } P271280;
-extern int D_0048B2C8;
+unsigned int D_0048B2C8[2] = { 0x0, 0x0 };
 extern P271280 D_004FFB00;
 extern char D_004FF300[];
 extern void func_001161A0();
@@ -13,8 +13,8 @@ extern int func_00118200(unsigned int id, void (*cb)(int), int a);
 void func_00271280(void)
 {
     int* q;
-    if (D_0048B2C8 != 0) return;
-    D_0048B2C8 = 1;
+    if ((*(int*)D_0048B2C8) != 0) return;
+    (*(int*)D_0048B2C8) = 1;
     func_001161A0();
     D_004FFB00.f8 = 0x20;
     D_004FFB00.f4 = (void*)((int)D_004FF300 | 0x20000000);

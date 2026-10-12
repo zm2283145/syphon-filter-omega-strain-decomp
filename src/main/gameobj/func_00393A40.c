@@ -7,7 +7,7 @@ typedef struct RgObj {
 } RgObj;
 typedef struct RgT1 { char p[0x48]; } RgT1;
 typedef struct RgT2 { char p[0x8]; } RgT2;
-extern float D_00493470;
+static const float dat_00493470[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
 extern void func_00393F10(void*);
 extern void func_00393CE0(void*);
 extern void ScalarCollection_Init(void*);
@@ -30,7 +30,7 @@ RgObj* func_00393A40(RgObj* o, int arg, void* model)
     RgSub* sub;
     RgFlag* fl;
     o->one = 1;
-    o->f4 = D_00493470;
+    o->f4 = (*(float*)dat_00493470);
     o->z14 = 0;
     o->s1c = 1.0f;
     o->arg = arg;

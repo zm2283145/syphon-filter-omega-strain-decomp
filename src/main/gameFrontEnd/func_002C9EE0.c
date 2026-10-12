@@ -5,7 +5,6 @@ extern "C" {
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void Mem_Free(int pool, void* p, char* file, int line);
 extern char D_004ACF10[];
-extern char D_004ACF60[];
 extern char D_0048B2F8[];
 char* func_002CCA30(void);
 int sprintf(char* buf, const char* fmt, ...);
@@ -19,7 +18,7 @@ extern "C" bool func_002C9EE0(Obj9EE0* o)
     if (!o->hog) {
         char path[0x100];
         void* p;
-        sprintf(path, D_004ACF60, D_0048B2F8, func_002CCA30());
+        sprintf(path, "%s\\FRONTEND\\LANG\\%s\\ZEUS.HOG", D_0048B2F8, func_002CCA30());
         {
             AllocGuard guard;
             p = Mem_Alloc(0, 0x16C, D_004ACF10, 0x628);

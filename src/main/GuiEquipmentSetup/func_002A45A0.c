@@ -5,7 +5,6 @@ struct V002A45A0 { virtual void v0(int f); virtual int v1(); virtual int v2(); v
 struct O002A45A0 { void* vt; char pad[0x44]; V002A45A0* items[4]; V002A45A0* p58; };
 extern "C" {
 
-extern char D_004AB260[];
 extern char D_0055DDA0[];
 extern char D_004DD7C0[];
 extern char D_004E1220[];
@@ -21,7 +20,7 @@ static inline void Del002A45A0(V002A45A0* o, int line)
 {
     AllocGuard g;
     o->v0(-1);
-    Mem_Free(0, o, D_004AB260, line);
+    Mem_Free(0, o, "GuiEquipmentSetup.cc", line);
 }
 extern "C" O002A45A0* func_002A45A0(O002A45A0* self, short del)
 {

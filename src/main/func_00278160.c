@@ -27,7 +27,6 @@ typedef struct HitFlags {
 
 extern void* D_004FFC34;
 extern float D_004A9098;
-extern char D_004A9228[];
 extern char D_004FFB50[];
 extern char D_004DAE30[];
 extern void WaterFx_PointSplash(void* fx, float a, float b);
@@ -43,7 +42,7 @@ void func_00278160(void* self, Hit08* hit, HitFlags* info) {
     SoundRequest req;
     if (info->flags & 0x80) {
         WaterFx_PointSplash(D_004FFC34, D_004A9098, hit->strength);
-        SoundRequest_Ctor(&req, 1, D_004A9228, 0, 0);
+        SoundRequest_Ctor(&req, 1, "B_HIT_WATER", 0, 0);
         func_0020F860(&msg, &req, hit);
         msg.flag = 1;
         Event_Send(&msg, D_004FFB50, 1);

@@ -11,7 +11,6 @@ extern char D_00571DC0[];
 extern char D_0055A700[];
 extern unsigned char D_0051EF68;
 extern char D_004FFC90[];
-extern char D_004ACF48[];
 extern char D_004FFB50[];
 extern char D_004F2CC0[];
 extern char D_004F5370[];
@@ -77,7 +76,7 @@ void func_002C9510(Self_002C9510* self)
                 }
                 buf.len = n;
             }
-            strncpy(D_004FFC90, D_004ACF48, 0x80);
+            strncpy(D_004FFC90, "FRONTEND", 0x80);
             svc = Service_Lookup(D_004FFB50, D_004F2CC0);
             Event_Construct(&m1, D_004F5370);
             m1.vt = D_004DE220;

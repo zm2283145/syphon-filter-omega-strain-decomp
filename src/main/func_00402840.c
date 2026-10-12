@@ -4,7 +4,6 @@ typedef struct SklFile_h5 {
     char name[0x9C];
 } SklFile_h5;
 extern signed char D_00493A60;
-extern char D_004BE770[];
 extern char D_0055D510[];
 extern char D_0055D950[];
 extern void func_0036E5D0(SklFile_h5* f);
@@ -25,7 +24,7 @@ void Skl_Load(void* self, char* skelPath, char* animPath)
         func_0036E140(&f, skelPath, 0, 0);
         if ((unsigned char)func_0036DEF0(&f)) {
             char msg[128];
-            sprintf(msg, D_004BE770, f.name);
+            sprintf(msg, "Failed to open %s in LoadSKL\n", f.name);
             func_0036E220(&f, -1);
         } else {
             int len = func_0036DE50(&f);
@@ -40,7 +39,7 @@ void Skl_Load(void* self, char* skelPath, char* animPath)
         func_0036E140(&f, animPath, 0, 0);
         if ((unsigned char)func_0036DEF0(&f)) {
             char msg[128];
-            sprintf(msg, D_004BE770, f.name);
+            sprintf(msg, "Failed to open %s in LoadSKL\n", f.name);
             func_0036E220(&f, -1);
         } else {
             int len = func_0036DE50(&f);

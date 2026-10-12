@@ -31,7 +31,7 @@ extern char D_004BBD58[]; extern char D_004BBD68[]; extern char D_004BBC48[]; ex
 extern char D_004A9870[]; extern char D_004AA640[]; extern char D_004A7520[];
 extern char D_004FFC90[];
 extern unsigned char D_005721C8;
-extern int D_00492F60;
+static const unsigned int dat_00492F60[2] = { 0x3, 0x0 };
 extern V4_3688C0 D_00587CE0; extern V4_3688C0 D_00587CC0;
 void func_0041F150(O_3688C0* o);
 W_3688C0* func_0041DB80(void* o, char* name);
@@ -80,7 +80,7 @@ void func_003688C0(O_3688C0* o)
                 SetC_3688C0(o->slots[i], D_00587CC0);
             }
             o->slots[i]->flags &= ~0x80;
-            func_00424820(o->slots[i], o->slots[i]->f5C - D_00492F60);
+            func_00424820(o->slots[i], o->slots[i]->f5C - (*(int*)dat_00492F60));
         }
     }
     if (o->f54) {

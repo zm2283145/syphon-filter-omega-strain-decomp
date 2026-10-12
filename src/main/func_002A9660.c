@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-extern char D_004AB8F0[];   /* "GuiOnlineOptions" */
+char D_004AB8F0[] = "GuiOnlineOptions";   /* "GuiOnlineOptions" */
 
 /* Class name getter: "GuiOnlineOptions". */
 char* func_002A9660(void) {

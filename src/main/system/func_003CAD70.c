@@ -10,7 +10,6 @@ typedef struct { void* buf; } Sub_3CAD70;
 typedef struct { void* vt; int f4; int f8; unsigned int fC; int f10; int f14; Sub_3CAD70* p18; int f1C; char list[0x10]; } Self_3CAD70;
 extern "C" {
 extern char D_004BD1A8[];
-extern char D_004BD1E8[];
 extern char D_004DFDA0[];
 extern char D_004DFDE0[];
 void Mem_Free(int pool, void* p, char* file, int line);
@@ -30,7 +29,7 @@ static inline ItB_3CAD70 Begin_3CAD70(void* l) { return BX1(l); }
 static inline ItA_3CAD70 End_3CAD70(void* l) { return E0_3CAD70(l); }
 
 static inline void FreeV_3CAD70(VObj_3CAD70* o, int line) { AllocGuard g; o->dtor(-1); Mem_Free(0, o, D_004BD1A8, line); }
-static inline void SubDtor_3CAD70(Sub_3CAD70* s) { if (s) { void* b = s->buf; if (b) { AllocGuard g; Mem_Free(0, b, D_004BD1E8, 0x34); } } }
+static inline void SubDtor_3CAD70(Sub_3CAD70* s) { if (s) { void* b = s->buf; if (b) { AllocGuard g; Mem_Free(0, b, "system.hh", 0x34); } } }
 static inline void BaseDtor_3CAD70(Self_3CAD70* self)
 {
     if (self) {

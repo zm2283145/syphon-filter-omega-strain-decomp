@@ -1,7 +1,6 @@
 #include "types.h"
 #include "net_local_id.h"
 typedef struct { int busy; int addr; int slot; } Join_AAB0;
-extern char D_004BE280[];
 extern char D_00493A10[];
 extern char D_00572418[];
 extern char D_0055C7C0[];
@@ -15,7 +14,7 @@ void Net_OnRemoteClientJoined(Join_AAB0* j)
     if (j->busy == 0) {
         int s;
         int off;
-        func_00127358(D_004BE280, j->addr, j->slot);
+        func_00127358("\n\n\n\tRemote client joined the game: %d[%d]\n", j->addr, j->slot);
         {
             int ok = 1;
             if (D_005721C8) ok = D_005721C0;

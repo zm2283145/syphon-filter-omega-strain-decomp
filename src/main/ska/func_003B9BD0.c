@@ -5,7 +5,7 @@
 
 #include "ska_types.h"
 
-extern int D_004BCEE8;
+unsigned int D_004BCEE8[2] = { 0x0, 0x0 };
 extern signed char D_00542C90;
 
 /* Lazily initialised constant: 0x1800000 - 1 (guarded function-local static). */
@@ -18,7 +18,7 @@ int func_003B9BD0(void) {
         size[0] = 0x1800000;
         ref = *(int*)ref;
         D_00542C90 = 1;
-        D_004BCEE8 = ref - 1;
+        (*(int*)D_004BCEE8) = ref - 1;
     }
-    return D_004BCEE8;
+    return (*(int*)D_004BCEE8);
 }

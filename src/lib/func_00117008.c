@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-extern char D_00487860[];
+static unsigned int dat_00487860[2] = { 0x0, 0xFFFFFFFF };
 
 int func_00117008(int a0) {
     int v0, v1;
@@ -19,7 +19,7 @@ int func_00117008(int a0) {
     *(int*)(char*)v0 = v1;
     goto L00117024;
 L0011701C:;
-    *(int*)(char*)D_00487860 = v1;
+    *(int*)(char*)((char*)dat_00487860) = v1;
 L00117024:;
     if (v1 == 0) {
     *(int*)((char*)a0 + 4) = 0;

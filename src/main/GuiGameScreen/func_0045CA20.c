@@ -8,8 +8,6 @@ typedef struct { char pad[0x6A8]; unsigned char busy; } G_45CA20;
 extern G_45CA20* D_004FFC2C;
 extern int D_00497ACC[];
 extern int D_00497AEC[];
-extern char D_004C21F8[];
-extern char D_004C2200[];
 void func_0045C760(S_45CA20* o);
 long long func_003698B0(void);
 void func_0045C5E0(S_45CA20* o);
@@ -40,7 +38,7 @@ void func_0045CA20(S_45CA20* o, int on)
         o->fD4 = 1;
         o->fD0 = 2;
         func_0041E0F0(o, o->fA4, 0xB, D_00497AEC[o->fDC], 0);
-        func_0041E0F0(o, o->fA0, 6, (int)D_004C21F8, 0);
+        func_0041E0F0(o, o->fA0, 6, (int)"onWake", 0);
         o->w->flags |= 0x80;
         func_00414B30(func_004147A0(), o->w);
         func_0041E0F0(o->w, func_004147A0(), 0x10, 2, 0);
@@ -53,7 +51,7 @@ void func_0045CA20(S_45CA20* o, int on)
         v = fmin_45CA20((float)D_00497AEC[o->fDC], v);
         func_0041E0F0(o, o->fA4, 0xC, (int)v, D_00497ACC[o->fDC]);
         o->w->flags &= ~4;
-        func_0041E0F0(o, o->fA0, 6, (int)D_004C2200, 0);
+        func_0041E0F0(o, o->fA0, 6, (int)"onSleep", 0);
         o->w->flags &= ~0x80;
         func_00414B30(func_004147A0(), o);
         func_0041E0F0(o->w, func_004147A0(), 0x10, 3, 0);

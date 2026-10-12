@@ -6,12 +6,12 @@
 
 #include "loose03_types.h"
 
-extern unsigned char D_00492F68;
+unsigned int D_00492F68[2] = { 0x1, 0x0 };
 
 void func_0036B070(void) {
-    D_00492F68 = 0;
+    (*(unsigned char*)D_00492F68) = 0;
 }
 
 void func_0036B080(void) {
-    D_00492F68 = 1;
+    (*(unsigned char*)D_00492F68) = 1;
 }

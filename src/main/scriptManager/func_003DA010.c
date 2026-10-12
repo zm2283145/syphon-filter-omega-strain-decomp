@@ -2,7 +2,6 @@
 typedef struct { int x0; int* args; char pad[0x44]; } SrvCtx;
 typedef struct { char pad[0x14]; void* init; unsigned char pending; char pad19[3]; void* owner; } SrvVar;
 typedef struct { int x0; int count; SrvVar** vars; } SrvScript;
-extern char D_004BD4D8[];
 extern char D_00555070[];
 extern void func_003D5EB0(SrvCtx*, void*, SrvScript*, void*);
 extern void func_003E03F0(void*, void*);
@@ -22,7 +21,7 @@ void Script_RunVarInitializers(SrvScript* s)
             if (init) {
                 SrvCtx ctx;
                 int arg[1];
-                func_003D5EB0(&ctx, D_004BD4D8, s, init);
+                func_003D5EB0(&ctx, "bogusfoobar", s, init);
                 arg[0] = 4;
                 ctx.args = arg;
                 func_003E03F0(D_00555070, init);

@@ -4,7 +4,6 @@
 #include "alloc_guard.h"
 
 extern "C" {
-extern char D_004BF608[];
 void func_00329930(void* destination, const void* source);
 void func_00421F90(TextListEntryVec* entries);
 void func_00138350(TextListEntry* entries, int flags);
@@ -47,7 +46,7 @@ extern "C" TextListEntry* func_00422F80(TextListEntry* first, TextListEntry* las
 static inline void release_storage(TextListEntry* data)
 {
     if (data)
-        func_00423080(data, 0, 0, D_004BF608, 0x64);
+        func_00423080(data, 0, 0, "allocator.hh", 0x64);
 }
 
 /* Destroy live entries, release their storage, then optionally delete the vector. */

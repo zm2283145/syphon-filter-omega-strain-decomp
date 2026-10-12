@@ -1,4 +1,4 @@
-extern int D_0048C458;
+unsigned int D_0048C458[1] = { 0x0 };
 extern int func_002E51B8(unsigned int, char **);
 int func_002DD178(int *out, unsigned int idx)
 {
@@ -6,7 +6,7 @@ int func_002DD178(int *out, unsigned int idx)
     int r;
     if (out == 0) return 0x17;
     *out = 0x100;
-    if (D_0048C458 == 0) return 0x11;
+    if ((*(int*)D_0048C458) == 0) return 0x11;
     if (idx >= 4) return 0x17;
     r = func_002E51B8(idx, &p);
     if (r) return r;

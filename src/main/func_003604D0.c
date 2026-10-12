@@ -5,7 +5,7 @@
 
 #include "loose03_types.h"
 
-extern char D_004BBC18[];       /* "GuiAgentInfo" */
+char D_004BBC18[] = "GuiAgentInfo";       /* "GuiAgentInfo" */
 
 /* Returns the class name string "GuiAgentInfo". */
 const char* GuiAgentInfo_GetClassName(void) {

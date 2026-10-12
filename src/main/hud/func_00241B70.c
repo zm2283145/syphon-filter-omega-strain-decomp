@@ -10,8 +10,6 @@ int func_0036E220(char *, int);
 int func_0036E5D0(char *);                               
 int func_003E7B00(int, char *);                        
 int sprintf(char *, char *, int);                           
-extern char D_004A7208;
-extern char D_004A7210;
 extern unsigned char D_00533880;
 extern int D_00533888;
 
@@ -21,13 +19,13 @@ int func_00241B70(int arg0, int arg1) {
     int var_s0;
 
     func_0036E5D0(sp30);
-    sprintf(spD0, &D_004A7208, arg0);
+    sprintf(spD0, "%s.IE", arg0);
     Hog_Register(sp30, spD0, arg1, 0);
     if (D_00533880 != 0) {
         Alloc_Lock(9);
     }
     D_00533888 += 1;
-    var_s0 = Mem_Alloc(0, 8, &D_004A7210, 0x704);
+    var_s0 = Mem_Alloc(0, 8, "hud.cc", 0x704);
     if (D_00533880 != 0) {
         Alloc_Unlock(9);
     }

@@ -5,7 +5,6 @@ struct PopReader_1C1770 { int version; int size; unsigned int base; char* cur; }
 struct Light_1C1770 { void* vt; char pad[0x64]; };
 extern "C" {
 extern char D_0049EE88[];
-extern char D_0049EFC0[];
 extern char D_004DA0B0[];
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void Object_Register(void* o);
@@ -20,7 +19,7 @@ extern "C" void Loader_InitLights(void* a0, PopReader_1C1770* r)
 {
     if (r->cur) {
         int mis;
-        func_00165E60(func_001698C0(), D_0049EFC0, 0);
+        func_00165E60(func_001698C0(), "Initializing Lights...", 0);
         mis = (int)((unsigned long long)(unsigned int)r->cur & 3);
         if (mis)
             r->cur += 4 - mis;

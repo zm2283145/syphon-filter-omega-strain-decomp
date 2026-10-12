@@ -1,6 +1,5 @@
 extern short D_0048C414;
 extern int D_0048C3D8;
-extern char D_004AD310[];
 extern int func_002EC738(int);
 extern void func_00127358(char *, int);
 int func_002CF5E0(void)
@@ -13,7 +12,8 @@ int func_002CF5E0(void)
         *pc = -1;
     }
     if (r) {
-        func_00127358(D_004AD310, r);
+        func_00127358("Error Disconnecting from Medius Server --- DME Error %d.
+", r);
         return -3;
     }
     return 0;

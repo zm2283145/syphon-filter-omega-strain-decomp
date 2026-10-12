@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-extern char D_004ABE98[];   /* "GuiZeusShell" */
+char D_004ABE98[] = "GuiZeusShell";   /* "GuiZeusShell" */
 
 /* Class name getter: "GuiZeusShell". */
 char* func_002B0C10(void) {

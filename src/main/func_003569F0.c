@@ -8,7 +8,6 @@ public:
     char s4[0xC];
 };
 extern "C" {
-extern char D_004BB320[];
 void* func_00414790(void);
 void* func_004147A0(void);
 int func_00418A80(void* mgr, char* a, char* b);
@@ -19,7 +18,7 @@ void func_003569F0(S3569F0* self, char* name, int b, int c, int d, int e);
 }
 void func_003569F0(S3569F0* self, char* name, int b, int c, int d, int e)
 {
-    int s = func_00418A80(func_00414790(), D_004BB320, name);
+    int s = func_00418A80(func_00414790(), "GuiPersonnelMenu", name);
     if (s) {
         char* str = func_001692D0(self->s4);
         func_00354E40(s, self->f54(), str, b, c, d, e);

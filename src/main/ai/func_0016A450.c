@@ -4,7 +4,7 @@
 extern "C" {
 extern void* D_004EE620;
 extern unsigned char D_004EE628;
-extern signed char D_0048A100;
+unsigned int D_0048A100[4] = { 0x1, 0x0, 0x0, 0x0 };
 extern unsigned char D_005723C8;
 extern char D_0049C650[];
 void Mem_Free(int pool, void* p, char* file, int line);
@@ -21,7 +21,7 @@ extern "C" void func_0016A450(void)
     }
     D_004EE620 = 0;
     D_004EE628 = 0;
-    D_0048A100 = 1;
+    (*(signed char*)D_0048A100) = 1;
     }
     D_005723C8 = 0;
 }

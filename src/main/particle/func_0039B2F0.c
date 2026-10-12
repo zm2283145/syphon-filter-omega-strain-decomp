@@ -5,7 +5,12 @@
 #pragma mpwc_relax on
 int operator_delete(char **);                            
 extern char D_004DFAD8;
-extern char D_004DFAF0;
+extern void func_00399080();
+extern void func_0039A000();
+extern void func_003A23F0();
+extern void func_003A6070();
+extern void func_003A6080();
+extern void * const D_004DFAF0[];
 extern char D_004DFB50;
 extern char D_0053B560;
 extern char D_0053B564;
@@ -16,7 +21,7 @@ char **func_0039B2F0(char **arg0, long long arg1) {
 
     if (arg0 != NULL) {
         var_a0 = 0;
-        *arg0 = &D_004DFAF0;
+        *arg0 = &(*(char*)D_004DFAF0);
         var_v1 = &D_0053B560;
 loop_2:
         if ((int)(F_(var_v1, 0x4, int)) == (int)(arg0)) {
@@ -40,3 +45,4 @@ loop_2:
     }
     return arg0;
 }
+void * const D_004DFAF0[8] = { (void*)0x0, (void*)0x0, (void*)func_0039B2F0, (void*)func_00399080, (void*)func_0039A000, (void*)func_003A6080, (void*)func_003A6070, (void*)func_003A23F0 };

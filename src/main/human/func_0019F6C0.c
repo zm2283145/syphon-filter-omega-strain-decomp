@@ -11,7 +11,7 @@ extern void func_0019F7C0(void* a, void* b);
 extern void func_0019F890(C3Ag19F* p);
 extern void func_00189590(C3Ag19F* p, int idx);
 extern void func_001A2C00(C3Ag19F* p, float dt);
-extern signed char D_0049D5E0[];
+static const unsigned int dat_0049D5E0[2] = { 0x15111005, 0x1F };
 static inline int C3PTest19F(C3PSet19F* s, int n)
 {
     return (*(int*)((char*)s + (n / 32) * 4 + 4) >> (n & 31)) & 1;
@@ -28,7 +28,7 @@ void Actor_UpdateAirState(C3Ag19F* p, float dt)
     func_0019F890(p);
     cur = p->set.top;
     for (i = 0; i < 5; i++) {
-        int idx = D_0049D5E0[i];
+        int idx = ((signed char*)dat_0049D5E0)[i];
         if (idx != cur && C3PTest19F(&p->set, idx)) {
             func_00189590(p, idx);
         }

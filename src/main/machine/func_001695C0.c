@@ -9,7 +9,6 @@ extern int D_005383C0;
 extern void* D_004FFC04;
 extern char D_0048B2F8[];
 extern char D_005381F0[];
-extern char D_0049C538[];
 extern void* func_0010D050(void);
 extern void func_0010CFF0(void* p, int n);
 extern void func_003A65F0(int n);
@@ -37,6 +36,6 @@ void StringPool_Load(F1Game1695* g)
         D_005383C0 = (unsigned char)(int)(D_004C1FC8 * D_004FFD2C->scale);
         func_00165950(g);
         func_002CB8C0(D_004FFC04, 0);
-        func_002C7D90(D_004FFC04, 1, D_0049C538, 0);
+        func_002C7D90(D_004FFC04, 1, "ROOT", 0);
     }
 }

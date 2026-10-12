@@ -3,7 +3,6 @@
 #include "alloc_guard.h"
 extern "C" {
 void* Mem_Alloc(int pool, int size, char* file, int line);
-extern char D_004B35C0[];
 extern char D_004DFD80[];
 extern char D_004DE610[];
 }
@@ -15,7 +14,7 @@ extern "C" Msg2530* func_00316A80(Msg2530* src)
     Msg2530* p;
     {
         AllocGuard guard;
-        p = (Msg2530*)Mem_Alloc(0, 0x3C, D_004B35C0, 0x21);
+        p = (Msg2530*)Mem_Alloc(0, 0x3C, "NetWeaponMsg.hh", 0x21);
     }
     if (p) {
         p->vtable = D_004DFD80;

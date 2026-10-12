@@ -14,8 +14,6 @@ int func_00414790(...);
 void **func_004147A0(...);                             
 int func_00418A80(...);                   
 char * func_004294C0(...);                              
-extern char D_004B9C40;
-extern char D_004B9C50;
 extern int D_004FFC04;
 }
 extern "C" void func_0033D800(char * arg0) {
@@ -28,7 +26,7 @@ extern "C" void func_0033D800(char * arg0) {
         return;
     }
     func_002C82F0(D_004FFC04);
-    temp_s0 = func_00418A80(func_00414790(), &D_004B9C40, &D_004B9C50);
+    temp_s0 = func_00418A80(func_00414790(), "GuiMissionSetup", "MSNSETUP");
     func_002C81D0(D_004FFC04);
     if (temp_s0 != 0) {
         F_(arg0, 0x14, unsigned short) = (unsigned short) (F_(arg0, 0x14, unsigned short) & 0xFFFD);

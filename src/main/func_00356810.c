@@ -5,7 +5,7 @@
 
 #include "loose03_types.h"
 
-extern char D_004BB430[];       /* "GuiPersonnelScreen" */
+char D_004BB430[] = "GuiPersonnelScreen";       /* "GuiPersonnelScreen" */
 
 /* Returns the class name string "GuiPersonnelScreen". */
 const char* GuiPersonnelScreen_GetClassName(void) {

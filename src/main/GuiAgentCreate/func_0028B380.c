@@ -6,8 +6,7 @@
 
 #include "types.h"
 
-extern char D_004A9BD0[];
 
 int func_0028B380(void) {
-    return (int)D_004A9BD0;
+    return (int)"GuiAgentCreate";
 }

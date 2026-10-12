@@ -13,7 +13,13 @@ struct Msg_00186F30 { void* vt; char pad4[0x18]; int f1C; unsigned char b20; cha
 extern "C" {
 extern char D_004FFB50[];
 extern char D_004EF008[];
-extern char D_004DA990[];
+extern "C" void Message_GetScriptTypeKey();
+extern "C" void cNetUpdateStatsMsg_dtor();
+extern "C" void cNetUpdateStatsMsg_v01();
+extern "C" void cNetUpdateStatsMsg_v04();
+extern "C" void cNetUpdateStatsMsg_v05();
+extern "C" void func_002823E0();
+void * const D_004DA990[8] = { (void*)0x0, (void*)0x0, (void*)cNetUpdateStatsMsg_dtor, (void*)cNetUpdateStatsMsg_v01, (void*)func_002823E0, (void*)Message_GetScriptTypeKey, (void*)cNetUpdateStatsMsg_v04, (void*)cNetUpdateStatsMsg_v05 };
 extern char D_004DCF10[];
 void* Agent_GetSelected(void* a, int b);
 void Stats_Add(void* ag, int a, int b);
@@ -66,7 +72,7 @@ extern "C" void Actor_RecordDeathStats(Npc_00186F30* self, Act_00186F30* att, un
                 Msg_00186F30 m;
                 Event_Construct(&m, D_004EF008);
                 m.type = type;
-                m.vt = D_004DA990;
+                m.vt = ((char*)D_004DA990);
                 m.sub = sub;
                 m.f1C = 0x40;
                 m.b20 = 4;

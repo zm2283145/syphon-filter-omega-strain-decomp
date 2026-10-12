@@ -16,8 +16,6 @@ extern "C" {
 extern Mgr_002891D0* D_004FFC04;
 extern char D_004A96F8[];
 extern char D_004A9718[];
-extern char D_004A9740[];
-extern char D_004A9758[];
 char* Loc_LookupText(char* key);
 void func_0041BEB0(void* w, char* s, int a);
 void* func_004294C0(void);
@@ -67,7 +65,7 @@ extern "C" void func_002891D0(S_002891D0* self)
         func_00138B70(&b, 0);
         func_00138B70(&a, 0);
     } else {
-        Pg_002891D0* p = func_00418A80(func_00414790(), D_004A9740, D_004A9758);
+        Pg_002891D0* p = func_00418A80(func_00414790(), "GuiCommandCenter", "CMDCENTR");
         if (p) {
             p->f10 = 1;
             p->flags &= ~2;
@@ -79,7 +77,7 @@ extern "C" void func_002891D0(S_002891D0* self)
     if (ok) {
         Pg_002891D0* q;
         func_004147A0()->Hide(self);
-        q = func_00418980(func_00414790(), D_004A9740);
+        q = func_00418980(func_00414790(), "GuiCommandCenter");
         if (q) {
             q->flags |= 2;
             func_0041E0F0(q, func_004147A0(), 0x10, 2, 0);

@@ -2,7 +2,6 @@
 #include "types.h"
 #include "alloc_guard.h"
 extern "C" {
-extern char D_0049C808[];
 extern char D_004D9870[];
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void cMessage_ctor2(void* self, void* other);
@@ -20,7 +19,7 @@ extern "C" Msg_0016F910* func_0016F910(Msg_0016F910* self)
     Msg_0016F910* p;
     {
         AllocGuard guard;
-        p = (Msg_0016F910*)Mem_Alloc(0, 0x50, D_0049C808, 0x16E);
+        p = (Msg_0016F910*)Mem_Alloc(0, 0x50, "ai.hh", 0x16E);
     }
     if (p) {
         cMessage_ctor2(p, self);

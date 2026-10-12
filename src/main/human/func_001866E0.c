@@ -11,7 +11,11 @@ extern "C" {
 int Event_Construct(...);                       
 int Event_Send(...);                      
 int cMessage_dtor(...);                           
-extern char D_004E01C0;
+extern "C" void Message_GetScriptTypeKey();
+extern "C" void func_001867C0();
+extern "C" void func_003E61F0();
+extern "C" void func_003E7250();
+void * const D_004E01C0[8] = { (void*)0x0, (void*)0x0, (void*)func_001867C0, (void*)func_003E7250, (void*)func_003E61F0, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
 extern char D_004E0840;
 extern char D_0055D480;
 extern unsigned char D_005721C8;
@@ -33,7 +37,7 @@ extern "C" void Actor_ApplyFlash(char * arg0, int arg1, float farg0) {
         Event_Construct(sl.f40, &D_0055D480);
         sl.f64 = 0x46;
         sl.f68[0] = 3;
-        sl.f40[0] = &D_004E01C0;
+        sl.f40[0] = &(*(char*)D_004E01C0);
         sl.f60[0] = 4;
         sl.f5C = 0x40;
         sl.f6C = farg0;

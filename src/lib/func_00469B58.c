@@ -1,7 +1,7 @@
 extern short D_00497CC0;
 extern int D_00497CC4;
 extern int D_0059856C;
-extern int D_00497D38;
+unsigned int D_00497D38[1] = { 0x0 };
 extern int func_004700F8(char *, int);
 extern int Net_SendLocked(int, int, int, int, int, int, void *);
 int func_00469B58(char *a, int b)
@@ -12,6 +12,6 @@ int func_00469B58(char *a, int b)
     func_004700F8(a + 0x70, 0x20);
     if (D_00497CC0 != 1) return -0xF;
     if (D_00497CC4 < 0) return -0x10;
-    D_00497D38 = b;
+    (*(int*)D_00497D38) = b;
     return Net_SendLocked(0x40, D_00497CC4, 0xFFFF, 0x4, D_0059856C, 0x94, a) ? -5 : 0;
 }

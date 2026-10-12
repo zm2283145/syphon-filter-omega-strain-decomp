@@ -1,0 +1,174 @@
+#pragma cplusplus on
+#include "cmessage.h"
+
+/* Placeholder vtable: State() is slot 64 (vtable offset 0x108). */
+class ActBase {
+public:
+    virtual void s0();
+    virtual void s1();
+    virtual void s2();
+    virtual void s3();
+    virtual void s4();
+    virtual void s5();
+    virtual void s6();
+    virtual void s7();
+    virtual void s8();
+    virtual void s9();
+    virtual void s10();
+    virtual void s11();
+    virtual void s12();
+    virtual void s13();
+    virtual void s14();
+    virtual void s15();
+    virtual void s16();
+    virtual void s17();
+    virtual void s18();
+    virtual void s19();
+    virtual void s20();
+    virtual void s21();
+    virtual void s22();
+    virtual void s23();
+    virtual void s24();
+    virtual void s25();
+    virtual void s26();
+    virtual void s27();
+    virtual void s28();
+    virtual void s29();
+    virtual void s30();
+    virtual void s31();
+    virtual void s32();
+    virtual void s33();
+    virtual void s34();
+    virtual void s35();
+    virtual void s36();
+    virtual void s37();
+    virtual void s38();
+    virtual void s39();
+    virtual void s40();
+    virtual void s41();
+    virtual void s42();
+    virtual void s43();
+    virtual void s44();
+    virtual void s45();
+    virtual void s46();
+    virtual void s47();
+    virtual void s48();
+    virtual void s49();
+    virtual void s50();
+    virtual void s51();
+    virtual void s52();
+    virtual void s53();
+    virtual void s54();
+    virtual void s55();
+    virtual void s56();
+    virtual void s57();
+    virtual void s58();
+    virtual void s59();
+    virtual void s60();
+    virtual void s61();
+    virtual void s62();
+    virtual void s63();
+    virtual unsigned char State();
+};
+struct Actor9F : ActBase {
+    char pad04[0x54];
+    void* target58;
+    char pad5C[0x2EC0 - 0x5C];
+    char root2EC0[0x3224 - 0x2EC0];
+    int prev3224;
+    int pad3228;
+    int alt322C;
+    char pad3230[8];
+    int cur3238;
+    char pad323C[0xC];
+    int flags3248;
+    char pad324C[0x3474 - 0x324C];
+    void* link3474;
+    char pad3478[0x3524 - 0x3478];
+    int item3524;
+};
+
+struct ActMsg : CMsg {
+    int action;
+    int target;
+    void* actor;
+};
+
+extern "C" {
+void* func_001A02B0(void* root, void* key);
+void func_001A02C0(Actor9F* a);
+void Root_ClearChildren(void* r);
+void WeaponInv_RestoreHiddenItem(int item);
+}
+extern char D_0049D040[];
+extern char D_0049D048[];
+extern char D_004DA950[];
+extern char D_0055A1D8[];
+
+static inline int ActBit(int v, int n) { return (v >> n) & 1; }
+static inline bool IsDown(Actor9F* a, int n) { return (a->cur3238 >> n) & 1; }
+static inline bool WasDown(Actor9F* a, int n) { return (a->prev3224 >> n) & 1; }
+static inline bool Alt(Actor9F* a, int n) { return (a->alt322C >> n) & 1; }
+static inline bool IsPressed(Actor9F* a, int n) { return IsDown(a, n) && !WasDown(a, n); }
+static inline bool IsHeld(Actor9F* a, int n) { return IsDown(a, n) || WasDown(a, n); }
+static inline bool ActTriggered(Actor9F* a, int n) { return IsPressed(a, n) || (!IsHeld(a, n) && Alt(a, n)); }
+
+static inline bool IsBusy9F(Actor9F* a) { unsigned char st = a->State(); return st == 2 || st == 3; }
+extern "C" void Actor_ReactToActionChanges(Actor9F* a)
+{
+    if (ActTriggered(a, 21)) {
+        Root_ClearChildren(func_001A02B0(a->root2EC0, D_0049D040));
+        Root_ClearChildren(func_001A02B0(a->root2EC0, D_0049D048));
+        WeaponInv_RestoreHiddenItem(a->item3524);
+        func_001A02C0(a);
+    }
+    if (ActTriggered(a, 17) || ActTriggered(a, 18)) {
+        if (!ActBit(a->prev3224, 19) && a->link3474 != 0) {
+            int act;
+            if (IsBusy9F(a))
+                act = 0xD;
+            else {
+                act = 0xF;
+                asm { .set reorder } /* scheduling barrier: keeps the if/else as branches instead of movz */
+            }
+            {
+                ActMsg m;
+                Event_Construct(&m, D_0055A1D8);
+                m.actor = a;
+                m.action = (char)act;
+                m.kind = 1;
+                m.vtable = D_004DA950;
+                m.target = -1;
+                Event_Send(&m, a->link3474, 1);
+                m.vtable = D_004DA950;
+                cMessage_dtor(&m, 0);
+            }
+            a->link3474 = 0;
+        }
+    }
+    if (ActTriggered(a, 16)) {
+        ActMsg m;
+        Event_Construct(&m, D_0055A1D8);
+        m.actor = 0;
+        m.vtable = D_004DA950;
+        m.action = 0xC;
+        m.target = -1;
+        Event_Send(&m, a->target58, 1);
+        m.vtable = D_004DA950;
+        cMessage_dtor(&m, 0);
+        WeaponInv_RestoreHiddenItem(a->item3524);
+    }
+    if (ActTriggered(a, 6)) {
+        ActMsg m;
+        a->flags3248 &= ~0x100;
+        a->flags3248 &= ~0x200;
+        Event_Construct(&m, D_0055A1D8);
+        m.actor = 0;
+        m.vtable = D_004DA950;
+        m.action = 7;
+        m.target = -1;
+        Event_Send(&m, a->target58, 0);
+        m.vtable = D_004DA950;
+        cMessage_dtor(&m, 0);
+    }
+}

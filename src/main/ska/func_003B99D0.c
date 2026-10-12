@@ -1,0 +1,60 @@
+#include "types.h"
+#pragma cplusplus on
+#pragma opt_propagation off
+#pragma opt_common_subs off
+#include "tstr_types.h"
+
+struct TV_3B99D0 { __int128 q[2]; int w; };
+struct TN_3B99D0 { TN_3B99D0* left; TN_3B99D0* right; unsigned int parentAndColor; int pad; TV_3B99D0 value; };
+struct TT_3B99D0 { unsigned int count; TN_3B99D0* root; int pad; TN_3B99D0* leftmost; };
+extern "C" { extern char D_004BCEF0[]; }
+extern "C" { char D_004BCF88[] = "allocator.hh"; }
+extern "C" {
+void func_0013CD40(void* node, void* root);
+}
+/* 2-quad copy loop (hand-written in the original) */
+static inline void Copy2(void* d0, const void* s0)
+{
+    int n = 2;
+    __int128 t;
+    const void* s = s0;
+    void* d = d0;
+    asm {
+        .set noreorder
+    loop:
+        lq t, 0(s)
+        addiu d, d, 16
+        addi n, n, -1
+        addiu s, s, 16
+        bgtz n, loop
+        sq t, -16(d)
+        .set reorder
+    }
+}
+/* with opt_propagation/opt_common_subs off, max_size() - 1 is computed at run time */
+static inline unsigned int MaxSize() { unsigned int r; r = 0xFFFFFFFFU; return r; }
+extern "C" TN_3B99D0* func_003B99D0(TT_3B99D0* tree, TN_3B99D0* parent, int left, int first, const TV_3B99D0* src)
+{
+    if (tree->count > MaxSize() - 1) {
+        func_00123BE8(D_00489738->stream, D_004BCEF0);
+        func_00121B60();
+    }
+    TN_3B99D0* node = (TN_3B99D0*)TStr_Alloc(0x40, D_004BCF88, 0x5C);
+    TV_3B99D0* v = &node->value;
+    if (v) {
+        Copy2(v, src);
+        v->w = src->w;
+    }
+    node->right = 0;
+    node->left = 0;
+    node->parentAndColor = (unsigned int)parent | (node->parentAndColor & 1);
+    if (left)
+        parent->left = node;
+    else
+        parent->right = node;
+    tree->count++;
+    func_0013CD40(node, tree->root);
+    if (first)
+        tree->leftmost = node;
+    return node;
+}

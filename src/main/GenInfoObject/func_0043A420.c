@@ -5,4 +5,38 @@ extern "C" {
 #include "net_local_id.h"
 }
 #include "net_owner_map.h"
-DEFINE_NET_OWNER_MAP(func_0043A420, NET_OWN_LACKS, 1, NET_OWN_SET, 0x173, D_00497580)
+extern "C" {
+static const unsigned int dat_00497580[2] = { 0x1, 0x0 };
+}
+extern "C" void func_0043A420(void* self, int* key)
+{
+    NetOwnEnt* e = NetOwn_Find(*key);
+    if (e && NET_OWN_LACKS(e->hi, 1 << NetLocalId())) {
+        NetOwnIt it; NetOwnIt end; NetOwnIt end2; NetOwnIt t;
+        NetOwnHdl* h;
+        func_00439380(&t, D_00583900);
+        it = t;
+        while (func_00439360(&end, func_00439370(D_00583900)),
+               NetOwn_Ne(&it, &end)) {
+            NetOwnVal* v = &it.node->v;
+            if (v->first->key == *key) { v->second = (1); break; }
+            Tree_Successor(&it);
+        }
+        func_00439360(&end2, func_00439370(D_00583900));
+        if (it.node == end2.node) {
+            NetOwnEnt* n; char res[8]; NetOwnVal pv;
+            NET_OWN_SET(e->hi, 1 << NetLocalId());
+            {
+                AllocGuard g;
+                n = (NetOwnEnt*)Mem_Alloc(0, 8, D_004BFD60, (0x173));
+            }
+            if (n) { n->key = *key; n->lo = 0xF; n->hi = 0; }
+            pv.first = n;
+            pv.second = (*(unsigned char*)dat_00497580);
+            func_0043B340(res, D_00583900, &pv);
+            func_002EB650(&h, D_00497578);
+            if (h->owner == NetLocalId())
+                func_00439390(NetLocalId(), D_00497578, -2);
+        }
+    }
+}

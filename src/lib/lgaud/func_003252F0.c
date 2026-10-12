@@ -1,8 +1,6 @@
 extern int D_0049147C;
 extern int* D_00491474;
 extern char D_0052AD00[];
-extern char D_004B7F50[];
-extern char D_004B7F88[];
 typedef struct { int w[83]; } lgAudInfo;
 extern int func_0010D1A0(int sema);
 extern int func_0010D180(int sema);
@@ -15,7 +13,7 @@ int lgAudEnumerate(int idx, lgAudInfo *info)
     if (D_0049147C == -1)
         return 0x8000000A;
     if (info == 0) {
-        func_00127358(D_004B7F50);
+        func_00127358("lgAudEnumerate: invalid parameter (description)\n");
         return 0x80000004;
     }
     func_0010D1A0(D_0049147C);
@@ -27,7 +25,7 @@ int lgAudEnumerate(int idx, lgAudInfo *info)
         func_0010D180(D_0049147C);
         return ret;
     }
-    func_00127358(D_004B7F88);
+    func_00127358("lgAudEnumerate: rpc call failed\n");
     func_0010D180(D_0049147C);
     return 0x80000000;
 }

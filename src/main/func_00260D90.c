@@ -4,8 +4,8 @@ extern unsigned char D_004F8258;
 extern unsigned char D_004F8230;
 extern F260D90_Key D_004F8190[];
 extern F260D90_Key D_004F80F0[];
-extern float D_0048B0A8;
-extern float D_0048B0A0;
+float D_0048B0A0 __attribute__((aligned(8))) = 0.9f;
+float D_0048B0A8 __attribute__((aligned(8))) = 0.9f;
 void func_00260D90(float* out, float x) {
     int i;
     unsigned char alt = D_004F8258 && D_004F8230;

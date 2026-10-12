@@ -2,7 +2,6 @@
 #include "types.h"
 #include "alloc_guard.h"
 extern "C" {
-extern char D_004BF258[];
 extern char D_004E0A40[];
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void func_0041C7D0(void* self);
@@ -17,7 +16,7 @@ extern "C" G0041BD30* func_0041BD30(void)
     G0041BD30* p;
     {
         AllocGuard guard;
-        p = (G0041BD30*)Mem_Alloc(0, 0x90, D_004BF258, 0x2A);
+        p = (G0041BD30*)Mem_Alloc(0, 0x90, "guiWidget.hh", 0x2A);
     }
     if (p) {
         func_0041C7D0(p);

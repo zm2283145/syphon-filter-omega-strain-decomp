@@ -1,6 +1,6 @@
 typedef struct { char pad[0x24]; void* serve; char pad2[0x14]; } Cd27C328;
 extern Cd27C328 D_00504080;
-extern int D_0048B374;
+int D_0048B374 = 0;
 extern int func_00110358(Cd27C328* cd, unsigned int id, int mode);
 extern int func_00110720(Cd27C328* cd);
 int func_0027C328(void)

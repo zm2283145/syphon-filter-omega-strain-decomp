@@ -7,8 +7,6 @@ extern int func_0010D180(int sema);
 extern int func_00110528(void* cd, int rpc, int mode, void* send, int ssize, void* recv, int rsize, void* end, void* param);
 extern int func_00127358(const char* fmt, ...);
 extern void *memcpy(void *, const void *, unsigned int);extern char D_004B80F0[];
-extern char D_004B8118[];
-extern char D_004B8148[];
 int lgAudWrite(int dev, int flag, void *src, int *len)
 {
     int ret;
@@ -19,7 +17,7 @@ int lgAudWrite(int dev, int flag, void *src, int *len)
         return 0x80000004;
     }
     if (len == 0 || *len > D_0049146C) {
-        func_00127358(D_004B8118);
+        func_00127358("lgAudWrite: invalid parameter (size too big)\n");
         return 0x80000004;
     }
     func_0010D1A0(D_0049147C);
@@ -37,7 +35,7 @@ int lgAudWrite(int dev, int flag, void *src, int *len)
         return ret;
     }
     *len = 0;
-    func_00127358(D_004B8148);
+    func_00127358("lgAudWrite: rpc call failed\n");
     func_0010D180(D_0049147C);
     return 0x80000000;
 }

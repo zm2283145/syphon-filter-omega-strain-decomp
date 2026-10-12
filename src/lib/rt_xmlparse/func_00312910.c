@@ -1,8 +1,6 @@
 extern char D_004B0DE0[];
 extern char D_004B0E18[];
 extern char D_004B0EA8[];
-extern char D_004B11D0[];
-extern char D_004B11E8[];
 extern char D_004B0F38[];
 extern int func_00127358(const char *, ...);
 extern void *memcpy(void *, const void *, unsigned int);
@@ -19,11 +17,11 @@ int func_00312910(void *c, Obj312910 *o, void *item)
         return 3;
     }
     if (o == 0) {
-        func_00127358(D_004B0DE0, D_004B0E18, 0x3D7, D_004B11D0);
+        func_00127358(D_004B0DE0, D_004B0E18, 0x3D7, "NULL != p_parent");
         return 3;
     }
     if (item == 0) {
-        func_00127358(D_004B0DE0, D_004B0E18, 0x3D8, D_004B11E8);
+        func_00127358(D_004B0DE0, D_004B0E18, 0x3D8, "NULL != p_new_child");
         return 3;
     }
     r = func_003111E0(c, (void **)&arr, o->n * 4 + 4);

@@ -1,3 +1,4 @@
+#pragma explicit_zero_data on
 #pragma cplusplus on
 
 #include "gui_traversal_types.h"
@@ -12,7 +13,7 @@ void func_0028C0A0(ChildIterator* result, ChildList* list);
 void func_0028C090(ChildIterator* result, const ChildIterator* source);
 void func_0041ED20(TraversalWidget* self);
 void func_0041E560(TraversalWidget* self, const Vec4* color);
-extern Vec4 D_004BF3C0;
+unsigned int D_004BF3C0[1] = { 0x0 };
 }
 
 static inline unsigned char notify_parent(TraversalWidget* receiver, TraversalWidget* sender,
@@ -116,5 +117,5 @@ extern "C" void func_0041E470(TraversalWidget* self)
         func_0028C090(&end, &rawEnd);
     }
     if ((self->flags & 0x100) && func_004147A0()->selected == self)
-        func_0041E560(self, &D_004BF3C0);
+        func_0041E560(self, &(*(Vec4*)D_004BF3C0));
 }

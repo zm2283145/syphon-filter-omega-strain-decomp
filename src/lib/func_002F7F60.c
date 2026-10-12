@@ -1,4 +1,4 @@
-extern unsigned char D_004908DC;
+unsigned char D_004908DC = 0;
 extern void func_00302088(int id);
 void func_002F7F60(void)
 {

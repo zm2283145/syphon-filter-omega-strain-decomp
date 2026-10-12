@@ -2,7 +2,7 @@
 
 /* compiler: Metrowerks (default check.py) */
 
-extern int D_004988B8[];
+char D_004988B8[] __attribute__((aligned(8))) = "_pictureTemporalScalableExtension is not supported"; /* 8-aligned in the original data */
 extern int func_0010BD90(void* ctx, void* table);
 
 /* Parses the picture temporal scalable extension using its field table. */

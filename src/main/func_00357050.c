@@ -5,7 +5,6 @@
 
 /* Factory: allocate a 0x6C-byte GuiWidget-derived object and construct it inline. */
 extern "C" {
-extern char D_004BB398[];
 extern char D_004DF0B0[];
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void GuiWidget_ctor(void* self);
@@ -19,7 +18,7 @@ extern "C" O357050* func_00357050(void)
     O357050* p;
     {
         AllocGuard guard;
-        p = (O357050*)Mem_Alloc(0, 0x6C, D_004BB398, 0x2A);
+        p = (O357050*)Mem_Alloc(0, 0x6C, "guiWidget.hh", 0x2A);
     }
     if (p) {
         GuiWidget_ctor(p);

@@ -1,7 +1,7 @@
 typedef struct N81E0 { struct N81E0 *next; struct N81E0 *prev; int tid; int err; int x10; char x14[0x3C]; char *x50; int x54; unsigned int x58; int x5C; int x60; } N81E0;
-extern N81E0 *D_00492CD0;
-extern N81E0 *D_00492CD4;
-extern int D_00492CCC;
+int D_00492CCC = 0;
+N81E0 *D_00492CD0 = 0;
+N81E0 *D_00492CD4 = 0;
 extern void func_0034B7E8(void *);
 extern void func_00357D88(void *);
 extern void *func_00357D50(int);

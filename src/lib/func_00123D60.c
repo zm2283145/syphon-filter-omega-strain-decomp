@@ -8,8 +8,8 @@ struct malloc_chunk {
 typedef struct malloc_chunk *mchunkptr;
 typedef struct malloc_chunk *mbinptr;
 extern mbinptr D_00489748[];
-extern unsigned long D_00489B50;
-extern unsigned int D_00489B58;
+unsigned long D_00489B50 = 0x20000;
+unsigned long D_00489B58 = 0;
 extern void func_001261B0(void *);
 extern void func_00126230(void *);
 extern int func_00124058(void *, unsigned int);

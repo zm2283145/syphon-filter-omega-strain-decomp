@@ -1,4 +1,4 @@
-extern int D_00491344;
+int D_00491344 = 0;
 extern int func_002F8908(int, int);
 int func_00306D88(void)
 {

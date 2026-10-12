@@ -1,5 +1,5 @@
-extern int D_00497CC0;
-extern int D_00497CC4;
+int D_00497CC0 = 0;
+int D_00497CC4 = -1;
 extern int D_00598670;
 extern int D_0059842C;
 extern int func_004700F8(char *, int);

@@ -9,7 +9,6 @@ struct Vec_3FECD0 { unsigned int cap; unsigned int count; E_3FECD0* data; };
 typedef struct { char pad[0xC]; void* stream; } Err_3FECD0;
 extern "C" {
 extern Err_3FECD0* D_00489738;
-extern char D_004BE4F0[];
 extern char D_004BE520[];
 extern char D_004BE530[];
 void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
@@ -30,7 +29,7 @@ extern "C" void func_003FECD0(Vec_3FECD0* v0, unsigned int n0)
     unsigned int n = n0;
     if (v0->cap < n) {
         if (n > 0x600000) {
-            func_00123BE8(D_00489738->stream, D_004BE4F0);
+            func_00123BE8(D_00489738->stream, "vector::reserve length error\n");
             func_00121B60();
         }
         {

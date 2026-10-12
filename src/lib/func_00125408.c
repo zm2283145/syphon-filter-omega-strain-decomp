@@ -71,7 +71,8 @@ struct mallinfo { int arena; int ordblks; };
 extern struct mallinfo D_00489B78;
 extern unsigned long D_00489B58;
 extern char *D_00489B60;
-extern unsigned long D_00489B68, D_00489B70;
+unsigned long D_00489B68 = 0;
+unsigned long D_00489B70 = 0;
 extern char *func_00128658(void *, int);
 extern void func_00123D60(void *, void *);
 #define sbrked_mem (D_00489B78.arena)

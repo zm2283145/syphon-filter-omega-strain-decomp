@@ -1,7 +1,9 @@
 typedef struct { char pad[0xB8]; int fB8; } P;
 typedef struct { int f0; void (*f4)(void); char f8[0x18]; } S;
 extern short D_00497CC0;
-extern int D_00497CC4, D_00497D34, D_00598564;
+extern int D_00497CC4;
+int D_00497D34 = 0;
+extern int D_00598564;
 extern int func_004700F8(void *, int);
 extern int func_002EA8C8(S *);
 extern void func_00467D90(void *);

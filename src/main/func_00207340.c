@@ -21,22 +21,6 @@ typedef struct { B8 m1360; B10 m1368; B10 m1378; B8 m1388; } S1360;
 typedef struct { B8 m12F0; B10 m12F8; B10 m1308; B8 m1318; } S12F0;
 typedef struct { B8 m1280; B10 m1288; B10 m1298; B8 m12A8; } S1280;
 typedef struct { B8 m1220; B10 m1228; B10 m1238; B8 m1248; } S1220;
-extern char D_004A3CF0[];
-extern char D_004A3D00[];
-extern char D_004A3D10[];
-extern char D_004A3D20[];
-extern char D_004A3D30[];
-extern char D_004A3D50[];
-extern char D_004A3D70[];
-extern char D_004A3D90[];
-extern char D_004A3DB0[];
-extern char D_004A3DD0[];
-extern char D_004A3DF0[];
-extern char D_004A3E10[];
-extern char D_004A3E28[];
-extern char D_004A3E38[];
-extern char D_004A3E48[];
-extern char D_004A3E58[];
 extern void func_00207310(void*, void*);
 extern void func_001C00D0(void*, void*, void*);
 extern void* func_0017DE50(void*, float, float, float);
@@ -303,13 +287,13 @@ int func_00207340(void* p0, void* p1, void* p2, void* p3, void* p4, void* p5, vo
     void* t30;
     func_00207310(&v1930, p2);
     func_00207310(&v1920, p2);
-    func_001C00D0(&v1910, &v1930, D_004A3CF0);
+    func_001C00D0(&v1910, &v1930, "Base_NotFlipped");
     func_003B41E0(&v1120, p3, p1, 0, 0, func_0017DE50(&v1170, 0.0f, 0.0f, 0.0f), p7, 2, 0.0f, 1.0f, 0);
     MotionSlider_RegisterNode(&v198C, p1, Str_CopyKey47(&v1180, &v1910), &v1120);
     func_003B28F0(&v1120, -1);
     func_00138350(&v1910, -1);
-    func_001C00D0(&v1900, &v1930, D_004A3D00);
-    func_001C00D0(&v18F0, &v1930, D_004A3CF0);
+    func_001C00D0(&v1900, &v1930, "Base_Flipped");
+    func_001C00D0(&v18F0, &v1930, "Base_NotFlipped");
     func_003B3CC0(&v1070, Str_CopyKey47(&v10C0, &v18F0), p1, 3);
     MotionSlider_RegisterNode(&v1988, p1, Str_CopyKey47(&v10F0, &v1900), &v1070);
     func_003B28F0(&v1070, -1);
@@ -318,62 +302,62 @@ int func_00207340(void* p0, void* p1, void* p2, void* p3, void* p4, void* p5, vo
     func_0018A890(&v11E0);
     func_0018A890(&v11B0);
     if (p4) {
-        func_001C00D0(&v18E0, &v1930, D_004A3CF0);
+        func_001C00D0(&v18E0, &v1930, "Base_NotFlipped");
         func_00209510(&v11E0, Str_CopyKey47(&v1040, &v18E0));
         func_00138350(&v18E0, -1);
         if (p5) {
-            func_001C00D0(&v18D0, &v1930, D_004A3D00);
+            func_001C00D0(&v18D0, &v1930, "Base_Flipped");
             func_00209510(&v11B0, Str_CopyKey47(&v1010, &v18D0));
             func_00138350(&v18D0, -1);
         } else {
-            func_001C00D0(&v18C0, &v1930, D_004A3CF0);
+            func_001C00D0(&v18C0, &v1930, "Base_NotFlipped");
             func_00209510(&v11B0, Str_CopyKey47(&vFE0, &v18C0));
             func_00138350(&v18C0, -1);
         }
     } else {
         if (p5) {
-            func_001C00D0(&v18B0, &v1930, D_004A3D00);
+            func_001C00D0(&v18B0, &v1930, "Base_Flipped");
             func_00209510(&v11E0, Str_CopyKey47(&vFB0, &v18B0));
             func_00138350(&v18B0, -1);
         } else {
-            func_001C00D0(&v18A0, &v1930, D_004A3CF0);
+            func_001C00D0(&v18A0, &v1930, "Base_NotFlipped");
             func_00209510(&v11E0, Str_CopyKey47(&vF80, &v18A0));
             func_00138350(&v18A0, -1);
         }
-        func_001C00D0(&v1890, &v1930, D_004A3CF0);
+        func_001C00D0(&v1890, &v1930, "Base_NotFlipped");
         func_00209510(&v11B0, Str_CopyKey47(&vF50, &v1890));
         func_00138350(&v1890, -1);
     }
-    func_001C00D0(&v1880, &v1930, D_004A3D10);
+    func_001C00D0(&v1880, &v1930, "FaceLeft");
     func_003B3B20(&vEC0, &v11E0, p1, 4, func_0017DE50(&vF10, 0.0f, 0.0f, fp0), 1);
     MotionSlider_RegisterNode(&v1984, p1, Str_CopyKey47(&vF20, &v1880), &vEC0);
     func_003B28F0(&vEC0, -1);
     func_00138350(&v1880, -1);
-    func_001C00D0(&v1870, &v1930, D_004A3D20);
+    func_001C00D0(&v1870, &v1930, "FaceRght");
     func_003B3B20(&vE30, &v11B0, p1, 4, func_0017DE50(&vE80, 0.0f, 0.0f, -fp1), 1);
     MotionSlider_RegisterNode(&v1980, p1, Str_CopyKey47(&vE90, &v1870), &vE30);
     func_003B28F0(&vE30, -1);
     func_00138350(&v1870, -1);
-    func_001C00D0(&v1860, &v1930, D_004A3D30);
-    func_001C00D0(&v1850, &v1930, D_004A3D10);
+    func_001C00D0(&v1860, &v1930, "FaceBack_LeftHemisphere");
+    func_001C00D0(&v1850, &v1930, "FaceLeft");
     func_003B3B20(&vD70, Str_CopyKey47(&vDD0, &v1850), p1, 4, func_0017DE50(&vDC0, 0.0f, 0.0f, Math_DegToRad(9e+01f)), 2);
     MotionSlider_RegisterNode(&v197C, p1, Str_CopyKey47(&vE00, &v1860), &vD70);
     func_003B28F0(&vD70, -1);
     func_00138350(&v1850, -1);
     func_00138350(&v1860, -1);
-    func_001C00D0(&v1840, &v1930, D_004A3D50);
-    func_001C00D0(&v1830, &v1930, D_004A3D20);
+    func_001C00D0(&v1840, &v1930, "FaceBack_RghtHemisphere");
+    func_001C00D0(&v1830, &v1930, "FaceRght");
     func_003B3B20(&vCB0, Str_CopyKey47(&vD10, &v1830), p1, 4, func_0017DE50(&vD00, 0.0f, 0.0f, Math_DegToRad(-9e+01f)), 2);
     MotionSlider_RegisterNode(&v1978, p1, Str_CopyKey47(&vD40, &v1840), &vCB0);
     func_003B28F0(&vCB0, -1);
     func_00138350(&v1830, -1);
     func_00138350(&v1840, -1);
     if (p6) {
-        func_001C00D0(&v1820, &v1920, D_004A3D70);
+        func_001C00D0(&v1820, &v1920, "MoveBack_LeftHemisphere");
         func_001F4470(&v1810);
         func_001F4460(&s17E0.m1808, 0.0f, 0.0f);
         MotionSliderChild_Resolve(&s17E0.m17F8, &v11B0, p1, &s17E0.m1808);
-        func_001C00D0(&s17E0.m17E8, &v1930, D_004A3D30);
+        func_001C00D0(&s17E0.m17E8, &v1930, "FaceBack_LeftHemisphere");
         func_001F4460(&s17E0.m17E0, 1.0f, 1.0f);
         MotionSliderChild_Resolve(&v17D0, Str_CopyKey47(&vC50, &s17E0.m17E8), p1, &s17E0.m17E0);
         t1 = func_001F4370(&v1810, &s17E0.m17F8);
@@ -389,11 +373,11 @@ int func_00207340(void* p0, void* p1, void* p2, void* p3, void* p4, void* p5, vo
         func_001F3DC0(&s17E0.m1808, -1);
         func_001F3C70(&v1810, -1);
         func_00138350(&v1820, -1);
-        func_001C00D0(&v17C0, &v1920, D_004A3D90);
+        func_001C00D0(&v17C0, &v1920, "MoveBack_RghtHemisphere");
         func_001F4470(&v17B0);
         func_001F4460(&s1780.m17A8, 0.0f, 0.0f);
         MotionSliderChild_Resolve(&s1780.m1798, &v11E0, p1, &s1780.m17A8);
-        func_001C00D0(&s1780.m1788, &v1930, D_004A3D50);
+        func_001C00D0(&s1780.m1788, &v1930, "FaceBack_RghtHemisphere");
         func_001F4460(&s1780.m1780, 1.0f, 1.0f);
         MotionSliderChild_Resolve(&v1770, Str_CopyKey47(&vBA0, &s1780.m1788), p1, &s1780.m1780);
         t3 = func_001F4370(&v17B0, &s1780.m1798);
@@ -409,9 +393,9 @@ int func_00207340(void* p0, void* p1, void* p2, void* p3, void* p4, void* p5, vo
         func_001F3DC0(&s1780.m17A8, -1);
         func_001F3C70(&v17B0, -1);
         func_00138350(&v17C0, -1);
-        func_001C00D0(&v1760, &v1920, D_004A3DB0);
+        func_001C00D0(&v1760, &v1920, "NonStrafing_LeftHemisphere");
         func_001F4470(&v1750);
-        func_001C00D0(&v1740, &v1920, D_004A3D70);
+        func_001C00D0(&v1740, &v1920, "MoveBack_LeftHemisphere");
         func_001F4460(&s1720.m1738, 0.0f, 0.0f);
         MotionSliderChild_Resolve(&s1720.m1728, Str_CopyKey47(&vAF0, &v1740), p1, &s1720.m1738);
         func_001F4460(&s1720.m1720, 1.0f, 1.0f);
@@ -429,9 +413,9 @@ int func_00207340(void* p0, void* p1, void* p2, void* p3, void* p4, void* p5, vo
         func_00138350(&v1740, -1);
         func_001F3C70(&v1750, -1);
         func_00138350(&v1760, -1);
-        func_001C00D0(&v1700, &v1920, D_004A3DD0);
+        func_001C00D0(&v1700, &v1920, "NonStrafing_RghtHemisphere");
         func_001F4470(&v16F0);
-        func_001C00D0(&v16E0, &v1920, D_004A3D90);
+        func_001C00D0(&v16E0, &v1920, "MoveBack_RghtHemisphere");
         func_001F4460(&s16C0.m16D8, 0.0f, 0.0f);
         MotionSliderChild_Resolve(&s16C0.m16C8, Str_CopyKey47(&vA40, &v16E0), p1, &s16C0.m16D8);
         func_001F4460(&s16C0.m16C0, 1.0f, 1.0f);
@@ -450,9 +434,9 @@ int func_00207340(void* p0, void* p1, void* p2, void* p3, void* p4, void* p5, vo
         func_001F3C70(&v16F0, -1);
         func_00138350(&v1700, -1);
     } else {
-        func_001C00D0(&v16A0, &v1920, D_004A3DB0);
+        func_001C00D0(&v16A0, &v1920, "NonStrafing_LeftHemisphere");
         func_001F4470(&v1690);
-        func_001C00D0(&v1680, &v1930, D_004A3D30);
+        func_001C00D0(&v1680, &v1930, "FaceBack_LeftHemisphere");
         func_001F4460(&s1660.m1678, 0.0f, 0.0f);
         MotionSliderChild_Resolve(&s1660.m1668, Str_CopyKey47(&v990, &v1680), p1, &s1660.m1678);
         func_001F4460(&s1660.m1660, 1.0f, 1.0f);
@@ -470,9 +454,9 @@ int func_00207340(void* p0, void* p1, void* p2, void* p3, void* p4, void* p5, vo
         func_00138350(&v1680, -1);
         func_001F3C70(&v1690, -1);
         func_00138350(&v16A0, -1);
-        func_001C00D0(&v1640, &v1920, D_004A3DD0);
+        func_001C00D0(&v1640, &v1920, "NonStrafing_RghtHemisphere");
         func_001F4470(&v1630);
-        func_001C00D0(&v1620, &v1930, D_004A3D50);
+        func_001C00D0(&v1620, &v1930, "FaceBack_RghtHemisphere");
         func_001F4460(&s1600.m1618, 0.0f, 0.0f);
         MotionSliderChild_Resolve(&s1600.m1608, Str_CopyKey47(&v8E0, &v1620), p1, &s1600.m1618);
         func_001F4460(&s1600.m1600, 1.0f, 1.0f);
@@ -492,12 +476,12 @@ int func_00207340(void* p0, void* p1, void* p2, void* p3, void* p4, void* p5, vo
         func_00138350(&v1640, -1);
     }
     if (p6) {
-        func_001C00D0(&v15E0, &v1920, D_004A3DF0);
+        func_001C00D0(&v15E0, &v1920, "MoveLeft_BackHemisphere");
         func_001F4470(&v15D0);
-        func_001C00D0(&v15C0, &v1930, D_004A3D20);
+        func_001C00D0(&v15C0, &v1930, "FaceRght");
         func_001F4460(&s1590.m15B8, 0.0f, 0.0f);
         MotionSliderChild_Resolve(&s1590.m15A8, Str_CopyKey47(&v830, &v15C0), p1, &s1590.m15B8);
-        func_001C00D0(&s1590.m1598, &v1930, D_004A3D10);
+        func_001C00D0(&s1590.m1598, &v1930, "FaceLeft");
         func_001F4460(&s1590.m1590, 1.0f, 1.0f);
         MotionSliderChild_Resolve(&v1580, Str_CopyKey47(&v800, &s1590.m1598), p1, &s1590.m1590);
         t13 = func_001F4370(&v15D0, &s1590.m15A8);
@@ -514,12 +498,12 @@ int func_00207340(void* p0, void* p1, void* p2, void* p3, void* p4, void* p5, vo
         func_00138350(&v15C0, -1);
         func_001F3C70(&v15D0, -1);
         func_00138350(&v15E0, -1);
-        func_001C00D0(&v1570, &v1920, D_004A3E10);
+        func_001C00D0(&v1570, &v1920, "MoveRght_BackHemisphere");
         func_001F4470(&v1560);
-        func_001C00D0(&v1550, &v1930, D_004A3D10);
+        func_001C00D0(&v1550, &v1930, "FaceLeft");
         func_001F4460(&s1520.m1548, 0.0f, 0.0f);
         MotionSliderChild_Resolve(&s1520.m1538, Str_CopyKey47(&v750, &v1550), p1, &s1520.m1548);
-        func_001C00D0(&s1520.m1528, &v1930, D_004A3D20);
+        func_001C00D0(&s1520.m1528, &v1930, "FaceRght");
         func_001F4460(&s1520.m1520, 1.0f, 1.0f);
         MotionSliderChild_Resolve(&v1510, Str_CopyKey47(&v720, &s1520.m1528), p1, &s1520.m1520);
         t15 = func_001F4370(&v1560, &s1520.m1538);
@@ -536,12 +520,12 @@ int func_00207340(void* p0, void* p1, void* p2, void* p3, void* p4, void* p5, vo
         func_00138350(&v1550, -1);
         func_001F3C70(&v1560, -1);
         func_00138350(&v1570, -1);
-        func_001C00D0(&v1500, &v1920, D_004A3E28);
+        func_001C00D0(&v1500, &v1920, "StrafeLeft");
         func_001F4470(&v14F0);
-        func_001C00D0(&v14E0, &v1920, D_004A3DF0);
+        func_001C00D0(&v14E0, &v1920, "MoveLeft_BackHemisphere");
         func_001F4460(&s14B0.m14D8, 0.0f, 0.0f);
         MotionSliderChild_Resolve(&s14B0.m14C8, Str_CopyKey47(&v670, &v14E0), p1, &s14B0.m14D8);
-        func_001C00D0(&s14B0.m14B8, &v1930, D_004A3D10);
+        func_001C00D0(&s14B0.m14B8, &v1930, "FaceLeft");
         func_001F4460(&s14B0.m14B0, 1.0f, 1.0f);
         MotionSliderChild_Resolve(&v14A0, Str_CopyKey47(&v640, &s14B0.m14B8), p1, &s14B0.m14B0);
         t17 = func_001F4370(&v14F0, &s14B0.m14C8);
@@ -558,12 +542,12 @@ int func_00207340(void* p0, void* p1, void* p2, void* p3, void* p4, void* p5, vo
         func_00138350(&v14E0, -1);
         func_001F3C70(&v14F0, -1);
         func_00138350(&v1500, -1);
-        func_001C00D0(&v1490, &v1920, D_004A3E38);
+        func_001C00D0(&v1490, &v1920, "StrafeRght");
         func_001F4470(&v1480);
-        func_001C00D0(&v1470, &v1920, D_004A3E10);
+        func_001C00D0(&v1470, &v1920, "MoveRght_BackHemisphere");
         func_001F4460(&s1440.m1468, 0.0f, 0.0f);
         MotionSliderChild_Resolve(&s1440.m1458, Str_CopyKey47(&v590, &v1470), p1, &s1440.m1468);
-        func_001C00D0(&s1440.m1448, &v1930, D_004A3D20);
+        func_001C00D0(&s1440.m1448, &v1930, "FaceRght");
         func_001F4460(&s1440.m1440, 1.0f, 1.0f);
         MotionSliderChild_Resolve(&v1430, Str_CopyKey47(&v560, &s1440.m1448), p1, &s1440.m1440);
         t19 = func_001F4370(&v1480, &s1440.m1458);
@@ -582,12 +566,12 @@ int func_00207340(void* p0, void* p1, void* p2, void* p3, void* p4, void* p5, vo
         func_00138350(&v1490, -1);
     }
     if (p6) {
-        func_001C00D0(&v1420, &v1920, D_004A3E48);
+        func_001C00D0(&v1420, &v1920, "LeftHemisphere");
         func_001F4470(&v1410);
-        func_001C00D0(&v1400, &v1920, D_004A3DB0);
+        func_001C00D0(&v1400, &v1920, "NonStrafing_LeftHemisphere");
         func_001F4460(&s13D0.m13F8, 0.0f, 0.0f);
         MotionSliderChild_Resolve(&s13D0.m13E8, Str_CopyKey47(&v4B0, &v1400), p1, &s13D0.m13F8);
-        func_001C00D0(&s13D0.m13D8, &v1920, D_004A3E28);
+        func_001C00D0(&s13D0.m13D8, &v1920, "StrafeLeft");
         func_001F4460(&s13D0.m13D0, 1.0f, 1.0f);
         MotionSliderChild_Resolve(&v13C0, Str_CopyKey47(&v480, &s13D0.m13D8), p1, &s13D0.m13D0);
         t21 = func_001F4370(&v1410, &s13D0.m13E8);
@@ -604,12 +588,12 @@ int func_00207340(void* p0, void* p1, void* p2, void* p3, void* p4, void* p5, vo
         func_00138350(&v1400, -1);
         func_001F3C70(&v1410, -1);
         func_00138350(&v1420, -1);
-        func_001C00D0(&v13B0, &v1920, D_004A3E58);
+        func_001C00D0(&v13B0, &v1920, "RghtHemisphere");
         func_001F4470(&v13A0);
-        func_001C00D0(&v1390, &v1920, D_004A3DD0);
+        func_001C00D0(&v1390, &v1920, "NonStrafing_RghtHemisphere");
         func_001F4460(&s1360.m1388, 0.0f, 0.0f);
         MotionSliderChild_Resolve(&s1360.m1378, Str_CopyKey47(&v3D0, &v1390), p1, &s1360.m1388);
-        func_001C00D0(&s1360.m1368, &v1920, D_004A3E38);
+        func_001C00D0(&s1360.m1368, &v1920, "StrafeRght");
         func_001F4460(&s1360.m1360, 1.0f, 1.0f);
         MotionSliderChild_Resolve(&v1350, Str_CopyKey47(&v3A0, &s1360.m1368), p1, &s1360.m1360);
         t23 = func_001F4370(&v13A0, &s1360.m1378);
@@ -627,12 +611,12 @@ int func_00207340(void* p0, void* p1, void* p2, void* p3, void* p4, void* p5, vo
         func_001F3C70(&v13A0, -1);
         func_00138350(&v13B0, -1);
     } else {
-        func_001C00D0(&v1340, &v1920, D_004A3E48);
+        func_001C00D0(&v1340, &v1920, "LeftHemisphere");
         func_001F4470(&v1330);
-        func_001C00D0(&v1320, &v1920, D_004A3DB0);
+        func_001C00D0(&v1320, &v1920, "NonStrafing_LeftHemisphere");
         func_001F4460(&s12F0.m1318, 0.0f, 0.0f);
         MotionSliderChild_Resolve(&s12F0.m1308, Str_CopyKey47(&v2F0, &v1320), p1, &s12F0.m1318);
-        func_001C00D0(&s12F0.m12F8, &v1930, D_004A3D10);
+        func_001C00D0(&s12F0.m12F8, &v1930, "FaceLeft");
         func_001F4460(&s12F0.m12F0, 1.0f, 1.0f);
         MotionSliderChild_Resolve(&v12E0, Str_CopyKey47(&v2C0, &s12F0.m12F8), p1, &s12F0.m12F0);
         t25 = func_001F4370(&v1330, &s12F0.m1308);
@@ -649,12 +633,12 @@ int func_00207340(void* p0, void* p1, void* p2, void* p3, void* p4, void* p5, vo
         func_00138350(&v1320, -1);
         func_001F3C70(&v1330, -1);
         func_00138350(&v1340, -1);
-        func_001C00D0(&v12D0, &v1920, D_004A3E58);
+        func_001C00D0(&v12D0, &v1920, "RghtHemisphere");
         func_001F4470(&v12C0);
-        func_001C00D0(&v12B0, &v1920, D_004A3DD0);
+        func_001C00D0(&v12B0, &v1920, "NonStrafing_RghtHemisphere");
         func_001F4460(&s1280.m12A8, 0.0f, 0.0f);
         MotionSliderChild_Resolve(&s1280.m1298, Str_CopyKey47(&v210, &v12B0), p1, &s1280.m12A8);
-        func_001C00D0(&s1280.m1288, &v1930, D_004A3D20);
+        func_001C00D0(&s1280.m1288, &v1930, "FaceRght");
         func_001F4460(&s1280.m1280, 1.0f, 1.0f);
         MotionSliderChild_Resolve(&v1270, Str_CopyKey47(&v1E0, &s1280.m1288), p1, &s1280.m1280);
         t27 = func_001F4370(&v12C0, &s1280.m1298);
@@ -673,10 +657,10 @@ int func_00207340(void* p0, void* p1, void* p2, void* p3, void* p4, void* p5, vo
         func_00138350(&v12D0, -1);
     }
     func_001F4470(&v1260);
-    func_001C00D0(&v1250, &v1920, D_004A3E48);
+    func_001C00D0(&v1250, &v1920, "LeftHemisphere");
     func_001F4460(&s1220.m1248, 0.0f, 0.0f);
     MotionSliderChild_Resolve(&s1220.m1238, Str_CopyKey47(&v130, &v1250), p1, &s1220.m1248);
-    func_001C00D0(&s1220.m1228, &v1920, D_004A3E58);
+    func_001C00D0(&s1220.m1228, &v1920, "RghtHemisphere");
     func_001F4460(&s1220.m1220, 1.0f, 1.0f);
     MotionSliderChild_Resolve(&v1210, Str_CopyKey47(&v100, &s1220.m1228), p1, &s1220.m1220);
     t29 = func_001F4370(&v1260, &s1220.m1238);

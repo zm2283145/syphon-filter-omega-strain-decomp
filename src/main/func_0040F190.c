@@ -24,7 +24,11 @@ extern void String_Copy(char* dst, const char* src); /* String_Copy */
 extern void strncpy(void* dst, const void* src, int size); /* strncpy-style copy */
 extern void func_0040F290(void* dst, const void* src, int size);
 extern char* D_00494008;
-extern char D_00493D84[], D_00493D44[], D_00493DC4[], D_00493C40[], D_004BEDA8[], D_00493D00[], D_004BEDB0[];
+extern char D_00493D84[];
+extern char D_00493D44[];
+extern char D_00493DC4[];
+extern char D_00493C40[];
+extern char D_00493D00[];
 
 /* Resets the memory card state and builds the icon.sys header strings. */
 MemCard* MemCard_SetupIconSys(MemCard* self) {
@@ -52,7 +56,7 @@ MemCard* MemCard_SetupIconSys(MemCard* self) {
     String_Copy(D_00493D84, D_00494008);
     String_Copy(D_00493D44, D_00494008);
     String_Copy(D_00493DC4, D_00494008);
-    strncpy(D_00493C40, D_004BEDA8, 4);
-    func_0040F290(D_00493D00, D_004BEDB0, 0x20);
+    strncpy(D_00493C40, "PS2D", 4);
+    func_0040F290(D_00493D00, "Syphon Filter:The Omega Strain", 0x20);
     return self;
 }

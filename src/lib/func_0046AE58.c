@@ -1,4 +1,4 @@
-extern int D_00497E34;
+int D_00497E34 = 0;
 extern int func_004700F8(char *, int);
 extern int func_00470120(char *, int, int, char *);
 int func_0046AE58(char *a, int b, char *c)

@@ -2,7 +2,13 @@
 #include "types.h"
 extern "C" { void operator_delete(void* p); void cMessage_dtor(void* m, int f); void __destroy_array(void* p, void* dtor, int size, int n);
 void func_001B4D50(void); void func_001906B0(void); void func_001B4C70(void);
-extern char D_004DACF0[]; extern char D_004DA930[]; extern char D_004DA440[]; extern char D_004DA350[]; extern char D_004DA830[]; }
+extern char D_004DACF0[];
+extern char D_004DA930[];
+extern char D_004DA440[];
+extern char D_004DA350[];
+extern "C" void func_001B8DF0();
+void * const D_004DA830[4] = { (void*)0x0, (void*)0x0, (void*)func_001B8DF0, (void*)0x0 };
+}
 struct M_1B4B10 { void* vt; };
 static inline void Msg_1B4B10(M_1B4B10* m) { if (m) { m->vt = D_004DA930; cMessage_dtor(m, 0); } }
 static inline void B2_1B4B10(M_1B4B10* m) { if (m) m->vt = D_004DA350; }
@@ -21,7 +27,7 @@ extern "C" void* func_001B4B10(O_1B4B10* self, short deleteFlag)
         D2_1B4B10(&self->m160);
         __destroy_array(self->aE0, (void*)func_001906B0, 0x30, 2);
         if (self->a14) Arr_1B4B10(self->a14, (void*)func_001B4C70, 8, 0x19);
-        if (self) self->vt.vt = D_004DA830;
+        if (self) self->vt.vt = ((char*)D_004DA830);
         if (deleteFlag > 0) operator_delete(self);
     }
     return self;

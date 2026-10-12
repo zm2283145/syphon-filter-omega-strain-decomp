@@ -1,4 +1,5 @@
-extern char D_004BADB8[], D_004BADC0[], D_004BAF18[];
+extern char D_004BADB8[];
+extern char D_004BADC0[];
 extern int func_0010F388(const char *, ...);
 extern int func_0010D520(void *, int);
 extern int func_0010D500(int);
@@ -12,7 +13,7 @@ int func_003532F8(int a, int b, int size, int wait)
     p.x = 0;
     if (size & 0xF) {
         func_0010F388(D_004BADB8, D_004BADC0);
-        func_0010F388(D_004BAF18, size, p.size);
+        func_0010F388("SIF DMA transfer size %d padded to %d\n", size, p.size);
     }
     do {
         r = func_0010D520(&p, 1);

@@ -17,7 +17,6 @@ Ft func_003E1090(void*);
 void func_003E10B0(Ft*,const Ft*);
 extern void* D_00554F18;
 extern void* D_00554F20;
-extern char D_004BD950[],D_004BD970[];
 }
 struct IE:It { IE(const It& i) { func_003E1F10(this,&i); } };
 struct FE:Ft { FE(const Ft& i) { func_003E10B0(this,&i); } };
@@ -33,13 +32,13 @@ extern "C" int cScriptInterpreter_CheckAllReferences() {
     It i=beginI();
     while(neqI(i,endI())) {
         Item* p=*i.p;
-        if(p->refs>0 && !p->defined) { func_003D7930(D_004BD950,p->name); bad=1; }
+        if(p->refs>0 && !p->defined) { func_003D7930("var %s not defined",p->name); bad=1; }
         i.p++;
     }
     Ft f=beginF0();
     while(neqF(f,endF())) {
         Func* p=*f.p;
-        if(p->refs>0 && !p->defined) { func_003D7930(D_004BD970,p->name); bad=1; }
+        if(p->refs>0 && !p->defined) { func_003D7930("func %s not defined",p->name); bad=1; }
         f.p++;
     }
     return !bad;

@@ -1,8 +1,8 @@
 typedef struct { int currentCount; int maxCount; int initCount; int numWaitThreads; unsigned int attr; unsigned int option; } SemaParam8718;
 extern int CreateSema(SemaParam8718 *);
 extern int D_004878A8;
-extern int D_004878AC;
-extern int D_004878B0;
+int D_004878AC = -1;
+int D_004878B0 = -1;
 extern volatile int D_004878A0;
 extern volatile int D_004878B4;
 

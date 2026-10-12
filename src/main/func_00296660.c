@@ -7,7 +7,7 @@ typedef struct S_00296660 {
     unsigned char state; char pad1D5[0x2EC - 0x1D5]; W_00296660* p2EC; W_00296660* p2F0; char pad2F4[0x2FC - 0x2F4];
     W_00296660* w2FC[10];
 } S_00296660;
-extern float D_004AA1F8;
+static const float dat_004AA1F8[2] = { 500.0f, 0.0f };
 extern char D_004FFB50[];
 extern Col_00296660 D_00587B80;
 extern Col_00296660 D_00587B90;
@@ -36,8 +36,8 @@ int i;
     if (!(st == 1 || (unsigned int)(st - 3) <= 1 || st == 5))
         return;
     self->f1B0 += 33.333332f * dt;
-    self->f1B0 = Math_FMod(self->f1B0, D_004AA1F8);
-    func_002986B0(Fabs_00296660(1.0f - 2.0f * self->f1B0 / D_004AA1F8), &col, &D_00587B90, &D_00587B80);
+    self->f1B0 = Math_FMod(self->f1B0, (*(float*)dat_004AA1F8));
+    func_002986B0(Fabs_00296660(1.0f - 2.0f * self->f1B0 / (*(float*)dat_004AA1F8)), &col, &D_00587B90, &D_00587B80);
     ag = Agent_GetSelected(D_004FFB50, -1);
     if (self->state == 4) {
         n = -1;

@@ -1,4 +1,4 @@
-extern void *(*D_004908E0)(int);
+void *(*D_004908E0)(int) = 0;
 extern void *func_00125368(int);
 int func_002FB2D8(void **out, long sz)
 {

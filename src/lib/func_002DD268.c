@@ -6,11 +6,11 @@
 
 #include "types.h"
 
-extern char D_0048C480[];
-extern char D_0048C484[];
+int D_0048C480 = 0;
+int D_0048C484 = 0;
 
 int func_002DD268(int a0, int a1) {
-    *(int*)D_0048C480 = a0;
-    *(int*)D_0048C484 = a1;
+    *(int*)((char*)&D_0048C480) = a0;
+    *(int*)((char*)&D_0048C484) = a1;
     return 0;
 }

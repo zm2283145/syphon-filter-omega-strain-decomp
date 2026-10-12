@@ -1,6 +1,6 @@
 extern short D_00497CC0;
 extern int D_00497CC4;
-extern int D_00497D3C;
+int D_00497D3C = 0;
 extern int D_0059857C;
 extern int func_004700F8(char *, int);
 extern int func_002EA8C8(char *);

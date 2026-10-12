@@ -1,7 +1,7 @@
 extern short D_00497CC0;
 extern int D_00497CC4;
 extern int D_00598660;
-extern int D_00497D9C;
+int D_00497D9C = 0;
 extern int func_004700F8(char *, int);
 extern int Net_SendLocked(int, int, int, int, int, int, void *);
 int func_0046AF60(char *a, int b)

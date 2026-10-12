@@ -13,7 +13,8 @@ struct Self { char pad[0x4EA0]; int owner; };
 struct Event { char pad[0x1C]; int id; };
 struct Pair { int key; Event* value; };
 extern "C" {
-extern char D_004BD4C0[],D_004BD760[],D_004BD788[],D_004BD790[],D_0055A0F0[];
+extern char D_004BD4C0[];
+extern char D_0055A0F0[];
 extern int D_0055A100;
 void* Mem_Alloc(int,int,char*,int);
 int strlen(char*);
@@ -38,7 +39,7 @@ extern "C" int ScriptSched_PrepareCall(Self* self0,Desc* desc0,void** args,int c
   int k=desc->params[i]->kind;
   if(k==3) {
    char* str=(char*)*ptr;
-   if(!str) {Script_InvalidArgNop(self,D_004BD760,i);return -1;}
+   if(!str) {Script_InvalidArgNop(self,"string param(#%d) null in schedule call",i);return -1;}
    int len=strlen(str);
    char* copy=(char*)Alloc(len+1,0x76D);
    String_Copy(copy,str);*ptr=copy;
@@ -47,7 +48,7 @@ extern "C" int ScriptSched_PrepareCall(Self* self0,Desc* desc0,void** args,int c
    if(type) {
     if(type->objectId) { if(!func_003E0A70(self,desc,type)) *ptr=Script_ObjectToId(*ptr); }
     else if(type->cloneable) *ptr=((SchedObject*)*ptr)->clone();
-    else if(String_CompareNoCase(type->name,D_004BD788)) {Script_InvalidArgNop(self,D_004BD790);return -1;}
+    else if(String_CompareNoCase(type->name,"group")) {Script_InvalidArgNop(self,"can't schedule a function with that param type");return -1;}
    }
   }
  i++;ptr++;

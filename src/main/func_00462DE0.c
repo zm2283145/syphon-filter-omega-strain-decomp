@@ -2,7 +2,6 @@
 #include "types.h"
 #include "alloc_guard.h"
 extern "C" {
-extern char D_004C2708[];
 extern char D_004E17C0[];
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void GuiObjectives_ctor(void* self, int a, int b);
@@ -14,7 +13,7 @@ extern "C" O462DE0* func_00462DE0(void)
     O462DE0* p;
     {
         AllocGuard guard;
-        p = (O462DE0*)Mem_Alloc(0, 0x250, D_004C2708, 0x2A);
+        p = (O462DE0*)Mem_Alloc(0, 0x250, "guiWidget.hh", 0x2A);
     }
     if (p) {
         GuiObjectives_ctor(p, 1, 0);

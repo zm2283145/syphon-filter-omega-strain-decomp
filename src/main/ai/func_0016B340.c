@@ -6,10 +6,17 @@
 #include "types.h"
 #include "ai_types.h"
 
-extern char D_004D92A0[]; /* action message vtable */
-extern char D_004D92C0[]; /* action message with sender vtable */
+/* action message vtable */
+extern char D_004D92A0[];
+/* action message with sender vtable */
+extern char D_004D92C0[];
 extern char D_004D9810[];
-extern char D_004D9870[]; /* action message with sender and target vtable */
+/* action message with sender and target vtable */
+extern void Event_PackHeader();
+extern void Message_GetScriptTypeKey();
+extern void func_0016F890();
+extern void func_0016F910();
+void * const D_004D9870[8] = { (void*)0x0, (void*)0x0, (void*)func_0016F890, (void*)func_0016F910, (void*)Event_PackHeader, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
 extern char D_004EE5C0[];
 extern char D_004EE5C8[];
 extern int Event_Construct(cActionMsg*, int);
@@ -31,7 +38,7 @@ cActionMsg* func_0016B380(cActionMsg* msg, int* sender, int* target, int action)
     *(int*)&msg->unk2C = 0;
     msg->base.vtable = D_004D92C0;
     msg->sender = *sender;
-    msg->base.vtable = D_004D9870;
+    msg->base.vtable = ((char*)D_004D9870);
     msg->target = *target;
     msg->event = 2;
     return msg;

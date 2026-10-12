@@ -5,7 +5,6 @@
 
 /* Factory: allocate a 0x8C-byte personnel screen and construct it inline (member at +0x6C, string at +0x80). */
 extern "C" {
-extern char D_004BB008[];
 extern char D_004DEF90[];
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void GuiPersonnelScreen_ctor(void* self);
@@ -18,7 +17,7 @@ extern "C" O354490* func_00354490(void)
     O354490* p;
     {
         AllocGuard guard;
-        p = (O354490*)Mem_Alloc(0, 0x8C, D_004BB008, 0x2A);
+        p = (O354490*)Mem_Alloc(0, 0x8C, "guiWidget.hh", 0x2A);
     }
     if (p) {
         GuiPersonnelScreen_ctor(p);

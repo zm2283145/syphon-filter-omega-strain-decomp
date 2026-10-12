@@ -17,7 +17,8 @@ void func_0045CA20(void* p, int v);
 void func_00437950(int v);
 extern char D_004FFB50[];
 extern char D_0055A300[];
-extern char D_004A7260[]; extern char D_004A7278[]; extern char D_004A7248[]; extern char D_004A7288[];
+extern char D_004A7260[];
+extern char D_004A7248[];
 }
 extern "C" void func_002429F0(Obj2426* s) {
     if (s->b6A8) return;
@@ -25,11 +26,11 @@ extern "C" void func_002429F0(Obj2426* s) {
     if (s->b6A9) func_002427F0(s);
     if (!func_00241AC0(s)) func_0036A240(D_0055A300);
     {
-        void* x = func_00418A80(func_00414790(), D_004A7260, D_004A7278);
+        void* x = func_00418A80(func_00414790(), D_004A7260, "GAMEBACK");
         func_004147A0()->s23(x, -1);
     }
     {
-        void* x = func_00418A80(func_00414790(), D_004A7248, D_004A7288);
+        void* x = func_00418A80(func_00414790(), D_004A7248, "INGAMENU");
         func_004147A0()->s23(x, 0);
     }
     func_0045CA20(s->snd, 0);

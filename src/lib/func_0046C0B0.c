@@ -1,6 +1,12 @@
 typedef struct { char pad[0x18]; int f18; } P;
 extern short D_00497CC0;
-extern int D_00497CC4, D_00497CE8, D_00497CEC, D_00497CE4, D_00497DE4, D_00497DF0, D_005988E0;
+extern int D_00497CC4;
+extern int D_00497CE8;
+extern int D_00497CEC;
+extern int D_00497CE4;
+extern int D_00497DE4;
+int D_00497DF0 = 0;
+extern int D_005988E0;
 extern int func_004700F8(P *, int);
 extern int Net_SendLocked(int, int, int, int, int, int, P *);
 int func_0046C0B0(P *p, int b, int c)

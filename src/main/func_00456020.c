@@ -20,8 +20,11 @@ typedef struct Screen_456020 {
     char pad[0x48];
     Panel_456020* panel;       /* +0x48 */
 } Screen_456020;
-extern "C" int D_00497980;
-extern "C" int D_00497988;
+extern "C" char D_004C19A0[];
+extern "C" char D_004C19B0[];
+extern "C" char D_004C19C0[];
+static void * const dat_00497980[1] = { (void*)D_004C19A0 };
+static void * const dat_00497988[3] = { (void*)D_004C19B0, (void*)0x0, (void*)D_004C19C0 };
 extern "C" char D_004AAE20[];
 extern "C" char D_004AAE00[];
 extern "C" void func_0041F150(Screen_456020* self);
@@ -31,12 +34,12 @@ extern "C" void func_00456020(Screen_456020* self)
 {
     Widget_456020* child;
     func_0041F150(self);
-    child = func_0041DB80(self, D_00497980);
+    child = func_0041DB80(self, (*(int*)dat_00497980));
     child = (child && child->IsA(D_004AAE20)) ? child : 0;
     self->panel = (Panel_456020*)child;
     if (self->panel) {
         self->panel->m60 = 0;
-        child = func_0041DB80(self, D_00497988);
+        child = func_0041DB80(self, (*(int*)dat_00497988));
         child = (child && child->IsA(D_004AAE00)) ? child : 0;
         self->panel->m7C = child;
         self->panel->flags |= 0x80;

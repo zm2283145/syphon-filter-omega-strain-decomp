@@ -24,28 +24,6 @@ extern char D_004A7520[];
 extern char D_004A9870[];
 extern char D_004AA640[];
 extern char D_004AAA80[];
-extern char D_004AA800[];
-extern char D_004AA810[];
-extern char D_004AA818[];
-extern char D_004AA830[];
-extern char D_004AA840[];
-extern char D_004AA850[];
-extern char D_004AA860[];
-extern char D_004AA870[];
-extern char D_004AA880[];
-extern char D_004AA890[];
-extern char D_004AA8A0[];
-extern char D_004AA8B0[];
-extern char D_004AA8C0[];
-extern char D_004AA8D0[];
-extern char D_004AA8E0[];
-extern char D_004AA8F8[];
-extern char D_004AA908[];
-extern char D_004AA920[];
-extern char D_004AA930[];
-extern char D_004AA940[];
-extern char D_004AA950[];
-extern char D_004AA958[];
 void func_0041F150(S_0029B360* self);
 W_0029B360* func_0041DB80(S_0029B360* self, char* name);
 char* Loc_LookupText(char* key);
@@ -72,41 +50,41 @@ extern "C" void func_0029B360(S_0029B360* self)
     }
     self->pB0 = FindAs_0029B360(self, D_0048B8F8, D_004A7520);
     self->pAC = func_0041DB80(self, D_0048B8D0);
-    self->p80 = func_0041DB80(self, D_004AA800);
-    self->p84 = func_0041DB80(self, D_004AA810);
-    self->p88 = FindAs_0029B360(self, D_004AA818, D_004A7520);
-    self->p408 = FindAs_0029B360(self, D_004AA830, D_004A9870);
-    self->p40C = FindAs_0029B360(self, D_004AA840, D_004A9870);
-    self->p410 = FindAs_0029B360(self, D_004AA850, D_004A9870);
-    self->p414 = FindAs_0029B360(self, D_004AA860, D_004A9870);
-    self->p418 = FindAs_0029B360(self, D_004AA870, D_004AAA80);
-    self->p41C = FindAs_0029B360(self, D_004AA880, D_004AAA80);
-    self->p420 = FindAs_0029B360(self, D_004AA890, D_004AAA80);
-    self->p424 = FindAs_0029B360(self, D_004AA8A0, D_004A9870);
-    self->p428 = FindAs_0029B360(self, D_004AA8B0, D_004AAA80);
-    self->p42C = FindAs_0029B360(self, D_004AA8C0, D_004A9870);
-    self->p430 = FindAs_0029B360(self, D_004AA8D0, D_004AA640);
-    self->p434 = func_0041DB80(self, D_004AA8E0);
+    self->p80 = func_0041DB80(self, "buttonsquare");
+    self->p84 = func_0041DB80(self, "buttonx");
+    self->p88 = FindAs_0029B360(self, "label_to_map", D_004A7520);
+    self->p408 = FindAs_0029B360(self, "value_manualaim", D_004A9870);
+    self->p40C = FindAs_0029B360(self, "value_rumble", D_004A9870);
+    self->p410 = FindAs_0029B360(self, "value_freelookx", D_004A9870);
+    self->p414 = FindAs_0029B360(self, "value_freelooky", D_004A9870);
+    self->p418 = FindAs_0029B360(self, "slider_sfx", D_004AAA80);
+    self->p41C = FindAs_0029B360(self, "slider_voices", D_004AAA80);
+    self->p420 = FindAs_0029B360(self, "slider_music", D_004AAA80);
+    self->p424 = FindAs_0029B360(self, "value_mode_btn", D_004A9870);
+    self->p428 = FindAs_0029B360(self, "slider_gamma", D_004AAA80);
+    self->p42C = FindAs_0029B360(self, "value_videomode", D_004A9870);
+    self->p430 = FindAs_0029B360(self, "player_list", D_004AA640);
+    self->p434 = func_0041DB80(self, "select_config_select");
     if (self->p430)
         self->p430->link = self->p434;
     { int j;
     for (j = 0; j < 2; j++) {
-        sprintf(buf, D_004AA8F8, j);
+        sprintf(buf, "AudioMode%d", j);
         self->t438[j] = Loc_LookupText(buf);
     } }
     { int j;
     for (j = 0; j < 2; j++) {
-        sprintf(buf, D_004AA908, j);
+        sprintf(buf, "VideoMode%d", j);
         self->t440[j] = Loc_LookupText(buf);
     } }
     { int j;
     for (j = 0; j < 4; j++) {
-        sprintf(buf, D_004AA920, j);
+        sprintf(buf, "OptionsHeader%d", j);
         self->t448[j] = Loc_LookupText(buf);
     } }
-    self->t458 = Loc_LookupText(D_004AA930);
-    self->t45C = Loc_LookupText(D_004AA940);
-    self->t460 = Loc_LookupText(D_004AA950);
-    self->t464 = Loc_LookupText(D_004AA958);
+    self->t458 = Loc_LookupText("ControlInvert");
+    self->t45C = Loc_LookupText("ControlNormal");
+    self->t460 = Loc_LookupText("MB_On");
+    self->t464 = Loc_LookupText("MB_Off");
     self->b401 = 1;
 }

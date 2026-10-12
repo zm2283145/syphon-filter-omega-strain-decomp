@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-extern char D_0048C40C[];
+int D_0048C40C = 0xFFFFFF;
 extern char D_0048C41C[];
 
 int func_002CEBB0(void) {
@@ -19,6 +19,6 @@ int func_002CEBB0(void) {
 int func_002CEBC0(void) {
     int tmp0;
 
-    tmp0 = *(int*)D_0048C40C;
+    tmp0 = *(int*)((char*)&D_0048C40C);
     return tmp0;
 }

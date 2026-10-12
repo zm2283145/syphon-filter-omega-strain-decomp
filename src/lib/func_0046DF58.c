@@ -6,13 +6,13 @@
 
 #include "types.h"
 
-extern char D_00497CAC[];
+int D_00497CAC = 0;
 
 int func_0046DF58(void) {
     int v0;
     int cond;
 
-    v0 = *(int*)(char*)D_00497CAC;
+    v0 = *(int*)(char*)((char*)&D_00497CAC);
     cond = v0 == 0;
     if (cond) goto L0046DF74;
     v0 = ((int (*)(void))v0)();

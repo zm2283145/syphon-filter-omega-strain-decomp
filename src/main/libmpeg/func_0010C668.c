@@ -1,6 +1,6 @@
 #include "types.h"
 
-extern char D_00498868[];
+char D_00498868[] __attribute__((aligned(8))) = "Unknown Extension"; /* 8-aligned in the original data */
 extern int func_0010BD90(int, int);
 
 int func_0010C668(int a0) {

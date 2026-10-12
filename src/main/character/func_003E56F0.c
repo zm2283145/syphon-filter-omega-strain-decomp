@@ -1,7 +1,9 @@
 #pragma cplusplus on
 #include "types.h"
 #include "alloc_guard.h"
-extern "C" { void Mem_Free(int pool, void* p, char* file, int line); extern char D_004BDD08[]; }
+extern "C" {
+void Mem_Free(int pool, void* p, char* file, int line);
+}
 class O3E56F0 { public: virtual void Destroy(int flags); };
 extern "C" O3E56F0* D_0055A228;
 extern "C" void func_003E56F0(void)
@@ -11,7 +13,7 @@ extern "C" void func_003E56F0(void)
         {
             AllocGuard g;
             p->Destroy(-1);
-            Mem_Free(0, p, D_004BDD08, 0x37B);
+            Mem_Free(0, p, "character.cc", 0x37B);
         }
         D_0055A228 = 0;
     }

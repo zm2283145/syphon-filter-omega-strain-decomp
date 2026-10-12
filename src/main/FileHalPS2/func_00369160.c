@@ -2,9 +2,9 @@
 typedef struct { char pad[0x30]; int a30; int a34; int a38; } S369160;
 extern int g_FrameCounter;
 extern int D_00533860;
-extern char D_004BBDE8[];
-extern char D_004BBDF8[];
-extern char D_004BBE00[];
+char D_004BBDE8[] = "CD Timeout";
+char D_004BBDF8[] __attribute__((aligned(8))) = "%s\n"; /* 8-aligned in the original data */
+char D_004BBE00[] = "CD ERROR: 0%x";
 extern int func_003A6ED0(void);
 extern int func_003A6F70(int mode);
 extern void func_003A6F10(void);

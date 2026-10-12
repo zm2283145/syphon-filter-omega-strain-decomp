@@ -2,13 +2,11 @@
 typedef union { float value; unsigned int word; } ieee_float_shape_type;
 #define GET_FLOAT_WORD(i,d) do { ieee_float_shape_type gf_u; gf_u.value = (d); (i) = gf_u.word; } while (0)
 #define SET_FLOAT_WORD(d,i) do { ieee_float_shape_type sf_u; sf_u.word = (i); (d) = sf_u.value; } while (0)
-extern const float D_00499578[];
-extern const float D_00499580[];
-extern const float D_00499588[];
+static const float
+bp[] = {1.0, 1.5,},
+dp_h[] = { 0.0, 5.84960938e-01,},
+dp_l[] = { 0.0, 1.56322085e-06,};
 extern const float D_004995FC;
-#define bp D_00499578
-#define dp_h D_00499580
-#define dp_l D_00499588
 extern float func_0011ED00(float x);
 extern float func_00121760(float x);
 extern float func_00121860(float x, int n);

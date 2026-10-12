@@ -10,7 +10,24 @@ typedef struct {
     signed char slot; unsigned char mode; signed char cur; signed char prev;
 } S_341C50;
 
-extern char D_00492A40[16][16];
+char D_00492A40[16][16] = {
+    "hairstyle",
+    "haircolor",
+    "hat",
+    "eyewear",
+    "beard",
+    "makeup",
+    "shirt",
+    "vest",
+    "pants",
+    "boots",
+    "leftarm",
+    "rightarm",
+    "back",
+    "leftarm2",
+    "rightarm2",
+    "hat2"
+};
 extern Tab_341C50 D_00492A00[16];
 extern signed char D_00492A01[];
 extern short D_00492A02[];

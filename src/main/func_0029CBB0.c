@@ -17,8 +17,6 @@ struct S_0029CBB0 {
 };
 extern "C" {
 extern Ui_0029CBB0* D_004FFC04;
-extern char D_004AABD0[];
-extern char D_004AABE0[];
 extern char D_004AABF0[];
 char* Loc_LookupText(char* key);
 void func_0041BEB0(void* w, char* s, int a);
@@ -70,10 +68,10 @@ extern "C" void func_0029CBB0(S_0029CBB0* self, unsigned char sel)
         if (sel == 1) {
             NameList_0029CBB0* l = 0;
             if (self->f88 == 8) {
-                SetText_0029CBB0(self, D_004AABD0);
+                SetText_0029CBB0(self, "PolicyTitle1");
                 l = D_004FFC04->l2F0;
             } else if (self->f88 == 9) {
-                SetText_0029CBB0(self, D_004AABE0);
+                SetText_0029CBB0(self, "PolicyTitle2");
                 l = D_004FFC04->l2F4;
             }
             if (!l) {

@@ -1,6 +1,6 @@
 extern int D_0058806C;
 extern void (*D_0058DF8C)(int *);
-extern int D_0048C47C;
+int D_0048C47C = 0;
 extern int func_002E6088(int);
 extern void func_002DB188(char **, unsigned int, int);
 extern char *func_002DB270(unsigned int, int);

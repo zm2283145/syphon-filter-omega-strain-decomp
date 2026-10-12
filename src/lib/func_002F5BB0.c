@@ -1,4 +1,4 @@
-extern volatile int D_0049089C;
+volatile int D_0049089C = 0;
 extern int func_002F7B48(void);
 extern int func_002F67F0(void);
 int func_002F5BB0(void)

@@ -1,5 +1,5 @@
 typedef struct { unsigned char c, d; char data[0x1FE]; } P2DDFF8;
-extern unsigned char D_0048C4AC;
+unsigned char D_0048C4AC = 0;
 extern int D_0048C4B0;
 extern unsigned short D_0058C0B0;
 extern P2DDFF8 D_0051F0D8;

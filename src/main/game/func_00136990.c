@@ -1,9 +1,9 @@
 #include "types.h"
 
-extern char D_0049AB30[];
-extern char D_0049AB48[];
-extern char D_0049AB50[];
-extern char D_0049AB10[];
+char D_0049AB10[] = "%s\\%s\\SCRIPTS.HOG";
+char D_0049AB30[] = "%s\\COMMON\\IARCADEN.HOG";
+char D_0049AB48[] = "iarcade";
+char D_0049AB50[] = "iarcade::init";
 extern char D_0048B2F8[];
 extern char D_004FFC90[];
 extern char D_00555070[]; /* script interpreter */

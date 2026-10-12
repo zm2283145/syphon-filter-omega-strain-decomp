@@ -2,13 +2,13 @@
 typedef union { float value; unsigned int word; } ieee_float_shape_type;
 #define GET_FLOAT_WORD(i,d) do { ieee_float_shape_type gf_u; gf_u.value = (d); (i) = gf_u.word; } while (0)
 #define SET_FLOAT_WORD(d,i) do { ieee_float_shape_type sf_u; sf_u.word = (i); (d) = sf_u.value; } while (0)
-extern const float D_004994E0[];
-extern const float D_004994F0[];
-extern const float D_004994F8[];
-extern const float D_00499518;
-#define halF D_004994E0
-#define ln2HI D_004994F0
-#define ln2LO D_004994F8
+static const float dat_004994E0[4] = { 0.5f, -0.5f, 9.9999994e29f, 7.8886086e-31f };
+static const float dat_004994F0[2] = { 0.69313813f, -0.69313813f };
+static const float dat_004994F8[8] = { 9.058001e-6f, -9.058001e-6f, 1.44269491f, 0.16666666f, -0.0027777777f, 6.6137553e-5f, -1.6533902e-6f, 4.1381366e-8f };
+static const float dat_00499518[4] = { 3.4028235e38f, 0.0f, 1.0f, 0.0f };
+#define halF ((const float*)dat_004994E0)
+#define ln2HI ((const float*)dat_004994F0)
+#define ln2LO ((const float*)dat_004994F8)
 float func_0011D980(float x)
 {
 	const float
@@ -30,7 +30,7 @@ float func_0011D980(float x)
 	hx = sx & 0x7fffffff;
 
 	if(sx > 0x42b2d4fc)
-	    return D_00499518;
+	    return (*(const float*)dat_00499518);
 	if(sx < 0 && hx > 0x42aeac50)
 	    return twom100*twom100;
 

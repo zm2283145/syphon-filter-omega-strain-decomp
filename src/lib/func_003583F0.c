@@ -3,7 +3,7 @@
 #pragma mpwc_relax on
 int func_003581C0();                                  
 int func_003581E0(int);                               
-extern int D_00492CE4;
+int D_00492CE4 = 12;
 
 int func_003583F0(void) {
     int temp_v0;

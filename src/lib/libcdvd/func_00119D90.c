@@ -6,9 +6,9 @@ extern int func_00110528(void *cd, int fno, int mode, void *send, int ssize, voi
 extern int func_0010D180(int);
 #define UNCACHED(p) (*(int *)((unsigned int)(p) | 0x20000000))
 extern int D_00488EC0[];
-extern int D_00489428;
-extern int D_0048942C;
-extern int D_00489430;
+int D_00489428 = 34;
+int D_0048942C = 4;
+int D_00489430 = 4;
 extern void func_0010FB10(void *, int);
 
 int func_00119D90(int x)

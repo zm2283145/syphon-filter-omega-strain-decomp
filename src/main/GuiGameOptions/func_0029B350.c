@@ -6,8 +6,7 @@
 
 #include "types.h"
 
-extern char D_004AAAC8[];
 
 int func_0029B350(void) {
-    return (int)D_004AAAC8;
+    return (int)"GuiCanvas";
 }

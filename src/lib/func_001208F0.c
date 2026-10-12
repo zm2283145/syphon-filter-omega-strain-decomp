@@ -2,8 +2,21 @@
 typedef union { float value; unsigned int word; } ieee_float_shape_type;
 #define GET_FLOAT_WORD(i,d) do { ieee_float_shape_type gf_u; gf_u.value = (d); (i) = gf_u.word; } while (0)
 #define SET_FLOAT_WORD(d,i) do { ieee_float_shape_type sf_u; sf_u.word = (i); (d) = sf_u.value; } while (0)
-extern const float D_00499B68[];
-#define T D_00499B68
+static const float T[] = {
+	0.33333335f,
+	0.133333341f,
+	0.053968255f,
+	0.021869487f,
+	0.008863239f,
+	0.0035920791f,
+	0.0014562094f,
+	0.00058804121f,
+	0.00024646312f,
+	7.8179445e-5f,
+	7.1407253e-5f,
+	-1.8558636e-5f,
+	2.5907306e-5f,
+};
 extern float func_00121760(float x);
 float Math_TanKernel(float x, float y, int iy)
 {

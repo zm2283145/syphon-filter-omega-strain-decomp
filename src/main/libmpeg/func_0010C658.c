@@ -1,6 +1,6 @@
 #include "types.h"
 
-extern char D_00498838[];
+char D_00498838[] __attribute__((aligned(8))) = "_sequenceScalableExtension() is not implemented"; /* 8-aligned in the original data */
 extern int func_0010BD90(int, int);
 
 int _sequenceScalableExtension(int a0) {

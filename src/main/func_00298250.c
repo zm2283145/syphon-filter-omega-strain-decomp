@@ -5,16 +5,17 @@
  */
 
 #include "types.h"
+#pragma explicit_zero_data on /* the zero-initialised globals below are in .data in the original */
 #include "loose02_types.h"
 
-extern unsigned char D_0048B7A0;
-extern int D_0048B7A4;
-extern unsigned char D_0048B7A8;
-extern unsigned char D_0048B7C8;
-extern unsigned char D_0048B7E8;
-extern unsigned char D_0048B808;
-extern unsigned char D_0048B828;
-extern unsigned char D_0048B848;
+unsigned char D_0048B7A0 = 0;
+int D_0048B7A4 = -1;
+unsigned char D_0048B7A8[32] __attribute__((aligned(8))) = { 0 };
+unsigned char D_0048B7C8[32] __attribute__((aligned(8))) = { 0 };
+unsigned char D_0048B7E8[32] __attribute__((aligned(8))) = { 0 };
+unsigned char D_0048B808[32] __attribute__((aligned(8))) = { 0 };
+unsigned char D_0048B828[32] __attribute__((aligned(8))) = { 0 };
+unsigned char D_0048B848[32] __attribute__((aligned(8))) = { 0 };
 extern int func_00294300(GuiCommandCenter* self, int arg);
 extern void func_00294AB0(GuiCommandCenter* self);
 extern int func_00295090(GuiCommandCenter* self, int selection, int arg);
@@ -48,11 +49,11 @@ void func_002982C0(GuiCommandCenter* self) {
 /* Clears the shared text buffers and index. */
 void func_00298310(void) {
     D_0048B7A0 = 0;
-    D_0048B7A8 = 0;
+    D_0048B7A8[0] = 0;
     D_0048B7A4 = -1;
-    D_0048B7C8 = 0;
-    D_0048B7E8 = 0;
-    D_0048B808 = 0;
-    D_0048B828 = 0;
-    D_0048B848 = 0;
+    D_0048B7C8[0] = 0;
+    D_0048B7E8[0] = 0;
+    D_0048B808[0] = 0;
+    D_0048B828[0] = 0;
+    D_0048B848[0] = 0;
 }

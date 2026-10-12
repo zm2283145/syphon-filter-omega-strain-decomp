@@ -9,7 +9,6 @@ struct Vec_3B7270 { unsigned int cap; unsigned int count; E_3B7270* data; };
 typedef struct { char pad[0xC]; void* stream; } Err_3B7270;
 extern "C" {
 extern Err_3B7270* D_00489738;
-extern char D_004BCE80[];
 extern char D_0049F388[];
 extern char D_004A6460[];
 void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
@@ -30,7 +29,7 @@ extern "C" void AnchorKeys_Reserve(Vec_3B7270* v0, unsigned int n0)
     unsigned int n = n0;
     if (v0->cap < n) {
         if (n > 0x1800000) {
-            func_00123BE8(D_00489738->stream, D_004BCE80);
+            func_00123BE8(D_00489738->stream, "vector::reserve length error\n");
             func_00121B60();
         }
         {

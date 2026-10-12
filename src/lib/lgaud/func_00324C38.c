@@ -7,7 +7,6 @@ extern int func_0010D180(int sema);
 extern int func_00110528(void* cd, int rpc, int mode, void* send, int ssize, void* recv, int rsize, void* end, void* param);
 extern int func_00127358(const char* fmt, ...);
 extern void *memcpy(void *, const void *, unsigned int);extern char D_004B8368[];
-extern char D_004B83A8[];
 extern int func_00325F38(int, int *);
 int lgAudPrepareForReboot(void)
 {
@@ -27,7 +26,7 @@ int lgAudPrepareForReboot(void)
         func_0010D180(D_0049147C);
         return ret;
     }
-    func_00127358(D_004B83A8);
+    func_00127358("lgAudPrepareForReboot: rpc call failed\n");
     func_0010D180(D_0049147C);
     return 0x80000000;
 }

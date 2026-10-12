@@ -1,4 +1,4 @@
-extern void (*D_0048C3E0)(int, int, int, char *);
+void (*D_0048C3E0)(int, int, int, char *) = 0;
 extern void func_002CEC38(char *);
 extern void func_002CECB0(char *);
 int func_002CEF90(int a, int b, int c, char *d)

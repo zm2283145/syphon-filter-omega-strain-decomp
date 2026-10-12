@@ -1,5 +1,5 @@
-extern int D_00489BA0;
-extern int D_00489BA4;
+int D_00489BA0 = -1;
+int D_00489BA4 = 0;
 extern int D_004868D0;
 extern int func_0010D050(void);
 extern void func_0010D1A0(int);

@@ -6,8 +6,23 @@
 #include "types.h"
 #include "gameSound_types.h"
 
-extern char D_004DACB0[]; /* SoundMgr vtable */
-extern char D_004F2CC0[]; /* receiver registration data */
+/* SoundMgr vtable */
+extern void SoundMgr_OnMessage();
+extern void func_0012ECE0();
+extern void func_0012ECF0();
+extern void func_0012ED00();
+extern void func_0012ED10();
+extern void func_0012ED20();
+extern void func_0012ED30();
+extern void func_0012ED40();
+extern void func_0012ED50();
+extern void func_001383D0();
+extern void func_001CA750();
+extern void func_003CB1E0();
+extern void func_003CB1F0();
+void * const D_004DACB0[16] = { (void*)0x0, (void*)0x0, (void*)func_001CA750, (void*)SoundMgr_OnMessage, (void*)func_0012ECE0, (void*)func_0012ECF0, (void*)func_001383D0, (void*)func_0012ED00, (void*)func_0012ED10, (void*)func_0012ED20, (void*)func_0012ED30, (void*)func_0012ED40, (void*)func_0012ED50, (void*)func_003CB1E0, (void*)func_003CB1F0, (void*)0x0 };
+/* receiver registration data */
+extern char D_004F2CC0[];
 extern void* Receiver_Construct(void* self, void* info);
 extern void* __construct_array(void* array, void* ctor, void* dtor, int size, int count);
 extern void* func_001C9F10(void* channel, int flags);
@@ -15,7 +30,7 @@ extern void* func_001C9F80(void* channel);
 
 SoundMgr* SoundMgr_Construct(SoundMgr* self) {
     Receiver_Construct(self, D_004F2CC0);
-    self->vtable = D_004DACB0;
+    self->vtable = ((char*)D_004DACB0);
     __construct_array(self->channels, func_001C9F80, func_001C9F10, sizeof(SoundChannel), 50);
     self->unk54A8 = 0;
     self->unk54AC = 0;

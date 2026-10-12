@@ -1,6 +1,11 @@
 #include "types.h"
 struct Script { char pad[0x4E88]; int line; char* module; };
-extern char D_00559FE0[],D_004BD868[],D_004BD878[],D_004BD888[];
+extern char D_00559FE0[];
+char D_004BD868[] = "%s\\common\\%s";
+char D_004BD878[] = "%s\\%s\\%s";
+char D_004BD888[] __attribute__((aligned(8))) = "."; /* 8-aligned in the original data */
+
+
 char*strrchr(char*,int);int sprintf(char*,char*,...);
 void String_Copy(char*,char*);void func_00128F58(char*,char*);
 char*func_003E11C0(struct Script*self,char*name,char*extension,int moduleOnly){

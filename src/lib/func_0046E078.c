@@ -6,14 +6,14 @@
 
 #include "types.h"
 
-extern char D_00497CBC[];
+int D_00497CBC = 0;
 extern char D_005984A0[];
 
 int func_0046E078(void) {
     int v0;
     int cond;
 
-    v0 = *(int*)(char*)D_00497CBC;
+    v0 = *(int*)(char*)((char*)&D_00497CBC);
     cond = v0 == 0;
     if (cond) goto L0046E094;
     v0 = ((int (*)(void))v0)();

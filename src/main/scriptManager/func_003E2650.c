@@ -6,8 +6,10 @@
 #pragma bool off
 #pragma opt_strength_reduction off
 extern "C" {
-extern unsigned char D_004938D0,D_00559F18;
-extern char D_004BDA08[],D_004BDA20[],D_004BDA40[],D_004BDC18[],D_004BDC28[];
+extern unsigned char D_004938D0;
+extern unsigned char D_00559F18;
+extern char D_004BDC18[];
+extern char D_004BDC28[];
 void Mem_Free(int,void*,char*,int);
 void func_00369700(void*,int);
 void func_0036DEC0(void*);
@@ -41,10 +43,10 @@ extern "C" int ScriptMgr_ExportSymbols(Self* self,int one,int two) {
  for(int i=0;i<count;i++) D_00554F28->data[i]->init(0);
  if(D_004938D0 || D_00559F18) {
   if(D_00559F18) {
-   char* name=D_004BDA08; Stream s;
+   char* name="release.sss"; Stream s;
    func_003DC080(&s,name,1);
-   if(s.ready) { func_003DDC30(self,&s);func_003D7930(D_004BDA20,name); }
-   else func_003D7930(D_004BDA40);
+   if(s.ready) { func_003DDC30(self,&s);func_003D7930("symbols exported to %s",name); }
+   else func_003D7930("couldn't export script symbols");
   }
  }
  return !D_00559F18;

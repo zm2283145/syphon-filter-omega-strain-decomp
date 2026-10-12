@@ -1,8 +1,8 @@
 #include "types.h"
-extern const int D_00499B08[];
-extern const float D_00499B18[];
-#define init_jk D_00499B08
-#define PIo2 D_00499B18
+static const unsigned int dat_00499B08[4] = { 0x4, 0x7, 0x9, 0x0 };
+static const float dat_00499B18[20] = { 1.5703125f, 0.00045776368f, 2.5987624e-5f, 7.543713e-8f, 6.0026644e-11f, 7.389644e-13f, 5.3845813e-15f, 5.637851e-18f, 8.300923e-20f, 3.275635e-22f, 6.3331016e-25f, 0.0f, 1.0f, 256.0f, 0.00390625f, 0.0f, 1.0f, 0.78539813f, 3.7748944e-8f, 0.0f };
+#define init_jk ((const int*)dat_00499B08)
+#define PIo2 ((const float*)dat_00499B18)
 extern float func_00121860(float x, int n);
 extern float func_00121788(float x);
 #define scalbnf func_00121860

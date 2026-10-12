@@ -3,7 +3,7 @@ typedef union { float value; unsigned int word; } ieee_float_shape_type;
 #define GET_FLOAT_WORD(i,d) do { ieee_float_shape_type gf_u; gf_u.value = (d); (i) = gf_u.word; } while (0)
 #define SET_FLOAT_WORD(d,i) do { ieee_float_shape_type sf_u; sf_u.word = (i); (d) = sf_u.value; } while (0)
 extern const float D_00499528[];
-#define Zero D_00499528
+#define Zero ((const float*)D_00499528)
 float Math_FModImpl(float x, float y)
 {
 	const float one = 1.0;
@@ -72,3 +72,4 @@ float Math_FModImpl(float x, float y)
 	}
 	return x;
 }
+const float D_00499528[13] = { 0.0f, -0.0f, 0.69313813f, 9.058001e-6f, 33554432.0f, 0.66666663f, 0.39999998f, 0.2857143f, 0.22222199f, 0.181835712f, 0.15313837f, 0.147981972f, 0.0f };

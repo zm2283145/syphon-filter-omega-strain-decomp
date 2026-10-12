@@ -1,6 +1,11 @@
-extern int D_004878A8; extern volatile int D_004878AC;
-extern char D_00487900[], D_00487980[], D_00488A50[];
-extern char D_00488A80[], D_00488EC0[], D_00489400[];
+extern int D_004878A8;
+extern volatile int D_004878AC;
+extern char D_00487900[];
+char D_00487980[0x1000] = { 0 };
+extern char D_00488A50[];
+extern char D_00488A80[];
+extern char D_00488EC0[];
+extern char D_00489400[];
 int func_00119180(int cmd,int *out){
  int v;
  if(cmd!=0x8001){
@@ -15,7 +20,7 @@ int func_00119180(int cmd,int *out){
       }else v=(int)D_00488A80;
      }else { v=D_004878AC; *out=v; goto done; }
     }else v=(int)D_00488A50;
-   }else v=(int)D_00487980;
+   }else v=(int)((char*)D_00487980);
   }else v=(int)D_00487900;
  }else v=D_004878A8;
  *out=v; done: return 1;

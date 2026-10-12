@@ -5,6 +5,8 @@
 
 #include "types.h"
 #include "list_insert_before.h"
+extern "C" { char D_0049C220[] = "allocator.hh"; }
+extern "C" { char D_0049C230[] = "allocator.hh"; }
 
 /* Insert an int value before a list position. */
 DEFINE_LIST_INSERT_BEFORE(func_00164940)

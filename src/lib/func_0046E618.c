@@ -6,14 +6,14 @@
 
 #include "types.h"
 
-extern char D_00497E38[];
-extern char D_00497E3C[];
+int D_00497E38 = 0;
+int D_00497E3C = 0;
 
 int func_0046E618(void) {
     int v0;
     int cond;
 
-    v0 = *(int*)(char*)D_00497E38;
+    v0 = *(int*)(char*)((char*)&D_00497E38);
     cond = v0 == 0;
     if (cond) goto L0046E634;
     v0 = ((int (*)(void))v0)();
@@ -32,7 +32,7 @@ int func_0046E650(void) {
     int v0;
     int cond;
 
-    v0 = *(int*)(char*)D_00497E3C;
+    v0 = *(int*)(char*)((char*)&D_00497E3C);
     cond = v0 == 0;
     if (cond) goto L0046E66C;
     v0 = ((int (*)(void))v0)();

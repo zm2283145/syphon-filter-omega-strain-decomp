@@ -1,7 +1,7 @@
 typedef struct { int x0; int x4; } P11F0;
 extern P11F0 D_004E5F80;
 extern volatile int D_004E5FC0;
-extern int D_0048623C;
+int D_0048623C = 0;
 extern void func_001111B0(int);
 extern void func_001112E0(void);
 extern int func_001161A0(void);

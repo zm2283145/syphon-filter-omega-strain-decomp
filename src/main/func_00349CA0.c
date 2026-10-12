@@ -5,7 +5,6 @@
 
 /* Factory: allocate a 0xA8-byte GuiScreen-derived object and construct it inline. */
 extern "C" {
-extern char D_004BA4A8[];
 extern char D_004DEB10[];
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void GuiScreen_ctor(void* self);
@@ -16,7 +15,7 @@ extern "C" O349CA0* func_00349CA0(void)
     O349CA0* p;
     {
         AllocGuard guard;
-        p = (O349CA0*)Mem_Alloc(0, 0xA8, D_004BA4A8, 0x2A);
+        p = (O349CA0*)Mem_Alloc(0, 0xA8, "guiWidget.hh", 0x2A);
     }
     if (p) {
         GuiScreen_ctor(p);

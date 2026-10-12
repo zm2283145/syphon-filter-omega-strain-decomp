@@ -1,5 +1,5 @@
-extern int D_00487868;
-extern int D_0048786C;
+int D_00487868 = 0;
+int D_0048786C = 0;
 extern char D_004E9AC8[];
 extern void* memset(void* p, int c, unsigned int n);
 void func_00118158(void)

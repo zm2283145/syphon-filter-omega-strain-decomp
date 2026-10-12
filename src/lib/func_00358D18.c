@@ -5,7 +5,7 @@ extern int func_00358678(void);
 extern void *func_00357D50(int);
 extern void *memset(void *, int, unsigned int);
 extern S8D18 *D_00492CD8;
-extern S8D18 *D_00492CDC;
+S8D18 *D_00492CDC = 0;
 
 int func_00358D18(int domain, int type)
 {

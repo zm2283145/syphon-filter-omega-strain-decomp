@@ -12,7 +12,7 @@ public:
     float f24;
 };
 extern "C" int Random_Next(void);
-extern "C" float D_00493988;
+extern "C" { float D_00493988 = 0.9f; }
 extern "C" bool Weapon_HitRoll(B4Obj4* p) {
     float chance;
     if (!p->IsForced() && p->f20 < D_00493988) return 0;

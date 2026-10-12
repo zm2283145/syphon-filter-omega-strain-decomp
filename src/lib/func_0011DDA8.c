@@ -2,7 +2,6 @@
 typedef union { float value; unsigned int word; } ieee_float_shape_type;
 #define GET_FLOAT_WORD(i,d) do { ieee_float_shape_type gf_u; gf_u.value = (d); (i) = gf_u.word; } while (0)
 #define SET_FLOAT_WORD(d,i) do { ieee_float_shape_type sf_u; sf_u.word = (i); (d) = sf_u.value; } while (0)
-extern const float D_0049955C;
 float func_0011DDA8(float x)
 {
 	const float
@@ -15,6 +14,7 @@ float func_0011DDA8(float x)
 	Lg5 = 1.8183572590e-01,
 	Lg6 = 1.5313838422e-01,
 	Lg7 = 1.4798198640e-01;
+	const float two25 = 3.355443200e+07;
 	const float zero   =  0.0;
 	float hfsq,f,s,z,R,w,t1,t2,dk;
 	int k,ix,i,j;
@@ -23,7 +23,7 @@ float func_0011DDA8(float x)
 
 	k=0;
 	if ((ix&0x7fffffff) < 0x00800000L)
-	    return D_0049955C;
+	    return -two25/zero;
 	if (ix<0) return (x-x)/zero;
 	k += (ix>>23)-127;
 	ix &= 0x007fffff;

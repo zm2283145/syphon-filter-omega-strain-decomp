@@ -1,7 +1,7 @@
 typedef struct { int currentCount; int maxCount; int initCount; int numWaitThreads; unsigned int attr; unsigned int option; } SemaParam0C50;
 extern int CreateSema(SemaParam0C50 *);
-extern int D_00486248;
-extern int D_0048624C;
+int D_00486248 = -1;
+int D_0048624C = -1;
 
 void func_00110C50(void)
 {

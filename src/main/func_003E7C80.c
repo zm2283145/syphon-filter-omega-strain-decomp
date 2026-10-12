@@ -7,7 +7,9 @@
 #include "types.h"
 #include "loose04_types.h"
 
-extern char* D_00493970;          /* cursor character */
+/* cursor character */
+extern char D_004BDF20[];
+static void * const dat_00493970[2] = { (void*)D_004BDF20, (void*)0x0 };
 extern void Global_SetCursorChar(char* str);
 
 /* Script native: SetCursorChar(string). */
@@ -23,7 +25,7 @@ int Script_SetCursorChar(L4ScriptArg* args) {
 void Global_SetCursorChar(char* str) {
     char c = *str;
 
-    *D_00493970 = c;
+    *(*(char**)dat_00493970) = c;
 }
 
 void func_003E7CD0(Unk3E7CD0* self) {

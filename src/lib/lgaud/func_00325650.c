@@ -1,7 +1,6 @@
 extern int D_0049147C;
 extern int* D_00491474;
 extern char D_0052AD00[];
-extern char D_004B8290[];
 extern int func_0010D1A0(int sema);
 extern int func_0010D180(int sema);
 extern int func_00110528(void* cd, int rpc, int mode, void* send, int ssize, void* recv, int rsize, void* end, void* param);
@@ -21,7 +20,7 @@ int lgAudGetAvailableRecordingBytes(int device, int *bytes)
         func_0010D180(D_0049147C);
         return device;
     }
-    func_00127358(D_004B8290);
+    func_00127358("lgAudGetAvailableRecordingBytes: rpc call failed\n");
     func_0010D180(D_0049147C);
     return 0x80000000;
 }

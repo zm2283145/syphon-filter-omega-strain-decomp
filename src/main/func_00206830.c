@@ -1,0 +1,85 @@
+#include "types.h"
+typedef struct { char d[0x4]; } B4;
+typedef struct { char d[0x8]; } B8;
+typedef struct { char d[0x10]; } B10;
+typedef struct { char d[0x20]; } B20;
+typedef struct { char d[0x30]; } B30;
+typedef struct { char d[0x40]; } B40;
+typedef struct { char d[0x50]; } B50;
+typedef struct { B10 m2D0; B8 m2E0; B10 m2E8; B8 m2F8; B10 m300; } S2D0;
+extern char D_004A3A20[];
+extern void* CanonicalKey_Construct(void*, void*);
+extern void func_003B43C0(void*, void*, void*, int, int);
+extern void MotionSlider_RegisterNode(void*, void*, void*, void*);
+extern void func_003B28F0(void*, int);
+extern float Math_DegToRad(float);
+extern void* func_0017DE50(void*, float, float, float);
+extern void func_003B3B20(void*, void*, void*, int, void*, int);
+extern void func_001F4470(void*);
+extern void func_001F4460(void*, float, float);
+extern void MotionSliderChild_Resolve(void*, void*, void*, void*);
+extern void* func_001F4370(void*, void*);
+extern void Quat_SetIdentity(void*);
+extern void MotionSlider_Ctor(void*, int, void*, int, int, void*);
+extern void MotionSlider_Dtor(void*, int);
+extern void func_001F3E10(void*, int);
+extern void func_001F3DC0(void*, int);
+extern void func_001F3C70(void*, int);
+extern void* func_0018A700(void*, int);
+extern void MotionSelNode_Ctor(void*, void*, void*, void*);
+extern void* MotionRegistry_MakeKey(void*, void*);
+extern void MotionRegistry_Register(void*, void*, void*);
+extern void func_00200550(void*, int);
+/* Builds and registers the run-roll-back-left motion nodes. */
+#pragma optimization_level 1
+void func_00206830(void* p0)
+{
+    B4 v32C;
+    B4 v328;
+    B4 v324;
+    B8 v318;
+    B8 v310;
+    S2D0 s2D0;
+    B30 v2A0;
+    B30 v270;
+    B50 v220;
+    B30 v1F0;
+    B30 v1C0;
+    B10 v1B0;
+    B50 v160;
+    B30 v130;
+    B30 v100;
+    B30 vD0;
+    B10 vC0;
+    B40 v80;
+    B20 v60;
+    B30 v30;
+    void* t1;
+    void* t2;
+    func_003B43C0(&v220, CanonicalKey_Construct(&v270, D_004A3A20), p0, 2, 1);
+    MotionSlider_RegisterNode(&v32C, p0, CanonicalKey_Construct(&v2A0, "animRunRollBackLeft_Left"), &v220);
+    func_003B28F0(&v220, -1);
+    func_003B3B20(&v160, CanonicalKey_Construct(&v1C0, "animRunRollBackLeft_Left"), p0, 4, func_0017DE50(&v1B0, 0.0f, 0.0f, Math_DegToRad(90.0f)), 2);
+    MotionSlider_RegisterNode(&v328, p0, CanonicalKey_Construct(&v1F0, "animRunRollBackLeft_Back"), &v160);
+    func_003B28F0(&v160, -1);
+    func_001F4470(&v318);
+    func_001F4460(&v310, 0.0f, 0.0f);
+    MotionSliderChild_Resolve(&s2D0.m300, CanonicalKey_Construct(&v100, "animRunRollBackLeft_Back"), p0, &v310);
+    func_001F4460(&s2D0.m2F8, 0.25f, 1.0f);
+    MotionSliderChild_Resolve(&s2D0.m2E8, CanonicalKey_Construct(&vD0, "animRunRollBackLeft_Left"), p0, &s2D0.m2F8);
+    t1 = func_001F4370(&v318, &s2D0.m300);
+    t2 = func_001F4370(t1, &s2D0.m2E8);
+    Quat_SetIdentity(&vC0);
+    MotionSlider_Ctor(&v80, 15, t2, 0, 0, &vC0);
+    MotionSlider_RegisterNode(&v324, p0, CanonicalKey_Construct(&v130, "sliderRunRollBackLeft"), &v80);
+    MotionSlider_Dtor(&v80, -1);
+    func_001F3E10(&s2D0.m2E8, -1);
+    func_001F3DC0(&s2D0.m2F8, -1);
+    func_001F3E10(&s2D0.m300, -1);
+    func_001F3DC0(&v310, -1);
+    func_001F3C70(&v318, -1);
+    MotionSelNode_Ctor(&s2D0.m2D0, CanonicalKey_Construct(&v30, "sliderRunRollBackLeft"), p0, func_0018A700(&s2D0.m2E0, 2));
+    MotionRegistry_Register(p0, MotionRegistry_MakeKey(&v60, "RunRollBackLeft"), &s2D0.m2D0);
+    func_00200550(&s2D0.m2D0, -1);
+}
+#pragma optimization_level reset

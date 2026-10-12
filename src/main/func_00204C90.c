@@ -1,0 +1,79 @@
+#include "types.h"
+typedef struct { char d[0x4]; } B4;
+typedef struct { char d[0x8]; } B8;
+typedef struct { char d[0x10]; } B10;
+typedef struct { char d[0x30]; } B30;
+typedef struct { char d[0x40]; } B40;
+typedef struct { char d[0x50]; } B50;
+typedef struct { B10 m2C0; B8 m2D0; B10 m2D8; B8 m2E8; B10 m2F0; } S2C0;
+extern void* CanonicalKey_Construct(void*, void*);
+extern void func_003B43C0(void*, void*, void*, int, int);
+extern void MotionSlider_RegisterNode(void*, void*, void*, void*);
+extern void func_003B28F0(void*, int);
+extern void* func_0017DE50(void*, float, float, float);
+extern void func_003B41E0(void*, void*, void*, int, int, void*, int, int, float, float, int);
+extern void func_001F4470(void*);
+extern void func_001F4460(void*, float, float);
+extern void MotionSliderChild_Resolve(void*, void*, void*, void*);
+extern void* func_001F4370(void*, void*);
+extern void Quat_SetIdentity(void*);
+extern void MotionSlider_Ctor(void*, int, void*, int, int, void*);
+extern void MotionSlider_Dtor(void*, int);
+extern void func_001F3E10(void*, int);
+extern void func_001F3DC0(void*, int);
+extern void func_001F3C70(void*, int);
+/* Builds and registers the hang-from-edge motion nodes. */
+#pragma optimization_level 1
+void func_00204C90(void* p0)
+{
+    B4 v31C;
+    B4 v318;
+    B4 v314;
+    B8 v308;
+    B8 v300;
+    S2C0 s2C0;
+    B30 v290;
+    B30 v260;
+    B50 v210;
+    B30 v1E0;
+    B30 v1B0;
+    B10 v1A0;
+    B50 v150;
+    B30 v120;
+    B30 vF0;
+    B30 vC0;
+    B30 v90;
+    B10 v80;
+    B40 v40;
+    void* t1;
+    void* t2;
+    void* t3;
+    func_003B43C0(&v210, CanonicalKey_Construct(&v260, "hang_from_edge_strafe"), p0, 5, 0);
+    MotionSlider_RegisterNode(&v31C, p0, CanonicalKey_Construct(&v290, "animHangMoveRght"), &v210);
+    func_003B28F0(&v210, -1);
+    func_003B41E0(&v150, CanonicalKey_Construct(&v1B0, "hang_from_edge_strafe"), p0, 0, 1, func_0017DE50(&v1A0, 0.0f, 0.0f, 0.0f), 5, 0, 0.0f, 1.0f, 0);
+    MotionSlider_RegisterNode(&v318, p0, CanonicalKey_Construct(&v1E0, "animHangMoveLeft"), &v150);
+    func_003B28F0(&v150, -1);
+    func_001F4470(&v308);
+    func_001F4460(&v300, 0.0f, 0.0f);
+    MotionSliderChild_Resolve(&s2C0.m2F0, CanonicalKey_Construct(&vF0, "animHangMoveLeft"), p0, &v300);
+    func_001F4460(&s2C0.m2E8, 0.5f, 0.5f);
+    MotionSliderChild_Resolve(&s2C0.m2D8, CanonicalKey_Construct(&vC0, "hang_from_edge_idle"), p0, &s2C0.m2E8);
+    func_001F4460(&s2C0.m2D0, 1.0f, 1.0f);
+    MotionSliderChild_Resolve(&s2C0.m2C0, CanonicalKey_Construct(&v90, "animHangMoveRght"), p0, &s2C0.m2D0);
+    t1 = func_001F4370(&v308, &s2C0.m2F0);
+    t2 = func_001F4370(t1, &s2C0.m2D8);
+    t3 = func_001F4370(t2, &s2C0.m2C0);
+    Quat_SetIdentity(&v80);
+    MotionSlider_Ctor(&v40, 6, t3, 0, 0, &v80);
+    MotionSlider_RegisterNode(&v314, p0, CanonicalKey_Construct(&v120, "sliderHang"), &v40);
+    MotionSlider_Dtor(&v40, -1);
+    func_001F3E10(&s2C0.m2C0, -1);
+    func_001F3DC0(&s2C0.m2D0, -1);
+    func_001F3E10(&s2C0.m2D8, -1);
+    func_001F3DC0(&s2C0.m2E8, -1);
+    func_001F3E10(&s2C0.m2F0, -1);
+    func_001F3DC0(&v300, -1);
+    func_001F3C70(&v308, -1);
+}
+#pragma optimization_level reset

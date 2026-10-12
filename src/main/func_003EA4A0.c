@@ -13,7 +13,7 @@ public:
 };
 extern "C" int Random_Next(void);
 extern "C" float D_00493988;
-extern "C" bool func_003EA4A0(B4Obj4* p) {
+extern "C" bool Weapon_HitRoll(B4Obj4* p) {
     float chance;
     if (!p->IsForced() && p->f20 < D_00493988) return 0;
     chance = p->f20 * p->f24;

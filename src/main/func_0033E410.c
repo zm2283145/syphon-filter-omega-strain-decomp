@@ -1,0 +1,43 @@
+#pragma cplusplus on
+#include "types.h"
+struct V33E4 { virtual int v0(); virtual int v1(); virtual int v2(); virtual int v3(); virtual int v4(); virtual int v5(); virtual int v6(); virtual int v7(); virtual int v8(); virtual int v9(); virtual int v10(); virtual int v11(); virtual int v12(); virtual int v13(); virtual int v14(); virtual int v15(); virtual int v16(); virtual int v17(); virtual int v18(); virtual int v19(); virtual int v20(); virtual int v21(); virtual int v22(); virtual void v23(void*, int); };
+typedef struct { char pad[0x10]; void* f10; } W33E4;
+typedef struct { int f0; char name[4]; } I33E4;
+typedef struct { char pad[0x14]; unsigned short flags; char pad2[0x92]; int fa8; } O33E4;
+extern "C" {
+extern int func_004294C0(void);
+extern int func_00450C60(int, int, char*);
+extern int D_004FFC04;
+extern char D_004B9C60[];
+extern char* func_0033CE30(O33E4*, int, char*, int, int, int);
+extern int func_002CAE30(int, int, char*, char*, int, int);
+extern void func_002C82F0(int);
+extern void func_002C81D0(int);
+extern int func_00414790(void);
+extern W33E4* func_00418A80(int, char*, char*);
+extern void func_00360610(W33E4*, I33E4*, char*);
+extern V33E4* func_004147A0(void);
+extern void func_002CAC80(int, int);
+}
+extern "C" void func_0033E410(O33E4* o, I33E4* info) {
+    char buf[0x100];
+    if (!o->fa8 || !func_004294C0()) return;
+    if (func_00450C60(func_004294C0(), info->f0, buf)) {
+        int g = D_004FFC04;
+        int h = func_002CAE30(g, 0, D_004B9C60, func_0033CE30(o, 0x7D, info->name, 0, 0, 0), 0, 0);
+        W33E4* w;
+        func_002C82F0(D_004FFC04);
+        w = func_00418A80(func_00414790(), "GuiAgentInfo", "AGNTINFO");
+        func_002C81D0(D_004FFC04);
+        if (w) {
+            w->f10 = o;
+            func_00360610(w, info, buf);
+        }
+        o->flags &= ~2;
+        func_004147A0()->v23(w, 0x14);
+        func_002CAC80(D_004FFC04, h);
+    } else {
+        int g = D_004FFC04;
+        func_002CAE30(g, 2, D_004B9C60, func_0033CE30(o, 0x67, 0, 0, 0, 0), 0, 0);
+    }
+}

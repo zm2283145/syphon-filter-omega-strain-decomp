@@ -1,22 +1,22 @@
 #include "types.h"
 typedef struct { int pad0; int pad4; int id; int padC; } Slot_39B0;
 typedef struct { Slot_39B0 slots[6]; } S_39B0;
-int func_00143BC0(S_39B0* self);
-void func_00143B60(S_39B0* self);
-int func_00143D20(int id);
-void func_00142C50(S_39B0* self, int slot);
-unsigned char func_001439B0(S_39B0* self, int id)
+int WeaponInv_CanChangeMode(S_39B0* self);
+void WeaponInv_HolsterCurrent(S_39B0* self);
+int WeaponInv_SlotOfItem(int id);
+void WeaponInv_Equip(S_39B0* self, int slot);
+unsigned char WeaponInv_EquipItem(S_39B0* self, int id)
 {
     unsigned char r = 0;
-    if (func_00143BC0(self)) {
+    if (WeaponInv_CanChangeMode(self)) {
         if (id == -1) {
-            func_00143B60(self);
+            WeaponInv_HolsterCurrent(self);
             r = 1;
         } else {
-            int slot = func_00143D20(id);
+            int slot = WeaponInv_SlotOfItem(id);
             int* p = (int*)((char*)&self->slots[0].id + ((unsigned char)slot << 4));
             if (id == *p) {
-                func_00142C50(self, slot);
+                WeaponInv_Equip(self, slot);
                 r = (id == *p);
             }
         }

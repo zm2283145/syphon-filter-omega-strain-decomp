@@ -6,10 +6,10 @@
 #include "types.h"
 #include "node_types.h"
 
-extern int func_0015C170(void* a0, cNode* node);
+extern int ActorObj_BuildNodeMatrix(void* a0, cNode* node);
 
 int cNode_v34(void* a0, cNode* node) {
-    return func_0015C170(a0, node);
+    return ActorObj_BuildNodeMatrix(a0, node);
 }
 
 /* v35..v37: write the node translation as a point (w = 1). */
@@ -44,15 +44,15 @@ void cNode_v37(Vec4* out, cNode* node) {
 }
 
 int cNode_v38(void* a0, cNode* node) {
-    return func_0015C170(a0, node);
+    return ActorObj_BuildNodeMatrix(a0, node);
 }
 
 int cNode_v39(void* a0, cNode* node) {
-    return func_0015C170(a0, node);
+    return ActorObj_BuildNodeMatrix(a0, node);
 }
 
 int cNode_v3B(void* a0, cNode* node) {
-    return func_0015C170(a0, node);
+    return ActorObj_BuildNodeMatrix(a0, node);
 }
 
 void cNode_v0E(void) {

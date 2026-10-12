@@ -5,7 +5,7 @@
 
 #include "gobj_types.h"
 
-extern int func_0038E100(int* p);
+extern int Model_HardMeshAttachPoints(int* p);
 extern void func_003A9F00(int* ctx);
 extern int func_003A9F10(int* ctx);
 extern void func_003CE790(cVUM_GOBJ* self);
@@ -25,6 +25,6 @@ void func_003928D0(cVUM_GOBJ* self) {
 void func_00392900(cVUM_GOBJ* self) {
     func_003A9F10(&self->modelCtx);
     self->model = &self->modelCtx;
-    func_0038E100(&self->unk60);
+    Model_HardMeshAttachPoints(&self->unk60);
     func_003CE810(self);
 }

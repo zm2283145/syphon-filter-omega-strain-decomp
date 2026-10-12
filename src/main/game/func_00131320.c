@@ -16,7 +16,7 @@ extern Obj_1320* D_00583878;
 extern int D_0058387C;
 void List_PushFront(void* list, Obj_1320** o);
 }
-extern "C" void func_00131320(S_1320* self, Obj_1320* o)
+extern "C" void World_PushObjectFromAction(S_1320* self, Obj_1320* o)
 {
     int m1;
     int* p;

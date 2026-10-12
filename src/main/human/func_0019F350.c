@@ -5,7 +5,7 @@
 #pragma peephole off
 #pragma opt_propagation off
 #pragma opt_common_subs off
-void func_0019F350(PPMtx* out, PPMtx* in, PPMtx* m) {
+void Actor_ShotFrameNodeWorld(PPMtx* out, PPMtx* in, PPMtx* m) {
     PPMtx t;
     PPMtx* ps = &t;
     PPMtx* pd = &t;

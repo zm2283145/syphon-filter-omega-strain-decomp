@@ -11,9 +11,9 @@ struct TankObj {
     char pad4[8]; int idC; int id10; unsigned char b14; char pad15[0x4B]; int f60; int f64; int f68; int f6C; unsigned char b70; char pad71[3]; int f74;
 };
 extern "C" {
-extern char D_004F77C0[];
+extern char g_TargetVisMgr[];
 extern char D_004DCF90[];
-void func_0022C650(void* list, int arg);
+void TargetVis_Register(void* list, int arg);
 void Object_Register(TankObj* o);
 int NetMap_BindReceiver(int id, int owner, TankObj* o);
 }
@@ -26,7 +26,7 @@ static inline void TankObj_Init(TankObj* o, int arg)
     o->f68 = 0;
     o->f64 = 0;
     o->b70 = 1;
-    func_0022C650(D_004F77C0, arg);
+    TargetVis_Register(g_TargetVisMgr, arg);
     Object_Register(o);
     o->activate(1);
     o->f74 = 0;

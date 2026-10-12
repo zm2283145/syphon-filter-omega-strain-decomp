@@ -5,9 +5,9 @@ struct T285EE0 { void* vt; char pad[0x5C]; int x60; void* p64; void* p68; void* 
 extern "C" {
 extern char D_004DCF90[];
 extern char D_004A93D0[];
-extern char D_004F77C0[];
+extern char g_TargetVisMgr[];
 void Mem_Free(int pool, void* p, char* file, int line);
-void func_0022C720(void* mgr, int id);
+void TargetVis_Unregister(void* mgr, int id);
 void cGOBJ_dtor(void* p, int f);
 void operator_delete(void* p);
 }
@@ -25,7 +25,7 @@ extern "C" T285EE0* cTank_dtor(T285EE0* self, short del)
         Rel285EE0(self->p64, 0x1DA);
         Rel285EE0(self->p68, 0x1DD);
         Rel285EE0(self->p6C, 0x1E0);
-        func_0022C720(D_004F77C0, self->x60);
+        TargetVis_Unregister(g_TargetVisMgr, self->x60);
         cGOBJ_dtor(self, 0);
         if (del > 0)
             operator_delete(self);

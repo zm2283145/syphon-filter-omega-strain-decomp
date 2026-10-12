@@ -6,7 +6,7 @@
 #include "npc_types.h"
 
 extern int GObj_IdentityB(int handle);
-extern int func_0016DDB0(NpcAi* ai, int target, int priority);
+extern int NpcPerception_SetTarget(NpcAi* ai, int target, int priority);
 
 /* Script: cNPC.ResumeAITargeting(). */
 int Script_cNPC_ResumeAITargeting(NpcScriptArgs* args) {
@@ -16,7 +16,7 @@ int Script_cNPC_ResumeAITargeting(NpcScriptArgs* args) {
 
 /* Script: cNPC.ClearTarget(). */
 int Script_cNPC_ClearTarget(NpcScriptArgs* args) {
-    func_0016DDB0(args->npc->ai, 0, 100);
+    NpcPerception_SetTarget(args->npc->ai, 0, 100);
     return 0;
 }
 
@@ -25,6 +25,6 @@ int Script_cNPC_SetTarget(NpcScriptArgs* args) {
     int target;
 
     target = GObj_IdentityB(args->arg1);
-    func_0016DDB0(args->npc->ai, target, 100);
+    NpcPerception_SetTarget(args->npc->ai, target, 100);
     return 0;
 }

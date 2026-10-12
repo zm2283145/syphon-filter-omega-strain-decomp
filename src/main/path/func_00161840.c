@@ -12,7 +12,7 @@ typedef struct {
     char pad61[0x70 - 0x61];
     int x70; int x74; int x78;
 } S_1840;
-S_1840* func_00161840(S_1840* self, int a, int b, int c)
+S_1840* NpcPath_Construct(S_1840* self, int a, int b, int c)
 {
     self->x4C = c;
     self->x70 = a;

@@ -55,11 +55,11 @@ void Event_Send(void* m, void* target, int immediate);
 void cMessage_dtor(void* m, int flags);
 void SoundEvent_CtorFromPreset(Snd_00186BF0* e, void* preset, void* owner);
 void func_0036E220(Str_00186BF0* s, int flag);
-void func_003CC990(Npc_00186BF0* self, int a, int b);
+void Actor_SetHealth(Npc_00186BF0* self, int a, int b);
 void func_0038CBF0(void* p);
-void func_00143770(int a);
+void WeaponInv_ReleaseHeldObject(int a);
 int func_00186950(Npc_00186BF0* self, V4_00186BF0* dir, int n);
-void func_003CCAC0(Npc_00186BF0* self, int a1, Att_00186BF0* att, int a3, int type, V4_00186BF0* pos);
+void Controller_DeathNotice(Npc_00186BF0* self, int a1, Att_00186BF0* att, int a3, int type, V4_00186BF0* pos);
 }
 static inline Msg_00186BF0* Ctor_00186BF0(Msg_00186BF0* p)
 {
@@ -81,15 +81,15 @@ static inline void Send_00186BF0(Msg_00186BF0* p, int anim, Npc_00186BF0* self)
     Event_Send(p, self, 1);
 }
 #pragma opt_propagation off
-extern "C" void func_00186BF0(Npc_00186BF0* self, int a1, Att_00186BF0* att, int a3, int type, V4_00186BF0* pos)
+extern "C" void Actor_Kill(Npc_00186BF0* self, int a1, Att_00186BF0* att, int a3, int type, V4_00186BF0* pos)
 {
     if (self->b33A4) {
-        func_003CC990(self, self->f3398, 0);
+        Actor_SetHealth(self, self->f3398, 0);
         func_0038CBF0(self->f60);
     } else if (self->b14) {
         int anim;
         char* snd;
-        func_00143770(self->f3524);
+        WeaponInv_ReleaseHeldObject(self->f3524);
         anim = 0;
         if (self->b3260 == 1)
             snd = D_004F0430;
@@ -154,7 +154,7 @@ extern "C" void func_00186BF0(Npc_00186BF0* self, int a1, Att_00186BF0* att, int
             func_0036E220(&s.s78, -1);
             cMessage_dtor(&s, 0);
         }
-        func_003CCAC0(self, a1, att, a3, type, pos);
+        Controller_DeathNotice(self, a1, att, a3, type, pos);
         msg.vt = D_004E0840;
         cMessage_dtor(&msg, 0);
     }

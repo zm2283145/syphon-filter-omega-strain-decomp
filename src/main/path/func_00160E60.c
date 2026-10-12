@@ -7,7 +7,7 @@ extern "C" {
 extern char D_0049C1B8[];
 void Mem_Free(int pool, void* p, char* file, int line);
 }
-extern "C" void func_00160E60(S_0E60* self)
+extern "C" void NpcRoute_ReleaseBuffer(S_0E60* self)
 {
     T_0E60* t = self->t;
     if (t) {

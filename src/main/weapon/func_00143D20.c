@@ -9,7 +9,7 @@
 extern signed char D_00489D60[];
 
 /* Maps a weapon id through definition byte +0x30 and the D_00489D60 table. */
-int func_00143D20(int id) {
+int WeaponInv_SlotOfItem(int id) {
     WeaponDef* def = WeaponDb_Get(D_004FFD30, id);
 
     return D_00489D60[def->unk30];

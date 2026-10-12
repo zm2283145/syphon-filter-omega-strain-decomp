@@ -1,6 +1,6 @@
 #include "types.h"
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
-int func_0016E170(int , int, int);                      
+int NpcAi_RequestMode(int , int, int);
 
 int func_001584B0(int arg0) {
     int var_a0;
@@ -18,7 +18,7 @@ int func_001584B0(int arg0) {
     } while (var_a0 < 9);
     F_(arg0, 0xF0, int) = 0;
     F_(arg0, 0xF8, int) = 0;
-    func_0016E170(arg0 + 0xF0, 0, 0);
+    NpcAi_RequestMode(arg0 + 0xF0, 0, 0);
     var_a1 = arg0 + 0x1E0;
     F_(arg0, 0x1D0, int) = -1;
     do {

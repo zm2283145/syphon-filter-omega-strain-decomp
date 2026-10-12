@@ -13,14 +13,14 @@ typedef struct Obj3929 {
 } Obj3929;
 
 extern void func_003A9F10(void* part);
-extern void func_0038E100(void* part);
+extern void Model_HardMeshAttachPoints(void* part);
 extern void Object_Activate(Obj3929* self, int arg);
 
 /* Initializes the sub-parts and activates the object. */
 void func_00392940(Obj3929* self, int arg) {
     func_003A9F10(self->part2E50);
     self->current = self->part2E50;
-    func_0038E100(self->part60);
+    Model_HardMeshAttachPoints(self->part60);
     Object_Activate(self, arg);
 }
 

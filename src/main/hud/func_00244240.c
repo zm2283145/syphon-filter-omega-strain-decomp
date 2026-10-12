@@ -3,7 +3,7 @@
 extern void func_00244280(int);
 extern void func_003E9730(int);
 
-void func_00244240(int a0) {
+void Hud_OnTargetChanged(int a0) {
     int s0;
     int cond;
 

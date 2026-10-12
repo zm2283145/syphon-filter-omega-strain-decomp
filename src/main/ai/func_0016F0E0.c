@@ -7,7 +7,7 @@ typedef struct {
     char pad[0xF];
 } E3AIMsgF0;
 typedef struct { char pad[0x30]; void* owner; char pad2[0x29]; unsigned char disabled; } E3cAIF0;
-extern char D_004FF270[];
+extern char g_ScriptAIDeactivatedMsgKey[];
 extern char D_004DCD10[];
 extern void Event_Construct(E3AIMsgF0* msg, void* name);
 extern void Event_Send(E3AIMsgF0* msg, void* target, int flags);
@@ -19,7 +19,7 @@ void cAI_v11(E3cAIF0* self)
     if (!self->disabled) {
         E3AIMsgF0 msg;
         unsigned char* kind;
-        Event_Construct(&msg, D_004FF270);
+        Event_Construct(&msg, g_ScriptAIDeactivatedMsgKey);
         msg.vtable = D_004DCD10;
         kind = &msg.kind;
         *kind = 2;

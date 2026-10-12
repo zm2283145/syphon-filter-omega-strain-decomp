@@ -3,7 +3,7 @@ extern unsigned char D_005721C8;
 extern unsigned char D_005721C0;
 extern char D_004FFB50[];
 extern void func_0042A770(void);
-extern void func_0016A970(void);
+extern void TeamRelations_Create(void);
 extern void World_Setup(void* w);
 extern void func_0042A1B0(void);
 extern void func_0042B0C0(void);
@@ -18,7 +18,7 @@ static inline int IsHostGR(void)
 void Game_Reset(void)
 {
     if (D_005721C8) func_0042A770();
-    func_0016A970();
+    TeamRelations_Create();
     World_Setup(D_004FFB50);
     if (D_005721C8) {
         func_0042A1B0();
@@ -27,7 +27,7 @@ void Game_Reset(void)
             func_00185840();
             NetObj_LoadNetworkData();
         } else {
-            func_0016A970();
+            TeamRelations_Create();
         }
     }
     if (D_005721C8) func_00429D30();

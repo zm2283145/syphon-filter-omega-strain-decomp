@@ -1,0 +1,72 @@
+#pragma cplusplus on
+#include "types.h"
+#include "alloc_guard.h"
+struct T_439670 { int id; unsigned int a : 4; unsigned int b : 4; };
+typedef struct { char pad[0x1C]; T_439670* f1C; } P_439670;
+extern "C" {
+extern unsigned char D_005721C8;
+extern unsigned char D_005721B8;
+extern unsigned char D_005721D0;
+extern unsigned char D_005721C0;
+extern unsigned char D_00583880;
+extern T_439670* D_00583888;
+extern char D_004BFD38[];
+extern char D_004BFD60[];
+extern int D_00497570;
+extern int D_00497578;
+int func_002EAF28(int* key, int a, int b, int c, int d, int e, int f, T_439670* g, char* h, int i);
+int func_002EB650(P_439670** out, int key);
+void* Mem_Alloc(int pool, int size, char* file, int line);
+void Mem_Free(int pool, void* p, char* file, int line);
+void func_00439670(void);
+}
+static inline void Reg_439670(int* key, T_439670** out)
+{
+    P_439670* p;
+    if (!func_002EAF28(key, 2, 4, 0, 0, 0, 0, *out, D_004BFD38, D_00497570) && !func_002EB650(&p, *key)) *out = p->f1C;
+}
+static inline int NetOk_439670(void) { return D_005721C8 ? D_005721C0 : 1; }
+static inline void RegAll_439670(void) { if (D_005721D0 && NetOk_439670()) Reg_439670(&D_00497578, &D_00583888); }
+
+#pragma push
+#pragma opt_unroll_loops off
+void func_00439670(void)
+{
+    if (D_005721C8 && !D_005721B8) {
+    if (D_005721D0) {
+        T_439670* p;
+        if (D_00583880) return;
+        if (!NetOk_439670()) return;
+        p = D_00583888;
+        RegAll_439670();
+        if (p) {
+            if (D_00533880) Alloc_Lock(9);
+            D_00533888++;
+            Mem_Free(0, p, D_004BFD60, 0x211);
+            if (D_00533880) Alloc_Unlock(9);
+            D_00533888--;
+        }
+        D_00583880 = 1;
+    } else {
+        T_439670* p;
+        if (D_00583888) return;
+        {
+            if (D_00533880) Alloc_Lock(9);
+            D_00533888++;
+            p = (T_439670*)Mem_Alloc(0, 0x1B8, D_004BFD60, 0x21B);
+            if (D_00533880) Alloc_Unlock(9);
+            D_00533888--;
+        }
+        if (p) {
+            T_439670* e;
+            for (e = p; e != p + 55; e++) {
+                e->id = -1;
+                e->a = 15;
+                e->b = 0;
+            }
+        }
+        D_00583888 = p;
+    }
+    }
+}
+#pragma pop

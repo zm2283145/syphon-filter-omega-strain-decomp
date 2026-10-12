@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-extern int D_0055A818;  /* counter */
+extern int g_FrameCounter;  /* counter */
 
-void func_00165610(void) {
-    D_0055A818 = D_0055A818 + 1;
+void Game_IncFrameCounter(void) {
+    g_FrameCounter = g_FrameCounter + 1;
 }

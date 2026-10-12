@@ -1,0 +1,18 @@
+#include "types.h"
+int Script_SetPickupTextColor();
+int func_003D8740();
+extern char D_00493880;
+extern char D_00493888;
+extern char D_00493890;
+extern int D_004F7E70;
+extern int D_004F7E74;
+extern int D_004F7E78;
+extern int D_004F7E7C;
+extern int D_004F7E88;
+void func_004CFCC0(void) {
+    D_004F7E70 = 1050253722;
+    D_004F7E74 = 1057803469;
+    D_004F7E78 = 1061158912;
+    D_004F7E7C = 1065353216;
+    D_004F7E88 = func_003D8740(Script_SetPickupTextColor, &D_00493880, "SetPickupTextColor", 4, &D_00493888, &D_00493888, &D_00493888, &D_00493890);
+}

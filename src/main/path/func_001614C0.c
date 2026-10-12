@@ -46,7 +46,7 @@ extern "C" {
 typedef struct { char pad[0x14]; int id; int arg; int pad1c; void* buf; int count; } S_14C0;
 extern char D_0049C1B8[];
 extern char D_004FFB50[];
-extern char D_004ED9B0[];
+extern char g_NpcRouteMgr[];
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void* Service_Lookup(void* reg, void* key);
 void func_0015F3D0(void* svc, int id, int arg, S_14C0* s);
@@ -65,5 +65,5 @@ extern "C" void func_001614C0(void* src, S_14C0* self)
         self->buf = p;
     }
     if (self->id >= 0)
-        func_0015F3D0(Service_Lookup(D_004FFB50, D_004ED9B0), self->id, self->arg, self);
+        func_0015F3D0(Service_Lookup(D_004FFB50, g_NpcRouteMgr), self->id, self->arg, self);
 }

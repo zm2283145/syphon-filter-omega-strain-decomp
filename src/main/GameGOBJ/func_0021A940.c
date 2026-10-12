@@ -31,7 +31,7 @@ public:
 };
 typedef struct { char p0[0x10]; int target; char p14[0x2C - 0x14]; unsigned char flag; char p2d[0x78 - 0x2D]; int n; C1Ch_21A9** ch; } C1Obj_21A9;
 extern "C" unsigned char D_005721C8;
-extern "C" char D_0055D498[];
+extern "C" char g_cDisableMsgClass[];
 extern "C" char D_004E0860[];
 extern "C" void Event_Construct(C1Msg_21A9* m, void* type);
 extern "C" void func_003FF650(C1Msg_21A9* m, int target, int x);
@@ -42,7 +42,7 @@ extern "C" void func_0021A940(C1Obj_21A9* o)
     int i;
     if (D_005721C8) {
         C1Msg_21A9 msg;
-        Event_Construct(&msg, D_0055D498);
+        Event_Construct(&msg, g_cDisableMsgClass);
         msg.vtbl = D_004E0860;
         msg.id = -1;
         msg.size = 0x40;

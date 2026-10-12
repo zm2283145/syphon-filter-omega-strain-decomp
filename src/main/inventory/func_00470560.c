@@ -12,7 +12,7 @@ static inline Pt2_Item* Find(Pt2_ItemInv* inv, int id) {
     return 0;
 }
 #pragma opt_strength_reduction off
-int func_00470560(Pt2_ItemInv* inv, int id) {
+int ItemInv_Count(Pt2_ItemInv* inv, int id) {
     Pt2_Item* e = Find(inv, id);
     return e ? e->count : 0;
 }

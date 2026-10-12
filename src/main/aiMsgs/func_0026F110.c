@@ -3,21 +3,21 @@
 #define NULL 0
 #define VC_(p) ((int (*)())(p))
 #pragma mpwc_relax on
-int Event_Construct();                             
-int func_001437A0(int );                          
+int Event_Construct();
+int WeaponInv_GetHeldClass(int );
 extern int D_004DCBF0;
 extern int D_004DCD70;
-extern int D_004FF2A0;
+extern int g_ScriptAIWeaponFiredMsgKey;
 
 int cAIWeaponFiredMsg_ctor(int arg0, int arg1, int arg2, int arg3) {
-    Event_Construct(arg0, &D_004FF2A0);
+    Event_Construct(arg0, &g_ScriptAIWeaponFiredMsgKey);
     F_(arg0, 0x0, int) = (int)(&D_004DCD70);
     F_(arg0, 0x24, int) = arg1;
     F_(arg0, 0x20, signed char) = 2;
     F_(arg0, 0x0, int) = (int)(&D_004DCBF0);
     F_(arg0, 0x2C, int) = arg3;
     if (arg2 != NULL) {
-        F_(arg0, 0x30, signed char) = (signed char) ((func_001437A0(arg2) & 0xFF) == 1);
+        F_(arg0, 0x30, signed char) = (signed char) ((WeaponInv_GetHeldClass(arg2) & 0xFF) == 1);
         F_(arg0, 0x28, int) = (int) F_(((char *)(F_(arg2, 0x84, unsigned char) * 0x10) + (int)(arg2)), 0x8, int);
     } else {
         F_(arg0, 0x28, int) = -1;

@@ -47,7 +47,7 @@ typedef struct Pt1FsSelf {
     char pad14[4];
     int visId;
 } Pt1FsSelf;
-extern char D_004F0C50[];
+extern char g_FlashlightClickSound[];
 extern char D_004FFB50[];
 extern char D_004DAE30[];
 extern char D_00535D20[];
@@ -55,32 +55,32 @@ extern char D_004D9280[];
 extern char D_004D9240[];
 extern char D_004D9200[];
 extern char D_004E15E0[];
-extern char D_004F77C0[];
+extern char g_TargetVisMgr[];
 extern signed char D_004979B0;
 extern unsigned char D_00535D62;
 extern "C" void func_0020F860(Pt1FsSnd* e, void* preset, Pt1FsId* id);
 extern "C" void Event_Send(void* msg, void* target, int immediate);
 extern "C" void cMessage_dtor(void* msg, int flags);
 extern "C" void func_0036E220(Pt1FsStr* s, int flag);
-extern "C" void func_00142E00(void* weapons, int item, int state);
-extern "C" Pt1FsLight* func_00373E70(void* pool, int kind);
+extern "C" void WeaponInv_SetSlotModelState(void* weapons, int item, int state);
+extern "C" Pt1FsLight* LightMgr_AllocPoint(void* pool, int kind);
 extern "C" Pt1FsV4* func_00426890(Pt1FsV4* out, float r, float g, float b, float a);
 extern "C" Pt1FsV4* func_00132000(Pt1FsV4* out, float x, float y, float z, float w);
-extern "C" void func_00179540(Pt1FsLight* l, int flags, Pt1FsV4* color, Pt1FsV4* pos, int range);
-extern "C" void func_0022C650(void* reg, int id);
-extern "C" void func_0022C720(void* reg, int id);
+extern "C" void LevelLight_InitPoint(Pt1FsLight* l, int flags, Pt1FsV4* color, Pt1FsV4* pos, int range);
+extern "C" void TargetVis_Register(void* reg, int id);
+extern "C" void TargetVis_Unregister(void* reg, int id);
 
-extern "C" void func_0045B610(Pt1FsSelf* self, int on)
+extern "C" void Flashlight_SetState(Pt1FsSelf* self, int on)
 {
     if ((unsigned char)on == self->on)
         return;
     if (self->owner) {
         Pt1FsId id = self->owner->GetId();
         Pt1FsSnd snd;
-        func_0020F860(&snd, D_004F0C50, &id);
+        func_0020F860(&snd, g_FlashlightClickSound, &id);
         snd.flag = 1;
         Event_Send(&snd, D_004FFB50, 0);
-        func_00142E00(self->owner->weapons, 7, on);
+        WeaponInv_SetSlotModelState(self->owner->weapons, 7, on);
         snd.vt = D_004DAE30;
         func_0036E220(&snd.s114, -1);
         func_0036E220(&snd.s78, -1);
@@ -88,7 +88,7 @@ extern "C" void func_0045B610(Pt1FsSelf* self, int on)
     }
     self->on = on;
     if (self->on) {
-        Pt1FsLight* l = func_00373E70(D_00535D20, 4);
+        Pt1FsLight* l = LightMgr_AllocPoint(D_00535D20, 4);
         if (l) {
             *(void**)((char*)l + 4) = D_004D9280;
             l->kind = D_004979B0;
@@ -111,25 +111,25 @@ extern "C" void func_0045B610(Pt1FsSelf* self, int on)
             *(void**)((char*)l + 4) = D_004D9200;
         }
         self->beam = l;
-        l = func_00373E70(D_00535D20, 4);
+        l = LightMgr_AllocPoint(D_00535D20, 4);
         if (l) {
             Pt1FsV4 color;
             Pt1FsV4 pos;
-            func_00179540(l, 0x40, func_00426890(&color, 1.0f, 1.0f, 1.0f, 1.0f), func_00132000(&pos, 0.0f, 0.0f, 0.0f, 0.0f), 0x10);
+            LevelLight_InitPoint(l, 0x40, func_00426890(&color, 1.0f, 1.0f, 1.0f, 1.0f), func_00132000(&pos, 0.0f, 0.0f, 0.0f, 0.0f), 0x10);
             *(void**)((char*)l + 4) = D_004E15E0;
             l->extra = 0;
         }
         self->glow = l;
         self->level = -1.0f;
         if (self->beam) {
-            func_0022C650(D_004F77C0, self->visId);
+            TargetVis_Register(g_TargetVisMgr, self->visId);
             self->beam->Enable();
         }
         if (self->glow)
             self->glow->Enable();
     } else {
         if (self->beam) {
-            func_0022C720(D_004F77C0, self->visId);
+            TargetVis_Unregister(g_TargetVisMgr, self->visId);
             if (self->beam)
                 self->beam->Destroy(1);
             self->beam = 0;

@@ -1,7 +1,7 @@
 #include "types.h"
 typedef union { float value; unsigned int word; } ieee_float_shape_type;
 #define GET_FLOAT_WORD(i,d) do { ieee_float_shape_type gf_u; gf_u.value = (d); (i) = gf_u.word; } while (0)
-float func_001207E8(float x, float y, int iy)
+float Math_SinKernel(float x, float y, int iy)
 {
 	const float
 half =  5.0000000000e-01,

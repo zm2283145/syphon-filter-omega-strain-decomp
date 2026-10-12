@@ -15,7 +15,7 @@ extern unsigned char D_005721C8;
 extern int D_005721A8;
 extern int D_00494180;
 SoftwareDoubleBits func_0011C7A0(int value);
-SoftwareDoubleBits func_0011BD70(float value);
+SoftwareDoubleBits SoftFloat_FloatToDouble(float value);
 SoftwareDoubleBits func_0011C268(SoftwareDoubleBits first, SoftwareDoubleBits second);
 SoftwareDoubleBits func_0011C200(SoftwareDoubleBits first, SoftwareDoubleBits second);
 unsigned int func_0011C858(SoftwareDoubleBits value);
@@ -26,7 +26,7 @@ static inline unsigned int retry_threshold(void)
 {
     int timer = D_00572538;
     SoftwareDoubleBits base = func_0011C7A0(timer);
-    SoftwareDoubleBits converted = func_0011BD70((float)timer);
+    SoftwareDoubleBits converted = SoftFloat_FloatToDouble((float)timer);
     SoftwareDoubleBits scaled = func_0011C268(0x3FB0000000000000ULL, converted);
     return func_0011C858(func_0011C200(base, scaled));
 }

@@ -34,7 +34,7 @@ void* func_002C8FD0(void* p);
 void func_002C8EC0(void* p, char* buf, int n);
 void String_Copy(char* d, const char* s);
 int sprintf(char* buf, const char* fmt, ...);
-int func_001861F0(void* p, int a);
+int WeaponInv_ClipsForActor(void* p, int a);
 }
 static inline W_002BE910* FindAs_002BE910(void* self, char* name, char* type)
 {
@@ -95,7 +95,7 @@ extern "C" void func_002BE910(S_002BE910* self)
         if (w)
             func_0041BEB0(w, buf, 0);
         w = FindAs_002BE910(self, D_004AC3D0, D_004A7520);
-        n = wp->f70 * func_001861F0(self->p48, wp->f74);
+        n = wp->f70 * WeaponInv_ClipsForActor(self->p48, wp->f74);
         if (n)
             sprintf(buf, D_004AC480, n);
         else

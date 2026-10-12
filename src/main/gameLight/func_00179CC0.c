@@ -9,7 +9,7 @@ extern LightFn_e1 D_004D9240[];
 extern LightFn_e1 D_004D9280[];
 extern char D_00535D62;
 extern char D_00535D20[];
-extern "C" void func_00373D70(void*, Light_e1*);
+extern "C" void LightMgr_RemoveFromTable(void*, Light_e1*);
 extern "C" Light_e1* func_00179CC0(Light_e1* self, short reg)
 {
     if (self != 0) {
@@ -24,7 +24,7 @@ extern "C" Light_e1* func_00179CC0(Light_e1* self, short reg)
             }
         }
         if (reg > 0) {
-            func_00373D70(D_00535D20, self);
+            LightMgr_RemoveFromTable(D_00535D20, self);
         }
     }
     return self;

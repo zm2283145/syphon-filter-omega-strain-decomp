@@ -56,10 +56,10 @@ struct Pt1HrNpc {
 };
 extern "C" {
 extern void* D_004FFC0C;
-Pt1HrActor* func_003EA550(void* players);
-void func_0016C9D0(Pt1HrPerc* p, Pt1HrActor* a, int kind, float amount);
-float func_0016C730(Pt1HrPerc* p, Pt1HrActor* a);
-Pt1HrReaction* func_0016C6A0(Pt1HrPerc* p, Pt1HrActor* a);
+Pt1HrActor* Controller_GetAimTarget(void* players);
+void NpcPerception_AddAwareness(Pt1HrPerc* p, Pt1HrActor* a, int kind, float amount);
+float NpcPerception_IsEnemy(Pt1HrPerc* p, Pt1HrActor* a);
+Pt1HrReaction* NpcPerception_SensedRecord(Pt1HrPerc* p, Pt1HrActor* a);
 }
 static inline Pt1HrActor* Pt1Hr_GetB(Pt1HrPerc* p)
 {
@@ -79,7 +79,7 @@ static inline Pt1HrActor* Pt1Hr_GetC(Pt1HrPerc* p)
         t = 0;
     return t;
 }
-extern "C" void func_00152C50(Pt1HrNpc* self, unsigned char kind, Pt1HrActor* src)
+extern "C" void NpcAlert_HearingReaction(Pt1HrNpc* self, unsigned char kind, Pt1HrActor* src)
 {
     Pt1HrActor* who;
     Pt1HrActor* tgt;
@@ -90,17 +90,17 @@ extern "C" void func_00152C50(Pt1HrNpc* self, unsigned char kind, Pt1HrActor* sr
     who = 0;
     if (kind == 4 && src->ctrl) {
         if (src->ctrl->IsPlayerControlled()) {
-            who = func_003EA550(D_004FFC0C);
+            who = Controller_GetAimTarget(D_004FFC0C);
             if (who && who != self->actor)
-                func_0016C9D0(self->perc, who, 2, 0.0f);
+                NpcPerception_AddAwareness(self->perc, who, 2, 0.0f);
         } else if (src->ctrl->IsAiControlled()) {
             who = Pt1Hr_GetB(((Pt1HrCtrlData*)src->ctrl)->perc);
             if (who && who != self->actor)
-                func_0016C9D0(self->perc, who, 2, 0.0f);
+                NpcPerception_AddAwareness(self->perc, who, 2, 0.0f);
         }
     }
     p = self->perc;
-    if (!(p->alertLevel < 0x32 && (!Pt1Hr_GetB(p) || func_0016C730(p, Pt1Hr_GetC(p)) <= 0.1f)) && kind != 7)
+    if (!(p->alertLevel < 0x32 && (!Pt1Hr_GetB(p) || NpcPerception_IsEnemy(p, Pt1Hr_GetC(p)) <= 0.1f)) && kind != 7)
         return;
     tgt = 0;
     if (self->CanSee(src))
@@ -118,7 +118,7 @@ extern "C" void func_00152C50(Pt1HrNpc* self, unsigned char kind, Pt1HrActor* sr
     if (!(self->hearing > 5.0f))
         return;
     {
-        Pt1HrReaction* r = func_0016C6A0(p, tgt);
+        Pt1HrReaction* r = NpcPerception_SensedRecord(p, tgt);
         if (r && r->investigate) {
             if (self->slots[self->curSlot].prio < 0x15) {
                 if (self->ReleaseSlot(*(signed char*)&self->curSlot)) {

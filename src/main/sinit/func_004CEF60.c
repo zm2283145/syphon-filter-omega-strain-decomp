@@ -1,0 +1,46 @@
+#include "types.h"
+int Script_cGameGobjController_Gobj();
+int ScriptType_cGameGobjController_Init();
+int Script_cTimerExpiredMsg_IsPersonal();
+int ScriptType_cTimerExpiredMsg_Init();
+int func_0022F210();
+int ScriptType_ToHitSettings_Init();
+int func_002824D0();
+int cGOBJ_GetScriptTypeKeyPtr();
+int func_003D84F0();
+int func_003D8A30();
+int Script_RegisterType();
+extern char D_0048ACB8;
+extern char D_0048ACC0;
+extern char D_0048ACC8;
+extern char D_00493878;
+extern char D_00493890;
+extern int D_004F79E0;
+extern int D_004F79E8;
+extern int D_004F79F0;
+extern int D_004F79F8;
+extern int D_004F7A00;
+extern void* D_004F7A08;
+extern char D_004F7A10;
+extern int D_004F7A18;
+extern int D_004F7A20;
+extern int D_004F7A28;
+extern int D_004F7A30;
+extern int D_004F7A38;
+extern int D_004F7A40;
+extern int D_004F7A48;
+void func_004CEF60(void) {
+    D_004F79E0 = Script_RegisterType("ToHitSettings", ScriptType_ToHitSettings_Init, 0, 0);
+    D_004F79E8 = D_004F79E0;
+    D_004F79F0 = func_003D8A30("ToHit", (int)&D_0048ACB8, &D_004F79E0);
+    D_004F79F8 = func_003D8A30("globalNpcSkill", (int)&D_0048ACC0, &D_00493890);
+    D_004F7A00 = func_003D8A30("PlayerAimTimePct", (int)&D_0048ACC8, &D_00493890);
+    D_004F7A08 = "cTimerExpiredMsg";
+    D_004F7A18 = func_002824D0(func_0022F210, &D_004F7A10, "cTimerExpiredMsg");
+    D_004F7A20 = Script_RegisterType("cTimerExpiredMsg", ScriptType_cTimerExpiredMsg_Init, 1, 0);
+    D_004F7A28 = D_004F7A20;
+    D_004F7A30 = func_003D84F0(D_004F7A20, Script_cTimerExpiredMsg_IsPersonal, &D_00493878, "IsPersonal", 1, &D_004F7A20);
+    D_004F7A38 = Script_RegisterType("cGameGobjController", ScriptType_cGameGobjController_Init, 0, 1);
+    D_004F7A40 = D_004F7A38;
+    D_004F7A48 = func_003D84F0(D_004F7A38, Script_cGameGobjController_Gobj, cGOBJ_GetScriptTypeKeyPtr(), "Gobj", 1, &D_004F7A38);
+}

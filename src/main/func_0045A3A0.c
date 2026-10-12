@@ -30,7 +30,7 @@ extern void* Service_Lookup(char* a, char* b);
 extern void func_001C9540(void* svc, int ch, int v);
 extern void func_001C9670(void* svc, int v);
 extern char* func_003CBA90(char* key);
-extern int func_00128E80(char* a, char* b);
+extern int String_CompareNoCase(char* a, char* b);
 extern void* func_001698C0(void);
 extern void func_00165420(void* a, int mode);
 void func_0045A3A0(LightCfg_h5* cfg, unsigned int mask)
@@ -82,7 +82,7 @@ void func_0045A3A0(LightCfg_h5* cfg, unsigned int mask)
         D_005383C0 = (unsigned char)(int)(191.25f * cfg->level);
     }
     if (mask & 0x800) {
-        int same = func_00128E80(func_003CBA90(D_004C1FD8), D_004C1FE8) == 0;
+        int same = String_CompareNoCase(func_003CBA90(D_004C1FD8), D_004C1FE8) == 0;
         int mode;
         mode = cfg->alt == 0 ? (same ? 2 : 0) : 4;
         func_00165420(func_001698C0(), mode);

@@ -23,13 +23,13 @@ typedef struct Pt1MaSelf {
 extern int D_004EE550;
 extern int D_004ED9B8;
 extern int* Event_GetType(void* ev);
-extern int func_00142B50(void* weapons);
+extern int WeaponInv_GetHeldRating(void* weapons);
 extern void* func_00156F50(void* target);
-extern float func_0016C730(void* target, void* other);
-extern unsigned char func_00150150(Pt1MaSelf* self);
-extern unsigned char func_0014FEC0(Pt1MaSelf* self);
-extern int func_001552B0(Pt1MaSelf* self);
-extern void func_0016E170(void* brain, int event, int arg);
+extern float NpcPerception_IsEnemy(void* target, void* other);
+extern unsigned char NpcAi_CoverSearch(Pt1MaSelf* self);
+extern unsigned char NpcAi_FiringPositionSearch(Pt1MaSelf* self);
+extern int NpcAlert_SearchAllowed(Pt1MaSelf* self);
+extern void NpcAi_RequestMode(void* brain, int event, int arg);
 
 static inline Pt1MaMode Pt1Ma_Mode(short state, short sub)
 {
@@ -44,7 +44,7 @@ static inline float Pt1Ma_TargetDist(void* target)
     if (func_00156F50(target) == 0)
         d = 0.0f;
     else
-        d = func_0016C730(target, func_00156F50(target));
+        d = NpcPerception_IsEnemy(target, func_00156F50(target));
     return d;
 }
 static inline unsigned char Pt1Ma_HasCover(Pt1MaSelf* self)
@@ -55,7 +55,7 @@ static inline unsigned char Pt1Ma_HasCover(Pt1MaSelf* self)
     return r;
 }
 
-unsigned char func_00156D00(Pt1MaSelf* self, Pt1MaMsg* msg)
+unsigned char NpcAi_ModeAlert(Pt1MaSelf* self, Pt1MaMsg* msg)
 {
     unsigned char handled = 0;
     int type = *Event_GetType(msg);
@@ -66,17 +66,17 @@ unsigned char func_00156D00(Pt1MaSelf* self, Pt1MaMsg* msg)
                 void* target;
                 float reach;
                 float dist;
-                reach = self->aggression * (float)func_00142B50(self->owner->weapons);
+                reach = self->aggression * (float)WeaponInv_GetHeldRating(self->owner->weapons);
                 target = self->target;
                 dist = Pt1Ma_TargetDist(target);
                 if (!(dist <= reach)) {
-                    func_00150150(self);
+                    NpcAi_CoverSearch(self);
                     { Pt1MaMode m; m.s.state = 1; m.s.sub = 2; self->mode.w = m.w; }
                 } else if (self->aggression < 0.9f) {
-                    func_0014FEC0(self);
+                    NpcAi_FiringPositionSearch(self);
                     { Pt1MaMode m; m.s.state = 1; m.s.sub = 3; self->mode.w = m.w; }
                 } else if (Pt1Ma_HasCover(self)) {
-                    func_0016E170(self->brain, 4, 0);
+                    NpcAi_RequestMode(self->brain, 4, 0);
                 }
             }
             handled = 1;
@@ -87,10 +87,10 @@ unsigned char func_00156D00(Pt1MaSelf* self, Pt1MaMsg* msg)
         unsigned char k = msg->kind;
         if (k == 2) {
             if (self->mode.s.state == 1)
-                func_0016E170(self->brain, self->mode.s.sub, 0);
+                NpcAi_RequestMode(self->brain, self->mode.s.sub, 0);
         } else if (k == 1 || k == 3) {
-            if (func_001552B0(self))
-                func_0016E170(self->brain, 5, 0);
+            if (NpcAlert_SearchAllowed(self))
+                NpcAi_RequestMode(self->brain, 5, 0);
             else
                 self->alertTimer = 0x3C;
         } else if (k == 5 || k == 6) {

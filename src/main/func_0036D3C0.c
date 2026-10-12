@@ -4,7 +4,7 @@ typedef struct {
     char pad[0x148]; H36D3C0* hdr; unsigned char loaded; char pad14D[0xB];
     char* base; char* names; int* offsets;
 } S36D3C0;
-extern int func_00128E80(char* a, char* b);
+extern int String_CompareNoCase(char* a, char* b);
 char* func_0036D3C0(S36D3C0* o, char* name)
 {
     int i;
@@ -15,7 +15,7 @@ char* func_0036D3C0(S36D3C0* o, char* name)
     for (i = 0; i < o->hdr->count; i++) {
         char* cur = s;
         while (*s++) ;
-        if (func_00128E80(name, cur) == 0) break;
+        if (String_CompareNoCase(name, cur) == 0) break;
     }
     h = o->hdr;
     if (i >= h->count) i = -1;

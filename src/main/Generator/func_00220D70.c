@@ -4,7 +4,7 @@ typedef struct { char pad[0xC]; char sub[4]; int id; char pad14[0x18]; unsigned 
 extern unsigned char D_005721C8;
 void Event_Construct(Msg_220D70* msg, void* type);
 void cMessage_dtor(Msg_220D70* msg, int flags);
-extern char D_0055D498[];
+extern char g_cDisableMsgClass[];
 extern char D_004E0860[];
 void func_003FF650(Msg_220D70* msg, int id, int x);
 void func_0043B190(void* t);
@@ -21,7 +21,7 @@ void cGenerator_v18(G_220D70* g, int bit)
             func_0043A030(t, g->sub);
             g->state = 0;
         }
-        Event_Construct(&msg, D_0055D498);
+        Event_Construct(&msg, g_cDisableMsgClass);
         msg.target = bit;
         msg.vtable = D_004E0860;
         msg.size = 0x40;

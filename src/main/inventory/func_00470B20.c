@@ -11,8 +11,8 @@ extern char D_004E1AC0[];
 extern char D_004DCF10[];
 extern void Event_Construct(M_00470B20* m, void* type);
 extern void cMessage_dtor(M_00470B20* m, int flags);
-extern void func_00470870(void* mgr, int a, int b, int c);
-extern void func_004706C0(void* mgr, int a, int b, int c);
+extern void ItemInv_Add(void* mgr, int a, int b, int c);
+extern void ItemInv_Remove(void* mgr, int a, int b, int c);
 static inline void Read_00470B20(M_00470B20* m) { m->a = R16_00470B20(); m->b = R8_00470B20(); m->c = R8_00470B20(); }
 void func_00470B20(T_00470B20* t) {
     M_00470B20 m;
@@ -20,8 +20,8 @@ void func_00470B20(T_00470B20* t) {
     m.vtable = D_004E1AC0;
     Read_00470B20(&m);
     if (t) {
-        if (m.c) func_00470870(t->mgr, m.a, m.b, 1);
-        else func_004706C0(t->mgr, m.a, m.b, 1);
+        if (m.c) ItemInv_Add(t->mgr, m.a, m.b, 1);
+        else ItemInv_Remove(t->mgr, m.a, m.b, 1);
     }
     m.vtable = D_004DCF10;
     cMessage_dtor(&m, 0);

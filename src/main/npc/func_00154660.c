@@ -55,27 +55,27 @@ extern "C" {
 extern int D_004EE550;
 extern int D_004ED9B8;
 extern char D_004FFB50[];
-extern char D_004ED9B0[];
+extern char g_NpcRouteMgr[];
 extern int D_004ED9C0[];
 int* Event_GetType(Ev_00154660* ev);
 void* Service_Lookup(void* a, void* b);
-void func_00163C50(void* svc, int a);
-void func_0015FB20(Brain_00154660* b, int a);
+void NpcRoute_Release(void* svc, int a);
+void NpcRoute_RequestToNode(Brain_00154660* b, int a);
 Act_00154660* Object_LookupById(int* id);
-int func_003CC950(Act_00154660* a);
-int func_0015D790(void* v, int z);
+int Controller_NotifySeen(Act_00154660* a);
+int NpcRoute_RegionAt(void* v, int z);
 void func_0015FA70(Brain_00154660* b, void* v, int z);
 }
-extern "C" unsigned char func_00154660(Self_00154660* self, Ev_00154660* ev)
+extern "C" unsigned char NpcAi_ScriptControlMode(Self_00154660* self, Ev_00154660* ev)
 {
     unsigned char handled = 0;
     int t = *Event_GetType(ev);
     if (t == D_004EE550) {
         if (ev->b24 == 0) {
             float f;
-            func_00163C50(Service_Lookup(D_004FFB50, D_004ED9B0), self->f30);
+            NpcRoute_Release(Service_Lookup(D_004FFB50, g_NpcRouteMgr), self->f30);
             if (self->f138 >= 0) {
-                func_0015FB20(self->p1B0, self->f138);
+                NpcRoute_RequestToNode(self->p1B0, self->f138);
             } else if (self->fF4 != -1) {
                 int id[1];
                 Act_00154660* a;
@@ -88,12 +88,12 @@ extern "C" unsigned char func_00154660(Self_00154660* self, Ev_00154660* ev)
                     if (c && c->IsPlayer())
                         r = 1;
                     if (r) {
-                        z = D_004ED9C0[func_003CC950(a)];
+                        z = D_004ED9C0[Controller_NotifySeen(a)];
                     } else if (a->ctl && a->ctl->IsAi()) {
                         z = a->ctl->p1B0->f5C;
                     } else {
                         z = self->p1B0->f5C;
-                        z = func_0015D790(a->GetA().Pos(), z);
+                        z = NpcRoute_RegionAt(a->GetA().Pos(), z);
                     }
                     func_0015FA70(self->p1B0, a->GetB().Pos(), z);
                     self->fE8 = -1;

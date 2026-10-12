@@ -16,7 +16,7 @@ struct C6AiComp_158800 : C6B1_158800, C6B2_158800 {
     int m1CC;
 };
 extern "C" void cAI_ctor(C6AiComp_158800*, void*, int);
-extern "C" void func_00158BC0(C6AiComp_158800*, void*);
+extern "C" void NpcAi_Construct(C6AiComp_158800*, void*);
 extern "C" char D_004D9380[];
 extern "C" C6AiComp_158800* AiComponent_Construct(C6AiComp_158800* self, void* owner, int* kind) {
     cAI_ctor(self, owner, 0);
@@ -30,6 +30,6 @@ extern "C" C6AiComp_158800* AiComponent_Construct(C6AiComp_158800* self, void* o
     self->m1C8 = 0;
     self->m1B0 = 0;
     self->m1AC = 0;
-    func_00158BC0(self, owner);
+    NpcAi_Construct(self, owner);
     return self;
 }

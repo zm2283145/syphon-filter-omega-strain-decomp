@@ -32,7 +32,7 @@ static inline void Init_7C60(Q_7C60* q, O_7C60* obj)
     q->vt = D_004D9DC0;
     q->obj = obj;
 }
-extern "C" void func_00177C60(S_7C60* self)
+extern "C" void Player_RespawnPollEvent(S_7C60* self)
 {
     Q_7C60* q;
     if (D_004FFC38->t == 0.0f) {

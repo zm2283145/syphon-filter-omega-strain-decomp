@@ -12,7 +12,7 @@ extern "C" {
 extern unsigned char D_005721C8;
 void Event_Construct(Msg_23BE50* msg, void* type);
 void cMessage_dtor(Msg_23BE50* msg, int flags);
-extern char D_0055D4B8[];
+extern char g_cEnableMsgClass[];
 extern char D_004E0880[];
 void func_003FF930(Msg_23BE50* msg, int id);
 }
@@ -21,7 +21,7 @@ extern "C" void cNIEventOBJ_v17(Obj_23BE50* self)
     self->Toggle(-1);
     if (D_005721C8) {
         Msg_23BE50 msg;
-        Event_Construct(&msg, D_0055D4B8);
+        Event_Construct(&msg, g_cEnableMsgClass);
         msg.vtable = D_004E0880;
         msg.target = -1;
         msg.size = 0x40;

@@ -11,8 +11,8 @@ struct Obj_63E0 {
     char pad4[8]; int idC; int id10; unsigned char b14; char pad15[0x4B]; int f60; int f64; int f68; int f6C; unsigned char b70; char pad71[3]; int f74;
 };
 extern "C" {
-extern char D_004F77C0[];
-void func_0022C650(void* list);
+extern char g_TargetVisMgr[];
+void TargetVis_Register(void* list);
 void Object_Register(Obj_63E0* o);
 int NetMap_BindReceiver(int id, int owner, Obj_63E0* o);
 }
@@ -24,7 +24,7 @@ extern "C" void func_002863E0(Obj_63E0* o, int arg1)
     o->f68 = 0;
     o->f64 = 0;
     o->b70 = 1;
-    func_0022C650(D_004F77C0);
+    TargetVis_Register(g_TargetVisMgr);
     Object_Register(o);
     o->activate(1);
     o->f74 = 0;

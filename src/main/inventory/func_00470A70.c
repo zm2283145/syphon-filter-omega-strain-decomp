@@ -5,7 +5,7 @@ typedef struct { int key; char pad[40]; } Pt2_ItemDef;
 extern int D_00587FF4;
 extern Pt2_ItemDef* D_00587FF8;
 extern int Loc_FindKeyThunk(char*);
-extern void func_00470870(void*, int, int, int);
+extern void ItemInv_Add(void*, int, int, int);
 static inline int Pt2_FindDef(int key) {
     int i;
     for (i = 0; i < D_00587FF4; i++) {
@@ -16,5 +16,5 @@ static inline int Pt2_FindDef(int key) {
 
 #pragma opt_strength_reduction off
 void Global_PlayerAddItem(void* inv, char* name, int n) {
-    func_00470870(inv, Pt2_FindDef(Loc_FindKeyThunk(name)), n, 0);
+    ItemInv_Add(inv, Pt2_FindDef(Loc_FindKeyThunk(name)), n, 0);
 }

@@ -4,7 +4,7 @@ int func_003F44E0(float, int);
 int func_003F45A0(float, int);                          
 
 #pragma opt_common_subs off
-void func_00244A80(int arg0, int arg1, int arg2) {
+void Hud_SetFlashlightIcon(int arg0, int arg1, int arg2) {
     int temp_a0;
     int temp_s1;
 

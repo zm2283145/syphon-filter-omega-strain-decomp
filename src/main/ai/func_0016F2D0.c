@@ -3,7 +3,7 @@ typedef struct { void* vt; char pad[0x20]; unsigned char on; char pad25[3]; int 
 typedef struct { char pad[0x50]; unsigned char pending; char pad51[7]; float timer; } S_F2D0;
 extern char D_004EE550[];
 extern char D_004D9340[];
-extern char D_004FF280[];
+extern char g_ScriptAITimeElapsedMsgKey[];
 extern char D_004DCC10[];
 void Event_Construct(Ev_F2D0* e, void* type);
 void Event_Send(Ev_F2D0* e, void* target, int a);
@@ -35,7 +35,7 @@ void cAI_v0E(S_F2D0* self, float dt)
     if (!(self->timer < 0.0f)) {
         self->timer -= dt;
         if (self->timer < 0.0f) {
-            Event_Construct(&c, D_004FF280);
+            Event_Construct(&c, g_ScriptAITimeElapsedMsgKey);
             c.vt = D_004DCC10;
             Event_Send(&c, self, 0);
             c.vt = D_004DCC10;

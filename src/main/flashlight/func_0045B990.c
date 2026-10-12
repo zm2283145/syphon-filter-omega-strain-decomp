@@ -10,21 +10,21 @@
 struct VC0045B990 { char vpad[4]; virtual int v0(...); };
 struct VD0045B990 { virtual int v0(...); };
 extern "C" {
-int Mem_Free(...);                     
-int func_0022C720(...);                      
-int operator_delete(...);                          
+int Mem_Free(...);
+int TargetVis_Unregister(...);
+int operator_delete(...);
 extern char D_004C2018;
-extern char D_004F77C0;
+extern char g_TargetVisMgr;
 extern unsigned char D_00533880;
 typedef struct { char p0[8]; int f8; int fC; char p10[8]; int f18; } PS0_0045B990;
 }
-extern "C" char * func_0045B990(PS0_0045B990 *arg0, long long arg1) {
+extern "C" char * Flashlight_Destroy(PS0_0045B990 *arg0, long long arg1) {
     void **temp_s1;
     char * temp_a0;
     char * temp_a0_2;
 
     if (arg0 != NULL) {
-        func_0022C720(&D_004F77C0, arg0->f18);
+        TargetVis_Unregister(&g_TargetVisMgr, arg0->f18);
         temp_a0 = (char *)(arg0->f8);
         if ((temp_a0 != NULL) && (temp_a0 != NULL)) {
             ((VC0045B990 *)(temp_a0))->v0(1);

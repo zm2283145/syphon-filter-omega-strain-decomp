@@ -16,7 +16,7 @@ void func_00145630(void* db, int id, int a);
 void Event_Construct(Ev_2450* e, void* type);
 void Event_Send(Ev_2450* e, void* target, int a);
 void cMessage_dtor(Ev_2450* e, int f);
-void func_00142450(S_2450* self, int slot, int unused, int drop, int remote)
+void WeaponInv_RemoveSlot(S_2450* self, int slot, int unused, int drop, int remote)
 {
     int i = (unsigned char)slot;
     Slot_2450* s = &self->slots[i];

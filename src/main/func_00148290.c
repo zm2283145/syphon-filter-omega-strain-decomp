@@ -12,7 +12,7 @@ void LosProvider_ClearExclusions(LP_8290* lp, int a);
 void LosProvider_AddExclusion(LP_8290* lp, void* obj);
 void Los_TraceImmediate(void* a, void* b, void* c, void* d, LP_8290* lp, int g, unsigned char h, unsigned char i, int j, unsigned char k);
 }
-extern "C" void func_00148290(void* unused, void* a, void* b, void* c, void* d, void* e1, void* e2, int g, unsigned char h, unsigned char i, int j, unsigned char k)
+extern "C" void LosMgr_TraceBullet(void* unused, void* a, void* b, void* c, void* d, void* e1, void* e2, int g, unsigned char h, unsigned char i, int j, unsigned char k)
 {
     LP_8290* lp = LosProvider_Get();
     lp->SetSource(c);

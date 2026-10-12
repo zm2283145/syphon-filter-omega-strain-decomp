@@ -4,7 +4,7 @@ typedef struct { int a; int b; int id; int c; } SlotD4;
 typedef struct { SlotD4 slots[8]; char pad[4]; unsigned char cur; } LosD4;
 extern void* D_004FFD30;
 extern WeapEntD4* WeaponDb_Get(void* db, int id);
-float func_0013FAF0(LosD4* p)
+float Weapon_GetHeldRange(LosD4* p)
 {
     float r = 0.0f;
     unsigned char i = p->cur;

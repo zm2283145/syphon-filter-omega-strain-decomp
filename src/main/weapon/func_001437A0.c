@@ -5,7 +5,7 @@ typedef struct E3Def437 { char pad[0xF0]; signed char unkF0; } E3Def437;
 extern void* D_004FFD30;
 extern E3Def437* WeaponDb_Get(void* table, int id);
 static inline E3Slot437* GetSel(E3Inv437* inv) { return &inv->slots[inv->selected]; }
-int func_001437A0(E3Inv437* inv) {
+int WeaponInv_GetHeldClass(E3Inv437* inv) {
     if (inv->selected != 6) {
         return WeaponDb_Get(D_004FFD30, GetSel(inv)->id)->unkF0;
     }

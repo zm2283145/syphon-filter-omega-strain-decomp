@@ -26,7 +26,7 @@ extern void Event_Send(ValueMsg* msg, void* target, int flags);
 extern void cMessage_dtor(ValueMsg* msg, int flags);
 
 /* Sets the value; in networked mode (unless silent) broadcasts it as message kind 4. */
-void func_003CC990(ValueObj* obj, int value, int silent) {
+void Actor_SetHealth(ValueObj* obj, int value, int silent) {
     ValueMsg msg;
     obj->value = (float)value;
     if (D_005721C8 && !silent) {

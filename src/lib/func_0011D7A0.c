@@ -2,9 +2,9 @@
 typedef union { float value; unsigned int word; } ieee_float_shape_type;
 #define GET_FLOAT_WORD(i,d) do { ieee_float_shape_type gf_u; gf_u.value = (d); (i) = gf_u.word; } while (0)
 #define SET_FLOAT_WORD(d,i) do { ieee_float_shape_type sf_u; sf_u.word = (i); (d) = sf_u.value; } while (0)
-extern float func_001212E0(float x);
+extern float Math_Atan(float x);
 extern float func_00121760(float x);
-float func_0011D7A0(float y, float x)
+float Math_Atan2Kernel(float y, float x)
 {
 	const float
 	tiny  = 1.0e-30,
@@ -18,7 +18,7 @@ float func_0011D7A0(float y, float x)
 	ix = hx&0x7fffffff;
 	GET_FLOAT_WORD(hy,y);
 	iy = hy&0x7fffffff;
-	if(hx==0x3f800000) return func_001212E0(y);
+	if(hx==0x3f800000) return Math_Atan(y);
 	m = ((hy>>31)&1)|((hx>>30)&2);
 
 	if(iy < 0x00800000L) {
@@ -34,7 +34,7 @@ float func_0011D7A0(float y, float x)
 	k = (iy-ix)>>23;
 	if(k > 60) z=pi_o_2+(float)0.5*pi_lo;
 	else if(hx<0&&k<-60) z=0.0;
-	else z=func_001212E0(func_00121760(y/x));
+	else z=Math_Atan(func_00121760(y/x));
 	switch (m) {
 	    case 0: return       z  ;
 	    case 1: {

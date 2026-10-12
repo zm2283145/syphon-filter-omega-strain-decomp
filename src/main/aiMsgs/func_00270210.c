@@ -6,7 +6,7 @@ extern void* Object_LookupById(int* id);
 extern void MsgQueue_QueueClone(AIDeadEvt* e, void* obj, int a, int b);
 extern void cMessage_dtor(AIDeadEvt* e, int f);
 extern char D_004DCD10[];
-extern char D_004FF270[];
+extern char g_ScriptAIDeactivatedMsgKey[];
 extern unsigned char D_005721D0;
 extern unsigned char D_005723C8;
 #pragma opt_common_subs off
@@ -15,7 +15,7 @@ int func_00270210(int a0, int a1, int a2, AIDeadArg* arg) {
     if (D_005721D0) {
         AIDeadEvt e;
         void* obj;
-        Event_Construct(&e, D_004FF270);
+        Event_Construct(&e, g_ScriptAIDeactivatedMsgKey);
         e.vt = D_004DCD10;
         e.id = arg->id;
         obj = Object_LookupById(&e.id);

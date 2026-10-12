@@ -19,7 +19,7 @@ static inline int* Pt1Sm_Default(void)
         D_004E1D9C = 0;
     }
     return &D_004E1D90;
-}int* func_0022F510(Pt1SmCtrl* c)
+}int* Controller_GetShooterMotion(Pt1SmCtrl* c)
 {
     Pt1SmActor* a = c->actor;
     a = (a && a->kind == D_0049D010) ? a : 0;

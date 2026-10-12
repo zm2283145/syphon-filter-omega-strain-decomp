@@ -16,7 +16,7 @@ extern void func_0036E5D0(H2Reg* r);
 extern void func_0036E220(H2Reg* r, int del);
 extern char* func_0036D200(H2Hog* h, int i);
 extern int Hog_Register(H2Reg* r, char* name, H2Hog* h, int opt);
-extern void func_00407EC0(char* dst, int n, char* src);
+extern void Appearance_RegistryKey(char* dst, int n, char* src);
 extern short func_00380D40(int lib, __int128 name, H2Reg* r);
 extern short func_00381000(int lib);
 static inline int h2eq(__int128 a, __int128 b) {
@@ -50,7 +50,7 @@ void func_00403D20(H2State* st, H2Hog* hog) {
         unsigned int i;
         if (e[14] != '0')
             lod = 1;
-        func_00407EC0(st->names[st->count].s, 15, e);
+        Appearance_RegistryKey(st->names[st->count].s, 15, e);
         st->names[st->count].s[14] = '0';
         key = st->names[st->count].q;
         i = h2find(st, key);

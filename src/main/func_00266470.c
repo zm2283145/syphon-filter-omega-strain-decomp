@@ -13,7 +13,7 @@ struct Obj266 {
 extern "C" {
 extern Vec266 D_004F8350; extern int D_004F8354; extern int* D_004F8358;
 void PtrVector_Resize(Vec266* v, int n, int* fill);
-void func_00263080(Obj266* self);
+void HeldItem_Release(Obj266* self);
 void func_00266710(void* p);
 void func_002665B0(void* p, short flag);
 void func_00267270(void* p, short flag);
@@ -22,7 +22,7 @@ void func_00267270(void* p, short flag);
 extern "C" Obj266* func_00266470(Obj266* self, short deleteFlag) {
     if (self) {
         self->f8 = 0;
-        func_00263080(self);
+        HeldItem_Release(self);
         func_00266710(self->m10);
         {
             VObj266* m = self->fC;

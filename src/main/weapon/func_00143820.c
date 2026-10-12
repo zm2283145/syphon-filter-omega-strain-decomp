@@ -5,7 +5,7 @@ typedef struct { char pad[0x200]; int x[64]; } WDef;
 extern void* D_004FFD30;
 typedef struct { char pad[0x78]; unsigned char x78; } WD_3820;
 extern WD_3820* WeaponDb_Get(void* db, int id);
-int func_00143820(INV* self)
+int WeaponInv_IsFullAuto(INV* self)
 {
     return self->cur != 6 ? WeaponDb_Get(D_004FFD30, *(int*)((char*)self + self->cur * 16 + 8))->x78 == 1 : 0;
 }

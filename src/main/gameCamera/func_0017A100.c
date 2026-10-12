@@ -12,7 +12,7 @@ extern int D_004EE908;
 extern char D_004FFB50[]; /* world object */
 extern char D_00555070[];
 extern int ScriptFilter_Dispatch(char*, int, int);
-extern int func_00131320(char* world, int camera); /* push camera */
+extern int World_PushObjectFromAction(char* world, int camera); /* push camera */
 extern void func_00282020(int);
 
 /* Script binding: removes camera args[0] from the world camera stack. */
@@ -29,7 +29,7 @@ int Script_cGameCamera_PopCurrent(void) {
 
 /* Script binding: pushes camera args[0] as current. */
 int Script_cGameCamera_PushCurrent(int* args) {
-    func_00131320(D_004FFB50, args[0]);
+    World_PushObjectFromAction(D_004FFB50, args[0]);
     return 0;
 }
 

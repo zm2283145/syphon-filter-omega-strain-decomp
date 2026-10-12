@@ -12,7 +12,7 @@ typedef struct PjCam {
 } PjCam;
 extern float D_00539184;
 extern float Math_Tan(float x);
-void func_003754A0(PjCam* c)
+void Renderer_LevelCameraProjection(PjCam* c)
 {
     float k = 1.0f / D_00539184;
     float t = Math_Tan(c->fov);

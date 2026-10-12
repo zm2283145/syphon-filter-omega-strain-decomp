@@ -9,7 +9,7 @@ typedef struct Msg {
 typedef struct { char pad[0x3524]; void* owner; } Player;
 extern char D_0055D480[];
 extern char D_004E0840[];
-extern int func_00143560(void* owner);
+extern int WeaponInv_AllowsAction(void* owner);
 extern void Event_Construct(Msg* msg, void* name);
 extern void Event_Send(Msg* msg, void* target, int flags);
 extern void cMessage_dtor(Msg* msg, int flags);
@@ -17,7 +17,7 @@ extern void cMessage_dtor(Msg* msg, int flags);
 void func_0024AA70(void* self, int enable, Player* p)
 {
     Msg msg;
-    if (enable && func_00143560(p->owner)) {
+    if (enable && WeaponInv_AllowsAction(p->owner)) {
         Event_Construct(&msg, D_0055D480);
         msg.vtable = D_004E0840;
         msg.value = 0x3C;

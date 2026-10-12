@@ -10,16 +10,16 @@ class TZ { public: virtual void v0(); virtual void v1(); virtual void v2(); virt
  virtual void v60(); virtual void v61(); virtual void v62(); virtual void v63(); virtual void v64(); virtual void v65(); virtual void v66(); virtual void f(int a); };
 extern "C" int* Event_GetType(TZEvt* e);
 extern "C" int D_004EE698;
-extern "C" void func_00172400(TZ* self, int a);
-extern "C" void func_00171ED0(TZ* self, int a);
+extern "C" void Hotbox_Type2Receiver(TZ* self, int a);
+extern "C" void Hotbox_SendLinkMessages(TZ* self, int a);
 extern "C" unsigned char TriggerZone_HandleEvent(TZ* self, TZEvt* e) {
     unsigned char r;
     int t = *Event_GetType(e);
     if (t == D_004EE698) {
         switch (e->kind) {
-        case 0: func_00172400(self, e->arg); break;
+        case 0: Hotbox_Type2Receiver(self, e->arg); break;
         case 1: break;
-        case 2: func_00171ED0(self, e->arg); break;
+        case 2: Hotbox_SendLinkMessages(self, e->arg); break;
         case 3: self->f(e->arg); break;
         }
         r = 1;

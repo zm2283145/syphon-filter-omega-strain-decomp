@@ -1,0 +1,47 @@
+#include "types.h"
+int func_003D8A30();
+extern char D_00493890;
+extern char FlashDist;
+extern char FlashShortDist;
+extern char FlashHitRad;
+extern char FlashAdjusty;
+extern char FlashMinOuter;
+extern char FlashMaxOuter;
+extern char FlashMaxInner;
+extern char FlashMinRG;
+extern char FlashMinB;
+extern char FlashVel;
+extern char FlashAcc;
+extern char FlashDazzleSize;
+extern char FlashMinInner;
+extern char FlashSqueeze;
+extern int D_005860D0;
+extern int D_005860D8;
+extern int D_005860E0;
+extern int D_005860E8;
+extern int D_005860F0;
+extern int D_005860F8;
+extern int D_00586100;
+extern int D_00586108;
+extern int D_00586110;
+extern int D_00586118;
+extern int D_00586120;
+extern int D_00586128;
+extern int D_00586130;
+extern int D_00586138;
+void Flashlight_RegisterEngineVars(void) {
+    D_005860D0 = func_003D8A30("FlashDist", (int)&FlashDist, &D_00493890);
+    D_005860D8 = func_003D8A30("FlashShortDist", (int)&FlashShortDist, &D_00493890);
+    D_005860E0 = func_003D8A30("FlashHitRad", (int)&FlashHitRad, &D_00493890);
+    D_005860E8 = func_003D8A30("FlashAdjusty", (int)&FlashAdjusty, &D_00493890);
+    D_005860F0 = func_003D8A30("FlashMinOuter", (int)&FlashMinOuter, &D_00493890);
+    D_005860F8 = func_003D8A30("FlashMinInner", (int)&FlashMinInner, &D_00493890);
+    D_00586100 = func_003D8A30("FlashMaxOuter", (int)&FlashMaxOuter, &D_00493890);
+    D_00586108 = func_003D8A30("FlashMaxInner", (int)&FlashMaxInner, &D_00493890);
+    D_00586110 = func_003D8A30("FlashMinRG", (int)&FlashMinRG, &D_00493890);
+    D_00586118 = func_003D8A30("FlashMinB", (int)&FlashMinB, &D_00493890);
+    D_00586120 = func_003D8A30("FlashVel", (int)&FlashVel, &D_00493890);
+    D_00586128 = func_003D8A30("FlashAcc", (int)&FlashAcc, &D_00493890);
+    D_00586130 = func_003D8A30("FlashDazzleSize", (int)&FlashDazzleSize, &D_00493890);
+    D_00586138 = func_003D8A30("FlashSqueeze", (int)&FlashSqueeze, &D_00493890);
+}

@@ -13,7 +13,7 @@ static inline float h1_fabs(float x) { asm { abs.s x, x } return x; }
 
 static inline unsigned char h1_aligning(H1Actor6120* s) { unsigned char r = 1; if (!((s->flags >> 25) & 1) && !((s->flags >> 26) & 1)) r = 0; return r; }
 /* Hand parity on the ladder (left hand when true), optionally inverted while aligning. */
-int func_00476120(H1Actor6120* self, int invert) {
+int Ladder_HandParity(H1Actor6120* self, int invert) {
     if (self->phys != 0) {
         int r = (unsigned char)(Math_FMod(func_00121788(0.5f + h1_fabs(func_00476230(self, 0)) / (2.0f * D_004A0418)), 2.0f) < 0.999f);
         unsigned char flip = 0;

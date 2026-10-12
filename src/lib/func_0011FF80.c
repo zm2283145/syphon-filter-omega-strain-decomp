@@ -7,7 +7,7 @@ extern float func_00121860(float x, int n);
 extern float func_00121788(float x);
 #define scalbnf func_00121860
 #define floorf func_00121788
-int func_0011FF80(float *x, float *y, int e0, int nx, int prec, const int *ipio2)
+int Math_RemPio2Kernel(float *x, float *y, int e0, int nx, int prec, const int *ipio2)
 {
 	const float
 	zero   = 0.0,

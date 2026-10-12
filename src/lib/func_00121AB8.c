@@ -1,7 +1,7 @@
 #include "types.h"
 
-extern int func_0011D7A0(float, float);
+extern int Math_Atan2Kernel(float, float);
 
 int Math_Atan2f(float f12, float f13) {
-    return func_0011D7A0(f12, f13);
+    return Math_Atan2Kernel(f12, f13);
 }

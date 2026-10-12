@@ -7,25 +7,25 @@ int Event_Construct(char **, char *);
 int Event_Send(char **, char * , int);
 int Inventory_HasAnyItem(int);
 int cMessage_dtor(char **, int);
-int func_00142320(int, int);
+int WeaponInv_MoveItemsToBackpack(int, int);
 int func_00255A50(int, int, int);
-int func_00257640(char * , int, int);
-int func_004704F0(int);
+int Backpack_Construct(char * , int, int);
+int ItemInv_Any(int);
 extern char D_004DCEF0;
 extern char D_004DCF10;
 extern char D_005061B0;
 }
 #pragma opt_common_subs off
-extern "C" void func_001A3520(char * arg0) {
+extern "C" void Npc_DeadStateDrop(char * arg0) {
     char * sp40[12];
     int x; int inv;
     if (F_(arg0, 0x3464, int) == 0) {
         inv = F_(arg0, 0x3524, int);
         x = F_(arg0, 0x33A0, int);
-        bool ok; if (!Inventory_HasAnyItem(inv) && !x) { ok = F_(arg0, 0x2D, unsigned char) && F_(arg0, 0x2C, unsigned char) && !F_(arg0, 0x2E, unsigned char) && F_(arg0, 0x3468, unsigned char); if (!ok && !func_004704F0(F_(arg0, 0x3528, int))) return; } {
+        bool ok; if (!Inventory_HasAnyItem(inv) && !x) { ok = F_(arg0, 0x2D, unsigned char) && F_(arg0, 0x2C, unsigned char) && !F_(arg0, 0x2E, unsigned char) && F_(arg0, 0x3468, unsigned char); if (!ok && !ItemInv_Any(F_(arg0, 0x3528, int))) return; } {
         if (F_(arg0, 0x14, unsigned char) != 0) {
-            F_(arg0, 0x3464, int) = func_00257640(arg0, 1, 0);
-            func_00142320(inv, F_(arg0, 0x3464, int));
+            F_(arg0, 0x3464, int) = Backpack_Construct(arg0, 1, 0);
+            WeaponInv_MoveItemsToBackpack(inv, F_(arg0, 0x3464, int));
             if (x != 0) {
                 func_00255A50(F_(arg0, 0x3464, int), x, F_(arg0, 0x339C, int));
             }

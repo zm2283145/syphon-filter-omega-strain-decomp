@@ -1,7 +1,7 @@
 #include "types.h"
 typedef struct { int a; int b; int c; int d; } E3870;
 typedef struct { char pad[0x10]; int base; int pad14; int id; int pad1c; int extra; char pad2[0x84-0x24]; char cur; } S3870;
-int func_00143870(S3870* self, char slot)
+int WeaponInv_GetSpare(S3870* self, char slot)
 {
     int r;
     if ((unsigned char)slot == 6)

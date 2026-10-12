@@ -51,7 +51,7 @@ typedef struct cNPC {
     NpcActor* actor;                /* 0x030 */
     char forceOnRadar;              /* 0x034 */
     char pad035[0xF];
-    char unk044[0x1C];              /* 0x044 sub-object passed to func_0016E170 */
+    char unk044[0x1C];              /* 0x044 sub-object passed to NpcAi_RequestMode */
     float unk060;                   /* 0x060 */
     int travelSpeedOverride;        /* 0x064 0 = AI decides */
     char pad068[0x4];

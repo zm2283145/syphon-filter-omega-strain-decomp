@@ -20,8 +20,8 @@ typedef struct SndObj_00212C80 {
     char pad0[0x60]; char preset[0x1F0 - 0x60]; unsigned char playing; char pad1F1; unsigned char local;
 } SndObj_00212C80;
 extern int D_004F5440;
-extern int D_0055D4B8;
-extern int D_0055D498;
+extern int g_cEnableMsgClass;
+extern int g_cDisableMsgClass;
 extern int D_004FFC0C;
 extern char D_004FFB50[];
 extern char D_004DAE30[];
@@ -61,14 +61,14 @@ int cSoundGOBJ_v01(SndObj_00212C80* self, void* ev)
         return 1;
     }
     t = *Event_GetType(ev);
-    if (t == D_0055D4B8) {
+    if (t == g_cEnableMsgClass) {
         if (!self->local) {
             Play_00212C80(self, &b);
             return 1;
         }
     } else {
         t = *Event_GetType(ev);
-        if (t == D_0055D498 && !self->local) {
+        if (t == g_cDisableMsgClass && !self->local) {
             SndObj_00212C80* owner;
             if (self->local)
                 owner = self;

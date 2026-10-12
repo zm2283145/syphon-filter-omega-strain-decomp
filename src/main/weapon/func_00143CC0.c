@@ -6,10 +6,10 @@
 #include "types.h"
 #include "weapon_types.h"
 
-extern void func_00143B60(Inventory* inv);
+extern void WeaponInv_HolsterCurrent(Inventory* inv);
 
 void Global_ForceHolster(Inventory* inv) {
     if (inv->selected != 6) {
-        func_00143B60(inv);
+        WeaponInv_HolsterCurrent(inv);
     }
 }

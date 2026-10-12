@@ -22,7 +22,7 @@ typedef struct H1Actor62A0 {
 static inline float h1_fabs(float x) { asm { abs.s x, x } return x; }
 
 /* Climb intent: slide / up / down, plus the three requested values. */
-void func_004762A0(H1Actor62A0* self, unsigned char* outSlide, unsigned char* outUp, unsigned char* outDown,
+void Ladder_Intent(H1Actor62A0* self, unsigned char* outSlide, unsigned char* outUp, unsigned char* outDown,
                    unsigned char* slide, unsigned char* up, unsigned char* down) {
     H1LadPhys* p = self->phys;
     unsigned char centered;

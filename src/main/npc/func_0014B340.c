@@ -6,7 +6,7 @@
 #include "npc_types.h"
 
 extern int D_004EA350;          /* maximum number of active NPCs */
-extern int func_00186360(NpcActor* actor, int a1, int a2, int a3, int a4, float f12);
+extern int Actor_Ignite(NpcActor* actor, int a1, int a2, int a3, int a4, float f12);
 
 /* Sets the maximum number of active NPCs. */
 void cNPC_SetMaxActiveNpcCount(int count) {
@@ -15,5 +15,5 @@ void cNPC_SetMaxActiveNpcCount(int count) {
 
 /* vtable slot 0x5D: SetOnFire. */
 int cNPC_SetOnFire(cNPC* self, float f12) {
-    return func_00186360(self->actor, 1, 0, 0, 0, f12);
+    return Actor_Ignite(self->actor, 1, 0, 0, 0, f12);
 }

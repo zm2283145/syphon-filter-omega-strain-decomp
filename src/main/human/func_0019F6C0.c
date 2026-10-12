@@ -16,7 +16,7 @@ static inline int C3PTest19F(C3PSet19F* s, int n)
 {
     return (*(int*)((char*)s + (n / 32) * 4 + 4) >> (n & 31)) & 1;
 }
-void func_0019F6C0(C3Ag19F* p, float dt)
+void Actor_UpdateAirState(C3Ag19F* p, float dt)
 {
     int cur;
     int i;

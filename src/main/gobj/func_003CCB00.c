@@ -6,7 +6,7 @@ struct Self_3CCB00 : SelfV_3CCB00 { char pad4[0x10]; unsigned char b14; char pad
 typedef struct { void* vt; char base[0x1C]; unsigned char kind; char pad21[3]; int dmg; int attacker; char p3; char p2; char flag; char pad2F; } Msg_3CCB00;
 extern "C" {
 extern char D_004E08A0[];
-extern char D_005716F0[];
+extern char g_MsgLibDamageRequestKey[];
 extern unsigned char D_005721C8;
 extern unsigned char D_005721C0;
 void Event_Construct(Msg_3CCB00* m, void* type);
@@ -20,14 +20,14 @@ static inline unsigned char IsGod_3CCB00(Self_3CCB00* self)
     if (c && c->IsGod()) r = 1;
     return r;
 }
-extern "C" int func_003CCB00(Self_3CCB00* self, int attacker, int p2, int p3, int p4, int flag, int p6, float dmg)
+extern "C" int Actor_ApplyContactDamage(Self_3CCB00* self, int attacker, int p2, int p3, int p4, int flag, int p6, float dmg)
 {
     if (!attacker) return 0;
     if (!(self->health <= 0.0f)) {
         int idmg;
         Msg_3CCB00 m;
         if (!D_005721C8 || !IsGod_3CCB00(self)) self->health = self->health - dmg;
-        Event_Construct(&m, D_005716F0);
+        Event_Construct(&m, g_MsgLibDamageRequestKey);
         idmg = (int)dmg;
         m.attacker = attacker;
         m.vt = D_004E08A0;
@@ -59,7 +59,7 @@ extern "C" int func_003CCB00(Self_3CCB00* self, int attacker, int p2, int p3, in
         int v = D_005721C8 ? D_005721C0 : 1;
         if (!v && !self->ctl && !flag) {
             Msg_3CCB00 m2;
-            Event_Construct(&m2, D_005716F0);
+            Event_Construct(&m2, g_MsgLibDamageRequestKey);
             m2.attacker = attacker;
             m2.vt = D_004E08A0;
             m2.p3 = p3;

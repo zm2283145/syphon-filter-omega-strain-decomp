@@ -1,7 +1,7 @@
 #include "types.h"
 typedef struct { char pad0[2]; unsigned char valid; char pad1[0x6D]; int mask; char pad2[0x2C]; } HgSlot;
 typedef struct { char pad0[0x3E0]; HgSlot slots[7]; } HgActor;
-int func_001E9290(HgActor* a)
+int Actor_HangSlotClimbable(HgActor* a)
 {
     HgSlot* s;
     s = &a->slots[6];

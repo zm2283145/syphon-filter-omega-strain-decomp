@@ -5,7 +5,7 @@
 
 #include "npc_types.h"
 
-extern int func_0016E170(void* obj, int a1, int a2);
+extern int NpcAi_RequestMode(void* obj, int a1, int a2);
 
 /* Three-word record, initialised to {0, -2, -1}. */
 typedef struct NpcTriple {
@@ -41,6 +41,6 @@ void* func_0015ACC0(void* self) {
 NpcTriple* func_0015ACD0(NpcTriple* self) {
     self->unk0 = 0;
     self->unk8 = 0;
-    func_0016E170(self, 0, 0);
+    NpcAi_RequestMode(self, 0, 0);
     return self;
 }

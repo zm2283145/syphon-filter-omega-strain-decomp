@@ -8,7 +8,7 @@ extern char D_004D9240[];
 extern char D_004D9280[];
 extern char D_00535D20[];
 extern unsigned char D_00535D62;
-void func_00373D70(void* pool, void* p);
+void LightMgr_RemoveFromTable(void* pool, void* p);
 }
 class S_8580 {
 public:
@@ -33,7 +33,7 @@ extern "C" S_8580* func_00178580(S_8580* self, short flag)
                 VT(s) = D_004D9280;
         }
         if (flag > 0)
-            func_00373D70(D_00535D20, s);
+            LightMgr_RemoveFromTable(D_00535D20, s);
     }
     return s;
 }

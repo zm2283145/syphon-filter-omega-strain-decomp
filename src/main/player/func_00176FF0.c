@@ -7,7 +7,7 @@ typedef struct { char p0[0x10]; V4 a; V4 b; char p1[0x10]; V4 c; char p2[0x10]; 
 #pragma peephole off
 #pragma opt_propagation off
 #pragma opt_common_subs off
-void func_00176FF0(O_6FF0* o, V4* v) {
+void CameraRig_TranslateFollowCurves(O_6FF0* o, V4* v) {
     ADD1(&o->a)
     ADD2(&o->b)
     ADD2(&o->c)

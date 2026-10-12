@@ -9,7 +9,7 @@
 
 extern char D_004FFD30[];
 extern int Global_ReloadWeapons(void);
-extern int func_00147630(int);
+extern int WeaponDb_LoadReloadVariant(int);
 extern int func_0036E5D0(void*);
 extern int func_003CC1D0(void*);
 
@@ -40,7 +40,7 @@ int Global_ReloadWeapons(void) {
     int db;
 
     db = *(int*)D_004FFD30;
-    return func_00147630(db);
+    return WeaponDb_LoadReloadVariant(db);
 }
 
 void func_001479A0(void) {

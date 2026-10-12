@@ -34,7 +34,7 @@ struct Pt1BdEvent {
     char pad21[0xF];
     char pos[0x10];
 };
-extern "C" void func_0021B890(Pt1BdEvent* e)
+extern "C" void Blast_DamageCall(Pt1BdEvent* e)
 {
     if (Pt1Bd_Get(&e->target)) {
         Pt1BdTarget* src = Pt1Bd_Get2(&e->source);

@@ -3,7 +3,7 @@
 typedef struct { void* vtable; char data[0x18]; int size; char pad[4]; int index; char pad2[8]; } Visitor;
 typedef struct { char pad[0x64]; unsigned char flag; } SubScript;
 
-extern char D_0055D4B8[];
+extern char g_cEnableMsgClass[];
 extern char D_004E0880[];
 extern void Event_Construct(Visitor* v, void* arg);
 extern void Event_Send(Visitor* v, void* target, int flags);
@@ -14,7 +14,7 @@ void SubScript_v17(SubScript* self)
 {
     Visitor v;
     self->flag = 1;
-    Event_Construct(&v, D_0055D4B8);
+    Event_Construct(&v, g_cEnableMsgClass);
     v.vtable = D_004E0880;
     v.index = -1;
     v.size = 0x40;

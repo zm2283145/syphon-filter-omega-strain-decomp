@@ -31,7 +31,7 @@ extern "C" void cAIWeaponFiredMsg_ctor(Pt1FnMsg* msg, int unused, int weapon, in
 extern "C" void Event_Send(Pt1FnMsg* msg, void* target, int flags);
 extern "C" void cMessage_dtor(Pt1FnMsg* msg, int flags);
 
-extern "C" void func_0014F460(Pt1FnSelf* self, int unused, int quiet)
+extern "C" void NpcAttack_FireNotice(Pt1FnSelf* self, int unused, int quiet)
 {
     if (!quiet) {
         self->fire->shots++;

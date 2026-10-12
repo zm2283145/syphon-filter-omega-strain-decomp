@@ -8,13 +8,13 @@ struct Act_f4 { char pad[0x20]; void* actor; float timer; };
 extern "C" unsigned char D_005721C8;
 extern "C" char D_004EE698[];
 extern "C" char D_004D9940[];
-extern "C" IObj_f4* func_00171260(Act_f4*, int);
+extern "C" IObj_f4* Hotbox_SelectInteraction(Act_f4*, int);
 extern "C" void Event_Construct(void*, void*);
 extern "C" void Event_Send(void*, void*, int);
 extern "C" void cMessage_dtor(void*, int);
 extern "C" int Actor_TryObjectInteraction(Act_f4* self, void* who, int setTimer, int id)
 {
-    IObj_f4* obj = func_00171260(self, id);
+    IObj_f4* obj = Hotbox_SelectInteraction(self, id);
     if (obj) {
         if (D_005721C8) {
             void* actor;

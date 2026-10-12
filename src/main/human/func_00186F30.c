@@ -16,7 +16,7 @@ extern char D_004EF008[];
 extern char D_004DA990[];
 extern char D_004DCF10[];
 void* Agent_GetSelected(void* a, int b);
-void func_00333F10(void* ag, int a, int b);
+void Stats_Add(void* ag, int a, int b);
 int func_003CC8E0(Act_00186F30* att, Npc_00186F30* self);
 int cAgentData_GetStat(void* ag, int stat);
 void func_0018C770(Act_00186F30* att, int k);
@@ -25,7 +25,7 @@ void Transport_Send(int a, void* m, int b, int c);
 void cMessage_dtor(void* m, int flags);
 }
 #pragma opt_propagation off
-extern "C" void func_00186F30(Npc_00186F30* self, Act_00186F30* att, unsigned char type, int sub)
+extern "C" void Actor_RecordDeathStats(Npc_00186F30* self, Act_00186F30* att, unsigned char type, int sub)
 {
     if (att && *(Ctl_00186F30* volatile*)&att->ctl) {
         unsigned char r = 0;
@@ -35,11 +35,11 @@ extern "C" void func_00186F30(Npc_00186F30* self, Act_00186F30* att, unsigned ch
         if (r) {
             if (att->b14) {
                 void* ag = Agent_GetSelected(D_004FFB50, -1);
-                func_00333F10(ag, 0, 1);
+                Stats_Add(ag, 0, 1);
                 if (!func_003CC8E0(att, self)) {
                     int k;
                     int st;
-                    func_00333F10(ag, 7, 1);
+                    Stats_Add(ag, 7, 1);
                     st = cAgentData_GetStat(ag, 0x19);
                     k = 0x10;
                     switch (st) {
@@ -51,16 +51,16 @@ extern "C" void func_00186F30(Npc_00186F30* self, Act_00186F30* att, unsigned ch
                     func_0018C770(att, k);
                 }
                 if (type == 9) {
-                    func_00333F10(ag, 1, 1);
+                    Stats_Add(ag, 1, 1);
                 } else if (type == 4) {
                     if (self->b3488)
-                        func_00333F10(ag, 4, 1);
+                        Stats_Add(ag, 4, 1);
                 } else if (type == 2) {
-                    func_00333F10(ag, 4, 1);
+                    Stats_Add(ag, 4, 1);
                 } else if (type == 10) {
-                    func_00333F10(ag, 3, 1);
+                    Stats_Add(ag, 3, 1);
                 } else if (type != 5 && type != 9 && sub == 2) {
-                    func_00333F10(ag, 2, 1);
+                    Stats_Add(ag, 2, 1);
                 }
             } else {
                 Msg_00186F30 m;

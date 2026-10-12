@@ -12,8 +12,8 @@ typedef struct {
     char pad61[0x13];
     T_FFD0* t;
 } S_FFD0;
-int func_00160A00(S_FFD0* self, int i);
-void func_00160C40(S_FFD0* self, int id);
+int NpcRoute_Step(S_FFD0* self, int i);
+void NpcPath_HoldNode(S_FFD0* self, int id);
 void func_0015FFD0(S_FFD0* self, int id)
 {
     if (!self->flag && id != self->cur && id != self->other) {
@@ -24,10 +24,10 @@ void func_0015FFD0(S_FFD0* self, int id)
             if (id == t->ids[i]) {
                 self->idx = i;
                 self->cur = id;
-                self->flag = !func_00160A00(self, i);
+                self->flag = !NpcRoute_Step(self, i);
                 break;
             }
         }
     }
-    func_00160C40(self, id);
+    NpcPath_HoldNode(self, id);
 }

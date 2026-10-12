@@ -287,7 +287,7 @@ typedef struct FlaggedRel {
     char enabled;                   /* 0x0C */
 } FlaggedRel;
 
-/* Object with a float at +0x40 (func_0045BBE0). */
+/* Object with a float at +0x40 (FlashGlare_GetCoronaSize). */
 typedef struct Float40 {
     char pad00[0x40];
     float unk40;                    /* 0x40 */

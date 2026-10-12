@@ -8,7 +8,7 @@ extern void func_003E13C0(int* out, void* list);
 extern void func_003E13B0(N12D0** out, int* in);
 extern const char* Path_GetBaseName(const char* p);
 extern void String_Copy(char* d, const char* s);
-extern int func_00128E80(const char* a, const char* b);
+extern int String_CompareNoCase(const char* a, const char* b);
 S12D0* func_003E12D0(T12D0* self, const char* path)
 {
     N12D0* e;
@@ -23,7 +23,7 @@ S12D0* func_003E12D0(T12D0* self, const char* path)
     func_003E13D0(&it, &t1);
     for (n = it; func_003E13C0(&t2, &self->list), func_003E13B0(&e, &t2), n != e; n = n->next) {
         s = n->data;
-        if (!func_00128E80(Path_GetBaseName(s->path), buf))
+        if (!String_CompareNoCase(Path_GetBaseName(s->path), buf))
             return s;
     }
     return 0;

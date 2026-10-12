@@ -11,7 +11,7 @@ extern int PtrVec_Insert(PtrVec* v, int* pos, int n, int* value);
 extern int func_00275780(PtrVec* v, int* value);
 
 /* Appends 'value' to the list at +0x78. */
-void func_00275750(BulletOwner* owner, int value) {
+void BulletPool_Link(BulletOwner* owner, int value) {
     int tmp[1];
 
     tmp[0] = value;

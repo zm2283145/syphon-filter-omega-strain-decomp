@@ -7,7 +7,7 @@ typedef struct {
 extern int D_005392D0;
 extern long long D_004BC1B0;
 extern long long D_005392D8;
-extern void func_003D2D10(C5Shadow* s, int i);
+extern void Shadow_SilhouetteLevel(C5Shadow* s, int i);
 void func_003D3BC0(C5Shadow* s) {
     if (s->recv) {
         int n = s->recv->count - s->first;
@@ -19,7 +19,7 @@ void func_003D3BC0(C5Shadow* s) {
         D_005392D0 = 5;
         D_005392D8 = D_004BC1B0;
         for (i = 0; i < s->n; i++)
-            func_003D2D10(s, i);
+            Shadow_SilhouetteLevel(s, i);
         D_005392D0 = save;
     }
 }

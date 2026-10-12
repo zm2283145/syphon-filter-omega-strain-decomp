@@ -5,7 +5,7 @@ typedef struct {
     char pad2[0x141 - 0x34];
     unsigned char b0 : 1; unsigned char b1 : 1; unsigned char b2 : 1; unsigned char b3 : 5;
 } NPC_B610;
-unsigned char func_0014B610(NPC_B610* self)
+unsigned char Npc_IsCorpseRemovable(NPC_B610* self)
 {
     unsigned char r = self->b2;
     Ctl_B610* c = self->ctl;

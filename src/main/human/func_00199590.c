@@ -13,8 +13,8 @@ class O_199590 { public:
   char pad3470[0x3524 - 0x3470]; void* weapons; };
 extern "C" {
 E_199590* func_0013FB50(void* w);
-void func_00244A80(void* p, int v, unsigned char on);
-void func_00142E00(void* w, int k, unsigned char on);
+void Hud_SetFlashlightIcon(void* p, int v, unsigned char on);
+void WeaponInv_SetSlotModelState(void* w, int k, unsigned char on);
 void func_0020F860(F2Ev_199590* e, void* name, V_199590* pos);
 void Event_Send(F2Ev_199590* e, void* tgt, int n);
 void func_0036E220(F2Str_199590* s, int f);
@@ -30,7 +30,7 @@ static inline unsigned char Has_199590(O_199590* o)
     if (o->ctl && o->ctl->IsLocal()) r = 1;
     return r;
 }
-extern "C" void func_00199590(O_199590* o, unsigned char on)
+extern "C" void Actor_InfraredSwitch(O_199590* o, unsigned char on)
 {
     E_199590* e = func_0013FB50(o->weapons);
     int v = 0;
@@ -38,10 +38,10 @@ extern "C" void func_00199590(O_199590* o, unsigned char on)
     if (e) v = e->b100;
     o->b346F = on ? v : 0;
     if (Has_199590(o) && o->active && o->b33E7) {
-        func_00244A80(mgr, v, on);
+        Hud_SetFlashlightIcon(mgr, v, on);
         if (!e) { o->b33E6 = 0; o->b33E7 = 0; }
     }
-    func_00142E00(o->weapons, 6, on);
+    WeaponInv_SetSlotModelState(o->weapons, 6, on);
     {
         V_199590 pos = o->GetPos();
         F2Ev_199590 ev;

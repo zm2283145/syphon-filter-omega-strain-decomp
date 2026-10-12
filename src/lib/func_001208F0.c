@@ -5,7 +5,7 @@ typedef union { float value; unsigned int word; } ieee_float_shape_type;
 extern const float D_00499B68[];
 #define T D_00499B68
 extern float func_00121760(float x);
-float func_001208F0(float x, float y, int iy)
+float Math_TanKernel(float x, float y, int iy)
 {
 	const float
 	one   =  1.0000000000e+00,

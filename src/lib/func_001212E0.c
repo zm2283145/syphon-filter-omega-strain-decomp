@@ -1,14 +1,33 @@
 #include "types.h"
 typedef union { float value; unsigned int word; } ieee_float_shape_type;
 #define GET_FLOAT_WORD(i,d) do { ieee_float_shape_type gf_u; gf_u.value = (d); (i) = gf_u.word; } while (0)
-extern const float D_00499BE8[];
-extern const float D_00499BF8[];
-extern const float D_00499C08[];
-#define atanhi D_00499BE8
-#define atanlo D_00499BF8
-#define aT D_00499C08
+static const float atanhi[] = {
+  4.6364760399e-01, /* atan(0.5)hi */
+  7.8539812565e-01, /* atan(1.0)hi */
+  9.8279368877e-01, /* atan(1.5)hi */
+  1.5707962513e+00, /* atan(inf)hi */
+};
+static const float atanlo[] = {
+  5.0121582440e-09, /* atan(0.5)lo */
+  3.7748947079e-08, /* atan(1.0)lo */
+  3.4473217170e-08, /* atan(1.5)lo */
+  7.5497894159e-08, /* atan(inf)lo */
+};
+static const float aT[] = {
+  3.3333334327e-01,
+ -2.0000000298e-01,
+  1.4285714924e-01,
+ -1.1111110449e-01,
+  9.0908870101e-02,
+ -7.6918758452e-02,
+  6.6610731184e-02,
+ -5.8335702866e-02,
+  4.9768779427e-02,
+ -3.6531571299e-02,
+  1.6285819933e-02,
+};
 extern float func_00121760(float x);
-float func_001212E0(float x)
+float Math_Atan(float x)
 {
 	const float one   = 1.0, huge   = 1.0e30;
 	float w,s1,s2,z;

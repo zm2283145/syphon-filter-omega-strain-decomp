@@ -13,15 +13,15 @@ struct Path {
 
 typedef struct cPathedGOBJ { char pad[0x64]; Path* path; /* +0x64 */ } cPathedGOBJ;
 
-extern char D_004F77C0[];
+extern char g_TargetVisMgr[];
 extern "C" void func_003CE790(cPathedGOBJ* self, void* arg);
-extern "C" void func_0022C720(void* list, cPathedGOBJ* obj);
+extern "C" void TargetVis_Unregister(void* list, cPathedGOBJ* obj);
 
-/* Notifies the path (virtual +0x60), runs the base handler, then func_0022C720(D_004F77C0, self). */
+/* Notifies the path (virtual +0x60), runs the base handler, then TargetVis_Unregister(g_TargetVisMgr, self). */
 extern "C" void func_0021ABC0(cPathedGOBJ* self, void* arg)
 {
     if (self->path)
         self->path->Method60();
     func_003CE790(self, arg);
-    func_0022C720(D_004F77C0, self);
+    TargetVis_Unregister(g_TargetVisMgr, self);
 }

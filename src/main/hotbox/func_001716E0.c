@@ -11,7 +11,7 @@ extern char D_004EE6C0[];
 extern void Receiver_Construct(void* self, void* type);
 extern void ScalarCollection_Init(void* self);
 
-HotboxReceiver* func_001716E0(HotboxReceiver* self, int unk20) {
+HotboxReceiver* HotboxTracker_Construct(HotboxReceiver* self, int unk20) {
     Receiver_Construct(self, D_004EE6C0);
     self->vtable = D_004D9960;
     ScalarCollection_Init(self->unk28);

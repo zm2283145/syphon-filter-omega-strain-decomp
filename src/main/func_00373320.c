@@ -27,13 +27,13 @@ extern void func_00373590(Pt1GlMgr* m, Pt1GlV4* pos, Pt1GlEntry* e, float radius
 extern void func_001832D0(Pt1GlV4* out, void* xform);
 extern void Sphere_FromCenter(Pt1GlV4* out, Pt1GlV4* a, Pt1GlV4* b);
 extern float func_00183350(Pt1GlV4* v);
-extern int func_00373BA0(const void* a, const void* b);
+extern int LightMgr_CompareOrder(const void* a, const void* b);
 extern void func_001273C8(void* base, int n, int size, int (*cmp)(const void*, const void*));
 extern void func_00372120(Pt1GlMgr* m, unsigned int mask, unsigned int flags);
 extern void func_00371CF0(Pt1GlMgr* m, void* out);
 extern void func_00371E70(Pt1GlMgr* m, void* out);
 
-void func_00373320(Pt1GlMgr* m, unsigned int mask, unsigned int flags, void* out)
+void LightMgr_GatherModelLights(Pt1GlMgr* m, unsigned int mask, unsigned int flags, void* out)
 {
     if (m->force) {
         m->dirty = 1;
@@ -53,7 +53,7 @@ void func_00373320(Pt1GlMgr* m, unsigned int mask, unsigned int flags, void* out
                         func_003730F0(m, &m->table->entries[i], m->xform);
                 }
                 if (m->candCount)
-                    func_001273C8(m->table->cand, m->candCount, 8, func_00373BA0);
+                    func_001273C8(m->table->cand, m->candCount, 8, LightMgr_CompareOrder);
             }
         } else {
             m->candCount = 0;
@@ -72,7 +72,7 @@ void func_00373320(Pt1GlMgr* m, unsigned int mask, unsigned int flags, void* out
                         func_00373590(m, &pos, &m->table->entries[i], radius);
                 }
                 if (m->candCount)
-                    func_001273C8(m->table->cand, m->candCount, 8, func_00373BA0);
+                    func_001273C8(m->table->cand, m->candCount, 8, LightMgr_CompareOrder);
             }
         }
         m->dirty = 0;

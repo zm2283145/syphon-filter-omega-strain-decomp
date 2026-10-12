@@ -14,7 +14,7 @@ unsigned char func_001B8740(Actor* actor) {
 }
 
 /* Set unk33A4 and mirror it to the linked object when the global gate is on. */
-void func_001B8750(Actor* actor, int value) {
+void Actor_SetInvulnerable(Actor* actor, int value) {
     ActorLink3584* link;
 
     actor->unk33A4 = value;

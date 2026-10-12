@@ -20,14 +20,14 @@ struct E8Nav {
     char pad60[0x70 - 0x60];
     E8Obj* obj;         /* 0x70 */
 };
-extern "C" void func_00160C40(E8Nav* self, int n);
-extern "C" int func_0015D510(int n, float* pos, int flags, int ex);
+extern "C" void NpcPath_HoldNode(E8Nav* self, int n);
+extern "C" int NpcRoute_NearestGroupNode(int n, float* pos, int flags, int ex);
 extern "C" void func_0015FDD0(E8Nav* self, int n)
 {
-    func_00160C40(self, -1);
+    NpcPath_HoldNode(self, -1);
     if (n >= 0 && n != self->target) {
         self->target = n;
-        int r = func_0015D510(n, self->obj->GetMatrix().Pos(), 0x80, -1);
+        int r = NpcRoute_NearestGroupNode(n, self->obj->GetMatrix().Pos(), 0x80, -1);
         if (r >= 0) self->node = r;
     }
     float z = self->obj->GetMatrix().Z();

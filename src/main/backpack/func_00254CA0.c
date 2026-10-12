@@ -2,14 +2,14 @@
 typedef struct { char pad[0x24]; int id; } Ent_4CA0;
 typedef struct { union { unsigned char type; Ent_4CA0 ents[5]; } u; int pad; int count; unsigned char flag; char pad2[3]; } Slot_4CA0;
 typedef struct { char pad[0x64]; Slot_4CA0 slots[3]; } Pack_4CA0;
-extern int func_00143D20(int key);
+extern int WeaponInv_SlotOfItem(int key);
 #pragma opt_rotateloops off
 
 int func_00254CA0(Pack_4CA0* s, int id, int back)
 {
     Slot_4CA0* p; int i;
     int t;
-     t = func_00143D20(id); p = s->slots;
+     t = WeaponInv_SlotOfItem(id); p = s->slots;
     i = 0;
     for (; i < 3; i++, p++) {
         if (p->u.type == (unsigned char)t) {

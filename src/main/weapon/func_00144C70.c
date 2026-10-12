@@ -7,7 +7,7 @@ extern "C" {
 extern char D_0049B1D0[];
 void Mem_Free(int pool, void* allocation, char* file, int line);
 void func_00266470(void* p, int f);
-void func_00144BA0(S_4C70* self, int slot);
+void WeaponInv_StopLoopSound(S_4C70* self, int slot);
 void func_0040C9A0(void* n);
 void func_003CB230(float t, void* n);
 void operator_delete(void* p);
@@ -22,8 +22,8 @@ extern "C" S_4C70* func_00144C70(S_4C70* self, short del)
             func_00266470(s, -1);
             Mem_Free(0, s, D_0049B1D0, 0x4CE);
         }
-        func_00144BA0(self, 0);
-        func_00144BA0(self, 1);
+        WeaponInv_StopLoopSound(self, 0);
+        WeaponInv_StopLoopSound(self, 1);
         o = self->obj;
         if (o) {
             if (o)

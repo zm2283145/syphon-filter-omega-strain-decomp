@@ -7,12 +7,12 @@
 #include "types.h"
 #include "ai_types.h"
 
-extern char D_004ED9B0[];
+extern char g_NpcRouteMgr[];
 extern char D_004FFB50[];  /* global service registry */
 extern char D_005721C8[];  /* multiplayer flag byte */
 extern int Service_Lookup(int, int);
 extern int func_001589D0(void);
-extern int func_00158A80(void);
+extern int NpcAi_ResetFireProgress(void);
 extern int func_00164330(int);
 extern int func_001644B0(int);
 
@@ -34,10 +34,10 @@ void func_0016F490(cAI* self, int value) {
 
 int func_0016F4D0(void) {
     func_001589D0();
-    return func_00164330(Service_Lookup((int)D_004FFB50, (int)D_004ED9B0));
+    return func_00164330(Service_Lookup((int)D_004FFB50, (int)g_NpcRouteMgr));
 }
 
 int func_0016F510(void) {
-    func_001644B0(Service_Lookup((int)D_004FFB50, (int)D_004ED9B0));
-    return func_00158A80();
+    func_001644B0(Service_Lookup((int)D_004FFB50, (int)g_NpcRouteMgr));
+    return NpcAi_ResetFireProgress();
 }

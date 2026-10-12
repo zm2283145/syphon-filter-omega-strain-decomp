@@ -8,7 +8,7 @@ extern int* Event_GetType(G1Ev*);
 extern int func_003CACA0(G1Ob*, G1Ev*);
 extern int World_UpdateFrame(G1Ob*);
 extern void func_0012EEE0(G1Ob*, int, int);
-extern void func_0025E6E0(void*, int, float);
+extern void ActorFader_Start(void*, int, float);
 extern int D_005436B0;
 extern int D_004F5398;
 extern unsigned char D_005721C8;
@@ -30,7 +30,7 @@ int func_00136A90(G1Ob* o, G1Ev* e)
             } else {
                 o->prevState = o->state;
                 o->state = 0x13;
-                func_0025E6E0(o->anim, 2, 1.0f);
+                ActorFader_Start(o->anim, 2, 1.0f);
             }
             return 1;
         }

@@ -9,9 +9,9 @@
 extern void* Agent_GetSelected(void* agents, int index);
 extern char D_004FFB50[];
 extern void func_0024B4D0(PlayerInputState* input);
-extern void func_00333F10(void* agent, int a1, int a2);
+extern void Stats_Add(void* agent, int a1, int a2);
 
 void cPlayer_v1D(PlayerComponent* self) {
-    func_00333F10(Agent_GetSelected(D_004FFB50, -1), 8, 1);
+    Stats_Add(Agent_GetSelected(D_004FFB50, -1), 8, 1);
     func_0024B4D0(&self->input);
 }

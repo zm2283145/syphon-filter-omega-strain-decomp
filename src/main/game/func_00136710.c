@@ -7,7 +7,7 @@ extern "C" {
 int AgentData_Construct(...);
 int Mem_Alloc(...);
 int ScriptMgr_CallFunction(...);
-int func_00147400(...);
+int WeaponDb_Load(...);
 int func_0040E4C0(...);
 extern char D_0049A890;
 extern char D_0049AAD8;
@@ -24,7 +24,7 @@ extern "C" void Awards_Init(char * arg0) {
 
     if (D_004E9FF0 == 0) {
         D_004E9FF0 = 1;
-        func_00147400(F_(arg0, 0x1E0, int));
+        WeaponDb_Load(F_(arg0, 0x1E0, int));
         func_0040E4C0(&D_0055A830);
         ScriptMgr_CallFunction(&D_00555070, &D_0049AAD8, 0);
         var_s1 = 0;

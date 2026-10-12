@@ -84,6 +84,29 @@ def subsegments(cfg):
     return subs
 
 
+# Subsegment types for the data a C unit emits itself: `[ROM, .rodata, unit]`
+# places all of the unit's data sections, in object order, at ROM. The type
+# is .rodata if the unit has any .rodata, else .data (see docs/data_split.md).
+DATA_PIECE_TYPES = (".data", ".rodata", ".sdata")
+
+
+
+def data_pieces(subs):
+    """{C unit: [(rom start, type)]} for every unit that links its own data."""
+    units = {name for _, typ, name in subs if typ == "c"}
+    pieces = {}
+    for start, typ, name in subs:
+        if typ in DATA_PIECE_TYPES:
+            if name not in units:
+                sys.exit(f"config/splat.yaml: {typ} subsegment at {start:#x} names {name!r}, which is not a C unit")
+            if name in pieces:
+                sys.exit(f"config/splat.yaml: C unit {name} has more than one data subsegment")
+            pieces.setdefault(name, []).append((start, typ))
+        elif typ.startswith("."):
+            sys.exit(f"config/splat.yaml: unsupported subsegment type {typ} at {start:#x}")
+    return pieces
+
+
 def unit_name(typ, name, start):
     # splat names unnamed subsegments after their rom offset in hex
     return name if name else f"{start:X}"
@@ -174,6 +197,53 @@ def gcc_command(version, wrap):
     return None
 
 
+LINK_SECTIONS = ".text* .data* .rodata* .sdata*"
+
+
+def block_labels(path):
+    """[(label, address)] of the data labels splat wrote for a data block."""
+    out, pending = [], None
+    for line in Path(path).read_text(errors="replace").splitlines():
+        m = re.match(r"\s*dlabel (\S+)", line)
+        if m:
+            pending = m.group(1); continue
+        m = re.match(r"\s*/\* [0-9A-F]+ ([0-9A-F]{8}) ", line)
+        if pending and m:
+            out.append((pending, int(m.group(1), 16))); pending = None
+    return out
+
+
+def link_script(gp, vram, provides=()):
+    """Linker script: the code in command-line (address) order, then the tail.
+
+    The single wildcard keeps the address-ordered command line and stays fast
+    for thousands of objects. The tail objects' sections are named
+    .tail.<VRAM> (tools/tail_obj.py) - the wildcard does not match them - and
+    are collected sorted by name, i.e. by address; sections of equal name keep
+    their object order. A C unit that links its data contributes its code to
+    the wildcard and its data block to the tail.
+
+    provides: retail labels inside the C data blocks (other code may still
+    use a literal the unit owns, e.g. a string pooled in its translation
+    unit); the C object only has local symbols for them.
+    """
+    labels = "".join(f"    PROVIDE({n} = {a:#x});\n" for n, a in provides)
+    return f"""SECTIONS
+{{
+    _gp = {gp:#x};
+{labels}
+    .main {vram:#x} : AT(0)
+    {{
+        FILL(0x00000000);
+        *({LINK_SECTIONS})
+        *(SORT_BY_NAME(.tail.*))
+        . = ALIGN(16);
+    }}
+    /DISCARD/ : {{ *(*) }}
+}}
+"""
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawTextHelpFormatter)
     ap.add_argument("--elf", help="path to your retail SCUS_972.64")
@@ -247,7 +317,23 @@ def main():
     objdiff = args.objdiff or str(ROOT / ".tools" / ("objdiff-cli" + EXE))
 
     asm_objs, c_units, link_objs, units = [], [], [], []
+    carved = data_pieces(subs)
+    seg_vram = cfg["segments"][0]["vram"] - cfg["segments"][0]["start"]
+    fallback = {n for n, v in overrides.items() if compilers.get(v) is None}
+    # The tail - everything from the first data subsegment on: data, the code
+    # islands among it, the static initialisers, and the data blocks of C
+    # units - is placed by address through section names .tail.<VRAM>
+    # (tools/tail_obj.py, link_script); data_objs and relinks make those
+    # objects.
+    first_data = min((st for st, t, _ in subs if t in ("data", "rodata", "bss") or t in DATA_PIECE_TYPES),
+                     default=None)
+    in_tail = lambda st: first_data is not None and st >= first_data
+    block = {n: p[0][0] + seg_vram for n, p in carved.items()}
+    data_objs, relinks = [], []
     for start, typ, name in subs:
+        vram = start + seg_vram
+        if typ in DATA_PIECE_TYPES:
+            continue  # linked through the unit's object
         if typ in ("asm", "hasm", "data", "rodata", "bss"):
             uname = unit_name(typ, name, start)
             src = Path("asm") / ("data/" + uname + ".data.s" if typ == "data" else uname + ".s")
@@ -255,7 +341,11 @@ def main():
                 src = Path("asm") / "data" / (uname + ".rodata.s")
             obj = Path("build") / src.with_suffix(".o")
             asm_objs.append((src, obj, next(a for a in (16, 8, 4) if (start + 0x100000) % a == 0)))
-            link_objs.append(obj)
+            link = obj
+            if in_tail(start):
+                link = obj.with_suffix(".link.o")
+                relinks.append((obj, link, vram, vram))
+            link_objs.append(link)
             if typ in ("asm", "hasm"):
                 units.append({"name": f"asm/{start + 0x100000:06X}", "target_path": str(obj).replace("\\", "/"),
                               "metadata": {"progress_categories": ["main"], "auto_generated": True}})
@@ -269,20 +359,36 @@ def main():
             src = Path("src") / (name + ".c")
             obj = Path("build") / "src" / (name + ".o")
             # splat (make_full_disasm_for_code) writes the retail code of the
-            # unit to asm/<unit>.s; it is assembled as the objdiff target.
+            # unit - and its data subsegment, if any - to asm/<unit>.s; it is
+            # assembled as the objdiff target.
             target_s = Path("asm") / (name + ".s")
             target = Path("build") / "target" / (name + ".o")
             align = next(a for a in (16, 8, 4) if (start + 0x100000) % a == 0)
-            if name in overrides and compilers[overrides[name]] is None:
+            text_tail = vram if in_tail(start) else None
+            if name in fallback:
                 obj = Path("build") / "fallback" / (name + ".o")
                 asm_objs.append((target_s, obj, align))
-                link_objs.append(obj)
+                link = obj
+                if text_tail is not None or name in block:
+                    link = obj.with_suffix(".link.o")
+                    relinks.append((obj, link, text_tail, block.get(name)))
+                link_objs.append(link)
                 units.append({"name": name, "target_path": str(obj).replace("\\", "/"),
                               "metadata": {"progress_categories": ["main"], "auto_generated": True}})
                 continue
-            c_units.append((src, obj, target_s, target, "gcc" if name.startswith("lib/") else "cc",
+            out = link = obj
+            if name in carved:
+                # compiled to .raw.o; tools/data_obj.py makes the objdiff base
+                # (obj) and the link object
+                out = Path("build") / "src" / (name + ".raw.o")
+                link = Path("build") / "src" / (name + ".link.o")
+                data_objs.append((out, obj, link, block[name], text_tail))
+            elif text_tail is not None:
+                link = Path("build") / "src" / (name + ".link.o")
+                relinks.append((obj, link, text_tail, None))
+            c_units.append((src, out, target_s, target, "gcc" if name.startswith("lib/") else "cc",
                             next(a for a in (16, 8, 4) if (start + 0x100000) % a == 0)))
-            link_objs.append(obj)
+            link_objs.append(link)
             units.append({"name": name, "target_path": str(target).replace("\\", "/"),
                           "base_path": str(obj).replace("\\", "/"),
                           "metadata": {"progress_categories": ["main"], "complete": True,
@@ -305,6 +411,9 @@ def main():
         "rule as",
         "  command = $python tools/assemble.py $as $objcopy $align $out $in $asflags",
         "  description = AS $in",
+        "rule as_target",
+        "  command = $python tools/assemble.py --relative-jumptables $as $objcopy $align $out $in $asflags",
+        "  description = AS $in",
         "rule cc",
         "  command = $cc $cflags -o $out $in",
         "  description = CC $in",
@@ -314,6 +423,14 @@ def main():
         "rule gcc",
         "  command = $python tools/compile_aligned.py $objcopy $align $out $in -- $gcc $gccflags",
         "  description = GCC $in",
+        "rule dataobj",
+        "  command = $python tools/data_obj.py $ld $objcopy $in $out $start $text",
+        "  description = DATA $in",
+        "  restat = 1",
+        "rule tailobj",
+        "  command = $python tools/tail_obj.py $objcopy $in $out $text $data",
+        "  description = TAIL $in",
+        "  restat = 1",
         "rule ld",
         "  command = $ld -EL -T build/undefined_syms_auto.txt -T build/undefined_funcs_auto.txt "
         "-T config/extra.ld -T build/link.ld -Map build/SCUS_972.64.map "
@@ -353,8 +470,18 @@ def main():
             lines.append(f"  gcc = {compilers[overrides[name]]}")
             flags = GCC_VERSION_FLAGS.get(overrides[name], GCCFLAGS)
             lines.append(f"  gccflags = {flags} -Iinclude -Isrc")
-        lines.append(f"build {ninja_path(target)}: as {ninja_path(target_s)}")
+        name = src.relative_to("src").with_suffix("").as_posix()
+        lines.append(f"build {ninja_path(target)}: {'as_target' if name in carved else 'as'} {ninja_path(target_s)}")
         lines.append("  align = 16")
+    hexa = lambda v: "-" if v is None else f"{v:#x}"
+    for raw, base, link, vram, text in data_objs:
+        lines.append(f"build {ninja_path(base)} {ninja_path(link)}: dataobj {ninja_path(raw)}")
+        lines.append(f"  start = {vram:#x}")
+        lines.append(f"  text = {hexa(text)}")
+    for obj, link, text, data in relinks:
+        lines.append(f"build {ninja_path(link)}: tailobj {ninja_path(obj)}")
+        lines.append(f"  text = {hexa(text)}")
+        lines.append(f"  data = {hexa(data)}")
     targets = " ".join(ninja_path(u[3]) for u in c_units)
     lines += [
         f"build build/SCUS_972.64.elf: ld | {' '.join(ninja_path(o) for o in link_objs)} build/link.ld build/link.rsp config/extra.ld",
@@ -375,19 +502,13 @@ def main():
     (ROOT / "build" / "link.rsp").write_text("\n".join(str(o).replace("\\", "/") for o in link_objs) + "\n")
     gp = cfg["options"]["gp_value"]
     seg = cfg["segments"][0]
-    (ROOT / "build" / "link.ld").write_text(f"""SECTIONS
-{{
-    _gp = {gp:#x};
-    .main {seg["vram"]:#x} : AT(0)
-    {{
-        FILL(0x00000000);
-        /* one pattern keeps the command-line (address) order of all objects */
-        *(.text* .data* .rodata* .sdata*)
-        . = ALIGN(16);
-    }}
-    /DISCARD/ : {{ *(*) }}
-}}
-""")
+    provides = []
+    for name, pieces in sorted(carved.items()):
+        for _, typ in pieces:
+            f = ROOT / "asm" / "data" / (name + "." + typ[1:] + ".s")
+            if f.exists():
+                provides += block_labels(f)
+    (ROOT / "build" / "link.ld").write_text(link_script(gp, seg["vram"], provides))
 
     objdiff_cfg = {
         "$schema": "https://raw.githubusercontent.com/encounter/objdiff/main/config.schema.json",

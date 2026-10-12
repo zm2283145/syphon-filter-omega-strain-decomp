@@ -5,16 +5,16 @@
 
 #include "loose05_types.h"
 
-extern float D_00497A20;
+extern float FlashDazzleSize;
 
-float func_0045BBE0(Float40* self) {
+float FlashGlare_GetCoronaSize(Float40* self) {
     return self->unk40;
 }
 
-int func_0045BBF0(void) {
+int FlashGlare_GetCoronaFlag(void) {
     return 0;
 }
 
-float func_0045BC00(void) {
-    return D_00497A20;
+float FlashGlare_GetRange(void) {
+    return FlashDazzleSize;
 }

@@ -5,7 +5,7 @@ typedef struct { char pad[0x200]; int x[64]; } WDef;
 extern void* D_004FFD30;
 typedef struct { char pad[0xF4]; int xF4; } WD_2E80;
 extern WD_2E80* WeaponDb_Get(void* db, int id);
-int func_00142E80(INV* self)
+int WeaponInv_GetCarriedValue(INV* self)
 {
     int best = 0;
     int i = 0;

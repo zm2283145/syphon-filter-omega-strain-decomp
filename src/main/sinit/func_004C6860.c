@@ -1,0 +1,45 @@
+#include "types.h"
+int __register_global_object();
+int func_00144930();
+int Script_cGameDirectionalLight_TurnOff();
+int Script_cGameDirectionalLight_TurnOn();
+int ScriptType_cGameDirectionalLight_Init();
+int Script_cGameSceneLight_TurnOff();
+int Script_cGameSceneLight_TurnOn();
+int ScriptType_cGameSceneLight_Init();
+int Script_cGameLight_TurnOff();
+int Script_cGameLight_TurnOn();
+int ScriptType_cGameLight_Init();
+int func_003D84F0();
+int Script_RegisterType();
+extern char D_00493880;
+extern char D_004EE880;
+extern void* D_004EE890;
+extern int D_004EE898;
+extern int D_004EE8A0;
+extern int D_004EE8A8;
+extern int D_004EE8B0;
+extern int D_004EE8B8;
+extern int D_004EE8C0;
+extern int D_004EE8C8;
+extern int D_004EE8D0;
+extern int D_004EE8D8;
+extern int D_004EE8E0;
+extern int D_004EE8E8;
+extern int D_004EE8F0;
+void func_004C6860(void) {
+    D_004EE890 = "LIGHT";
+    __register_global_object(&D_004EE890, func_00144930, &D_004EE880);
+    D_004EE898 = Script_RegisterType("cGameLight", ScriptType_cGameLight_Init, 0, 1);
+    D_004EE8A0 = D_004EE898;
+    D_004EE8A8 = func_003D84F0(D_004EE898, Script_cGameLight_TurnOn, &D_00493880, "TurnOn", 1, &D_004EE898);
+    D_004EE8B0 = func_003D84F0(D_004EE898, Script_cGameLight_TurnOff, &D_00493880, "TurnOff", 1, &D_004EE898);
+    D_004EE8B8 = Script_RegisterType("cGameSceneLight", ScriptType_cGameSceneLight_Init, 0, 1);
+    D_004EE8C0 = D_004EE8B8;
+    D_004EE8C8 = func_003D84F0(D_004EE8B8, Script_cGameSceneLight_TurnOn, &D_00493880, "TurnOn", 1, &D_004EE8B8);
+    D_004EE8D0 = func_003D84F0(D_004EE8B8, Script_cGameSceneLight_TurnOff, &D_00493880, "TurnOff", 1, &D_004EE8B8);
+    D_004EE8D8 = Script_RegisterType("cGameDirectionalLight", ScriptType_cGameDirectionalLight_Init, 0, 1);
+    D_004EE8E0 = D_004EE8D8;
+    D_004EE8E8 = func_003D84F0(D_004EE8D8, Script_cGameDirectionalLight_TurnOn, &D_00493880, "TurnOn", 1, &D_004EE8D8);
+    D_004EE8F0 = func_003D84F0(D_004EE8D8, Script_cGameDirectionalLight_TurnOff, &D_00493880, "TurnOff", 1, &D_004EE8D8);
+}

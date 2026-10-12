@@ -4,7 +4,7 @@
 /*
  * Virtual method 7 shared by pathed GOBJ classes: notify the attached
  * object at +0x64 (its int slot 22 with 1), run func_003CE7D0 on self,
- * then register self with func_0022C720(D_004F77C0, self).
+ * then register self with TargetVis_Unregister(g_TargetVisMgr, self).
  * C++ only (#pragma cplusplus on before including).
  */
 class VSlotsInt23 {
@@ -26,9 +26,9 @@ struct GobjV07 {
 };
 
 extern "C" {
-extern char D_004F77C0[];
+extern char g_TargetVisMgr[];
 void func_003CE7D0(GobjV07* self);
-void func_0022C720(void* list, GobjV07* self);
+void TargetVis_Unregister(void* list, GobjV07* self);
 }
 
 #define DEFINE_GOBJ_V07_REGISTER(name)                                        \
@@ -38,7 +38,7 @@ void func_0022C720(void* list, GobjV07* self);
         if (a)                                                                \
             a->slot22(1);                                                     \
         func_003CE7D0(self);                                                  \
-        func_0022C720(D_004F77C0, self);                                      \
+        TargetVis_Unregister(g_TargetVisMgr, self);                                      \
     }
 
 #endif /* GOBJ_V07_REGISTER_H */

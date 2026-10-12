@@ -5,7 +5,7 @@ typedef struct { int a; int b; int id; int d; } Slot_3710;
 typedef struct { char pad[0x70]; int x70; } WDef_3710;
 extern void* D_004FFD30;
 extern WDef_3710* WeaponDb_Get(void* db, int id);
-int func_00143710(INV* self, int id)
+int WeaponInv_HasAmmoText(INV* self, int id)
 {
     if (id == -1 && self->cur != 6) id = self->e[self->cur].id;
     return id != -1 ? WeaponDb_Get(D_004FFD30, id)->x70 != 0 : 0;

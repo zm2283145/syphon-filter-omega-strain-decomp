@@ -5,10 +5,10 @@ typedef struct { char pad[0x18]; int id; char pad1c[0x84 - 0x1C]; unsigned char 
 extern unsigned char D_00489D78[];
 extern unsigned char D_00489D70[];
 extern void Equip_SwapSlots(void*, int, int);
-void func_00142BB0(AnimHost_e1* self, unsigned char b)
+void WeaponInv_Holster(AnimHost_e1* self, unsigned char b)
 {
     if (b == 0 && (E1IsNone(self->id) ^ 1)) {
-        func_00142BB0(self, 1);
+        WeaponInv_Holster(self, 1);
     }
     Equip_SwapSlots(self->equip + 0x60, D_00489D78[b], D_00489D70[b]);
     self->state = 6;

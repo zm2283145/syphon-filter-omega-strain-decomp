@@ -16,7 +16,7 @@ extern char D_004C2018;
 extern unsigned char D_00533880;
 extern char D_0055C9F0;
 }
-extern "C" char * func_0045BAD0(char * arg0, int arg1) {
+extern "C" char * Flashlight_Construct(char * arg0, int arg1) {
     int sp4C;
     int sp48;
     void **temp_a0;

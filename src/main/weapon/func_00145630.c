@@ -7,7 +7,7 @@ extern char D_0049B240[];
 extern char D_0049B248[];
 extern int strlen(const char* s);
 extern int func_00129C80(char* a, char* b);
-extern void func_00128E80(char* a, char* b);
+extern void String_CompareNoCase(char* a, char* b);
 extern void func_00146460(S_5630* self, R_5630* r);
 void func_00145630(S_5630* self, int idx, int release)
 {
@@ -16,7 +16,7 @@ void func_00145630(S_5630* self, int idx, int release)
     if (e->count == 0) {
         if (strlen(e->name) && !func_00129C80(e->name, D_0049B238))
             func_00129C80(e->name, D_0049B240);
-        func_00128E80(e->xE0, D_0049B248);
+        String_CompareNoCase(e->xE0, D_0049B248);
         if (e->res) {
             e->res->refs--;
             if (release && e->res->refs <= 0)

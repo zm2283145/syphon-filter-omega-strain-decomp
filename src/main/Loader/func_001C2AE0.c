@@ -33,7 +33,7 @@ Gen_1C2AE0* cGenerator_ctor(void* p, PopReader_1C2AE0* r);
 void func_00165E60(void* a, char* name, int x);
 void* func_001698C0(void);
 void* LosRegion_FindGlobal(void* region);
-void func_00173D60(void* reg, Gen_1C2AE0* g, int a, int b);
+void ZoneMgr_Associate(void* reg, Gen_1C2AE0* g, int a, int b);
 }
 extern "C" void Loader_LoadGeneratorDefs(void* a0, PopReader_1C2AE0* r)
 {
@@ -60,7 +60,7 @@ extern "C" void Loader_LoadGeneratorDefs(void* a0, PopReader_1C2AE0* r)
                     c->Refresh();
                 reg = LosRegion_FindGlobal(c->region);
                 if (reg)
-                    func_00173D60(reg, p, 1, 0);
+                    ZoneMgr_Associate(reg, p, 1, 0);
                 else
                     p->Attach(1);
             }

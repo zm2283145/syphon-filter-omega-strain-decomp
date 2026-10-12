@@ -23,13 +23,13 @@ typedef struct ElevE6 {
 
 extern "C" char D_004FFB50[];
 extern "C" char D_004DADF0[];
-extern "C" char D_004F77C0[];
+extern "C" char g_TargetVisMgr[];
 extern "C" void func_0020EBA0(ElevE6Msg* msg, void* key, ElevE6* self);
 extern "C" void Event_Send(ElevE6Msg*, void*, int);
 extern "C" void func_0036E220(void*, int);
 extern "C" void cMessage_dtor(ElevE6Msg*, int);
 extern "C" void func_003CE790(ElevE6* self, void* arg);
-extern "C" void func_0022C720(void* list, ElevE6* self);
+extern "C" void TargetVis_Unregister(void* list, ElevE6* self);
 
 /* cElevatorGOBJ vtable slot 16: broadcast, forward to the child, then base handling. */
 extern "C" void cElevatorGOBJ_v16(ElevE6* self, void* arg)
@@ -45,5 +45,5 @@ extern "C" void cElevatorGOBJ_v16(ElevE6* self, void* arg)
         self->child->Fn(arg);
     }
     func_003CE790(self, arg);
-    func_0022C720(D_004F77C0, self);
+    TargetVis_Unregister(g_TargetVisMgr, self);
 }

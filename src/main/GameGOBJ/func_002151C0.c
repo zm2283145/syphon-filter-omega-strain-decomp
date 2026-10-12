@@ -28,12 +28,12 @@ typedef struct ElevatorMsg {
 
 extern char D_004FFB50[];
 extern char D_004DADF0[];
-extern char D_004F77C0[];
+extern char g_TargetVisMgr[];
 extern "C" void func_0020EBA0(ElevatorMsg* msg, int* floors, cElevatorGOBJ* self);
 extern "C" void Event_Send(ElevatorMsg* msg, void* queue, int flag);
 extern "C" void func_0036E220(void* member, int flag);
 extern "C" void cMessage_dtor(ElevatorMsg* msg, int flag);
-extern "C" void func_0022C720(void* list, cElevatorGOBJ* obj);
+extern "C" void TargetVis_Unregister(void* list, cElevatorGOBJ* obj);
 extern "C" void func_003CE7D0(cElevatorGOBJ* self);
 
 /* Lift virtual 0x07: posts an elevator message, notifies the door (virtual +0x60), runs the base handler and unregisters. */
@@ -50,5 +50,5 @@ extern "C" void cElevatorGOBJ_v07(cElevatorGOBJ* self)
     if (self->door)
         self->door->Method60(1);
     func_003CE7D0(self);
-    func_0022C720(D_004F77C0, self);
+    TargetVis_Unregister(g_TargetVisMgr, self);
 }

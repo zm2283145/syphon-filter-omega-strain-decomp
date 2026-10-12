@@ -19,7 +19,7 @@ extern void Event_Send(Msg_0014D900* msg, void* target, int flags);
 extern void cMessage_dtor(Msg_0014D900* msg, int flags);
 #define SEND1(V) { Msg_0014D900 msg; Event_Construct(&msg, D_0055D480); msg.b28 = 0; msg.vtable = D_004E0840; msg.value = V; { void* t = self->target; msg.b20 = 1; Event_Send(&msg, t, 0); } msg.vtable = D_004E0840; cMessage_dtor(&msg, 0); }
 #define SEND0(V) { Msg_0014D900 msg; Event_Construct(&msg, D_0055D480); msg.b28 = 0; msg.vtable = D_004E0840; msg.value = V; Event_Send(&msg, self->target, 0); msg.vtable = D_004E0840; cMessage_dtor(&msg, 0); }
-void func_0014D900(Self_0014D900* self, unsigned char type, int prio, float f)
+void NpcAi_RequestAction(Self_0014D900* self, unsigned char type, int prio, float f)
 {
     switch (type) {
     case 9:

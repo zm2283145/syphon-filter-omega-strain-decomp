@@ -3,7 +3,7 @@ typedef struct { char pad[0xC]; int seed; char pad2[0x3524 - 0x10]; void* inv; }
 typedef struct { char pad[0x30]; Ctl_NPCW* ctl; char pad2[0xA4 - 0x34]; int burst; int burstCount; } NPC_W;
 extern int func_001B16C0(Ctl_NPCW* c);
 extern int Random_Next(void);
-extern int func_001438E0(void* inv, int slot);
+extern int WeaponInv_GetClipSize(void* inv, int slot);
 static inline void ResetBurst(NPC_W* self)
 {
     Ctl_NPCW* c = self->ctl;
@@ -12,8 +12,8 @@ static inline void ResetBurst(NPC_W* self)
         self->burst = (self->ctl->seed & 7) + 3;
         if (Random_Next() & 1)
             self->burst++;
-        if (self->burst > func_001438E0(inv, 6)) {
-            int h = func_001438E0(inv, 6) / 2;
+        if (self->burst > WeaponInv_GetClipSize(inv, 6)) {
+            int h = WeaponInv_GetClipSize(inv, 6) / 2;
             if (h <= 0)
                 h = 1;
             self->burst = h;
@@ -23,12 +23,12 @@ static inline void ResetBurst(NPC_W* self)
     }
     self->burstCount = 0;
 }typedef struct { char pad[0x84]; unsigned char cur; } Inv_B9E0;
-extern void func_00143A60(Inv_B9E0* inv, int wrap);
+extern void WeaponInv_Cycle(Inv_B9E0* inv, int wrap);
 void cNPC_v6A(NPC_W* self)
 {
     Inv_B9E0* inv = (Inv_B9E0*)self->ctl->inv;
-    func_00143A60(inv, 1);
+    WeaponInv_Cycle(inv, 1);
     if (inv->cur == 6)
-        func_00143A60(inv, 1);
+        WeaponInv_Cycle(inv, 1);
     ResetBurst(self);
 }

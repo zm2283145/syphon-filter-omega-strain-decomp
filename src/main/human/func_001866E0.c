@@ -18,7 +18,7 @@ extern unsigned char D_005721C8;
 /* Warning: Gap in callee-saved word stack region.
  * Saved: [0x0, 0x10, 0x14, 0x18, 0x1c, 0x20, 0x24, 0x28, 0x2c, 0x30, 0x34], gap at: 0x8. */
 }
-extern "C" void func_001866E0(char * arg0, int arg1, float farg0) {
+extern "C" void Actor_ApplyFlash(char * arg0, int arg1, float farg0) {
     struct { char * f40[7]; int f5C; signed char f60[4]; int f64; signed char f68[4]; float f6C; } sl;
     void **temp_a0;
 

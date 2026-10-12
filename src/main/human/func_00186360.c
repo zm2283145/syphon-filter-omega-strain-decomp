@@ -56,7 +56,7 @@ static inline int GetId_00186360(Obj_00186360* o, int& t)
     }
     return *p;
 }
-extern "C" void func_00186360(Npc_00186360* self, unsigned char on, Obj_00186360* obj, unsigned char a3, int quiet, float f)
+extern "C" void Actor_Ignite(Npc_00186360* self, unsigned char on, Obj_00186360* obj, unsigned char a3, int quiet, float f)
 {
     int t2;
     int t1;

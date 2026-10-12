@@ -20,6 +20,17 @@ compiler (if any) produces the retail bytes:
 
 Relocated fields are masked, then call targets and %hi/%lo pairs are checked
 against the retail addresses (template clones are not interchangeable).
+
+Data the file defines itself (string literals, float tables, switch jump
+tables, initialised globals) is checked too: the %hi/%lo pairs that load it
+give its retail address, the per-entity sections are laid out the way the
+build merges them (tools/data_obj.py) and the bytes and relocations are
+compared with the retail data. The data forms one block in object order:
+
+  [mw38] DATA .rodata 0x004BE4B0 size 0x18: MATCH
+
+A file with data is a match only if every DATA line says MATCH; the
+integrator then links the data from C (docs/data_split.md).
 Symbols are resolved through config/symbol_addrs.txt and splat's labels.
 Nothing derived from the game is written anywhere except build/.
 """
@@ -189,6 +200,7 @@ def compare(obj, rom, names, starts):
                             bad.append(f"{lo_off:#x}(lo {sym.name})")
             results.append((n, a, "MATCH" if not bad else "DIFF at " + ",".join(bad[:6])
                             + (f" (+{len(bad) - 6})" if len(bad) > 6 else "")))
+        called = {sym.name for t, sym, j, rels in relinfo.values() if t == 4}
         for s in symtab.iter_symbols():
             if s["st_shndx"] != "SHN_UNDEF" or not s.name or s.name in names:
                 continue
@@ -198,9 +210,154 @@ def compare(obj, rom, names, starts):
                 if a in starts and a not in byaddr:
                     continue
                 undef.append(f"{s.name}: " + (f"named {byaddr[a]}" if a in byaddr else "not a function start"))
+            elif s.name in called:
+                undef.append(f"{s.name}: called as a function (name it func_...)")
             elif not re.fullmatch(r"D_[0-9A-F]{8}", s.name):
                 undef.append(f"{s.name}: unknown symbol")
     return results, undef
+
+
+DATA_KINDS = (".data", ".rodata", ".sdata")  # tools/data_obj.py
+SHF_ALLOC, SHF_EXECINSTR = 2, 4
+# not data: assembler bookkeeping, and the C++ exception index the link discards for all units
+NOT_DATA = (".reginfo", ".MIPS.", ".pdr", ".mdebug", ".gnu", ".note", ".exceptix", ".exception")
+
+
+def _sext16(v):
+    return ((v & 0xFFFF) ^ 0x8000) - 0x8000
+
+
+def _layout(secs, members, start):
+    """Absolute address of each data section when the block starts at start."""
+    pos, out = start, {}
+    for i in members:
+        al = max(1, secs[i]["sh_addralign"])
+        pos = (pos + al - 1) // al * al
+        out[i] = pos
+        pos += secs[i]["sh_size"]
+    return out, (pos - start + 3) // 4 * 4
+
+
+def data_pieces(e, rom, names):
+    """Place and compare the data a compiled object defines.
+
+    The data sections form one block in object order (the original link kept
+    each object's literals and tables together, see tools/data_obj.py). Its
+    address comes from the %hi/%lo pairs in the code that load it. Returns
+    [] or [{"section", "start", "size", "result"}]; "section" is the block's
+    subsegment type (.rodata if the unit has any .rodata, else .data)."""
+    symtab = e.get_section_by_name(".symtab")
+    secs = list(e.iter_sections())
+    out = []
+    for sec in secs:
+        if sec["sh_type"] == "SHT_NOBITS" and sec["sh_flags"] & SHF_ALLOC and sec["sh_size"]:
+            out.append({"section": sec.name, "start": None, "size": sec["sh_size"],
+                        "result": "uninitialised data cannot be linked from C; declare it extern"})
+        elif (sec["sh_flags"] & SHF_ALLOC and not sec["sh_flags"] & SHF_EXECINSTR and sec["sh_size"]
+              and sec["sh_type"] != "SHT_NOBITS" and sec.name not in DATA_KINDS
+              and not sec.name.startswith(NOT_DATA)):
+            out.append({"section": sec.name, "start": None, "size": sec["sh_size"],
+                        "result": "section kind cannot be linked from C yet"})
+    members = [i for i, sec in enumerate(secs) if sec.name in DATA_KINDS and sec["sh_size"]]
+    if not members:
+        return out
+    kind = next(k for k in (".rodata", ".data", ".sdata") if any(secs[i].name == k for i in members))
+    # retail address of each .text section, from the functions in it
+    text_base = {}
+    for s in symtab.iter_symbols():
+        if s["st_info"]["type"] != "STT_FUNC" or not isinstance(s["st_shndx"], int):
+            continue
+        a = names.get(s.name)
+        if a is None and re.fullmatch(r"func_[0-9A-F]{8}", s.name):
+            a = int(s.name[5:], 16)
+        if a is not None:
+            text_base.setdefault(s["st_shndx"], a - s["st_value"])
+    # %hi/%lo pairs in code that point into a data section give its address
+    seen = {}
+    for rs in e.iter_sections():
+        if not isinstance(rs, RelocationSection) or rs["sh_info"] not in text_base:
+            continue
+        tdata = secs[rs["sh_info"]].data(); tb = text_base[rs["sh_info"]]
+        last_hi = {}
+        for rel in rs.iter_relocations():
+            t, si = rel["r_info_type"], rel["r_info_sym"]
+            if t == 5:
+                last_hi[si] = rel["r_offset"]; continue
+            if t != 6 or si not in last_hi:
+                continue
+            sym = symtab.get_symbol(si)
+            if sym["st_shndx"] not in members:
+                continue
+            ho, lo = last_hi[si], rel["r_offset"]
+            hw, = struct.unpack_from("<I", tdata, ho); lw, = struct.unpack_from("<I", tdata, lo)
+            off = sym["st_value"] + ((hw & 0xFFFF) << 16) + _sext16(lw)
+            rh, = struct.unpack_from("<I", rom, tb + ho - BASE); rl, = struct.unpack_from("<I", rom, tb + lo - BASE)
+            seen.setdefault(sym["st_shndx"], set()).add(((rh & 0xFFFF) << 16) + _sext16(rl) - off)
+    entry = {"section": kind, "start": None, "size": None}
+    out.append(entry)
+    if not seen:
+        entry["result"] = "not referenced from code (cannot be placed)"; return out
+    if any(len(v) > 1 for v in seen.values()):
+        entry["result"] = "inconsistent placement"; return out
+    # block starts: the first section's alignment steps below the lowest known address
+    lo_i = min(seen, key=lambda i: members.index(i))
+    known = next(iter(seen[lo_i]))
+    step = max(1, secs[members[0]]["sh_addralign"])
+    total = sum(secs[i]["sh_size"] + secs[i]["sh_addralign"] for i in members)
+    if members.index(lo_i) == 0:
+        starts = [known]
+    else:
+        top = (known - 1) - (known - 1) % step
+        starts = range(top, known - total - step, -step)
+    cands = []
+    for st in starts:
+        pos, size = _layout(secs, members, st)
+        if all(pos[i] == next(iter(v)) for i, v in seen.items()):
+            cands.append((st, pos, size))
+    if not cands:
+        entry["result"] = "the referenced items cannot be laid out in object order at their retail addresses"
+        return out
+
+    def compare(start, offs, size):
+        img = bytearray(size)
+        for i in members:
+            img[offs[i] - start:offs[i] - start + secs[i]["sh_size"]] = secs[i].data()
+        bad, undef = [], []
+        for rs in e.iter_sections():
+            if not isinstance(rs, RelocationSection) or rs["sh_info"] not in offs:
+                continue
+            for rel in rs.iter_relocations():
+                o = offs[rs["sh_info"]] - start + rel["r_offset"]
+                if rel["r_info_type"] != 2:
+                    bad.append(f"{o:#x}(reloc type {rel['r_info_type']})"); continue
+                sym = symtab.get_symbol(rel["r_info_sym"])
+                sh = sym["st_shndx"]
+                if sh in offs:
+                    target = offs[sh] + sym["st_value"]
+                elif sh in text_base:
+                    target = text_base[sh] + sym["st_value"]
+                elif sh == "SHN_UNDEF":
+                    target = names.get(sym.name)
+                    m = re.fullmatch(r"(?:func|D)_([0-9A-F]{8})", sym.name)
+                    if target is None and m:
+                        target = int(m.group(1), 16)
+                else:
+                    target = None
+                if target is None:
+                    undef.append(sym.name or f"section {sh}"); continue
+                w, = struct.unpack_from("<I", img, o)
+                struct.pack_into("<I", img, o, (w + target) & 0xFFFFFFFF)
+        orig = rom[start - BASE:start - BASE + size]
+        bad += [f"{k:#x}" for k in range(0, size, 4) if img[k:k + 4] != orig[k:k + 4]]
+        if undef:
+            bad.append("unknown symbols " + ",".join(sorted(set(undef))))
+        return bad
+
+    results = [(compare(st, pos, size), st, size) for st, pos, size in cands]
+    bad, start, size = min(results, key=lambda r: len(r[0]))
+    entry.update(start=start, size=size)
+    entry["result"] = "MATCH" if not bad else "DIFF at " + ",".join(bad[:6]) + (f" (+{len(bad) - 6})" if len(bad) > 6 else "")
+    return out
 
 
 def main():
@@ -225,10 +382,14 @@ def main():
         else:
             try:
                 res, undef = compare(obj, rom, names, starts)
+                with open(obj, "rb") as fh:
+                    data = data_pieces(ELFFile(fh), rom, names)
             finally:
                 os.unlink(obj)
             report[kind] = {"functions": [{"name": n, "addr": f"{a:08X}" if a else None, "result": r}
-                                          for n, a, r in res], "undefined": undef}
+                                          for n, a, r in res], "undefined": undef,
+                            "data": [dict(d, start=f"{d['start']:08X}" if d["start"] is not None else None)
+                                     for d in data]}
     if args.json:
         print(json.dumps(report)); return
     for kind, r in report.items():
@@ -236,6 +397,9 @@ def main():
             print(f"[{kind}] COMPILE ERROR\n{r['error']}"); continue
         for f in r["functions"]:
             print(f"[{kind}] {f['name']}: {f['result']}")
+        for d in r["data"]:
+            size = f"{d['size']:#x}" if d["size"] is not None else "?"
+            print(f"[{kind}] DATA {d['section']} {'0x' + d['start'] if d['start'] else '?'} size {size}: {d['result']}")
         for u in r["undefined"]:
             print(f"[{kind}] UNDEF {u}")
 

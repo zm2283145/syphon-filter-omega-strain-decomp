@@ -1,6 +1,6 @@
 #include "types.h"
 typedef struct { char pad[0x30]; int a30; int a34; int a38; } S369160;
-extern int D_0055A818;
+extern int g_FrameCounter;
 extern int D_00533860;
 extern char D_004BBDE8[];
 extern char D_004BBDF8[];
@@ -17,9 +17,9 @@ int func_00369160(S369160* o)
     int r = 1;
     int err = func_003A6ED0();
     int busy = func_003A6F70(r);
-    o->a34 = D_0055A818;
+    o->a34 = g_FrameCounter;
     if (busy) {
-        if (D_0055A818 - o->a30 > o->a38) {
+        if (g_FrameCounter - o->a30 > o->a38) {
             sprintf(msg2, D_004BBDE8);
             func_00127358(D_004BBDF8, msg2);
             r = -1;

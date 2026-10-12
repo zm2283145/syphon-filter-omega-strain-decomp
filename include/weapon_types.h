@@ -23,8 +23,8 @@ typedef struct WeaponDef {
     char pad31[0x48 - 0x31];
     signed char equipMode;   /* 0x48: 6 means no weapon selected */
     char pad49[0x70 - 0x49];
-    int unk70;               /* 0x70: multiplied by the func_001861F0 result */
-    int unk74;               /* 0x74: key passed to func_001861F0 */
+    int unk70;               /* 0x70: multiplied by the WeaponInv_ClipsForActor result */
+    int unk74;               /* 0x74: key passed to WeaponInv_ClipsForActor */
 } WeaponDef;
 
 /* Inventory slot (16 bytes); id -1 marks an empty slot. */
@@ -41,7 +41,7 @@ typedef struct Inventory {
     InventorySlot slots[8];  /* 0x04 */
     unsigned char selected;  /* 0x84: selected slot; 6 = holstered */
     char pad85[0x88 - 0x85];
-    void* unk88;             /* 0x88: passed to func_001861F0 */
+    void* unk88;             /* 0x88: passed to WeaponInv_ClipsForActor */
 } Inventory;
 
 /* cOutOfAmmoMsg payload. */

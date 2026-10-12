@@ -10,7 +10,7 @@ extern char D_00535D20[];
 extern void* func_001698C0(void);
 extern void func_00165E60(void* h, void* s, int f);
 extern int Pop_FindTag(G4PopReader* r, int tag);
-extern void func_00374270(void* pool, int type, int count);
+extern void LightMgr_AllocPool(void* pool, int type, int count);
 static inline void G4_Align(G4PopReader* r)
 {
     int m = (unsigned long long)(unsigned int)r->cur % 4;
@@ -31,14 +31,14 @@ void Loader_AllocateLights(void* level, G4PopReader* r)
     }
     n = *r->cur;
     r->cur++;
-    func_00374270(D_00535D20, 16, n);
+    LightMgr_AllocPool(D_00535D20, 16, n);
     G4_Align(r);
     if (!(unsigned char)Pop_FindTag(r, 0x3A524944)) {
         return;
     }
     n = *r->cur;
     r->cur++;
-    func_00374270(D_00535D20, 2, n);
-    func_00374270(D_00535D20, 4, 0x18);
-    func_00374270(D_00535D20, 1, 1);
+    LightMgr_AllocPool(D_00535D20, 2, n);
+    LightMgr_AllocPool(D_00535D20, 4, 0x18);
+    LightMgr_AllocPool(D_00535D20, 1, 1);
 }

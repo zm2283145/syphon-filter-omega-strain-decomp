@@ -15,7 +15,7 @@ typedef struct cNPC {
     int ai;
 } cNPC;
 
-extern void func_0016C9D0(int ai, int arg, int mode, float value);
+extern void NpcPerception_AddAwareness(int ai, int arg, int mode, float value);
 extern void Event_Construct(NpcMsg* msg, void* name);
 extern void Event_Send(NpcMsg* msg, cNPC* target, int flags);
 extern void cMessage_dtor(NpcMsg* msg, int flags);
@@ -25,7 +25,7 @@ extern char D_004D9340[]; /* AI mode message vtable */
 /* cNPC vtable slot 0x1C: switches the AI to mode 8 and notifies itself. */
 void cNPC_v1C(cNPC* self, int arg) {
     NpcMsg msg;
-    func_0016C9D0(self->ai, arg, 8, 0.0f);
+    NpcPerception_AddAwareness(self->ai, arg, 8, 0.0f);
     Event_Construct(&msg, D_004EE550);
     msg.vtable = D_004D9340;
     msg.mode = 8;

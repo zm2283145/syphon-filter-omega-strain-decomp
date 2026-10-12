@@ -7,8 +7,8 @@ extern const int D_00499914[];
 #define two_over_pi D_00499600
 #define npio2_hw (D_00499914 + 1)
 extern float func_00121760(float x);
-extern int func_0011FF80(float *x, float *y, int e0, int nx, int prec, const int *ipio2);
-int func_0011E950(float x, float *y)
+extern int Math_RemPio2Kernel(float *x, float *y, int e0, int nx, int prec, const int *ipio2);
+int Math_RemPio2(float x, float *y)
 {
 	const float
 	zero =  0.0000000000e+00,
@@ -99,7 +99,7 @@ int func_0011E950(float x, float *y)
 	tx[2] = z;
 	nx = 3;
 	while(tx[nx-1]==zero) nx--;
-	n  =  func_0011FF80(tx,y,e0,nx,2,two_over_pi);
+	n  =  Math_RemPio2Kernel(tx,y,e0,nx,2,two_over_pi);
 	if(hx<0) {y[0] = -y[0]; y[1] = -y[1]; return -n;}
 	return n;
 }

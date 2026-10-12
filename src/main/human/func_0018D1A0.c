@@ -8,7 +8,7 @@ extern char D_00542B60[];
 extern char D_0049DC20[];
 extern Message* Event_Construct(Message*, void*);
 extern void cMessage_dtor(AnimEvent* msg, int flags);
-extern void func_001CAE20(int target, Key_18D1A0* key, int n, AnimEvent* ev);
+extern void Secondary_RequestOneShot(int target, Key_18D1A0* key, int n, AnimEvent* ev);
 static inline AnimEvent* AnimEvent_Init_18D1A0(AnimEvent* self)
 {
     Event_Construct(&self->base, D_00542B60);
@@ -36,7 +36,7 @@ void func_0018D1A0(O_18D1A0* o)
         AnimEvent ev;
         AnimEvent* pe = &ev; AnimEvent_Init_18D1A0(pe);
         CKC_COPY_S(key.c, D_0049DC20)
-        func_001CAE20(o->target, &key, 1, &ev);
+        Secondary_RequestOneShot(o->target, &key, 1, &ev);
         ev.base.vtable = D_004DA930;
         cMessage_dtor(&ev, 0);
         o->flags |= 0x100;

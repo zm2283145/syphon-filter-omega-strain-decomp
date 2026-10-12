@@ -12,7 +12,7 @@ public:
     virtual void v28(); virtual void v29();
 };
 struct C3Own3CC { char pad[0x58]; C3Vt3CC* child; };
-extern "C" void func_003CCAC0(C3Own3CC* o)
+extern "C" void Controller_DeathNotice(C3Own3CC* o)
 {
     if (o->child != 0) {
         o->child->v29();

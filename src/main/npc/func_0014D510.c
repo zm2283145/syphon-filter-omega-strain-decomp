@@ -25,10 +25,10 @@ extern char D_004D9340[];
 extern void Event_Construct(AiMsg_f3* m, void* type);
 extern void Event_Send(AiMsg_f3* m, void* target, int immediate);
 extern void cMessage_dtor(AiMsg_f3* m, int flags);
-extern void func_0014D900(AiChar_f3* c, int a, int b, float f);
-void func_0014D510(AiChar_f3* c, unsigned char state, int prio);
+extern void NpcAi_RequestAction(AiChar_f3* c, int a, int b, float f);
+void NpcAi_SetMovementState(AiChar_f3* c, unsigned char state, int prio);
 }
-void func_0014D510(AiChar_f3* c, unsigned char state, int prio)
+void NpcAi_SetMovementState(AiChar_f3* c, unsigned char state, int prio)
 {
     AiMsg_f3 msg;
     if (prio < c->prio) {
@@ -50,7 +50,7 @@ void func_0014D510(AiChar_f3* c, unsigned char state, int prio)
             }
         } else {
             if ((c->owner->flags >> 3) & 1) {
-                func_0014D900(c, 9, 0, 0.0f);
+                NpcAi_RequestAction(c, 9, 0, 0.0f);
             }
             c->f1C0 = 999999.0f;
             c->f1C4 = 0;

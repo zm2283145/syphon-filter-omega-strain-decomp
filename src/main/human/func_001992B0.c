@@ -16,7 +16,7 @@ extern char D_004DA8B0[];
 extern unsigned char D_005721C8;
 extern Message* Event_Construct(Message*, void*);
 extern void cMessage_dtor(void* msg, int flags);
-extern int func_001CAE20(int target, Key_1992B0* key, int n, AnimEvent* ev);
+extern int Secondary_RequestOneShot(int target, Key_1992B0* key, int n, AnimEvent* ev);
 extern void Event_Send(Msg3_1992B0* m, void* o, int x);
 extern void* func_0013FB50(void* w);
 #pragma push
@@ -24,7 +24,7 @@ extern void* func_0013FB50(void* w);
 #pragma opt_rotateloops off
 #pragma opt_strength_reduction off
 #pragma opt_propagation off
-void func_001992B0(O_1992B0* o, unsigned char on, int f)
+void Goggles_SetMode(O_1992B0* o, unsigned char on, int f)
 {
     if (o->b33E5 == 2) return;
     if (func_0013FB50(o->weapons) || f) {
@@ -42,7 +42,7 @@ void func_001992B0(O_1992B0* o, unsigned char on, int f)
             pe->unk30 = 0;
             pe->unk34 = 0.0f;
             CKC_COPY_S(key.c, D_0049E070)
-            r = func_001CAE20(o->target, &key, 1, &ev);
+            r = Secondary_RequestOneShot(o->target, &key, 1, &ev);
             ev.base.vtable = D_004DA930;
             cMessage_dtor(&ev, 0);
             if (r) {

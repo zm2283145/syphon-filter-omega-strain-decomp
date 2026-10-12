@@ -18,7 +18,7 @@ extern char D_0049C390;
 extern char D_004D97B0;
 extern unsigned char D_00533880;
 extern char D_0055A700;
-extern int D_0055A818;
+extern int g_FrameCounter;
 }
 extern "C" char * func_00169780(char * arg0) {
     int var_s2;
@@ -32,7 +32,7 @@ extern "C" char * func_00169780(char * arg0) {
     F_(arg0, 0x268, int) = 0;
     F_(arg0, 0x264, int) = 0;
     var_s2 = 0;
-    D_0055A818 = 0;
+    g_FrameCounter = 0;
     var_s0 = 0;
     F_(arg0, 0x270, int) = 0;
     F_(arg0, 0x274, int) = 0;

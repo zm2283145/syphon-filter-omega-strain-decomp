@@ -6,7 +6,7 @@ class AiSelf { public: virtual void s0(); virtual void s1(); virtual void s2(); 
 struct AiTimer { int a; int b; int c; unsigned char done; };
 struct AiData { void* vt; char p4[0x40]; AiTimer t; char p54[4]; float f58; unsigned char b5c, b5d; };
 extern "C" void Component_BaseInit(AiData*);
-extern "C" int func_003CC950(AiSpawn*);
+extern "C" int Controller_NotifySeen(AiSpawn*);
 extern "C" char D_004D9890[];
 inline int AiTimer_Pos(AiTimer* t) { return t->c > 0; }
 inline void AiTimer_Init(AiTimer* t) { t->a = 0; t->c = 0; if (!AiTimer_Pos(t)) { t->b = 0; t->done = 1; t->c = 0; } }
@@ -17,7 +17,7 @@ extern "C" AiData* cAI_ctor(AiData* self, AiSpawn* s)
     Component_BaseInit(self);
     AiTimer_Init(&self->t);
     self->vt = D_004D9890;
-    if (s && AiSpawn_Ready(s)) mode = func_003CC950(s);
+    if (s && AiSpawn_Ready(s)) mode = Controller_NotifySeen(s);
     else mode = 4;
     ((AiSelf*)self)->SetMode(mode);
     self->f58 = -1.0f;

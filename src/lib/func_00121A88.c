@@ -1,7 +1,7 @@
 #include "types.h"
 
-extern int func_0011CFD8(float);
+extern int Math_AcosKernel(float);
 
-int func_00121A88(float f12) {
-    return func_0011CFD8(f12);
+int Math_Acos(float f12) {
+    return Math_AcosKernel(f12);
 }

@@ -14,7 +14,7 @@ static inline int Pt1Et_IsEnemy(int a, int b)
         return D_004EE620[a][b].enemy;
     return 0;
 }
-extern "C" unsigned char func_0022F440(Pt1EtCtrl* c, int other)
+extern "C" unsigned char Controller_IsEnemyTeam(Pt1EtCtrl* c, int other)
 {
     unsigned char r = 0;
     if (c->GetTeam() >= 0 && other >= 0)

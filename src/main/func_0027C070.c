@@ -11,7 +11,7 @@ typedef struct { char pad[0x24]; int id; char p28[8]; float pos[4]; float f; } M
 extern int D_0049D010;
 extern void Script_ReadU32(int* p);
 extern float Script_ReadFloat(void);
-extern void func_00197560(float f, T_0027C070* t, int* id, float* pos);
+extern void Actor_StartGrenadeThrow(float f, T_0027C070* t, int* id, float* pos);
 void func_0027C070(M_0027C070* m, T_0027C070* t) {
     Script_ReadU32(&m->id);
     m->pos[0] = Script_ReadFloat();
@@ -19,5 +19,5 @@ void func_0027C070(M_0027C070* m, T_0027C070* t) {
     m->pos[2] = Script_ReadFloat();
     m->pos[3] = 1.0f;
     m->f = RF_0027C070();
-    if (t && t->kind == D_0049D010) func_00197560(m->f, t, &m->id, m->pos);
+    if (t && t->kind == D_0049D010) Actor_StartGrenadeThrow(m->f, t, &m->id, m->pos);
 }

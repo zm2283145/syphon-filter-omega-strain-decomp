@@ -13,10 +13,10 @@ extern char D_00555070[];
 extern unsigned char D_005721C8;
 extern int GObj_IdentityA(void*);
 extern int ScriptFilter_Dispatch(void* filter, int a0, int a1);
-extern int func_001439B0(void* inventory, int a1);
+extern int WeaponInv_EquipItem(void* inventory, int a1);
 extern int* func_001450C0(void);
 extern void* func_0014A690(int handle);
-extern void func_001B8750(PlayerActor* actor, int invulnerable);
+extern void Actor_SetInvulnerable(PlayerActor* actor, int invulnerable);
 extern int* func_0022DE00(void);
 extern int* func_0022F170(void);
 extern int* func_0022F1F0(void);
@@ -37,7 +37,7 @@ int Script_cPlayer_SwitchBodies(PlayerScriptArg* args) {
 int Script_cPlayer_SetInvulnerable(PlayerScriptArg* args) {
     int flag = args[1].i;
 
-    func_001B8750(((PlayerComponent*)args[0].p)->actor, (unsigned int)0 < (unsigned int)flag);
+    Actor_SetInvulnerable(((PlayerComponent*)args[0].p)->actor, (unsigned int)0 < (unsigned int)flag);
     return 0;
 }
 
@@ -84,14 +84,14 @@ int cPlayer_v0C(int a0, int a1) {
 }
 
 /*
- * For an NPC-class actor: calls func_001439B0 on its inventory (a1 is passed
+ * For an NPC-class actor: calls WeaponInv_EquipItem on its inventory (a1 is passed
  * through) and, when the D_005721C8 flag is set, func_002493C0 on the input state.
  */
 void func_00175FF0(PlayerComponent* self, int a1) {
     PlayerActor* actor = self->actor;
 
     if (actor != 0 && actor->classToken == D_0049D010) {
-        func_001439B0(actor->inventory, a1);
+        WeaponInv_EquipItem(actor->inventory, a1);
         if (D_005721C8 != 0) {
             func_002493C0(&self->input, actor);
         }

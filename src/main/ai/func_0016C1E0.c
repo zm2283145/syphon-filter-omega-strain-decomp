@@ -12,12 +12,12 @@ public:
 struct G_C1E0 { char pad[0x3470]; unsigned char net; };
 struct H_C1E0 { char pad[0x30]; G_C1E0* g; };
 struct S_C1E0 { char pad[0x3C]; H_C1E0* h; };
-extern "C" void func_0016C260(S_C1E0* self, R_C1E0* r, int x, int mode);
+extern "C" void NpcPerception_SightTest(S_C1E0* self, R_C1E0* r, int x, int mode);
 extern "C" void func_0016C1E0(S_C1E0* self, O_C1E0* o, int x)
 {
     R_C1E0 r = o->Get(-1);
     int mode = o->mode;
     if (self->h->g->net == 1)
         mode = 0;
-    func_0016C260(self, &r, x, mode);
+    NpcPerception_SightTest(self, &r, x, mode);
 }

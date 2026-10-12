@@ -9,7 +9,7 @@ extern signed char* D_005061D0;
 extern void Event_Construct(Msg_197380* msg, void* name);
 extern void cMessage_dtor(Msg_197380* msg, int flags);
 extern void func_00282160(int* out);
-extern void func_00196480(G_197380* g, int id, int b);
+extern void Melee_StartAttack(G_197380* g, int id, int b);
 static inline void ReadS8_197380(signed char* out) { signed char v = *D_005061D0; D_005061D0++; *out = v; }
 static inline void ReadI_197380(int* out) { int t; func_00282160(&t); *out = t; }
 void func_00197380(G_197380* g)
@@ -27,7 +27,7 @@ void func_00197380(G_197380* g)
         ReadS8_197380(bp);
         *ip = t;
     }
-    if (g && g->classKey == D_0049D010) func_00196480(g, *ip, *bp != 0);
+    if (g && g->classKey == D_0049D010) Melee_StartAttack(g, *ip, *bp != 0);
     msg.vtable = D_004DCF10;
     cMessage_dtor(&msg, 0);
 }

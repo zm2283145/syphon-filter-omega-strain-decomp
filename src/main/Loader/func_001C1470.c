@@ -15,7 +15,7 @@ struct Col_1C1470 {
 extern "C" {
 int Pop_FindTag(PopReader_1C1470* r, int tag);
 Col_1C1470* IdMgr_FindCollision(int a, int b);
-void func_00173D60(Col_1C1470* a, Col_1C1470* b, int c, Col_1C1470* d);
+void ZoneMgr_Associate(Col_1C1470* a, Col_1C1470* b, int c, Col_1C1470* d);
 }
 static inline void Align_1C1470(PopReader_1C1470* r)
 {
@@ -87,7 +87,7 @@ extern "C" void func_001C1470(void* a0, PopReader_1C1470* r)
                 if (o1)
                     o1->Activate(1);
                 if (o2 && o1)
-                    func_00173D60(o2, o1, 1, o2);
+                    ZoneMgr_Associate(o2, o1, 1, o2);
             }
             Copy_1C1470((void*)&L.buf, r->cur, 0x24);
             r->cur += 0x24;

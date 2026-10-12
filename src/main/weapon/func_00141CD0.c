@@ -21,7 +21,7 @@ void Equip_SetSlot(void* eq, int a, int slot);
 void Event_Construct(Ev_1CD0* e, void* type);
 void Event_Send(Ev_1CD0* e, void* target, int a);
 void cMessage_dtor(Ev_1CD0* e, int f);
-void func_00143A60(S_1CD0* self, int a);
+void WeaponInv_Cycle(S_1CD0* self, int a);
 }
 extern "C" void Inventory_ReleaseItem(S_1CD0* self)
 {
@@ -49,6 +49,6 @@ extern "C" void Inventory_ReleaseItem(S_1CD0* self)
             cMessage_dtor(&e, 0);
         }
         s->id = -1;
-        func_00143A60(self, 1);
+        WeaponInv_Cycle(self, 1);
     }
 }

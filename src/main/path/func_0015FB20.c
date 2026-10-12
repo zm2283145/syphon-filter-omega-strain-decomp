@@ -5,12 +5,12 @@ typedef struct {
     char pad61[0x70 - 0x61]; int a1arg; int stackArg;
 } Route_e1;
 extern char D_004FFB50[];
-extern char D_004ED9B0[];
+extern char g_NpcRouteMgr[];
 extern void* Service_Lookup(void*, void*);
-extern int func_0015EFB0(void*, int, int, int, int, int, int, int, int);
-unsigned char func_0015FB20(Route_e1* self, int arg)
+extern int NpcRoute_Request(void*, int, int, int, int, int, int, int, int);
+unsigned char NpcRoute_RequestToNode(Route_e1* self, int arg)
 {
-    void* svc = Service_Lookup(D_004FFB50, D_004ED9B0);
+    void* svc = Service_Lookup(D_004FFB50, g_NpcRouteMgr);
     int node = self->node;
     int extra = -1;
     if (self->b1 || self->b2) {
@@ -19,5 +19,5 @@ unsigned char func_0015FB20(Route_e1* self, int arg)
             extra = self->altArg;
         }
     }
-    return func_0015EFB0(svc, self->a1arg, node, extra, self->t0arg, arg, -1, 0, self->stackArg);
+    return NpcRoute_Request(svc, self->a1arg, node, extra, self->t0arg, arg, -1, 0, self->stackArg);
 }

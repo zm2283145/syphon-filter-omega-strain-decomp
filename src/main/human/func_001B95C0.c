@@ -24,7 +24,7 @@ extern void SoundEvent_CtorFromPreset(F2Ev* e, F2Req* r, int preset);
 extern void Event_Send(F2Ev* e, char* tgt, int n);
 extern void func_0036E220(F2Str* s, int flag);
 extern void cMessage_dtor(F2Ev* e, int flag);
-extern void func_00188FB0(int preset, int a, int b);
+extern void Actor_SurfaceSoundEffects(int preset, int a, int b);
 static inline void Play_F2(int preset)
 {
     F2Req req;
@@ -44,7 +44,7 @@ void func_001B95C0(F2Arg* a)
 {
     switch (a->kind) {
     case 0:
-        func_00188FB0(a->preset, 1, 1);
+        Actor_SurfaceSoundEffects(a->preset, 1, 1);
         break;
     case 1:
         Play_F2(a->preset);

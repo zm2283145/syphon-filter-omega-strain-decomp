@@ -12,8 +12,8 @@ struct Tank_60F0 {
 };
 extern "C" {
 extern char D_004DCF90[];
-extern char D_004F77C0[];
-void func_0022C650(void* list, int arg);
+extern char g_TargetVisMgr[];
+void TargetVis_Register(void* list, int arg);
 void Object_Register(Tank_60F0* o);
 int NetMap_BindReceiver(int id, int owner, Tank_60F0* o);
 void cGOBJ_ctor(Tank_60F0* o, void* id, int a, int* b);
@@ -33,7 +33,7 @@ extern "C" Tank_60F0* cTank_ctor(Tank_60F0* o, int arg1)
     o->f68 = 0;
     o->f64 = 0;
     o->b70 = 1;
-    func_0022C650(D_004F77C0, arg1);
+    TargetVis_Register(g_TargetVisMgr, arg1);
     Object_Register(o);
     o->activate(1);
     o->f74 = 0;

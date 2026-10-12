@@ -12,7 +12,7 @@ struct Pt1TvReg {
     char sentinel[4];
 };
 extern "C" void func_00222980(Pt1TvIt* out, void* list, Pt1TvIt* pos, Pt1TvHandle* h);
-extern "C" int func_0022C650(Pt1TvReg* r, Pt1TvActor* a)
+extern "C" int TargetVis_Register(Pt1TvReg* r, Pt1TvActor* a)
 {
     for (int i = 0; i < 30; i++)
         if (r->slots[i] == a)

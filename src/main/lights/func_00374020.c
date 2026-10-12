@@ -11,7 +11,7 @@ static inline void Rel374020(void* p, int line)
     AllocGuard g;
     Mem_Free(0, p, D_004BC150, line);
 }
-extern "C" void func_00374020(S374020* s)
+extern "C" void LightMgr_FreePools(S374020* s)
 {
     if (s->p[0]) {
         Rel374020(s->p[0], 0x94);

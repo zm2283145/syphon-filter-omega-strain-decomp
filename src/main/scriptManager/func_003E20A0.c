@@ -10,7 +10,7 @@ extern int ScriptMgr_CallFunction(void* self, const char* name, int a2);
 extern unsigned char cScriptInterpreter_CheckAllReferences(void* self);
 
 /* Runs the load steps in order; returns 1 only if every step succeeds. */
-unsigned char func_003E20A0(void* self)
+unsigned char Script_StartLevel(void* self)
 {
     unsigned char ok = 0;
     if (D_004938D0 && ScriptMgr_LoadScript(self, D_004BD9E8, 0) && ScriptMgr_LoadScript(self, D_004BD9F0, 0)) {

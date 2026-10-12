@@ -1,0 +1,69 @@
+#pragma cplusplus on
+#include "types.h"
+#include "alloc_guard.h"
+#pragma push
+#pragma inline_depth(12)
+#pragma opt_strength_reduction off
+#pragma opt_propagation off
+struct SchedObject { virtual void v0(); virtual void* clone(); };
+struct Type { char* name; char pad4[0x41]; unsigned char cloneable; char pad46[6]; unsigned char objectId; };
+struct Param { int kind; };
+struct Desc { char pad[0x10]; Param** params; };
+struct Self { char pad[0x4EA0]; int owner; };
+struct Event { char pad[0x1C]; int id; };
+struct Pair { int key; Event* value; };
+extern "C" {
+extern char D_004BD4C0[],D_004BD760[],D_004BD788[],D_004BD790[],D_0055A0F0[];
+extern int D_0055A100;
+void* Mem_Alloc(int,int,char*,int);
+int strlen(char*);
+void String_Copy(char*,char*);
+void Script_InvalidArgNop(Self*,char*,...);
+Type* func_003D7590(int);
+int func_003E0A70(Self*,Desc*,Type*);
+void* Script_ObjectToId(void*);
+int String_CompareNoCase(char*,char*);
+Event* ScriptEvent_Construct(Event*,int,Desc*,void**,int,int);
+void EventQueue_Admit(Event*);
+void func_003E3250(void*,void*,Pair*);
+}
+static inline void* Alloc(int size,int line) { AllocGuard g;return Mem_Alloc(0,size,D_004BD4C0,line); }
+extern "C" int ScriptSched_PrepareCall(Self* self0,Desc* desc0,void** args,int count,float delay) {
+ void** ptr;
+ Self* self=self0; Desc* desc=desc0;
+ int ret[2];
+ Pair pair;
+ int i=0;
+ if(0<count) { ptr=args; do {
+  int k=desc->params[i]->kind;
+  if(k==3) {
+   char* str=(char*)*ptr;
+   if(!str) {Script_InvalidArgNop(self,D_004BD760,i);return -1;}
+   int len=strlen(str);
+   char* copy=(char*)Alloc(len+1,0x76D);
+   String_Copy(copy,str);*ptr=copy;
+  } else if(k>=100) {
+   Type* type=func_003D7590(k);
+   if(type) {
+    if(type->objectId) { if(!func_003E0A70(self,desc,type)) *ptr=Script_ObjectToId(*ptr); }
+    else if(type->cloneable) *ptr=((SchedObject*)*ptr)->clone();
+    else if(String_CompareNoCase(type->name,D_004BD788)) {Script_InvalidArgNop(self,D_004BD790);return -1;}
+   }
+  }
+ i++;ptr++;
+ } while(i<count); }
+ Event* ev=(Event*)Alloc(0x20,0x791);
+ if(ev) ev=ScriptEvent_Construct(ev,(int)(1000.0f*delay),desc,args,count,self->owner);
+ EventQueue_Admit(ev);
+ pair.key=D_0055A100;pair.value=ev;
+ func_003E3250(ret,D_0055A0F0,&pair);
+ ev->id=D_0055A100;
+ return D_0055A100++;
+}
+#pragma pop
+
+
+
+
+
+

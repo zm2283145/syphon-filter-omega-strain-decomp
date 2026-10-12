@@ -2,7 +2,7 @@
 typedef union { long long q[4]; char s[32]; __int128 v[2]; } H2Key;
 typedef struct { char b[0x440]; } H2Pack;
 typedef struct { H2Key* keys; H2Pack* packs; int count; } H2Registry;
-extern void func_00407EC0(char* dst, int n, char* src);
+extern void Appearance_RegistryKey(char* dst, int n, char* src);
 /* Finds the registry packing whose key equals the upper-cased stem of name. */
 H2Pack* func_00407DA0(H2Registry* reg, char* name) {
     int n;
@@ -12,7 +12,7 @@ H2Pack* func_00407DA0(H2Registry* reg, char* name) {
     if (name == 0)
         return 0;
     n = reg->count;
-    func_00407EC0(p = key.s, 0x1f, name);
+    Appearance_RegistryKey(p = key.s, 0x1f, name);
     while (*p != 0) {
         int c = *(volatile char*)p;
         if (c >= 'a' && c <= 'z')

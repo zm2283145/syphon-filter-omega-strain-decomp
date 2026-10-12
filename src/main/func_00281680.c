@@ -14,7 +14,7 @@ extern char D_005061B0[];
 extern char D_004DCEF0[];
 extern char D_004DCF10[];
 void Script_ReadU32(int* id);
-O_00281680* func_00257640(void* t, unsigned char remote, int* id);
+O_00281680* Backpack_Construct(void* t, unsigned char remote, int* id);
 O_00281680* Object_LookupById(int* id);
 void func_002536D0(O_00281680* o);
 void func_002579E0(O_00281680* o);
@@ -56,7 +56,7 @@ extern "C" void func_00281680(S_00281680* p, T_00281680* t) {
             if (t->c58 && t->c58->v19()) r = 1;
             if (!!r ^ 1) remote = 1;
         }
-        p->obj = func_00257640(t, remote, &id);
+        p->obj = Backpack_Construct(t, remote, &id);
         p->obj->owner = p->owner;
         func_002536D0(p->obj);
         if (t && !p->obj->b2F1) t->p3464 = p->obj;

@@ -6,7 +6,7 @@ extern void func_0013B180(int* out, void* list);
 extern void func_003EA900(NA910** out, int* in);
 extern void func_003EA8F0(int* out, void* list);
 extern void func_003EA8E0(NA910** out, int* in);
-extern int func_00128E80(const char* a, const char* b);
+extern int String_CompareNoCase(const char* a, const char* b);
 XA910* func_003EA910(void* self, YA910* key, int type)
 {
     XA910* found = 0;
@@ -27,7 +27,7 @@ XA910* func_003EA910(void* self, YA910* key, int type)
         a = y->m98;
         b = key->m98;
         if ((unsigned char)type == x->type
-            && !func_00128E80(key->name, y ? y->name : 0)
+            && !String_CompareNoCase(key->name, y ? y->name : 0)
             && (!b || !a || b == a)) {
             found = x;
             break;

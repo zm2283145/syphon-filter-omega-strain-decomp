@@ -7,7 +7,7 @@
 #include "playerControls_types.h"
 
 /* True when crouchZone is set and unk25 is clear. */
-int func_0024A820(InputState* self) {
+int PlayerInput_ZoneEnteredThisFrame(InputState* self) {
     int result = !(self->unk25 != 0);
 
     if (result) {

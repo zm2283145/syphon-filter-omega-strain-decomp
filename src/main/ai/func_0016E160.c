@@ -10,6 +10,6 @@ typedef struct WordPair {
     int second;
 } WordPair;
 
-void func_0016E160(WordPair* p) {
+void NpcAi_ApplyModeRequest(WordPair* p) {
     p->first = p->second;
 }

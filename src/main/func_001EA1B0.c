@@ -1,7 +1,7 @@
 #include "types.h"
 typedef struct { int head; int bits[1]; } B1EA1B0;
 #pragma optimization_level 3
-B1EA1B0* func_001EA1B0(B1EA1B0* d, const B1EA1B0* s)
+B1EA1B0* Physical_CopyModeRecord(B1EA1B0* d, const B1EA1B0* s)
 {
     int i;
     d->head = s->head;

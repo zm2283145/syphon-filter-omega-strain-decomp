@@ -11,7 +11,7 @@ typedef struct {
 } E4Obj;
 extern unsigned char D_00535D62;
 extern void func_003767E0(void* a, int b, int c);
-void func_00371B00(E4Obj* o)
+void PntLight_Enable(E4Obj* o)
 {
     int i;
     if (!o->b58 && o->n5C) {

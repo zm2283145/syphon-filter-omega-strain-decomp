@@ -1,7 +1,7 @@
 #include "types.h"
 
 extern void func_0036DEF0(void* f);
-extern char* func_0036DC60(void* f);
+extern char* FileMan_ReadData(void* f);
 extern void func_0036DEC0(void* f);
 extern int func_00418FD0(void* self, char** cursor, int c);
 
@@ -15,7 +15,7 @@ int func_00419020(void* self, void* file, int c)
     char d;
     int r;
     func_0036DEF0(file);
-    p = func_0036DC60(file);
+    p = FileMan_ReadData(file);
     a = Rd8_419020(&p);
     b = Rd8_419020(&p);
     d = Rd8_419020(&p);

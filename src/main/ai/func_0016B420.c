@@ -39,7 +39,7 @@ static inline void C2_B420(M_B420* m, float a, float b, int* id, signed char k)
     m->vt = D_004D92C0;
     m->id = *id;
 }
-M_B420* func_0016B420(M_B420* self, float a, float b, int* id, V_B420* pos, signed char kind)
+M_B420* AiSound_SendImpactNoise(M_B420* self, float a, float b, int* id, V_B420* pos, signed char kind)
 {
     C2_B420(self, a, b, id, kind);
     self->vt = ((char*)D_004D9850);

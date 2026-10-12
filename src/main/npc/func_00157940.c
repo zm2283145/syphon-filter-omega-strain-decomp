@@ -28,7 +28,7 @@ static inline int DefaultBody()
     }
     return 0;
 }
-extern "C" void func_00157940(NPC_7940* self, int v)
+extern "C" void NpcAi_ActivateMultiplayer(NPC_7940* self, int v)
 {
     int r = func_0015B060(self, -1);
     if (v >= 0) {

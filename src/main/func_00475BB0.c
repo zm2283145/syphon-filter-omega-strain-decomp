@@ -8,7 +8,7 @@
 extern int AnimChannel_SetTarget(void* channel, int anim, int arg, float weight, float blend, float start);
 
 /* Clears flag bits 25 and 26, then retargets the animation channel to anim 21. */
-int func_00475BB0(Char475BB0* self) {
+int Ladder_ReleaseAlignment(Char475BB0* self) {
     unsigned int flags;
 
     flags = self->flags;

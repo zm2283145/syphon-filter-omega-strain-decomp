@@ -88,7 +88,7 @@ typedef struct Slot20 {
 typedef struct Manager37F9D0 {
     int unk00;                      /* 0x00 = -1 */
     char pad004[0x1EC];
-    char items[8][272];             /* 0x1F0 each built by func_003755C0 */
+    char items[8][272];             /* 0x1F0 each built by CameraRecord_Construct */
     int current;                    /* 0xA70 index into items */
     char pad0A74[0x5E4];
     int unk1058;                    /* 0x1058 (4184) */

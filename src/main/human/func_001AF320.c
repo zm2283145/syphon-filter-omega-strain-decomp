@@ -11,7 +11,7 @@ float func_001AF320(char* self) {
 }
 
 /* Address of 464-byte skeleton node i. */
-char* func_001AF330(PtrVec* v, int i) {
+char* SkelNodes_GetAt(PtrVec* v, int i) {
     char* data = (char*)v->data;
 
     return data + i * 464;

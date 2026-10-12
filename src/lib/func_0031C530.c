@@ -10,8 +10,6 @@ typedef struct {
     void *buf34;
 } Ctx_c530;
 
-extern char D_004B53C0[];
-extern char D_004B53F0[];
 extern void *(*D_004E1D34)(int, int);
 extern unsigned short D_004E1D4C;
 extern int func_00322E60(int);
@@ -29,11 +27,11 @@ int func_0031C530(Ctx_c530 **out)
     *out = 0;
     r = func_00322E60(0);
     if (r == 1) {
-        func_00127358(D_004B53C0);
+        func_00127358("\nEvaluation period has expired.\nExiting...\n\n");
         return 0x1965;
     }
     if (r == -1) {
-        func_00127358(D_004B53F0);
+        func_00127358("\nClock incorrectly set.  Please adjust to correct date and time.\nExiting...\n\n");
         return 0x1965;
     }
     s = D_004E1D34(1, sizeof(Ctx_c530));

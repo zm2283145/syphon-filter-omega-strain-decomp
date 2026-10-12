@@ -8,7 +8,7 @@ extern float D_004E1D90;
 extern float D_004E1D94;
 extern float D_004E1D98;
 extern float D_004E1D9C;
-void func_001AF720(S_1AF720* s) {
+void BoundSphere_Reset(S_1AF720* s) {
     if (s != 0) {
         float z;
         V4_1AF720* d; V4_1AF720* p;

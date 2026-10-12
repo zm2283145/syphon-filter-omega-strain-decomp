@@ -15,8 +15,8 @@ struct K8_23B4C0 { float t; int v; };
 struct K16_23B4C0 { float t; char pad[0xC]; };
 struct Rot_23B4C0 { float val; int cap; int n; K16_23B4C0* data; int pad10; int state; float t; unsigned char flag; char pad1D[3]; };
 extern "C" {
-float func_00132270(V4_23B4C0* v);
-float func_00132260(V4_23B4C0* v);
+float Vec4_GetX(V4_23B4C0* v);
+float Vec4_GetY(V4_23B4C0* v);
 float Vec4_GetZ(V4_23B4C0* v);
 void Mtx_MakeAxisRotation(M4_23B4C0* m, float x, float y, float z, float a);
 void func_001D3E20(M4_23B4C0* m);
@@ -84,7 +84,7 @@ extern "C" void cNIEventOBJ_v48(Self_23B4C0* self)
         float ang;
         ang = Rad_23B4C0(self->rx.val);
         ax1.Set(1.0f, 0.0f, 0.0f, 0.0f);
-        Mtx_MakeAxisRotation(&m0, func_00132270(&ax1), func_00132260(&ax1), Vec4_GetZ(&ax1), ang);
+        Mtx_MakeAxisRotation(&m0, Vec4_GetX(&ax1), Vec4_GetY(&ax1), Vec4_GetZ(&ax1), ang);
         ang = Rad_23B4C0(self->ry.val);
         ax2.Set(0.0f, 1.0f, 0.0f, 0.0f);
         func_001D3E20(&m1);

@@ -12,7 +12,7 @@ extern char D_004F83E0;
 extern unsigned char D_00533880;
 extern int D_00533888;
 
-char * func_002689F0(int arg0) {
+char * ScriptArray_Create(int arg0) {
     char * sp4C;
     char * temp_s0;
     char * temp_s2;

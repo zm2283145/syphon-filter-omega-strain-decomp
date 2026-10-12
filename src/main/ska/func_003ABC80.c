@@ -9,7 +9,7 @@ extern void Event_Send(void*, int, int);
 extern void cMessage_dtor(void*, int);
 static inline int AcPair_Valid(AcPair* p) { return p->target != 0 && ~p->token != 0; }
 #pragma opt_common_subs off
-void func_003ABC80(AcHost* h, int idx, unsigned char clear)
+void MotionNotify_SendSlot(AcHost* h, int idx, unsigned char clear)
 {
     AcPair* p;
     if (h->active) {

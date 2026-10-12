@@ -58,7 +58,7 @@ void func_0036E220(Str_00186BF0* s, int flag);
 void Actor_SetHealth(Npc_00186BF0* self, int a, int b);
 void func_0038CBF0(void* p);
 void WeaponInv_ReleaseHeldObject(int a);
-int func_00186950(Npc_00186BF0* self, V4_00186BF0* dir, int n);
+int Actor_ClassifyHitDirection(Npc_00186BF0* self, V4_00186BF0* dir, int n);
 void Controller_DeathNotice(Npc_00186BF0* self, int a1, Att_00186BF0* att, int a3, int type, V4_00186BF0* pos);
 }
 static inline Msg_00186BF0* Ctor_00186BF0(Msg_00186BF0* p)
@@ -111,9 +111,9 @@ extern "C" void Actor_Kill(Npc_00186BF0* self, int a1, Att_00186BF0* att, int a3
             {
             int t = (unsigned char)type;
             if (t == 2 || t == 0xD) {
-                anim = func_00186950(self, &dir, 4);
+                anim = Actor_ClassifyHitDirection(self, &dir, 4);
             } else if (t == 1) {
-                anim = func_00186950(self, &dir, 6);
+                anim = Actor_ClassifyHitDirection(self, &dir, 6);
             } else if (a3 == 2) {
                 anim = 1;
                 snd = 0;

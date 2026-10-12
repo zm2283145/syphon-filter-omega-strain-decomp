@@ -19,7 +19,7 @@ extern void func_002666F0(Sub*);
 extern void func_00266B80(void*);
 extern void func_002666D0(void* registry, S** self);
 /* Constructor: initialises members and registers the object in the global registry. */
-S* func_00266630(S* self, int owner)
+S* HeldItem_Construct(S* self, int owner)
 {
     Sub* sub = &self->sub;
     func_002666F0(sub);

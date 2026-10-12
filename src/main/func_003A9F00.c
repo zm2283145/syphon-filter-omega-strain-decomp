@@ -15,7 +15,7 @@ void func_003A9F00(SkelNodes* self) {
 }
 
 /* Sets unk14 then constructs the node set. */
-int func_003A9F10(SkelNodes* self) {
+int SkelNodes_ConstructActive(SkelNodes* self) {
     self->unk14 = 1;
     return SkelNodes_Construct(self);
 }

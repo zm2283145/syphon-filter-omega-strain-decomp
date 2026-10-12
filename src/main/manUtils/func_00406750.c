@@ -2,7 +2,7 @@
 typedef struct { char first[16]; char second[16]; } H2Pair;
 typedef struct { char hdr[0x40]; H2Pair pairs[32]; } H2Pack;
 /* Returns the first tone digit found in the manifest pairs, '_' when none. */
-int func_00406750(H2Pack* p) {
+int Appearance_GetToneDigit(H2Pack* p) {
     char* s;
     int i;
     for (i = 0; i < 32; i++) {

@@ -14,9 +14,9 @@ extern int Service_Lookup(int, int);
 extern int func_001589D0(void);
 extern int NpcAi_ResetFireProgress(void);
 extern int func_00164330(int);
-extern int func_001644B0(int);
+extern int NpcRouteMgr_AllocRequestPool(int);
 
-void func_0016F490(cAI* self, int value) {
+void NpcAi_SetTeam(cAI* self, int value) {
     AIGObj* gobj;
     AIGObjSub* sub;
 
@@ -38,6 +38,6 @@ int func_0016F4D0(void) {
 }
 
 int func_0016F510(void) {
-    func_001644B0(Service_Lookup((int)D_004FFB50, (int)g_NpcRouteMgr));
+    NpcRouteMgr_AllocRequestPool(Service_Lookup((int)D_004FFB50, (int)g_NpcRouteMgr));
     return NpcAi_ResetFireProgress();
 }

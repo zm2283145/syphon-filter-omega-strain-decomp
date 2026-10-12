@@ -1,6 +1,13 @@
 #pragma cplusplus on
 #include "types.h"
 
+extern "C" char D_004AB7C0[];
+extern "C" char D_004AB7D8[];
+extern "C" char D_004AB7F0[];
+static void * const dat_0048BC00[2] = { (void*)D_004AB7C0, (void*)0x0 };
+static void * const dat_0048BC08[2] = { (void*)D_004AB7D8, (void*)0x0 };
+static void * const dat_0048BC10[2] = { (void*)D_004AB7F0, (void*)0x0 };
+
 struct Obj9FE0 {
     virtual void v00(); virtual void v01(); virtual void v02(); virtual void v03(); virtual void v04(); virtual void v05();
     virtual void v06(); virtual void v07(); virtual void v08(); virtual void v09(); virtual void v0A(); virtual void v0B();
@@ -21,10 +28,8 @@ typedef struct Screen9FE0 {
 extern "C" {
 extern char D_004A7520[];
 extern char D_004AA640[];
-extern const char* D_0048BC00;
-extern const char* D_0048BC08;
 extern const char* D_0048BBF0;
-extern const char* D_0048BC10;
+
 void func_0033D3F0(Screen9FE0* self);
 Obj9FE0* func_0041DB80(Screen9FE0* self, const char* name);
 }
@@ -42,10 +47,10 @@ static inline Obj9FE0* AsB9FE0(Obj9FE0* obj)
 extern "C" void func_002A9FE0(Screen9FE0* self)
 {
     func_0033D3F0(self);
-    self->item0 = AsA9FE0(func_0041DB80(self, D_0048BC00));
-    self->item1 = (Sub9FE0*)AsB9FE0(func_0041DB80(self, D_0048BC08));
+    self->item0 = AsA9FE0(func_0041DB80(self, *(const char**)dat_0048BC00));
+    self->item1 = (Sub9FE0*)AsB9FE0(func_0041DB80(self, *(const char**)dat_0048BC08));
     self->item2 = AsA9FE0(func_0041DB80(self, D_0048BBF0));
-    self->extra = func_0041DB80(self, D_0048BC10);
+    self->extra = func_0041DB80(self, *(const char**)dat_0048BC10);
     if (self->extra && self->item1)
         self->item1->link = self->extra;
 }

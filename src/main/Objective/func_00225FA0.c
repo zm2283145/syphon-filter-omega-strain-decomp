@@ -10,8 +10,8 @@ void Objective_SetCompleted(void* o);
 void* ObjMan_GetService(void);
 int ObjMan_GetTotalCount(void* s);
 int func_002270C0(void* s, int* buf, int n, int f);
-void func_00245400(int id, int f);
-void func_0018C770(void* a, int v);
+void Objective_QueueThresholdVoice(int id, int f);
+void Actor_BuildVoiceKey(void* a, int v);
 extern int D_0049D010;
 typedef struct { char p[0x4C]; int kind; } Act225FA0;
 static inline void SetF225FA0(int* p, int v) { *p = v; }
@@ -41,8 +41,8 @@ void Objective_Succeed(void* self, void* obj, Act225FA0* actor)
     total = ObjMan_GetTotalCount(ObjMan_GetService());
     half = total / 2;
     n = func_002270C0(ObjMan_GetService(), buf, 0x14, 1);
-    if (n == total) func_00245400(0x17, 1);
-    else if (n >= half && n - 1 < half) func_00245400(0x16, 1);
-    if (actor && actor->kind == D_0049D010) func_0018C770(actor, 0xD);
+    if (n == total) Objective_QueueThresholdVoice(0x17, 1);
+    else if (n >= half && n - 1 < half) Objective_QueueThresholdVoice(0x16, 1);
+    if (actor && actor->kind == D_0049D010) Actor_BuildVoiceKey(actor, 0xD);
 }
 #pragma pop

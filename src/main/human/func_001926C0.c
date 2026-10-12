@@ -7,20 +7,20 @@
 #include "types.h"
 #include "human_types.h"
 
-extern void func_001BADD0(int*, int, int);
+extern void NamedRootMap_Find(int*, int, int);
 extern int func_001BDA10(PtrVec*, char*, int, int);
 
 /* Tree iterator dereference: value stored at node +0x30. */
-char* func_001926C0(Iter* it) {
+char* NamedRoot_GetRegistry(Iter* it) {
     return (char*)it->p + 48;
 }
 
 /* Tree lookup wrapper returning the found iterator through out. */
-void func_001926D0(int* out) {
+void NamedRoot_Lookup(int* out) {
     int it[1];
     int a1, a2;
 
-    func_001BADD0(it, a1, a2);
+    NamedRootMap_Find(it, a1, a2);
     *out = it[0];
 }
 

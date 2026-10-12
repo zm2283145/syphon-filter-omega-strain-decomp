@@ -14,7 +14,7 @@ typedef struct cGameLight { char pad[0x60]; Light* light; /* +0x60 */ } cGameLig
 extern "C" void Object_Activate(cGameLight* self, void* arg);
 
 /* Object_Activate then light object (+0x60) virtual slot +0x2C. */
-extern "C" void func_00179BB0(cGameLight* self, void* arg)
+extern "C" void cGameSceneLight_Activate(cGameLight* self, void* arg)
 {
     Object_Activate(self, arg);
     self->light->Method2C();

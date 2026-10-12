@@ -10,10 +10,10 @@ struct V4_23C1C0 {
     V4_23C1C0(float a, float b, float c, float d) { x = a; y = b; z = c; w = d; }
 } __attribute__((aligned(16)));
 struct M4_23C1C0;
-extern "C" M4_23C1C0* func_00131F00(M4_23C1C0* o, const V4_23C1C0& a, const V4_23C1C0& b, const V4_23C1C0& c, const V4_23C1C0& d);
+extern "C" M4_23C1C0* Mtx_FromRowsAndTranslation(M4_23C1C0* o, const V4_23C1C0& a, const V4_23C1C0& b, const V4_23C1C0& c, const V4_23C1C0& d);
 struct M4_23C1C0 { __int128 q[4];
     M4_23C1C0() {}
-    M4_23C1C0(const V4_23C1C0& a, const V4_23C1C0& b, const V4_23C1C0& c, const V4_23C1C0& d) { const V4_23C1C0* pa = &a; func_00131F00(this, *pa, b, c, d); }
+    M4_23C1C0(const V4_23C1C0& a, const V4_23C1C0& b, const V4_23C1C0& c, const V4_23C1C0& d) { const V4_23C1C0* pa = &a; Mtx_FromRowsAndTranslation(this, *pa, b, c, d); }
 };
 struct X_23C1C0 {
     V4_23C1C0 pos;
@@ -60,7 +60,7 @@ extern char D_004A6FA8[];
 void* Mem_Alloc(int pool, int size, char* file, int line);
 Tgt_23C1C0* func_001C5950(void* p, int* desc, int v);
 }
-extern "C" void func_0023C1C0(Self_23C1C0* self, Pop_23C1C0* r)
+extern "C" void NiEvent_LoadParticleAsset(Self_23C1C0* self, Pop_23C1C0* r)
 {
     int mis;
     X_23C1C0 x(V4_23C1C0(0.0f, 0.0f, 0.0f, 0.0f), M4_23C1C0(V4_23C1C0(1.0f, 0.0f, 0.0f, 1.0f), V4_23C1C0(0.0f, 1.0f, 0.0f, 1.0f),

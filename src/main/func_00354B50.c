@@ -17,7 +17,6 @@ typedef struct { char pad0[0x48]; void* tbl; char pad4C[0x84 - 0x4C]; unsigned c
 
 extern "C" char D_004FFB50[];
 extern "C" const char* D_0048C160[];
-extern "C" char D_004BB0D0[];
 extern "C" void func_00296F20(L4B50* l);
 extern "C" void func_00299270(L4B50* l, int flags);
 extern "C" void* Agent_GetSelected(void* list, int idx);
@@ -54,7 +53,7 @@ extern "C" void func_00354B50(O4B50* self)
     } else {
         func_00333260(ag, self->kind, self->arg, &l);
     }
-    text = Loc_LookupText(D_004BB0D0);
+    text = Loc_LookupText("Classified");
     for (i = 0; i < l.size(); i++) {
         E4B50* e = (E4B50*)((int)l.data + i * sizeof(E4B50));
         int id = text;
@@ -69,3 +68,4 @@ extern "C" void func_00354B50(O4B50* self)
     }
     func_00299270(&l, 0);
 }
+

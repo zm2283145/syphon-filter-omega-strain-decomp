@@ -119,7 +119,7 @@ typedef struct L4Entry110 {
     char pad107[9];
 } L4Entry110;
 
-/* Owner of eight L4Entry110 records (used by func_003D3670/func_003D3690). */
+/* Owner of eight L4Entry110 records (used by func_003D3670/Renderer_PushCameraState). */
 typedef struct Unk3D3670 {
     char pad00[0xF4];
     int unkF4;                     /* 0xF4 */

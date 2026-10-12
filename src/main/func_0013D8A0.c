@@ -11,7 +11,7 @@ int Region_ProcessChange(int);
 /* run Region_ProcessChange over every entry of the list (begin/end iterators) */
 #pragma push
 #pragma opt_propagation off
-extern "C" void func_0013D8A0(int l)
+extern "C" void World_UpdateZoneTrackers(int l)
 {
     It_D8A0 it;
     It_D8A0 tmp;

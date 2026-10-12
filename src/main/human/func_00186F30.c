@@ -23,9 +23,9 @@ void * const D_004DA990[8] = { (void*)0x0, (void*)0x0, (void*)cNetUpdateStatsMsg
 extern char D_004DCF10[];
 void* Agent_GetSelected(void* a, int b);
 void Stats_Add(void* ag, int a, int b);
-int func_003CC8E0(Act_00186F30* att, Npc_00186F30* self);
+int TeamTable_AreEnemies(Act_00186F30* att, Npc_00186F30* self);
 int cAgentData_GetStat(void* ag, int stat);
-void func_0018C770(Act_00186F30* att, int k);
+void Actor_BuildVoiceKey(Act_00186F30* att, int k);
 void Event_Construct(void* m, void* type);
 void Transport_Send(int a, void* m, int b, int c);
 void cMessage_dtor(void* m, int flags);
@@ -42,7 +42,7 @@ extern "C" void Actor_RecordDeathStats(Npc_00186F30* self, Act_00186F30* att, un
             if (att->b14) {
                 void* ag = Agent_GetSelected(D_004FFB50, -1);
                 Stats_Add(ag, 0, 1);
-                if (!func_003CC8E0(att, self)) {
+                if (!TeamTable_AreEnemies(att, self)) {
                     int k;
                     int st;
                     Stats_Add(ag, 7, 1);
@@ -54,7 +54,7 @@ extern "C" void Actor_RecordDeathStats(Npc_00186F30* self, Act_00186F30* att, un
                     case 3: k = 0xF; break;
                     case 4: k = 0x11; break;
                     }
-                    func_0018C770(att, k);
+                    Actor_BuildVoiceKey(att, k);
                 }
                 if (type == 9) {
                     Stats_Add(ag, 1, 1);

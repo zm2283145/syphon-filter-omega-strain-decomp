@@ -9,7 +9,7 @@ struct O_199860 { char pad[0x14]; unsigned char active; char pad15[0x58 - 0x15];
 extern "C" {
 void Goggles_SetMode(O_199860* o, int on, int f);
 void Flashlight_SetState(unsigned char* s, int on);
-E_199860* func_0013FB50(void* w);
+E_199860* WeaponInv_GetSlot6Record(void* w);
 void Hud_SetGoggles(void* p, int v);
 extern void* D_004FFC2C;
 }
@@ -26,14 +26,14 @@ extern "C" void Goggles_Toggle(O_199860* o)
         if (o->b33E5) return;
         if (o->b33E6 == 1) Goggles_SetMode(o, 0, 0);
         o->b33E7 = 0;
-    } else if (func_0013FB50(o->weapons)) {
+    } else if (WeaponInv_GetSlot6Record(o->weapons)) {
         o->b33E7 = 1;
         if (*o->state) Flashlight_SetState(o->state, 0);
     }
     if (was != o->b33E7) {
         if (Has_199860(o) && o->active) {
             int v = 0;
-            if (o->b33E7 && func_0013FB50(o->weapons)) v = func_0013FB50(o->weapons)->b100;
+            if (o->b33E7 && WeaponInv_GetSlot6Record(o->weapons)) v = WeaponInv_GetSlot6Record(o->weapons)->b100;
             Hud_SetGoggles(D_004FFC2C, v);
         }
     }

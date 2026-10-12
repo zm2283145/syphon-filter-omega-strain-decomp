@@ -9,7 +9,6 @@ extern unsigned char D_005721D8;
 extern unsigned char D_005723B0;
 extern char D_005721E0[];
 extern char D_005721F0;
-extern char D_004A3FE0[];
 extern char D_004FFB50[];
 char* strncpy(char*, const char*, unsigned int);
 void func_0012FA60(void*, int);
@@ -24,7 +23,7 @@ extern "C" int func_0020E350(int a0, int a1, int a2, Pk20E350* arg) {
             if (p->fC == 1) {
                 D_005721D8 = 1;
                 D_005723B0 = 2;
-                strncpy(D_005721E0, D_004A3FE0, 0x10);
+                strncpy(D_005721E0, "HOST_LEFTGAME", 0x10);
                 D_005721F0 = 0;
             }
             func_0012FA60(D_004FFB50, p->b8);

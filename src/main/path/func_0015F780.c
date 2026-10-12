@@ -48,7 +48,7 @@ static inline bool CxCa_Area(CxCaArea*a,CxCaReq*r){
     if(selfEqual)if(a->flags==r->flags)result=true;
     return result;
 }
-extern "C" CxCaReq*func_0015F780(CxCaManager*self,CxCaActor*actor,int kind,CxCaV4*from,CxCaV4*to,int mask,CxCaArea*area){
+extern "C" CxCaReq*NpcRoute_NodeSearchCached(CxCaManager*self,CxCaActor*actor,int kind,CxCaV4*from,CxCaV4*to,int mask,CxCaArea*area){
     CxCaIt cur=CxCa_Begin(&self->cache);
     for(;cur.link!=CxCa_End(&self->cache);cur.link=cur.link->prev){
         CxCaReq* req=cur.Req();

@@ -11,7 +11,7 @@ extern void cDisableMsg_v02();
 extern void cDisableMsg_v03();
 void * const D_004E0860[8] = { (void*)0x0, (void*)0x0, (void*)cDisableMsg_dtor, (void*)cDisableMsg_v01, (void*)cDisableMsg_v02, (void*)cDisableMsg_v03, (void*)0x0, (void*)0x0 };
 void func_003FF650(Msg_1C5680* msg, int id, int x);
-void func_0016FBE0(S_1C5680* self)
+void Hotbox_Disable(S_1C5680* self)
 {
     if (D_005721C8) {
         Msg_1C5680 msg;

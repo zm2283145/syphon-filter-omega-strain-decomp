@@ -8,13 +8,13 @@ extern int sprintf(char*, const char*, ...);
 extern void func_0036E540(H178*, char*, void*, int);
 extern int func_0036DEF0(H178*);
 extern void func_0036E140(H178*, char*, int, int);
-extern int func_0036DE50(H178*);
+extern int FileMan_GetSize(H178*);
 extern void* Mem_Alloc(int, int, char*, int);
 extern char D_0049CDA0[];
 extern char D_0048B2F8[];
 extern void func_0036D990(H178*, void**, int);
 extern void func_0036DEC0(H178*);
-extern void* func_0036DC60(H178*);
+extern void* FileMan_ReadData(H178*);
 extern void func_0036E220(H178*, int);
 }
 extern "C" P178* Population_Load(P178* p, char* name, void* arg) {
@@ -27,7 +27,7 @@ extern "C" P178* Population_Load(P178* p, char* name, void* arg) {
         sprintf(buf, "%s\\%s\\DATA.POP", D_0048B2F8, name, name);
         func_0036E140(&h, buf, 0, 0);
         func_0036DEF0(&h);
-        p->f4 = func_0036DE50(&h);
+        p->f4 = FileMan_GetSize(&h);
         p->b10 = 1;
         {
         int sz = p->f4;
@@ -42,8 +42,8 @@ extern "C" P178* Population_Load(P178* p, char* name, void* arg) {
         func_0036DEC0(&h);
     } else {
         p->b10 = 0;
-        p->f8 = func_0036DC60(&h);
-        p->f4 = func_0036DE50(&h);
+        p->f8 = FileMan_ReadData(&h);
+        p->f4 = FileMan_GetSize(&h);
     }
     p->fc = p->f8;
     p->f0 = *(int*)p->fc;

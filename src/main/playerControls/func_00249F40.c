@@ -15,7 +15,7 @@ extern char D_004E0840[];
 extern void Event_Construct(Msg_00249F40* msg, void* name);
 extern void Event_Send(Msg_00249F40* msg, void* target, int flags);
 extern void cMessage_dtor(Msg_00249F40* msg, int flags);
-extern int func_0024A820(In_00249F40* in);
+extern int PlayerInput_ZoneEnteredThisFrame(In_00249F40* in);
 extern int PlayerInput_CrouchToggle(In_00249F40* in, Pl_00249F40* p);
 #define SENDB(V) { Msg_00249F40 msg; Event_Construct(&msg, D_0055D480); msg.vtable = D_004E0840; msg.value = V; msg.b20 = 1; msg.b28 = 0; Event_Send(&msg, p, 1); msg.vtable = D_004E0840; cMessage_dtor(&msg, 0); }
 #define SEND(V) { Msg_00249F40 msg; Event_Construct(&msg, D_0055D480); msg.vtable = D_004E0840; msg.b20 = 1; msg.value = V; msg.b28 = 0; Event_Send(&msg, p, 1); msg.vtable = D_004E0840; cMessage_dtor(&msg, 0); }
@@ -29,7 +29,7 @@ void PlayerInput_HandleCross(In_00249F40* in, Pl_00249F40* p, float v)
     pressed = t;
     edge = !in->held && pressed;
     in->held = pressed;
-    if (edge || (func_0024A820(in) && pressed)) {
+    if (edge || (PlayerInput_ZoneEnteredThisFrame(in) && pressed)) {
         if (PlayerInput_CrouchToggle(in, p))
             pressed = 0;
     }

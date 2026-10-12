@@ -7,7 +7,7 @@ struct C5Item {
 };
 struct C5Lift { char pad[0x11C]; int count; C5Item** items; };
 #pragma opt_strength_reduction off
-extern "C" void func_002154B0(C5Lift* p) {
+extern "C" void Lift_ActivateRecipients(C5Lift* p) {
     int i;
     for (i = 0; i < p->count; i++) {
         p->items[i]->Method64(-1);

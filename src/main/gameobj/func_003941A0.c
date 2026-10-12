@@ -9,7 +9,7 @@
 extern "C" {
 int Mem_Free(...);                         
 int func_003A2BA0(...);                            
-int func_003CE790(...);                         
+int Object_Deactivate(...);                         
 extern unsigned char D_00533880;
 }
 #pragma opt_common_subs off
@@ -25,5 +25,5 @@ extern "C" void func_003941A0(char * arg0, int arg1) {
         }
         F_(arg0, 0x64, int) = 0;
     }
-    func_003CE790(arg0, arg1);
+    Object_Deactivate(arg0, arg1);
 }

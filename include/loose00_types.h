@@ -89,7 +89,7 @@ typedef struct Unk0013EE70 {
     int value;                      /* 0x08 */
 } Unk0013EE70;
 
-/* 0x24-byte record (copy func_001D7840, ctor func_001D86D0). */
+/* 0x24-byte record (copy func_001D7840, ctor Secondary_MotionRecordCtor). */
 typedef struct Rec24 {
     int unk00;                      /* 0x00 */
     int unk04;                      /* 0x04 */

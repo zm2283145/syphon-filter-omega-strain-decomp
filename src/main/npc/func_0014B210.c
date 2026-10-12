@@ -7,6 +7,6 @@
 
 extern char D_0055C9F0[];
 
-void* func_0014B210(void) {
+void* Mtx_GetIdentity(void) {
     return D_0055C9F0;
 }

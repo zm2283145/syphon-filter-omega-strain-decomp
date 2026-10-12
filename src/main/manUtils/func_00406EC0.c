@@ -13,7 +13,7 @@ extern char D_004BE950[];
 extern char D_004BE960[];
 extern void Appearance_RegistryKey(H2E_Pack* p, int n, char* name);
 extern void String_Copy(void* d, char* s);
-extern int func_004067E0(H2E_Pack* p);
+extern int Appearance_GetBodyKind(H2E_Pack* p);
 /* inline-asm block copy (hand-written in the original) */
 static inline void H2E_Copy(void* d0, void* s0, int n0)
 {
@@ -126,7 +126,7 @@ void func_00406EC0(H2E_Pack* dst, short* p)
     }
     H2E_QZero(&dst->pairs[i], 2);
     if (c1 != -1) {
-        int k = func_004067E0(dst);
+        int k = Appearance_GetBodyKind(dst);
         __int128* tbl = D_005712F8[k];
         if (c1 >= D_005712F0[k]) c1 = 0;
         dst->slot1 = tbl[c1];

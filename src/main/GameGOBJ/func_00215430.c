@@ -12,7 +12,7 @@ public:
     virtual void Fn(int a);
 };
 struct C4Obj215 { char pad[0x11C]; int count; C4It215** items; };
-extern "C" void func_00215430(C4Obj215* o) {
+extern "C" void Lift_DeactivateRecipients(C4Obj215* o) {
     int i;
     for (i = 0; i < o->count; i++) {
         o->items[i]->Fn(-1);

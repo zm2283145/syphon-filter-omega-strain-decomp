@@ -14,7 +14,7 @@ extern void Loader_InitLights(void* l, Pop_1C4190* p);
 extern void Loader_InitPopulatedCameras(void* l, Pop_1C4190* p);
 extern void func_001C1E40(void* l, Pop_1C4190* p, void* arc);
 extern void Pop_LoadMissionSections(void* l, int h, Pop_1C4190* p, void* arc);
-extern void func_001C1470(void* l, Pop_1C4190* p);
+extern void Loader_LoadPointLights(void* l, Pop_1C4190* p);
 extern void Loader_InitEnvironmentSettings(void* l, Pop_1C4190* p);
 extern void Loader_LoadGeneratorDefs(void* l, Pop_1C4190* p);
 extern void Loader_LoadInventoryDefs(void* l, Pop_1C4190* p);
@@ -40,7 +40,7 @@ void Loader_LoadLevelData(void* l, void* arc)
     Loader_InitPopulatedCameras(l, &pop);
     func_001C1E40(l, &pop, arc);
     Pop_LoadMissionSections(l, h, &pop, arc);
-    func_001C1470(l, &pop);
+    Loader_LoadPointLights(l, &pop);
     Loader_InitEnvironmentSettings(l, &pop);
     Loader_LoadGeneratorDefs(l, &pop);
     Loader_LoadInventoryDefs(l, &pop);

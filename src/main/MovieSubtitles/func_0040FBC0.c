@@ -11,9 +11,9 @@ typedef struct {
     int f68;             /* 0x68 */
 } Subs40FBC0;
 
-extern char D_004BEF08[];
-extern char D_004BEF00[];
-extern char D_004BEEF8[];
+static char D_004BEEF8[] = "FEED";
+static char D_004BEF00[] = "INIT";
+static char D_004BEF08[] = "END";
 extern void String_PushBack(Str40FBC0* s, int c);
 extern char* func_002071A0(Str40FBC0* s);
 extern void func_001F12D0(Str40FBC0* s, char* cs);
@@ -87,3 +87,4 @@ void func_0040FBC0(Subs40FBC0* self, const char* s, const char* end)
     }
     self->f64 = self->f68;
 }
+

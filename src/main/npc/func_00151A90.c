@@ -16,7 +16,7 @@ extern char D_004E0840[];
 extern void Event_Construct(Msg_00151A90* msg, void* name);
 extern void Event_Send(Msg_00151A90* msg, void* target, int flags);
 extern void cMessage_dtor(Msg_00151A90* msg, int flags);
-int func_00151A90(Self_00151A90* self, Ev_00151A90* ev)
+int NpcAi_HandleLivingMessage(Self_00151A90* self, Ev_00151A90* ev)
 {
     switch (ev->type) {
     case 6: {

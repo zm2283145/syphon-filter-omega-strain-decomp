@@ -13,7 +13,7 @@ extern "C" {
 void func_0015F770(CxRelIt*,CxRelList*);
 void func_0015F760(CxRelIt*,CxRelIt*);
 void func_0015F750(CxRelIt*,CxRelList*);
-void func_001642B0(CxRelManager*,CxRelReq*);
+void NpcRouteMgr_FreeRequest(CxRelManager*,CxRelReq*);
 void ActiveList_EraseMatching(CxRelList*,CxRelPredicate);
 extern unsigned char D_004ED9D0;
 }
@@ -38,7 +38,7 @@ extern "C" void NpcRoute_Release(CxRelManager*self,CxRelActor*actor){
             if(actor){int*serial=&actor->serial;int id=CxRel_Get(cur.link->req)->serial;if(id!=*serial)continue;}
             {
                 if(cur.link==first && D_004ED9D0==1)D_004ED9D0=2;
-                func_001642B0(self,cur.link->req);
+                NpcRouteMgr_FreeRequest(self,cur.link->req);
                 ErWrap(&self->queue,&cur.link->req);
                 removed=true;
                 break;

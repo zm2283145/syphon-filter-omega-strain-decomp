@@ -26,8 +26,6 @@ struct G { char pad[0x25C]; int f25C; };
 extern "C" {
 extern char *D_00492BB8;
 extern char D_004B88F0[];
-extern char D_004BA898[];
-extern char D_004BA8A0[];
 extern char D_004FFB50[];
 extern G *D_004FFC04;
 void func_00356CD0(Self *self);
@@ -54,11 +52,11 @@ extern "C" void func_0034DD20(Self *self)
     if (grp == 0)
         return;
     for (i = 0; i < 24; i++) {
-        sprintf(name, D_004BA898, i + 1);
+        sprintf(name, "%2.2d", i + 1);
         self->items[i] = Cast(func_0041DB80(grp, name), D_004B88F0);
         if (self->items[i]) {
             float alpha;
-            sprintf(text, D_004BA8A0, self->f64, i + 1);
+            sprintf(text, "0_%d_%ds.tdx", self->f64, i + 1);
             func_0043C890(self->items[i], text, D_004FFC04->f25C);
             self->items[i]->idx = i;
             self->items[i]->flags |= 0x80;

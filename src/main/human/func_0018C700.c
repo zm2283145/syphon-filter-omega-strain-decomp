@@ -23,7 +23,7 @@ void func_0018C730(Iter* out, Tree* t) {
 }
 
 /* Tree lookup wrapper returning the found iterator through out. */
-void func_0018C740(int* out) {
+void ModelCtx_FindNodeById(int* out) {
     int it[1];
     int a1, a2;
 

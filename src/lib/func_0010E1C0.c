@@ -1,5 +1,4 @@
 typedef struct { int count; int max_count; int init_count; int wait_threads; unsigned int attr; void *option; } SemaParamE1C0;
-extern char D_00498918[];
 extern int CreateSema(SemaParamE1C0 *);
 extern int func_00117C68(int, int);
 extern int func_00117E18(int, int (*)(int, int, int, int), int);
@@ -13,7 +12,7 @@ int func_0010E1C0(int a)
     __asm__ volatile("mfc0 %0, $12" : "=r"(s));
     if (!(s & 0x10000)) return 0x80008008;
     sp.max_count = 1;
-    sp.option = D_00498918;
+    sp.option = "DelayThread";
     sp.init_count = 0;
     sema = CreateSema(&sp);
     if (sema < 0) return 0x80008003;

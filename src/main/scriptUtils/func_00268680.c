@@ -8,7 +8,7 @@
 #include "scriptUtils_types.h"
 
 extern int Global_RemoveArray(ScriptArray* array);
-extern int func_002689F0(int arg);
+extern int ScriptArray_Create(int arg);
 extern int func_00269090(int value);
 extern ScriptArray* func_002690C0(void* obj);
 
@@ -49,5 +49,5 @@ int Script_RemoveArray(ScriptArg* args) {
 /* Script native: CreateArray(args[0]). volatile mirrors the original stack temporary. */
 int Script_CreateArray(ScriptArg* args) {
     volatile int arg = args[0].i;
-    return func_00269090(func_002689F0(arg));
+    return func_00269090(ScriptArray_Create(arg));
 }

@@ -1,7 +1,5 @@
 extern char D_004B0DE0[];
 extern char D_004B0E18[];
-extern char D_004B0F60[];
-extern char D_004B0F90[];
 extern int func_00127358(const char *, ...);
 extern int func_002FB3C0(void *p);
 typedef struct { void *ptr; int size; } Slot311320;
@@ -20,8 +18,8 @@ int func_00311320(Ctx311320 *c, void **pp)
         }
     }
     if (*pp) {
-        if (D_004B0F60)
-            func_00127358(D_004B0DE0, D_004B0E18, 0x1BB, D_004B0F90);
+        if ("Freeing a pointer that wasn't alloc'd by me!")
+            func_00127358(D_004B0DE0, D_004B0E18, 0x1BB, "!\"Freeing a pointer that wasn't alloc'd by me!\"");
         func_002FB3C0(pp);
     }
     return 0;

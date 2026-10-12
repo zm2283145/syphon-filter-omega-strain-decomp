@@ -14,7 +14,7 @@ typedef struct {
 extern "C" {
 extern char D_004BEE90[];
 int func_0036DEF0(void* file);
-int func_0036DE50(void* file);
+int FileMan_GetSize(void* file);
 void func_0036D990(void* file, char** out, int z);
 void func_0036DEC0(void* file);
 void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
@@ -76,7 +76,7 @@ extern "C" void func_00410C20(Subs410C20* self, void* file, int lang)
     self->lang = lang;
     self->mode = 0;
     if ((unsigned char)func_0036DEF0(file)) return;
-    size = func_0036DE50(file);
+    size = FileMan_GetSize(file);
     buf = Alloc_410C20(size);
     MemClear_410C20(buf, size);
     func_0036D990(file, (char**)&buf, 0);

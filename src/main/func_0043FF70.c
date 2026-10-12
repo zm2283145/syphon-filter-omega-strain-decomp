@@ -3,7 +3,6 @@
 #include "alloc_guard.h"
 extern "C" {
 void* Mem_Alloc(int pool, int size, char* file, int line);
-extern char D_004C0300[];
 extern char D_004DFD80[];
 extern char D_004E1160[];
 }
@@ -13,7 +12,7 @@ extern "C" M1EEDC0* func_0043FF70(M1EEDC0* self)
     M1EEDC0* p;
     {
         AllocGuard guard;
-        p = (M1EEDC0*)Mem_Alloc(0, 0x28, D_004C0300, 0x14);
+        p = (M1EEDC0*)Mem_Alloc(0, 0x28, "NetTransferRecvMsg.hh", 0x14);
     }
     if (p) {
         p->vtable = D_004DFD80;

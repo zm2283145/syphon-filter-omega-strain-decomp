@@ -1,4 +1,4 @@
-extern unsigned char D_004AF5E8[];
+static unsigned char D_004AF5E8[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 extern unsigned int func_00301F40(void);
 void func_00301FF8(char *buf, unsigned int n)
 {

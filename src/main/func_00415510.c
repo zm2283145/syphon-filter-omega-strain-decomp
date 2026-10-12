@@ -24,7 +24,10 @@ struct W_415510 {
     char pad30[0x38];
     unsigned int mask;
 };
-extern unsigned int D_004940B0[16];
+static unsigned int D_004940B0[16] = {
+    0x1000, 0x4000, 0x8000, 0x2000, 0x10, 0x40, 0x80, 0x20,
+    0x200, 0x400, 0x4, 0x1, 0x8, 0x2, 0x800, 0x100
+};
 extern int D_00533870;
 extern long D_00533878;
 extern int D_00571FD8;
@@ -94,6 +97,7 @@ extern "C" void func_00415510(W_415510* w, Pad_415510* pads)
         }
     }
 }
+
 
 
 

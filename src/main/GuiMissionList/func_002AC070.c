@@ -17,7 +17,7 @@ struct S_002AC070 : W_002AC070 {
     Vec_002AC070 list; L_002AC070* p11C;
 };
 extern "C" {
-extern int D_0048BCB0;
+static int D_0048BCB0 = -1;
 void func_002AD770(Vec_002AC070* v);
 void* func_004294C0(void);
 E_002AC070* func_0044F290(L_002AC070* l, int i);

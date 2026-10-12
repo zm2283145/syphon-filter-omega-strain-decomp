@@ -7,7 +7,7 @@
 #include "types.h"
 #include "loose00_types.h"
 
-extern int func_00224D80(void);
+extern int TerrainList_GetFirst(void);
 
 /* Transpose the upper 3x3 of a 4x4 matrix in place. */
 Mtx44* Mtx_Transpose3x3(Mtx44* m) {
@@ -37,12 +37,12 @@ int func_0013EE60(void) {
     return 0;
 }
 
-/* Init: owner, a value from func_00224D80 and a set flag. */
+/* Init: owner, a value from TerrainList_GetFirst and a set flag. */
 Unk0013EE70* func_0013EE70(Unk0013EE70* self, int owner) {
     int value;
 
     self->owner = owner;
-    value = func_00224D80();
+    value = TerrainList_GetFirst();
     self->value = value;
     self->valid = 1;
     return self;

@@ -8,7 +8,6 @@ struct BaGuard { BlockArray* owner; int n; char* p; };
 extern "C" {
 extern signed char D_00542C88;
 extern unsigned int D_004BCDF0;
-extern char D_004BCEA0[];
 extern char D_004BCFA8[];
 BaDeq* func_003B9170(BaDeq* self, unsigned int n, char** value, void* alloc);
 BaDeq* func_003B9070(BaDeq* self, const BaDeq* x);
@@ -33,7 +32,7 @@ extern "C" void BlockArray_Append(BlockArray* self, const void* src)
             D_00542C88 = 1;
         }
         if (self->count == D_004BCDF0) {
-            func_00123BE8(D_00489738->stream, D_004BCEA0);
+            func_00123BE8(D_00489738->stream, "deque::push_back length error");
             func_00121B60();
         }
         if (self->blocks.size == (self->blocks.cap == 0 ? 0 : self->blocks.cap - 1)) {

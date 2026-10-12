@@ -1,5 +1,5 @@
 #include "types.h"
-void func_003732F0(int sadr, int madr, int qwc)
+void Dma_StartToSpr(int sadr, int madr, int qwc)
 {
     *(volatile int*)0x1000D420 = qwc;
     *(volatile int*)0x1000D480 = sadr;

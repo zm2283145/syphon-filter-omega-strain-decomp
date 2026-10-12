@@ -3,7 +3,7 @@ typedef struct { int pad0; void* light; char pad8[24]; } Pt2_LEnt;
 typedef struct { char pad0[0x4C]; int count; char pad50[0x10]; Pt2_LEnt ents[1]; } Pt2_LMgr;
 typedef struct { char pad0[8]; int x8; char padC[0x12]; unsigned char type; } Pt2_Light;
 typedef struct { char pad[0x60]; Pt2_LEnt e; } Pt2_Row;
-extern void func_0010DA58(Pt2_LEnt*, Pt2_LEnt*);
+extern void SyncDCache(Pt2_LEnt*, Pt2_LEnt*);
 static inline void Pt2_QMove(void* d, void* s, int n) {
     __int128 t;
     asm {
@@ -39,7 +39,7 @@ void LightMgr_RemoveFromTable(Pt2_LMgr* m, Pt2_Light* l) {
         if (r->e.light == l) {
             m->count = m->count - 1;
             Pt2_QMove(&r->e, &m->ents[i + 1], (m->count - i) * 2);
-            func_0010DA58(m->ents, &m->ents[m->count]);
+            SyncDCache(m->ents, &m->ents[m->count]);
             return;
         }
     }

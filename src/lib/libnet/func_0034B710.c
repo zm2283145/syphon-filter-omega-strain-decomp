@@ -1,6 +1,5 @@
 extern int func_0010F388(const char *fmt, ...);
 extern int func_002715D0(void *cd, unsigned int num, int mode, unsigned int bufsize, unsigned int stacksize, int prio);
-extern char D_004BA6A0[];
 typedef struct { char pad[0x24]; void *serve; } NetCd34B710;
 int sceLibnetInitialize(NetCd34B710 *cd, unsigned int bufsize, unsigned int stacksize, int prio)
 {
@@ -8,7 +7,7 @@ int sceLibnetInitialize(NetCd34B710 *cd, unsigned int bufsize, unsigned int stac
     if (bufsize < 0x80)
         return -0x21F;
     if (bufsize != ((bufsize + 0x3F) & ~0x3F)) {
-        func_0010F388(D_004BA6A0);
+        func_0010F388("sceLibnetInitialize() buffersize\n");
         return -0x21F;
     }
     for (;;) {
@@ -21,3 +20,5 @@ int sceLibnetInitialize(NetCd34B710 *cd, unsigned int bufsize, unsigned int stac
     }
     return 0;
 }
+static const char rcsid[] = "$Header: /projects/rtime/CVS/libnetb/src/ee/libnetb_ex.c,v 1.33 2003/12/17 21:22:31 aharris Exp $";
+static const char rcsid_h[] = "$Header: $";

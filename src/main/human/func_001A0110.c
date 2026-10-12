@@ -5,7 +5,7 @@ extern void* Root_GetParent(void*);
 extern void* Root_GetWorldPlacement(void*);
 extern void Transform_SetOrientation(void*, void*);
 extern void Placement_Compose(void*, void*);
-void* func_001A0110(RootIdn_f4* self)
+void* SceneRoot_GetPoseCache(RootIdn_f4* self)
 {
     void* pl;
     if (self->xform != 0) {

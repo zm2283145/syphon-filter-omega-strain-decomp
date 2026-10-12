@@ -9,8 +9,8 @@ Vec_E070* func_001339A0(void* arr);
 void PtrVec_Begin(It_E070* out, Vec_E070* v);
 void PtrVec_End(It_E070* out, Vec_E070* v);
 void func_00133980(It_E070* out, It_E070* in);
-void* func_00224530(void);
-void func_00224180(void* mgr, A_E070* a, int f);
+void* ActivationMgr_Get(void);
+void ZoneMgr_DeactivateObject(void* mgr, A_E070* a, int f);
 }
 static inline int Ne_E070(It_E070* a, It_E070* b) { return (a->p == b->p) ^ 1; }
 extern "C" void func_0013E070(void)
@@ -27,7 +27,7 @@ extern "C" void func_0013E070(void)
         if (a) {
             unsigned char ok = a->b2D != 0 && a->b2C != 0 && !(a->b2E != 0);
             if (ok)
-                func_00224180(func_00224530(), a, 1);
+                ZoneMgr_DeactivateObject(ActivationMgr_Get(), a, 1);
         }
         it.p++;
     }

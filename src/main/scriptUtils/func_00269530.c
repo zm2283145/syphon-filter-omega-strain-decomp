@@ -13,7 +13,7 @@ extern cNodeList* func_00269810(void* obj);
 extern void* Group_GetAt(ScriptGroup* group, int index);
 
 /* push_back on a list whose sentinel node is at +4. */
-ListPos* func_00269530(void* list, int value) {
+ListPos* List_PushBack_269530(void* list, int value) {
     ListPos end;
     ListPos result;
 

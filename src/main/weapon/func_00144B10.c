@@ -31,7 +31,7 @@ static inline unsigned char eq4_(V4* a, V4* b) {
 
 
 
-void func_00144B10(C44_O* o, V4* v) {
+void Light_SetPosition(C44_O* o, V4* v) {
     if ((eq4_(&o->v30, v) != 0) ^ 1) {
         { V4* d = &o->v30; VCopyF(d, v); }
         D_00535D62 = 1;

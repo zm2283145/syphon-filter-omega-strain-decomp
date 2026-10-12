@@ -6,7 +6,7 @@ extern void Event_Construct(Msg* m, void* type);
 extern int func_0015A430(Msg* m);
 extern void* func_00133EC0(void* obj);
 extern void func_0015A400(Vec4* out, void* v);
-extern void func_0014B1E0(Vec4* out, void* v);
+extern void Vec4_CopyAsPoint(Vec4* out, void* v);
 extern void func_0014B160(void* data, void* obj, Vec4* v);
 extern void Event_Send(Msg* m, void* target, int immediate);
 extern void cMessage_dtor(Msg* m, int flags);
@@ -25,7 +25,7 @@ void func_001847F0(void* target, void* obj)
         func_0015A400(&a, func_00133EC0(obj));
         v = &a;
     } else {
-        func_0014B1E0(&b, func_00133EC0(obj));
+        Vec4_CopyAsPoint(&b, func_00133EC0(obj));
         v = &b;
     }
     func_0014B160(m->data, obj, v);

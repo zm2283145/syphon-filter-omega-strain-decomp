@@ -5,7 +5,7 @@ extern int Name_Compare48(const char* a, const char* b, int n);
 static inline int c4less(const char* a, const char* b) {
     return !(a[0] == 0 && b[0] == 0) && Name_Compare48(a, b, 0x20) < 0;
 }
-void func_001BADD0(C4Node1BA** out, C4Tree1BA* t, const char* key) {
+void NamedRootMap_Find(C4Node1BA** out, C4Tree1BA* t, const char* key) {
     C4Node1BA* x = t->header.left;
     C4Node1BA* y = &t->header;
     while (x) {

@@ -1,6 +1,6 @@
 #include "types.h"
 
-int func_00176EF0(int a0, int a1) {
+int ObjHandle_Set(int a0, int a1) {
     int loc[1];
     int v0, v1;
     int cond;

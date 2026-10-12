@@ -2,7 +2,7 @@
 
 extern int func_0023EB70(int);
 
-int func_002244D0(int a0) {
+int ZoneMgr_GetMemberModel(int a0) {
     int a1, v0, v1;
     int cond;
 

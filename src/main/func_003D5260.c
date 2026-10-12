@@ -5,7 +5,7 @@ struct F6Act { virtual void v0(); virtual void v1(); virtual void v2(); virtual 
 typedef struct { F6Act* actor; int x4; int arg; char pad[0x124]; } F6Ent;
 typedef struct { int x0; int max; char pad[8]; F6Ent ents[219]; char pad2[0xB0]; int count; } F6Sys;
 extern "C" int D_005392D0;
-extern "C" void func_003D5260(F6Sys* s, F6Act* a, int arg)
+extern "C" void Shadow_AddCaster(F6Sys* s, F6Act* a, int arg)
 {
     if (D_005392D0 & 0x60) {
         if (s->count < s->max && a->x38 != 0x80 && a->x50) {

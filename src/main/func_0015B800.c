@@ -7,7 +7,7 @@
 #include "types.h"
 #include "loose00_types.h"
 
-int func_0015B800(Unk001827A0* self) {
+int NpcAi_GetTeam(Unk001827A0* self) {
     return self->unk54;
 }
 

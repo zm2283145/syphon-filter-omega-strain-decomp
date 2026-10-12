@@ -2,7 +2,7 @@
 
 extern char D_00554F28[];
 
-int func_003D7590(int a0) {
+int ScriptType_GetRecord(int a0) {
     int v0, v1;
     int cond;
 

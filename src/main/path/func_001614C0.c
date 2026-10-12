@@ -49,7 +49,7 @@ extern char D_004FFB50[];
 extern char g_NpcRouteMgr[];
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void* Service_Lookup(void* reg, void* key);
-void func_0015F3D0(void* svc, int id, int arg, S_14C0* s);
+void NpcPath_RebuildRoute(void* svc, int id, int arg, S_14C0* s);
 }
 #pragma opt_common_subs off
 extern "C" void func_001614C0(void* src, S_14C0* self)
@@ -65,5 +65,5 @@ extern "C" void func_001614C0(void* src, S_14C0* self)
         self->buf = p;
     }
     if (self->id >= 0)
-        func_0015F3D0(Service_Lookup(D_004FFB50, g_NpcRouteMgr), self->id, self->arg, self);
+        NpcPath_RebuildRoute(Service_Lookup(D_004FFB50, g_NpcRouteMgr), self->id, self->arg, self);
 }

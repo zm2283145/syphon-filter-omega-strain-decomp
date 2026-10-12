@@ -20,8 +20,8 @@ void* Mem_Alloc(int,int,char*,int);
 int strlen(char*);
 void String_Copy(char*,char*);
 void Script_InvalidArgNop(Self*,char*,...);
-Type* func_003D7590(int);
-int func_003E0A70(Self*,Desc*,Type*);
+Type* ScriptType_GetRecord(int);
+int ScriptFilter_ArgIsId(Self*,Desc*,Type*);
 void* Script_ObjectToId(void*);
 int String_CompareNoCase(char*,char*);
 Event* ScriptEvent_Construct(Event*,int,Desc*,void**,int,int);
@@ -44,9 +44,9 @@ extern "C" int ScriptSched_PrepareCall(Self* self0,Desc* desc0,void** args,int c
    char* copy=(char*)Alloc(len+1,0x76D);
    String_Copy(copy,str);*ptr=copy;
   } else if(k>=100) {
-   Type* type=func_003D7590(k);
+   Type* type=ScriptType_GetRecord(k);
    if(type) {
-    if(type->objectId) { if(!func_003E0A70(self,desc,type)) *ptr=Script_ObjectToId(*ptr); }
+    if(type->objectId) { if(!ScriptFilter_ArgIsId(self,desc,type)) *ptr=Script_ObjectToId(*ptr); }
     else if(type->cloneable) *ptr=((SchedObject*)*ptr)->clone();
     else if(String_CompareNoCase(type->name,"group")) {Script_InvalidArgNop(self,"can't schedule a function with that param type");return -1;}
    }

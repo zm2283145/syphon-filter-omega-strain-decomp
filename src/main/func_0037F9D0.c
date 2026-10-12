@@ -8,7 +8,7 @@
 
 /* Runtime array constructor: (array, ctor, dtor, element size, count). */
 extern int __construct_array(void* array, void* ctor, void* dtor, int size, int count);
-extern int func_003755C0(void*);
+extern int CameraRecord_Construct(void*);
 extern List* func_0037FE80(List*);
 extern int func_003BB2F0(int, int);
 extern int func_003BB340(int);
@@ -20,7 +20,7 @@ Manager37F9D0* func_0037F9D0(Manager37F9D0* self) {
     self->unk00 = -1;
     item = self->items[0];
     do {
-        func_003755C0(item);
+        CameraRecord_Construct(item);
         item += 272;
     } while (item != self->items[8]);
     self->unk1058 = 0;

@@ -69,7 +69,7 @@ static inline void Copy_1C1470(void* d0, void* s0, int n0)
     done:
     }
 }
-extern "C" void func_001C1470(void* a0, PopReader_1C1470* r)
+extern "C" void Loader_LoadPointLights(void* a0, PopReader_1C1470* r)
 {
     Align_1C1470(r);
     if ((unsigned char)Pop_FindTag(r, 0x3A544E50)) {

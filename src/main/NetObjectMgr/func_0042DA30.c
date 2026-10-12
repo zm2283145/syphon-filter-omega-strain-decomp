@@ -27,7 +27,7 @@ int func_00434440(int* shared, const GobjId* id);
 int func_00434380(int* shared, const GobjId* id);
 void func_00434600(int* shared, const GobjId* id, int peer);
 int func_002EBAF8(int* id, int session);
-int func_003FB8D0(int peer);
+int PlayerSlots_Get(int peer);
 void Event_Construct(void* notice, const void* descriptor);
 void cMessage_dtor(void* notice, int flags);
 int Transport_Send(unsigned int id, const void* notice, int flags, int peer);
@@ -119,7 +119,7 @@ extern "C" void func_0042DA30(cGOBJ* object, int previousPeer, int nextPeer)
                 func_0042D910(object);
             }
         } else if (owner < 0) {
-            if (previousOwner >= 0 && func_003FB8D0(previousOwner)) {
+            if (previousOwner >= 0 && PlayerSlots_Get(previousOwner)) {
                 func_00434600(&shared, object_id(object), nextPeer);
                 if (previousOwner != current_peer())
                     request_transfer(object, nextPeer, previousOwner);

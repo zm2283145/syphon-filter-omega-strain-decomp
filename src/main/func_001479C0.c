@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_001479C0(void) {
+int Light_GetCoronaFlag(void) {
     return 1;
 }

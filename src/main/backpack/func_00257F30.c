@@ -21,13 +21,13 @@ void func_00258330(Backpack*,int);
 Weapon* WeaponDb_Get(int,int);
 void func_00255AF0(Backpack*,int,int,int,int);
 void Object_Register(Backpack*);
-Link* func_00170E20(int,Backpack*,int,int);
+Link* Hotbox_CreateRuntime(int,Backpack*,int,int);
 int IdMgr_FindCollision(int,int);
 void ZoneMgr_Associate(int,Backpack*,int,int);
 }
 static inline int Read(Reader* r) {int v=*(int*)r->cur;r->cur+=4;return v;}
 static inline void ReadFloat(Reader* r,float* out) {*out=*(float*)r->cur;r->cur+=4;}
-static inline void Ensure(Backpack* obj) {if(!obj->link){obj->active(1);Object_Register(obj);if(!obj->link){obj->link=func_00170E20(D_004FFBD0,obj,0,1);obj->link->id=obj->id;}}}
+static inline void Ensure(Backpack* obj) {if(!obj->link){obj->active(1);Object_Register(obj);if(!obj->link){obj->link=Hotbox_CreateRuntime(D_004FFBD0,obj,0,1);obj->link->id=obj->id;}}}
 extern "C" Backpack* cBackpack_ctor(Backpack* obj0,Reader* r0) {
  int flag; int weapon;int slot;int n;int amount;Weapon* w;int j;Backpack* obj=obj0;Reader* r=r0;
  int id=-1;

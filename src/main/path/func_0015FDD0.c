@@ -22,7 +22,7 @@ struct E8Nav {
 };
 extern "C" void NpcPath_HoldNode(E8Nav* self, int n);
 extern "C" int NpcRoute_NearestGroupNode(int n, float* pos, int flags, int ex);
-extern "C" void func_0015FDD0(E8Nav* self, int n)
+extern "C" void NpcPath_GetDestination(E8Nav* self, int n)
 {
     NpcPath_HoldNode(self, -1);
     if (n >= 0 && n != self->target) {

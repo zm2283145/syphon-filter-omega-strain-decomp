@@ -3,7 +3,6 @@ typedef struct Deq { unsigned int cap; unsigned int size; unsigned int start; in
 extern void func_00123BE8(int, const char*);
 extern void func_00121B60(void);
 extern char* D_00489738;
-extern char D_004BCF30[];
 extern unsigned int D_004BCEE8[2];
 extern signed char D_00542C90;
 
@@ -25,7 +24,7 @@ unsigned int func_003BA0C0(Deq* self, unsigned int n)
     unsigned int m = MaxSize();
     unsigned int c;
     if (m < n) {
-        func_00123BE8(*(int*)(D_00489738 + 0xC), D_004BCF30);
+        func_00123BE8(*(int*)(D_00489738 + 0xC), "cdeque max_size error");
         func_00121B60();
     }
     c = self->cap ? self->cap - 1 : 1;

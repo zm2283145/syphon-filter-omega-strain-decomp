@@ -19,7 +19,7 @@ extern void Event_Send(void* m, void* target, int immediate);
 extern void cMessage_dtor(void* m, int flags);
 extern void cElevatorGOBJ_ChooseFloor(Lift_00214C90* l);
 extern void func_002EC3C8(void* h);
-extern void func_00215430(Lift_00214C90* l);
+extern void Lift_DeactivateRecipients(Lift_00214C90* l);
 extern unsigned char Lift_OpenDoors(Lift_00214C90* l);
 static inline int IsAuth_00214C90(void) { return D_005721C8 ? D_005721C0 : 1; }
 static inline int ObjId_00214C90(Obj_00214C90* o) { return o ? o->id : 0; }
@@ -71,7 +71,7 @@ void Lift_SeekFloor(Lift_00214C90* l, int floor, int a2, int a3)
                 n.vtable = D_004DAED0;
                 cMessage_dtor(&n, 0);
                 l->state->dir = 1;
-                func_00215430(l);
+                Lift_DeactivateRecipients(l);
             } else if (st->target < st->cur) {
                 Notice_00214C90 n;
                 Event_Construct(&n, D_004F5448);
@@ -82,7 +82,7 @@ void Lift_SeekFloor(Lift_00214C90* l, int floor, int a2, int a3)
                 n.vtable = D_004DAED0;
                 cMessage_dtor(&n, 0);
                 l->state->dir = -1;
-                func_00215430(l);
+                Lift_DeactivateRecipients(l);
             } else {
                 st->dir = 0;
                 Lift_OpenDoors(l);

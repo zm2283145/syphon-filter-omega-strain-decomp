@@ -16,7 +16,7 @@ extern void* Placement_GetPosition(void* placement);
 extern void Mtx_FromBasisAndPosition(void* out, void* basis, void* pos);
 
 /* Builds the world matrix of obj's root placement into out. */
-void func_00132280(void* out, RootP* obj) {
+void Actor_GetRootWorldMatrix(void* out, RootP* obj) {
     Mtx40 rot;
     void* placement = Root_GetWorldPlacement(obj->root);
     void* basis = Quat_ToMatrix(&rot, Placement_GetQuat(placement));

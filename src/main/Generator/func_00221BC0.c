@@ -8,7 +8,7 @@ int Mem_Free(int, int, char *, int);
 int cGOBJ_dtor(char *, int);
 int func_00135D80(char *, int);
 int func_00177B80(char *, int);
-int func_00177F60(int *, char *, int *, char **);
+int Player_ClearRecentTargets(int *, char *, int *, char **);
 int operator_delete(char *);
 extern char D_004A4A90;
 extern "C" void Actor_ApplyContactDamage();
@@ -78,7 +78,7 @@ extern "C" void func_003CE9D0();
 extern "C" void func_003CEA00();
 extern void * const D_004DB680[];
 }
-static inline char* Identity(char*a){return a;} static inline void clr0(char*a){int r;int f;char*l;l=Identity(a+0xA0);f=F_(a,0xA4,int);func_00177F60(&r,a+0x9C,&f,&l);}
+static inline char* Identity(char*a){return a;} static inline void clr0(char*a){int r;int f;char*l;l=Identity(a+0xA0);f=F_(a,0xA4,int);Player_ClearRecentTargets(&r,a+0x9C,&f,&l);}
 static inline void clr1(char *a) { clr0(a); }
 #pragma push
 #pragma opt_common_subs off

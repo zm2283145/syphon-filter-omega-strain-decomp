@@ -1,5 +1,5 @@
 #include "types.h"
-int func_003D8A30();
+int Script_RegisterVariable();
 extern char D_00493890;
 extern char FlashDist;
 extern char FlashShortDist;
@@ -30,18 +30,18 @@ extern int D_00586128;
 extern int D_00586130;
 extern int D_00586138;
 void Flashlight_RegisterEngineVars(void) {
-    D_005860D0 = func_003D8A30("FlashDist", (int)&FlashDist, &D_00493890);
-    D_005860D8 = func_003D8A30("FlashShortDist", (int)&FlashShortDist, &D_00493890);
-    D_005860E0 = func_003D8A30("FlashHitRad", (int)&FlashHitRad, &D_00493890);
-    D_005860E8 = func_003D8A30("FlashAdjusty", (int)&FlashAdjusty, &D_00493890);
-    D_005860F0 = func_003D8A30("FlashMinOuter", (int)&FlashMinOuter, &D_00493890);
-    D_005860F8 = func_003D8A30("FlashMinInner", (int)&FlashMinInner, &D_00493890);
-    D_00586100 = func_003D8A30("FlashMaxOuter", (int)&FlashMaxOuter, &D_00493890);
-    D_00586108 = func_003D8A30("FlashMaxInner", (int)&FlashMaxInner, &D_00493890);
-    D_00586110 = func_003D8A30("FlashMinRG", (int)&FlashMinRG, &D_00493890);
-    D_00586118 = func_003D8A30("FlashMinB", (int)&FlashMinB, &D_00493890);
-    D_00586120 = func_003D8A30("FlashVel", (int)&FlashVel, &D_00493890);
-    D_00586128 = func_003D8A30("FlashAcc", (int)&FlashAcc, &D_00493890);
-    D_00586130 = func_003D8A30("FlashDazzleSize", (int)&FlashDazzleSize, &D_00493890);
-    D_00586138 = func_003D8A30("FlashSqueeze", (int)&FlashSqueeze, &D_00493890);
+    D_005860D0 = Script_RegisterVariable("FlashDist", (int)&FlashDist, &D_00493890);
+    D_005860D8 = Script_RegisterVariable("FlashShortDist", (int)&FlashShortDist, &D_00493890);
+    D_005860E0 = Script_RegisterVariable("FlashHitRad", (int)&FlashHitRad, &D_00493890);
+    D_005860E8 = Script_RegisterVariable("FlashAdjusty", (int)&FlashAdjusty, &D_00493890);
+    D_005860F0 = Script_RegisterVariable("FlashMinOuter", (int)&FlashMinOuter, &D_00493890);
+    D_005860F8 = Script_RegisterVariable("FlashMinInner", (int)&FlashMinInner, &D_00493890);
+    D_00586100 = Script_RegisterVariable("FlashMaxOuter", (int)&FlashMaxOuter, &D_00493890);
+    D_00586108 = Script_RegisterVariable("FlashMaxInner", (int)&FlashMaxInner, &D_00493890);
+    D_00586110 = Script_RegisterVariable("FlashMinRG", (int)&FlashMinRG, &D_00493890);
+    D_00586118 = Script_RegisterVariable("FlashMinB", (int)&FlashMinB, &D_00493890);
+    D_00586120 = Script_RegisterVariable("FlashVel", (int)&FlashVel, &D_00493890);
+    D_00586128 = Script_RegisterVariable("FlashAcc", (int)&FlashAcc, &D_00493890);
+    D_00586130 = Script_RegisterVariable("FlashDazzleSize", (int)&FlashDazzleSize, &D_00493890);
+    D_00586138 = Script_RegisterVariable("FlashSqueeze", (int)&FlashSqueeze, &D_00493890);
 }

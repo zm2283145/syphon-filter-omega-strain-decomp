@@ -10,10 +10,10 @@ float Vec4_GetZ(char* self) {
     return *(float*)(self + 8);
 }
 
-float func_00132260(char* self) {
+float Vec4_GetY(char* self) {
     return *(float*)(self + 4);
 }
 
-float func_00132270(char* self) {
+float Vec4_GetX(char* self) {
     return *(float*)(self + 0);
 }

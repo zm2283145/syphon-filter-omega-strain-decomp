@@ -3,7 +3,7 @@
 #define NULL 0
 #pragma mpwc_relax on
 int Script_Load(int, int, int);                       
-int func_003D7930(char *, int);                          
+int Script_PrintWarning(char *, int);                          
 int func_003E11C0(char *, int, char *, int);                          
 int func_003E12D0(char * , int);                     
 
@@ -13,7 +13,7 @@ int ScriptMgr_ReloadScript(char * arg0, int arg1) {
     int var_s0;
 
     temp_v0 = func_003E11C0(arg0, arg1, "so", 0);
-    func_003D7930("reloading %s...", temp_v0);
+    Script_PrintWarning("reloading %s...", temp_v0);
     var_s0 = 0;
     temp_v0_2 = func_003E12D0(arg0, temp_v0);
     if (temp_v0_2 != 0) {

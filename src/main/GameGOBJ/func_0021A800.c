@@ -12,7 +12,7 @@ Rec0C* func_0021A800(Rec0C* r) {
     return r;
 }
 
-Rec0C* func_0021A820(Rec0C* r, int a1, int a2, int a3) {
+Rec0C* SchedEvent_Init(Rec0C* r, int a1, int a2, int a3) {
     r->unk8 = D_004D9DE0;
     r->unk4 = a2;
     r->unk0 = a1;

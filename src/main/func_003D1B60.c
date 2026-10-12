@@ -12,7 +12,7 @@ extern VT3D1B60 D_004E0080;
 extern VT3D1B60 D_004E0060;
 extern M3D1B60* D_00539248;
 class C3D1B60 { public: int id; void* a; int b; int c; virtual void s0(); virtual void s1(); };
-extern "C" S3D1B60* func_003D1B60(S3D1B60* o, A3D1B60* a, int b, int c, int id) {
+extern "C" S3D1B60* Material_Animate(S3D1B60* o, A3D1B60* a, int b, int c, int id) {
     o->vt = &D_004E0080;
     o->id = id;
     o->a = a;

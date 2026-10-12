@@ -5,7 +5,7 @@ struct Ctl_6830 { VPAD16(a) VPAD2(b) VPAD1(c) virtual int IsPlayer(); };
 struct Hum_6830 { char pad[0x14]; unsigned char alive; char pad15[0x43]; Ctl_6830* ctl; char pad5c[0x33A8 - 0x5C]; float blind; };
 struct Msg_6830 { void* vt; char pad[0x1C]; unsigned char kind; char pad21[3]; int id; unsigned char sub; char pad29[3]; float v; };
 extern "C" {
-void func_00260990(void*, int, float, float, float, float);
+void ScreenFx_Start(void*, int, float, float, float, float);
 void Event_Construct(Msg_6830*, void*);
 void Event_Send(Msg_6830*, void*, int);
 void cMessage_dtor(Msg_6830*, int);
@@ -23,7 +23,7 @@ static inline unsigned char IsPlayer_6830(Hum_6830* h) { unsigned char r = 0; if
 extern "C" void Actor_ApplyBlind(Hum_6830* h, int silent, float v)
 {
     h->blind = v;
-    if (h->alive && IsPlayer_6830(h)) func_00260990(D_004FFC30, 1, 0.0f, D_0048A2C8, v, v);
+    if (h->alive && IsPlayer_6830(h)) ScreenFx_Start(D_004FFC30, 1, 0.0f, D_0048A2C8, v, v);
     if (D_005721C8 && !silent) {
         Msg_6830 m;
         Event_Construct(&m, D_0055D480);

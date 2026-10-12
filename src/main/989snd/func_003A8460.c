@@ -10,7 +10,7 @@ extern char D_00542850[];
 extern char D_004BCA30[];
 extern void func_00127358(char*);
 extern void String_Copy(char*, char*);
-extern void func_0010DA58(int*, char*);
+extern void SyncDCache(int*, char*);
 extern int func_00110720(char*);
 extern void func_003A85E0(void);
 extern void func_0010D3E0(int);
@@ -26,7 +26,7 @@ int snd_BankLoad(char* name, int arg) {
     D_0053DE80 = arg;
     String_Copy(D_0053DE84, name);
     D_005428C0 = -1;
-    func_0010DA58(&D_005428C0, D_005428C4);
+    SyncDCache(&D_005428C0, D_005428C4);
     while (func_00110720(D_00542850)) {
         if (!D_00542990) func_00127358(D_004BCA30);
         func_003A85E0();

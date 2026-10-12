@@ -12,7 +12,7 @@ typedef struct {
 typedef struct { unsigned char d[0x14]; } sceDmaEnv;
 
 extern DmaChan *D_00485EE0[10];
-extern int D_00498320[10];
+static int D_00498320[10] = { 1, 1, 1, 1, 1, 0, 0, 0, 1, 1 };
 extern void func_00103D08(void *, int);
 extern int func_00103E48(sceDmaEnv *);
 

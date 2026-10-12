@@ -24,7 +24,7 @@ extern char D_004DCF10[];
 extern void Event_Construct(InvMsg_h5* msg, void* name);
 extern void Event_Send(InvMsg_h5* msg, void* target, int flags);
 extern void cMessage_dtor(InvMsg_h5* msg, int flags);
-extern void func_00470E10(Inventory_h5* inv, InvPair_h5* pos, int n, InvPair_h5* val);
+extern void ItemInv_AppendPair(Inventory_h5* inv, InvPair_h5* pos, int n, InvPair_h5* val);
 #pragma opt_strength_reduction off
 void ItemInv_Add(Inventory_h5* inv, int item, int n, int silent)
 {
@@ -41,7 +41,7 @@ void ItemInv_Add(Inventory_h5* inv, int item, int n, int silent)
     }
     pair.item = item;
     pair.count = n;
-    func_00470E10(inv, &inv->data[inv->size], 1, &pair);
+    ItemInv_AppendPair(inv, &inv->data[inv->size], 1, &pair);
     if (D_005721C8 && !silent) {
         InvMsg_h5 msg;
         Event_Construct(&msg, D_00587FC0);

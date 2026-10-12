@@ -11,7 +11,7 @@ extern int func_001D8730(void);
 extern int func_001D8900(void);
 
 /* Rec24 constructor (+0x08 is left untouched). */
-Rec24* func_001D86D0(Rec24* r) {
+Rec24* Secondary_MotionRecordCtor(Rec24* r) {
     r->unk00 = 0;
     r->unk04 = 0;
     r->unk0C = 0.0f;

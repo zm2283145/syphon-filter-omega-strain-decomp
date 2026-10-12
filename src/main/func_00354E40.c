@@ -25,7 +25,8 @@ typedef struct {
 } O4E40;
 
 extern "C" {
-extern char* D_00492C48;
+extern char D_004BB088[];
+static char* D_00492C48 = D_004BB088;
 extern char D_004A7520[];
 extern char D_004FFB50[];
 extern const char* D_0048C160[];

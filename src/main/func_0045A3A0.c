@@ -30,7 +30,7 @@ extern void func_001C9670(void* svc, int v);
 extern char* func_003CBA90(char* key);
 extern int String_CompareNoCase(char* a, char* b);
 extern void* func_001698C0(void);
-extern void func_00165420(void* a, int mode);
+extern void Options_SetVideoMode(void* a, int mode);
 void func_0045A3A0(LightCfg_h5* cfg, unsigned int mask)
 {
     void* svc;
@@ -83,6 +83,6 @@ void func_0045A3A0(LightCfg_h5* cfg, unsigned int mask)
         int same = String_CompareNoCase(func_003CBA90("BOOT_VIDEOMODE"), "PAL") == 0;
         int mode;
         mode = cfg->alt == 0 ? (same ? 2 : 0) : 4;
-        func_00165420(func_001698C0(), mode);
+        Options_SetVideoMode(func_001698C0(), mode);
     }
 }

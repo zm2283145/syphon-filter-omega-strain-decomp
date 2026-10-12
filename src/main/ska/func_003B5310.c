@@ -7,7 +7,7 @@ typedef struct { int a; char name[1]; } File_5310;
 typedef struct { char pad[0x14]; char list[1]; } Self_5310;
 extern "C" {
 int func_0036DEF0(File_5310* f);
-int func_0036DE50(File_5310* f);
+int FileMan_GetSize(File_5310* f);
 int func_0036D990(File_5310* f, char** buf, int size);
 void func_0036DEC0(File_5310* f);
 void* Mem_Alloc(int a, int size, char* file, int line);
@@ -60,7 +60,7 @@ extern "C" void func_003B5310(Self_5310* self, File_5310* f)
     int size;
     int r;
     if (func_0036DEF0(f) & 0xFF) return;
-    size = func_0036DE50(f);
+    size = FileMan_GetSize(f);
     { char* p; { AllocGuard g; p = (char*)Mem_Alloc(0, size, &D_004BCD70, 0x1A3); } buf.p = p; }
     if (!buf.p) return;
     tmp = buf;

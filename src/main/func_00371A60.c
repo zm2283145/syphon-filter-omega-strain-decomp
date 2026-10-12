@@ -11,7 +11,7 @@ typedef struct {
 } E2Group;
 extern void func_003767E0(void*, int, int);
 extern unsigned char D_00535D62;
-void func_00371A60(E2Group* g) {
+void PntLight_Disable(E2Group* g) {
     int i;
     if (g->active && g->count) {
         for (i = 0; i < 16; i++) {

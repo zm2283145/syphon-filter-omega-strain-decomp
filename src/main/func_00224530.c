@@ -8,7 +8,7 @@ extern void __register_global_object(void* obj, void* dtor, void* link);
 extern void func_00224590(void);
 
 /* Returns the lazily constructed static collection. */
-void* func_00224530(void) {
+void* ActivationMgr_Get(void) {
     if (!D_004F7530) {
         ScalarCollection_Init(D_004F7548);
         __register_global_object(D_004F7548, func_00224590, D_004F7538);

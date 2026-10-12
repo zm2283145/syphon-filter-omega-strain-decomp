@@ -8,7 +8,7 @@ int Sphere_FromCenter(char *, char * , char * );
 int Transform_GetUpdated(int);                      
 int Vec4_Copy(char * , int);                           
 int Vec4_Scale(float, char *, char *);                        
-int func_001320F0(char *, char *, char *);                     
+int Vec4_Cross(char *, char *, char *);                     
 int func_00139BB0(char * , int);                         
 int func_001E1D00(char * , char *);                       
 float func_001E1D10(char * );                          
@@ -22,7 +22,7 @@ int func_001E1D80(int, unsigned short);
 
 /* Warning: Gap in callee-saved word stack region.
  * Saved: [0x0, 0x10, 0x14, 0x18, 0x1c, 0x20, 0x24, 0x28, 0x2c, 0x30, 0x34, 0x38, 0x3c, 0x40, 0x44, 0x48, 0x4c, 0x50, 0x54, 0x58, 0x5c, 0x60, 0x64, 0x68, 0x6c, 0x70, 0x74], gap at: 0x8. */
-void func_001E1B70(char * arg0, char * arg1, int arg2, int arg3, char * arg4) {
+void FloorContact_ReadTriFlags(char * arg0, char * arg1, int arg2, int arg3, char * arg4) {
     int spB0[4];
     int spA0[4];
     int sp90[4];
@@ -52,7 +52,7 @@ void func_001E1B70(char * arg0, char * arg1, int arg2, int arg3, char * arg4) {
     func_001E1D20(arg0 + 0x60, arg2, temp_s1);
     Sphere_FromCenter(spB0, arg0 + 0x10, arg0);
     Sphere_FromCenter(spA0, arg0 + 0x20, arg0);
-    func_001320F0(sp80, spB0, spA0);
+    Vec4_Cross(sp80, spB0, spA0);
     Vec4_Scale(func_001E1D10(arg0), sp90, sp80);
     func_001E1D00(arg0, sp90);
 }

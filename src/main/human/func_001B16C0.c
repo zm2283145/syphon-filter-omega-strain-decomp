@@ -7,6 +7,6 @@
 #include "types.h"
 #include "human_types.h"
 
-int func_001B16C0(Actor* actor) {
+int Actor_IsArmed(Actor* actor) {
     return actor->unk3524->state != 6;
 }

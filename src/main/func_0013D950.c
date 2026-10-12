@@ -6,9 +6,9 @@ extern "C" {
 void func_0013B180(It_D950*, int);
 void func_0013B160(It_D950*, int);
 void func_0013D940(It_D950*, It_D950*);
-int func_0013E1B0(int);
+int World_DrawPass(int);
 }
-/* run func_0013E1B0 over every entry of the list (begin/end iterators) */
+/* run World_DrawPass over every entry of the list (begin/end iterators) */
 #pragma push
 #pragma opt_propagation off
 extern "C" void func_0013D950(int l)
@@ -31,7 +31,7 @@ extern "C" void func_0013D950(int l)
     /* the iterator lives in memory: every access reloads it (volatile view) */
 #define IT (((volatile It_D950*)&it)->n)
     while (IT != n) {
-        func_0013E1B0(IT->obj);
+        World_DrawPass(IT->obj);
         IT = IT->next;
     }
 #undef IT

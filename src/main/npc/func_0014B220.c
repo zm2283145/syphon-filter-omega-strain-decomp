@@ -35,7 +35,7 @@ static inline E2Npc* E2Get(E2Handle* h) {
     if ((E2NonNull(h->obj) ^ 1) == 0 && h->obj->serial != h->serial) ok = false;
     return ok ? h->obj : 0;
 }
-extern "C" int func_0014B220(void)
+extern "C" int NpcAi_CountThinking(void)
 {
     E2Node* e;
     E2Node* it;

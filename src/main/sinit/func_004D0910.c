@@ -1,6 +1,6 @@
 #include "types.h"
 typedef struct { char pad[0xC]; unsigned char ready; } Obj_4D0910;
-extern char D_004F8350[], D_004F8338[], D_004A8240[];
+extern char D_004F8350[], D_004F8338[];
 extern char func_00267360[];
 extern signed char D_004EA0C8;
 extern char* D_004EA0B0;
@@ -20,7 +20,7 @@ void func_004D0910(void)
         __register_global_object(o, func_00267360, D_004F8338);
     }
     if (!D_004EA0C8) {
-        D_004EA0B0 = D_004A8240;
+        D_004EA0B0 = "LOS Manager";
         D_004EA0C8 = 1;
     }
 }

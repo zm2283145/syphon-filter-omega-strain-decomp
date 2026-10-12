@@ -4,7 +4,7 @@ typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
 #pragma peephole off
 #pragma opt_propagation off
 #pragma opt_common_subs off
-V4 func_001BC280(V4 v) {
+V4 Quat_Conjugate(V4 v) {
     V4* p = &v;
     asm {
         

@@ -31,10 +31,10 @@ extern Tbl D_0055DDA0;
 extern char D_004FFB50[];
 extern char D_004DAE10[];
 extern void func_0041E3B0(Self*, float);
-extern Ent* func_003FB8D0(int);
+extern Ent* PlayerSlots_Get(int);
 extern void func_001B2E90(Ent*);
 extern void func_001B2D20(Ent*);
-extern int func_004067E0(void*);
+extern int Appearance_GetBodyKind(void*);
 extern void func_00391020(void*, int);
 extern void SoundRequest_Ctor(SoundRequest* req, int kind, void* name, int a, int b);
 extern void func_0020F190(SoundMsg* msg, SoundRequest* req, Ent* e);
@@ -56,7 +56,7 @@ extern "C" void func_002C03C0(Self* self, float dt) {
     func_0041E3B0(self, dt);
     if (!D_005721C8) return;
     for (i = 0; i < 4; i++) {
-        e = func_003FB8D0(i);
+        e = PlayerSlots_Get(i);
         if (!e) continue;
         if (!e->b14) func_001B2E90(e);
         func_001B2D20(e);
@@ -72,7 +72,7 @@ extern "C" void func_002C03C0(Self* self, float dt) {
         if (D_00506518[i]) continue;
         D_00506518[i] = 1;
         if (self->x80) {
-            int a = D_0055DDA0.t[func_004067E0(e->xA0)][i];
+            int a = D_0055DDA0.t[Appearance_GetBodyKind(e->xA0)][i];
             if (a) func_00391020(e->x60, a);
         }
         if (i != 0) {

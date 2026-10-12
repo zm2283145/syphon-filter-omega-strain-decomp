@@ -6,7 +6,7 @@ extern int NodeNameMap_Find(void* owner);
 extern Item** Registry_At(void* table, int key);
 
 /* Looks up the owner's item; returns it unless it is disabled (then 0). */
-Item* func_00190F50(Holder* self)
+Item* ModelCtx_FindNodeByName(Holder* self)
 {
     char* owner = self->owner;
     Item* item = *Registry_At(owner + 0x34, NodeNameMap_Find(owner));

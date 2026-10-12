@@ -14,7 +14,7 @@ typedef struct {
     Container* list;
 } Npc14F;
 
-extern void func_0015B860(int* out, Container* self, int* value, int** where);
+extern void LookSlot_Release(int* out, Container* self, int* value, int** where);
 
 /* Sets a new request if its priority is at least the current one, clearing the pending list. */
 void func_0014F2E0(Npc14F* self, unsigned char a, unsigned char b, int priority)
@@ -27,7 +27,7 @@ void func_0014F2E0(Npc14F* self, unsigned char a, unsigned char b, int priority)
             int result;
             where = &list->unk4;
             value = list->unk8;
-            func_0015B860(&result, list, &value, &where);
+            LookSlot_Release(&result, list, &value, &where);
         }
         self->unk15C = 0;
         self->a = a;

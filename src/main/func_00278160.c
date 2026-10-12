@@ -31,7 +31,7 @@ extern char D_004FFB50[];
 extern char D_004DAE30[];
 extern void WaterFx_PointSplash(void* fx, float a, float b);
 extern void SoundRequest_Ctor(SoundRequest* req, int kind, void* name, int a, int b);
-extern void func_0020F860(SoundMsg* msg, SoundRequest* req, Hit08* hit);
+extern void SoundPosRequest_Ctor(SoundMsg* msg, SoundRequest* req, Hit08* hit);
 extern void Event_Send(SoundMsg* msg, void* target, int flags);
 extern void func_0036E220(void* part, int flags);
 extern void cMessage_dtor(SoundMsg* msg, int flags);
@@ -43,7 +43,7 @@ void func_00278160(void* self, Hit08* hit, HitFlags* info) {
     if (info->flags & 0x80) {
         WaterFx_PointSplash(D_004FFC34, D_004A9098, hit->strength);
         SoundRequest_Ctor(&req, 1, "B_HIT_WATER", 0, 0);
-        func_0020F860(&msg, &req, hit);
+        SoundPosRequest_Ctor(&msg, &req, hit);
         msg.flag = 1;
         Event_Send(&msg, D_004FFB50, 1);
         msg.vtbl = D_004DAE30;

@@ -9,7 +9,7 @@ extern void cEnableMsg_v02();
 extern void cEnableMsg_v03();
 void * const D_004E0880[8] = { (void*)0x0, (void*)0x0, (void*)cEnableMsg_dtor, (void*)cEnableMsg_v01, (void*)cEnableMsg_v02, (void*)cEnableMsg_v03, (void*)0x0, (void*)0x0 };
 void func_003FF930(ToggleEventMsg* msg, int id);
-void func_0016FD00(ToggleSender* self)
+void Hotbox_Enable(ToggleSender* self)
 {
     if (D_005721C8) {
         ToggleEventMsg msg;

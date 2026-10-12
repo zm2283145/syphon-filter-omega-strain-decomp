@@ -2,7 +2,7 @@
 typedef struct { int top; int cur[2]; int dirty[2]; } Bits_18A0B0;
 static inline unsigned char Get_18A0B0(int* a, int bit) { return ((a[bit/32] >> (bit&31)) & 1) != 0; }
 static inline void Set_18A0B0(int* a, int bit) { a[bit/32] |= 1 << (bit&31); }
-void func_0018A0B0(Bits_18A0B0* b, int bit)
+void ActionPriority_Reset(Bits_18A0B0* b, int bit)
 {
     int old[2];
     int i;

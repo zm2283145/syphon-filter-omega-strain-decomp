@@ -11,9 +11,9 @@ typedef struct {
     unsigned int rbmsk;
 } sceDmaEnv;
 
-extern unsigned char D_00498348[];
-extern unsigned char D_00498358[];
-extern unsigned char D_00498368[];
+static unsigned char D_00498348[10] = { 0, 0, 0, 3, 0, 1, 0, 0, 2, 0 };
+static unsigned char D_00498358[10] = { 0, 1, 2, 0, 0, 0, 3, 0, 0, 0 };
+static unsigned char D_00498368[10] = { 0, 2, 3, 0, 0, 0, 0, 0, 0, 0 };
 extern sceDmaEnv D_004E1DB8;
 
 #define D_CTRL ((volatile unsigned int *)0x1000E000)

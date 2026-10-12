@@ -5,7 +5,7 @@
 /*fc*/
 char * ObjRegistry_Find();                           
 
-char * func_0040C080(int arg0) {
+char * IdMgr_IsOccupied(int arg0) {
     char *var_v1;
     char * temp_v0;
 

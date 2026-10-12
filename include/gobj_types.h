@@ -19,7 +19,7 @@ typedef union ScriptArg {
 
 /*
  * Base world object (cGOBJ). Constructor cGOBJ_ctor (0x003CF0E0) runs the
- * parent constructor func_003CB090 and then initializes +0x2C..+0x5C.
+ * parent constructor Object_ConstructBase and then initializes +0x2C..+0x5C.
  * Total size unknown (at least 0x60).
  */
 typedef struct cGOBJ {
@@ -145,7 +145,7 @@ typedef struct IntFloatVec {
     IntFloat* data;
 } IntFloatVec;
 
-/* Small record initialized by func_0021A800 / func_0021A820 (0x0C bytes). */
+/* Small record initialized by func_0021A800 / SchedEvent_Init (0x0C bytes). */
 typedef struct Rec0C {
     int unk0;                  /* 0x0 */
     signed char unk4;          /* 0x4 (func_0021A800 writes -2 as a word over 0x4..0x7) */

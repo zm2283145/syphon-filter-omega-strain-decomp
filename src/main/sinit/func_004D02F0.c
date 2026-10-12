@@ -36,10 +36,10 @@ extern float D_004A7E64;
 extern float D_004A7E68;
 extern float D_004A7E6C;
 extern int D_004F80C0, D_004F80C8, D_004F80D0, D_004F80D8, D_004F80E0;
-extern char D_004A8000[], D_0048B030[], D_004A8020[], D_0048B070[], D_00493880[], D_00493890[], D_004A8038[], D_004A8048[], D_004A8058[];
+extern char D_0048B030[], D_0048B070[], D_00493880[], D_00493890[];
 extern char Script_setFxMode[], Script_setFxFlair[], Script_setFxLightDist[];
 extern int func_003D8F60(void* a, void* b, int n);
-extern int func_003D8740(void* fn, void* name, void* desc, int n, ...);
+extern int Script_RegisterNative_2(void* fn, void* name, void* desc, int n, ...);
 void func_004D02F0(void)
 {
     D_004A7DE0 = 1.0f;
@@ -78,9 +78,9 @@ void func_004D02F0(void)
     D_004A7E64 = 0.6499999761581421f;
     D_004A7E68 = 0.10999999940395355f;
     D_004A7E6C = 0.10000000149011612f;
-    D_004F80C0 = func_003D8F60(D_004A8000, D_0048B030, 5);
-    D_004F80C8 = func_003D8F60(D_004A8020, D_0048B070, 4);
-    D_004F80D0 = func_003D8740(Script_setFxMode, D_00493880, D_004A8038, 1, &D_004F80C0);
-    D_004F80D8 = func_003D8740(Script_setFxFlair, D_00493880, D_004A8048, 4, &D_004F80C8, D_00493890, D_00493890, D_00493890);
-    D_004F80E0 = func_003D8740(Script_setFxLightDist, D_00493880, D_004A8058, 2, &D_004F80C0, D_00493890);
+    D_004F80C0 = func_003D8F60("cVisionFxMan::eMode", D_0048B030, 5);
+    D_004F80C8 = func_003D8F60("cVisionFxMan::eFlair", D_0048B070, 4);
+    D_004F80D0 = Script_RegisterNative_2(Script_setFxMode, D_00493880, "setFxMode", 1, &D_004F80C0);
+    D_004F80D8 = Script_RegisterNative_2(Script_setFxFlair, D_00493880, "setFxFlair", 4, &D_004F80C8, D_00493890, D_00493890, D_00493890);
+    D_004F80E0 = Script_RegisterNative_2(Script_setFxLightDist, D_00493880, "setFxLightDist", 2, &D_004F80C0, D_00493890);
 }

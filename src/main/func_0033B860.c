@@ -4,7 +4,6 @@
 
 struct V33B860 { unsigned int cap; unsigned int count; char* data; };
 extern "C" {
-extern char D_004B9340[];
 extern char D_004B98B8[];
 }
 static inline void Cp33B860(char* d, const char* f, const char* l) { memcpy(d, f, l - f); }
@@ -13,7 +12,7 @@ extern "C" void func_0033B860(V33B860* v, char* first, char* last)
 {
     v->count = v->cap = last - first;
     if (v->count > 0x6000000) {
-        func_00123BE8(D_00489738->stream, D_004B9340);
+        func_00123BE8(D_00489738->stream, "vector length error\n");
         func_00121B60();
     }
     if (v->count) {

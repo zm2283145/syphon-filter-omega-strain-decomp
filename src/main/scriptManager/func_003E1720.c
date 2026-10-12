@@ -8,7 +8,7 @@ char * Mem_Alloc(int, int, char *, int);
 int Script_Load(char * , int, int);                  
 int func_001C07C0(char * );                            
 int func_003983E0(char * );                            
-int func_003D7930(char *, int);                          
+int Script_PrintWarning(char *, int);                          
 int func_003D8E30(char * );                            
 int func_003E11C0(char * , int, char *, int);               
 int func_003E12D0();                                
@@ -54,7 +54,7 @@ int ScriptMgr_LoadScript(char * arg0, int arg1, int arg2) {
         sp5C = temp_s2;
         var_s2 = Script_Load(temp_s2, F_(arg0, 0x4E90, int), temp_s0);
         func_003E1900(arg0 + 0xC, &sp5C);
-        if (var_s2) func_003D7930("loaded %s...", temp_s0); else func_003D7930("couldn't load script %s...", temp_s0);
+        if (var_s2) Script_PrintWarning("loaded %s...", temp_s0); else Script_PrintWarning("couldn't load script %s...", temp_s0);
     }
     return var_s2;
 }

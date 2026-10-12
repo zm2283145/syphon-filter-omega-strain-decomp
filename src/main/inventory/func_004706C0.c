@@ -30,7 +30,7 @@ extern char D_004DCF10[];
 extern void Event_Construct(InvMsg_h5* msg, void* name);
 extern void Event_Send(InvMsg_h5* msg, void* target, int flags);
 extern void cMessage_dtor(InvMsg_h5* msg, int flags);
-extern void func_00470E10(Inventory_h5* inv, InvPair_h5* pos, int n, InvPair_h5* val);
+extern void ItemInv_AppendPair(Inventory_h5* inv, InvPair_h5* pos, int n, InvPair_h5* val);
 #pragma opt_strength_reduction off
 int ItemInv_Remove(Inventory_h5* inv, int item, int n, int silent)
 {

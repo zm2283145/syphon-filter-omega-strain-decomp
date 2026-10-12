@@ -12,18 +12,18 @@ extern int D_0055D4F8;
 extern void func_0036D630(Msg*);
 extern void sprintf(Text*, void*, int, int);
 extern void Hog_Load(Msg*, Text*, int, int);
-extern void func_00407830(void*, Msg*);
+extern void SklRegistry_AddArchive(void*, Msg*);
 extern void func_0036CD80(Msg*);
 extern void func_0036D5D0(Msg*, int);
 
 /* Formats a message from (a, b) and posts it to the D_0055D4F8 queue. */
-void func_00407D10(int a, int b) {
+void SklRegistry_LoadMission(int a, int b) {
     Msg msg;
     Text text;
     func_0036D630(&msg);
     sprintf(&text, ((int*)"%s\\%s\\SKL.HOG"), a, b);
     Hog_Load(&msg, &text, 0, 0);
-    func_00407830(&D_0055D4F8, &msg);
+    SklRegistry_AddArchive(&D_0055D4F8, &msg);
     func_0036CD80(&msg);
     func_0036D5D0(&msg, -1);
 }

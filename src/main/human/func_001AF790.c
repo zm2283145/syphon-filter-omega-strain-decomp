@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void* func_001AF790(char* self) {
+void* SkelNode_GetBoundSphere(char* self) {
     return self + 336;
 }

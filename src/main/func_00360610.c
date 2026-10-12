@@ -22,8 +22,6 @@ extern void func_00406EC0(Blk*, char*);
 extern void Skl_Load(void*, char*, char*);
 extern void func_00361000(char*);
 extern char D_004BB868[];
-extern char D_004BB870[];
-extern char D_004BB890[];
 extern char D_004FFB50[];
 extern char D_0055DDA0[];
 extern C16 D_0055D510;
@@ -106,7 +104,7 @@ void func_00360610(char* self, int* arg1, Msg* arg2) {
         memset(p, 0, 0x440);
         func_00406EC0(p, buf);
     } else {
-        Skl_Load(D_0055DDA0, D_004BB870, D_004BB890);
+        Skl_Load(D_0055DDA0, "GAMEDATA\\FRONTEND\\MALE.SKL", "GAMEDATA\\FRONTEND\\FEMALE.SKL");
         p = (Blk*)(F_(self, 0x120, char*) + 0xA0);
         p->a = D_0055D510;
         p->b = D_0055D520;

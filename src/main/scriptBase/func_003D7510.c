@@ -3,7 +3,7 @@
 #define NULL 0
 #pragma mpwc_relax on
 int *ScriptEnum_GetById();                          
-int *func_003D7590(int);                            
+int *ScriptType_GetRecord(int);                            
 extern char D_004BD378[];
 extern char D_004BD380[];
 extern char D_004BD388[];
@@ -26,5 +26,5 @@ int func_003D7510(int arg0) {
     if (var_a0 >= 0x13EC) {
         var_a0 -= 0x1388;
     }
-    return *func_003D7590(var_a0);
+    return *ScriptType_GetRecord(var_a0);
 }

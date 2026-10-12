@@ -1,6 +1,6 @@
 typedef struct _Bigint { struct _Bigint *_next; int _k, _maxwds, _sign, _wds; unsigned long _x[1]; } _Bigint;
 struct _reent126918 { char pad[0x48]; _Bigint *_p5s; };
-extern const int D_00499E24[];
+static const int p05[3] = { 5, 25, 125 };
 extern _Bigint *func_00126358(struct _reent126918 *, _Bigint *, int, int);
 /* weak discarded stub: models callee defined in the same retail file (affects delay-slot filling) */
 _Bigint * __attribute__((weak, section(".dtors_drop"))) func_001266D0(struct _reent126918 *p, int i) { return 0; }
@@ -11,7 +11,7 @@ _Bigint *func_00126918(struct _reent126918 *ptr, _Bigint *b, int k)
     _Bigint *b1, *p5, *p51;
     int i;
     if ((i = k & 3) != 0)
-        b = func_00126358(ptr, b, D_00499E24[i], 0);
+        b = func_00126358(ptr, b, p05[i - 1], 0);
     if (!(k >>= 2))
         return b;
     if (!(p5 = ptr->_p5s)) {

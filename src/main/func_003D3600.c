@@ -12,7 +12,7 @@ char* func_003D3600(char** self) {
     return self[1] + 8;
 }
 
-void func_003D3610(Unk3D3670* self, float value) {
+void Renderer_SetAspect(Unk3D3670* self, float value) {
     self->unkF94 = value;
 }
 
@@ -40,7 +40,7 @@ L4Entry110* func_003D3670(Unk3D3670* self) {
 }
 
 /* Advances to the next entry and marks it in use. */
-void func_003D3690(int a0) {
+void Renderer_PushCameraState(int a0) {
     int tmp0;
     int tmp1;
 

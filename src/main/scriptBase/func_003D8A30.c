@@ -20,7 +20,7 @@ extern int D_00554F18;
 
 #pragma push
 #pragma opt_propagation off
-int func_003D8A30(char * arg0, int arg1, int arg2) {
+int Script_RegisterVariable(char * arg0, int arg1, int arg2) {
     int temp_v1;
     char * temp_s2;
     int sp60[67];

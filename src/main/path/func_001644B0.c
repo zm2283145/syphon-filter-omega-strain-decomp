@@ -23,7 +23,7 @@ static inline int* set16(char *t, int *pv) { F_(t, 0x4, int) = *pv; return pv;}
 static inline void push16(char *arg0, char **pp, char *t) { PathList_PushBack(arg0 + 0x2C, pp, set16(t, Identity((int*)&Id(-1)))); }
 #pragma push
 #pragma opt_propagation off
-extern "C" void func_001644B0(char *arg0) {
+extern "C" void NpcRouteMgr_AllocRequestPool(char *arg0) {
     char *sp6C;
     int var_s2;
     char *temp_v1;

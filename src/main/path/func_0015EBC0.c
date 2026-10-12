@@ -55,14 +55,14 @@ void cMessage_dtor(void* msg, int flags);
 Pt1NsReq* NpcRoute_IsQueued(Pt1NsRouter* r, Pt1NsActor* a, int kind);
 void func_0015EF80(Pt1NsIt* it, void* queue);
 void func_0015EF70(Pt1NsIt* it);
-Pt1NsResult* func_0015F780(Pt1NsRouter* r, Pt1NsActor* a, int kind, Pt1NsV4* from, Pt1NsV4* to, int mask, Pt1NsArea* area);
-Pt1NsReq* func_001642E0(Pt1NsRouter* r);
-int func_00164120(Pt1NsRouter* r, Pt1NsReq* req);
+Pt1NsResult* NpcRoute_NodeSearchCached(Pt1NsRouter* r, Pt1NsActor* a, int kind, Pt1NsV4* from, Pt1NsV4* to, int mask, Pt1NsArea* area);
+Pt1NsReq* NpcRouteMgr_TakeFreeRequest(Pt1NsRouter* r);
+int NpcRouteMgr_QueueRequest(Pt1NsRouter* r, Pt1NsReq* req);
 }
 
 /* empty then-arm kept as its own block (barrier, emits nothing) */
 static inline Pt1NsActor* Pt1Ns_Root(Pt1NsActor* a) { if (!a->owner) asm { .set reorder } else a = a->owner; return a; }
-static inline unsigned char Pt1Ns_Submit(Pt1NsRouter* r, Pt1NsReq* req) { return func_00164120(r, req); }
+static inline unsigned char Pt1Ns_Submit(Pt1NsRouter* r, Pt1NsReq* req) { return NpcRouteMgr_QueueRequest(r, req); }
 #pragma push
 #pragma opt_propagation off
 extern "C" unsigned char NpcRoute_NodeSearch(Pt1NsRouter* r, Pt1NsActor* actor, Pt1NsArea* area, Pt1NsV4* from, Pt1NsV4* to, int route, int mask, float maxDist, signed char mode, int extra)
@@ -77,7 +77,7 @@ extern "C" unsigned char NpcRoute_NodeSearch(Pt1NsRouter* r, Pt1NsActor* actor, 
             func_0015EF80(&it, r->queue);
             func_0015EF70(&it);
         } else {
-            Pt1NsResult* res = func_0015F780(r, actor, 2, from, to, mask, area);
+            Pt1NsResult* res = NpcRoute_NodeSearchCached(r, actor, 2, from, to, mask, area);
             if (res) {
                 if (res->node >= 0) {
                     Pt1NsMsg m;
@@ -110,7 +110,7 @@ extern "C" unsigned char NpcRoute_NodeSearch(Pt1NsRouter* r, Pt1NsActor* actor, 
                 }
                 return 1;
             }
-            req = func_001642E0(r);
+            req = NpcRouteMgr_TakeFreeRequest(r);
             req->dirty = 1;
             req->reported = 0;
             req->state = 2;

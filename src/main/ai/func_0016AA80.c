@@ -9,7 +9,7 @@ extern unsigned char D_005723C8;
 extern char D_0049C650[];
 void Mem_Free(int pool, void* p, char* file, int line);
 }
-extern "C" void func_0016AA80(void)
+extern "C" void TeamRelations_Teardown(void)
 {
     void* p = D_004EE620;
     if (p && !D_004EE628) {

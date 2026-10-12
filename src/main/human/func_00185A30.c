@@ -7,7 +7,7 @@ class T_5A { public: VPAD16(p) VPAD2(q) virtual void v18(); virtual void v19(); 
     char pad4[0xC]; char sub10[0x40]; unsigned char b50; };
 typedef struct { char pad0[8]; int id; char padC[4]; } Slot_5A;
 typedef struct { Slot_5A slots[8]; char pad80[4]; unsigned char cur; } Weap_5A;
-typedef struct { short ids[4]; float f; } Ids_5A;
+typedef struct { short ids[4]; int f; } Ids_5A;
 typedef struct { char pad0[0x40]; char m40[0x40]; } Sub_5A;
 typedef struct {
     char pad0[0xC]; int iC; int i10; char pad14[0x18];
@@ -16,7 +16,7 @@ typedef struct {
     Sub_5A sub60; char padE0[0x3318 - 0xE0]; char m3318[0x3524 - 0x3318]; Weap_5A* weapons;
     char pad3528[0x3590 - 0x3528]; unsigned char b3590;
 } O_5A;
-extern Ids_5A D_0048A2F8;
+static const Ids_5A D_0048A2F8 = { { -1, -1, -1, -1 }, -1 };
 static inline bool Ready_5A(O_5A* o) { return o->b2D && o->b2C && !o->b2E; }
 extern "C" void func_002C72A0(int a, int b, int c, void* d, void* e, Ids_5A* ids, int f);
 extern "C" void func_002C7110(int a, int b, int c, void* d, void* e, Ids_5A* ids, unsigned char r, unsigned char g, int f);

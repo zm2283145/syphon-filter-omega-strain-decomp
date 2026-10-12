@@ -4,7 +4,7 @@ extern void func_0036E5D0(void*);
 extern void func_0036E140(void*, void*, int, int);
 extern int func_00380A40(E2List*, void*);
 extern void func_0036E220(void*, int);
-int func_00381000(E2List* s) {
+int TexCache_LoadErrorTexture(E2List* s) {
     char buf[0xA0];
     int r;
     func_0036E5D0(buf);

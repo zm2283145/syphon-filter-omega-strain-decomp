@@ -17,7 +17,7 @@ for line in (ROOT / "config" / "symbol_addrs.txt").read_text().splitlines():
 changed = 0
 for p in list((ROOT / "src").rglob("*.c")) + list((ROOT / "include").rglob("*.h")):
     text = p.read_text()
-    new = re.sub(r"\bfunc_[0-9A-F]{8}\b", lambda m: names.get(m.group(0), m.group(0)), text)
+    new = re.sub(r"\bfunc_[0-9A-F]{8}(?=\b|_)", lambda m: names.get(m.group(0), m.group(0)), text)
     if new != text:
         p.write_text(new)
         changed += 1

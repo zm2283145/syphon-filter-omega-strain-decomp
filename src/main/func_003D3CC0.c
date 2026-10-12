@@ -19,7 +19,7 @@ typedef struct E3ShMgr {
 } E3ShMgr;
 
 /* Selects the shadow receiver record whose key matches. */
-void func_003D3CC0(E3ShMgr* m, int key)
+void Shadow_SelectReceiver(E3ShMgr* m, int key)
 {
     int i;
     m->sel = 0;

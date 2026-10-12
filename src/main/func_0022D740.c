@@ -25,7 +25,7 @@ struct Pred22D740 {
 
 extern "C" {
 bool func_0022D820(Pred22D740* self, Handle22D740* x, Handle22D740* y);
-void func_00177F60(Node22D740** result, List22D740* list, Node22D740** first, Node22D740** last);
+void Player_ClearRecentTargets(Node22D740** result, List22D740* list, Node22D740** first, Node22D740** last);
 }
 
 #pragma push
@@ -51,7 +51,7 @@ extern "C" void TargetVis_LeaveRecent(List22D740* self, Pred22D740 pred) {
                 Node22D740* last;
                 last = j;
                 first = i;
-                func_00177F60(&result, self, &first, &last);
+                Player_ClearRecentTargets(&result, self, &first, &last);
                 i = result;
                 if (result == end) {
                     break;

@@ -5,17 +5,17 @@ typedef struct {
     char pad3[0x1C4 - 0xEC]; unsigned char f1C4; unsigned char f1C5; unsigned char f1C6;
 } G1Ob;
 extern int* Event_GetType(G1Ev*);
-extern int func_003CACA0(G1Ob*, G1Ev*);
+extern int Object_BroadcastToChildren(G1Ob*, G1Ev*);
 extern int World_UpdateFrame(G1Ob*);
 extern void func_0012EEE0(G1Ob*, int, int);
 extern void ActorFader_Start(void*, int, float);
 extern int D_005436B0;
 extern int D_004F5398;
 extern unsigned char D_005721C8;
-int func_00136A90(G1Ob* o, G1Ev* e)
+int World_HandleMessage(G1Ob* o, G1Ev* e)
 {
     int t;
-    int handled = (unsigned char)func_003CACA0(o, e);
+    int handled = (unsigned char)Object_BroadcastToChildren(o, e);
     t = *Event_GetType(e);
     if (t == D_005436B0) {
         return World_UpdateFrame(o) != 0 || handled != 0;

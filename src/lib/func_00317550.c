@@ -1,4 +1,8 @@
-extern float D_004B36F0[];
+/* hex literals: this compiler's decimal float parsing is not exact */
+static const float D_004B36F0[12] = {
+    0x1.46c5e2p+1f, 4.0f, 0x1.4f8768p+2f, 0x1.8c8db8p+2f, 0x1.b2ea5ep+2f, 7.0f,
+    0x1.b2ea5ep+2f, 0x1.8c8dc2p+2f, 0x1.4f8768p+2f, 4.0f, 0x1.46c5e2p+1f, 1.0f,
+};
 extern float D_004E1CC0;
 extern const float D_004E1BB8;
 extern const float D_004E1C30;

@@ -1,7 +1,7 @@
 #include "types.h"
 typedef struct { char pad[0xC]; int idC; int id10; char pad14[0x7C]; int f90; } Obj_0360;
 int NetMap_BindReceiver(int, int, Obj_0360*);
-Obj_0360* func_00170E20(int, int, int, int);
+Obj_0360* Hotbox_CreateRuntime(int, int, int, int);
 int func_002EBAF8(int*, int);
 int func_002EBBA0(int, int*);
 extern int D_00494178;
@@ -35,7 +35,7 @@ static inline int NetId_0360(void)
 }
 void func_00170360(int arg0, int* arg1)
 {
-    Obj_0360* o = func_00170E20(D_004FFBD0, arg0, 1, 0);
+    Obj_0360* o = Hotbox_CreateRuntime(D_004FFBD0, arg0, 1, 0);
     o->idC = *arg1;
     o->id10 = *arg1;
     if (D_005721C8) {

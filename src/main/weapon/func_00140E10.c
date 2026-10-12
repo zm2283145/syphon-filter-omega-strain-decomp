@@ -34,11 +34,11 @@ Mtx44* Mtx44_SetRotation(Mtx44* m, float a, float b, float c, float d, float e, 
     return m;
 }
 
-int func_00140E70(float f12) {
+int Math_SinThunk(float f12) {
     return Math_Sin(f12);
 }
 
-int func_00140E80(float f12) {
+int Math_CosThunk(float f12) {
     return Math_Cos(f12);
 }
 

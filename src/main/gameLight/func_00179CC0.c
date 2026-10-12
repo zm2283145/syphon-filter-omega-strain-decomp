@@ -10,7 +10,7 @@ extern LightFn_e1 D_004D9280[];
 extern char D_00535D62;
 extern char D_00535D20[];
 extern "C" void LightMgr_RemoveFromTable(void*, Light_e1*);
-extern "C" Light_e1* func_00179CC0(Light_e1* self, short reg)
+extern "C" Light_e1* DirLight_Destruct(Light_e1* self, short reg)
 {
     if (self != 0) {
         self->vt = D_004DA070;

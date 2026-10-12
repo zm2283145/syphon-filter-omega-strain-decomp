@@ -13,7 +13,7 @@ extern void Event_Construct(PosMsg* msg, void* name);
 extern int func_00184470(PosMsg* msg);
 extern Vec4* func_00133EC0(void* xform);
 extern void func_0015A400(Vec4* out, Vec4* v);
-extern void func_0014B1E0(Vec4* out, Vec4* v);
+extern void Vec4_CopyAsPoint(Vec4* out, Vec4* v);
 extern void func_0014B160(void* dst, void* basis, Vec4* pos);
 extern void Event_Send(PosMsg* msg, void* target, int flags);
 extern void cMessage_dtor(PosMsg* msg, int flags);
@@ -33,7 +33,7 @@ void func_00184480(void* target, void* xform)
         func_0015A400(&dir, func_00133EC0(xform));
         pos = &dir;
     } else {
-        func_0014B1E0(&point, func_00133EC0(xform));
+        Vec4_CopyAsPoint(&point, func_00133EC0(xform));
         pos = &point;
     }
     func_0014B160(m->xform, xform, pos);

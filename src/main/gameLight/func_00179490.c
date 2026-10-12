@@ -6,6 +6,6 @@
 #include "types.h"
 #include "gameLight_types.h"
 
-void func_00179490(GameLightParams* self, int value) {
+void Light_SetId(GameLightParams* self, int value) {
     self->unk08 = value;
 }

@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-int* func_0019F7C0(int* dst, int* src) {
+int* Actor_ShiftBitsHistory(int* dst, int* src) {
     dst[0] = src[0];
     dst[1] = src[1];
     return dst;

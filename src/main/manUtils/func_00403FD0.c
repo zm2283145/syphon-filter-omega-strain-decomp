@@ -15,7 +15,7 @@ static inline int kfd0eq(__int128 a, __int128 b) {
     }
     return r == -1;
 }
-unsigned int func_00403FD0(KFD0* s, __int128 key) {
+unsigned int TexCache_FindOrAddSlot(KFD0* s, __int128 key) {
     unsigned int i;
     for (i = 0; i < s->count; i++) {
         if (kfd0eq(kfd0and(s->mask, s->keys[i]), kfd0and(s->mask, key)))

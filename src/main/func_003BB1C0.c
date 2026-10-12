@@ -4,7 +4,7 @@ extern void* D_00539248;
 extern void String_Copy(char* dst, char* src);
 extern void func_00128F58(char* dst, char* src);
 extern int func_00380DB0(void* mgr, char* name, int w, int h, int fmt);
-void func_003BB1C0(F1RT3BB* rt, char* name, int w, int h, int fmt, int depth)
+void RenderTarget_Create(F1RT3BB* rt, char* name, int w, int h, int fmt, int depth)
 {
     char cname[0x40];
     char dname[0x40];

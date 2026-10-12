@@ -11,7 +11,7 @@ struct Pt1TvReg {
     char list[4];
     char sentinel[4];
 };
-extern "C" void func_00222980(Pt1TvIt* out, void* list, Pt1TvIt* pos, Pt1TvHandle* h);
+extern "C" void WeakHandleList_Append(Pt1TvIt* out, void* list, Pt1TvIt* pos, Pt1TvHandle* h);
 extern "C" int TargetVis_Register(Pt1TvReg* r, Pt1TvActor* a)
 {
     for (int i = 0; i < 30; i++)
@@ -28,7 +28,7 @@ extern "C" int TargetVis_Register(Pt1TvReg* r, Pt1TvActor* a)
             h.target = a;
             h.serial = *(a ? &a->serial : (none = -1, &none));
             pos.p = r->sentinel;
-            func_00222980(&res, r->list, &pos, &h);
+            WeakHandleList_Append(&res, r->list, &pos, &h);
             return 1;
         }
     }

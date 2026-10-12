@@ -15,7 +15,7 @@ extern void* D_004D9280[];
 extern unsigned char D_00535D62;
 extern int D_00535D20;
 extern void LightMgr_RemoveFromTable(void* pool, void* p);
-E7Light* func_00144A60(E7Light* p, short flag) {
+E7Light* Light_Destruct(E7Light* p, short flag) {
     if (p) {
         p->vt = D_004D9200;
         if (p) {

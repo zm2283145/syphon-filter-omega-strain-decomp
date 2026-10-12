@@ -2,7 +2,6 @@
 typedef struct { unsigned char cmd; unsigned char arg; } ReqDE60;
 typedef struct { unsigned int idx; int pad; ReqDE60 q[512]; } RingDE60;
 extern int D_004E2400;
-extern char D_004988F0[];
 extern int func_0010D1A0(int);
 extern int func_0010D090(int);
 extern int func_0010D010(int);
@@ -26,7 +25,7 @@ void func_0010DE60(RingDE60 *r)
             func_0010D0D0(r->q[i].arg);
             break;
         default:
-            func_0010F350(D_004988F0);
+            func_0010F350("## internel error in libkernl.a!\n");
             break;
         }
     }

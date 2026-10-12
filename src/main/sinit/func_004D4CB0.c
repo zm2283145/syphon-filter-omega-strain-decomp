@@ -1,6 +1,7 @@
 #include "types.h"
 extern char D_004BAF80[];
-extern char D_004DF000[];
+extern void func_00354490();
+static void* D_004DF000[] = { 0, 0, (void*)func_00354490 };
 extern char D_00533548[];
 extern char D_00533550[];
 extern void FreeList_Push();

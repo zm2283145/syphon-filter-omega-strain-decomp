@@ -6,8 +6,8 @@ class O_1B3960 { public: VPAD16(a) VPAD4(b) VPAD2(c) virtual void Kill(int f); c
 extern "C" {
 extern unsigned char D_005721C8;
 extern unsigned char D_005721C0;
-P_1B3960* func_003FB8D0(int i);
-int func_003FB340(int h);
+P_1B3960* PlayerSlots_Get(int i);
+int Player_GetIndex(int h);
 void cNPC_Deactivate(void* npc, P_1B3960* p);
 }
 static inline int Net_1B3960(void) { return D_005721C8 ? D_005721C0 : 1; }
@@ -19,8 +19,8 @@ extern "C" void func_001B3960(O_1B3960* self, int id)
         if (Net_1B3960()) {
             int i;
             for (i = 0; i < 4; i++) {
-                P_1B3960* p = func_003FB8D0(i);
-                if (p && func_003FB340(p->h) == id) { found = p; break; }
+                P_1B3960* p = PlayerSlots_Get(i);
+                if (p && Player_GetIndex(p->h) == id) { found = p; break; }
             }
         }
         Deact_1B3960(self->npc, found);

@@ -1,8 +1,8 @@
 #include "types.h"
 
-extern int func_003D9C80(void);
+extern int Group_FindByObject(void);
 
-/* Script native: returns whether func_003D9C80 result is not -1. */
+/* Script native: returns whether Group_FindByObject result is not -1. */
 int Script_IsGroupMember(void) {
-    return func_003D9C80() != -1;
+    return Group_FindByObject() != -1;
 }

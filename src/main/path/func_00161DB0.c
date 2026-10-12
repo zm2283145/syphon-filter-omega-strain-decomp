@@ -27,9 +27,9 @@ typedef struct Pt1RwSelf {
 extern void func_00162010(Pt1RwSelf* s, int id, int flag);
 extern void func_00161FA0(Pt1RwSelf* s, int id, int flag);
 extern Pt1RwNode* func_001647B0(void* list, Pt1RwNode* n);
-extern void func_00161BC0(Pt1RwSelf* s, int id, int mask);
+extern void NpcRoute_RequestLosChecks(Pt1RwSelf* s, int id, int mask);
 
-void func_00161DB0(Pt1RwSelf* s, unsigned char* flag)
+void NpcRoute_HandleLosResult(Pt1RwSelf* s, unsigned char* flag)
 {
     Pt1RwNode* cur = s->cur;
     int found = 0;
@@ -62,11 +62,11 @@ void func_00161DB0(Pt1RwSelf* s, unsigned char* flag)
         }
         if (s->reverse) {
             if (n->d < 0) {
-                func_00161BC0(s, n->b, ~s->mask);
+                NpcRoute_RequestLosChecks(s, n->b, ~s->mask);
                 found = 1;
             }
         } else if ((s->target < 0 || s->retry) && s->active && s->cur->c < 0) {
-            func_00161BC0(s, s->cur->a, s->mask);
+            NpcRoute_RequestLosChecks(s, s->cur->a, s->mask);
             found = 1;
         }
     } while (s->status != 2 && !found && s->active);

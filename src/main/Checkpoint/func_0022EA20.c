@@ -16,7 +16,7 @@ extern char D_004A6698;
 extern unsigned char D_00533880;
 }
 #pragma opt_common_subs off
-extern "C" void func_0022EA20(char * arg0, int arg1) {
+extern "C" void Checkpoint_SetLabel(char * arg0, int arg1) {
     int temp_s2;
     int temp_s2_2;
     int temp_s2_3;

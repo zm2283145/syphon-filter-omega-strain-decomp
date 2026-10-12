@@ -15,7 +15,7 @@ extern E2BB520 *func_002BB520(int);
 extern char D_004AC248[];
 extern int func_0010F388(const char *, ...);
 extern void *memcpy(void *, const void *, unsigned int);
-extern void func_0010DA58(void *, void *);
+extern void SyncDCache(void *, void *);
 int func_002BC620(int i, int a)
 {
     int l;
@@ -29,7 +29,7 @@ int func_002BC620(int i, int a)
     D_00518A40.x20 = a;
     l = 0x2080;
     memset(D_0051AAC0, 0, 0x100);
-    func_0010DA58(D_0051AAC0, D_0051AAC0 + 0xFF);
+    SyncDCache(D_0051AAC0, D_0051AAC0 + 0xFF);
     D_0048C09C = 9;
     while (sceDbcSendData3(D_00518A08[i].sock, D_0048C09C, &l, &D_00518A40, func_002BB660) != 1);
     return func_002BB520(D_00518A08[i].sock)->x8 != 0;

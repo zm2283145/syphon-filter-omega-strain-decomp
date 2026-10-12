@@ -4,7 +4,7 @@ extern "C" {
 extern char* D_005061D0;
 extern int D_004FFBD0;
 extern void Object_Register(void* o);
-extern void* func_00170E20(int a, void* o, int b, int c);
+extern void* Hotbox_CreateRuntime(int a, void* o, int b, int c);
 extern void func_00255F60(void* o);
 }
 struct VC_002536D0 { virtual int v0(); virtual int v1(); virtual int v2(); virtual int v3(); virtual int v4(); virtual int v5(); virtual int v6(); virtual int v7(); virtual int v8(); virtual int v9(); virtual int v10(); virtual int v11(); virtual int v12(); virtual int v13(); virtual int v14(); virtual int v15(); virtual int v16(); virtual int v17(); virtual int v18(); virtual int v19(); virtual int v20(); virtual void v21(int a); };
@@ -43,7 +43,7 @@ extern "C" void func_002536D0(S_002536D0* p) {
         ((VC_002536D0*)p)->v21(1);
         Object_Register(p);
         if (p->obj == 0) {
-            p->obj = (Obj_002536D0*)func_00170E20(D_004FFBD0, p, 0, 1);
+            p->obj = (Obj_002536D0*)Hotbox_CreateRuntime(D_004FFBD0, p, 0, 1);
             p->obj->v = p->id;
         }
     }

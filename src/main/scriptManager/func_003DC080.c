@@ -22,7 +22,7 @@ static inline void* New_003DC080(int size, char* f, int line) { AllocGuard g; re
 static inline void DelF_003DC080(int* p, char* f, int line) { if (p) { AllocGuard g; func_00369700(p, -1); Mem_Free(0, p, f, line); } }
 static inline void DelG_003DC080(int* p, char* f, int line) { AllocGuard g; func_00369700(p, -1); Mem_Free(0, p, f, line); }
 static inline void Del_003DC080(void* p, char* f, int line) { if (p) { AllocGuard g; Mem_Free(0, p, f, line); } }
-extern "C" void func_003DC080(S_003DC080* s, char* name, int mode)
+extern "C" void FileMan_Open(S_003DC080* s, char* name, int mode)
 {
     int* f;
     s->pA4 = 0;

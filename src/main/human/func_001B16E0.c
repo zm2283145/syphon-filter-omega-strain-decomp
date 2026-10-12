@@ -1,15 +1,15 @@
 #include "types.h"
 
-extern int func_00392990(int);
+extern int ActorModel_Draw(int);
 
-void func_001B16E0(int a0) {
+void Actor_Draw(int a0) {
     int v0, v1;
     int cond;
 
     v1 = *(int*)((char*)a0 + 13236);
     cond = v1 != 0;
     if (cond) goto L001B1700;
-    v0 = func_00392990(a0);
+    v0 = ActorModel_Draw(a0);
 L001B1700:;
     goto ret;
 ret:;

@@ -6,7 +6,7 @@ static inline void fill_00163330(FA_00163330 *s, int n, int *v) {
     for (i = s->n; i <= (int)(n - 1); i++) *(int *)((char *)s->a + (i << 2)) = *v;
     s->n = n;
 }
-void func_00163330(FA_00163330 *s, unsigned int n, int *v) {
+void NpcRoute_ClearRegionCandidates(FA_00163330 *s, unsigned int n, int *v) {
     if (n < 65U) {
         fill_00163330(s, n, v);
         return;

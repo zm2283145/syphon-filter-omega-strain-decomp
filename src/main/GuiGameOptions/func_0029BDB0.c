@@ -2,7 +2,7 @@
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int func_003FB8D0(int);                             
+int PlayerSlots_Get(int);                             
 extern unsigned char D_005721C8;
 
 int func_0029BDB0(void) {
@@ -15,7 +15,7 @@ int func_0029BDB0(void) {
     var_s1 = 0;
     var_s0 = 0;
     do {
-        if (func_003FB8D0(var_s0) != 0) {
+        if (PlayerSlots_Get(var_s0) != 0) {
             var_s1 += 1;
         }
         var_s0 += 1;

@@ -3,7 +3,7 @@ typedef struct { char first[16]; char second[16]; } H2Pair;
 typedef struct { char hdr[0x40]; H2Pair pairs[32]; } H2Pack;
 extern int String_CompareN(char* a, char* b, int n);
 /* Body kind from the mesh family of the first part pair. */
-int func_004067E0(H2Pack* p) {
+int Appearance_GetBodyKind(H2Pack* p) {
     char* name;
     int i;
     char c;

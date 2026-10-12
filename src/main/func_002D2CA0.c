@@ -8,7 +8,7 @@ extern char D_004EE550[];
 extern char D_004D9340[];
 void cNPC_v3D(Npc2CA0* o);
 void Event_Construct(Ev2CA0* e, void* type);
-void func_00153870(Npc2CA0* o, Ev2CA0* e);
+void NpcAi_ModeFollow(Npc2CA0* o, Ev2CA0* e);
 void cMessage_dtor(void* self, int flags);
 }
 extern "C" void func_002D2CA0(Npc2CA0* o, bool on)
@@ -20,7 +20,7 @@ extern "C" void func_002D2CA0(Npc2CA0* o, bool on)
         ev.vtable = D_004D9340;
         ev.b24 = 0;
         ev.i28 = -1;
-        func_00153870(o, &ev);
+        NpcAi_ModeFollow(o, &ev);
         ev.vtable = D_004D9340;
         cMessage_dtor(&ev, 0);
         o->bits.f0 = 1;

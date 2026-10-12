@@ -4,7 +4,7 @@ extern GobjEntry* D_00571770;
 extern GobjId D_00571774;
 
 /* Publish the local player and retain its ID for subsequent validity checks. */
-void func_0040BED0(GobjEntry* player)
+void Player_SetLocal(GobjEntry* player)
 {
     GobjId missing;
     const GobjId* id;

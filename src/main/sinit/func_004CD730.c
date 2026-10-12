@@ -48,7 +48,7 @@ extern char* D_004EA0B0;
 extern int __register_global_object();
 extern int Script_RegisterType();
 extern int func_0014A6A0();
-extern int func_003D84F0();
+extern int Script_RegisterNative();
 extern int cGOBJ_GetScriptTypeKeyPtr();
 void func_004CD730(void)
 {
@@ -59,7 +59,7 @@ void func_004CD730(void)
     D_004A4A78 = "GeneratorData Message";
     D_004F56D8 = Script_RegisterType("cGeneratorMessageBase", func_0021D0F0, 1, 0);
     D_004F56E0 = D_004F56D8;
-    D_004F56E8 = func_003D84F0(D_004F56D8, Script_cGeneratorMessageBase_GetNPC, func_0014A6A0(), "GetNPC", 1, &D_004F56D8);
+    D_004F56E8 = Script_RegisterNative(D_004F56D8, Script_cGeneratorMessageBase_GetNPC, func_0014A6A0(), "GetNPC", 1, &D_004F56D8);
     D_004F56F0 = Script_RegisterType("cSpawnedNPCMsg", ScriptType_cSpawnedNPCMsg_Init, 1, 0);
     D_004F56F8 = D_004F56F0;
     D_004F5700 = Script_RegisterType("cDespawnedNPCMsg", ScriptType_cDespawnedNPCMsg_Init, 1, 0);
@@ -68,16 +68,16 @@ void func_004CD730(void)
     D_004F5708 = D_004F5700;
     D_004F5710 = Script_RegisterType("cGenerator", ScriptType_cGenerator_Init, 0, 1);
     D_004F5718 = D_004F5710;
-    D_004F5720 = func_003D84F0(D_004F5710, Script_cGenerator_Enable, D_00493880, "Enable", 1, &D_004F5710);
-    D_004F5728 = func_003D84F0(D_004F5710, Script_cGenerator_Disable, D_00493880, "Disable", 1, &D_004F5710);
-    D_004F5730 = func_003D84F0(D_004F5710, Script_cGenerator_EnableBy, D_00493880, "EnableBy", 2, &D_004F5710, cGOBJ_GetScriptTypeKeyPtr());
-    D_004F5738 = func_003D84F0(D_004F5710, Script_cGenerator_DisableBy, D_00493880, "DisableBy", 2, &D_004F5710, cGOBJ_GetScriptTypeKeyPtr());
-    D_004F5740 = func_003D84F0(D_004F5710, Script_cGenerator_EnableAnon, D_00493880, "EnableAnon", 1, &D_004F5710);
-    D_004F5748 = func_003D84F0(D_004F5710, Script_cGenerator_DisableAnon, D_00493880, "DisableAnon", 1, &D_004F5710);
-    D_004F5750 = func_003D84F0(D_004F5710, Script_cGenerator_Pause, D_00493880, "Pause", 1, &D_004F5710);
-    D_004F5758 = func_003D84F0(D_004F5710, Script_cGenerator_Unpause, D_00493880, "Unpause", 1, &D_004F5710);
-    D_004F5760 = func_003D84F0(D_004F5710, Script_cGenerator_SetMinSpawnDistance, D_00493880, "SetMinSpawnDistance", 2, &D_004F5710, D_00493890);
-    D_004F5768 = func_003D84F0(D_004F5710, Script_cGenerator_ResetPulse, D_00493880, "ResetPulse", 1, &D_004F5710);
+    D_004F5720 = Script_RegisterNative(D_004F5710, Script_cGenerator_Enable, D_00493880, "Enable", 1, &D_004F5710);
+    D_004F5728 = Script_RegisterNative(D_004F5710, Script_cGenerator_Disable, D_00493880, "Disable", 1, &D_004F5710);
+    D_004F5730 = Script_RegisterNative(D_004F5710, Script_cGenerator_EnableBy, D_00493880, "EnableBy", 2, &D_004F5710, cGOBJ_GetScriptTypeKeyPtr());
+    D_004F5738 = Script_RegisterNative(D_004F5710, Script_cGenerator_DisableBy, D_00493880, "DisableBy", 2, &D_004F5710, cGOBJ_GetScriptTypeKeyPtr());
+    D_004F5740 = Script_RegisterNative(D_004F5710, Script_cGenerator_EnableAnon, D_00493880, "EnableAnon", 1, &D_004F5710);
+    D_004F5748 = Script_RegisterNative(D_004F5710, Script_cGenerator_DisableAnon, D_00493880, "DisableAnon", 1, &D_004F5710);
+    D_004F5750 = Script_RegisterNative(D_004F5710, Script_cGenerator_Pause, D_00493880, "Pause", 1, &D_004F5710);
+    D_004F5758 = Script_RegisterNative(D_004F5710, Script_cGenerator_Unpause, D_00493880, "Unpause", 1, &D_004F5710);
+    D_004F5760 = Script_RegisterNative(D_004F5710, Script_cGenerator_SetMinSpawnDistance, D_00493880, "SetMinSpawnDistance", 2, &D_004F5710, D_00493890);
+    D_004F5768 = Script_RegisterNative(D_004F5710, Script_cGenerator_ResetPulse, D_00493880, "ResetPulse", 1, &D_004F5710);
     if (!D_004EA0C8) {
     D_004EA0B0 = "LOS Manager";
     D_004EA0C8 = 1;

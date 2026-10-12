@@ -4,7 +4,6 @@
 #include "q4_asm_copy.h"
 extern "C" {
 void* Mem_Alloc(int pool, int size, char* file, int line);
-extern char D_0049CB90[];
 extern char D_004DFD80[];
 extern char D_004D9DA0[];
 }
@@ -18,7 +17,7 @@ extern "C" Msg_7E30* func_00177E30(Msg_7E30* src)
     Msg_7E30* p;
     {
         AllocGuard guard;
-        p = (Msg_7E30*)Mem_Alloc(0, 0x70, D_0049CB90, 0x4C);
+        p = (Msg_7E30*)Mem_Alloc(0, 0x70, "moveMsg.hh", 0x4C);
     }
     if (p) {
         M_7E30* d = &p->m;

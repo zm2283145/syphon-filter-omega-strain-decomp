@@ -27,7 +27,8 @@ struct Reader_239610 { int version; int size; unsigned int base; char* cur; };
 struct Owner_239610 { char pad[0xC]; unsigned int flags; };
 extern "C" {
 extern char D_004DC038[];
-extern char D_004DC008[];
+extern void * const D_004DC008[];
+void func_002395A0();
 extern char** D_004F7C70;
 extern int D_004F7C78;
 extern int D_004F7C80;
@@ -46,7 +47,7 @@ extern "C" Track_239610* func_00239610(Track_239610* self, Reader_239610* r, Own
     self->vtable = D_004DC038;
     self->kind = 2;
     self->time = RdF(r);
-    self->vtable = D_004DC008;
+    self->vtable = (void*)D_004DC008;
     *(int*)((char*)self + 0x34) = -2;
     *(int*)((char*)self + 0x30) = 0;
     p = &self->snd;
@@ -75,5 +76,4 @@ extern "C" Track_239610* func_00239610(Track_239610* self, Reader_239610* r, Own
     return self;
 }
 #pragma pop
-
-
+extern "C" void * const D_004DC008[3] = { (void*)0x0, (void*)0x0, (void*)func_002395A0 };

@@ -13,8 +13,8 @@ int func_001AFCF0(char * , int);
 int func_001AFD00(char * );                            
 int func_001AFD20(char * , int);                       
 int func_001AFD30(char * );                            
-int func_001AFD50(char * );                            
-int func_001B0740(char * );                            
+int HumanBounds_BuildTable(char * );                            
+int HumanCentroid_GetTable(char * );                            
 int func_001D8720();                                  
 extern char D_0049D8D0;
 extern char * D_004EE9D0;
@@ -48,7 +48,7 @@ void func_001AFB20(void) {
             F_(temp_s0, 0xC, signed char) = 1;
         }
         D_004EE9D0 = temp_s0;
-        func_001B0740(temp_s0);
+        HumanCentroid_GetTable(temp_s0);
     }
     if (D_004EE9D8 == NULL) {
         if (D_00533880 != 0) {
@@ -66,6 +66,6 @@ void func_001AFB20(void) {
             F_(temp_s0_2, 0xC, signed char) = 1;
         }
         D_004EE9D8 = temp_s0_2;
-        func_001AFD50(temp_s0_2);
+        HumanBounds_BuildTable(temp_s0_2);
     }
 }

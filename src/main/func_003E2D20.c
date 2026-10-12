@@ -38,6 +38,6 @@ void func_003E2D80(int value) {
     D_00559F18 = value;
 }
 
-void func_003E2D90(int value) {
+void ScriptFilter_SetGate(int value) {
     D_004938D0 = value;
 }

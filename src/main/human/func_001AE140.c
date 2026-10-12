@@ -12,7 +12,7 @@ void* func_001AE140(char* self) {
 }
 
 /* Clear byte +0x3A5 of the 0x70-byte record i. */
-void func_001AE150(char* self, int i) {
+void LookCtl_ClearSlot(char* self, int i) {
     i = i & 255;
     self[(((i << 3) - i) << 4) + 933] = 0;
 }

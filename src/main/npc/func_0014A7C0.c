@@ -5,7 +5,7 @@
 
 #include "npc_types.h"
 
-extern int func_0018C9D0(NpcActor* actor, int a1, int a2);
+extern int Actor_SetDeathMotionOverride(NpcActor* actor, int a1, int a2);
 extern int Goggles_SetMode(NpcActor* actor, int a1, int a2);
 
 /* vtable slot 0x7F: SetFireInvulnerability. */
@@ -25,5 +25,5 @@ int cNPC_EquipGoggles(cNPC* self, int a1) {
 
 /* vtable slot 0x79: RequestDeathAnimation. */
 int cNPC_RequestDeathAnimation(cNPC* self, int a1) {
-    return func_0018C9D0(self->actor, a1, 0);
+    return Actor_SetDeathMotionOverride(self->actor, a1, 0);
 }

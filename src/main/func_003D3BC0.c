@@ -8,7 +8,7 @@ extern int D_005392D0;
 extern long long D_004BC1B0;
 extern long long D_005392D8;
 extern void Shadow_SilhouetteLevel(C5Shadow* s, int i);
-void func_003D3BC0(C5Shadow* s) {
+void Shadow_RenderBatch(C5Shadow* s) {
     if (s->recv) {
         int n = s->recv->count - s->first;
         int i;

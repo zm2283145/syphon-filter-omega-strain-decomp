@@ -2,7 +2,7 @@
 extern int WeaponDb_Get(int db, int id);
 extern int D_004FFD30;
 typedef struct { char pad[0x68]; int weapon; } S_FB50;
-int func_0013FB50(S_FB50* p)
+int WeaponInv_GetSlot6Record(S_FB50* p)
 {
     int r;
     int id = p->weapon;

@@ -12,13 +12,13 @@ typedef struct Obj3929 {
     char part2E50[4];       /* 0x2E50 */
 } Obj3929;
 
-extern void func_003A9F10(void* part);
+extern void SkelNodes_ConstructActive(void* part);
 extern void Model_HardMeshAttachPoints(void* part);
 extern void Object_Activate(Obj3929* self, int arg);
 
 /* Initializes the sub-parts and activates the object. */
-void func_00392940(Obj3929* self, int arg) {
-    func_003A9F10(self->part2E50);
+void ActorModel_Activate(Obj3929* self, int arg) {
+    SkelNodes_ConstructActive(self->part2E50);
     self->current = self->part2E50;
     Model_HardMeshAttachPoints(self->part60);
     Object_Activate(self, arg);

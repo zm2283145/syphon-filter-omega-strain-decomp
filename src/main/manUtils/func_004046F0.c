@@ -14,7 +14,7 @@ static inline int k6f0eq(__int128 a, __int128 b) {
     }
     return r == -1;
 }
-unsigned int func_004046F0(K6F0* s, __int128 key) {
+unsigned int MeshCache_FindSlot(K6F0* s, __int128 key) {
     unsigned int i;
     for (i = 0; i < s->count; i++) {
         if (k6f0eq(k6f0and(s->mask, s->keys[i]), k6f0and(s->mask, key)))

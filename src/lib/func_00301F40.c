@@ -1,6 +1,6 @@
 typedef struct { unsigned int mt[625]; int idx; } Mt1F40;
 extern Mt1F40 D_00490910;
-extern unsigned int D_004912D8, D_004912DC, D_004912E0;
+static unsigned int D_004912D8 = 0x98765431;static unsigned int D_004912DC = 0x12345679;static unsigned int D_004912E0 = 0x13579BDF;
 extern void func_00301DC8(void);
 unsigned int func_00301F40(void)
 {

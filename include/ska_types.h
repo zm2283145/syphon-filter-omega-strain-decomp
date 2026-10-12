@@ -67,7 +67,7 @@ typedef struct SkaBlockArray {
     int first;        /* 0x10, index of the first live entry */
 } SkaBlockArray;
 
-/* Pose source used by func_003B2510 (XYZ at +8/+0xC/+0x10). */
+/* Pose source used by SkelBone_GetLocalOffset (XYZ at +8/+0xC/+0x10). */
 typedef struct SkaPoseSrc {
     char pad00[8];
     float x;          /* 0x08 */

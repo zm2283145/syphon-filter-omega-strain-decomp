@@ -21,7 +21,7 @@ typedef union BackpackScriptArg {
  */
 #define STACK_COPY(arr) (*(int*)(arr))
 
-/* Object registered with func_00170E20 by func_00256180. */
+/* Object registered with Hotbox_CreateRuntime by func_00256180. */
 typedef struct BackpackLink {
     char pad00[0x94];
     int owner;                       /* 0x94: copied from cBackpack.unk0C */

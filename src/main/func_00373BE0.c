@@ -1,6 +1,6 @@
 #include "types.h"
 
-int func_00373BE0(int a0) {
+int LightMgr_FindFirstAmbient(int a0) {
     int v0, v1;
     int cond;
 

@@ -9,7 +9,7 @@
 extern int List_InsertBefore(HotboxListIter* out, Tree* list, HotboxListIter* pos, int* value);
 
 /* Inserts value with end() as the position hint; the result iterator is discarded. */
-int func_00171020(Tree* list, int* value) {
+int Hotbox_AddToGlobalList(Tree* list, int* value) {
     HotboxListIter end;
     HotboxListIter result;
 

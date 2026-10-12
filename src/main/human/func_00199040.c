@@ -26,7 +26,7 @@ extern void Event_Send(HumanMsg_00199040* msg, void* target, int flags);
 extern void cMessage_dtor(HumanMsg_00199040* msg, int flags);
 
 /* Stores the byte at +0x346C and, when D_005721C8 is set and not silent, broadcasts it. */
-void func_00199040(Human_00199040* self, unsigned char value, int silent) {
+void Actor_SetNotGasable(Human_00199040* self, unsigned char value, int silent) {
     HumanMsg_00199040 msg;
     self->value = value;
     if (D_005721C8 && !silent) {

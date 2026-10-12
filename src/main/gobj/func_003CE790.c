@@ -18,7 +18,7 @@ typedef struct Owner {
 } Owner;
 
 /* Clears the active flag and calls the attachment's virtual +0x4C, if any. */
-extern "C" void func_003CE790(Owner* self)
+extern "C" void Object_Deactivate(Owner* self)
 {
     self->active = 0;
     if (self->attachment)

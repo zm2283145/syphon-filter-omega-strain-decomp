@@ -10,7 +10,7 @@ extern int func_002ACA00(const void* a, const void* b);
 extern int func_002AC980(const void* a, const void* b);
 extern int func_002AC900(const void* a, const void* b);
 extern int func_002AC7E0(const void* a, const void* b);
-extern void func_001273C8(void* base, int n, int size, Cmp_002AC6F0 cmp);
+extern void qsort(void* base, int n, int size, Cmp_002AC6F0 cmp);
 #pragma opt_dead_assignments off
 void func_002AC6F0(S_002AC6F0* self)
 {
@@ -36,7 +36,7 @@ void func_002AC6F0(S_002AC6F0* self)
     }
     if (cmp) {
         D_005065C0 = self;
-        { int n = self->count; func_001273C8(self->data, n, 12, cmp); }
+        { int n = self->count; qsort(self->data, n, 12, cmp); }
     }
 }
 

@@ -22,7 +22,7 @@ extern void SoundEvent_CtorFromPreset(E4Ev* e, E4Req* r, int preset);
 extern void Event_Send(E4Ev* e, char* tgt, int n);
 extern void func_0036E220(E4Str* s, int flag);
 extern void cMessage_dtor(E4Ev* e, int flag);
-void func_00188F00(int preset)
+void Actor_SendSoundImmediate(int preset)
 {
     E4Req req;
     E4Ev ev;

@@ -33,7 +33,7 @@ extern void SoundEvent_CtorFromPreset(Snd_00212C80* e, void* preset, void* owner
 extern void func_0020EBA0(Snd2_00212C80* e, void* preset, void* owner);
 extern void func_0036E220(Str_00212C80* s, int flag);
 extern void func_001C6700();
-extern int func_003CEA10(SndObj_00212C80* self, void* ev);
+extern int Object_HandleMessage(SndObj_00212C80* self, void* ev);
 static inline SndObj_00212C80* Owner_00212C80(SndObj_00212C80* o) { return o->local ? o : 0; }
 static inline void Play_00212C80(SndObj_00212C80* self, Snd_00212C80* s)
 {
@@ -86,5 +86,5 @@ int cSoundGOBJ_v01(SndObj_00212C80* self, void* ev)
             return 1;
         }
     }
-    return func_003CEA10(self, ev);
+    return Object_HandleMessage(self, ev);
 }

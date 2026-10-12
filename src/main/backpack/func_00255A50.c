@@ -18,7 +18,7 @@ struct Pt1SpObj {
 extern "C" {
 extern void* D_004FFBD0;
 void Object_Register(Pt1SpObj* o);
-Pt1SpProxy* func_00170E20(void* mgr, Pt1SpObj* o, int a, int b);
+Pt1SpProxy* Hotbox_CreateRuntime(void* mgr, Pt1SpObj* o, int a, int b);
 }
 extern "C" void func_00255A50(Pt1SpObj* o, int a, int b)
 {
@@ -34,6 +34,6 @@ extern "C" void func_00255A50(Pt1SpObj* o, int a, int b)
     Object_Register(o);
     if (o->proxy)
         return;
-    o->proxy = func_00170E20(D_004FFBD0, o, 0, 1);
+    o->proxy = Hotbox_CreateRuntime(D_004FFBD0, o, 0, 1);
     o->proxy->id = o->id;
 }

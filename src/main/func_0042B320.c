@@ -6,7 +6,7 @@ typedef struct NetworkPeerSamples {
 
 extern "C" {
 extern NetworkPeerSamples D_00572270[];
-int func_003FB8D0(void);
+int PlayerSlots_Get(void);
 }
 
 /* Average nonzero peer samples and cap the result with the retail NaN behavior. */
@@ -14,7 +14,7 @@ extern "C" float func_0042B320(int peer)
 {
     float sum = 0.0f;
     int count = 0;
-    if (!func_003FB8D0())
+    if (!PlayerSlots_Get())
         return sum;
     for (int index = 0; index < 20; ++index) {
         unsigned int value = D_00572270[peer].values[index];

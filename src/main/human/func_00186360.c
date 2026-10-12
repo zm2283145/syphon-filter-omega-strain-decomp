@@ -40,7 +40,7 @@ extern "C" void func_003E7000();
 void * const D_004E0180[8] = { (void*)0x0, (void*)0x0, (void*)func_00186670, (void*)func_003E7000, (void*)func_003E60F0, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
 extern char D_004E0840[];
 extern unsigned char D_005721C8;
-void func_00185D40(Npc_00186360* self, int a, int b, float f);
+void Actor_ShockReaction(Npc_00186360* self, int a, int b, float f);
 void SoundRequest_Ctor(Req_00186360* r, int a, char* name, int b, int c);
 void SoundEvent_CtorFromPreset(Snd_00186360* e, Req_00186360* r, void* owner);
 void func_0020EBA0(Snd2_00186360* e, Req_00186360* r, void* owner);
@@ -70,8 +70,8 @@ extern "C" void Actor_Ignite(Npc_00186360* self, unsigned char on, Obj_00186360*
     else
         self->b326A = on;
     if (!old && self->b326A) {
-        func_00185D40(self, 0, 1, 0.4f);
-        func_00185D40(self, 1, 1, 0.4f);
+        Actor_ShockReaction(self, 0, 1, 0.4f);
+        Actor_ShockReaction(self, 1, 1, 0.4f);
         self->f31F4 = f;
         self->p3480 = obj;
         self->id3484 = GetId_00186360(obj, t1);
@@ -91,8 +91,8 @@ extern "C" void Actor_Ignite(Npc_00186360* self, unsigned char on, Obj_00186360*
             func_0036E220(&req.s48, -1);
         }
     } else if (!self->b326A) {
-        func_00185D40(self, 0, 0, 1.0f);
-        func_00185D40(self, 1, 0, 1.0f);
+        Actor_ShockReaction(self, 0, 0, 1.0f);
+        Actor_ShockReaction(self, 1, 0, 1.0f);
         {
             Req_00186360 req;
             Snd2_00186360 ev;

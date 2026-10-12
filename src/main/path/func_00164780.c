@@ -4,7 +4,7 @@ typedef struct LNode { struct LNode* unk0; struct LNode* prev; struct LNode* nex
 typedef struct { char pad[8]; LNode* node; char pad2[0x10]; int count; } LOwner;
 
 /* Unlinks the owner's node from its doubly linked list, decrements the count and returns the node. */
-LNode* func_00164780(LOwner* self)
+LNode* NpcRoute_PopOpen(LOwner* self)
 {
     LNode* node = self->node;
     LNode* next;

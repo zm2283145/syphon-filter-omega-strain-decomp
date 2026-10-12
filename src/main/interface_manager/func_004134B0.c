@@ -7,8 +7,6 @@ struct Self4134B0 { char pad[0x1E4]; List4134B0* list; int arc; };
 struct Hog4134B0 { char pad[0xA0]; };
 
 extern "C" {
-extern char D_004BEF50[];
-extern char D_004BEF60[];
 char* func_001692D0(Str4134B0* s);
 int sprintf(char* buf, const char* fmt, ...);
 void func_0036E5D0(Hog4134B0* h);
@@ -37,7 +35,7 @@ extern "C" bool func_004134B0(Self4134B0* self, Str4134B0* out, const char* name
     for (i = self->list->count - 1; i >= 0; i--) {
         char* p;
         func_0036E5D0(&h);
-        sprintf(buf, D_004BEF50, func_001692D0(&self->list->data[i]), name);
+        sprintf(buf, "%s\\%s.HOG", func_001692D0(&self->list->data[i]), name);
         for (p = buf; *p; p++) {
             char c = *p;
             if (c >= 'a' && c <= 'z')
@@ -60,7 +58,7 @@ extern "C" bool func_004134B0(Self4134B0* self, Str4134B0* out, const char* name
     }
     if (self->arc) {
         func_0036E5D0(&h2);
-        sprintf(buf2, D_004BEF60, name);
+        sprintf(buf2, "%s.HOG", name);
         Hog_Register(&h2, buf2, self->arc, 0);
         if ((unsigned char)func_0036DEF0(&h2)) {
             func_0036E220(&h2, -1);

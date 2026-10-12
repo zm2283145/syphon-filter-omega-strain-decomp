@@ -3,7 +3,8 @@ typedef struct { char p[0x6C]; float f6C; } W465570;
 extern void func_00414F00(W465570* w);
 extern void* func_0041DB80(void* x, int key);
 extern void func_0041E0F0(void* w, void* src, int kind, int a, int b);
-extern int D_00497BE0;
+extern char D_004C28F8[];
+static int D_00497BE0 = (int)D_004C28F8;
 void func_00465570(W465570* w, void* x)
 {
     func_00414F00(w);

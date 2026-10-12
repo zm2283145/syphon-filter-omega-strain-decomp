@@ -9,7 +9,7 @@
 extern PtrVec D_004EE6E0;  /* list of created hotboxes */
 extern void* D_004FFBD0;
 extern int PtrVec_Insert(PtrVec* v, int* pos, int n, int* value);
-extern int func_00170E20(void* owner, void* gobj, int a2, int a3);
+extern int Hotbox_CreateRuntime(void* owner, void* gobj, int a2, int a3);
 
 /* push_back on a pointer vector. */
 int func_00170500(PtrVec* v, int* value) {
@@ -18,7 +18,7 @@ int func_00170500(PtrVec* v, int* value) {
 
 /* Creates a hotbox for a game object and records it in D_004EE6E0. */
 int Global_MakeGOBJInteractable(void* gobj) {
-    int hotbox = func_00170E20(D_004FFBD0, gobj, 0, 0);
+    int hotbox = Hotbox_CreateRuntime(D_004FFBD0, gobj, 0, 0);
 
     func_00170500(&D_004EE6E0, &hotbox);
     return hotbox;

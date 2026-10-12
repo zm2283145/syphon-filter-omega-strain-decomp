@@ -11,7 +11,7 @@ extern "C" {
 int func_001A0280(Root_396DF0* r);
 VP_396DF0* Root_GetWorldPlacement(Root_396DF0* r);
 V4_396DF0* Root_GetWorldMotion(Root_396DF0* r);
-VP_396DF0* func_001A0110(Root_396DF0* r);
+VP_396DF0* SceneRoot_GetPoseCache(Root_396DF0* r);
 void VecPair_Copy(VP_396DF0* dst, VP_396DF0* src);
 void Vec4_Assign(V4_396DF0* dst, V4_396DF0* src);
 void func_001A0080(Root_396DF0* r);
@@ -36,7 +36,7 @@ extern "C" Root_396DF0* func_00396DF0(Root_396DF0* self, short deleteFlag)
             VP_396DF0 other;
             VecPair_Copy(&place, Root_GetWorldPlacement(self));
             Vec4_Assign(&motion, Root_GetWorldMotion(self));
-            VecPair_Copy(&other, func_001A0110(self));
+            VecPair_Copy(&other, SceneRoot_GetPoseCache(self));
             func_001A0080(self);
             Root_SetWorldPlacement(self, &place);
             func_0019FFC0(self, &motion);

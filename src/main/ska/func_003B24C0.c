@@ -23,7 +23,7 @@ int func_003B2500(char* self) {
 }
 
 /* Build an XYZ vector with W = 0 from the source's +8/+0xC/+0x10 floats. */
-void func_003B2510(SkaVec4* out, SkaPoseSrc* src) {
+void SkelBone_GetLocalOffset(SkaVec4* out, SkaPoseSrc* src) {
     float z = src->z;
     float y = src->y;
     float x = src->x;

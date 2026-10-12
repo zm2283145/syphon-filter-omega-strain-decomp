@@ -13,7 +13,6 @@ extern int sceDbcSendData3(int, int, void *, void *, void *);
 extern void func_002BB660(void);
 extern E2BB520 *func_002BB520(int);
 extern void *memcpy(void *, const void *, unsigned int);
-extern char D_004AC238[];
 extern char D_0051AB40[];
 extern int func_0010F388(const char *, ...);
 extern E2BB520 *func_002BB5F0(int);
@@ -38,12 +37,12 @@ int func_002BC0C8(int i, char *buf, int sec, int n, int x)
     memset(D_0051AAC0, 0, 0x100);
     D_0048C09C = 1;
     while (sceDbcSendData3(D_00518A08[i].sock, D_0048C09C, &l, &D_00518A40, func_002BB660) != 1)
-        func_0010F388(D_004AC238);
+        func_0010F388("SendDataHoge\n");
     if (func_002BB5F0(D_00518A08[i].sock)->x8 == 0) return 0;
     src = D_0051AB40;
     buf = l.b;
     for (k = 0; k < n; k++) {
-        func_0010DA58(src, src + D_00518A40.x8);
+        SyncDCache(src, src + D_00518A40.x8);
         memcpy(buf, src, D_00518A40.x8);
         src += D_00518A40.x8;
         buf += D_00518A40.x8;

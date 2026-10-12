@@ -22,7 +22,7 @@ typedef struct {
     char pad6c[4];
     E2WaterSub sub;
 } E2WaterFx;
-extern int* func_00236F20(int);
+extern int* SpecFx_GetEffectDef(int);
 extern void List_Init(E2List*);
 extern E2ModelTable* D_00539248;
 #pragma opt_propagation off
@@ -32,11 +32,11 @@ E2WaterFx* WaterFxRecord_Construct(E2WaterFx* s) {
     s->f4 = -2;
     s->f0 = 0;
     s->f40 = 0;
-    s->f68 = *func_00236F20(0x28);
+    s->f68 = *SpecFx_GetEffectDef(0x28);
     sub = &s->sub;
     sub->rate = 0.0375f;
     List_Init(&sub->list);
-    sub->model = *func_00236F20(0x27);
+    sub->model = *SpecFx_GetEffectDef(0x27);
     z = 0.0f;
     sub->count = D_00539248->models[sub->model]->info->count;
     sub->f10 = 0;

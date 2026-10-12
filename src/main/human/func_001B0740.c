@@ -37,7 +37,7 @@ extern int D_004EEAD8;
 extern int D_004EEADC;
 extern char func_001B0A00;
 
-void func_001B0740(int arg0) {
+void HumanCentroid_GetTable(int arg0) {
     int var_s2;
     int *sp4C;
     int *var_s1;

@@ -12,10 +12,10 @@ class O_199590 { public:
   char pad5C[0x33E6 - 0x5C]; unsigned char b33E6; unsigned char b33E7; char pad33E8[0x346F - 0x33E8]; unsigned char b346F;
   char pad3470[0x3524 - 0x3470]; void* weapons; };
 extern "C" {
-E_199590* func_0013FB50(void* w);
+E_199590* WeaponInv_GetSlot6Record(void* w);
 void Hud_SetFlashlightIcon(void* p, int v, unsigned char on);
 void WeaponInv_SetSlotModelState(void* w, int k, unsigned char on);
-void func_0020F860(F2Ev_199590* e, void* name, V_199590* pos);
+void SoundPosRequest_Ctor(F2Ev_199590* e, void* name, V_199590* pos);
 void Event_Send(F2Ev_199590* e, void* tgt, int n);
 void func_0036E220(F2Str_199590* s, int f);
 void cMessage_dtor(F2Ev_199590* e, int f);
@@ -32,7 +32,7 @@ static inline unsigned char Has_199590(O_199590* o)
 }
 extern "C" void Actor_InfraredSwitch(O_199590* o, unsigned char on)
 {
-    E_199590* e = func_0013FB50(o->weapons);
+    E_199590* e = WeaponInv_GetSlot6Record(o->weapons);
     int v = 0;
     void* mgr = D_004FFC2C;
     if (e) v = e->b100;
@@ -45,7 +45,7 @@ extern "C" void Actor_InfraredSwitch(O_199590* o, unsigned char on)
     {
         V_199590 pos = o->GetPos();
         F2Ev_199590 ev;
-        func_0020F860(&ev, D_004F0DF0, &pos);
+        SoundPosRequest_Ctor(&ev, D_004F0DF0, &pos);
         ev.flag = 1;
         Event_Send(&ev, D_004FFB50, 0);
         ev.vt = D_004DAE30;

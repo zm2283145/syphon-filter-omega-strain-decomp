@@ -10,7 +10,7 @@ extern "C" void func_00264720(A2S262* s, void* b);
 extern "C" void func_00262F30(A2S262* s, float dt);
 extern "C" void func_00264530(A2S262* s, void* b);
 extern "C" void func_00265790(A2S262* s, float f, int x);
-extern "C" void func_00262E00(A2S262* s, float dt) {
+extern "C" void HeldItem_UpdateReelIn(A2S262* s, float dt) {
     int n = s->n14;
     int i = 0;
     int* po;

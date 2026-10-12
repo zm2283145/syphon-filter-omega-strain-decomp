@@ -11,7 +11,7 @@ extern char D_004D92C0[];
 extern char D_004EE5C8[];
 extern int Event_Construct(cActionMsg*, int);
 
-cActionMsg* func_0016B4F0(cActionMsg* msg, int* sender, int action, float amplitude, float f2C) {
+cActionMsg* AiSound_SendFireNoise(cActionMsg* msg, int* sender, int action, float amplitude, float f2C) {
     Event_Construct(msg, (int)D_004EE5C8);
     msg->base.vtable = D_004D92A0;
     msg->event = 0;

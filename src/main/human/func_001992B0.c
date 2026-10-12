@@ -24,7 +24,7 @@ extern Message* Event_Construct(Message*, void*);
 extern void cMessage_dtor(void* msg, int flags);
 extern int Secondary_RequestOneShot(int target, Key_1992B0* key, int n, AnimEvent* ev);
 extern void Event_Send(Msg3_1992B0* m, void* o, int x);
-extern void* func_0013FB50(void* w);
+extern void* WeaponInv_GetSlot6Record(void* w);
 #pragma push
 #pragma opt_common_subs off
 #pragma opt_rotateloops off
@@ -33,7 +33,7 @@ extern void* func_0013FB50(void* w);
 void Goggles_SetMode(O_1992B0* o, unsigned char on, int f)
 {
     if (o->b33E5 == 2) return;
-    if (func_0013FB50(o->weapons) || f) {
+    if (WeaponInv_GetSlot6Record(o->weapons) || f) {
         if (o->target && !o->b33E5) {
             Msg3_1992B0 m;
             Key_1992B0 key;

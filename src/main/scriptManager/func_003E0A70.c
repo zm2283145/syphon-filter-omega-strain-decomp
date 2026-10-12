@@ -10,14 +10,14 @@ typedef struct LevelOwner {
     LevelInfo* info;
 } LevelOwner;
 
-extern int func_003D6C90(void* arg);
+extern int ScriptType_DerivesFromName(void* arg);
 
-/* Returns func_003D6C90(arg) as a byte when the owner's level is at least 8, else 0. */
-int func_003E0A70(void* self, LevelOwner* owner, void* arg) {
+/* Returns ScriptType_DerivesFromName(arg) as a byte when the owner's level is at least 8, else 0. */
+int ScriptFilter_ArgIsId(void* self, LevelOwner* owner, void* arg) {
     int result = 0;
     LevelInfo* info = owner->info;
     if (info && info->level > 7) {
-        result = (unsigned char)func_003D6C90(arg);
+        result = (unsigned char)ScriptType_DerivesFromName(arg);
     }
     return result;
 }

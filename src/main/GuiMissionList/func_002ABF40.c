@@ -11,9 +11,9 @@ struct S_002ABF40 : W_002ABF40 {
     char pad4[0x90 - 4]; char* f90[7]; unsigned char bAC; char padAD[3]; W_002ABF40* pB0;
 };
 struct T_002ABF40 { int count; int ids[3]; };
+static char* const D_0048BC40[8] = { (char*)0xE0, (char*)0x8C, (char*)0x3C, (char*)0xE0, (char*)0x50, (char*)0x46, (char*)0x0, (char*)0x0 };
+static const T_002ABF40 D_0048BC60[5] = { { 3, { 3, 4, 5 } }, { 3, { 0, 1, 2 } }, { 1, { 0, -1, -1 } }, { 3, { 0, 1, 5 } }, { 0, { -1, -1, -1 } } };
 extern "C" {
-extern T_002ABF40 D_0048BC60[];
-extern char* D_0048BC40[];
 extern char D_004AB9D0[];
 void func_004248C0(void* w, int i, char* s);
 void func_00426510(void* w, int i, int a, char* s);
@@ -22,7 +22,7 @@ extern "C" void func_002ABF40(S_002ABF40* self, unsigned char idx)
 {
     int n;
     int i;
-    T_002ABF40* t;
+    const T_002ABF40* t;
     t = &D_0048BC60[idx];
     n = t->count;
     self->SetCount(n, 0);

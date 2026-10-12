@@ -35,6 +35,6 @@ int func_0016FE50(void) {
     return D_004EE738;
 }
 
-int func_0016FE60(int a0, int a1) {
+int Hotbox_ScriptFilter(int a0, int a1) {
     return ScriptFilter_Dispatch(D_00555070, a0, a1);
 }

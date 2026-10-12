@@ -3,7 +3,7 @@
 /* Group_RemoveObject */
 typedef struct { int pad0; int count; int* ids; } Pt2_Group;
 extern int Script_ObjectToId(void*);
-extern void func_003D7930(char*);
+extern void Script_PrintWarning(char*);
 extern void func_003E2FF0(Pt2_Group*, int, int*);
 
 #pragma opt_strength_reduction off
@@ -24,5 +24,5 @@ void Group_RemoveObject(Pt2_Group* g, void* obj) {
             return;
         }
     }
-    func_003D7930("warning: obj to remove is not in group");
+    Script_PrintWarning("warning: obj to remove is not in group");
 }

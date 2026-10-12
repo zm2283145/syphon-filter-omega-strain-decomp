@@ -7,7 +7,6 @@ struct V_6840 { unsigned int cap; unsigned int count; E_6840* data; };
 typedef struct { char pad[0xC]; void* stream; } Err_6840;
 extern "C" {
 extern Err_6840* D_00489738;
-extern char D_004BCE00[];
 extern char D_004BC4E0[];
 extern char D_004BCFB8[];
 void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
@@ -48,7 +47,7 @@ extern "C" void func_003B6840(V_6840* v, E_6840* first, E_6840* last)
         }
     } else {
         if (n > 0x40000) {
-            func_00123BE8(D_00489738->stream, D_004BCE00);
+            func_00123BE8(D_00489738->stream, "vector::assign length error\n");
             func_00121B60();
         }
         func_00396D00(v);

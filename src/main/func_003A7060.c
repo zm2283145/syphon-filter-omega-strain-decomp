@@ -1,5 +1,5 @@
 #include "types.h"
-extern void func_0010DA58(int*, char*);
+extern void SyncDCache(int*, char*);
 extern void func_0010DB98(int*, char*);
 extern int func_00118F00(int);
 extern int sceCdRead(int, int, int);
@@ -32,7 +32,7 @@ int func_003A7060(int a, int b, int c)
     if (Check3A7060(1) == 1) return 0;
     D_00542800 = 1;
     D_00542810 = 0;
-    func_0010DA58(&D_00542800, &D_0054283F);
+    SyncDCache(&D_00542800, &D_0054283F);
     D_0053DC10 = 1;
     buf[0] = a;
     buf[1] = b;

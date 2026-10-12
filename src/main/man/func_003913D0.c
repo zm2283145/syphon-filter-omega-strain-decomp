@@ -11,7 +11,7 @@ extern Pt2_Sc* D_00571484[];
 extern int strcmp(const char*, const char*);
 extern void* memcpy(void*, const void*, unsigned int);
 extern float* func_0028D5F0(void*, int);
-extern void* func_001AF330(void*, int);
+extern void* SkelNodes_GetAt(void*, int);
 extern void func_0028D580(void*, float);
 extern void func_0028D530(void*, float);
 extern void func_0028D4E0(void*, float);
@@ -36,13 +36,13 @@ int Skel_ApplyScalePreset(Pt2_App* a, int preset) {
         float v;
         k = a->skel; v = s->x;
         func_0028D5F0(k->bones, i)[0] = v;
-        if (k->hasMorph) func_0028D580(func_001AF330(k->morph, i), v);
+        if (k->hasMorph) func_0028D580(SkelNodes_GetAt(k->morph, i), v);
         k = a->skel; v = s->y;
         func_0028D5F0(k->bones, i)[1] = v;
-        if (k->hasMorph) func_0028D530(func_001AF330(k->morph, i), v);
+        if (k->hasMorph) func_0028D530(SkelNodes_GetAt(k->morph, i), v);
         k = a->skel; v = s->z;
         func_0028D5F0(k->bones, i)[2] = v;
-        if (k->hasMorph) func_0028D4E0(func_001AF330(k->morph, i), v);
+        if (k->hasMorph) func_0028D4E0(SkelNodes_GetAt(k->morph, i), v);
     }
     a->preset = preset;
     return preset;

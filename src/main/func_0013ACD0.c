@@ -14,12 +14,12 @@ typedef struct {
 extern void func_0013B180(AcIter*, void*);
 extern void func_0013B170(AcIter*, AcIter*);
 extern void func_0013B160(AcIter*, void*);
-extern void func_0013AE20(void*);
+extern void LosMgr_ExecuteEntry(void*);
 extern void func_0013AE00(AcOwner*, void*);
 extern void ObjectList_EraseRange(AcIter*, void*, AcIter*, AcIter*);
 extern AcNode* func_0013ADF0(void*);
 extern void func_00138DA0(AcIter*, void*, AcIter*);
-int func_0013ACD0(AcOwner* o)
+int LosMgr_Update(AcOwner* o)
 {
     AcIter it;
     AcIter end;
@@ -41,7 +41,7 @@ int func_0013ACD0(AcOwner* o)
     e = end.n;
     for (; n != e; n = n->next) {
         obj = n->obj;
-        func_0013AE20(obj);
+        LosMgr_ExecuteEntry(obj);
         func_0013AE00(o, obj);
     }
     last.n = (AcNode*)o->x34;
@@ -49,7 +49,7 @@ int func_0013ACD0(AcOwner* o)
     ObjectList_EraseRange(&r1, o->list, &first, &last);
     if (*(int*)o->x3c) {
         obj = func_0013ADF0(o->x40)->next->obj;
-        func_0013AE20(obj);
+        LosMgr_ExecuteEntry(obj);
         func_0013AE00(o, obj);
         pos.n = o->x44;
         func_00138DA0(&r2, o->x3c, &pos);

@@ -7,10 +7,10 @@
 #include "types.h"
 
 extern char D_00535D20[];
-extern int func_00373670(void* p);
+extern int LightMgr_RebuildTable(void* p);
 extern int func_0041E470(void* self);
 
 int func_0035BF70(void* self) {
-    func_00373670(D_00535D20);
+    LightMgr_RebuildTable(D_00535D20);
     return func_0041E470(self);
 }

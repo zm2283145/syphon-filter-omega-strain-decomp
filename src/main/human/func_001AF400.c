@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-void* func_001AF400(char* self) {
+void* SkelNode_GetWeightPtr(char* self) {
     return self + 368;
 }
 

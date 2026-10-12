@@ -6,7 +6,7 @@ typedef struct { Node_3B8550* node; bool inserted; } Res_3B8550;
 extern "C" {
 int Name_Compare48(const char* a, const char* b, int n);
 Node_3B8550* func_003B99D0(Tree_3B8550* t, Node_3B8550* y, bool comp, bool leftmost, const char* key);
-extern const bool D_00493508;
+static bool D_00493508 = true;
 extern const bool D_00493510;
 }
 static inline bool Less_3B8550(const char* a, const char* b)

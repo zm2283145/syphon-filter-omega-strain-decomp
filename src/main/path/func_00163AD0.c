@@ -20,8 +20,8 @@ extern int D_004ED9C0[];
 unsigned char NpcRoute_Search(CxRuReq*);
 unsigned char NpcRoute_ScoreNodes(CxRuReq*);
 void func_00138DA0(CxRuIt*,CxRuList*,CxRuIt*);
-void func_001642B0(CxRuManager*,CxRuReq*);
-CxRuActor* func_003FB8D0(int);
+void NpcRouteMgr_FreeRequest(CxRuManager*,CxRuReq*);
+CxRuActor* PlayerSlots_Get(int);
 int NpcRoute_RegionAt(const CxRuV4*,int);
 }
 static inline CxRuActor* CxRu_Get(CxRuReq* req){ bool isNull;bool ok;CxRuActor* actor;actor=req->actor;isNull=!actor;ok=true;if(!isNull)if(actor->serial!=req->serial)ok=false;return ok ? actor:0;}
@@ -42,12 +42,12 @@ extern "C" void NpcRoute_Update(CxRuManager* self){
             CxRuIt out; CxRuIt it;
             it.link=*head;
             func_00138DA0(&out,&self->queue,&it);
-            func_001642B0(self,req);
+            NpcRouteMgr_FreeRequest(self,req);
         }
     }
     int slot=D_005383C8&3;
-    if(slot<4 && func_003FB8D0(slot)){
-        const CxRuV4* pos=func_003FB8D0(slot)->Matrix().Pos();
+    if(slot<4 && PlayerSlots_Get(slot)){
+        const CxRuV4* pos=PlayerSlots_Get(slot)->Matrix().Pos();
         int* region=&D_004ED9C0[slot];
         int id=NpcRoute_RegionAt(pos,*region);
         if(id>=0)*region=id;

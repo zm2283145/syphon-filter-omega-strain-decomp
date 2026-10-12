@@ -11,16 +11,16 @@ struct E7S2 { E7S3* p; };
 struct E7S1 { E7S3* p; };
 struct E7Node { char pad[0x10]; E7S1* info; };
 extern "C" {
-extern int func_003D7590(int x);
-extern int func_003E0A70(void* ctx, E7Node* n, int t);
+extern int ScriptType_GetRecord(int x);
+extern int ScriptFilter_ArgIsId(void* ctx, E7Node* n, int t);
 extern void Script_CallHandler(void* ctx, E7Node* n, int* args, int count);
-void func_003E09C0(void* ctx_, E7Node* n_, E7Obj* obj_, int val_) {
+void Script_InvokeHandler(void* ctx_, E7Node* n_, E7Obj* obj_, int val_) {
     E7Obj* obj = obj_;
     int val = val_;
     void* ctx = ctx_;
     E7Node* n = n_;
     int args[2];
-    if (func_003E0A70(ctx, n, func_003D7590(n->info->p->a))) {
+    if (ScriptFilter_ArgIsId(ctx, n, ScriptType_GetRecord(n->info->p->a))) {
         args[0] = *obj->Get();
     } else {
         args[0] = (int)obj;

@@ -9,7 +9,6 @@ void* func_001005E0(void* p, void* ctor, int dtor, int size, int n);
 void func_00222B60(void*);
 void func_0022D3C0(M22D4F0*);
 void func_0022DBC0(void*);
-extern char D_004A65D0[];
 extern char D_004DB850[];
 extern char D_004F77A8[];
 extern char func_0022D630[];
@@ -29,7 +28,7 @@ extern "C" M22D4F0* func_0022D4F0(M22D4F0* m) {
     func_00222B60(m->a11C);
     for (i = 0, off = 0; i < 29; i++, off += 4) {
         n = 29 - i;
-        { AllocGuard g; p = Mem_Alloc(0, (n << 4) + 0x10, D_004A65D0, 0x2B); }
+        { AllocGuard g; p = Mem_Alloc(0, (n << 4) + 0x10, "targetManager.cc", 0x2B); }
         *(void**)((char*)m + off + 0x20) = func_001005E0(p, func_0022D630, 0, 0x10, n);
     }
     func_0022D3C0(m);

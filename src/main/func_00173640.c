@@ -16,7 +16,7 @@ void func_00173640(void) {
 void func_00173650(void) {
 }
 
-void* func_00173660(char* self) {
+void* Hotbox_GetBounds(char* self) {
     return self + 112;
 }
 

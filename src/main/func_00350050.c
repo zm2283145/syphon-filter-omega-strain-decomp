@@ -22,8 +22,6 @@ public:
 extern "C" {
 extern char* D_00492BC8;
 extern char D_004BAB40[];
-extern char D_004BAB50[];
-extern char D_004BAB58[];
 char* func_001692D0(Str* s);
 void func_00426510(Tbl* t, int col, int row, char* s);
 void String_Copy(char* d, char* s);
@@ -59,17 +57,17 @@ void func_00350050(Tbl* self)
         else sprintf(buf, D_004BAB40, v / 60, v % 60);
         func_00426510(self, 5, i, buf);
         if (it->r[2].a == -1) String_Copy(buf, D_00492BC8);
-        else sprintf(buf, D_004BAB50, it->r[2].a);
+        else sprintf(buf, "%d", it->r[2].a);
         func_00426510(self, 7, i, buf);
         {
             int a = it->r[3].a;
             int b = it->r[3].b;
             if (a == -1) String_Copy(buf, D_00492BC8);
-            else sprintf(buf, D_004BAB58, a, b);
+            else sprintf(buf, "%d/%d", a, b);
         }
         func_00426510(self, 9, i, buf);
         if (it->r[4].a == -1) String_Copy(buf, D_00492BC8);
-        else sprintf(buf, D_004BAB50, it->r[4].a);
+        else sprintf(buf, "%d", it->r[4].a);
         func_00426510(self, 0xA, i, buf);
     }
 }

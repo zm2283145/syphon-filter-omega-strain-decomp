@@ -8,7 +8,7 @@
 
 extern "C" {
 int Mem_Alloc(...);
-int func_0016A0A0(...);
+int TeamRelations_CreateMultiplayer(...);
 int TeamRelations_SetDefaults(...);
 extern unsigned char D_0048A100;
 extern char D_0049C650;
@@ -22,7 +22,7 @@ extern "C" void TeamRelations_Create(void) {
 
     if (D_005721C8 != 0) {
         if (D_004EE628 == 0) {
-            func_0016A0A0();
+            TeamRelations_CreateMultiplayer();
         }
         if (D_0048A100 != 0) {
             D_0048A100 = 0;

@@ -17,7 +17,7 @@ void func_0014AB80(Iter* out, Tree* t) {
 }
 
 /* map insert(value): inserts with an end() hint, result iterator in out[1]. */
-Iter* func_0014AB90(Tree* t, int value) {
+Iter* NpcAi_AddToDeadList(Tree* t, int value) {
     Iter it[2];
 
     it[0].p = &t->header;

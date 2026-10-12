@@ -26,17 +26,22 @@ typedef struct Screen47820 {
 } Screen47820;
 
 extern "C" {
+extern char D_004BA2A0[];
+static void * const dat_00492B60[2] = { (void*)D_004BA2A0, (void*)0x0 };
+extern char D_004BA2B0[];
+static void * const dat_00492B68[2] = { (void*)D_004BA2B0, (void*)0x0 };
+extern char D_004BA2B8[];
+static void * const dat_00492B70[2] = { (void*)D_004BA2B8, (void*)0x0 };
+extern char D_004BA2C0[];
+static void * const dat_00492B78[2] = { (void*)D_004BA2C0, (void*)0x0 };
+extern char D_004BA2C8[];
+static void * const dat_00492B80[2] = { (void*)D_004BA2C8, (void*)0x0 };
 extern char D_004BA540[];
 extern char D_004A9870[];
 extern char D_004A7520[];
 extern char D_004BA3B0[];
 extern V47820 D_00587B50;
 extern V47820 D_00587B60;
-extern const char* D_00492B60;
-extern const char* D_00492B68;
-extern const char* D_00492B70;
-extern const char* D_00492B78;
-extern const char* D_00492B80;
 extern const char* D_00492B98;
 void func_0033D3F0(Screen47820* self);
 Obj47820* func_0041DB80(Screen47820* self, const char* name);
@@ -54,11 +59,11 @@ extern "C" void func_00347820(Screen47820* self)
 {
     Sp47820* sp;
     func_0033D3F0(self);
-    self->f88 = As47820(func_0041DB80(self, D_00492B60), D_004BA540);
-    self->f8C = As47820(func_0041DB80(self, D_00492B68), D_004A9870);
-    self->f90 = As47820(func_0041DB80(self, D_00492B70), D_004A9870);
-    self->f94 = As47820(func_0041DB80(self, D_00492B78), D_004A9870);
-    self->fA0 = As47820(func_0041DB80(self, D_00492B80), D_004A7520);
+    self->f88 = As47820(func_0041DB80(self, *(const char**)dat_00492B60), D_004BA540);
+    self->f8C = As47820(func_0041DB80(self, *(const char**)dat_00492B68), D_004A9870);
+    self->f90 = As47820(func_0041DB80(self, *(const char**)dat_00492B70), D_004A9870);
+    self->f94 = As47820(func_0041DB80(self, *(const char**)dat_00492B78), D_004A9870);
+    self->fA0 = As47820(func_0041DB80(self, *(const char**)dat_00492B80), D_004A7520);
     self->fA4 = func_0041DB80(self, D_00492B98);
     sp = func_00418420(func_00414790(), D_004BA3B0);
     if (sp) { SetA47820(sp, D_00587B50); SetB47820(sp, D_00587B60); }

@@ -43,7 +43,7 @@ void func_00436BA0(int* t, int f);
 }
 static inline unsigned char G3IsA(G3Gen157* g) { unsigned char r = 0; if (g->sub && g->sub->IsA()) r = 1; return r; }
 static inline unsigned char G3IsB(G3Gen157* g) { unsigned char r = 0; if (g->sub && g->sub->IsB()) r = 1; return r; }
-extern "C" void func_00157800(G3Npc157* n, G3Gen157* g)
+extern "C" void NpcAi_ActivateForPlayer(G3Npc157* n, G3Gen157* g)
 {
     if (D_005721C8) {
         if (n->IsAlive()) {

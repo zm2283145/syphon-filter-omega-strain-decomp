@@ -5,7 +5,7 @@ extern void* RootCollection_FindByKey(void*, void*);
 extern void* Root_GetWorldPlacement(void*);
 extern float* Placement_GetPosition(void*);
 extern char D_004A03D8[];
-void func_001E19F0(B4Obj1* p) {
+void Ladder_CheckTopBlocked(B4Obj1* p) {
     float* pos = Placement_GetPosition(Root_GetWorldPlacement(RootCollection_FindByKey((char*)p->c + 0xB0, D_004A03D8)));
     p->b99D = p->f990 - pos[2] < 0.5f;
 }

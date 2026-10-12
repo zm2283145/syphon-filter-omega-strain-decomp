@@ -3,7 +3,6 @@ extern float D_004BF1A0, D_004BF1A4, D_004BF1A8, D_004BF1AC, D_004BF1B0, D_004BF
 extern char* D_005720F0;
 extern char* D_005720F8;
 extern char D_004E0AA0[];
-extern char D_004BF240[];
 extern void FreeList_Push(void* p);
 void func_004D7130(void)
 {
@@ -16,6 +15,6 @@ void func_004D7130(void)
     D_004BF1B8 = 1.0f;
     D_004BF1BC = 1.0f;
     D_005720F8 = D_004E0AA0;
-    D_005720F0 = D_004BF240;
+    D_005720F0 = "GuiTextEditWidget";
     FreeList_Push(&D_005720F0);
 }

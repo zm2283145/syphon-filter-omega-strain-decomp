@@ -8,7 +8,7 @@ extern void* func_00198D00(void* map, int key);
 extern float func_00198CF0(void* entry);
 
 /* Looks up key in the object's table and returns the entry's value, or 0. */
-float func_00198CA0(Obj198* self, int key)
+float Actor_GetGaitPhase(Obj198* self, int key)
 {
     void* entry = func_00198D00(Deque_Back(self->ref)->map, key);
     if (entry)

@@ -19,13 +19,13 @@ typedef struct Pt1LcGather {
 extern void Sphere_FromCenter(Pt1LcVec* out, Pt1LcVec* a, Pt1LcVec* b);
 extern void Vec4_Assign(Pt1LcVec* out, Pt1LcVec* src);
 extern void Vec4_NormalizeXYZ_132060(Pt1LcVec* out, Pt1LcVec* src);
-extern float func_00192FB0(Pt1LcVec* a, Pt1LcVec* b);
+extern float Vec4_Dot3(Pt1LcVec* a, Pt1LcVec* b);
 extern float func_00372AC0(void* light);
 extern Pt1LcVec* func_00372AD0(void* light);
 extern float func_00372AE0(void* light);
 extern float func_00373290(Pt1LcVec* v);
 
-void func_003730F0(Pt1LcGather* g, Pt1LcEntry* e, Pt1LcVec* pos)
+void LightMgr_TestPointSpot(Pt1LcGather* g, Pt1LcEntry* e, Pt1LcVec* pos)
 {
     Pt1LcVec dir;
     Pt1LcVec n;
@@ -49,7 +49,7 @@ void func_003730F0(Pt1LcGather* g, Pt1LcEntry* e, Pt1LcVec* pos)
                     Sphere_FromCenter(&v, &e->pos, pos);
                     Vec4_NormalizeXYZ_132060(&n, &v);
                     outer = 1.0f - func_00372AC0(light);
-                    if (!(1.0f - func_00192FB0(&dir, &n) <= outer))
+                    if (!(1.0f - Vec4_Dot3(&dir, &n) <= outer))
                         ok = 0;
                 }
             }

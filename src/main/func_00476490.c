@@ -14,7 +14,7 @@ extern void Event_Send(NavDirMsg_h5* msg, void* target, int flags);
 extern void cMessage_dtor(NavDirMsg_h5* msg, int flags);
 
 static inline float h5_fabs(float x) { float r; asm { abs.s r, x } return r; }
-int func_00476490(void* actor, float* dir)
+int Ladder_AiNavRequest(void* actor, float* dir)
 {
     float x = dir[0];
     signed char action = -1;

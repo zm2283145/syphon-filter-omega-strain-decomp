@@ -26,7 +26,7 @@ static inline void* Alloc_00238A50(int size, int line)
 }
 #pragma push
 #pragma opt_strength_reduction off
-extern "C" void func_00238A50(Trk_00238A50* self, int owner, Pop_00238A50* r)
+extern "C" void NiEvent_ReadEvents(Trk_00238A50* self, int owner, Pop_00238A50* r)
 {
     int n = (int)ReadF_00238A50(r);
     void* fill1 = 0;

@@ -1,6 +1,6 @@
 #include "types.h"
 int Script_SetPickupTextColor();
-int func_003D8740();
+int Script_RegisterNative_2();
 extern char D_00493880;
 extern char D_00493888;
 extern char D_00493890;
@@ -14,5 +14,5 @@ void func_004CFCC0(void) {
     D_004F7E74 = 1057803469;
     D_004F7E78 = 1061158912;
     D_004F7E7C = 1065353216;
-    D_004F7E88 = func_003D8740(Script_SetPickupTextColor, &D_00493880, "SetPickupTextColor", 4, &D_00493888, &D_00493888, &D_00493888, &D_00493890);
+    D_004F7E88 = Script_RegisterNative_2(Script_SetPickupTextColor, &D_00493880, "SetPickupTextColor", 4, &D_00493888, &D_00493888, &D_00493888, &D_00493890);
 }

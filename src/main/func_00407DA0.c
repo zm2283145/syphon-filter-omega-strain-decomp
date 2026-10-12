@@ -4,7 +4,7 @@ typedef struct { char b[0x440]; } H2Pack;
 typedef struct { H2Key* keys; H2Pack* packs; int count; } H2Registry;
 extern void Appearance_RegistryKey(char* dst, int n, char* src);
 /* Finds the registry packing whose key equals the upper-cased stem of name. */
-H2Pack* func_00407DA0(H2Registry* reg, char* name) {
+H2Pack* SklRegistry_Find(H2Registry* reg, char* name) {
     int n;
     char* p;
     int i;

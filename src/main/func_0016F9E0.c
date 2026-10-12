@@ -9,13 +9,13 @@
 void func_0016F9E0(void) {
 }
 
-void func_0016F9F0(void) {
+void PlayerComp_OnHitNop(void) {
 }
 
 void func_0016FA00(void) {
 }
 
-int func_0016FA10(int a0, int a1) {
+int PlayerComp_GetDeathCode(int a0, int a1) {
     return a1;
 }
 

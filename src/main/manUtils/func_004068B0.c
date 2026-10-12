@@ -4,7 +4,7 @@ typedef struct { P8B0Name a; P8B0Name b; } P8B0Pair;
 typedef struct { char pad[0x40]; P8B0Pair pairs[1]; } P8B0Obj;
 extern int String_CompareN(const char* a, const char* b, int n);
 /* Pair index by type prefix. */
-int func_004068B0(P8B0Obj* o, const char* key) {
+int Appearance_FindPairByType(P8B0Obj* o, const char* key) {
     P8B0Pair* p = o->pairs;
     int i = 0;
     while ((long long)p->a.q != 0) {

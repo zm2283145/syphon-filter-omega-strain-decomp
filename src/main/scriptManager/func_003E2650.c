@@ -15,9 +15,9 @@ void func_00369700(void*,int);
 void func_0036DEC0(void*);
 void func_0036E220(void*,int);
 void func_0036E5D0(void*);
-void func_003D7930(char*,...);
+void Script_PrintWarning(char*,...);
 void func_003D7E30();
-void func_003DC080(void*,char*,int);
+void FileMan_Open(void*,char*,int);
 void func_003DDC30(void*,void*);
 }
 struct TypeRec { char pad[0x34]; void (*init)(int); };
@@ -44,9 +44,9 @@ extern "C" int ScriptMgr_ExportSymbols(Self* self,int one,int two) {
  if(D_004938D0 || D_00559F18) {
   if(D_00559F18) {
    char* name="release.sss"; Stream s;
-   func_003DC080(&s,name,1);
-   if(s.ready) { func_003DDC30(self,&s);func_003D7930("symbols exported to %s",name); }
-   else func_003D7930("couldn't export script symbols");
+   FileMan_Open(&s,name,1);
+   if(s.ready) { func_003DDC30(self,&s);Script_PrintWarning("symbols exported to %s",name); }
+   else Script_PrintWarning("couldn't export script symbols");
   }
  }
  return !D_00559F18;

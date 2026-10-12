@@ -9,7 +9,7 @@ typedef struct Pending {
 extern void ActiveList_RemoveObject(Pending*, int);
 
 /* If the pending flag is set, clears it and calls ActiveList_RemoveObject(self, arg). */
-void func_00131510(Pending* p) {
+void World_PopObject(Pending* p) {
     if (p->pending) {
         p->pending = 0;
         ActiveList_RemoveObject(p, p->arg);

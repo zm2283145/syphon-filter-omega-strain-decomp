@@ -45,7 +45,6 @@ static inline char* ReadStr_23C3C0(Pop_23C3C0* r)
 }
 extern "C" {
 extern char D_004A6FA8[];
-extern char D_004A6FB8[];
 extern char D_004FFB50[];
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void func_0036E5D0(Obj_23C3C0* o);
@@ -60,7 +59,7 @@ void func_00130D10(char* mgr, Tgt_23C3C0* t, char* name, char* buf);
 void* cVUM_GOBJ_ctor2(void* p, const D_23C3C0& d);
 }
 static inline Tgt_23C3C0* NewTgt_23C3C0() { void* m = Tgt_23C3C0::operator new(0x1F4, D_004A6FA8, 0x350); if (m) m = cVUM_GOBJ_ctor2(m, D_23C3C0(0)); return (Tgt_23C3C0*)m; }
-extern "C" void func_0023C3C0(Self_23C3C0* self, int mode, Pop_23C3C0* r, int id)
+extern "C" void NiEvent_LoadModelAsset(Self_23C3C0* self, int mode, Pop_23C3C0* r, int id)
 {
     int a;
     int b;
@@ -69,7 +68,7 @@ extern "C" void func_0023C3C0(Self_23C3C0* self, int mode, Pop_23C3C0* r, int id
     char* name;
     func_0036E5D0(&obj);
     name = ReadStr_23C3C0(r);
-    sprintf(buf, D_004A6FB8, id);
+    sprintf(buf, "%s.HOG", id);
     Hog_Register(&obj, buf, mode, 1);
     if (!(unsigned char)func_0036DEF0(&obj)) {
         unsigned char found;

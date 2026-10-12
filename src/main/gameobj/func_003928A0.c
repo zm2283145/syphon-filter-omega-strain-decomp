@@ -7,8 +7,8 @@
 
 extern int Model_HardMeshAttachPoints(int* p);
 extern void func_003A9F00(int* ctx);
-extern int func_003A9F10(int* ctx);
-extern void func_003CE790(cVUM_GOBJ* self);
+extern int SkelNodes_ConstructActive(int* ctx);
+extern void Object_Deactivate(cVUM_GOBJ* self);
 extern void func_003CE7D0(cVUM_GOBJ* self);
 extern void func_003CE810(cVUM_GOBJ* self);
 
@@ -18,12 +18,12 @@ void func_003928A0(cVUM_GOBJ* self) {
 }
 
 void func_003928D0(cVUM_GOBJ* self) {
-    func_003CE790(self);
+    Object_Deactivate(self);
     func_003A9F00(&self->modelCtx);
 }
 
 void func_00392900(cVUM_GOBJ* self) {
-    func_003A9F10(&self->modelCtx);
+    SkelNodes_ConstructActive(&self->modelCtx);
     self->model = &self->modelCtx;
     Model_HardMeshAttachPoints(&self->unk60);
     func_003CE810(self);

@@ -22,11 +22,11 @@ typedef struct Screen3F250 {
 } Screen3F250;
 
 extern "C" {
-extern char D_004B9CF0[];
-extern char D_004B9CE0[];
-extern char D_004B9CC8[];
+char D_004B9CC8[] = "vscrollbar2";
+char D_004B9CD8[] = "callout";
+char D_004B9CE0[] = "GuiChatWindow";
+char D_004B9CF0[] = "GuiMissionList";
 extern char D_004AAE00[];
-extern char D_004B9CD8[];
 extern char D_004A9870[];
 extern const char* D_004928B0;
 extern const char* D_004928B8;

@@ -2,7 +2,7 @@
 
 extern int func_00138DA0(int, int, int);
 
-int func_001642E0(int a0) {
+int NpcRouteMgr_TakeFreeRequest(int a0) {
     int loc[2];
     int a1, a2, s0, v0;
     int cond;

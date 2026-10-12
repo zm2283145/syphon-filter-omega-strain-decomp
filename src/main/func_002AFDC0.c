@@ -10,10 +10,13 @@ struct W_002AFDC0 {
 struct S_002AFDC0 {
     char pad0[0x160]; W_002AFDC0* p160; W_002AFDC0* p164; W_002AFDC0* p168; W_002AFDC0* p16C;
 };
+extern "C" char D_004ABC80[];
+extern "C" char D_004ABC90[];
+extern "C" char D_004ABCA0[];
+static void * const dat_0048BCD8[2] = { (void*)D_004ABC80, (void*)0x0 };
+static void * const dat_0048BCE0[2] = { (void*)D_004ABC90, (void*)0x0 };
+static void * const dat_0048BCE8[2] = { (void*)D_004ABCA0, (void*)0x0 };
 extern "C" {
-extern char* D_0048BCD8;
-extern char* D_0048BCE0;
-extern char* D_0048BCE8;
 extern char* D_0048BCF8;
 extern char D_004A9870[];
 extern char D_004A7520[];
@@ -29,9 +32,9 @@ static inline W_002AFDC0* FindAs_002AFDC0(S_002AFDC0* self, char* name, char* ty
 extern "C" void func_002AFDC0(S_002AFDC0* self)
 {
     func_0033F250(self);
-    self->p164 = FindAs_002AFDC0(self, D_0048BCD8, D_004A9870);
-    self->p168 = FindAs_002AFDC0(self, D_0048BCE0, D_004A9870);
-    self->p16C = FindAs_002AFDC0(self, D_0048BCE8, D_004A9870);
+    self->p164 = FindAs_002AFDC0(self, *(char**)dat_0048BCD8, D_004A9870);
+    self->p168 = FindAs_002AFDC0(self, *(char**)dat_0048BCE0, D_004A9870);
+    self->p16C = FindAs_002AFDC0(self, *(char**)dat_0048BCE8, D_004A9870);
     self->p160 = FindAs_002AFDC0(self, D_0048BCF8, D_004A7520);
     if (self->p160)
         func_0041C0D0(self->p160, 1);

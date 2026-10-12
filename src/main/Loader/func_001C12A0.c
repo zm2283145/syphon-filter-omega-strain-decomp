@@ -11,10 +11,10 @@ int Pop_FindTag(PopReader_1C12A0* r, int tag);
 void* cEnvSettings_ctor(void* p, PopReader_1C12A0* r);
 void func_00165E60(void* a, char* name, int x);
 void* func_001698C0(void);
-void func_001C1440(void* list, void** item);
+void EnvController_AddEnv(void* list, void** item);
 int func_001723F0(void* list);
 void** func_00172360(void* list, int i);
-void func_001781A0(void* list, void* item);
+void EnvController_ActivateFirst(void* list, void* item);
 }
 extern "C" void Loader_InitEnvironmentSettings(void* a0, PopReader_1C12A0* r)
 {
@@ -40,8 +40,8 @@ extern "C" void Loader_InitEnvironmentSettings(void* a0, PopReader_1C12A0* r)
             p = cEnvSettings_ctor(p, r);
         void* item[1];
         item[0] = p;
-        func_001C1440(list, item);
+        EnvController_AddEnv(list, item);
         Object_Register(p);
     }
-    func_001781A0(list, func_001723F0(list) ? 0 : *func_00172360(list, 0));
+    EnvController_ActivateFirst(list, func_001723F0(list) ? 0 : *func_00172360(list, 0));
 }

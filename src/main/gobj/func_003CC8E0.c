@@ -9,7 +9,7 @@ struct VC003CC8E0 { virtual int v0(); virtual int v1(); virtual int v2(); virtua
 extern "C" {
 
 }
-extern "C" int func_003CC8E0(char * arg0, char * arg1) {
+extern "C" int TeamTable_AreEnemies(char * arg0, char * arg1) {
     int var_v0;
     void **temp_a0;
     void **temp_s0;

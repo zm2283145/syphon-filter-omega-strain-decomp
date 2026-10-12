@@ -18,7 +18,7 @@ extern char* func_0036D200(H2Hog* h, int i);
 extern int Hog_Register(H2Reg* r, char* name, H2Hog* h, int opt);
 extern void Appearance_RegistryKey(char* dst, int n, char* src);
 extern short func_00380D40(int lib, __int128 name, H2Reg* r);
-extern short func_00381000(int lib);
+extern short TexCache_LoadErrorTexture(int lib);
 static inline int h2eq(__int128 a, __int128 b) {
     long long r;
     asm {
@@ -36,7 +36,7 @@ static inline unsigned int h2find(H2State* st, __int128 key) {
     return i;
 }
 /* Registers a texture HOG and loads each member texture into the state's texture table. */
-void func_00403D20(H2State* st, H2Hog* hog) {
+void TexCache_RegisterNpcTex(H2State* st, H2Hog* hog) {
     H2Reg reg;
     int k;
     int total;
@@ -62,7 +62,7 @@ void func_00403D20(H2State* st, H2Hog* hog) {
         if (lod == 0) {
             st->tex[i].a = func_00380D40(D_00539248, st->names[i].q, &reg);
             if (st->tex[i].a == -1)
-                st->tex[i].a = func_00381000(D_00539248);
+                st->tex[i].a = TexCache_LoadErrorTexture(D_00539248);
             if (st->tex[i].b == -1)
                 st->tex[i].b = st->tex[i].a;
         } else {
@@ -76,7 +76,7 @@ void func_00403D20(H2State* st, H2Hog* hog) {
             pb = &sb->tex[0].b;
             *pb = func_00380D40(D_00539248, st->names[i].q, &reg);
             if (*pb == -1)
-                *pb = func_00381000(D_00539248);
+                *pb = TexCache_LoadErrorTexture(D_00539248);
             pa = &sb->tex[0].a;
             if (*pa == -1)
                 *pa = *pb;

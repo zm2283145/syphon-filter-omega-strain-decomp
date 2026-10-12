@@ -30,7 +30,7 @@ static inline Key_239DF0* Zero_239DF0(void* d0, int n0) { void* dst = d0; int n 
     return r;
 }
 extern "C" void func_00240150(Vec_239DF0* v, unsigned int n, const Key_239DF0* value);
-extern "C" void func_00239DF0(Track_239DF0* self, Reader_239DF0* r)
+extern "C" void NiEvent_ReadKeyedTrack4(Track_239DF0* self, Reader_239DF0* r)
 {
     Key_239DF0 k1;
     Key_239DF0 k0;

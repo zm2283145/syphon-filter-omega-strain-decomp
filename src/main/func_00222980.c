@@ -86,4 +86,4 @@ struct ListI8_00222980Holder {
     }
 
 #endif /* LIB_00222980 */
-DEFINE_LIST_INSERT_BEFORE8(func_00222980)
+DEFINE_LIST_INSERT_BEFORE8(WeakHandleList_Append)

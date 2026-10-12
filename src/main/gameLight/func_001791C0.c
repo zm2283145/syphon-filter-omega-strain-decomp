@@ -6,8 +6,8 @@ struct C5Sub {
     virtual void Method30(); /* +0x30 */
 };
 struct C5Light { char pad[0x60]; C5Sub* sub; };
-extern "C" void func_003CE790(C5Light* p);
+extern "C" void Object_Deactivate(C5Light* p);
 extern "C" void cGameDirectionalLight_v16(C5Light* p) {
-    func_003CE790(p);
+    Object_Deactivate(p);
     p->sub->Method30();
 }

@@ -10,7 +10,7 @@ extern int List_InsertBefore(PathListLink** out, PathList* list, PathListLink** 
 extern int PathList_PushBack(PathList* list, int* value);
 
 /* Appends value to listA; always returns 1. */
-int func_00164120(PathReceiver* self, int value) {
+int NpcRouteMgr_QueueRequest(PathReceiver* self, int value) {
     volatile int tmp = value; /* original stack temporary */
     PathList_PushBack(&self->listA, (int*)&tmp);
     return 1;

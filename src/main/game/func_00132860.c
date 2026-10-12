@@ -10,7 +10,7 @@ struct Ctx_2860 { char pad[0x2E78]; Mdl_2860* model; char pad2e7c[0x24]; V_2860 
 #pragma push
 #pragma opt_propagation off
 #pragma opt_common_subs off
-extern "C" V_2860 func_00132860(Ctx_2860* self)
+extern "C" V_2860 Actor_GetPosition(Ctx_2860* self)
 {
     Mdl_2860* m = self->model;
     if (m->dirty) m->Update();

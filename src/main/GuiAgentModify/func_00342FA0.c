@@ -28,7 +28,7 @@ extern char D_004A9870[]; extern char D_004A9C40[]; extern char D_004A7520[]; ex
 extern char D_004FFB50[];
 extern O_342FA0* D_005331D0;
 void func_0041F150(O_342FA0* o);
-int func_004068B0(void* p, char* name);
+int Appearance_FindPairByType(void* p, char* name);
 void func_003437C0(O_342FA0* o, int v);
 void func_00343680(O_342FA0* o, int v);
 W_342FA0* func_0041DB80(void* o, char* name);
@@ -51,12 +51,12 @@ void func_00342FA0(O_342FA0* o)
     W_342FA0* a;
     W_342FA0* b;
     func_0041F150(o);
-    o->f114 = func_004068B0(o->f8C->fA0, D_004B9F88);
-    o->f118 = func_004068B0(o->f8C->fA0, D_004B9F90);
-    o->f11C = func_004068B0(o->f8C->fA0, D_004B9F98);
-    o->f120 = func_004068B0(o->f8C->fA0, D_004B9FA0);
-    o->f124 = func_004068B0(o->f8C->fA0, D_004B9FA8);
-    o->f128 = func_004068B0(o->f8C->fA0, D_004B9FB0);
+    o->f114 = Appearance_FindPairByType(o->f8C->fA0, D_004B9F88);
+    o->f118 = Appearance_FindPairByType(o->f8C->fA0, D_004B9F90);
+    o->f11C = Appearance_FindPairByType(o->f8C->fA0, D_004B9F98);
+    o->f120 = Appearance_FindPairByType(o->f8C->fA0, D_004B9FA0);
+    o->f124 = Appearance_FindPairByType(o->f8C->fA0, D_004B9FA8);
+    o->f128 = Appearance_FindPairByType(o->f8C->fA0, D_004B9FB0);
     func_003437C0(o, o->f120);
     func_003437C0(o, o->f124);
     func_00343680(o, o->f128);

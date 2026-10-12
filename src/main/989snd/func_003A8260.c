@@ -1,5 +1,5 @@
 #include "types.h"
-extern void func_0010DA58(int*, char*);
+extern void SyncDCache(int*, char*);
 extern void func_0010DB98(int*, char*);
 extern int func_00118F00(int);
 extern int func_003A85E0(void);
@@ -19,10 +19,7 @@ extern char D_005428C4;
 extern int D_00542900;
 extern int D_00542904;
 extern char D_00542850[];
-extern char D_004BCBC0[];
-extern char D_004BCBF0[];
 extern char D_004BCA30[];
-extern char D_004BCC10[];
 static inline unsigned char Done3A8260(void) { return !D_00542800; }
 static inline int Poll3A8260(char* k) {
     int t;
@@ -42,15 +39,15 @@ int snd_BankLoadByLoc(int loc, int size)
 {
     D_0053DBF8 = 0;
     if (D_00542878) {
-        if (!D_00542990) func_00127358(D_004BCBC0);
+        if (!D_00542990) func_00127358("snd_BankLoadByLoc: Load already in progress!\n");
         return 0;
     }
     if (Check3A8260(1) == 1) {
-        if (!D_00542990) func_00127358(D_004BCBF0);
+        if (!D_00542990) func_00127358("snd_BankLoadByLoc: CD BUSY!\n");
         return 0;
     }
     D_005428C0 = -1;
-    func_0010DA58(&D_005428C0, &D_005428C4);
+    SyncDCache(&D_005428C0, &D_005428C4);
     D_00542900 = loc;
     D_00542904 = size;
     while (func_00110720(D_00542850)) {
@@ -59,7 +56,7 @@ int snd_BankLoadByLoc(int loc, int size)
         func_0010D3E0(0);
     }
     if (func_00110528(D_00542850, 3, 1, &D_00542900, 8, &D_005428C0, 4, 0, 0) < 0) {
-        if (!D_00542990) func_00127358(D_004BCC10);
+        if (!D_00542990) func_00127358("989snd.c: RPC call has failed inside snd_BankLoadByLoc\n");
         D_0053DBF8 = 0x106;
         return 0;
     }

@@ -1,6 +1,6 @@
 #include "types.h"
 
-void func_001AF3E0(int a0) {
+void SkelNode_ClearWeight(int a0) {
     int cond;
 
     cond = a0 == 0;

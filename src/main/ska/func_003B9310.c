@@ -13,7 +13,6 @@ Str* String_Replace(Str* s, unsigned int pos, unsigned int n, const char* first,
 void func_00123BE8(int, const char*);
 void func_00121B60(void);
 extern char* D_00489738;
-extern char D_004BCE40[];
 }
 
 template <class T> static inline const T& Min(const T& a, const T& b) { return b < a ? b : a; }
@@ -32,7 +31,7 @@ extern "C" Str* func_003B9310(Str* self, unsigned int pos, unsigned int n1, cons
         len = str->l.length;
     }
     if (len < pos2) {
-        func_00123BE8(*(int*)(D_00489738 + 0xC), D_004BCE40);
+        func_00123BE8(*(int*)(D_00489738 + 0xC), "basic_string: out_of_range");
         func_00121B60();
     }
     data += pos2;

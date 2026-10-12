@@ -18,7 +18,7 @@ extern "C" {
 extern int D_004F7C60;
 int* func_0023A550(PtrVec* v, int i);
 void func_0023BEE0(Node_23BEE0* self, int arg);
-void func_003CE790(Node_23BEE0* self, int arg);
+void Object_Deactivate(Node_23BEE0* self, int arg);
 }
 #pragma push
 #pragma opt_strength_reduction off
@@ -34,6 +34,6 @@ extern "C" void func_0023BEE0(Node_23BEE0* self, int arg)
         else
             ((Target_23BEE0*)self->children.data[i])->slot22(arg);
     }
-    func_003CE790(self, arg);
+    Object_Deactivate(self, arg);
 }
 #pragma pop

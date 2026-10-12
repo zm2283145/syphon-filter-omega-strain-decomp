@@ -14,13 +14,13 @@ extern char D_004EE698[];
 extern char D_004D9940[];
 extern char D_004FFB50[];
 extern void* D_004FFBD4;
-extern int func_003FB340(int);
+extern int Player_GetIndex(int);
 extern void Event_Construct(void*, char*);
 extern void Event_Send(void*, void*, int);
 extern void cMessage_dtor(void*, int);
 extern int func_001723F0(void*);
 extern int* func_00172360(void*, int);
-extern void func_001781A0(void*, int);
+extern void EnvController_ActivateFirst(void*, int);
 extern void ActiveList_RemoveObject(char*, T171*);
 }
 #define BCAST171(o, ev, mi, me) \
@@ -29,7 +29,7 @@ extern void ActiveList_RemoveObject(char*, T171*);
         for (i = 0; i < (o)->n; i++) { \
             if (D_005721C8) { \
                 int id = -1; \
-                if (ev) id = func_003FB340((ev)->fc); \
+                if (ev) id = Player_GetIndex((ev)->fc); \
                 Event_Construct(&mi, g_cDisableMsgClass); \
                 mi.vt = D_004E0860; \
                 mi.f24 = id; \
@@ -67,7 +67,7 @@ extern "C" void Hotbox_SendLinkMessages(O171* o, E171* ev) {
         break;
     case 5: {
         void* g = D_004FFBD4;
-        func_001781A0(g, func_001723F0(g) ? 0 : *func_00172360(g, 0));
+        EnvController_ActivateFirst(g, func_001723F0(g) ? 0 : *func_00172360(g, 0));
         break;
     }
     case 8: case 12: case 13: case 14: case 18: {

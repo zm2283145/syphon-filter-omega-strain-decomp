@@ -5,10 +5,10 @@ typedef struct { int pad0; int count; } Pt2_LVec;
 typedef struct { unsigned char hit; char pad1[0x5F]; unsigned char want; unsigned char excl; unsigned char alt; } Pt2_LQ;
 extern Pt2_LRec** func_001EEBA0(Pt2_LVec*);
 extern void Los_IntersectRecord(Pt2_LQ*, Pt2_LRec*);
-extern void func_003C4A80(Pt2_LQ*, Pt2_LRec*);
+extern void Los_TraceWaterSurfaces(Pt2_LQ*, Pt2_LRec*);
 static inline int Pt2_Ne(Pt2_LRec* a, Pt2_LRec** b) { return !(a == *b); }
 
-int func_003C3A60(Pt2_LQ* q, Pt2_LVec* v) {
+int Los_TraceWithWater(Pt2_LQ* q, Pt2_LVec* v) {
     unsigned char deferred = 0;
     {
         Pt2_LRec* end[1];
@@ -36,7 +36,7 @@ int func_003C3A60(Pt2_LQ* q, Pt2_LVec* v) {
             unsigned char m = it->mask;
             if ((unsigned char)(m & q->alt)) {
                 if (!(unsigned char)(m & q->excl)) {
-                    if (q->want == (unsigned char)(m & q->want)) func_003C4A80(q, it);
+                    if (q->want == (unsigned char)(m & q->want)) Los_TraceWaterSurfaces(q, it);
                 }
             }
         }

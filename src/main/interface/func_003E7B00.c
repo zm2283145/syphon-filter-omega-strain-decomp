@@ -5,7 +5,7 @@ typedef struct { char pad[0x60]; unsigned char b60; } M3E7B;
 typedef struct { M3E7B* f0; void* f4; } O3E7B;
 extern "C" {
 extern void func_0036DEF0(void*);
-extern unsigned char* func_0036DC60(void*);
+extern unsigned char* FileMan_ReadData(void*);
 extern int D_0055C0B8;
 extern char D_004BDEC8[];
 extern void* Mem_Alloc(int, int, char*, int);
@@ -23,7 +23,7 @@ extern "C" O3E7B* func_003E7B00(O3E7B* o, void* src) {
     o->f0 = 0;
     o->f4 = 0;
     func_0036DEF0(src);
-    p = func_0036DC60(src);
+    p = FileMan_ReadData(src);
     p++;
     p++;
     D_0055C0B8 = *(unsigned short*)p;

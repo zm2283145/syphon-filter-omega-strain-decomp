@@ -11,7 +11,7 @@ extern char g_NpcRouteMgr[]; /* receiver registration data */
 extern void* Receiver_Construct(void* self, void* info);
 extern PathList* ScalarCollection_Init(PathList* list);
 
-PathReceiver* func_00164620(PathReceiver* self) {
+PathReceiver* NpcRouteMgr_Construct(PathReceiver* self) {
     Receiver_Construct(self, g_NpcRouteMgr);
     self->vtable = D_004D96C0;
     ScalarCollection_Init(&self->listA);

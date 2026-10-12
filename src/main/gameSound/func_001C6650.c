@@ -4,7 +4,6 @@ int SoundEvent_Ctor(void*, void*, int);
 int SoundRequest_Ctor(void*, int, void*, int, int);
 int cMessage_dtor(void*, int);
 int func_0036E220(void*, int);
-extern char D_0049F498[];
 extern char D_004DADF0[];
 extern char D_004FFB50[];
 extern void func_001C6700(void);
@@ -16,7 +15,7 @@ typedef struct { int w[43]; } A2C4; typedef struct { int w[39]; } A228; typedef 
 void Global_StopAllQuips(void) {
     struct { A10 sp10; A88 sp88; A124 sp124; A1E0 sp1E0; A228 sp228; A2C4 sp2C4; } L;
     if (&func_001C6700 != 0) {
-        SoundRequest_Ctor(&L.sp1E0, 4, D_0049F498, 0, 0);
+        SoundRequest_Ctor(&L.sp1E0, 4, "", 0, 0);
         SoundEvent_Ctor(&L.sp10, &L.sp1E0, 0);
         Event_Send(&L.sp10, D_004FFB50, 0);
         L.sp10.vt = D_004DADF0;

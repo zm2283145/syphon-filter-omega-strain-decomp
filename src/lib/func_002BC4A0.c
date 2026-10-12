@@ -15,7 +15,7 @@ extern E2BB520 *func_002BB520(int);
 extern char D_004AC248[];
 extern int func_0010F388(const char *, ...);
 extern void *memcpy(void *, const void *, unsigned int);
-extern void func_0010DA58(void *, void *);
+extern void SyncDCache(void *, void *);
 int func_002BC4A0(int i, int sec, int n)
 {
     int l;

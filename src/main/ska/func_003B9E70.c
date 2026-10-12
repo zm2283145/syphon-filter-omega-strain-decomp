@@ -6,7 +6,6 @@ struct DqBuf { unsigned int cap; unsigned int size; unsigned int start; int* dat
 extern "C" {
 extern char D_0049AF00[];
 extern char D_0049AE50[];
-extern char D_004BCF10[];
 extern unsigned int D_004BCEE8[2];
 extern signed char D_00542C90;
 }
@@ -47,7 +46,7 @@ extern "C" void func_003B9E70(DqBuf* self, unsigned int n)
     if ((self->cap == 0 ? 0 : self->cap - 1) < n) {
         int* nd;
         if (MaxSize() < n) {
-            func_00123BE8(D_00489738->stream, D_004BCF10);
+            func_00123BE8(D_00489738->stream, "cdeque::reserve length error");
             func_00121B60();
         }
         nd = (int*)TStr_Alloc((n + 1) * 4, D_0049AE50, 0x5C);

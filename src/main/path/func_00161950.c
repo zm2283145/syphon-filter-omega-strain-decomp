@@ -43,9 +43,9 @@ extern char D_004D9760[];
 extern "C" void Event_Construct(void* msg, void* name);
 extern "C" void Event_Send(void* msg, void* target, int immediate);
 extern "C" void cMessage_dtor(void* msg, int flags);
-extern "C" void func_0015E110(Pt1SnSelf* self, int mode);
+extern "C" void NpcRoute_CollectCandidates(Pt1SnSelf* self, int mode);
 extern "C" Pt1SnNode* func_001647B0(void* list);
-extern "C" void func_00161BC0(Pt1SnSelf* self, int id, int mask);
+extern "C" void NpcRoute_RequestLosChecks(Pt1SnSelf* self, int id, int mask);
 
 static inline Pt1SnObj* Pt1Sn_Owner(Pt1SnSelf* self)
 {
@@ -70,9 +70,9 @@ extern "C" unsigned char NpcRoute_ScoreNodes(Pt1SnSelf* self)
         self->last = self->sentinel;
         self->count = 0;
         if (!self->crouched)
-            func_0015E110(self, 2);
+            NpcRoute_CollectCandidates(self, 2);
         else
-            func_0015E110(self, 0);
+            NpcRoute_CollectCandidates(self, 0);
         self->target = -1;
         self->target2 = -1;
         self->status = 0;
@@ -82,7 +82,7 @@ extern "C" unsigned char NpcRoute_ScoreNodes(Pt1SnSelf* self)
                 self->target = n->a;
                 self->target2 = n->b;
             } else {
-                func_00161BC0(self, ((Pt1SnNode*)self->head)->a, self->mask);
+                NpcRoute_RequestLosChecks(self, ((Pt1SnNode*)self->head)->a, self->mask);
             }
         }
     }

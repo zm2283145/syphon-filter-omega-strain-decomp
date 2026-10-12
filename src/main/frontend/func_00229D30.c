@@ -12,7 +12,7 @@ extern "C" void func_0012ED30();
 extern "C" void func_0012ED40();
 extern "C" void func_0012ED50();
 extern "C" void func_001383D0();
-extern "C" void func_003CACA0();
+extern "C" void Object_BroadcastToChildren();
 extern "C" void func_003CB1E0();
 extern "C" void func_003CB1F0();
 extern void * const D_004DB810[];
@@ -48,4 +48,4 @@ extern "C" Obj_229D30* func_00229D30(Obj_229D30* o, short flag)
     }
     return o;
 }
-void * const D_004DB810[16] = { (void*)0x0, (void*)0x0, (void*)func_00229D30, (void*)func_003CACA0, (void*)func_0012ECE0, (void*)func_0012ECF0, (void*)func_001383D0, (void*)func_0012ED00, (void*)func_0012ED10, (void*)func_0012ED20, (void*)func_0012ED30, (void*)func_0012ED40, (void*)func_0012ED50, (void*)func_003CB1E0, (void*)func_003CB1F0, (void*)0x0 };
+void * const D_004DB810[16] = { (void*)0x0, (void*)0x0, (void*)func_00229D30, (void*)Object_BroadcastToChildren, (void*)func_0012ECE0, (void*)func_0012ECF0, (void*)func_001383D0, (void*)func_0012ED00, (void*)func_0012ED10, (void*)func_0012ED20, (void*)func_0012ED30, (void*)func_0012ED40, (void*)func_0012ED50, (void*)func_003CB1E0, (void*)func_003CB1F0, (void*)0x0 };

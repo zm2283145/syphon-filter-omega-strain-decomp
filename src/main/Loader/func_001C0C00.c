@@ -12,7 +12,7 @@ void func_00165E60(int a, char* b, int c);
 int Pop_FindTag(Pop_001C0C00* r, int tag);
 void* TriggerZone_ctor(void* p, Pop_001C0C00* r);
 void* cHotbox_ctor(void* p, Pop_001C0C00* r, int type);
-void func_00171020(void* vec, void** val);
+void Hotbox_AddToGlobalList(void* vec, void** val);
 void Object_Register(void* p);
 static inline void Align_001C0C00(Pop_001C0C00* r)
 {
@@ -76,7 +76,7 @@ void Loader_InitHotboxes(void* self, Pop_001C0C00* r)
                     }
                 }
                 tmp[0] = p;
-                func_00171020(D_004EE688, tmp);
+                Hotbox_AddToGlobalList(D_004EE688, tmp);
                 Object_Register(p);
             }
         }

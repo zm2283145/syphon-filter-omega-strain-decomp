@@ -8,10 +8,10 @@
 #include "MovieSubtitles_types.h"
 
 extern void func_00374DF0(SubtitleEntry* entry);
-extern float func_0037D9A0(SubtitleOwner* owner);
+extern float Renderer_UpdateCameraMatrices(SubtitleOwner* owner);
 
 char* func_00411550(SubtitleOwner* owner) {
-    func_0037D9A0(owner);
+    Renderer_UpdateCameraMatrices(owner);
     return owner->unkEC0;
 }
 

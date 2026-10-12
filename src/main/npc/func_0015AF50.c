@@ -9,7 +9,7 @@ extern char D_004EA190[];
 void* Mem_Alloc(int, int, char*, int);
 void func_0015B030(void*, Think_f4**);
 }
-extern "C" void func_0015AF50(Npc_f4* npc)
+extern "C" void NpcThinkList_Add(Npc_f4* npc)
 {
     Think_f4* t[1];
     Think_f4* p;

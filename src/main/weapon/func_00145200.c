@@ -15,7 +15,7 @@ struct I_00145200 { int a; int n; };
 struct S_00145200 { int x0; I_00145200* info; char pad8[0xC]; E_00145200* arr; unsigned char x18; char pad1c[0xB8 - 0x1C]; void* pB8[7]; void* pD4; };
 static inline void Free_00145200(void* p, int line) { AllocGuard g; Mem_Free(0, p, D_0049B1D0, line); }
 static inline void DelD4_00145200(void* p, int line) { G_00145200 g; func_00136DA0(&g); func_001454E0(p, -1); Mem_Free(0, p, D_0049B1D0, line); func_0012F530(&g, -1); }
-extern "C" void func_00145200(S_00145200* self)
+extern "C" void WeaponDb_LoadResources(S_00145200* self)
 {
     int i;
     for (i = 0; i < self->info->n; i++) {

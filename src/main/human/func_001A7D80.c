@@ -21,7 +21,7 @@ static inline V4_7D80 QMul_(V4_7D80* a, V4_7D80* b) {
 #pragma peephole off
 #pragma opt_propagation off
 #pragma opt_common_subs off
-V4_7D80* func_001A7D80(V4_7D80* self, V4_7D80* o) {
+V4_7D80* Quat_MulInPlace(V4_7D80* self, V4_7D80* o) {
     V4_7D80 t; V4_7D80* tp; t = QMul_(self, o); tp = &t; *self = *tp;
     return self;
 }

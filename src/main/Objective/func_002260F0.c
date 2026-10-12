@@ -19,7 +19,7 @@ extern void Event_Construct(E7FMsg* msg, void* name);
 extern void Event_Send(E7FMsg* msg, void* target, int flags);
 extern void cMessage_dtor(E7FMsg* msg, int flags);
 extern void Objective_SetFailed(void* obj);
-extern void func_0018C770(E7FActor* a, int n);
+extern void Actor_BuildVoiceKey(E7FActor* a, int n);
 void Objective_Fail(void* self, void* obj, E7FActor* actor)
 {
     if (D_005721C8) {
@@ -36,6 +36,6 @@ void Objective_Fail(void* self, void* obj, E7FActor* actor)
     }
     Objective_SetFailed(obj);
     if (actor && actor->type == D_0049D010) {
-        func_0018C770(actor, 11);
+        Actor_BuildVoiceKey(actor, 11);
     }
 }

@@ -10,7 +10,6 @@ extern int func_0010B3F8(void *);
 extern void func_0010B5E8(void *);
 extern int func_0010C698();
 extern int func_0010C6C0();
-extern char D_004986A0[];
 
 int func_0010AFF8(char *mp, char *work, int size)
 {
@@ -21,7 +20,7 @@ int func_0010AFF8(char *mp, char *work, int size)
     p = (char *)(((unsigned int)work + 3) >> 2 << 2);
     rem = size - (p - work);
     if (rem < 0x10C0) {
-        func_0010BD90(p, D_004986A0);
+        func_0010BD90(p, "The size of work area is too small");
         return 0;
     }
     F_(mp, 0x40, char *) = p;

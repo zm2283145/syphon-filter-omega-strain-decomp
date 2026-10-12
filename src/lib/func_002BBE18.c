@@ -12,14 +12,13 @@ extern void *memset(void *, int, unsigned int);
 extern int sceDbcSendData3(int, int, void *, void *, void *);
 extern void func_002BB660(void);
 extern E2BB520 *func_002BB520(int);
-extern char D_004AC228[];
 extern int func_0010F388(const char *, ...);
 int func_002BBE18(int i)
 {
     LBBBB0 l;
     if (func_0026A8C8(D_00518A08[i].sock) == 3) return 0;
     if (D_00518A08[i].s.x8 == 0 || D_00518A08[i].s.xC == 0) {
-        func_0010F388(D_004AC228);
+        func_0010F388("** PANIC!\n");
         return 0;
     }
     D_00518A40.x8 = D_00518A08[i].s.x8;

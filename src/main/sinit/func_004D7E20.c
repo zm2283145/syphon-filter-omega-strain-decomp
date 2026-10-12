@@ -1,7 +1,7 @@
 #include "types.h"
 int func_002824D0();
 int cGOBJ_GetScriptTypeKeyPtr();
-int func_003D8740();
+int Script_RegisterNative_2();
 int func_003D8F60();
 int FreeList_Push();
 int Script_ClearInteract_2();
@@ -38,18 +38,18 @@ extern void* D_005861B8;
 extern void* D_005861C0;
 void func_004D7E20(void) {
     D_00586140 = func_003D8F60("eJoystickButton", &D_00497A30, 12);
-    D_00586148 = func_003D8740(Script_PlayXA, &D_00493880, "PlayXA", 1, &D_004938A0);
-    D_00586150 = func_003D8740(Script_PlayXA_2, &D_00493880, "PlayXA", 2, &D_004938A0, &D_00493898);
+    D_00586148 = Script_RegisterNative_2(Script_PlayXA, &D_00493880, "PlayXA", 1, &D_004938A0);
+    D_00586150 = Script_RegisterNative_2(Script_PlayXA_2, &D_00493880, "PlayXA", 2, &D_004938A0, &D_00493898);
     D_00586158 = "cDisplayClientInteractMsg";
     D_00586168 = func_002824D0(func_0045EBC0, &D_00586160, "cDisplayClientInteractMsg");
     D_00586170 = "cClearClientInteractMsg";
     D_00586180 = func_002824D0(func_0045EB70, &D_00586178, "cClearClientInteractMsg");
-    D_00586188 = func_003D8740(Script_DisplayInteract, &D_00493880, "DisplayInteract", 1, &D_00493898);
-    D_00586190 = func_003D8740(Script_DisplayInteract_2, &D_00493880, "DisplayInteract", 2, &D_00493898, &D_00586140);
-    D_00586198 = func_003D8740(Script_DisplayInteract_3, &D_00493880, "DisplayInteract", 2, cGOBJ_GetScriptTypeKeyPtr(), &D_004938A0);
-    D_005861A0 = func_003D8740(Script_DisplayInteract_4, &D_00493880, "DisplayInteract", 3, cGOBJ_GetScriptTypeKeyPtr(), &D_004938A0, &D_00586140);
-    D_005861A8 = func_003D8740(Script_ClearInteract, &D_00493880, "ClearInteract", 0);
-    D_005861B0 = func_003D8740(Script_ClearInteract_2, &D_00493880, "ClearInteract", 1, cGOBJ_GetScriptTypeKeyPtr());
+    D_00586188 = Script_RegisterNative_2(Script_DisplayInteract, &D_00493880, "DisplayInteract", 1, &D_00493898);
+    D_00586190 = Script_RegisterNative_2(Script_DisplayInteract_2, &D_00493880, "DisplayInteract", 2, &D_00493898, &D_00586140);
+    D_00586198 = Script_RegisterNative_2(Script_DisplayInteract_3, &D_00493880, "DisplayInteract", 2, cGOBJ_GetScriptTypeKeyPtr(), &D_004938A0);
+    D_005861A0 = Script_RegisterNative_2(Script_DisplayInteract_4, &D_00493880, "DisplayInteract", 3, cGOBJ_GetScriptTypeKeyPtr(), &D_004938A0, &D_00586140);
+    D_005861A8 = Script_RegisterNative_2(Script_ClearInteract, &D_00493880, "ClearInteract", 0);
+    D_005861B0 = Script_RegisterNative_2(Script_ClearInteract_2, &D_00493880, "ClearInteract", 1, cGOBJ_GetScriptTypeKeyPtr());
     D_005861C0 = &D_004E16C0;
     D_005861B8 = "GuiGameScreen";
     FreeList_Push(&D_005861B8);

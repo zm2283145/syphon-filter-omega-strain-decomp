@@ -9,7 +9,7 @@ public:
     char pad[0x2A];
     char b2E;
 };
-extern "C" void func_002240E0(void* unused, Obj002240E0* o, int enable)
+extern "C" void ZoneMgr_OnAsyncLoaded(void* unused, Obj002240E0* o, int enable)
 {
     if (enable) {
         o->on(0);

@@ -5,7 +5,7 @@ extern char D_004E0840[];
 extern void Event_Construct(Ev24A7A0*, void*);
 extern void Event_Send(Ev24A7A0*, void*, int);
 extern void cMessage_dtor(void*, int);
-int func_0024A7A0(void* self, void* target) {
+int PlayerInput_Crouch(void* self, void* target) {
     Ev24A7A0 ev;
     Event_Construct(&ev, D_0055D480);
     ev.vt = D_004E0840;

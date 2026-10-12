@@ -17,7 +17,7 @@ extern void Game_LoadIni(F1Game1695* g);
 extern void Loc_LoadCommonPool(char* name);
 extern void func_003A6560(void);
 extern void func_00165DD0(F1Game1695* g);
-extern void func_0037E780(void* p, int a, int b, int c, int d, int e, int f, int g);
+extern void Renderer_Init(void* p, int a, int b, int c, int d, int e, int f, int g);
 extern void func_00165950(F1Game1695* g);
 extern void func_002CB8C0(void* p, int n);
 extern void func_002C7D90(void* p, int a, void* b, int c);
@@ -31,7 +31,7 @@ void StringPool_Load(F1Game1695* g)
     func_003A6560();
     func_00165DD0(g);
     if (D_004FFBA0 == 9) {
-        func_0037E780(D_005381F0, g->x254, g->x258, 0x20, 0x10, g->b250, 4000, 500);
+        Renderer_Init(D_005381F0, g->x254, g->x258, 0x20, 0x10, g->b250, 4000, 500);
         D_005383D4 = g->x260;
         D_005383C0 = (unsigned char)(int)(D_004C1FC8 * D_004FFD2C->scale);
         func_00165950(g);

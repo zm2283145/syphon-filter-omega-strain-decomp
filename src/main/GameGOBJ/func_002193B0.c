@@ -14,7 +14,7 @@ struct Path {
 typedef struct cPathedGOBJ { char pad[0x64]; Path* path; /* +0x64 */ } cPathedGOBJ;
 
 extern char g_TargetVisMgr[];
-extern "C" void func_003CE790(cPathedGOBJ* self, void* arg);
+extern "C" void Object_Deactivate(cPathedGOBJ* self, void* arg);
 extern "C" void TargetVis_Unregister(void* list, cPathedGOBJ* obj);
 
 /* Notifies the path (virtual +0x60), runs the base handler, then TargetVis_Unregister(g_TargetVisMgr, self). */
@@ -22,6 +22,6 @@ extern "C" void cPathedGOBJ_v16(cPathedGOBJ* self, void* arg)
 {
     if (self->path)
         self->path->Method60();
-    func_003CE790(self, arg);
+    Object_Deactivate(self, arg);
     TargetVis_Unregister(g_TargetVisMgr, self);
 }

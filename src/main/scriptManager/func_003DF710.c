@@ -16,8 +16,8 @@ struct Pt2_RObj { virtual void Destroy(int); };
 extern "C" {
 extern char D_004BD4C0[];
 void Script_InvalidArgNop(Pt2_Interp*, char*, char*);
-Pt2_TInfo* func_003D7590(int);
-int func_003E0A70(Pt2_Interp*, Pt2_Handler*, Pt2_TInfo*);
+Pt2_TInfo* ScriptType_GetRecord(int);
+int ScriptFilter_ArgIsId(Pt2_Interp*, Pt2_Handler*, Pt2_TInfo*);
 int Script_LookupObjectById(int);
 int Script_CallHandler(Pt2_Interp*, Pt2_Handler*, int*, int);
 void Mem_Free(int, void*, char*, int);
@@ -41,8 +41,8 @@ extern "C" int ScriptEvent_Replay(Pt2_Interp* in, Pt2_Handler* h, int* args, int
             do {
                 int t = h->argTypes[i]->type;
                 if (t >= 100) {
-                    Pt2_TInfo* ti = func_003D7590(t);
-                    if (ti && ti->isObj && !func_003E0A70(in, h, ti)) *a = Script_LookupObjectById(*a);
+                    Pt2_TInfo* ti = ScriptType_GetRecord(t);
+                    if (ti && ti->isObj && !ScriptFilter_ArgIsId(in, h, ti)) *a = Script_LookupObjectById(*a);
                 }
                 i++;
                 a++;
@@ -55,7 +55,7 @@ extern "C" int ScriptEvent_Replay(Pt2_Interp* in, Pt2_Handler* h, int* args, int
             do {
                 int t = h->argTypes[j]->type;
                 if (t >= 100) {
-                    Pt2_TInfo* ti = func_003D7590(t);
+                    Pt2_TInfo* ti = ScriptType_GetRecord(t);
                     if (ti && ti->owned) Pt2_FreeObj((Pt2_RObj*)*args);
                 }
                 j++;

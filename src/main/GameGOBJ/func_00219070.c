@@ -34,7 +34,7 @@ extern void Event_Send(void* m, void* target, int immediate);
 extern void cMessage_dtor(void* m, int flags);
 extern void SoundEvent_CtorFromPreset(Snd_00219070* e, void* preset, void* owner);
 extern void func_0036E220(Str_00219070* s, int flag);
-extern int func_003CEA10(Path_00219070* self, void* ev);
+extern int Object_HandleMessage(Path_00219070* self, void* ev);
 }
 static inline int ObjId_00219070(Obj_00219070* o) { return o ? o->id : 0; }
 #pragma opt_strength_reduction off
@@ -87,7 +87,7 @@ extern "C" int PathObj_Receive(Path_00219070* self, void* ev)
         Handler_00219070* h = self->handler;
         if (h)
             h->Receive(ev);
-        return func_003CEA10(self, ev);
+        return Object_HandleMessage(self, ev);
     }
-    return func_003CEA10(self, ev);
+    return Object_HandleMessage(self, ev);
 }

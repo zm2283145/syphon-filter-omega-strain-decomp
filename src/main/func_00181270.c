@@ -27,8 +27,8 @@ struct Gath {
 static inline int Ne(It* a, It* b) { return (a->p == b->p) ^ 1; }
 extern "C" {
 void Sphere_FromCenter(V4*, V4*);
-float func_00183350(V4*);
-void func_001832D0(V4*, Sph*);
+float Vec4_Length(V4*);
+void Box_GetCenter(V4*, Sph*);
 void func_001832B0(Sph*, V4*, float);
 void func_0013B260(Scene*);
 void func_00183270(It*, Lst*);
@@ -78,8 +78,8 @@ void Collision_GatherScene(Gath* self, Scene* scene, Sph* sph, int a3)
     *(int*)0x70000004 = 0;
     *(int*)0x70000008 = a3;
     Sphere_FromCenter(&d0, (V4*)((char*)sph + 0x10));
-    r = 0.5f * func_00183350(&d0);
-    func_001832D0(&c0, sph);
+    r = 0.5f * Vec4_Length(&d0);
+    Box_GetCenter(&c0, sph);
     func_001832B0(&e0, &c0, r);
     func_0013B260(scene);
     self->Begin();

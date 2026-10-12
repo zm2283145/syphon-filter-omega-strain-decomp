@@ -1,4 +1,5 @@
-extern char ***D_00489440;
+extern char **D_0048943C;
+static char ***D_00489440 = &D_0048943C;
 extern void func_00123310(void *);
 extern void func_00123318(void *);
 extern int String_CompareN(const char *, const char *, unsigned int);

@@ -1,7 +1,7 @@
 #include "types.h"
 typedef unsigned long long u64_f4;
 typedef struct { char pad[0x90]; u64_f4 frame; u64_f4 frameNoMask; u64_f4 zbuf; u64_f4 xyoffset; char padB0[0x20]; unsigned char dirty; } GsTarget_f4;
-void func_0037E210(GsTarget_f4* t, unsigned int w, unsigned int h, unsigned int psm, unsigned int fbp,
+void Renderer_BindTarget(GsTarget_f4* t, unsigned int w, unsigned int h, unsigned int psm, unsigned int fbp,
                    unsigned int fbmsk, unsigned int zpsm, unsigned int zbp, unsigned int zmsk, unsigned char field)
 {
     unsigned int ofx = (2048 - (w >> 1)) << 4;

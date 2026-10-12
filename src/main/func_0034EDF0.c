@@ -16,7 +16,6 @@ struct LEDF0 {
 typedef struct { char pad0[0x48]; void* tbl; } OEDF0;
 
 extern "C" char D_004FFB50[];
-extern "C" char D_004BA9E8[];
 extern "C" void func_00296F20(LEDF0* l);
 extern "C" void func_00299270(LEDF0* l, int flags);
 extern "C" void* Agent_GetSelected(void* list, int idx);
@@ -33,7 +32,7 @@ extern "C" void func_0034EDF0(OEDF0* self)
     func_00296F20(&l);
     l.aC = 1;
     func_00333260(ag, 4, 0, &l);
-    text = Loc_LookupText(D_004BA9E8);
+    text = Loc_LookupText("Classified");
     for (i = 0; i < l.size(); i++) {
         EEDF0* e = (EEDF0*)((int)l.data + i * sizeof(EEDF0));
         int id = text;

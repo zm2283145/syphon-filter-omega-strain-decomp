@@ -9,10 +9,10 @@ public:
     virtual void stop();
 };
 struct Ev00237AD0 { char pad[0x140]; Light00237AD0* light; };
-extern "C" void func_003CE790(Ev00237AD0* self);
+extern "C" void Object_Deactivate(Ev00237AD0* self);
 extern "C" void cNIEventLight_v16(Ev00237AD0* self)
 {
-    func_003CE790(self);
+    Object_Deactivate(self);
     if (self->light) {
         self->light->stop();
         if (self->light)

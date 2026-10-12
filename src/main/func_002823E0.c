@@ -8,7 +8,6 @@ typedef struct { char pad[8]; short len; short kind; unsigned char data[1]; } Bu
 extern "C" {
 extern unsigned char* D_005061D0;
 extern int D_005061C8;
-extern char D_004A9398[];
 void Event_PackHeader(Msg2823E0* e, int a1, int* type, int a3, int a4, unsigned int size, void* buf);
 void func_00127358(const char* format, ...);
 }
@@ -33,7 +32,7 @@ b->len = n;
             *type = D_005061C8;
         }
     }
-    if ((unsigned int)r > 0x10C) func_00127358(D_004A9398, r);
+    if ((unsigned int)r > 0x10C) func_00127358("size = %d\n", r);
     return r;
 }
 #pragma pop

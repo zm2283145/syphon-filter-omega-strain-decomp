@@ -1,6 +1,6 @@
 #include "types.h"
 
-void func_001AE100(int a0, int a1) {
+void Actor_SetLookTarget(int a0, int a1) {
     int loc[1];
     int v1;
     int cond;

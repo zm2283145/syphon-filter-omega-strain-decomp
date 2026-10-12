@@ -16,7 +16,7 @@ extern int ScalarCollection_Init(void* list);
 extern int ScriptFilter_Dispatch(void* filter, int a0, int a1);
 
 /* Constructor taking the initial unk0C value by reference. */
-ListReceiver* func_003CB090(ListReceiver* self, int* id) {
+ListReceiver* Object_ConstructBase(ListReceiver* self, int* id) {
     self->base.vtable = D_004DFDE0;
     self->base.magic = RECEIVER_MAGIC;
     self->base.owner = D_00543650;

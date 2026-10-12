@@ -4,13 +4,13 @@
 #pragma mpwc_relax on
 int NetMap_BindReceiver(int, int, char * );
 int Npc_CreatePhysical();
-int func_001AF190(char * );
-int func_001AF460(char * );
+int Human_ApplyCentroidWeights(char * );
+int Human_ApplyBoundSpheres(char * );
 int TargetVis_Register(char *, char * );
 int func_002D1D80(int);
 int func_002D1FF0(char * , int);
 int func_002EBAF8(int *, int);
-int func_00392940(char * , int);
+int ActorModel_Activate(char * , int);
 int func_003FB4B0(int, int);
 int func_004341F0(char *, char * );
 int func_00436BA0(char *, int);
@@ -41,9 +41,9 @@ void Npc_Activate(char * arg0, int arg1) {
     int var_a1_2;
 
     Npc_CreatePhysical();
-    func_00392940(arg0, arg1);
-    func_001AF460(arg0);
-    func_001AF190(arg0);
+    ActorModel_Activate(arg0, arg1);
+    Human_ApplyBoundSpheres(arg0);
+    Human_ApplyCentroidWeights(arg0);
     TargetVis_Register(&g_TargetVisMgr, arg0);
     if (D_005721C8 != 0) {
         if ((F_(arg0, 0x3584, int) == 0) && (D_005721D0 != 0)) {

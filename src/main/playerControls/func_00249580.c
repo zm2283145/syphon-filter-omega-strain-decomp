@@ -7,7 +7,7 @@ extern char D_004E0840[];
 void Event_Construct(void* m, void* type);
 void Event_Send(void* m, void* target, int immediate);
 void cMessage_dtor(void* m, int flags);
-void func_00249580(void* self, Obj249580* o, void* target) {
+void PlayerInput_LookAtLockAction(void* self, Obj249580* o, void* target) {
     if (o) {
         Msg249580 m;
         int id = o->id;

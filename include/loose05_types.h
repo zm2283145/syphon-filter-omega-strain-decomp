@@ -261,7 +261,7 @@ typedef struct Vec12 {
     char* data;                     /* 0x08 */
 } Vec12;
 
-/* Character object (only the fields touched by func_00475BB0). */
+/* Character object (only the fields touched by Ladder_ReleaseAlignment). */
 typedef struct Char475BB0 {
     char pad0000[0x2ED0];
     char animChannel[1];            /* 0x2ED0 animation channel passed to AnimChannel_SetTarget */

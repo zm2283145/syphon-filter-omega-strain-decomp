@@ -28,7 +28,7 @@ extern "C" void func_0020EBA0(ElevE6Msg* msg, void* key, ElevE6* self);
 extern "C" void Event_Send(ElevE6Msg*, void*, int);
 extern "C" void func_0036E220(void*, int);
 extern "C" void cMessage_dtor(ElevE6Msg*, int);
-extern "C" void func_003CE790(ElevE6* self, void* arg);
+extern "C" void Object_Deactivate(ElevE6* self, void* arg);
 extern "C" void TargetVis_Unregister(void* list, ElevE6* self);
 
 /* cElevatorGOBJ vtable slot 16: broadcast, forward to the child, then base handling. */
@@ -44,6 +44,6 @@ extern "C" void cElevatorGOBJ_v16(ElevE6* self, void* arg)
     if (self->child != 0) {
         self->child->Fn(arg);
     }
-    func_003CE790(self, arg);
+    Object_Deactivate(self, arg);
     TargetVis_Unregister(g_TargetVisMgr, self);
 }

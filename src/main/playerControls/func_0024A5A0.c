@@ -6,13 +6,13 @@ typedef struct {
     int flags;
 } PlayerInput_24A5A0;
 extern unsigned char PlayerInput_TryStand(PlayerInput_24A5A0* p);
-extern unsigned char func_0024A7A0(PlayerInput_24A5A0* p);
+extern unsigned char PlayerInput_Crouch(PlayerInput_24A5A0* p);
 unsigned char PlayerInput_CrouchToggle(PlayerInput_24A5A0* p) {
     unsigned char result = 0;
     int crouched = (p->flags >> 4) & 1;
     if (crouched)
         result = PlayerInput_TryStand(p);
     else if (!crouched && p->b24)
-        result = func_0024A7A0(p);
+        result = PlayerInput_Crouch(p);
     return result;
 }

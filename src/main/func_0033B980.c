@@ -4,7 +4,6 @@
 
 struct V33B980 { unsigned int cap; unsigned int count; char* data; };
 extern "C" {
-extern char D_004B9360[];
 extern char D_004B99B8[];
 extern char D_004B98B8[];
 }
@@ -15,7 +14,7 @@ extern "C" void func_0033B980(V33B980* v, char* first, char* last)
     unsigned int n = last - first;
     if (v->cap < n) {
         if (n > 0x6000000) {
-            func_00123BE8(D_00489738->stream, D_004B9360);
+            func_00123BE8(D_00489738->stream, "vector::assign length error\n");
             func_00121B60();
         }
         v->count = 0;

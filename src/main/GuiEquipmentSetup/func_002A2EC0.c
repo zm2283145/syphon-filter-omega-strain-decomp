@@ -8,10 +8,10 @@
 #include "GuiEquipmentSetup_types.h"
 
 extern char D_00535D20[];
-extern int func_00373670(void* p);
+extern int LightMgr_RebuildTable(void* p);
 extern int func_0041E470(GuiEquipmentSetup* self);
 
 int func_002A2EC0(GuiEquipmentSetup* self) {
-    func_00373670(D_00535D20);
+    LightMgr_RebuildTable(D_00535D20);
     return func_0041E470(self);
 }

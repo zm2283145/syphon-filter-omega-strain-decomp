@@ -14,8 +14,8 @@ extern int Global_PlayerGetItemCount(int items, int item);
 extern void Global_PlayerRemoveItem(int items, int item, int count);
 extern int ScriptFilter_Dispatch(void* filter, int a1, int a2);
 extern int* func_0016AD70(void);
-extern int func_00198F90(NpcActor* actor, int on, int a2);
-extern int func_00199040(NpcActor* actor, int on, int a2);
+extern int Actor_SetStunImmune(NpcActor* actor, int on, int a2);
+extern int Actor_SetNotGasable(NpcActor* actor, int on, int a2);
 extern int func_001990F0(NpcActor* actor, int on, int a2);
 extern int* cGOBJTriggerEventMsg_GetScriptTypeKeyPtr(void);
 extern int ScriptType_AddAccepted(int type, int iface);
@@ -57,7 +57,7 @@ int func_0014A6B0(void) {
 }
 
 /* vtable slot 0x0C: forwards to the cNPC script filter. */
-int func_0014A6C0(int a0, int a1) {
+int AiComponent_ScriptFilter(int a0, int a1) {
     return ScriptFilter_Dispatch(D_00555070, a0, a1);
 }
 
@@ -105,10 +105,10 @@ int cNPC_SetNotTargetable(cNPC* self, int on) {
 
 /* vtable slot 0x82: SetNotGasable. */
 int cNPC_SetNotGasable(cNPC* self, int on) {
-    return func_00199040(self->actor, on, 0);
+    return Actor_SetNotGasable(self->actor, on, 0);
 }
 
 /* vtable slot 0x81: SetNotTaserable. */
 int cNPC_SetNotTaserable(cNPC* self, int on) {
-    return func_00198F90(self->actor, on, 0);
+    return Actor_SetStunImmune(self->actor, on, 0);
 }

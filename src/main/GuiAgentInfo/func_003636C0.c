@@ -9,7 +9,9 @@
 
 extern int Curve_Bind(void* binding, CurveSegment* segment);
 extern int Curve_InitConstant(CurveSegment* segment, int from, int to, float t);
-extern float D_00492EE8;    /* 0.0f */
+#pragma explicit_zero_data on
+static float D_00492EE8 = 0.0f;
+#pragma explicit_zero_data reset
 static const float dat_00492EF0[24] = { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 2.8026e-45f, 0.0f, 2.8026e-45f, 0.0f, 2.8026e-45f, 0.0f, 2.8026e-45f, 0.0f, 2.8026e-45f, 0.0f, 0.0f, 0.0f };
 extern char D_004DA380[];   /* CurveChannel base vtable */
 extern char D_004DA840[];   /* AnimChannel vtable */

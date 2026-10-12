@@ -4,11 +4,14 @@
 /* Types for the SpecFxDefs directory. Layouts are provisional. */
 
 /* One script-native argument slot (4 bytes). */
+#ifndef SCRIPT_ARG_DEFINED
+#define SCRIPT_ARG_DEFINED
 typedef union ScriptArg {
     int i;
     float f;
     void* p;
 } ScriptArg;
+#endif
 
 /* List iterator used by the push_back wrappers. */
 typedef struct SpecListPos {

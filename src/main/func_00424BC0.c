@@ -12,7 +12,8 @@ struct Widget {
 
 extern "C" char D_004BF698[];
 static void * const dat_00494140[2] = { (void*)D_004BF698, (void*)0x0 };
-extern int D_00494148;
+extern "C" char D_004BF6A8[];
+static void * const dat_00494148[2] = { (void*)D_004BF6A8, (void*)0x0 };
 extern char D_004AAE00[];
 extern "C" void func_0041F150(void* self);
 extern "C" Widget* func_0041DC70(void* self, int id);
@@ -27,5 +28,5 @@ extern "C" void func_00424BC0(Screen* self)
     if (!child || !child->IsA(D_004AAE00))
     child = 0;
     self->unk8C = child;
-    self->unk88 = func_0041DC70(self, D_00494148);
+    self->unk88 = func_0041DC70(self, (*(int*)dat_00494148));
 }

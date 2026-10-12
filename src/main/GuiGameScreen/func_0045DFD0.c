@@ -27,11 +27,8 @@ typedef struct {
     char padEC[0x28]; W_45DFD0* f114; W_45DFD0* f118; W_45DFD0* f11C; W_45DFD0* f120; W_45DFD0* f124;
 } O_45DFD0;
 extern "C" {
-extern char D_004C2290[]; extern char D_004C22A8[]; extern char D_00587D80[];
-extern char D_004C22B0[]; extern char D_004C22C0[]; extern char D_004C22D0[]; extern char D_004C22E0[];
-extern char D_004C22F0[]; extern char D_004C22F8[]; extern char D_004C2300[]; extern char D_004C2310[];
-char D_004C2328[] = "value_timer"; extern char D_004C2340[]; extern char D_004C2350[]; extern char D_004C2360[];
-extern char D_004C2370[]; extern char D_004C2380[]; extern char D_004C2268[];
+extern char D_004C2290[];extern char D_00587D80[];
+extern char D_004C2268[];
 extern char D_004C2430[]; extern char D_004A7520[]; extern char D_004C1D10[]; extern char D_004AA640[];
 extern char D_004FFB50[];
 extern V4_45DFD0 D_00587CA0; extern V4_45DFD0 D_00587CB0;
@@ -57,24 +54,24 @@ void func_0045DFD0(O_45DFD0* o)
     T_45DFD0* t;
     func_0041F150(o);
     t = (T_45DFD0*)Alloc_45DFD0(0x60, 0x107);
-    if (t) t = func_003D0940(t, 0, 0, 10, 10, func_00418420(func_00414790(), D_004C22A8), D_00587D80);
+    if (t) t = func_003D0940(t, 0, 0, 10, 10, func_00418420(func_00414790(), "callout"), D_00587D80);
     o->f48 = t;
     o->f48->b10 = 2;
     o->f48->b11 = 1;
-    o->f4C = Cast_45DFD0(func_0041DB80(o, D_004C22B0), D_004C2430);
-    o->f50 = Cast_45DFD0(func_0041DB80(o, D_004C22C0), D_004A7520);
-    o->f68 = Cast_45DFD0(func_0041DB80(o, D_004C22D0), D_004C1D10);
-    o->fE0 = func_0041DB80(o, D_004C22E0);
+    o->f4C = Cast_45DFD0(func_0041DB80(o, "quickchat"), D_004C2430);
+    o->f50 = Cast_45DFD0(func_0041DB80(o, "interact"), D_004A7520);
+    o->f68 = Cast_45DFD0(func_0041DB80(o, "subtitles"), D_004C1D10);
+    o->fE0 = func_0041DB80(o, "choosemenu");
     if (o->fE0) {
-        o->fE4 = Cast_45DFD0(func_0041DB80(o->fE0, D_004C22F0), D_004A7520);
+        o->fE4 = Cast_45DFD0(func_0041DB80(o->fE0, "title"), D_004A7520);
         func_0041C0F0(o->fE4, 1);
-        o->fE8 = Cast_45DFD0(func_0041DB80(o->fE0, D_004C22F8), D_004AA640);
+        o->fE8 = Cast_45DFD0(func_0041DB80(o->fE0, "choices"), D_004AA640);
         SetB0_45DFD0(o->fE8, D_00587CA0);
         SetE0_45DFD0(o->fE8, D_00587CB0);
         o->fE8->bF0 = 1;
     }
     if (!o->fE0 || !o->fE4 || !o->fE8) o->fE0 = 0;
-    o->f114 = Cast_45DFD0(func_0041DB80(o, D_004C2300), D_004A7520);
+    o->f114 = Cast_45DFD0(func_0041DB80(o, "value_codename"), D_004A7520);
     if (o->f114) {
         if (D_005721C8) {
             char* s = func_0012F5D0(D_004FFB50, NetLocalId());
@@ -84,14 +81,14 @@ void func_0045DFD0(O_45DFD0* o)
             o->f114->flags &= ~2;
         }
     }
-    o->f118 = Cast_45DFD0(func_0041DB80(o, D_004C2310), D_004A7520);
-    o->f11C = Cast_45DFD0(func_0041DB80(o, D_004C2328), D_004A7520);
+    o->f118 = Cast_45DFD0(func_0041DB80(o, "value_timer_description"), D_004A7520);
+    o->f11C = Cast_45DFD0(func_0041DB80(o, "value_timer"), D_004A7520);
     o->f118->flags &= ~2;
     o->f11C->flags &= ~2;
-    o->f120 = Cast_45DFD0(func_0041DB80(o, D_004C2340), D_004A7520);
-    o->f124 = func_0041DB80(o, D_004C2350);
-    o->f6C = func_0041DB80(o, D_004C2360);
-    o->fA4 = func_0041DB80(o, D_004C2370);
-    o->fA0 = func_0041DB80(o, D_004C2380);
+    o->f120 = Cast_45DFD0(func_0041DB80(o, "headset_playing"), D_004A7520);
+    o->f124 = func_0041DB80(o, "label_talking");
+    o->f6C = func_0041DB80(o, "weaponselect");
+    o->fA4 = func_0041DB80(o, "lines_arrows");
+    o->fA0 = func_0041DB80(o, "brackets");
     func_0045CC90(o);
 }

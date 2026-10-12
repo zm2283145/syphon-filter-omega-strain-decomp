@@ -124,11 +124,14 @@ typedef struct Unk1F32E0 {
 } Unk1F32E0;
 
 /* One script-native argument word (same layout as in scriptUtils_types.h). */
+#ifndef SCRIPT_ARG_DEFINED
+#define SCRIPT_ARG_DEFINED
 typedef union ScriptArg {
     int i;
     float f;
     void* p;
 } ScriptArg;
+#endif
 
 /* Object reached through D_004FFC2C; holds the objective marker manager at +0x90. */
 typedef struct GameUI {

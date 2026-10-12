@@ -14,11 +14,14 @@
 /* ---------------------------------------------------------------- misc --- */
 
 /* One script-native argument word (int, float bits or pointer). */
+#ifndef SCRIPT_ARG_DEFINED
+#define SCRIPT_ARG_DEFINED
 typedef union ScriptArg {
     int i;
     float f;
     void* p;
 } ScriptArg;
+#endif
 
 /* Script natives copy an argument through a one-word stack slot first. */
 #define STACK_COPY(arr) (*(int*)(arr))

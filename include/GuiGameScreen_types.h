@@ -9,11 +9,14 @@
 #include "types.h"
 
 /* One script-native argument word (int, float bits or pointer). */
+#ifndef SCRIPT_ARG_DEFINED
+#define SCRIPT_ARG_DEFINED
 typedef union ScriptArg {
     int i;
     float f;
     void* p;
 } ScriptArg;
+#endif
 
 /* Child widget whose flag word lives at +0x14. */
 typedef struct GuiGameChild {

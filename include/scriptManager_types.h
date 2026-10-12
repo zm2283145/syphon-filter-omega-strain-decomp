@@ -9,11 +9,14 @@
 #include "types.h"
 
 /* One script-native argument word (int, float bits or pointer). */
+#ifndef SCRIPT_ARG_DEFINED
+#define SCRIPT_ARG_DEFINED
 typedef union ScriptArg {
     int i;
     float f;
     void* p;
 } ScriptArg;
+#endif
 
 /* Script manager / interpreter state; the global instance is D_00555070.
  * Only the fields used here. The evaluation stack grows downwards and sp points

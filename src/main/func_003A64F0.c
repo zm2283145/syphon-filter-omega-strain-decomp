@@ -1,5 +1,4 @@
 #include "types.h"
-extern char D_004BC6B0[];
 extern void LibInit_LoadIrxModule(void* a, int b, void* c, int d);
 extern void func_002B4D08(int a);
 extern void func_002B5070(int a);
@@ -10,5 +9,5 @@ void func_003A64F0(void)
     func_002B4D08(0);
     func_002B5070(1);
     LibInit_LoadIrxModule("USBD.IRX", 0, 0, 1);
-    LibInit_LoadIrxModule("USBKB.IRX", 0x10, D_004BC6B0, 1);
+    LibInit_LoadIrxModule("USBKB.IRX", 0x10, "keybd=1\0debug=0", 1);
 }

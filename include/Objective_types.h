@@ -8,12 +8,15 @@
  */
 
 /* One script-native argument slot (4 bytes). */
+#ifndef SCRIPT_ARG_DEFINED
+#define SCRIPT_ARG_DEFINED
 typedef union ScriptArg {
     int i;
     float f;
     void* p;
     unsigned char u8;
 } ScriptArg;
+#endif
 
 /* Objective state byte values (cObjective.state). */
 #define OBJECTIVE_PENDING  0

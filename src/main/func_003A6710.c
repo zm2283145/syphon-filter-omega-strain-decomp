@@ -13,30 +13,22 @@ extern unsigned char D_004934B0;
 extern unsigned char D_004934B8;
 extern unsigned char D_004934C0;
 extern char D_004BC670;
-extern char D_004BC748;
-extern char D_004BC758;
-extern char D_004BC768;
-extern char D_004BC780;
-extern char D_004BC7D8;
-extern char D_004BC7E8;
-extern char D_004BC800;
-extern char D_004BC840;
 extern int D_0053BBA0;
 extern int D_0053BBA8;
 
 int func_003A6710(int arg0) {
     if (D_004934A8 != 0) {
         if (D_004934B0 != 0) {
-            LibInit_LoadIrxModule(&D_004BC748, 0xA, &D_004BC758, 1);
-            D_0053BBA0 = LibInit_LoadIrxModule(&D_004BC768, 0x58, &D_004BC780, 1);
-            D_0053BBA8 = LibInit_LoadIrxModule(&D_004BC7D8, 0, NULL, 1);
+            LibInit_LoadIrxModule("INET.IRX", 0xA, "mem=100KB", 1);
+            D_0053BBA0 = LibInit_LoadIrxModule("NETCNF.IRX", 0x58, "icon=cdrom0:\\GAMEDATA\\NETWORK\\SYS_NET.ICO;1\0iconsys=cdrom0:\\GAMEDATA\\NETWORK\\ICON.SYS;1", 1);
+            D_0053BBA8 = LibInit_LoadIrxModule("NETCNFIF.IRX", 0, NULL, 1);
             func_0027C3D0();
             func_002BCA88(1);
             D_004934A0 = 1;
             if (arg0 != 0) {
-                LibInit_LoadIrxModule(&D_004BC7E8, 0x31, &D_004BC800, 1);
+                LibInit_LoadIrxModule("INETCTL.IRX", 0x31, "-no_decode\0cdrom0:\\GAMEDATA\\NETWORK\\NET005.CNF;1", 1);
             } else {
-                LibInit_LoadIrxModule(&D_004BC7E8, 0x12, &D_004BC840, 1);
+                LibInit_LoadIrxModule("INETCTL.IRX", 0x12, "-no_auto\0-verbose", 1);
             }
             LibInit_LoadIrxModule("PPP.IRX", 0, NULL, 1);
             LibInit_LoadIrxModule("PPPOE.IRX", 0, NULL, 1);

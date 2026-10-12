@@ -11,11 +11,14 @@
 #include "types.h"
 
 /* One script-native argument slot (4 bytes). */
+#ifndef SCRIPT_ARG_DEFINED
+#define SCRIPT_ARG_DEFINED
 typedef union ScriptArg {
     int i;
     float f;
     void* p;
 } ScriptArg;
+#endif
 
 /*
  * Base world object (cGOBJ). Constructor cGOBJ_ctor (0x003CF0E0) runs the

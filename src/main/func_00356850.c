@@ -4,8 +4,6 @@ typedef struct { char pad[0x25C]; int f25C; } Cfg356850;
 extern Cfg356850 *D_004FFC04;
 char D_004BB2E8[] = "0_%d_%d.tdx";
 char D_004BB2F8[] = "AB_SPECIAL_%d";
-extern char D_004BB308[];
-extern char D_004BB310[];
 extern int sprintf(char *buf, const char *fmt, ...);
 extern void func_0043C890(W356850 *w, char *s, int v);
 extern char *Loc_LookupText(char *key);
@@ -26,7 +24,7 @@ void func_00356850(S356850 *self, int a, int n)
                 self->w58->flags |= 2;
                 sprintf(buf, D_004BB2F8, n - 10000);
                 t = Loc_LookupText(buf);
-                func_0041BEB0(self->w58, t ? t : D_004BB308, 0);
+                func_0041BEB0(self->w58, t ? t : "", 0);
             }
         }
     } else {
@@ -38,7 +36,7 @@ void func_00356850(S356850 *self, int a, int n)
         if (self->w58) self->w58->flags &= ~2;
     }
     if (self->w50) {
-        sprintf(buf2, D_004BB310, self->x64, a + self->x68);
+        sprintf(buf2, "0_%d_%ds.tdx", self->x64, a + self->x68);
         func_0043C890(self->w50, buf2, D_004FFC04->f25C);
     }
 }

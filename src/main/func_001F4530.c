@@ -1,0 +1,88 @@
+#include "types.h"
+typedef struct { char d[0x4]; } B4;
+typedef struct { char d[0x8]; } B8;
+typedef struct { char d[0x10]; } B10;
+typedef struct { char d[0x30]; } B30;
+typedef struct { char d[0x38]; } B38;
+typedef struct { char d[0x50]; } B50;
+extern char D_004A0DC0[];
+extern char D_004A0DE0[];
+extern char D_004A0E10[];
+extern char D_004A0E30[];
+extern char D_004A0E60[];
+extern char D_004A0E80[];
+extern char D_004A0EA0[];
+extern char D_004A0ED0[];
+extern void* CanonicalKey_Construct(void*, void*);
+extern float func_0017DD00(float);
+extern void* func_001F1300(void*, float, float);
+extern void* func_0017DE50(void*, float, float, float);
+extern void func_003B3E40(void*, void*, void*, int, int, void*, void*, int, float, int, int);
+extern void MotionSlider_RegisterNode(void*, void*, void*, void*);
+extern void func_003B28F0(void*, int);
+/* Builds and registers one block of motion-graph nodes. */
+#pragma optimization_level 1
+void func_001F4530(void* p0)
+{
+    B4 v52C;
+    B4 v528;
+    B4 v524;
+    B4 v520;
+    B4 v51C;
+    B4 v518;
+    B8 v510;
+    B8 v508;
+    B8 v500;
+    B8 v4F8;
+    B8 v4F0;
+    B8 v4E8;
+    B38 v4B0;
+    B30 v480;
+    B10 v470;
+    B50 v420;
+    B30 v3F0;
+    B30 v3C0;
+    B10 v3B0;
+    B50 v360;
+    B30 v330;
+    B30 v300;
+    B10 v2F0;
+    B50 v2A0;
+    B30 v270;
+    B30 v240;
+    B10 v230;
+    B50 v1E0;
+    B30 v1B0;
+    B30 v180;
+    B10 v170;
+    B50 v120;
+    B30 vF0;
+    B30 vC0;
+    B10 vB0;
+    B50 v60;
+    float f0;
+    float f1;
+    void* t1;
+    func_003B3E40(&v420, CanonicalKey_Construct(&v480, D_004A0DC0), p0, 0, 0, func_001F1300(&v510, func_0017DD00(0.5f), 3.4028235e+38f), func_0017DE50(&v470, 0.0f, 0.0f, 0.0f), -1, 1.0f, 0, 0);
+    MotionSlider_RegisterNode(&v52C, p0, CanonicalKey_Construct(&v4B0, D_004A0DE0), &v420);
+    func_003B28F0(&v420, -1);
+    func_003B3E40(&v360, CanonicalKey_Construct(&v3C0, D_004A0E10), p0, 0, 0, func_001F1300(&v508, func_0017DD00(0.5f), 3.4028235e+38f), func_0017DE50(&v3B0, 0.0f, 0.0f, 0.0f), -1, 1.0f, 0, 0);
+    MotionSlider_RegisterNode(&v528, p0, CanonicalKey_Construct(&v3F0, D_004A0E30), &v360);
+    func_003B28F0(&v360, -1);
+    t1 = CanonicalKey_Construct(&v300, D_004A0DC0);
+    f0 = func_0017DD00(0.0f);
+    func_003B3E40(&v2A0, t1, p0, 0, 0, func_001F1300(&v500, f0, func_0017DD00(0.0f)), func_0017DE50(&v2F0, 0.0f, 0.0f, 0.0f), -1, 1.0f, 0, 1);
+    MotionSlider_RegisterNode(&v524, p0, CanonicalKey_Construct(&v330, D_004A0E60), &v2A0);
+    func_003B28F0(&v2A0, -1);
+    f1 = func_0017DD00(6.5f);
+    func_003B3E40(&v1E0, CanonicalKey_Construct(&v240, D_004A0E10), p0, 0, 0, func_001F1300(&v4F8, f1, f1), func_0017DE50(&v230, 0.0f, 0.0f, 0.0f), -1, 1.0f, 0, 1);
+    MotionSlider_RegisterNode(&v520, p0, CanonicalKey_Construct(&v270, D_004A0E80), &v1E0);
+    func_003B28F0(&v1E0, -1);
+    func_003B3E40(&v120, CanonicalKey_Construct(&v180, D_004A0DC0), p0, 0, 0, func_001F1300(&v4F0, f1, 3.4028235e+38f), func_0017DE50(&v170, 0.0f, 0.0f, 0.0f), -1, 1.0f, 0, 0);
+    MotionSlider_RegisterNode(&v51C, p0, CanonicalKey_Construct(&v1B0, D_004A0EA0), &v120);
+    func_003B28F0(&v120, -1);
+    func_003B3E40(&v60, CanonicalKey_Construct(&vC0, D_004A0E10), p0, 0, 0, func_001F1300(&v4E8, f1, 3.4028235e+38f), func_0017DE50(&vB0, 0.0f, 0.0f, 0.0f), -1, 1.0f, 0, 0);
+    MotionSlider_RegisterNode(&v518, p0, CanonicalKey_Construct(&vF0, D_004A0ED0), &v60);
+    func_003B28F0(&v60, -1);
+}
+#pragma optimization_level reset

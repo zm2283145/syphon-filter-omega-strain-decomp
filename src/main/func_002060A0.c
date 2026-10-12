@@ -1,0 +1,86 @@
+#include "types.h"
+typedef struct { char data[0x30]; } Name;
+typedef struct { char data[0x20]; } RegKey;
+typedef struct { char data[0x50]; } Binding;
+typedef struct { char data[0x40]; } Slider;
+typedef struct { char data[0x10]; } Quat;
+typedef struct { char data[0x10]; } Vec;
+typedef struct { char data[0x10]; } SelNode;
+typedef struct { char data[0x8]; } Pair;
+typedef struct { char data[0x10]; } Child;
+typedef struct { char data[0x8]; } Range;
+typedef struct { char data[0x10]; } ChildList;
+typedef struct { int unused; } Handle;
+typedef struct { Child c; Range r; } ChildRange;
+typedef struct { SelNode n; Pair p; } SelPair;
+typedef struct { SelPair sp; ChildRange cr3; ChildRange cr2; ChildRange cr1; ChildList list; } SliderParts;
+extern char D_004A3A20[];
+extern char D_004A3AD0[];
+extern char D_004A3AF0[];
+extern char D_004A3B10[];
+extern char D_004A3B30[];
+extern char D_004A3B48[];
+extern Name* CanonicalKey_Construct(Name* n, const char* s);
+extern void func_003B43C0(Binding* b, Name* n, void* obj, int a, int b2);
+extern void func_003B3B20(Binding* b, Name* n, void* obj, int a, Vec* v, int c);
+extern void MotionSlider_RegisterNode(Handle* h, void* obj, Name* n, void* node);
+extern void func_003B28F0(Binding* b, int flags);
+extern float Math_DegToRad(float deg);
+extern Vec* func_0017DE50(Vec* v, float x, float y, float z);
+extern void func_001F4470(ChildList* l);
+extern Range* func_001F4460(Range* r, float a, float b);
+extern Child* MotionSliderChild_Resolve(Child* c, Name* n, void* obj, Range* r);
+extern ChildList* func_001F4370(ChildList* l, Child* c);
+extern void Quat_SetIdentity(Quat* q);
+extern Slider* MotionSlider_Ctor(Slider* s, int a, ChildList* l, int c, int d, Quat* q);
+extern void MotionSlider_Dtor(Slider* s, int flags);
+extern void func_001F3E10(Child* c, int flags);
+extern void func_001F3DC0(Range* r, int flags);
+extern void func_001F3C70(ChildList* l, int flags);
+extern Pair* func_0018A700(Pair* p, int a);
+extern SelNode* MotionSelNode_Ctor(SelNode* s, Name* n, void* obj, Pair* p);
+extern RegKey* MotionRegistry_MakeKey(RegKey* k, const char* s);
+extern void MotionRegistry_Register(void* obj, RegKey* k, SelNode* s);
+extern void func_00200550(SelNode* s, int flags);
+/* Registers the turn bindings and the turn slider of a motion graph. */
+#pragma optimization_level 1
+void func_002060A0(void* obj)
+{
+    Handle h1; Handle h2; Handle h3; Handle h4;
+    SliderParts s;
+    Name n2; Name n1; Binding b1; Name n5; Name n4; Vec v1; Binding b2; Name n8; Name n7; Vec v2; Binding b3;
+    Name n9; Name n10; Name n11; Name n12; Quat q; Slider slider; RegKey key; Name n13;
+    ChildList* l;
+    func_003B43C0(&b1, CanonicalKey_Construct(&n1, D_004A3A20), obj, 2, 0x1);
+    MotionSlider_RegisterNode(&h1, obj, CanonicalKey_Construct(&n2, D_004A3AD0), &b1);
+    func_003B28F0(&b1, -1);
+    func_003B3B20(&b2, CanonicalKey_Construct(&n4, D_004A3AD0), obj, 4, func_0017DE50(&v1, 0.0f, 0.0f, Math_DegToRad(90.0f)), 0x2);
+    MotionSlider_RegisterNode(&h2, obj, CanonicalKey_Construct(&n5, D_004A3AF0), &b2);
+    func_003B28F0(&b2, -1);
+    func_003B3B20(&b3, CanonicalKey_Construct(&n7, D_004A3AD0), obj, 4, func_0017DE50(&v2, 0.0f, 0.0f, Math_DegToRad(-90.0f)), 0x2);
+    MotionSlider_RegisterNode(&h3, obj, CanonicalKey_Construct(&n8, D_004A3B10), &b3);
+    func_003B28F0(&b3, -1);
+    func_001F4470(&s.list);
+    func_001F4460(&s.cr1.r, 0.0f, 0.0f);
+    MotionSliderChild_Resolve(&s.cr1.c, CanonicalKey_Construct(&n10, D_004A3AF0), obj, &s.cr1.r);
+    func_001F4460(&s.cr2.r, 0.25f, 0.25f);
+    MotionSliderChild_Resolve(&s.cr2.c, CanonicalKey_Construct(&n11, D_004A3AD0), obj, &s.cr2.r);
+    func_001F4460(&s.cr3.r, 0.5f, 1.0f);
+    MotionSliderChild_Resolve(&s.cr3.c, CanonicalKey_Construct(&n12, D_004A3B10), obj, &s.cr3.r);
+    l = func_001F4370(func_001F4370(func_001F4370(&s.list, &s.cr1.c), &s.cr2.c), &s.cr3.c);
+    Quat_SetIdentity(&q);
+    MotionSlider_Ctor(&slider, 0xF, l, 0, 0, &q);
+    MotionSlider_RegisterNode(&h4, obj, CanonicalKey_Construct(&n9, D_004A3B30), &slider);
+    MotionSlider_Dtor(&slider, -1);
+    func_001F3E10(&s.cr3.c, -1);
+    func_001F3DC0(&s.cr3.r, -1);
+    func_001F3E10(&s.cr2.c, -1);
+    func_001F3DC0(&s.cr2.r, -1);
+    func_001F3E10(&s.cr1.c, -1);
+    func_001F3DC0(&s.cr1.r, -1);
+    func_001F3C70(&s.list, -1);
+    MotionSelNode_Ctor(&s.sp.n, CanonicalKey_Construct(&n13, D_004A3B30), obj, func_0018A700(&s.sp.p, 2));
+    MotionRegistry_Register(obj, MotionRegistry_MakeKey(&key, D_004A3B48), &s.sp.n);
+    func_00200550(&s.sp.n, -1);
+}
+#pragma optimization_level reset

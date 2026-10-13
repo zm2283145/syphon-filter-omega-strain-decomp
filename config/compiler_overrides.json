@@ -7421,5 +7421,19 @@
   "lib/rt_xmlparse/func_00311418": "ee-gcc2.96",
   "lib/func_002CF648": "ee-gcc2.96-G0",
   "lib/func_002E2BB8": "ee-gcc2.96-G0",
-  "main/tank/func_00286570": "cwps2-3.0b38"
+  "main/tank/func_00286570": "cwps2-3.0b38",
+  "lib/func_002F59F8": "ee-gcc2.96",
+  "lib/func_003201A8": "ee-gcc2.96",
+  "lib/func_002E3340": "ee-gcc2.96-G0",
+  "lib/func_002E5280": "ee-gcc2.96-G0",
+  "lib/func_002FE7C0": "ee-gcc2.96-G0",
+  "lib/func_0030DD48": "ee-gcc2.96-G0",
+  "lib/func_00117DB8": "ee-gcc2.9-991111",
+  "main/AgentData/func_003302A0": "cwps2-3.0b38",
+  "main/gameobj/func_003966B0": "cwps2-3.0b38",
+  "main/interface_model/func_003F3E70": "cwps2-3.0b38",
+  "main/func_004178E0": "cwps2-3.0b38",
+  "main/func_00417C60": "cwps2-3.0b38",
+  "main/sinit/func_004C5D90": "cwps2-3.0b38",
+  "main/sinit/func_004C7500": "cwps2-3.0b38"
 }

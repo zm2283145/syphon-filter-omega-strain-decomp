@@ -11,7 +11,7 @@ extern int* SpecFx_GetEffectDef(int index);
 extern void func_0038B8B0(int slot, int value);
 
 /* Sets up the title text and copies the four configured values into slots (1, 0, 2, 3). */
-void func_001368D0(void* self)
+void Game_LoadParResources(void* self)
 {
     char buf[0x80];
     sprintf(buf, D_0049AAF0, D_0048B2F8);

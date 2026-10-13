@@ -5,7 +5,7 @@
 extern "C" {
 GuiStreamString* String_CtorCStr_13B480(GuiStreamString* result, const char* text);
 void func_0013D680(GuiStreamString* destination, const GuiStreamString* source);
-void func_00138B70(GuiStreamString* string, int flags);
+void String_Dtor(GuiStreamString* string, int flags);
 }
 
 static inline const char* read_string(char** cursor)
@@ -32,7 +32,7 @@ extern "C" int func_0041F210(GuiWidgetStreamRecord* self, char** cursor)
     GuiStreamString name;
     String_CtorCStr_13B480(&name, read_string(cursor));
     func_0013D680(&self->name, &name);
-    func_00138B70(&name, 0);
+    String_Dtor(&name, 0);
     *cursor = (char*)(((unsigned int)*cursor + 3) & ~3u);
     self->first = *(float*)*cursor;
     *cursor += 4;

@@ -11,7 +11,7 @@ char* String_CStr(Str4133B0* s);
 int func_003F9850(int h, char* name, int arc);
 int Archive_Open(int h, char* name, int a, int b);
 void func_00413FB0(List4133B0* list, Str4133B0* pos, int n, Str4133B0* value);
-void func_00138B70(Str4133B0* s, int flags);
+void String_Dtor(Str4133B0* s, int flags);
 }
 
 #pragma push
@@ -31,10 +31,10 @@ extern "C" int func_004133B0(Self4133B0* self, int* out, int name)
                 *out = Archive_Open(self->h1E0, String_CStr(&s), 0, 0);
             }
             func_00413FB0(self->list, &self->list->data[self->list->count], 1, &s);
-            func_00138B70(&s, 0);
+            String_Dtor(&s, 0);
             return 1;
         }
-        func_00138B70(&s, 0);
+        String_Dtor(&s, 0);
         return 0;
     }
 }

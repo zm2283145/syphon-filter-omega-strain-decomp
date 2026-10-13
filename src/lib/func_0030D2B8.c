@@ -18,7 +18,7 @@ extern int func_0030BC98(UpnpD2B8 *u, unsigned char *done);
 extern int func_00310C90(int p, char *s, int a, int b);
 extern int func_00310D20(int p, UpListD2B8 **out);
 extern int String_CompareN(char *a, char *b, int n);
-extern int func_0012AF90(char *s, char **end, int base);
+extern int strtol(char *s, char **end, int base);
 extern int func_00310C30(int p);
 extern void func_002F5DB0(int s);
 extern void *memset(void *d, int c, unsigned int n);
@@ -45,10 +45,10 @@ int func_0030D2B8(UpnpD2B8 *u)
                     if (String_CompareN(list->name[i], D_004B0008, 0x100) == 0 && String_CompareN(list->value[i], u->host, 0x100) == 0) {
                         a = 1;
                     } else if (String_CompareN(list->name[i], D_004B0020, 0x100) == 0) {
-                        if (u->port == (unsigned short)func_0012AF90(list->value[i], 0, 10))
+                        if (u->port == (unsigned short)strtol(list->value[i], 0, 10))
                             b = 1;
                     } else if (String_CompareN(list->name[i], D_004B00A8, 0x100) == 0) {
-                        k = func_0012AF90(list->value[i], 0, 10);
+                        k = strtol(list->value[i], 0, 10);
                     }
             }
             if (a && b && k) r = 0; else r = 13;

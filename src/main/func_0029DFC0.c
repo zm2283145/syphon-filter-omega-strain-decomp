@@ -14,7 +14,7 @@ extern char D_004AAC80[];
 void func_0029CBB0(S_0029DFC0* self, unsigned char sel);
 void* Gui_GetScreenList(void);
 void* Gui_GetScreenStack(void);
-void* func_00418A80(void* a, char* b, char* c);
+void* GuiManager_FindOrLoad(void* a, char* b, char* c);
 void GuiStack_SwapScreens(void* ui, S_0029DFC0* self, void* pg);
 int func_002CA070(void* ui);
 void func_00288DE0(void* pg, int a);
@@ -47,7 +47,7 @@ extern "C" void func_0029DFC0(S_0029DFC0* self)
     if (go) {
         void* pg;
         func_0029CBB0(self, 4);
-        pg = func_00418A80(Gui_GetScreenList(), D_004AAC70, D_004AAC80);
+        pg = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AAC70, D_004AAC80);
         if (pg) {
             unsigned char ok = 1;
             if (!D_004FFC04->f265 && !IsEmpty_DFC0(Agent_GetSelected(D_004FFB50, -1) + 0x8CC))

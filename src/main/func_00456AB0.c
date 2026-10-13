@@ -10,7 +10,7 @@ extern char D_004C1A38[];
 extern char D_004A7520[];
 extern unsigned char D_004FFBB7;
 void func_00368760(W_456AB0*);
-VObj_456AB0* func_0041DB80(W_456AB0*, char*);
+VObj_456AB0* GuiWidget_FindChildByName(W_456AB0*, char*);
 int sprintf(char*, const char*, ...);
 char* Loc_LookupText(char*);
 void func_0041BEB0(VObj_456AB0*, char*, int);
@@ -24,7 +24,7 @@ extern "C" void func_00456AB0(W_456AB0* self)
     char buf[16];
     func_00368760(self);
     self->id = 0;
-    o = func_0041DB80(self, D_004C1C60);
+    o = GuiWidget_FindChildByName(self, D_004C1C60);
     o = (o != 0 && o->v20(D_004A7520) != 0) ? o : 0;
     if (o) {
         char* s;

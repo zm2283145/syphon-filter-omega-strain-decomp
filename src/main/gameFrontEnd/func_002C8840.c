@@ -58,7 +58,7 @@ void func_0025C9D0(V4_002C8840* d, V4_002C8840* s);
 float func_0025F220(void);
 V4_002C8840* func_00132000(V4_002C8840* o, float x, float y, float z, float w);
 void func_00370550(void* s);
-void func_0037A9F0(void* s);
+void Video_BeginFrame(void* s);
 void func_0036E4B0(void* s, char* name, int a, int b);
 void func_0036E220(void* s, int a);
 int func_00380A40(void* m, void* s);
@@ -164,7 +164,7 @@ extern "C" void func_002C8840(char* name)
         Emit_002C8840(V4c_002C8840(-hw, hh, 0.5f, 1.0f), V4c_002C8840(1.0f, 1.0f, 1.0f, 1.0f), V4c_002C8840(0.0f, 0.0f, 1.0f, 0.0f));
         Emit_002C8840(V4c_002C8840(hw, -hh, 0.5f, 1.0f), V4c_002C8840(1.0f, 1.0f, 1.0f, 1.0f), V4c_002C8840(umax, vmax, 1.0f, 0.0f));
         func_00370550(D_005381F0);
-        func_0037A9F0(D_005381F0);
+        Video_BeginFrame(D_005381F0);
     }
     D_00538C64--;
     D_00538C68 = 1;

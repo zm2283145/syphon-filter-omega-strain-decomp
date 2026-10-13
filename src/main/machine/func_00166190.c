@@ -6,13 +6,13 @@ int Alloc_Lock(int);
 int Alloc_Unlock(int);
 int Hog_Register(char *, int, char *, int);
 int Mem_Free(int, int, char *, int);
-int func_0010CE60(int, int);
-int func_0010CF70(int);
-int func_0010CFB0(int);
+int RemoveIntcHandler(int, int);
+int DeleteThread(int);
+int TerminateThread(int);
 int ChangeThreadPriority(int, int);
 int func_00271CD0(int);
 int func_002720A0(int, int);
-int func_0036D200(char *, int);
+int Archive_GetMemberName(char *, int);
 int func_0036DEF0(char *);
 int func_0036E220(char *, int);
 int func_0036E5D0(char *);
@@ -33,7 +33,7 @@ extern int D_00539248;
 
 typedef struct { char p0[0x148]; int *f148; unsigned char f14C; } M270_00166190;
 typedef struct { char p0[624]; M270_00166190 *f270; int f274; } PS0_00166190;
-void func_00166190(PS0_00166190 *arg0) {
+void App_Teardown(PS0_00166190 *arg0) {
     int sp50[44];
     int n;
     int i;
@@ -42,12 +42,12 @@ void func_00166190(PS0_00166190 *arg0) {
     if (arg0->f274 != 0) {
         if (D_0048A038 != -1) {
             Alloc_Lock(2);
-            func_0010CE60(2, D_0048A038);
+            RemoveIntcHandler(2, D_0048A038);
             D_0048A038 = -1;
         }
         if (D_0048A030 != -1) {
-            func_0010CFB0(D_0048A030);
-            func_0010CF70(D_0048A030);
+            TerminateThread(D_0048A030);
+            DeleteThread(D_0048A030);
             D_0048A030 = -1;
         }
         D_004EE500 = 0;
@@ -85,7 +85,7 @@ void func_00166190(PS0_00166190 *arg0) {
             n = arg0->f270->f148[1];
             for (i = 0; i < n; i++) {
                 M270_00166190 *m = arg0->f270;
-                Hog_Register((char *)sp50, func_0036D200((char *)m, i), (char *)m, 0);
+                Hog_Register((char *)sp50, Archive_GetMemberName((char *)m, i), (char *)m, 0);
                 func_0036DEF0((char *)sp50);
                 func_003816F0(D_00539248, (char *)sp50);
             }

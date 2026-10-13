@@ -447,7 +447,7 @@ typedef struct L4Bytes3 {
     char unk02;
 } L4Bytes3;
 
-/* Collection with a trailing flag and a vtable pointer at +0x10 (func_003D28D0). */
+/* Collection with a trailing flag and a vtable pointer at +0x10 (ListenerList_Ctor). */
 typedef struct Unk3D28D0 {
     L4ScalarCollection coll;       /* 0x00 */
     char unk0C;                    /* 0x0C */

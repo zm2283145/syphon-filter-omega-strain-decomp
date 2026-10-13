@@ -35,7 +35,7 @@ typedef struct {
 extern int D_00532AF4;
 int func_00336440(BV_61E0* v);
 char* func_00336450(BV_61E0* v, int i);
-void func_00337490(LvlVec_61E0* v, unsigned int n, const Lvl_61E0* value);
+void AgentLevelVec_Resize(LvlVec_61E0* v, unsigned int n, const Lvl_61E0* value);
 
 void AgentData_Reset(Agent_61E0* a)
 {
@@ -76,8 +76,8 @@ void AgentData_Reset(Agent_61E0* a)
     e0.w[2] = 0;
     e0.w[4] = -1;
     e0.w[5] = -1;
-    func_00337490(&a->levels, 0, &e0);
-    func_00337490(&a->levels, n, &e1);
+    AgentLevelVec_Resize(&a->levels, 0, &e0);
+    AgentLevelVec_Resize(&a->levels, n, &e1);
     a->unkB72 = 0;
     a->unkB74 = 0;
     a->unkB6C = -1;

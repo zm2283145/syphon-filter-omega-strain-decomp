@@ -3,7 +3,7 @@ typedef struct { char pad[0xB08]; unsigned int bits[1]; } A352C0;
 extern void* D_004FFD30;
 extern W352C0* WeaponDb_Get(void* db, int id);
 extern void cAgentData_UnlockWeapon(A352C0* self, const char* name);
-void func_003352C0(A352C0* self, int id)
+void AgentData_UnlockById(A352C0* self, int id)
 {
     if (id > -1) {
         if (id < 10000) {

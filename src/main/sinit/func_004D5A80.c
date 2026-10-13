@@ -37,7 +37,7 @@ extern char Script_SubScript_Disable[];
 extern int D_00543738;
 extern int Script_RegisterType();
 extern int Script_RegisterNative();
-void func_004D5A80(void)
+void StaticInit_RegisterGobj(void)
 {
     D_005436B8 = Script_RegisterType("cGOBJ", ScriptType_cGOBJ_Init, 0, 1);
     D_005436C0 = D_005436B8;

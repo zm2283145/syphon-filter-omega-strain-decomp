@@ -6,7 +6,7 @@ __asm__(".set nomove\n"
         "dpmul = func_0011C268\n"
         "dptoul = func_0011C980\n"
         "__floatdidf = func_0011B7E0\n"
-        "dpadd = func_0011C1A8\n"
+        "dpadd = SoftFloat_DoubleAdd\n"
         "dpsub = func_0011C200");
 
 typedef int SItype;

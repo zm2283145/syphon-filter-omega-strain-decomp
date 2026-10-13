@@ -10,7 +10,7 @@ extern char Script_PerformAction[], Script_PerformAction_2[], Script_PerformActi
 extern char Script_PerformAction_WithObject[], Script_PerformAction_WithObject_2[];
 extern char Script_PerformAction_WithObject_3[], Script_PerformAction_WithObject_4[];
 extern char Script_StopPerformingAction[];
-extern int func_003D8F60();
+extern int ScriptEnum_Register();
 extern int Script_RegisterVariable();
 extern int Script_RegisterNative_2();
 extern int cGOBJ_GetScriptTypeKeyPtr();
@@ -18,7 +18,7 @@ extern int cSystem_GetScriptTypeKeyPtr();
 
 void func_004D63D0(void)
 {
-    *(int*)D_0055A180 = func_003D8F60("nCAS::eAction", D_00493910, 3);
+    *(int*)D_0055A180 = ScriptEnum_Register("nCAS::eAction", D_00493910, 3);
     D_0055A188 = Script_RegisterVariable("PerformActionOnceThrough", (int)&D_00493938, D_00493890);
     D_0055A190 = Script_RegisterVariable("PerformActionForever", (int)&D_00493940, D_00493890);
     D_0055A198 = Script_RegisterNative_2(Script_PerformAction, D_00493880, "PerformAction", 2, cSystem_GetScriptTypeKeyPtr(), D_0055A180);

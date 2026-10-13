@@ -19,7 +19,7 @@ extern char* func_002071A0(Str40FBC0* s);
 extern void func_001F12D0(Str40FBC0* s, char* cs);
 extern int func_0040FE50(Str40FBC0* s, Str40FBC0* key);
 extern void func_00138350(Str40FBC0* s, int flags);
-extern void func_00138B70(Str40FBC0* s, int flags);
+extern void String_Dtor(Str40FBC0* s, int flags);
 extern int func_00412C40(Str40FBC0* s);
 extern void func_00410630(Subs40FBC0* self, Str40FBC0* s);
 extern void func_0040FF20(Subs40FBC0* self, Str40FBC0* s);
@@ -83,7 +83,7 @@ void func_0040FBC0(Subs40FBC0* self, const char* s, const char* end)
                 }
             }
         }
-        func_00138B70(&line, 0);
+        String_Dtor(&line, 0);
     }
     self->f64 = self->f68;
 }

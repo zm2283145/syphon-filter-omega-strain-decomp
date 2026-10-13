@@ -23,7 +23,7 @@ extern unsigned char D_0051EEA8;
 extern G_002A06C0* D_0055A830;
 void func_0041EFA0(Self_002A06C0* self);
 void func_002C9AF0(Mgr_002A06C0* m, int a);
-Ctl_002A06C0* func_0041DB80(Self_002A06C0* self, char* name);
+Ctl_002A06C0* GuiWidget_FindChildByName(Self_002A06C0* self, char* name);
 Ui_002A06C0* Gui_GetScreenStack(void);
 void GuiScreen_SetFocus(Ui_002A06C0* ui, void* w);
 }
@@ -41,11 +41,11 @@ extern "C" void func_002A06C0(Self_002A06C0* self)
     Ctl_002A06C0* w;
     func_0041EFA0(self);
     func_002C9AF0(D_004FFC04, 0);
-    self->p20 = func_0041DB80(self, self->b48 ? D_0048BA28 : D_0048BA30);
-    w = func_0041DB80(self, D_0048BA38);
+    self->p20 = GuiWidget_FindChildByName(self, self->b48 ? D_0048BA28 : D_0048BA30);
+    w = GuiWidget_FindChildByName(self, D_0048BA38);
     if (w)
         SetHidden_002A06C0(w, !D_0051EEA8);
-    w = func_0041DB80(self, D_0048BA28);
+    w = GuiWidget_FindChildByName(self, D_0048BA28);
     if (w) {
         bool hide;
         if (D_004FFC04->b31) {

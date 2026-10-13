@@ -1,5 +1,5 @@
 #pragma mpwc_relax on
-extern int func_00121BC8(char*);
+extern int atoi(char*);
 extern int strcmp(const char*, const char*);
 extern char D_004C0720[];
 extern char D_004C0740[];
@@ -103,12 +103,12 @@ extern int D_00585FA8;
 extern int D_00585FB0;
 
 /* Applies one "{SFOLOBBY_SETTINGS}" key/value pair: the value is parsed with
- * func_00121BC8 and stored only if it lies within the setting's [min, max]. */
+ * atoi and stored only if it lies within the setting's [min, max]. */
 void func_004434A0(void* self, char* key, char* value) {
     int n;
 
     if (value != 0) {
-        n = func_00121BC8(value);
+        n = atoi(value);
     } else {
         n = 0;
     }

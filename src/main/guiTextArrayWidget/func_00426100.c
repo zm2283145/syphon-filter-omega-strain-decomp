@@ -10,7 +10,7 @@ void func_00424A90(guiTextArrayWidget* self);
 void func_00424BC0(guiTextArrayWidget* self);
 void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
 void Mem_Free(int pool, void* allocation, char* file, int line);
-void func_00138B70(void* string, int flags);
+void String_Dtor(void* string, int flags);
 TextArrayWidgetChild* func_003D0940(TextArrayWidgetChild* child, int x, int y,
                                   int width, int height, int resource, float* color);
 void* Gui_GetScreenList(void);
@@ -22,7 +22,7 @@ void func_00424820(guiTextArrayWidget* self, unsigned int height);
 static inline void destroy_string(void* string)
 {
     if (string)
-        func_00138B70(string, 0);
+        String_Dtor(string, 0);
 }
 
 static inline void destroy_child(TextArrayWidgetChild* child)

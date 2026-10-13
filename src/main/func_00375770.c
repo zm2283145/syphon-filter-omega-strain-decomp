@@ -54,7 +54,7 @@ static inline void Flip(S375770* o)
         q->open = 0;
     }
 }
-extern "C" void func_00375770(S375770* o, int ch)
+extern "C" void Vif1Packet_Kick(S375770* o, int ch)
 {
     B375770* b;
     if (o->aD8 < 0) {

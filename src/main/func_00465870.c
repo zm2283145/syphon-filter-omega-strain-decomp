@@ -16,7 +16,7 @@ extern void String_CtorCStr_13B480(S465*, char*);
 extern char* String_CStr(S465*);
 extern int FrontEnd_OpenPopup(int, int, char*, char*, int, int);
 extern void Game_SetPaused(char*, int);
-extern void func_00138B70(S465*, int);
+extern void String_Dtor(S465*, int);
 extern void FrontEnd_ClosePopup(int, int);
 extern void func_00415950(W465*, float);
 static inline int st465(X465* x) { return x->f1ec; }
@@ -37,8 +37,8 @@ void func_00465870(W465* w, float t) {
                     D_00497BE8 = FrontEnd_OpenPopup(D_004FFC04, 1, String_CStr(&a), tb, 0, 0);
                 }
                 Game_SetPaused(D_004FFB50, 1);
-                func_00138B70(&b, 0);
-                func_00138B70(&a, 0);
+                String_Dtor(&b, 0);
+                String_Dtor(&a, 0);
             }
         } else if (D_00497BE8 != -1) {
             FrontEnd_ClosePopup(D_004FFC04, D_00497BE8);

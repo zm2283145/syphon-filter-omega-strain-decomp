@@ -64,7 +64,7 @@ extern int D_004FF248;
 extern int D_004FF250;
 extern int D_004FF258;
 extern int GObj_IdentityA(int who);
-extern int func_0015C100(int node);
+extern int cNode_Identity(int node);
 extern int* Message_GetScriptTypeKeyPtr(void);
 extern void ScriptType_SetParent(int type, int baseType);
 
@@ -199,7 +199,7 @@ int cAIWaypointReachedMsg_v03(void) {
 }
 
 int Script_cAINodeMsg_GetNode(cAINodeMsg** msg) {
-    return func_0015C100((*msg)->node);
+    return cNode_Identity((*msg)->node);
 }
 
 void func_0026EFC0(void) {

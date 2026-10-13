@@ -4,7 +4,7 @@
 int Gui_GetScreenList();                                
 int Gui_GetScreenStack();                                
 int GuiStack_SwapScreens(int, int , int);                  
-int func_00418A80(int, int *, int *);                   
+int GuiManager_FindOrLoad(int, int *, int *);                   
 int func_00456160();                                  
 
 void func_00299780(int arg0) {
@@ -14,6 +14,6 @@ void func_00299780(int arg0) {
         func_00456160();
         return;
     }
-    temp_s0 = func_00418A80(Gui_GetScreenList(), ((int*)"GuiTitleScreen"), ((int*)"TITLESCR"));
+    temp_s0 = GuiManager_FindOrLoad(Gui_GetScreenList(), ((int*)"GuiTitleScreen"), ((int*)"TITLESCR"));
     GuiStack_SwapScreens(Gui_GetScreenStack(), arg0, temp_s0);
 }

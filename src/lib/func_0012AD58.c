@@ -15,7 +15,7 @@ extern unsigned long func_0011B278(unsigned long a, unsigned long b) __attribute
 extern unsigned long func_0011ACF8(unsigned long a, unsigned long b) __attribute__((const));
 extern unsigned long UInt64_Multiply(unsigned long a, unsigned long b) __attribute__((const));
 
-long func_0012AD58(struct _reent *rptr, const char *nptr, char **endptr, int base)
+long _strtol_r(struct _reent *rptr, const char *nptr, char **endptr, int base)
 {
     register const char *s = nptr;
     register unsigned long acc;

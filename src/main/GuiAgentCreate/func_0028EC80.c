@@ -18,7 +18,7 @@ extern char D_004A7520[];
 void func_0041EFA0(void);
 void func_0041E0F0(S_28EC80* a, int b, int c, int d, int e);
 int Agent_GetSelected(void* a, int b);
-W28EC80* func_0041DB80(S_28EC80* a, char* b);
+W28EC80* GuiWidget_FindChildByName(S_28EC80* a, char* b);
 char* func_00336170(int a);
 void func_0041BEB0(void* w, char* s, int a);
 G_28EC80* Gui_GetScreenStack(void);
@@ -30,7 +30,7 @@ extern "C" void func_0028EC80(S_28EC80* self)
     func_0041EFA0();
     if (self->f58)
         func_0041E0F0(self, self->f58, 10, 0, 0);
-    p = func_0041DB80(self, D_004A99B0);
+    p = GuiWidget_FindChildByName(self, D_004A99B0);
     p = (p && p->IsA(D_004A7520)) ? p : 0;
     if (p)
         func_0041BEB0(p, func_00336170(Agent_GetSelected(D_004FFB50, -1)), 0);

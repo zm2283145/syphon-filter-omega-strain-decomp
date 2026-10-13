@@ -34,7 +34,7 @@ void func_00456BF0(O456* o)
     char buf[16];
     GuiWidgetV* w;
 
-    o->acc = (char*)func_0041DB80(o, D_00497960);
+    o->acc = (char*)GuiWidget_FindChildByName(o, D_00497960);
     if (o->acc) {
         int i = 0;
         LNode* n;
@@ -48,7 +48,7 @@ void func_00456BF0(O456* o)
             n = n->next;
         }
     }
-    o->f8C = func_0041DB80(o, D_00497978);
+    o->f8C = GuiWidget_FindChildByName(o, D_00497978);
     func_003688C0(o);
     o->fB0 = 0;
     w = GuiFindAs(o, D_004C1C60, D_004A7520);

@@ -30,7 +30,7 @@ void func_001C05E0(void*);
 void func_001C0540(void*);
 int func_0036D4E0(Arc_1C01D0* a, int i);
 int func_0036D380(Arc_1C01D0* a, int i);
-char* func_0036D200(Arc_1C01D0* a, int i);
+char* Archive_GetMemberName(Arc_1C01D0* a, int i);
 void func_003B6270(Ska_1C01D0* p, int a, int b, Arc_1C01D0* c);
 void String_CtorCStr_13B480(Str_1C01D0* s, char* c);
 void func_001BFF20(It_1C01D0* out, Str_1C01D0* s);
@@ -43,7 +43,7 @@ void func_001EFB60(Ska_1C01D0* p);
 void func_0013BCB0(Str_1C01D0* d, Str_1C01D0* s);
 void func_001C0500(Pair_1C01D0* out, Str_1C01D0* k, Ska_1C01D0* v);
 void func_001C4770(Ins_1C01D0* out, void* t, Pair_1C01D0* k);
-void func_00138B70(void* s, int f);
+void String_Dtor(void* s, int f);
 }
 extern "C" void func_001C01D0(void* self, void* fs)
 {
@@ -81,7 +81,7 @@ extern "C" void func_001C01D0(void* self, void* fs)
             Str_1C01D0 s;
             It_1C01D0 it;
             It_1C01D0 end;
-            String_CtorCStr_13B480(&s, func_0036D200(a, i));
+            String_CtorCStr_13B480(&s, Archive_GetMemberName(a, i));
             func_001BFF20(&it, &s);
             func_001BFEE0(&end, &s);
             while (func_001BFE90(&it, &end)) {
@@ -100,11 +100,11 @@ extern "C" void func_001C01D0(void* self, void* fs)
                 func_0013BCB0(&pb.key, &pa.key);
                 pb.val = pa.val;
                 func_001C4770(&r, D_004FFBC0, &pb);
-                func_00138B70(&pb, 0);
-                func_00138B70(&pa, 0);
-                func_00138B70(&t, 0);
+                String_Dtor(&pb, 0);
+                String_Dtor(&pa, 0);
+                String_Dtor(&t, 0);
             }
-            func_00138B70(&s, 0);
+            String_Dtor(&s, 0);
         }
     }
 }

@@ -1,7 +1,7 @@
 extern int sprintf(char *buf, const char *fmt, ...);
 extern char *strncpy(char *d, const char *s, unsigned int n);
 extern char *func_00129C80(const char *searchee, const char *lookfor);
-extern int func_00121BC8(const char *s);
+extern int atoi(const char *s);
 
 int func_0034BD28(char *out, int n)
 {
@@ -18,7 +18,7 @@ int func_0034BD28(char *out, int n)
     time = "12:06:56";
     sprintf(mon, "%.3s", date);
     m = (func_00129C80(months, mon) - months) / 3 + 1;
-    sprintf(buf, "%.2d.%.2d.%.4s.%.2s.%.2s.%.2s", m, func_00121BC8(date + 4), date + 7,
+    sprintf(buf, "%.2d.%.2d.%.4s.%.2s.%.2s.%.2s", m, atoi(date + 4), date + 7,
             time, time + 3, time + 6);
     strncpy(out, buf, n);
     return 0;

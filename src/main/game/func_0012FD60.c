@@ -4,7 +4,7 @@
 extern "C" {
 void Mem_Free(int, void*, char*, int);
 float World_GetElapsedTime(void);
-int func_003F8220(void*, float);
+int MoviePlayer_Update(void*, float);
 void func_003F9300(void*, int);
 void func_0036B250(int);
 void* Service_Lookup(void*, void*);
@@ -36,10 +36,10 @@ typedef struct {
 } S_12FD60;
 
 #pragma opt_common_subs off
-extern "C" void func_0012FD60(S_12FD60* self)
+extern "C" void Game_UpdateMovieQueue(S_12FD60* self)
 {
     if (self->b0) {
-        bool done = !func_003F8220(self->b0, World_GetElapsedTime());
+        bool done = !MoviePlayer_Update(self->b0, World_GetElapsedTime());
         if (done) {
             void* p = self->b0;
             {

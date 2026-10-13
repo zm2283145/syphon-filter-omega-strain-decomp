@@ -18,7 +18,7 @@ void func_004426B0(Lobby2A*);
 int func_004518F0(Lobby2A*, void (*)(), void*, void*, void*);
 int func_0033CE30(W2A9030*, int, int, int, int, int);
 void FrontEnd_OpenPopup(char*, int, char*, int, W2A9030*, int);
-VObj2A* func_0041DB80(W2A9030*, char*);
+VObj2A* GuiWidget_FindChildByName(W2A9030*, char*);
 void func_0041BEB0(VObj2A*, char*, int);
 char* Agent_GetSelected(void*, int);
 void func_0033D8E0(W2A9030*, int);
@@ -40,10 +40,10 @@ extern "C" void func_002A9030(W2A9030* self)
                 FrontEnd_OpenPopup(g, 2, D_004AB6B8, func_0033CE30(self, 0x5A, 0, 0, 0, 0), self, 0xB);
             }
         }
-        o = func_0041DB80(self, D_0048BBD0);
+        o = GuiWidget_FindChildByName(self, D_0048BBD0);
         o = (o != 0 && o->v20(D_004A7520) != 0) ? o : 0;
         if (o) func_0041BEB0(o, D_004FFC04 + 0x1C8, 0);
-        o = func_0041DB80(self, D_0048BBC8);
+        o = GuiWidget_FindChildByName(self, D_0048BBC8);
         o = (o != 0 && o->v20(D_004A7520) != 0) ? o : 0;
         if (o) func_0041BEB0(o, Agent_GetSelected(D_004FFB50, -1) + 0x95C, 0);
         func_0033D8E0(self, 0);

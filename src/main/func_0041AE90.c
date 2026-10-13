@@ -6,7 +6,7 @@ typedef __int128 Q128;
 #pragma mpwc_relax on
 int String_PushBack(char *, int);                          
 int String_Reserve(char *);                              
-int func_00138B70(char *, int);                            
+int String_Dtor(char *, int);                            
 int String_CStr(char *);                             
 int func_003D08B0(int, int);                          
 
@@ -20,7 +20,7 @@ void func_0041AE90(int arg0, int arg1) {
                 String_PushBack(&sp40, 0x23);
         }
         func_003D08B0(arg0, String_CStr(&sp40));
-        func_00138B70(&sp40, 0);
+        String_Dtor(&sp40, 0);
     }
 }
 

@@ -1,5 +1,5 @@
 __asm__(".set nomove\n"
-        "dpadd = func_0011C1A8\n"
+        "dpadd = SoftFloat_DoubleAdd\n"
         "dpsub = func_0011C200\n"
         "dpmul = func_0011C268\n"
         "dptoli = func_0011C858\n");

@@ -30,7 +30,7 @@ extern void func_0041F090();
 extern void func_0041F210();
 extern void * const D_004DDC20[];
 extern char D_004DE8A0[];
-extern void func_00138B70(void* p, int f);
+extern void String_Dtor(void* p, int f);
 extern void func_0044F970(void* p, int f);
 extern void func_0033D430(void* p, int f);
 extern void operator_delete(void* p);
@@ -39,7 +39,7 @@ static inline void Base2AD920(O2AD920* p)
     if (p) {
         p->vt = D_004DE8A0;
         if (p->m104)
-            func_00138B70(p->m104, 0);
+            String_Dtor(p->m104, 0);
         func_0044F970(p->mE4, -1);
         func_0044F970(p->mC8, -1);
         func_0044F970(p->mAC, -1);

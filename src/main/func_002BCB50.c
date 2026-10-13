@@ -22,7 +22,7 @@ void WeaponInv_Equip(void*,int);
 void WeaponInv_HolsterCurrent(void*);
 void WeaponInv_RemoveSlot(void*,int,int,int,int=0);
 int WeaponInv_SlotOfItem(short);
-void* func_00418A80(void*,char*,char*);
+void* GuiManager_FindOrLoad(void*,char*,char*);
 void func_0041E0F0(void*,void*,int,int,int=0);
 extern signed char D_00489D62[];
 extern char D_004A9870[],D_004AC2B0[],D_004AC2C8[],D_004AC2D0[],D_004AC2E0[],D_004AC2F0[],D_004AC300[],D_004AC310[],D_004AC320[],D_004AC330[],D_004AC340[],D_004AC350[],D_004AC360[],D_004FFB50[],D_0055A300[];
@@ -128,7 +128,7 @@ extern "C" int GuiEquipmentModify_Accept(Screen* arg0, GuiGridInput* arg1) {
         }
         var_s0_2 = 0;
         if (D_005721C8 != 0) {
-            var_s0_2 = func_00418A80(Gui_GetScreenList(), D_004AC2B0, D_004AC2C8);
+            var_s0_2 = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AC2B0, D_004AC2C8);
         } else {
             D_004FFC29 = 0;
             Pad_Reset(D_0055A300);
@@ -140,7 +140,7 @@ extern "C" int GuiEquipmentModify_Accept(Screen* arg0, GuiGridInput* arg1) {
     var_v0 = Press(arg1,0x10);
     if (var_v0 != 0) {
         if (D_005721C8 != 0) {
-            temp_s0 = func_00418A80(Gui_GetScreenList(), D_004AC2B0, D_004AC2C8);
+            temp_s0 = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AC2B0, D_004AC2C8);
             GuiStack_SwapScreens(Gui_GetScreenStack(), arg0, temp_s0);
             Game_NetSendPauseState(D_004FFB50, 0, 0);
             return 1;

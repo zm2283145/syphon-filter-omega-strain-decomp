@@ -227,10 +227,10 @@ int WeaponInv_GetClipSize(int inv, int w);
 int WeaponInv_IsFullAuto(int inv);
 void cAI_v10(Npc *npc);
 void cMessage_dtor(Msg *m, int f);
-int func_002EBAF8(int *id, int session);
+int NetGame_InitLocalSlot(int *id, int session);
 }
 
-#define LOCALID(X) { int ld_a = D_005721A8; if (D_005721C8) { if (D_00494178 == -1) func_002EBAF8(&D_00494178, ld_a); X = D_00494178; } else X = 0; }
+#define LOCALID(X) { int ld_a = D_005721A8; if (D_005721C8) { if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, ld_a); X = D_00494178; } else X = 0; }
 
 extern "C" void cNPC_v10(Npc *self)
 {

@@ -1,7 +1,7 @@
 #include "types.h"
 typedef struct { char pad[0x14C]; unsigned char on; char p1[3]; unsigned int idx; char* cur; char p2[4]; char* base; } SL36D2;
 #pragma opt_rotateloops off
-char* func_0036D200(SL36D2* p, int n) {
+char* Archive_GetMemberName(SL36D2* p, int n) {
     int i;
     char* s;
     char* r;

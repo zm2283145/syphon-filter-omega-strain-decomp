@@ -15,7 +15,7 @@ extern void printf(char* fmt, ...);
 extern int String_CompareNoCase(char* a, char* b);
 extern int String_CompareN(char* a, char* b, int n);
 extern int strlen(char*);
-extern int func_00121BC8(char*);
+extern int atoi(char*);
 extern void func_003FE110(int);
 extern char* Loc_GetLanguageName(unsigned char id);
 extern void Loc_SetLanguage(unsigned char id);
@@ -58,7 +58,7 @@ void Game_LoadIni(Game* g) {
     g->invFps = 1.0f / g->fps;
     { char* net = func_003CBA90("NET_BUFFER_SIZE");
     if (strlen(net) != 0) {
-        D_00494188 = func_00121BC8(net);
+        D_00494188 = atoi(net);
     } }
     /* retail "1" is an 8-byte, 8-aligned literal: a 4-byte wide string */
     ukEnglish = String_CompareNoCase(func_003CBA90("BOOT_USE_UK_ENGLISH"), (char*)L"1") == 0;

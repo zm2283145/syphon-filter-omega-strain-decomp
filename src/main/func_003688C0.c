@@ -34,7 +34,7 @@ extern unsigned char D_005721C8;
 static const unsigned int dat_00492F60[2] = { 0x3, 0x0 };
 extern V4_3688C0 D_00587CE0; extern V4_3688C0 D_00587CC0;
 void func_0041F150(O_3688C0* o);
-W_3688C0* func_0041DB80(void* o, char* name);
+W_3688C0* GuiWidget_FindChildByName(void* o, char* name);
 int sprintf(char* buf, const char* fmt, ...);
 void func_00421690(W_3688C0* w, char* s);
 void func_00424820(W_3688C0* w, int v);
@@ -53,26 +53,26 @@ void func_003688C0(O_3688C0* o)
     int i;
     W_3688C0* t;
     func_0041F150(o);
-    o->f60 = func_0041DB80(o, D_004BBC90);
-    o->f64 = func_0041DB80(o, D_004BBCB0);
+    o->f60 = GuiWidget_FindChildByName(o, D_004BBC90);
+    o->f64 = GuiWidget_FindChildByName(o, D_004BBCB0);
     if (o->f64) {
-        o->f68 = Cast_3688C0(func_0041DB80(o, D_004BBCC8), D_004A9870);
-        o->f6C = Cast_3688C0(func_0041DB80(o, D_004BBCD0), D_004A9870);
+        o->f68 = Cast_3688C0(GuiWidget_FindChildByName(o, D_004BBCC8), D_004A9870);
+        o->f6C = Cast_3688C0(GuiWidget_FindChildByName(o, D_004BBCD0), D_004A9870);
         if (o->f68) o->f68->flags &= ~0x80;
         if (o->f6C) o->f6C->flags &= ~0x80;
     } else {
         o->f68 = 0;
         o->f6C = 0;
     }
-    o->f80 = func_0041DB80(o, D_004BBCE0);
+    o->f80 = GuiWidget_FindChildByName(o, D_004BBCE0);
     for (i = 0; i < 4; i++) {
         char name[32];
         sprintf(name, D_004BBD00, i);
-        o->slots[i] = Cast_3688C0(func_0041DB80(o, name), D_004AA640);
+        o->slots[i] = Cast_3688C0(GuiWidget_FindChildByName(o, name), D_004AA640);
         if (o->slots[i]) {
             func_00421690(o->slots[i], D_004BBD18);
             if (i == 0) {
-                W_3688C0* w = func_0041DB80(o, D_004BBD20);
+                W_3688C0* w = GuiWidget_FindChildByName(o, D_004BBD20);
                 if (w) w->flags &= ~2;
                 SetC_3688C0(o->slots[i], D_00587CE0);
                 o->slots[i]->f88 = w;
@@ -88,9 +88,9 @@ void func_003688C0(O_3688C0* o)
         o->f7C = (int)o->f54->f40;
         if (o->f80) o->f84 = (int)(o->f80->f38 - (float)o->f78);
     }
-    o->f70 = Cast_3688C0(func_0041DB80(o, D_004BBD38), D_004A7520);
-    o->f74 = Cast_3688C0(func_0041DB80(o, D_004BBD48), D_004A7520);
-    t = Cast_3688C0(func_0041DB80(o, D_004BBD58), D_004A7520);
+    o->f70 = Cast_3688C0(GuiWidget_FindChildByName(o, D_004BBD38), D_004A7520);
+    o->f74 = Cast_3688C0(GuiWidget_FindChildByName(o, D_004BBD48), D_004A7520);
+    t = Cast_3688C0(GuiWidget_FindChildByName(o, D_004BBD58), D_004A7520);
     if (t) {
         char buf[32];
         int r = func_00330C30(D_004FFC90, D_005721C8);
@@ -102,7 +102,7 @@ void func_003688C0(O_3688C0* o)
         }
         func_0041BEB0(t, buf, 0);
     }
-    t = Cast_3688C0(func_0041DB80(o, D_004BBD70), D_004A7520);
+    t = Cast_3688C0(GuiWidget_FindChildByName(o, D_004BBD70), D_004A7520);
     if (t) {
         char* s = Loc_LookupText(D_005721C8 ? D_004BBD80 : D_004BBD88);
         if (s) {

@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-Rel* func_001B6A90(Rel* r) {
+Rel* ItemList_Reset(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;

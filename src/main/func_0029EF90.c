@@ -32,36 +32,36 @@ extern char D_004A7520[];
 extern char D_004AAE20[];
 extern char D_004AAE00[];
 void func_0033D3F0(Self_0029EF90* self);
-void* func_0041DB80(Self_0029EF90* self, char* name);
+void* GuiWidget_FindChildByName(Self_0029EF90* self, char* name);
 void func_004235B0(W_0029EF90* w, int a, int b);
 void func_00421650(W_0029EF90* w, int a);
 void MLTextWidget_SetFont(W_0029EF90* w, char* s);
 void* Gui_GetScreenList(void);
-Page_0029EF90* func_00418A80(void* a, char* b, char* c);
+Page_0029EF90* GuiManager_FindOrLoad(void* a, char* b, char* c);
 }
 static inline W_0029EF90* FindAs_0029EF90(Self_0029EF90* self, char* name, char* type)
 {
-    W_0029EF90* w = (W_0029EF90*)func_0041DB80(self, name);
+    W_0029EF90* w = (W_0029EF90*)GuiWidget_FindChildByName(self, name);
     return (w && w->IsA(type)) ? w : 0;
 }
 extern "C" void func_0029EF90(Self_0029EF90* self)
 {
     func_0033D3F0(self);
-    self->f10C = func_0041DB80(self, D_0048B920);
-    self->f110 = func_0041DB80(self, D_0048B938);
-    self->f114 = func_0041DB80(self, D_0048B968);
+    self->f10C = GuiWidget_FindChildByName(self, D_0048B920);
+    self->f110 = GuiWidget_FindChildByName(self, D_0048B938);
+    self->f114 = GuiWidget_FindChildByName(self, D_0048B968);
     self->fEC = FindAs_0029EF90(self, D_0048B928, D_004AA640);
     if (self->fEC) {
         func_004235B0(self->fEC, 1, 10);
-        self->fEC->f88 = func_0041DB80(self, D_0048B930);
+        self->fEC->f88 = GuiWidget_FindChildByName(self, D_0048B930);
         func_00421650(self->fEC, 1);
     }
     self->fF0 = FindAs_0029EF90(self, D_0048B940, D_004A7520);
     self->fF4 = FindAs_0029EF90(self, D_0048B948, D_004AAE20);
-    self->fF8 = func_0041DB80(self, D_0048B950);
-    self->fFC = func_0041DB80(self, D_0048B958);
+    self->fF8 = GuiWidget_FindChildByName(self, D_0048B950);
+    self->fFC = GuiWidget_FindChildByName(self, D_0048B958);
     self->f100 = FindAs_0029EF90(self, D_0048B970, D_004AAE20);
-    self->f104 = func_0041DB80(self, D_0048B978);
+    self->f104 = GuiWidget_FindChildByName(self, D_0048B978);
     if (self->fF4) {
         self->fF4->f7C = FindAs_0029EF90(self, D_0048B960, D_004AAE00);
         MLTextWidget_SetFont(self->fF4, "callout");
@@ -72,6 +72,6 @@ extern "C" void func_0029EF90(Self_0029EF90* self)
         MLTextWidget_SetFont(self->f100, "callout");
         self->f100->f60 = 0;
     }
-    self->f108 = func_00418A80(Gui_GetScreenList(), "GuiWidget", "DNASLOGO");
+    self->f108 = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiWidget", "DNASLOGO");
     self->f108->flags &= ~0x20;
 }

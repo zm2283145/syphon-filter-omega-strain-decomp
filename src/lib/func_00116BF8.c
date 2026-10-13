@@ -6,7 +6,7 @@ extern void *memset(void *, int, unsigned int);
 extern void func_00117D68(void);
 extern void func_00117040(void);
 extern int func_0010CE50(int, void *, int, int);
-extern int func_0010CE60(int, int);
+extern int RemoveIntcHandler(int, int);
 extern int func_001161A0(void);
 extern void func_001161F8(void);
 extern void func_00116A70(int);
@@ -20,7 +20,7 @@ int func_00116BF8(void)
     if (D_00487848.id < 0) return 0x80008001;
     if (D_00487848.cnt != 0) return 0x80000010;
     s = func_001161A0();
-    if (func_0010CE60(11, D_00487848.id) == 0) {
+    if (RemoveIntcHandler(11, D_00487848.id) == 0) {
         Alloc_Lock(11);
         func_00116A80(0xC00);
         func_00116A70(0);

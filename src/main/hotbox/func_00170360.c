@@ -2,7 +2,7 @@
 typedef struct { char pad[0xC]; int idC; int id10; char pad14[0x7C]; int f90; } Obj_0360;
 int NetMap_BindReceiver(int, int, Obj_0360*);
 Obj_0360* Hotbox_CreateRuntime(int, int, int, int);
-int func_002EBAF8(int*, int);
+int NetGame_InitLocalSlot(int*, int);
 int func_002EBBA0(int, int*);
 extern int D_00494178;
 extern int D_004FFBD0;
@@ -15,7 +15,7 @@ static inline int LocalId_0360(void)
     int r;
     int a = D_005721A8; /* read before the flag test: retail loads it ahead of the branch */
     if (D_005721C8) {
-        if (D_00494178 == -1) func_002EBAF8(&D_00494178, a);
+        if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, a);
         r = D_00494178;
     } else r = 0;
     return r;

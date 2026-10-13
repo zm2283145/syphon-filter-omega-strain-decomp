@@ -14,7 +14,7 @@ extern A34E5* Agent_GetSelected(char*, int);
 extern int Gui_GetScreenStack(void);
 extern void func_0041E0F0(O34E5*, int, int, int, int);
 extern int Gui_GetScreenList(void);
-extern void* func_00418A80(int, char*, char*);
+extern void* GuiManager_FindOrLoad(int, char*, char*);
 extern char* String_CStr(void*);
 extern void func_00327C70(void*, int, char*, int);
 extern void func_00328630(void*);
@@ -34,7 +34,7 @@ extern "C" void func_0034E5A0(O34E5* o, int idx) {
     if (sel == -1) return;
     if (!(Agent_GetSelected(D_004FFB50, -1)->fb50->f4 < sel)) {
     func_0041E0F0(o, Gui_GetScreenStack(), 0x10, 1, 0);
-    w = func_00418A80(Gui_GetScreenList(), "GuiSlideShow", "ZEUSHELL");
+    w = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiSlideShow", "ZEUSHELL");
     if (!w) return;
     {
         char* t = String_CStr(o->f4);

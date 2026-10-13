@@ -52,11 +52,11 @@ typedef struct Agent070 {
 extern RangeTable070 D_00532A70[5];
 extern DosDefVec070 D_00532B50;
 extern void func_00335350(Agent070* self, RangeRec070* rec, RangeDef070* def, int x);
-extern void func_003351E0(Agent070* self, int x);
+extern void AgentData_ApplyReachedRatings(Agent070* self, int x);
 extern int AgentData_TotalPoints(Agent070* self);
-extern void func_003352C0(Agent070* self, int id);
+extern void AgentData_UnlockById(Agent070* self, int id);
 
-void func_00335070(Agent070* self, int x)
+void AgentData_AwardPass(Agent070* self, int x)
 {
     int t;
     int pts;
@@ -74,12 +74,12 @@ void func_00335070(Agent070* self, int x)
             func_00335350(self, &rv->data[j], &tb->data[j], x);
         }
     }
-    func_003351E0(self, x);
+    AgentData_ApplyReachedRatings(self, x);
     pts = AgentData_TotalPoints(self);
     dv = &D_00532B50;
     for (i = 0; i < dv->count; i++) {
         if (pts >= dv->data[i].need) {
-            func_003352C0(self, dv->data[i].id);
+            AgentData_UnlockById(self, dv->data[i].id);
             self->dossier = &dv->data[i];
         }
     }

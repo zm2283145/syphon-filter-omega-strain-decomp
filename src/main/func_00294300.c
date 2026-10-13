@@ -14,7 +14,7 @@ struct CcFocus {VPAD8(a) VPAD4(b) VPAD2(c) VPAD1(d) virtual GuiWidget*GetFocus()
 extern "C" {
 void*Gui_GetScreenStack();void GuiScreen_SetFocus(void*,void*);void func_0041E0F0(void*,void*,int,int,int);void func_0041BEB0(void*,const char*,int);
 int Agent_GetSelected(void*,int);int AgentData_IsObjectiveComplete(int,const char*);int func_003329B0(int,int,int,int);int func_00336060(int,const char*);
-int String_CompareNoCase(const char*,const char*);void String_Copy(char*,const char*);int func_00121BC8(const char*);char*Loc_LookupText(const char*);int sprintf(char*,const char*,...);
+int String_CompareNoCase(const char*,const char*);void String_Copy(char*,const char*);int atoi(const char*);char*Loc_LookupText(const char*);int sprintf(char*,const char*,...);
 extern char D_004AA200[],D_004AA210[],D_004AA228[],D_004AA238[],D_004AA248[],D_004AA250[],D_004AA260[],D_004AA268[],D_004AA270[],D_004AA280[],D_004FFB50[],D_004FFC90[];
 }
 extern "C" void func_00294300(CcBindings*self,unsigned char requested){
@@ -45,7 +45,7 @@ extern "C" void func_00294300(CcBindings*self,unsigned char requested){
    sprintf(text,D_004AA260,D_004FFC90);char*requirement=Loc_LookupText(text);
    if(title&&*title&&requirement&&*requirement){
     self->tail[i]->flags|=2;bool missing=1;
-    if(requirement[1]==':'&&requirement[2]){text[0]=requirement[0];text[1]=0;objective=func_00121BC8(text);String_Copy(text,requirement+2);if(AgentData_IsObjectiveComplete(Agent_GetSelected(D_004FFB50,-1),text)){missing=0;self->objective=objective;self->tail[i]->unk10=3;}}
+    if(requirement[1]==':'&&requirement[2]){text[0]=requirement[0];text[1]=0;objective=atoi(text);String_Copy(text,requirement+2);if(AgentData_IsObjectiveComplete(Agent_GetSelected(D_004FFB50,-1),text)){missing=0;self->objective=objective;self->tail[i]->unk10=3;}}
     if(missing)func_0041BEB0(self->tail[i],locked,0);else{func_0041BEB0(self->tail[i],title,0);self->tail[i]->flags|=4;}i++;
    }
    self->tail[i]->flags|=2;bool enabled=0;

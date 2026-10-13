@@ -14,7 +14,7 @@ static unsigned int dat_00493A18[2] = { 0x1, 0x0 };
 extern int D_0055C7B8;
 extern signed char D_005724D0;
 
-void func_003FBEC0(void) {
+void Net_Pump(void) {
     int sp1C;
     int sp18;
 

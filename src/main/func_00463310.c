@@ -17,7 +17,7 @@ extern char D_004C2780[];
 extern char D_004C2798[];
 extern "C" Manager* Gui_GetScreenStack(void);
 extern "C" void* Gui_GetScreenList(void);
-extern "C" void* func_00418A80(void* root, const char* a, const char* b);
+extern "C" void* GuiManager_FindOrLoad(void* root, const char* a, const char* b);
 extern "C" void GuiStack_SwapScreens(Manager* mgr, Screen* screen, void* item);
 
 /* Passes +0x250 to the manager's virtual +0x68, looks up an item by the two names and hands it to GuiStack_SwapScreens. */
@@ -25,6 +25,6 @@ extern "C" void func_00463310(Screen* self)
 {
     void* item;
     Gui_GetScreenStack()->Method68(self->unk250);
-    item = func_00418A80(Gui_GetScreenList(), D_004C2780, D_004C2798);
+    item = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004C2780, D_004C2798);
     GuiStack_SwapScreens(Gui_GetScreenStack(), self, item);
 }

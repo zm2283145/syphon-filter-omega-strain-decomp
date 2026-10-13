@@ -7,7 +7,7 @@ extern void func_0029F340(void*, char*, char*, char*);
 extern void String_CtorCStr_13B480(Str_D980*, char*);
 extern char* String_CStr(Str_D980*);
 extern void func_00209620(Str_D980*, Str_D980*);
-extern void func_00138B70(Str_D980*, int);
+extern void String_Dtor(Str_D980*, int);
 extern void FrontEnd_OpenPopup(int, int, char*, char*, O_D980*, int);
 extern void FrontEnd_ClosePopup(int, int);
 
@@ -38,14 +38,14 @@ void func_0029D980(O_D980* o, void* src) {
     if (extra[0]) {
         String_CtorCStr_13B480(&t, D_004AAC10);
         func_00209620(&s, &t);
-        func_00138B70(&t, 0);
+        String_Dtor(&t, 0);
         String_CtorCStr_13B480(&u, extra);
         func_00209620(&s, &u);
-        func_00138B70(&u, 0);
+        String_Dtor(&u, 0);
     }
     flags = 0;
     if (o->x88 != 4) flags = 0x20;
     FrontEnd_OpenPopup(D_004FFC04, 2, title, String_CStr(&s), o, flags);
     FrontEnd_ClosePopup(D_004FFC04, o->x11C);
-    func_00138B70(&s, 0);
+    String_Dtor(&s, 0);
 }

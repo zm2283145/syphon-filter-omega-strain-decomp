@@ -13,7 +13,7 @@ extern "C" {
 extern char* D_0048B3E8;
 extern char* D_0048B3F0;
 extern char* D_0048B3F8;
-W_00288920* func_0041DB80(Scr_00288920* s, char* name);
+W_00288920* GuiWidget_FindChildByName(Scr_00288920* s, char* name);
 void* Gui_GetScreenStack(void);
 void GuiScreen_SetFocus(void* stack, void* w);
 }
@@ -22,7 +22,7 @@ extern "C" void func_00288920(Scr_00288920* self, int on)
     char* names[3] = { D_0048B3E8, D_0048B3F0, D_0048B3F8 };
     unsigned int i;
     for (i = 0; i < 3; i++) {
-        W_00288920* w = func_0041DB80(self, names[i]);
+        W_00288920* w = GuiWidget_FindChildByName(self, names[i]);
         if (w) {
             if (on)
                 w->flags |= 4;

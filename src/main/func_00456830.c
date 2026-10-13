@@ -12,7 +12,7 @@ extern char D_004A7520[];
 extern unsigned char D_004FFBA0;
 extern int D_004FFC2C;
 extern char D_004FFB50[];
-VObj45* func_0041DB80(W456830*, char*);
+VObj45* GuiWidget_FindChildByName(W456830*, char*);
 int sprintf(char*, const char*, ...);
 char* Loc_LookupText(char*);
 void func_0041BEB0(VObj45*, char*, int);
@@ -33,7 +33,7 @@ extern "C" int func_00456830(W456830* self, Ev45* ev, int code, int a3, int a4)
             VObj45* o;
             char buf[16];
             self->id = id;
-            o = func_0041DB80(self, D_004C1C60);
+            o = GuiWidget_FindChildByName(self, D_004C1C60);
             o = (o != 0 && o->v20(D_004A7520) != 0) ? o : 0;
             if (o) {
                 char* s;

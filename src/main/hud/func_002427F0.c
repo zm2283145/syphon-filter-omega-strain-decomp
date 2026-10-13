@@ -8,12 +8,12 @@ public:
 extern "C" {
 void* Gui_GetScreenList(void);
 Mgr2427* Gui_GetScreenStack(void);
-void* func_00418980(void* a, void* b);
-void* func_00418A80(void* a, void* b, void* c);
+void* GuiManager_FindByName(void* a, void* b);
+void* GuiManager_FindOrLoad(void* a, void* b, void* c);
 extern char D_004A7240[];
 }extern "C" void func_002427F0(Obj2426* s) {
     if (s->b6A9) {
-        void* x = func_00418980(Gui_GetScreenList(), "GuiMapScreen");
+        void* x = GuiManager_FindByName(Gui_GetScreenList(), "GuiMapScreen");
         if (x) Gui_GetScreenStack()->s24(x);
         s->b6A9 = 0;
     }

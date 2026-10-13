@@ -35,7 +35,7 @@ int cAgentData_GetStat(Agent_4624E0* agent, int stat);
 int sprintf(char* buf, const char* fmt, ...);
 Line_4624E0* func_00462650(Line_4624E0* line, char* voice, int duration);
 void func_00462620(void* vec, Line_4624E0* line);
-W_4624E0* func_0041DB80(void* self, char* name);
+W_4624E0* GuiWidget_FindChildByName(void* self, char* name);
 int func_00330C30(void* p, unsigned char f);
 void func_004624E0(Self_4624E0* self);
 
@@ -55,7 +55,7 @@ void func_004624E0(Self_4624E0* self)
         func_00462650(&line, buf, 0x1E);
         func_00462620(self->lines, &line);
     }
-    w = func_0041DB80(self, D_004C26B0);
+    w = GuiWidget_FindChildByName(self, D_004C26B0);
     if (agent->bB71) {
         int r;
         if (w) w->flags &= ~2;

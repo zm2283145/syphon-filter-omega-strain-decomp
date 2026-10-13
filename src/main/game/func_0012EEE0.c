@@ -12,7 +12,7 @@ typedef struct {
     unsigned char b2D;
 } Msg_12EEE0;
 char* Agent_GetSelected(int, int);
-int func_002EBAF8(int*, int);
+int NetGame_InitLocalSlot(int*, int);
 extern int D_00494178;
 extern int D_005721A8;
 extern unsigned char D_005721C8;
@@ -31,7 +31,7 @@ void Game_NetSendPauseState(int arg0, unsigned char arg1, unsigned char arg2)
         int id;
         int a = D_005721A8;
         if (D_005721C8) {
-            if (D_00494178 == -1) func_002EBAF8(&D_00494178, a);
+            if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, a);
             id = D_00494178;
         } else id = 0;
         {

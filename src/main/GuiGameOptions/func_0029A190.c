@@ -73,7 +73,7 @@ int sprintf(char* buf, const char* fmt, ...);
 int FrontEnd_OpenPopup(void* fe, int kind, char* title, char* text, Hud_A190* owner, int id);
 void String_CtorCStr_13B480(Str_A190* s, char* text);
 char* String_CStr(Str_A190* s);
-void func_00138B70(Str_A190* s, int flags);
+void String_Dtor(Str_A190* s, int flags);
 void func_00299AA0(Hud_A190* self, int idx);
 void func_002998B0(Hud_A190* self);
 void func_002996D0(Hud_A190* self, int a);
@@ -159,8 +159,8 @@ extern "C" int func_0029A190(Hud_A190* self, Wdg_A190* w, unsigned short msg, in
                 String_CtorCStr_13B480(&s, Loc_LookupText(D_004AA7C0));
                 { char* txt = String_CStr(&s); FrontEnd_OpenPopup(D_004FFC04, 5, String_CStr(&t), txt, self, 0xB); }
                 func_0029AA50(self, 0x800);
-                func_00138B70(&s, 0);
-                func_00138B70(&t, 0);
+                String_Dtor(&s, 0);
+                String_Dtor(&t, 0);
             } else {
                 func_002C9860(D_004FFC04, 1);
                 func_0045A3A0(self->xB8, 0x800);
@@ -183,8 +183,8 @@ extern "C" int func_0029A190(Hud_A190* self, Wdg_A190* w, unsigned short msg, in
                 func_002C9860(D_004FFC04, 1);
                 func_0045A3A0(self->xB8, 0x800);
                 func_002C9510(D_004FFC04);
-                func_00138B70(&s, 0);
-                func_00138B70(&t, 0);
+                String_Dtor(&s, 0);
+                String_Dtor(&t, 0);
             } else {
                 self->iD8 = 0;
                 func_0029AA50(self, 0x800);

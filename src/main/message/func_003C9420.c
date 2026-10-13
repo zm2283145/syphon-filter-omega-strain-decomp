@@ -25,13 +25,13 @@ extern unsigned char D_005721C0,D_005721C8;
 }
 extern "C" {
 int Player_GetIndex(int); void Transport_Send(int,CMsg*,int,int);
-void printf(char*); void func_002EBAF8(int*,int);
+void printf(char*); void NetGame_InitLocalSlot(int*,int);
 extern int D_00494178,D_005721A8;
 extern unsigned char D_005721D0;
 extern char D_004BD150[];
 }
 static inline int CurrentPlayer(int id) {
- if(D_005721C8) {if(D_00494178==-1)func_002EBAF8(&D_00494178,id); return D_00494178;}return 0;
+ if(D_005721C8) {if(D_00494178==-1)NetGame_InitLocalSlot(&D_00494178,id); return D_00494178;}return 0;
 }
 static inline int LocalAuth(){return D_005721C8?D_005721C0:1;}
 static inline void Enqueue(int mode,CMsg* msg,TargetV* obj) {

@@ -1,7 +1,7 @@
 #include "types.h"
 typedef struct { char p0[0x1C]; int w; int h; int bpp; int clut; char p2C[0x100]; int f12C; int f130; int f134; int f138; int f13C; int f140; } T37F670;
 /* Computes the texture's VRAM page layout (page counts for image and CLUT). */
-void func_0037F670(T37F670* t)
+void Video_ComputeGsPageLayout(T37F670* t)
 {
     int bw; unsigned char big; int bh; int pages; int cl; int ch;
     bw = (t->w + 63) >> 6;

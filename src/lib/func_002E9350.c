@@ -1,6 +1,6 @@
 extern int sprintf(char* buf, const char* fmt, ...);
 extern char* func_00129C80(const char* s, const char* sub);
-extern int func_00121BC8(const char* s);
+extern int atoi(const char* s);
 
 int func_002E9350(char* out)
 {
@@ -16,6 +16,6 @@ int func_002E9350(char* out)
     time = "12:08:45";
     sprintf(buf, "%.3s", date);
     m = (func_00129C80(months, buf) - months) / 3 + 1;
-    sprintf(out, "Time of build: %.2d.%.2d.%.4s.%.2s.%.2s.%.2s", m, func_00121BC8(date + 4), date + 7, time, time + 3, time + 6);
+    sprintf(out, "Time of build: %.2d.%.2d.%.4s.%.2s.%.2s.%.2s", m, atoi(date + 4), date + 7, time, time + 3, time + 6);
     return 0;
 }

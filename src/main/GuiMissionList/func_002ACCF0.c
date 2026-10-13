@@ -27,7 +27,7 @@ extern char D_004ABAB0[];
 extern char D_004AB9D0[]; /* fallback text */
 /* key formats */
 extern "C" void func_00424BC0(Screen* self);
-extern "C" Widget* func_0041DB80(Screen* self, int id);
+extern "C" Widget* GuiWidget_FindChildByName(Screen* self, int id);
 extern "C" int sprintf(char* buf, const char* fmt, ...);
 extern "C" const char* Loc_LookupText(const char* key);
 
@@ -40,7 +40,7 @@ extern "C" void func_002ACCF0(Screen* self)
     char key1[0x20];
     Widget* child;
     func_00424BC0(self);
-    child = func_0041DB80(self, D_0048BC28);
+    child = GuiWidget_FindChildByName(self, D_0048BC28);
     if (!child || !child->IsA(D_004ABAB0))
     child = 0;
     self->child = child;

@@ -3,9 +3,9 @@ typedef struct { unsigned int word; unsigned int length; char* data; } Str_50A0;
 typedef struct { char* p; } It_50A0;
 typedef struct { char pad[0x148]; struct { int a; int n; }* p148; } Obj_50A0;
 extern int func_0036D4E0(Obj_50A0* o, int i);
-extern char* func_0036D200(Obj_50A0* o, int i);
+extern char* Archive_GetMemberName(Obj_50A0* o, int i);
 extern void String_CtorCStr_13B480(Str_50A0* s, char* c);
-extern void func_00138B70(Str_50A0* s, int f);
+extern void String_Dtor(Str_50A0* s, int f);
 extern void func_001BFF20(It_50A0* out, Str_50A0* s);
 extern void func_001BFEE0(It_50A0* out, Str_50A0* s);
 extern int func_001BFE90(It_50A0* a, It_50A0* b);
@@ -33,7 +33,7 @@ void func_003B50A0(void* self, Obj_50A0* o)
         int clip = func_0036D4E0(o, i);
         if (clip) {
             int idx;
-            String_CtorCStr_13B480(&s, func_0036D200(o, i));
+            String_CtorCStr_13B480(&s, Archive_GetMemberName(o, i));
             func_001BFF20(&it, &s);
             func_001BFEE0(&end, &s);
             while (func_001BFE90(&it, &end)) {
@@ -42,7 +42,7 @@ void func_003B50A0(void* self, Obj_50A0* o)
             }
             String_CtorCStr_13B480(&t, D_004BCD78);
             idx = func_003B7100(&s, &t, -1);
-            func_00138B70(&t, 0);
+            String_Dtor(&t, 0);
             if (idx != -1) {
                 int j;
                 func_003B52B0(&u, &s, 0, idx);
@@ -50,10 +50,10 @@ void func_003B50A0(void* self, Obj_50A0* o)
                     name[j] = (j < func_002071F0(&u)) ? func_002071A0(&u)[j] : 0;
                 }
                 name[j] = 0;
-                func_00138B70(&u, 0);
+                String_Dtor(&u, 0);
                 Skas_RegisterClip(&r, self, name, clip);
             }
-            func_00138B70(&s, 0);
+            String_Dtor(&s, 0);
         }
     }
 }

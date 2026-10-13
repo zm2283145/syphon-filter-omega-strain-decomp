@@ -15,8 +15,8 @@ extern V D_005329F0;
 int strlen(const char *s);
 int sprintf(char *buf, const char *fmt, ...);
 E **func_003305C0(V *v);
-void *func_003FDAE0(void *name);
-int func_00333890(void *agent, char *a, void *name, int c);
+void *Loc_GetStoredKey(void *name);
+int Awards_MatchKeyPattern(void *agent, char *a, void *name, int c);
 unsigned char AgentData_IsObjectiveComplete(void *agent, void *name);
 void func_00299500(IV *v);
 char *Loc_LookupText(void *name);
@@ -52,8 +52,8 @@ extern "C" void func_003353F0(void *agent, char *s, IV *out)
     it = *func_003305C0(&D_005329F0);
     end = *func_003305C0(&D_005329F0) + D_005329F0.count;
     for (; Neq(it, end); it++) {
-        name = func_003FDAE0(it->name);
-        if (func_00333890(agent, pat, name, '*') && !func_00333890(agent, D_004B92C0, name, '*')) {
+        name = Loc_GetStoredKey(it->name);
+        if (Awards_MatchKeyPattern(agent, pat, name, '*') && !Awards_MatchKeyPattern(agent, D_004B92C0, name, '*')) {
             Item item;
             char st = AgentData_IsObjectiveComplete(agent, name) ? 2 : 1;
             item.text = Loc_LookupText(name);

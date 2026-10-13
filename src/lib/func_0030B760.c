@@ -3,7 +3,7 @@ extern unsigned char D_00499C70[];
 const char D_004AF990[] = ":";
 #define isspace(c) ((D_00499C70 + 1)[(int)(c)] & 8)
 char *func_0012AC70(char *s, const char *delim);
-long func_0012AF90(const char *s, char **end, int base);
+long strtol(const char *s, char **end, int base);
 int func_0030B510(const char *s1, const char *s2, size_t n);
 char *func_0030B468(char **sp, const char *delim);
 size_t strlen(const char *s);
@@ -40,7 +40,7 @@ int func_0030B760(char *buf, SsdpResp *r)
         if (line == 0) {
             if (func_0030B510(tok, "http/1.", 7) == 0) {
                 p = tok + 9;
-                status = (short)func_0012AF90(p, 0, 10);
+                status = (short)strtol(p, 0, 10);
                 r->status = status;
                 if (status != 200)
                     return status;
@@ -61,7 +61,7 @@ int func_0030B760(char *buf, SsdpResp *r)
             switch (i) {
             case 0:
                 if (func_0030B510(func_0030B468(&p, "="), "max-age", 7) == 0)
-                    r->maxage = func_0012AF90(p, 0, 10);
+                    r->maxage = strtol(p, 0, 10);
                 break;
             case 1:
                 strncpy(r->usn, p, 0x200);
@@ -82,7 +82,7 @@ int func_0030B760(char *buf, SsdpResp *r)
                 strncpy(r->date, p, 0x200);
                 break;
             case 7:
-                r->clen = func_0012AF90(p, 0, 10);
+                r->clen = strtol(p, 0, 10);
                 break;
             case 8:
                 strncpy(r->clang, p, 0x200);

@@ -8,7 +8,7 @@ extern char D_0049ADD0[];
 void Mem_Free(int pool, void* p, char* file, int line);
 void Tree_Successor(N_C6F0** it);
 void func_0013C800(N_C6F0* n, void* root);
-void func_00138B70(void* v, short f);
+void String_Dtor(void* v, short f);
 }
 extern "C" void func_0013C6F0(T_C6F0* t, N_C6F0** it)
 {
@@ -21,7 +21,7 @@ extern "C" void func_0013C6F0(T_C6F0* t, N_C6F0** it)
     func_0013C800(n, t->root);
     if (n->val) {
         if (n->val)
-            func_00138B70(n->val, 0);
+            String_Dtor(n->val, 0);
     }
     if (n) {
         AllocGuard g;

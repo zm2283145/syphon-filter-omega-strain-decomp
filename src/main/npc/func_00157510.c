@@ -13,7 +13,7 @@ extern char D_00582760[];
 extern char D_004E0E80[];
 extern char D_004E0F00[];
 void NpcAi_GetPlayerRecord(void* self, int a, int b);
-void func_002EBAF8(int* p, int v);
+void NetGame_InitLocalSlot(int* p, int v);
 void func_0042D910(void* o);
 void func_00429200(void* m, int a, int b);
 void Event_Construct(void* m, void* type);
@@ -39,7 +39,7 @@ static inline int LocalId_7510(void)
     int a = D_005721A8;
     if (D_005721C8) {
         if (D_00494178 == -1)
-            func_002EBAF8(&D_00494178, a);
+            NetGame_InitLocalSlot(&D_00494178, a);
         return D_00494178;
     }
     return 0;

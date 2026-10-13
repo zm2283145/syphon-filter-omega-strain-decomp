@@ -16,7 +16,7 @@ void func_0028C0B0(ChildIterator* result, const ChildIterator& source);
 ChildIterator func_0028C0A0(ChildList* list);
 void func_0028C090(ChildIterator* result, const ChildIterator& source);
 void func_002CCD80(ChildList* list, int flags);
-void func_00138B70(void* string, int flags);
+void String_Dtor(void* string, int flags);
 void Mem_Free(int pool, void* allocation, char* file, int line);
 void operator_delete(void* allocation);
 }
@@ -42,7 +42,7 @@ static inline void destroy_children(ChildList* list)
 static inline void destroy_name(void* name)
 {
     if (name)
-        func_00138B70(name, 0);
+        String_Dtor(name, 0);
 }
 
 static inline void destroy_base(TraversalWidget* self)

@@ -3,7 +3,7 @@ extern char D_005253F0[];
 extern int RecursiveLock_Acquire(void *, int);
 extern int RecursiveLock_Release(void *, int);
 extern int func_002DD178(void *, void *);
-int func_002EBAF8(void *a, void *b)
+int NetGame_InitLocalSlot(void *a, void *b)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;

@@ -3,7 +3,7 @@
 #define NULL 0
 #pragma mpwc_relax on
 int String_CtorCStr_13B480(char *, int);                 
-int func_00138B70(char *, int);                            
+int String_Dtor(char *, int);                            
 int func_003CBF70(int, char *, int);                     
 extern char D_004BEDF8[];
 extern char D_004BEE08[];
@@ -28,7 +28,7 @@ int func_00412C40(int arg0) {
 loop_1:
     String_CtorCStr_13B480(sp60, F_(var_s1, 0x0, int));
     temp_s2 = ~func_003CBF70(arg0, sp60, 0) != 0;
-    func_00138B70(sp60, 0);
+    String_Dtor(sp60, 0);
     if (temp_s2 != 0) {
         var_s4 = F_(var_s1, 0x4, int);
     } else {

@@ -5,7 +5,7 @@ typedef struct { char pad[0x18]; int value; } Node_418420;
 typedef struct { Node_418420* n; } MIt_418420;
 typedef struct { char pad[0x10]; int def; } O_418420;
 extern void String_CtorCStr_13B480(Str_418420* s, char* c);
-extern void func_00138B70(Str_418420* s, int f);
+extern void String_Dtor(Str_418420* s, int f);
 extern void func_001BFF20(It_418420* out, Str_418420* s);
 extern void func_001BFEE0(It_418420* out, Str_418420* s);
 extern int func_001BFE90(It_418420* a, It_418420* b);
@@ -42,11 +42,11 @@ int func_00418420(O_418420* o, char* name)
         func_00418580(&e, &tmp);
         if (Ne_418420(n, e.n)) {
             int r = n->value;
-            func_00138B70(&s, 0);
+            String_Dtor(&s, 0);
             return r;
         } else {
             int r = o->def;
-            func_00138B70(&s, 0);
+            String_Dtor(&s, 0);
             return r;
         }
     }

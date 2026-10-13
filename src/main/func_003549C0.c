@@ -4,7 +4,7 @@ extern int func_003534A0(int id);
 extern char* String_CStr(void* str);
 extern void* Gui_GetScreenList(void);
 extern void* Gui_GetScreenStack(void);
-extern int func_00418A80(void* mgr, char* a, char* b);
+extern int GuiManager_FindOrLoad(void* mgr, char* a, char* b);
 extern void func_0041E0F0(void* self, int a, int b, int c, int d);
 extern void GuiStack_SwapScreens(void* mgr, void* self, int snd);
 void func_003549C0(S3549C0* o)
@@ -13,7 +13,7 @@ void func_003549C0(S3549C0* o)
     if (!s) {
         char* b = String_CStr(o->s78);
         char* a = String_CStr(o->s6C);
-        s = func_00418A80(Gui_GetScreenList(), a, b);
+        s = GuiManager_FindOrLoad(Gui_GetScreenList(), a, b);
     }
     if (s) {
         func_0041E0F0(o, s, 0x3000, o->a88, 0);

@@ -8,7 +8,7 @@ void func_0032E3E0(E308E0** out, void* t, int* raw);
 int Loc_FindKeyThunk(__int128* key);
 }
 static inline bool Neq308E0(E308E0* a, E308E0* b) { return !(a == b); }
-extern "C" int func_003308E0(__int128 key)
+extern "C" int UnlockTable_FindBitByName(__int128 key)
 {
     E308E0* b;
     E308E0* e;

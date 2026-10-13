@@ -2,6 +2,8 @@
 
 extern void CameraCol_ComputeBounds();
 extern void CameraCol_SetCollection();
+extern void Camera_ZoomBounds();
+extern void Camera_ZoomSweep();
 extern void Edge_FilterTriangle();
 extern void Event_PackHeader();
 extern void Message_GetScriptTypeKey();
@@ -19,8 +21,6 @@ extern void func_0017EF30();
 extern void func_0018C940();
 extern void func_001E1990();
 extern void func_001EEDC0();
-extern void func_0020CF90();
-extern void func_0020D130();
 extern void func_0020E660();
 extern void func_0020EA20();
 extern void func_0020EF50();
@@ -39,8 +39,8 @@ void *D_004DAD58[6] __attribute__((aligned(8))) = {
 };
 
 void *D_004DAD70[8] = {
-    0, 0, &func_0017EE80, &func_0020D130,
-    &func_0020CF90, 0, 0, 0,
+    0, 0, &func_0017EE80, &Camera_ZoomBounds,
+    &Camera_ZoomSweep, 0, 0, 0,
 };
 
 void *D_004DAD90[8] = {

@@ -3,7 +3,7 @@
 #include "alloc_guard.h"
 extern "C" {
 void* Mem_Alloc(int pool, int size, char* file, int line);
-void func_00254DA0(void* o, void* c);
+void Pickup_PerformAction(void* o, void* c);
 void* func_00253070(void* p, void* s, void* o, void* c, int a, int b);
 }
 typedef struct { void* first; } L_62C0;
@@ -21,7 +21,7 @@ extern "C" void func_001762C0(S_62C0* self, Obj_62C0* o)
     void* c = self->ctl;
     if (self->reset) {
         self->reset = 0;
-        func_00254DA0(o, c);
+        Pickup_PerformAction(o, c);
     }
     if (self->on && !self->fx) {
         void* p;

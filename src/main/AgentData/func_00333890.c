@@ -3,7 +3,7 @@
 extern int String_ToLower(int c);
 extern int strlen(const char* s);
 
-int func_00333890(void* self, const char* a, const char* b, char wild)
+int Awards_MatchKeyPattern(void* self, const char* a, const char* b, char wild)
 {
     int i = 0;
     int j = 0;

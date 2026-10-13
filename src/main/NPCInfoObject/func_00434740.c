@@ -22,7 +22,7 @@ extern int D_00494178;
 extern unsigned int func_0042B1A0(int clock);
 extern int func_002EC3C8(void* key);
 extern int func_002EB650(NetSessionEntry** entry, void* key);
-extern int func_002EBAF8(int* id, int session);
+extern int NetGame_InitLocalSlot(int* id, int session);
 extern void func_00432230(int peer, void* key, int mode);
 
 static inline void service_slot(unsigned int* deadline, unsigned char* pending,
@@ -41,7 +41,7 @@ static inline int current_peer(void)
     int session = D_005721A8;
     if (D_005721C8) {
         if (D_00494178 == -1)
-            func_002EBAF8(&D_00494178, session);
+            NetGame_InitLocalSlot(&D_00494178, session);
         return D_00494178;
     }
     return 0;

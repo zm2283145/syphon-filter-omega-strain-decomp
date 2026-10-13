@@ -19,7 +19,7 @@ extern int D_00538C60;
 extern int D_00538C64;
 extern char D_00538C68;
 void Mem_Free(int pool, void* p, char* file, int line);
-void func_001037A8(int a, int b, int c, int d);
+void sceGsSyncPath(int a, int b, int c, int d);
 }
 static inline void Free_412320(void* p, int line) { AllocGuard g; Mem_Free(0, p, D_004BEE90, line); }
 static inline void SubDtor_412320(Sub_412320* s) { if (s) { if (s->p60) Free_412320(s->p60, 0x29A); } }
@@ -33,7 +33,7 @@ extern "C" void func_00412320(Self_412320* self)
     {
         int idx = D_00538C60;
         ((Row_412320*)&D_005381F0[idx])->f2F6 = 1;
-        func_001037A8(0, 0, idx, 1);
+        sceGsSyncPath(0, 0, idx, 1);
     }
     for (i = 0; i < 2; i++) {
         Free_412320(self->bufs[i].buf, 0x94);

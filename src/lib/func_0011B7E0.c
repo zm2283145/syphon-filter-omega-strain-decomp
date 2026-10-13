@@ -3,7 +3,7 @@
 __asm__(".set nomove\n"
         "litodp = func_0011C7A0\n"
         "dpmul = func_0011C268\n"
-        "dpadd = func_0011C1A8");
+        "dpadd = SoftFloat_DoubleAdd");
 
 typedef int SItype;
 typedef unsigned int USItype;

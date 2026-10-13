@@ -12,7 +12,7 @@ extern unsigned char D_005838A0[4];
 
 extern unsigned int func_0042B1A0(int synchronized);
 extern int func_002EB650(NetSessionEntry** entry, void* key);
-extern int func_002EBAF8(int* id, int session);
+extern int NetGame_InitLocalSlot(int* id, int session);
 extern int func_002EC3C8(void* key);
 extern void func_00439390(int peer, void* key, int event);
 
@@ -21,7 +21,7 @@ static inline int current_peer(void)
     int session = D_005721A8;
     if (D_005721C8) {
         if (D_00494178 == -1)
-            func_002EBAF8(&D_00494178, session);
+            NetGame_InitLocalSlot(&D_00494178, session);
         return D_00494178;
     }
     return 0;

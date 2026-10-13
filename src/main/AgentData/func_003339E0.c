@@ -6,8 +6,8 @@ extern "C" {
 extern char D_005329F0[];
 extern int D_005329F4;
 E3339E0** func_003305C0(void* v);
-const char* func_003FDAE0(int name);
-int func_00333890(A3339E0* self, const char* a, const char* b, char wild);
+const char* Loc_GetStoredKey(int name);
+int Awards_MatchKeyPattern(A3339E0* self, const char* a, const char* b, char wild);
 }
 static inline bool Neq3339E0(E3339E0* a, E3339E0* b) { return !(a == b); }
 static inline bool Done3339E0(A3339E0* self, int idx)
@@ -22,7 +22,7 @@ extern "C" int cAgentData_AreObjectivesComplete(A3339E0* self, const char* patte
     E3339E0* first = *func_003305C0(D_005329F0);
     E3339E0* last = *func_003305C0(D_005329F0) + D_005329F4;
     for (; Neq3339E0(first, last); first++) {
-        if (func_00333890(self, pattern, func_003FDAE0(first->name), '*')) {
+        if (Awards_MatchKeyPattern(self, pattern, Loc_GetStoredKey(first->name), '*')) {
             if (!Done3339E0(self, first->idx)) return 0;
         }
     }

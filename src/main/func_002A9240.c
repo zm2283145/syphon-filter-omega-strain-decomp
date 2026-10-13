@@ -26,7 +26,7 @@ static void * const dat_0048BBB0[2] = { (void*)D_004AB648, (void*)0x0 };
 static void * const dat_0048BBB8[2] = { (void*)D_004AB658, (void*)0x0 };
 static void * const dat_0048BBC0[2] = { (void*)D_004AB668, (void*)0x0 };
 extern "C" void func_0033F250(Screen* self);
-extern "C" Obj* func_0041DB80(Screen* self, const char* name);
+extern "C" Obj* GuiWidget_FindChildByName(Screen* self, const char* name);
 
 /* Returns obj when it is a D_004A9870-type widget, else 0. */
 static inline Obj* AsLabel(Obj* obj)
@@ -40,7 +40,7 @@ static inline Obj* AsLabel(Obj* obj)
 extern "C" void func_002A9240(Screen* self)
 {
     func_0033F250(self);
-    self->item0 = AsLabel(func_0041DB80(self, (*(const char**)dat_0048BBB0)));
-    self->item1 = AsLabel(func_0041DB80(self, (*(const char**)dat_0048BBB8)));
-    self->item2 = AsLabel(func_0041DB80(self, (*(const char**)dat_0048BBC0)));
+    self->item0 = AsLabel(GuiWidget_FindChildByName(self, (*(const char**)dat_0048BBB0)));
+    self->item1 = AsLabel(GuiWidget_FindChildByName(self, (*(const char**)dat_0048BBB8)));
+    self->item2 = AsLabel(GuiWidget_FindChildByName(self, (*(const char**)dat_0048BBC0)));
 }

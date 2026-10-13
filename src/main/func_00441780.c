@@ -22,11 +22,11 @@ int Agent_GetSelected(void*, int);
 char* Loc_LookupText(char*);
 int FrontEnd_OpenPopup(int, int, char*, char*, void*, int);
 void FrontEnd_ClosePopup(int, int);
-int func_00334100(int);
+int AgentData_GetSaveSize(int);
 int func_0040D580(Net_441780*, int);
 int func_0040D690(Net_441780*, char*);
 int func_004422D0(int, char*, char*);
-void func_00441A10(Obj_441780*);
+void GuiSaveAgentWidget_HandleEvent(Obj_441780*);
 int sprintf(char*, const char*, ...);
 char* strncpy(char*, const char*, int);
 char* func_00129C80(const char*, const char*);
@@ -45,13 +45,13 @@ extern "C" int func_00441780(Obj_441780* self)
     if (self->mode == 4) {
         if (!func_0040D690(net, D_004C04B8)) need = 1000;
     } else if (!func_004422D0(self->f50, 0, 0)) {
-        need = func_00334100(Agent_GetSelected(D_004FFB50, -1));
+        need = AgentData_GetSaveSize(Agent_GetSelected(D_004FFB50, -1));
     }
     have = func_0040D580(net, need);
     lim = net->impl->f5A4;
     if (!net->impl->f59D || !net->impl->f59E) {
         FrontEnd_ClosePopup(D_004FFC04, self->dlg);
-        func_00441A10(self);
+        GuiSaveAgentWidget_HandleEvent(self);
         return 0;
     }
     if (lim < have) {

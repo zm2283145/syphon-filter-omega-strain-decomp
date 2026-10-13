@@ -12,7 +12,7 @@ extern int Script_RegisterVariable();
 extern int Script_RegisterNative_2();
 extern int Script_RegisterNative();
 extern int Script_RegisterType();
-extern int func_003D8F60();
+extern int ScriptEnum_Register();
 extern int* func_001450C0(void);
 
 void func_004C39E0(void)
@@ -25,7 +25,7 @@ void func_004C39E0(void)
     D_004EA158 = Script_RegisterType("cOutOfAmmoMsg", ScriptType_cOutOfAmmoMsg_Init, 1, 0);
     D_004EA160 = *func_001450C0();
     D_004EA168 = Script_RegisterNative(*func_001450C0(), Script_cOutOfAmmoMsg_Weapon, D_00493888, "Weapon", 1, func_001450C0());
-    D_004EA170 = func_003D8F60("cWeapon::eWpnSlot", D_00489D00, 8);
+    D_004EA170 = ScriptEnum_Register("cWeapon::eWpnSlot", D_00489D00, 8);
     D_004EA178 = Script_RegisterVariable("doKnifeDmg", (int)&D_00489DA0, D_00493878);
     if (!D_004EA0C8) {
         D_004EA0B0 = "LOS Manager";

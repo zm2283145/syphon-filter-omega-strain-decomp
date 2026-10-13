@@ -2,7 +2,7 @@ typedef struct { int pad[4]; int level; } E301E0;
 typedef struct { int a; int count; } T301E0;
 extern int D_00532B34;
 extern E301E0* D_00532B38;
-extern void func_00330280(T301E0* self, E301E0** e);
+extern void PtrVec_PushBack_330280(T301E0* self, E301E0** e);
 #pragma opt_strength_reduction off
 void func_003301E0(T301E0* self, int level)
 {
@@ -13,7 +13,7 @@ void func_003301E0(T301E0* self, int level)
         E301E0* p = &D_00532B38[i];
         e[0] = p;
         if (level < p->level)
-            func_00330280(self, e);
+            PtrVec_PushBack_330280(self, e);
     }
 }
 #pragma opt_strength_reduction reset

@@ -91,7 +91,7 @@ extern void func_003F7D90(void);
 extern void func_003F7BD0(void);
 extern void func_003F7F80(void);
 extern void func_003F5A10(void);
-extern void func_003F7060(void);
+extern void MoviePlayer_PresentVblank(void);
 extern void func_003F7010(void);
 void func_003F8450(Sys8450* s)
 {
@@ -158,7 +158,7 @@ void func_003F8450(Sys8450* s)
     tp.option = 0;
     s->f50 = CreateThread(&tp);
     StartThread(s->f50, D_0055C480);
-    func_00103AC0(func_003F7060);
+    func_00103AC0(MoviePlayer_PresentVblank);
     D_0055C530 = func_0010CE70(2, func_003F7010, 0);
     func_0010DD78(2);
     if (!func_003F7950(s->part58, s->part190)) {

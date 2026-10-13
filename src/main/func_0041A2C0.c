@@ -19,7 +19,7 @@ struct O_41A2C0 {
 };
 extern "C" {
 void String_CtorCStr_13B480(Str_41A2C0* s, char* c);
-void func_00138B70(Str_41A2C0* s, int f);
+void String_Dtor(Str_41A2C0* s, int f);
 void func_003B52B0(Str_41A2C0* out, Str_41A2C0* s, int a, int b);
 void func_002072B0(Str_41A2C0* out, Str_41A2C0* a, Str_41A2C0* b);
 void func_0013D680(Str_41A2C0* d, Str_41A2C0* s);
@@ -33,7 +33,7 @@ extern "C" int func_0041A2C0(O_41A2C0* o, char* text)
     Str_41A2C0 right;
     String_CtorCStr_13B480(&s, text);
     if (o->maxLen > 0 && s.Size() + o->str.Size() >= o->maxLen) {
-        func_00138B70(&s, 0);
+        String_Dtor(&s, 0);
         return 0;
     }
     func_003B52B0(&left, &o->str, 0, o->cursor);
@@ -44,14 +44,14 @@ extern "C" int func_0041A2C0(O_41A2C0* o, char* text)
         func_002072B0(&t1, &left, &s);
         func_002072B0(&t2, &t1, &right);
         func_0013D680(&o->str, &t2);
-        func_00138B70(&t2, 0);
-        func_00138B70(&t1, 0);
+        String_Dtor(&t2, 0);
+        String_Dtor(&t1, 0);
     }
     func_0041A100(o, o->cursor + s.Size());
     o->Changed();
-    func_00138B70(&right, 0);
-    func_00138B70(&left, 0);
-    func_00138B70(&s, 0);
+    String_Dtor(&right, 0);
+    String_Dtor(&left, 0);
+    String_Dtor(&s, 0);
     return 1;
 }
 

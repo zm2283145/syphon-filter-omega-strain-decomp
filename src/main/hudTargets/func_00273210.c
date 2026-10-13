@@ -18,7 +18,7 @@ public:
 
 extern "C" {
 int Mem_Alloc(...);
-int func_00138B70(...);
+int String_Dtor(...);
 int func_002731A0(...);
 int func_002731B0(...);
 int func_002731C0(...);
@@ -93,7 +93,7 @@ extern "C" int func_00273210(char* mgr, int* id, char* obj, char* text) {
             Str* ps = &s;
             String_CtorCStr_13B480(ps, text ? text : (text = &D_004A8F70));
             func_0013D680((char*)rec + 0x28, &s);
-            func_00138B70(&s, 0);
+            String_Dtor(&s, 0);
         }
         {
             beg2(&b2, mgr);

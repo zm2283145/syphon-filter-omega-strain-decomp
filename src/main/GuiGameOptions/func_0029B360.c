@@ -25,13 +25,13 @@ extern char D_004A9870[];
 extern char D_004AA640[];
 extern char D_004AAA80[];
 void func_0041F150(S_0029B360* self);
-W_0029B360* func_0041DB80(S_0029B360* self, char* name);
+W_0029B360* GuiWidget_FindChildByName(S_0029B360* self, char* name);
 char* Loc_LookupText(char* key);
 int sprintf(char* buf, const char* fmt, ...);
 }
 static inline W_0029B360* FindAs_0029B360(S_0029B360* self, char* name, char* type)
 {
-    W_0029B360* w = func_0041DB80(self, name);
+    W_0029B360* w = GuiWidget_FindChildByName(self, name);
     return (w && w->IsA(type)) ? w : 0;
 }
 /* Looks up the child widgets and localised strings of the page. */
@@ -41,7 +41,7 @@ extern "C" void func_0029B360(S_0029B360* self)
     int i;
     func_0041F150(self);
     for (i = 0; i < 4; i++) {
-        self->tab[i] = func_0041DB80(self, D_00506420[i]);
+        self->tab[i] = GuiWidget_FindChildByName(self, D_00506420[i]);
         if (self->tab[i])
             self->tab[i]->flags &= ~4;
         self->tabLabel[i] = FindAs_0029B360(self, D_00506430[i], D_004A9870);
@@ -49,9 +49,9 @@ extern "C" void func_0029B360(S_0029B360* self)
             self->tabLabel[i]->index = i;
     }
     self->pB0 = FindAs_0029B360(self, D_0048B8F8, D_004A7520);
-    self->pAC = func_0041DB80(self, D_0048B8D0);
-    self->p80 = func_0041DB80(self, "buttonsquare");
-    self->p84 = func_0041DB80(self, "buttonx");
+    self->pAC = GuiWidget_FindChildByName(self, D_0048B8D0);
+    self->p80 = GuiWidget_FindChildByName(self, "buttonsquare");
+    self->p84 = GuiWidget_FindChildByName(self, "buttonx");
     self->p88 = FindAs_0029B360(self, "label_to_map", D_004A7520);
     self->p408 = FindAs_0029B360(self, "value_manualaim", D_004A9870);
     self->p40C = FindAs_0029B360(self, "value_rumble", D_004A9870);
@@ -64,7 +64,7 @@ extern "C" void func_0029B360(S_0029B360* self)
     self->p428 = FindAs_0029B360(self, "slider_gamma", D_004AAA80);
     self->p42C = FindAs_0029B360(self, "value_videomode", D_004A9870);
     self->p430 = FindAs_0029B360(self, "player_list", D_004AA640);
-    self->p434 = func_0041DB80(self, "select_config_select");
+    self->p434 = GuiWidget_FindChildByName(self, "select_config_select");
     if (self->p430)
         self->p430->link = self->p434;
     { int j;

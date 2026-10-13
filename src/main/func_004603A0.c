@@ -10,14 +10,14 @@ int func_0041EFA0(char * );
 int func_0041F960(char *);                             
 int func_0045F4D0(char * );                            
 int func_0045F860(char * );                            
-int func_0045FAB0();                                  
+int GuiNewParts_BuildBonusList();                                  
 int func_00460450(char * );                            
 extern char D_004C2460;
 
 void func_004603A0(char * arg0) {
     int temp_v0;
 
-    func_0045FAB0();
+    GuiNewParts_BuildBonusList();
     if (F_(arg0, 0x1B4, int) == 0) {
         temp_v0 = func_0041F960(&D_004C2460);
         if (temp_v0 != 0) {

@@ -14,7 +14,7 @@ typedef struct { __int128 x[10]; } H2Reg;
 extern int D_00539248;
 extern void func_0036E5D0(H2Reg* r);
 extern void func_0036E220(H2Reg* r, int del);
-extern char* func_0036D200(H2Hog* h, int i);
+extern char* Archive_GetMemberName(H2Hog* h, int i);
 extern int Hog_Register(H2Reg* r, char* name, H2Hog* h, int opt);
 extern void Appearance_RegistryKey(char* dst, int n, char* src);
 extern short func_00380D40(int lib, __int128 name, H2Reg* r);
@@ -41,10 +41,10 @@ void TexCache_RegisterNpcTex(H2State* st, H2Hog* hog) {
     int k;
     int total;
     func_0036E5D0(&reg);
-    Hog_Register(&reg, func_0036D200(hog, 0), hog, 0);
+    Hog_Register(&reg, Archive_GetMemberName(hog, 0), hog, 0);
     total = hog->dir[1];
     for (k = 0; k < total; k++) {
-        char* e = func_0036D200(hog, k);
+        char* e = Archive_GetMemberName(hog, k);
         int lod = 0;
         __int128 key;
         unsigned int i;

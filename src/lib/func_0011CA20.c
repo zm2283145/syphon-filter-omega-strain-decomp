@@ -1,6 +1,6 @@
 /* __ieee754_rem_pio2 (newlib e_rem_pio2.c); retail newlib was built with -g. */
 __asm__(".set nomove\n"
-        "dpadd = func_0011C1A8\n"
+        "dpadd = SoftFloat_DoubleAdd\n"
         "dpsub = func_0011C200\n"
         "dpmul = func_0011C268\n"
         "litodp = func_0011C7A0\n"

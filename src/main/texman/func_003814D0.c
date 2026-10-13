@@ -5,7 +5,7 @@ typedef struct { char pad[8]; char** names; int pad0C; int count; } S3814D0;
 typedef struct { int pad0; char path[0x9C]; } B3814D0;
 extern void func_0036E5D0(void*);
 extern void func_0036E220(void*, int);
-extern int func_0036D200(void*, int);
+extern int Archive_GetMemberName(void*, int);
 extern void func_0036DFB0(void*, int, void*);
 extern void func_0036DEF0(void*);
 extern int String_CompareNoCase(char*, char*);
@@ -24,7 +24,7 @@ void func_003814D0(S3814D0* self, A3814D0* arg1)
     n = f->list->count;
     for (i = 0; i < n; i++) {
         char* path = buf.path;
-        func_0036DFB0(&buf, func_0036D200(f, i), arg1);
+        func_0036DFB0(&buf, Archive_GetMemberName(f, i), arg1);
         func_0036DEF0(&buf);
         if (String_CompareNoCase(path + strlen(path) - 3, D_004BC2C8) == 0) {
             char* s = path;

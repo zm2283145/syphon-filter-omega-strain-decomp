@@ -9,7 +9,7 @@
 extern "C" {
 /*fc*/
 int Mem_Free(...);                         
-int func_00138B70(...);                         
+int String_Dtor(...);                         
 int func_0041F370(...);                         
 int operator_delete(...);                          
 extern char D_004BF2D0;
@@ -51,7 +51,7 @@ extern "C" char * func_0041C6A0(char * arg0, long long arg1) {
             if (temp_s2 != 0) {
                 temp_a0 = (char *)(temp_s2 + 0x14);
                 if (temp_a0 != NULL) {
-                    func_00138B70(temp_a0, 0);
+                    String_Dtor(temp_a0, 0);
                 }
             }
             Mem_Free(0, temp_s2, &D_004BF2D0, 0x23);
@@ -59,7 +59,7 @@ extern "C" char * func_0041C6A0(char * arg0, long long arg1) {
         }
         temp_a0_2 = arg0 + 0x48;
         if (temp_a0_2 != NULL) {
-            func_00138B70(temp_a0_2, 0);
+            String_Dtor(temp_a0_2, 0);
         }
         func_0041F370(arg0, 0);
         if (((long long) (arg1 << 0x30) >> 0x30) > 0) {

@@ -37,7 +37,7 @@ void func_00165950(W_002C9510* w);
 void func_002C9EE0(Self_002C9510* self);
 void func_00145160(int a);
 void func_002CCA40(int a, int b, int c);
-void func_0037A9F0(void* p);
+void Video_BeginFrame(void* p);
 void func_002C9510(Self_002C9510* self)
 {
     if (self->b37) {
@@ -107,6 +107,6 @@ void func_002C9510(Self_002C9510* self)
         func_002CCA40(0x2003, 0, 0);
         self->b37 = 0;
         self->b28 = 1;
-        func_0037A9F0(D_005381F0);
+        Video_BeginFrame(D_005381F0);
     }
 }

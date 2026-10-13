@@ -6,7 +6,7 @@ static const unsigned int dat_004ACBB0[8] = { 0x1000000, 0x10000, 0x10000, 0x100
 static const unsigned int dat_004ACBD0[6] = { 0x1000000, 0x10000, 0x10000, 0x1000000, 0x0, 0x0 };
 extern int D_00494198;
 extern void String_Copy(char* dst, const char* src);
-void func_002CC820(LevelC820* o, int i)
+void LevelSelect_SetLevel(LevelC820* o, int i)
 {
     if (i >= 0 && i < 0x12) {
         String_Copy(o->name, D_0048C160[i]);

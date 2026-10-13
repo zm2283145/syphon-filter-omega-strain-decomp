@@ -26,11 +26,11 @@ extern char D_00493A60;
 extern Blk_00292B90 D_0055D510;
 char* Loc_LookupText(char* key);
 char* String_CStr(Str_00292B90* s);
-int func_00121BC8(char* s);
+int atoi(char* s);
 Agent_00292B90* Agent_GetSelected(void* a, int b);
 unsigned char AgentData_Load(Agent_00292B90* a, char* s, int id);
 void* Gui_GetScreenList(void);
-void* func_00418A80(void* a, char* b, char* c);
+void* GuiManager_FindOrLoad(void* a, char* b, char* c);
 void* Gui_GetScreenStack(void);
 void GuiStack_SwapScreens(void* a, void* b, void* c);
 int FrontEnd_OpenPopup(void* ui, int a, char* b, char* c, void* d, int e);
@@ -66,7 +66,7 @@ extern "C" int func_00292B90(void* self, Obj_00292B90* o, int msg)
         }
         o = p;
         if (o) {
-            int id = func_00121BC8(String_CStr(&o->s4));
+            int id = atoi(String_CStr(&o->s4));
             Agent_00292B90* ag = (Agent_00292B90*)Agent_GetSelected(D_004FFB50, -1);
             unsigned char r = AgentData_Load(ag, String_CStr(&o->s48), id);
             if (r == 0) {
@@ -75,10 +75,10 @@ extern "C" int func_00292B90(void* self, Obj_00292B90* o, int msg)
                 QCopy(&D_0055D510, ag->p9A4, 0x44);
                 if (D_004FFC04->b2E) {
                     asm { .set reorder }
-                    pg = func_00418A80(Gui_GetScreenList(), D_004A9CA0, D_004A9CB8);
+                    pg = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004A9CA0, D_004A9CB8);
                 } else {
                     asm { .set reorder }
-                    pg = func_00418A80(Gui_GetScreenList(), D_004A9CD0, D_004A9CE8);
+                    pg = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004A9CD0, D_004A9CE8);
                 }
                 GuiStack_SwapScreens(Gui_GetScreenStack(), self, pg);
             } else if (r == 2) {

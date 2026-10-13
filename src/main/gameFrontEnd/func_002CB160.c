@@ -23,7 +23,7 @@ extern char D_004ACF48[];
 void func_004147B0(void);
 void func_004139C0(void* p);
 void func_002C81D0(Self_002CB160* self);
-void func_0037A9F0(void* p);
+void Video_BeginFrame(void* p);
 void Mem_Free(int heap, void* p, char* file, int line);
 W_002CB160* func_001698C0(void);
 void func_003D1700(void* p);
@@ -50,7 +50,7 @@ extern "C" void func_002CB160(Self_002CB160* self)
             Obj_002CB160* p;
             void* svc;
             for (i = 0; i < 3; i++)
-                func_0037A9F0(D_005381F0);
+                Video_BeginFrame(D_005381F0);
             p = self->p260;
             if (p) {
                 AllocGuard g;

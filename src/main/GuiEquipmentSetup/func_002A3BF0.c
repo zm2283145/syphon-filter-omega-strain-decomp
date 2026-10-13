@@ -57,7 +57,7 @@ void func_002A5470(W_002A3BF0* w, Vec2 off);
 }
 static inline W_002A3BF0* FindAs(void* self, char* n, char* t)
 {
-    W_002A3BF0* w = (W_002A3BF0*)func_0041DB80(self, n);
+    W_002A3BF0* w = (W_002A3BF0*)GuiWidget_FindChildByName(self, n);
     unsigned char ok = 0;
     if (w && w->IsA(t)) ok = 1;
     return ok ? w : 0;
@@ -119,7 +119,7 @@ extern "C" void func_002A3BF0(S_002A3BF0* self0)
     for (i = 0; i < 4; i++) {
         char buf2[18] = "1player_stats_grp";
         buf2[0] = '1' + i;
-        slots[i] = (W_002A3BF0*)func_0041DB80(self, buf2);
+        slots[i] = (W_002A3BF0*)GuiWidget_FindChildByName(self, buf2);
     }
     n = D_004FFC04->n254;
     {
@@ -166,7 +166,7 @@ extern "C" void func_002A3BF0(S_002A3BF0* self0)
     if (!D_00506508)
         self->fD0->flags &= ~2;
     {
-    W_002A3BF0* w2 = (W_002A3BF0*)func_0041DB80(self, D_004AB120);
+    W_002A3BF0* w2 = (W_002A3BF0*)GuiWidget_FindChildByName(self, D_004AB120);
     if (w2) {
         unsigned char b = !D_004FFC04->b251;
         if (b)

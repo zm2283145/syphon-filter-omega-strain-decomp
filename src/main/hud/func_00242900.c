@@ -12,7 +12,7 @@ int Game_SetPaused(...);
 int func_0036A240(...);                               
 int Gui_GetScreenList(...);                                
 void **Gui_GetScreenStack(...);                             
-int func_00418980(...);                        
+int GuiManager_FindByName(...);                        
 extern char D_004FFB50;
 extern unsigned char D_004FFBB7;
 extern char D_0055A300;
@@ -26,12 +26,12 @@ extern "C" void Hud_ClosePauseMenu(char * arg0) {
     void **temp_v0_4;
 
     if (F_(arg0, 0x6A8, unsigned char) != 0) {
-        temp_v0 = func_00418980(Gui_GetScreenList(), "GuiStartMenu");
+        temp_v0 = GuiManager_FindByName(Gui_GetScreenList(), "GuiStartMenu");
         if (temp_v0 != 0) {
             temp_v0_2 = Gui_GetScreenStack();
             ((VC00242900 *)(temp_v0_2))->v24(temp_v0);
         }
-        temp_v0_3 = func_00418980(Gui_GetScreenList(), "GuiStartMenuBackdrop");
+        temp_v0_3 = GuiManager_FindByName(Gui_GetScreenList(), "GuiStartMenuBackdrop");
         if (temp_v0_3 != 0) {
             temp_v0_4 = Gui_GetScreenStack();
             ((VC00242900 *)(temp_v0_4))->v24(temp_v0_3);

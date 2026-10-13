@@ -15,7 +15,7 @@ extern char D_00571CF0[];
 extern char D_0055C480[];
 extern char D_0055C540[];
 extern "C" {
-extern void func_00411DB0(void* p);
+extern void MovieSubtitles_Update(void* p);
 extern int func_003F5CE0(void* p);
 extern void func_003F8000(Sys3F82* s, void* r, int a, void* b);
 extern bool func_003F5AE0(void* p);
@@ -25,12 +25,12 @@ extern void func_003F6F90(void);
 extern void func_003F6CD0(void* p);
 extern void func_003F8390(Sys3F82* s);
 extern void func_003F8450(Sys3F82* s);
-bool func_003F8220(Sys3F82* s);
+bool MoviePlayer_Update(Sys3F82* s);
 }
 
-bool func_003F8220(Sys3F82* s)
+bool MoviePlayer_Update(Sys3F82* s)
 {
-    func_00411DB0(D_00571CF0);
+    MovieSubtitles_Update(D_00571CF0);
     if (!s->done) {
         if (s->f234) {
             s->done = 1;

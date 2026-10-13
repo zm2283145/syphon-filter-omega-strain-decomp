@@ -22,9 +22,9 @@ extern char D_00555070[];
 extern char D_004B92E0[];
 extern LvlE50 *D_00532AF8;
 extern PairE50 *D_00532B98;
-char *func_003FDAE0(int name);
-void func_00335660(AE50 *agent, char *s, RecE50 *st);
-void func_00335070(AE50 *agent, int x);
+char *Loc_GetStoredKey(int name);
+void AgentData_CountObjectives(AE50 *agent, char *s, RecE50 *st);
+void AgentData_AwardPass(AE50 *agent, int x);
 int ScriptMgr_CallFunction(void *mgr, char *name, int n, ...);
 }
 extern "C" void awards_SetAwardsAndBonuses(AE50 *self, int x, int reset)
@@ -38,9 +38,9 @@ extern "C" void awards_SetAwardsAndBonuses(AE50 *self, int x, int reset)
         self->n48 = 0;
     }
     for (i = 0; i < self->nLevels - 1; i++) {
-        char *name = func_003FDAE0(D_00532AF8[(unsigned)i].name);
+        char *name = Loc_GetStoredKey(D_00532AF8[(unsigned)i].name);
         rec = &self->recs[(unsigned)i];
-        func_00335660(self, name, rec);
+        AgentData_CountObjectives(self, name, rec);
         rec->tC = D_00532B98[(unsigned)i].b;
         rec->t8 = D_00532B98[(unsigned)i].a;
         if (rec->tC <= 0) rec->t4 = -1;
@@ -54,7 +54,7 @@ extern "C" void awards_SetAwardsAndBonuses(AE50 *self, int x, int reset)
     { int j; for (j = 0; j < 9; j++) self->unkB08[j] = 0; }
     self->iB5C = 0;
     ScriptMgr_CallFunction(D_00555070, D_004B92E0, 1, self);
-    func_00335070(self, x);
+    AgentData_AwardPass(self, x);
     ScriptMgr_CallFunction(D_00555070, D_004B92E0, 1, self);
-    func_00335070(self, x);
+    AgentData_AwardPass(self, x);
 }

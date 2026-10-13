@@ -5,7 +5,7 @@ int Alloc_Lock(int);
 int Alloc_Unlock(int);
 int func_00102A18();
 int AddIntcHandler(int, int, int);
-int func_0010CE60(int, int);
+int RemoveIntcHandler(int, int);
 
 int func_00103AC0(int arg0) {
     int temp_s2;
@@ -15,13 +15,13 @@ int func_00103AC0(int arg0) {
     temp_s2 = F_(temp_s0, 0x8, int);
     if (arg0 == 0) {
         Alloc_Lock(2);
-        func_0010CE60(2, F_(temp_s0, 0xC, int));
+        RemoveIntcHandler(2, F_(temp_s0, 0xC, int));
         F_(temp_s0, 0xC, int) = 0;
         F_(temp_s0, 0x8, int) = 0;
     } else {
         if (temp_s2 != 0) {
             Alloc_Lock(2);
-            func_0010CE60(2, F_(temp_s0, 0xC, int));
+            RemoveIntcHandler(2, F_(temp_s0, 0xC, int));
         }
         F_(temp_s0, 0x8, int) = arg0;
         F_(temp_s0, 0xC, int) = AddIntcHandler(2, arg0, -1);

@@ -12,7 +12,7 @@ void func_0028C090(char**, const Raw_8980&);
 int String_CompareNoCase(char*, char*);
 }
 #pragma opt_common_subs off
-extern "C" Obj_8980* func_00418980(char* self, char* name) {
+extern "C" Obj_8980* GuiManager_FindByName(char* self, char* name) {
     char* end;
     char* n;
     char* it;

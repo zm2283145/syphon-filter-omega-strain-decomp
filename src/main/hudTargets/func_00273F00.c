@@ -10,7 +10,7 @@
 extern "C" {
 /*fc*/
 int Mem_Free(...);                      
-int func_00138B70(...);                         
+int String_Dtor(...);                         
 int func_00177B80(...);                            
 int func_002731D0(...);                          
 int func_002731E0(...);                      
@@ -59,11 +59,11 @@ extern "C" int func_00273F00(char *arg0, long long arg1) {
                     }
                     temp_a0 = temp_s1 + 0x28;
                     if (temp_a0 != NULL) {
-                        func_00138B70(temp_a0, 0);
+                        String_Dtor(temp_a0, 0);
                     }
                     temp_a0_2 = temp_s1 + 0x1C;
                     if (temp_a0_2 != NULL) {
-                        func_00138B70(temp_a0_2, 0);
+                        String_Dtor(temp_a0_2, 0);
                     }
                 }
                 Mem_Free(0, temp_s1, &D_004A8F60, 0x17E);

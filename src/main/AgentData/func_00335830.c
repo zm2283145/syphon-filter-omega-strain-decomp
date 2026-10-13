@@ -46,8 +46,8 @@ extern int D_00532A10[];
 int strlen(const char *s);
 int sprintf(char *buf, const char *fmt, ...);
 E5830 **func_003305C0(V5830 *v);
-const char *func_003FDAE0(int name);
-int func_00333890(A5830 *agent, const char *a, const char *name, int c);
+const char *Loc_GetStoredKey(int name);
+int Awards_MatchKeyPattern(A5830 *agent, const char *a, const char *name, int c);
 int String_CompareNoCase(const char *a, const char *b);
 float func_00245890(void *ui);
 void AgentData_SetObjectiveBit(A5830 *agent, char *name, int notify);
@@ -96,7 +96,7 @@ extern "C" void AgentData_EndLevel(A5830 *self, unsigned char done)
     if (self->fD4 < 0.0f) self->fD4 = func_00245890(D_004FFC2C);
     for (i = 0; i < self->nLevels; i++) {
         rec = &self->recs[i];
-        name = func_003FDAE0(D_00532AF8[i].name);
+        name = Loc_GetStoredKey(D_00532AF8[i].name);
         if (String_CompareNoCase(name, D_004FFB50.levelName) == 0 && done) {
             ok = 1;
             self->count3C++;
@@ -106,8 +106,8 @@ extern "C" void AgentData_EndLevel(A5830 *self, unsigned char done)
             it = *func_003305C0(&D_005329F0);
             end = *func_003305C0(&D_005329F0) + D_005329F0.count;
             for (; Neq5830(it, end); it++) {
-                n2 = func_003FDAE0(it->name);
-                if (func_00333890(self, pat, n2, '*') && !func_00333890(self, D_004B92C0, n2, '*')) {
+                n2 = Loc_GetStoredKey(it->name);
+                if (Awards_MatchKeyPattern(self, pat, n2, '*') && !Awards_MatchKeyPattern(self, D_004B92C0, n2, '*')) {
                     if (!Bit5830(self->bits, it->idx)) {
                         if ((D_005721C8 && Bit5830(D_00532A40, it->idx)) ||
                             (!D_005721C8 && Bit5830(D_00532A10, it->idx))) {

@@ -10,16 +10,16 @@ typedef struct { unsigned int cap; unsigned int count; int* data; } Vec_5580;
 typedef struct { float f0; Vec_5580 keys; char pad10[0x24]; Vec_5580 clips; } Skas_5580;
 extern void String_CtorCStr_13B480(StrP_5580* s, char* c);
 extern void func_0013D680(StrP_5580* d, StrP_5580* s);
-extern void func_00138B70(StrP_5580* s, int f);
+extern void String_Dtor(StrP_5580* s, int f);
 extern void String_PushBack(StrP_5580* s, char c);
 extern int String_AssignCStr_1C43A0(StrP_5580* s, char* c);
 extern void func_00298690(Str2_5580* s);
 extern void func_00138350(Str2_5580* s, int f);
 extern Tok_5580* func_003B6150(Tok_5580* self, Str2_5580* out);
 extern char* func_00189540(Str2_5580* s);
-extern int func_00121BC8(char* s);
+extern int atoi(char* s);
 extern long long func_00121BB0(char* s);
-extern float func_0011C928(long long a);
+extern float SoftFloat_DoubleToFloat(long long a);
 extern int func_002071F0(StrP_5580* s);
 extern char* func_002071A0(StrP_5580* s);
 extern int func_0022A360(Vec_5580* v, int* pos, int n, char* value);
@@ -42,7 +42,7 @@ extern char D_004BCDE0[];
 
 }
 #include "alloc_guard.h"
-struct Str_5580 : StrP_5580 { Str_5580() { int i; unsigned int* p = &word; for (i = 0; i < 3; i++) *p++ = 0; } __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~Str_5580() { func_00138B70(this, 0); } };
+struct Str_5580 : StrP_5580 { Str_5580() { int i; unsigned int* p = &word; for (i = 0; i < 3; i++) *p++ = 0; } __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~Str_5580() { String_Dtor(this, 0); } };
 static inline void Str_Init(StrP_5580* s) { s->word = 0; s->length = 0; s->data = 0; }
 
 static inline void ReadToken(Tok_5580* self, StrP_5580* out)
@@ -52,7 +52,7 @@ static inline void ReadToken(Tok_5580* self, StrP_5580* out)
         StrP_5580 t;
         String_CtorCStr_13B480(&t, D_004BD008);
         func_0013D680(out, &t);
-        func_00138B70(&t, 0);
+        String_Dtor(&t, 0);
     }
     started = 0;
     if (self->s) {
@@ -75,7 +75,7 @@ static inline int ReadInt0(Tok_5580* tok)
     Str2_5580 t;
     func_00298690(&t);
     func_003B6150(tok, &t);
-    r = func_00121BC8(func_00189540(&t));
+    r = atoi(func_00189540(&t));
     func_00138350(&t, -1);
     return r;
 }
@@ -85,7 +85,7 @@ static inline void ReadFloat0(Tok_5580* tok, float* out)
     Str2_5580 t;
     func_00298690(&t);
     func_003B6150(tok, &t);
-    *out = func_0011C928(func_00121BB0(func_00189540(&t)));
+    *out = SoftFloat_DoubleToFloat(func_00121BB0(func_00189540(&t)));
     func_00138350(&t, -1);
 }
 
@@ -179,7 +179,7 @@ extern "C" void Skas_Load(Skas_5580* self, Tok_5580* tok, void* list)
                                 }
                                 func_001C00D0(&tmp, &a, D_004BCD78);
                                 func_0013D680(&b, &tmp);
-                                func_00138B70(&tmp, 0);
+                                String_Dtor(&tmp, 0);
                                 clip = func_0036D3C0(list, String_CStr(&b), 0);
                                 if (!clip) RET;
                                 if (*clip > 3) RET;

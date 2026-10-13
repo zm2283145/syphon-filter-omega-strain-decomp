@@ -225,7 +225,7 @@ extern int Script_RegisterType();
 extern int Script_RegisterNative();
 extern int func_002257A0();
 extern int cGOBJ_GetScriptTypeKeyPtr();
-extern int func_003D8F60();
+extern int ScriptEnum_Register();
 void StaticInit_RegisterObjectives(void)
 {
     D_004F7558 = Script_RegisterNative_2(Script_SetObjectivesFont, D_00493880, D_004A5E60, 1, D_004EE538);
@@ -271,10 +271,10 @@ void StaticInit_RegisterObjectives(void)
     D_004F7660 = Script_RegisterNative(*(int*)func_00225C50(), Script_cObjectiveMan_DestroyObjectives, D_00493880, D_004A6020, 1, func_00225C50());
     D_004F7668 = Script_RegisterType(D_004A6038, ScriptType_cObjective_Init, 0, 1);
     D_004F7670 = *(int*)func_002257A0();
-    D_004F7678 = func_003D8F60(D_004A6050, ((char*)dat_0048AB30), 6);
-    D_004F7680 = func_003D8F60(D_004A6070, ((char*)dat_0048AB80), 4);
-    D_004F7688 = func_003D8F60(D_004A6090, ((char*)dat_0048ABB0), 3);
-    D_004F7690 = func_003D8F60(D_004A60B0, ((char*)dat_0048ABE0), 3);
+    D_004F7678 = ScriptEnum_Register(D_004A6050, ((char*)dat_0048AB30), 6);
+    D_004F7680 = ScriptEnum_Register(D_004A6070, ((char*)dat_0048AB80), 4);
+    D_004F7688 = ScriptEnum_Register(D_004A6090, ((char*)dat_0048ABB0), 3);
+    D_004F7690 = ScriptEnum_Register(D_004A60B0, ((char*)dat_0048ABE0), 3);
     D_004F7698 = Script_RegisterNative(*(int*)func_002257A0(), Script_cObjective_Add, D_00493880, D_004A60C8, 1, func_002257A0());
     D_004F76A0 = Script_RegisterNative(*(int*)func_002257A0(), Script_cObjective_SetType, D_00493880, D_004A60D0, 2, func_002257A0(), &D_004F7678);
     D_004F76A8 = Script_RegisterNative(*(int*)func_002257A0(), Script_cObjective_SetMultiType, D_00493880, D_004A60D8, 3, func_002257A0(), &D_004F7680, D_00493888);

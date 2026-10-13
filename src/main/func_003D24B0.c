@@ -11,7 +11,7 @@ Raw_24B0 func_003D2610(void*);
 void func_003D2620(char**, const Raw_24B0&);
 void func_003D2600(char**, const Raw_24B0&);
 }
-extern "C" void func_003D24B0(S_24B0* self, float dt) {
+extern "C" void ListenerList_Update(S_24B0* self, float dt) {
     char* end1;
     char* end2;
     if (self->dirty) {

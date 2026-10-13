@@ -9,7 +9,7 @@ typedef struct LookupE6 {
 
 extern int D_00532AF4;
 extern LookupE6* D_00532AF8;
-extern void* func_003FDAE0(void* name);
+extern void* Loc_GetStoredKey(void* name);
 extern int String_CompareNoCase(void* a, void* b);
 
 static inline LookupE6* EntryE6(int i) { return &D_00532AF8[i]; }
@@ -20,7 +20,7 @@ int Objective_GetLevelMissionNumber(void* name)
     int count = D_00532AF4;
     int i;
     for (i = 0; i < count; i++) {
-        if (String_CompareNoCase(func_003FDAE0(EntryE6(i)->name), name) == 0) {
+        if (String_CompareNoCase(Loc_GetStoredKey(EntryE6(i)->name), name) == 0) {
             return EntryE6(i)->value;
         }
     }

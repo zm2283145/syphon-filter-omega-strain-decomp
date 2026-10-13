@@ -39,7 +39,7 @@ int func_0040D740(Net_441CA0*);
 int func_004422D0(int, char*, char*);
 void func_00441370(Obj_441CA0*);
 void func_00441960(Obj_441CA0*);
-void func_00441A10(Obj_441CA0*);
+void GuiSaveAgentWidget_HandleEvent(Obj_441CA0*);
 int func_0041EF10(void*, void*, int, int, void*);
 }
 
@@ -56,7 +56,7 @@ extern "C" int func_00441CA0(Obj_441CA0* self, void* w, int msg, int sub, void* 
     if (m == 27) {
         if (sub == 3 || sub == 9) {
             FrontEnd_ClosePopup(D_004FFC04, self->dlg);
-            func_00441A10(self);
+            GuiSaveAgentWidget_HandleEvent(self);
             return 1;
         }
         if (sub == 2) {
@@ -88,7 +88,7 @@ extern "C" int func_00441CA0(Obj_441CA0* self, void* w, int msg, int sub, void* 
             FrontEnd_ClosePopup(D_004FFC04, self->dlg);
             impl = net->impl;
             if (!impl->f59D) {
-                func_00441A10(self);
+                GuiSaveAgentWidget_HandleEvent(self);
             } else if (impl->f59E) {
                 self->dlg = Open1(D_004FFC04, 2, err, D_004C0540, self, 8);
             } else {
@@ -131,14 +131,14 @@ extern "C" int func_00441CA0(Obj_441CA0* self, void* w, int msg, int sub, void* 
             func_0040D3C0(net);
             impl = net->impl;
             if (!impl->f59D || !impl->f59E || !impl->f59F)
-                func_00441A10(self);
+                GuiSaveAgentWidget_HandleEvent(self);
             else
                 func_00441370(self);
             return 1;
         }
         if (sub == 2) {
             FrontEnd_ClosePopup(D_004FFC04, self->dlg);
-            func_00441A10(self);
+            GuiSaveAgentWidget_HandleEvent(self);
             return 1;
         }
         if (sub == 10) {

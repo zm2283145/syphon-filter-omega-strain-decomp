@@ -2,7 +2,7 @@ typedef struct { int a; int index; int b; int c; char name[16]; int key; } R2EB0
 extern char* strncpy(char* d, const char* s, unsigned int n);
 extern int sprintf(char* buf, const char* fmt, ...);
 extern int Loc_FindKeyThunk(char* key);
-R2EB00* func_0032EB00(R2EB00* r, int a, int b, int c, int index, const char* name)
+R2EB00* Awards_FormatRankTitle(R2EB00* r, int a, int b, int c, int index, const char* name)
 {
     char buf[16];
     r->a = a;

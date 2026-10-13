@@ -22,9 +22,9 @@ E_002A9A20* LobbyArray_At(void* v, int i);
 int SFOLobby_JoinLobby(G_002A9A20* g, int i);
 void String_CtorCStr_13B480(Str_002A9A20* s, const char* c);
 void func_003FD740(Str_002A9A20* s);
-void func_00138B70(Str_002A9A20* s, int flags);
+void String_Dtor(Str_002A9A20* s, int flags);
 void String_Copy(char* d, const char* s);
-void func_00441A10(S_002A9A20* self);
+void GuiSaveAgentWidget_HandleEvent(S_002A9A20* self);
 }
 extern "C" void func_002A9A20(S_002A9A20* self)
 {
@@ -40,7 +40,7 @@ extern "C" void func_002A9A20(S_002A9A20* self)
                 String_Copy(pr->name, String_CStr(&s));
                 pr->fC4 = e->f0;
                 self->f98 = self->f9C;
-                func_00138B70(&s, 0);
+                String_Dtor(&s, 0);
             } else {
                 void* ui = D_004FFC04;
                 FrontEnd_OpenPopup(ui, 2, D_004AB808, func_0033CE30(self, 0x70, 0, 0, 0, 0), 0, 0);
@@ -49,5 +49,5 @@ extern "C" void func_002A9A20(S_002A9A20* self)
         }
     }
     self->b4C = 1;
-    func_00441A10(self);
+    GuiSaveAgentWidget_HandleEvent(self);
 }

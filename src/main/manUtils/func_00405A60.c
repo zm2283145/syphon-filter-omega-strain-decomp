@@ -15,7 +15,7 @@ void* Mem_Alloc(int pool, int size, char* file, int line);
 void Mem_Free(int pool, void* p, char* file, int line);
 void Hog_Load(A60Hog* h, A60Hog* t, int a, int b);
 void Hog_Unload(A60Hog* h);
-char* func_0036D200(A60Hog* h, int i);
+char* Archive_GetMemberName(A60Hog* h, int i);
 void Appearance_RegistryKey(char* dst, int n, char* src);
 int String_CompareN(const char* a, const char* b, int n);
 void func_00405E10(A60Obj* o, void* list, __int128* keys, int n);
@@ -57,7 +57,7 @@ void func_00405A60(A60Obj* o, void* list)
         keys = (__int128*)Mem_Alloc(0, n * 16, D_004BE7F0, 0x40B);
     }
     for (i = 0; i < n; i++)
-        Appearance_RegistryKey((char*)&keys[i], 15, func_0036D200(h, i));
+        Appearance_RegistryKey((char*)&keys[i], 15, Archive_GetMemberName(h, i));
     func_00405E10(o, list, keys, n);
     if (unload)
         Hog_Unload(h);

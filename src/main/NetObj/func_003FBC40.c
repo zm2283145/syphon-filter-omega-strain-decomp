@@ -1,9 +1,9 @@
-#define LOCALID_(X) { int ld_a = D_005721A8; /* read before the flag test: retail loads it ahead of the branch */ if (D_005721C8) { if (D_00494178 == -1) func_002EBAF8(&D_00494178, ld_a); X = D_00494178; } else X = 0; }
+#define LOCALID_(X) { int ld_a = D_005721A8; /* read before the flag test: retail loads it ahead of the branch */ if (D_005721C8) { if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, ld_a); X = D_00494178; } else X = 0; }
 #include "types.h"
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int func_002EBAF8(int *, int);                        
+int NetGame_InitLocalSlot(int *, int);                        
 int func_004343E0(int, int);                        
 extern int D_00494178;
 extern int D_0055C988;

@@ -16,20 +16,20 @@ int sprintf(char*,const char*,...);void func_0033D3F0(void*);void func_00421670(
 }
 extern "C" void func_00297C10(CcBindings*self){
  char a[32],b[32],c[32];int i;CcBindings*walk;
- self->root=(GuiWidget*)func_0041DB80(self,D_0048B650);
- self->child8c=(GuiWidget*)func_0041DB80(self,D_0048B6C8);
- self->child90=(GuiWidget*)func_0041DB80(self,D_0048B6D0);
- self->child94=(GuiWidget*)func_0041DB80(self,D_0048B6D8);
- i=0;walk=self;for(;i<17;i++,walk=(CcBindings*)((char*)walk+4)){self->states[i]=0;sprintf(a,D_004AA4D0,i);walk->main[0]=(GuiWidget*)func_0041DB80(self,a);if(walk->main[0]){walk->main[0]->unk10=i;walk->buttons[0]=walk->main[0];}}
+ self->root=(GuiWidget*)GuiWidget_FindChildByName(self,D_0048B650);
+ self->child8c=(GuiWidget*)GuiWidget_FindChildByName(self,D_0048B6C8);
+ self->child90=(GuiWidget*)GuiWidget_FindChildByName(self,D_0048B6D0);
+ self->child94=(GuiWidget*)GuiWidget_FindChildByName(self,D_0048B6D8);
+ i=0;walk=self;for(;i<17;i++,walk=(CcBindings*)((char*)walk+4)){self->states[i]=0;sprintf(a,D_004AA4D0,i);walk->main[0]=(GuiWidget*)GuiWidget_FindChildByName(self,a);if(walk->main[0]){walk->main[0]->unk10=i;walk->buttons[0]=walk->main[0];}}
  self->states[17]=0;
- {int j;CcBindings*w1;CcBindings*w2;j=0;w1=self;w2=self;for(;j<3;j++,w1=(CcBindings*)((char*)w1+4),w2=(CcBindings*)((char*)w2+4)){sprintf(b,D_004AA4D8,j+1);w1->extra[0]=(GuiWidget*)func_0041DB80(self,b);if(w1->extra[0]){w1->extra[0]->unk10=j+17;w2->buttons[17]=w1->extra[0];}}}
- self->childac=(GuiWidget*)func_0041DB80(self,D_0048B6B8);if(self->childac){self->childac->unk10=20;self->buttons[20]=self->childac;}
- self->childa8=(GuiWidget*)func_0041DB80(self,D_0048B6B0);if(self->childa8){self->childa8->unk10=21;self->buttons[21]=self->childa8;}
- self->childa4=(GuiWidget*)func_0041DB80(self,D_0048B6A8);if(self->childa4){self->childa4->unk10=22;self->buttons[22]=self->childa4;}
- self->childb0=(GuiWidget*)func_0041DB80(self,D_0048B6C0);if(self->childb0){self->childb0->unk10=23;self->buttons[23]=self->childb0;}
+ {int j;CcBindings*w1;CcBindings*w2;j=0;w1=self;w2=self;for(;j<3;j++,w1=(CcBindings*)((char*)w1+4),w2=(CcBindings*)((char*)w2+4)){sprintf(b,D_004AA4D8,j+1);w1->extra[0]=(GuiWidget*)GuiWidget_FindChildByName(self,b);if(w1->extra[0]){w1->extra[0]->unk10=j+17;w2->buttons[17]=w1->extra[0];}}}
+ self->childac=(GuiWidget*)GuiWidget_FindChildByName(self,D_0048B6B8);if(self->childac){self->childac->unk10=20;self->buttons[20]=self->childac;}
+ self->childa8=(GuiWidget*)GuiWidget_FindChildByName(self,D_0048B6B0);if(self->childa8){self->childa8->unk10=21;self->buttons[21]=self->childa8;}
+ self->childa4=(GuiWidget*)GuiWidget_FindChildByName(self,D_0048B6A8);if(self->childa4){self->childa4->unk10=22;self->buttons[22]=self->childa4;}
+ self->childb0=(GuiWidget*)GuiWidget_FindChildByName(self,D_0048B6C0);if(self->childb0){self->childb0->unk10=23;self->buttons[23]=self->childb0;}
  for(int i=0;i<6;i++){self->labels[i]=(GuiWidget*)GuiFindAs(self,D_0048B770[i],D_004A9870);if(self->labels[i])self->labels[i]->unk10=i;}
  for(int i=0;i<24;i++){if(i==21)self->actions[i]=2;else if(i==22)self->actions[i]=3;else if(i==20)self->actions[i]=4;else self->actions[i]=1;}
- for(int i=0;i<6;i++)self->groups[i]=(GuiWidget*)func_0041DB80(self,D_0048B6E0[i]);
+ for(int i=0;i<6;i++)self->groups[i]=(GuiWidget*)GuiWidget_FindChildByName(self,D_0048B6E0[i]);
  for(int i=0;i<24;i++)if(self->buttons[i])self->buttons[i]->flags&=0xff7f;
  self->child98=(GuiWidget*)GuiFindAs(self,D_0048B668,D_004A7520);
  self->child9c=(GuiWidget*)GuiFindAs(self,D_0048B670,D_004A7520);
@@ -38,9 +38,9 @@ extern "C" void func_00297C10(CcBindings*self){
  self->child2ec=(GuiWidget*)GuiFindAs(self,D_0048B700,D_004A9870);
  self->child2f0=(GuiWidget*)GuiFindAs(self,D_0048B728,D_004A9870);
  for(int i=0;i<10;i++){sprintf(c,D_004AA4E0,i+1);self->tail[i]=(GuiWidget*)GuiFindAs(self,c,D_004A9870);}
- GuiWidget*w=(GuiWidget*)func_0041DB80(self,D_004AA4E8);if(w)w->flags&=0xfffd;
+ GuiWidget*w=(GuiWidget*)GuiWidget_FindChildByName(self,D_004AA4E8);if(w)w->flags&=0xfffd;
  func_0033D3F0(self);
- self->child190=(GuiWidget*)func_0041DB80(self,D_0048B788);if(self->child190)self->child190->flags&=0xfffd;
+ self->child190=(GuiWidget*)GuiWidget_FindChildByName(self,D_0048B788);if(self->child190)self->child190->flags&=0xfffd;
  self->child194=(GuiWidget*)GuiFindAs(self,D_0048B790,D_004AA640);if(self->child194){func_00421670(self->child194,2);func_00421690(self->child194,D_004AA4F8);self->child194->flags&=0xff7f;}
 }
 

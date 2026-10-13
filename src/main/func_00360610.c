@@ -8,7 +8,7 @@ typedef struct { C16 a; __int128 b; C16 c; C16 d; Q64 e; } Blk;
 
 extern void func_00360510(char*);
 extern int String_CtorCStr_13B480(char*, char*);
-extern int func_00138B70(char*, int);
+extern int String_Dtor(char*, int);
 extern int func_0013D680(char*, char*);
 extern char* DME_GetLobby(void);
 extern int func_0044A1D0(char*);
@@ -46,7 +46,7 @@ void func_00360610(char* self, int* arg1, Msg* arg2) {
     F_(self, 0xD0, int) = arg2->b1;
     String_CtorCStr_13B480(s1, (char*)(arg1 + 1));
     func_0013D680(self + 0xB8, s1);
-    func_00138B70(s1, 0);
+    String_Dtor(s1, 0);
     o = DME_GetLobby();
     if (o) {
         F_(self, 0xF4, char) = func_0044A1D0(o);
@@ -55,18 +55,18 @@ void func_00360610(char* self, int* arg1, Msg* arg2) {
                 F_(self, 0xF8, int) = -1;
                 String_CtorCStr_13B480(s2, func_0044A070(o));
                 func_0013D680(self + 0xC4, s2);
-                func_00138B70(s2, 0);
+                String_Dtor(s2, 0);
             } else {
                 F_(self, 0xF8, int) = arg1[0];
                 String_CtorCStr_13B480(s3, D_004BB868);
                 func_0013D680(self + 0xC4, s3);
-                func_00138B70(s3, 0);
+                String_Dtor(s3, 0);
                 if (arg2->xE8 != -1) {
                     r = func_00448FF0(o, arg2->xE8);
                     if (r) {
                         String_CtorCStr_13B480(s4, r);
                         func_0013D680(self + 0xC4, s4);
-                        func_00138B70(s4, 0);
+                        String_Dtor(s4, 0);
                     }
                 }
             }

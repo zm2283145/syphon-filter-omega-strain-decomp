@@ -22,7 +22,7 @@ struct Obj46 {
 typedef struct { char p0[4]; int f4; } Tbl46;
 typedef struct { char p0[0x148]; Tbl46 *f148; } Src46;
 typedef struct { char p0[0xB8]; Obj46 *slot[7]; } Slot46;
-extern "C" char *func_0036D200(Src46 *, int);
+extern "C" char *Archive_GetMemberName(Src46 *, int);
 extern "C" int func_0036D4E0(Src46 *, int);
 extern "C" void func_0038D530(Obj46 *, char *, int, int, int, int, int, int);
 extern "C" void func_0038CD90(Obj46 *, int);
@@ -54,7 +54,7 @@ extern "C" void func_00146040(Slot46 *self, Src46 *src)
     int i;
     for (i = 0; i < n; i++) {
         int found = 0;
-        char *name = func_0036D200(src, i);
+        char *name = Archive_GetMemberName(src, i);
         int x = func_0036D4E0(src, i);
         int k;
         for (k = 0; k < 7; k++) {

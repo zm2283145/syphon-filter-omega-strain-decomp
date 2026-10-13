@@ -7,7 +7,7 @@ extern char D_004AAE80[];
 extern char D_004AAE98[];
 extern void func_002CCA20(Hud32* hud, int a1);
 extern void* Gui_GetScreenList(void);
-extern void* func_00418A80(void* manager, const char* a, const char* b);
+extern void* GuiManager_FindOrLoad(void* manager, const char* a, const char* b);
 extern void* Gui_GetScreenStack(void);
 extern void GuiStack_SwapScreens(void* target, void* self, void* handle);
 
@@ -18,6 +18,6 @@ void func_002A04C0(void* self)
     D_00532FE8 = 0;
     func_002CCA20(D_004FFC04, 1);
     D_004FFC04->flag = 0;
-    handle = func_00418A80(Gui_GetScreenList(), D_004AAE80, D_004AAE98);
+    handle = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AAE80, D_004AAE98);
     GuiStack_SwapScreens(Gui_GetScreenStack(), self, handle);
 }

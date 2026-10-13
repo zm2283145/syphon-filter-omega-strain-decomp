@@ -26,7 +26,7 @@ void func_00436BA0(int* shared, short flags);
 int func_00434440(int* shared, const GobjId* id);
 int func_00434380(int* shared, const GobjId* id);
 void func_00434600(int* shared, const GobjId* id, int peer);
-int func_002EBAF8(int* id, int session);
+int NetGame_InitLocalSlot(int* id, int session);
 int PlayerSlots_Get(int peer);
 void Event_Construct(void* notice, const void* descriptor);
 void cMessage_dtor(void* notice, int flags);
@@ -48,7 +48,7 @@ static inline int current_peer(void)
     int session = D_005721A8;
     if (D_005721C8) {
         if (D_00494178 == -1)
-            func_002EBAF8(&D_00494178, session);
+            NetGame_InitLocalSlot(&D_00494178, session);
         return D_00494178;
     }
     return 0;

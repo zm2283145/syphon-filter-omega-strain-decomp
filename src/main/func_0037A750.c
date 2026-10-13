@@ -36,8 +36,8 @@ typedef struct GsCtx37A750 {
 typedef struct Slot37A750 { char p0[0x110]; } Slot37A750;
 
 extern void func_00382060(int);
-extern void func_00375650(void*);
-extern void func_0037B0C0(GsCtx37A750*, int);
+extern void Vif1Packet_Flip(void*);
+extern void Video_FreeDeferredBuffers(GsCtx37A750*, int);
 extern void func_0037B000(GsCtx37A750*);
 extern void func_003820C0(int);
 extern char D_00537F80[];
@@ -72,8 +72,8 @@ void func_0037A750(GsCtx37A750* c)
     while ((*(volatile int*)0x1000A000 & 0x100) || (*(volatile int*)0x10003020 & 0xC00))
         ;
     func_00382060(c->dev);
-    func_00375650(D_00537F80);
-    func_0037B0C0(c, 0);
+    Vif1Packet_Flip(D_00537F80);
+    Video_FreeDeferredBuffers(c, 0);
     c->buf ^= 1;
     func_0037B000(c);
     c->frames++;

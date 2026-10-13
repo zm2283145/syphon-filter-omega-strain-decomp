@@ -9,7 +9,7 @@ int Human_ApplyBoundSpheres(char * );
 int TargetVis_Register(char *, char * );
 int func_002D1D80(int);
 int func_002D1FF0(char * , int);
-int func_002EBAF8(int *, int);
+int NetGame_InitLocalSlot(int *, int);
 int ActorModel_Activate(char * , int);
 int func_003FB4B0(int, int);
 int func_004341F0(char *, char * );
@@ -27,7 +27,7 @@ static inline int LocalId_53D0(void)
     int r;
     int a = D_005721A8; /* read before the flag test: retail loads it ahead of the branch */
     if (D_005721C8) {
-        if (D_00494178 == -1) func_002EBAF8(&D_00494178, a);
+        if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, a);
         r = D_00494178;
     } else r = 0;
     return r;

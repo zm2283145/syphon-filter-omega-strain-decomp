@@ -25,9 +25,9 @@ extern int D_00533000;
 void func_0033D3A0(O* o);
 void String_CtorCStr_13B480(String* s, const char* text);
 void func_0013D680(void* list, String* s);
-void func_00138B70(String* s, int flags);
+void String_Dtor(String* s, int flags);
 void func_0033D8E0(O* o, unsigned char mode);
-W* func_0041DB80(void* o, char* name);
+W* GuiWidget_FindChildByName(void* o, char* name);
 void* Agent_GetSelected(void* p, int i);
 char* func_00336170(void* a);
 void func_0041BEB0(W* w, char* s, int f);
@@ -46,7 +46,7 @@ void func_0033F110(O* o)
         String s;
         String_CtorCStr_13B480(&s, D_004B9C60);
         func_0013D680(o->f104, &s);
-        func_00138B70(&s, 0);
+        String_Dtor(&s, 0);
     }
     if (o->f88) {
         func_0033D8E0(o, 1);
@@ -54,7 +54,7 @@ void func_0033F110(O* o)
         o->f88->b80 = 1;
     }
     o->b78 = 1;
-    w = Cast(func_0041DB80(o, D_004928E0), D_004A7520);
+    w = Cast(GuiWidget_FindChildByName(o, D_004928E0), D_004A7520);
     if (w)
         func_0041BEB0(w, func_00336170(Agent_GetSelected(D_004FFB50, -1)), 0);
     D_00532FF0 = 0;

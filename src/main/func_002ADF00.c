@@ -23,18 +23,18 @@ static void * const dat_0048BCB8[2] = { (void*)D_004ABAE8, (void*)0x0 };
 static void * const dat_0048BCC0[2] = { (void*)D_004ABAF8, (void*)0x0 };
 extern char D_004A9870[];
 extern "C" void func_0033F250(Screen* self);
-extern "C" Widget* func_0041DB80(Screen* self, int id);
+extern "C" Widget* GuiWidget_FindChildByName(Screen* self, int id);
 
 /* Base init (func_0033F250), then caches the (*(int*)dat_0048BCB8) / (*(int*)dat_0048BCC0) children (+0x160/+0x164) when they are of type D_004A9870, and clears +0x94. */
 extern "C" void func_002ADF00(Screen* self)
 {
     Widget* child;
     func_0033F250(self);
-    child = func_0041DB80(self, (*(int*)dat_0048BCB8));
+    child = GuiWidget_FindChildByName(self, (*(int*)dat_0048BCB8));
     if (!child || !child->IsA(D_004A9870))
     child = 0;
     self->first = child;
-    child = func_0041DB80(self, (*(int*)dat_0048BCC0));
+    child = GuiWidget_FindChildByName(self, (*(int*)dat_0048BCC0));
     if (!child || !child->IsA(D_004A9870))
     child = 0;
     self->second = child;

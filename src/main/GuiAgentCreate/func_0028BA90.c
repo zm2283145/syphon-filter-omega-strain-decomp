@@ -43,7 +43,7 @@ Agent* Agent_GetSelected(void* p, int i);
 void func_00334000(Agent* a, Look* l);
 int Gui_GetScreenList(void);
 int Gui_GetScreenStack(void);
-int func_00418A80(int list, char* a, char* b);
+int GuiManager_FindOrLoad(int list, char* a, char* b);
 void GuiStack_SwapScreens(int stack, Screen* s, int n);
 int Loc_LookupText(char* s);
 void FrontEnd_OpenPopup(int a, int b, int t1, int t2, Screen* s, int c);
@@ -67,7 +67,7 @@ extern "C" void func_0028BA90(Screen* self)
     func_00334000(Agent_GetSelected(D_004FFB50, -1), &look);
     Holder* h = &D_0055A830;
     if (h->cfg->b59D) {
-        int n = func_00418A80(Gui_GetScreenList(), D_004A9930, D_004A9940);
+        int n = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004A9930, D_004A9940);
         GuiStack_SwapScreens(Gui_GetScreenStack(), self, n);
     } else {
         int p = D_004FFC04;

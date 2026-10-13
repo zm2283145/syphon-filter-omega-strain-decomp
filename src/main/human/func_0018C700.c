@@ -10,7 +10,7 @@
 extern void Tree_Compare(int*, int, int);
 
 /* Tree iterator dereference: value stored at node +0x40. */
-char* func_0018C700(Iter* it) {
+char* NodeMapIter_Value(Iter* it) {
     return (char*)it->p + 64;
 }
 
@@ -18,7 +18,7 @@ int NodeMapIter_NotEqual(Iter* a, Iter* b) {
     return !(a->p == b->p);
 }
 
-void func_0018C730(Iter* out, Tree* t) {
+void NodeMap_End(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 

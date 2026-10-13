@@ -29,10 +29,10 @@ extern void StaticInit_RunAll(void);
 extern char *strrchr(const char *, int);
 extern StrObj *String_CtorCStr_13B480(StrObj *, const char *);
 extern void func_0013D680(StrObj *, StrObj *);
-extern void func_00138B70(void *, short);
+extern void String_Dtor(void *, short);
 extern char *strncpy(char *, const char *, int);
 extern void printf(char *, ...);
-extern void func_002CC8E0(int, char *);
+extern void LevelSelect_FindByName(int, char *);
 extern int String_ToLower(int);
 extern void func_003E2D80(int);
 extern void ScriptFilter_SetGate(int);
@@ -81,7 +81,7 @@ int Game_ParseCommandLine(int argc, char **argv)
     else base = base + 1;
     String_CtorCStr_13B480(&tmp, base);
     func_0013D680(&D_004FFBA4, &tmp);
-    func_00138B70(&tmp, 0);
+    String_Dtor(&tmp, 0);
     Game_SetState(9);
     if (argc > 1) {
         for (i = 1; i < argc; i++) {
@@ -100,7 +100,7 @@ int Game_ParseCommandLine(int argc, char **argv)
                     break;
                 case 'l':
                     strncpy(D_004FFC90, val, 0x80);
-                    func_002CC8E0(D_004FFC04 + 0x188, val);
+                    LevelSelect_FindByName(D_004FFC04 + 0x188, val);
                     printf(D_0049AF30, val);
                     run = 0;
                     break;

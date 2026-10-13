@@ -30,7 +30,7 @@ extern int D_005721A8;
 extern unsigned char D_005721C8;
 extern int D_004FFBD0;
 int func_001A3730(Owner_7A40* o);
-int func_002EBAF8(int*, int);
+int NetGame_InitLocalSlot(int*, int);
 void func_00170DB0(int, void*);
 int Object_Unregister(void*);
 int Object_DeleteLater(void*, float);
@@ -63,7 +63,7 @@ extern "C" void func_00257A40(void) {
         {
             int a = D_005721A8;
             if (D_005721C8) {
-                if (D_00494178 == -1) func_002EBAF8(&D_00494178, a);
+                if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, a);
                 me = D_00494178;
             } else me = 0;
         }

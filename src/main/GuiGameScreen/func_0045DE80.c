@@ -9,7 +9,7 @@
 
 extern "C" {
 int Mem_Free(int, int, char *, int);                         
-int func_00138B70(int, int);                            
+int String_Dtor(int, int);                            
 int func_0038CC70(int);                               
 int func_0041F090();                                  
 extern unsigned char D_00533880;
@@ -27,7 +27,7 @@ extern "C" void func_0045DE80(char * arg0) {
     if (temp_s1 != 0) {
         temp_a0 = temp_s1 + 0x14;
         if (temp_a0 != 0) {
-            func_00138B70(temp_a0, 0);
+            String_Dtor(temp_a0, 0);
         }
     }
     Mem_Free(0, temp_s1, "GuiGameScreen.cc", 0x152);

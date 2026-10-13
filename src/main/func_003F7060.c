@@ -11,7 +11,7 @@ extern T5EA0 D_0055C460;
 extern volatile int D_0055C5A8;
 extern volatile unsigned char D_0055C740;
 extern char D_00571CF0[];
-extern int func_001037A8(int, int);
+extern int sceGsSyncPath(int, int);
 extern void func_00103B60(unsigned long draw, short cx, short cy, short half);
 extern void* func_00103D40(int);
 extern void func_00104070(void* d, void* tag);
@@ -24,14 +24,14 @@ static inline void EI3F7060(void) { asm { sync }
     asm { ei } }
 
 #pragma opt_propagation off
-int func_003F7060(void)
+int MoviePlayer_PresentVblank(void)
 {
     volatile int field;
     volatile int r;
     field = (int)((*(volatile unsigned long*)0x12001000 >> 13) & 1);
     if (D_0055C210) {
         D_0055C218++;
-        r = func_001037A8(1, 0);
+        r = sceGsSyncPath(1, 0);
         if (r == 0) {
             int* buf = func_003F5EA0(&D_0055C460);
             unsigned long dma;
@@ -60,13 +60,13 @@ int func_003F7060(void)
             if (field == 0 && *buf == 2) {
                 func_00411860(D_00571CF0, idx, 0);
                 func_001036B0(D_0055C230, 0);
-                func_001037A8(0, 0);
+                sceGsSyncPath(0, 0);
                 func_00104070(d, (char*)buf + 0x40);
                 *buf = 1;
             } else if (field == 1 && *buf == 1) {
                 func_00411860(D_00571CF0, idx, 1);
                 func_001036B0(D_0055C230, 1);
-                func_001037A8(0, 0);
+                sceGsSyncPath(0, 0);
                 func_00104070(d, (char*)buf + 0x26740);
                 *buf = 0;
                 D_0055C220 = 1;

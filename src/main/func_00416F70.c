@@ -10,7 +10,7 @@ void* Gui_GetScreenList(void);
 char* String_CStr(void* s);
 void String_CtorCStr_13B480(Str_416F70* s, char* c);
 void func_0013D680(Str_416F70* d, Str_416F70* s);
-void func_00138B70(void* s, int f);
+void String_Dtor(void* s, int f);
 void Mtx_SetBasis(void* m, V4_416F70* a, V4_416F70* b, V4_416F70* c);
 void Mtx_SetTranslation(void* m, V4_416F70* t);
 void func_00298690(E_416F70* e);
@@ -45,13 +45,13 @@ int func_00416F70(O_416F70* o, char** cur)
     else o->b28 = 1;
     String_CtorCStr_13B480(&t1, s);
     func_0013D680(&o->s8, &t1);
-    func_00138B70(&t1, 0);
+    String_Dtor(&t1, 0);
     s = *cur;
     while (*(*cur)++ != 0);
     if (s != 0 && *s != 0) {
         String_CtorCStr_13B480(&t2, s);
         func_0013D680(&o->s14, &t2);
-        func_00138B70(&t2, 0);
+        String_Dtor(&t2, 0);
     }
     *cur = (char*)(((int)*cur + 3) & ~3);
     RdV_416F70(cur, &a, 0.0f);
@@ -67,13 +67,13 @@ int func_00416F70(O_416F70* o, char** cur)
         while (*(*cur)++ != 0);
         String_CtorCStr_13B480(&t3, s);
         func_0013D680(&e.name, &t3);
-        func_00138B70(&t3, 0);
+        String_Dtor(&t3, 0);
         *cur = (char*)(((int)*cur + 3) & ~3);
         e.b = Rd16_416F70(cur);
         e.c = Rd16_416F70(cur);
         e.d = Rd16_416F70(cur);
         func_00417C60(o->v70, o->v78 + o->n74, 1, &e);
-        func_00138B70(&e, 0);
+        String_Dtor(&e, 0);
     }
     return 1;
 }

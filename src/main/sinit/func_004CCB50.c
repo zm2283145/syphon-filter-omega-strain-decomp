@@ -202,7 +202,7 @@ extern int cGOBJ_GetScriptTypeKeyPtr();
 extern int Script_RegisterNative_2();
 extern int Script_RegisterType();
 extern int Script_RegisterNative();
-extern int func_003D8F60();
+extern int ScriptEnum_Register();
 void StaticInit_RegisterLift(void)
 {
     D_004F5440 = D_004A4670;
@@ -221,7 +221,7 @@ void StaticInit_RegisterLift(void)
     D_004F54E8 = Script_RegisterNative(D_004F54D0, Script_cGameGOBJ_Disable, D_00493880, D_004A4720, 1, &D_004F54D0);
     D_004F54F0 = Script_RegisterType(D_004A4728, ScriptType_cPathedGOBJ_Init, 0, 1);
     D_004F54F8 = D_004F54F0;
-    D_004F5500 = func_003D8F60(D_004A4740, ((char*)dat_0048A9D0), 2);
+    D_004F5500 = ScriptEnum_Register(D_004A4740, ((char*)dat_0048A9D0), 2);
     D_004F5508 = Script_RegisterNative(D_004F54F0, PathObj_ScriptTrigger, D_00493880, D_004A4760, 1, &D_004F54F0);
     D_004F5510 = Script_RegisterNative(D_004F54F0, PathObj_ScriptResetAndTrigger, D_00493880, D_004A4770, 1, &D_004F54F0);
     D_004F5518 = Script_RegisterNative(D_004F54F0, Script_Mover_GetPos, D_00493888, D_004A4780, 1, &D_004F54F0);
@@ -247,24 +247,24 @@ void StaticInit_RegisterLift(void)
     D_004F55B8 = Script_RegisterNative(D_004F5540, Script_cElevatorGOBJ_SetLoopSound, D_00493880, D_004A4880, 2, &D_004F5540, D_00493898);
     D_004F55C0 = Script_RegisterNative(D_004F5540, Script_cElevatorGOBJ_LockFloor, D_00493880, D_004A4890, 2, &D_004F5540, D_00493888);
     D_004F55C8 = Script_RegisterNative(D_004F5540, Script_cElevatorGOBJ_UnlockFloor, D_00493880, D_004A48A0, 2, &D_004F5540, D_00493888);
-    D_004F55D0 = func_003D8F60(D_004A48B0, ((char*)dat_0048A9F0), 4);
+    D_004F55D0 = ScriptEnum_Register(D_004A48B0, ((char*)dat_0048A9F0), 4);
     D_004F55D8 = Script_RegisterType(D_004A48D0, ScriptType_cGOBJTriggerEventMsg_Init, 1, 0);
     D_004F55E0 = D_004F55D8;
     D_004F55E8 = Script_RegisterNative(D_004F55D8, Script_cGOBJTriggerEventMsg_Action, &D_004F5608, D_004A48E8, 1, &D_004F55D8);
     D_004F55F0 = Script_RegisterNative(D_004F55D8, Script_cGOBJTriggerEventMsg_Data, D_00493888, D_004A48F0, 1, &D_004F55D8);
     D_004F55F8 = Script_RegisterNative(D_004F55D8, Script_cGOBJTriggerEventMsg_Who, cGOBJ_GetScriptTypeKeyPtr(), D_004A48F8, 1, &D_004F55D8);
     D_004F5600 = Script_RegisterNative(D_004F55D8, Script_cGOBJTriggerEventMsg_Box, cGOBJ_GetScriptTypeKeyPtr(), D_004A4900, 1, &D_004F55D8);
-    D_004F5608 = func_003D8F60(D_004A4910, ((char*)dat_0048AA20), 7);
+    D_004F5608 = ScriptEnum_Register(D_004A4910, ((char*)dat_0048AA20), 7);
     D_004F5610 = Script_RegisterType(D_004A4940, ScriptType_cElevatorNotice_Init, 1, 0);
     D_004F5618 = D_004F5610;
     D_004F5620 = Script_RegisterNative(D_004F5610, Script_cElevatorNotice_Action, &D_004F5630, D_004A48E8, 1, &D_004F5610);
     D_004F5628 = Script_RegisterNative(D_004F5610, Script_cElevatorNotice_Data, D_00493888, D_004A48F0, 1, &D_004F5610);
-    D_004F5630 = func_003D8F60(D_004A4950, ((char*)dat_0048AA80), 5);
+    D_004F5630 = ScriptEnum_Register(D_004A4950, ((char*)dat_0048AA80), 5);
     D_004F5638 = Script_RegisterType(D_004A4970, ScriptType_cPathedNotice_Init, 1, 0);
     D_004F5640 = D_004F5638;
     D_004F5648 = Script_RegisterNative(D_004F5638, PathedNotice_GetAction, &D_004F5658, D_004A48E8, 1, &D_004F5638);
     D_004F5650 = Script_RegisterNative(D_004F5638, Script_cPathedNotice_Data, D_00493888, D_004A48F0, 1, &D_004F5638);
-    D_004F5658 = func_003D8F60(D_004A4980, ((char*)dat_0048AAC0), 3);
+    D_004F5658 = ScriptEnum_Register(D_004A4980, ((char*)dat_0048AAC0), 3);
     D_004F5660 = Script_RegisterType(D_004A49A0, ScriptType_cInteractGOBJ_Init, 0, 1);
     D_004F5668 = D_004F5660;
     D_004F5670 = Script_RegisterNative(D_004F5660, Script_cInteractGOBJ_GetTarget, &D_004F54D0, D_004A49B0, 2, &D_004F5660, D_00493888);

@@ -36,7 +36,7 @@ void func_00441C10(void);
 
 static inline int ShowDlg(int mgr, int type, char* t, char* m, void* cb, int x) { return FrontEnd_OpenPopup(mgr, type, Loc_LookupText(t), Loc_LookupText(m), cb, x); }
 
-extern "C" void func_00441A10(Obj_441A10* self)
+extern "C" void GuiSaveAgentWidget_HandleEvent(Obj_441A10* self)
 {
     Net_441A10* net = &D_0055A830;
     if (self->mode != 0 && self->mode != 4) self->f50 = Agent_GetSelected(D_004FFB50, -1)[1];

@@ -20,13 +20,13 @@ extern char D_004A9880[];
 extern char D_004A9870[];
 int sprintf(char* buf, const char* fmt, ...);
 void* func_0041DC70(Self_002A8410* self, char* name);
-void* func_0041DB80(Self_002A8410* self, char* name);
+void* GuiWidget_FindChildByName(Self_002A8410* self, char* name);
 void func_0041C110(W_002A8410* w, int a);
 void func_0041F150(Self_002A8410* self);
 }
 static inline W_002A8410* FindAs_002A8410(Self_002A8410* self, char* name, char* type)
 {
-    W_002A8410* w = (W_002A8410*)func_0041DB80(self, name);
+    W_002A8410* w = (W_002A8410*)GuiWidget_FindChildByName(self, name);
     return (w && w->IsA(type)) ? w : 0;
 }
 extern "C" void func_002A8410(Self_002A8410* self)

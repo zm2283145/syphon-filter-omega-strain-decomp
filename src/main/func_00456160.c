@@ -4,9 +4,9 @@ struct V4561 { virtual int v0(); virtual int v1(); virtual int v2(); virtual int
 typedef struct { char pad[0x10]; int f10; unsigned short flags; short h16; } W4561;
 extern "C" {
 extern int Gui_GetScreenList(void);
-extern W4561* func_00418A80(int, char*, char*);
-extern void* func_00418980(int, char*);
-extern W4561* func_0041DB80(void*, char*);
+extern W4561* GuiManager_FindOrLoad(int, char*, char*);
+extern void* GuiManager_FindByName(int, char*);
+extern W4561* GuiWidget_FindChildByName(void*, char*);
 extern V4561* Gui_GetScreenStack(void);
 extern char D_004C1AD8[];
 extern char D_004C1B00[];
@@ -16,7 +16,7 @@ extern char D_004C1B28[];
 extern char D_004C1B38[];
 }
 extern "C" void func_00456160(W4561* g) {
-    W4561* w = func_00418A80(Gui_GetScreenList(), D_004C1AD8, "INGAMENU");
+    W4561* w = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004C1AD8, "INGAMENU");
     void* p;
     if (!w) return;
     w->f10 = g->f10;
@@ -25,17 +25,17 @@ extern "C" void func_00456160(W4561* g) {
         Gui_GetScreenStack()->v24(g);
         Gui_GetScreenStack()->v23(w, z);
     }
-    p = func_00418980(Gui_GetScreenList(), D_004C1B00);
+    p = GuiManager_FindByName(Gui_GetScreenList(), D_004C1B00);
     if (p) {
-        W4561* a = func_0041DB80(p, D_004C1B18);
-        W4561* b = func_0041DB80(p, D_004C1B20);
+        W4561* a = GuiWidget_FindChildByName(p, D_004C1B18);
+        W4561* b = GuiWidget_FindChildByName(p, D_004C1B20);
         if (a) a->flags |= 2;
         if (b) b->flags |= 2;
     }
-    p = func_00418980(Gui_GetScreenList(), D_004C1B00);
+    p = GuiManager_FindByName(Gui_GetScreenList(), D_004C1B00);
     if (p) {
-        W4561* a = func_0041DB80(p, D_004C1B28);
-        W4561* b = func_0041DB80(p, D_004C1B38);
+        W4561* a = GuiWidget_FindChildByName(p, D_004C1B28);
+        W4561* b = GuiWidget_FindChildByName(p, D_004C1B38);
         if (a) a->flags |= 2;
         if (b) b->flags |= 2;
     }

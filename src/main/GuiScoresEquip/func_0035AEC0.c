@@ -15,7 +15,7 @@ extern char D_004BB4D8[];
 extern char D_004BB530[];
 extern char D_004A9870[];
 extern G_35AEC0* D_004FFC2C;
-W_35AEC0* func_0041DB80(void* self, char* name);
+W_35AEC0* GuiWidget_FindChildByName(void* self, char* name);
 char* Loc_LookupText(char* key);
 void func_0041BEB0(W_35AEC0* w, char* text, int flags);
 void func_00456160(S_35AEC0* o);
@@ -45,11 +45,11 @@ int func_0035AEC0(S_35AEC0* o, Ev_35AEC0* ev)
             return 1;
         }
         o->a224 = 0;
-        a = func_0041DB80(o, D_004BB4D8);
-        b = func_0041DB80(o, "equipment_grp");
+        a = GuiWidget_FindChildByName(o, D_004BB4D8);
+        b = GuiWidget_FindChildByName(o, "equipment_grp");
         if (a) a->a14 |= 2;
         if (b) b->a14 &= ~2;
-        c = cast_35AEC0(func_0041DB80(o, "button_equip_score"));
+        c = cast_35AEC0(GuiWidget_FindChildByName(o, "button_equip_score"));
         if (c) {
             char* t = Loc_LookupText("ScoresEquipScr0");
             func_0041BEB0(c, t ? t : D_004BB530, 0);

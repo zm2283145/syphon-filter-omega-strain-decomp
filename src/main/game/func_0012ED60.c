@@ -1,6 +1,6 @@
 #include "types.h"
 unsigned char* Agent_GetSelected(int, int);
-int func_002EBAF8(int*, int);
+int NetGame_InitLocalSlot(int*, int);
 int PlayerSlots_Get(int);
 unsigned int D_00494178[2] = { 0xFFFFFFFF, 0x0 };
 extern int D_005721A8;
@@ -13,7 +13,7 @@ int Game_RemotePlayersReady(int arg0)
         int v;
         int a = D_005721A8; /* read before the flag test: retail loads it ahead of the branch */
         if (D_005721C8) {
-            if ((*(int*)D_00494178) == -1) func_002EBAF8(&(*(int*)D_00494178), a);
+            if ((*(int*)D_00494178) == -1) NetGame_InitLocalSlot(&(*(int*)D_00494178), a);
             v = (*(int*)D_00494178);
         } else v = 0;
         if (i != v && PlayerSlots_Get(i)) {

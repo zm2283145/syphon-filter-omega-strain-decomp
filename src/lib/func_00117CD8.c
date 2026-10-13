@@ -1,5 +1,5 @@
-/* libgcc __floatdisf is the retail func_0011B888 */
-__asm__("__floatdisf = func_0011B888");
+/* libgcc __floatdisf is the retail SoftFloat_S64ToFloat */
+__asm__("__floatdisf = SoftFloat_S64ToFloat");
 float func_00117CD8(unsigned long x)
 {
     float f = (float)x;

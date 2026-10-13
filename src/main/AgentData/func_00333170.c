@@ -1,5 +1,5 @@
 /*
- * func_00333170: finds the range definition of table D_00532A70[type] that
+ * Awards_FindRequirementRow: finds the range definition of table D_00532A70[type] that
  * contains the localised key and returns the matching byte of the agent's
  * per-type record (used by func_00333130 to set a flag byte).
  */
@@ -46,7 +46,7 @@ extern int Loc_FindKeyThunk(const char* key);
 
 #pragma opt_strength_reduction off
 #pragma opt_loop_invariants off
-unsigned char* func_00333170(AgentRanges* self, unsigned char type, const char* key) {
+unsigned char* Awards_FindRequirementRow(AgentRanges* self, unsigned char type, const char* key) {
     int k = Loc_FindKeyThunk(key);
     int i;
     int s;

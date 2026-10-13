@@ -9,7 +9,7 @@ extern char D_0051F098[];
 extern char D_004DE280[];
 extern void Event_Construct(Msg_2D2650* m, void* type);
 extern void cMessage_dtor(Msg_2D2650* m, int f);
-extern char* func_003FDAE0(int);
+extern char* Loc_GetStoredKey(int);
 extern void* ObjMan_GetService(void);
 extern void ObjMan_SetDisplayLabel(void* mgr, char* key, void* obj, int quiet);
 extern void* Object_LookupById(int* id);
@@ -22,7 +22,7 @@ struct Guard_2D2650 {
     Guard_2D2650() { if (!D_005723C8) D_005723C8 = 1; }
     __declspec(weak) __declspec(GUARD_2D2650_DTOR) ~Guard_2D2650() { D_005723C8 = 0; }
 };
-static inline char* Name_2D2650(int id) { return id != -1 ? func_003FDAE0(id) : 0; }
+static inline char* Name_2D2650(int id) { return id != -1 ? Loc_GetStoredKey(id) : 0; }
 
 extern "C" int func_002D2650(void* a0, void* a1, void* a2, void* data)
 {

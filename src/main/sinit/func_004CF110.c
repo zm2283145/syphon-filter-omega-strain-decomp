@@ -18,7 +18,7 @@ extern char* D_004EA0B0;
 extern int __construct_array();
 extern int Script_RegisterNative_2();
 extern int cGOBJ_GetScriptTypeKeyPtr();
-extern int func_003D8F60();
+extern int ScriptEnum_Register();
 extern int func_002824D0();
 void func_004CF110(void)
 {
@@ -32,7 +32,7 @@ void func_004CF110(void)
     D_004F7BC8 = Script_RegisterNative_2(Script_AtmosphericEffect_2, D_00493880, "AtmosphericEffect", 6, &D_004F7BE0, D_00493890, D_00493890, D_00493890, D_00493890, D_00493888);
     D_004F7BD0 = Script_RegisterNative_2(Script_Wind, D_00493880, "Wind", 5, D_00493890, D_00493890, D_00493890, D_00493890, D_00493890);
     D_004F7BD8 = Script_RegisterNative_2(Script_Shatter, D_00493880, "Shatter", 2, cGOBJ_GetScriptTypeKeyPtr(), cGOBJ_GetScriptTypeKeyPtr());
-    D_004F7BE0 = func_003D8F60("eEffectName", D_0048AD90, 0xC);
+    D_004F7BE0 = ScriptEnum_Register("eEffectName", D_0048AD90, 0xC);
     D_004F7BE8 = "cNetSpawnParticleMsg";
     D_004F7BF8 = func_002824D0(func_00230C80, D_004F7BF0, "cNetSpawnParticleMsg");
     D_004F7C00 = "cNetSpawnLightMsg";

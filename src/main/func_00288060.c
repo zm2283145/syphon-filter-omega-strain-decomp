@@ -69,18 +69,18 @@ extern "C" char D_004A95E8[];
 extern "C" signed char D_004FFBA0;
 extern "C" signed char D_004FFBA1;
 
-extern "C" Ent288060* func_0041DB80(Self288060* self, int id);
+extern "C" Ent288060* GuiWidget_FindChildByName(Self288060* self, int id);
 extern "C" unsigned char func_00288510(void);
 extern "C" Game288060* Gui_GetScreenStack(void);
 extern "C" void GuiScreen_SetFocus(Game288060* g, int v);
 extern "C" int func_003698B0(void);
-extern "C" float func_001002D0(int t);
+extern "C" float SoftFloat_U64ToFloat(int t);
 extern "C" void String_Copy(char* dst, const char* src);
 extern "C" void func_0041E3B0(Self288060* self, float dt);
 
 extern "C" void func_00288060(Self288060* self, float dt)
 {
-    Ent288060* e = func_0041DB80(self, D_0048B3F0);
+    Ent288060* e = GuiWidget_FindChildByName(self, D_0048B3F0);
     unsigned char flag = D_0055A830->x59D != 0;
     if (e) {
         unsigned char s = func_00288510();
@@ -96,9 +96,9 @@ extern "C" void func_00288060(Self288060* self, float dt)
     D_004FFBB8 = flag;
     if (self->x48) {
         if (Gui_GetScreenStack()->x2C->x8 != self) {
-            self->x4C = func_001002D0(func_003698B0()) / 1000.0f;
+            self->x4C = SoftFloat_U64ToFloat(func_003698B0()) / 1000.0f;
         } else {
-            float t = func_001002D0(func_003698B0()) / 1000.0f;
+            float t = SoftFloat_U64ToFloat(func_003698B0()) / 1000.0f;
             if (D_004FFBB1 && t - self->x4C > 30.0f) {
                 D_004FFC04->x13C = 1;
                 String_Copy(D_004FFC04->name, D_004A95E8);

@@ -51,9 +51,9 @@ extern void func_002C82F0(Self7D90* self);
 extern long long func_003698B0(unsigned char on);
 extern int Gui_GetScreenList(void);
 extern VObj* Gui_GetScreenStack(void);
-extern int func_00418A80(int a, char* b, char* c);
+extern int GuiManager_FindOrLoad(int a, char* b, char* c);
 extern void GuiManager_Update(int a, float f);
-extern int func_0041DB80(int h, char* name);
+extern int GuiWidget_FindChildByName(int h, char* name);
 extern int func_0041E0F0(VObj* o, int h, int n, int name, int out);
 extern char D_004ACEA8[];
 extern char D_004ACEB0[];
@@ -92,7 +92,7 @@ extern "C" void FrontEnd_SetLoadingScreen(Self7D90* self, int on, char* a, char*
         D_00587B38 = 1;
         a = a ? a : D_004ACEB0;
         b = b ? b : D_004ACEB8;
-        D_0051EF80 = func_00418A80(Gui_GetScreenList(), b, a);
+        D_0051EF80 = GuiManager_FindOrLoad(Gui_GetScreenList(), b, a);
         {
             VObj* o = Gui_GetScreenStack();
             o->f64(D_0051EF80, 1000);
@@ -100,7 +100,7 @@ extern "C" void FrontEnd_SetLoadingScreen(Self7D90* self, int on, char* a, char*
         self->f2D = 1;
         D_0051EF90 = 0;
         if (D_0051EF80) {
-            D_0051EF88 = func_0041DB80(D_0051EF80, D_004ACEC8);
+            D_0051EF88 = GuiWidget_FindChildByName(D_0051EF80, D_004ACEC8);
             {
                 int h = D_0051EF88;
                 if (h) {

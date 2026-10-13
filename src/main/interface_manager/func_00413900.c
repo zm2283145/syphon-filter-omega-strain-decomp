@@ -9,7 +9,7 @@ extern "C" {
 int func_004134B0(Self413900* self, Str413900* out, int name, int flags);
 char* String_CStr(Str413900* s);
 Arc413900* Archive_Open(int h, char* name, int a, int b);
-void func_00138B70(Str413900* s, int flags);
+void String_Dtor(Str413900* s, int flags);
 }
 
 #pragma push
@@ -25,7 +25,7 @@ extern "C" void func_00413900(Self413900* self, int name)
             self->arc = Archive_Open(self->h1E0, String_CStr(&s), 1, 0);
             if (self->arc->ready) ok = true;
         }
-        func_00138B70(&s, 0);
+        String_Dtor(&s, 0);
     }
     if (!ok) self->arc = 0;
 }

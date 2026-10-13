@@ -6,7 +6,7 @@
 extern "C" {
 void operator_delete(void* allocation);
 void* func_00351070(void* self, short deleteFlag);
-void* func_00138B70(void* self, short deleteFlag);
+void* String_Dtor(void* self, short deleteFlag);
 void* func_0034F720(void* self, short deleteFlag);
 }
 void* func_0034F720(void* self, short deleteFlag)
@@ -20,7 +20,7 @@ void* func_0034F720(void* self, short deleteFlag)
             }
         }
         if (self)
-            func_00138B70(self, 0);
+            String_Dtor(self, 0);
         if (deleteFlag > 0)
             operator_delete(self);
     }

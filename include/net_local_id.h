@@ -7,7 +7,7 @@ extern int D_00494178;
 extern int D_005721A8;
 extern unsigned char D_005721C0;
 extern unsigned char D_005721C8;
-int func_002EBAF8(int*, int);
+int NetGame_InitLocalSlot(int*, int);
 int func_002EBBA0(int, int*);
 
 static inline int NetLocalId(void)
@@ -15,7 +15,7 @@ static inline int NetLocalId(void)
     int r;
     int a = D_005721A8;
     if (D_005721C8) {
-        if (D_00494178 == -1) func_002EBAF8(&D_00494178, a);
+        if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, a);
         r = D_00494178;
     } else r = 0;
     return r;

@@ -11,7 +11,7 @@ extern void String_CtorCStr_13B480(Str_1BFF40* s, char* c);
 extern void func_001C00D0(Str_1BFF40* out, Str_1BFF40* a, char* b);
 extern char* String_CStr(Str_1BFF40* s);
 extern void func_0036E540(File_1BFF40* f, char* name, void* h, int x);
-extern void func_00138B70(Str_1BFF40* s, int f);
+extern void String_Dtor(Str_1BFF40* s, int f);
 extern void* func_001C3C50(void* mgr, File_1BFF40* f);
 extern void func_00130B00(It_1BFF40* out, void* tree);
 extern void func_001C00C0(It_1BFF40* out, void* tree);
@@ -41,8 +41,8 @@ void SkaRegistry_LoadAnimation(void* mgr, char* name)
     String_CtorCStr_13B480(&s1, name);
     func_001C00D0(&s2, &s1, ".ska");
     func_0036E540(&file, String_CStr(&s2), h, 0);
-    func_00138B70(&s2, 0);
-    func_00138B70(&s1, 0);
+    String_Dtor(&s2, 0);
+    String_Dtor(&s1, 0);
     r = func_001C3C50(mgr, &file);
     if (r) {
         func_00130B00(&b, D_004FFBC0);
@@ -52,7 +52,7 @@ void SkaRegistry_LoadAnimation(void* mgr, char* name)
         while (Eq_1BFF40(it.n, h) ^ 1) {
             String_CtorCStr_13B480(&s3, name);
             Skas_AppendAnimation(it.n->anim, &s3, r);
-            func_00138B70(&s3, 0);
+            String_Dtor(&s3, 0);
             Tree_Successor(&it);
         }
     }

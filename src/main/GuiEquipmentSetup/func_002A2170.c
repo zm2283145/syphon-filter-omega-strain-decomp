@@ -42,7 +42,7 @@ G_002A2170* DME_GetLobby(void);
 char* Loc_LookupText(char* key);
 void func_0041BEB0(void* w, char* s, int a);
 void* Gui_GetScreenList(void);
-void* func_00418A80(void* a, char* b, char* c);
+void* GuiManager_FindOrLoad(void* a, char* b, char* c);
 void Game_EndLevel(void* a, int b);
 int func_0041EF10(S_002A2170* self, W_002A2170* w, int msg, int sub, char* text);
 }
@@ -107,7 +107,7 @@ extern "C" int func_002A2170(S_002A2170* self, W_002A2170* w, int msg, int sub, 
             return 1;
         }
         if (!strcmp(n, "equipbutton")) {
-            void* pg = func_00418A80(Gui_GetScreenList(), "GuiEquipmentModify", "eqmodify");
+            void* pg = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiEquipmentModify", "eqmodify");
             D_004FFC0C->p30->SetState(1);
             GuiStack_SwapScreens(Gui_GetScreenStack(), self, pg);
             return 1;

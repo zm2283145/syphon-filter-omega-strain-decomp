@@ -23,7 +23,7 @@ void func_002A7E90(void* o, int a, int b, int c, int d, int e);
 void func_00298690(Str* s);
 void String_CtorCStr_13B480(Str* s, const char* c);
 void func_0013D680(Str* d, Str* s);
-void func_00138B70(Str* s, int f);
+void String_Dtor(Str* s, int f);
 void func_002CE1A0(void* ret, void* list, void** it, void* ent);
 void func_0041E0F0(Mgr* a, Mgr* b, int c, int d, int e);
 extern char D_004ACFE0[];
@@ -37,7 +37,7 @@ struct Str {
     char* d;
     Str() { func_00298690(this); }
     Str(const char* s) { Str* p = this; String_CtorCStr_13B480(p, s ? s : D_004ACFE0); }
-    __declspec(weak) __declspec(DROPDTOR) ~Str() { func_00138B70(this, 0); }
+    __declspec(weak) __declspec(DROPDTOR) ~Str() { String_Dtor(this, 0); }
     Str& operator=(const Str& o) { func_0013D680(this, (Str*)&o); return *this; }
 };
 

@@ -5,7 +5,7 @@ extern C_AD10* D_004FFD2C;
 extern void* D_004FFC04;
 extern int func_0045A600(C_AD10*, C_AD10*);
 extern void func_0045A3A0(C_AD10*, int);
-extern void func_00441A10(G_AD10*);
+extern void GuiSaveAgentWidget_HandleEvent(G_AD10*);
 extern void func_002C9860(void*, int);
 extern void func_002C9510(void*);
 extern void* Gui_GetScreenStack(void);
@@ -34,7 +34,7 @@ void func_0029AD10(G_AD10* g, int apply) {
             c->f20 = g->cfg.f20;
             g->b401 = 0;
             g->b4c = 4;
-            func_00441A10(g);
+            GuiSaveAgentWidget_HandleEvent(g);
         } else {
             m = diff & 0x800;
             if (m) func_002C9860(D_004FFC04, 1);

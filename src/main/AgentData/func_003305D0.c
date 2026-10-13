@@ -40,7 +40,7 @@ extern void func_003308B0(ObjectiveRow** out, ObjectiveRowVec* v);
 extern int func_00330830(ObjectiveRow** a, ObjectiveRow** b);
 extern ObjectiveRow* func_003308A0(ObjectiveRow** it);
 extern ObjectiveRow** func_00330850(ObjectiveRow** it);
-extern int func_00330870(unsigned int* bits, int index);
+extern int AgentData_TestObjectiveBit(unsigned int* bits, int index);
 extern ObjectiveRow** func_00330820(ObjectiveRowVec* v);
 extern void func_00296FA0(TpList* l);
 extern void func_003334C0(TpAgent* self, unsigned char kind, TpList* l);
@@ -55,7 +55,7 @@ static inline int TpCompleted(TpAgent* self) {
     func_003308D0(&it, &D_005329F0);
     func_003308B0(&end, &D_005329F0);
     while (func_00330830(&it, &end)) {
-        if (func_00330870(self->objectiveBits, func_003308A0(&it)->index))
+        if (AgentData_TestObjectiveBit(self->objectiveBits, func_003308A0(&it)->index))
             sum += func_003308A0(&it)->points;
         func_00330850(&it);
     }

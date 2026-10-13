@@ -38,7 +38,7 @@ extern void * const D_004E0DC0[];
 extern char D_004E0D20[];
 void func_00428090(TextArrayRow* row, int flags);
 void func_004263C0(guiTextArrayWidget* self);
-void func_00138B70(void* string, int flags);
+void String_Dtor(void* string, int flags);
 TextArrayStore* func_00426BD0(TextArrayStore* store, short flags);
 void func_0013B2E0(void* state, int flags);
 void func_0041F370(guiTextArrayWidget* self, int flags);
@@ -61,7 +61,7 @@ extern "C" TextArrayRow* func_004268E0(TextArrayRow* self, short deleteFlag)
 static inline void destroy_string(void* string)
 {
     if (string)
-        func_00138B70(string, 0);
+        String_Dtor(string, 0);
 }
 
 static inline void destroy_child(TextArrayWidgetChild* child)

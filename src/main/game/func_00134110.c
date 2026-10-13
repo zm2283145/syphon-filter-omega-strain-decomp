@@ -42,10 +42,10 @@ int FrontEnd_OpenPopup(void* ui, int a, char* b, char* c, void* d, int e);
 void ActorFader_Start(Fader_134110* f, int mode, float t);
 void ActorFader_Update(Fader_134110* f, float dt);
 void ActorFader_GetAlpha(Fader_134110* f);
-void func_0037A9F0(void* p);
+void Video_BeginFrame(void* p);
 char* Loc_LookupText(char* key);
-void* func_00418A80(void* a, char* b, char* c);
-float func_001002D0(unsigned long long t);
+void* GuiManager_FindOrLoad(void* a, char* b, char* c);
+float SoftFloat_U64ToFloat(unsigned long long t);
 void Pad_Reset(void* p);
 void GuiManager_Update(void* l, float dt);
 void World_PhysicsTraversal(float dt);
@@ -66,7 +66,7 @@ static inline void Fade_134110(int mode)
     while (D_004FFC38->b != 0.0f) {
         ActorFader_Update(D_004FFC38, 0.05f);
         ActorFader_GetAlpha(D_004FFC38);
-        func_0037A9F0(D_005381F0);
+        Video_BeginFrame(D_005381F0);
     }
 }
 
@@ -99,11 +99,11 @@ extern "C" void func_00134110(void* svc, unsigned char mode)
         FrontEnd_OpenPopup(ui, 2, t, Loc_LookupText(D_0049AA28), 0, 0);
     }
     {
-        void* scr = func_00418A80(Gui_GetScreenList(), D_0049AA40, D_0049AA58);
+        void* scr = GuiManager_FindOrLoad(Gui_GetScreenList(), D_0049AA40, D_0049AA58);
         Gui_GetScreenStack()->Show(scr, 0);
     }
     if (!D_004EA000) {
-        D_004E9FF8 = func_001002D0(Now_134110());
+        D_004E9FF8 = SoftFloat_U64ToFloat(Now_134110());
         D_004EA000 = 1;
     }
     while (Gui_GetScreenStack()->count) {
@@ -111,14 +111,14 @@ extern "C" void func_00134110(void* svc, unsigned char mode)
         float dt;
         Pad_Reset(D_0055A300);
         now = Now_134110();
-        dt = (func_001002D0(now) - D_004E9FF8) / 100000.0f;
+        dt = (SoftFloat_U64ToFloat(now) - D_004E9FF8) / 100000.0f;
         GuiManager_Update(Gui_GetScreenList(), dt);
         World_PhysicsTraversal(dt);
         func_00415870(Gui_GetScreenStack());
         Gui_GetScreenStack()->Update(dt);
         Gui_GetScreenStack()->Draw();
         func_00169390(func_001698C0());
-        func_0037A9F0(D_005381F0);
+        Video_BeginFrame(D_005381F0);
         {
             CMsg m;
             Event_Construct(&m, D_005436B0);
@@ -127,7 +127,7 @@ extern "C" void func_00134110(void* svc, unsigned char mode)
             m.vtable = D_004D9160;
             cMessage_dtor(&m, 0);
         }
-        D_004E9FF8 = func_001002D0(now);
+        D_004E9FF8 = SoftFloat_U64ToFloat(now);
     }
     Fade_134110(2);
 }

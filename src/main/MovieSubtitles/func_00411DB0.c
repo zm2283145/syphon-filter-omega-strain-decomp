@@ -38,7 +38,7 @@ extern void func_004120C0(void* src);
 extern void func_00412050(Sub411DB0* s);
 }
 
-extern "C" void func_00411DB0(Sub411DB0* s)
+extern "C" void MovieSubtitles_Update(Sub411DB0* s)
 {
     int j;
     int i;

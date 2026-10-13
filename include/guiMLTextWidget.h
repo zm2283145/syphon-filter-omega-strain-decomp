@@ -35,7 +35,7 @@ typedef struct GuiTextBox {
     char pad00[0x10];
     unsigned char unk10;           /* 0x10 cleared by MLTextWidget_Setup */
     char pad11[3];
-    char text[0xC];                /* 0x14 String (sso_string.h), dtor func_00138B70 */
+    char text[0xC];                /* 0x14 String (sso_string.h), dtor String_Dtor */
     void* font;                    /* 0x20 */
     char pad24[0x58 - 0x24];
     unsigned char unk58;           /* 0x58 set by MLTextWidget_Setup */

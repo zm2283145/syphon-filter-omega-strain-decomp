@@ -8,7 +8,7 @@ static const unsigned int dat_00493C30[4] = { 0x0, 0x0, 0x0, 0x0 };
 TUNode* func_0040CFF0(TUTree* t, TUNode* parent, bool left, bool first,
                  const unsigned int* v);
 }
-extern "C" void func_0040CC40(TUPair* ret, TUTree* t, const unsigned int* v)
+extern "C" void ObjMap_Insert(TUPair* ret, TUTree* t, const unsigned int* v)
 {
     bool left = true;
     bool first = left;

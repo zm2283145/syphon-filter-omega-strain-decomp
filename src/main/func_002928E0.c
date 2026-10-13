@@ -7,7 +7,7 @@ typedef struct Settings2E {
 
 extern Settings2E* D_004FFC04;
 extern void* Gui_GetScreenList(void);
-extern void* func_00418A80(void* lib, const char* a, const char* b);
+extern void* GuiManager_FindOrLoad(void* lib, const char* a, const char* b);
 extern void* Gui_GetScreenStack(void);
 extern void GuiStack_SwapScreens(void* mgr, int arg, void* res);
 
@@ -15,9 +15,9 @@ extern void GuiStack_SwapScreens(void* mgr, int arg, void* res);
 void func_002928E0(int arg) {
     void* res;
     if (D_004FFC04->altMode) {
-        res = func_00418A80(Gui_GetScreenList(), "GuiCommandCenter", "CMDCENTR");
+        res = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiCommandCenter", "CMDCENTR");
     } else {
-        res = func_00418A80(Gui_GetScreenList(), "GuiOnlineOfflineSelect", "onoffsel");
+        res = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiOnlineOfflineSelect", "onoffsel");
     }
     GuiStack_SwapScreens(Gui_GetScreenStack(), arg, res);
 }

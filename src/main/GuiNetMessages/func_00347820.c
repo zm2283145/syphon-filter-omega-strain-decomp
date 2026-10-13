@@ -44,7 +44,7 @@ extern V47820 D_00587B50;
 extern V47820 D_00587B60;
 extern const char* D_00492B98;
 void func_0033D3F0(Screen47820* self);
-Obj47820* func_0041DB80(Screen47820* self, const char* name);
+Obj47820* GuiWidget_FindChildByName(Screen47820* self, const char* name);
 int Gui_GetScreenList(void);
 Sp47820* func_00418420(int mgr, char* name);
 }
@@ -59,12 +59,12 @@ extern "C" void func_00347820(Screen47820* self)
 {
     Sp47820* sp;
     func_0033D3F0(self);
-    self->f88 = As47820(func_0041DB80(self, *(const char**)dat_00492B60), D_004BA540);
-    self->f8C = As47820(func_0041DB80(self, *(const char**)dat_00492B68), D_004A9870);
-    self->f90 = As47820(func_0041DB80(self, *(const char**)dat_00492B70), D_004A9870);
-    self->f94 = As47820(func_0041DB80(self, *(const char**)dat_00492B78), D_004A9870);
-    self->fA0 = As47820(func_0041DB80(self, *(const char**)dat_00492B80), D_004A7520);
-    self->fA4 = func_0041DB80(self, D_00492B98);
+    self->f88 = As47820(GuiWidget_FindChildByName(self, *(const char**)dat_00492B60), D_004BA540);
+    self->f8C = As47820(GuiWidget_FindChildByName(self, *(const char**)dat_00492B68), D_004A9870);
+    self->f90 = As47820(GuiWidget_FindChildByName(self, *(const char**)dat_00492B70), D_004A9870);
+    self->f94 = As47820(GuiWidget_FindChildByName(self, *(const char**)dat_00492B78), D_004A9870);
+    self->fA0 = As47820(GuiWidget_FindChildByName(self, *(const char**)dat_00492B80), D_004A7520);
+    self->fA4 = GuiWidget_FindChildByName(self, D_00492B98);
     sp = func_00418420(Gui_GetScreenList(), D_004BA3B0);
     if (sp) { SetA47820(sp, D_00587B50); SetB47820(sp, D_00587B60); }
 }

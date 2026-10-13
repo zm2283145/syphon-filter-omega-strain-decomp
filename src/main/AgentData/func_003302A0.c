@@ -15,12 +15,12 @@ extern ColVec *func_003305A0(ColVec *);
 extern void func_0033A580(ColVec *);
 extern void func_0033A590(ColVec *, int);
 extern void func_00339E30(ColVec *, Col *, int, Col *);
-extern void func_00339880(EntVec *, Ent *, int, Ent *);
-extern int func_00121BC8(const char *);
+extern void PartsTable_InsertRow(EntVec *, Ent *, int, Ent *);
+extern int atoi(const char *);
 extern int strlen(const char *);
 extern char *strncpy(char *, const char *, int);
 #pragma opt_strength_reduction off
-void func_003302A0(int arg)
+void PartsTable_Load(int arg)
 {
     Col col;
     FEnt f;
@@ -64,7 +64,7 @@ void func_003302A0(int arg)
                 for (i = 0; i < len; i++) {
                     s = &line[i];
                     if (*s != ' ') {
-                        *hp = func_00121BC8(s);
+                        *hp = atoi(s);
                         col.idx = i;
                         func_00339E30(&v, *pd + v.count, 1, &col);
                         while (i < len && *s != ' ') {
@@ -87,7 +87,7 @@ void func_003302A0(int arg)
                             strncpy(ent.name, b, n);
                             ent.name[n] = 0;
                             ent.val = v.data[j].hash;
-                            func_00339880(&D_00532B30, D_00532B30.data + D_00532B30.count, 1, &ent);
+                            PartsTable_InsertRow(&D_00532B30, D_00532B30.data + D_00532B30.count, 1, &ent);
                         }
                     }
                 }

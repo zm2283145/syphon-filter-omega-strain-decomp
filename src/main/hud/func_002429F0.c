@@ -8,7 +8,7 @@ public:
 extern "C" {
 void* Gui_GetScreenList(void);
 Mgr2427* Gui_GetScreenStack(void);
-void* func_00418A80(void* a, void* b, void* c);
+void* GuiManager_FindOrLoad(void* a, void* b, void* c);
 void Game_SetPaused(void* p, int v);
 void func_002427F0(Obj2426* s);
 int func_00241AC0(Obj2426* s);
@@ -26,11 +26,11 @@ extern "C" void func_002429F0(Obj2426* s) {
     if (s->b6A9) func_002427F0(s);
     if (!func_00241AC0(s)) func_0036A240(D_0055A300);
     {
-        void* x = func_00418A80(Gui_GetScreenList(), D_004A7260, "GAMEBACK");
+        void* x = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004A7260, "GAMEBACK");
         Gui_GetScreenStack()->s23(x, -1);
     }
     {
-        void* x = func_00418A80(Gui_GetScreenList(), D_004A7248, "INGAMENU");
+        void* x = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004A7248, "INGAMENU");
         Gui_GetScreenStack()->s23(x, 0);
     }
     func_0045CA20(s->snd, 0);

@@ -80,7 +80,7 @@ struct TexCache {
 #pragma opt_rotateloops off
 #pragma opt_strength_reduction off
 /* TexCache constructor: allocate the entry table, hook interrupt 5, reset VRAM state. */
-extern "C" TexCache* func_003831D0(TexCache* self, unsigned int base, int cap)
+extern "C" TexCache* TexMan_Construct(TexCache* self, unsigned int base, int cap)
 {
     int i;
     func_00383660(self->m41C);

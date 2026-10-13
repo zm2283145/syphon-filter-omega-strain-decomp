@@ -9851,7 +9851,7 @@ segments:
       - [0x2FF970, c, main/func_003FF970]
       - [0x2FFA20, c, main/func_003FFA20]
       - [0x2FFA70, c, main/func_003FFA70]
-      - [0x2FFB20, asm]
+      - [0x2FFB20, c, main/func_003FFB20]
       - [0x2FFFC0, c, main/func_003FFFC0]
       - [0x300090, c, main/func_00400090]
       - [0x300140, c, main/func_00400140]

@@ -2,7 +2,7 @@
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int func_00138B70(char * , int);                         
+int String_Dtor(char * , int);                         
 int func_0013A040(char * , int);                         
 int func_0041F370(char **, int);                           
 int operator_delete(char **);                            
@@ -45,7 +45,7 @@ char **func_0045BC10(char **arg0, long long arg1) {
         }
         temp_a0_3 = (char *)arg0 + 0x58;
         if (temp_a0_3 != NULL) {
-            func_00138B70(temp_a0_3, 0);
+            String_Dtor(temp_a0_3, 0);
         }
         func_0041F370(arg0, 0);
         if (((long long) (arg1 << 0x30) >> 0x30) > 0) {

@@ -34,7 +34,7 @@ extern char D_005064A8;
 extern int D_005064B0;
 extern int D_005064B8;
 void func_002CC260(void);
-Obj_002A1780* func_0041DB80(Self_002A1780* self, char* name);
+Obj_002A1780* GuiWidget_FindChildByName(Self_002A1780* self, char* name);
 void func_0041BEB0(void* w, char* s, int a);
 void func_002A1670(Self_002A1780* self);
 Game_002A1780* DME_GetLobby(void);
@@ -52,16 +52,16 @@ extern "C" void func_002A1780(Self_002A1780* self)
     Game_002A1780* g;
     if (self->b80)
         return;
-    self->pDC = func_0041DB80(self, D_0048BA40);
-    self->pE0 = func_0041DB80(self, D_0048BA48);
-    self->pE4 = func_0041DB80(self, D_0048BA60);
-    p = func_0041DB80(self, D_0048BA50);
+    self->pDC = GuiWidget_FindChildByName(self, D_0048BA40);
+    self->pE0 = GuiWidget_FindChildByName(self, D_0048BA48);
+    self->pE4 = GuiWidget_FindChildByName(self, D_0048BA60);
+    p = GuiWidget_FindChildByName(self, D_0048BA50);
     CAST(p);
     self->pE8 = p;
-    p = func_0041DB80(self, D_0048BA58);
+    p = GuiWidget_FindChildByName(self, D_0048BA58);
     CAST(p);
     self->pEC = p;
-    p = func_0041DB80(self, D_0048BA68);
+    p = GuiWidget_FindChildByName(self, D_0048BA68);
     CAST(p);
     if (p) {
         asm { .set reorder }

@@ -1,7 +1,7 @@
 extern int func_001115B0(const char *, int);
 extern int func_00111BF0(int, void *, int);
 extern int func_00111838(int);
-extern int func_00121BC8(const char *);
+extern int atoi(const char *);
 
 int func_00102A90(void)
 {
@@ -15,5 +15,5 @@ int func_00102A90(void)
         if (*p++ == 0) break;
     }
     func_00111838(fd);
-    return func_00121BC8(buf + (i - 9)) > 0x1315670;
+    return atoi(buf + (i - 9)) > 0x1315670;
 }

@@ -5,6 +5,6 @@
 
 #include "types.h"
 
-int func_00334100(void) {
+int AgentData_GetSaveSize(void) {
     return 16000;
 }

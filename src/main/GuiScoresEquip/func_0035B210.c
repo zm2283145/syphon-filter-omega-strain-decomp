@@ -17,14 +17,14 @@ extern char D_004BB520[];
 extern char D_004BB530[];
 extern char D_004BB540[];
 extern char D_004A9870[];
-void* func_0041DB80(void* self, char* name);
+void* GuiWidget_FindChildByName(void* self, char* name);
 char* Loc_LookupText(char* key);
 void func_0041BEB0(W_0035B210* w, char* s, int a);
 int func_0041EF10(void* self, int a, unsigned short b);
 }
 static inline W_0035B210* FindAs_0035B210(void* self, char* name, char* type)
 {
-    W_0035B210* w = (W_0035B210*)func_0041DB80(self, name);
+    W_0035B210* w = (W_0035B210*)GuiWidget_FindChildByName(self, name);
     return (w && w->IsA(type)) ? w : 0;
 }
 extern "C" int func_0035B210(S_0035B210* self, int a, unsigned short b)
@@ -35,8 +35,8 @@ extern "C" int func_0035B210(S_0035B210* self, int a, unsigned short b)
         B_0035B210* b2;
         W_0035B210* w;
         self->f224 = on;
-        b1 = (B_0035B210*)func_0041DB80(self, D_004BB4D8);
-        b2 = (B_0035B210*)func_0041DB80(self, D_004BB4E8);
+        b1 = (B_0035B210*)GuiWidget_FindChildByName(self, D_004BB4D8);
+        b2 = (B_0035B210*)GuiWidget_FindChildByName(self, D_004BB4E8);
         if (b1) {
             if (!on)
                 b1->flags |= 2;

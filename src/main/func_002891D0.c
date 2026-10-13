@@ -27,10 +27,10 @@ void String_CtorCStr_13B480(Str_002891D0* s, const char* c);
 char* String_CStr(Str_002891D0* s);
 int FrontEnd_OpenPopup(void* ui, int a, char* b, char* c, S_002891D0* d, int e);
 void FrontEnd_ClosePopup(void* ui, int id);
-void func_00138B70(Str_002891D0* s, int flags);
+void String_Dtor(Str_002891D0* s, int flags);
 void* Gui_GetScreenList(void);
-Pg_002891D0* func_00418A80(void* a, char* b, char* c);
-Pg_002891D0* func_00418980(void* a, char* b);
+Pg_002891D0* GuiManager_FindOrLoad(void* a, char* b, char* c);
+Pg_002891D0* GuiManager_FindByName(void* a, char* b);
 Ui_002891D0* Gui_GetScreenStack(void);
 void func_0041E0F0(void* a, void* b, int c, int d, int e);
 }
@@ -62,10 +62,10 @@ extern "C" void func_002891D0(S_002891D0* self)
         }
         FrontEnd_ClosePopup(D_004FFC04, self->fA8);
         ok = 0;
-        func_00138B70(&b, 0);
-        func_00138B70(&a, 0);
+        String_Dtor(&b, 0);
+        String_Dtor(&a, 0);
     } else {
-        Pg_002891D0* p = func_00418A80(Gui_GetScreenList(), "GuiCommandCenter", "CMDCENTR");
+        Pg_002891D0* p = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiCommandCenter", "CMDCENTR");
         if (p) {
             p->f10 = 1;
             p->flags &= ~2;
@@ -77,7 +77,7 @@ extern "C" void func_002891D0(S_002891D0* self)
     if (ok) {
         Pg_002891D0* q;
         Gui_GetScreenStack()->Hide(self);
-        q = func_00418980(Gui_GetScreenList(), "GuiCommandCenter");
+        q = GuiManager_FindByName(Gui_GetScreenList(), "GuiCommandCenter");
         if (q) {
             q->flags |= 2;
             func_0041E0F0(q, Gui_GetScreenStack(), 0x10, 2, 0);

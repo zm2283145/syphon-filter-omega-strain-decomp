@@ -5,7 +5,7 @@ typedef struct { Str_4185A0 first; int second; } Pair_4185A0;
 typedef struct { void* it; unsigned char ok; } Res_4185A0;
 typedef struct { char pad[0x10]; int def; } O_4185A0;
 extern void String_CtorCStr_13B480(Str_4185A0* s, char* c);
-extern void func_00138B70(Str_4185A0* s, int f);
+extern void String_Dtor(Str_4185A0* s, int f);
 extern void func_0013BCB0(Str_4185A0* d, Str_4185A0* s);
 extern void func_001BFF20(It_4185A0* out, Str_4185A0* s);
 extern void func_001BFEE0(It_4185A0* out, Str_4185A0* s);
@@ -41,10 +41,10 @@ unsigned char func_004185A0(O_4185A0* o, char* name, int w, int force)
         q.second = p.second;
         func_00419D10(&r, o, &q);
         ok = r.ok;
-        func_00138B70(&q.first, 0);
-        func_00138B70(&p.first, 0);
-        func_00138B70(&k, 0);
-        func_00138B70(&s, 0);
+        String_Dtor(&q.first, 0);
+        String_Dtor(&p.first, 0);
+        String_Dtor(&k, 0);
+        String_Dtor(&s, 0);
         return ok;
     }
 }

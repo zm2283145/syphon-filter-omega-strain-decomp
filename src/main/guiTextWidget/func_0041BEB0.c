@@ -9,7 +9,7 @@ unsigned int strlen(const char* s);
 char* Loc_LookupText(const char* key);
 void String_CtorCStr_13B480(Str_BEB0* s, const char* c);
 void func_0013D680(Str_BEB0* d, Str_BEB0* s);
-void func_00138B70(Str_BEB0* s, int flags);
+void String_Dtor(Str_BEB0* s, int flags);
 }
 class W_BEB0 {
 public:
@@ -34,19 +34,19 @@ extern "C" void func_0041BEB0(W_BEB0* self, const char* text, unsigned char loca
             Str_BEB0* ps = &s;
             String_CtorCStr_13B480(ps, t ? t : D_004BF2C8);
             func_0013D680(&self->text, &s);
-            func_00138B70(&s, 0);
+            String_Dtor(&s, 0);
             return;
         } else {
             Str_BEB0 s;
             String_CtorCStr_13B480(&s, text + 1);
             func_0013D680(&self->text, &s);
-            func_00138B70(&s, 0);
+            String_Dtor(&s, 0);
         }
     } else {
         Str_BEB0 s;
         String_CtorCStr_13B480(&s, text);
         func_0013D680(&self->text, &s);
-        func_00138B70(&s, 0);
+        String_Dtor(&s, 0);
     }
     self->Refresh();
 }

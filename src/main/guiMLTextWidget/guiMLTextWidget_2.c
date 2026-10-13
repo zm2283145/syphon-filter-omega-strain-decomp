@@ -15,7 +15,7 @@
 extern "C" {
 extern char D_004C0110[]; /* "guiMLTextWidget.cc" */
 void Mem_Free(int pool, void* allocation, char* file, int line);
-void* func_00138B70(void* self, short flags);   /* String dtor */
+void* String_Dtor(void* self, short flags);   /* String dtor */
 void func_0041F090(void* self);                 /* GuiWidget vtable slot 4 */
 }
 /* vtable slot 4: base teardown, then destroy and free the text box. */
@@ -29,7 +29,7 @@ extern "C" void MLTextWidget_Teardown(MLTextWidget* o)
         if (box) {
             char* text = box->text;
             if (text)
-                func_00138B70(text, 0);
+                String_Dtor(text, 0);
         }
         Mem_Free(0, box, D_004C0110, 0x67);
     }

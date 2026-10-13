@@ -1,5 +1,5 @@
 __asm__(".set nomove\n"
-        "dpadd = func_0011C1A8\n"
+        "dpadd = SoftFloat_DoubleAdd\n"
         "dpcmp = SoftFloat_UnpackAndCompare\n");
 typedef union { double value; struct { unsigned int lsw; unsigned int msw; } parts; } ieee_double_shape_type;
 #define EXTRACT_WORDS(ix0,ix1,d) do { ieee_double_shape_type ew_u; ew_u.value = (d); (ix0) = ew_u.parts.msw; (ix1) = ew_u.parts.lsw; } while (0)

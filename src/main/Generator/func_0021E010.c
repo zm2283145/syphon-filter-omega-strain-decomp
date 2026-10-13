@@ -1,6 +1,6 @@
 #include "types.h"
 int NetMap_BindReceiver(int, int, void*);
-int func_002EBAF8(int*, int);
+int NetGame_InitLocalSlot(int*, int);
 extern int D_00494178;
 extern int D_005721A8;
 extern unsigned char D_005721C0;
@@ -16,7 +16,7 @@ void cGenerator_v3D(Gen_E010* self)
         int id;
         int a = D_005721A8; /* read before the flag test: retail loads it ahead of the branch */
         if (D_005721C8) {
-            if (D_00494178 == -1) func_002EBAF8(&D_00494178, a);
+            if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, a);
             id = D_00494178;
         } else id = 0;
         NetMap_BindReceiver(t, id, self);

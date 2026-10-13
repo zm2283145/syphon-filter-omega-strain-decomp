@@ -7,7 +7,7 @@ extern void func_0041EFA0(W455*);
 extern char* Loc_LookupText(char*);
 extern void MLTextWidget_Clear(void*);
 extern void MLTextWidget_AddText(void*, char*);
-extern V455* func_0041DB80(W455*, char*);
+extern V455* GuiWidget_FindChildByName(W455*, char*);
 extern char D_004A7520[];
 extern char D_004C1A38[];
 extern char D_004FFC90[];
@@ -22,7 +22,7 @@ extern "C" void func_00455CB0(W455* w) {
         MLTextWidget_Clear(x);
         MLTextWidget_AddText(x, t ? t : D_004C1A38);
     }
-    p = func_0041DB80(w, "label_briefingheader");
+    p = GuiWidget_FindChildByName(w, "label_briefingheader");
     p = (p && p->v20(D_004A7520)) ? p : 0;
     if (p) {
         char* t = Loc_LookupText(D_004FFC90);

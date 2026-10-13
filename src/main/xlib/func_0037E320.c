@@ -6,7 +6,7 @@ extern char D_004BC200[];
 extern char D_00537F80[];
 void Mem_Free(int heap, void* p, char* file, int line);
 void func_00375CD0(void* p);
-void func_0037B0C0(void* p, int a);
+void Video_FreeDeferredBuffers(void* p, int a);
 void func_003813A0(void* p, int id, int a);
 void func_00383020(void* p, int flag);
 }
@@ -51,6 +51,6 @@ extern "C" void func_0037E320(S_0037E320* self)
     self->p1058 = 0;
     DelV_0037E320(self->p105C, 0x251);
     self->p105C = 0;
-    func_0037B0C0(self, 1);
+    Video_FreeDeferredBuffers(self, 1);
     self->flags = -1;
 }

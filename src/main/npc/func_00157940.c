@@ -7,7 +7,7 @@ extern int D_005721A8;
 extern unsigned char D_005721C8;
 int func_0015B060(void* self, int a);
 void NpcAi_GetPlayerRecord(void* self, int a, int b);
-void func_002EBAF8(int* p, int v);
+void NetGame_InitLocalSlot(int* p, int v);
 void func_0042E180(void* ctl, int v);
 }
 typedef struct { char pad[0xC]; unsigned int flags; } Obj_7940;
@@ -23,7 +23,7 @@ static inline int DefaultBody()
     int a = D_005721A8;
     if (D_005721C8) {
         if (D_00494178 == -1)
-            func_002EBAF8(&D_00494178, a);
+            NetGame_InitLocalSlot(&D_00494178, a);
         return D_00494178;
     }
     return 0;

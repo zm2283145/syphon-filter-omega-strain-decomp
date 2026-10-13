@@ -16,7 +16,7 @@ char* func_0033CE30(O_DAF0*, int, int, int, int, int);
 int FrontEnd_OpenPopup(int, int, char*, char*, O_DAF0*, int);
 void FrontEnd_ClosePopup(int, int);
 Stack_DAF0* Gui_GetScreenStack(void);
-W_DAF0* func_0041DB80(void*, char*);
+W_DAF0* GuiWidget_FindChildByName(void*, char*);
 void func_002C9AA0(int);
 void func_002C9AF0(int, int);
 int SFOLobby_StartNetwork(void*, void*, int);
@@ -26,7 +26,7 @@ void func_0029D980(O_DAF0*, void*);
 void func_0029D390(O_DAF0*);
 void String_CtorCStr_13B480(Str_DAF0*, char*);
 void func_0013D680(Str_DAF0*, Str_DAF0*);
-void func_00138B70(Str_DAF0*, int);
+void String_Dtor(Str_DAF0*, int);
 int func_002071F0(Str_DAF0*);
 char* String_CStr(Str_DAF0*);
 }
@@ -54,9 +54,9 @@ extern "C" void func_0029DAF0(O_DAF0* o, void* arg) {
     if (w) {
         W_DAF0* p;
         Gui_GetScreenStack()->Show(w, 2000);
-        p = func_0041DB80(o->x108, D_004AAC18);
+        p = GuiWidget_FindChildByName(o->x108, D_004AAC18);
         if (p) p->flags |= 2;
-        p = func_0041DB80(o->x108, D_004AAC28);
+        p = GuiWidget_FindChildByName(o->x108, D_004AAC28);
         if (p) p->flags &= ~2;
     }
     D_00587B38 = 1;
@@ -84,15 +84,15 @@ extern "C" void func_0029DAF0(O_DAF0* o, void* arg) {
     case 0x3E:
         String_CtorCStr_13B480(&t1, func_0033CE30(o, 0xC, 0, 0, 0, 0));
         func_0013D680(&msg, &t1);
-        func_00138B70(&t1, 0);
+        String_Dtor(&t1, 0);
         break;
     default:
         String_CtorCStr_13B480(&t2, func_0033CE30(o, 0xB, 0, 0, 0, 0));
         func_0013D680(&title, &t2);
-        func_00138B70(&t2, 0);
+        String_Dtor(&t2, 0);
         String_CtorCStr_13B480(&t3, func_0033CE30(o, 0x84, 0, 0, 0, 0));
         func_0013D680(&msg, &t3);
-        func_00138B70(&t3, 0);
+        String_Dtor(&t3, 0);
         break;
     }
     if (func_002071F0(&msg)) {
@@ -100,6 +100,6 @@ extern "C" void func_0029DAF0(O_DAF0* o, void* arg) {
         FrontEnd_OpenPopup(D_004FFC04, 2, String_CStr(&title), m, o, 0);
     }
     FrontEnd_ClosePopup(D_004FFC04, o->x11C);
-    func_00138B70(&title, 0);
-    func_00138B70(&msg, 0);
+    String_Dtor(&title, 0);
+    String_Dtor(&msg, 0);
 }

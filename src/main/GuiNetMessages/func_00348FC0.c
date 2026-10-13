@@ -10,7 +10,7 @@ extern void func_00424C50(S348FC0* self);
 extern char* Loc_LookupText(char* key);
 extern void String_CtorCStr_13B480(Str348FC0* s, char* text);
 extern void func_0013D680(Str348FC0* dst, Str348FC0* src);
-extern void func_00138B70(Str348FC0* s, int flags);
+extern void String_Dtor(Str348FC0* s, int flags);
 S348FC0* func_00348FC0(S348FC0* self)
 {
     Str348FC0 tmp;
@@ -29,6 +29,6 @@ S348FC0* func_00348FC0(S348FC0* self)
     t = Loc_LookupText("TOSSystem");
     { Str348FC0* p = &tmp; String_CtorCStr_13B480(p, t ? t : D_004BA338); }
     func_0013D680(&self->sA8, &tmp);
-    func_00138B70(&tmp, 0);
+    String_Dtor(&tmp, 0);
     return self;
 }

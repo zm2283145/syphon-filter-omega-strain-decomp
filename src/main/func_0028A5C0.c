@@ -31,7 +31,7 @@ extern int D_0048B420;
 extern int D_0048B428;
 void func_0033D3F0(void);
 int Agent_GetSelected(void* a, int b);
-W28A5C0* func_0041DB80(S_28A5C0* a, int b);
+W28A5C0* GuiWidget_FindChildByName(S_28A5C0* a, int b);
 char* Loc_LookupText(char* key);
 void func_0041BEB0(void* w, char* s, int a);
 }
@@ -40,22 +40,22 @@ extern "C" void func_0028A5C0(S_28A5C0* self)
     W28A5C0* p;
     func_0033D3F0();
     self->f9C = Agent_GetSelected(D_004FFB50, -1);
-    self->p88 = func_0041DB80(self, D_0048B400);
-    p = func_0041DB80(self, D_0048B408);
+    self->p88 = GuiWidget_FindChildByName(self, D_0048B400);
+    p = GuiWidget_FindChildByName(self, D_0048B408);
     p = (p && p->IsA(D_004A9880)) ? p : 0;
     self->p8C = p;
     if (self->p8C)
         self->p8C->f84 = 15;
-    self->p90 = func_0041DB80(self, D_0048B410);
-    p = func_0041DB80(self, D_0048B418);
+    self->p90 = GuiWidget_FindChildByName(self, D_0048B410);
+    p = GuiWidget_FindChildByName(self, D_0048B418);
     p = (p && p->IsA(D_004A9880)) ? p : 0;
     self->p94 = p;
     if (self->p94)
         self->p94->f84 = 15;
-    p = func_0041DB80(self, D_0048B420);
+    p = GuiWidget_FindChildByName(self, D_0048B420);
     p = (p && p->IsA(D_004A9870)) ? p : 0;
     self->p98 = p;
-    p = func_0041DB80(self, D_0048B428);
+    p = GuiWidget_FindChildByName(self, D_0048B428);
     p = (p && p->IsA(D_004A7520)) ? p : 0;
     self->pA0 = p;
     if (self->pA0)

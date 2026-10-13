@@ -8,7 +8,7 @@ extern unsigned char D_005721D0;
 extern char D_0051EE48[], D_004DE0F0[];
 extern void *D_004FFC2C;
 extern void Event_Construct(Msg2C50E0* e, void* type);
-extern char *func_003FDAE0(int);
+extern char *Loc_GetStoredKey(int);
 extern char *strncpy(char *, const char *, unsigned int);
 extern void func_00242E40(void *, int *, char *, int, float, float, unsigned char, unsigned char, int);
 extern void func_00242B40(void *, int *, int, unsigned char, int);
@@ -31,7 +31,7 @@ extern "C" int func_002C50E0(int a0, int a1, int a2, Pk2C50E0* arg) {
         msg.f44 = p->f1C;
         msg.b48 = p->f9;
         msg.b49 = p->fA;
-        strncpy(m->name, func_003FDAE0(p->fC), 0x10);
+        strncpy(m->name, Loc_GetStoredKey(p->fC), 0x10);
         if (p->f8 == 0) {
             func_00242E40(D_004FFC2C, &msg.f28, msg.name, msg.f44, msg.f2C, msg.f30, msg.b48, msg.b49, 0);
         } else {

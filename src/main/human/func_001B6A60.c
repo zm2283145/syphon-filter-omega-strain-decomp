@@ -6,11 +6,11 @@
 
 #include "types.h"
 
-extern Rel* func_001B6A90(Rel*);
+extern Rel* ItemList_Reset(Rel*);
 
 /* Clear the three words and set the byte at +0x0C. */
 Rel* ItemList_Init(Rel* r) {
-    func_001B6A90(r);
+    ItemList_Reset(r);
     *((char*)r + 12) = 1;
     return r;
 }

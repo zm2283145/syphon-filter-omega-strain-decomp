@@ -41,13 +41,13 @@ extern int g_DmeConnectMaxRetries;
 extern signed char D_005724B0;
 extern int Gui_GetScreenStack(void);
 extern void func_0041E0F0(int a, int b, int c, int d, int e);
-extern void func_002EBAF8(int* out, int session);
+extern void NetGame_InitLocalSlot(int* out, int session);
 extern void func_002EBBA0(int session, int* out);
 static inline int LocalSlot_h5(int session)
 {
     if (D_005721C8) {
         if (D_00494178 == -1) {
-            func_002EBAF8(&D_00494178, session);
+            NetGame_InitLocalSlot(&D_00494178, session);
         }
         return D_00494178;
     }
@@ -69,7 +69,7 @@ void DME_OnConnectResult(NetConnInfo_h5* info)
     } else {
         D_005724B0 = DME_STATE_CONNECTED;
         D_005721C8 = 1;
-        func_002EBAF8(slot, info->session);
+        NetGame_InitLocalSlot(slot, info->session);
         D_00494178 = slot[0];
         func_002EBBA0(info->session, slot);
         if (slot[0] == LocalSlot_h5(D_005721A8) && Gui_GetScreenStack()) {

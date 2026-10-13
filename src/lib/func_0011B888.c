@@ -3,8 +3,8 @@
 __asm__(".set nomove\n"
         "litodp = func_0011C7A0\n"
         "dpmul = func_0011C268\n"
-        "dpadd = func_0011C1A8\n"
-        "dptofp = func_0011C928");
+        "dpadd = SoftFloat_DoubleAdd\n"
+        "dptofp = SoftFloat_DoubleToFloat");
 
 typedef int SItype;
 typedef unsigned int USItype;
@@ -20,7 +20,7 @@ typedef double DFtype;
 #define DF_SIZE 53
 #define SF_SIZE 24
 
-SFtype func_0011B888(DItype u)
+SFtype SoftFloat_S64ToFloat(DItype u)
 {
   DFtype f;
 

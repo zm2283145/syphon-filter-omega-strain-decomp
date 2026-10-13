@@ -31,7 +31,7 @@ extern "C" void func_0041F210();
 extern void * const D_004DEF90[];
 extern char D_004DF0B0[];
 void operator_delete(void* allocation);
-void* func_00138B70(void* self, short deleteFlag);
+void* String_Dtor(void* self, short deleteFlag);
 void* func_00299360(void* self, short deleteFlag);
 void* func_0041F370(void* self, short deleteFlag);
 }
@@ -42,7 +42,7 @@ extern "C" O3533B0* func_003533B0(O3533B0* self, short deleteFlag)
         self->vtable = ((char*)D_004DEF90);
         char* a = (char*)self + 0x80;
         if (a)
-            func_00138B70(a, 0);
+            String_Dtor(a, 0);
         char* m = (char*)self + 0x6C;
         if (m) {
             if (m) {

@@ -26,7 +26,7 @@ void* Agent_GetSelected(void* a, int b);
 char* func_00336170(void* ag);
 void func_0028BA90(Self_0028B3C0* self);
 void* Gui_GetScreenList(void);
-void* func_00418A80(void* a, char* b, char* c);
+void* GuiManager_FindOrLoad(void* a, char* b, char* c);
 char* Loc_LookupText(char* key);
 void func_0032B4F0(void* pg, char* title, char* text, Self_0028B3C0* self, int a, int b, int c);
 void* Gui_GetScreenStack(void);
@@ -72,7 +72,7 @@ extern "C" int func_0028B3C0(Self_0028B3C0* self, Ev_0028B3C0* ev)
         ag = Agent_GetSelected(D_004FFB50, -1);
         n = func_00336170(ag);
         if (!n || !*n) {
-            pg = func_00418A80(Gui_GetScreenList(), D_004A98E0, D_004A98F0);
+            pg = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004A98E0, D_004A98F0);
             if (pg) {
                 char* t = Loc_LookupText(D_004A9900);
                 func_0032B4F0(pg, t, func_00336170(ag), self, 0xF, 2, 1);
@@ -83,7 +83,7 @@ extern "C" int func_0028B3C0(Self_0028B3C0* self, Ev_0028B3C0* ev)
         return 1;
     }
     if (Plain_0028B3C0(ev, 0x10)) {
-        void* pg = func_00418A80(Gui_GetScreenList(), D_004A9910, D_004A9920);
+        void* pg = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004A9910, D_004A9920);
         GuiStack_SwapScreens(Gui_GetScreenStack(), self, pg);
         return 1;
     }
@@ -102,7 +102,7 @@ extern "C" int func_0028B3C0(Self_0028B3C0* self, Ev_0028B3C0* ev)
             GuiScreen_SetFocus(Gui_GetScreenStack(), self->GetFocus());
         } else if (self->fCC == 4) {
             void* ag = Agent_GetSelected(D_004FFB50, -1);
-            void* pg = func_00418A80(Gui_GetScreenList(), D_004A98E0, D_004A98F0);
+            void* pg = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004A98E0, D_004A98F0);
             if (pg) {
                 char* t = Loc_LookupText(D_004A9900);
                 func_0032B4F0(pg, t, func_00336170(ag), self, 0xF, 1, 1);

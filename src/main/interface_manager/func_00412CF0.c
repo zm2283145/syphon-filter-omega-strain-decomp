@@ -25,7 +25,7 @@ void Interface_Dtor(void* p, int flags);
 void Mem_Free(int pool, void* allocation, char* file, int line);
 void func_0036E5D0(Hog412CF0* h);
 void func_0036E220(Hog412CF0* h, int flags);
-char* func_0036D200(Arc412CF0* a, int i);
+char* Archive_GetMemberName(Arc412CF0* a, int i);
 void Hog_Register(Hog412CF0* h, char* name, Arc412CF0* a, int z);
 int func_0036DEF0(Hog412CF0* h);
 void func_003816F0(void* mgr, Hog412CF0* h);
@@ -73,7 +73,7 @@ extern "C" void func_00412CF0(Self412CF0* self, int idx)
         func_0036E5D0(&h);
         n = arc->info->count;
         for (i = 0; i < n; i++) {
-            Hog_Register(&h, func_0036D200(arc, i), arc, 0);
+            Hog_Register(&h, Archive_GetMemberName(arc, i), arc, 0);
             func_0036DEF0(&h);
             func_003816F0(D_00539248, &h);
         }

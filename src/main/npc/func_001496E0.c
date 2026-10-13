@@ -25,11 +25,11 @@ struct cNPC {
     virtual void* GetCurrentNode(); /* +0x18C */
 };
 
-extern "C" int func_0015C100(void* node);
+extern "C" int cNode_Identity(void* node);
 
 /* Script native: id of the NPC current node. */
 extern "C" int Script_cNPC_GetCurrentNode(ScriptArg* args)
 {
     cNPC* npc = (cNPC*)args[0].p;
-    return func_0015C100(npc->GetCurrentNode());
+    return cNode_Identity(npc->GetCurrentNode());
 }

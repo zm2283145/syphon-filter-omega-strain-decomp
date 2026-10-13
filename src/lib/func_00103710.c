@@ -3,7 +3,7 @@ extern GsInfo3710 *func_00102A18(void);
 extern void func_0010D5F0(void);
 extern long func_0010D680(void);
 
-int func_00103710(void)
+int sceGsSyncV(void)
 {
     GsInfo3710 *g = func_00102A18();
     long v;

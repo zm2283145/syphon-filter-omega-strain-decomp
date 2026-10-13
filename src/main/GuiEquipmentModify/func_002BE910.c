@@ -26,7 +26,7 @@ extern char D_004AC480[];
 extern char D_004A7520[];
 extern char* D_0048C0A8;
 Wpn_002BE910* WeaponDb_Get(int db, int id);
-void* func_0041DB80(void* self, char* name);
+void* GuiWidget_FindChildByName(void* self, char* name);
 char* Loc_LookupText(char* key);
 void func_0041BEB0(W_002BE910* w, char* s, int a);
 void* func_002C9020(void* p);
@@ -38,7 +38,7 @@ int WeaponInv_ClipsForActor(void* p, int a);
 }
 static inline W_002BE910* FindAs_002BE910(void* self, char* name, char* type)
 {
-    W_002BE910* w = (W_002BE910*)func_0041DB80(self, name);
+    W_002BE910* w = (W_002BE910*)GuiWidget_FindChildByName(self, name);
     return (w && w->IsA(type)) ? w : 0;
 }
 static inline void Clear_002BE910(void* self, char* name)

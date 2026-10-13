@@ -8,7 +8,7 @@ extern void func_0041F090(Obj* self);
 extern void func_003813A0(void* mgr, int handle, int a2);
 extern void String_CtorCStr_13B480(String* s, const char* text);
 extern void func_0013D680(String* dst, String* src);
-extern void func_00138B70(String* s, int flags);
+extern void String_Dtor(String* s, int flags);
 
 /* Resets: base reset, releases the handle, clears fields and the name. */
 void func_0043CA20(Obj* self)
@@ -22,5 +22,5 @@ void func_0043CA20(Obj* self)
     self->unk4C = 0;
     String_CtorCStr_13B480(&tmp, D_004C0018);
     func_0013D680(&self->name, &tmp);
-    func_00138B70(&tmp, 0);
+    String_Dtor(&tmp, 0);
 }

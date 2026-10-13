@@ -5,7 +5,7 @@ struct Bits_2F40 {
 };
 typedef struct { char pad[0xB2C]; Bits_2F40 bits; } AgentD2F40;
 #pragma opt_propagation off
-extern "C" bool func_00332F40(AgentD2F40* self, unsigned char idx)
+extern "C" bool AgentData_HasShownUnlock(AgentD2F40* self, unsigned char idx)
 {
     int i = idx;
     bool r;

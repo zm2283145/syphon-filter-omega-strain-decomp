@@ -40,7 +40,7 @@ extern void cMessage_dtor(void* msg, int flags);
 extern void SoundAction_CtorVoice(void* action, int kind, char* voice, int a, int b);
 extern void SoundMsg_WrapAction(SoundMsg_45F4D0* msg, void* action);
 extern void func_0041E0F0(void* a, void* b, int c, int d, int e);
-extern Obj_45F4D0* func_0041DB80(void* self, char* name);
+extern Obj_45F4D0* GuiWidget_FindChildByName(void* self, char* name);
 extern void func_0041BEB0(Obj_45F4D0* obj, int arg, int c);
 }
 
@@ -82,7 +82,7 @@ extern "C" int func_0045F4D0(Self_45F4D0* self)
         func_0041E0F0(self, self->ent[self->cur].obj, 6, (int)"onDeactivate", 0);
     }
     self->cur++;
-    obj = func_0041DB80(self, "value_awardstring");
+    obj = GuiWidget_FindChildByName(self, "value_awardstring");
     obj = (obj && obj->IsA(D_004A7520)) ? obj : 0;
     e = &self->ent[self->cur];
     if (obj != 0) {

@@ -18,7 +18,7 @@ static void * const dat_00492BD8[2] = { (void*)D_004BAA90, (void*)0x0 };
 extern char D_004BAD80[];
 void func_00356CD0(S34FBA0* o);
 void func_0034F670(S34FBA0* o);
-W34FBA0* func_0041DB80(void* self, char* name);
+W34FBA0* GuiWidget_FindChildByName(void* self, char* name);
 void func_00424430(void* w, int a, int b);
 void func_004248C0(void* w, int i, int v);
 void func_0034FBA0(S34FBA0* o);
@@ -32,11 +32,11 @@ void func_0034FBA0(S34FBA0* o)
     func_00356CD0(o);
     o->a80 = 0;
     func_0034F670(o);
-    o->a6C = cast34FBA0(func_0041DB80(o, (*(char**)dat_00492BD0)));
+    o->a6C = cast34FBA0(GuiWidget_FindChildByName(o, (*(char**)dat_00492BD0)));
     if (o->a6C) {
         W34FBA0* w;
         int i;
-        o->a6C->a88 = func_0041DB80(o, (*(char**)dat_00492BD8));
+        o->a6C->a88 = GuiWidget_FindChildByName(o, (*(char**)dat_00492BD8));
 
         w = o->a6C;
         w->aC0 = &o->v70;

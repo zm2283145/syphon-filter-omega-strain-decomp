@@ -33,7 +33,7 @@ int func_00452FE0(void* g);
 void func_0029CBB0(S_0029E440* self, int a);
 void func_0029DAF0(S_0029E440* self, char* t);
 Ui_0029E440* Gui_GetScreenStack(void);
-Fl_0029E440* func_0041DB80(void* p, char* name);
+Fl_0029E440* GuiWidget_FindChildByName(void* p, char* name);
 int func_0033CE30(S_0029E440* self, int a, int b, int c, int d, int e);
 int FrontEnd_OpenPopup(void* ui, int a, char* b, int c, S_0029E440* d, int e);
 void FrontEnd_ClosePopup(void* ui, int id);
@@ -79,10 +79,10 @@ extern "C" int func_0029E440(S_0029E440* self, void* w, int msg, int sub, char* 
             int old;
             void* ui;
             Gui_GetScreenStack()->Show(p, 0x7D0);
-            a = func_0041DB80(self->p108, D_004AAC18);
+            a = GuiWidget_FindChildByName(self->p108, D_004AAC18);
             if (a)
                 a->flags &= ~2;
-            b = func_0041DB80(self->p108, D_004AAC28);
+            b = GuiWidget_FindChildByName(self->p108, D_004AAC28);
             if (b)
                 b->flags |= 2;
             old = self->f11C;

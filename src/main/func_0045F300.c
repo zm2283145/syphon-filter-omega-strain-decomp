@@ -12,7 +12,7 @@ extern void GuiStack_SwapScreens(int mgr, void* owner, int res);
 extern int GuiManager_AddWidget(int a0, int res);
 extern int func_0041EFA0(void* self);
 extern int func_0041F960(char* name);
-extern int func_00441A10(void* self);
+extern int GuiSaveAgentWidget_HandleEvent(void* self);
 
 void func_0045F300(void* self) {
     GuiStack_SwapScreens(Gui_GetScreenStack(), self, 0);
@@ -21,7 +21,7 @@ void func_0045F300(void* self) {
 int func_0045F340(GuiWidget45F340* self) {
     func_0041EFA0(self);
     self->unk4C = 2;
-    return func_00441A10(self);
+    return GuiSaveAgentWidget_HandleEvent(self);
 }
 
 /* Looks up the named resource and, if found, registers it for this owner. */

@@ -2,7 +2,7 @@
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int func_00121BC8(char * );                          
+int atoi(char * );                          
 int LobbyArray_Append(int, int *);                        
 int SFOLobby_NoInstance();                                
 int memset(int *, int, int);                              
@@ -18,7 +18,7 @@ void func_00447BB0(int d0, int d1, int d2, char * arg3) {
     if (SFOLobby_NoInstance() == 0) {
         temp_s0 = F_(D_00585E60, 0x23EC, int);
         if ((temp_s0 != 0) && ((temp_a0 = F_(arg3, 0x58, int), (temp_a0 == 0)) || (temp_a0 == 4))) {
-            temp_s2 = func_00121BC8(arg3);
+            temp_s2 = atoi(arg3);
             memset(&sl.f40, 0, 0x68);
             sl.fA4[0] = temp_s2 != 0;
             sl.f40 = temp_s2;

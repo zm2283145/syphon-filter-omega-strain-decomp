@@ -137,8 +137,8 @@ void* func_003EF010(void* a);
 void func_003FA1B0(void* a, int b);
 void func_003FA500(void* a, int b, int c);
 void* func_004187C0(void* list, char* a, char* b);
-void func_00418A80(void* list, char* a, char* b);
-Widget_245F00* func_0041DB80(void* a, char* name);
+void GuiManager_FindOrLoad(void* list, char* a, char* b);
+Widget_245F00* GuiWidget_FindChildByName(void* a, char* name);
 }
 
 #pragma inline_depth(10)
@@ -242,14 +242,14 @@ extern "C" Hud_245F00* func_00245F00(Hud_245F00* h, int a1, int a2, int a3)
     func_002CB3D0(D_004FFC04, 1);
     h->f6A4 = func_004187C0(Gui_GetScreenList(), D_004A7400, D_004A7410);
     Gui_GetScreenStack()->Show(h->f6A4, 0);
-    wa = Cast_245F00(func_0041DB80(h->f6A4, D_004A7420), D_004A7520);
-    wb = Cast_245F00(func_0041DB80(h->f6A4, D_004A7438), D_004A7520);
+    wa = Cast_245F00(GuiWidget_FindChildByName(h->f6A4, D_004A7420), D_004A7520);
+    wb = Cast_245F00(GuiWidget_FindChildByName(h->f6A4, D_004A7438), D_004A7520);
     h->f6D4 = wa;
     h->f6D8 = wb;
     h->f6BC = wa;
     h->f6C0 = wb;
-    func_00418A80(Gui_GetScreenList(), D_004A7260, D_004A7278);
-    func_00418A80(Gui_GetScreenList(), D_004A7248, D_004A7288);
+    GuiManager_FindOrLoad(Gui_GetScreenList(), D_004A7260, D_004A7278);
+    GuiManager_FindOrLoad(Gui_GetScreenList(), D_004A7248, D_004A7288);
     return h;
 }
 

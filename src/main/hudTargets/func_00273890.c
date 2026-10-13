@@ -18,7 +18,7 @@ public:
 
 extern "C" {
 int Mem_Alloc(...);
-int func_00138B70(...);
+int String_Dtor(...);
 int func_002731A0(...);
 int func_002731B0(...);
 int func_002731C0(...);

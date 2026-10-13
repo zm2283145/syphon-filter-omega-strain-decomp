@@ -18,7 +18,7 @@ int FrontEnd_OpenPopup(void* ui, int a, char* b, char* c, S_0029E1A0* d, int e);
 void func_002C9AF0(void* ui, int a);
 void FrontEnd_ClosePopup(void* ui, int id);
 void func_002C81D0(void* ui);
-void func_00138B70(Str_0029E1A0* s, int flags);
+void String_Dtor(Str_0029E1A0* s, int flags);
 void func_0029D120(S_0029E1A0* self);
 void func_0029DE70(S_0029E1A0* self, int a);
 void func_002CA350(void* ui);
@@ -51,8 +51,8 @@ extern "C" void func_0029E1A0(S_0029E1A0* self)
             func_002C9AF0(D_004FFC04, 0);
             FrontEnd_ClosePopup(D_004FFC04, self->f48);
             func_002C81D0(D_004FFC04);
-            func_00138B70(&b, 0);
-            func_00138B70(&a, 0);
+            String_Dtor(&b, 0);
+            String_Dtor(&a, 0);
             return;
         }
         func_0029D120(self);

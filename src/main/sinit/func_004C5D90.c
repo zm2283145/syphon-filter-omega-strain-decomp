@@ -22,7 +22,7 @@ extern void func_00173910(void* p);
 extern void func_00173900(void* p, int n);
 extern int func_001361D0(int* n);
 extern void __register_global_object(void* obj, void* dtor, void* link);
-extern int func_003D8F60();
+extern int ScriptEnum_Register();
 extern int Script_RegisterType();
 extern int Script_RegisterNative();
 extern int cGOBJ_GetScriptTypeKeyPtr();
@@ -55,7 +55,7 @@ void func_004C5D90(void)
     D_004EE718 = Script_RegisterNative(D_004EE700, Script_cHotboxMsg_Who, cGOBJ_GetScriptTypeKeyPtr(), D_0049C9B0, 1, &D_004EE700);
     D_004EE720 = Script_RegisterNative(D_004EE700, Script_cHotboxMsg_WhoNPC, func_0014A6A0(), D_0049C9B8, 1, &D_004EE700);
     D_004EE728 = Script_RegisterNative(D_004EE700, Script_cHotboxMsg_WhoPlayer, func_00175FB0(), D_0049C9C0, 1, &D_004EE700);
-    D_004EE730 = func_003D8F60(D_0049C9D0, D_0048A110, 3);
+    D_004EE730 = ScriptEnum_Register(D_0049C9D0, D_0048A110, 3);
     D_004EE738 = Script_RegisterType(D_0049C9E8, ScriptType_cHotbox_Init, 0, 1);
     D_004EE740 = D_004EE738;
     D_004EE748 = Script_RegisterNative(D_004EE738, Script_cHotbox_Enable, D_00493880, D_0049C9F0, 1, &D_004EE738);

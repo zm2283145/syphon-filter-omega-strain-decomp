@@ -3,7 +3,7 @@
 #define NULL 0
 #pragma mpwc_relax on
 int String_Copy(char * , int);
-int func_00121BC8(int);
+int atoi(int);
 int String_CompareNoCase(int, char *);
 
 void func_00443260(char * arg0, int arg1, int arg2) {
@@ -11,7 +11,7 @@ void func_00443260(char * arg0, int arg1, int arg2) {
     int var_v0;
 
     if (arg2 != 0) {
-        var_v0 = func_00121BC8(arg2);
+        var_v0 = atoi(arg2);
     } else {
         var_v0 = 0;
     }

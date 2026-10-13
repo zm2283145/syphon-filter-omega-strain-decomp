@@ -14,7 +14,7 @@ char* func_0033CE30(S_0029E8C0* self, int a, int b, int c, int d, int e);
 int FrontEnd_OpenPopup(void* ui, int a, char* b, char* c, S_0029E8C0* d, int e);
 void String_CtorCStr_13B480(Str_0029E8C0* s, const char* c);
 char* String_CStr(Str_0029E8C0* s);
-void func_00138B70(Str_0029E8C0* s, int flags);
+void String_Dtor(Str_0029E8C0* s, int flags);
 void func_0043D820(void* p, int a);
 void func_0043D760(void* p, int a);
 int func_0033CEF0(S_0029E8C0* self, Ev_0029E8C0* ev);
@@ -63,8 +63,8 @@ extern "C" int func_0029E8C0(S_0029E8C0* self, Ev_0029E8C0* ev)
                     char* tc = String_CStr(&c);
                     FrontEnd_OpenPopup(D_004FFC04, 5, String_CStr(&a), tc, self, 0x1F);
                 }
-                func_00138B70(&c, 0);
-                func_00138B70(&a, 0);
+                String_Dtor(&c, 0);
+                String_Dtor(&a, 0);
             }
             return 1;
         } else {

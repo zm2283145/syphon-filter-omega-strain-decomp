@@ -11,7 +11,7 @@ extern char D_004E0800[];
 extern char D_004BDFB0[];
 void ActiveList_EraseMatching(void* list, Pred_8EC0 p);
 char* func_003D1020(void);
-void func_00138B70(Str_8EC0*, int);
+void String_Dtor(Str_8EC0*, int);
 void Mem_Free(int, void*, char*, int);
 void operator_delete(void*);
 }
@@ -31,7 +31,7 @@ extern "C" O_8EC0* func_003E8EC0(O_8EC0* self, short del)
                 AllocGuard g;
                 if (p) {
                     Str_8EC0* s = &p->str;
-                    if (s) func_00138B70(s, 0);
+                    if (s) String_Dtor(s, 0);
                 }
                 Mem_Free(0, p, D_004BDFB0, 0x41);
             }

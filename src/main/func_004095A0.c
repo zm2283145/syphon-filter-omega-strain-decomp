@@ -4,7 +4,7 @@ typedef struct { int f0, f4, f8, fc, f10, f14, f18, f1c, f20, f24, f28, f2c; flo
 extern int String_CompareNoCase(char*, char*);
 extern void String_CtorCStr_13B480(S409*, char*);
 extern void func_0013D680(void*, S409*);
-extern void func_00138B70(S409*, int);
+extern void String_Dtor(S409*, int);
 O409* func_004095A0(O409* o, char* a, int b, char* c, char* d, float f, unsigned char g) {
     S409 s1;
     S409 s2;
@@ -25,7 +25,7 @@ O409* func_004095A0(O409* o, char* a, int b, char* c, char* d, float f, unsigned
     } else {
         String_CtorCStr_13B480(&s1, a);
         func_0013D680(o, &s1);
-        func_00138B70(&s1, 0);
+        String_Dtor(&s1, 0);
         o->fc = -1;
     }
     if (c && !String_CompareNoCase(c, "none")) {
@@ -36,14 +36,14 @@ O409* func_004095A0(O409* o, char* a, int b, char* c, char* d, float f, unsigned
         o->f10 = b;
         String_CtorCStr_13B480(&s2, c);
         func_0013D680(&o->f14, &s2);
-        func_00138B70(&s2, 0);
+        String_Dtor(&s2, 0);
     }
     if (d && !String_CompareNoCase(d, "none")) {
         o->f2c = -2;
     } else {
         String_CtorCStr_13B480(&s3, d);
         func_0013D680(&o->f20, &s3);
-        func_00138B70(&s3, 0);
+        String_Dtor(&s3, 0);
         o->f2c = -1;
     }
     return o;

@@ -33,7 +33,7 @@ extern Reg_404AA0 D_00571300;
 extern char D_004BE830[];
 extern char D_004BE858[];
 int func_0036D380(Npc_404AA0* npc, int i);
-char* func_0036D200(Npc_404AA0* npc, int i);
+char* Archive_GetMemberName(Npc_404AA0* npc, int i);
 void* func_0036D4E0(Npc_404AA0* npc, int i);
 void Appearance_RegistryKey(char* dst, int n, char* src);
 char* strrchr(char* s, int c);
@@ -81,7 +81,7 @@ void MeshCache_RegisterNpcSkm(Cache_404AA0* c, Npc_404AA0* npc)
     for (i = 0; i < n; i++) {
         union { __int128 q; char s[16]; } key;
         a = func_0036D380(npc, i);
-        name = func_0036D200(npc, i);
+        name = Archive_GetMemberName(npc, i);
         Appearance_RegistryKey(key.s, 15, name);
         ext = strrchr(name, '.');
         if (!ext) ext = name;

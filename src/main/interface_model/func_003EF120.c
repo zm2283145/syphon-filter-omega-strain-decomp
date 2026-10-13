@@ -16,7 +16,7 @@ void func_003ED860(It_3EF120* out, It_3EF120* in);
 It_3EF120 func_003ED870(void* l);
 void func_003813A0(int a, int b, int c);
 void func_003EF5E0(void* p, int f);
-void func_00138B70(void* p, int f);
+void String_Dtor(void* p, int f);
 void operator_delete(void* p);
 Self_3EF120* func_003EF120(Self_3EF120* self, short f);
 }
@@ -50,8 +50,8 @@ extern "C" Self_3EF120* func_003EF120(Self_3EF120* self, short f)
         if (self->pD4) FreeP_3EF120(self->pD4, 0x1FB);
         if (self->p88) FreeP_3EF120(self->p88, 0x1FE);
         if (self->l8C) func_003EF5E0(self->l8C, 0);
-        if ((char*)self + 0xC) func_00138B70((char*)self + 0xC, 0);
-        if (self) func_00138B70(self, 0);
+        if ((char*)self + 0xC) String_Dtor((char*)self + 0xC, 0);
+        if (self) String_Dtor(self, 0);
         if (f > 0) operator_delete(self);
     }
     return self;

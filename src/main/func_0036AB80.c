@@ -33,7 +33,7 @@ extern int func_00380A40(int mgr, FileMan* f);
 extern void* memcpy(void* d, const void* s, unsigned int n);
 extern long long SoftFloat_FloatToDouble(float f);
 extern long long func_0011C268(long long a, long long b);
-extern float func_0011C928(long long a);
+extern float SoftFloat_DoubleToFloat(long long a);
 
 static inline void Copy(PStr* buf, char* t, const char* s)
 {
@@ -105,7 +105,7 @@ void func_0036AB80(ObjAB80* obj, int arg1, char* name)
     if ((ver == 2 && flags >= 4) || ver > 2) {
         obj->f94 = *(signed char*)p++;
     } else {
-        obj->f94 = func_0011C928(func_0011C268((long long)0x3FE00000 << 0x20, SoftFloat_FloatToDouble(obj->f98 / 2.0f * obj->f90)));
+        obj->f94 = SoftFloat_DoubleToFloat(func_0011C268((long long)0x3FE00000 << 0x20, SoftFloat_FloatToDouble(obj->f98 / 2.0f * obj->f90)));
     }
     if ((ver == 2 && flags != 0) || ver > 2) {
         obj->fBE0 = *(signed char*)p != 0;

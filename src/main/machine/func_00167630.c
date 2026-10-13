@@ -70,9 +70,9 @@ Obj_00167630* func_0027B900(void* p, int ar, char* name);
 void func_0027B680(Obj_00167630* o);
 void func_0027B690(Obj_00167630* o, int flags);
 void func_00165BC0(void);
-void func_0037A9F0(void* p);
+void Video_BeginFrame(void* p);
 void func_0027A740(Obj_00167630* o, void* pad);
-float func_001002D0(unsigned long long t);
+float SoftFloat_U64ToFloat(unsigned long long t);
 void func_0027A830(Obj_00167630* o, float dt);
 void func_0027A7F0(Obj_00167630* o);
 int func_003D1020(void);
@@ -159,7 +159,7 @@ extern "C" void func_00167630(void* arg)
     UM_00167630(&RS_00167630->mtx[D_00538C64]);
     D_00538C68 = 1;
     D_005392D8 = D_004BC1B0;
-    func_0037A9F0(D_005381F0);
+    Video_BeginFrame(D_005381F0);
     {
         V4c_00167630 c(1.0f, 1.0f, 0.0f, 1.0f);
         SetCol_00167630(c);
@@ -167,7 +167,7 @@ extern "C" void func_00167630(void* arg)
     func_0027A740(D_004EE498, D_0055A300);
     {
         unsigned long long now = Now_00167630();
-        func_0027A830(D_004EE498, func_001002D0(now - D_004EE4A8) / 100000.0f);
+        func_0027A830(D_004EE498, SoftFloat_U64ToFloat(now - D_004EE4A8) / 100000.0f);
         D_004EE4A8 = now;
     }
     func_0027A7F0(D_004EE498);

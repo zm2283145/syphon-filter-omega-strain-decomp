@@ -8,7 +8,7 @@ extern "C" {
 void* Mem_Alloc(int, int, char*, int);
 void* Ptr_Identity(void*);
 int func_0012AC20(char*, char**);
-float func_0011C928(int);
+float SoftFloat_DoubleToFloat(int);
 char* strchr(const char*, int);
 int func_0012B1F0(char*, char**, int);
 void func_003A5890(void*);
@@ -57,7 +57,7 @@ extern "C" Obj3A5630* func_003A5630(void* self, char* str, int arg, Obj3A5630* o
     float ver;
     unsigned char type;
 
-    ver = func_0011C928(func_0012AC20(s, &s));
+    ver = SoftFloat_DoubleToFloat(func_0012AC20(s, &s));
     if (ver <= 2.1f) {
         s = strchr(s, '\n') + 1;
         type = func_0012B1F0(s, &s, 10);

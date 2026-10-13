@@ -93,7 +93,7 @@ extern char Script_PlaySnd_2[], Script_StopSnd_2[], Script_PlaySnd[], Script_Sto
 extern char Script_PlayMusic[], Script_StopMusic[], Script_PlayQuip[], Script_PlayQuip_2[];
 extern char Script_StopAllQuips[], Script_SetReverb[], Script_AddPDAQuip[], Script_AddPDAQuip_2[];
 extern int func_002824D0();
-extern int func_003D8F60();
+extern int ScriptEnum_Register();
 extern int cGOBJ_GetScriptTypeKeyPtr();
 extern int Script_RegisterNative_2();
 
@@ -162,7 +162,7 @@ void func_004C7500(void)
     D_004F2CF8 = func_002824D0(func_001C7500, D_004F2CF0, "cStopAllQuipsMsg");
     D_004F2D00 = "cPlayQuipMsg";
     D_004F2D10 = func_002824D0(func_001C7340, D_004F2D08, "cPlayQuipMsg");
-    D_004F2D18 = func_003D8F60("cGameSound::eSndBank", D_0048A340, 7);
+    D_004F2D18 = ScriptEnum_Register("cGameSound::eSndBank", D_0048A340, 7);
     D_004F2D20 = Script_RegisterNative_2(Script_PlaySnd_2, D_00493880, "PlaySnd", 2, &D_004F2D18, D_00493898);
     D_004F2D28 = Script_RegisterNative_2(Script_StopSnd_2, D_00493880, "StopSnd", 2, &D_004F2D18, D_00493898);
     D_004F2D30 = Script_RegisterNative_2(Script_PlaySnd, D_00493880, "PlaySnd", 3, &D_004F2D18, D_00493898, cGOBJ_GetScriptTypeKeyPtr());

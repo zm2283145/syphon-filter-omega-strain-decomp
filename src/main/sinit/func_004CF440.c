@@ -20,7 +20,7 @@ int ScriptType_cNIEventOBJ_Init();
 int Script_RegisterNative();
 int Script_RegisterVariable();
 int Script_RegisterType();
-int func_003D8F60();
+int ScriptEnum_Register();
 extern char D_0048AE20;
 extern char D_0048AE30;
 extern char D_00493880;
@@ -81,5 +81,5 @@ void func_004CF440(void) {
     D_004F7D20 = Script_RegisterType("cNINotice", ScriptType_cNINotice_Init, 1, 0);
     D_004F7D28 = D_004F7D20;
     D_004F7D30 = Script_RegisterNative(D_004F7D20, Script_cNINotice_Action, &D_004F7D38, "Action", 1, &D_004F7D20);
-    D_004F7D38 = func_003D8F60("cNINotice::ActionTypes", &D_0048AE30, 2);
+    D_004F7D38 = ScriptEnum_Register("cNINotice::ActionTypes", &D_0048AE30, 2);
 }

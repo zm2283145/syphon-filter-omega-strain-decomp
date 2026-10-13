@@ -2,7 +2,7 @@
 
 extern char D_005721D8[];
 
-int func_00169360(void) {
+int NetGame_ConsumeQuitRequest(void) {
     int v0;
     int cond;
 

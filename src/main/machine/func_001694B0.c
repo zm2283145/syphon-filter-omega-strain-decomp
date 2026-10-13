@@ -13,7 +13,7 @@ extern int sprintf(char*, const char*, ...);
 extern int Archive_Open(char*, char*, int, int);
 extern void func_003E2140(char*, int);
 extern void ScriptMgr_InitClient(char*);
-extern void func_003302A0(int);
+extern void PartsTable_Load(int);
 extern void ArchiveList_CloseNamed(char*, char*);
 extern void ManUtils_LoadSKL(char*);
 extern void func_0036B3B0(int, int, int);
@@ -33,7 +33,7 @@ void func_001694B0(O169* o) {
         h = Archive_Open(arc, buf, 0, 0);
         func_003E2140(D_00555070, h);
         ScriptMgr_InitClient(D_00555070);
-        func_003302A0(h);
+        PartsTable_Load(h);
         ArchiveList_CloseNamed(arc, buf);
     }
     ManUtils_LoadSKL(D_0055DDA0);

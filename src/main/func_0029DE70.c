@@ -2,7 +2,7 @@
 typedef struct { int a[4]; } S29D;
 typedef struct { char pad[0x94]; unsigned char b94; } O29D;
 extern int Gui_GetScreenList(void);
-extern void* func_00418A80(int, char*, char*);
+extern void* GuiManager_FindOrLoad(int, char*, char*);
 extern int Gui_GetScreenStack(void);
 extern void GuiStack_SwapScreens(int, O29D*, void*);
 extern int DME_GetLobby(void);
@@ -13,9 +13,9 @@ extern char* func_0033CE30(O29D*, int, int, int, int, int);
 extern void String_CtorCStr_13B480(S29D*, char*);
 extern char* String_CStr(S29D*);
 extern void FrontEnd_OpenPopup(int, int, char*, char*, int, int);
-extern void func_00138B70(S29D*, int);
+extern void String_Dtor(S29D*, int);
 void func_0029DE70(O29D* o, int show) {
-    void* w = func_00418A80(Gui_GetScreenList(), "GuiOnlineOfflineSelect", "ONOFFSEL");
+    void* w = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiOnlineOfflineSelect", "ONOFFSEL");
     GuiStack_SwapScreens(Gui_GetScreenStack(), o, w);
     if (o->b94) {
         if (DME_GetLobby()) SFOLobby_LeaveNetworkState(DME_GetLobby());
@@ -31,7 +31,7 @@ void func_0029DE70(O29D* o, int show) {
             char* tb = String_CStr(&b);
             FrontEnd_OpenPopup(D_004FFC04, 2, String_CStr(&a), tb, 0, 0);
         }
-        func_00138B70(&b, 0);
-        func_00138B70(&a, 0);
+        String_Dtor(&b, 0);
+        String_Dtor(&a, 0);
     }
 }

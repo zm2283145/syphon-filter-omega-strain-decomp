@@ -21,12 +21,12 @@ extern char* D_0048BCF8;
 extern char D_004A9870[];
 extern char D_004A7520[];
 void func_0033F250(S_002AFDC0* self);
-void* func_0041DB80(S_002AFDC0* self, char* name);
+void* GuiWidget_FindChildByName(S_002AFDC0* self, char* name);
 void func_0041C0D0(W_002AFDC0* w, int a);
 }
 static inline W_002AFDC0* FindAs_002AFDC0(S_002AFDC0* self, char* name, char* type)
 {
-    W_002AFDC0* w = (W_002AFDC0*)func_0041DB80(self, name);
+    W_002AFDC0* w = (W_002AFDC0*)GuiWidget_FindChildByName(self, name);
     return (w && w->IsA(type)) ? w : 0;
 }
 extern "C" void func_002AFDC0(S_002AFDC0* self)

@@ -11,9 +11,9 @@ extern char* D_00533890[];
 extern Heap36C960 D_00533CB0[];
 extern char D_004BBE50[];
 void Mem_HeapFree(Heap36C960* heap, void* p, char* file, int line);
-void func_0036C960(void);
+void Mem_PumpDeferredFrees(void);
 }
-void func_0036C960(void)
+void Mem_PumpDeferredFrees(void)
 {
     while (D_00533C90) {
         char* p;

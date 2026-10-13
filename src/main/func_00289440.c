@@ -25,10 +25,10 @@ int strcmp(const char* a, const char* b);
 void String_Copy(char* d, const char* s);
 char* func_00336170(Ag_00289440* ag);
 void func_00441C20(S_00289440* self, char* n);
-void func_00441A10(S_00289440* self);
+void GuiSaveAgentWidget_HandleEvent(S_00289440* self);
 void String_CtorCStr_13B480(Str_00289440* s, const char* c);
 void func_0013D680(Str_00289440* d, Str_00289440* s);
-void func_00138B70(Str_00289440* s, int flags);
+void String_Dtor(Str_00289440* s, int flags);
 int func_00452FF0(void* g, int a);
 int func_002CA070(void* ui);
 void FrontEnd_ClosePopup(void* ui, int id);
@@ -39,7 +39,7 @@ static inline void Assign_00289440(S_00289440* self, Str_00289440* d, int id)
     Str_00289440 t;
     String_CtorCStr_13B480(&t, func_0033CE30(self, id, 0, 0, 0, 0));
     func_0013D680(d, &t);
-    func_00138B70(&t, 0);
+    String_Dtor(&t, 0);
 }
 extern "C" void func_00289440(S_00289440* self)
 {
@@ -73,7 +73,7 @@ extern "C" void func_00289440(S_00289440* self)
                 changed = 1;
             if (changed) {
                 self->b4C = 1;
-                func_00441A10(self);
+                GuiSaveAgentWidget_HandleEvent(self);
             } else {
                 self->Refresh(1);
             }
@@ -121,8 +121,8 @@ extern "C" void func_00289440(S_00289440* self)
             FrontEnd_OpenPopup(D_004FFC04, kind, String_CStr(&a), pw, self, cb);
         }
         FrontEnd_ClosePopup(D_004FFC04, self->fA8);
-        func_00138B70(&b, 0);
-        func_00138B70(&a, 0);
+        String_Dtor(&b, 0);
+        String_Dtor(&a, 0);
         D_004FFC04->b264 = ok;
     }
 }

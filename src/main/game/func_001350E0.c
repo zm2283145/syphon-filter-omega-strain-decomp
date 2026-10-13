@@ -104,7 +104,7 @@ void func_001307F0(World_1350E0* w);
 void func_001360D0(int n);
 void func_001365E0(void* p);
 void func_001366F0(void* p);
-void func_001368D0(void* p);
+void Game_LoadParResources(void* p);
 Zone_1350E0* func_0013D770(void* z, int id);
 void* func_0013D9F0(void);
 void func_00166430(void* a, int b, char* c);
@@ -117,7 +117,7 @@ void func_001C9BF0(void* p);
 void func_00257380(void);
 void func_0026BE70(unsigned char b);
 void* func_0027A020(void* p, int a, int b);
-void func_002CC8E0(void* a, void* b);
+void LevelSelect_FindByName(void* a, void* b);
 void func_00335D50(void* a, int b);
 int func_0036DEF0(Path_1350E0* p);
 void func_0036E220(void* p, int f);
@@ -146,7 +146,7 @@ extern "C" void World_Setup(World_1350E0* w)
 
     {
         Cfg_1350E0* c = &w->fB4->f188;
-        if (c->fC4 == -1) func_002CC8E0(c, w->f140);
+        if (c->fC4 == -1) LevelSelect_FindByName(c, w->f140);
     }
     func_0012F630(w);
     func_003E2140(D_00555070, IArcade_Init(w->f3C));
@@ -244,7 +244,7 @@ extern "C" void World_Setup(World_1350E0* w)
     Loader_LoadLevelData(w->f88, w->f3C);
     sprintf(arc, D_0049AAC0, D_0048B2F8);
     func_004089F0(D_0053BB90, Archive_Open(w->f3C, arc, 0, 0));
-    func_001368D0(w->f3C);
+    Game_LoadParResources(w->f3C);
     World_SetupView(w);
     func_001307F0(w);
     Event_Construct(&cm, D_004F53F0);

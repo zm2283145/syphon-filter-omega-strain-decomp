@@ -1,5 +1,5 @@
 /* newlib 1.9.0 vfscanf.c (FLOATING_POINT, _NO_LONGDBL, no MB_CAPABLE): __svfscanf. Retail newlib was built with -g. */
-__asm__(".set nomove\n dptofp = func_0011C928\n");
+__asm__(".set nomove\n dptofp = SoftFloat_DoubleToFloat\n");
 typedef unsigned int size_t;
 typedef int wchar_t;
 typedef __builtin_va_list va_list;
@@ -34,7 +34,7 @@ extern int func_0012B398(int, FILE *);                  /* ungetc */
 extern size_t func_00123C40(void *, size_t, size_t, FILE *); /* fread */
 extern long func_00121BF0(const char *);                /* atol */
 extern double func_00121BB0(const char *);              /* atof */
-extern long func_0012AF90(const char *, char **, int);  /* strtol */
+extern long strtol(const char *, char **, int);  /* strtol */
 extern unsigned long func_0012B1F0(const char *, char **, int); /* strtoul */
 extern int sprintf(char *, const char *, ...);
 #define __srefill func_001284D8
@@ -42,7 +42,7 @@ extern int sprintf(char *, const char *, ...);
 #define fread func_00123C40
 #define atol func_00121BF0
 #define atof func_00121BB0
-#define strtol func_0012AF90
+#define strtol strtol
 #define strtoul func_0012B1F0
 #define __sccl func_0012E9A8
 

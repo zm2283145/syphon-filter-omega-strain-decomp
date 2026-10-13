@@ -114,7 +114,7 @@ extern "C" void func_002C0790(Screen* arg0) {
     arg0->unk9C = (int) arg0->unk94->unk38;
     arg0->unkA4 = (int) arg0->unk94->unk5C;
     arg0->unkA8 = (int) ((arg0->unk94->unk40 / (float) arg0->unkA4) - 1.0f);
-    arg0->unkCC = (Widget*)func_0041DB80(arg0, D_004AC4E0);
+    arg0->unkCC = (Widget*)GuiWidget_FindChildByName(arg0, D_004AC4E0);
     temp_v1_3 = arg0->unkCC;
     temp_v1_3->unk14 = (unsigned short) (temp_v1_3->unk14 & 0xFF7F);
     temp_v1_4 = arg0->unk94;

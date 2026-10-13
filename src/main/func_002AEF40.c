@@ -30,7 +30,7 @@ extern void func_0041F090();
 extern void func_0041F210();
 extern void * const D_004DDD40[];
 extern char D_004DE8A0[];
-extern void func_00138B70(void* p, int f);
+extern void String_Dtor(void* p, int f);
 extern void func_0044F970(void* p, int f);
 extern void func_0033D430(void* p, int f);
 extern void operator_delete(void* p);
@@ -39,7 +39,7 @@ static inline void Base2AEF40(O2AEF40* p)
     if (p) {
         p->vt = D_004DE8A0;
         if (p->m104)
-            func_00138B70(p->m104, 0);
+            String_Dtor(p->m104, 0);
         func_0044F970(p->mE4, -1);
         func_0044F970(p->mC8, -1);
         func_0044F970(p->mAC, -1);
@@ -51,7 +51,7 @@ O2AEF40* func_002AEF40(O2AEF40* self, short del)
     if (self) {
         self->vt = ((char*)D_004DDD40);
         if (self->m174)
-            func_00138B70(self->m174, 0);
+            String_Dtor(self->m174, 0);
         Base2AEF40(self);
         if (del > 0)
             operator_delete(self);

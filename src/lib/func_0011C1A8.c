@@ -13,7 +13,7 @@ typedef union { DFtype value; fractype value_raw; } FLO_union_type;
 extern void func_0011BE88(FLO_union_type* src, fp_number_type* dst);
 extern DFtype func_0011BDB0(fp_number_type* src);
 extern fp_number_type* func_0011BF48(fp_number_type* a, fp_number_type* b, fp_number_type* tmp);
-DFtype func_0011C1A8(DFtype arg_a, DFtype arg_b)
+DFtype SoftFloat_DoubleAdd(DFtype arg_a, DFtype arg_b)
 {
     fp_number_type a;
     fp_number_type b;

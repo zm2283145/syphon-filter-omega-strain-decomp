@@ -17,9 +17,9 @@ extern unsigned char D_005721C8;
 char* Loc_LookupText(char* key);
 int FrontEnd_OpenPopup(void* ui, int a, char* b, char* c, Self_4562E0* d, int e);
 void* Gui_GetScreenList(void);
-Pg_4562E0* func_00418A80(void* a, char* b, char* c);
-Pg_4562E0* func_00418980(void* a, char* b);
-Pg_4562E0* func_0041DB80(Pg_4562E0* a, char* b);
+Pg_4562E0* GuiManager_FindOrLoad(void* a, char* b, char* c);
+Pg_4562E0* GuiManager_FindByName(void* a, char* b);
+Pg_4562E0* GuiWidget_FindChildByName(Pg_4562E0* a, char* b);
 Ui_4562E0* Gui_GetScreenStack(void);
 }
 
@@ -47,10 +47,10 @@ char D_004C1C28[] = "QuitMessage";
 }
 static inline void ShowButtons(char* a, char* b)
 {
-    Pg_4562E0* bd = func_00418980(Gui_GetScreenList(), D_004C1B00);
+    Pg_4562E0* bd = GuiManager_FindByName(Gui_GetScreenList(), D_004C1B00);
     if (bd) {
-        Pg_4562E0* x = func_0041DB80(bd, a);
-        Pg_4562E0* y = func_0041DB80(bd, b);
+        Pg_4562E0* x = GuiWidget_FindChildByName(bd, a);
+        Pg_4562E0* y = GuiWidget_FindChildByName(bd, b);
         if (x) {
             x->flags &= ~2;
         }
@@ -65,28 +65,28 @@ extern "C" void func_004562E0(Self_4562E0* self, int which)
     Pg_4562E0* pg = 0;
     switch (which) {
     case 0:
-        pg = func_00418A80(Gui_GetScreenList(), D_004C1B48, D_004C1B58);
+        pg = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004C1B48, D_004C1B58);
         break;
     case 1:
-        pg = func_00418A80(Gui_GetScreenList(), D_004C1B68, D_004C1B78);
+        pg = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004C1B68, D_004C1B78);
         break;
     case 2:
-        pg = func_00418A80(Gui_GetScreenList(), D_004C1B90, D_004C1BA0);
+        pg = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004C1B90, D_004C1BA0);
         ShowButtons(D_004C1B18, D_004C1B20);
         break;
     case 3:
-        pg = func_00418A80(Gui_GetScreenList(), D_004C1BB0, D_004C1BC8);
+        pg = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004C1BB0, D_004C1BC8);
         break;
     case 4:
         if (D_005721C8) {
-            pg = func_00418A80(Gui_GetScreenList(), D_004C1BD0, D_004C1BE0);
+            pg = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004C1BD0, D_004C1BE0);
         } else {
-            pg = func_00418A80(Gui_GetScreenList(), D_004C1BD0, D_004C1BE8);
+            pg = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004C1BD0, D_004C1BE8);
         }
         ShowButtons(D_004C1B28, D_004C1B38);
         break;
     case 5:
-        pg = func_00418A80(Gui_GetScreenList(), D_004C1BF8, D_004C1C08);
+        pg = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004C1BF8, D_004C1C08);
         break;
     case 6:
         if (D_004FFBA0 != 0x13 && D_004FFBA0 != 0x14) {

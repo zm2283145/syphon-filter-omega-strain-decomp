@@ -17,7 +17,7 @@ typedef struct {
 extern char D_00537F80[];
 extern u64_t* func_00375C30(void* q, int a, int b, int c, int d, int e);
 
-void func_0037A5C0(R5C0* o)
+void Video_BuildFrameClearPacket(R5C0* o)
 {
     unsigned int tbp = o->tbp[o->cur];
     GsQ* q = (GsQ*)func_00375C30(D_00537F80, 1, 1, 8, 0, 1);

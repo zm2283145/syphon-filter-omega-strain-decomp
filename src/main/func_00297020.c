@@ -14,7 +14,7 @@ void func_00296FA0(List_7020*);
 void func_003334C0(int, int, List_7020*);
 int func_00332FE0(int, __int128);
 __int128 func_003FDA40(char*);
-char* func_003FDAE0(int);
+char* Loc_GetStoredKey(int);
 int String_CompareNoCase(char*, char*);
 void func_00299360(List_7020*, int);
 
@@ -57,8 +57,8 @@ void func_00297020(char* self) {
         if (D_0048B868) {
             *pi = -1;
             for (j = 0; j < list.count; j++) {
-                func_003FDAE0(list.items[j].name);
-                if (String_CompareNoCase(func_003FDAE0(list.items[j].name), name) == 0) {
+                Loc_GetStoredKey(list.items[j].name);
+                if (String_CompareNoCase(Loc_GetStoredKey(list.items[j].name), name) == 0) {
                     *pi = j;
                     break;
                 }

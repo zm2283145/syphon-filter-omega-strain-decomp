@@ -41,7 +41,7 @@ void func_0013B0C0(void* p);
 void Col_ReconstructSourceTriangle(ATri* t, V* src);
 }
 inline ATri::ATri(V* src) { ATri* p = this; PV* it = p->v; do { Ptr_Identity(it); it++; } while (it != p->v + 3); Ptr_Identity(&p->n); func_0013B0D0(p->x40); func_0013B0C0(p->x60); Col_ReconstructSourceTriangle(p, src); }
-extern "C" unsigned char func_003C3220(CQ* q, int a, int b)
+extern "C" unsigned char ColQuery_ExecuteSweep(CQ* q, int a, int b)
 {
     unsigned char hit;
     if (q->xD0) {

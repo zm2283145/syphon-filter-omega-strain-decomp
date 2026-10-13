@@ -22,7 +22,7 @@ char D_004BA818[] = "GuiSlideShow"; void func_0034D770(O_34D2D0* o, int k);
 M_34D2D0* Gui_GetScreenStack(void);
 void* Gui_GetScreenList(void);
 void func_0041E0F0(void* a, void* b, int kind, int v, int f);
-void* func_00418A80(void* mgr, char* a, char* b);
+void* GuiManager_FindOrLoad(void* mgr, char* a, char* b);
 void GuiStack_SwapScreens(void* mgr, void* o, void* w);
 char* String_CStr(void* s);
 void func_00327C70(void* w, int a, char* s, int b);
@@ -55,7 +55,7 @@ int func_0034D2D0(O_34D2D0* o, Ev_34D2D0* ev)
         E_34D2D0** ep = &o->ents;
         if (((E_34D2D0*)((char*)o->ents + idx * 20))->b8) {
             func_0041E0F0(o, Gui_GetScreenStack(), 0x10, 1, 0);
-            w = func_00418A80(Gui_GetScreenList(), D_004BA818, "ZEUSHELL");
+            w = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004BA818, "ZEUSHELL");
             if (w) {
                 char b0[16];
                 char b1[16];

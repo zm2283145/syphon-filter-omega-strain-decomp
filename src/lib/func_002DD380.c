@@ -1,7 +1,7 @@
 extern char *strncpy(char *, const char *, unsigned int);
 extern unsigned int strlen(const char *);
 extern char *func_00129C80(char *, const char *);
-extern int func_00121BC8(const char *);
+extern int atoi(const char *);
 extern char D_004ADB50[];
 int func_002DD380(unsigned char *out, const char *s)
 {
@@ -19,10 +19,10 @@ int func_002DD380(unsigned char *out, const char *s)
             if (q == 0)
                 return 0xA;
             *q = 0;
-            out[i] = func_00121BC8(p);
+            out[i] = atoi(p);
             p = q + 1;
         }
-        out[3] = func_00121BC8(p);
+        out[3] = atoi(p);
         return 0;
     }
     return 0xA;

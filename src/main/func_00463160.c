@@ -15,7 +15,7 @@ extern char D_004C2780[];
 extern char D_004C2798[];
 Ui_463160* Gui_GetScreenStack(void);
 void* Gui_GetScreenList(void);
-void* func_00418A80(void* a, char* b, char* c);
+void* GuiManager_FindOrLoad(void* a, char* b, char* c);
 void GuiStack_SwapScreens(void* ui, S_463160* self, void* pg);
 int func_0035AEC0(S_463160* self, Ev_463160* ev);
 }
@@ -54,7 +54,7 @@ extern "C" int func_00463160(S_463160* self, Ev_463160* ev)
         if (b) {
             void* pg;
             Gui_GetScreenStack()->Hide(self->f250);
-            pg = func_00418A80(Gui_GetScreenList(), D_004C2780, D_004C2798);
+            pg = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004C2780, D_004C2798);
             GuiStack_SwapScreens(Gui_GetScreenStack(), self, pg);
             return 1;
         }

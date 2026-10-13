@@ -14,7 +14,7 @@ extern int D_00585F90;
 extern int SFOLobby_NoInstance(int a, int b, int c, Msg_452A70* s);
 extern void String_Copy(char* d, char* s);
 extern char* strrchr(char* s, int c);
-extern int func_00121BC8(char* s);
+extern int atoi(char* s);
 void func_00452A70(int a, int b, int c, Msg_452A70* s) {
     char buf[0x40];
     char* p;
@@ -25,7 +25,7 @@ void func_00452A70(int a, int b, int c, Msg_452A70* s) {
         *strrchr(buf, ':') = 0;
         p = strrchr(buf, '_');
         if (p) {
-            n = func_00121BC8(p + 1);
+            n = atoi(p + 1);
             if (n < D_00585F90) {
                 D_00585E60->table[n] = s->val;
             }

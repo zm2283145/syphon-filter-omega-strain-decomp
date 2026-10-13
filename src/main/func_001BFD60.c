@@ -3,7 +3,7 @@ typedef struct { unsigned int word; unsigned int length; char* data; } Str_1BFD6
 typedef struct { char* p; } It_1BFD60;
 extern void String_CtorCStr_13B480(Str_1BFD60* s, char* c);
 extern void func_0013D680(Str_1BFD60* d, Str_1BFD60* s);
-extern void func_00138B70(Str_1BFD60* s, int f);
+extern void String_Dtor(Str_1BFD60* s, int f);
 extern void func_001BFF20(It_1BFD60* out, Str_1BFD60* s);
 extern void func_001BFEE0(It_1BFD60* out, Str_1BFD60* s);
 extern int func_001BFE90(It_1BFD60* a, It_1BFD60* b);
@@ -25,7 +25,7 @@ void Global_LoadAnimation(char* name)
         Str_1BFD60 t;
         String_CtorCStr_13B480(&t, name);
         func_0013D680(&s, &t);
-        func_00138B70(&t, 0);
+        String_Dtor(&t, 0);
         func_001BFF20(&it, &s);
         func_001BFEE0(&end, &s);
         while (func_001BFE90(&it, &end)) {
@@ -36,10 +36,10 @@ void Global_LoadAnimation(char* name)
         Str_1BFD60 t2;
         String_CtorCStr_13B480(&t2, name);
         func_0013D680(&s, &t2);
-        func_00138B70(&t2, 0);
+        String_Dtor(&t2, 0);
     }
     SkaRegistry_LoadAnimation(D_004FFBD8, String_CStr(&s));
-    func_00138B70(&s, 0);
+    String_Dtor(&s, 0);
 }
 
 

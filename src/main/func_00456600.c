@@ -10,7 +10,7 @@ struct VC00456600 { virtual int v0(); virtual int v1(); virtual int v2(); virtua
 extern "C" {
 int Loc_LookupText(...);                             
 int func_0041BEB0(...);                   
-void **func_0041DB80(...);                          
+void **GuiWidget_FindChildByName(...);                          
 int sprintf(...);                           
 extern int D_004A7520;
 extern int D_004C1A38;
@@ -21,7 +21,7 @@ extern "C" void func_00456600(int arg0, int arg1) {
     void **var_s0;
 
     F_(arg0, 0xB0, int) = arg1;
-    var_s0 = func_0041DB80(arg0, ((int*)"label_to_map"));
+    var_s0 = GuiWidget_FindChildByName(arg0, ((int*)"label_to_map"));
     var_s0 = ((var_s0 != NULL) && (((VC00456600 *)(var_s0))->v20(&D_004A7520) != 0)) ? var_s0 : NULL;
     if (var_s0 != NULL) {
         sprintf(sp30, ((int*)"StartMenuOpt%d"), arg1);

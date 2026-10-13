@@ -14,7 +14,7 @@ extern int sprintf(char*, const char*, ...);
 extern void String_CtorCStr_13B480(S346*, char*);
 extern void func_003FD740(S346*);
 extern char* String_CStr(S346*);
-extern void func_00138B70(S346*, int);
+extern void String_Dtor(S346*, int);
 extern char* func_0033CE30(O346*, int, char*, char*, int, int);
 
 extern int Gui_GetScreenStack(void);
@@ -57,7 +57,7 @@ extern "C" void func_00346FB0(O346* self, I346* info) {
             String_CtorCStr_13B480(&s, info->text);
             func_003FD740(&s);
             func_0041BEB0(self->wa0, String_CStr(&s), 0);
-            func_00138B70(&s, 0);
+            String_Dtor(&s, 0);
         } else {
             int c = -1;
             char* t;

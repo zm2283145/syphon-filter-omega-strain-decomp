@@ -34,7 +34,7 @@ void func_00209620(Str_0029CBB0* d, Str_0029CBB0* s);
 void func_003FD740(Str_0029CBB0* s);
 char* String_CStr(Str_0029CBB0* s);
 int func_002071F0(Str_0029CBB0* s);
-void func_00138B70(Str_0029CBB0* s, int flags);
+void String_Dtor(Str_0029CBB0* s, int flags);
 }
 static inline void SetText_0029CBB0(S_0029CBB0* self, char* key)
 {
@@ -90,12 +90,12 @@ extern "C" void func_0029CBB0(S_0029CBB0* self, unsigned char sel)
                         Str_0029CBB0 s;
                         String_CtorCStr_13B480(&s, (char*)e);
                         func_00209620(&list1, &s);
-                        func_00138B70(&s, 0);
+                        String_Dtor(&s, 0);
                     }
                 }
                 func_003FD740(&list1);
                 MLTextWidget_AddText(self->pF4, String_CStr(&list1));
-                func_00138B70(&list1, 0);
+                String_Dtor(&list1, 0);
             }
         } else if (sel == 2) {
             void* w = self->p100;
@@ -118,7 +118,7 @@ extern "C" void func_0029CBB0(S_0029CBB0* self, unsigned char sel)
                                 Str_0029CBB0 s;
                                 String_CtorCStr_13B480(&s, e->name);
                                 func_00209620(&list2, &s);
-                                func_00138B70(&s, 0);
+                                String_Dtor(&s, 0);
                             }
                         }
                     }
@@ -143,7 +143,7 @@ extern "C" void func_0029CBB0(S_0029CBB0* self, unsigned char sel)
                     func_003FD740(&list2);
                     MLTextWidget_AddText(self->p100, String_CStr(&list2));
                 }
-                func_00138B70(&list2, 0);
+                String_Dtor(&list2, 0);
             }
         }
     }

@@ -4,11 +4,11 @@ typedef struct {
     B375770* cur[3]; char padC[0x20]; char bufs[0xA0];
     B375770* last0; B375770* lastA; B375770* lastB; int aD8; int idx0; int idxA; int idxB; int size0; int sizeA; int sizeB;
 } S375770;
-extern int func_001037A8(int, int);
+extern int sceGsSyncPath(int, int);
 void func_00375CD0(S375770* o)
 {
     B375770* p;
-    func_001037A8(0, 0);
+    sceGsSyncPath(0, 0);
     p = o->cur[0];
     o->size0 = (p->end - p->start) * 8;
     o->last0 = o->cur[0];

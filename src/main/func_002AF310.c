@@ -12,7 +12,7 @@ extern "C" {
     int func_0033CE30(Screen*,int,char*,char*,int = 0,int = 0);
     void func_0033D8E0(Screen*,int);
     int func_0033DF00(Screen*,int,int,int,char*);
-    int func_00418A80(int,char*,char*);
+    int GuiManager_FindOrLoad(int,char*,char*);
     void func_0041BEB0(int,char*,int);
     int DME_GetLobby();
     char* func_0044A060(int);
@@ -44,14 +44,14 @@ extern "C" int func_002AF310(Screen* arg0, int arg1, int arg2, int arg3, char* a
             return 1;
         }
         if (arg1 == temp_s4->unk168) {
-            int temp_v0 = func_00418A80(Gui_GetScreenList(), D_004ABCD8, D_004ABCE8);
+            int temp_v0 = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004ABCD8, D_004ABCE8);
             if (temp_v0 != 0) {
                 func_0032B4F0(temp_v0, func_0033CE30(temp_s4, 0x49, 0, 0), D_004ABCD0, temp_s4, 15, 16, 0);
             }
             return 1;
         }
         if (arg1 == temp_s4->unk16C) {
-            int temp_v0_2 = func_00418A80(Gui_GetScreenList(), D_004ABCD8, D_004ABCE8);
+            int temp_v0_2 = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004ABCD8, D_004ABCE8);
             if (temp_v0_2 != 0) {
                 func_0032B4F0(temp_v0_2, func_0033CE30(temp_s4, 0x41, 0, 0), D_004ABCD0, temp_s4, 40, 14, 0);
             }

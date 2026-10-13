@@ -46,7 +46,7 @@ int func_00171EB0(PtrVec* v);
 Item_172AE0*** func_00171EC0(Items_172AE0* v);
 int func_001734D0(PtrVec* v, Hotbox** value);
 int NetMap_BindReceiver(int, int, Hotbox*);
-int func_002EBAF8(int*, int);
+int NetGame_InitLocalSlot(int*, int);
 int func_002EBBA0(int, int*);
 }
 static inline int Read(Reader* r) { int v = *(int*)r->cur; r->cur += 4; return v; }
@@ -71,7 +71,7 @@ static inline bool IsIdent(float* m) {
 static inline Leaf_172AE0* First(PtrVec* v) { return func_00171EB0(v) ? (Leaf_172AE0*)*func_00171EA0(v, 0) : 0; }
 static inline unsigned char IsLocal(void) { unsigned char v; if (D_005721C8) v = D_005721C0; else v = 1; return v; }
 #pragma inline_depth(10)
-static inline int LocalId() { int r=0;int a=D_005721A8;if(D_005721C8) { if(D_00494178==-1)func_002EBAF8(&D_00494178,a);r=D_00494178; }else { /* Keep the default-id branch. */ asm { .set reorder } }return r; }
+static inline int LocalId() { int r=0;int a=D_005721A8;if(D_005721C8) { if(D_00494178==-1)NetGame_InitLocalSlot(&D_00494178,a);r=D_00494178; }else { /* Keep the default-id branch. */ asm { .set reorder } }return r; }
 #pragma opt_strength_reduction off
 #pragma opt_unroll_loops off
 #pragma opt_rotateloops off

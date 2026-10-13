@@ -17,7 +17,7 @@ typedef struct EvtSndEvent {
 extern "C" {
 void* Gui_GetScreenList(void);
 void* Gui_GetScreenStack(void);
-int func_00418A80(void* mgr, char* a, char* b);
+int GuiManager_FindOrLoad(void* mgr, char* a, char* b);
 void GuiStack_SwapScreens(void* mgr, void* self, int snd);
 }
 
@@ -28,7 +28,7 @@ void GuiStack_SwapScreens(void* mgr, void* self, int snd);
     {                                                                         \
         bool b = e->type == 1 && e->sub == 0 && e->id == 0x10 && e->arg6 == 0; \
         if (b) {                                                              \
-            int s = func_00418A80(Gui_GetScreenList(), nameA, nameB);             \
+            int s = GuiManager_FindOrLoad(Gui_GetScreenList(), nameA, nameB);             \
             GuiStack_SwapScreens(Gui_GetScreenStack(), self, s);                          \
             return 1;                                                         \
         }                                                                     \

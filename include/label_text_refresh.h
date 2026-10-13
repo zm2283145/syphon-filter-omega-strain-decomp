@@ -21,7 +21,7 @@ extern "C" {
 extern LtrGlobal* D_004FFC04;
 extern char D_004A9CF8[];
 extern char D_004A7520[];
-LtrWidget* func_0041DB80(void* self, char* name);
+LtrWidget* GuiWidget_FindChildByName(void* self, char* name);
 char* Loc_LookupText(char* key);
 void func_0041BEB0(LtrWidget* w, char* text, int flags);
 void AgentOpen_BuildSlotList(void* self);
@@ -39,7 +39,7 @@ static inline LtrWidget* Ltr_Cast(LtrWidget* w)
     {                                                                         \
         LtrWidget* w;                                                         \
         D_004FFC04->flag2F = 0;                                               \
-        w = Ltr_Cast(func_0041DB80(self, D_004A9CF8));                        \
+        w = Ltr_Cast(GuiWidget_FindChildByName(self, D_004A9CF8));                        \
         if (w)                                                                \
             func_0041BEB0(w, Loc_LookupText(textKey), 0);                     \
         AgentOpen_BuildSlotList(self);                                                  \

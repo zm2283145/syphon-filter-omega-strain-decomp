@@ -17,7 +17,7 @@ extern char D_004C2668[];
 extern char D_004C2680[];
 Stack_462380* Gui_GetScreenStack(void);
 void* Gui_GetScreenList(void);
-void* func_00418A80(void* a, char* b, char* c);
+void* GuiManager_FindOrLoad(void* a, char* b, char* c);
 int func_00368300(void* self, Ev_462380* ev);
 }
 static inline unsigned char Down_462380(Ev_462380* e)
@@ -48,7 +48,7 @@ extern "C" int func_00462380(void* self, Ev_462380* ev)
         void* pg;
         Gui_GetScreenStack()->Pop(self);
         name = D_005721C8 ? D_004C2660 : D_004C2668;
-        pg = func_00418A80(Gui_GetScreenList(), D_004C2680, name);
+        pg = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004C2680, name);
         Gui_GetScreenStack()->Push(pg, 1);
         return 1;
     }

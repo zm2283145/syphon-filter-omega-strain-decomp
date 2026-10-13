@@ -22,7 +22,7 @@ extern char D_004A9A40[];
 extern char D_004FFB50[];
 extern char D_0055DDA0[];
 void func_0041F150(Self_0028ED60* self);
-void* func_0041DB80(Self_0028ED60* self, char* name);
+void* GuiWidget_FindChildByName(Self_0028ED60* self, char* name);
 void func_00290BC0(void);
 void func_0041BEB0(W_0028ED60* w, char* s, int a);
 void func_002888C0(Aw_0028ED60* a);
@@ -33,7 +33,7 @@ void func_002887C0(Aw_0028ED60* a, int flags);
 }
 static inline W_0028ED60* FindAs_0028ED60(Self_0028ED60* self, char* name, char* type)
 {
-    W_0028ED60* w = (W_0028ED60*)func_0041DB80(self, name);
+    W_0028ED60* w = (W_0028ED60*)GuiWidget_FindChildByName(self, name);
     return (w && w->IsA(type)) ? w : 0;
 }
 extern "C" void func_0028ED60(Self_0028ED60* self)
@@ -46,7 +46,7 @@ extern "C" void func_0028ED60(Self_0028ED60* self)
         D_00506390 = self;
         w->f48 = (void*)func_00290BC0;
     }
-    self->f48 = func_0041DB80(self, "createagent_grp");
+    self->f48 = GuiWidget_FindChildByName(self, "createagent_grp");
     self->f4C = FindAs_0028ED60(self, D_004A9988, D_004A9870);
     self->f50 = FindAs_0028ED60(self, D_004A9990, D_004A9870);
     self->f58 = FindAs_0028ED60(self, "selectindicator", D_004A9C40);

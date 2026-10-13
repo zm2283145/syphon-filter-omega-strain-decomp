@@ -15,7 +15,7 @@
  *
  * Usual caller idiom:
  *   SsoString s;  String_CtorCStr_13B480(&s, "text");
- *   ... String_CStr(&s) (data) ...;  func_00138B70(&s, 0);  (dtor)
+ *   ... String_CStr(&s) (data) ...;  String_Dtor(&s, 0);  (dtor)
  *
  * Prototypes take void* so local string types still convert; define
  * SSO_STRING_NO_PROTOS to keep typed local declarations instead.
@@ -43,7 +43,7 @@ LAYOUT_SIZE(SsoString, 0xC);
 extern "C" {
 #endif
 void* String_CtorCStr_13B480(void* str, const char* cstr);      /* ctor from C string */
-void* func_00138B70(void* str, int flags);                      /* dtor (frees long data) */
+void* String_Dtor(void* str, int flags);                      /* dtor (frees long data) */
 char* String_CStr(void* str);                                 /* data() / c_str() */
 void* func_0013D680(void* dst, const void* src);                /* operator= */
 void String_Reserve(void* str, unsigned int n);                 /* 0x0013B970 */

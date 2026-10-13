@@ -13,7 +13,7 @@ void func_004268B0(Vec4* color);
 Vec4* func_00426890(Vec4* color, float x, float y, float z, float w);
 void func_00412150(Vec4* destination, const Vec4* source);
 void func_00428000(TextArrayRow* row, unsigned int columns, const TextArrayCell* value);
-void func_00138B70(void* string, int flags);
+void String_Dtor(void* string, int flags);
 void func_00426870(TextArrayStore* store, TextArrayRow** row);
 void func_00428090(TextArrayStore* store, int flags);
 void operator_delete(void* allocation);
@@ -63,7 +63,7 @@ extern "C" void func_00426600(guiTextArrayWidget* self, unsigned int columns, un
         cell.text = 0;
         func_00412150(&cell.color, func_00426890(&white, 1.0f, 1.0f, 1.0f, 1.0f));
         func_00428000(row, columns, &cell);
-        func_00138B70(cell.string, 0);
+        String_Dtor(cell.string, 0);
         func_00426870(&self->store, &row);
     }
 }
@@ -71,7 +71,7 @@ extern "C" void func_00426600(guiTextArrayWidget* self, unsigned int columns, un
 static inline void destroy_string(void* string)
 {
     if (string)
-        func_00138B70(string, 0);
+        String_Dtor(string, 0);
 }
 
 /* Destroy the cell's string before optional cell deletion. */

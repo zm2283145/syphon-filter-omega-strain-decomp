@@ -1,6 +1,6 @@
 extern int func_001161A0(void);
 extern void func_001161F8(void);
-extern int func_0010CE60(int, int);
+extern int RemoveIntcHandler(int, int);
 extern int Alloc_Lock(int);
 extern int DeleteSema(int);
 extern int scePrintf(const char *, ...);
@@ -11,7 +11,7 @@ int sceUsbKbEnd(void)
 {
     int err = 0;
     int s = func_001161A0();
-    int r = func_0010CE60(3, D_004F581C);
+    int r = RemoveIntcHandler(3, D_004F581C);
     if (r == 0) Alloc_Lock(3);
     if (s) func_001161F8();
     if (r < 0) {

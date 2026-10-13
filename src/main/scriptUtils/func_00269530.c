@@ -8,7 +8,7 @@
 #include "scriptUtils_types.h"
 
 extern ListPos* List_InsertBefore(ListPos* result, void* list, ListPos* pos, int value);
-extern int func_0015C100(void* obj);
+extern int cNode_Identity(void* obj);
 extern cNodeList* func_00269810(void* obj);
 extern void* Group_GetAt(ScriptGroup* group, int index);
 
@@ -27,7 +27,7 @@ int Script_cNodeList_Get(ScriptArg* args) {
     volatile int arg1 = args[1].i;
     int index = arg1;
 
-    return func_0015C100(Group_GetAt(func_00269810(args[0].p)->group, index));
+    return cNode_Identity(Group_GetAt(func_00269810(args[0].p)->group, index));
 }
 
 /* Script native: cNodeList.GetSize(). volatile mirrors the original stack temporary. */

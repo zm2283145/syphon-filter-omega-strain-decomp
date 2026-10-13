@@ -70,7 +70,7 @@ Stk3D0* Gui_GetScreenStack(void);
 int Gui_GetScreenList(void);
 void func_004158C0(Stk3D0* s, int x);
 Scr3D0* func_004187C0(int l, char* a, char* b);
-Scr3D0* func_00418A80(int l, char* a, char* b);
+Scr3D0* GuiManager_FindOrLoad(int l, char* a, char* b);
 int DME_GetLobby(void);
 void func_00453A50(int g);
 void DME_StartThread(void);
@@ -170,16 +170,16 @@ extern "C" void func_002CB3D0(Self3D0* self, unsigned char flag)
             func_0041E0F0(a, Gui_GetScreenStack(), 0x10, 5, 0);
         }
         if (self->b2C) {
-            func_00418A80(Gui_GetScreenList(), D_004AD000, D_004AD010);
-            func_00418A80(Gui_GetScreenList(), D_004AD020, D_004AD038);
+            GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AD000, D_004AD010);
+            GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AD020, D_004AD038);
             func_002C9D50(self);
         }
         if (self->b35) {
             self->b35 = 0;
-            next = func_00418A80(Gui_GetScreenList(), D_004AD020, D_004AD038);
+            next = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AD020, D_004AD038);
             if (self->b30 && !self->b32) go = 1;
         } else {
-            next = func_00418A80(Gui_GetScreenList(), D_004AD000, D_004AD010);
+            next = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AD000, D_004AD010);
         }
         func_002C9EE0(self);
         func_00145160(D_004FFD30);

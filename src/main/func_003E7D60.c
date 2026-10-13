@@ -24,7 +24,7 @@ extern void String_Reserve(Str_E7D60* s, int n);
 extern void String_CtorCStr_13B480(Str_E7D60* s, char* c);
 extern void func_0013D680(Str_E7D60* d, Str_E7D60* s);
 extern void func_00209620(Str_E7D60* d, Str_E7D60* s);
-extern void func_00138B70(Str_E7D60* s, int f);
+extern void String_Dtor(Str_E7D60* s, int f);
 
 Con_E7D60* func_003E7D60(Con_E7D60* self, char* name, int x)
 {
@@ -44,19 +44,19 @@ Con_E7D60* func_003E7D60(Con_E7D60* self, char* name, int x)
         Str_E7D60 t;
         String_CtorCStr_13B480(&t, D_004BDF30);
         func_0013D680(&self->lines[0], &t);
-        func_00138B70(&t, 0);
+        String_Dtor(&t, 0);
     }
     {
         Str_E7D60 t;
         String_CtorCStr_13B480(&t, name);
         func_00209620(&self->lines[0], &t);
-        func_00138B70(&t, 0);
+        String_Dtor(&t, 0);
     }
     {
         Str_E7D60 t;
         String_CtorCStr_13B480(&t, D_004BDF50);
         func_0013D680(&self->lines[1], &t);
-        func_00138B70(&t, 0);
+        String_Dtor(&t, 0);
     }
     self->wC = 2;
     self->w218 = 0;

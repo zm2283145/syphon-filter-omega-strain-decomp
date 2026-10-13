@@ -43,7 +43,7 @@ void func_004456C0(int n);
 Agent_D390* Agent_GetSelected(char* a, int b);
 void String_CtorCStr_13B480(Str_D390* s, char* text);
 char* String_CStr(Str_D390* s);
-void func_00138B70(Str_D390* s, int flags);
+void String_Dtor(Str_D390* s, int flags);
 }
 static inline bool Start_D390(O_D390* o)
 {
@@ -139,8 +139,8 @@ extern "C" void func_0029D390(O_D390* o)
             txt = String_CStr(&t2);
             FrontEnd_OpenPopup(D_004FFC04, 2, String_CStr(&s2), txt, o, 0);
             FrontEnd_ClosePopup(D_004FFC04, o->x120);
-            func_00138B70(&t2, 0);
-            func_00138B70(&s2, 0);
+            String_Dtor(&t2, 0);
+            String_Dtor(&s2, 0);
             func_0044F970(&lst, -1);
             return;
         }
@@ -153,8 +153,8 @@ extern "C" void func_0029D390(O_D390* o)
             FrontEnd_OpenPopup(D_004FFC04, 2, String_CStr(&s1), txt, o, 0);
             FrontEnd_ClosePopup(D_004FFC04, o->x120);
             func_00442E90(n);
-            func_00138B70(&t1, 0);
-            func_00138B70(&s1, 0);
+            String_Dtor(&t1, 0);
+            String_Dtor(&s1, 0);
             func_0044F970(&lst, -1);
             return;
         }

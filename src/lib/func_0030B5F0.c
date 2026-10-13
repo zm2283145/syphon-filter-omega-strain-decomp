@@ -1,7 +1,7 @@
 typedef unsigned int size_t;
 extern char *strncpy(char *d, const char *s, size_t n);
 extern size_t strlen(const char *s);
-extern long func_0012AF90(const char *s, char **end, int base);
+extern long strtol(const char *s, char **end, int base);
 extern char *func_0030B468(char **sp, const char *delim);
 extern unsigned char D_00499C70[];
 extern const char D_004AF990[];
@@ -33,7 +33,7 @@ int func_0030B5F0(char *url, char *path, char *host, unsigned short *port)
                 if (!isdigit(*tok)) return 11;
                 strncpy(host, tok, 0x10);
                 if (rest != 0)
-                    *port = func_0012AF90(rest, 0, 10);
+                    *port = strtol(rest, 0, 10);
                 else
                     *port = 80;
             }

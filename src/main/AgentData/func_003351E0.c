@@ -13,9 +13,9 @@ typedef struct {
 } O_3351E0;
 extern int D_00532AD4;
 extern E_3351E0* D_00532AD8;
-void func_003352C0(O_3351E0* o, int arg);
+void AgentData_UnlockById(O_3351E0* o, int arg);
 
-void func_003351E0(O_3351E0* o, int force)
+void AgentData_ApplyReachedRatings(O_3351E0* o, int force)
 {
     int i;
     for (i = 0; i < D_00532AD4; i++) {
@@ -26,7 +26,7 @@ void func_003351E0(O_3351E0* o, int force)
             } else if (o->flags[i] == 0) {
                 o->flags[i] = 1;
             }
-            func_003352C0(o, e->arg);
+            AgentData_UnlockById(o, e->arg);
         }
     }
 }

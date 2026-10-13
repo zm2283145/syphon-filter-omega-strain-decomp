@@ -45,7 +45,7 @@ extern char Script_SetFootstepSoundRadius[];
 extern int D_004EE668;
 extern char Script_CastNPC[];
 extern int D_004EE670;
-extern int func_003D8F60();
+extern int ScriptEnum_Register();
 extern int Script_RegisterType();
 extern int Script_RegisterNative();
 extern int cGOBJ_GetScriptTypeKeyPtr();
@@ -57,7 +57,7 @@ void func_004C59F0(void)
     D_004EE550 = D_0049C680;
     D_004EE5C0 = D_0049C690;
     D_004EE5C8 = D_0049C6A0;
-    D_004EE5D0 = func_003D8F60(D_0049C6C0, D_0048A090, 9);
+    D_004EE5D0 = ScriptEnum_Register(D_0049C6C0, D_0048A090, 9);
     D_004EE5D8 = Script_RegisterType("cAI", ScriptType_cAI_Init, 0, 1);
     D_004EE5E0 = D_004EE5D8;
     D_004EE5E8 = Script_RegisterNative(D_004EE5D8, Script_cAI_SetTeam, D_00493880, "SetTeam", 2, &D_004EE5D8, D_00493888);

@@ -18,7 +18,7 @@ typedef struct { void* n; } It_3617C0;
 extern "C" {
 L_3617C0* Gui_GetScreenList(void);
 M_3617C0* Gui_GetScreenStack(void);
-void* func_00418A80(void* mgr, char* a, char* b);
+void* GuiManager_FindOrLoad(void* mgr, char* a, char* b);
 void GuiStack_SwapScreens(void* mgr, S_3617C0* o, void* w);
 void func_002A88C0(It_3617C0* out, void* list, W_3617C0** val);
 void func_002A88B0(It_3617C0* out, void* list);
@@ -37,7 +37,7 @@ int func_003617C0(S_3617C0* o, Ev_3617C0* ev)
 {
     if (Plain_3617C0(ev, 0x10)) {
         if (o->fFC == 0) {
-            void* w = func_00418A80(Gui_GetScreenList(), "GuiDossiers", "DOSSIERS");
+            void* w = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiDossiers", "DOSSIERS");
             GuiStack_SwapScreens(Gui_GetScreenStack(), o, w);
         } else {
             W_3617C0* w = o->w10;

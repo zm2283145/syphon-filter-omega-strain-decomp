@@ -28,7 +28,7 @@ extern "C" {
 void* memset(void*, int, unsigned int);
 void String_Copy(char*, const char*);
 void func_002D0D70(Conn9C0*);
-int func_00121BC8(char*);
+int atoi(char*);
 void func_002D0DB0(Conn9C0*, int, int, int, void*);
 void func_00352C30(char*);
 int func_002CF420(Conn9C0*, int*);
@@ -79,7 +79,7 @@ int func_004449C0(int a, char* b) {
     memset(&req, 0, sizeof(req));
     memset(&join, 0, sizeof(join));
     func_002D0D70(&conn);
-    func_002D0DB0(&conn, a, func_00121BC8(b), 1, (void*)func_00444DD0);
+    func_002D0DB0(&conn, a, atoi(b), 1, (void*)func_00444DD0);
     if (((unsigned char*)D_00585E60)[0x23D6] == 0)
         func_00352C30(conn.sub);
     else

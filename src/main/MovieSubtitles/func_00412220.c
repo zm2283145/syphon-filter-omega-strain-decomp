@@ -33,7 +33,7 @@ extern int func_004120F0(void* src);
 extern void func_004120C0(void* src);
 extern void func_00412050(Sub412220* self);
 
-void func_00412220(Sub412220* self) {
+void MovieSubtitles_Start(Sub412220* self) {
     int i;
     self->iB4 = 0;
     if (func_00412210(self->src)) {

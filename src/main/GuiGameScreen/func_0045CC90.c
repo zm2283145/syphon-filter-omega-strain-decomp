@@ -31,7 +31,7 @@ extern void* D_004FFD30;
 extern void* D_00497AC0;
 extern W_45CC90* func_0041F960(char*);
 extern int sprintf(char*, const char*, ...);
-extern W_45CC90* func_0041DB80(W_45CC90*, char*);
+extern W_45CC90* GuiWidget_FindChildByName(W_45CC90*, char*);
 extern void func_0041EBA0(W_45CC90*, float, float);
 extern void GuiWidget_AddChild(W_45CC90*, W_45CC90*);
 extern void WeaponDb_LoadModel(void* m, void* a, void* b, int c, int d, int e, int f);
@@ -64,7 +64,7 @@ void func_0045CC90(S_45CC90* self)
         Vec2_45CC90 s;
         self->items[i] = func_0041F960(D_004C2210);
         sprintf(buf, D_004C2228, i + 1);
-        ref = func_0041DB80(self->root, buf);
+        ref = GuiWidget_FindChildByName(self->root, buf);
         p = ref->pos;
         func_0041EBA0(self->items[i], p.x, p.y);
         s = ref->size;

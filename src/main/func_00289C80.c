@@ -28,12 +28,12 @@ int strcmp(const char* a, const char* b);
 void String_Copy(char* d, const char* s);
 char* func_00336170(Ag_00289C80* ag);
 void func_00441C20(S_00289C80* self, char* n);
-void func_00441A10(S_00289C80* self);
+void GuiSaveAgentWidget_HandleEvent(S_00289C80* self);
 char* Loc_LookupText(char* key);
 void func_0041BEB0(void* w, char* s, int a);
 void func_002CA640(void* ui, int a);
 void* Gui_GetScreenList(void);
-void* func_00418A80(void* a, char* b, char* c);
+void* GuiManager_FindOrLoad(void* a, char* b, char* c);
 void GuiStack_SwapScreens(void* ui, S_00289C80* self, void* pg);
 }
 static inline int StrNe_00289C80(const char* a, const char* b) { return strcmp(a, b); }
@@ -102,7 +102,7 @@ extern "C" int func_00289C80(S_00289C80* self, void* w, int msg, int sub, char* 
                     if (changed) {
                         *f = 0;
                         self->b4C = 1;
-                        func_00441A10(self);
+                        GuiSaveAgentWidget_HandleEvent(self);
                     } else {
                         if (self->pA0)
                             func_0041BEB0(self->pA0, Loc_LookupText(D_004A96F8), 0);
@@ -124,7 +124,7 @@ extern "C" int func_00289C80(S_00289C80* self, void* w, int msg, int sub, char* 
             if (sub == 0x1E) {
                 void* pg;
                 func_002CA640(D_004FFC04, 1);
-                pg = func_00418A80(Gui_GetScreenList(), "GuiOnlineOfflineSelect", "ONOFFSEL");
+                pg = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiOnlineOfflineSelect", "ONOFFSEL");
                 GuiStack_SwapScreens(Gui_GetScreenStack(), self, pg);
                 return 1;
             }

@@ -12,7 +12,7 @@ void func_00298690(void* s);
 void func_003284E0(void* s);
 void String_CtorCStr_13B480(Str_328310* s, char* c);
 void func_0013D680(Str_328310* d, Str_328310* s);
-void func_00138B70(void* s, int f);
+void String_Dtor(void* s, int f);
 void func_00329A70(void* v, E_328310* pos, int n, E_328310* e);
 void func_0032A110(void* s, int f);
 
@@ -27,7 +27,7 @@ int func_00328310(O_328310* o, char* s)
     func_003284E0(m);
     { Str_328310* p = &t; String_CtorCStr_13B480(p, s ? s : D_004B8790); }
     func_0013D680(&e.name, &t);
-    func_00138B70(&t, 0);
+    String_Dtor(&t, 0);
     e.x = 0;
     func_00329A70(o->v48, o->v50 + o->n4C, 1, &e);
     r = o->n4C - 1;
@@ -36,7 +36,7 @@ int func_00328310(O_328310* o, char* s)
             if (m) func_0032A110(m, 0);
         }
     }
-    func_00138B70(&e, 0);
+    String_Dtor(&e, 0);
     return r;
 }
 

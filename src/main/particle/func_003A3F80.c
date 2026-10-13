@@ -5,7 +5,7 @@
 
 extern "C" {
 int func_0012AC20(char*, char**);
-float func_0011C928(int);
+float SoftFloat_DoubleToFloat(int);
 char* strchr(const char*, int);
 long func_0012B1F0(char*, char**, int);
 }
@@ -45,28 +45,28 @@ struct Mk3A3F80 : V4_3A3F80 {
 extern "C" void func_003A3F80(Obj3A3F80* self, char* str, float ver)
 {
     char* s = str;
-    self->f990 = func_0011C928(func_0012AC20(s, &s));
-    self->f994 = func_0011C928(func_0012AC20(s, &s));
+    self->f990 = SoftFloat_DoubleToFloat(func_0012AC20(s, &s));
+    self->f994 = SoftFloat_DoubleToFloat(func_0012AC20(s, &s));
     s = strchr(s, '\n') + 1;
-    self->f9A0 = func_0011C928(func_0012AC20(s, &s));
-    self->f9A4 = func_0011C928(func_0012AC20(s, &s));
+    self->f9A0 = SoftFloat_DoubleToFloat(func_0012AC20(s, &s));
+    self->f9A4 = SoftFloat_DoubleToFloat(func_0012AC20(s, &s));
     s = strchr(s, '\n') + 1;
-    self->f998 = func_0011C928(func_0012AC20(s, &s));
-    self->f99C = func_0011C928(func_0012AC20(s, &s));
+    self->f998 = SoftFloat_DoubleToFloat(func_0012AC20(s, &s));
+    self->f99C = SoftFloat_DoubleToFloat(func_0012AC20(s, &s));
     s = strchr(s, '\n') + 1;
-    self->f9A8 = func_0011C928(func_0012AC20(s, &s));
-    self->f9AC = func_0011C928(func_0012AC20(s, &s));
+    self->f9A8 = SoftFloat_DoubleToFloat(func_0012AC20(s, &s));
+    self->f9AC = SoftFloat_DoubleToFloat(func_0012AC20(s, &s));
     self->f9AC = self->f9AC / self->f9A8;
     s = strchr(s, '\n') + 1;
-    self->f9B0 = func_0011C928(func_0012AC20(s, &s));
+    self->f9B0 = SoftFloat_DoubleToFloat(func_0012AC20(s, &s));
     self->f9B4 = 0.0f;
     s = strchr(s, '\n') + 1;
-    self->f9B8 = func_0011C928(func_0012AC20(s, &s));
-    self->f9BC = func_0011C928(func_0012AC20(s, &s));
+    self->f9B8 = SoftFloat_DoubleToFloat(func_0012AC20(s, &s));
+    self->f9BC = SoftFloat_DoubleToFloat(func_0012AC20(s, &s));
     s = strchr(s, '\n') + 1;
     if (ver >= 1.5f) {
-        self->f9C0 = func_0011C928(func_0012AC20(s, &s));
-        self->f9C4 = func_0011C928(func_0012AC20(s, &s));
+        self->f9C0 = SoftFloat_DoubleToFloat(func_0012AC20(s, &s));
+        self->f9C4 = SoftFloat_DoubleToFloat(func_0012AC20(s, &s));
         s = strchr(s, '\n') + 1;
         self->i8F4 = func_0012B1F0(s, &s, 10);
         s = strchr(s, '\n') + 1;

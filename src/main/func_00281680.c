@@ -17,7 +17,7 @@ O_00281680* Backpack_Construct(void* t, unsigned char remote, int* id);
 O_00281680* Object_LookupById(int* id);
 void func_002536D0(O_00281680* o);
 void func_002579E0(O_00281680* o);
-int func_002EBAF8(int* id, int session);
+int NetGame_InitLocalSlot(int* id, int session);
 void func_001762C0(int a, O_00281680* o);
 void Hud_PostNotification(int a, char* s);
 void Event_Construct(M_00281680* m, void* type);
@@ -33,7 +33,7 @@ static inline int LocalId_00281680(void) {
     int session = D_005721A8;
     if (D_005721C8) {
         if (D_00494178 == -1)
-            func_002EBAF8(&D_00494178, session);
+            NetGame_InitLocalSlot(&D_00494178, session);
         return D_00494178;
     }
     return 0;

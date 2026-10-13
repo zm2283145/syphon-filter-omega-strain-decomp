@@ -27,20 +27,20 @@ void func_0028CB20(Self_0028BBE0* self, int a, int b);
 void func_0028C2A0(Src_0028BBE0* w);
 void* Agent_GetSelected(void* a, int b);
 void AgentData_SetName(void* ag, char* text);
-void* func_0041DB80(Self_0028BBE0* self, char* name);
+void* GuiWidget_FindChildByName(Self_0028BBE0* self, char* name);
 void func_0041BEB0(W_0028BBE0* w, char* s, int a);
 void func_0028BA90(Self_0028BBE0* self);
 void* Gui_GetScreenStack(void);
 void GuiScreen_SetFocus(void* ui, void* w);
 void AgentData_Create(void* ag, int a, int b);
 void* Gui_GetScreenList(void);
-void* func_00418A80(void* a, char* b, char* c);
+void* GuiManager_FindOrLoad(void* a, char* b, char* c);
 void GuiStack_SwapScreens(void* ui, Self_0028BBE0* self, void* pg);
 int func_0041EF10(Self_0028BBE0* self, Src_0028BBE0* w, int msg, int sub, char* text);
 }
 static inline W_0028BBE0* FindAs_0028BBE0(Self_0028BBE0* self, char* name, char* type)
 {
-    W_0028BBE0* w = (W_0028BBE0*)func_0041DB80(self, name);
+    W_0028BBE0* w = (W_0028BBE0*)GuiWidget_FindChildByName(self, name);
     return (w && w->IsA(type)) ? w : 0;
 }
 extern "C" int func_0028BBE0(Self_0028BBE0* self, Src_0028BBE0* w, int msg, int sub, char* text)
@@ -97,7 +97,7 @@ extern "C" int func_0028BBE0(Self_0028BBE0* self, Src_0028BBE0* w, int msg, int 
                 func_0028BA90(self);
                 return 1;
             }
-            x = (W_0028BBE0*)func_0041DB80(self, "agentname");
+            x = (W_0028BBE0*)GuiWidget_FindChildByName(self, "agentname");
             if (x)
                 GuiScreen_SetFocus(Gui_GetScreenStack(), x);
             return 1;
@@ -107,9 +107,9 @@ extern "C" int func_0028BBE0(Self_0028BBE0* self, Src_0028BBE0* w, int msg, int 
             D_004FFBBC = -1;
             AgentData_Create(Agent_GetSelected(D_004FFB50, -1), 0, 1);
             if (D_004FFC04->b2E)
-                pg = func_00418A80(Gui_GetScreenList(), "GuiCommandCenter", "CMDCENTR");
+                pg = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiCommandCenter", "CMDCENTR");
             else
-                pg = func_00418A80(Gui_GetScreenList(), "GuiOnlineOfflineSelect", "onoffsel");
+                pg = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiOnlineOfflineSelect", "onoffsel");
             GuiStack_SwapScreens(Gui_GetScreenStack(), self, pg);
         }
     }

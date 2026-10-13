@@ -13,7 +13,7 @@ extern char D_00571C50[];
 extern int sprintf(char*, const char*, ...);
 extern void func_002B51E0(int, int*);
 extern void func_002B56E0(int, char*, int, int, void*, int*);
-extern int func_00121BC8(char*);
+extern int atoi(char*);
 
 void func_0040EFA0(S40E5D0* s) {
     int i;
@@ -60,7 +60,7 @@ void func_0040EFA0(S40E5D0* s) {
             s->f59F = 1;
             for (i = 0; i < s->p560; i++) {
                 if (s->ent[i].name[0] == '#')
-                    s->x5A8 = func_00121BC8(s->ent[i].name + 1);
+                    s->x5A8 = atoi(s->ent[i].name + 1);
             }
         }
         s->retries = 0;

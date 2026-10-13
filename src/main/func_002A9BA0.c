@@ -34,7 +34,7 @@ int FrontEnd_OpenPopup(void* ui, int a, char* b, int c, S_002A9BA0* d, int e);
 void func_0041C0F0(Txt_002A9BA0* t, int a);
 char* Loc_LookupText(char* key);
 void func_0041BEB0(void* w, char* s, int a);
-void* func_0041DB80(S_002A9BA0* self, char* name);
+void* GuiWidget_FindChildByName(S_002A9BA0* self, char* name);
 Ag_002A9BA0* Agent_GetSelected(void* a, int b);
 char* func_00336170(Ag_002A9BA0* ag);
 char* String_CStr(void* s);
@@ -45,13 +45,13 @@ void String_CtorCStr_13B480(Str_002A9BA0* s, const char* c);
 void func_003FD740(Str_002A9BA0* s);
 void func_00421290(List_002A9BA0* l, char* s, int i, int a);
 int strcmp(const char* a, const char* b);
-void func_00138B70(Str_002A9BA0* s, int flags);
+void String_Dtor(Str_002A9BA0* s, int flags);
 void String_Copy(char* d, const char* s);
 void func_00424430(List_002A9BA0* l, int a, int b);
 }
 static inline W_002A9BA0* FindAs_002A9BA0(S_002A9BA0* self, char* name, char* type)
 {
-    W_002A9BA0* w = (W_002A9BA0*)func_0041DB80(self, name);
+    W_002A9BA0* w = (W_002A9BA0*)GuiWidget_FindChildByName(self, name);
     return (w && w->IsA(type)) ? w : 0;
 }
 extern "C" void func_002A9BA0(S_002A9BA0* self)
@@ -105,7 +105,7 @@ extern "C" void func_002A9BA0(S_002A9BA0* self)
                     func_00421290(self->p90, String_CStr(&s), i, 0);
                     if (e->f0 == key && !strcmp(String_CStr(&s), pname))
                         self->f98 = i;
-                    func_00138B70(&s, 0);
+                    String_Dtor(&s, 0);
                 }
             }
         }

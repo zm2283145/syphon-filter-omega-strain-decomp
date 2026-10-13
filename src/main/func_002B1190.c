@@ -7,7 +7,7 @@ extern char* D_004FFC2C;
 extern int sprintf(char* buf, const char* fmt, ...);
 extern char* Loc_LookupText(char* key);
 extern char* Loc_GetTextById(int id);
-extern char* func_003FDAE0(int id);
+extern char* Loc_GetStoredKey(int id);
 extern void String_Copy(char* d, const char* s);
 extern void Notify_Insert(void* list, char* text, void* a, int b, int c);
 #pragma opt_propagation off
@@ -27,7 +27,7 @@ void func_002B1190(int a, int b, int id)
     txt = 0;
     if (id > 0)
         txt = Loc_GetTextById(id);
-    p = func_003FDAE0(id);
+    p = Loc_GetStoredKey(id);
     if (p)
         String_Copy(np, p);
     sprintf(out, D_004ABEC8, fmt, txt ? txt : D_004ABED0);

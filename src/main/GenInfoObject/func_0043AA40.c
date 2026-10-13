@@ -4,11 +4,11 @@ extern E43AA40 *D_00583888;
 extern int D_00494178;
 extern int D_005721A8;
 extern unsigned char D_005721C8;
-int func_002EBAF8(int *, int);
+int NetGame_InitLocalSlot(int *, int);
 static inline int Get43AA40(int a) {
     if (D_005721C8 != 0) {
         if (D_00494178 == -1) {
-            func_002EBAF8(&D_00494178, a);
+            NetGame_InitLocalSlot(&D_00494178, a);
         }
         return D_00494178;
     }

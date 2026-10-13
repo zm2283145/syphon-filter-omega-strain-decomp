@@ -164,7 +164,7 @@ int PlayerSlots_Get(int);
 int func_0042B1A0(int);
 void func_0042D310(int*, int);
 void func_0042DA30(NpcObj_A440*, int, int);
-void func_002EBAF8(int*, int);
+void NetGame_InitLocalSlot(int*, int);
 
 }
 
@@ -195,7 +195,7 @@ static inline int LocalSlot(int a)
 {
     if (D_005721C8) {
         if (D_00494178 == -1)
-            func_002EBAF8(&D_00494178, a);
+            NetGame_InitLocalSlot(&D_00494178, a);
         return D_00494178;
     }
     return 0;

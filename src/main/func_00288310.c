@@ -34,7 +34,7 @@ extern int func_00288510(void);
 extern char* Loc_LookupText(const char* key);
 extern int FrontEnd_OpenPopup(void* ui, int kind, const char* a, const char* b, Self288310* owner, int flag);
 extern int Agent_GetSelected(void* list, int idx);
-extern int func_00334100(int agent);
+extern int AgentData_GetSaveSize(int agent);
 extern int func_0040D580(Mgr288310* m, int v);
 extern int sprintf(char* buf, const char* fmt, ...);
 extern char* func_00129C80(const char* s, const char* sub);
@@ -60,7 +60,7 @@ void func_00288310(Self288310* self, int force)
             self->x50 = FrontEnd_OpenPopup(ui, 4, a, Loc_LookupText(D_004A9600), self, 1);
         } else if (m->cfg->x59E) {
             int have = m->cfg->x5A4;
-            int need = func_0040D580(m, func_00334100(Agent_GetSelected(D_004FFB50, -1)));
+            int need = func_0040D580(m, AgentData_GetSaveSize(Agent_GetSelected(D_004FFB50, -1)));
             if (have < need) {
                 char* text;
                 char* p;

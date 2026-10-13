@@ -23,7 +23,7 @@ extern void func_0041F090();
 extern void func_0041F210();
 extern void * const D_004DE710[];
 extern void func_0036E220(void* p, int f);
-extern void func_00138B70(void* p, int f);
+extern void String_Dtor(void* p, int f);
 extern void func_0032A2F0(void* p, int f);
 extern void func_0041F370(void* p, int f);
 extern void operator_delete(void* p);
@@ -43,9 +43,9 @@ O326CC0* func_00326CC0(O326CC0* self, short del)
         self->vt = ((char*)D_004DE710);
         M326CC0_dtor(&self->m90);
         if (self->m78)
-            func_00138B70(self->m78, 0);
+            String_Dtor(self->m78, 0);
         if (self->m6C)
-            func_00138B70(self->m6C, 0);
+            String_Dtor(self->m6C, 0);
         A326CC0(self->m48);
         func_0041F370(self, 0);
         if (del > 0)

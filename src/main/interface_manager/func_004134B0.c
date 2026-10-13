@@ -16,7 +16,7 @@ void Hog_Register(Hog4134B0* h, char* name, int arc, int z);
 int func_0036DEF0(Hog4134B0* h);
 void String_CtorCStr_13B480(Str4134B0* s, char* src);
 void func_0013D680(Str4134B0* dst, Str4134B0* src);
-void func_00138B70(Str4134B0* s, int flags);
+void String_Dtor(Str4134B0* s, int flags);
 }
 
 #pragma push
@@ -49,7 +49,7 @@ extern "C" bool func_004134B0(Self4134B0* self, Str4134B0* out, const char* name
         {
             String_CtorCStr_13B480(&tmp, buf);
             func_0013D680(out, &tmp);
-            func_00138B70(&tmp, 0);
+            String_Dtor(&tmp, 0);
         }
         if (isPak)
             *isPak = 0;
@@ -67,7 +67,7 @@ extern "C" bool func_004134B0(Self4134B0* self, Str4134B0* out, const char* name
         {
             String_CtorCStr_13B480(&tmp2, buf2);
             func_0013D680(out, &tmp2);
-            func_00138B70(&tmp2, 0);
+            String_Dtor(&tmp2, 0);
         }
         if (isPak)
             *isPak = 1;

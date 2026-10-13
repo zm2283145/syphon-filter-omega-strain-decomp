@@ -14,7 +14,7 @@ extern void func_002C82F0(G33*);
 extern void func_002C81D0(G33*);
 extern void FrontEnd_ClosePopup(G33*, int);
 extern int Gui_GetScreenList(void);
-extern W33* func_00418A80(int, char*, char*);
+extern W33* GuiManager_FindOrLoad(int, char*, char*);
 extern void func_00418840(int, W33*);
 extern int DME_GetLobby(void);
 extern int func_00442510(int, int);
@@ -43,15 +43,15 @@ extern "C" int func_0033C320(O33* self, int type) {
     }
     w = 0;
     switch (type) {
-    case 0: w = func_00418A80(Gui_GetScreenList(), "GuiOnlineConnect", "ONLINECN"); break;
-    case 1: w = func_00418A80(Gui_GetScreenList(), "GuiCommandCenter", "CMDCENTR"); break;
-    case 2: w = func_00418A80(Gui_GetScreenList(), "GuiNetJoinMission", "JOINMIS"); break;
-    case 6: w = func_00418A80(Gui_GetScreenList(), "GuiMissionSetup", "MSNSETUP"); break;
-    case 3: w = func_00418A80(Gui_GetScreenList(), "GuiNetAgencyCell", "AGENTCEL"); break;
-    case 4: w = func_00418A80(Gui_GetScreenList(), "GuiNetContacts", "CONTACTS"); break;
-    case 5: w = func_00418A80(Gui_GetScreenList(), "GuiOnlineOptions", "ONLIPREF"); break;
-    case 9: w = func_00418A80(Gui_GetScreenList(), "GuiNetMessages", "NETMESS"); break;
-    case 7: w = func_00418A80(Gui_GetScreenList(), "GuiAccountLogin", "ACNTLOGN"); break;
+    case 0: w = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiOnlineConnect", "ONLINECN"); break;
+    case 1: w = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiCommandCenter", "CMDCENTR"); break;
+    case 2: w = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiNetJoinMission", "JOINMIS"); break;
+    case 6: w = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiMissionSetup", "MSNSETUP"); break;
+    case 3: w = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiNetAgencyCell", "AGENTCEL"); break;
+    case 4: w = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiNetContacts", "CONTACTS"); break;
+    case 5: w = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiOnlineOptions", "ONLIPREF"); break;
+    case 9: w = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiNetMessages", "NETMESS"); break;
+    case 7: w = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiAccountLogin", "ACNTLOGN"); break;
     }
     if (c != -1) func_002C81D0(D_004FFC04);
     if (w) {

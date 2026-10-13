@@ -22,7 +22,7 @@ extern "C" void func_0043CA20();
 extern "C" void func_0043CAA0();
 extern "C" void func_0043CAF0();
 extern void * const D_004E0FC0[];
-void func_00138B70(void* m, short f);
+void String_Dtor(void* m, short f);
 void func_0041F370(void* p, short f);
 void operator_delete(void* p);
 }
@@ -30,7 +30,7 @@ extern "C" O_001379A0* func_0043C030(O_001379A0* self, short del)
 {
     if (self) {
         self->vt = ((char*)D_004E0FC0);
-        if (self->m) func_00138B70(self->m, 0);
+        if (self->m) String_Dtor(self->m, 0);
         func_0041F370(self, 0);
         if (del > 0) operator_delete(self);
     }

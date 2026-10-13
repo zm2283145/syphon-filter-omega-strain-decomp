@@ -258,7 +258,7 @@ extern int cGOBJ_GetScriptTypeKeyPtr();
 extern int Script_RegisterNative_2();
 extern int Script_RegisterType();
 extern int Script_RegisterNative();
-extern int func_003D8F60();
+extern int ScriptEnum_Register();
 extern int func_0015C130();
 extern int func_0016FE40();
 void func_004C3B80(void)
@@ -279,12 +279,12 @@ void func_004C3B80(void)
     D_004EA3E8 = "Script AI Mode Change Message";
     D_004EA3F0 = Script_RegisterType("cNPC", ScriptType_cNPC_Init, 0, 1);
     D_004EA3F8 = D_004EA3F0;
-    D_004EA400 = func_003D8F60("cNPC::eMode", D_00489E30, 9);
-    D_004EA408 = func_003D8F60("cNPC::eAimMode", D_00489EA0, 3);
-    D_004EA410 = func_003D8F60("cNPC::eAimSubtarget", D_00489ED0, 2);
-    D_004EA418 = func_003D8F60("cNPC::eTravelSpeed", D_00489EF0, 4);
-    D_004EA420 = func_003D8F60("cNPC::eAction", D_00489F20, 5);
-    D_004EA428 = func_003D8F60("cNPC::eWeaponPreference", D_00489F60, 2);
+    D_004EA400 = ScriptEnum_Register("cNPC::eMode", D_00489E30, 9);
+    D_004EA408 = ScriptEnum_Register("cNPC::eAimMode", D_00489EA0, 3);
+    D_004EA410 = ScriptEnum_Register("cNPC::eAimSubtarget", D_00489ED0, 2);
+    D_004EA418 = ScriptEnum_Register("cNPC::eTravelSpeed", D_00489EF0, 4);
+    D_004EA420 = ScriptEnum_Register("cNPC::eAction", D_00489F20, 5);
+    D_004EA428 = ScriptEnum_Register("cNPC::eWeaponPreference", D_00489F60, 2);
     D_004EA430 = Script_RegisterNative(D_004EA3F0, Script_cNPC_MoveToNode, D_00493878, "MoveToNode", 2, &D_004EA3F0, func_0015C130());
     D_004EA438 = Script_RegisterNative(D_004EA3F0, Script_cNPC_MoveToGobj, D_00493878, "MoveToGobj", 2, &D_004EA3F0, cGOBJ_GetScriptTypeKeyPtr());
     D_004EA440 = Script_RegisterNative(D_004EA3F0, Script_cNPC_CarryBodyToNode, D_00493878, "CarryBodyToNode", 3, &D_004EA3F0, cGOBJ_GetScriptTypeKeyPtr(), func_0015C130());

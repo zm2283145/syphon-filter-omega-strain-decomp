@@ -31,7 +31,7 @@ extern char D_004AA640[];
 extern const char* D_0048BBF0;
 
 void func_0033D3F0(Screen9FE0* self);
-Obj9FE0* func_0041DB80(Screen9FE0* self, const char* name);
+Obj9FE0* GuiWidget_FindChildByName(Screen9FE0* self, const char* name);
 }
 
 static inline Obj9FE0* AsA9FE0(Obj9FE0* obj)
@@ -47,10 +47,10 @@ static inline Obj9FE0* AsB9FE0(Obj9FE0* obj)
 extern "C" void func_002A9FE0(Screen9FE0* self)
 {
     func_0033D3F0(self);
-    self->item0 = AsA9FE0(func_0041DB80(self, *(const char**)dat_0048BC00));
-    self->item1 = (Sub9FE0*)AsB9FE0(func_0041DB80(self, *(const char**)dat_0048BC08));
-    self->item2 = AsA9FE0(func_0041DB80(self, D_0048BBF0));
-    self->extra = func_0041DB80(self, *(const char**)dat_0048BC10);
+    self->item0 = AsA9FE0(GuiWidget_FindChildByName(self, *(const char**)dat_0048BC00));
+    self->item1 = (Sub9FE0*)AsB9FE0(GuiWidget_FindChildByName(self, *(const char**)dat_0048BC08));
+    self->item2 = AsA9FE0(GuiWidget_FindChildByName(self, D_0048BBF0));
+    self->extra = GuiWidget_FindChildByName(self, *(const char**)dat_0048BC10);
     if (self->extra && self->item1)
         self->item1->link = self->extra;
 }

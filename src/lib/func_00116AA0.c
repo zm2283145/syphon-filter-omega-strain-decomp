@@ -6,7 +6,7 @@ extern void *memset(void *, int, unsigned int);
 extern void func_00117D68(void);
 extern void func_00117040(void);
 extern int func_0010CE50(int, void *, int, int);
-extern int func_0010CE60(int, int);
+extern int RemoveIntcHandler(int, int);
 extern int func_001161A0(void);
 extern void func_001161F8(void);
 extern void func_00116A70(int);

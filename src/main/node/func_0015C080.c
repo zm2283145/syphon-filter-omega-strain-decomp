@@ -37,7 +37,7 @@ void ScriptType_cNode_Init(void) {
 }
 
 /* volatile mirrors the original stack temporary. */
-int func_0015C100(int value) {
+int cNode_Identity(int value) {
     volatile int tmp = value;
     return tmp;
 }

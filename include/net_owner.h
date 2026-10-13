@@ -5,13 +5,13 @@
 typedef struct { char pad[4]; int owner; } NetOwnerHdl;
 extern int D_005721A8;
 extern int D_00494178;
-extern void func_002EBAF8(int* id, int session);
+extern void NetGame_InitLocalSlot(int* id, int session);
 extern int func_002EB650(NetOwnerHdl** out, int id);
 static inline int NetOwner_LocalId(int session)
 {
     if (D_005721C8) {
         if (D_00494178 == -1)
-            func_002EBAF8(&D_00494178, session);
+            NetGame_InitLocalSlot(&D_00494178, session);
         return D_00494178;
     }
     return 0;

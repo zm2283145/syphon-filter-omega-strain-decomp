@@ -20,7 +20,7 @@ static inline int ite0(char *l) { int r; func_0037B2C0(&r, func_0037B2D0(l)); re
 static inline void er0(char *l, char *n) { int sp84; char *sp80; sp80 = n; func_0037FBA0(&sp84, l, &sp80); }
 static inline void er1(char *l, char *n) { er0(l, n); }
 static inline int ite1(char *l) { return ite0(l); }
-extern "C" void func_0037B0C0(char * arg0, int arg1) {
+extern "C" void Video_FreeDeferredBuffers(char * arg0, int arg1) {
     int temp_s3;
     char * var_s2;
     char * temp_s1;

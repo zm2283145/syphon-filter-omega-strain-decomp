@@ -26,7 +26,7 @@ void func_0043B190(void* ctx);
 int func_0043AB20(void* ctx, void* key);
 int func_00439C70(void* ctx, void* key);
 void func_003FB4B0(int id, int v);
-int func_002EBAF8(int*, int);
+int NetGame_InitLocalSlot(int*, int);
 int Event_Construct(void*, char*);
 int Event_Send(void*, void*, int);
 int cMessage_dtor(void*, int);
@@ -56,7 +56,7 @@ extern "C" void func_0021EAA0(Gen* self)
         key = &self->key;
         int a = D_005721A8;
         if (D_005721C8) {
-            if (D_00494178 == -1) func_002EBAF8(&D_00494178, a);
+            if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, a);
             id = D_00494178;
         } else id = 0;
     }

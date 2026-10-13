@@ -13,7 +13,7 @@ extern void func_0036B250(int a0);
 extern void func_0036B3B0(int a0, int a1, int a2);
 extern void func_002C9AF0(void* a0, int a1);
 extern void func_00327890(S327D90* self);
-extern W327D90* func_0041DB80(S327D90* self, char* name);
+extern W327D90* GuiWidget_FindChildByName(S327D90* self, char* name);
 #pragma opt_strength_reduction off
 #pragma opt_unroll_loops off
 /* Total number of sub-items over all entries (inlined func_00327F20; the
@@ -52,12 +52,12 @@ void func_00327D90(S327D90* self)
         if (n > 1) w->flags |= 2;
         else w->flags &= ~2;
     }
-    w = func_0041DB80(self, D_00491560);
+    w = GuiWidget_FindChildByName(self, D_00491560);
     if (w) {
         if (n > 1) w->flags |= 2;
         else w->flags &= ~2;
     }
-    w = func_0041DB80(self, D_00491568);
+    w = GuiWidget_FindChildByName(self, D_00491568);
     if (w) {
         if (n > 1) w->flags |= 2;
         else w->flags &= ~2;

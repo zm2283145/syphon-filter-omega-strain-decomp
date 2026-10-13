@@ -2,7 +2,7 @@
 int func_002824D0();
 int cGOBJ_GetScriptTypeKeyPtr();
 int Script_RegisterNative_2();
-int func_003D8F60();
+int ScriptEnum_Register();
 int FreeList_Push();
 int Script_ClearInteract_2();
 int Script_ClearInteract();
@@ -37,7 +37,7 @@ extern int D_005861B0;
 extern void* D_005861B8;
 extern void* D_005861C0;
 void func_004D7E20(void) {
-    D_00586140 = func_003D8F60("eJoystickButton", &D_00497A30, 12);
+    D_00586140 = ScriptEnum_Register("eJoystickButton", &D_00497A30, 12);
     D_00586148 = Script_RegisterNative_2(Script_PlayXA, &D_00493880, "PlayXA", 1, &D_004938A0);
     D_00586150 = Script_RegisterNative_2(Script_PlayXA_2, &D_00493880, "PlayXA", 2, &D_004938A0, &D_00493898);
     D_00586158 = "cDisplayClientInteractMsg";

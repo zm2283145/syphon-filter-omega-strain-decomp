@@ -15,7 +15,7 @@ typedef struct { void* vtable; char pad[0x2C]; } Msg;
 
 extern "C" {
 unsigned long long func_003698B0(void);
-float func_001002D0(unsigned long long);
+float SoftFloat_U64ToFloat(unsigned long long);
 void func_0040E320(void* p);
 Mgr* Gui_GetScreenStack(void);
 int Gui_GetScreenList(void);
@@ -55,7 +55,7 @@ extern "C" void func_002CBB30(ObjCBB30* o)
             o->last = 0;
         if (now - o->last > 100)
             o->last = now - 100;
-        dt = func_001002D0(now - o->last) / 1000.0f;
+        dt = SoftFloat_U64ToFloat(now - o->last) / 1000.0f;
         if (o->b2A && o->b28)
             func_0040E320(D_0055A830);
         if (D_0051EEB0) {

@@ -7,7 +7,7 @@ extern char D_004DE830[];
 extern char D_004E1220[];
 extern int D_00532FD8;
 extern void* D_00532FE0;
-void func_00138B70(void* p, int f);
+void String_Dtor(void* p, int f);
 void func_0041F370(void* p, int f);
 void Mem_Free(int pool, void* p, char* file, int line);
 void operator_delete(void* p);
@@ -23,7 +23,7 @@ extern "C" O33D430* func_0033D430(O33D430* self, short del)
                 if (p) {
                     AllocGuard g;
                     if (p)
-                        func_00138B70(p, 0);
+                        String_Dtor(p, 0);
                     Mem_Free(0, p, "GuiLobbyScreen.cc", 0x6F);
                 }
                 D_00532FE0 = 0;

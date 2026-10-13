@@ -37,7 +37,7 @@ void* Mem_Alloc(int pool, int size, char* file, int line);
 void* Gui_GetScreenList(void);
 void* func_00418420(void* mgr, char* name);
 T_45DFD0* func_003D0940(void* p, int a, int b, int c, int d, void* e, char* f);
-W_45DFD0* func_0041DB80(void* o, char* name);
+W_45DFD0* GuiWidget_FindChildByName(void* o, char* name);
 void func_0041C0F0(W_45DFD0* w, int v);
 char* func_0012F5D0(void* p, int id);
 void func_0041BEB0(W_45DFD0* w, char* s, int f);
@@ -58,20 +58,20 @@ void func_0045DFD0(O_45DFD0* o)
     o->f48 = t;
     o->f48->b10 = 2;
     o->f48->b11 = 1;
-    o->f4C = Cast_45DFD0(func_0041DB80(o, "quickchat"), D_004C2430);
-    o->f50 = Cast_45DFD0(func_0041DB80(o, "interact"), D_004A7520);
-    o->f68 = Cast_45DFD0(func_0041DB80(o, "subtitles"), D_004C1D10);
-    o->fE0 = func_0041DB80(o, "choosemenu");
+    o->f4C = Cast_45DFD0(GuiWidget_FindChildByName(o, "quickchat"), D_004C2430);
+    o->f50 = Cast_45DFD0(GuiWidget_FindChildByName(o, "interact"), D_004A7520);
+    o->f68 = Cast_45DFD0(GuiWidget_FindChildByName(o, "subtitles"), D_004C1D10);
+    o->fE0 = GuiWidget_FindChildByName(o, "choosemenu");
     if (o->fE0) {
-        o->fE4 = Cast_45DFD0(func_0041DB80(o->fE0, "title"), D_004A7520);
+        o->fE4 = Cast_45DFD0(GuiWidget_FindChildByName(o->fE0, "title"), D_004A7520);
         func_0041C0F0(o->fE4, 1);
-        o->fE8 = Cast_45DFD0(func_0041DB80(o->fE0, "choices"), D_004AA640);
+        o->fE8 = Cast_45DFD0(GuiWidget_FindChildByName(o->fE0, "choices"), D_004AA640);
         SetB0_45DFD0(o->fE8, D_00587CA0);
         SetE0_45DFD0(o->fE8, D_00587CB0);
         o->fE8->bF0 = 1;
     }
     if (!o->fE0 || !o->fE4 || !o->fE8) o->fE0 = 0;
-    o->f114 = Cast_45DFD0(func_0041DB80(o, "value_codename"), D_004A7520);
+    o->f114 = Cast_45DFD0(GuiWidget_FindChildByName(o, "value_codename"), D_004A7520);
     if (o->f114) {
         if (D_005721C8) {
             char* s = func_0012F5D0(D_004FFB50, NetLocalId());
@@ -81,14 +81,14 @@ void func_0045DFD0(O_45DFD0* o)
             o->f114->flags &= ~2;
         }
     }
-    o->f118 = Cast_45DFD0(func_0041DB80(o, "value_timer_description"), D_004A7520);
-    o->f11C = Cast_45DFD0(func_0041DB80(o, "value_timer"), D_004A7520);
+    o->f118 = Cast_45DFD0(GuiWidget_FindChildByName(o, "value_timer_description"), D_004A7520);
+    o->f11C = Cast_45DFD0(GuiWidget_FindChildByName(o, "value_timer"), D_004A7520);
     o->f118->flags &= ~2;
     o->f11C->flags &= ~2;
-    o->f120 = Cast_45DFD0(func_0041DB80(o, "headset_playing"), D_004A7520);
-    o->f124 = func_0041DB80(o, "label_talking");
-    o->f6C = func_0041DB80(o, "weaponselect");
-    o->fA4 = func_0041DB80(o, "lines_arrows");
-    o->fA0 = func_0041DB80(o, "brackets");
+    o->f120 = Cast_45DFD0(GuiWidget_FindChildByName(o, "headset_playing"), D_004A7520);
+    o->f124 = GuiWidget_FindChildByName(o, "label_talking");
+    o->f6C = GuiWidget_FindChildByName(o, "weaponselect");
+    o->fA4 = GuiWidget_FindChildByName(o, "lines_arrows");
+    o->fA0 = GuiWidget_FindChildByName(o, "brackets");
     func_0045CC90(o);
 }

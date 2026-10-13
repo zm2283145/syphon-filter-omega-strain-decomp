@@ -5,13 +5,13 @@ extern G441* D_0055A830;
 extern int D_004FFC04;
 extern char D_004C0448[];
 extern char* Loc_LookupText(char*);
-extern void func_00441A10(O441*);
+extern void GuiSaveAgentWidget_HandleEvent(O441*);
 extern void func_004415A0(O441*);
 extern int FrontEnd_OpenPopup(int, int, char*, char*, O441*, int);
 void func_00441960(O441* o) {
     G441* g = D_0055A830;
     if (!g->b59d) {
-        func_00441A10(o);
+        GuiSaveAgentWidget_HandleEvent(o);
     } else if (!g->b59e) {
         int m = D_004FFC04;
         char* t = Loc_LookupText(D_004C0448);

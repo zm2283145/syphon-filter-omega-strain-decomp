@@ -26,11 +26,11 @@ struct cNPC {
     virtual void* GetNextNode(); /* +0x190 */
 };
 
-extern "C" int func_0015C100(void* node);
+extern "C" int cNode_Identity(void* node);
 
-/* Script native: returns the id (func_0015C100) of the NPC's next path node. */
+/* Script native: returns the id (cNode_Identity) of the NPC's next path node. */
 extern "C" int Script_cNPC_GetNextNode(ScriptArg* args)
 {
     cNPC* npc = (cNPC*)args[0].p;
-    return func_0015C100(npc->GetNextNode());
+    return cNode_Identity(npc->GetNextNode());
 }

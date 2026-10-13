@@ -32,8 +32,8 @@ extern char D_004FFB50[];
 extern const char* D_0048C160[];
 void String_CtorCStr_13B480(Str4E40* s, const char* text);
 void func_0013D680(void* dst, Str4E40* s);
-void func_00138B70(Str4E40* s, int flags);
-W4E40* func_0041DB80(void* o, char* name);
+void String_Dtor(Str4E40* s, int flags);
+W4E40* GuiWidget_FindChildByName(void* o, char* name);
 void* Agent_GetSelected(void* p, int i);
 void func_00296FA0(L4E40* l);
 void func_00299360(L4E40* l, int flags);
@@ -56,19 +56,19 @@ void func_00354E40(O4E40* self, const char* a, const char* b, unsigned char kind
         Str4E40 s;
         String_CtorCStr_13B480(&s, a);
         func_0013D680(self->s6C, &s);
-        func_00138B70(&s, 0);
+        String_Dtor(&s, 0);
     }
     {
         Str4E40 s;
         String_CtorCStr_13B480(&s, b);
         func_0013D680(self->s78, &s);
-        func_00138B70(&s, 0);
+        String_Dtor(&s, 0);
     }
     self->kind = kind;
     self->arg = arg;
     self->f8C = c;
     self->f90 = d;
-    w = Cast(func_0041DB80(self, D_00492C48), D_004A7520);
+    w = Cast(GuiWidget_FindChildByName(self, D_00492C48), D_004A7520);
     if (w) {
         void* ag = Agent_GetSelected(D_004FFB50, -1);
         if (self->kind != 6) {

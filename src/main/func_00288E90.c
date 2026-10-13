@@ -12,7 +12,7 @@ int strlen(const char* s);
 char* func_0033CE30(S_00288E90* self, unsigned char a, char* b, int c, int d, int e);
 void String_CtorCStr_13B480(Str_00288E90* s, const char* c);
 int FrontEnd_OpenPopup(void* ui, int a, char* b, char* c, S_00288E90* d, int e);
-void func_00138B70(Str_00288E90* s, int flags);
+void String_Dtor(Str_00288E90* s, int flags);
 int func_00445B90(void* g, char* a, char* b);
 unsigned char func_00452FF0(void* g, int a);
 int func_004459D0(void* g, char* a, char* b);
@@ -31,8 +31,8 @@ extern "C" void func_00288E90(S_00288E90* self)
             char* tb = String_CStr(&b);
             FrontEnd_OpenPopup(D_004FFC04, 2, String_CStr(&a), tb, 0, 0);
         }
-        func_00138B70(&b, 0);
-        func_00138B70(&a, 0);
+        String_Dtor(&b, 0);
+        String_Dtor(&a, 0);
         return;
     }
     {
@@ -72,8 +72,8 @@ extern "C" void func_00288E90(S_00288E90* self)
                 pw = String_CStr(&d);
                 FrontEnd_OpenPopup(D_004FFC04, 2, String_CStr(&c), pw, tgt, cb);
             }
-            func_00138B70(&d, 0);
-            func_00138B70(&c, 0);
+            String_Dtor(&d, 0);
+            String_Dtor(&c, 0);
         }
     }
     FrontEnd_ClosePopup(D_004FFC04, self->fA8);

@@ -5,7 +5,7 @@
 
 extern "C" {
 int func_0012AC20(char*, char**);
-float func_0011C928(int);
+float SoftFloat_DoubleToFloat(int);
 char* strchr(const char*, int);
 long func_0012B1F0(char*, char**, int);
 }
@@ -51,7 +51,7 @@ struct Mk3A3A40 : V4_3A3A40 {
     Mk3A3A40(float a, float b, float c, float d) { x = a; y = b; z = c; w = d; }
 };
 
-#define RD() func_0011C928(func_0012AC20(s, &s))
+#define RD() SoftFloat_DoubleToFloat(func_0012AC20(s, &s))
 #define NL() s = strchr(s, '\n') + 1
 
 extern "C" void func_003A3A40(Obj3A3A40* self, char* str)

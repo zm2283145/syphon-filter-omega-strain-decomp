@@ -6,7 +6,7 @@ typedef struct { char data[0xA0]; } HogFile;     /* file object read from a HOG 
 
 extern void String_CtorCStr_13B480(String* s, const char* text);
 extern void func_0013D680(void* list, String* s);  /* list<String>::push_back */
-extern void func_00138B70(String* s, int flags);   /* String dtor */
+extern void String_Dtor(String* s, int flags);   /* String dtor */
 extern int sprintf(char* buf, const char* fmt, ...);
 extern void func_0036E5D0(HogFile* file);           /* ctor */
 extern void Hog_Register(HogFile* file, char* name, int hog, int b);
@@ -22,7 +22,7 @@ int GuiManager_LoadGuiFromHog(GuiScreenList* self, int hog, const char* name, in
     int root;
     String_CtorCStr_13B480(&str, name);
     func_0013D680(self->loadedNames, &str);
-    func_00138B70(&str, 0);
+    String_Dtor(&str, 0);
     sprintf(path, "%s.GUI", name);
     func_0036E5D0(&file);
     Hog_Register(&file, path, hog, 0);

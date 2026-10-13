@@ -4,7 +4,7 @@ typedef struct { char* p; } It_43C890;
 typedef struct { char pad[0x14]; unsigned short flags; char pad16[0x32]; int h48; int f4C; Str_43C890 name; } O_43C890;
 extern void String_CtorCStr_13B480(Str_43C890* s, char* c);
 extern void func_0013D680(Str_43C890* d, Str_43C890* s);
-extern void func_00138B70(Str_43C890* s, int f);
+extern void String_Dtor(Str_43C890* s, int f);
 extern void func_001BFF20(It_43C890* out, Str_43C890* s);
 extern void func_001BFEE0(It_43C890* out, Str_43C890* s);
 extern int func_001BFE90(It_43C890* a, It_43C890* b);
@@ -27,7 +27,7 @@ int func_0043C890(O_43C890* o, char* name, int arg)
     {
         String_CtorCStr_13B480(&t, D_004C0018);
         func_0013D680(&o->name, &t);
-        func_00138B70(&t, 0);
+        String_Dtor(&t, 0);
     }
     if (name == 0 || *name == 0) return 1;
     o->f4C = arg;
@@ -36,7 +36,7 @@ int func_0043C890(O_43C890* o, char* name, int arg)
         It_43C890 end;
         String_CtorCStr_13B480(&t2, name);
         func_0013D680(&o->name, &t2);
-        func_00138B70(&t2, 0);
+        String_Dtor(&t2, 0);
         func_001BFF20(&it, &o->name);
         func_001BFEE0(&end, &o->name);
         while (func_001BFE90(&it, &end)) {

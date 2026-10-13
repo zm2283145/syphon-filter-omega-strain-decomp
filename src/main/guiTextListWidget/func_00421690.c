@@ -16,7 +16,7 @@ void func_00424A90(TextRenderWidget* self);
 void func_00424BC0(TextRenderWidget* self);
 void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
 void Mem_Free(int pool, void* allocation, char* file, int line);
-void func_00138B70(void* string, int flags);
+void String_Dtor(void* string, int flags);
 TextRenderChild* func_003D0940(TextRenderChild* self, int x, int y,
                              int width, int height, void* resource,
                              TextRenderStyle* style);
@@ -30,7 +30,7 @@ void operator_delete(void* allocation);
 static inline void destroy_string(void* string)
 {
     if (string)
-        func_00138B70(string, 0);
+        String_Dtor(string, 0);
 }
 
 static inline void destroy_child(TextRenderChild* child)

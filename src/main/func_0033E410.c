@@ -14,7 +14,7 @@ extern int FrontEnd_OpenPopup(int, int, char*, char*, int, int);
 extern void func_002C82F0(int);
 extern void func_002C81D0(int);
 extern int Gui_GetScreenList(void);
-extern W33E4* func_00418A80(int, char*, char*);
+extern W33E4* GuiManager_FindOrLoad(int, char*, char*);
 extern void func_00360610(W33E4*, I33E4*, char*);
 extern V33E4* Gui_GetScreenStack(void);
 extern void FrontEnd_ClosePopup(int, int);
@@ -27,7 +27,7 @@ extern "C" void func_0033E410(O33E4* o, I33E4* info) {
         int h = FrontEnd_OpenPopup(g, 0, D_004B9C60, func_0033CE30(o, 0x7D, info->name, 0, 0, 0), 0, 0);
         W33E4* w;
         func_002C82F0(D_004FFC04);
-        w = func_00418A80(Gui_GetScreenList(), "GuiAgentInfo", "AGNTINFO");
+        w = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiAgentInfo", "AGNTINFO");
         func_002C81D0(D_004FFC04);
         if (w) {
             w->f10 = o;

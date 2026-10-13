@@ -1,5 +1,5 @@
 /* newlib 1.9.0 stdlib/dtoa.c: _dtoa_r (quorem = func_00121E78 is its own matched unit). Retail newlib was built with -g. */
-__asm__(".set nomove\n dpadd = func_0011C1A8\n dpsub = func_0011C200\n dpmul = func_0011C268\n dpdiv = func_0011C4F0\n litodp = func_0011C7A0\n dptoli = func_0011C858\n dpcmp = SoftFloat_UnpackAndCompare\n");
+__asm__(".set nomove\n dpadd = SoftFloat_DoubleAdd\n dpsub = func_0011C200\n dpmul = func_0011C268\n dpdiv = func_0011C4F0\n litodp = func_0011C7A0\n dptoli = func_0011C858\n dpcmp = SoftFloat_UnpackAndCompare\n");
 typedef unsigned int size_t;
 typedef unsigned int __uint32_t;
 typedef int __int32_t;

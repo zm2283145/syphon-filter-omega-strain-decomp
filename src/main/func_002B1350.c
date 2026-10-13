@@ -21,7 +21,7 @@ extern "C" {
     char* String_Copy(char*,char*);
     int func_0012F5B0(void*,int);
     void func_002426E0(int);
-    char* func_003FDAE0(int);
+    char* Loc_GetStoredKey(int);
     void func_0041BEB0(void*,char*,int);
     void func_0041E0F0(void*,void*,int,int,int=0);
     int sprintf(char*,const char*,...);
@@ -142,7 +142,7 @@ extern "C" int func_002B1350(Screen* arg0, Input* arg1) {
                     if (var_s2_2 > 0) {
                         var_s3_2 = Loc_GetTextById(var_s2_2);
                     }
-                    temp_v0_2 = func_003FDAE0(var_s2_2);
+                    temp_v0_2 = Loc_GetStoredKey(var_s2_2);
                     if (temp_v0_2 != 0) {
                         String_Copy(savedName, temp_v0_2);
                     }

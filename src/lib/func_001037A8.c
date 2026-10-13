@@ -28,7 +28,7 @@ static char D_004982E0[] = "sceGsSyncPath: GIF does not terminate\r\n";
 
 
 /* VU1 status (vi29) has no C spelling; .set noreorder only suppresses gas's hazard nop. */
-int func_001037A8(int mode)
+int sceGsSyncPath(int mode)
 {
     unsigned int cnt = 0;
     register char *msg asm("$4");

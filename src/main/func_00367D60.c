@@ -66,7 +66,7 @@ extern "C" void func_00367D60(S367D60* self)
     mgr = ObjMan_GetService();
     if (mgr == 0) return;
     {
-        LtrWidget* w = Ltr_Cast(func_0041DB80(self, D_004BBC70));
+        LtrWidget* w = Ltr_Cast(GuiWidget_FindChildByName(self, D_004BBC70));
         if (w) {
             int n = func_002270C0(mgr, tmp, 0x14, 1);
             sprintf(buf, D_004BBC80, n, ObjMan_GetTotalCount(mgr));

@@ -20,7 +20,7 @@ int FrontEnd_OpenPopup(void* ui, int a, char* b, char* c, S_0029ED40* d, int e);
 Ag_0029ED40* Agent_GetSelected(void* mgr, int idx);
 void String_CtorCStr_13B480(Str_0029ED40* s, const char* c);
 char* String_CStr(Str_0029ED40* s);
-void func_00138B70(Str_0029ED40* s, int flags);
+void String_Dtor(Str_0029ED40* s, int flags);
 G_0029ED40* Gui_GetScreenStack(void);
 }
 extern "C" void func_0029ED40(S_0029ED40* self)
@@ -50,8 +50,8 @@ extern "C" void func_0029ED40(S_0029ED40* self)
             FrontEnd_OpenPopup(D_004FFC04, 2, String_CStr(&a), tb, self, 0);
         }
         self->f88 = 4;
-        func_00138B70(&b, 0);
-        func_00138B70(&a, 0);
+        String_Dtor(&b, 0);
+        String_Dtor(&a, 0);
     } else {
         self->f88 = 7;
     }

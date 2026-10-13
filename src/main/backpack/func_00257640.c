@@ -8,15 +8,15 @@ extern int D_00494178;
 extern int D_005721A8;
 extern bool D_005721C0;
 extern bool D_005721C8;
-int func_002EBAF8(int*,int);
+int NetGame_InitLocalSlot(int*,int);
 int func_002EBBA0(int,int*);
 }
 #pragma push
 #pragma inline_depth(12)
 #pragma opt_common_subs off
 #pragma opt_propagation off
-static inline int LocalId() { int r=0;int a=D_005721A8;if(D_005721C8) { if(D_00494178==-1)func_002EBAF8(&D_00494178,a);r=D_00494178; }else { /* Keep the default-id branch. */ asm { .set reorder } }return r; }
-static inline int KnownLocal(bool online) { int r=0;int a=D_005721A8;if(online) { if(D_00494178==-1)func_002EBAF8(&D_00494178,a);r=D_00494178; }else { /* Keep the default-id branch. */ asm { .set reorder } }return r; }
+static inline int LocalId() { int r=0;int a=D_005721A8;if(D_005721C8) { if(D_00494178==-1)NetGame_InitLocalSlot(&D_00494178,a);r=D_00494178; }else { /* Keep the default-id branch. */ asm { .set reorder } }return r; }
+static inline int KnownLocal(bool online) { int r=0;int a=D_005721A8;if(online) { if(D_00494178==-1)NetGame_InitLocalSlot(&D_00494178,a);r=D_00494178; }else { /* Keep the default-id branch. */ asm { .set reorder } }return r; }
 static inline bool Hosting() {bool r;if(D_005721C8)r=D_005721C0;else {r=1; /* Preserve the offline branch. */ asm { .set reorder }}return r;}
 static inline int OwnerId() {int id;if(Hosting())id=LocalId();else{int tmp;func_002EBBA0(D_005721A8,&tmp);id=tmp;}return id;}
 struct Mat { __int128 q[4]; Mat() {} };

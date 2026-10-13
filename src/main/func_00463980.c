@@ -12,7 +12,7 @@ int func_0035B210(...);
 int Gui_GetScreenList(...);                                
 void **Gui_GetScreenStack(...);                             
 int GuiStack_SwapScreens(...);              
-int func_00418A80(...);                   
+int GuiManager_FindOrLoad(...);                   
 extern char D_004C2780;
 extern char D_004C2798;
 }
@@ -23,7 +23,7 @@ extern "C" int func_00463980(char * arg0, int d1, int arg2) {
     if ((arg2 & 0xFFFF) == 2) {
         temp_v0 = Gui_GetScreenStack();
         ((VC00463980 *)(temp_v0))->v24(F_(arg0, 0x250, int));
-        temp_s0 = func_00418A80(Gui_GetScreenList(), &D_004C2780, &D_004C2798);
+        temp_s0 = GuiManager_FindOrLoad(Gui_GetScreenList(), &D_004C2780, &D_004C2798);
         GuiStack_SwapScreens(Gui_GetScreenStack(), arg0, temp_s0);
         return 1;
     }

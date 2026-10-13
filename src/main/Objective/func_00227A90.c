@@ -14,8 +14,8 @@ extern int Loc_FindKeyThunk(char* s);
 extern void Transport_Send(int a, Msg_227A90* m, int b, int c);
 extern void cMessage_dtor(Msg_227A90* m, int f);
 extern int Player_GetIndex(int);
-extern void func_002EBAF8(int*, int);
-#define LOCALID_(X) { int ld_a = D_005721A8; if (D_005721C8) { if (D_00494178 == -1) func_002EBAF8(&D_00494178, ld_a); X = D_00494178; } else X = 0; }
+extern void NetGame_InitLocalSlot(int*, int);
+#define LOCALID_(X) { int ld_a = D_005721A8; if (D_005721C8) { if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, ld_a); X = D_00494178; } else X = 0; }
 static inline int KeyOf_227A90(char* s) { return s ? Loc_FindKeyThunk(s) : -1; }
 static inline int LocalId_227A90() { int r; LOCALID_(r); return r; }
 static inline int IsMine_227A90(Obj_227A90* o) { int owner = o->owner; return Player_GetIndex(owner) == LocalId_227A90(); }

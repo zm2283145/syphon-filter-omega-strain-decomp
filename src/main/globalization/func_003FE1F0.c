@@ -26,7 +26,7 @@ char String_ToLower(char);
 void String_Copy(char*, const char*);
 void func_003FE800(void*, void*, int, char*);
 void func_003FE640(void*);
-void func_00330280(void*, char**);
+void PtrVec_PushBack_330280(void*, char**);
 }
 struct Stream {
  void* file; int size; char hog[0x9C]; void* owned; char* a8; char* ac; int b0; int b4; unsigned char ready; char pad[3];
@@ -84,7 +84,7 @@ extern "C" bool Loc_ReadPoolFile(Loc* self, char* name) {
    }
    func_003FE800(self, &self->entries[self->count], 1, key);
    func_003FE640(D_0055CA70);
-   func_00330280(D_0055CA70, &str);
+   PtrVec_PushBack_330280(D_0055CA70, &str);
   }
   ok = true;
  }

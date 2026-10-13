@@ -38,7 +38,7 @@ extern int func_003327A0(PartIt* a, PartIt* b);
 extern PartDef** func_003327F0(PartIt* it);
 extern PartIt* func_003327C0(PartIt* it);
 extern PartIt* func_003327E0(PartIt* dst, PartIt* src);
-extern void func_00330280(PartVec* v, PartDef** value);
+extern void PtrVec_PushBack_330280(PartVec* v, PartDef** value);
 
 void cAgentData_UnlockPart(Agent332610* self, const char* name)
 {
@@ -77,6 +77,6 @@ void cAgentData_UnlockPart(Agent332610* self, const char* name)
     rp = &res;
 done:
     if (rp->p == end.p) {
-        func_00330280(&self->parts, &found);
+        PtrVec_PushBack_330280(&self->parts, &found);
     }
 }

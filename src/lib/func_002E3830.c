@@ -1,7 +1,7 @@
 /* EE soft-float double libcalls are aliased to their retail functions. */
 __asm__("dpcmp = SoftFloat_UnpackAndCompare\n"
         "dpmul = func_0011C268\n"
-        "dpadd = func_0011C1A8\n"
+        "dpadd = SoftFloat_DoubleAdd\n"
         "dpsub = func_0011C200\n"
         "fptodp = SoftFloat_FloatToDouble");
 

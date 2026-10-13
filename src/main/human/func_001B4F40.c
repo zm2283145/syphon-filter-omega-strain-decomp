@@ -42,7 +42,7 @@ void Human_ApplyBoundSpheres(Act*);
 void Human_ApplyCentroidWeights(Act*);
 void TargetVis_Register(char*, Act*);
 int Player_GetIndex(int);
-void func_002EBAF8(int*, int);
+void NetGame_InitLocalSlot(int*, int);
 void NetMap_BindReceiver(int, int, Act*);
 void func_00436C00(int*);
 void func_004341F0(int*, int*);
@@ -57,7 +57,7 @@ static inline int LocalId()
     int a = D_005721A8;
     if (D_005721C8) {
         if (D_00494178 == -1)
-            func_002EBAF8(&D_00494178, a);
+            NetGame_InitLocalSlot(&D_00494178, a);
         return D_00494178;
     }
     return 0;

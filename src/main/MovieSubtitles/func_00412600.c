@@ -64,7 +64,7 @@ void FlushCache(int);
 void func_0036AFC0(VBig*);
 void func_0036AB80(VBig*, int*, const char*);
 void func_00382910(IdList*);
-void func_0037A9F0(void*);
+void Video_BeginFrame(void*);
 void func_00410C20(Subs* self, void* file, int lang);
 }
 /* retail's hand-written memclear (addi + sq zero), inlined from a shared helper */
@@ -174,8 +174,8 @@ extern "C" void func_00412600(Self* self, void* file, int lang)
             { IdList* l = D_00539248; l->n = 0; l->f16 = 0; }
             AddId(D_00539248, *(int*)self->p54);
             func_00382910(D_00539248);
-            func_0037A9F0(&D_005381F0);
-            func_0037A9F0(&D_005381F0);
+            Video_BeginFrame(&D_005381F0);
+            Video_BeginFrame(&D_005381F0);
         }
     }
     self->rect.r = 20.0f; self->rect.g = 20.0f; self->rect.b = 600.0f; self->rect.a = 440.0f;

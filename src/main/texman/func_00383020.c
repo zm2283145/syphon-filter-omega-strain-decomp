@@ -8,7 +8,7 @@
 
 extern "C" {
 int Mem_Free(int, int, char *, int);                         
-int func_0010CE60(int, int);                            
+int RemoveIntcHandler(int, int);                            
 int func_00381080(char * );                            
 int func_00383150(char * , int);                         
 int operator_delete(char * );                          
@@ -23,7 +23,7 @@ extern "C" char * func_00383020(char * arg0, long long arg1) {
 
     if (arg0 != NULL) {
         Alloc_Lock(5);
-        func_0010CE60(5, F_(arg0, 0x490, int));
+        RemoveIntcHandler(5, F_(arg0, 0x490, int));
         func_00381080(arg0);
         temp_s2 = F_(arg0, 0x8, int);
         {

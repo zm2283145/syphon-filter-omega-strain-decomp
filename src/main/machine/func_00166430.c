@@ -7,7 +7,7 @@ int Alloc_Unlock(int);
 int Archive_Open(char *, int, int, int);                     
 int Loc_LookupText(char *);                            
 int Mem_Alloc(int, int, char *, int);                        
-int func_00121BC8(signed char *);                            
+int atoi(signed char *);                            
 int func_00166650();                                  
 int func_00166690(char *);                               
 int func_00271B10(int, float);                            
@@ -77,7 +77,7 @@ void func_00166430(PS0_00166430 *arg0, int d1, int arg2) {
         D_004EE4D8 = 0;
         D_004EE4D0 = 0x4B0;
     } else {
-        D_004EE4D0 = func_00121BC8(temp_v0);
+        D_004EE4D0 = atoi(temp_v0);
         D_004EE4D8 = 1;
     }
     D_004EE4C8 = 0;

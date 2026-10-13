@@ -108,7 +108,7 @@ typedef struct GuiWidget456D90 {
 /* Game screen sub-widget used by func_00464B30/func_00464B70. */
 typedef struct GuiWidget464B30 {
     GuiWidget base;                 /* 0x00 */
-    int child;                      /* 0x48 child found by func_0041DB80 */
+    int child;                      /* 0x48 child found by GuiWidget_FindChildByName */
     int unk4C;                      /* 0x4C copied from (*D_004FFC2C)->unk6A0 */
 } GuiWidget464B30;
 

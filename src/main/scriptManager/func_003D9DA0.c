@@ -44,7 +44,7 @@ struct Arr_3D9DA0 { int* data; int count; };
 
 #pragma opt_common_subs off
 #pragma opt_propagation off
-extern "C" void func_003D9DA0(Arr_3D9DA0* a, int n)
+extern "C" void ScriptSlot_ResizeBuffer(Arr_3D9DA0* a, int n)
 {
     int* old = a->data;
     if (old) {

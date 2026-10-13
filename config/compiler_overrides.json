@@ -7570,5 +7570,10 @@
   "main/ska/func_003AF2D0": "cwps2-3.0b38",
   "main/func_003BA840": "cwps2-3.0b38",
   "main/func_003BAAB0": "cwps2-3.0b38",
-  "main/func_00475D80": "cwps2-3.0b38"
+  "main/func_00475D80": "cwps2-3.0b38",
+  "lib/func_001220A8": "ee-gcc2.96-G0",
+  "lib/func_001273C8": "ee-gcc2.96-G0",
+  "lib/func_00129D08": "ee-gcc2.96-G0",
+  "lib/vfprintf/func_0012C408": "ee-gcc2.96-G0",
+  "lib/func_0012DD18": "ee-gcc2.96-G0"
 }

@@ -9,16 +9,22 @@ This is the working state and the routine for whoever continues this project
 
 | | |
 |---|---|
-| Functions matched | 12,776 of 14,331 |
-| Code matched | 58.48% |
+| Functions matched | 12,779 of 14,331 |
+| Code matched | 58.64% |
 | Data matched | 99.92% |
 | Full build | reproduces the retail executable byte for byte |
+
+
+The objdiff report undercounts `func_0038A800`: its full 2,328-byte body and the
+linked executable match retail, but target-only relocations on scratchpad
+constants (`D_70000040` and `D_70000008`) produce a 99.93% symbolic comparison.
+The status above follows the generated report without manually changing totals.
 
 What is left (from `progress/report.json`):
 
 | Function size | Unmatched | Bytes |
 |---|---|---|
-| under 100 bytes | 222 | 6 KB |
+| under 100 bytes | 222 | 7 KB |
 | 100–1,200 bytes | 962 | 510 KB |
 | 1,200–3,000 bytes | 294 | 515 KB |
 | over 3,000 bytes | 89 | 496 KB |

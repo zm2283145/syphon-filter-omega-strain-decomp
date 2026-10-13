@@ -31,6 +31,16 @@ compared with the retail data. The data forms one block in object order:
 
 A file with data is a match only if every DATA line says MATCH; the
 integrator then links the data from C (docs/data_split.md).
+
+EE-GCC 2.96 (gcc296, -G8) puts float/double constants in .lit4/.lit8 and
+loads them gp-relative from the retail linker's shared literal pool. Each
+load is checked against the pool entry the retail instruction uses
+(tools/lit_pool.py, docs/data_split.md):
+
+  [gcc296] LIT .lit4 0x004E1BD0: MATCH
+
+Every LIT line must say MATCH. (gcc 2.96 rounds some decimal float literals
+one ulp off: spell the constant differently until it does.)
 Symbols are resolved through config/symbol_addrs.txt and splat's labels.
 Nothing derived from the game is written anywhere except build/.
 """
@@ -38,6 +48,9 @@ import argparse, json, os, re, shutil, struct, subprocess, sys, tempfile
 from pathlib import Path
 from elftools.elf.elffile import ELFFile
 from elftools.elf.relocation import RelocationSection
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import lit_pool  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 BASE = 0x100000
@@ -238,6 +251,46 @@ def _layout(secs, members, start):
     return out, (pos - start + 3) // 4 * 4
 
 
+def text_bases(e, names):
+    """{section index: retail address} of each .text section, from the functions in it."""
+    text_base = {}
+    for s in e.get_section_by_name(".symtab").iter_symbols():
+        if s["st_info"]["type"] != "STT_FUNC" or not isinstance(s["st_shndx"], int):
+            continue
+        a = names.get(s.name)
+        if a is None and re.fullmatch(r"func_[0-9A-F]{8}", s.name):
+            a = int(s.name[5:], 16)
+        if a is not None:
+            text_base.setdefault(s["st_shndx"], a - s["st_value"])
+    return text_base
+
+
+def pooled_literals(obj, rom, names):
+    """Check an EE-GCC object's gp-relative literals (.lit4/.lit8) against the retail pool.
+
+    The build points each load at the retail pool entry its instruction uses
+    (tools/lit_pool.py); the value the source produced must equal it.
+    Returns [{"section", "start", "size", "result"}], one per load and one per
+    pool entry no code loads (which cannot be pooled)."""
+    with open(obj, "rb") as fh:
+        blob = fh.read()
+        fh.seek(0)
+        text_base = text_bases(ELFFile(fh), names)
+    out = []
+    loads = lit_pool.literals(blob, text_base, rom, lit_pool.gp_value(ROOT))
+    for ld in loads:
+        out.append({"section": ld["section"], "start": ld["addr"], "size": ld["size"],
+                    "result": "MATCH" if ld["match"] else f"DIFF (+{ld['offset']:#x} of the object's pool)"})
+    used = {(ld["section"], ld["offset"]) for ld in loads}
+    for sec in lit_pool.sections(blob):
+        name, size = sec[2], sec[6]
+        for o in range(0, size if name in lit_pool.LIT else 0, lit_pool.LIT.get(name, 4)):
+            if (name, o) not in used:
+                out.append({"section": name, "start": None, "size": lit_pool.LIT[name],
+                            "result": f"+{o:#x} not loaded by the code (cannot be pooled)"})
+    return out
+
+
 def data_pieces(e, rom, names):
     """Place and compare the data a compiled object defines.
 
@@ -255,23 +308,14 @@ def data_pieces(e, rom, names):
                         "result": "uninitialised data cannot be linked from C; declare it extern"})
         elif (sec["sh_flags"] & SHF_ALLOC and not sec["sh_flags"] & SHF_EXECINSTR and sec["sh_size"]
               and sec["sh_type"] != "SHT_NOBITS" and sec.name not in DATA_KINDS
-              and not sec.name.startswith(NOT_DATA)):
+              and sec.name not in lit_pool.LIT and not sec.name.startswith(NOT_DATA)):
             out.append({"section": sec.name, "start": None, "size": sec["sh_size"],
                         "result": "section kind cannot be linked from C yet"})
     members = [i for i, sec in enumerate(secs) if sec.name in DATA_KINDS and sec["sh_size"]]
     if not members:
         return out
     kind = next(k for k in (".rodata", ".data", ".sdata") if any(secs[i].name == k for i in members))
-    # retail address of each .text section, from the functions in it
-    text_base = {}
-    for s in symtab.iter_symbols():
-        if s["st_info"]["type"] != "STT_FUNC" or not isinstance(s["st_shndx"], int):
-            continue
-        a = names.get(s.name)
-        if a is None and re.fullmatch(r"func_[0-9A-F]{8}", s.name):
-            a = int(s.name[5:], 16)
-        if a is not None:
-            text_base.setdefault(s["st_shndx"], a - s["st_value"])
+    text_base = text_bases(e, names)
     # %hi/%lo pairs in code that point into a data section give its address
     seen = {}
     for rs in e.iter_sections():
@@ -384,12 +428,15 @@ def main():
                 res, undef = compare(obj, rom, names, starts)
                 with open(obj, "rb") as fh:
                     data = data_pieces(ELFFile(fh), rom, names)
+                lits = pooled_literals(obj, rom, names)
             finally:
                 os.unlink(obj)
             report[kind] = {"functions": [{"name": n, "addr": f"{a:08X}" if a else None, "result": r}
                                           for n, a, r in res], "undefined": undef,
                             "data": [dict(d, start=f"{d['start']:08X}" if d["start"] is not None else None)
-                                     for d in data]}
+                                     for d in data],
+                            "literals": [dict(d, start=f"{d['start']:08X}" if d["start"] is not None else None)
+                                         for d in lits]}
     if args.json:
         print(json.dumps(report)); return
     for kind, r in report.items():
@@ -400,6 +447,8 @@ def main():
         for d in r["data"]:
             size = f"{d['size']:#x}" if d["size"] is not None else "?"
             print(f"[{kind}] DATA {d['section']} {'0x' + d['start'] if d['start'] else '?'} size {size}: {d['result']}")
+        for d in r["literals"]:
+            print(f"[{kind}] LIT {d['section']} {'0x' + d['start'] if d['start'] else '?'}: {d['result']}")
         for u in r["undefined"]:
             print(f"[{kind}] UNDEF {u}")
 

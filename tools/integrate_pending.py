@@ -18,6 +18,11 @@ then cut out of the asm data segment that holds it and becomes a
 `[ROM, .rodata, unit]` (or .data) subsegment of the unit, so the build links
 it from C (docs/data_split.md). A file whose data does not match, cannot be
 placed or does not lie inside one asm data segment is skipped with the reason.
+EE-GCC 2.96 float/double constants (.lit4/.lit8, gp-relative) are not cut
+out: they live in the retail linker's shared literal pool, which stays where
+it is; each one must equal the pool entry its retail load uses
+(check_match.pooled_literals), and the build points the loads at those
+entries (tools/lit_pool.py).
 
 Functions inside the static-initialiser island (asm segments named sinit_*)
 become main/sinit/func_<ADDR> units, as with integrate_island.py.
@@ -182,9 +187,11 @@ def main():
         try:
             with open(obj, "rb") as fh:
                 pieces = check_match.data_pieces(ELFFile(fh), rom, names)
+            lits = check_match.pooled_literals(obj, rom, names)
         finally:
             os.unlink(obj)
         bad = [f"{p['section']}: {p['result']}" for p in pieces if p["result"] != "MATCH"]
+        bad += [f"{p['section']} literal {p['start'] or 0:08X}: {p['result']}" for p in lits if p["result"] != "MATCH"]
         bad += [f"{p['section']}: not linkable from C yet" for p in pieces if p["section"] not in PIECE_TYPES]
         if bad:
             skipped.append((f.name, "data " + "; ".join(bad))); continue

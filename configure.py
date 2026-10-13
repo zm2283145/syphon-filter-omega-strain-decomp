@@ -350,7 +350,7 @@ def main():
             target_s = Path("asm") / "data" / (name + "." + typ[1:] + ".s")
             target = Path("build") / "target" / (name + ".o")
             data_objs.append((out, obj, link, vram, None, target))
-            c_units.append((src, out, target_s, target, "cc", 16))
+            c_units.append((src, out, target_s, target, "cc", 16, vram))
             link_objs.append(link)
             units.append({"name": name, "target_path": str(target).replace("\\", "/"),
                           "base_path": str(obj).replace("\\", "/"),
@@ -412,7 +412,7 @@ def main():
                 link = Path("build") / "src" / (name + ".link.o")
                 relinks.append((obj, link, text_tail, None))
             c_units.append((src, out, target_s, target, "gcc" if name.startswith("lib/") else "cc",
-                            next(a for a in (16, 8, 4) if (start + 0x100000) % a == 0)))
+                            next(a for a in (16, 8, 4) if (start + 0x100000) % a == 0), vram))
             link_objs.append(link)
             units.append({"name": name, "target_path": str(target).replace("\\", "/"),
                           "base_path": str(obj).replace("\\", "/"),
@@ -432,6 +432,8 @@ def main():
         f"python = {py}",
         f"asflags = {ASFLAGS}",
         f"cflags = {CFLAGS} -Iinclude -Isrc",
+        f"gp = {cfg['options']['gp_value']:#x}",
+        f"rom = {cmd_path(rom)}",
         "",
         "rule as",
         "  command = $python tools/assemble.py $as $objcopy $align $out $in $asflags",
@@ -445,8 +447,10 @@ def main():
         "rule cc_aligned",
         "  command = $python tools/compile_aligned.py $objcopy $align $out $in -- $cc $cflags",
         "  description = CC $in",
+        # --pool: EE-GCC 2.96 literals (.lit4/.lit8) are loaded from the retail
+        # literal pool (tools/lit_pool.py); $vram is the unit's address
         "rule gcc",
-        "  command = $python tools/compile_aligned.py $objcopy $align $out $in -- $gcc $gccflags",
+        "  command = $python tools/compile_aligned.py --pool $rom $gp $vram $objcopy $align $out $in -- $gcc $gccflags",
         "  description = GCC $in",
         "rule dataobj",
         "  command = $python tools/data_obj.py $ld $objcopy $in $out $start $text $target",
@@ -479,7 +483,7 @@ def main():
     for src, obj, align in asm_objs:
         lines.append(f"build {ninja_path(obj)}: as {ninja_path(src)}")
         lines.append(f"  align = {align}")
-    for src, obj, target_s, target, rule, align in c_units:
+    for src, obj, target_s, target, rule, align, vram in c_units:
         # Metrowerks aligns .text to 16; a unit starting on an 8-byte boundary
         # gets the alignment its retail address implies, like the GCC units.
         if rule == "cc" and align != 16:
@@ -487,6 +491,8 @@ def main():
         lines.append(f"build {ninja_path(obj)}: {rule} {ninja_path(src)}")
         if rule != "cc":
             lines.append(f"  align = {align}")
+        if rule == "gcc":
+            lines.append(f"  vram = {vram:#x}")
         name = src.relative_to("src").with_suffix("").as_posix()
         if rule != "gcc":
             if name in overrides:

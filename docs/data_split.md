@@ -28,6 +28,10 @@ What the compilers emit:
 | initialised global / static | `.data`, one section per object | `.data` |
 | float literal, `const float` scalar | `lui`/`ori`+`mtc1`, no data | `lui`/`ori`+`mtc1` |
 
+EE-GCC 2.96 at its default -G8 puts float literals in `.lit4` (doubles in
+`.lit8`) and loads them gp-relative (`lwc1 $f0, %gp_rel(D_xxx)($gp)`); see
+"gp-relative literal pools" below.
+
 The measured Metrowerks rules are in the d2 notes (`build/agents/d2/rules.md`
 in the coordinator's checkout).
 
@@ -143,6 +147,36 @@ unit's `c` and dot subsegments. Functions in the static-initialiser island
 (`sinit_*` asm segments) become `main/sinit/func_<ADDR>` units. A done file
 for a function that is already a C unit replaces that unit's source when it
 adds data (an `extern D_xxxxxxxx` turned back into the literal or table).
+
+## gp-relative literal pools (.lit4/.lit8)
+
+The retail linker merged the `.lit4`/`.lit8` sections of all EE-GCC -G8
+objects into one deduplicated pool (around `0x004E1B8C`, inside the data-only
+unit `data/d_004E1B00`); a value used by several functions is stored once, so
+a unit's literals are neither contiguous nor its own and cannot be carved out
+like `.rodata`. Instead the pool stays where it is and the C unit's loads are
+pointed at it:
+
+* gcc emits `R_MIPS_LITERAL` relocations against the `.lit4` section symbol
+  (instruction immediate = offset - gp0, gp0 = 0x4000 in `.reginfo`).
+* `tools/lit_pool.py` (run by `tools/compile_aligned.py --pool ROM GP VRAM`,
+  which the `gcc` rule in `configure.py` passes for every EE-GCC unit) reads
+  the retail instruction at each load (`gp + simm16` gives the pool address),
+  requires the literal's bytes to equal the retail pool entry, rewrites the
+  relocation to `R_MIPS_GPREL16` against the undefined global `D_<ADDR>`
+  with a zero immediate, and the `.lit4`/`.lit8` sections are removed.
+  Objects without literal sections are unchanged. A literal that differs from
+  retail stops the build with an error.
+* The object then has exactly the relocations of the splat asm
+  (`%gp_rel(D_<ADDR>)`), so objdiff pairs the functions; the pool bytes keep
+  counting toward the data-only unit.
+
+`check_match.py` prints one `LIT` line per literal
+(`[gcc296] LIT .lit4 0x004E1BD0: MATCH`) and `integrate_pending.py` requires
+them all to match. gcc 2.96 rounds some long decimal float literals to the
+wrong float (`0.015915492549538612f` gives `0x3C826134`, retail
+`0x3C826135`); write a shorter spelling (`0.01591549255f`) or the hex value
+when a LIT line shows a DIFF.
 
 ## Conventions for matching agents
 

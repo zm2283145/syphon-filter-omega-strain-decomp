@@ -9068,7 +9068,7 @@ segments:
       - [0x2CF190, c, main/gobj/func_003CF190]
       - [0x2CF220, c, main/gobj/func_003CF220]
       - [0x2CF3A0, c, main/func_003CF3A0]
-      - [0x2CFAB0, asm]
+      - [0x2CFAB0, c, main/func_003CFAB0]
       - [0x2D04C0, c, main/func_003D04C0]
       - [0x2D0810, c, main/func_003D0810]
       - [0x2D0850, c, main/func_003D0850]

@@ -7343,5 +7343,7 @@
   "main/func_002BCB50": "cwps2-3.0b38",
   "lib/func_002B98D0": "ee-gcc2.96-G0",
   "main/func_002AF310": "cwps2-3.0b38",
-  "main/man/func_0038A800": "cwps2-3.0b38"
+  "main/man/func_0038A800": "cwps2-3.0b38",
+  "main/func_002B1350": "cwps2-3.0b38",
+  "main/message/func_003C9420": "cwps2-3.0b38"
 }

@@ -1,0 +1,72 @@
+#include "types.h"
+int func_00443EA0(int);
+int func_00443F40(int);
+int memcpy(int, int, int);
+int Name_Compare48(int, int, int);
+void func_0044F2E0(void *, int);
+extern int D_00585E58;
+
+typedef struct {
+    int cap;
+    int count;
+    int f8;
+    int grow;
+    int size;
+    int data;
+    signed char dirty;
+    char pad19;
+    unsigned char unique;
+} Arr;
+
+static inline int Arr_At(Arr *a, int i) {
+    if (a->data == 0) return 0;
+    if (i < 0 || i >= a->count) return 0;
+    return a->data + i * a->size;
+}
+
+static inline void Arr_Set(Arr *a, int i, int elem) {
+    int p;
+    if (elem != 0) {
+        p = Arr_At(a, i);
+        if (p != 0) {
+            if (Name_Compare48(p, elem, a->size) != 0) {
+                a->dirty = 1;
+            }
+            memcpy(p, elem, a->size);
+        }
+    }
+}
+
+void func_0044F470(Arr *a, int elem) {
+    int i;
+    int newcap;
+    int p;
+
+    if (a->data == 0) return;
+    if (elem == 0) return;
+    if (a->unique) {
+        for (i = 0; i < a->count; i++) {
+            p = Arr_At(a, i);
+            if (p != 0 && Name_Compare48(p, elem, a->size) == 0) return;
+        }
+    }
+    if (a->cap < a->count + 1) {
+        if (a->grow <= 0) {
+            func_0044F2E0(a, 0);
+        } else {
+            newcap = a->cap + a->grow;
+            p = func_00443F40(newcap * a->size);
+            D_00585E58 += newcap * a->size;
+            if (p == 0) return;
+            memcpy(p, a->data, a->cap * a->size);
+            func_00443EA0(a->data);
+            D_00585E58 -= a->cap * a->size;
+            a->cap = newcap;
+            a->data = p;
+        }
+    }
+    a->count++;
+    Arr_Set(a, a->count - 1, elem);
+    a->dirty = 1;
+}
+

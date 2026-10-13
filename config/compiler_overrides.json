@@ -7439,5 +7439,10 @@
   "lib/libdbc/func_0026A620": "ee-gcc2.9-991111",
   "main/ai/func_0016DC60": "cwps2-3.0b38",
   "main/func_0020DEE0": "cwps2-3.0b38",
-  "main/gobj/func_003CE850": "cwps2-3.0b38"
+  "main/gobj/func_003CE850": "cwps2-3.0b38",
+  "lib/func_002D9EC8": "ee-gcc2.96-G0",
+  "main/AgentData/func_00333600": "cwps2-3.0b38",
+  "main/func_003E7D60": "cwps2-3.0b38",
+  "main/NetObj/func_003FB750": "cwps2-3.0b38",
+  "main/sinit/func_004CC810": "cwps2-3.0b38"
 }

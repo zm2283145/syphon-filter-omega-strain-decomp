@@ -7604,5 +7604,12 @@
   "main/ska/func_003B43C0": "cwps2-3.0b38",
   "main/func_003BF540": "cwps2-3.0b38",
   "main/func_003C7880": "cwps2-3.0b38",
-  "main/func_003D2B20": "cwps2-3.0b38"
+  "main/func_003D2B20": "cwps2-3.0b38",
+  "main/weapon/func_00141880": "cwps2-3.0b38",
+  "main/func_0020E730": "cwps2-3.0b38",
+  "main/GuiAgentCreate/func_0028BA90": "cwps2-3.0b38",
+  "main/func_00437640": "cwps2-3.0b38",
+  "main/GenInfoObject/func_00439390": "cwps2-3.0b38",
+  "main/func_0043D8B0": "cwps2-3.0b38",
+  "main/func_0043FBB0": "cwps2-3.0b38"
 }

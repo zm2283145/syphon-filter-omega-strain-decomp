@@ -7412,5 +7412,10 @@
   "lib/LargeInt/func_002F14E8": "ee-gcc2.96-G0",
   "main/human/func_001AE7D0": "cwps2-3.0b38",
   "main/func_0029D390": "cwps2-3.0b38",
-  "main/func_00460450": "cwps2-3.0b38"
+  "main/func_00460450": "cwps2-3.0b38",
+  "main/ska/func_003B5580": "cwps2-3.0b38",
+  "main/collision/func_003C19F0": "cwps2-3.0b38",
+  "main/interface_model/func_003F0BD0": "cwps2-3.0b38",
+  "main/func_004434A0": "cwps2-3.0b38",
+  "main/SFOLobby_Games/func_0044E430": "cwps2-3.0b38"
 }

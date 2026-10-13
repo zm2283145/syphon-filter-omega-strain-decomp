@@ -1,14 +1,14 @@
 #include "types.h"
+#include "humanCollision_types.h"
 
-typedef struct { char pad[0xC]; char flag; } Obj1EB;
-extern void func_001EB850(Obj1EB* self);
-extern void func_001EF530(Obj1EB* self, int value);
+extern void HumanColBufA_Init(HumanColVec* v);
+extern void HumanColBufA_Reserve(HumanColVec* v, int capacity); /* vector reserve (buffer A) */
 
-/* Constructs the object: base init, sets the value from *src and stores the flag byte; returns self. */
-Obj1EB* func_001EB800(Obj1EB* self, int* src, char flag)
+/* Constructor for buffer A: empty vector, reserve *capacity, store the flag byte; returns v. */
+HumanColVec* HumanColBufA_Ctor(HumanColVec* v, int* capacity, char flag)
 {
-    func_001EB850(self);
-    func_001EF530(self, *src);
-    self->flag = flag;
-    return self;
+    HumanColBufA_Init(v);
+    HumanColBufA_Reserve(v, *capacity);
+    v->flag0C = flag;
+    return v;
 }

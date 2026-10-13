@@ -4,7 +4,7 @@ extern char D_0053DC00[];
 extern char D_0053DC08[];
 extern int func_001183B8(int);
 
-int func_003A6D50(int a0) {
+int Cd_SetCallback(int a0) {
     int v0;
     int cond;
 

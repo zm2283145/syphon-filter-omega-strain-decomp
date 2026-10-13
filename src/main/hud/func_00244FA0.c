@@ -61,7 +61,7 @@ void cMessage_dtor(Msg_244FA0* m, int flags);
 int Gui_GetScreenList();
 Svc_244FA0* Gui_GetScreenStack();
 void func_00415870(Svc_244FA0* s);
-void func_00419260(int h, float dt);
+void GuiManager_Update(int h, float dt);
 }
 extern "C" void func_00244FA0(Obj_244FA0* o, float dt)
 {
@@ -130,7 +130,7 @@ extern "C" void func_00244FA0(Obj_244FA0* o, float dt)
         }
     }
     if (!D_004FFC29 || D_005721C8) {
-        func_00419260(Gui_GetScreenList(), dt);
+        GuiManager_Update(Gui_GetScreenList(), dt);
         if (D_004FFBA0 != 0x13)
             func_00415870(Gui_GetScreenStack());
         Gui_GetScreenStack()->v22(dt);

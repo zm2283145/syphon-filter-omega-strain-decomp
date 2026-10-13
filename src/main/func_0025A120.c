@@ -1,7 +1,7 @@
 #include "types.h"
 typedef struct { char pad[0xD4]; unsigned char done; } O_A120;
 O_A120 **func_0025A1C0(void *, int);
-int func_003CB230(O_A120 *, float);
+int Object_DeleteLater(O_A120 *, float);
 int Object_Unregister(O_A120 *);
 extern char D_004F8040;
 extern int D_004F8044;
@@ -12,7 +12,7 @@ void func_0025A120(void) {
         if (!o->done) {
             o->done = 1;
             Object_Unregister(o);
-            func_003CB230(o, 0.1f);
+            Object_DeleteLater(o, 0.1f);
         }
     }
 }

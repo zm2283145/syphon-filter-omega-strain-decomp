@@ -10,7 +10,7 @@ extern "C" {
 /*fc*/
 int Mem_Free(...);                         
 int func_001AF7A0(...);                                  
-int func_0036CD80(...);                            
+int Hog_Unload(...);                            
 int func_003B62E0(...);                            
 int func_00404FD0(...);                            
 extern int D_004F77A0;
@@ -33,23 +33,23 @@ extern "C" void func_00229EB0(char * arg0) {
     D_005712F4 = 0;
     temp_a0 = (char *)(F_(arg0, 0x4, int));
     if ((temp_a0 != NULL) && (F_(temp_a0, 0x14C, unsigned char) != 0)) {
-        func_0036CD80(temp_a0);
+        Hog_Unload(temp_a0);
     }
     temp_a0_2 = (char *)(F_(arg0, 0x8, int));
     if ((temp_a0_2 != NULL) && (F_(temp_a0_2, 0x14C, unsigned char) != 0)) {
-        func_0036CD80(temp_a0_2);
+        Hog_Unload(temp_a0_2);
     }
     temp_a0_3 = (char *)(F_(arg0, 0xC, int));
     if ((temp_a0_3 != NULL) && (F_(temp_a0_3, 0x14C, unsigned char) != 0)) {
-        func_0036CD80(temp_a0_3);
+        Hog_Unload(temp_a0_3);
     }
     temp_a0_4 = (char *)(F_(arg0, 0x10, int));
     if ((temp_a0_4 != NULL) && (F_(temp_a0_4, 0x14C, unsigned char) != 0)) {
-        func_0036CD80(temp_a0_4);
+        Hog_Unload(temp_a0_4);
     }
     temp_a0_5 = (char *)(F_(arg0, 0x14, int));
     if ((temp_a0_5 != NULL) && (F_(temp_a0_5, 0x14C, unsigned char) != 0)) {
-        func_0036CD80(temp_a0_5);
+        Hog_Unload(temp_a0_5);
     }
     F_(arg0, 0x4, int) = NULL;
     F_(arg0, 0x8, int) = NULL;

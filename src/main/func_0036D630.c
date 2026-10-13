@@ -6,11 +6,11 @@
 
 #include "loose03_types.h"
 
-extern int func_00369870(void*);
+extern int FileHal_CtorDefault(void*);
 
 /* Constructor: builds the sub-object at +0x80 and clears the remaining state. */
 Obj36D630* func_0036D630(Obj36D630* self) {
-    func_00369870(self->unk80);
+    FileHal_CtorDefault(self->unk80);
     self->unk148 = 0;
     self->unk158 = 0;
     self->unk15C = 0;

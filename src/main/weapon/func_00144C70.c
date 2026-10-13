@@ -9,7 +9,7 @@ void Mem_Free(int pool, void* allocation, char* file, int line);
 void func_00266470(void* p, int f);
 void WeaponInv_StopLoopSound(S_4C70* self, int slot);
 void Object_Unregister(void* n);
-void func_003CB230(float t, void* n);
+void Object_DeleteLater(float t, void* n);
 void operator_delete(void* p);
 }
 extern "C" S_4C70* func_00144C70(S_4C70* self, short del)
@@ -31,7 +31,7 @@ extern "C" S_4C70* func_00144C70(S_4C70* self, short del)
         }
         if (self->node) {
             Object_Unregister(self->node);
-            func_003CB230(0.1f, self->node);
+            Object_DeleteLater(0.1f, self->node);
         }
         if (del > 0)
             operator_delete(self);

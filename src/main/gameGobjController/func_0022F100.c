@@ -14,7 +14,7 @@ extern char D_00555070[];   /* global script filter */
 extern int GObj_IdentityA(int gobj);
 extern int ScriptFilter_Dispatch(void* filter, int a1, int a2);
 extern int* Message_GetScriptTypeKeyPtr(void);
-extern int* func_003CB1D0(void);
+extern int* cSystem_GetScriptTypeKeyPtr(void);
 extern int ScriptType_AddAccepted(int type, int iface);
 extern void ScriptType_SetParent(int type, int parentType);
 extern int* cWeaponVisChangeMsg_GetScriptTypeKeyPtr(void);
@@ -26,7 +26,7 @@ int Script_cGameGobjController_Gobj(GgcScriptArg* args) {
 }
 
 void ScriptType_cGameGobjController_Init(void) {
-    ScriptType_SetParent(D_004F7A40, *func_003CB1D0());
+    ScriptType_SetParent(D_004F7A40, *cSystem_GetScriptTypeKeyPtr());
     ScriptType_AddAccepted(D_004F7A40, *cWeaponVisChangeMsg_GetScriptTypeKeyPtr());
     ScriptType_AddAccepted(D_004F7A40, D_004F7A20);
 }

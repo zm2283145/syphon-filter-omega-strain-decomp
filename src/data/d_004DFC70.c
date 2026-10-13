@@ -6,6 +6,7 @@ extern void Actor_BaseWorldUpdate();
 extern void Actor_VirtualNop();
 extern void Controller_DeathNotice();
 extern void Event_PackHeader();
+extern void ListReceiver_Dtor();
 extern void Message_GetScriptTypeKey();
 extern void Node_ClearFlag2C();
 extern void Node_GetFlag2C();
@@ -19,7 +20,9 @@ extern void Object_HandleMessage();
 extern void PathObj_GetPosition();
 extern void Player_GetActiveWeapon();
 extern void Receiver_Destruct();
+extern void Receiver_GetScriptTypeKey();
 extern void Receiver_HandleEventBase();
+extern void Receiver_ScriptDispatch();
 extern void cMessage_dtor();
 extern void cSKYBOX_GOBJ_dtor();
 extern void func_0012ECE0();
@@ -58,9 +61,6 @@ extern void func_003BBDC0();
 extern void func_003BC270();
 extern void func_003BC280();
 extern void func_003BC520();
-extern void func_003CAD70();
-extern void func_003CB1E0();
-extern void func_003CB1F0();
 extern void func_003CCFF0();
 extern void func_003CD090();
 extern void func_003CD110();
@@ -106,15 +106,15 @@ void *D_004DFD80[8] = {
 };
 
 void *D_004DFDA0[16] = {
-    0, 0, &func_003CAD70, &Object_BroadcastToChildren,
+    0, 0, &ListReceiver_Dtor, &Object_BroadcastToChildren,
     &func_0012ECE0, &func_0012ECF0, &func_001383D0, &func_0012ED00,
     &func_0012ED10, &func_0012ED20, &func_0012ED30, &func_0012ED40,
-    &func_0012ED50, &func_003CB1E0, &func_003CB1F0, 0,
+    &func_0012ED50, &Receiver_GetScriptTypeKey, &Receiver_ScriptDispatch, 0,
 };
 
 void *D_004DFDE0[16] = {
     0, 0, &Receiver_Destruct, &Receiver_HandleEventBase,
     &func_0012ECE0, &func_0012ECF0, &func_001383D0, &func_0012ED00,
     &func_0012ED10, &func_0012ED20, &func_0012ED30, &func_0012ED40,
-    &func_0012ED50, &func_003CB1E0, &func_003CB1F0, 0,
+    &func_0012ED50, &Receiver_GetScriptTypeKey, &Receiver_ScriptDispatch, 0,
 };

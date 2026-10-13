@@ -5,14 +5,15 @@
  */
 
 #include "types.h"
+#include "guiMLTextWidget.h"
 
 extern Iter* List_InsertBefore(Iter* result, void* list, Iter* pos, int value);
 
-/* push_back on a list whose sentinel node is at +4. */
-Iter* func_0043E0B0(void* list, int value) {
+/* push_back on the line list (sentinel node at +4). */
+Iter* MLTextLineList_PushBack(MLTextLineList* list, int text) {
     Iter end;
     Iter result;
 
-    end.p = (int*)((char*)list + 4);
-    return List_InsertBefore(&result, list, &end, value);
+    end.p = (int*)&list->last;
+    return List_InsertBefore(&result, list, &end, text);
 }

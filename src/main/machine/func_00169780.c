@@ -10,7 +10,7 @@ extern "C" {
 /*fc*/
 int Mem_Alloc(...);                        
 int func_0036AFC0(...);                             
-int func_003CB110(...);                                  
+int ListReceiver_Ctor(...);                                  
 int func_003E7D60(...);                     
 int func_0042B850(...);                            
 extern char D_0049C390;
@@ -24,7 +24,7 @@ extern "C" char * func_00169780(char * arg0) {
     int var_s1;
     int var_s0;
 
-    func_003CB110();
+    ListReceiver_Ctor();
     F_(arg0, 0x0, int) = (int)(&D_004D97B0);
     func_003E7D60(arg0 + 0x2C, "1.0", &D_0055A700);
     func_0042B850(arg0 + 0x279);

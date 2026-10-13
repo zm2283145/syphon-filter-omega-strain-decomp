@@ -256,7 +256,7 @@ typedef struct Obj4147A0 {
     Obj4147A0Inner* unk2C;          /* 0x2C */
 } Obj4147A0;
 
-/* Object built by func_0036D630 (sub-object at +0x80 from func_00369870, FileHalPS2.cc). */
+/* Object built by func_0036D630 (sub-object at +0x80 from FileHal_CtorDefault, FileHalPS2.cc). */
 typedef struct Obj36D630 {
     char pad000[0x80];
     char unk80[0xC8];               /* 0x80 */

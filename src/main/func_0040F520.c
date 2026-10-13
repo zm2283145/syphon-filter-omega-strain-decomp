@@ -7,7 +7,7 @@
 #include "types.h"
 #include "loose04_types.h"
 
-extern Tree* D_00571CD0;
+extern Tree* g_MotionManager;
 extern void World_ClearPending(Tree*);
 
 void Tree_End(Iter* out, Tree* t) {
@@ -18,9 +18,9 @@ void Tree_Begin(Iter* out, Tree* t) {
     out->p = t->leftmost;
 }
 
-/* Clears the global tree D_00571CD0 if it exists. */
+/* Clears the global tree g_MotionManager if it exists. */
 void func_0040F540(void) {
-    Tree* t = D_00571CD0;
+    Tree* t = g_MotionManager;
 
     if (t != 0) {
         World_ClearPending(t);

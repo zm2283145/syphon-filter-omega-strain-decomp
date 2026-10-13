@@ -26,7 +26,7 @@ int Script_cPlayer_SwitchBodies();
 int Script_cPlayer_SetInvulnerable();
 int Script_cPlayer_GetPlayerObject();
 int ScriptType_cPlayer_Init();
-int func_003CB1D0();
+int cSystem_GetScriptTypeKeyPtr();
 int cGOBJ_GetScriptTypeKeyPtr();
 int Script_RegisterNative();
 int Script_RegisterNative_2();
@@ -75,7 +75,7 @@ void func_004C6180(void) {
     D_004EE7B8 = Script_RegisterNative(D_004EE788, Script_cPlayer_LaunchChooseMenu, &D_00493880, "LaunchChooseMenu", 1, &D_004EE788);
     D_004EE7C0 = Script_RegisterNative(D_004EE788, Script_cPlayer_AddMenuChoice, &D_00493880, "AddMenuChoice", 2, &D_004EE788, &D_00493898);
     D_004EE7C8 = Script_RegisterNative(D_004EE788, Script_cPlayer_SetMenuTitle, &D_00493880, "SetMenuTitle", 2, &D_004EE788, &D_00493898);
-    D_004EE7D0 = Script_RegisterNative(D_004EE788, Script_cPlayer_SetMenuReceiver, &D_00493880, "SetMenuReceiver", 2, &D_004EE788, func_003CB1D0());
+    D_004EE7D0 = Script_RegisterNative(D_004EE788, Script_cPlayer_SetMenuReceiver, &D_00493880, "SetMenuReceiver", 2, &D_004EE788, cSystem_GetScriptTypeKeyPtr());
     D_004EE7D8 = Script_RegisterNative(D_004EE788, Script_cPlayer_Team, &D_00493888, "Team", 1, &D_004EE788);
     D_004EE7E0 = Script_RegisterNative(D_004EE788, Script_cPlayer_GetActiveWeapon, &D_00493888, "GetActiveWeapon", 1, &D_004EE788);
     D_004EE7E8 = Script_RegisterNative(D_004EE788, Script_cPlayer_ArmWeapon, &D_00493880, "ArmWeapon", 2, &D_004EE788, &D_00493888);

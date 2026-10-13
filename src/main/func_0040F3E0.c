@@ -19,7 +19,7 @@ struct WHandle { WObj* obj; int serial; };
 struct WNode { char pad[0x10]; WHandle h; };
 struct WIt { WNode* n; WIt() {} };
 extern "C" {
-extern void* D_00571CD0;
+extern void* g_MotionManager;
 void Tree_Begin(WIt* out, void* tree);
 void Tree_End(WIt* out, void* tree);
 void Tree_Successor(WIt* it);
@@ -46,15 +46,15 @@ extern "C" void World_PhysicsTraversal(float dt)
     WIt end;
     {
         WIt tb;
-        Tree_Begin(&tb, D_00571CD0);
+        Tree_Begin(&tb, g_MotionManager);
         it = tb;
     }
     {
         WIt te;
-        Tree_End(&te, D_00571CD0);
+        Tree_End(&te, g_MotionManager);
         end = te;
     }
     for (; (it.n == end.n) ^ 1; Tree_Successor(&it))
         WStep(&it.n->h, dt);
-    World_ClearPending(D_00571CD0);
+    World_ClearPending(g_MotionManager);
 }

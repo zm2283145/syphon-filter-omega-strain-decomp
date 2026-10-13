@@ -52,7 +52,7 @@ extern long long func_003698B0(unsigned char on);
 extern int Gui_GetScreenList(void);
 extern VObj* Gui_GetScreenStack(void);
 extern int func_00418A80(int a, char* b, char* c);
-extern void func_00419260(int a, float f);
+extern void GuiManager_Update(int a, float f);
 extern int func_0041DB80(int h, char* name);
 extern int func_0041E0F0(VObj* o, int h, int n, int name, int out);
 extern char D_004ACEA8[];
@@ -118,7 +118,7 @@ extern "C" void FrontEnd_SetLoadingScreen(Self7D90* self, int on, char* a, char*
             VObj* o = Gui_GetScreenStack();
             o->f68(D_0051EF80);
         }
-        func_00419260(Gui_GetScreenList(), 0.0f);
+        GuiManager_Update(Gui_GetScreenList(), 0.0f);
         D_00587B38 = 0;
         D_0051EF80 = 0;
         D_0051EF88 = 0;

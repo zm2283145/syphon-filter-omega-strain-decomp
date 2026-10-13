@@ -5,7 +5,7 @@
 int Gui_GetScreenList();                                
 int Gui_GetScreenStack();                                
 int GuiStack_SwapScreens(int, char * , int);                  
-int func_00419530(int, int);                          
+int GuiManager_AddWidget(int, int);                          
 int func_0041EFA0(char * );                            
 int func_0041F960(char *);                             
 int func_0045F4D0(char * );                            
@@ -21,7 +21,7 @@ void func_004603A0(char * arg0) {
     if (F_(arg0, 0x1B4, int) == 0) {
         temp_v0 = func_0041F960(&D_004C2460);
         if (temp_v0 != 0) {
-            func_00419530(Gui_GetScreenList(), temp_v0);
+            GuiManager_AddWidget(Gui_GetScreenList(), temp_v0);
             GuiStack_SwapScreens(Gui_GetScreenStack(), arg0, temp_v0);
         }
     } else {

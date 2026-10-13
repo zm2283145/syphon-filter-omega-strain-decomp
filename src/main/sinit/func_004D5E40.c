@@ -62,8 +62,8 @@ extern int Script_RegisterNative();
 extern int Script_RegisterVariable();
 extern int func_003E3F60();
 extern int Script_RegisterNative_2();
-extern int func_003D9980();
-extern int func_003CB1D0();
+extern int cGroup_GetScriptTypeKeyPtr();
+extern int cSystem_GetScriptTypeKeyPtr();
 void func_004D5E40(void)
 {
     char sp3C[4];
@@ -84,15 +84,15 @@ void func_004D5E40(void)
     D_0055A110 = Script_RegisterNative_2(Script_Reschedule, D_00493880, "Reschedule", 2, D_00493888, D_00493890);
     D_0055A118 = Script_RegisterNative_2(Script_ClearSchedules, D_00493880, "ClearSchedules", 0);
     D_0055A120 = Script_RegisterType("cGroup", func_003D9960, 0, 0);
-    D_0055A128 = *(int*)func_003D9980();
-    D_0055A130 = Script_RegisterNative(*(int*)func_003D9980(), Script_cGroup_Add, D_00493880, "Add", 2, func_003D9980(), func_003CB1D0());
-    D_0055A138 = Script_RegisterNative(*(int*)func_003D9980(), Script_cGroup_AddDup, D_00493880, "AddDup", 2, func_003D9980(), func_003CB1D0());
-    D_0055A140 = Script_RegisterNative(*(int*)func_003D9980(), Script_cGroup_Remove, D_00493880, "Remove", 2, func_003D9980(), func_003CB1D0());
-    D_0055A148 = Script_RegisterNative(*(int*)func_003D9980(), Script_cGroup_RemoveAll, D_00493880, "RemoveAll", 1, func_003D9980());
-    D_0055A150 = Script_RegisterNative(*(int*)func_003D9980(), Script_cGroup_Randomize, D_00493880, "Randomize", 1, func_003D9980());
-    D_0055A158 = Script_RegisterNative(*(int*)func_003D9980(), Script_cGroup_Print, D_00493880, "Print", 1, func_003D9980());
-    D_0055A160 = Script_RegisterNative(*(int*)func_003D9980(), Script_cGroup_Find, D_00493888, "Find", 2, func_003D9980(), func_003CB1D0());
-    D_0055A168 = Script_RegisterNative(*(int*)func_003D9980(), Script_cGroup_Contains, D_00493878, "Contains", 2, func_003D9980(), func_003CB1D0());
-    D_0055A170 = Script_RegisterNative(*(int*)func_003D9980(), Script_cGroup_GetSize, D_00493888, "GetSize", 1, func_003D9980());
-    D_0055A178 = Script_RegisterNative(*(int*)func_003D9980(), Script_cGroup_Get, func_003CB1D0(), "Get", 2, func_003D9980(), D_00493888);
+    D_0055A128 = *(int*)cGroup_GetScriptTypeKeyPtr();
+    D_0055A130 = Script_RegisterNative(*(int*)cGroup_GetScriptTypeKeyPtr(), Script_cGroup_Add, D_00493880, "Add", 2, cGroup_GetScriptTypeKeyPtr(), cSystem_GetScriptTypeKeyPtr());
+    D_0055A138 = Script_RegisterNative(*(int*)cGroup_GetScriptTypeKeyPtr(), Script_cGroup_AddDup, D_00493880, "AddDup", 2, cGroup_GetScriptTypeKeyPtr(), cSystem_GetScriptTypeKeyPtr());
+    D_0055A140 = Script_RegisterNative(*(int*)cGroup_GetScriptTypeKeyPtr(), Script_cGroup_Remove, D_00493880, "Remove", 2, cGroup_GetScriptTypeKeyPtr(), cSystem_GetScriptTypeKeyPtr());
+    D_0055A148 = Script_RegisterNative(*(int*)cGroup_GetScriptTypeKeyPtr(), Script_cGroup_RemoveAll, D_00493880, "RemoveAll", 1, cGroup_GetScriptTypeKeyPtr());
+    D_0055A150 = Script_RegisterNative(*(int*)cGroup_GetScriptTypeKeyPtr(), Script_cGroup_Randomize, D_00493880, "Randomize", 1, cGroup_GetScriptTypeKeyPtr());
+    D_0055A158 = Script_RegisterNative(*(int*)cGroup_GetScriptTypeKeyPtr(), Script_cGroup_Print, D_00493880, "Print", 1, cGroup_GetScriptTypeKeyPtr());
+    D_0055A160 = Script_RegisterNative(*(int*)cGroup_GetScriptTypeKeyPtr(), Script_cGroup_Find, D_00493888, "Find", 2, cGroup_GetScriptTypeKeyPtr(), cSystem_GetScriptTypeKeyPtr());
+    D_0055A168 = Script_RegisterNative(*(int*)cGroup_GetScriptTypeKeyPtr(), Script_cGroup_Contains, D_00493878, "Contains", 2, cGroup_GetScriptTypeKeyPtr(), cSystem_GetScriptTypeKeyPtr());
+    D_0055A170 = Script_RegisterNative(*(int*)cGroup_GetScriptTypeKeyPtr(), Script_cGroup_GetSize, D_00493888, "GetSize", 1, cGroup_GetScriptTypeKeyPtr());
+    D_0055A178 = Script_RegisterNative(*(int*)cGroup_GetScriptTypeKeyPtr(), Script_cGroup_Get, cSystem_GetScriptTypeKeyPtr(), "Get", 2, cGroup_GetScriptTypeKeyPtr(), D_00493888);
 }

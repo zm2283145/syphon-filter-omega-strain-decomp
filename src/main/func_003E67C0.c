@@ -9,7 +9,7 @@ const float D_00493940[2] = { -2.0f, 0.0f };
 extern char D_0055D480[];
 extern char D_004E0160[];
 extern char D_004E0840[];
-extern int* func_003CB220(void);
+extern int* Receiver_GetOwner(void);
 extern void Event_Construct(Msg_3E67C0* m, void* type);
 extern void Event_Send(Msg_3E67C0* m, void* target, int x);
 extern void cMessage_dtor(Msg_3E67C0* m, int f);
@@ -18,7 +18,7 @@ void ObjectAction_SendKind7(Pt2_Tgt* t, char cat, Pt2_Hd* h, unsigned char flag,
     int tmp[1];
     int* idp;
     Msg_3E67C0 m;
-    { int k = *func_003CB220(); if (k == D_0055A840) t = (Pt2_Tgt*)t->owner; }
+    { int k = *Receiver_GetOwner(); if (k == D_0055A840) t = (Pt2_Tgt*)t->owner; }
     if (val == (*(float*)D_00493938)) val = -1.0f;
     else if (val == (*(float*)D_00493940)) val = 3.4028235e38f;
     if (h) idp = &h->id;

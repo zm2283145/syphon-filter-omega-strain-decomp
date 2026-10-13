@@ -236,7 +236,7 @@ typedef struct Unk28A430 {
     unsigned char pending; /* 0x80 */
 } Unk28A430;
 
-/* Object built by FrontEndScene_ctor on top of func_003CB110 (member at +0x2C). */
+/* Object built by FrontEndScene_ctor on top of ListReceiver_Ctor (member at +0x2C). */
 typedef struct Unk229E60 {
     void* vtable;          /* 0x00 */
     char pad04[0x28];

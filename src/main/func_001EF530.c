@@ -9,9 +9,9 @@ extern char D_004A0558[];
 void* func_00139BC0(unsigned int size, void* p);
 void func_001EF4F0(void* dst, const E1EF530* src);
 void func_001EF370(V1EF530* a, V1EF530* b);
-void func_001EF8D0(V1EF530* a, int f);
+void HumanColBufA_Dtor(V1EF530* a, int f);
 }
-extern "C" void func_001EF530(V1EF530* v, unsigned int n)
+extern "C" void HumanColBufA_Reserve(V1EF530* v, unsigned int n)
 {
     if (v->cap < n) {
         if (n > 0x600000) {
@@ -33,6 +33,6 @@ extern "C" void func_001EF530(V1EF530* v, unsigned int n)
             tmp.count++;
         }
         func_001EF370(&tmp, v);
-        func_001EF8D0(&tmp, -1);
+        HumanColBufA_Dtor(&tmp, -1);
     }
 }

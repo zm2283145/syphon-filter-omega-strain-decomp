@@ -3,6 +3,8 @@
 extern void Event_PackHeader();
 extern void LosReceiver_HandleEvent();
 extern void Message_GetScriptTypeKey();
+extern void Receiver_GetScriptTypeKey();
+extern void Receiver_ScriptDispatch();
 extern void func_0012ECE0();
 extern void func_0012ECF0();
 extern void func_0012ED00();
@@ -15,8 +17,6 @@ extern void func_00135970();
 extern void func_001383D0();
 extern void func_001383E0();
 extern void func_001384E0();
-extern void func_003CB1E0();
-extern void func_003CB1F0();
 
 void *D_004D90E0[8] = {
     0, 0, &func_00135970, &func_001383E0,
@@ -27,5 +27,5 @@ void *D_004D9100[16] = {
     0, 0, &func_001384E0, &LosReceiver_HandleEvent,
     &func_0012ECE0, &func_0012ECF0, &func_001383D0, &func_0012ED00,
     &func_0012ED10, &func_0012ED20, &func_0012ED30, &func_0012ED40,
-    &func_0012ED50, &func_003CB1E0, &func_003CB1F0, 0,
+    &func_0012ED50, &Receiver_GetScriptTypeKey, &Receiver_ScriptDispatch, 0,
 };

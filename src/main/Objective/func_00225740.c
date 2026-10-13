@@ -16,12 +16,12 @@ extern int ObjMan_SetDisplayLabel(cObjectiveMan*, int, int, int);
 extern int ScriptFilter_Dispatch(int, int, int);
 extern int* func_002257A0(void);
 extern cObjectiveMan* ObjMan_ResolveReceiver(void*);
-extern int* func_003CB1D0(void);
+extern int* cSystem_GetScriptTypeKeyPtr(void);
 extern void ScriptType_SetParent(int, int);
 
 /* Registers the cObjective script type with its parent type. */
 void ScriptType_cObjective_Init(void) {
-    int* parent = func_003CB1D0();
+    int* parent = cSystem_GetScriptTypeKeyPtr();
     ScriptType_SetParent(*(int*)D_004F7670, *parent);
 }
 

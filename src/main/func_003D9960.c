@@ -15,6 +15,6 @@ void* Group_FromHandle(void* self) {
     return self;
 }
 
-int func_003D9980(void) {
+int cGroup_GetScriptTypeKeyPtr(void) {
     return (int)D_0055A120;
 }

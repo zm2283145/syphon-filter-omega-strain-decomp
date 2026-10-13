@@ -11,7 +11,7 @@ extern "C" {
 int func_0035CBF0(...);                            
 int Gui_GetScreenList(...);                                
 void **Gui_GetScreenStack(...);                             
-int func_004191D0(...);                     
+int GuiManager_LoadGui(...);                     
 int func_00463390(...);                            
 }
 #pragma push
@@ -20,7 +20,7 @@ extern "C" void func_00463A20(char * arg0) {
     int temp_s0;
     void **temp_v0;
 
-    F_(arg0, 0x250, int) = func_004191D0(Gui_GetScreenList(), "ENDBACK", 0);
+    F_(arg0, 0x250, int) = GuiManager_LoadGui(Gui_GetScreenList(), "ENDBACK", 0);
     F_(arg0, 0x256, signed char) = 0;
     F_(arg0, 0x255, signed char) = 0;
     F_(arg0, 0x254, signed char) = 0;

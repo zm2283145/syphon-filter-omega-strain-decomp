@@ -5,7 +5,7 @@ typedef struct { int n; int pad[3]; Col_B000 items[9]; } List_B000;
 void func_001EB310(void* d, int* a, int* b, int* c, int* e);
 void HumanColPreset_Copy(void* d, void* s);
 void func_001EB2F0(void*);
-void func_001EB2C0(void*, int);
+void HumanColMask_Ctor(void*, int);
 void Ptr_Identity(void*);
 void func_001EB0F0(Col_B000* d, Col_B000* s);
 static inline void Tail_B000(Col_B000* cp, unsigned char v)
@@ -14,7 +14,7 @@ static inline void Tail_B000(Col_B000* cp, unsigned char v)
     cp->x31 = 0;
     cp->x32 = 0;
     func_001EB2F0(cp->x40);
-    func_001EB2C0(cp->xA0, 0);
+    HumanColMask_Ctor(cp->xA0, 0);
     Ptr_Identity(cp->xB0);
     Ptr_Identity(cp->xC0);
     Ptr_Identity(cp->xD0);

@@ -9,8 +9,8 @@ char D_004BDC48[] = "scriptFile.hh";
 char D_004BDC58[] = "scriptFile.hh";
 void* Mem_Alloc(int heap, int size, char* file, int line);
 void Mem_Free(int heap, void* p, char* file, int line);
-void func_00369700(void* p, int flag);
-int* func_00369820(void* p, char* name, int mode);
+void FileHal_Dtor(void* p, int flag);
+int* FileHal_Ctor(void* p, char* name, int mode);
 void func_0036DEC0(void* h);
 int func_0036DEF0(void* h);
 void func_0036E140(void* h, char* name, int* f, int a);
@@ -19,8 +19,8 @@ char* strrchr(const char* s, int c);
 }
 struct S_003DC080 { int* file; int size; char hog[0xA4 - 8]; void* pA4; int a8; int ac; int b0; int b4; unsigned char b8; };
 static inline void* New_003DC080(int size, char* f, int line) { AllocGuard g; return Mem_Alloc(0, size, f, line); }
-static inline void DelF_003DC080(int* p, char* f, int line) { if (p) { AllocGuard g; func_00369700(p, -1); Mem_Free(0, p, f, line); } }
-static inline void DelG_003DC080(int* p, char* f, int line) { AllocGuard g; func_00369700(p, -1); Mem_Free(0, p, f, line); }
+static inline void DelF_003DC080(int* p, char* f, int line) { if (p) { AllocGuard g; FileHal_Dtor(p, -1); Mem_Free(0, p, f, line); } }
+static inline void DelG_003DC080(int* p, char* f, int line) { AllocGuard g; FileHal_Dtor(p, -1); Mem_Free(0, p, f, line); }
 static inline void Del_003DC080(void* p, char* f, int line) { if (p) { AllocGuard g; Mem_Free(0, p, f, line); } }
 extern "C" void FileMan_Open(S_003DC080* s, char* name, int mode)
 {
@@ -46,7 +46,7 @@ extern "C" void FileMan_Open(S_003DC080* s, char* name, int mode)
     if (mode == 0) {
         if (s->size == 0) {
             f = (int*)New_003DC080(0xC8, D_004BDC58, 0x6E);
-            if (f) f = func_00369820(f, name, 1);
+            if (f) f = FileHal_Ctor(f, name, 1);
             s->file = f;
             if (*s->file >= 0) {
                 func_0036E140(s->hog, name, s->file, 0);
@@ -64,7 +64,7 @@ extern "C" void FileMan_Open(S_003DC080* s, char* name, int mode)
         }
     } else if (mode == 1) {
         f = (int*)New_003DC080(0xC8, D_004BDC38, 0x84);
-        if (f) f = func_00369820(f, name, 0x202);
+        if (f) f = FileHal_Ctor(f, name, 0x202);
         s->file = f;
     } else {
         s->file = 0;

@@ -16,7 +16,7 @@ extern void __register_global_object(void*, void*, void*);
 
 #pragma push
 #pragma opt_propagation off
-Obj40BCC0* func_0040BCC0(void) {
+Obj40BCC0* GobjScope_GetList(void) {
     if (!D_00571C20) {
         Obj40BCC0* p = &D_00571C40;
         int kind;

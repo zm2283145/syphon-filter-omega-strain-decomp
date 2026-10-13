@@ -14,50 +14,53 @@
 #include "types.h"
 #include "GobjMan_types.h"
 
-/* Address of the payload at +0x08. */
-void* func_0040C1E0(GobjHolder* self) {
-    return self->data;
+/* Address of the vector's data pointer. */
+int** IdVec_DataRef(PtrVec* v) {
+    return &v->data;
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0040C1E0 */
 
 /* merge_units: begin func_0040C1F0 */
 #pragma push /* merge_units */
-extern char D_00571B80[];
+extern char g_GobjIdText[];
 extern int sprintf(char* buf, const char* fmt, ...);
 
-/* Formats the id's high byte (bits 16-23) and low half into a static buffer and returns it. */
-char* Object_ToString(unsigned int* id)
+/* Formats an id as "(category index)" into a static buffer and returns it. */
+char* Object_ToString(GobjId* id)
 {
-    sprintf(D_00571B80, "(%d %d)", (*id & 0xFF0000) >> 16, *id & 0xFFFF);
-    return D_00571B80;
+    sprintf(g_GobjIdText, "(%d %d)", (id->word & 0xFF0000) >> 16, id->word & 0xFFFF);
+    return g_GobjIdText;
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0040C1F0 */
 
 /* merge_units: begin func_0040C240 */
 #pragma push /* merge_units */
-#define F_(b, o, T) (*(T*)((char*)(b) + (o)))
-#define NULL 0
 #pragma mpwc_relax on
-int IdMgr_FindCollision(int, int);                  
-extern char D_00571780;
+int IdMgr_FindCollision(int category, int index);
+/* Next index per category (256 counters). */
+extern char g_GobjIdCounters;
 
-void IdMgr_Allocate(int *arg0, int arg1) {
-    int temp_v0;
-    int *temp_s2;
-    int temp_s1;
+/*
+ * Allocates a fresh id in a category: bumps the category's counter (wrapping
+ * after 0xFFFF) until no visible object uses the index.
+ */
+void IdMgr_Allocate(GobjId* out, int category) {
+    int next;
+    int* counter;
+    int cat;
 
-    temp_s1 = arg1 & 0xFF;
-    temp_s2 = &D_00571780 + (temp_s1 * 4);
+    cat = category & 0xFF;
+    counter = (int*)(&g_GobjIdCounters + (cat * 4));
     do {
-        temp_v0 = *temp_s2 + 1;
-        *temp_s2 = temp_v0;
-        if (temp_v0 > 0xFFFF) {
-            *temp_s2 = 0;
+        next = *counter + 1;
+        *counter = next;
+        if (next > 0xFFFF) {
+            *counter = 0;
         }
-    } while (IdMgr_FindCollision(temp_s1, *temp_s2) != 0);
-    *arg0 = *temp_s2 | (temp_s1 << 0x10);
+    } while (IdMgr_FindCollision(cat, *counter) != 0);
+    out->word = *counter | (cat << 0x10);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0040C240 */
@@ -66,47 +69,45 @@ void IdMgr_Allocate(int *arg0, int arg1) {
 #pragma push /* merge_units */
 #pragma cplusplus on
 #include "alloc_guard.h"
-typedef struct IdPool_n1 { int unk0; } IdPool_n1;
-typedef struct IdSlot_n1 { int id; } IdSlot_n1;
 extern "C" {
-extern char D_004BECA8[];
-extern IdPool_n1* D_00571740;
-extern IdPool_n1* D_00571748;
+extern char D_004BECA8[]; /* "GobjMan.cc" */
+extern GobjScope* g_GobjRootScope;
+extern GobjScope* g_GobjWorldScope;
 #if 0 /* merge_units */
-extern int D_00571780[256];
+extern int g_GobjIdCounters[256];
 #endif /* merge_units */
-#define D_00571780 ((int*)&D_00571780) /* merge_units */
+#define g_GobjIdCounters ((int*)&g_GobjIdCounters) /* merge_units */
 
 void* Mem_Alloc(int, int, char*, int);
-void func_0040BA10(IdPool_n1* self, int capacity, IdPool_n1* parent);
+void GobjScopeBase_Ctor(GobjScope* self, int capacity, GobjScope* parent);
 }
 static inline void* AllocL_n1(int size, char* file, int line)
 {
     AllocGuard g;
     return Mem_Alloc(0, size, file, line);
 }
+/* Creates the root and world scopes and resets the per-category id counters. */
 extern "C" void IdMgr_Init(void)
 {
     int i;
-    IdPool_n1* p;
-    p = (IdPool_n1*)AllocL_n1(0x24, D_004BECA8, 0xCF);
-    if (p) {
-        func_0040BA10(p, 0x1194, 0);
+    GobjScope* scope;
+    scope = (GobjScope*)AllocL_n1(sizeof(GobjScope), D_004BECA8, 0xCF);
+    if (scope) {
+        GobjScopeBase_Ctor(scope, 4500, 0);
     }
-    D_00571740 = p;
-    p = (IdPool_n1*)AllocL_n1(0x24, D_004BECA8, 0xD0);
-    if (p) {
-        func_0040BA10(p, 0x9C4, D_00571740);
+    g_GobjRootScope = scope;
+    scope = (GobjScope*)AllocL_n1(sizeof(GobjScope), D_004BECA8, 0xD0);
+    if (scope) {
+        GobjScopeBase_Ctor(scope, 2500, g_GobjRootScope);
     }
-    D_00571748 = p;
+    g_GobjWorldScope = scope;
     for (i = 0; i < 256; i++) {
-        ((IdSlot_n1*)D_00571780)[i].id = 0;
+        g_GobjIdCounters[i] = 0;
     }
 }
-#undef D_00571780 /* merge_units */
+#undef g_GobjIdCounters /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0040C2D0 */
-
 /* merge_units: begin func_0040C460 */
 #pragma push /* merge_units */
 /*

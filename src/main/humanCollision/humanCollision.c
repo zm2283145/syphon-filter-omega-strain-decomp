@@ -43,59 +43,59 @@ Word* func_001EB390(Word* dst, Word* src) {
 #pragma push /* merge_units */
 #pragma cplusplus on
 #include "alloc_guard.h"
-#define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
 
 
 extern "C" {
-int Mem_Free(int, int, char *, int);                         
-int __destroy_array(int, char *, int, int);                  
-int func_001EF8D0(int, int);                            
-int func_001EFA40(int, int);                            
-extern int D_004F5358;
-extern int D_004F5360;
-extern int D_004F5368;
+int Mem_Free(int, int, char *, int);
+int __destroy_array(int, char *, int, int);
+int HumanColBufA_Dtor(int, int); /* buffer A dtor */
+int HumanColBufB_Dtor(int, int); /* buffer B dtor */
+extern int g_HumanColPresetMgr; /* HumanColPresetMgr* */
+extern int g_HumanColBufB; /* HumanColVec* (buffer B) */
+extern int g_HumanColBufA; /* HumanColVec* (buffer A) */
 extern unsigned char D_00533880;
 extern char HumanColPreset_Dtor;
 }
+/* Destroy and free the preset manager and both buffers. */
 extern "C" void HumanCol_Shutdown(void) {
-    int temp_s0;
-    int temp_s0_2;
-    int temp_s0_3;
+    int mgr;
+    int bufB;
+    int bufA;
 
-    temp_s0 = D_004F5358;
-    if (temp_s0 != 0) {
+    mgr = g_HumanColPresetMgr;
+    if (mgr != 0) {
         {
             AllocGuard g;
-        if ((temp_s0 != 0) && (temp_s0 != 0)) {
-            __destroy_array(temp_s0 + 0x10, &HumanColPreset_Dtor, 0xF0, 9);
+        if ((mgr != 0) && (mgr != 0)) {
+            __destroy_array(mgr + 0x10, &HumanColPreset_Dtor, sizeof(HumanColPreset), HUMANCOL_PRESET_COUNT);
         }
-        Mem_Free(0, temp_s0, "humanCollision.cc", 0x3F6);
+        Mem_Free(0, mgr, "humanCollision.cc", 0x3F6);
         }
-        D_004F5358 = 0;
+        g_HumanColPresetMgr = 0;
     }
-    temp_s0_2 = D_004F5360;
-    if (temp_s0_2 != 0) {
+    bufB = g_HumanColBufB;
+    if (bufB != 0) {
         {
             AllocGuard g;
-        if ((temp_s0_2 != 0) && (temp_s0_2 != 0) && (temp_s0_2 != 0)) {
-            func_001EFA40(temp_s0_2, 0);
+        if ((bufB != 0) && (bufB != 0) && (bufB != 0)) {
+            HumanColBufB_Dtor(bufB, 0);
         }
-        Mem_Free(0, temp_s0_2, "humanCollision.cc", 0x3FE);
+        Mem_Free(0, bufB, "humanCollision.cc", 0x3FE);
         }
-        D_004F5360 = 0;
+        g_HumanColBufB = 0;
     }
-    temp_s0_3 = D_004F5368;
-    if (temp_s0_3 != 0) {
+    bufA = g_HumanColBufA;
+    if (bufA != 0) {
         {
             AllocGuard g;
-        if ((temp_s0_3 != 0) && (temp_s0_3 != 0) && (temp_s0_3 != 0) && (temp_s0_3 != 0)) {
-            func_001EF8D0(temp_s0_3, 0);
+        if ((bufA != 0) && (bufA != 0) && (bufA != 0) && (bufA != 0)) {
+            HumanColBufA_Dtor(bufA, 0);
         }
-        Mem_Free(0, temp_s0_3, "humanCollision.cc", 0x406);
+        Mem_Free(0, bufA, "humanCollision.cc", 0x406);
         }
-        D_004F5368 = 0;
+        g_HumanColBufA = 0;
     }
 }
 #pragma pop /* merge_units */
@@ -111,74 +111,75 @@ extern "C" {
 int HumanCol_InstallPresets(...);                        
 int *Mem_Alloc(...);                       
 int __construct_array(...);            
-int func_001361D0(...);                           
-int func_001EB800(...);                   
-int func_001EB870(...);                        
-int func_001EB880(...);                             
-extern char D_004A04A0;
+int func_001361D0(...);                     /* returns *p */
+int HumanColBufA_Ctor(...);
+int HumanColBufB_Reserve(...);
+int HumanColBufB_Init(...);
+extern char D_004A04A0;                     /* "humanCollision.cc" */
 #if 0 /* merge_units */
-extern int *D_004F5358;
+extern int *g_HumanColPresetMgr;
 #endif /* merge_units */
-#define D_004F5358 (*(int **)&D_004F5358) /* merge_units */
+#define g_HumanColPresetMgr (*(int **)&g_HumanColPresetMgr) /* merge_units */
 
 #if 0 /* merge_units */
-extern int *D_004F5360;
+extern int *g_HumanColBufB;
 #endif /* merge_units */
-#define D_004F5360 (*(int **)&D_004F5360) /* merge_units */
+#define g_HumanColBufB (*(int **)&g_HumanColBufB) /* merge_units */
 
 #if 0 /* merge_units */
-extern int *D_004F5368;
+extern int *g_HumanColBufA;
 #endif /* merge_units */
-#define D_004F5368 (*(int **)&D_004F5368) /* merge_units */
+#define g_HumanColBufA (*(int **)&g_HumanColBufA) /* merge_units */
 
 extern char HumanColPreset_Ctor;
 }
+/* Allocate the preset manager (then install the presets) and both buffers. */
 extern "C" void HumanCol_Init(void) {
-    int sp3C;
-    int sp38;
-    int *temp_s0;
-    int *temp_s0_2;
-    int *temp_s0_3;
+    int capB;
+    int capA;
+    int *mgr;
+    int *bufB;
+    int *bufA;
 
-    if (D_004F5358 == NULL) {
+    if (g_HumanColPresetMgr == NULL) {
         {
             AllocGuard g;
-        temp_s0 = Mem_Alloc(0, 0x880, &D_004A04A0, 0x3DC);
+        mgr = Mem_Alloc(0, sizeof(HumanColPresetMgr), &D_004A04A0, 0x3DC);
         }
-        if (temp_s0 != NULL) {
-            *temp_s0 = 0;
-            __construct_array((char *)temp_s0 + 0x10, &HumanColPreset_Ctor, &HumanColPreset_Dtor, 0xF0, 9);
+        if (mgr != NULL) {
+            ((HumanColPresetMgr *)mgr)->count = 0;
+            __construct_array((char *)mgr + 0x10, &HumanColPreset_Ctor, &HumanColPreset_Dtor, sizeof(HumanColPreset), HUMANCOL_PRESET_COUNT);
         }
-        D_004F5358 = temp_s0;
+        g_HumanColPresetMgr = mgr;
         HumanCol_InstallPresets();
     }
-    if (D_004F5360 == NULL) {
+    if (g_HumanColBufB == NULL) {
         {
             AllocGuard g;
-        temp_s0_2 = Mem_Alloc(0, 0x10, &D_004A04A0, 0x3E4);
+        bufB = Mem_Alloc(0, sizeof(HumanColVec), &D_004A04A0, 0x3E4);
         }
-        if (temp_s0_2 != NULL) {
-            sp3C = 0x96;
-            func_001EB880(temp_s0_2);
-            func_001EB870(temp_s0_2, func_001361D0(&sp3C));
-            F_(temp_s0_2, 0xC, signed char) = 1;
+        if (bufB != NULL) {
+            capB = HUMANCOL_VEC_RESERVE;
+            HumanColBufB_Init(bufB);
+            HumanColBufB_Reserve(bufB, func_001361D0(&capB));
+            ((HumanColVec *)bufB)->flag0C = 1;
         }
-        D_004F5360 = temp_s0_2;
+        g_HumanColBufB = bufB;
     }
-    if (D_004F5368 == NULL) {
+    if (g_HumanColBufA == NULL) {
         {
             AllocGuard g;
-        temp_s0_3 = Mem_Alloc(0, 0x10, &D_004A04A0, 0x3EB);
+        bufA = Mem_Alloc(0, sizeof(HumanColVec), &D_004A04A0, 0x3EB);
         }
-        if (temp_s0_3 != NULL) {
-            sp38 = 0x96;
-            func_001EB800(temp_s0_3, &sp38, 1);
+        if (bufA != NULL) {
+            capA = HUMANCOL_VEC_RESERVE;
+            HumanColBufA_Ctor(bufA, &capA, 1);
         }
-        D_004F5368 = temp_s0_3;
+        g_HumanColBufA = bufA;
     }
 }
-#undef D_004F5358 /* merge_units */
-#undef D_004F5360 /* merge_units */
-#undef D_004F5368 /* merge_units */
+#undef g_HumanColPresetMgr /* merge_units */
+#undef g_HumanColBufB /* merge_units */
+#undef g_HumanColBufA /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_001EB5C0 */

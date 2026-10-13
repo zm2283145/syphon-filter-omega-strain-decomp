@@ -2,8 +2,8 @@
 typedef struct { char pad[0x64]; int f64; int f68; int f6c; int f70; } O2AE;
 extern unsigned int strlen(const char*);
 extern int sprintf(char*, const char*, ...);
-extern void func_0043DCE0(O2AE*, char*);
-extern void func_0043E290(O2AE*);
+extern void MLTextWidget_AddText(O2AE*, char*);
+extern void MLTextWidget_UpdateScrollBar(O2AE*);
 void func_002AEC90(O2AE* o, char* name, char* msg, int team) {
     char buf[0x80];
     unsigned char atEnd;
@@ -14,10 +14,10 @@ void func_002AEC90(O2AE* o, char* name, char* msg, int team) {
     if (strlen(msg) >= 0x41) return;
     if (team) sprintf(buf, "(%c%s%c): %s\n", 0x11, name, 0x10, msg);
     else sprintf(buf, "%c%s%c: %s\n", 0x11, name, 0x10, msg);
-    func_0043DCE0(o, buf);
+    MLTextWidget_AddText(o, buf);
     if (atEnd) {
         o->f68 = o->f70 - o->f64;
         if (o->f68 < 0) o->f68 = 0;
-        func_0043E290(o);
+        MLTextWidget_UpdateScrollBar(o);
     }
 }

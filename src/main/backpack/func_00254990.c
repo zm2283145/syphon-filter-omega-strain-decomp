@@ -43,7 +43,7 @@ void* WeaponDb_Get(int db, int item);
 int func_001A3730(Owner_00254990* o);
 void func_00170DB0(int, void*);
 int Object_Unregister(void*);
-int func_003CB230(void*, float);
+int Object_DeleteLater(void*, float);
 void func_00254770(BP* bp);
 }
 
@@ -95,7 +95,7 @@ extern "C" void func_00254990(BP* bp) {
             if (bp->fx) {
                 func_00170DB0(D_004FFBD0, bp->fx);
                 Object_Unregister(bp->fx);
-                func_003CB230(bp->fx, 0.1f);
+                Object_DeleteLater(bp->fx, 0.1f);
                 bp->fx = 0;
             }
         } else {

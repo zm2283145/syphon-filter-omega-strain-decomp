@@ -9,7 +9,7 @@ extern "C" {
 void Mem_Free(int pool, void* p, const char* file, int line);
 void Object_Unregister(void*);
 void TargetVis_Unregister(void*, void*);
-void func_003CB230(void*, float);
+void Object_DeleteLater(void*, float);
 void* func_0013D9F0(void);
 void func_00132B80(void*);
 extern void ActiveList_EraseMatching(int* list, AlPred_c pred);
@@ -35,11 +35,11 @@ extern "C" void func_00132A40(World132A40* w)
     Object_Unregister(w->c0);
     Object_Unregister(w->d4);
     if (w->c0) {
-        func_003CB230(w->c0, 0.1f);
+        Object_DeleteLater(w->c0, 0.1f);
         w->c0 = 0;
     }
     if (w->d4) {
-        func_003CB230(w->d4, 0.1f);
+        Object_DeleteLater(w->d4, 0.1f);
         w->d4 = 0;
     }
     p = w->d0;

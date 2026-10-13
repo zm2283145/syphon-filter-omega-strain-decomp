@@ -6,11 +6,11 @@
 #include "types.h"
 #include "fileman_types.h"
 
-extern int func_003695C0(int halFile);
+extern int FileHal_Close(int halFile);
 
-/* If the entry has an open file (flag bit 0), pass its HAL file to func_003695C0. */
+/* If the entry has an open file (flag bit 0), pass its HAL file to FileHal_Close. */
 void func_0036DEC0(FileManEntry* entry) {
     if (entry->flags & 1) {
-        func_003695C0(entry->halFile);
+        FileHal_Close(entry->halFile);
     }
 }

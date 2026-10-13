@@ -9,45 +9,52 @@
 #pragma cplusplus on
 #include "types.h"
 #include "alloc_guard.h"
-struct H36CB90 { int pad0; unsigned int count; char pad8[8]; int base; };
-struct T36CB90 { H36CB90* hdr; unsigned char state; char pad5[0xB]; void* buf; int x; int* offs; int pool;
-    int EntrySize(int i) { if (!state) return 0; return offs[i + 1] - offs[i]; } };
-struct S36CB90 { char pad[0x80]; char m80[0xC8]; T36CB90 t; };
+#include "hog_types.h"
 extern "C" {
-extern char D_004BBF88[];
+extern char D_004BBF88[];                           /* "hog.cc" */
 void* Mem_Alloc(int pool, int size, char* file, int line);
-void func_003695C0(void* p);
-void func_003696B0(void* p, void* o, int mode);
-void func_00369270(void* p, void* buf, int size, int off);
+void FileHal_Close(FileHalFile* f);                 /* FileHal_Close */
+void FileHal_Reopen(FileHalFile* f, char* name, int mode); /* FileHal_Reopen */
+void FileHal_Read(FileHalFile* f, void* buf, int size, int off); /* FileHal_Read */
 }
-static inline void* Alloc36CB90(int pool, int size)
+static inline int Hog_EntrySize(Hog* s, int i)
+{
+    if (!s->mode) return 0;
+    return s->offsets[i + 1] - s->offsets[i];
+}
+static inline void* Hog_Alloc(int pool, int size)
 {
     AllocGuard g;
     return Mem_Alloc(pool, size, D_004BBF88, 0x16C);
 }
-extern "C" int func_0036CB90(S36CB90* s, int idx, int flag)
+/*
+ * Streamed hogs: read entry idx into the shared entry buffer (allocated on
+ * first use at the largest entry size). Returns 0 on success, 4 when the hog
+ * is not streamed, 3 when the buffer cannot be allocated.
+ */
+extern "C" int Hog_ReadEntry(Hog* s, int idx, int direct)
 {
-    if (*(volatile unsigned char*)&s->t.state != 2) return 4;
-    if (!s->t.buf) {
+    if (*(volatile unsigned char*)&s->mode != HOG_STREAMED) return 4;
+    if (!s->buf) {
         int max = 0;
         int i;
-        for (i = 0; i < s->t.hdr->count; i++) {
-            int n = s->t.EntrySize(i);
+        for (i = 0; i < s->hdr->count; i++) {
+            int n = Hog_EntrySize(s, i);
             max = max < n ? n : max;
         }
-        s->t.buf = Alloc36CB90(s->t.pool, max);
-        if (!s->t.buf) {
-            func_003695C0(s->m80);
+        s->buf = Hog_Alloc(s->pool, max);
+        if (!s->buf) {
+            FileHal_Close(&s->file);
             return 3;
         }
     }
-    if (flag)
-        func_003696B0(s->m80, s, 0x8000);
+    if (direct)
+        FileHal_Reopen(&s->file, s->name, FILEHAL_MODE_DIRECT);
     else
-        func_003696B0(s->m80, s, 1);
+        FileHal_Reopen(&s->file, s->name, 1);
     {
-        int off = s->t.offs[idx];
-        func_00369270(s->m80, s->t.buf, s->t.state ? s->t.offs[idx + 1] - off : 0, s->t.hdr->base + off);
+        int off = s->offsets[idx];
+        FileHal_Read(&s->file, s->buf, s->mode ? s->offsets[idx + 1] - off : 0, s->hdr->headerSize + off);
     }
     return 0;
 }
@@ -57,32 +64,32 @@ extern "C" int func_0036CB90(S36CB90* s, int idx, int flag)
 /* merge_units: begin func_0036CD80 */
 #pragma push /* merge_units */
 #pragma cplusplus on
-struct S36CD80 { char pad[0x80]; char m80[0xC8]; void* p148; unsigned char b14C; char pad14D[0xB]; void* p158; int x15C; int x160; int pool; };
 extern "C" {
 void Mem_Free(int pool, void* p, char* file, int line);
 }
-static inline void Rel36CD80(void* p, int pool, int line)
+static inline void Hog_Free(void* p, int pool, int line)
 {
     AllocGuard g;
     Mem_Free(pool, p, D_004BBF88, line);
 }
-extern "C" int func_0036CD80(S36CD80* s)
+/* Close the file and free the buffers; the hog returns to the unloaded state. */
+extern "C" int Hog_Unload(Hog* s)
 {
-    if (!s->b14C)
+    if (!s->mode)
         return 0;
-    func_003695C0(s->m80);
-    if (s->p158) {
-        Rel36CD80(s->p158, s->pool, 0x122);
-        s->p158 = 0;
+    FileHal_Close(&s->file);
+    if (s->buf) {
+        Hog_Free(s->buf, s->pool, 0x122);
+        s->buf = 0;
     }
-    if (s->b14C == 2) {
-        Rel36CD80(s->p148, s->pool, 0x128);
+    if (s->mode == HOG_STREAMED) {
+        Hog_Free(s->hdr, s->pool, 0x128);
     }
-    s->p148 = 0;
-    s->x15C = 0;
-    s->x160 = 0;
+    s->hdr = 0;
+    s->names = 0;
+    s->offsets = 0;
     s->pool = 0;
-    s->b14C = 0;
+    s->mode = 0;
     return 0;
 }
 #pragma pop /* merge_units */

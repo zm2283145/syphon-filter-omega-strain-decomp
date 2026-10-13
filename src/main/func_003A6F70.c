@@ -16,7 +16,7 @@ static inline int Poll3A6F70(char* k) {
 }
 #pragma push
 #pragma bool off
-int func_003A6F70(int wait)
+int Cd_Sync(int wait)
 {
     char* k;
     if (D_0053DC00 == 0) return sceCdSync();

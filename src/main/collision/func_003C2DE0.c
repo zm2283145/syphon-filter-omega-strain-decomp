@@ -8,8 +8,8 @@ void* Mem_Alloc(int pool, int size, char* file, int line);
 void func_001361E0(void* p);
 int func_001361D0(int* n);
 void func_001361C0(void* p, int n);
-void func_001EB880(void* p);
-void func_001EB870(void* p, int n);
+void HumanColBufB_Init(void* p);
+void HumanColBufB_Reserve(void* p, int n);
 void func_003C3120(void* p, int* n, int k);
 void func_003C3110(void* p);
 void func_003C06B0(int a);
@@ -49,8 +49,8 @@ extern "C" void ColScratch_Init(int a0, int a1, int a2, int a3) {
         ScrA* p = (ScrA*)AllocL(0x10, 0x34);
         if (p) {
             int n = a1;
-            func_001EB880(p);
-            func_001EB870(p, func_001361D0(&n));
+            HumanColBufB_Init(p);
+            HumanColBufB_Reserve(p, func_001361D0(&n));
             p->bC = 1;
         }
         D_00542CD8 = p;

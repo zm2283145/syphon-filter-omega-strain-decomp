@@ -1,6 +1,6 @@
 #include "types.h"
 
-extern void* D_00571740;
+extern void* g_GobjRootScope;
 extern void Object_SetRegistry(void* obj, void* registry);
 extern void ObjRegistry_AppendRecursive(void* registry, void* obj);
 
@@ -8,6 +8,6 @@ extern void ObjRegistry_AppendRecursive(void* registry, void* obj);
 void func_0040C940(void* obj)
 {
     void* registry;
-    Object_SetRegistry(obj, registry = D_00571740);
+    Object_SetRegistry(obj, registry = g_GobjRootScope);
     ObjRegistry_AppendRecursive(registry, obj);
 }

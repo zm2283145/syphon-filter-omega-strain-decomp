@@ -1,32 +1,32 @@
 #include "types.h"
+#include "guiManager.h"
 
 typedef struct { char* begin; char* end; char* cap; } String;
-typedef struct { char data[0xA0]; } TextObj;
-typedef struct { char pad[0x2C]; char names[1]; } Obj419;
+typedef struct { char data[0xA0]; } HogFile;     /* file object read from a HOG archive */
 
 extern void String_CtorCStr_13B480(String* s, const char* text);
-extern void func_0013D680(void* list, String* s);
-extern void func_00138B70(String* s, int flags);
+extern void func_0013D680(void* list, String* s);  /* list<String>::push_back */
+extern void func_00138B70(String* s, int flags);   /* String dtor */
 extern int sprintf(char* buf, const char* fmt, ...);
-extern void func_0036E5D0(TextObj* obj);
-extern void Hog_Register(TextObj* obj, char* text, int a, int b);
-extern int func_00419020(Obj419* self, TextObj* obj, int c);
-extern void func_0036E220(TextObj* obj, int flags);
+extern void func_0036E5D0(HogFile* file);           /* ctor */
+extern void Hog_Register(HogFile* file, char* name, int hog, int b);
+extern int GuiManager_LoadGuiFile(GuiScreenList* self, HogFile* file, int existing);
+extern void func_0036E220(HogFile* file, int flags); /* dtor */
 
-/* Records name in the object's name list, builds a formatted text object from it and adds it; returns the result. */
-int func_00419110(Obj419* self, int a, const char* name, int c)
+/* Remember name as loaded, open "<name>.GUI" from the given HOG and load its widget tree. */
+int GuiManager_LoadGuiFromHog(GuiScreenList* self, int hog, const char* name, int existing)
 {
-    TextObj obj;
-    char buf[0x20];
+    HogFile file;
+    char path[0x20];
     String str;
-    int result;
+    int root;
     String_CtorCStr_13B480(&str, name);
-    func_0013D680(self->names, &str);
+    func_0013D680(self->loadedNames, &str);
     func_00138B70(&str, 0);
-    sprintf(buf, "%s.GUI", name);
-    func_0036E5D0(&obj);
-    Hog_Register(&obj, buf, a, 0);
-    result = func_00419020(self, &obj, c);
-    func_0036E220(&obj, -1);
-    return result;
+    sprintf(path, "%s.GUI", name);
+    func_0036E5D0(&file);
+    Hog_Register(&file, path, hog, 0);
+    root = GuiManager_LoadGuiFile(self, &file, existing);
+    func_0036E220(&file, -1);
+    return root;
 }

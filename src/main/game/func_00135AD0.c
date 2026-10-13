@@ -11,8 +11,8 @@ extern "C" void func_0012ED30();
 extern "C" void func_0012ED40();
 extern "C" void func_0012ED50();
 extern "C" void func_001383D0();
-extern "C" void func_003CB1E0();
-extern "C" void func_003CB1F0();
+extern "C" void Receiver_GetScriptTypeKey();
+extern "C" void Receiver_ScriptDispatch();
 extern void * const D_004D90A0[];
 void func_00135B90(void* m, short f);
 void func_0013A130(void* m, short f);
@@ -31,4 +31,4 @@ extern "C" O_00135AD0* func_00135AD0(O_00135AD0* self, short del)
     }
     return self;
 }
-void * const D_004D90A0[16] = { (void*)0x0, (void*)0x0, (void*)func_00135AD0, (void*)LosReceiver_HandleEvent, (void*)func_0012ECE0, (void*)func_0012ECF0, (void*)func_001383D0, (void*)func_0012ED00, (void*)func_0012ED10, (void*)func_0012ED20, (void*)func_0012ED30, (void*)func_0012ED40, (void*)func_0012ED50, (void*)func_003CB1E0, (void*)func_003CB1F0, (void*)0x0 };
+void * const D_004D90A0[16] = { (void*)0x0, (void*)0x0, (void*)func_00135AD0, (void*)LosReceiver_HandleEvent, (void*)func_0012ECE0, (void*)func_0012ECF0, (void*)func_001383D0, (void*)func_0012ED00, (void*)func_0012ED10, (void*)func_0012ED20, (void*)func_0012ED30, (void*)func_0012ED40, (void*)func_0012ED50, (void*)Receiver_GetScriptTypeKey, (void*)Receiver_ScriptDispatch, (void*)0x0 };

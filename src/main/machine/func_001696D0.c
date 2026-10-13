@@ -10,13 +10,13 @@ extern void func_0012ED40();
 extern void func_0012ED50();
 extern void func_001383D0();
 extern void Object_BroadcastToChildren();
-extern void func_003CB1E0();
-extern void func_003CB1F0();
+extern void Receiver_GetScriptTypeKey();
+extern void Receiver_ScriptDispatch();
 extern void * const D_004D97B0[];
 void func_0042B800(void* p, int f);
 void func_00138350(void* p, int f);
 void __destroy_array(void* arr, void* dtor, int size, int n);
-void func_003CAD70(S_96D0* p, int f);
+void ListReceiver_Dtor(S_96D0* p, int f);
 void operator_delete(void* p);
 S_96D0* func_001696D0(S_96D0* self, short del)
 {
@@ -27,10 +27,10 @@ S_96D0* func_001696D0(S_96D0* self, short del)
             __destroy_array(self->a14C, func_00138350, 0xC, 0x14);
             __destroy_array(self->a44, func_00138350, 0xC, 0x16);
         }
-        func_003CAD70(self, 0);
+        ListReceiver_Dtor(self, 0);
         if (del > 0)
             operator_delete(self);
     }
     return self;
 }
-void * const D_004D97B0[16] = { (void*)0x0, (void*)0x0, (void*)func_001696D0, (void*)Object_BroadcastToChildren, (void*)func_0012ECE0, (void*)func_0012ECF0, (void*)func_001383D0, (void*)func_0012ED00, (void*)func_0012ED10, (void*)func_0012ED20, (void*)func_0012ED30, (void*)func_0012ED40, (void*)func_0012ED50, (void*)func_003CB1E0, (void*)func_003CB1F0, (void*)0x0 };
+void * const D_004D97B0[16] = { (void*)0x0, (void*)0x0, (void*)func_001696D0, (void*)Object_BroadcastToChildren, (void*)func_0012ECE0, (void*)func_0012ECF0, (void*)func_001383D0, (void*)func_0012ED00, (void*)func_0012ED10, (void*)func_0012ED20, (void*)func_0012ED30, (void*)func_0012ED40, (void*)func_0012ED50, (void*)Receiver_GetScriptTypeKey, (void*)Receiver_ScriptDispatch, (void*)0x0 };

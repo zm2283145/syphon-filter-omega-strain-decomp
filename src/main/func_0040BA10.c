@@ -9,7 +9,7 @@ void func_0040BCA0(A40BA10* a);
 int func_001361D0(int* kind);
 void func_0040BC90(A40BA10* a, int v);
 void func_001C29F0(A40BA10* a);
-V40BA10* func_0040BCC0(void);
+V40BA10* GobjScope_GetList(void);
 void PtrVec_PushBack_40BC70(V40BA10* v, S40BA10** e);
 int func_0040BC60(V40BA10* v);
 void func_0040BC50(V40BA10* v, int n, S40BA10* const& fill);
@@ -50,16 +50,16 @@ static inline void PushFront40BA10(V40BA10* v, S40BA10** x)
     }
     *func_0040BB70(v) = *x;
 }
-extern "C" S40BA10* func_0040BA10(S40BA10* self, int kind, int prio)
+extern "C" S40BA10* GobjScopeBase_Ctor(S40BA10* self, int kind, int prio)
 {
     int k = kind;
     InitA40BA10(&self->a, &k);
     InitB40BA10(&self->b);
     self->prio = prio;
     if (prio)
-        PtrVec_PushBack_40BC70(func_0040BCC0(), &self);
+        PtrVec_PushBack_40BC70(GobjScope_GetList(), &self);
     else
-        PushFront40BA10(func_0040BCC0(), &self);
+        PushFront40BA10(GobjScope_GetList(), &self);
     return self;
 }
 

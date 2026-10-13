@@ -28,7 +28,7 @@ void World_ClearPending(Tree* t) {
     }
 }
 
-Map* func_0040FBA0(Map* m, unsigned char* cmp) {
+Map* MotionManager_Ctor(Map* m, unsigned char* cmp) {
     m->count = 0;
     m->head = 0;
     m->cmp = *cmp;

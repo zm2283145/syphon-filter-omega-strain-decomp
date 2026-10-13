@@ -11,7 +11,7 @@ extern unsigned char D_00559F18;
 extern char D_004BDC18[];
 extern char D_004BDC28[];
 void Mem_Free(int,void*,char*,int);
-void func_00369700(void*,int);
+void FileHal_Dtor(void*,int);
 void func_0036DEC0(void*);
 void func_0036E220(void*,int);
 void func_0036E5D0(void*);
@@ -29,7 +29,7 @@ struct Stream {
  Stream() { func_0036E5D0(hog); file=0;size=0; }
  __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~Stream() {
   func_0036DEC0(hog);
-  { void* p=file; if(p) { { AllocGuard g; func_00369700(p,-1); Mem_Free(0,p,D_004BDC28,0x45); } file=0; } }
+  { void* p=file; if(p) { { AllocGuard g; FileHal_Dtor(p,-1); Mem_Free(0,p,D_004BDC28,0x45); } file=0; } }
   size=0;
   { void* p=owned; if(p) { AllocGuard g; Mem_Free(0,p,D_004BDC18,0x4B); } }
   a8=0;owned=0;ac=0;ready=0;

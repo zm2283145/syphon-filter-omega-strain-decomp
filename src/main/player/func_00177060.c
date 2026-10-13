@@ -10,7 +10,7 @@ public:
 struct S_7060 { char pad[0x1A4]; Obj_7060* obj; };
 extern "C" {
 void Object_Unregister(Obj_7060* o);
-void func_003CB230(float t, Obj_7060* o);
+void Object_DeleteLater(float t, Obj_7060* o);
 void Object_Register(Obj_7060* o);
 }
 extern "C" void func_00177060(S_7060* self, Obj_7060* o)
@@ -18,7 +18,7 @@ extern "C" void func_00177060(S_7060* self, Obj_7060* o)
     if (self->obj) {
         self->obj->Detach(1);
         Object_Unregister(self->obj);
-        func_003CB230(0.1f, self->obj);
+        Object_DeleteLater(0.1f, self->obj);
         self->obj = 0;
     }
     if (o) {

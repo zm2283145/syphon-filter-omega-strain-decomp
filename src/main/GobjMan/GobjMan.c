@@ -7,33 +7,35 @@
 /* merge_units: begin func_0040C080 */
 #pragma push /* merge_units */
 #include "types.h"
-#define F_(b, o, T) (*(T*)((char*)(b) + (o)))
-#define NULL 0
-#pragma mpwc_relax on
-/*fc*/
-char * ObjRegistry_Find();                           
+#include "GobjMan_types.h"
 
-char * IdMgr_IsOccupied(int arg0) {
-    char *var_v1;
-    char * temp_v0;
+extern GobjEntry* ObjRegistry_Find(GobjScope* scope, const GobjId* id);
 
-    temp_v0 = (char *)(ObjRegistry_Find());
-    if (temp_v0 != NULL) {
-        var_v1 = (char *)(F_(temp_v0, 0x1C, int));
-        if (var_v1 != NULL) {
-loop_2:
-            if ((int)var_v1 == (int)arg0) {
-                return temp_v0;
+/*
+ * Returns the object registered under id if it is visible from scope (its
+ * scope chain reaches scope), otherwise null.
+ */
+GobjEntry* IdMgr_IsOccupied(GobjScope* scope, const GobjId* id) {
+    GobjScope* s;
+    GobjEntry* obj;
+
+    obj = ObjRegistry_Find(scope, id);
+    if (obj != 0) {
+        s = obj->scope;
+        if (s != 0) {
+loop:
+            if (s == scope) {
+                return obj;
             }
-            var_v1 = *(char **)var_v1;
-            if (var_v1 == NULL) {
-                goto block_6;
+            s = s->parent;
+            if (s == 0) {
+                goto none;
             }
-            goto loop_2;
+            goto loop;
         }
     }
-block_6:
-    return NULL;
+none:
+    return 0;
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0040C080 */
@@ -42,17 +44,17 @@ block_6:
 #pragma push /* merge_units */
 /*
  * Matched functions (byte-identical with the retail executable).
- * GobjMan.cc: pointer-vector iterator helpers.
+ * GobjMan.cc: iterator helpers for a scope's id vector (GobjScope.ids).
  */
 
 
 /* Iterator inequality. */
-int func_0040C0E0(Iter* a, Iter* b) {
+int IdVecIter_Ne(Iter* a, Iter* b) {
     return !(a->p == b->p);
 }
 
-/* end() iterator of a pointer vector. */
-void func_0040C100(Iter* out, PtrVec* v) {
+/* end() iterator of the id vector. */
+void IdVec_End(Iter* out, PtrVec* v) {
     out->p = v->data + v->count;
 }
 #pragma pop /* merge_units */
@@ -61,15 +63,14 @@ void func_0040C100(Iter* out, PtrVec* v) {
 /* merge_units: begin func_0040C120 */
 #pragma push /* merge_units */
 #pragma bool off
-typedef struct { int** data; int size; } VC120;
-extern int** func_0040C1E0(VC120* v);
-static inline int c120ne(int* a, int* b) { return (a == b) ^ 1; }
-/* Finds val in the pointer vector; stores the iterator (end if absent). */
-void func_0040C120(int** out, VC120* v, int* val) {
-    int* it = *func_0040C1E0(v);
-    int* end = *func_0040C1E0(v) + v->size;
-    while (c120ne(it, end)) {
-        if (*it == *val) {
+extern int** IdVec_DataRef(PtrVec* v);
+static inline int IdIter_Ne(int* a, int* b) { return (a == b) ^ 1; }
+/* Finds the id word *id in the vector; stores its iterator (end() if absent). */
+void IdVec_Find(int** out, PtrVec* v, int* id) {
+    int* it = *IdVec_DataRef(v);
+    int* end = *IdVec_DataRef(v) + v->count;
+    while (IdIter_Ne(it, end)) {
+        if (*it == *id) {
             *out = it;
             return;
         }

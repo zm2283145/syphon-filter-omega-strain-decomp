@@ -5,10 +5,10 @@
 
 #include "types.h"
 
-extern int D_00571740;
+extern int g_GobjRootScope;
 /* Object registry (actor array). Declared as bytes: an int declaration changes
  * the register choice in Object_Register. */
-extern char D_00571748[];
+extern char g_GobjWorldScope[];
 extern int ObjRegistry_AppendRecursive(int registry, int obj);
 extern void Object_SetRegistry(int obj, int registry);
 
@@ -17,16 +17,16 @@ int Object_Register(int obj) {
     int registry;
     int ret;
 
-    registry = *(int*)D_00571748;
+    registry = *(int*)g_GobjWorldScope;
     Object_SetRegistry(obj, registry);
     ret = ObjRegistry_AppendRecursive(registry, obj);
     return ret;
 }
 
 int func_0040CA20(void) {
-    return D_00571740;
+    return g_GobjRootScope;
 }
 
 int World_GetActorArray(void) {
-    return *(int*)D_00571748;
+    return *(int*)g_GobjWorldScope;
 }

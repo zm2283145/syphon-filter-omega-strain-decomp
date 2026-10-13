@@ -24,8 +24,8 @@ void* Gui_GetScreenStack(void);
 void GuiScreen_SetFocus(void* mgr, int a);
 int func_0033CE30(S_0029CBB0* self, int a, int b, int c, int d, int e);
 int FrontEnd_OpenPopup(void* ui, int a, char* b, int c, S_0029CBB0* d, int e);
-void func_0043DB80(void* w);
-void func_0043DCE0(void* w, char* s);
+void MLTextWidget_Clear(void* w);
+void MLTextWidget_AddText(void* w, char* s);
 Ent_0029CBB0* LobbyArray_At(NameList_0029CBB0* l, int i);
 void LobbyArray_RemoveAt(NameList_0029CBB0* l, int i);
 void LobbyArray_Clear(NameList_0029CBB0* l);
@@ -81,7 +81,7 @@ extern "C" void func_0029CBB0(S_0029CBB0* self, unsigned char sel)
                 return;
             }
             if (self->pF4) {
-                func_0043DB80(self->pF4);
+                MLTextWidget_Clear(self->pF4);
                 Str_0029CBB0 all;
                 StrInit_0029CBB0(&list1);
                 for (i = 0; i < l->count; i++) {
@@ -94,14 +94,14 @@ extern "C" void func_0029CBB0(S_0029CBB0* self, unsigned char sel)
                     }
                 }
                 func_003FD740(&list1);
-                func_0043DCE0(self->pF4, String_CStr(&list1));
+                MLTextWidget_AddText(self->pF4, String_CStr(&list1));
                 func_00138B70(&list1, 0);
             }
         } else if (sel == 2) {
             void* w = self->p100;
             NameList_0029CBB0* l = D_004FFC04->l2F8;
             if (w && l) {
-                func_0043DB80(w);
+                MLTextWidget_Clear(w);
                 Str_0029CBB0 all;
                 StrInit_0029CBB0(&list2);
                 if (l->count != 0) {
@@ -141,7 +141,7 @@ extern "C" void func_0029CBB0(S_0029CBB0* self, unsigned char sel)
                 }
                 if (func_002071F0(&list2)) {
                     func_003FD740(&list2);
-                    func_0043DCE0(self->p100, String_CStr(&list2));
+                    MLTextWidget_AddText(self->p100, String_CStr(&list2));
                 }
                 func_00138B70(&list2, 0);
             }

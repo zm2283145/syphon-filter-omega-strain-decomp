@@ -9,7 +9,7 @@ char D_004C2460[] = "GuiAutoSaver"; /* resource name */
 extern int Gui_GetScreenList(void);
 extern int Gui_GetScreenStack(void);
 extern void GuiStack_SwapScreens(int mgr, void* owner, int res);
-extern int func_00419530(int a0, int res);
+extern int GuiManager_AddWidget(int a0, int res);
 extern int func_0041EFA0(void* self);
 extern int func_0041F960(char* name);
 extern int func_00441A10(void* self);
@@ -30,7 +30,7 @@ void func_0045F380(void* self) {
 
     res = func_0041F960(D_004C2460);
     if (res != 0) {
-        func_00419530(Gui_GetScreenList(), res);
+        GuiManager_AddWidget(Gui_GetScreenList(), res);
         GuiStack_SwapScreens(Gui_GetScreenStack(), self, res);
     }
 }

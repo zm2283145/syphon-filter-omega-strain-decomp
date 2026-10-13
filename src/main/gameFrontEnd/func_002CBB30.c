@@ -20,7 +20,7 @@ void func_0040E320(void* p);
 Mgr* Gui_GetScreenStack(void);
 int Gui_GetScreenList(void);
 void func_00415B60(Mgr* m, float dt);
-void func_00419260(int a, float dt);
+void GuiManager_Update(int a, float dt);
 void func_00415870(Mgr* m);
 int Service_Lookup(void* a, void* b);
 void Event_Construct(Msg* m, void* type);
@@ -61,7 +61,7 @@ extern "C" void func_002CBB30(ObjCBB30* o)
         if (D_0051EEB0) {
             func_00415B60(Gui_GetScreenStack(), dt);
         } else {
-            func_00419260(Gui_GetScreenList(), dt);
+            GuiManager_Update(Gui_GetScreenList(), dt);
             func_00415870(Gui_GetScreenStack());
             Gui_GetScreenStack()->Update(dt);
         }

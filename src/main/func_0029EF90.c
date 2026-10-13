@@ -35,7 +35,7 @@ void func_0033D3F0(Self_0029EF90* self);
 void* func_0041DB80(Self_0029EF90* self, char* name);
 void func_004235B0(W_0029EF90* w, int a, int b);
 void func_00421650(W_0029EF90* w, int a);
-void func_0043E200(W_0029EF90* w, char* s);
+void MLTextWidget_SetFont(W_0029EF90* w, char* s);
 void* Gui_GetScreenList(void);
 Page_0029EF90* func_00418A80(void* a, char* b, char* c);
 }
@@ -64,12 +64,12 @@ extern "C" void func_0029EF90(Self_0029EF90* self)
     self->f104 = func_0041DB80(self, D_0048B978);
     if (self->fF4) {
         self->fF4->f7C = FindAs_0029EF90(self, D_0048B960, D_004AAE00);
-        func_0043E200(self->fF4, "callout");
+        MLTextWidget_SetFont(self->fF4, "callout");
         self->fF4->f60 = 0;
     }
     if (self->f100) {
         self->f100->f7C = FindAs_0029EF90(self, D_0048B980, D_004AAE00);
-        func_0043E200(self->f100, "callout");
+        MLTextWidget_SetFont(self->f100, "callout");
         self->f100->f60 = 0;
     }
     self->f108 = func_00418A80(Gui_GetScreenList(), "GuiWidget", "DNASLOGO");

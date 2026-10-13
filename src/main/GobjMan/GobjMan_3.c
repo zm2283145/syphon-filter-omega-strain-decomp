@@ -8,20 +8,20 @@
 #pragma push /* merge_units */
 #include "GobjMan_types.h"
 
-extern GobjScope* D_00571740;
+extern GobjScope* g_GobjRootScope;
 extern int Id_IsValidCategory(unsigned int category);
 extern int Id_IsValidIndex(unsigned int index);
 extern GobjId* Id_Build(GobjId* id, int category, int index, int kind);
-extern GobjEntry* IdMgr_IsOccupied(GobjScope* manager, GobjId* id);
+extern GobjEntry* IdMgr_IsOccupied(GobjScope* scope, GobjId* id);
 
-/* Check whether a valid category and index already identify an object. */
+/* Check whether a valid category and index already identify a visible object. */
 GobjEntry* IdMgr_FindCollision(unsigned int category, unsigned int index)
 {
-    GobjScope* manager = D_00571740;
+    GobjScope* root = g_GobjRootScope;
     GobjId id;
     if (!Id_IsValidCategory(category) || !Id_IsValidIndex(index))
         return 0;
-    return IdMgr_IsOccupied(manager, Id_Build(&id, category, index, -1));
+    return IdMgr_IsOccupied(root, Id_Build(&id, category, index, -1));
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0040C480 */
@@ -55,20 +55,18 @@ int Id_IsValidCategory(unsigned int category) {
 
 /* merge_units: begin func_0040C540 */
 #pragma push /* merge_units */
-/* Object_LookupById */
-#if 0 /* merge_units */
-extern void* D_00571740;
-#endif /* merge_units */
-#define D_00571740 (*(void **)&D_00571740) /* merge_units */
+extern GobjEntry* ObjRegistry_Find(GobjScope* scope, const GobjId* id);
+extern GobjScope* Object_GetScope(GobjEntry* obj);
+extern GobjScope* Scope_GetParent(GobjScope* scope);
 
-extern void* ObjRegistry_Find(void*, int);
-extern void* Object_GetScope(void*);
-extern void* Scope_GetParent(void*);
-
-void* Object_LookupById(int id) {
-    void* o;
-    void* s;
-    void* root = D_00571740;
+/*
+ * Looks an id up in the global registry; returns the object only if its
+ * scope chain reaches the root scope, otherwise null.
+ */
+GobjEntry* Object_LookupById(const GobjId* id) {
+    GobjEntry* o;
+    GobjScope* s;
+    GobjScope* root = g_GobjRootScope;
     o = ObjRegistry_Find(root, id);
     if (o) {
         for (s = Object_GetScope(o); s; s = Scope_GetParent(s)) {
@@ -79,7 +77,6 @@ void* Object_LookupById(int id) {
 out:
     return o;
 }
-#undef D_00571740 /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0040C540 */
 
@@ -91,11 +88,11 @@ out:
  */
 
 
-extern int func_0040B4B0(void);
+extern void func_0040B4B0(void);
 
-/* Thunk to func_0040B4B0. */
-int func_0040C5C0(void) {
-    return func_0040B4B0();
+/* Thunk to func_0040B4B0 (calls func_0040B510 on every scope, newest first). */
+void func_0040C5C0(void) {
+    func_0040B4B0();
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0040C5C0 */
@@ -106,82 +103,79 @@ int func_0040C5C0(void) {
 #include "alloc_guard.h"
 #pragma inline_depth(10)
 
-struct VObj_40C5D0 { virtual void dtor(int f); };
-typedef struct { int vt; int magic; } Ent_40C5D0;
-typedef struct { char pad[4]; int f4; } Pool_40C5D0;
-struct It_40C5D0 { VObj_40C5D0** p; };
-struct ItB_40C5D0 : It_40C5D0 { ItB_40C5D0() {} };
-struct G_40C5D0;
-extern "C" void func_0012F530(G_40C5D0* g, int f);
-extern "C" void func_00136DA0(G_40C5D0* g);
-struct G_40C5D0 { char c; G_40C5D0() { func_00136DA0(this); } __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~G_40C5D0() { func_0012F530(this, -1); } };
+/* Registered object seen through its vtable; slot 0 is the destructor. */
+struct GobjVirt { virtual void Dtor(int flags); };
+typedef struct { char pad[4]; int unk04; } Pool_40C5D0;
+struct GobjIter { GobjVirt** p; };
+struct GobjIterB : GobjIter { GobjIterB() {} };
+/*
+ * AllocGuard with out-of-line constructor/destructor calls
+ * (func_00136DA0 / func_0012F530) instead of the inlined ones.
+ */
+struct AllocGuardCall;
+extern "C" void func_0012F530(AllocGuardCall* g, int f);
+extern "C" void func_00136DA0(AllocGuardCall* g);
+struct AllocGuardCall { char c; AllocGuardCall() { func_00136DA0(this); } __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~AllocGuardCall() { func_0012F530(this, -1); } };
 extern "C" {
-extern char D_004BECA8[];
-#if 0 /* merge_units */
-extern void* D_00571740;
-#endif /* merge_units */
-#define D_00571740 (*(void **)&D_00571740) /* merge_units */
-
-extern void* D_00571748;
+extern char D_004BECA8[]; /* "GobjMan.cc" */
+extern void* g_GobjWorldScope;
 extern Pool_40C5D0* D_00571750;
 extern Pool_40C5D0* D_00571758;
 extern Pool_40C5D0* D_00571760;
-extern unsigned char D_00571768;
-extern char D_00571C10[];
+extern unsigned char g_GobjDeleting;
+extern char D_00571C10[]; /* global id -> object map (GobjMap) */
 void Mem_Free(int pool, void* p, char* file, int line);
-ItB_40C5D0 PtrVec_Begin(int v);
-void PtrVec_End(It_40C5D0* out, int v);
+GobjIterB PtrVec_Begin(int v);
+void PtrVec_End(GobjIter* out, int v);
 int func_001339A0(void* p);
 void func_00134E80(void* p, int f);
-#if 0 /* merge_units */
-void func_0040C5C0(void);
-#endif /* merge_units */
-#define func_0040C5C0() ((void)func_0040C5C0()) /* merge_units */
-
-void func_0040C8E0(void* p, int f);
+void GobjScope_Dtor(void* p, int f);
 void func_0040CAC0(void* p);
 }
-static inline void Del_40C5D0(VObj_40C5D0* o) { AllocGuard g; o->dtor(-1); Mem_Free(0, o, D_004BECA8, 0x9B); }
-static inline bool Ne_40C5D0(const It_40C5D0& a, const It_40C5D0& b) { return !(a.p == b.p); }
-static inline void DelA_40C5D0(void* p, int line) { G_40C5D0 g; func_0040C8E0(p, -1); Mem_Free(0, p, D_004BECA8, line); }
-static inline void DelB_40C5D0(void* p, int line) { G_40C5D0 g; func_00134E80(p, -1); Mem_Free(0, p, D_004BECA8, line); }
+static inline void DeleteObject(GobjVirt* o) { AllocGuard g; o->Dtor(-1); Mem_Free(0, o, D_004BECA8, 0x9B); }
+static inline bool IterNe(const GobjIter& a, const GobjIter& b) { return !(a.p == b.p); }
+static inline void DeleteScope(void* p, int line) { AllocGuardCall g; GobjScope_Dtor(p, -1); Mem_Free(0, p, D_004BECA8, line); }
+static inline void DeletePool(void* p, int line) { AllocGuardCall g; func_00134E80(p, -1); Mem_Free(0, p, D_004BECA8, line); }
 
+/*
+ * Tears the object manager down: deletes every live object registered in the
+ * root scope, clears the global registry map, deletes both scopes and the
+ * three pools.
+ */
 extern "C" void IdMgr_Destroy(void)
 {
     func_0040C5C0();
     {
-        void* v = D_00571740;
-        It_40C5D0 e;
-        unsigned char old;
-        PtrVec_End(&e, func_001339A0(v));
-        old = D_00571768;
-        D_00571768 = 1;
-        It_40C5D0 it = PtrVec_Begin(func_001339A0(v));
-        while (Ne_40C5D0(it, e)) {
-            VObj_40C5D0* o = *it.p;
-            if (((Ent_40C5D0*)o)->magic == (int)0xBEBAAFDE) Del_40C5D0(o);
+        void* root = g_GobjRootScope;
+        GobjIter end;
+        unsigned char wasDeleting;
+        PtrVec_End(&end, func_001339A0(root));
+        wasDeleting = g_GobjDeleting;
+        g_GobjDeleting = 1;
+        GobjIter it = PtrVec_Begin(func_001339A0(root));
+        while (IterNe(it, end)) {
+            GobjVirt* o = *it.p;
+            if (((GobjEntry*)o)->magic == (int)GOBJ_ALIVE_MAGIC) DeleteObject(o);
             it.p++;
         }
-        D_00571768 = old;
+        g_GobjDeleting = wasDeleting;
     }
     func_0040CAC0(D_00571C10);
-    DelA_40C5D0(D_00571748, 0xA0);
-    DelA_40C5D0(D_00571740, 0xA1);
-    D_00571748 = 0;
-    D_00571740 = 0;
+    DeleteScope(g_GobjWorldScope, 0xA0);
+    DeleteScope(g_GobjRootScope, 0xA1);
+    g_GobjWorldScope = 0;
+    g_GobjRootScope = 0;
     if (D_00571750) {
-        D_00571750->f4 = 0;
-        D_00571758->f4 = 0;
-        D_00571760->f4 = 0;
-        DelB_40C5D0(D_00571750, 0xAC);
-        DelB_40C5D0(D_00571758, 0xAD);
-        DelB_40C5D0(D_00571760, 0xAE);
+        D_00571750->unk04 = 0;
+        D_00571758->unk04 = 0;
+        D_00571760->unk04 = 0;
+        DeletePool(D_00571750, 0xAC);
+        DeletePool(D_00571758, 0xAD);
+        DeletePool(D_00571760, 0xAE);
         D_00571750 = 0;
         D_00571758 = 0;
         D_00571760 = 0;
     }
 }
-#undef D_00571740 /* merge_units */
-#undef func_0040C5C0 /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0040C5D0 */

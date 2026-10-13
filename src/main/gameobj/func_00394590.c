@@ -54,7 +54,7 @@ void Mem_Free(int pool, void* p, char* file, int line);
 void func_003A2BA0(Tracer394590* t, int flag);
 void func_003A2400(Tracer394590* t, void* pos, int z, float dt);
 void Object_Unregister(Self394590* self);
-void func_003CB230(Self394590* self, float t);
+void Object_DeleteLater(Self394590* self, float t);
 }
 
 extern "C" void cPARTICLE_GOBJ_v10(Self394590* self, float dt)
@@ -68,7 +68,7 @@ extern "C" void cPARTICLE_GOBJ_v10(Self394590* self, float dt)
             ((SelfV394590*)self)->Kill(-1);
             if (((self->type & 0xFF0000) >> 16) == 0xE7) {
                 Object_Unregister(self);
-                func_003CB230(self, 0.1f);
+                Object_DeleteLater(self, 0.1f);
                 Tracer394590* t = self->tracer;
                 if (t) {
                     {

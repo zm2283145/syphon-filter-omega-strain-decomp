@@ -15,7 +15,7 @@ extern int ScalarCollection_Init(List* list);
 extern void GuiWidget_ctor(void* self);
 
 /* Constructor: base widget, empty line list, default color. */
-GuiWidget43E5D0* func_0043E5D0(GuiWidget43E5D0* self) {
+GuiWidget43E5D0* MLTextWidget_ctor(GuiWidget43E5D0* self) {
     float r;
     float g;
     float b;

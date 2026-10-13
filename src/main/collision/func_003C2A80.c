@@ -13,12 +13,12 @@ extern void* D_00542D00;
 void Mem_Free(int pool, void* p, char* file, int line);
 void func_00139DF0(void* p, int f);
 void func_001810D0(void* p, int f);
-void func_001EFA40(void* p, int f);
+void HumanColBufB_Dtor(void* p, int f);
 }
 static inline void A3_3C2A80(void* p) { if (p) func_00139DF0(p, 0); }
 static inline void A2_3C2A80(void* p) { if (p) A3_3C2A80(p); }
 static inline void A1_3C2A80(void* p) { if (p) A2_3C2A80(p); }
-static inline void B3_3C2A80(void* p) { if (p) func_001EFA40(p, 0); }
+static inline void B3_3C2A80(void* p) { if (p) HumanColBufB_Dtor(p, 0); }
 static inline void B2_3C2A80(void* p) { if (p) B3_3C2A80(p); }
 static inline void B1_3C2A80(void* p) { if (p) B2_3C2A80(p); }
 static inline void C3_3C2A80(void* p) { if (p) func_001810D0(p, 0); }

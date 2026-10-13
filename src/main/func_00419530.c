@@ -10,7 +10,7 @@ struct VC00419530 { virtual int v0(); virtual int v1(...); };
 extern "C" {
 int func_002CCE50(...);                      
 }
-extern "C" void func_00419530(int arg0, char * arg1) {
+extern "C" void GuiManager_AddWidget(int arg0, char * arg1) {
     void **temp_a0;
 
     if (!(F_(arg1, 0x14, unsigned short) & 1)) {

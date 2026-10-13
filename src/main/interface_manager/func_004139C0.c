@@ -13,7 +13,7 @@ extern "C" {
 extern char D_004BEF30[];
 void Mem_Free(int pool, void* p, char* file, int line);
 int String_CStr(Item_4139C0* it);
-void func_003E79F0(void* p, int f);
+void Interface_Dtor(void* p, int f);
 void ArchiveList_CloseNamed(int a, int b);
 void func_004145A0(void* p, int f);
 }
@@ -29,7 +29,7 @@ extern "C" void func_004139C0(Self_4139C0* self)
     for (i = 0; i < 20; i++, e++) {
         if (e->active && e->obj) {
             ArchiveList_CloseNamed(self->h1E0, e->handle);
-            { void* o = e->obj; AllocGuard g; func_003E79F0(o, -1); Mem_Free(0, o, D_004BEF30, 0x47); }
+            { void* o = e->obj; AllocGuard g; Interface_Dtor(o, -1); Mem_Free(0, o, D_004BEF30, 0x47); }
             e->active = 0;
             e->obj = 0;
         }

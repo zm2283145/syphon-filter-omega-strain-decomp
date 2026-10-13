@@ -10,11 +10,11 @@
 extern void* D_004F7E58;
 extern PtrMsg* func_002472E0(void*);
 extern int* Message_GetScriptTypeKeyPtr(void);
-extern int func_003CB1A0(void*);
+extern int Script_ObjToValue(void*);
 extern void ScriptType_SetParent(void*, int);
 
 int Script_cMenuChoiceMsg_Who(ScriptArg* args) {
-    return func_003CB1A0(func_002472E0(args[0].p)->who);
+    return Script_ObjToValue(func_002472E0(args[0].p)->who);
 }
 
 int Script_cMenuChoiceMsg_Choice(ScriptArg* args) {

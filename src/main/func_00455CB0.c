@@ -5,8 +5,8 @@ typedef struct { char pad[0x48]; void* f48; } W455;
 extern "C" {
 extern void func_0041EFA0(W455*);
 extern char* Loc_LookupText(char*);
-extern void func_0043DB80(void*);
-extern void func_0043DCE0(void*, char*);
+extern void MLTextWidget_Clear(void*);
+extern void MLTextWidget_AddText(void*, char*);
 extern V455* func_0041DB80(W455*, char*);
 extern char D_004A7520[];
 extern char D_004C1A38[];
@@ -19,8 +19,8 @@ extern "C" void func_00455CB0(W455* w) {
     if (w->f48) {
         char* t = Loc_LookupText("level_briefing");
         void* x = w->f48;
-        func_0043DB80(x);
-        func_0043DCE0(x, t ? t : D_004C1A38);
+        MLTextWidget_Clear(x);
+        MLTextWidget_AddText(x, t ? t : D_004C1A38);
     }
     p = func_0041DB80(w, "label_briefingheader");
     p = (p && p->v20(D_004A7520)) ? p : 0;

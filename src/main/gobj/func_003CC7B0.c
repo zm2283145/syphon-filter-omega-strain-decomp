@@ -9,7 +9,7 @@ extern int D_005436B8;   /* cGOBJ script-type key */
 extern int D_005436C0;   /* cGOBJ script-type value */
 extern char D_00555070[];
 extern int ScriptFilter_Dispatch(void* filter, int a0, int a1);
-extern int* func_003CB1D0(void);
+extern int* cSystem_GetScriptTypeKeyPtr(void);
 extern int ScriptType_AddAccepted(int type, int iface);
 extern void ScriptType_SetParent(int type, int base);
 extern int* func_004080E0(void);
@@ -18,7 +18,7 @@ extern int* func_004080E0(void);
 int ScriptType_cGOBJ_Init(void) {
     int* key;
 
-    key = func_003CB1D0();
+    key = cSystem_GetScriptTypeKeyPtr();
     ScriptType_SetParent(D_005436C0, *key);
     key = func_004080E0();
     return ScriptType_AddAccepted(D_005436C0, *key);

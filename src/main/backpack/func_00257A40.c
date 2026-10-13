@@ -33,7 +33,7 @@ int func_001A3730(Owner_7A40* o);
 int func_002EBAF8(int*, int);
 void func_00170DB0(int, void*);
 int Object_Unregister(void*);
-int func_003CB230(void*, float);
+int Object_DeleteLater(void*, float);
 }
 
 static inline bool HolderReady(BP_7A40* bp) {
@@ -96,7 +96,7 @@ extern "C" void func_00257A40(void) {
             if (sel->fx) {
                 func_00170DB0(D_004FFBD0, sel->fx);
                 Object_Unregister(sel->fx);
-                func_003CB230(sel->fx, 0.1f);
+                Object_DeleteLater(sel->fx, 0.1f);
                 sel->fx = 0;
             }
         }

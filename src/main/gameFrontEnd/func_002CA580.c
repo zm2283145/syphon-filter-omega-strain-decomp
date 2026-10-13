@@ -6,7 +6,7 @@ extern L2CA580* DME_GetLobby(void);
 extern void func_004536B0(L2CA580* l);
 extern int func_00452FD0(L2CA580* l);
 extern int Gui_GetScreenList(void);
-extern void func_00419260(int mgr, float t);
+extern void GuiManager_Update(int mgr, float t);
 extern void func_002CA6F0(void* s);
 extern void func_002CA640(void* s, int v);
 extern void func_00453B00(L2CA580* l, int v);
@@ -23,7 +23,7 @@ void func_002CA580(void* s)
         D_005723B8 = 1;
         return;
     }
-    func_00419260(Gui_GetScreenList(), 0.0f);
+    GuiManager_Update(Gui_GetScreenList(), 0.0f);
     func_002CA6F0(s);
     func_002CA640(s, 1);
     func_00453B00(l, 1);

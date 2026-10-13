@@ -13,7 +13,7 @@ extern int Group_RemoveObject(ScriptGroup* group, void* obj);
 extern void* func_0015C120(int handle);
 extern int func_002697E0(int value);
 extern cNodeList* func_00269810(void* obj);
-extern int* func_003CB1D0(void);
+extern int* cSystem_GetScriptTypeKeyPtr(void);
 extern void ScriptType_SetParent(int typeId, int value);
 extern float Group_Shuffle(ScriptGroup* group);
 extern int Group_AddObjectDup(ScriptGroup* group, void* obj);
@@ -45,9 +45,9 @@ int Script_cNodeList_Add(ScriptArg* args) {
     return 0;
 }
 
-/* Registers the cNodeList script type with the value returned by func_003CB1D0. */
+/* Registers the cNodeList script type with the value returned by cSystem_GetScriptTypeKeyPtr. */
 void ScriptType_cNodeList_Init(void) {
-    int* key = func_003CB1D0();
+    int* key = cSystem_GetScriptTypeKeyPtr();
     ScriptType_SetParent(D_004F8400, *key);
 }
 

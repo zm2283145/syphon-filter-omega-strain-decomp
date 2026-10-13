@@ -8,7 +8,7 @@ int Hog_Register(char *, char *, int, int);
 int Mem_Alloc(int, int, char *, int);                        
 int func_0036E220(char *, int);                            
 int func_0036E5D0(char *);                               
-int func_003E7B00(int, char *);                        
+int Interface_Ctor(int, char *);                        
 int sprintf(char *, char *, int);                           
 extern unsigned char D_00533880;
 extern int D_00533888;
@@ -31,7 +31,7 @@ int func_00241B70(int arg0, int arg1) {
     }
     D_00533888 -= 1;
     if (var_s0 != 0) {
-        var_s0 = func_003E7B00(var_s0, sp30);
+        var_s0 = Interface_Ctor(var_s0, sp30);
     }
     func_0036E220(sp30, -1);
     return var_s0;

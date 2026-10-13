@@ -1,6 +1,6 @@
 #include "types.h"
 
-int func_001EB2C0(int a0, int a1) {
+int HumanColMask_Ctor(int a0, int a1) {
     int v0, v1;
     int cond;
 

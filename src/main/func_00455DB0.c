@@ -3,7 +3,7 @@
 #define NULL 0
 #pragma mpwc_relax on
 int func_0041E470(char * );                            
-int func_0043E1A0(int, char *);                          
+int MLTextWidget_SetColor(int, char *);                          
 extern char D_00587D20;
 extern char D_00587D30;
 
@@ -18,7 +18,7 @@ void func_00455DB0(char * arg0) {
         } else {
             var_a1 = &D_00587D30;
         }
-        func_0043E1A0(temp_a0, var_a1);
+        MLTextWidget_SetColor(temp_a0, var_a1);
     }
     func_0041E470(arg0);
 }

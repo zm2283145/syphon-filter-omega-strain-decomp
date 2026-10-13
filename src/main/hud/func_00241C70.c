@@ -10,7 +10,7 @@ int Hog_Register();
 int Mem_Alloc();                        
 int func_0036E220();                            
 int func_0036E5D0();                               
-int func_003E7B00();                        
+int Interface_Ctor();                        
 int sprintf();                      
 extern char D_0048B2F8;
 extern char D_004A7208;
@@ -38,7 +38,7 @@ int func_00241C70(char *arg0, int arg1) {
     }
     D_00533888 -= 1;
     if (var_s0 != 0) {
-        var_s0 = func_003E7B00(var_s0, sp30);
+        var_s0 = Interface_Ctor(var_s0, sp30);
     }
     func_0036E220(sp30, -1);
     return var_s0;

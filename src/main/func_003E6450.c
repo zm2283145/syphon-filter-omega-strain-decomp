@@ -1,7 +1,7 @@
 #include "types.h"
 
 typedef union ScriptArg { int i; float f; void* p; signed char c; } ScriptArg;
-extern void* func_003CB1C0(void* obj);
+extern void* Script_ValueToObj(void* obj);
 extern void* GObj_IdentityB(void* obj);
 extern void Global_PerformAction_WithObject(void* actor, int action, void* target, int extra, float value, int flag);
 
@@ -17,7 +17,7 @@ int Script_PerformAction_WithObject_3(ScriptArg* args)
     p3[0] = args[3].i;
     action = args[1].c;
     value = *(float*)p4;
-    actor = func_003CB1C0(args[0].p);
+    actor = Script_ValueToObj(args[0].p);
     Global_PerformAction_WithObject(actor, action, GObj_IdentityB(args[2].p), *(int*)p3, value, 0);
     return 0;
 }

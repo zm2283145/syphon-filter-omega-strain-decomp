@@ -7,17 +7,16 @@
 /* merge_units: begin func_00418FD0 */
 #pragma push /* merge_units */
 #include "loose04_types.h"
+#include "guiManager.h"
 
-typedef struct GuiManager GuiManager;
+extern GuiWidget* GuiManager_LoadNode(GuiScreenList* self, char** cursor, GuiWidget* existing);
+extern void GuiManager_AddWidget(GuiScreenList* self, GuiWidget* widget);
 
-extern GuiWidget* func_00418B10(GuiManager* self, char** cursor, GuiWidget* existing);
-extern void func_00419530(GuiManager* self, GuiWidget* widget);
-
-/* Read a widget hierarchy and register the root when creation succeeds. */
-GuiWidget* func_00418FD0(GuiManager* self, char** cursor, GuiWidget* existing) {
-    GuiWidget* widget = func_00418B10(self, cursor, existing);
+/* Read a widget tree at *cursor and add the root when creation succeeds. */
+GuiWidget* GuiManager_ReadTree(GuiScreenList* self, char** cursor, GuiWidget* existing) {
+    GuiWidget* widget = GuiManager_LoadNode(self, cursor, existing);
     if (widget != 0) {
-        func_00419530(self, widget);
+        GuiManager_AddWidget(self, widget);
     }
     return widget;
 }
@@ -27,37 +26,33 @@ GuiWidget* func_00418FD0(GuiManager* self, char** cursor, GuiWidget* existing) {
 /* merge_units: begin func_00419020 */
 #pragma push /* merge_units */
 #include "types.h"
+#include "guiManager.h"
 
-extern void func_0036DEF0(void* f);
+extern void func_0036DEF0(void* f);             /* file: begin access */
 extern char* FileMan_ReadData(void* f);
-extern void func_0036DEC0(void* f);
-#if 0 /* merge_units */
-extern int func_00418FD0(void* self, char** cursor, int c);
-#endif /* merge_units */
-#define func_00418FD0(a0, a1, a2) ((int)func_00418FD0((GuiManager *)(a0), (a1), (GuiWidget *)(a2))) /* merge_units */
-
+extern void func_0036DEC0(void* f);             /* file: end access */
 
 static inline char Rd8_419020(char* volatile* c) { char* t = *c; char v = *t; *c = t + 1; return v; }
 
-int func_00419020(void* self, void* file, int c)
+/* Check the "GUI" magic of an opened .GUI file and load its widget tree. */
+GuiWidget* GuiManager_LoadGuiFile(GuiScreenList* self, void* file, GuiWidget* existing)
 {
     char* volatile p;
-    char a;
-    char b;
-    char d;
-    int r;
+    char m0;
+    char m1;
+    char m2;
+    GuiWidget* root;
     func_0036DEF0(file);
     p = FileMan_ReadData(file);
-    a = Rd8_419020(&p);
-    b = Rd8_419020(&p);
-    d = Rd8_419020(&p);
-    if (a != 'G' || b != 'U' || d != 'I') return 0;
+    m0 = Rd8_419020(&p);
+    m1 = Rd8_419020(&p);
+    m2 = Rd8_419020(&p);
+    if (m0 != 'G' || m1 != 'U' || m2 != 'I') return 0;
     p = (char*)(((int)p + 3) & ~3);
-    p += 2;
-    r = func_00418FD0(self, (char**)&p, c);
+    p += GUI_FILE_HEADER_SKIP;
+    root = GuiManager_ReadTree(self, (char**)&p, existing);
     func_0036DEC0(file);
-    return r;
+    return root;
 }
-#undef func_00418FD0 /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00419020 */

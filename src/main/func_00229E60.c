@@ -9,13 +9,13 @@
 
 extern void* D_004DB810;
 extern int func_001391E0(int*);
-extern int func_003CB110(Unk229E60*);
-extern int func_0040F650(void);
+extern int ListReceiver_Ctor(Unk229E60*);
+extern int MotionManager_Init(void);
 
 Unk229E60* FrontEndScene_ctor(Unk229E60* self) {
-    func_003CB110(self);
+    ListReceiver_Ctor(self);
     self->vtable = &D_004DB810;
     func_001391E0(&self->unk2C);
-    func_0040F650();
+    MotionManager_Init();
     return self;
 }

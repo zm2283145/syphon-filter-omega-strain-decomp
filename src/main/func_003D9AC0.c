@@ -9,6 +9,6 @@
 
 extern void Actor_VirtualLeaf175230(void*);
 
-void func_003D9AC0(void* self) {
+void Group_RemoveAll(void* self) {
     Actor_VirtualLeaf175230(self);
 }

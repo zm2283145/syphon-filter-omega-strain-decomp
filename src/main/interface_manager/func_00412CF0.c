@@ -21,7 +21,7 @@ struct Hog412CF0 { char pad[0xA8]; };
 extern "C" {
 extern char D_004BEF30[];
 extern void* D_00539248;
-void func_003E79F0(void* p, int flags);
+void Interface_Dtor(void* p, int flags);
 void Mem_Free(int pool, void* allocation, char* file, int line);
 void func_0036E5D0(Hog412CF0* h);
 void func_0036E220(Hog412CF0* h, int flags);
@@ -62,7 +62,7 @@ extern "C" void func_00412CF0(Self412CF0* self, int idx)
     obj = *pd;
     {
         AllocGuard g;
-        func_003E79F0(obj, -1);
+        Interface_Dtor(obj, -1);
         Mem_Free(0, obj, D_004BEF30, 0x15B);
     }
     off = idx * (int)sizeof(Ent412CF0);

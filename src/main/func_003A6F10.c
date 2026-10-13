@@ -5,7 +5,7 @@ extern int D_0053DC00;
 extern int func_00119C20(void);
 extern void snd_SendIOPCommandNoWait(int cmd, int size, void* data, int a3, int t0);
 
-int func_003A6F10(void)
+int Cd_Break(void)
 {
     if (D_0053DC00 == 0)
         return func_00119C20();

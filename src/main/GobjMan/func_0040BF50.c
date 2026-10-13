@@ -1,39 +1,42 @@
 #pragma cplusplus on
 #include "types.h"
 #include "alloc_guard.h"
-struct O40BF50 { virtual ~O40BF50(); };
-struct I40BF50 { int p; };
-struct G40BF50 { char pad[0x14]; int map; };
+#include "GobjMan_types.h"
+/* Registered object; vtable slot 0 is the destructor. */
+struct GobjVirt { virtual ~GobjVirt(); };
+struct IdIter { int* p; };
 extern "C" {
-extern G40BF50* D_00571740;
-extern unsigned char D_00571768;
-extern char D_004BECA8[];
-int func_0012F2B0(void);
-void func_0040C120(I40BF50* out, int* map, int key);
-void func_0040C100(I40BF50* out, int* map);
-int func_0040C0E0(I40BF50* a, I40BF50* b);
-int IdMgr_IsOccupied(G40BF50* g, int key);
+extern GobjScope* g_GobjRootScope;
+extern unsigned char g_GobjDeleting;
+extern char D_004BECA8[]; /* "GobjMan.cc" */
+int func_0012F2B0(void); /* returns its argument + 0xC: here &obj->id */
+void IdVec_Find(IdIter* out, PtrVec* v, int id);
+void IdVec_End(IdIter* out, PtrVec* v);
+int IdVecIter_Ne(IdIter* a, IdIter* b);
+int IdMgr_IsOccupied(GobjScope* scope, int id);
 void Mem_Free(int pool, void* allocation, char* file, int line);
 }
-static inline bool check40BF50(G40BF50* g, int key)
+/* True when the id is listed in the scope's id vector or no longer visible from it. */
+static inline bool CanDelete(GobjScope* scope, int id)
 {
-    I40BF50 it;
-    I40BF50 end;
-    func_0040C120(&it, &g->map, key);
-    func_0040C100(&end, &g->map);
-    return func_0040C0E0(&it, &end) || !IdMgr_IsOccupied(g, key);
+    IdIter it;
+    IdIter end;
+    IdVec_Find(&it, (PtrVec*)&scope->ids, id);
+    IdVec_End(&end, (PtrVec*)&scope->ids);
+    return IdVecIter_Ne(&it, &end) || !IdMgr_IsOccupied(scope, id);
 }
-extern "C" void func_0040BF50(O40BF50* obj)
+/* Deletes obj (with g_GobjDeleting set) when CanDelete allows it in the root scope. */
+extern "C" void Gobj_TryDelete(GobjVirt* obj)
 {
-    G40BF50* g = D_00571740;
-    int key = func_0012F2B0();
-    if (check40BF50(g, key)) {
-        D_00571768 = 1;
+    GobjScope* root = g_GobjRootScope;
+    int id = func_0012F2B0();
+    if (CanDelete(root, id)) {
+        g_GobjDeleting = 1;
         if (obj) {
             AllocGuard guard;
-            obj->~O40BF50();
+            obj->~GobjVirt();
             Mem_Free(0, obj, D_004BECA8, 0x11C);
         }
-        D_00571768 = 0;
+        g_GobjDeleting = 0;
     }
 }

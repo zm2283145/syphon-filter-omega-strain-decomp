@@ -45,7 +45,7 @@ void func_001B3170(Iter*, char*, int*);
 int func_001B3150(Iter*, Iter*);
 int ReceiverMap_Erase(char*, Iter*);
 void func_0040B720(void*, Act*);
-void func_003CB230(Act*, float);
+void Object_DeleteLater(Act*, float);
 void func_002EC2A8(int);
 void func_00257040(int);
 }
@@ -106,7 +106,7 @@ extern "C" bool func_001B2E90(Act* a)
                 }
             }
             func_0040B720(D_004FFD44, a);
-            func_003CB230(a, 0.1f);
+            Object_DeleteLater(a, 0.1f);
             a->Fn60(1);
             ret = 1;
             {

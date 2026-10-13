@@ -22,8 +22,8 @@ char* WeaponDb_Get(void*, int);
 char* strncpy(char*, char*, int);
 int WeaponInv_SlotOfItem(int);
 void func_00455840(void*, int);
-void func_0043DB80(void*);
-void func_0043DCE0(void*, char*);
+void MLTextWidget_Clear(void*);
+void MLTextWidget_AddText(void*, char*);
 void func_0041BEB0(void*, char*, int);
 void func_00455260(O_455260* o, A_455260* a, int id);
 }
@@ -95,8 +95,8 @@ void func_00455260(O_455260* o, A_455260* a, int id)
         }
         {
             void* t = o->f4C;
-            func_0043DB80(t);
-            func_0043DCE0(t, name ? name : D_004C1A38);
+            MLTextWidget_Clear(t);
+            MLTextWidget_AddText(t, name ? name : D_004C1A38);
         }
         func_0041BEB0(o->f50, desc ? desc : D_004C1A38, 0);
     }

@@ -16,7 +16,7 @@ extern int snd_SendIOPCommandAndWait(int cmd, int size, void* req);
 }
 #pragma push
 #pragma opt_unroll_count 2
-extern "C" int func_003A6DA0(Info3A6DA0* out, char* name)
+extern "C" int Cd_SearchFile(Info3A6DA0* out, char* name)
 {
     struct { Buf3A6DA0* buf; char path[0xFC]; } req;
     int r;

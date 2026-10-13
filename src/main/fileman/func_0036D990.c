@@ -6,7 +6,7 @@ typedef struct { unsigned int flags; char pad[0x80]; short idx; H36D990 h; char*
 extern "C" {
 extern char D_004BBF90[];
 void* Mem_Alloc(int pool, int size, char* file, int line);
-int func_00369270(void* f, void* buf, int size, int off);
+int FileHal_Read(void* f, void* buf, int size, int off);
 int func_0036CAC0(void* f, int idx, void* buf, int off);
 int func_0036D380(void* f, int idx);
 char* func_0036D4E0(void* f, int idx);
@@ -50,7 +50,7 @@ extern "C" int func_0036D990(S36D990* o, char** out, int size)
         }
     } else if (f & 1) {
         if (!*out) *out = (char*)Alloc36D990(sz, 0x18F);
-        if (!func_00369270(o->a98, *out, sz, 0)) err = 4;
+        if (!FileHal_Read(o->a98, *out, sz, 0)) err = 4;
     } else {
         err = 5;
     }

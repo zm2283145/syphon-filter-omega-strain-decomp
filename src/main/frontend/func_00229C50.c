@@ -11,7 +11,7 @@ int Mem_Alloc(...);
 int func_001698C0(...);                                  
 int FrontEndScene_LoadSkeletons(...);                               
 int func_0022A040(...);                       
-int func_0040F650(...);                                  
+int MotionManager_Init(...);                                  
 extern unsigned char D_00533880;
 extern int D_00543790;
 extern int D_00543794;
@@ -25,7 +25,7 @@ extern "C" void FrontEndScene_Init(FrontEndScene* self) {
     int characters;
 
     FrontEndScene_LoadSkeletons(self, self->archives);
-    func_0040F650();
+    MotionManager_Init();
     D_00543790 = 0;
     D_00543794 = 0;
     func_001698C0();

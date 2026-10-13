@@ -9,49 +9,49 @@
 #pragma cplusplus on
 #include "types.h"
 #include "alloc_guard.h"
-#define F_(b, o, T) (*(T*)((char*)(b) + (o)))
+#include "system_types.h"
 #define NULL 0
 #pragma mpwc_relax on
 
 
 extern "C" {
-/*fc*/
-int Mem_Free(...);                         
-int operator_delete(...);                          
-extern char D_004BD1A8;
-extern char D_004BD1E8;
-extern char D_004DFDE0;
+int Mem_Free(...);
+int operator_delete(...);
+extern char D_004BD1A8;                     /* "system.cc" */
+extern char D_004BD1E8;                     /* "system.hh" */
+extern char D_004DFDE0;                     /* Receiver vtable */
 extern unsigned char D_00533880;
 }
-extern "C" char * Receiver_Destruct(char * arg0, long long arg1) {
-    char *temp_s0;
-    char *temp_s3;
+/* Receiver destructor: frees the owned buffer; deletes self when (short)flags > 0. */
+extern "C" Receiver * Receiver_Destruct(Receiver * self, long long flags) {
+    ReceiverBuf *buf;
+    void *data;
 
-    if (arg0 != NULL) {
-        F_(arg0, 0x0, int) = (int)(&D_004DFDE0);
-        F_(arg0, 0x4, int) = 0;
-        F_(arg0, 0xC, int) = 0xF0FFFFF0;
-        temp_s0 = (char *)(F_(arg0, 0x18, int));
-        if (temp_s0 != NULL) {
+    if (self != NULL) {
+        self->vtable = &D_004DFDE0;
+        self->magic = 0;
+        self->id = RECEIVER_DEAD_ID;
+        buf = self->buf;
+        if (buf != NULL) {
             {
                 AllocGuard g;
-            if (temp_s0 != NULL) {
-                temp_s3 = *(char **)temp_s0;
-                if (temp_s3 != NULL) {
+            if (buf != NULL) {
+                data = buf->data;
+                if (data != NULL) {
                     {
                         AllocGuard g;
-                    Mem_Free(0, temp_s3, &D_004BD1E8, 0x34);
+                    Mem_Free(0, data, &D_004BD1E8, 0x34);
                     }
                 }
             }
-            Mem_Free(0, temp_s0, &D_004BD1A8, 0x54);
+            Mem_Free(0, buf, &D_004BD1A8, 0x54);
             }
         }
-        if (((long long) (arg1 << 0x30) >> 0x30) > 0) {
-            operator_delete(arg0);
+        if (((long long) (flags << 0x30) >> 0x30) > 0) {
+            operator_delete(self);
         }
     }
-    return arg0;
+    return self;
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003CB330 */
@@ -76,10 +76,10 @@ Receiver* Receiver_Construct(Receiver* self, void* owner) {
     self->vtable = D_004DFDE0;
     self->magic = RECEIVER_MAGIC;
     self->owner = owner;
-    self->unk0C = -1;
+    self->id = -1;
     self->unk10 = -1;
     self->enabled = 1;
-    self->unk18 = 0;
+    self->buf = 0;
     return self;
 }
 #undef D_004DFDE0 /* merge_units */

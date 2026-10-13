@@ -36,7 +36,7 @@ extern const char* D_004928D0;
 extern const char* D_004928D8;
 void func_0033D3F0(Screen3F250* self);
 Obj3F250* func_0041DB80(Screen3F250* self, const char* name);
-void func_0043E200(List3F250* l, char* s);
+void MLTextWidget_SetFont(List3F250* l, char* s);
 }
 
 static inline Obj3F250* As3F250(Obj3F250* obj, const char* type)
@@ -51,7 +51,7 @@ extern "C" void func_0033F250(Screen3F250* self)
     self->f88 = As3F250(func_0041DB80(self, D_004928B0), D_004B9CF0);
     self->f8C = (List3F250*)As3F250(func_0041DB80(self, D_004928B8), D_004B9CE0);
     self->f8C->f7C = As3F250(func_0041DB80(self, D_004B9CC8), D_004AAE00);
-    func_0043E200(self->f8C, D_004B9CD8);
+    MLTextWidget_SetFont(self->f8C, D_004B9CD8);
     self->f8C->f60 = 0x40;
     self->f98 = As3F250(func_0041DB80(self, D_004928C0), D_004A9870);
     self->f9C = As3F250(func_0041DB80(self, D_004928C8), D_004A9870);

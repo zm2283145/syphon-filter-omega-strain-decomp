@@ -9,17 +9,19 @@
 #pragma cplusplus on
 #include "types.h"
 #include "alloc_guard.h"
+#include "interface_types.h"
 extern "C" {
 void Mem_Free(int pool, void* p, char* file, int line);
-extern void* D_00539248;
-void func_003EF120(void* p, int flags);
+extern void* D_00539248;                            /* texture manager */
+void func_003EF120(InterfaceModel* p, int flags);   /* InterfaceModel dtor */
 void func_00381260(void* p);
 void operator_delete(void* p);
 }
-extern "C" void* func_003E79F0(void* self, short flag)
+/* Destructor: delete the model, then let the texture manager release its textures. */
+extern "C" Interface* Interface_Dtor(Interface* self, short flag)
 {
     if (self) {
-        void* b = *(void**)self;
+        InterfaceModel* b = self->model;
         {
             AllocGuard g;
             func_003EF120(b, -1);
@@ -36,19 +38,13 @@ extern "C" void* func_003E79F0(void* self, short flag)
 
 /* merge_units: begin func_003E7AD0 */
 #pragma push /* merge_units */
-extern int func_003F05A0(int, int);
+extern int func_003F05A0(InterfaceModel*, void*);   /* recursive over the model tree */
 
-void func_003E7AD0(int a0) {
-    int a1, v0;
-    int cond;
-
-    a0 = *(int*)(char*)a0;
-    cond = a0 == 0;
-    if (cond) goto L003E7AF0;
-    v0 = func_003F05A0(a0, a1);
-L003E7AF0:;
-    goto ret;
-ret:;
+/* Forward arg to func_003F05A0 on the model (if loaded). */
+void func_003E7AD0(Interface* self, void* arg) {
+    if (self->model != 0) {
+        func_003F05A0(self->model, arg);
+    }
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003E7AD0 */
@@ -56,27 +52,26 @@ ret:;
 /* merge_units: begin func_003E7B00 */
 #pragma push /* merge_units */
 #pragma cplusplus on
-typedef struct { char pad[0x60]; unsigned char b60; } M3E7B;
-typedef struct { M3E7B* f0; void* f4; } O3E7B;
 extern "C" {
 extern void func_0036DEF0(void*);
 extern unsigned char* FileMan_ReadData(void*);
-extern int D_0055C0B8;
-extern char D_004BDEC8[];
+extern int D_0055C0B8;                              /* u16 read from the interface file header */
+extern char D_004BDEC8[];                           /* "interface.cc" */
 extern void* Mem_Alloc(int, int, char*, int);
-extern M3E7B* func_003EF660(void*, unsigned char**, void*, int);
-extern void* func_003EEB30(M3E7B*, char*);
+extern InterfaceModel* func_003EF660(void*, unsigned char**, void*, int); /* InterfaceModel ctor from data */
+extern void* func_003EEB30(InterfaceModel*, char*); /* find element by name */
 extern void* func_003EF010(void*);
 extern float func_003EE740(void*);
 extern void func_003F4510(void*, int, float, float);
 }
 #pragma opt_propagation off
-extern "C" O3E7B* func_003E7B00(O3E7B* o, void* src) {
+/* Constructor: build the model from the interface file src and set up its "preview" element. */
+extern "C" Interface* Interface_Ctor(Interface* o, void* src) {
     unsigned char* p;
-    M3E7B* m;
+    InterfaceModel* m;
     void* s;
-    o->f0 = 0;
-    o->f4 = 0;
+    o->model = 0;
+    o->preview = 0;
     func_0036DEF0(src);
     p = FileMan_ReadData(src);
     p++;
@@ -85,15 +80,15 @@ extern "C" O3E7B* func_003E7B00(O3E7B* o, void* src) {
     p += 2;
     {
         AllocGuard g;
-        m = (M3E7B*)Mem_Alloc(0, 0xE0, D_004BDEC8, 0x2F);
+        m = (InterfaceModel*)Mem_Alloc(0, INTERFACE_MODEL_SIZE, D_004BDEC8, 0x2F);
     }
     if (m) m = func_003EF660(m, &p, src, 0);
-    o->f0 = m;
-    o->f0->b60 = 1;
-    s = func_003EEB30(o->f0, "preview");
+    o->model = m;
+    o->model->unk60 = 1;
+    s = func_003EEB30(o->model, "preview");
     if (s) {
-        o->f4 = func_003EF010(s);
-        func_003F4510(o->f4, 1, -20.0f, 20.0f + func_003EE740(s));
+        o->preview = func_003EF010(s);
+        func_003F4510(o->preview, 1, -20.0f, 20.0f + func_003EE740(s));
     }
     return o;
 }

@@ -21,7 +21,7 @@ extern int Script_RegisterVariable();
 extern int Script_RegisterType();
 extern int Script_RegisterNative();
 extern int* func_002472F0(void);
-extern char* func_003CB1D0(void);
+extern char* cSystem_GetScriptTypeKeyPtr(void);
 
 void func_004CF9B0(void)
 {
@@ -50,7 +50,7 @@ void func_004CF9B0(void)
     D_004F7E50 = Script_RegisterType(D_004A7948, ScriptType_cMenuChoiceMsg_Init, 1, 0);
     D_004F7E58 = *func_002472F0();
     D_004F7E60 = Script_RegisterNative(*func_002472F0(), Script_cMenuChoiceMsg_Choice, D_00493888, D_004A7958, 1, func_002472F0());
-    D_004F7E68 = Script_RegisterNative(*func_002472F0(), Script_cMenuChoiceMsg_Who, func_003CB1D0(), D_004A7960, 1, func_002472F0());
+    D_004F7E68 = Script_RegisterNative(*func_002472F0(), Script_cMenuChoiceMsg_Who, cSystem_GetScriptTypeKeyPtr(), D_004A7960, 1, func_002472F0());
     if (!D_004EA0C8) {
         D_004EA0B0 = D_004A7968;
         D_004EA0C8 = 1;

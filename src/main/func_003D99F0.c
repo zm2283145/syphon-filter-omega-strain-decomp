@@ -6,5 +6,5 @@
 
 #include "types.h"
 
-void func_003D99F0(void) {
+void Group_Print(void) {
 }

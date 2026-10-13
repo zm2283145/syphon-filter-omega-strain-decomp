@@ -10,7 +10,7 @@ Raw_B690 func_0027AC80(void*);
 void func_0027AA80(char**, const Raw_B690&);
 void func_0027AC70(char**, const Raw_B690&);
 void func_003E8EB0(void*);
-void func_003E79F0(void*, int);
+void Interface_Dtor(void*, int);
 void func_0027B880(void*, int);
 void operator_delete(void*);
 extern char D_004A9270;
@@ -37,7 +37,7 @@ extern "C" char* func_0027B690(char* self, short flag) {
         {
             char* p = F_(self, 0x0, char*);
             AllocGuard g;
-            func_003E79F0(p, -1);
+            Interface_Dtor(p, -1);
             Mem_Free(0, p, &D_004A9270, 0x6A);
         }
         if (self + 0x2C) func_0027B880(self + 0x2C, 0);

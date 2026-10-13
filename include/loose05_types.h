@@ -58,7 +58,7 @@ typedef struct GuiWidget43CB20 {
     float unk70;                    /* 0x70 defaults to 1.0 */
 } GuiWidget43CB20;
 
-/* Widget built by func_0043E5D0 (vtable D_004E1040; its methods sit in guiMLTextWidget.cc). */
+/* Widget built by MLTextWidget_ctor (vtable D_004E1040; its methods sit in guiMLTextWidget.cc). */
 typedef struct GuiWidget43E5D0 {
     GuiWidget base;                 /* 0x00 */
     int unk48;                      /* 0x48 */
@@ -188,16 +188,7 @@ typedef struct Word4 {
     int unk04;                      /* 0x04 */
 } Word4;
 
-/* Multi-line text widget with an optional range-control widget. */
-typedef struct MLTextWidget {
-    char pad00[0x64];
-    int unk64;                     /* 0x64 */
-    int unk68;                     /* 0x68 */
-    char pad6C[4];
-    int unk70;                     /* 0x70 */
-    char pad74[8];
-    GuiWidget43BEF0* rangeWidget;   /* 0x7C */
-} MLTextWidget;
+/* MLTextWidget (multi-line text widget) lives in guiMLTextWidget.h. */
 
 /* Lookup object with 256 byte-page pointers and separate inline storage. */
 typedef struct Lookup43FDD0 {

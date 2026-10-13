@@ -14,7 +14,7 @@ extern A60Hog* D_00571248;
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void Mem_Free(int pool, void* p, char* file, int line);
 void Hog_Load(A60Hog* h, A60Hog* t, int a, int b);
-void func_0036CD80(A60Hog* h);
+void Hog_Unload(A60Hog* h);
 char* func_0036D200(A60Hog* h, int i);
 void Appearance_RegistryKey(char* dst, int n, char* src);
 int String_CompareN(const char* a, const char* b, int n);
@@ -60,7 +60,7 @@ void func_00405A60(A60Obj* o, void* list)
         Appearance_RegistryKey((char*)&keys[i], 15, func_0036D200(h, i));
     func_00405E10(o, list, keys, n);
     if (unload)
-        func_0036CD80(h);
+        Hog_Unload(h);
     k0 = a60find(o, D_004BE930);
     k1 = a60find(o, D_004BE938);
     k2 = a60find(o, D_004BE940);

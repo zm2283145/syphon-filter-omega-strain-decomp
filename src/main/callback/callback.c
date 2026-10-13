@@ -8,20 +8,13 @@
 #pragma push /* merge_units */
 #include "types.h"
 #pragma cplusplus on
-struct EQBase { int a, b; };
-struct EQEvent : EQBase { virtual ~EQEvent(); };
-struct EQCmp {};
-struct EQPred {
-    EQCmp cmp;
-    EQEvent** pp;
-    EQPred(const EQCmp& c, EQEvent** p) : cmp(c), pp(p) {}
-};
+#include "eventQueue.h"
 extern "C" {
 extern unsigned char D_00533880;
 extern int D_00533888;
-extern char D_004BDFC8[];
-extern EQEvent* D_0055A2F0;
-extern char D_0055A2E0[];
+extern char D_004BDFC8[];                   /* "callback.cc" */
+extern EQEvent* g_EventQueueRunning;                 /* event currently running */
+extern char g_EventQueue[];                   /* queued events */
 void Alloc_Lock(int id);
 void Alloc_Unlock(int id);
 void Mem_Free(int pool, void* p, char* file, int line);
@@ -39,12 +32,12 @@ static inline void EQ_Delete(EQEvent* e)
         Alloc_Unlock(9);
     D_00533888--;
 }
-/* Removes an event from the active queue and destroys it. */
+/* Removes an event from the queue and destroys it (unless it is running). */
 extern "C" void EventQueue_Remove(EQEvent* ev)
 {
-    if (D_0055A2F0 != ev) {
+    if (g_EventQueueRunning != ev) {
         EQCmp c __attribute__((aligned(8)));
-        ActiveList_EraseMatching(D_0055A2E0, EQPred(c, &ev));
+        ActiveList_EraseMatching(g_EventQueue, EQPred(c, &ev));
         EQ_Delete(ev);
     }
 }
@@ -56,22 +49,22 @@ extern "C" void EventQueue_Remove(EQEvent* ev)
 #pragma cplusplus on
 #include "alloc_guard.h"
 extern "C" {
-extern unsigned char D_0055A2F8;
-void List_End(void* list, void* item);
+extern unsigned char g_EventQueueClosed;            /* queue closed: drop new events */
+void List_End(void* list, void* item);      /* push_back */
 }
-class F8Ev { public: int a; int b; virtual ~F8Ev(); };
-extern "C" void EventQueue_Admit(F8Ev* e)
+/* Queues an event; destroys it right away when the queue is closed. */
+extern "C" void EventQueue_Admit(EQEvent* e)
 {
-    if (D_0055A2F8) {
-        F8Ev* p = e;
+    if (g_EventQueueClosed) {
+        EQEvent* p = e;
         if (p) {
             AllocGuard g;
-            p->~F8Ev();
+            p->~EQEvent();
             Mem_Free(0, p, D_004BDFC8, 0x27);
         }
         return;
     }
-    List_End(D_0055A2E0, &e);
+    List_End(g_EventQueue, &e);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003EA1D0 */

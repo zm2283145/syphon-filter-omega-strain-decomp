@@ -1,0 +1,87 @@
+/*
+ * main/system: 2 files, 003CB330-003CB4B0
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_003CB330 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+#include "types.h"
+#include "alloc_guard.h"
+#define F_(b, o, T) (*(T*)((char*)(b) + (o)))
+#define NULL 0
+#pragma mpwc_relax on
+
+
+extern "C" {
+/*fc*/
+int Mem_Free(...);                         
+int operator_delete(...);                          
+extern char D_004BD1A8;
+extern char D_004BD1E8;
+extern char D_004DFDE0;
+extern unsigned char D_00533880;
+}
+extern "C" char * Receiver_Destruct(char * arg0, long long arg1) {
+    char *temp_s0;
+    char *temp_s3;
+
+    if (arg0 != NULL) {
+        F_(arg0, 0x0, int) = (int)(&D_004DFDE0);
+        F_(arg0, 0x4, int) = 0;
+        F_(arg0, 0xC, int) = 0xF0FFFFF0;
+        temp_s0 = (char *)(F_(arg0, 0x18, int));
+        if (temp_s0 != NULL) {
+            {
+                AllocGuard g;
+            if (temp_s0 != NULL) {
+                temp_s3 = *(char **)temp_s0;
+                if (temp_s3 != NULL) {
+                    {
+                        AllocGuard g;
+                    Mem_Free(0, temp_s3, &D_004BD1E8, 0x34);
+                    }
+                }
+            }
+            Mem_Free(0, temp_s0, &D_004BD1A8, 0x54);
+            }
+        }
+        if (((long long) (arg1 << 0x30) >> 0x30) > 0) {
+            operator_delete(arg0);
+        }
+    }
+    return arg0;
+}
+#pragma pop /* merge_units */
+/* merge_units: end func_003CB330 */
+
+/* merge_units: begin func_003CB4B0 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Receiver base-class constructor.
+ */
+
+#include "system_types.h"
+
+#if 0 /* merge_units */
+extern char D_004DFDE0[];   /* Receiver vtable */
+#endif /* merge_units */
+#define D_004DFDE0 ((char*)&D_004DFDE0) /* merge_units */
+
+
+/* Initializes the Receiver base fields; owner is stored at +8. */
+Receiver* Receiver_Construct(Receiver* self, void* owner) {
+    self->vtable = D_004DFDE0;
+    self->magic = RECEIVER_MAGIC;
+    self->owner = owner;
+    self->unk0C = -1;
+    self->unk10 = -1;
+    self->enabled = 1;
+    self->unk18 = 0;
+    return self;
+}
+#undef D_004DFDE0 /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003CB4B0 */

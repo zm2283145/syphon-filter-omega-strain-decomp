@@ -157,6 +157,10 @@ def main():
         if existing:
             # a matched unit that now brings its data
             path = segs[k][2]
+            if path.rsplit("/", 1)[-1] != f"func_{a:08X}":
+                # a unit of several functions (tools/merge_units.py): the file would replace all of them
+                skipped.append((f.name, f"starts merged unit {path}; run tools/merge_units.py --unmerge first"))
+                continue
             if path.startswith("main/") != mw:
                 skipped.append((f.name, f"compiler kind does not fit unit {path}")); continue
             have = any(n == path and t.startswith(".") for _, t, n, _ in segs)

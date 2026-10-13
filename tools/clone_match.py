@@ -255,6 +255,7 @@ class DB:
         for a, f in self.matched.items():
             self.tmpl[a] = {"src": ROOT / "src" / (f.unit + ".c"), "kind": unit_kind(f.unit, overrides),
                             "single": unit_nfuncs[f.unit] == 1, "origin": f.unit}
+        self.add_merged_blocks(unit_nfuncs)
         self.pending = pending_files()
         if use_pending:
             for a, lst in self.pending.items():
@@ -269,6 +270,33 @@ class DB:
                                 "origin": str(p.relative_to(ROOT))}
         self.done_elsewhere = set(self.pending)   # already hand-matched by someone: not a target
         self.done_mine = set(mine)
+
+    def add_merged_blocks(self, unit_nfuncs):
+        """A unit merged by tools/merge_units.py keeps each original file as one
+        block; a block holding one function is a template on its own (the
+        declarations it uses from earlier blocks are put in front of it)."""
+        import merge_units
+        by_unit = collections.defaultdict(list)
+        for a, f in self.matched.items():
+            if unit_nfuncs[f.unit] > 1:
+                by_unit[f.unit].append(a)
+        for unit, addrs in by_unit.items():
+            src = ROOT / "src" / (unit + ".c")
+            if not src.exists() or "merge_units: begin" not in src.read_text(errors="replace"):
+                continue
+            kind = self.tmpl[addrs[0]]["kind"]
+            chunks = merge_units.read_chunks(src, kind)
+            labels = [c.addr if c.label.startswith("func_") else None for c in chunks]
+            if None in labels:
+                continue
+            addrs.sort()
+            for j, lo in enumerate(labels):
+                hi = labels[j + 1] if j + 1 < len(labels) else float("inf")
+                inside = [a for a in addrs if lo <= a < hi]
+                if inside != [lo]:
+                    continue
+                text = merge_units.standalone(chunks, j, src.parent, kind in merge_units.MW_KINDS)
+                self.tmpl[lo] = dict(self.tmpl[lo], single=True, text=text)
 
     def targets(self):
         return [f for a, f in sorted(self.unmatched.items())
@@ -543,7 +571,7 @@ def generate(db, t, c, mode, rom):
     smap, imms = diff_pair(db, t, c)
     if mode == "strict" and imms:
         raise Skip("immediates differ")
-    base = info["src"].read_text(errors="replace")
+    base = info["text"] if "text" in info else info["src"].read_text(errors="replace")
     outs = []
     for regen in (True, False):
         s = rewrite_data(db, base, smap, rom, regen)

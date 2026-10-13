@@ -7383,5 +7383,7 @@
   "main/func_0043F200": "cwps2-3.0b38",
   "main/SFOLobby_Lobby/func_0044FA70": "cwps2-3.0b38",
   "main/SFOLobby_Lobby/func_00450060": "cwps2-3.0b38",
-  "main/GuiSubTitleDisplay/func_00458A30": "cwps2-3.0b38"
+  "main/GuiSubTitleDisplay/func_00458A30": "cwps2-3.0b38",
+  "main/GameGOBJ/func_00210E70": "cwps2-3.0b38",
+  "main/backpack/func_00256500": "cwps2-3.0b38"
 }

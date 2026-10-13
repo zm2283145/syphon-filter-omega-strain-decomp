@@ -9,8 +9,8 @@ This is the working state and the routine for whoever continues this project
 
 | | |
 |---|---|
-| Functions matched | 12,779 of 14,331 |
-| Code matched | 58.64% |
+| Functions matched | 12,784 of 14,331 |
+| Code matched | 58.84% |
 | Data matched | 99.92% |
 | Full build | reproduces the retail executable byte for byte |
 
@@ -168,6 +168,17 @@ into translation units. Run it occasionally; see [merge_units.md](merge_units.md
   the cases to match the compare chain.
 - **mw38 calls:** a call through a C function pointer goes through `v0`, while a C++
   virtual call goes through `t9`. Pick whichever matches the retail register.
+- **Decompiler argument omissions:** check every call against the original argument
+  setup, including unused receivers, fifth/sixth integer arguments and floating-point
+  arguments. A lower difference score can hide an incomplete prototype.
+- **mw38 loop guards:** after initializing an index to zero, `index < count` can
+  retain a separate comparison that `count > 0` replaces with a direct branch.
+  A pointer const-reference helper used only in the loop update can preserve the
+  original count and data-pointer setup.
+- **mw38 inlined wrappers:** a getter taking a global value as an argument can
+  preserve an eager load; a queue wrapper with the iterator initialized after its
+  entry fields can preserve stack-store order. Use the surrounding source semantics
+  to choose the wrapper rather than adding instruction assembly.
 - **mw38 dead aligned slot:** a `volatile int x[4];` local reproduces an aligned
   16-byte stack slot that is written but never read.
 - **Return registers:** declaring a `void` callee as returning `int` can fix

@@ -7398,5 +7398,8 @@
   "main/human/func_001B57C0": "cwps2-3.0b38",
   "main/GuiGameOptions/func_0029A190": "cwps2-3.0b38",
   "main/func_002A7E90": "cwps2-3.0b38",
-  "main/gameFrontEnd/func_002CB3D0": "cwps2-3.0b38"
+  "main/gameFrontEnd/func_002CB3D0": "cwps2-3.0b38",
+  "main/weapon/func_00146460": "cwps2-3.0b38",
+  "main/taser/func_00263080": "cwps2-3.0b38",
+  "main/func_00327D90": "cwps2-3.0b38"
 }

@@ -7,7 +7,7 @@ typedef struct {
 } T3F050;
 extern void func_0033D360(T3F050* self);
 extern void func_002ACC80(void* p, int f);
-extern void func_0044F6B0(L3F050* l);
+extern void LobbyArray_Free(L3F050* l);
 extern G3F050* Gui_GetScreenStack(void);
 void func_0033F050(T3F050* self)
 {
@@ -15,9 +15,9 @@ void func_0033F050(T3F050* self)
     self->fA8 = 0;
     if (self->p88)
         func_002ACC80(self->p88, 0);
-    func_0044F6B0(&self->l0);
-    func_0044F6B0(&self->l1);
-    func_0044F6B0(&self->l2);
+    LobbyArray_Free(&self->l0);
+    LobbyArray_Free(&self->l1);
+    LobbyArray_Free(&self->l2);
     self->b78 = 0;
     Gui_GetScreenStack()->flags &= ~3;
 }

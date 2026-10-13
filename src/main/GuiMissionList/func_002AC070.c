@@ -20,7 +20,7 @@ extern "C" {
 static int D_0048BCB0 = -1;
 void func_002AD770(Vec_002AC070* v);
 void* func_004294C0(void);
-E_002AC070* func_0044F290(L_002AC070* l, int i);
+E_002AC070* LobbyArray_At(L_002AC070* l, int i);
 int func_002AC470(S_002AC070* self, E_002AC070* e);
 void func_002AD1F0(Vec_002AC070* v, It_002AC070* pos, int n, It_002AC070* it);
 void func_002AC6F0(S_002AC070* self);
@@ -42,7 +42,7 @@ extern "C" void func_002AC070(S_002AC070* self)
         return;
     n = self->p11C->count;
     for (i = 0; i < n; i++) {
-        E_002AC070* e = func_0044F290(self->p11C, i);
+        E_002AC070* e = LobbyArray_At(self->p11C, i);
         if (e) {
             int fl = func_002AC470(self, e);
             if (fl & 2) {
@@ -81,7 +81,7 @@ extern "C" void func_002AC070(S_002AC070* self)
         self->fC0 = self->fC4 = self->fCC = -1;
     } else {
         int k = At_002AC070(&self->list, self->fCC)->idx;
-        E_002AC070* e = func_0044F290(self->p11C, k);
+        E_002AC070* e = LobbyArray_At(self->p11C, k);
         if (e) {
             self->fC0 = e->id;
             self->fC4 = k;

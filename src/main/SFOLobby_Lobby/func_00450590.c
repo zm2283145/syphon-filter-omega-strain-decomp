@@ -1,5 +1,4 @@
-#include "loose05_types.h"
-
+#include "SFOLobby.h"
 /* Store an ordered range with a nonnegative lower bound. */
 void func_00450590(SFOLobby* lobby, int start, int end)
 {

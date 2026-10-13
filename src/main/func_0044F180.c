@@ -11,14 +11,14 @@ typedef struct {
     char pad19;
     unsigned char unique;
 } Arr;
-void func_0044F470(Arr *a, int elem);
+void LobbyArray_Append(Arr *a, int elem);
 static inline int Arr_At(Arr *a, int i) {
     int d = a->data;
     if (d == 0) return 0;
     if (i < 0 || i >= a->count) return 0;
     return d + i * a->size;
 }
-void func_0044F180(Arr *dst, Arr *src) {
+void LobbyArray_Copy(Arr *dst, Arr *src) {
     int i;
     if (dst == 0 || src == 0) return;
     if (dst->size != src->size) return;
@@ -27,7 +27,7 @@ void func_0044F180(Arr *dst, Arr *src) {
         dst->count = 0;
     }
     for (i = 0; i < src->count; i++) {
-        func_0044F470(dst, Arr_At(src, i));
+        LobbyArray_Append(dst, Arr_At(src, i));
     }
 }
 

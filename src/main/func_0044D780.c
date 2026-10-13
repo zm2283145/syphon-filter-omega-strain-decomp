@@ -3,9 +3,9 @@
 #define NULL 0
 #pragma mpwc_relax on
 int String_Copy(char *, char *);                            
-int func_00443E70();                                
-int func_00452F70(char * , int, int);                      
-int func_004534A0(char * , int, int, int);             
+int Lobby_GetTime();                                
+int SFOLobby_CallUpdateHook(char * , int, int);                      
+int SFOLobby_Poll(char * , int, int, int);             
 int func_0046C7A0(char *, char *);                        
 int memset(char *, int, int);                                
 extern int D_00497890;
@@ -22,12 +22,12 @@ void func_0044D780(PS0_0044D780 *arg0) {
         String_Copy(sp30, "1");
         arg0->f24C = func_0046C7A0(sp30, &func_00446740);
         if (arg0->f24C == 0) {
-            temp_v0 = func_00443E70();
+            temp_v0 = Lobby_GetTime();
             arg0->f22C = 0;
             if (arg0->f22C == 0) {
 loop_4:
-                func_00452F70(arg0, 0, 0);
-                if (func_004534A0(arg0, temp_v0, D_00497890, 0) != 0) {
+                SFOLobby_CallUpdateHook(arg0, 0, 0);
+                if (SFOLobby_Poll(arg0, temp_v0, D_00497890, 0) != 0) {
                     if (arg0->f22C != 0) {
 
                     } else {

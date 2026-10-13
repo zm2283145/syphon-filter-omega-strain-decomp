@@ -6,7 +6,7 @@ extern char* func_004294C0(void);
 extern A2C8090* Agent_GetSelected(void*, int);
 extern char D_004FFB50;
 extern int D_0052FE80;
-extern E2C8090* func_0044F290(L2C8090*, int);
+extern E2C8090* LobbyArray_At(L2C8090*, int);
 extern void func_00336EC0(A2C8090*, E2C8090*);
 int func_002C8090(void) {
     char* g = func_004294C0();
@@ -22,7 +22,7 @@ int func_002C8090(void) {
     n = l->count;
     if (n > 0x40) return 0;
     for (i = 0; i < n; i++) {
-        E2C8090* e = func_0044F290(l, i);
+        E2C8090* e = LobbyArray_At(l, i);
         if (e) {
             switch (e->type) {
             case 2: case 3: case 4: case 5: case 6: case 7: case 8: case 9: case 11:

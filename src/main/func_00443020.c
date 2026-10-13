@@ -14,7 +14,7 @@ static inline int ParseIp(char* s) {
     return (v[0] << 24) | (v[1] << 16) | (v[2] << 8) | v[3];
 }
 
-extern "C" int func_00443020(char* s) {
+extern "C" int Net_ParseIPv4(char* s) {
     if (s == 0 || *s == 0) return 0;
     return ParseIp(s);
 }

@@ -12,7 +12,7 @@ typedef struct {
 } S2A1700;
 extern void* func_004294C0(void);
 extern void func_00451610(void* p);
-extern void func_0044F6B0(M2A1700* m);
+extern void LobbyArray_Free(M2A1700* m);
 void func_002A1700(S2A1700* s)
 {
     if (s->active) {
@@ -22,9 +22,9 @@ void func_002A1700(S2A1700* s)
                 func_00451610(p);
             s->hasFx = 0;
         }
-        func_0044F6B0(&s->m88);
-        func_0044F6B0(&s->mA4);
-        func_0044F6B0(&s->mC0);
+        LobbyArray_Free(&s->m88);
+        LobbyArray_Free(&s->mA4);
+        LobbyArray_Free(&s->mC0);
         s->active = 0;
     }
 }

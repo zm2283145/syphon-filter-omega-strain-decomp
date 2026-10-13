@@ -9,11 +9,11 @@ typedef struct {
     int f2588; int f258C; char p2590[0x265C - 0x2590]; unsigned char f265C;
 } S44A810;
 extern void String_Copy(char*, char*);
-extern int func_00443E70(void);
+extern int Lobby_GetTime(void);
 extern void func_00451AE0(void);
-extern void func_00451B00(S44A810*, int, char*, int);
-extern void func_00452F70(S44A810*, int, int);
-extern int func_004534A0(S44A810*, int, int, int);
+extern void SFOLobby_SetError(S44A810*, int, char*, int);
+extern void SFOLobby_CallUpdateHook(S44A810*, int, int);
+extern int SFOLobby_Poll(S44A810*, int, int, int);
 extern void func_00449A00(S44A810*);
 extern void func_00449D20(S44A810*, int);
 extern int func_00449180(S44A810*);
@@ -31,16 +31,16 @@ extern char func_00448E30[];
 static inline void Tick44A810(S44A810* s, int arg1)
 {
     int last = s->f258C;
-    int dt = func_00443E70() - last;
+    int dt = Lobby_GetTime() - last;
     if (s->state == 7) {
         if (last == 0 || dt > D_00497800) {
             func_00449D20(s, arg1);
             func_0044A290(s);
-            s->f258C = func_00443E70();
+            s->f258C = Lobby_GetTime();
         }
     } else if (last == 0 || dt > D_00497818) {
         func_00449D20(s, arg1);
-        s->f258C = func_00443E70();
+        s->f258C = Lobby_GetTime();
     }
 }
 static inline unsigned char Known44A810(S44A810* s, int key, int update)
@@ -55,7 +55,7 @@ static inline unsigned char Known44A810(S44A810* s, int key, int update)
 static inline int Online44A810(S44A810* s)
 {
     int last = s->f2588;
-    int elapsed = func_00443E70() - last;
+    int elapsed = Lobby_GetTime() - last;
     if (last == 0 || D_00497800 < elapsed) {
         func_00449A00(s);
     }
@@ -71,11 +71,11 @@ int func_0044A810(S44A810* s, int id)
     func_00449A00(s);
     func_00449D20(s, 1);
     if (id < 0 || !Known44A810(s, id, 1)) {
-        func_00451B00(s, 0x1D, D_004C0D10, 0x1E4);
+        SFOLobby_SetError(s, 0x1D, D_004C0D10, 0x1E4);
         return 0;
     }
     if (id != s->f2480 && !Online44A810(s)) {
-        func_00451B00(s, 0x1F, D_004C0D10, 0x1EB);
+        SFOLobby_SetError(s, 0x1F, D_004C0D10, 0x1EB);
         return 0;
     }
     if (!Online44A810(s) || id != s->f2480) {
@@ -85,29 +85,29 @@ int func_0044A810(S44A810* s, int id)
         req.f28 = id;
         req.f2C = s->fE84;
         s->f1D4 = 0;
-        s->f2410 = func_00443E70();
+        s->f2410 = Lobby_GetTime();
         s->f24C = func_00466E08(&req, func_00448E30);
         if (s->f24C != 0) {
-            func_00451B00(s, 1, D_004C0D10, 0x203);
+            SFOLobby_SetError(s, 1, D_004C0D10, 0x203);
             return 0;
         }
         s->busy = 1;
         while (s->f1D4 == 0) {
-            func_00452F70(s, 0, 0);
+            SFOLobby_CallUpdateHook(s, 0, 0);
             if (s->f24C != 0) {
-                func_00451B00(s, 1, D_004C0D10, 0x20E);
+                SFOLobby_SetError(s, 1, D_004C0D10, 0x20E);
                 s->busy = 0;
                 return 0;
             }
-            if (func_004534A0(s, s->f2410, D_00497890, 0) == 0) {
-                func_00451B00(s, 2, D_004C0D10, 0x216);
+            if (SFOLobby_Poll(s, s->f2410, D_00497890, 0) == 0) {
+                SFOLobby_SetError(s, 2, D_004C0D10, 0x216);
                 s->busy = 0;
                 return 0;
             }
         }
         s->busy = 0;
         if (s->fC24 != 0) {
-            func_00451B00(s, 1, D_004C0D10, 0x21F);
+            SFOLobby_SetError(s, 1, D_004C0D10, 0x21F);
             return 0;
         }
         s->f2588 = 0;
@@ -115,7 +115,7 @@ int func_0044A810(S44A810* s, int id)
         func_00449A00(s);
         func_00449D20(s, 0);
     } else if (Online44A810(s) && id == s->f2480 && !func_00449180(s)) {
-        func_00451B00(s, 1, D_004C0D10, 0x231);
+        SFOLobby_SetError(s, 1, D_004C0D10, 0x231);
         return 0;
     }
     return 1;

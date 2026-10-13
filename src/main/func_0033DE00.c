@@ -9,9 +9,9 @@ extern void func_0033D310(T3DE00* self);
 extern G3DE00* Gui_GetScreenStack(void);
 extern T3DE00** func_0033DEF0(void* key);
 extern int func_004294C0(void);
-extern E3DE00* func_0044F290(void* list, int i);
+extern E3DE00* LobbyArray_At(void* list, int i);
 extern void func_002AEC90(void* p, char* a, char* b, unsigned char c);
-extern void func_0044F7E0(void* list);
+extern void LobbyArray_Clear(void* list);
 void func_0033DE00(T3DE00* self)
 {
     G3DE00* g;
@@ -26,10 +26,10 @@ void func_0033DE00(T3DE00* self)
         g->flags &= ~3;
     if (func_004294C0() && self->count) {
         for (i = 0; i < self->count; i++) {
-            E3DE00* e = func_0044F290(self->lAC, i);
+            E3DE00* e = LobbyArray_At(self->lAC, i);
             if (e)
                 func_002AEC90(self->p8C, e->a, e->b, e->c);
         }
-        func_0044F7E0(self->lAC);
+        LobbyArray_Clear(self->lAC);
     }
 }

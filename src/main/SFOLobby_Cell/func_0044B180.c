@@ -2,8 +2,8 @@
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #pragma mpwc_relax on
 int String_Copy(char *, char *);
-int func_00443E70();
-int func_00451B00(char * , int, char *, int);
+int Lobby_GetTime();
+int SFOLobby_SetError(char * , int, char *, int);
 int func_00466F50(char *, char *);
 int memset(char *, int, int);
 int strncpy(char *, char * , int);
@@ -32,26 +32,26 @@ void func_0044B180(Cell * c) { char* arg0 = (char*)c;
     if (st == 7 && c->f2409 == 0) {
         func_00453FE0(arg0);
         temp_s1 = c->t88;
-        temp_a0 = func_00443E70() - temp_s1;
+        temp_a0 = Lobby_GetTime() - temp_s1;
         if ((temp_s1 == 0) || (D_00497800 < temp_a0)) {
             func_00449A00(arg0);
         }
         temp_s1 = c->t8C;
-        temp_a0 = func_00443E70() - temp_s1;
+        temp_a0 = Lobby_GetTime() - temp_s1;
         if (c->st == 7) {
             if ((temp_s1 == 0) || (D_00497800 < temp_a0)) {
                 func_00449D20(arg0, 0);
                 func_0044A290(arg0);
-                c->t8C = func_00443E70();
+                c->t8C = Lobby_GetTime();
             }
         } else {
             if ((temp_s1 == 0) || (D_00497818 < temp_a0)) {
                 func_00449D20(arg0, 0);
-                c->t8C = func_00443E70();
+                c->t8C = Lobby_GetTime();
             }
         }
         temp_s1 = c->t84;
-        temp_a0 = func_00443E70() - temp_s1;
+        temp_a0 = Lobby_GetTime() - temp_s1;
         if ((temp_s1 == 0) || (D_004977E8 < temp_a0)) {
             memset((char*)&sl, 0, 0x30);
             String_Copy(sl.name, &D_004C0D38);
@@ -60,9 +60,9 @@ void func_0044B180(Cell * c) { char* arg0 = (char*)c;
             sl.f5C = 0x3E7;
             c->f24C = func_00466F50((char*)&sl, &func_004482E0);
             if (c->f24C != 0) {
-                func_00451B00(arg0, 1, &D_004C0D10, 0x53F);
+                SFOLobby_SetError(arg0, 1, &D_004C0D10, 0x53F);
             }
-            c->t84 = func_00443E70();
+            c->t84 = Lobby_GetTime();
         }
         func_00451B30(arg0);
         func_00453FA0(arg0, arg0 + 0xC4);

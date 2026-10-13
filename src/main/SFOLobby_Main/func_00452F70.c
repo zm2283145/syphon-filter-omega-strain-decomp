@@ -5,7 +5,7 @@
 #pragma mpwc_relax on
 #pragma push
 #pragma opt_common_subs off
-void func_00452F70(char * arg0, int arg1, int arg2) {
+void SFOLobby_CallUpdateHook(char * arg0, int arg1, int arg2) {
     int (*temp_v1)(int, int);
 
     F_(arg0, 0x2409, signed char) = 1;

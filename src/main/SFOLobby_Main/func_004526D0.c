@@ -1,6 +1,6 @@
 #include "types.h"
 int String_Copy(char*, char*);
-int func_00443E70(void);
+int Lobby_GetTime(void);
 int* func_00443F40(int);
 void func_00443EA0(int*);
 int func_0046A2D0(void*, void*);
@@ -41,7 +41,7 @@ typedef struct {
     char* errFile;
     int errLine;
 } Lobby_4526D0;
-int func_004534A0(Lobby_4526D0*, int, int, int);
+int SFOLobby_Poll(Lobby_4526D0*, int, int, int);
 int func_00452050(Lobby_4526D0*, int, char*);
 int func_004524C0(Lobby_4526D0*, char*, char*);
 
@@ -76,7 +76,7 @@ int func_004526D0(Lobby_4526D0* self, char* room)
     String_Copy(req.room, room);
     req.f68 = 1;
     self->f244 = 0;
-    self->f2410 = func_00443E70();
+    self->f2410 = Lobby_GetTime();
     self->f248 = func_00443F40(D_00585F90 * 4);
     for (i = 0; i < D_00585F90; i++)
         self->f248[i] = -1;
@@ -91,7 +91,7 @@ int func_004526D0(Lobby_4526D0* self, char* room)
             Free_4526D0(self);
             return 0;
         }
-        if (!func_004534A0(self, self->f2410, D_00497890, 0)) {
+        if (!SFOLobby_Poll(self, self->f2410, D_00497890, 0)) {
             SetErr_4526D0(self, 2, D_004C0FB0, 0x4CC);
             Free_4526D0(self);
             return 0;

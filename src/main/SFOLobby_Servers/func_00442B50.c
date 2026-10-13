@@ -1,19 +1,21 @@
-#include "types.h"
-#define F_(b, o, T) (*(T*)((char*)(b) + (o)))
+#include "SFOLobby.h"
 #define NULL 0
 #pragma mpwc_relax on
 /*fc*/
-int func_00442C20();             
-int func_00442D80();                          
-int func_0044CA30();                          
-int func_0044CA90();                                
-int func_0044D510();                          
-char * func_0044F290(int, int);                        
+int SFOLobby_ResolveHost();
+int SFOLobby_RequestLobbyList();
+int func_0044CA30();
+int func_0044CA90();
+int SFOLobby_Authenticate();
+LobbyUniverseEntry * LobbyArray_At(LobbyArray *, int);
 
-int func_00442B50(char * arg0, int arg1) {
-    char * temp_v0;
+/* Connects to universe `arg1` of universeList: drops any current connection,
+ * resolves the universe's auth server (unless directAuth), authenticates
+ * (SFOLobby_Authenticate) and fetches its lobby list (SFOLobby_RequestLobbyList). */
+int SFOLobby_ConnectUniverse(SFOLobby * arg0, int arg1) {
+    LobbyUniverseEntry * temp_v0;
 
-    if (F_(arg0, 0x180, int) > 0) {
+    if (arg0->connHandle > 0) {
         if (func_0044CA90() == 0) {
             return 0;
         }
@@ -23,17 +25,17 @@ int func_00442B50(char * arg0, int arg1) {
         goto block_5;
     }
 block_5:
-    if (F_(arg0, 0x2184, unsigned char) == 0) {
-        temp_v0 = (char *)(func_0044F290(F_(arg0, 0x23DC, int), arg1));
-        if (func_00442C20(arg0, temp_v0 + 0x80, arg0 + 0x1FFC) == 0) {
+    if (arg0->directAuth == 0) {
+        temp_v0 = LobbyArray_At(arg0->universeList, arg1);
+        if (SFOLobby_ResolveHost(arg0, temp_v0->hostName, arg0->authServer) == 0) {
             return 0;
         }
-        F_(arg0, 0x207C, int) = F_(temp_v0, 0x100, int);
+        arg0->authPort = temp_v0->port;
         goto block_10;
     }
 block_10:
-    if (func_0044D510(arg0) == 0) {
+    if (SFOLobby_Authenticate(arg0) == 0) {
         return 0;
     }
-    return func_00442D80(arg0);
+    return SFOLobby_RequestLobbyList(arg0);
 }

@@ -1,37 +1,36 @@
 #pragma cplusplus on
-#include "types.h"
+#include "SFOLobby.h"
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 extern "C" {
 int String_Copy(char *, char *);
-char *func_0044F0C0(char *, int, int *);
-void func_0044F160(char *, int);
-void func_0044F180(char *, char *);
-void func_0044F280(char *, int);
-int func_0044F470(char *, void *);
-int func_004505C0();
+char *func_0044F0C0(SFOLobby *, int, int *);
+void LobbyArray_SetRefreshing(LobbyArray *, int);
+void LobbyArray_Copy(LobbyArray *, LobbyArray *);
+void LobbyArray_SetDirty(LobbyArray *, int);
+int LobbyArray_Append(LobbyArray *, void *);
+int SFOLobby_NoInstance();
 void *memset(void *, int, int);
-extern char D_004C0CC8[];
-extern char *D_00585E60;
+extern char D_004C0CC8[]; /* "" */
+extern SFOLobby *D_00585E60;
 }
-
 typedef struct {
     signed char a, b;
 } Pair446830;
-
+/* One buddy-list reply record (same layout as LobbyBuddyReply). */
 typedef struct {
-    char name[0x15];
-    int f18;
-    int f1C;
-    Pair446830 pairs[0x10];
-    int w[0x23];
-    signed char cc;
+    char messageId[0x15];
+    int statusCode;
+    int accountId;
+    Pair446830 accountName[0x10];
+    int w[0x23];                    /* w[0] playerStatus, w[2] gameWorldId */
+    signed char endOfList;
 } Msg446830;
-
+/* LobbyArray element of buddyList (0x50 bytes). */
 typedef struct {
-    int id;
+    int accountId;
     char name[0x20];
-    int f24;
+    int f24;                        /* 1 in a game, 2 in a chat world, 3 otherwise */
     int f28;
     char *f2C;
     int f30;
@@ -40,23 +39,23 @@ typedef struct {
     int f3C;
     int f40;
     int f44;
-    int f48;
+    int gameWorldId;
     int f4C;
-} Req446830;
-
+} Buddy446830;
+/* Buddy-list reply callback: appends one buddy per record (looking up the game the
+ * buddy is in), and on the last record publishes the list to pool150/outBuddyList. */
 extern "C" void func_00446830(int d0, int d1, int d2, Msg446830 *msg)
 {
-    Req446830 req;
-    char *list;
+    Buddy446830 req;
+    LobbyArray *list;
     char *e;
-
-    if (func_004505C0() == 0) {
-        list = D_00585E60 + 0xE0;
+    if (SFOLobby_NoInstance() == 0) {
+        list = &D_00585E60->buddyList;
         if (list != NULL) {
-            if (msg->f18 == 0) {
+            if (msg->statusCode == MediusSuccess) {
                 memset(&req, 0, 0x50);
-                req.id = msg->f1C;
-                String_Copy(req.name, (char *)msg->pairs);
+                req.accountId = msg->accountId;
+                String_Copy(req.name, (char *)msg->accountName);
                 req.f30 = 0;
                 req.f34 = -1;
                 req.f38 = -1;
@@ -67,16 +66,16 @@ extern "C" void func_00446830(int d0, int d1, int d2, Msg446830 *msg)
                 req.f24 = 3;
                 req.f2C = D_004C0CC8;
                 switch (msg->w[0]) {
-                case 0:
-                case 1:
+                case MediusPlayerDisconnected:
+                case MediusPlayerInAuthWorld:
                     break;
-                case 2:
+                case MediusPlayerInChatWorld:
                     req.f24 = 2;
                     break;
-                case 3:
+                case MediusPlayerInGameWorld:
                     req.f24 = 1;
-                    req.f48 = msg->w[2];
-                    e = func_0044F0C0(D_00585E60, req.f48, &req.f24);
+                    req.gameWorldId = msg->w[2];
+                    e = func_0044F0C0(D_00585E60, req.gameWorldId, &req.f24);
                     if (e != NULL) {
                         req.f30 = F_(e, 0x24, int);
                         req.f34 = F_(e, 0x4, int);
@@ -87,17 +86,17 @@ extern "C" void func_00446830(int d0, int d1, int d2, Msg446830 *msg)
                     }
                     break;
                 }
-                func_0044F470(list, &req);
+                LobbyArray_Append(list, &req);
             }
-            if (msg->cc != 0) {
-                func_0044F160(list, 0);
-                if (F_(list, 4, int) > 0)
-                    func_0044F280(list, 1);
-                if (F_(D_00585E60, 0x23E8, char *) != NULL)
-                    func_0044F180(F_(D_00585E60, 0x23E8, char *), list);
-                func_0044F180(D_00585E60 + 0x150, list);
+            if (msg->endOfList != 0) {
+                LobbyArray_SetRefreshing(list, 0);
+                if (list->count > 0)
+                    LobbyArray_SetDirty(list, 1);
+                if (D_00585E60->outBuddyList != NULL)
+                    LobbyArray_Copy(D_00585E60->outBuddyList, list);
+                LobbyArray_Copy(&D_00585E60->pool150, list);
             }
-            *(Msg446830 *)(D_00585E60 + 0xC28) = *msg;
+            *(Msg446830 *)&D_00585E60->buddyListReply = *msg;
         }
     }
 }

@@ -1,6 +1,6 @@
 #include "types.h"
-typedef struct { void* vt; int pad[8]; void* target; signed char flag; char pad2[11]; int tid; int oid; } Evt26F850;
-typedef struct { int pad; int id; int id2; signed char flag; } Arg26F850;
+typedef struct { void* vt; int pad[8]; void* who; signed char flag; char pad2[11]; int whoId; int receiverId; } Evt26F850;
+typedef struct { int header; int receiverId; int whoId; signed char flag; } Arg26F850;
 extern void Event_Construct(Evt26F850* e, void* type);
 extern void* Object_LookupById(int* id);
 extern void MsgQueue_QueueClone(Evt26F850* e, void* obj, int a, int b);
@@ -12,7 +12,10 @@ extern unsigned char D_005721D0;
 extern unsigned char D_005723C8;
 #pragma push
 #pragma opt_propagation off
-int func_0026F850(int a0, int a1, int a2, Arg26F850* arg) {
+/* Network receive handler for cAINewAwarenessMsg (registered by cAINewAwarenessMsg_NetRegister): rebuilds the
+ * message from the packet {receiver id, who id, flag} and queues a clone on the receiving
+ * object. Returns the packet size. */
+int cAINewAwarenessMsg_NetReceive(int a0, int a1, int a2, Arg26F850* arg) {
     if (!D_005723C8) D_005723C8 = 1;
     if (D_005721D0) {
         Evt26F850 e;
@@ -21,12 +24,12 @@ int func_0026F850(int a0, int a1, int a2, Arg26F850* arg) {
         Evt26F850* p = &e;
         Event_Construct(p, g_ScriptAINewAwarenessMsgKey);
         e.vt = D_004DCD70;
-        e.tid = a->id2;
-        p->target = Object_LookupById((int*)((char*)&e + 0x34));
+        e.whoId = a->whoId;
+        p->who = Object_LookupById((int*)((char*)&e + 0x34) /* &e.whoId */);
         e.vt = D_004DCC90;
         e.flag = a->flag;
-        e.oid = a->id;
-        obj = Object_LookupById((int*)((char*)&e + 0x38));
+        e.receiverId = a->receiverId;
+        obj = Object_LookupById((int*)((char*)&e + 0x38) /* &e.receiverId */);
         if (obj) MsgQueue_QueueClone(&e, obj, 0, 0);
         e.vt = D_004DCD70;
         cMessage_dtor(&e, 0);

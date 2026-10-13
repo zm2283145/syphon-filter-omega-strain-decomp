@@ -1,23 +1,21 @@
-/*
- * Matched functions (byte-identical with the retail executable).
- * Original translation unit not identified yet; functions are named by address
- * until real names are known.
- */
-
-#include "types.h"
-#include "SFOLobby_Callback_types.h"
-
-extern LobbyState* D_00585E60;
+#include "SFOLobby.h"
+extern SFOLobby* D_00585E60;
 extern int String_Copy(char* dst, char* src);
-extern int func_004505C0(void);
+extern int SFOLobby_NoInstance(void);
 
-/* Lobby callback: unless func_004505C0() reports busy, flags the event and copies
- * the info name into the lobby state when info->unk2C is 0. */
-void func_00446D00(int a0, int a1, int a2, LobbyCallbackInfo* info) {
-    if (func_004505C0() == 0) {
-        D_00585E60->unk204 = 1;
-        if (info->unk2C == 0) {
-            String_Copy(D_00585E60->name, info->name);
+/* Reply to the own-IP request (SFOLobby_RequestMyIp). */
+typedef struct LobbyMyIpReply {
+    char messageId[0x15];
+    char ip[0x2C - 0x15];           /* 0x15 */
+    int statusCode;                 /* 0x2C */
+} LobbyMyIpReply;
+
+/* Own-IP reply callback: flags gotMyIp and stores the address on success. */
+void func_00446D00(int a0, int a1, int a2, LobbyMyIpReply* info) {
+    if (SFOLobby_NoInstance() == 0) {
+        D_00585E60->gotMyIp = 1;
+        if (info->statusCode == MediusSuccess) {
+            String_Copy(D_00585E60->myIp, info->ip);
         }
     }
 }

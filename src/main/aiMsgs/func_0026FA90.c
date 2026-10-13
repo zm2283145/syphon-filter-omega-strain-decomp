@@ -3,8 +3,8 @@
 #include "vslot_pad.h"
 struct VObj26FA90 { VPAD16(a) VPAD4(b) VPAD1(c) virtual int Check(); char pad[0x20C]; int f210; };
 typedef struct { char pad[0x58]; VObj26FA90* sub; } Obj26FA90;
-typedef struct { void* vt; int pad[8]; void* n1; void* n2; int pad2[2]; int tid; int oid; } Evt26FA90;
-typedef struct { int pad; int id; int n1; int n2; } Arg26FA90;
+typedef struct { void* vt; int pad[8]; void* n1; void* n2; int pad2[2]; int whoId; int receiverId; } Evt26FA90;
+typedef struct { int header; int receiverId; int n1; int n2; } Arg26FA90;
 extern "C" {
 extern void Event_Construct(Evt26FA90* e, void* type);
 extern void* Object_LookupById(int* id);
@@ -21,7 +21,10 @@ extern unsigned char D_005723C8;
 #pragma optimization_level 3
 
 #pragma opt_propagation off
-extern "C" int func_0026FA90(int a0, int a1, int a2, Arg26FA90* arg) {
+/* Network receive handler for cAIDestinationReachedMsg (registered by cAIDestinationReachedMsg_NetRegister): rebuilds the
+ * message from the packet {receiver id, who id} and queues a clone on the receiving
+ * object. Returns the packet size. */
+extern "C" int cAIDestinationReachedMsg_NetReceive(int a0, int a1, int a2, Arg26FA90* arg) {
     if (!D_005723C8) D_005723C8 = 1;
     if (D_005721D0) {
         Evt26FA90 e;
@@ -33,8 +36,8 @@ extern "C" int func_0026FA90(int a0, int a1, int a2, Arg26FA90* arg) {
         if (a->n1 >= 0) p->n1 = NpcPath_GetNode(a->n1); else p->n1 = 0;
         if (a->n2 >= 0) p->n2 = NpcPath_GetNode(a->n2); else p->n2 = 0;
         p->vt = D_004DCCB0;
-        e.oid = a->id;
-        obj = (Obj26FA90*)Object_LookupById((int*)((char*)&e + 0x38));
+        e.receiverId = a->receiverId;
+        obj = (Obj26FA90*)Object_LookupById((int*)((char*)&e + 0x38) /* &e.receiverId */);
         if (obj) {
             unsigned char ok = 0;
             if (obj->sub && obj->sub->Check()) ok = 1;

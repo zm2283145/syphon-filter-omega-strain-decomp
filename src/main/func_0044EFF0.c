@@ -2,8 +2,8 @@
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int func_0044F280(char * , int);                         
-char * func_0044F290(char * , int);                   
+int LobbyArray_SetDirty(char * , int);                         
+char * LobbyArray_At(char * , int);                   
 
 typedef struct { int f0; int f4; int f8; char pC[4]; int f10; char p14[4]; int f18; int f1C; char p20[4]; int f24; } PS0_0044EFF0;
 void func_0044EFF0(int d0, char * arg1, PS0_0044EFF0 *arg2) {
@@ -15,7 +15,7 @@ void func_0044EFF0(int d0, char * arg1, PS0_0044EFF0 *arg2) {
         return;
     }
     for (var_s0 = 0; var_s0 < temp_s1; var_s0++) {
-            temp_v0 = func_0044F290(arg1, var_s0);
+            temp_v0 = LobbyArray_At(arg1, var_s0);
             if (F_(temp_v0, 0x48, int) == arg2->f0) {
                 F_(temp_v0, 0x30, int) = arg2->f24;
                 F_(temp_v0, 0x34, int) = arg2->f4;
@@ -23,7 +23,7 @@ void func_0044EFF0(int d0, char * arg1, PS0_0044EFF0 *arg2) {
                 F_(temp_v0, 0x3C, int) = arg2->f1C;
                 F_(temp_v0, 0x40, int) = arg2->f10;
                 F_(temp_v0, 0x44, int) = arg2->f18;
-                func_0044F280(arg1, 1);
+                LobbyArray_SetDirty(arg1, 1);
             }
     }
 }

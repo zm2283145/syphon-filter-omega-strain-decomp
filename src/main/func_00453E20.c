@@ -13,36 +13,36 @@ typedef struct {
     char pad2418[0x26AC - 0x2418];
 } Game;
 extern Game* D_00585E60;
-extern void func_0044FA00(Slot* slot);
+extern void LobbyArray_ctor(Slot* slot);
 extern void* memset(void* p, int c, int n);
-extern void func_0044F880(Slot* slot, int a, int b, int c);
+extern void LobbyArray_Init(Slot* slot, int a, int b, int c);
 extern char* String_Copy(char* dst, const char* src);
 
 /* Game state constructor: builds the slots, clears the data block and sets defaults. */
 Game* func_00453E20(Game* self)
 {
-    func_0044FA00(&self->slots[0]);
-    func_0044FA00(&self->slots[1]);
-    func_0044FA00(&self->slots[2]);
-    func_0044FA00(&self->slots[3]);
-    func_0044FA00(&self->slots[4]);
-    func_0044FA00(&self->slots[5]);
-    func_0044FA00(&self->slots[6]);
-    func_0044FA00(&self->slots[7]);
-    func_0044FA00(&self->slots[8]);
-    func_0044FA00(&self->slots[9]);
-    func_0044FA00(&self->slots[10]);
-    func_0044FA00(&self->slots[11]);
-    func_0044FA00(&self->slots[12]);
+    LobbyArray_ctor(&self->slots[0]);
+    LobbyArray_ctor(&self->slots[1]);
+    LobbyArray_ctor(&self->slots[2]);
+    LobbyArray_ctor(&self->slots[3]);
+    LobbyArray_ctor(&self->slots[4]);
+    LobbyArray_ctor(&self->slots[5]);
+    LobbyArray_ctor(&self->slots[6]);
+    LobbyArray_ctor(&self->slots[7]);
+    LobbyArray_ctor(&self->slots[8]);
+    LobbyArray_ctor(&self->slots[9]);
+    LobbyArray_ctor(&self->slots[10]);
+    LobbyArray_ctor(&self->slots[11]);
+    LobbyArray_ctor(&self->slots[12]);
     D_00585E60 = self;
     memset(self->state, 0, (char*)(self + 1) - self->state);
     self->unk2414 = 0;
     self->mode = 8;
     self->active = 1;
     self->slots[1].flag = 1;
-    func_0044F880(&self->slots[1], 0x40, 0, 0xAC);
-    func_0044F880(&self->slots[2], 8, 0, 0x214);
-    func_0044F880(&self->slots[3], 0x10, 0, 9);
+    LobbyArray_Init(&self->slots[1], 0x40, 0, 0xAC);
+    LobbyArray_Init(&self->slots[2], 8, 0, 0x214);
+    LobbyArray_Init(&self->slots[3], 0x10, 0, 9);
     String_Copy(self->name, "MediusLobby");
     return self;
 }

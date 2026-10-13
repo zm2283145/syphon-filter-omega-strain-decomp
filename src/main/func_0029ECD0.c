@@ -11,16 +11,16 @@ extern GameMachine* D_004FFC04;
 extern int FrontEnd_ClosePopup(GameMachine* machine, int arg);
 extern void func_0033D360(GuiScreen* self);
 extern GuiManager* Gui_GetScreenStack(void);
-extern int func_0044F6B0(GuiSlot* slot);
+extern int LobbyArray_Free(GuiSlot* slot);
 
 /* GuiOnlineConnect vtable slot 6: base call, reset the three slots, clear manager flags 0x0C. */
 int func_0029ECD0(GuiOnlineConnect* self) {
     GuiManager* mgr;
 
     func_0033D360(&self->base);
-    func_0044F6B0(&self->slots[0]);
-    func_0044F6B0(&self->slots[1]);
-    func_0044F6B0(&self->slots[2]);
+    LobbyArray_Free(&self->slots[0]);
+    LobbyArray_Free(&self->slots[1]);
+    LobbyArray_Free(&self->slots[2]);
     D_004FFC04->unk2A = 1;
     mgr = Gui_GetScreenStack();
     mgr->flags &= ~0xC;

@@ -1,8 +1,8 @@
 #include "types.h"
 typedef struct { char p0[0x23D8]; int h[11]; } S4538D0;
-extern void func_0044F6B0(int h);
+extern void LobbyArray_Free(int h);
 extern void func_0044F810(void* p);
-static inline void Release4538D0(int* h) { int t = *h; if (t != 0) func_0044F6B0(t); *h = 0; }
+static inline void Release4538D0(int* h) { int t = *h; if (t != 0) LobbyArray_Free(t); *h = 0; }
 #pragma push
 #pragma opt_common_subs off
 void func_004538D0(S4538D0* s)

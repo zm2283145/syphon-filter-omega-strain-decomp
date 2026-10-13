@@ -1,11 +1,11 @@
-#include "loose05_types.h"
+#include "SFOLobby.h"
 
-extern int func_004505C0(void);
+extern int SFOLobby_NoInstance(void);
 extern SFOLobby* D_00585E60;
 
-/* Mark the pending lobby event when the lobby gate returns zero. */
+/* Reply callback: flags gotReply230. */
 void func_004466B0(void)
 {
-    if (!func_004505C0())
-        D_00585E60->unk230 = 1;
+    if (!SFOLobby_NoInstance())
+        D_00585E60->gotReply230 = 1;
 }

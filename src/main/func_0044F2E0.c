@@ -33,7 +33,7 @@ static inline void Arr_Set(Arr *a, int i, int elem) {
     }
 }
 
-void func_0044F2E0(Arr *a, int idx) {
+void LobbyArray_RemoveAt(Arr *a, int idx) {
     int i;
     if (Arr_At(a, idx) != 0) {
         for (i = idx; i < a->count - 1; i++) {

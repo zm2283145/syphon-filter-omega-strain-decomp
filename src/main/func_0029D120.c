@@ -12,13 +12,13 @@ extern void* D_004FFC04;
 extern char D_004AABF0[];
 void* func_004294C0(void);
 void func_002CC260(void);
-int func_0044C440(void* g, void* cb, void* a, void* b, void* c);
+int SFOLobby_EnterNetworkState(void* g, void* cb, void* a, void* b, void* c);
 void func_00421070(L_0029D120* l);
-E_0029D120* func_0044F290(void* v, int i);
+E_0029D120* LobbyArray_At(void* v, int i);
 void func_00421290(L_0029D120* l, char* s, int i, int a);
 void func_00424430(L_0029D120* l, int a, int b);
 void func_0029CBB0(S_0029D120* self, int a);
-void func_0044C3C0(void* g);
+void SFOLobby_LeaveNetworkState(void* g);
 unsigned char func_00452FF0(void* g, int a);
 void func_002CA640(void* ui, int a);
 char* func_0033CE30(S_0029D120* self, int a, int b, int c, int d, int e);
@@ -32,7 +32,7 @@ extern "C" void func_0029D120(S_0029D120* self)
     void* g = func_004294C0();
     if (!g)
         return;
-    if (func_0044C440(g, (void*)func_002CC260, self->f98, self->fB4, self->fD0)) {
+    if (SFOLobby_EnterNetworkState(g, (void*)func_002CC260, self->f98, self->fB4, self->fD0)) {
         int sel;
         int i;
         self->b94 = 1;
@@ -40,7 +40,7 @@ extern "C" void func_0029D120(S_0029D120* self)
         func_00421070(self->pEC);
         sel = -1;
         for (i = 0; i < self->f9C; i++) {
-            E_0029D120* e = func_0044F290(self->f98, i);
+            E_0029D120* e = LobbyArray_At(self->f98, i);
             func_00421290(self->pEC, e->name, i, 0);
             if (e->b0)
                 sel = i;
@@ -50,7 +50,7 @@ extern "C" void func_0029D120(S_0029D120* self)
         func_0029CBB0(self, 0);
     } else {
         unsigned char r;
-        func_0044C3C0(g);
+        SFOLobby_LeaveNetworkState(g);
         self->b94 = 0;
         r = func_00452FF0(g, 0);
         if (r == 0x2F || r == 0x30) {

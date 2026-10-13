@@ -18,13 +18,13 @@ typedef struct {
     unsigned char f265D;
 } S449D20;
 extern void String_Copy(char*, char*);
-extern int func_00443E70(void);
+extern int Lobby_GetTime(void);
 extern void func_00449A00(S449D20*);
-extern void func_0044F7E0(void*);
-extern void func_0044F160(void*, int);
-extern void func_00451B00(S449D20*, int, char*, int);
-extern void func_00452F70(S449D20*, int, int);
-extern int func_004534A0(S449D20*, int, int, int);
+extern void LobbyArray_Clear(void*);
+extern void LobbyArray_SetRefreshing(void*, int);
+extern void SFOLobby_SetError(S449D20*, int, char*, int);
+extern void SFOLobby_CallUpdateHook(S449D20*, int, int);
+extern int SFOLobby_Poll(S449D20*, int, int, int);
 extern int func_00467BE0(void*, void*);
 extern void* memset(void*, int, int);
 extern int D_00497800;
@@ -36,44 +36,44 @@ int func_00449D20(S449D20* s, int wait)
 {
     struct { char a[0x18]; int x; int y; int z; } req;
     int last = s->f2588;
-    int elapsed = func_00443E70() - last;
+    int elapsed = Lobby_GetTime() - last;
 
     if (last == 0 || D_00497800 < elapsed)
         func_00449A00(s);
     if (s->f265D == 0)
         return 1;
-    func_0044F7E0(s->fC4);
-    func_0044F160(s->fC4, 0);
+    LobbyArray_Clear(s->fC4);
+    LobbyArray_SetRefreshing(s->fC4, 0);
     last = s->f2588;
-    elapsed = func_00443E70() - last;
+    elapsed = Lobby_GetTime() - last;
     if (last == 0 || D_00497800 < elapsed)
         func_00449A00(s);
     if (s->fE84 < 0) {
-        func_00451B00(s, 1, D_004C0D10, 0x44D);
+        SFOLobby_SetError(s, 1, D_004C0D10, 0x44D);
         return 0;
     }
     memset(&req, 0, sizeof(req));
     memset(s->f1050, 0, 0x1DC);
-    s->f2410 = func_00443E70();
+    s->f2410 = Lobby_GetTime();
     String_Copy(req.a, D_004C0D38);
     req.x = s->fE84;
     req.y = 0;
     req.z = 0;
     s->f24C = func_00467BE0(&req, func_004487A0);
     if (s->f24C != 0) {
-        func_00451B00(s, 1, D_004C0D10, 0x460);
+        SFOLobby_SetError(s, 1, D_004C0D10, 0x460);
         return 0;
     }
     if (wait) {
         while (s->f1228 != 1) {
-            func_00452F70(s, 0, 0);
+            SFOLobby_CallUpdateHook(s, 0, 0);
             if (s->f24C != 0) {
-                func_00451B00(s, 1, D_004C0D10, 0x46D);
+                SFOLobby_SetError(s, 1, D_004C0D10, 0x46D);
                 s->busy = 0;
                 return 0;
             }
-            if (func_004534A0(s, s->f2410, D_00497890, 0) == 0) {
-                func_00451B00(s, 2, D_004C0D10, 0x475);
+            if (SFOLobby_Poll(s, s->f2410, D_00497890, 0) == 0) {
+                SFOLobby_SetError(s, 2, D_004C0D10, 0x475);
                 s->busy = 0;
                 return 0;
             }

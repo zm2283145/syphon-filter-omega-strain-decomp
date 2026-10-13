@@ -1,8 +1,8 @@
 #include "types.h"
-int func_0044F290();
-int func_0044F470();
-int func_004505C0();
-int func_00451B00(char *, int, char *, int);
+int LobbyArray_At();
+int LobbyArray_Append();
+int SFOLobby_NoInstance();
+int SFOLobby_SetError(char *, int, char *, int);
 int memset();
 int strncpy();
 extern char D_004C0D10;
@@ -11,7 +11,7 @@ typedef struct { int st; int f4; int id; } E48;
 typedef struct { int f40; int f44; int f48; char s4C[0x20]; char s6C[0x20]; char rest[0x60]; } L48;
 typedef struct { char p[0x18]; int a; int b; char q[8]; char s28[0xC8]; int id; char sF4[0x20]; } R482;
 void func_004482E0(int d0, int d1, int d2, R482 *src) {
-    if (func_004505C0() == 0) {
+    if (SFOLobby_NoInstance() == 0) {
         int i;
         int n;
         switch (src->a) {
@@ -24,12 +24,12 @@ void func_004482E0(int d0, int d1, int d2, R482 *src) {
         case -989:
         case -990:
         default:
-            func_00451B00(D_00585E60, 1, &D_004C0D10, 0x8CE);
+            SFOLobby_SetError(D_00585E60, 1, &D_004C0D10, 0x8CE);
             return;
         }
         n = *(int *)(D_00585E60 + 0x20);
         for (i = 0; i < n; i++) {
-            E48 *e = (E48 *)func_0044F290(D_00585E60 + 0x1C, i);
+            E48 *e = (E48 *)LobbyArray_At(D_00585E60 + 0x1C, i);
             if (e != 0 && e->st == 0 && e->id == src->id) return;
         }
         if (src->id >= 0 && src->id != *(int *)(D_00585E60 + 0xEAC)) {
@@ -40,7 +40,7 @@ void func_004482E0(int d0, int d1, int d2, R482 *src) {
                 l.f48 = src->b;
                 strncpy(l.s4C, src->sF4, 0x20);
                 strncpy(l.s6C, src->s28, 0x20);
-                func_0044F470(D_00585E60 + 0x1C, &l);
+                LobbyArray_Append(D_00585E60 + 0x1C, &l);
             }
         }
     }

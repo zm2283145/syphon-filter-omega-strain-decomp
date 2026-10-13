@@ -5,10 +5,10 @@
 
 #include "loose05_types.h"
 
-void func_0044F160(LobbyRecord1C* self, char value) {
-    self->unk19 = value;
+void LobbyArray_SetRefreshing(LobbyRecord1C* self, char value) {
+    self->refreshing = value;
 }
 
-unsigned char func_0044F170(LobbyRecord1C* self) {
-    return self->unk19;
+unsigned char LobbyArray_GetRefreshing(LobbyRecord1C* self) {
+    return self->refreshing;
 }

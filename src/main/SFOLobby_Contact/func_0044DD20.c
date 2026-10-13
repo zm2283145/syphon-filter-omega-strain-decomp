@@ -1,20 +1,19 @@
-#include "types.h"
-typedef struct {
-    char p0[0x23E8]; void* f23E8; void* f23EC;
-    char p23F0[0x255C - 0x23F0]; int state;
-} S44DD20;
-extern void func_00452FC0(S44DD20*, int);
-extern void func_0044F6B0(void*);
-void func_0044DD20(S44DD20* s)
+#include "SFOLobby.h"
+extern void func_00452FC0(SFOLobby*, int);
+extern void LobbyArray_Free(LobbyArray*);
+
+/* Leaves the CONTACTS state (6; state 10 is left unchanged), releasing the
+ * caller-supplied lists set up by SFOLobby_EnterContactsState. */
+void SFOLobby_LeaveContactsState(SFOLobby* s)
 {
     int st = s->state;
-    if (st == 9) return;
-    if (st == 6 || st == 10) {
-        if (st != 10) s->state = 9;
+    if (st == SFOLOBBY_STATE_IDLE) return;
+    if (st == SFOLOBBY_STATE_CONTACTS || st == SFOLOBBY_STATE_10) {
+        if (st != SFOLOBBY_STATE_10) s->state = SFOLOBBY_STATE_IDLE;
         func_00452FC0(s, 0);
-        if (s->f23EC) func_0044F6B0(s->f23EC);
-        s->f23EC = 0;
-        if (s->f23E8) func_0044F6B0(s->f23E8);
-        s->f23E8 = 0;
+        if (s->outList23EC) LobbyArray_Free(s->outList23EC);
+        s->outList23EC = 0;
+        if (s->outBuddyList) LobbyArray_Free(s->outBuddyList);
+        s->outBuddyList = 0;
     }
 }

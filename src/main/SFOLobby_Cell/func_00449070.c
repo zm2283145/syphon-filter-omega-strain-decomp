@@ -1,10 +1,10 @@
 #include "types.h"
 typedef struct { char p0[0x1EC]; int done; char p1F0[0x103C]; char res[0x18]; int f1244; char p1248[0x11C0]; signed char busy; char p2409[0xF]; char name[0x68]; int f2480; } S449070;
 extern void String_Copy(char*, char*);
-extern int func_00443E70(void);
-extern void func_00451B00(S449070*, int, char*, int);
-extern void func_00452F70(S449070*, int, int);
-extern int func_004534A0(S449070*, int, int, int);
+extern int Lobby_GetTime(void);
+extern void SFOLobby_SetError(S449070*, int, char*, int);
+extern void SFOLobby_CallUpdateHook(S449070*, int, int);
+extern int SFOLobby_Poll(S449070*, int, int, int);
 extern void func_00466C18(void*, void*);
 extern void* memset(void*, int, int);
 extern int D_00497890;
@@ -26,13 +26,13 @@ char* func_00449070(S449070* s, int arg)
     req.f58 = s->f2480;
     func_00466C18(&req, func_00448050);
     s->f1244 = -0x3C6;
-    h = func_00443E70();
+    h = Lobby_GetTime();
     s->done = 0;
     s->busy = 1;
     while (s->done == 0) {
-        func_00452F70(s, 0, 0);
-        if (func_004534A0(s, h, D_00497890, 0) == 0) {
-            func_00451B00(s, 2, D_004C0D10, 0x683);
+        SFOLobby_CallUpdateHook(s, 0, 0);
+        if (SFOLobby_Poll(s, h, D_00497890, 0) == 0) {
+            SFOLobby_SetError(s, 2, D_004C0D10, 0x683);
             break;
         }
     }

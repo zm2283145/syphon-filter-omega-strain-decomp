@@ -17,6 +17,6 @@ void func_00454010(void* rec) {
 
 void func_00454050(SFOLobby* self) {
     if (self->unk23D5 == 0) {
-        func_00438A70(self->unk180, 0);
+        func_00438A70(self->connHandle, 0);
     }
 }

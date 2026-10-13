@@ -39,8 +39,8 @@ Ag_002A9BA0* Agent_GetSelected(void* a, int b);
 char* func_00336170(Ag_002A9BA0* ag);
 char* String_CStr(void* s);
 void func_00421070(List_002A9BA0* l);
-unsigned char func_00442D80(G_002A9BA0* g);
-E_002A9BA0* func_0044F290(void* v, int i);
+unsigned char SFOLobby_RequestLobbyList(G_002A9BA0* g);
+E_002A9BA0* LobbyArray_At(void* v, int i);
 void String_CtorCStr_13B480(Str_002A9BA0* s, const char* c);
 void func_003FD740(Str_002A9BA0* s);
 void func_00421290(List_002A9BA0* l, char* s, int i, int a);
@@ -93,11 +93,11 @@ extern "C" void func_002A9BA0(S_002A9BA0* self)
     if (self->p90) {
         unsigned char ok;
         func_00421070(self->p90);
-        ok = func_00442D80(g);
+        ok = SFOLobby_RequestLobbyList(g);
         if (ok) {
             int i;
             for (i = 0; i < self->fA4; i++) {
-                E_002A9BA0* e = func_0044F290(self->fA0, i);
+                E_002A9BA0* e = LobbyArray_At(self->fA0, i);
                 if (e) {
                     Str_002A9BA0 s;
                     String_CtorCStr_13B480(&s, e->name);

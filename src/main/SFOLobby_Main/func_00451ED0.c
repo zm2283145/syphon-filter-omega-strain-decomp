@@ -1,6 +1,6 @@
 #include "types.h"
 int String_Copy(char*, char*);
-int func_00443E70(void);
+int Lobby_GetTime(void);
 int func_0046A2D0(void*, void*);
 void* memset(void*, int, int);
 extern int D_00497890;
@@ -34,7 +34,7 @@ typedef struct {
     char* errFile;
     int errLine;
 } Lobby_451ED0;
-int func_004534A0(Lobby_451ED0*, int, int, int);
+int SFOLobby_Poll(Lobby_451ED0*, int, int, int);
 
 static inline void SetErr_451ED0(Lobby_451ED0* self, unsigned char code, char* file, int line)
 {
@@ -56,7 +56,7 @@ int func_00451ED0(Lobby_451ED0* self, char* room)
     String_Copy(req.room, room);
     req.f68 = 1;
     self->f1FC = 0;
-    self->f2410 = func_00443E70();
+    self->f2410 = Lobby_GetTime();
     self->f24C = func_0046A2D0(&req, &func_00447020);
     while (self->f1BC8 != 1) {
         self->f2409 = 1;
@@ -67,7 +67,7 @@ int func_00451ED0(Lobby_451ED0* self, char* room)
             SetErr_451ED0(self, 0x18, D_004C0FB0, 0x5FD);
             return 0;
         }
-        if (!func_004534A0(self, self->f2410, D_00497890, 0)) {
+        if (!SFOLobby_Poll(self, self->f2410, D_00497890, 0)) {
             SetErr_451ED0(self, 2, D_004C0FB0, 0x603);
             return 0;
         }

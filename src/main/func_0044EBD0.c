@@ -24,8 +24,8 @@ typedef struct Lobby44 {
     char name[1];
 } Lobby44;
 void String_Copy(char *, char *);
-int func_00443E70(void);
-Ent44 *func_0044F290(List44 *, int);
+int Lobby_GetTime(void);
+Ent44 *LobbyArray_At(List44 *, int);
 Obj44 *func_00450A00(Lobby44 *, int);
 void func_0046A0E8(char *, void *);
 extern int D_00497860;
@@ -45,7 +45,7 @@ inline Ent44 *Find44(Lobby44 *l, int id) {
     int j;
     Ent44 *e;
     for (j = 0; j < n; j++) {
-        e = func_0044F290(&l->list, j);
+        e = LobbyArray_At(&l->list, j);
         if (id == e->id) {
             return e;
         }
@@ -70,13 +70,13 @@ void func_0044EBD0(Lobby44 *arg0, List44 *arg1) {
     if (arg1 == NULL || arg1->count == 0) {
         return;
     }
-    now = func_00443E70();
+    now = Lobby_GetTime();
     if (now - D_00585E50 < D_00497860) {
         return;
     }
     D_00585E50 = now;
     for (i = 0; i < arg1->count; i++) {
-        e = func_0044F290(arg1, i);
+        e = LobbyArray_At(arg1, i);
         st = e->state;
         eid = e->id;
         if (st == 3) {

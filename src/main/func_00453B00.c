@@ -14,11 +14,11 @@ extern void func_0044CA30(S453B00*);
 extern void func_004689B0(void);
 extern void func_002E9648(void);
 extern void func_00444E70(void);
-extern void func_0044F6B0(void*);
-extern void func_0044BFF0(S453B00*);
+extern void LobbyArray_Free(void*);
+extern void SFOLobby_NetDown(S453B00*);
 extern void func_003A6680(int);
 extern void func_004538D0(S453B00*);
-extern void func_0044F7E0(void*);
+extern void LobbyArray_Clear(void*);
 
 void func_00453B00(S453B00* s, int full)
 {
@@ -36,10 +36,10 @@ void func_00453B00(S453B00* s, int full)
         if (full)
             func_00444E70();
         if (s->f2404)
-            func_0044F6B0(s->f2404);
+            LobbyArray_Free(s->f2404);
         s->f2404 = 0;
         if (s->f23DC)
-            func_0044F6B0(s->f23DC);
+            LobbyArray_Free(s->f23DC);
         s->f23DC = 0;
         s->f1EA8 = full ? 1 : -1;
     }
@@ -50,7 +50,7 @@ void func_00453B00(S453B00* s, int full)
                 func_00444E70();
                 func_002E9648();
             }
-            func_0044BFF0(s);
+            SFOLobby_NetDown(s);
             s->f1EA8 = 0;
         }
         func_003A6680(0);
@@ -58,9 +58,9 @@ void func_00453B00(S453B00* s, int full)
     s->f180 = -1;
     func_004538D0(s);
     if (full) {
-        func_0044F7E0(s->f1C);
-        func_0044F7E0(s->f38);
-        func_0044F7E0(s->f54);
+        LobbyArray_Clear(s->f1C);
+        LobbyArray_Clear(s->f38);
+        LobbyArray_Clear(s->f54);
     }
     s->f255C = 0;
     s->err = 0;

@@ -10,7 +10,7 @@ int func_002CF2C0(char*, void*);
 int func_002CF5E0(void);
 void func_002EBC48(int*);
 int func_004446E0(int);
-void func_00452F70(char*, int, int);
+void SFOLobby_CallUpdateHook(char*, int, int);
 void func_00445230(void);
 extern unsigned char D_00584231;
 extern unsigned char D_00584237;
@@ -23,7 +23,7 @@ static inline bool Poll(void) {
     int now = 0;
     func_002EBC48(&now);
     if (now - D_00584528 > 30000) return false;
-    func_00452F70(D_00585E60, 0, 0);
+    SFOLobby_CallUpdateHook(D_00585E60, 0, 0);
     return true;
 }
 
@@ -42,7 +42,7 @@ extern "C" int func_00444070(int arg) {
         if (func_002CF2C0(buf, (void*)func_00445230) == 0) {
             D_00584528 = 0;
             func_002EBC48(&D_00584528);
-            func_00452F70(D_00585E60, 2, 1);
+            SFOLobby_CallUpdateHook(D_00585E60, 2, 1);
             while (D_00584237 == 0) {
                 if (!Poll()) break;
                 if (func_004446E0(0)) break;

@@ -5,11 +5,11 @@
 extern "C" {
 int String_Copy(char *, char *);
 int func_00128C68(char *, char *, ...);
-void func_0044F160(char *, int);
-void func_0044F180(int, char *);
-int func_0044F470(char *, void *);
-int func_004505C0();
-void func_00450880(char *, int, char *, int, int);
+void LobbyArray_SetRefreshing(char *, int);
+void LobbyArray_Copy(int, char *);
+int LobbyArray_Append(char *, void *);
+int SFOLobby_NoInstance();
+void SFOLobby_CacheAccount(char *, int, char *, int, int);
 void *memset(void *, int, int);
 unsigned int strlen(char *);
 extern char D_004C0CF0[];
@@ -47,7 +47,7 @@ extern "C" void func_00447790(int d0, int d1, int d2, char *arg3)
     int i;
     char *p;
 
-    if (func_004505C0() == 0) {
+    if (SFOLobby_NoInstance() == 0) {
         list = D_00585E60 + 0xA8;
         if (list != NULL) {
             if (F_(arg3, 0x18, int) == 0) {
@@ -84,7 +84,7 @@ extern "C" void func_00447790(int d0, int d1, int d2, char *arg3)
                 if (n3 < 0 || (unsigned int)n3 >= 6)
                     ok = false;
                 if (ok) {
-                    func_00450880(D_00585E60, n4, name, 0, 0);
+                    SFOLobby_CacheAccount(D_00585E60, n4, name, 0, 0);
                     String_Copy(req.name, name);
                     req.f30 = F_(arg3, 0x60, int);
                     req.f34 = F_(arg3, 0x68, int);
@@ -94,13 +94,13 @@ extern "C" void func_00447790(int d0, int d1, int d2, char *arg3)
                     req.f40 = n2;
                     req.f44 = n3;
                     req.pad24 = 0;
-                    func_0044F470(list, &req);
+                    LobbyArray_Append(list, &req);
                 }
             }
             if (F_(arg3, 0x6C, signed char) != 0) {
-                func_0044F160(list, 0);
+                LobbyArray_SetRefreshing(list, 0);
                 if (F_(D_00585E60, 0x23F0, int) != 0)
-                    func_0044F180(F_(D_00585E60, 0x23F0, int), list);
+                    LobbyArray_Copy(F_(D_00585E60, 0x23F0, int), list);
             }
         }
     }

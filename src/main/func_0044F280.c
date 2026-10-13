@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void func_0044F280(char* self, char value) {
+void LobbyArray_SetDirty(char* self, char value) {
     self[24] = value;
 }

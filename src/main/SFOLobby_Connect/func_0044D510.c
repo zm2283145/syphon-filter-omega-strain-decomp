@@ -1,45 +1,47 @@
-#include "types.h"
-typedef struct { char name[0x15]; char id[0x13]; int f28; unsigned char b2c; char pw[0x20]; char pad[3]; } R44D;
-typedef struct { char pad[0xFC]; char ffc[0x1C]; char f118[0x134]; int f24c; char pad2[0x213E]; char f238e[0x22]; int f23b0; unsigned char b23b4; char pad3[0x63]; char f2418[0x20]; } O44D;
-extern void func_0044F7E0(char*);
-extern int func_0044D200(O44D*);
-extern int func_0044CBE0(O44D*);
+#include "SFOLobby.h"
+typedef struct { char messageId[0x15]; char sessionKey[0x13]; int f28; unsigned char passwordLen; char password[0x20]; char pad[3]; } R44D;
+extern void LobbyArray_Clear(LobbyArray*);
+extern int SFOLobby_ConnectAuth(SFOLobby*);
+extern int func_0044CBE0(SFOLobby*);
 extern int func_004688D8(char*);
-extern void func_00451B00(O44D*, int, char*, int);
-extern char D_004C0E80[];
-extern char D_004C0E78[];
+extern void SFOLobby_SetError(SFOLobby*, int, char*, int);
+extern char D_004C0E80[];           /* "SFOLobby_Connect.cc" */
+extern char D_004C0E78[];           /* "1" */
 extern void* memset(void*, int, int);
 extern void String_Copy(char*, char*);
 extern char* strncpy(char*, const char*, int);
 extern void* memcpy(void*, const void*, int);
 extern void func_004691D8(R44D*);
-extern void func_0044C620(O44D*);
-extern int func_0044D3D0(O44D*);
-int func_0044D510(O44D* o) {
+extern void SFOLobby_RequestMyIp(SFOLobby*);
+extern int func_0044D3D0(SFOLobby*);
+/* Authentication sequence: connect to the auth server, run the reply350 request,
+ * send the session key, send the password (a placeholder when none is set), fetch
+ * the own IP and finish with func_0044D3D0. */
+int SFOLobby_Authenticate(SFOLobby* o) {
     R44D rec;
-    func_0044F7E0(o->ffc);
-    func_0044F7E0(o->f118);
-    if (!func_0044D200(o)) return 0;
+    LobbyArray_Clear(&o->accountCache);
+    LobbyArray_Clear(&o->pool118);
+    if (!SFOLobby_ConnectAuth(o)) return 0;
     if (!func_0044CBE0(o)) return 0;
-    o->f24c = func_004688D8(o->f2418);
-    if (o->f24c) {
-        func_00451B00(o, 0x13, D_004C0E80, 0x25);
+    o->requestResult = func_004688D8(o->sessionKey);
+    if (o->requestResult) {
+        SFOLobby_SetError(o, 0x13, D_004C0E80, 0x25);
         return 0;
     }
-    if (!o->b23b4 || o->f23b0 == 0x20) {
+    if (!o->useDnas || o->passwordLen == 0x20) {
         memset(&rec, 0, 0x50);
-        String_Copy(rec.name, D_004C0E78);
-        strncpy(rec.id, o->f2418, 0x11);
+        String_Copy(rec.messageId, D_004C0E78);
+        strncpy(rec.sessionKey, o->sessionKey, 0x11);
         rec.f28 = 0;
-        if (!o->f23b0) {
-            o->f23b0 = 0x20;
-            String_Copy(o->f238e, "*******************************");
+        if (!o->passwordLen) {
+            o->passwordLen = 0x20;
+            String_Copy(o->password, "*******************************");
         }
-        rec.b2c = o->f23b0;
-        memcpy(rec.pw, o->f238e, 0x20);
+        rec.passwordLen = o->passwordLen;
+        memcpy(rec.password, o->password, 0x20);
         func_004691D8(&rec);
     }
-    func_0044C620(o);
+    SFOLobby_RequestMyIp(o);
     if (!func_0044D3D0(o)) return 0;
     return 1;
 }

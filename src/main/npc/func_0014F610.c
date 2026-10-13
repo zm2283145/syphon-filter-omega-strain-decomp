@@ -7,7 +7,7 @@
 extern "C" {
 extern "C" void cAIWeaponFiredMsg_v01();
 extern "C" void cAIWeaponFiredMsg_v03();
-extern "C" void func_00270630();
+extern "C" void cAIGOBJMsg_v02();
 extern void * const D_004DCBF0[];
 extern char D_004DCD70[];
 void* cMessage_dtor(void* self, short deleteFlag);
@@ -25,4 +25,4 @@ extern "C" Vtable2Object* cAIWeaponFiredMsg_dtor(Vtable2Object* self, short dele
     }
     return self;
 }
-void * const D_004DCBF0[8] = { (void*)0x0, (void*)0x0, (void*)cAIWeaponFiredMsg_dtor, (void*)cAIWeaponFiredMsg_v01, (void*)func_00270630, (void*)cAIWeaponFiredMsg_v03, (void*)0x0, (void*)0x0 };
+void * const D_004DCBF0[8] = { (void*)0x0, (void*)0x0, (void*)cAIWeaponFiredMsg_dtor, (void*)cAIWeaponFiredMsg_v01, (void*)cAIGOBJMsg_v02, (void*)cAIWeaponFiredMsg_v03, (void*)0x0, (void*)0x0 };

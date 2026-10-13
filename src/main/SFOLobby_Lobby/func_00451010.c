@@ -1,7 +1,8 @@
-#include "types.h"
-extern int func_0044F290(void*);
-int func_00451010(char* p) {
+#include "SFOLobby.h"
+extern int LobbyArray_At(LobbyArray*);
+/* Element of inbox (0 when empty). */
+int func_00451010(SFOLobby* p) {
     /* .set reorder barrier keeps the empty then-arm */
-    if (*(int*)(p + 0x20) == 0) { asm { .set reorder } return 0; }
-    return func_0044F290(p + 0x1C);
+    if (p->inbox.count == 0) { asm { .set reorder } return 0; }
+    return LobbyArray_At(&p->inbox);
 }

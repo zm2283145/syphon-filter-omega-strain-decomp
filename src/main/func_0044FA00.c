@@ -7,18 +7,18 @@
 
 extern int D_00585FA8;
 
-/* Constructor: clears the record; unk18 defaults to 1. */
-LobbyRecord1C* func_0044FA00(LobbyRecord1C* self) {
-    self->unk10 = 0;
-    self->unk0C = 0;
-    self->unk08 = 0;
-    self->unk04 = 0;
-    self->unk00 = 0;
-    self->unk14 = 0;
-    self->unk18 = 1;
-    self->unk19 = 0;
-    self->unk1A = 0;
-    self->unk18 = 1;
+/* Constructor: clears the record; dirty defaults to 1. */
+LobbyRecord1C* LobbyArray_ctor(LobbyRecord1C* self) {
+    self->elemSize = 0;
+    self->grow = 0;
+    self->initialCapacity = 0;
+    self->count = 0;
+    self->capacity = 0;
+    self->data = 0;
+    self->dirty = 1;
+    self->refreshing = 0;
+    self->unique = 0;
+    self->dirty = 1;
     return self;
 }
 

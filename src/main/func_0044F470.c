@@ -3,7 +3,7 @@ int func_00443EA0(int);
 int func_00443F40(int);
 int memcpy(int, int, int);
 int Name_Compare48(int, int, int);
-void func_0044F2E0(void *, int);
+void LobbyArray_RemoveAt(void *, int);
 extern int D_00585E58;
 
 typedef struct {
@@ -37,7 +37,7 @@ static inline void Arr_Set(Arr *a, int i, int elem) {
     }
 }
 
-void func_0044F470(Arr *a, int elem) {
+void LobbyArray_Append(Arr *a, int elem) {
     int i;
     int newcap;
     int p;
@@ -52,7 +52,7 @@ void func_0044F470(Arr *a, int elem) {
     }
     if (a->cap < a->count + 1) {
         if (a->grow <= 0) {
-            func_0044F2E0(a, 0);
+            LobbyArray_RemoveAt(a, 0);
         } else {
             newcap = a->cap + a->grow;
             p = func_00443F40(newcap * a->size);

@@ -9,15 +9,15 @@
 
 extern char D_004DD620[];   /* GuiOnlineConnect vtable */
 extern GuiScreen* GuiScreen_ctor(GuiScreen* self);
-extern GuiSlot* func_0044FA00(GuiSlot* slot);
+extern GuiSlot* LobbyArray_ctor(GuiSlot* slot);
 
 /* GuiOnlineConnect constructor. */
 GuiOnlineConnect* GuiOnlineConnect_ctor(GuiOnlineConnect* self) {
     GuiScreen_ctor(&self->base);
     self->base.base.base.vtable = D_004DD620;
-    func_0044FA00(&self->slots[0]);
-    func_0044FA00(&self->slots[1]);
-    func_0044FA00(&self->slots[2]);
+    LobbyArray_ctor(&self->slots[0]);
+    LobbyArray_ctor(&self->slots[1]);
+    LobbyArray_ctor(&self->slots[2]);
     self->base.screenId = 0;
     self->unk94 = 0;
     self->unk88 = 0;

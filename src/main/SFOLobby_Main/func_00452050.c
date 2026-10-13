@@ -1,6 +1,6 @@
 #include "types.h"
 int String_Copy(char*, char*);
-int func_00443E70(void);
+int Lobby_GetTime(void);
 int func_00469D20(void*, void*);
 int func_004689F8(void*, void*);
 void* memset(void*, int, int);
@@ -46,7 +46,7 @@ typedef struct {
     char* errFile;
     int errLine;
 } Lobby_452050;
-int func_004534A0(Lobby_452050*, int, int, int);
+int SFOLobby_Poll(Lobby_452050*, int, int, int);
 int func_0044CA30(Lobby_452050*);
 int func_0044C940(Lobby_452050*, int);
 int func_00451D70(Lobby_452050*, int);
@@ -85,7 +85,7 @@ int func_00452050(Lobby_452050* self, int id, int unused)
     req.f28 = id;
     String_Copy(req.name2, D_004C0FA8);
     self->f1C0 = 0;
-    self->f2410 = func_00443E70();
+    self->f2410 = Lobby_GetTime();
     for (j = 0; j < D_00497910 && self->f1C0 == 0; ) {
         j++;
         self->f24C = func_00469D20(&req, &func_00446FD0);
@@ -95,7 +95,7 @@ int func_00452050(Lobby_452050* self, int id, int unused)
                 SetErr_452050(self, 0x16, D_004C0FB0, 0x57E);
                 return 0;
             }
-            if (!func_004534A0(self, self->f2410, D_00497890, 0))
+            if (!SFOLobby_Poll(self, self->f2410, D_00497890, 0))
                 break;
         }
     }
@@ -124,10 +124,10 @@ int func_00452050(Lobby_452050* self, int id, int unused)
             continue;
         }
         self->f184 = 0;
-        self->f2410 = func_00443E70();
+        self->f2410 = Lobby_GetTime();
         while (self->f184 == 0) {
             Pump_452050(self);
-            if (!func_004534A0(self, self->f2410, D_00497890, 0)) {
+            if (!SFOLobby_Poll(self, self->f2410, D_00497890, 0)) {
                 SetErr_452050(self, 2, D_004C0FB0, 0x5C2);
                 return 0;
             }

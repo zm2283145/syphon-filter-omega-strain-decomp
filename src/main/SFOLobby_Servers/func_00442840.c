@@ -1,49 +1,50 @@
 #pragma opt_loop_invariants off
 #pragma opt_common_subs off
-#include "types.h"
-#define F_(b, o, T) (*(T*)((char*)(b) + (o)))
+#include "SFOLobby.h"
 
 typedef struct {
-    char name[0x15];
-    char host[0x13];
-    int id;
-} Login442840;
+    char messageId[0x15];
+    char sessionKey[0x13];
+    int worldId;
+} Join442840;
 
-extern int D_00497890;
-extern char D_004C05C8[];
-extern char D_004C05D0[];
+extern int D_00497890;    /* request timeout */
+extern char D_004C05C8[]; /* "1" (message id) */
+extern char D_004C05D0[]; /* "SFOLobby_Servers.cc" */
 void* memset(void*, int, unsigned int);
 void String_Copy(char*, char*);
-int func_00443E70(void);
-int* func_0044F290(int, int);
-void func_00451B00(char*, int, char*, int);
-void func_00452F70(char*, int, int);
-int func_004534A0(char*, int, int, int);
+int Lobby_GetTime(void);
+int* LobbyArray_At(LobbyArray*, int);
+void SFOLobby_SetError(SFOLobby*, int, char*, int);
+void SFOLobby_CallUpdateHook(SFOLobby*, int, int);
+int SFOLobby_Poll(SFOLobby*, int, int, int);
 int func_0046B280(void*, void*);
 void func_00446E50();
 
-int func_00442840(char* self, int index) {
-    Login442840 l;
+/* Joins lobby `index` of lobbyList (func_0046B280, reply callback func_00446E50)
+ * and records its world id in lobbyWorldId. */
+int SFOLobby_JoinLobby(SFOLobby* self, int index) {
+    Join442840 l;
     int* e;
 
     memset(&l, 0, sizeof(l));
-    String_Copy(l.name, D_004C05C8);
-    String_Copy(l.host, self + 0x2418);
-    e = func_0044F290(F_(self, 0x23E0, int), index);
-    l.id = *e;
-    F_(self, 0x1F38, int) = 0;
-    F_(self, 0x26A8, int) = 0;
-    F_(self, 0x2410, int) = func_00443E70();
-    F_(self, 0x1B0, int) = 0;
-    F_(self, 0x24C, int) = func_0046B280(&l, func_00446E50);
-    while (F_(self, 0x1B0, int) == 0) {
-        func_00452F70(self, 0, 0);
-        if (func_004534A0(self, F_(self, 0x2410, int), D_00497890, 0) == 0) {
-            func_00451B00(self, 2, D_004C05D0, 0x153);
+    String_Copy(l.messageId, D_004C05C8);
+    String_Copy(l.sessionKey, self->sessionKey);
+    e = LobbyArray_At(self->lobbyList, index);
+    l.worldId = *e;
+    self->lobbyWorldId = 0;
+    *(int*)((char*)self + 0x26A8) = 0; /* just past the end of SFOLobby */
+    self->waitStart = Lobby_GetTime();
+    self->gotReply1B0 = 0;
+    self->requestResult = func_0046B280(&l, func_00446E50);
+    while (self->gotReply1B0 == 0) {
+        SFOLobby_CallUpdateHook(self, 0, 0);
+        if (SFOLobby_Poll(self, self->waitStart, D_00497890, 0) == 0) {
+            SFOLobby_SetError(self, 2, D_004C05D0, 0x153);
             return 0;
         }
     }
-    F_(self, 0x1F38, int) = *e;
-    func_00451B00(self, 0, D_004C05D0, 0x162);
+    self->lobbyWorldId = *e;
+    SFOLobby_SetError(self, 0, D_004C05D0, 0x162);
     return 1;
 }

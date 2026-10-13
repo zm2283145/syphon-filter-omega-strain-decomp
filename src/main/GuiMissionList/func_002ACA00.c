@@ -5,12 +5,12 @@ typedef struct {
     int f0; char name[0x20]; int f24; char pad28[0x34 - 0x28]; int f34; int f38; char pad3C[0x44 - 0x3C]; int f44;
 } E_002ACA00;
 extern S_002ACA00* D_005065C0;
-extern E_002ACA00* func_0044F290(void* table, int idx);
+extern E_002ACA00* LobbyArray_At(void* table, int idx);
 extern int strcmp(const char* a, const char* b);
 int func_002ACA00(const void* a, const void* b)
 {
-    E_002ACA00* e1 = func_0044F290(D_005065C0->p11C, ((It_002ACA00*)a)->idx);
-    E_002ACA00* e2 = func_0044F290(D_005065C0->p11C, ((It_002ACA00*)b)->idx);
+    E_002ACA00* e1 = LobbyArray_At(D_005065C0->p11C, ((It_002ACA00*)a)->idx);
+    E_002ACA00* e2 = LobbyArray_At(D_005065C0->p11C, ((It_002ACA00*)b)->idx);
     int r1;
     int r2;
     if (!e1 || !e2)

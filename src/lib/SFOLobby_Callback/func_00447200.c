@@ -6,11 +6,11 @@
 
 #include "types.h"
 
-extern int func_004505C0(void);
+extern int SFOLobby_NoInstance(void);
 
 int func_00447200(void) {
     int tmp0;
 
-    tmp0 = func_004505C0();
+    tmp0 = SFOLobby_NoInstance();
     return tmp0;
 }

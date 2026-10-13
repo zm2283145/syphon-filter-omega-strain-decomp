@@ -2,7 +2,7 @@
 #include "types.h"
 extern "C" {
 int func_002EC580(int *);
-int func_00443E70(void);
+int Lobby_GetTime(void);
 int func_00468D38(void);
 int func_00468DD8(void);
 int func_00468EF0(void);
@@ -52,7 +52,7 @@ inline bool Port_IsReady(int arg0) {
     return false;
 }
 
-extern "C" int func_004534A0(Conn4534A0* self, int start, int timeout, int flag) {
+extern "C" int SFOLobby_Poll(Conn4534A0* self, int start, int timeout, int flag) {
     int now;
     int ok;
     bool fallback;
@@ -64,7 +64,7 @@ extern "C" int func_004534A0(Conn4534A0* self, int start, int timeout, int flag)
         return 1;
     }
     D_00585FC0 = 1;
-    now = func_00443E70();
+    now = Lobby_GetTime();
     fallback = false;
     self->now = now;
     if (flag != 0) {

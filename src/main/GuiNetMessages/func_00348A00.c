@@ -12,7 +12,7 @@ extern "C" {
 extern void func_0041E3B0(S348A00*);
 extern void func_00424410(S348A00*, int*, unsigned int*);
 extern void func_00424430(S348A00*, int, unsigned int);
-extern void func_0044F280(C348A00*, int);
+extern void LobbyArray_SetDirty(C348A00*, int);
 void func_00348A00(S348A00* o);
 }
 static inline void inl_348A00(S348A00* o)
@@ -31,6 +31,6 @@ void func_00348A00(S348A00* o)
     func_0041E3B0(o);
     if (o->aA4 && o->aA4->a18) {
         inl_348A00(o);
-        func_0044F280(o->aA4, 0);
+        LobbyArray_SetDirty(o->aA4, 0);
     }
 }

@@ -1,6 +1,6 @@
 #include "types.h"
-typedef struct { void* vt; int pad[8]; void* target; unsigned char flag; char pad2[11]; int tid; int oid; } Evt26F610;
-typedef struct { int pad; int id; int id2; unsigned char flag; } Arg26F610;
+typedef struct { void* vt; int pad[8]; void* who; unsigned char flag; char pad2[11]; int whoId; int receiverId; } Evt26F610;
+typedef struct { int header; int receiverId; int whoId; unsigned char flag; } Arg26F610;
 extern void Event_Construct(Evt26F610* e, void* type);
 extern void* Object_LookupById(int* id);
 extern void MsgQueue_QueueClone(Evt26F610* e, void* obj, int a, int b);
@@ -12,7 +12,10 @@ extern unsigned char D_005721D0;
 extern unsigned char D_005723C8;
 #pragma push
 #pragma opt_propagation off
-int func_0026F610(int a0, int a1, int a2, Arg26F610* arg) {
+/* Network receive handler for cAIBodyMovedMsg (registered by cAIBodyMovedMsg_NetRegister): rebuilds the
+ * message from the packet {receiver id, who id, flag} and queues a clone on the receiving
+ * object. Returns the packet size. */
+int cAIBodyMovedMsg_NetReceive(int a0, int a1, int a2, Arg26F610* arg) {
     if (!D_005723C8) D_005723C8 = 1;
     if (D_005721D0) {
         Evt26F610 e;
@@ -21,12 +24,12 @@ int func_0026F610(int a0, int a1, int a2, Arg26F610* arg) {
         Evt26F610* p = &e;
         Event_Construct(p, D_004FF2B0);
         e.vt = D_004DCD70;
-        e.tid = a->id2;
-        p->target = Object_LookupById((int*)((char*)&e + 0x34));
+        e.whoId = a->whoId;
+        p->who = Object_LookupById((int*)((char*)&e + 0x34) /* &e.whoId */);
         e.vt = D_004DCC70;
         e.flag = a->flag;
-        e.oid = a->id;
-        obj = Object_LookupById((int*)((char*)&e + 0x38));
+        e.receiverId = a->receiverId;
+        obj = Object_LookupById((int*)((char*)&e + 0x38) /* &e.receiverId */);
         if (obj) MsgQueue_QueueClone(&e, obj, 0, 0);
         e.vt = D_004DCD70;
         cMessage_dtor(&e, 0);

@@ -1,46 +1,41 @@
-#include "types.h"
-typedef struct {
-    char p0[0x19C]; int f19C; int f1A0; char p1A4[0x24C - 0x1A4]; int f24C;
-    char p250[0x17CC - 0x250]; char f17CC[0x11C]; signed char f18E8; char p18E9[3];
-    char f18EC[0x22C]; signed char f1B18; char p1B19[0x2410 - 0x1B19]; int f2410;
-    char p2414[0x26A4 - 0x2414]; int f26A4;
-} S44CD20;
+#include "SFOLobby.h"
 extern void String_Copy(char*, char*);
-extern int func_00443E70(void);
-extern void func_00451B00(S44CD20*, int, char*, int);
-extern void func_00452F70(S44CD20*, int, int);
-extern int func_004534A0(S44CD20*, int, int, int);
+extern int Lobby_GetTime(void);
+extern void SFOLobby_SetError(SFOLobby*, int, char*, int);
+extern void SFOLobby_CallUpdateHook(SFOLobby*, int, int);
+extern int SFOLobby_Poll(SFOLobby*, int, int, int);
 extern int func_0046BFF0(void*, void*, void*);
 extern void* memset(void*, int, int);
-extern int D_00497890;
-extern char D_004C0E78[];
-extern char D_004C0E80[];
+extern int D_00497890;              /* reply timeout */
+extern char D_004C0E78[];           /* "1" */
+extern char D_004C0E80[];           /* "SFOLobby_Connect.cc" */
 extern char func_00447130[];
 extern char func_00447070[];
-int func_0044CD20(S44CD20* s)
+/* Two-part list request (callbacks func_00447130 -> reply17CC and
+ * func_00447070 -> reply18EC); waits until both lists report their end. */
+int func_0044CD20(SFOLobby* s)
 {
-    struct { char f0[0x18]; int f18; int f1C; int f20; } req;
-
+    struct { char messageId[0x18]; int f18; int f1C; int f20; } req;
     memset(&req, 0, sizeof(req));
-    memset(s->f17CC, 0, 0x120);
-    memset(s->f18EC, 0, 0x230);
-    String_Copy(req.f0, D_004C0E78);
+    memset(s->reply17CC, 0, 0x120);
+    memset(s->reply18EC, 0, 0x230);
+    String_Copy(req.messageId, D_004C0E78);
     req.f18 = 3;
     req.f1C = 2;
-    req.f20 = s->f26A4;
-    s->f24C = func_0046BFF0(&req, func_00447130, func_00447070);
-    if (s->f24C != 0) {
+    req.f20 = s->unk26A4;
+    s->requestResult = func_0046BFF0(&req, func_00447130, func_00447070);
+    if (s->requestResult != 0) {
         return 0;
     }
-    s->f19C = 0;
-    s->f1A0 = 0;
-    s->f2410 = func_00443E70();
+    s->gotReply19C = 0;
+    s->gotReply1A0 = 0;
+    s->waitStart = Lobby_GetTime();
     do {
-        func_00452F70(s, 0, 0);
-        if (func_004534A0(s, s->f2410, D_00497890, 1) == 0) {
-            func_00451B00(s, 2, D_004C0E80, 0x1E6);
+        SFOLobby_CallUpdateHook(s, 0, 0);
+        if (SFOLobby_Poll(s, s->waitStart, D_00497890, 1) == 0) {
+            SFOLobby_SetError(s, 2, D_004C0E80, 0x1E6);
             return 0;
         }
-    } while (!s->f19C || !s->f1A0 || s->f18E8 != 1 || s->f1B18 != 1);
+    } while (!s->gotReply19C || !s->gotReply1A0 || s->reply17CCEnd != 1 || s->reply18ECEnd != 1);
     return 1;
 }

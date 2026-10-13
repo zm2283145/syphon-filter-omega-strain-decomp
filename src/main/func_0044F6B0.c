@@ -3,7 +3,7 @@
 int func_0044F700();                                  
 
 #pragma opt_common_subs off
-void func_0044F6B0(int arg0) {
+void LobbyArray_Free(int arg0) {
     int temp_v1;
 
     temp_v1 = F_(arg0, 0x14, int);

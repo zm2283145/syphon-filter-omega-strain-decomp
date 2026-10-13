@@ -106,7 +106,7 @@ typedef struct GuiManager {
     unsigned int flags;             /* 0x68 */
 } GuiManager;
 
-/* Animated GUI slot (0x1C bytes); constructor func_0044FA00, reset func_0044F6B0. */
+/* Animated GUI slot (0x1C bytes); constructor LobbyArray_ctor, reset LobbyArray_Free. */
 typedef struct GuiSlot {
     int unk00;                      /* 0x00 */
     int unk04;                      /* 0x04 */

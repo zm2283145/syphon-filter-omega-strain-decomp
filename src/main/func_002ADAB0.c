@@ -15,7 +15,7 @@ char* String_CStr(void* s);
 int FrontEnd_OpenPopup(void* ui, int a, char* b, int c, S_002ADAB0* d, int e);
 int func_0044D9C0(void* g, int a);
 void FrontEnd_ClosePopup(void* ui, int id);
-int func_00451370(void* g, char* t);
+int SFOLobby_LookupAccountId(void* g, char* t);
 int func_00452FF0(void* g, int a);
 void func_0033C7C0(S_002ADAB0* self, int r, char* t);
 void func_0033D8E0(S_002ADAB0* self, int a);
@@ -55,7 +55,7 @@ extern "C" int func_002ADAB0(S_002ADAB0* self, void* w, int msg, int sub, char* 
             if (text && *text) {
                 void* g = func_004294C0();
                 if (g) {
-                    int r = func_00451370(g, text);
+                    int r = SFOLobby_LookupAccountId(g, text);
                     if ((unsigned char)func_00452FF0(g, 0)) {
                         void* ui = D_004FFC04;
                         FrontEnd_OpenPopup(ui, 2, D_004ABB08, func_0033CE30(self, 0x17, text, 0, 0, 0), 0, 0);

@@ -18,8 +18,8 @@ int func_0033CE30(S_002A9A20* self, int a, int b, int c, int d, int e);
 int FrontEnd_OpenPopup(void* ui, int a, char* b, int c, S_002A9A20* d, int e);
 Ag_002A9A20* Agent_GetSelected(void* a, int b);
 char* String_CStr(void* s);
-E_002A9A20* func_0044F290(void* v, int i);
-int func_00442840(G_002A9A20* g, int i);
+E_002A9A20* LobbyArray_At(void* v, int i);
+int SFOLobby_JoinLobby(G_002A9A20* g, int i);
 void String_CtorCStr_13B480(Str_002A9A20* s, const char* c);
 void func_003FD740(Str_002A9A20* s);
 void func_00138B70(Str_002A9A20* s, int flags);
@@ -30,9 +30,9 @@ extern "C" void func_002A9A20(S_002A9A20* self)
 {
     G_002A9A20* g = func_004294C0();
     if (g) {
-        E_002A9A20* e = func_0044F290(self->fA0, self->f9C);
+        E_002A9A20* e = LobbyArray_At(self->fA0, self->f9C);
         if (e) {
-            if (func_00442840(g, self->f9C)) {
+            if (SFOLobby_JoinLobby(g, self->f9C)) {
                 Prof_002A9A20* pr = &Agent_GetSelected(D_004FFB50, -1)->prof;
                 Str_002A9A20 s;
                 String_CtorCStr_13B480(&s, e->name);

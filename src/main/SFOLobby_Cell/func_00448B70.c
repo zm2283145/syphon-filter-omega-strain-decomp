@@ -2,11 +2,11 @@
 typedef struct { char c[21]; } S21;
 typedef struct { char c[32]; } S32;
 typedef struct { char c[256]; } S256;
-int func_004505C0();
+int SFOLobby_NoInstance();
 extern char *D_00585E60;
 typedef struct { S21 name; int a; int b; int c; S32 d; int e; S32 f; S256 g; int h; signed char flag; } R4B;
 void func_00448B70(int d0, int d1, int d2, R4B *src) {
-    if (func_004505C0() == 0) {
+    if (SFOLobby_NoInstance() == 0) {
         switch (src->a) {
         case 0:
             break;

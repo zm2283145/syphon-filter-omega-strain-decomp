@@ -4,12 +4,12 @@ extern int D_004976D0;
 extern char D_004C0598[];
 extern char D_004C05A0[];
 extern int func_00452A60(L442*);
-extern int func_0044F290(char*, int);
+extern int LobbyArray_At(char*, int);
 extern int sprintf(char*, const char*, ...);
 extern int func_004526D0(L442*, char*);
 extern int func_00452B40(L442*, char*);
 extern void func_0044E1A0(L442*, int);
-extern void func_00451B00(L442*, int, char*, int);
+extern void SFOLobby_SetError(L442*, int, char*, int);
 int func_00442510(L442* l, int idx) {
     char buf[0x100];
     if (idx < 0 || !(idx < l->n58)) return 0;
@@ -17,16 +17,16 @@ int func_00442510(L442* l, int idx) {
         l->f26a8 = 0;
         l->f1eb0 = idx;
         if (func_00452A60(l)) {
-            sprintf(buf, D_004C0598, func_0044F290(l->f54, idx), l->f1f38);
+            sprintf(buf, D_004C0598, LobbyArray_At(l->f54, idx), l->f1f38);
             if (!func_004526D0(l, buf)) return 0;
         } else {
-            sprintf(buf, D_004C05A0, func_0044F290(l->f54, idx), l->f1f38);
+            sprintf(buf, D_004C05A0, LobbyArray_At(l->f54, idx), l->f1f38);
             if (!func_00452B40(l, buf)) return 0;
         }
         func_0044E1A0(l, idx);
         D_004976D0 = l->f1f38;
         l->f26a8 = 2;
     }
-    func_00451B00(l, 0, "SFOLobby_Mission.cc", 0x105);
+    SFOLobby_SetError(l, 0, "SFOLobby_Mission.cc", 0x105);
     return 1;
 }

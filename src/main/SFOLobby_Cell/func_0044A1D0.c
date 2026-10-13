@@ -8,13 +8,13 @@
 #include "SFOLobby_Cell_types.h"
 
 extern int D_00497800; /* refresh interval */
-extern int func_00443E70(void); /* current time */
+extern int Lobby_GetTime(void); /* current time */
 extern void func_00449A00(LobbyCell* cell);
 
 /* Returns byte +0x265C after refreshing the cell if it is stale. */
 int func_0044A1D0(LobbyCell* cell) {
     int last = cell->lastUpdate;
-    int elapsed = func_00443E70() - last;
+    int elapsed = Lobby_GetTime() - last;
     if (last == 0 || D_00497800 < elapsed) {
         func_00449A00(cell);
     }
@@ -24,7 +24,7 @@ int func_0044A1D0(LobbyCell* cell) {
 /* Returns byte +0x265D after refreshing the cell if it is stale. */
 int func_0044A230(LobbyCell* cell) {
     int last = cell->lastUpdate;
-    int elapsed = func_00443E70() - last;
+    int elapsed = Lobby_GetTime() - last;
     if (last == 0 || D_00497800 < elapsed) {
         func_00449A00(cell);
     }

@@ -3,14 +3,14 @@ typedef struct { char c[21]; } S21;
 typedef struct { char c[200]; } S200;
 typedef struct { S21 name; int a; int b; S200 data; char e8; } R45;
 int String_Copy();
-int func_004505C0();
-int func_00451B00();
+int SFOLobby_NoInstance();
+int SFOLobby_SetError();
 int strncpy();
 extern char D_004C0D10;
 const unsigned int D_004C0D30[2] = { 0x0, 0x0 };
 extern char *D_00585E60;
 void func_004485C0(int d0, int d1, int d2, R45 *src) {
-    if (func_004505C0() == 0) {
+    if (SFOLobby_NoInstance() == 0) {
         R45 *d;
         switch (src->a) {
         case 0:
@@ -21,7 +21,7 @@ void func_004485C0(int d0, int d1, int d2, R45 *src) {
         case -991:
         case -989:
         default:
-            func_00451B00(D_00585E60, 1, &D_004C0D10, 0x854);
+            SFOLobby_SetError(D_00585E60, 1, &D_004C0D10, 0x854);
             String_Copy(&src->data, &(*(char*)D_004C0D30));
             break;
         }

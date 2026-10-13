@@ -5,7 +5,7 @@ int func_00443F40(int);
 extern int D_00585E58;
 
 #pragma opt_common_subs off
-void func_0044F880(int arg0, int arg1, int arg2, int arg3) {
+void LobbyArray_Init(int arg0, int arg1, int arg2, int arg3) {
     int temp_a0;
 
     temp_a0 = F_(arg0, 0x14, int);

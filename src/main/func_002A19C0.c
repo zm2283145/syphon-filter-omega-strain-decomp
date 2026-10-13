@@ -10,15 +10,15 @@
 extern char D_004DD730[];   /* GuiMissionSetup vtable */
 extern GameMachine* D_004FFC04;
 extern GuiScreen* GuiScreen_ctor(GuiScreen* self);
-extern GuiSlot* func_0044FA00(GuiSlot* slot);
+extern GuiSlot* LobbyArray_ctor(GuiSlot* slot);
 
 /* GuiMissionSetup constructor. */
 GuiMissionSetup* GuiMissionSetup_ctor(GuiMissionSetup* self) {
     GuiScreen_ctor(&self->base);
     self->base.base.base.vtable = D_004DD730;
-    func_0044FA00(&self->slots[0]);
-    func_0044FA00(&self->slots[1]);
-    func_0044FA00(&self->slots[2]);
+    LobbyArray_ctor(&self->slots[0]);
+    LobbyArray_ctor(&self->slots[1]);
+    LobbyArray_ctor(&self->slots[2]);
     self->base.screenId = 6;
     self->unkDC = 0;
     self->unkE0 = 0;

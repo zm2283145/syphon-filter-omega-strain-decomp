@@ -1,38 +1,38 @@
 #pragma opt_loop_invariants off
 #pragma opt_common_subs off
-#include "types.h"
-#define F_(b, o, T) (*(T*)((char*)(b) + (o)))
+#include "SFOLobby.h"
 
-extern int D_00497890;
-extern char D_004C05C8[];
-extern char D_004C05D0[];
+extern int D_00497890;    /* request timeout */
+extern char D_004C05C8[]; /* "1" (message id) */
+extern char D_004C05D0[]; /* "SFOLobby_Servers.cc" */
 void* memset(void*, int, unsigned int);
 void String_Copy(char*, char*);
-int func_00443E70(void);
-void func_0044F7E0(int);
-void func_00451B00(char*, int, char*, int);
-void func_00452F70(char*, int, int);
-int func_004534A0(char*, int, int, int);
+int Lobby_GetTime(void);
+void LobbyArray_Clear(LobbyArray*);
+void SFOLobby_SetError(SFOLobby*, int, char*, int);
+void SFOLobby_CallUpdateHook(SFOLobby*, int, int);
+int SFOLobby_Poll(SFOLobby*, int, int, int);
 int func_0046B1E0(char*, void*);
 void func_00446EA0();
 
-int func_00442D80(char* self) {
-    char buf[0x26];
+/* Refills lobbyList (func_0046B1E0, one reply per lobby via func_00446EA0) and
+ * waits for the end-of-list record. */
+int SFOLobby_RequestLobbyList(SFOLobby* self) {
+    char buf[0x26]; /* message id, session key at +0x15 */
 
-    func_0044F7E0(F_(self, 0x23E0, int));
+    LobbyArray_Clear(self->lobbyList);
     memset(buf, 0, sizeof(buf));
-    memset(self + 0x39C, 0, 0x64);
+    memset(self->reply39C, 0, 0x64);
     String_Copy(buf, D_004C05C8);
-    String_Copy(buf + 0x15, self + 0x2418);
-    F_(self, 0x2410, int) = func_00443E70();
-    F_(self, 0x24C, int) = func_0046B1E0(buf, func_00446EA0);
-    while (F_(self, 0x3FC, signed char) != 1) {
-        func_00452F70(self, 0, 0);
-        if (func_004534A0(self, F_(self, 0x2410, int), D_00497890, 0) == 0) {
-            func_00451B00(self, 2, D_004C05D0, 0x7C);
+    String_Copy(buf + 0x15, self->sessionKey);
+    self->waitStart = Lobby_GetTime();
+    self->requestResult = func_0046B1E0(buf, func_00446EA0);
+    while (self->reply39CEnd != 1) {
+        SFOLobby_CallUpdateHook(self, 0, 0);
+        if (SFOLobby_Poll(self, self->waitStart, D_00497890, 0) == 0) {
+            SFOLobby_SetError(self, 2, D_004C05D0, 0x7C);
             return 0;
         }
     }
-    return F_(self, 0x3F8, int) >= 0;
+    return self->reply39CStatus >= 0;
 }
-

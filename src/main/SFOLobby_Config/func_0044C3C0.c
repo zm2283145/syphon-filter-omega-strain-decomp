@@ -1,18 +1,17 @@
-#include "types.h"
+#include "SFOLobby.h"
 
-typedef struct { char pad[0x23D8]; void* pending; char pad2[0x255C - 0x23DC]; int state; } Obj;
-extern void func_0044F6B0(void* p);
-extern void func_00452FC0(Obj* self, int a);
+extern void LobbyArray_Free(LobbyArray* p);
+extern void func_00452FC0(SFOLobby* self, int a);
 
-/* Moves from state 1 to state 9, releasing the pending object. */
-void func_0044C3C0(Obj* self)
+/* Leaves the NETWORK state (1) for IDLE (9), releasing netConfigList. */
+void SFOLobby_LeaveNetworkState(SFOLobby* self)
 {
-    if (self->state != 9 && self->state == 1) {
-        self->state = 9;
-        if (self->pending) {
-            func_0044F6B0(self->pending);
+    if (self->state != SFOLOBBY_STATE_IDLE && self->state == SFOLOBBY_STATE_NETWORK) {
+        self->state = SFOLOBBY_STATE_IDLE;
+        if (self->netConfigList) {
+            LobbyArray_Free(self->netConfigList);
         }
-        self->pending = 0;
+        self->netConfigList = 0;
         func_00452FC0(self, 0);
     }
 }

@@ -1,43 +1,43 @@
-#include "types.h"
-typedef struct { char p0[0x1A4]; int f1A4; int done; char p1AC[0xA0]; int f24C; char p250[0x130]; char f380[0x18]; int f398; char p39C[0x2074]; int t0; char p2414[4]; char name[0x20]; } S44CA90;
+#include "SFOLobby.h"
 extern void String_Copy(char*, char*);
-extern int func_00443E70(void);
-extern void func_00451B00(S44CA90*, int, char*, int);
-extern void func_00452F70(S44CA90*, int, int);
-extern int func_004534A0(S44CA90*, int, int, int);
+extern int Lobby_GetTime(void);
+extern void SFOLobby_SetError(SFOLobby*, int, char*, int);
+extern void SFOLobby_CallUpdateHook(SFOLobby*, int, int);
+extern int SFOLobby_Poll(SFOLobby*, int, int, int);
 extern int func_004690A0(void*, void*);
 extern void* memset(void*, int, int);
-extern int D_00497890;
-extern char D_004C0E78[];
-extern char D_004C0E80[];
+extern int D_00497890;              /* reply timeout */
+extern char D_004C0E78[];           /* "1" */
+extern char D_004C0E80[];           /* "SFOLobby_Connect.cc" */
 extern char func_00447470[];
 #pragma push
 #pragma opt_common_subs off
 #pragma opt_loop_invariants off
-int func_0044CA90(S44CA90* s)
+/* Request answered into reply380 (callback func_00447470); fails on a negative status. */
+int func_0044CA90(SFOLobby* s)
 {
-    struct { char a[0x15]; char b[0x11]; } req;
+    struct { char messageId[0x15]; char sessionKey[0x11]; } req;
     memset(&req, 0, sizeof(req));
-    memset(s->f380, 0, 0x1C);
-    String_Copy(req.a, D_004C0E78);
-    String_Copy(req.b, s->name);
-    s->f24C = func_004690A0(&req, func_00447470);
-    if (s->f24C != 0) {
-        func_00451B00(s, 0x12, D_004C0E80, 0x25F);
+    memset(&s->reply380, 0, 0x1C);
+    String_Copy(req.messageId, D_004C0E78);
+    String_Copy(req.sessionKey, s->sessionKey);
+    s->requestResult = func_004690A0(&req, func_00447470);
+    if (s->requestResult != 0) {
+        SFOLobby_SetError(s, 0x12, D_004C0E80, 0x25F);
         return 0;
     }
-    s->done = 0;
-    s->f1A4 = 0;
-    s->t0 = func_00443E70();
-    while (s->done == 0) {
-        func_00452F70(s, 0, 0);
-        if (func_004534A0(s, s->t0, D_00497890, 0) == 0) {
-            func_00451B00(s, 2, D_004C0E80, 0x26C);
+    s->gotReply1A8 = 0;
+    s->gotReply1A4 = 0;
+    s->waitStart = Lobby_GetTime();
+    while (s->gotReply1A8 == 0) {
+        SFOLobby_CallUpdateHook(s, 0, 0);
+        if (SFOLobby_Poll(s, s->waitStart, D_00497890, 0) == 0) {
+            SFOLobby_SetError(s, 2, D_004C0E80, 0x26C);
             return 0;
         }
     }
-    if (s->f398 < 0) {
-        func_00451B00(s, 0x12, D_004C0E80, 0x274);
+    if (s->reply380.statusCode < 0) {
+        SFOLobby_SetError(s, 0x12, D_004C0E80, 0x274);
         return 0;
     }
     return 1;

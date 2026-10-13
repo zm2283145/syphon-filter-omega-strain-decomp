@@ -9,17 +9,17 @@ typedef struct {
 } SLB;
 extern void String_Copy(char*, char*);
 extern int sprintf(char*, const char*, ...);
-extern int func_00443E70(void);
+extern int Lobby_GetTime(void);
 extern void func_00451AE0(void);
-extern void func_00451B00(SLB*, int, char*, int);
+extern void SFOLobby_SetError(SLB*, int, char*, int);
 extern int func_00449A00(SLB*);
 extern void func_00449D20(SLB*, int);
 extern void func_0044A290(SLB*);
 extern void func_00452FC0(SLB*, int);
 extern void func_00453FB0(SLB*);
 extern void func_0044F810(void*);
-extern void func_0044F6B0(void*);
-extern void func_0044F880(void*, int, int, int);
+extern void LobbyArray_Free(void*);
+extern void LobbyArray_Init(void*, int, int, int);
 extern int func_00451ED0(SLB*, char*);
 extern int func_004524C0(SLB*, char*, char*);
 extern int func_00452050(SLB*, int, char*);
@@ -31,14 +31,14 @@ extern char D_004C0D30[];
 extern char D_004C0D40[];
 static inline void ClearLists(SLB* s)
 {
-    if (s->f23E4) func_0044F6B0(s->f23E4);
+    if (s->f23E4) LobbyArray_Free(s->f23E4);
     s->f23E4 = 0;
-    if (s->f23EC) func_0044F6B0(s->f23EC);
+    if (s->f23EC) LobbyArray_Free(s->f23EC);
     s->f23EC = 0;
 }static inline int Online2(SLB* s)
 {
     int last = s->f2588;
-    int elapsed = func_00443E70() - last;
+    int elapsed = Lobby_GetTime() - last;
     if (last == 0 || D_00497800 < elapsed) {
         func_00449A00(s);
     }
@@ -52,14 +52,14 @@ int func_0044B420(SLB* s, int mode, void* a, void* b)
 
     func_00451AE0();
     if (s->state != 9) {
-        func_00451B00(s, 1, D_004C0D10, 0x27);
+        SFOLobby_SetError(s, 1, D_004C0D10, 0x27);
         return 0;
     }
     func_00452FC0(s, mode);
     s->f23E4 = a;
     s->f23EC = b;
-    func_0044F880(s->f23EC, s->f1EA4, 0, 0x68);
-    func_0044F880(s->f23E4, 0x40, 0x20, 0x50);
+    LobbyArray_Init(s->f23EC, s->f1EA4, 0, 0x68);
+    LobbyArray_Init(s->f23E4, 0x40, 0x20, 0x50);
     s->f2588 = 0;
     if (!func_00449A00(s)) {
         ClearLists(s);
@@ -76,23 +76,23 @@ int func_0044B420(SLB* s, int mode, void* a, void* b)
         sprintf(path, D_004C0D40, s->fE84);
         if (!func_00451ED0(s, path)) {
             if (!func_004524C0(s, path, name)) {
-                func_00451B00(s, 0x17, D_004C0D10, 0x59);
+                SFOLobby_SetError(s, 0x17, D_004C0D10, 0x59);
                 ClearLists(s);
                 return 0;
             }
             if (!func_00452050(s, s->f1B38, key)) {
-                func_00451B00(s, 0x16, D_004C0D10, 0x60);
+                SFOLobby_SetError(s, 0x16, D_004C0D10, 0x60);
                 ClearLists(s);
                 return 0;
             }
         } else if (!func_00452050(s, s->f1B80, key)) {
             if (!func_004524C0(s, path, name)) {
-                func_00451B00(s, 0x17, D_004C0D10, 0x6C);
+                SFOLobby_SetError(s, 0x17, D_004C0D10, 0x6C);
                 ClearLists(s);
                 return 0;
             }
             if (!func_00452050(s, s->f1B38, key)) {
-                func_00451B00(s, 0x16, D_004C0D10, 0x73);
+                SFOLobby_SetError(s, 0x16, D_004C0D10, 0x73);
                 ClearLists(s);
                 return 0;
             }

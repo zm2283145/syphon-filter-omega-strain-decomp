@@ -9,17 +9,17 @@ typedef struct {
 } SLB;
 extern void String_Copy(char*, char*);
 extern int sprintf(char*, const char*, ...);
-extern int func_00443E70(void);
+extern int Lobby_GetTime(void);
 extern void func_00451AE0(void);
-extern void func_00451B00(SLB*, int, char*, int);
+extern void SFOLobby_SetError(SLB*, int, char*, int);
 extern int func_00449A00(SLB*);
 extern void func_00449D20(SLB*, int);
 extern void func_0044A290(SLB*);
 extern void func_00452FC0(SLB*, int);
 extern void func_00453FB0(SLB*);
 extern void func_0044F810(void*);
-extern void func_0044F6B0(void*);
-extern void func_0044F880(void*, int, int, int);
+extern void LobbyArray_Free(void*);
+extern void LobbyArray_Init(void*, int, int, int);
 extern int func_00451ED0(SLB*, char*);
 extern int func_004524C0(SLB*, char*, char*);
 extern int func_00452050(SLB*, int, char*);
@@ -31,9 +31,9 @@ extern char D_004C0D30[];
 extern char D_004C0D40[];
 static inline void ClearLists(SLB* s)
 {
-    if (s->f23E4) func_0044F6B0(s->f23E4);
+    if (s->f23E4) LobbyArray_Free(s->f23E4);
     s->f23E4 = 0;
-    if (s->f23EC) func_0044F6B0(s->f23EC);
+    if (s->f23EC) LobbyArray_Free(s->f23EC);
     s->f23EC = 0;
 }void func_0044B370(SLB* s)
 {

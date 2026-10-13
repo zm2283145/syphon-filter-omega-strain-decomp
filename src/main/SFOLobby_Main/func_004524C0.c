@@ -1,6 +1,6 @@
 #include "types.h"
 int String_Copy(char*, char*);
-int func_00443E70(void);
+int Lobby_GetTime(void);
 int func_00476998(void);
 int func_00469B58(void*, void*);
 void* memset(void*, int, int);
@@ -33,7 +33,7 @@ typedef struct {
     char* errFile;
     int errLine;
 } Lobby_4524C0;
-int func_004534A0(Lobby_4524C0*, int, int, int);
+int SFOLobby_Poll(Lobby_4524C0*, int, int, int);
 
 static inline void SetErr_4524C0(Lobby_4524C0* self, unsigned char code, char* file, int line)
 {
@@ -60,7 +60,7 @@ int func_004524C0(Lobby_4524C0* self, char* user, char* pass)
     String_Copy(sl.user, user);
     String_Copy(sl.pass, pass);
     self->f1F8 = 0;
-    self->f2410 = func_00443E70();
+    self->f2410 = Lobby_GetTime();
     self->f24C = func_00469B58(&sl, &func_00446F80);
     while (self->f1F8 == 0) {
         self->f2409 = 1;
@@ -71,7 +71,7 @@ int func_004524C0(Lobby_4524C0* self, char* user, char* pass)
             SetErr_4524C0(self, 0x17, D_004C0FB0, 0x53F);
             return 0;
         }
-        if (!func_004534A0(self, self->f2410, D_00497890, 0)) {
+        if (!SFOLobby_Poll(self, self->f2410, D_00497890, 0)) {
             SetErr_4524C0(self, 2, D_004C0FB0, 0x545);
             return 0;
         }

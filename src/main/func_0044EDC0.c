@@ -6,10 +6,10 @@ typedef struct {
     L44EDC0 list; char p120[0x22C4]; void* l23E4; void* l23E8; char p23EC[4]; void* l23F0; void* l23F4;
 } S44EDC0;
 extern int Name_Compare48(void*, void*, int);
-extern int func_00443E70(void);
+extern int Lobby_GetTime(void);
 extern void func_0044EFF0(S44EDC0*, void*, E44EDC0*);
-extern E44EDC0* func_0044F290(L44EDC0*, int);
-extern void func_0044F470(L44EDC0*, E44EDC0*);
+extern E44EDC0* LobbyArray_At(L44EDC0*, int);
+extern void LobbyArray_Append(L44EDC0*, E44EDC0*);
 extern void* memcpy(void*, const void*, int);
 extern void* memset(void*, int, int);
 
@@ -22,7 +22,7 @@ static inline E44EDC0* Find44EDC0(L44EDC0* list, int id)
         return 0;
     n = list->count;
     for (i = 0; i < n; i++) {
-        e = func_0044F290(list, i);
+        e = LobbyArray_At(list, i);
         if (id == e->id)
             return e;
     }
@@ -44,7 +44,7 @@ void func_0044EDC0(S44EDC0* s, int id, int a2, int a3, int a4, void* name)
             e->f4 = a2;
             changed = 1;
             e->f8 = a3;
-            e->f28 = func_00443E70();
+            e->f28 = Lobby_GetTime();
             memcpy(e->name, name, 0x18);
         }
     } else {
@@ -53,9 +53,9 @@ void func_0044EDC0(S44EDC0* s, int id, int a2, int a3, int a4, void* name)
         tmp.id = id;
         tmp.f4 = a2;
         tmp.f8 = a3;
-        tmp.f28 = func_00443E70();
+        tmp.f28 = Lobby_GetTime();
         memcpy(tmp.name, name, 0x18);
-        func_0044F470(&s->list, &tmp);
+        LobbyArray_Append(&s->list, &tmp);
         e = &tmp;
         changed = 1;
     }

@@ -1,40 +1,40 @@
-#include "types.h"
-typedef struct { char p0[0x204]; int done; char p208[0x44]; int f24C; char p250[0x21C0]; int t0; char p2414[4]; char name[0x11]; char out[0x14]; } S44C620;
+#include "SFOLobby.h"
 extern void String_Copy(char*, char*);
-extern int func_00443E70(void);
-extern void func_00451B00(S44C620*, int, char*, int);
-extern void func_00452F70(S44C620*, int, int);
-extern int func_004534A0(S44C620*, int, int, int);
+extern int Lobby_GetTime(void);
+extern void SFOLobby_SetError(SFOLobby*, int, char*, int);
+extern void SFOLobby_CallUpdateHook(SFOLobby*, int, int);
+extern int SFOLobby_Poll(SFOLobby*, int, int, int);
 extern int func_0046AF60(void*, void*);
 extern void* memset(void*, int, int);
 extern int strlen(const char*);
-extern int D_00497890;
-extern char D_004C0E78[];
-extern char D_004C0E80[];
+extern int D_00497890;              /* reply timeout */
+extern char D_004C0E78[];           /* "1" */
+extern char D_004C0E80[];           /* "SFOLobby_Connect.cc" */
 extern char func_00446D00[];
 #pragma push
 #pragma opt_common_subs off
-int func_0044C620(S44C620* s)
+/* Asks the server for the own IP address; the reply callback func_00446D00 stores
+ * it in myIp and sets gotMyIp. */
+int SFOLobby_RequestMyIp(SFOLobby* s)
 {
-    struct { char a[0x15]; char b[0x11]; } req;
-
+    struct { char messageId[0x15]; char sessionKey[0x11]; } req;
     memset(&req, 0, sizeof(req));
-    String_Copy(req.a, D_004C0E78);
-    String_Copy(req.b, s->name);
-    memset(s->out, 0, 0x14);
-    s->f24C = func_0046AF60(&req, func_00446D00);
-    if (s->f24C != 0) return 0;
-    s->done = 0;
-    s->t0 = func_00443E70();
-    while (s->done == 0) {
-        func_00452F70(s, 0, 0);
-        if (func_004534A0(s, s->t0, D_00497890, 0) == 0) {
-            func_00451B00(s, 2, D_004C0E80, 0x38A);
+    String_Copy(req.messageId, D_004C0E78);
+    String_Copy(req.sessionKey, s->sessionKey);
+    memset(s->myIp, 0, 0x14);
+    s->requestResult = func_0046AF60(&req, func_00446D00);
+    if (s->requestResult != 0) return 0;
+    s->gotMyIp = 0;
+    s->waitStart = Lobby_GetTime();
+    while (s->gotMyIp == 0) {
+        SFOLobby_CallUpdateHook(s, 0, 0);
+        if (SFOLobby_Poll(s, s->waitStart, D_00497890, 0) == 0) {
+            SFOLobby_SetError(s, 2, D_004C0E80, 0x38A);
             break;
         }
     }
-    if (strlen(s->out) == 0) {
-        func_00451B00(s, 1, D_004C0E80, 0x392);
+    if (strlen(s->myIp) == 0) {
+        SFOLobby_SetError(s, 1, D_004C0E80, 0x392);
         return 0;
     }
     return 1;

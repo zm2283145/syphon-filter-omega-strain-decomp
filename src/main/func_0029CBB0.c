@@ -26,9 +26,9 @@ int func_0033CE30(S_0029CBB0* self, int a, int b, int c, int d, int e);
 int FrontEnd_OpenPopup(void* ui, int a, char* b, int c, S_0029CBB0* d, int e);
 void func_0043DB80(void* w);
 void func_0043DCE0(void* w, char* s);
-Ent_0029CBB0* func_0044F290(NameList_0029CBB0* l, int i);
-void func_0044F2E0(NameList_0029CBB0* l, int i);
-void func_0044F7E0(NameList_0029CBB0* l);
+Ent_0029CBB0* LobbyArray_At(NameList_0029CBB0* l, int i);
+void LobbyArray_RemoveAt(NameList_0029CBB0* l, int i);
+void LobbyArray_Clear(NameList_0029CBB0* l);
 void String_CtorCStr_13B480(Str_0029CBB0* s, const char* c);
 void func_00209620(Str_0029CBB0* d, Str_0029CBB0* s);
 void func_003FD740(Str_0029CBB0* s);
@@ -85,7 +85,7 @@ extern "C" void func_0029CBB0(S_0029CBB0* self, unsigned char sel)
                 Str_0029CBB0 all;
                 StrInit_0029CBB0(&list1);
                 for (i = 0; i < l->count; i++) {
-                    Name_0029CBB0* e = (Name_0029CBB0*)func_0044F290(l, i);
+                    Name_0029CBB0* e = (Name_0029CBB0*)LobbyArray_At(l, i);
                     if (e && e->name) {
                         Str_0029CBB0 s;
                         String_CtorCStr_13B480(&s, (char*)e);
@@ -108,7 +108,7 @@ extern "C" void func_0029CBB0(S_0029CBB0* self, unsigned char sel)
                     int id;
                     unsigned char found = 0;
                     for (i = 0; i < l->count; i++) {
-                        Ent_0029CBB0* e = func_0044F290(l, i);
+                        Ent_0029CBB0* e = LobbyArray_At(l, i);
                         if (e && e->name && e->name[0]) {
                             if (!found) {
                                 id = e->id;
@@ -127,16 +127,16 @@ extern "C" void func_0029CBB0(S_0029CBB0* self, unsigned char sel)
                         do {
                             removed = 0;
                             for (i = 0; i < l->count; i++) {
-                                Ent_0029CBB0* e = func_0044F290(l, i);
+                                Ent_0029CBB0* e = LobbyArray_At(l, i);
                                 if (!(e && e->name && e->name[0]) || e->id == id) {
-                                    func_0044F2E0(l, i);
+                                    LobbyArray_RemoveAt(l, i);
                                     removed = 1;
                                     break;
                                 }
                             }
                         } while (removed);
                     } else {
-                        func_0044F7E0(l);
+                        LobbyArray_Clear(l);
                     }
                 }
                 if (func_002071F0(&list2)) {

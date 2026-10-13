@@ -195,7 +195,7 @@ typedef struct GuiScreenBase {
     int screenId;                   /* 0x84 */
 } GuiScreenBase;
 
-/* 28-byte member constructed by func_0044FA00. */
+/* 28-byte member constructed by LobbyArray_ctor. */
 typedef struct Member44FA00 {
     char pad[0x1C];
 } Member44FA00;

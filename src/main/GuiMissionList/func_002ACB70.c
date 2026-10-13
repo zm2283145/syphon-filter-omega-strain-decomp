@@ -17,7 +17,7 @@ void func_002AC070(S_002ACB70* self);
 void func_00424430(S_002ACB70* self, int a, int b);
 int func_004245D0(S_002ACB70* self, int a, unsigned int b);
 void func_00424670(S_002ACB70* self, int a, unsigned int b);
-void func_0044F280(void* p, int a);
+void LobbyArray_SetDirty(void* p, int a);
 }
 static inline void Upd_(S_002ACB70* s, int n) { s->SetCount(s->f48, n); }
 #pragma opt_dead_assignments off
@@ -46,7 +46,7 @@ extern "C" void func_002ACB70(S_002ACB70* self)
     if (!func_004245D0(self, self->f50, self->f54))
         func_00424670(self, self->f50, self->f54);
     if (self->p11C)
-        func_0044F280(self->p11C, 0);
+        LobbyArray_SetDirty(self->p11C, 0);
 }
 
 

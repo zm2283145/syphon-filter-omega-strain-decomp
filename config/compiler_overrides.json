@@ -7419,5 +7419,7 @@
   "main/func_004434A0": "cwps2-3.0b38",
   "main/SFOLobby_Games/func_0044E430": "cwps2-3.0b38",
   "lib/rt_xmlparse/func_00311418": "ee-gcc2.96",
-  "lib/func_002CF648": "ee-gcc2.96-G0"
+  "lib/func_002CF648": "ee-gcc2.96-G0",
+  "lib/func_002E2BB8": "ee-gcc2.96-G0",
+  "main/tank/func_00286570": "cwps2-3.0b38"
 }

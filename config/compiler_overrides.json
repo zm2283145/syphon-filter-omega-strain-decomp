@@ -7542,5 +7542,16 @@
   "main/MovieSubtitles/func_00412600": "cwps2-3.0b38",
   "main/func_00441CA0": "cwps2-3.0b38",
   "main/func_00457900": "cwps2-3.0b38",
-  "main/GuiGameScreen/func_0045BD30": "cwps2-3.0b38"
+  "main/GuiGameScreen/func_0045BD30": "cwps2-3.0b38",
+  "lib/func_0011F0A8": "ee-gcc2.96-G0",
+  "lib/vfiprintf/func_0012B698": "ee-gcc2.96-G0",
+  "main/func_00139D30": "cwps2-3.0b38",
+  "main/func_0013B0E0": "cwps2-3.0b38",
+  "main/machine/func_00167630": "cwps2-3.0b38",
+  "main/humanIk/func_001DF910": "cwps2-3.0b38",
+  "main/func_001EAEC0": "cwps2-3.0b38",
+  "main/func_002D4760": "cwps2-3.0b38",
+  "main/func_002D7D10": "cwps2-3.0b38",
+  "main/func_003E49B0": "cwps2-3.0b38",
+  "main/manUtils/func_00403310": "cwps2-3.0b38"
 }

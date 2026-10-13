@@ -7368,5 +7368,8 @@
   "main/ai/func_0016A0A0": "cwps2-3.0b38",
   "main/gameSound/func_001C6500": "cwps2-3.0b38",
   "main/ska/func_003AD500": "cwps2-3.0b38",
-  "main/func_003F96E0": "cwps2-3.0b38"
+  "main/func_003F96E0": "cwps2-3.0b38",
+  "lib/usbkb/func_002234D0": "ee-gcc2.9-991111",
+  "main/GameGOBJ/func_00216580": "cwps2-3.0b38",
+  "main/Generator/func_00221610": "cwps2-3.0b38"
 }

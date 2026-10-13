@@ -7575,5 +7575,12 @@
   "lib/func_001273C8": "ee-gcc2.96-G0",
   "lib/func_00129D08": "ee-gcc2.96-G0",
   "lib/vfprintf/func_0012C408": "ee-gcc2.96-G0",
-  "lib/func_0012DD18": "ee-gcc2.96-G0"
+  "lib/func_0012DD18": "ee-gcc2.96-G0",
+  "main/particle/func_003A2A90": "cwps2-3.0b38",
+  "main/collision/func_003C13C0": "cwps2-3.0b38",
+  "main/func_0040D3C0": "cwps2-3.0b38",
+  "main/func_00415BB0": "cwps2-3.0b38",
+  "main/func_0041A450": "cwps2-3.0b38",
+  "main/guiTextWidget/func_0041C150": "cwps2-3.0b38",
+  "main/guiTextArrayWidget/func_00425EA0": "cwps2-3.0b38"
 }

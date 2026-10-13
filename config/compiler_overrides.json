@@ -7371,5 +7371,14 @@
   "main/func_003F96E0": "cwps2-3.0b38",
   "lib/usbkb/func_002234D0": "ee-gcc2.9-991111",
   "main/GameGOBJ/func_00216580": "cwps2-3.0b38",
-  "main/Generator/func_00221610": "cwps2-3.0b38"
+  "main/Generator/func_00221610": "cwps2-3.0b38",
+  "main/gameSound/func_001C8E10": "cwps2-3.0b38",
+  "main/backpack/func_00253070": "cwps2-3.0b38",
+  "main/fileman/func_0036DDC0": "cwps2-3.0b38",
+  "main/func_003AA7B0": "cwps2-3.0b38",
+  "main/message/func_003C8DE0": "cwps2-3.0b38",
+  "main/func_00428450": "cwps2-3.0b38",
+  "main/nellymoser_wrapper/func_0042C1E0": "cwps2-3.0b38",
+  "main/NetObjectMgr/func_0042E180": "cwps2-3.0b38",
+  "main/func_0043F200": "cwps2-3.0b38"
 }

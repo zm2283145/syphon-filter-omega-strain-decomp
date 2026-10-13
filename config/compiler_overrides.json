@@ -7385,5 +7385,10 @@
   "main/SFOLobby_Lobby/func_00450060": "cwps2-3.0b38",
   "main/GuiSubTitleDisplay/func_00458A30": "cwps2-3.0b38",
   "main/GameGOBJ/func_00210E70": "cwps2-3.0b38",
-  "main/backpack/func_00256500": "cwps2-3.0b38"
+  "main/backpack/func_00256500": "cwps2-3.0b38",
+  "lib/func_0011CA20": "ee-gcc2.96-G0",
+  "lib/libmpeg/func_0010A998": "ee-gcc2.9-991111",
+  "main/func_00101640": "cwps2-3.0b38",
+  "main/MovieSubtitles/func_0040FF20": "cwps2-3.0b38",
+  "main/MovieSubtitles/func_00410630": "cwps2-3.0b38"
 }

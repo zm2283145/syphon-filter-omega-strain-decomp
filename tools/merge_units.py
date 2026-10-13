@@ -55,6 +55,7 @@ except ImportError:
     lit_pool = None
 
 BASE = 0x100000
+os.environ["GLIBC_TUNABLES"] = "glibc.cpu.hwcaps=-SSSE3,-SSE4_1,-SSE4_2,-AVX,-AVX2,-ERMS,-FSRM,-BMI1,-BMI2,-POPCNT,-LZCNT,-MOVBE"  # see compile_aligned.py
 ROM_PATH = ROOT / "build" / "orig" / "SCUS_972.64.rom"
 KIND_OF = {v: k for k, v in ip.OVR.items()}          # compiler_overrides value -> kind
 OVR_OF = dict(ip.OVR)                                 # kind -> compiler_overrides value

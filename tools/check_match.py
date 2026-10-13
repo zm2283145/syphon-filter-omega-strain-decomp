@@ -55,6 +55,7 @@ import lit_pool  # noqa: E402
 ROOT = Path(__file__).resolve().parent.parent
 BASE = 0x100000
 IS_WINDOWS = os.name == "nt"
+os.environ["GLIBC_TUNABLES"] = "glibc.cpu.hwcaps=-SSSE3,-SSE4_1,-SSE4_2,-AVX,-AVX2,-ERMS,-FSRM,-BMI1,-BMI2,-POPCNT,-LZCNT,-MOVBE"  # see compile_aligned.py
 MWFLAGS = ["-c", "-O4,p", "-nostdinc", "-sdatathreshold", "0", "-char", "signed", "-lang", "c"]
 GCCFLAGS = ["-c", "-O2", "-G0", "-w"]
 

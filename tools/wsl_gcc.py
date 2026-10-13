@@ -61,6 +61,7 @@ def main():
     cache = f"$HOME/.cache/sfos-eegcc/{cdir.name}"
     script = (
         "set -e\n"
+        "export GLIBC_TUNABLES=glibc.cpu.hwcaps=-SSSE3,-SSE4_1,-SSE4_2,-AVX,-AVX2,-ERMS,-FSRM,-BMI1,-BMI2,-POPCNT,-LZCNT,-MOVBE\n"  # see compile_aligned.py
         f"C={cache}\n"
         f'if [ ! -x "$C/bin/ee-gcc" ]; then mkdir -p "$C" && cp -r {shlex.quote(wsl_path(cdir))}/. "$C"/; fi\n'
         'T=$(mktemp -d); trap \'rm -rf "$T"\' EXIT; cd "$T"; tar -mxf -\n'

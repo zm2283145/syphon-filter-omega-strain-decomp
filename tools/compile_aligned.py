@@ -11,10 +11,17 @@ With --pool (EE-GCC units; VRAM is the unit's retail address), gp-relative
 literals in .lit4/.lit8 are pointed at the retail literal pool and the
 sections dropped (tools/lit_pool.py); objects without them are unchanged.
 """
+import os
 import subprocess
 import sys
 
 import lit_pool
+
+# ee-gcc2.96's cc1 reads uninitialized memory, so a few units (e.g.
+# String_CompareNoCase) compile differently depending on which CPU-specific
+# glibc string routines ran before (Intel vs AMD hosts) and on the environment
+# size. Pinning glibc to its baseline routines gives the same output everywhere.
+os.environ["GLIBC_TUNABLES"] = "glibc.cpu.hwcaps=-SSSE3,-SSE4_1,-SSE4_2,-AVX,-AVX2,-ERMS,-FSRM,-BMI1,-BMI2,-POPCNT,-LZCNT,-MOVBE"
 
 args = sys.argv[1:]
 pool = None

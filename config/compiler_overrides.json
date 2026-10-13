@@ -7466,5 +7466,19 @@
   "main/func_00400620": "cwps2-3.0b38",
   "main/func_004173B0": "cwps2-3.0b38",
   "main/func_00423500": "cwps2-3.0b38",
-  "main/inventory/func_00471290": "cwps2-3.0b38"
+  "main/inventory/func_00471290": "cwps2-3.0b38",
+  "main/game/func_00132610": "cwps2-3.0b38",
+  "main/npc/func_00158BC0": "cwps2-3.0b38",
+  "main/Generator/func_00221D20": "cwps2-3.0b38",
+  "main/man/func_0038D530": "cwps2-3.0b38",
+  "main/gameobj/func_003943A0": "cwps2-3.0b38",
+  "main/gameobj/func_00395530": "cwps2-3.0b38",
+  "main/ska/func_003AB510": "cwps2-3.0b38",
+  "main/func_003C8990": "cwps2-3.0b38",
+  "main/scriptManager/func_003DD2D0": "cwps2-3.0b38",
+  "main/scriptManager/func_003E0040": "cwps2-3.0b38",
+  "main/func_003E4370": "cwps2-3.0b38",
+  "main/func_003E4880": "cwps2-3.0b38",
+  "main/func_003E9A60": "cwps2-3.0b38",
+  "main/func_004002B0": "cwps2-3.0b38"
 }

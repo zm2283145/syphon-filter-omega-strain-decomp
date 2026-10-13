@@ -9,8 +9,8 @@ This is the working state and the routine for whoever continues this project
 
 | | |
 |---|---|
-| Functions matched | 12,784 of 14,331 |
-| Code matched | 58.84% |
+| Functions matched | 12,977 of 14,331 |
+| Code matched | 63.97% |
 | Data matched | 99.92% |
 | Full build | reproduces the retail executable byte for byte |
 
@@ -24,10 +24,10 @@ What is left (from `progress/report.json`):
 
 | Function size | Unmatched | Bytes |
 |---|---|---|
-| under 100 bytes | 222 | 7 KB |
-| 100–1,200 bytes | 962 | 510 KB |
-| 1,200–3,000 bytes | 294 | 515 KB |
-| over 3,000 bytes | 89 | 496 KB |
+| under 100 bytes | 202 | 5 KB |
+| 100–1,200 bytes | 861 | 454 KB |
+| 1,200–3,000 bytes | 207 | 366 KB |
+| over 3,000 bytes | 84 | 463 KB |
 
 Almost every remaining function under 1,200 bytes has been attempted at least once,
 most of them by several workers. Code percentage is by bytes, so the large functions

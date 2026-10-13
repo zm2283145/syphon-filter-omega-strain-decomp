@@ -9,8 +9,8 @@ This is the working state and the routine for whoever continues this project
 
 | | |
 |---|---|
-| Functions matched | 12,764 of 14,331 |
-| Code matched | 58.28% |
+| Functions matched | 12,776 of 14,331 |
+| Code matched | 58.48% |
 | Data matched | 99.92% |
 | Full build | reproduces the retail executable byte for byte |
 
@@ -131,6 +131,17 @@ into translation units. Run it occasionally; see [merge_units.md](merge_units.md
   generation. Rebuild after each batch.
 
 ## Near-miss techniques (newest)
+
+- **mw38 inline helpers:** exposing a helper's locals in the caller and changing their
+  declaration order can resolve register allocation without changing control flow.
+  This finished `AnimCtl_UpdateTransitions` and `PlayerSlots_Get`.
+- **mw50 indexed pointers:** integer byte-address addition can choose different
+  temporary registers from pointer indexing. This finished both texture-cache
+  update functions at `00382190` and `00382540`.
+- **GCC register copies:** bind a local copy rather than the incoming parameter.
+  Assigning it after the null test preserved the original branch register in
+  `00311120`; assigning the shared second argument before the final call branch
+  recovered both argument delay slots in `0027C410`.
 
 - **gcc296:** a weak stub of the callee in the same file
   (`int __attribute__((weak, section(".dtors_drop"))) f(...) { return 0; }`) can change

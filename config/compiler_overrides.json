@@ -7331,5 +7331,13 @@
   "main/Loader/func_001C4000": "cwps2-3.0b38",
   "main/func_00400160": "cwps2-3.0b38",
   "main/texman/func_00382190": "cwps2-3.0b50",
-  "main/texman/func_00382540": "cwps2-3.0b50"
+  "main/texman/func_00382540": "cwps2-3.0b50",
+  "lib/rt_xmlparse/func_00311120": "ee-gcc2.96",
+  "lib/func_0027C410": "ee-gcc2.9-991111",
+  "main/npc/func_0014AFE0": "cwps2-3.0b38",
+  "main/func_00261540": "cwps2-3.0b38",
+  "main/GuiEquipmentModify/func_002C0790": "cwps2-3.0b38",
+  "main/ska/func_003AC100": "cwps2-3.0b38",
+  "main/NetObj/func_003FB8D0": "cwps2-3.0b38",
+  "main/SFOLobby_Cell/func_004487A0": "cwps2-3.0b38"
 }

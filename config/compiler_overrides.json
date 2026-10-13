@@ -7395,5 +7395,8 @@
   "main/human/func_001898F0": "cwps2-3.0b38",
   "main/human/func_0018CAF0": "cwps2-3.0b38",
   "lib/func_00314550": "ee-gcc2.96-G0",
-  "main/human/func_001B57C0": "cwps2-3.0b38"
+  "main/human/func_001B57C0": "cwps2-3.0b38",
+  "main/GuiGameOptions/func_0029A190": "cwps2-3.0b38",
+  "main/func_002A7E90": "cwps2-3.0b38",
+  "main/gameFrontEnd/func_002CB3D0": "cwps2-3.0b38"
 }

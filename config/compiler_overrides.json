@@ -7647,5 +7647,14 @@
   "main/func_00371CF0": "cwps2-3.0b38",
   "main/func_003A9220": "cwps2-3.0b38",
   "main/ska/func_003AEF50": "cwps2-3.0b38",
-  "main/ska/func_003B2730": "cwps2-3.0b38"
+  "main/ska/func_003B2730": "cwps2-3.0b38",
+  "main/func_001828E0": "cwps2-3.0b38",
+  "main/GameGOBJ/func_00215700": "cwps2-3.0b38",
+  "main/AgentData/func_003305D0": "cwps2-3.0b38",
+  "main/AgentData/func_00334110": "cwps2-3.0b38",
+  "main/AgentData/func_00334790": "cwps2-3.0b38",
+  "main/AgentData/func_00335E50": "cwps2-3.0b38",
+  "main/AgentData/func_003361E0": "cwps2-3.0b38",
+  "main/gobj/func_003CEA10": "cwps2-3.0b38",
+  "main/GenInfoObject/func_0043ACE0": "cwps2-3.0b38"
 }

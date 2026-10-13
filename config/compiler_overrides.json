@@ -7611,5 +7611,15 @@
   "main/func_00437640": "cwps2-3.0b38",
   "main/GenInfoObject/func_00439390": "cwps2-3.0b38",
   "main/func_0043D8B0": "cwps2-3.0b38",
-  "main/func_0043FBB0": "cwps2-3.0b38"
+  "main/func_0043FBB0": "cwps2-3.0b38",
+  "lib/func_00103418": "ee-gcc2.9-991111",
+  "lib/func_001037A8": "ee-gcc2.9-991111",
+  "lib/libmpeg/func_00108B40": "ee-gcc2.9-991111",
+  "lib/libmpeg/func_00109C90": "ee-gcc2.9-991111",
+  "main/func_00100800": "cwps2-3.0b38",
+  "main/func_00100D60": "cwps2-3.0b38",
+  "main/func_00100F10": "cwps2-3.0b38",
+  "main/func_001014C0": "cwps2-3.0b38",
+  "main/func_00101E90": "cwps2-3.0b38",
+  "main/func_001021E0": "cwps2-3.0b38"
 }

@@ -7393,5 +7393,7 @@
   "main/MovieSubtitles/func_00410630": "cwps2-3.0b38",
   "main/player/func_00176660": "cwps2-3.0b38",
   "main/human/func_001898F0": "cwps2-3.0b38",
-  "main/human/func_0018CAF0": "cwps2-3.0b38"
+  "main/human/func_0018CAF0": "cwps2-3.0b38",
+  "lib/func_00314550": "ee-gcc2.96-G0",
+  "main/human/func_001B57C0": "cwps2-3.0b38"
 }

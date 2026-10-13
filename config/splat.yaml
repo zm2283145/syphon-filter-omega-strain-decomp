@@ -1661,7 +1661,7 @@ segments:
       - [0x06E0A0, c, main/ai/func_0016E0A0]
       - [0x06E160, c, main/ai/func_0016E160]
       - [0x06E170, c, main/ai/func_0016E170]
-      - [0x06E1A0, asm]
+      - [0x06E1A0, c, main/ai/func_0016E1A0]
       - [0x06E860, c, main/ai/func_0016E860]
       - [0x06E890, asm]
       - [0x06EF80, c, main/ai/func_0016EF80]

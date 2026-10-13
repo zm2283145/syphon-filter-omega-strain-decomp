@@ -15,13 +15,15 @@
 #include "types.h"
 #include "pickup_menu_types.h"
 
-extern char D_004F7E70[];
-extern float func_003D0810(PickupMenu* self, char* arg);
+extern char D_004F7E70[]; /* text colour (Vec4f; set by sinit and backpack Global_SetPickupTextColor) */
+extern float func_003D0810(PickupMenu* text, char* color);
 
-float func_00251040(PickupMenu* self) {
-    self->unk10 = 1;
-    self->unk11 = 1;
-    return func_003D0810(self, D_004F7E70);
+/* Applies the pickup-menu text colour to a model's text object (model +0x74),
+ * setting the two flags at +0x10/+0x11 first. */
+float func_00251040(PickupMenu* text) {
+    text->unk10 = 1;
+    text->unk11 = 1;
+    return func_003D0810(text, D_004F7E70);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00251040 */
@@ -30,58 +32,71 @@ float func_00251040(PickupMenu* self) {
 #pragma push /* merge_units */
 #pragma cplusplus on
 #include "alloc_guard.h"
-struct Model_251060 { char pad[0x74]; int x74; };
-struct Self_251060 { signed char kind; char pad1[3]; int id; int x8; void* a; void* b; Model_251060* m1; Model_251060* m2; };
+/* Interface model instance (0x80 bytes, made by func_003EF010); +0x74 is its text object. */
+struct PickupMenuModel { char pad[0x74]; int text; };
+/* The pickup menu: one or two interface models (the second is only made when
+ * t == 0), each paired with a 0x68-byte game object (func_00259420). */
+struct PickupMenuObj {
+    signed char kind;        /* 0x00 */
+    char pad1[3];
+    int id;                  /* 0x04 */
+    int x8;                  /* 0x08 cleared */
+    void* obj1;              /* 0x0C game object for model1 */
+    void* obj2;              /* 0x10 game object for model2 */
+    PickupMenuModel* model1; /* 0x14 */
+    PickupMenuModel* model2; /* 0x18 */
+};
 extern "C" {
-extern int D_004F7E90;
-extern int D_004F7E98;
+extern int D_004F7E90; /* interface model template of the first panel */
+extern int D_004F7E98; /* interface model template of the second panel */
 extern int D_0048AEF8;
-extern char D_004A7998[];
+extern char D_004A7998[]; /* "pickup_menu.cc" */
 void* Mem_Alloc(int pool, int size, char* file, int line);
-Model_251060* func_003EF010(int h);
-void func_003F45A0(float t, Model_251060* m);
-void func_003F44E0(float t, Model_251060* m);
+PickupMenuModel* func_003EF010(int tmpl);
+void func_003F45A0(float t, PickupMenuModel* m);
+void func_003F44E0(float t, PickupMenuModel* m);
 #if 0 /* merge_units */
 void func_00251040(int x);
 #endif /* merge_units */
 #define func_00251040(a0) ((void)func_00251040((PickupMenu *)(a0))) /* merge_units */
 
-void* func_00259420(void* p);
-void func_003EEBE0(int h, int a, int b);
+void* func_00259420(void* obj);
+void func_003EEBE0(int node, int visible, int recurse); /* show/hide a model tree */
 }
-extern "C" void func_00251060(Self_251060* s, signed char kind, int id, int t)
+/* Sets up the pickup menu: instantiates the panel model(s) and their game objects. */
+extern "C" void func_00251060(PickupMenuObj* s, signed char kind, int id, int t)
 {
     void* p;
     s->kind = kind;
     s->id = id;
     s->x8 = 0;
-    s->m1 = func_003EF010(D_004F7E90);
-    func_003F45A0(t, s->m1);
-    func_003F44E0(t + D_0048AEF8, s->m1);
-    func_00251040(s->m1->x74);
+    s->model1 = func_003EF010(D_004F7E90);
+    func_003F45A0(t, s->model1);
+    func_003F44E0(t + D_0048AEF8, s->model1);
+    func_00251040(s->model1->text);
     {
         AllocGuard g;
         p = Mem_Alloc(0, 0x68, D_004A7998, 0x352);
     }
     if (p)
         p = func_00259420(p);
-    s->a = p;
+    s->obj1 = p;
     if (t) {
         func_003EEBE0(D_004F7E98, 0, 1);
         return;
     }
     func_003EEBE0(D_004F7E98, 1, 1);
-    s->m2 = func_003EF010(D_004F7E98);
-    func_003F45A0(t, s->m2);
-    func_003F44E0(t + D_0048AEF8, s->m2);
-    func_00251040(s->m2->x74);
+    s->model2 = func_003EF010(D_004F7E98);
+    func_003F45A0(t, s->model2);
+    func_003F44E0(t + D_0048AEF8, s->model2);
+    func_00251040(s->model2->text);
     {
         AllocGuard g;
         p = Mem_Alloc(0, 0x68, D_004A7998, 0x35D);
     }
     if (p)
         p = func_00259420(p);
-    s->b = p;
+    s->obj2 = p;
 }
 #undef func_00251040 /* merge_units */
 #pragma pop /* merge_units */

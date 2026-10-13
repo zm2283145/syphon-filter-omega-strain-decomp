@@ -9,7 +9,7 @@ extern char D_004A4D80[];
 extern void func_00223400(void* p);
 extern void WaitSema(int s);
 extern int sceSifCallRpc(void* cd, int fno, int mode, void* send, int ssize, void* recv, int rsize, void (*end)(void*), void* param);
-extern int func_0010F388(char* fmt, ...);
+extern int scePrintf(char* fmt, ...);
 int func_00223FF0(unsigned int port)
 {
     E223FF0* e;
@@ -20,7 +20,7 @@ int func_00223FF0(unsigned int port)
     WaitSema(D_0048AB18);
     r = sceSifCallRpc(D_004F5820, 6, 1, D_004F5880, 0x10, D_004F58C0, 0, func_00223400, 0);
     if (r != 0) {
-        func_0010F388(D_004A4D80, r);
+        scePrintf(D_004A4D80, r);
         return -2;
     }
     e = &D_004F5780.tbl[port];

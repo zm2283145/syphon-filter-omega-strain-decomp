@@ -13,7 +13,7 @@ extern int sceDbcSendData3(int, int, void *, void *, void *);
 extern void func_002BB660(void);
 extern E2BB520 *func_002BB520(int);
 extern char D_004AC248[];
-extern int func_0010F388(const char *, ...);
+extern int scePrintf(const char *, ...);
 extern void *memcpy(void *, const void *, unsigned int);
 extern void SyncDCache(void *, void *);
 int func_002BC620(int i, int a)

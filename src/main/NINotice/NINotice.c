@@ -9,33 +9,49 @@
 #pragma cplusplus on
 #include "types.h"
 #include "alloc_guard.h"
+#define CMSG_KIND_T char
+#define CMSG_NO_PROTOS /* cMessage_dtor is declared by DEFINE_VTABLE_BASE_DTOR below */
+#include "cmessage.h"
+
+#define cMessage_vtable  D_004DFD80
+#define cNINotice_vtable D_004DBEB0
+
 extern "C" {
 void* Mem_Alloc(int pool, int size, char* file, int line);
-extern char D_004DFD80[];
-extern char D_004DBEB0[];
+extern char cMessage_vtable[];
+extern char cNINotice_vtable[];
 }
-struct M1EEDC0 { void* vtable; int w4, w8, wC, w10, w14, w18, w1C; char b20; int w24; };
-extern "C" M1EEDC0* cNINotice_v01(M1EEDC0* self)
+
+/* cNINotice (NIEvent.hh): a cMessage carrying one word whose low byte is the
+ * notice action (read by the script Action() accessor). 0x28 bytes. */
+struct cNINotice {
+    CMSG_HEADER;
+    int action; /* +0x24 */
+};
+
+/* Clone (vtable slot 1): heap copy of the message, built the way the inlined
+ * copy constructors do it (base part first, then the derived vtable). */
+extern "C" cNINotice* cNINotice_v01(cNINotice* self)
 {
-    M1EEDC0* p;
+    cNINotice* copy;
     {
         AllocGuard guard;
-        p = (M1EEDC0*)Mem_Alloc(0, 0x28, "NIEvent.hh", 0x28);
+        copy = (cNINotice*)Mem_Alloc(0, sizeof(cNINotice), "NIEvent.hh", 0x28);
     }
-    if (p) {
-        p->vtable = D_004DFD80;
-        p->w4 = self->w4;
-        p->w8 = self->w8;
-        p->wC = self->wC;
-        p->w10 = self->w10;
-        p->w14 = self->w14;
-        p->w18 = self->w18;
-        p->w1C = self->w1C;
-        p->b20 = self->b20;
-        p->vtable = D_004DBEB0;
-        p->w24 = self->w24;
+    if (copy) {
+        copy->vtable = cMessage_vtable;
+        copy->type = self->type;
+        copy->magic = self->magic;
+        copy->time = self->time;
+        copy->unk10 = self->unk10;
+        copy->target = self->target;
+        copy->stampKind = self->stampKind;
+        copy->flags = self->flags;
+        copy->kind = self->kind;
+        copy->vtable = cNINotice_vtable;
+        copy->action = self->action;
     }
-    return p;
+    return copy;
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_002373A0 */
@@ -45,7 +61,7 @@ extern "C" M1EEDC0* cNINotice_v01(M1EEDC0* self)
 #pragma cplusplus on
 #include "vtable_base_dtor.h"
 
-DEFINE_VTABLE_BASE_DTOR(cNINotice_dtor, D_004DBEB0, cMessage_dtor)
+DEFINE_VTABLE_BASE_DTOR(cNINotice_dtor, cNINotice_vtable, cMessage_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_002374A0 */
 
@@ -63,9 +79,9 @@ extern int D_004F7D28; /* cNINotice script type id */
 extern int* Message_GetScriptTypeKeyPtr(void); /* address of the cMessage type key */
 extern void ScriptType_SetParent(int type, int parentType);
 
-/* Action(notice): returns the notice's action byte (+0x24). */
+/* Action(notice): returns the notice's action byte (low byte of cNINotice.action, +0x24). */
 int Script_cNINotice_Action(unsigned char** args) {
-    return args[0][36];
+    return args[0][0x24];
 }
 
 /* cNINotice derives from cMessage. */

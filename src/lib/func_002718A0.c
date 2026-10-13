@@ -6,7 +6,7 @@ extern char D_004A8D18[];
 extern char D_004A8D50[];
 extern char D_004A8D60[];
 extern char D_004FFB00[];
-extern int func_0010F388(const char *, ...);
+extern int scePrintf(const char *, ...);
 extern int WaitSema(int);
 extern void DeleteSema(int);
 extern E18A0 *func_002713C0(void *);
@@ -21,16 +21,16 @@ int sceSifMCallRpc(C18A0 *cd, int rpc_number, int mode, int send, int ssize, int
     int s;
     int g;
     if (mode) {
-        func_0010F388(D_004A8CF0);
+        scePrintf(D_004A8CF0);
         return -1;
     }
     WaitSema(cd->x28);
     if (send & 0x3F) {
-        func_0010F388(D_004A8D18, D_004A8D50, send);
+        scePrintf(D_004A8D18, D_004A8D50, send);
         return -1;
     }
     if (receive & 0x3F) {
-        func_0010F388(D_004A8D60, D_004A8D50, receive);
+        scePrintf(D_004A8D60, D_004A8D50, receive);
         return -1;
     }
     e = func_002713C0(D_004FFB00);

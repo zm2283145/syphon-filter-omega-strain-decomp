@@ -14,9 +14,9 @@ extern int SignalSema(int);
 extern int func_00119510(int);
 extern void D_0010FBC0(int);
 extern void func_0010FB10(void *, int);
-extern int func_00110358(RpcCd *cd, unsigned int id, int mode);
+extern int sceSifBindRpc(RpcCd *cd, unsigned int id, int mode);
 extern int sceSifCallRpc(RpcCd *, int, int, void *, int, void *, int, void *, void *);
-extern void func_0010F388(const char *, ...);
+extern void scePrintf(const char *, ...);
 
 /* busy-wait; the nop has no C equivalent */
 #define DELAY(j) { j = 0x100000; do { j--; __asm__ volatile("nop"); } while (j != -1); }
@@ -26,15 +26,15 @@ int func_00119708(int mode)
     int i;
     int ret;
     int j;
-    if (D_00487890 > 0) func_0010F388(D_00498DF0);
+    if (D_00487890 > 0) scePrintf(D_00498DF0);
     func_00118718();
     if (D_004878B0 != func_0010D1B0(D_004878B0)) return mode != 8 ? 6 : -1;
     D_0010FBC0(0);
     i = 0;
     if (D_004878C8 < 0) {
         do {
-            if (func_00110358(&D_004E9F50, 0x8000059C, 0) < 0) {
-                if (D_00487890 > 0) func_0010F388(D_00498DB8);
+            if (sceSifBindRpc(&D_004E9F50, 0x8000059C, 0) < 0) {
+                if (D_00487890 > 0) scePrintf(D_00498DB8);
                 DELAY(j);
                 continue;
             }
@@ -56,7 +56,7 @@ int func_00119708(int mode)
         SignalSema(D_004878B0);
         return mode != 8 ? 6 : -1;
     }
-    if (D_00487890 > 0) func_0010F388(D_00498DD8);
+    if (D_00487890 > 0) scePrintf(D_00498DD8);
     ret = *(int *)((int)D_00489300 | 0x20000000);
     SignalSema(D_004878B0);
     return ret;

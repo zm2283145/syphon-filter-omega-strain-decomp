@@ -3,7 +3,7 @@ extern void func_001161F8(void);
 extern int func_0010CE60(int, int);
 extern int Alloc_Lock(int);
 extern int DeleteSema(int);
-extern int func_0010F388(const char *, ...);
+extern int scePrintf(const char *, ...);
 extern int D_004F581C;
 extern int D_0048AB18;
 
@@ -16,13 +16,13 @@ int sceUsbKbEnd(void)
     if (s) func_001161F8();
     if (r < 0) {
         err = 1;
-        func_0010F388("libusbkb.a : RemoveIntcHandler() --> error
+        scePrintf("libusbkb.a : RemoveIntcHandler() --> error
 ");
     }
     if (D_0048AB18 != -1) {
         if (DeleteSema(D_0048AB18) < 0) {
             err++;
-            func_0010F388("libusbkb.a : DeleteSema() --> error
+            scePrintf("libusbkb.a : DeleteSema() --> error
 ");
         } else {
             D_0048AB18 = -1;

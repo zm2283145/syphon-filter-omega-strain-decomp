@@ -4,7 +4,7 @@ extern RpcCd D_004E63C0;
 extern int D_004E61C0[];
 extern Name4 D_004E63E8;
 extern int D_00486260;
-extern int func_00110358(RpcCd *cd, unsigned int id, int mode);
+extern int sceSifBindRpc(RpcCd *cd, unsigned int id, int mode);
 extern int sceSifCallRpc(void *cd, int fno, int mode, void *send, int ssize, void *recv, int rsize, void *endf, void *endp);
 extern int func_001148B8(void);
 extern int func_001149B8(void);

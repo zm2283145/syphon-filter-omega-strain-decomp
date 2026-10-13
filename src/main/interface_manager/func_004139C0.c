@@ -14,7 +14,7 @@ extern char D_004BEF30[];
 void Mem_Free(int pool, void* p, char* file, int line);
 int String_CStr(Item_4139C0* it);
 void func_003E79F0(void* p, int f);
-void func_003F9530(int a, int b);
+void ArchiveList_CloseNamed(int a, int b);
 void func_004145A0(void* p, int f);
 }
 static inline void D3_4139C0(void* p) { if (p) func_004145A0(p, 0); }
@@ -28,7 +28,7 @@ extern "C" void func_004139C0(Self_4139C0* self)
     Ent_4139C0* e = self->ents;
     for (i = 0; i < 20; i++, e++) {
         if (e->active && e->obj) {
-            func_003F9530(self->h1E0, e->handle);
+            ArchiveList_CloseNamed(self->h1E0, e->handle);
             { void* o = e->obj; AllocGuard g; func_003E79F0(o, -1); Mem_Free(0, o, D_004BEF30, 0x47); }
             e->active = 0;
             e->obj = 0;
@@ -37,7 +37,7 @@ extern "C" void func_004139C0(Self_4139C0* self)
     if (self->p1EC) {
         int n = self->p1EC->count;
         int j;
-        for (j = 0; j < n; j++) func_003F9530(self->h1E0, String_CStr(&self->p1EC->data[j]));
+        for (j = 0; j < n; j++) ArchiveList_CloseNamed(self->h1E0, String_CStr(&self->p1EC->data[j]));
         { List_4139C0* p = self->p1EC; AllocGuard g; D1_4139C0(p); Mem_Free(0, p, D_004BEF30, 0x53); }
         self->p1EC = 0;
     }
@@ -48,7 +48,7 @@ extern "C" void func_004139C0(Self_4139C0* self)
             self->p1E4 = 0;
         }
     }
-    if (self->h1E8) func_003F9530(self->h1E0, self->h1E8);
+    if (self->h1E8) ArchiveList_CloseNamed(self->h1E0, self->h1E8);
     self->h1E0 = 0;
     self->h1E8 = 0;
 }

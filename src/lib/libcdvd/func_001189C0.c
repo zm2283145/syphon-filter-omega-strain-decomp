@@ -22,9 +22,9 @@ extern int ReferThreadStatus(int, void *);
 extern int sceCdSync(int);
 extern void D_0010FBC0(int);
 extern void func_0010FB10(void *, int);
-extern int func_00110358(RpcCd *cd, unsigned int id, int mode);
+extern int sceSifBindRpc(RpcCd *cd, unsigned int id, int mode);
 extern int sceSifCallRpc(RpcCd *, int, int, void *, int, void *, int, void *, void *);
-extern void func_0010F388(const char *, ...);
+extern void scePrintf(const char *, ...);
 
 /* busy-wait; the nop has no C equivalent */
 #define DELAY() { int j = 0x100000; do { j--; __asm__ volatile("nop"); } while (j != -1); }
@@ -44,8 +44,8 @@ int sceCdSearchFile(sceCdlFILE *fp, const char *name, int layer)
     D_0010FBC0(0);
     if (D_004878C4 < 0) {
         do {
-            if (func_00110358(&D_004E9F00, 0x80000597, 0) < 0) {
-                if (D_00487890 > 0) func_0010F388(D_00498C60);
+            if (sceSifBindRpc(&D_004E9F00, 0x80000597, 0) < 0) {
+                if (D_00487890 > 0) scePrintf(D_00498C60);
                 DELAY();
                 continue;
             }
@@ -58,7 +58,7 @@ int sceCdSearchFile(sceCdlFILE *fp, const char *name, int layer)
     }
     for (i = 0; i < 256 && (D_004E9D80.name[i] = name[i]) != 0; i++) ;
     if (i == 256) D_004E9D80.name[255] = 0;
-    if (D_00487890 > 0) func_0010F388(D_00498C80, D_004E9D80.name);
+    if (D_00487890 > 0) scePrintf(D_00498C80, D_004E9D80.name);
     D_004E9D80.layer = layer;
     D_004E9D80.dest = &D_004E9D80;
     func_0010FB10(&D_004E9D80, sizeof(SearchBuf));
@@ -67,9 +67,9 @@ int sceCdSearchFile(sceCdlFILE *fp, const char *name, int layer)
         return 0;
     }
     __builtin_memcpy(fp, (void *)((int)&D_004E9D80 | 0x20000000), sizeof(sceCdlFILE));
-    if (D_00487890 > 0) func_0010F388(D_00498C98, fp->name);
-    if (D_00487890 > 0) func_0010F388(D_00498CA8, fp->size);
-    if (D_00487890 > 0) func_0010F388(D_00498CB8, fp->lsn);
+    if (D_00487890 > 0) scePrintf(D_00498C98, fp->name);
+    if (D_00487890 > 0) scePrintf(D_00498CA8, fp->size);
+    if (D_00487890 > 0) scePrintf(D_00498CB8, fp->lsn);
     ret = *(int *)((int)&D_004E9EC0 | 0x20000000);
     SignalSema(D_004878A8);
     return ret;

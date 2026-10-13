@@ -17,7 +17,7 @@ int func_0036DEF0(char *);
 int func_0036E220(char *, int);
 int func_0036E5D0(char *);
 int func_003816F0(int, char *);
-int func_003F9530(char *, char *);
+int ArchiveList_CloseNamed(char *, char *);
 extern int D_0048A030;
 extern int D_0048A038;
 extern int D_0048A048;
@@ -89,7 +89,7 @@ void func_00166190(PS0_00166190 *arg0) {
                 func_0036DEF0((char *)sp50);
                 func_003816F0(D_00539248, (char *)sp50);
             }
-            func_003F9530(&D_004FFB8C, (char *)arg0->f270);
+            ArchiveList_CloseNamed(&D_004FFB8C, (char *)arg0->f270);
             func_0036E220((char *)sp50, -1);
         }
     }

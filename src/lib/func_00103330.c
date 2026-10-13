@@ -1,11 +1,11 @@
-extern int func_0010F388(const char *, ...);
+extern int scePrintf(const char *, ...);
 
 int func_00103330(unsigned long *tag)
 {
     unsigned int i = 0;
     while (*(volatile int *)0x1000A000 & 0x100) {
         if (i++ > 0x1000000) {
-            func_0010F388("sceGsPutDrawEnv: DMA Ch.2 does not terminate\r\n");
+            scePrintf("sceGsPutDrawEnv: DMA Ch.2 does not terminate\r\n");
             return -1;
         }
     }

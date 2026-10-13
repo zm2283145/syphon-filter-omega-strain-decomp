@@ -1,7 +1,7 @@
 #include "types.h"
 extern void InvalidDCache(int*, char*);
 extern int sceCdSync(void);
-extern void func_003A85E0(void);
+extern void snd_FlushSoundCommands(void);
 extern int D_0053DC00;
 extern int D_0053DC18;
 extern int D_00542800;
@@ -24,7 +24,7 @@ int func_003A6F70(int wait)
     if (Poll3A6F70(k) == 1) return 0;
     if (wait == 1) return 1;
     while (D_0053DC18 == 0) {
-        func_003A85E0();
+        snd_FlushSoundCommands();
         Poll3A6F70(k);
     }
     return 0;

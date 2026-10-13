@@ -1,8 +1,8 @@
 #include "types.h"
 extern void InvalidDCache(int*, char*);
 extern int sceCdSync(int);
-extern int func_003A85E0(void);
-extern int func_003A7990(int, int, void*);
+extern int snd_FlushSoundCommands(void);
+extern int snd_SendIOPCommandAndWait(int, int, void*);
 extern int D_0053DC00;
 extern int D_0053DC18;
 extern int D_00542800;
@@ -26,7 +26,7 @@ static inline int Sync3A7200(int wait)
     if (t == 1) return 0;
     if (wait == 1) return 1;
     while (t == 0) {
-        func_003A85E0();
+        snd_FlushSoundCommands();
         t = Poll3A7200(k);
     }
     return 0;
@@ -37,10 +37,10 @@ void func_003A7200(void)
 {
     if (D_0053DC00) {
         if (D_00542878) {
-            while (func_003A85E0()) { }
+            while (snd_FlushSoundCommands()) { }
         }
         Sync3A7200(0);
-        func_003A7990(0x35, 0, 0);
+        snd_SendIOPCommandAndWait(0x35, 0, 0);
         D_0053DC00 = 0;
     }
 }

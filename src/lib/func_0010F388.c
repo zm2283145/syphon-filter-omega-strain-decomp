@@ -1,7 +1,7 @@
 extern int func_0010ED58(const char *fmt, char *ap);
 extern void func_0010EA70(void);
 extern void *D_004861A4;
-int func_0010F388(const char *fmt, ...)
+int scePrintf(const char *fmt, ...)
 {
     char *ap;
     void *old;

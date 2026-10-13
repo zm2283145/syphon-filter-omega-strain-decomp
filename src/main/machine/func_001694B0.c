@@ -14,7 +14,7 @@ extern int Archive_Open(char*, char*, int, int);
 extern void func_003E2140(char*, int);
 extern void ScriptMgr_InitClient(char*);
 extern void func_003302A0(int);
-extern void func_003F9530(char*, char*);
+extern void ArchiveList_CloseNamed(char*, char*);
 extern void ManUtils_LoadSKL(char*);
 extern void func_0036B3B0(int, int, int);
 extern void func_0042C1E0(void);
@@ -34,7 +34,7 @@ void func_001694B0(O169* o) {
         func_003E2140(D_00555070, h);
         ScriptMgr_InitClient(D_00555070);
         func_003302A0(h);
-        func_003F9530(arc, buf);
+        ArchiveList_CloseNamed(arc, buf);
     }
     ManUtils_LoadSKL(D_0055DDA0);
     func_0036B3B0(2, 0xC1C00, 16);

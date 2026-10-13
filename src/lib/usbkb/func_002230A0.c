@@ -7,7 +7,7 @@ extern char D_004F58C0[];
 extern void func_00223400(void);
 extern void WaitSema(int);
 extern int sceSifCallRpc(void *cd, int fno, int mode, void *send, int ssize, void *recv, int rsize, void *endf, void *endp);
-extern int func_0010F388(const char *, ...);
+extern int scePrintf(const char *, ...);
 int sceUsbKbSetLEDStatus(int a, unsigned char b)
 {
     int r;
@@ -18,7 +18,7 @@ int sceUsbKbSetLEDStatus(int a, unsigned char b)
     WaitSema(D_0048AB18);
     r = sceSifCallRpc(D_004F5820, 4, 1, D_004F5880, 0x10, D_004F58C0, 0x10, func_00223400, 0);
     if (r) {
-        func_0010F388("sceUsbKbSetLEDStatus: sceSifCallRpc -> %d
+        scePrintf("sceUsbKbSetLEDStatus: sceSifCallRpc -> %d
 ", r);
         return -2;
     }

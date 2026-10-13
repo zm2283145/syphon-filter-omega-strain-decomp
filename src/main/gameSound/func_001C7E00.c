@@ -23,9 +23,9 @@ extern char D_004D9DE0[];
 extern void * const D_004DAC30[];
 void* Mem_Alloc(int, int, char*, int);
 void EventQueue_Admit(SndEv_7E00*);
-void func_003A7EC0(int, int, int, int);
-void func_003A7F80(int);
-void func_003A7FB0(int);
+void snd_AutoVol(int, int, int, int);
+void snd_ContinueAllSoundsInGroup(int);
+void snd_PauseAllSoundsInGroup(int);
 }
 
 extern "C" void func_001C7E00(Self_7E00* self, int on)
@@ -44,7 +44,7 @@ extern "C" void func_001C7E00(Self_7E00* self, int on)
     if (on && !self->on) {
         if (found) {
             SndEv_7E00* e;
-            func_003A7EC0(found->handle, 0, 0x1F4, 2);
+            snd_AutoVol(found->handle, 0, 0x1F4, 2);
             {
                 AllocGuard g;
                 e = (SndEv_7E00*)Mem_Alloc(0, 0x10, D_0049F4A0, 0x591);
@@ -59,14 +59,14 @@ extern "C" void func_001C7E00(Self_7E00* self, int on)
             }
             EventQueue_Admit(e);
         } else {
-            func_003A7FB0(2);
+            snd_PauseAllSoundsInGroup(2);
         }
         self->on = 1;
     }
     if (!on && self->on) {
         if (found) {
             SndEv_7E00* e;
-            func_003A7EC0(found->handle, 0x400, 0x1F4, 2);
+            snd_AutoVol(found->handle, 0x400, 0x1F4, 2);
             {
                 AllocGuard g;
                 e = (SndEv_7E00*)Mem_Alloc(0, 0x10, D_0049F4A0, 0x5A2);
@@ -81,7 +81,7 @@ extern "C" void func_001C7E00(Self_7E00* self, int on)
             }
             EventQueue_Admit(e);
         } else {
-            func_003A7F80(2);
+            snd_ContinueAllSoundsInGroup(2);
         }
         self->on = 0;
     }

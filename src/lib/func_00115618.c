@@ -6,7 +6,7 @@ extern void func_0010D430(void);
 extern unsigned int func_0010D570(unsigned int);
 extern void func_0010FB10(void *,int);
 extern int func_0010D560(unsigned int,unsigned int);
-extern int func_0010D520(Dma5618 *,int);
+extern int sceSifSetDma(Dma5618 *,int);
 int func_00115618(char *args,int mode)
 {
  Dma5618 dma;
@@ -24,7 +24,7 @@ int func_00115618(char *args,int mode)
  dma.src=&D_004E6400;dma.dest=dest;dma.size=0x68;dma.attr=0x44;
  func_0010FB10(&D_004E6400,0x68);
  func_0010D560(4,0x40000);
- if(func_0010D520(&dma,1)){
+ if(sceSifSetDma(&dma,1)){
   func_0010D560(4,0x10000);func_0010D560(4,0x20000);
   func_0010D560(0x80000002,0);func_0010D560(0x80000000,0);
   return 1;

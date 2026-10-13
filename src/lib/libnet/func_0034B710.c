@@ -1,4 +1,4 @@
-extern int func_0010F388(const char *fmt, ...);
+extern int scePrintf(const char *fmt, ...);
 extern int func_002715D0(void *cd, unsigned int num, int mode, unsigned int bufsize, unsigned int stacksize, int prio);
 typedef struct { char pad[0x24]; void *serve; } NetCd34B710;
 int sceLibnetInitialize(NetCd34B710 *cd, unsigned int bufsize, unsigned int stacksize, int prio)
@@ -7,7 +7,7 @@ int sceLibnetInitialize(NetCd34B710 *cd, unsigned int bufsize, unsigned int stac
     if (bufsize < 0x80)
         return -0x21F;
     if (bufsize != ((bufsize + 0x3F) & ~0x3F)) {
-        func_0010F388("sceLibnetInitialize() buffersize\n");
+        scePrintf("sceLibnetInitialize() buffersize\n");
         return -0x21F;
     }
     for (;;) {

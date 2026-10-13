@@ -2,7 +2,7 @@ typedef struct { unsigned int psize : 8; unsigned int dsize : 24; void *dest; in
 typedef struct { unsigned int src; unsigned int dest; unsigned int size; unsigned int attr; } DmaT;
 extern void *D_004E2D60;
 extern void func_0010FB10(void *, int);
-extern unsigned int func_0010D520(DmaT *, int);
+extern unsigned int sceSifSetDma(DmaT *, int);
 extern unsigned int func_0010D530(DmaT *, int);
 unsigned int func_0010F810(int cid, int mode, CmdHdr *pkt, int pktsize, void *src, void *dest, int size)
 {
@@ -36,7 +36,7 @@ unsigned int func_0010F810(int cid, int mode, CmdHdr *pkt, int pktsize, void *sr
     if (mode & 1)
         return func_0010D530(dmat, count);
     else
-        return func_0010D520(dmat, count);
+        return sceSifSetDma(dmat, count);
 }
 
 

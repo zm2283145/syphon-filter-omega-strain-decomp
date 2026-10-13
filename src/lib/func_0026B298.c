@@ -4,14 +4,14 @@ typedef struct { int f0; int f4; int f8; int fc; int f10; N26B298 name; } S26B29
 typedef struct { int used; char pad[0xC]; void* buf; char pad2[0x334 - 0x14]; } E26B298;
 extern E26B298 D_004FBB88[];
 extern int sceDbcCreateSocket(S26B298* p, void* rbuf, void* sbuf);
-extern int func_0010F388(const char* fmt, ...);
+extern int scePrintf(const char* fmt, ...);
 extern void func_0026B7C0(int i);
 int func_0026B298(P26B298* p, void* buf)
 {
     S26B298 s;
     int r;
     if ((int)buf & 0x3F) {
-        func_0010F388("libpad2: buffer addr is not 64 byte align. %08x\n", buf);
+        scePrintf("libpad2: buffer addr is not 64 byte align. %08x\n", buf);
         return -1;
     }
     if (p) {

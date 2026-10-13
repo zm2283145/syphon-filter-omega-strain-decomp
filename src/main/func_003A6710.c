@@ -3,7 +3,7 @@
 #define NULL 0
 #pragma mpwc_relax on
 int LibInit_LoadIrxModule(char *, int, char *, int);          
-int func_00114F20(char *);                             
+int sceSifSearchModuleByName(char *);                             
 int func_0027C3D0();                                  
 int func_002BCA88(int);                                 
 int func_003A6390();                                  
@@ -37,7 +37,7 @@ int func_003A6710(int arg0) {
         if ((D_004934B8 != 0) && (LibInit_LoadIrxModule("DEV9.IRX", 0, NULL, 0) < 0)) {
             return 0;
         }
-        if (func_00114F20(&D_004BC670) < 0) {
+        if (sceSifSearchModuleByName(&D_004BC670) < 0) {
             return 0;
         }
         func_003A6390();

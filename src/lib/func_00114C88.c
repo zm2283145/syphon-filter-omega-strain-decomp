@@ -8,7 +8,7 @@ extern int func_001148B8(void);
 extern int func_001149B8(void);
 extern void *memcpy(void *, const void *, unsigned int);
 
-int func_00114C88(int id, int size, void *data, int *out)
+int sceSifStopModule(int id, int size, void *data, int *out)
 {
     if (func_001148B8() < 0) return -0x10000;
     if (func_001149B8() != 0) return -0x10004;

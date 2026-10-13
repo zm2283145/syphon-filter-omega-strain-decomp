@@ -1,7 +1,7 @@
 #pragma cplusplus on
 #include "types.h"
 #include "alloc_guard.h"
-struct Obj_229D30 { void* vt; char pad04[0x28]; char m2C[0xC]; void* buf; };
+#include "frontend.h"
 extern "C" {
 extern "C" void func_0012ECE0();
 extern "C" void func_0012ECF0();
@@ -15,37 +15,38 @@ extern "C" void func_001383D0();
 extern "C" void Object_BroadcastToChildren();
 extern "C" void func_003CB1E0();
 extern "C" void func_003CB1F0();
-extern void * const D_004DB810[];
-extern char D_004A6308[];
+extern void * const FrontEndScene_vtable[];
+extern char D_004A6308[]; /* "frontend.cc" */
 void Mem_Free(int pool, void* p, char* file, int line);
-void func_00229EB0(void* p);
-void func_00229B40(Obj_229D30* o, void* m);
+void func_00229EB0(void* characters);
+void FrontEndScene_UnloadSkeletons(FrontEndScene* self, void* archives);
 void func_0040F570(void);
 void func_00137670(void* p, int f);
 void func_003CAD70(void* p, int f);
 void operator_delete(void* p);
 }
-extern "C" Obj_229D30* func_00229D30(Obj_229D30* o, short flag)
+/* Deleting destructor (FrontEndScene_vtable slot 2). */
+extern "C" FrontEndScene* FrontEndScene_dtor(FrontEndScene* self, short deleteFlag)
 {
-    if (o) {
-        o->vt = ((char*)D_004DB810);
-        if (o->buf) {
-            func_00229EB0(o->buf);
+    if (self) {
+        self->vtable = ((char*)FrontEndScene_vtable);
+        if (self->characters) {
+            func_00229EB0(self->characters);
             {
-                void* p = o->buf;
+                void* p = self->characters;
                 AllocGuard g;
                 Mem_Free(0, p, D_004A6308, 0x5C);
             }
-            o->buf = 0;
+            self->characters = 0;
         }
-        func_00229B40(o, o->m2C);
+        FrontEndScene_UnloadSkeletons(self, self->archives);
         func_0040F570();
-        if (o->m2C)
-            func_00137670(o->m2C, -1);
-        func_003CAD70(o, 0);
-        if (flag > 0)
-            operator_delete(o);
+        if (self->archives)
+            func_00137670(self->archives, -1);
+        func_003CAD70(self, 0);
+        if (deleteFlag > 0)
+            operator_delete(self);
     }
-    return o;
+    return self;
 }
-void * const D_004DB810[16] = { (void*)0x0, (void*)0x0, (void*)func_00229D30, (void*)Object_BroadcastToChildren, (void*)func_0012ECE0, (void*)func_0012ECF0, (void*)func_001383D0, (void*)func_0012ED00, (void*)func_0012ED10, (void*)func_0012ED20, (void*)func_0012ED30, (void*)func_0012ED40, (void*)func_0012ED50, (void*)func_003CB1E0, (void*)func_003CB1F0, (void*)0x0 };
+void * const FrontEndScene_vtable[16] = { (void*)0x0, (void*)0x0, (void*)FrontEndScene_dtor, (void*)Object_BroadcastToChildren, (void*)func_0012ECE0, (void*)func_0012ECF0, (void*)func_001383D0, (void*)func_0012ED00, (void*)func_0012ED10, (void*)func_0012ED20, (void*)func_0012ED30, (void*)func_0012ED40, (void*)func_0012ED50, (void*)func_003CB1E0, (void*)func_003CB1F0, (void*)0x0 };

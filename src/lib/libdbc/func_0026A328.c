@@ -9,9 +9,9 @@ extern SifRpcClientData D_004F8618;
 extern int D_004FBB40[16];
 extern char D_004FBAC0[];
 extern void D_0010FBC0(int);
-extern int func_00110358(SifRpcClientData*, unsigned int, int);
+extern int sceSifBindRpc(SifRpcClientData*, unsigned int, int);
 extern int func_0026A2D0(void);
-extern int func_0010F388(const char*, ...);
+extern int scePrintf(const char*, ...);
 extern void func_0026B1C8(const char*, ...);
 extern int sceDbcSetWorkAddr(int);
 
@@ -25,7 +25,7 @@ int sceDbcInit(void)
     D_004FBB80 = 0;
     D_0010FBC0(0);
     for (;;) {
-        if (func_00110358(&D_004F85C8, 0x80001300, 0) < 0) {
+        if (sceSifBindRpc(&D_004F85C8, 0x80001300, 0) < 0) {
             func_0026B1C8("libdbc: bind failed\n");
             return 0;
         }
@@ -34,7 +34,7 @@ int sceDbcInit(void)
         while (i--) {}
     }
     for (;;) {
-        if (func_00110358(&D_004F85F0, 0x8000131B, 0) < 0) {
+        if (sceSifBindRpc(&D_004F85F0, 0x8000131B, 0) < 0) {
             func_0026B1C8("libdbc: bind failed\n");
             return 0;
         }
@@ -43,7 +43,7 @@ int sceDbcInit(void)
         while (i--) {}
     }
     for (;;) {
-        if (func_00110358(&D_004F8618, 0x8000131C, 0) < 0) {
+        if (sceSifBindRpc(&D_004F8618, 0x8000131C, 0) < 0) {
             func_0026B1C8("libdbc: bind failed\n");
             return 0;
         }
@@ -53,8 +53,8 @@ int sceDbcInit(void)
     }
     ver = func_0026A2D0();
     if ((ver >> 8) != 3) {
-        func_0010F388("libdbc: Module version mismatch ");
-        func_0010F388("[libdbc.a = %d.%d, dbcman.irx = %d.%d]\n", 3, 0, ver >> 8, ver & 0xFF);
+        scePrintf("libdbc: Module version mismatch ");
+        scePrintf("[libdbc.a = %d.%d, dbcman.irx = %d.%d]\n", 3, 0, ver >> 8, ver & 0xFF);
         return 0;
     }
     sp.initCount = 1;

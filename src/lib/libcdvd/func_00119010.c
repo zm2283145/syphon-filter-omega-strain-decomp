@@ -14,15 +14,15 @@ extern int SignalSema(int);
 extern int ReferThreadStatus(int, void *);
 extern int func_00118FA0(int);
 extern void D_0010FBC0(int);
-extern int func_00110358(RpcCd *cd, unsigned int id, int mode);
-extern int func_0010F388(const char *, ...);
+extern int sceSifBindRpc(RpcCd *cd, unsigned int id, int mode);
+extern int scePrintf(const char *, ...);
 
 int func_00119010(int cmd)
 {
     int i;
     func_00118718();
     if (D_004878AC != func_0010D1B0(D_004878AC)) {
-        if (D_00487890 > 0) func_0010F388(D_00498D30, cmd, D_00487898);
+        if (D_00487890 > 0) scePrintf(D_00498D30, cmd, D_00487898);
         return 0;
     }
     D_00487898 = cmd;
@@ -34,8 +34,8 @@ int func_00119010(int cmd)
     D_0010FBC0(0);
     if (D_004878CC >= 0) return 1;
     while (1) {
-        if (func_00110358(&D_00489400, 0x80000593, 0) < 0) {
-            if (D_00487890 > 0) func_0010F388(D_00498D58);
+        if (sceSifBindRpc(&D_00489400, 0x80000593, 0) < 0) {
+            if (D_00487890 > 0) scePrintf(D_00498D58);
             i = 0x100000;
             while (i--) ;
             continue;

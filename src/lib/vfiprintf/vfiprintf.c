@@ -2,6 +2,10 @@
  * lib/vfiprintf: 2 files, 0012B520-0012B568
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ *
+ * newlib vfiprintf.c (integer-only printf core): the unbuffered-stream helper
+ * __sbprintf; vfiprintf itself is in vfiprintf.c and _vfiprintf_r is
+ * still assembly.
  */
 
 /* merge_units: begin func_0012B520 */
@@ -14,15 +18,21 @@ DEFINE_BUFFER_RELEASE_CLEAR(func_0012B520)
 /* merge_units: end func_0012B520 */
 
 /* merge_units: begin func_0012B568 */
+/* newlib struct __sbuf / struct __sFILE (0x58 bytes) */
 typedef struct { unsigned char *_base; int _size; } SBUF;
 typedef struct {
     unsigned char *_p; int _r; int _w; short _flags; short _file; SBUF _bf; int _lbfsize;
     void *_cookie; int (*_read)(); int (*_write)(); int (*_seek)(); int (*_close)();
     SBUF _ub; unsigned char *_up; int _ur; unsigned char _ubuf[3]; unsigned char _nbuf[1];
     SBUF _lb; int _blksize; int _offset; struct _reent *_data;
-} FILE;extern int func_0012B620(FILE *, const char *, void *);
-extern int func_001234E0(FILE *);
-int func_0012B568(FILE *fp, const char *fmt, void *ap)
+} FILE;extern int vfiprintf(FILE *, const char *, void *);
+extern int func_001234E0(FILE *); /* fflush */
+/*
+ * Formats to an unbuffered stream through a temporary 1 KB buffer on the
+ * stack (a fake FILE sharing fp's write hook), then flushes it once and
+ * copies an error (__SERR, 0x40) back. __SNBF is 0x2.
+ */
+int __sbprintf(FILE *fp, const char *fmt, void *ap)
 {
     int ret;
     FILE fake;
@@ -38,7 +48,7 @@ int func_0012B568(FILE *fp, const char *fmt, void *ap)
     fake._bf._size = fake._w = sizeof(buf);
     fake._lbfsize = 0;
 
-    ret = func_0012B620(&fake, fmt, ap);
+    ret = vfiprintf(&fake, fmt, ap);
     if (ret >= 0 && func_001234E0(&fake))
         ret = -1;
     if (fake._flags & 0x40)

@@ -5,7 +5,7 @@ extern T2B4E50 D_00506B60;
 extern int DeleteSema(int);
 extern int func_0010CFB0(int);
 extern int func_0010CF70(int);
-extern int func_0010F388(const char *, ...);
+extern int scePrintf(const char *, ...);
 extern void func_002BB738(void);
 int func_002B4E50(void)
 {
@@ -14,7 +14,7 @@ int func_002B4E50(void)
     if (D_00506B60.x4 >= 0) DeleteSema(D_00506B60.x4);
     if (D_00506B60.x8 >= 0) DeleteSema(D_00506B60.x8);
     if (D_00506B60.x0 >= 0) {
-        if (func_0010CFB0(D_00506B60.x0) < 0) func_0010F388("libmc2: TerminateTread faild\n");
+        if (func_0010CFB0(D_00506B60.x0) < 0) scePrintf("libmc2: TerminateTread faild\n");
         func_0010CF70(D_00506B60.x0);
     }
     func_002BB738();

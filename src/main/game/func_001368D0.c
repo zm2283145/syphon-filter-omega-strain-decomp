@@ -6,7 +6,7 @@ extern char D_0053B540[];
 extern int sprintf(char* buf, const char* fmt, ...); /* sprintf */
 extern void* Archive_Open(void* self, const char* text, int a2, int a3);
 extern void func_00397B20(void* list, void* item);
-extern void func_003F9530(void* self, const char* text);
+extern void ArchiveList_CloseNamed(void* self, const char* text);
 extern int* SpecFx_GetEffectDef(int index);
 extern void func_0038B8B0(int slot, int value);
 
@@ -16,7 +16,7 @@ void func_001368D0(void* self)
     char buf[0x80];
     sprintf(buf, D_0049AAF0, D_0048B2F8);
     func_00397B20(D_0053B540, Archive_Open(self, buf, 1, 0));
-    func_003F9530(self, buf);
+    ArchiveList_CloseNamed(self, buf);
     func_0038B8B0(1, *SpecFx_GetEffectDef(0));
     func_0038B8B0(0, *SpecFx_GetEffectDef(1));
     func_0038B8B0(2, *SpecFx_GetEffectDef(2));

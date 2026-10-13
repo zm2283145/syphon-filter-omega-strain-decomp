@@ -8,7 +8,7 @@ extern int func_001161F8(void);
 extern Rend *func_0010FE80(void *, int);
 extern Rend *func_0010FE50(void *);
 extern int func_0010F948(unsigned int, void *, int, int, int, int);
-extern unsigned int func_0010D520(DmaT *, int);
+extern unsigned int sceSifSetDma(DmaT *, int);
 void func_00110A48(Srv *sd)
 {
     DmaT dmat[2];
@@ -52,7 +52,7 @@ void func_00110A48(Srv *sd)
     dmat[index].attr = 0;
     index++;
     do {
-        id = func_0010D520(dmat, index);
+        id = sceSifSetDma(dmat, index);
         if (id == 0) {
             i = 0x100000; while (i--) ;
         }

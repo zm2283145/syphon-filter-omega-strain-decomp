@@ -1,36 +1,40 @@
-extern int D_00492C34;
-extern char D_005332C0[];
-extern char D_00533280[];
-extern char D_004BADB8[];
-extern char D_004BADC0[];
-extern void func_0010F388(const char *, ...);
-extern int sceSifCallRpc(char *, int, int, void *, int, void *, int, void *, void *);
-extern int func_003532F8(int, int, int, int);
-int ezNetCtlSetProperties(int size)
+#include "sif_rpc_types.h"
+#include "ezNet.h"
+extern int ezNetCtl_rpcBound;
+extern char ezNetCtl_rpcBuf[];
+extern SifRpcClientData ezNetCtl_cd;
+extern char ezNetCtl_logPrefix[];
+extern char ezNetCtl_srcFile[];
+extern void scePrintf(const char *, ...);
+extern int sceSifCallRpc(SifRpcClientData *cd, int fno, int mode, void *send, int ssize, void *recv, int rsize, void *endFunc, void *endParam);
+extern int ezNetCtl_SifDmaSend(int, int, int, int);
+/* Sends the EE properties block at `props` (EZNET_RPC_BUF_SIZE bytes): asks
+ * the IOP module where to put it, DMAs it there and applies it. */
+int ezNetCtlSetProperties(int props)
 {
-    int *res = (int *)D_005332C0;
+    int *res = (int *)ezNetCtl_rpcBuf;
     int r;
-    if (!D_00492C34) {
-        func_0010F388(D_004BADB8, D_004BADC0);
-        func_0010F388("RPC service not running\n");
+    if (!ezNetCtl_rpcBound) {
+        scePrintf(ezNetCtl_logPrefix, ezNetCtl_srcFile);
+        scePrintf("RPC service not running\n");
         return -1;
     }
-    if (4 > 0x1340) { /* inlined RPC size check, constant-false here: only its message remains */
-        func_0010F388(D_004BADB8, D_004BADC0);
-        func_0010F388("RPC data size 0x%x exceeds buffer size 0x%x\n", 4, 0x1340);
+    if (4 > EZNET_RPC_BUF_SIZE) { /* inlined RPC size check, constant-false here: only its message remains */
+        scePrintf(ezNetCtl_logPrefix, ezNetCtl_srcFile);
+        scePrintf("RPC data size 0x%x exceeds buffer size 0x%x\n", 4, EZNET_RPC_BUF_SIZE);
         return -1;
     }
-    sceSifCallRpc(D_00533280, 0, 0, res, 4, res, 4, 0, 0);
+    sceSifCallRpc(&ezNetCtl_cd, EZNETCTL_FNO_GET_PROPERTIES_ADDRESS, 0, res, 4, res, 4, 0, 0);
     if (*res == 0) {
-        func_0010F388(D_004BADB8, D_004BADC0);
-        func_0010F388("eCtlGetPropertiesAddress returned NULL\n");
+        scePrintf(ezNetCtl_logPrefix, ezNetCtl_srcFile);
+        scePrintf("eCtlGetPropertiesAddress returned NULL\n");
         *res = -2;
         return -2;
     }
-    func_003532F8(size, *res, 0x1340, 0);
-    sceSifCallRpc(D_00533280, 1, 0, res, 4, res, 4, 0, 0);
+    ezNetCtl_SifDmaSend(props, *res, EZNET_RPC_BUF_SIZE, 0);
+    sceSifCallRpc(&ezNetCtl_cd, EZNETCTL_FNO_SET_PROPERTIES, 0, res, 4, res, 4, 0, 0);
     r = *res;
-    func_0010F388(D_004BADB8, D_004BADC0);
-    func_0010F388("ezNetCtlSetProperties returned %d\n", r);
+    scePrintf(ezNetCtl_logPrefix, ezNetCtl_srcFile);
+    scePrintf("ezNetCtlSetProperties returned %d\n", r);
     return r;
 }

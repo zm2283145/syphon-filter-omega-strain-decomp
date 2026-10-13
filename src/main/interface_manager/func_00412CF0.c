@@ -30,7 +30,7 @@ void Hog_Register(Hog412CF0* h, char* name, Arc412CF0* a, int z);
 int func_0036DEF0(Hog412CF0* h);
 void func_003816F0(void* mgr, Hog412CF0* h);
 Str412CF0* String_Replace(Str412CF0* self, unsigned int pos, unsigned int n, const char* first, const char* last, TagChar412CF0 tag);
-void func_003F9530(void* t, Arc412CF0* a);
+void ArchiveList_CloseNamed(void* t, Arc412CF0* a);
 }
 
 static inline void* GetData(Self412CF0* self, int idx)
@@ -84,7 +84,7 @@ extern "C" void func_00412CF0(Self412CF0* self, int idx)
         String_Replace((Str412CF0*)((char*)self + idx * (int)sizeof(Ent412CF0)), 0, (unsigned int)-1, 0, 0, tag);
     }
     *pd = 0;
-    func_003F9530(self->f1E0, *pa);
+    ArchiveList_CloseNamed(self->f1E0, *pa);
 }
 
 

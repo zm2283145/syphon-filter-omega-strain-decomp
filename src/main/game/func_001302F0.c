@@ -5,7 +5,7 @@
 /*fc*/
 char * Archive_Open(int, char *, int, int);                 
 int Hog_FindFileNoCase();                  
-int func_003F9530();                       
+int ArchiveList_CloseNamed();                       
 int sprintf();                           
 extern int D_00489BE0;
 
@@ -28,7 +28,7 @@ loop_5:
             goto loop_5;
         }
     }
-    func_003F9530(arg0 + 0x3C, temp_v0);
+    ArchiveList_CloseNamed(arg0 + 0x3C, temp_v0);
     D_00489BE0 += 1;
     return D_00489BE0;
 }

@@ -5,52 +5,58 @@
  */
 
 /* merge_units: begin func_0033F688 */
-extern int D_004928EC;
-extern char D_00533080[];
-extern char D_00533040[];
-extern char D_004B9D10[];
-extern char D_004B9D18[];
-extern int func_0010F388(const char *, ...);
-extern int sceSifCallRpc(char *, int, int, void *, int, void *, int, void *, void *);
+#include "sif_rpc_types.h"
+#include "ezNet.h"
+extern int ezNetCnf_rpcBound;
+extern char ezNetCnf_rpcBuf[];
+extern SifRpcClientData ezNetCnf_cd;
+extern char ezNetCnf_logPrefix[];
+extern char ezNetCnf_srcFile[];
+extern int scePrintf(const char *, ...);
+extern int sceSifCallRpc(SifRpcClientData *cd, int fno, int mode, void *send, int ssize, void *recv, int rsize, void *endFunc, void *endParam);
 extern void String_Copy(char *, char *);
-int ezNetCnfGetCombinationList(char *name, int a, int b)
+/* Asks the IOP module to read the combination list of configuration file
+ * `fname`; `list` is the EE address of the result it fills in. */
+int ezNetCnfGetCombinationList(char *fname, int type, int list)
 {
-    char *res = D_00533080;
-    if (!D_004928EC) {
-        func_0010F388(D_004B9D10, D_004B9D18);
-        func_0010F388("RPC service not running\n");
+    char *res = ezNetCnf_rpcBuf;
+    if (!ezNetCnf_rpcBound) {
+        scePrintf(ezNetCnf_logPrefix, ezNetCnf_srcFile);
+        scePrintf("RPC service not running\n");
         return -1;
     }
-    if (0x130 > 0x1340) { /* inlined RPC size check, constant-false here: only its message remains */
-        func_0010F388(D_004B9D10, D_004B9D18);
-        func_0010F388("RPC data size 0x%x exceeds buffer size 0x%x\n", 0x130, 0x1340);
+    if (EZNET_RPC_NAMES_SIZE > EZNET_RPC_BUF_SIZE) { /* inlined RPC size check, constant-false here: only its message remains */
+        scePrintf(ezNetCnf_logPrefix, ezNetCnf_srcFile);
+        scePrintf("RPC data size 0x%x exceeds buffer size 0x%x\n", EZNET_RPC_NAMES_SIZE, EZNET_RPC_BUF_SIZE);
         return -1;
     }
-    String_Copy(res + 0x10, name);
-    ((int *)res)[0] = b;
-    ((int *)res)[1] = a;
-    sceSifCallRpc(D_00533040, 1, 0, res, 0x130, res, 0x130, 0, 0);
-    func_0010F388(D_004B9D10, D_004B9D18);
-    func_0010F388("ezNetCnfGetCombinationList returned %d\n", *(int *)res);
+    String_Copy(res + 0x10, fname);
+    ((int *)res)[0] = list;
+    ((int *)res)[1] = type;
+    sceSifCallRpc(&ezNetCnf_cd, EZNETCNF_FNO_GET_COMBINATION_LIST, 0, res, EZNET_RPC_NAMES_SIZE, res, EZNET_RPC_NAMES_SIZE, 0, 0);
+    scePrintf(ezNetCnf_logPrefix, ezNetCnf_srcFile);
+    scePrintf("ezNetCnfGetCombinationList returned %d\n", *(int *)res);
     return *(int *)res;
 }
 /* merge_units: end func_0033F688 */
 
 /* merge_units: begin func_0033F770 */
-typedef struct { char b[0x68]; } E0033F770;
-typedef struct { int count; char pad[0x2C]; E0033F770 e[1]; } T0033F770;
-E0033F770 *ezNetCnfGetCombination(T0033F770 *t, int idx)
+/* Combination list filled in by ezNetCnfGetCombinationList: a count, then 0x68-byte entries. */
+typedef struct { char b[0x68]; } EzNetCnfCombination;
+typedef struct { int listLength; char pad[0x2C]; EzNetCnfCombination list[1]; } EzNetCnfCombinationList;
+/* Returns entry `idx` (1-based) of the list, or 0. */
+EzNetCnfCombination *ezNetCnfGetCombination(EzNetCnfCombinationList *t, int idx)
 {
-    if (t == 0 || t->count == 0) {
-        func_0010F388(D_004B9D10, D_004B9D18);
-        func_0010F388("ezNetCnfGetCombination: pList is empty\n");
+    if (t == 0 || t->listLength == 0) {
+        scePrintf(ezNetCnf_logPrefix, ezNetCnf_srcFile);
+        scePrintf("ezNetCnfGetCombination: pList is empty\n");
         return 0;
     }
-    if (idx <= 0 || t->count < idx) {
-        func_0010F388(D_004B9D10, D_004B9D18);
-        func_0010F388("ezNetCnfGetCombination: invalid Combination number (%d)\n", idx);
+    if (idx <= 0 || t->listLength < idx) {
+        scePrintf(ezNetCnf_logPrefix, ezNetCnf_srcFile);
+        scePrintf("ezNetCnfGetCombination: invalid Combination number (%d)\n", idx);
         return 0;
     }
-    return &t->e[idx - 1];
+    return &t->list[idx - 1];
 }
 /* merge_units: end func_0033F770 */

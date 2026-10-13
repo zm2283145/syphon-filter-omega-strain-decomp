@@ -4,8 +4,8 @@ typedef struct { char pad[0x24]; BufC440 *b; } CdC440;
 extern char D_004BA7D0[];
 extern void FlushCache(int mode);
 extern void *memcpy(void *d, const void *s, unsigned int n);
-extern unsigned int func_0010D520(DmaC440 *d, int n);
-extern int func_0010D500(unsigned int id);
+extern unsigned int sceSifSetDma(DmaC440 *d, int n);
+extern int sceSifDmaStat(unsigned int id);
 extern int printf(const char *fmt, ...);
 int func_0034C440(int a, int b, CdC440 *cd, void *data, int len)
 {
@@ -27,17 +27,17 @@ int func_0034C440(int a, int b, CdC440 *cd, void *data, int len)
     dma.dest = (void *)p->dest;
     dma.size = n;
     dma.attr = 0;
-    id = func_0010D520(&dma, 1);
+    id = sceSifSetDma(&dma, 1);
     if (id == 0) printf(D_004BA7D0);
-    while (func_0010D500(id) >= 0);
+    while (sceSifDmaStat(id) >= 0);
     p->pending = n;
     FlushCache(0);
     dma.src = p;
     dma.dest = (void *)p->ack;
     dma.size = 4;
     dma.attr = 0;
-    id = func_0010D520(&dma, 1);
+    id = sceSifSetDma(&dma, 1);
     if (id == 0) printf(D_004BA7D0);
-    while (func_0010D500(id) >= 0);
+    while (sceSifDmaStat(id) >= 0);
     return n;
 }

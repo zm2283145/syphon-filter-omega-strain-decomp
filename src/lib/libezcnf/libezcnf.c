@@ -5,47 +5,51 @@
  */
 
 /* merge_units: begin func_0033F508 */
-extern int D_004928E8;
-extern int D_004928EC;
-extern char D_00533040[];
-extern char D_004B9D10[], D_004B9D18[], D_004B9D28[], D_004B9D40[];
-extern int func_0010F388(const char *, ...);
-extern int func_00114F20(char *);
-extern int func_00110358(char *, int, int);
-int func_0033F508(void)
+#include "sif_rpc_types.h"
+#include "ezNet.h"
+extern int ezNetCnf_modId;
+extern int ezNetCnf_rpcBound;
+extern SifRpcClientData ezNetCnf_cd;
+extern char ezNetCnf_logPrefix[], ezNetCnf_srcFile[], ezNetCnf_msgModuleNotFound[], ezNetCnf_msgBindFailed[];
+extern int scePrintf(const char *, ...);
+extern int sceSifSearchModuleByName(char *);
+extern int sceSifBindRpc(SifRpcClientData *cd, unsigned int rpcId, int mode);
+/* Finds eznetcnf.irx and binds its RPC server (retries until bound). */
+int ezNetCnfInit(void)
 {
     int r, i;
-    if ((D_004928E8 = func_00114F20("eznetcnf")) < 0) {
-        func_0010F388(D_004B9D10, D_004B9D18);
-        func_0010F388(D_004B9D28, "eznetcnf");
+    if ((ezNetCnf_modId = sceSifSearchModuleByName("eznetcnf")) < 0) {
+        scePrintf(ezNetCnf_logPrefix, ezNetCnf_srcFile);
+        scePrintf(ezNetCnf_msgModuleNotFound, "eznetcnf");
     }
     for (;;) {
-        r = func_00110358(D_00533040, 0x75499128, 0);
+        r = sceSifBindRpc(&ezNetCnf_cd, EZNETCNF_RPC_ID, 0);
         i = 0x10000;
         if (r < 0) {
-            func_0010F388(D_004B9D10, D_004B9D18);
-            func_0010F388(D_004B9D40);
+            scePrintf(ezNetCnf_logPrefix, ezNetCnf_srcFile);
+            scePrintf(ezNetCnf_msgBindFailed);
         }
-        if (*(int *)(D_00533040 + 0x24)) break;
+        if (ezNetCnf_cd.server) break;
         while (--i != -1)
             ;
     }
-    D_004928EC = 1;
+    ezNetCnf_rpcBound = 1;
     return r;
 }
 /* merge_units: end func_0033F508 */
 
 /* merge_units: begin func_0033F608 */
-extern int func_00114C88(int fd, int a, int b, int *stat);
-extern int func_00114E90(int fd);
-int func_0033F608(void)
+extern int sceSifStopModule(int fd, int a, int b, int *stat);
+extern int sceSifUnloadModule(int fd);
+/* Stops and unloads eznetcnf.irx. */
+int ezNetCnfExit(void)
 {
     int stat;
-    if (D_004928EC == 1) {
-        if (func_00114C88(D_004928E8, 0, 0, &stat) >= 0) {
-            stat = func_00114E90(D_004928E8);
+    if (ezNetCnf_rpcBound == 1) {
+        if (sceSifStopModule(ezNetCnf_modId, 0, 0, &stat) >= 0) {
+            stat = sceSifUnloadModule(ezNetCnf_modId);
             if (stat >= 0) {
-                D_004928EC = 0;
+                ezNetCnf_rpcBound = 0;
                 stat = 0;
             }
         }

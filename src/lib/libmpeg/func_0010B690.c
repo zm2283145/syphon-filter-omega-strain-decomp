@@ -1,7 +1,7 @@
 #define F_(b, o, T) (*(T *)((char *)(b) + (o)))
 
 extern void func_0010BD58(void *, const char *, ...);
-extern void func_0010F388(const char *);
+extern void scePrintf(const char *);
 extern int func_00108130(void *);
 extern int func_0010BB28(void *);
 extern int func_0010B968(void *, int, int);
@@ -24,7 +24,7 @@ int func_0010B690(char *mp)
         return -1;
     }
     if (F_(p, 0x10A0, int)) {
-        func_0010F388(D_00498728);
+        scePrintf(D_00498728);
         return -1;
     }
     F_(p, 0x838, int) = 0;
@@ -63,7 +63,7 @@ int func_0010B690(char *mp)
             break;
         }
         if (F_(p, 0x10A0, int)) {
-            func_0010F388(D_00498768);
+            scePrintf(D_00498768);
             return -1;
         }
         if (F_(p, 0x838, int))

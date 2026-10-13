@@ -16,8 +16,8 @@ extern int func_0036D520(Arc1C98D0* a, int idx);
 extern void func_003A7330(int, int, int);
 extern void func_003A7370(int, int, int, int);
 extern void func_003A8240(void);
-extern int func_003A85E0(void);
-extern void func_003F9530(void* a, char* name);
+extern int snd_FlushSoundCommands(void);
+extern void ArchiveList_CloseNamed(void* a, char* name);
 extern int func_003F9600(void* a, char* name);
 extern int snd_BankLoadByLoc(int loc, int size);
 extern int sprintf(char*, const char*, ...);
@@ -58,7 +58,7 @@ int func_001C98D0(char* arg0) {
         if (Hog_FindFileNoCase(arc, "SHELL.BNK", 0) != -1) {
             F_(arg0, 0x549C, int) = snd_BankLoadByLoc(arc->f84, F_(arc->f148, 0x10, int) + func_0036D520(arc, Hog_FindFileNoCase(arc, "SHELL.BNK", 0)));
         }
-        func_003F9530(fs, snd);
+        ArchiveList_CloseNamed(fs, snd);
         Archive_Open(fs, vag, 1, 0);
         F_(arg0, 0x54A8, int) = func_003F9600(fs, vag);
         Archive_Open(fs, vagloc, 1, 0);
@@ -67,7 +67,7 @@ int func_001C98D0(char* arg0) {
         F_(arg0, 0x54B0, int) = func_003F9600(fs, music);
     }
     func_003A8240();
-    while (func_003A85E0()) {
+    while (snd_FlushSoundCommands()) {
     }
     return 1;
 }

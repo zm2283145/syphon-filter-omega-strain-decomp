@@ -10,7 +10,7 @@
 extern int func_0036DFB0(void*, void*, int*);
 extern int func_0036E5D0(void*);
 extern int func_003F8450(Unk3F9380*);
-extern int func_003F8D20(Unk3F9380*);
+extern int MoviePlayer_AllocBuffers(Unk3F9380*);
 
 /* Constructor: clears the object, copies *src into the second sub-object, then runs two setup passes. */
 Unk3F9380* func_003F9380(Unk3F9380* self, int* src, int arg) {
@@ -47,7 +47,7 @@ Unk3F9380* func_003F9380(Unk3F9380* self, int* src, int arg) {
     self->unk235 = 0;
     self->unk236 = 1;
     func_0036DFB0(self->unk190, src + 1, src);
-    func_003F8D20(self);
+    MoviePlayer_AllocBuffers(self);
     func_003F8450(self);
     return self;
 }

@@ -2,8 +2,8 @@ typedef struct { void *a; void *b; int n; int z; } NetReq_200;
 typedef struct { int avail; int f4; int f8; int fC; char pad[0xC]; char *base; void *f20; int pos; } NetCtx_200;
 typedef struct { char pad[0x20]; NetCtx_200 *ctx; } NetObj_200;
 extern void FlushCache(int a);
-extern int func_0010D520(NetReq_200 *req, int n);
-extern int func_0010D500(int h);
+extern int sceSifSetDma(NetReq_200 *req, int n);
+extern int sceSifDmaStat(int h);
 extern void printf(const char *s);
 extern void *memcpy(void *d, const void *s, unsigned int n);
 extern int func_0034C8E0(NetObj_200 *o, int *out);
@@ -35,10 +35,10 @@ int func_0034C200(void *cd, int *buf, NetObj_200 *o, void *dst, int len, int *ou
         c->pos = 0;
         FlushCache(0);
         req.b = c->f20; req.a = c; req.n = 4; req.z = 0;
-        h = func_0010D520(&req, 1);
+        h = sceSifSetDma(&req, 1);
         if (h == 0) printf("Error DMAing data to IOP memory!!!
 ");
-        while (func_0010D500(h) >= 0) ;
+        while (sceSifDmaStat(h) >= 0) ;
     }
     return n;
 }

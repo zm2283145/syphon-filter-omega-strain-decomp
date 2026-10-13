@@ -8,7 +8,7 @@ extern void printf(char*);
 extern void String_Copy(char*, char*);
 extern void SyncDCache(int*, char*);
 extern int sceSifCheckStatRpc(char*);
-extern void func_003A85E0(void);
+extern void snd_FlushSoundCommands(void);
 extern void FlushCache(int);
 extern int strlen(const char*);
 extern int sceSifCallRpc(char*, int, int, int*, int, int*, int, int, int);
@@ -25,7 +25,7 @@ int snd_BankLoad(char* name, int arg) {
     SyncDCache(&snd_rpcResult, D_005428C4);
     while (sceSifCheckStatRpc(snd_bankCd)) {
         if (!snd_quiet) printf(snd_rpcCollisionMsg);
-        func_003A85E0();
+        snd_FlushSoundCommands();
         FlushCache(0);
     }
     if (sceSifCallRpc(snd_bankCd, SND_BANK_RPC_LOAD, 1, &D_0053DE80, strlen(name) + 5, &snd_rpcResult, 4, 0, 0) < 0) {

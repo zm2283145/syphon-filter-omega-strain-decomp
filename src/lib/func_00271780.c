@@ -3,7 +3,7 @@ typedef struct E1780 { char p0[0x14]; int x14; int x18; int x1C; int x20; int x2
 typedef struct { int x0; int x4; int x8; int xC; int x10; char p[0x10]; int x24; int x28; int x2C; } C1780;
 extern char D_004A8CF0[];
 extern char D_004FFB00[];
-extern int func_0010F388(const char *, ...);
+extern int scePrintf(const char *, ...);
 extern void WaitSema(int);
 extern void DeleteSema(int);
 extern E1780 *func_002713C0(void *);
@@ -16,7 +16,7 @@ int func_00271780(C1780 *c, int a1)
     E1780 *e;
     int s;
     if (a1) {
-        func_0010F388(D_004A8CF0);
+        scePrintf(D_004A8CF0);
         return -1;
     }
     WaitSema(c->x28);

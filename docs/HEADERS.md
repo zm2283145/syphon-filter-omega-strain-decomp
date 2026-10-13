@@ -28,6 +28,9 @@ Rules of thumb:
 | `rtudp_types.h` | lib net: RtUdpSlot (0xC), RtUdpPeer (0x28; addr@0x12, port@0x22), RtUdpObj (0x1B4) - the 'Upnp*' objects | `RtUdpObj, RtUdpPeer` | 0 | build/agents/types1/proof/rtudp_types_a.c |
 | `script_arg.h` | ScriptArg union {i,f,p,b,c,u8} (4 bytes) for Script_* natives; include FIRST, before any *_types.h | `ScriptArg` | 0 | build/agents/types1/proof/script_arg_a.c |
 | `sif_rpc_types.h` | lib: SifRpcHeader (0x10), SifRpcClientData (0x28; server@0x24) for sceSifBindRpc/CallRpc wrappers | `SifRpcClientData` | 0 | build/agents/types1/proof/sif_rpc_types_a.c |
+| `frontend.h` | main/frontend: FrontEndScene (0x3C; archives@0x2C, characters@0x38), FrontEndScene_vtable / g_skelManager / g_dataRoot aliases | `FrontEndScene` | 4 | src/main/frontend/func_00229D30.c |
+| `movie_player.h` | main/MoviePlayer: MovieBuffers (10 x {aligned, raw}), MOVIE_BUF_SIZE_0..9, MOVIE_ALIGN64 | `MovieBuffers` | 1 | src/main/MoviePlayer/MoviePlayer.c |
+| `ezNet.h` | lib/libezcnf + libezctl: RPC server ids, function numbers, buffer sizes, aliases for modId/rpcBound/cd/rpcBuf/log strings | `EZNETCNF_*, EZNETCTL_*, ezNetCnf_*, ezNetCtl_*` | 8 | src/lib/libezctl/libezctl.c |
 | `sound_event.h` | SoundRequest (0x190), SoundEvent (0x1D0, SoundEvent_Ctor users), SoundEventP (0x1C0 aligned16, CtorFromPreset/WrapAction users) + protos | `SoundRequest, SoundEvent, SoundEventP, SOUND_EVENT_NO_PROTOS` | 0 | build/agents/types1/proof/sound_event_a.c |
 | `sso_string.h` | SsoString: 12-byte short/long string {h(isLong:1,len:7), longLen, longData}; SSO_IS_LONG; ctor/dtor/data/assign/reserve protos | `SsoString, SSO_IS_LONG, SSO_STRING_NO_PROTOS` | 0 | build/agents/types1/proof/sso_string_a.c |
 

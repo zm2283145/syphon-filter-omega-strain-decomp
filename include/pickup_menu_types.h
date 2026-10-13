@@ -1,6 +1,8 @@
 #ifndef PICKUP_MENU_TYPES_H
 #define PICKUP_MENU_TYPES_H
 
+/* Despite the name: the text object of an interface model (model +0x74) that
+ * pickup_menu's func_00251040 recolours; func_003D0810 sets its colour. */
 typedef struct PickupMenu {
     char pad00[0x10];
     char unk10;                     /* 0x10 */

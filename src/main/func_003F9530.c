@@ -7,7 +7,7 @@ int func_003F9520(int);
 int func_003F95E0(int *, int);
 int func_003F95F0(int);
 
-void func_003F9530(int arg0, int arg1) {
+void ArchiveList_CloseNamed(int arg0, int arg1) {
     int sp4C;
     int var_s0;
 

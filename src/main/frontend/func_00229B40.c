@@ -1,16 +1,17 @@
 #include "types.h"
+#include "frontend.h"
 
-extern char D_0053BB70[];
-char D_004A62F0[] = "%s\\COMMON\\SKEL.HOG"; /* format string */
-extern char D_0048B2F8[];
-extern void func_003AA320(void* obj);
-extern void sprintf(char* buf, const char* fmt, const char* arg); /* sprintf */
-extern void func_003F9530(void* str, const char* text);
+extern char g_skelManager[];
+char FrontEndScene_skelHogFmt[] = "%s\\COMMON\\SKEL.HOG";
+extern char g_dataRoot[];
+extern void Skel_FreeAll(void* skelManager);
+extern void sprintf(char* buf, const char* fmt, const char* arg);
+extern void ArchiveList_CloseNamed(void* archives, const char* name);
 
-/* Formats D_004A62F0 with D_0048B2F8 into a buffer and assigns it to str. */
-void func_00229B40(void* self, void* str) {
-    char buf[128];
-    func_003AA320(D_0053BB70);
-    sprintf(buf, D_004A62F0, D_0048B2F8);
-    func_003F9530(str, buf);
+/* Frees every loaded skeleton and closes COMMON\SKEL.HOG again (undoes FrontEndScene_LoadSkeletons). */
+void FrontEndScene_UnloadSkeletons(FrontEndScene* self, void* archives) {
+    char path[128];
+    Skel_FreeAll(g_skelManager);
+    sprintf(path, FrontEndScene_skelHogFmt, g_dataRoot);
+    ArchiveList_CloseNamed(archives, path);
 }

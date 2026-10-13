@@ -5,97 +5,105 @@
  */
 
 /* merge_units: begin func_00353070 */
-extern int D_00492C34;
-extern char D_005332C0[];
-extern char D_00533280[];
-extern char D_004BADB8[];
-extern char D_004BADC0[];
-extern char D_004BAE08[];
-extern int func_0010F388(const char *, ...);
-extern int sceSifCallRpc(char *, int, int, void *, int, void *, int, void *, void *);
+#include "sif_rpc_types.h"
+#include "ezNet.h"
+extern int ezNetCtl_rpcBound;
+extern char ezNetCtl_rpcBuf[];
+extern SifRpcClientData ezNetCtl_cd;
+extern char ezNetCtl_logPrefix[];
+extern char ezNetCtl_srcFile[];
+extern char ezNetCtl_msgNotRunning[];
+extern int scePrintf(const char *, ...);
+extern int sceSifCallRpc(SifRpcClientData *cd, int fno, int mode, void *send, int ssize, void *recv, int rsize, void *endFunc, void *endParam);
 extern void String_Copy(char *, char *);
 int ezNetCtlPreloadModemCnf(char *name)
 {
-    char *res = D_005332C0;
-    if (!D_00492C34) {
-        func_0010F388(D_004BADB8, D_004BADC0);
-        func_0010F388(D_004BAE08);
+    char *res = ezNetCtl_rpcBuf;
+    if (!ezNetCtl_rpcBound) {
+        scePrintf(ezNetCtl_logPrefix, ezNetCtl_srcFile);
+        scePrintf(ezNetCtl_msgNotRunning);
         return -1;
     }
     String_Copy(res + 0x10, name);
-    sceSifCallRpc(D_00533280, 7, 0, res, 0x130, res, 0x130, 0, 0);
-    func_0010F388(D_004BADB8, D_004BADC0);
-    func_0010F388("ezNetCtlPreloadModemCnf returned %d\n", *(int *)res);
+    sceSifCallRpc(&ezNetCtl_cd, EZNETCTL_FNO_PRELOAD_MODEM_CNF, 0, res, EZNET_RPC_NAMES_SIZE, res, EZNET_RPC_NAMES_SIZE, 0, 0);
+    scePrintf(ezNetCtl_logPrefix, ezNetCtl_srcFile);
+    scePrintf("ezNetCtlPreloadModemCnf returned %d\n", *(int *)res);
     return *(int *)res;
 }
 /* merge_units: end func_00353070 */
 
 /* merge_units: begin func_00353130 */
-extern char D_004BADB8[], D_004BADC0[], D_004BAE08[];
+extern char ezNetCtl_logPrefix[], ezNetCtl_srcFile[], ezNetCtl_msgNotRunning[];
+/* RPC function 5, no arguments; returns the reply word (role unknown). */
 int func_00353130(void)
 {
-    int *res = (int *)D_005332C0;
-    if (!D_00492C34) {
-        func_0010F388(D_004BADB8, D_004BADC0);
-        func_0010F388(D_004BAE08);
+    int *res = (int *)ezNetCtl_rpcBuf;
+    if (!ezNetCtl_rpcBound) {
+        scePrintf(ezNetCtl_logPrefix, ezNetCtl_srcFile);
+        scePrintf(ezNetCtl_msgNotRunning);
         return -1;
     }
-    sceSifCallRpc(D_00533280, 5, 0, res, 4, res, 4, 0, 0);
+    sceSifCallRpc(&ezNetCtl_cd, EZNETCTL_FNO_5, 0, res, 4, res, 4, 0, 0);
     return *res;
 }
 /* merge_units: end func_00353130 */
 
 /* merge_units: begin func_003531B8 */
+/* RPC function 6, no arguments; returns the reply word (role unknown;
+ * used by SFOLobby_Config). */
 int func_003531B8(void)
 {
-    int *res = (int *)D_005332C0;
-    if (!D_00492C34) {
-        func_0010F388(D_004BADB8, D_004BADC0);
-        func_0010F388(D_004BAE08);
+    int *res = (int *)ezNetCtl_rpcBuf;
+    if (!ezNetCtl_rpcBound) {
+        scePrintf(ezNetCtl_logPrefix, ezNetCtl_srcFile);
+        scePrintf(ezNetCtl_msgNotRunning);
         return -1;
     }
-    sceSifCallRpc(D_00533280, 6, 0, res, 4, res, 4, 0, 0);
+    sceSifCallRpc(&ezNetCtl_cd, EZNETCTL_FNO_6, 0, res, 4, res, 4, 0, 0);
     return *res;
 }
 /* merge_units: end func_003531B8 */
 
 /* merge_units: begin func_00353240 */
+/* Fills the 0x110-byte status block `buf`; its first word is the result. */
 int ezNetCtlGetStatus(int *buf)
 {
-    if (!D_00492C34) {
-        func_0010F388(D_004BADB8, D_004BADC0);
-        func_0010F388(D_004BAE08);
+    if (!ezNetCtl_rpcBound) {
+        scePrintf(ezNetCtl_logPrefix, ezNetCtl_srcFile);
+        scePrintf(ezNetCtl_msgNotRunning);
         return -1;
     }
-    sceSifCallRpc(D_00533280, 3, 0, buf, 0x110, buf, 0x110, 0, 0);
+    sceSifCallRpc(&ezNetCtl_cd, EZNETCTL_FNO_GET_STATUS, 0, buf, 0x110, buf, 0x110, 0, 0);
     if (*buf) {
-        func_0010F388(D_004BADB8, D_004BADC0);
-        func_0010F388("ezNetCtlGetStatus returned %d\n", *buf);
+        scePrintf(ezNetCtl_logPrefix, ezNetCtl_srcFile);
+        scePrintf("ezNetCtlGetStatus returned %d\n", *buf);
     }
     return *buf;
 }
 /* merge_units: end func_00353240 */
 
 /* merge_units: begin func_003532F8 */
-extern int func_0010D520(void *, int);
-extern int func_0010D500(int);
-int func_003532F8(int a, int b, int size, int wait)
+extern int sceSifSetDma(void *, int);
+extern int sceSifDmaStat(int);
+/* Copies `size` bytes from EE `src` to IOP `dst` with one SIF DMA transfer
+ * (size rounded up to 16); waits for completion unless `async`. */
+int ezNetCtl_SifDmaSend(int src, int dst, int size, int async)
 {
-    struct { int a, b, size, x; } p;
+    struct { int data, addr, size, mode; } p; /* sceSifDmaData */
     int r;
-    p.a = a;
-    p.b = b;
+    p.data = src;
+    p.addr = dst;
     p.size = (size + 0xF) & ~0xF;
-    p.x = 0;
+    p.mode = 0;
     if (size & 0xF) {
-        func_0010F388(D_004BADB8, D_004BADC0);
-        func_0010F388("SIF DMA transfer size %d padded to %d\n", size, p.size);
+        scePrintf(ezNetCtl_logPrefix, ezNetCtl_srcFile);
+        scePrintf("SIF DMA transfer size %d padded to %d\n", size, p.size);
     }
     do {
-        r = func_0010D520(&p, 1);
+        r = sceSifSetDma(&p, 1);
     } while (r == 0);
-    if (!wait)
-        while (func_0010D500(r) >= 0)
+    if (!async)
+        while (sceSifDmaStat(r) >= 0)
             ;
     return r;
 }

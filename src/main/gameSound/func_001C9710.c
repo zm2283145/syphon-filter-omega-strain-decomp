@@ -4,9 +4,9 @@ typedef struct { char pad[0x90]; void* ptr; unsigned char flag; char pad2[0x1B0 
 extern void func_003A7FE0(void);
 extern void func_003A7310(void);
 extern void func_003A7200(void);
-extern void func_003A8210(int);
-extern int func_003A85E0(void);
-extern void func_003F9530(void* a, char* name);
+extern void snd_UnloadBank(int);
+extern int snd_FlushSoundCommands(void);
+extern void ArchiveList_CloseNamed(void* a, char* name);
 extern int sprintf(char*, const char*, ...);
 extern char D_0048B2F8[];
 extern char D_004FFB8C[];
@@ -40,11 +40,11 @@ void func_001C9710(char* arg0) {
         e[0].flag = 0; e[0].ptr = 0;
         e[1].flag = 0; e[1].ptr = 0;
     }
-    if (F_(arg0, 0x5494, int)) func_003A8210(F_(arg0, 0x5494, int));
-    if (F_(arg0, 0x5490, int)) func_003A8210(F_(arg0, 0x5490, int));
-    if (F_(arg0, 0x5498, int)) func_003A8210(F_(arg0, 0x5498, int));
-    if (F_(arg0, 0x549C, int)) func_003A8210(F_(arg0, 0x549C, int));
-    while (func_003A85E0()) {
+    if (F_(arg0, 0x5494, int)) snd_UnloadBank(F_(arg0, 0x5494, int));
+    if (F_(arg0, 0x5490, int)) snd_UnloadBank(F_(arg0, 0x5490, int));
+    if (F_(arg0, 0x5498, int)) snd_UnloadBank(F_(arg0, 0x5498, int));
+    if (F_(arg0, 0x549C, int)) snd_UnloadBank(F_(arg0, 0x549C, int));
+    while (snd_FlushSoundCommands()) {
     }
     {
     char a[0x80];
@@ -54,9 +54,9 @@ void func_001C9710(char* arg0) {
     sprintf(a, D_0049F550, D_0048B2F8, D_004FFC90);
     sprintf(b, D_0049F570);
     sprintf(c, D_0049F590, D_004FFC90);
-    func_003F9530(fs, a);
-    func_003F9530(fs, b);
-    func_003F9530(fs, c);
+    ArchiveList_CloseNamed(fs, a);
+    ArchiveList_CloseNamed(fs, b);
+    ArchiveList_CloseNamed(fs, c);
     }
     F_(arg0, 0x54A8, int) = 0;
     F_(arg0, 0x54AC, int) = 0;

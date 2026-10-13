@@ -13,7 +13,7 @@ extern int sceDbcSendData3(int, int, void *, void *, void *);
 extern void func_002BB660(void);
 extern E2BB520 *func_002BB520(int);
 extern char D_004AC248[];
-extern int func_0010F388(const char *, ...);
+extern int scePrintf(const char *, ...);
 extern void *memcpy(void *, const void *, unsigned int);
 extern void SyncDCache(void *, void *);
 int func_002BC2D8(int i, char *buf, int sec, int n)
@@ -23,7 +23,7 @@ int func_002BC2D8(int i, char *buf, int sec, int n)
     if (func_0026A8C8(D_00518A08[i].sock) == 3) return 0;
     size = D_00518A08[i].s.x8 * n;
     if (size > 0x2000) {
-        func_0010F388(D_004AC248);
+        scePrintf(D_004AC248);
         return 0;
     }
     D_00518A40.x0 = sec;

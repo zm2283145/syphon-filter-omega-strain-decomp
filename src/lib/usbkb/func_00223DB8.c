@@ -1,5 +1,5 @@
 extern const unsigned short D_004A4E50[2][256],D_004A5250[2][256],D_004A5650[2][256];
-extern int func_0010F388(const char *,...);
+extern int scePrintf(const char *,...);
 extern unsigned short func_00223F10(unsigned char,unsigned char);
 unsigned short func_00223DB8(int type,int mods,int locks,unsigned short key)
 {
@@ -10,7 +10,7 @@ unsigned short func_00223DB8(int type,int mods,int locks,unsigned short key)
  case 0:table=D_004A4E50[shift];break;
  case 1:table=D_004A5250[shift];break;
  case 2:table=D_004A5650[shift];break;
- default:func_0010F388("Arrangement error!\n");break;
+ default:scePrintf("Arrangement error!\n");break;
  }
  if(!key)return 0;
  if(key>=256)return key;

@@ -12,7 +12,7 @@ extern int func_00118CD8(Info3A6DA0* out, char* name);
 extern char* strncpy(char* d, const char* s, int n);
 extern void SyncDCache(void* p, char* k);
 extern void InvalidDCache(void* p, char* k);
-extern int func_003A7990(int cmd, int size, void* req);
+extern int snd_SendIOPCommandAndWait(int cmd, int size, void* req);
 }
 #pragma push
 #pragma opt_unroll_count 2
@@ -27,7 +27,7 @@ extern "C" int func_003A6DA0(Info3A6DA0* out, char* name)
     req.path[0xFB] = 0;
     k = D_00493500->sync;
     SyncDCache(D_00493500, k);
-    r = func_003A7990(0x69, 0x100, &req);
+    r = snd_SendIOPCommandAndWait(0x69, 0x100, &req);
     if (r == 1) {
         InvalidDCache(D_00493500, k);
         *out = D_00493500->info;

@@ -1,5 +1,5 @@
 typedef struct { char pad[0x30]; int bufsize; } NetCd_7A8;
-extern int func_0010F388(const char *fmt, ...);
+extern int scePrintf(const char *fmt, ...);
 extern int sceSifMCallRpc(void *cd, unsigned int fno, unsigned int mode, void *send, int ssize, void *recv, int rsize, void *end, void *edata);
 int func_0034A7A8(NetCd_7A8 *cd, int fno, void *buf, int ssize, int rsize)
 {
@@ -8,7 +8,7 @@ int func_0034A7A8(NetCd_7A8 *cd, int fno, void *buf, int ssize, int rsize)
     rsize = (rsize + 63) & ~63;
     bsize = cd->bufsize;
     if (bsize < ssize || bsize < rsize) {
-        func_0010F388("CallRpc() in Libnet send:%d, recv:%d, max:%d
+        scePrintf("CallRpc() in Libnet send:%d, recv:%d, max:%d
 ", ssize, rsize, bsize);
         return -0x21F;
     }

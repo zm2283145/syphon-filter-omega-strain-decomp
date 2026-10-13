@@ -2,7 +2,7 @@
 
 extern void D_0010FBC0(int a);
 extern int sceCdInit(int mode);
-extern int func_0010F388(const char* fmt, ...);
+extern int scePrintf(const char* fmt, ...);
 extern int sceSifRebootIop(const char* img);
 extern int func_00115798(void);
 extern int func_00114368(void);
@@ -17,7 +17,7 @@ void LibInitModules(int flash)
     D_0010FBC0(0);
     sceCdInit(0);
     if (flash) {
-        func_0010F388("\nLibInitModules(): Flashing IOP... (%s)\n\n", D_00493480);
+        scePrintf("\nLibInitModules(): Flashing IOP... (%s)\n\n", D_00493480);
         while (!sceSifRebootIop(D_00493480)) {
         }
         while (!func_00115798()) {
@@ -28,18 +28,18 @@ void LibInitModules(int flash)
     sceCdInit(0);
     switch (func_00119AF0()) {
     case 0xFF:
-        func_0010F388("Disk Type= IllegalMedia\n");
+        scePrintf("Disk Type= IllegalMedia\n");
         break;
     case 0x14:
-        func_0010F388("Disk Type= PlayStation2 DVD\n");
+        scePrintf("Disk Type= PlayStation2 DVD\n");
         func_00119D90(2);
         break;
     case 0x12:
-        func_0010F388("Disk Type= PlayStation2 CD\n");
+        scePrintf("Disk Type= PlayStation2 CD\n");
         func_00119D90(1);
         break;
     default:
-        func_0010F388("Disk Type= OTHER DISK\n");
+        scePrintf("Disk Type= OTHER DISK\n");
         break;
     }
     func_00111578();

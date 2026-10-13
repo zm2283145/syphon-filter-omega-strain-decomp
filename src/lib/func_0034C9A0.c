@@ -1,7 +1,7 @@
 typedef struct { void *a; void *b; int n; int z; } NetReq_9A0;
 extern void FlushCache(int a);
-extern int func_0010D520(NetReq_9A0 *req, int n);
-extern int func_0010D500(int h);
+extern int sceSifSetDma(NetReq_9A0 *req, int n);
+extern int sceSifDmaStat(int h);
 int func_0034C9A0(void *a, void *b, int n)
 {
     NetReq_9A0 req;
@@ -12,9 +12,9 @@ int func_0034C9A0(void *a, void *b, int n)
     if (n == 0) return ret;
     FlushCache(0);
     req.a = a; req.b = b; req.n = n; req.z = 0;
-    h = func_0010D520(&req, 1);
+    h = sceSifSetDma(&req, 1);
     ret = 4;
     if (h == 0) return ret;
-    while (func_0010D500(h) >= 0) ;
+    while (sceSifDmaStat(h) >= 0) ;
     return 0;
 }

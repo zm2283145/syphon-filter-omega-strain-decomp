@@ -2,7 +2,7 @@
 typedef struct { void* src; void* dest; int size; int attr; } Dma3F6630;
 extern "C" {
 void FlushCache(int);
-int func_0010D520(Dma3F6630*, int);
+int sceSifSetDma(Dma3F6630*, int);
 }
 static inline void Send3F6630(void* src, void* dest, int size)
 {
@@ -12,7 +12,7 @@ static inline void Send3F6630(void* src, void* dest, int size)
     t.dest = dest;
     t.size = size;
     t.attr = 0;
-    while (func_0010D520(&t, 1) == 0) {
+    while (sceSifSetDma(&t, 1) == 0) {
     }
 }
 extern "C" int func_003F6630(void* self, char* dst, int len, char* dst2, int len2, char* src, int n1, char* src2, int n2)

@@ -5,7 +5,7 @@ extern unsigned char D_004F5880[];
 extern char D_004F58C0[];
 extern KbState D_004F5780;
 extern int WaitSema(int);
-extern int func_0010F388(const char *, ...);
+extern int scePrintf(const char *, ...);
 extern void func_00223400(void *);
 extern int sceSifCallRpc(void *cd, int fno, int mode, void *send, int ssize, void *recv, int rsize, void *endf, void *endp);
 
@@ -20,7 +20,7 @@ int sceUsbKbRead(unsigned int port, void *data)
     WaitSema(D_0048AB18);
     r = sceSifCallRpc(D_004F5820, 2, 1, D_004F5880, 0x10, D_004F58C0, 0x50, func_00223400, 0);
     if (r != 0) {
-        func_0010F388("sceUsbKbRead: sceSifCallRpc -> %d
+        scePrintf("sceUsbKbRead: sceSifCallRpc -> %d
 ", r);
         return -2;
     }

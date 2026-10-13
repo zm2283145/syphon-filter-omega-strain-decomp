@@ -2,7 +2,7 @@ extern char D_004E4780[];
 extern int *func_0010FD88(void *);
 extern void func_0010FE30(void *),DeleteSema(int),WaitSema(int);
 extern int CreateSema(void *),func_0010F948(unsigned,void *,int,void *,int,int);
-int func_00110358(int *client,int sid,int mode){
+int sceSifBindRpc(int *client,int sid,int mode){
  int sem[8],*packet;
  client[4]=0;client[9]=0;
  packet=func_0010FD88(D_004E4780);

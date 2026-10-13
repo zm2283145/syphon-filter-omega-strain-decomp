@@ -7,7 +7,7 @@ extern volatile int g_DmeThreadId;
 extern int D_00572508;
 extern char D_004BF990[]; /* "\n\n\t\tERROR IN iWAKEUPTHREAD\n" */
 extern int iWakeupThread(int a);
-extern void func_0010F388(const char* s); /* printf-like */
+extern void scePrintf(const char* s); /* printf-like */
 /* sync + ei (enable interrupts) have no C equivalent */
 static inline void EI4292B0(void) { asm { sync }
     asm { ei } }
@@ -25,7 +25,7 @@ int DME_TimerHandler(void)
     if (D_00572528 && (unsigned)(D_00572538 - g_DmeLastWakeTick) >= 100) {
         int woken = iWakeupThread(g_DmeThreadId);
         if (woken != g_DmeThreadId)
-            func_0010F388(D_004BF990);
+            scePrintf(D_004BF990);
         T0_COUNT = 0;
         D_00572508 = 0;
         g_DmeLastWakeTick = D_00572538;

@@ -7444,5 +7444,13 @@
   "main/AgentData/func_00333600": "cwps2-3.0b38",
   "main/func_003E7D60": "cwps2-3.0b38",
   "main/NetObj/func_003FB750": "cwps2-3.0b38",
-  "main/sinit/func_004CC810": "cwps2-3.0b38"
+  "main/sinit/func_004CC810": "cwps2-3.0b38",
+  "main/func_0013C800": "cwps2-3.0b38",
+  "main/npc/func_00157DF0": "cwps2-3.0b38",
+  "main/vu1model/func_00376AD0": "cwps2-3.0b38",
+  "main/xlib/func_0037BD40": "cwps2-3.0b38",
+  "main/texman/func_00381F30": "cwps2-3.0b38",
+  "main/man/func_00390570": "cwps2-3.0b38",
+  "main/scriptManager/func_003E2150": "cwps2-3.0b38",
+  "main/guiManager/func_00418E00": "cwps2-3.0b38"
 }

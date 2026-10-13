@@ -8,7 +8,7 @@ extern void func_00357D88(void *);
 extern int func_003581C0(void);
 extern int func_00358158(void);
 extern int func_0010D050(void);
-extern int func_0010D170(int);
+extern int DeleteSema(int);
 extern int D_00492CE0;
 extern int *func_00123320(void);
 

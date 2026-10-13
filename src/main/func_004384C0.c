@@ -21,12 +21,12 @@ extern int D_00582D18;
 extern int D_00582D10;
 void func_002EB650(P_4384C0** out, void* s);
 void func_002EC460(void* s);
-int func_00325A28(int h);
+int lgAudStopRecording(int h);
 int func_0042B1A0(int v);
 int lgAudEnumerate(int a, char* b);
 int lgAudOpen(int a, Cfg_4384C0* c, int* h);
-void func_00325D48(int h, int a, int b);
-void func_00325E40(int h, int a, int b);
+void lgAudSetLevel0D(int h, int a, int b);
+void lgAudSetLevel0E(int h, int a, int b);
 void func_0042C1E0(void);
 void lgAudStartPlayback(int h);
 void lgAudStopPlayback(int h);
@@ -44,7 +44,7 @@ static inline int Owner_4384C0(void)
 static inline void Stop_4384C0(void)
 {
     if (D_00582B88) {
-        if (func_00325A28(D_00497548) == 0x80000006) D_00582B88 = 0;
+        if (lgAudStopRecording(D_00497548) == 0x80000006) D_00582B88 = 0;
         D_00582D08 = func_0042B1A0(1) + 2000;
     }
 }
@@ -75,8 +75,8 @@ unsigned char func_004384C0(void)
         c.f = 200;
         c.e = 8000;
         if (lgAudOpen(0, &c, &D_00497548) == 0) {
-            func_00325D48(D_00497548, 0, 0x58);
-            func_00325E40(D_00497548, 0, 0x15);
+            lgAudSetLevel0D(D_00497548, 0, 0x58);
+            lgAudSetLevel0E(D_00497548, 0, 0x15);
             func_0042C1E0();
             if (D_00582B88) lgAudStartPlayback(D_00497548);
             D_00582B88 = 1;

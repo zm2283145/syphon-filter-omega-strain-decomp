@@ -9,7 +9,7 @@ extern char* D_0048BBE0;
 void func_0033C320(S_002A8D60* self, int a);
 int func_0033D8C0(S_002A8D60* self);
 void func_0033D8E0(S_002A8D60* self, int a);
-void* func_004294C0(void);
+void* DME_GetLobby(void);
 void func_004515F0(void* g, int a);
 char* Loc_LookupText(char* key);
 void func_0041BEB0(void* w, char* s, int a);
@@ -33,16 +33,16 @@ extern "C" int func_002A8D60(S_002A8D60* self, void* w, int msg, int sub, char* 
             if ((unsigned char)func_0033D8C0(self) == 2) {
                 char* t;
                 func_0033D8E0(self, 0);
-                if (func_004294C0())
-                    func_004515F0(func_004294C0(), 1);
+                if (DME_GetLobby())
+                    func_004515F0(DME_GetLobby(), 1);
                 t = Loc_LookupText(D_0048BBD8);
                 if (t && self->p160)
                     func_0041BEB0(self->p160, t, 0);
             } else {
                 char* t;
                 func_0033D8E0(self, 2);
-                if (func_004294C0())
-                    func_004515F0(func_004294C0(), 0);
+                if (DME_GetLobby())
+                    func_004515F0(DME_GetLobby(), 0);
                 t = Loc_LookupText(D_0048BBE0);
                 if (t && self->p160)
                     func_0041BEB0(self->p160, t, 0);

@@ -33,7 +33,7 @@ void func_002C9C80(Self_002CB160* self, int a);
 void* Service_Lookup(void* a, void* b);
 char* strncpy(char* d, const char* s, int n);
 void func_001C9710(void* svc);
-void* func_004294C0(void);
+void* DME_GetLobby(void);
 void func_004538D0(void* g);
 void func_0037E320(void* p);
 void func_002CDEF0(Node_002CB160** out, int* list, Node_002CB160** first, Node_002CB160** last);
@@ -84,8 +84,8 @@ extern "C" void func_002CB160(Self_002CB160* self)
                 func_001C9710(svc);
                 strncpy(D_004FFC90, buf.s, 0x80);
             }
-            if (func_004294C0())
-                func_004538D0(func_004294C0());
+            if (DME_GetLobby())
+                func_004538D0(DME_GetLobby());
             func_0037E320(D_005381F0);
         }
         self->b29 = 0;

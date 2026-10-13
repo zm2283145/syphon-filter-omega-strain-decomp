@@ -13,7 +13,7 @@
 typedef struct { char pad[0x40]; int sema; } Dev40;
 extern void func_001161A0(void); /* DI */
 extern void func_001161F8(void); /* EI */
-extern void func_0010D170(int sema);
+extern void DeleteSema(int sema);
 
 /* Stops DMA channel 4 (with the DMAC suspended), clears its registers and signals the semaphore. */
 int Dma4_Stop(Dev40* self)
@@ -26,6 +26,6 @@ int Dma4_Stop(Dev40* self)
     D4_QWC = 0;
     D4_MADR = 0;
     D4_TADR = 0;
-    func_0010D170(self->sema);
+    DeleteSema(self->sema);
     return 1;
 }

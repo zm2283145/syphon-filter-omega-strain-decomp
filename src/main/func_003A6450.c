@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-extern void func_0010D190(void);
+extern void iSignalSema(void);
 
 void func_003A6450(void) {
-    func_0010D190();
+    iSignalSema();
 }

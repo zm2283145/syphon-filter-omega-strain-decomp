@@ -9,7 +9,7 @@
 #pragma cplusplus on
 #include "types.h"
 #include "alloc_guard.h"
-#define F_(b, o, T) (*(T*)((char*)(b) + (o)))
+#include "flashlight.h"
 #define NULL 0
 #define VC_(p) ((int (*)())(p))
 #pragma mpwc_relax on
@@ -23,34 +23,34 @@ int TargetVis_Unregister(...);
 int operator_delete(...);
 extern char g_TargetVisMgr;
 extern unsigned char D_00533880;
-typedef struct { char p0[8]; int f8; int fC; char p10[8]; int f18; } PS0_0045B990;
 }
-extern "C" char * Flashlight_Destroy(PS0_0045B990 *arg0, long long arg1) {
-    void **temp_s1;
-    char * temp_a0;
-    char * temp_a0_2;
+/* Deleting destructor (called as (fl, 1) from 001b57c0); frees the object when (short)flags > 0. */
+extern "C" char * Flashlight_Destroy(Flashlight *fl, long long flags) {
+    void **spot;
+    char * light;
+    char * glare;
 
-    if (arg0 != NULL) {
-        TargetVis_Unregister(&g_TargetVisMgr, arg0->f18);
-        temp_a0 = (char *)(arg0->f8);
-        if ((temp_a0 != NULL) && (temp_a0 != NULL)) {
-            ((VC0045B990 *)(temp_a0))->v0(1);
+    if (fl != NULL) {
+        TargetVis_Unregister(&g_TargetVisMgr, fl->litSpot);
+        light = (char *)(fl->beamLight);
+        if ((light != NULL) && (light != NULL)) { /* inlined delete */
+            ((VC0045B990 *)(light))->v0(1);
         }
-        temp_a0_2 = (char *)(arg0->fC);
-        if ((temp_a0_2 != NULL) && (temp_a0_2 != NULL)) {
-            ((VC0045B990 *)(temp_a0_2))->v0(1);
+        glare = (char *)(fl->glareLight);
+        if ((glare != NULL) && (glare != NULL)) {
+            ((VC0045B990 *)(glare))->v0(1);
         }
-        temp_s1 = (void **)(arg0->f18);
+        spot = (void **)(fl->litSpot);
         {
             AllocGuard g;
-        ((VD0045B990 *)(temp_s1))->v0(-1);
-        Mem_Free(0, temp_s1, "flashlight.cc", 0x58);
+        ((VD0045B990 *)(spot))->v0(-1);
+        Mem_Free(0, spot, "flashlight.cc", 0x58);
         }
-        if (((long long) (arg1 << 0x30) >> 0x30) > 0) {
-            operator_delete(arg0);
+        if (((long long) (flags << 0x30) >> 0x30) > 0) {
+            operator_delete(fl);
         }
     }
-    return (char *)(arg0);
+    return (char *)(fl);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0045B990 */
@@ -63,37 +63,37 @@ extern "C" char * Flashlight_Destroy(PS0_0045B990 *arg0, long long arg1) {
 
 struct VC0045BAD0 { virtual int v0(); virtual int v1(); virtual int v2(); virtual int v3(); virtual int v4(); virtual int v5(); virtual int v6(); virtual int v7(); virtual int v8(); virtual int v9(); virtual int v10(); virtual int v11(); virtual int v12(); virtual int v13(); virtual int v14(); virtual int v15(); virtual int v16(); virtual int v17(); virtual int v18(); virtual int v19(); virtual int v20(); virtual int v21(); virtual int v22(); virtual int v23(); virtual int v24(); virtual int v25(); virtual int v26(); virtual int v27(); virtual int v28(); virtual int v29(); virtual int v30(); virtual int v31(); virtual int v32(); virtual int v33(); virtual int v34(...); };
 extern "C" {
-int IdMgr_Allocate(...);                           
-void **Mem_Alloc(...);                     
-void **cGOBJ_ctor(...);          
+int IdMgr_Allocate(...);
+void **Mem_Alloc(...);
+void **cGOBJ_ctor(...);
 extern char D_004C2018;
-extern char D_0055C9F0;
+extern char D_0055C9F0; /* identity matrix */
 }
-extern "C" char * Flashlight_Construct(char * arg0, int arg1) {
-    int sp4C;
-    int sp48;
-    void **temp_a0;
-    void **var_s2;
+extern "C" Flashlight * Flashlight_Construct(Flashlight * fl, int owner) {
+    int kind;
+    int id;
+    void **spotObj;
+    void **obj;
 
     {
         AllocGuard g;
-    var_s2 = Mem_Alloc(0, 0x60, &D_004C2018, 0x42);
+    obj = Mem_Alloc(0, 0x60, &D_004C2018, 0x42); /* "flashlight.cc" */
     }
-    if (var_s2 != NULL) {
-        sp4C = 0;
-        IdMgr_Allocate(&sp48, 0xE7);
-        var_s2 = cGOBJ_ctor(var_s2, &sp48, 0, &sp4C);
+    if (obj != NULL) {
+        kind = 0;
+        IdMgr_Allocate(&id, FLASHLIGHT_LITSPOT_ID_CATEGORY);
+        obj = cGOBJ_ctor(obj, &id, 0, &kind);
     }
-    F_(arg0, 0x18, int) = (int)(var_s2);
-    temp_a0 = (void **)(F_(arg0, 0x18, int));
-    ((VC0045BAD0 *)(temp_a0))->v34(&D_0055C9F0, 0);
-    F_(arg0, 0x0, unsigned char) = 0;
-    F_(arg0, 0x8, int) = 0;
-    F_(arg0, 0xC, int) = 0;
-    F_(arg0, 0x4, int) = arg1;
-    F_(arg0, 0x10, int) = 0xBF800000;
-    F_(arg0, 0x14, int) = 0;
-    return arg0;
+    fl->litSpot = obj;
+    spotObj = (void **)(fl->litSpot);
+    ((VC0045BAD0 *)(spotObj))->v34(&D_0055C9F0, 0); /* vcall +0x90: set transform to identity */
+    fl->on = 0;
+    fl->beamLight = 0;
+    fl->glareLight = 0;
+    fl->owner = (void *)owner;
+    *(int *)&fl->beamLength = 0xBF800000; /* -1.0f */
+    *(int *)&fl->beamSpeed = 0;
+    return fl;
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0045BAD0 */

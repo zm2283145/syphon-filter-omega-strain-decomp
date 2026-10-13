@@ -12,7 +12,7 @@ extern SysH D_004E2D80[32];
 extern int D_004E2F00[32];
 extern int func_001161A0(void);
 extern int func_001161F8(void);
-extern void func_0010D3E0(int);
+extern void FlushCache(int);
 extern void func_0010D540(void);
 extern int func_0010D560(unsigned int, unsigned int);
 extern unsigned int func_0010D570(unsigned int);
@@ -51,7 +51,7 @@ void func_0010F460(void)
     D_004E2D80[1].func = func_0010F3E8;
     D_004E2D80[1].data = &D_004E2D58;
     func_001161F8();
-    func_0010D3E0(0);
+    FlushCache(0);
     if (R(0x1000E010) & 0x20)
         R(0x1000E010) = 0x20;
     if (!(R(0x1000C000) & 0x100))

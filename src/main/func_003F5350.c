@@ -9,13 +9,13 @@ typedef struct Counter48 {
     long long total;    /* 0x48 */
 } Counter48;
 
-extern void func_0010D1A0(void* lock);
-extern void func_0010D180(void* lock);
+extern void WaitSema(void* lock);
+extern void SignalSema(void* lock);
 
 /* Under the lock, adds n to both counters. */
 void func_003F5350(Counter48* c, int n) {
-    func_0010D1A0(c->lock);
+    WaitSema(c->lock);
     c->count += n;
     c->total += n;
-    func_0010D180(c->lock);
+    SignalSema(c->lock);
 }

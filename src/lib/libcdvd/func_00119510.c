@@ -12,12 +12,12 @@ extern char D_00498DB8[];
 extern char D_00498DD8[];
 extern void func_00118718(void);
 extern int func_0010D1B0(int);
-extern int func_0010D180(int);
+extern int SignalSema(int);
 extern int func_00118FA0(int);
 extern void D_0010FBC0(int);
 extern void func_0010FB10(void *, int);
 extern int func_00110358(RpcCd *cd, unsigned int id, int mode);
-extern int func_00110528(RpcCd *, int, int, void *, int, void *, int, void *, void *);
+extern int sceSifCallRpc(RpcCd *, int, int, void *, int, void *, int, void *, void *);
 extern void func_0010F388(const char *, ...);
 
 /* busy-wait; the nop has no C equivalent */
@@ -30,7 +30,7 @@ int func_00119510(int mode)
     func_00118718();
     if (D_004878AC != func_0010D1B0(D_004878AC)) return 6;
     if (func_00118FA0(1)) {
-        func_0010D180(D_004878AC);
+        SignalSema(D_004878AC);
         return mode != 8 ? 6 : -1;
     }
     D_0010FBC0(0);
@@ -50,13 +50,13 @@ int func_00119510(int mode)
     }
     D_004E9F90 = mode;
     func_0010FB10(&D_004E9F90, 4);
-    if (func_00110528(&D_004E9F50, 0, 0, &D_004E9F90, 4, D_00488A80, 4, 0, 0) < 0) {
-        func_0010D180(D_004878AC);
+    if (sceSifCallRpc(&D_004E9F50, 0, 0, &D_004E9F90, 4, D_00488A80, 4, 0, 0) < 0) {
+        SignalSema(D_004878AC);
         return mode != 8 ? 6 : -1;
     }
     if (D_00487890 > 0) func_0010F388(D_00498DD8);
     ret = *(int *)((int)D_00488A80 | 0x20000000);
-    func_0010D180(D_004878AC);
+    SignalSema(D_004878AC);
     return ret;
 }
 

@@ -27,8 +27,8 @@ typedef struct {
 
 extern void func_001161A0(void);
 extern void func_001161F8(void);
-extern void func_0010D1A0(int sema);
-extern void func_0010D180(int sema);
+extern void WaitSema(int sema);
+extern void SignalSema(int sema);
 
 int func_003F5050(IpuRing* s)
 {
@@ -41,9 +41,9 @@ int func_003F5050(IpuRing* s)
     int cnt;
     int i;
 
-    func_0010D1A0(s->sema);
+    WaitSema(s->sema);
     if (!s->active) {
-        func_0010D180(s->sema);
+        SignalSema(s->sema);
         return 0;
     }
     func_001161A0();
@@ -91,7 +91,7 @@ int func_003F5050(IpuRing* s)
         DMAC_ENABLEW = DMAC_ENABLER & ~0x10000;
         func_001161F8();
     }
-    func_0010D180(s->sema);
+    SignalSema(s->sema);
     return 1;
 }
 

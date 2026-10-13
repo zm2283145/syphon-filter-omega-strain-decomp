@@ -5,7 +5,7 @@ extern int Gui_GetScreenList(void);
 extern void* func_00418A80(int, char*, char*);
 extern int Gui_GetScreenStack(void);
 extern void GuiStack_SwapScreens(int, O29D*, void*);
-extern int func_004294C0(void);
+extern int DME_GetLobby(void);
 extern void SFOLobby_LeaveNetworkState(int);
 extern int D_004FFC04;
 extern void func_002CA640(int, int);
@@ -18,7 +18,7 @@ void func_0029DE70(O29D* o, int show) {
     void* w = func_00418A80(Gui_GetScreenList(), "GuiOnlineOfflineSelect", "ONOFFSEL");
     GuiStack_SwapScreens(Gui_GetScreenStack(), o, w);
     if (o->b94) {
-        if (func_004294C0()) SFOLobby_LeaveNetworkState(func_004294C0());
+        if (DME_GetLobby()) SFOLobby_LeaveNetworkState(DME_GetLobby());
         o->b94 = 0;
     }
     func_002CA640(D_004FFC04, 1);

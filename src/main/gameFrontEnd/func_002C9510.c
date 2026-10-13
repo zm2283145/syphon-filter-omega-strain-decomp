@@ -22,8 +22,8 @@ extern char D_005381F0[];
 void func_00412ED0(void* p);
 W_002C9510* func_001698C0(void);
 void func_003D1730(void* p);
-G_002C9510* func_004294C0(void);
-void func_0042A770(void);
+G_002C9510* DME_GetLobby(void);
+void DME_StartThread(void);
 int Gui_GetScreenStack(void);
 void func_0041E0F0(int a, int b, int c, int d, int e);
 char* strncpy(char* d, const char* s, int n);
@@ -32,7 +32,7 @@ void Event_Construct(void* m, void* type);
 void Event_Send(void* m, void* target, int immediate);
 void cMessage_dtor(void* m, int flags);
 void func_002C9AF0(Self_002C9510* self, int v);
-void func_0042A680(void);
+void DME_StopThread(void);
 void func_00165950(W_002C9510* w);
 void func_002C9EE0(Self_002C9510* self);
 void func_00145160(int a);
@@ -47,7 +47,7 @@ void func_002C9510(Self_002C9510* self)
         switch (self->b38) {
         case 0: {
             unsigned char had = 0;
-            G_002C9510* g = func_004294C0();
+            G_002C9510* g = DME_GetLobby();
             void* svc;
             int a;
             PStr_002C9510 buf;
@@ -55,7 +55,7 @@ void func_002C9510(Self_002C9510* self)
             Msg_002C9510 m2;
             if (g) {
                 had = 1;
-                func_0042A770();
+                DME_StartThread();
                 if (D_0051EF68)
                     g->b2409 = 0;
             }
@@ -95,7 +95,7 @@ void func_002C9510(Self_002C9510* self)
                 func_002C9AF0(self, o);
             }
             if (had)
-                func_0042A680();
+                DME_StopThread();
             break;
         }
         case 1:

@@ -3,115 +3,112 @@
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
+#include "lgaud.h"
 
 /* merge_units: begin func_00325C80 */
-extern int D_0049147C;
-extern int* D_00491474;
-extern char D_0052AD00[];
-extern int func_0010D1A0(int sema);
-extern int func_0010D180(int sema);
-extern int func_00110528(void* cd, int rpc, int mode, void* send, int ssize, void* recv, int rsize, void* end, void* param);
-extern int func_00127358(const char* fmt, ...);
-
 int lgAudResumePlayback(int device)
 {
-    int* buf;
-    if (D_0049147C == -1)
-        return 0x8000000A;
-    func_0010D1A0(D_0049147C);
-    buf = D_00491474;
-    buf[3] = device;
-    if (func_00110528(D_0052AD00, 17, 0, buf, 0x20, buf, 0x20, 0, 0) == 0) {
-        device = *D_00491474;
-        func_0010D180(D_0049147C);
+    lgAudRpcPkt *pkt;
+    if (lgAud_sema == -1)
+        return LGAUD_ERR_NOT_INITIALIZED;
+    WaitSema(lgAud_sema);
+    pkt = lgAud_pkt;
+    pkt->device = device;
+    if (sceSifCallRpc(&lgAud_cd, LGAUD_RPC_RESUME_PLAYBACK, LGAUD_RPC_SYNC, pkt, 0x20, pkt, 0x20, 0, 0) == 0) {
+        device = lgAud_pkt->ret;
+        SignalSema(lgAud_sema);
         return device;
     }
-    func_00127358("lgAudResumePlayback: rpc call failed
-");
-    func_0010D180(D_0049147C);
-    return 0x80000000;
+    printf("lgAudResumePlayback: rpc call failed\n");
+    SignalSema(lgAud_sema);
+    return LGAUD_ERR_RPC_FAILED;
 }
 /* merge_units: end func_00325C80 */
 
 /* merge_units: begin func_00325D48 */
-extern char D_004B8318[];
-int func_00325D48(int device, unsigned char a, unsigned char b)
+/*
+ * lgAudSetLevel0D/0E: RPC 0xD/0xE with two byte parameters; the game sends
+ * (dev, 0, 0x58) and (dev, 0, 0x15) right after lgAudOpen. Real names unknown.
+ */
+extern char D_004B8318[]; /* "lgAudStopPlayback: rpc call failed\n" (library bug) */
+int lgAudSetLevel0D(int device, unsigned char a, unsigned char b)
 {
     int ret;
-    if (D_0049147C == -1)
-        return 0x8000000A;
-    func_0010D1A0(D_0049147C);
+    if (lgAud_sema == -1)
+        return LGAUD_ERR_NOT_INITIALIZED;
+    WaitSema(lgAud_sema);
     {
-    int *buf = D_00491474;
-    buf[3] = device;
-    ((unsigned char *)buf)[16] = a;
+        lgAudRpcPkt *pkt = lgAud_pkt;
+        pkt->device = device;
+        pkt->param0 = a;
     }
-    ((unsigned char *)D_00491474)[17] = b;
-    if (func_00110528(D_0052AD00, 0xD, 0, D_00491474, 0x20, D_00491474, 0x20, 0, 0) == 0) {
-        ret = *D_00491474;
-        func_0010D180(D_0049147C);
+    lgAud_pkt->param1 = b;
+    if (sceSifCallRpc(&lgAud_cd, LGAUD_RPC_SET_LEVEL_0D, LGAUD_RPC_SYNC, lgAud_pkt, 0x20, lgAud_pkt, 0x20, 0, 0) == 0) {
+        ret = lgAud_pkt->ret;
+        SignalSema(lgAud_sema);
         return ret;
     }
-    func_00127358(D_004B8318);
-    func_0010D180(D_0049147C);
-    return 0x80000000;
+    printf(D_004B8318);
+    SignalSema(lgAud_sema);
+    return LGAUD_ERR_RPC_FAILED;
 }
 /* merge_units: end func_00325D48 */
 
 /* merge_units: begin func_00325E40 */
-int func_00325E40(int device, unsigned char a, unsigned char b)
+int lgAudSetLevel0E(int device, unsigned char a, unsigned char b)
 {
     int ret;
-    if (D_0049147C == -1)
-        return 0x8000000A;
-    func_0010D1A0(D_0049147C);
+    if (lgAud_sema == -1)
+        return LGAUD_ERR_NOT_INITIALIZED;
+    WaitSema(lgAud_sema);
     {
-    int *buf = D_00491474;
-    buf[3] = device;
-    ((unsigned char *)buf)[16] = a;
+        lgAudRpcPkt *pkt = lgAud_pkt;
+        pkt->device = device;
+        pkt->param0 = a;
     }
-    ((unsigned char *)D_00491474)[17] = b;
-    if (func_00110528(D_0052AD00, 0xE, 0, D_00491474, 0x20, D_00491474, 0x20, 0, 0) == 0) {
-        ret = *D_00491474;
-        func_0010D180(D_0049147C);
+    lgAud_pkt->param1 = b;
+    if (sceSifCallRpc(&lgAud_cd, LGAUD_RPC_SET_LEVEL_0E, LGAUD_RPC_SYNC, lgAud_pkt, 0x20, lgAud_pkt, 0x20, 0, 0) == 0) {
+        ret = lgAud_pkt->ret;
+        SignalSema(lgAud_sema);
         return ret;
     }
-    func_00127358(D_004B8318);
-    func_0010D180(D_0049147C);
-    return 0x80000000;
+    printf(D_004B8318);
+    SignalSema(lgAud_sema);
+    return LGAUD_ERR_RPC_FAILED;
 }
 /* merge_units: end func_00325E40 */
 
 /* merge_units: begin func_00325F38 */
-extern int D_0052AEB8;
-extern int func_00110720(void *cd);int func_00325F38(int poll, int *result)
+/*
+ * Waits for (poll == 0) or polls (poll != 0) the pending async call.
+ * Returns nonzero while it is still busy; *result gets the async return code.
+ */
+int lgAudSync(int poll, int *result)
 {
     int r;
-    if (D_0049147C == -1)
-        return 0x8000000A;
+    if (lgAud_sema == -1)
+        return LGAUD_ERR_NOT_INITIALIZED;
     if (poll == 0) {
-        while (func_00110720(D_0052AD00))
+        while (sceSifCheckStatRpc(&lgAud_cd))
             ;
         if (result)
-            *result = D_0052AEB8;
+            *result = lgAud_asyncReq.ret;
         return 0;
     }
-    r = func_00110720(D_0052AD00);
+    r = sceSifCheckStatRpc(&lgAud_cd);
     if (r == 0 && result)
-        *result = D_0052AEB8;
+        *result = lgAud_asyncReq.ret;
     return r;
 }
 /* merge_units: end func_00325F38 */
 
 /* merge_units: begin func_00325FD8 */
-extern int func_0010D190(int sema);
-extern void *memcpy(void *, const void *, unsigned int);
-typedef struct { void *dst; int *len; int ret; } lgAudReadReq;
-void func_00325FD8(lgAudReadReq *req)
+/* Completion callback of lgAudARead; releases the semaphore lgAudARead kept. */
+void lgAudAReadCallback(lgAudAsyncReq *req)
 {
-    memcpy(req->dst, (char *)D_00491474 + 0x30, D_00491474[8]);
-    *req->len = D_00491474[8];
-    req->ret = D_00491474[0];
-    func_0010D190(D_0049147C);
+    memcpy(req->buf, LGAUD_PKT_DATA(lgAud_pkt), lgAud_pkt->u.size);
+    *req->len = lgAud_pkt->u.size;
+    req->ret = lgAud_pkt->ret;
+    iSignalSema(lgAud_sema);
 }
 /* merge_units: end func_00325FD8 */

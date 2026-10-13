@@ -3,14 +3,14 @@ typedef struct { volatile int fd; volatile int x4; volatile unsigned int x8; vol
 extern Ctx D_004E2950;
 extern char D_004E2980[];
 extern char D_004E2AC0[];
-extern void func_0010D3E0(int);
+extern void FlushCache(int);
 extern int func_0010E2B0(int, void *, void (*)(int, int, Ctx *));
 extern void func_0010E590(int, int, Ctx *);
 extern Ring *func_0010E4E8(int);
 int func_0010E970(void)
 {
     char *b;
-    func_0010D3E0(0);
+    FlushCache(0);
     D_004E2950.fd = func_0010E2B0(0x210, &D_004E2950, func_0010E590);
     if (D_004E2950.fd < 0)
         return 0;

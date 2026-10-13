@@ -6,7 +6,7 @@ static void * const dat_00487808[16] = { (void*)0x5A, (void*)func_001168E0, (voi
 extern void func_001168C0(int, int);
 extern int func_00116918(int);
 extern void func_001168D0(unsigned int, void *, int);
-extern void func_0010D3E0(int);
+extern void FlushCache(int);
 
 void func_00116928(void)
 {
@@ -16,8 +16,8 @@ void func_00116928(void)
         func_001168C0(((Pair6928*)dat_00487808)[0].a, ((Pair6928*)dat_00487808)[0].b);
         func_001168D0(0x80076000, ((char*)dat_004870A0), 0x740);
         func_001168D0(0x82000, ((char*)dat_004877E0), 0x28);
-        func_0010D3E0(0);
-        func_0010D3E0(2);
+        FlushCache(0);
+        FlushCache(2);
         func_001168C0(((Pair6928*)dat_00487808)[1].a, ((Pair6928*)dat_00487808)[1].b);
         p = &((Pair6928*)dat_00487808)[2];
         for (i = 2; i < 8; i++, p++) {

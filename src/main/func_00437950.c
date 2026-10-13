@@ -10,7 +10,7 @@ extern int D_00582D08;
 extern unsigned char D_00583860;
 void func_002EB650(P_437950** out, void* s);
 void func_002EC460(void* s);
-int func_00325A28(void* p);
+int lgAudStopRecording(void* p);
 int func_0042B1A0(int v);
 int func_002EC3C8(void* s);
 
@@ -30,7 +30,7 @@ static inline void Release_437950(void)
         D_00582D28 = 1;
     }
     if (D_00582B88) {
-        if (func_00325A28(D_00497548) == 0x80000006) D_00582B88 = 0;
+        if (lgAudStopRecording(D_00497548) == 0x80000006) D_00582B88 = 0;
         D_00582D08 = func_0042B1A0(1) + 2000;
     }
     D_00583860 = 0;

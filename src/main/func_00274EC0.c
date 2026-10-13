@@ -15,7 +15,7 @@ extern void cMessage_dtor(HudObjMsg_274EC0* m, int f);
 extern void Transport_Send(int, HudObjMsg_274EC0*, int, int);
 extern char* Loc_LookupText(char*);
 extern int Loc_FindKeyThunk(char*);
-extern void func_00127358(char*);
+extern void printf(char*);
 extern HudObjGObj_274EC0* GObj_IdentityB(int);
 extern void ObjMarkerMgr_Insert(void*, int*, char*, char*);
 }
@@ -33,7 +33,7 @@ extern "C" int Game_AddHudObjective2(int* args)
     obj = GObj_IdentityB(args[0]);
     text = Loc_LookupText(a);
     if (!text || !*text) {
-        func_00127358(D_004A8F80);
+        printf(D_004A8F80);
     } else {
         if (D_005721C8) {
             HudObjMsg_274EC0 m;

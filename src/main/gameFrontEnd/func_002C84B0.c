@@ -10,11 +10,11 @@ extern unsigned char D_00587B38;
 extern unsigned char D_0051EE90;
 extern unsigned char D_00572528;
 extern unsigned char D_005723C8;
-extern void func_0010D080(void);
+extern void SleepThread(void);
 extern void func_0010D0D0(int);
 extern void func_0010D0F0(int);
 extern void func_002CC260(int, int);
-extern O2C84B0* func_004294C0(void);
+extern O2C84B0* DME_GetLobby(void);
 extern void func_004536B0(O2C84B0* o);
 }
 #pragma define_section REENT_DTOR ".dtors_drop" far_absolute RX
@@ -112,7 +112,7 @@ extern "C" void func_002C84B0(int arg)
                 if (!D_00572528 && !(b = D_005723C8)) {
                     O2C84B0* o;
                     { Reent_84B0 r(b); }
-                    o = func_004294C0();
+                    o = DME_GetLobby();
                     if (o) {
                         if (!o->busy) {
                             o->busy = 1;
@@ -129,7 +129,7 @@ extern "C" void func_002C84B0(int arg)
                 func_0010D0F0(D_0048C348);
                 last = DivTime();
             }
-            func_0010D080();
+            SleepThread();
         }
     }
 }

@@ -10,7 +10,7 @@ extern unsigned char D_00587B38;
 extern char D_004AABF0[];
 extern char D_004AAC18[];
 extern char D_004AAC28[];
-void* func_004294C0(void);
+void* DME_GetLobby(void);
 void func_0029CBB0(O_DAF0*, int);
 char* func_0033CE30(O_DAF0*, int, int, int, int, int);
 int FrontEnd_OpenPopup(int, int, char*, char*, O_DAF0*, int);
@@ -44,7 +44,7 @@ extern "C" void func_0029DAF0(O_DAF0* o, void* arg) {
     unsigned char ok;
     void* w;
     int fe;
-    net = func_004294C0();
+    net = DME_GetLobby();
     if (!net) return;
     func_0029CBB0(o, 4);
     fe = D_004FFC04;

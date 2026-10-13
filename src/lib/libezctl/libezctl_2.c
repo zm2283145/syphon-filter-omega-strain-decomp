@@ -12,7 +12,7 @@ extern char D_004BADB8[];
 extern char D_004BADC0[];
 extern char D_004BAE08[];
 extern int func_0010F388(const char *, ...);
-extern int func_00110528(char *, int, int, void *, int, void *, int, void *, void *);
+extern int sceSifCallRpc(char *, int, int, void *, int, void *, int, void *, void *);
 extern void String_Copy(char *, char *);
 int ezNetCtlPreloadModemCnf(char *name)
 {
@@ -23,7 +23,7 @@ int ezNetCtlPreloadModemCnf(char *name)
         return -1;
     }
     String_Copy(res + 0x10, name);
-    func_00110528(D_00533280, 7, 0, res, 0x130, res, 0x130, 0, 0);
+    sceSifCallRpc(D_00533280, 7, 0, res, 0x130, res, 0x130, 0, 0);
     func_0010F388(D_004BADB8, D_004BADC0);
     func_0010F388("ezNetCtlPreloadModemCnf returned %d\n", *(int *)res);
     return *(int *)res;
@@ -40,7 +40,7 @@ int func_00353130(void)
         func_0010F388(D_004BAE08);
         return -1;
     }
-    func_00110528(D_00533280, 5, 0, res, 4, res, 4, 0, 0);
+    sceSifCallRpc(D_00533280, 5, 0, res, 4, res, 4, 0, 0);
     return *res;
 }
 /* merge_units: end func_00353130 */
@@ -54,7 +54,7 @@ int func_003531B8(void)
         func_0010F388(D_004BAE08);
         return -1;
     }
-    func_00110528(D_00533280, 6, 0, res, 4, res, 4, 0, 0);
+    sceSifCallRpc(D_00533280, 6, 0, res, 4, res, 4, 0, 0);
     return *res;
 }
 /* merge_units: end func_003531B8 */
@@ -67,7 +67,7 @@ int ezNetCtlGetStatus(int *buf)
         func_0010F388(D_004BAE08);
         return -1;
     }
-    func_00110528(D_00533280, 3, 0, buf, 0x110, buf, 0x110, 0, 0);
+    sceSifCallRpc(D_00533280, 3, 0, buf, 0x110, buf, 0x110, 0, 0);
     if (*buf) {
         func_0010F388(D_004BADB8, D_004BADC0);
         func_0010F388("ezNetCtlGetStatus returned %d\n", *buf);

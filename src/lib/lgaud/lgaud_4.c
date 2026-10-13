@@ -3,96 +3,87 @@
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
+#include "lgaud.h"
 
 /* merge_units: begin func_00325960 */
-extern int D_0049147C;
-extern int* D_00491474;
-extern char D_0052AD00[];
-extern int func_0010D1A0(int sema);
-extern int func_0010D180(int sema);
-extern int func_00110528(void* cd, int rpc, int mode, void* send, int ssize, void* recv, int rsize, void* end, void* param);
-extern int func_00127358(const char* fmt, ...);
-
-int func_00325960(int device)
+int lgAudStartRecording(int device)
 {
-    int* buf;
-    if (D_0049147C == -1)
-        return 0x8000000A;
-    func_0010D1A0(D_0049147C);
-    buf = D_00491474;
-    buf[3] = device;
-    if (func_00110528(D_0052AD00, 4, 0, buf, 0x20, buf, 0x20, 0, 0) == 0) {
-        device = *D_00491474;
-        func_0010D180(D_0049147C);
+    lgAudRpcPkt *pkt;
+    if (lgAud_sema == -1)
+        return LGAUD_ERR_NOT_INITIALIZED;
+    WaitSema(lgAud_sema);
+    pkt = lgAud_pkt;
+    pkt->device = device;
+    if (sceSifCallRpc(&lgAud_cd, LGAUD_RPC_START_RECORDING, LGAUD_RPC_SYNC, pkt, 0x20, pkt, 0x20, 0, 0) == 0) {
+        device = lgAud_pkt->ret;
+        SignalSema(lgAud_sema);
         return device;
     }
-    func_00127358("lgAudStartRecording: rpc call failed
-");
-    func_0010D180(D_0049147C);
-    return 0x80000000;
+    printf("lgAudStartRecording: rpc call failed\n");
+    SignalSema(lgAud_sema);
+    return LGAUD_ERR_RPC_FAILED;
 }
 /* merge_units: end func_00325960 */
 
 /* merge_units: begin func_00325A28 */
-extern char D_004B82C8[];
+extern char D_004B82C8[]; /* the "lgAudStartRecording: rpc call failed\n" string above (library bug) */
 
-int func_00325A28(int device)
+/* The game treats a 0x80000006 result as "headset removed". */
+int lgAudStopRecording(int device)
 {
-    int* buf;
-    if (D_0049147C == -1)
-        return 0x8000000A;
-    func_0010D1A0(D_0049147C);
-    buf = D_00491474;
-    buf[3] = device;
-    if (func_00110528(D_0052AD00, 5, 0, buf, 0x20, buf, 0x20, 0, 0) == 0) {
-        device = *D_00491474;
-        func_0010D180(D_0049147C);
+    lgAudRpcPkt *pkt;
+    if (lgAud_sema == -1)
+        return LGAUD_ERR_NOT_INITIALIZED;
+    WaitSema(lgAud_sema);
+    pkt = lgAud_pkt;
+    pkt->device = device;
+    if (sceSifCallRpc(&lgAud_cd, LGAUD_RPC_STOP_RECORDING, LGAUD_RPC_SYNC, pkt, 0x20, pkt, 0x20, 0, 0) == 0) {
+        device = lgAud_pkt->ret;
+        SignalSema(lgAud_sema);
         return device;
     }
-    func_00127358(D_004B82C8);
-    func_0010D180(D_0049147C);
-    return 0x80000000;
+    printf(D_004B82C8);
+    SignalSema(lgAud_sema);
+    return LGAUD_ERR_RPC_FAILED;
 }
 /* merge_units: end func_00325A28 */
 
 /* merge_units: begin func_00325AF0 */
 int lgAudStartPlayback(int device)
 {
-    int* buf;
-    if (D_0049147C == -1)
-        return 0x8000000A;
-    func_0010D1A0(D_0049147C);
-    buf = D_00491474;
-    buf[3] = device;
-    if (func_00110528(D_0052AD00, 6, 0, buf, 0x20, buf, 0x20, 0, 0) == 0) {
-        device = *D_00491474;
-        func_0010D180(D_0049147C);
+    lgAudRpcPkt *pkt;
+    if (lgAud_sema == -1)
+        return LGAUD_ERR_NOT_INITIALIZED;
+    WaitSema(lgAud_sema);
+    pkt = lgAud_pkt;
+    pkt->device = device;
+    if (sceSifCallRpc(&lgAud_cd, LGAUD_RPC_START_PLAYBACK, LGAUD_RPC_SYNC, pkt, 0x20, pkt, 0x20, 0, 0) == 0) {
+        device = lgAud_pkt->ret;
+        SignalSema(lgAud_sema);
         return device;
     }
-    func_00127358("lgAudStartPlayback: rpc call failed
-");
-    func_0010D180(D_0049147C);
-    return 0x80000000;
+    printf("lgAudStartPlayback: rpc call failed\n");
+    SignalSema(lgAud_sema);
+    return LGAUD_ERR_RPC_FAILED;
 }
 /* merge_units: end func_00325AF0 */
 
 /* merge_units: begin func_00325BB8 */
 int lgAudStopPlayback(int device)
 {
-    int* buf;
-    if (D_0049147C == -1)
-        return 0x8000000A;
-    func_0010D1A0(D_0049147C);
-    buf = D_00491474;
-    buf[3] = device;
-    if (func_00110528(D_0052AD00, 7, 0, buf, 0x20, buf, 0x20, 0, 0) == 0) {
-        device = *D_00491474;
-        func_0010D180(D_0049147C);
+    lgAudRpcPkt *pkt;
+    if (lgAud_sema == -1)
+        return LGAUD_ERR_NOT_INITIALIZED;
+    WaitSema(lgAud_sema);
+    pkt = lgAud_pkt;
+    pkt->device = device;
+    if (sceSifCallRpc(&lgAud_cd, LGAUD_RPC_STOP_PLAYBACK, LGAUD_RPC_SYNC, pkt, 0x20, pkt, 0x20, 0, 0) == 0) {
+        device = lgAud_pkt->ret;
+        SignalSema(lgAud_sema);
         return device;
     }
-    func_00127358("lgAudStopPlayback: rpc call failed
-");
-    func_0010D180(D_0049147C);
-    return 0x80000000;
+    printf("lgAudStopPlayback: rpc call failed\n");
+    SignalSema(lgAud_sema);
+    return LGAUD_ERR_RPC_FAILED;
 }
 /* merge_units: end func_00325BB8 */

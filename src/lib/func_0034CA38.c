@@ -25,7 +25,7 @@ typedef struct Obj {
     char pad0[0x20];
     Ctx *ctx;
 } Obj;
-extern void func_0010D3E0(int a);
+extern void FlushCache(int a);
 extern int func_0034A360(Ctx *p, unsigned char a, unsigned char b, unsigned char *out);
 extern int func_0034C9A0(void *a, void *b, int n);
 extern void *memcpy(void *d, const void *s, unsigned int n);
@@ -51,7 +51,7 @@ int func_0034CA38(Obj *o, void *dst, int size, int *p3, Name16 *p4, int *p5, int
                 if (o != 0) {
                     c = o->ctx;
                     if (c != 0) {
-                        func_0010D3E0(0);
+                        FlushCache(0);
                         r = func_0034A360(c, 1, 0, &ready);
                         if (r != 0)
                             return r;

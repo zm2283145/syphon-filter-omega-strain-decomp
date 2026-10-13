@@ -7,8 +7,8 @@ extern char D_004F5820[];
 extern char D_004F58C0[];
 extern char D_004A4D80[];
 extern void func_00223400(void* p);
-extern void func_0010D1A0(int s);
-extern int func_00110528(void* cd, int fno, int mode, void* send, int ssize, void* recv, int rsize, void (*end)(void*), void* param);
+extern void WaitSema(int s);
+extern int sceSifCallRpc(void* cd, int fno, int mode, void* send, int ssize, void* recv, int rsize, void (*end)(void*), void* param);
 extern int func_0010F388(char* fmt, ...);
 int func_00223FF0(unsigned int port)
 {
@@ -17,8 +17,8 @@ int func_00223FF0(unsigned int port)
     if (D_0048AB18 == -1) return -1;
     if (port >= D_004F5780.count) return -11;
     D_004F5880[0] = port;
-    func_0010D1A0(D_0048AB18);
-    r = func_00110528(D_004F5820, 6, 1, D_004F5880, 0x10, D_004F58C0, 0, func_00223400, 0);
+    WaitSema(D_0048AB18);
+    r = sceSifCallRpc(D_004F5820, 6, 1, D_004F5880, 0x10, D_004F58C0, 0, func_00223400, 0);
     if (r != 0) {
         func_0010F388(D_004A4D80, r);
         return -2;

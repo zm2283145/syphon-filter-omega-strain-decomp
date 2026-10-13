@@ -1,6 +1,6 @@
 extern unsigned short func_002DCD00(unsigned int);
 extern int func_002FBD48(unsigned short, unsigned short, void *, void *, unsigned short);
-extern int func_00127358(const char *, ...);
+extern int printf(const char *, ...);
 int Net_SendConvertRecipient(signed char a, unsigned int idx, int to, unsigned int len, void *data)
 {
     int r; unsigned short recip;
@@ -9,7 +9,7 @@ int Net_SendConvertRecipient(signed char a, unsigned int idx, int to, unsigned i
     else if (to == 0xFFFF) recip = 0xFFFF;
     r = func_002FBD48(func_002DCD00(idx), recip, (void *)(int)a, data, len);
     if (r) {
-        func_00127358("SendPacket error sending message, msg error code = %d\n", r);
+        printf("SendPacket error sending message, msg error code = %d\n", r);
         return 0xD;
     }
     return r;

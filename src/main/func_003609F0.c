@@ -45,7 +45,7 @@ char* func_00336170(Agent_09F0* a);
 void String_CtorCStr_13B480(Str_09F0* s, const char* c);
 void func_0013D680(void* dst, Str_09F0* s);
 void func_00138B70(Str_09F0* s, short f);
-char* func_004294C0(void);
+char* DME_GetLobby(void);
 void String_Copy(char* dst, char* src);
 int cAgentData_GetStat(Agent_09F0* a, int id);
 void func_00296FA0(Rel_09F0* r);
@@ -71,7 +71,7 @@ extern "C" void func_003609F0(Panel_09F0* p)
     String_CtorCStr_13B480(&s1, func_00336170(a));
     func_0013D680(p->strB8, &s1);
     func_00138B70(&s1, 0);
-    g = func_004294C0();
+    g = DME_GetLobby();
     if (g) String_Copy(a->name, g + 0xE8C);
     String_CtorCStr_13B480(&s2, a->name);
     func_0013D680(p->strC4, &s2);

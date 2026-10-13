@@ -10,7 +10,7 @@ extern char D_004AF228[];
 extern char D_004AF250[];
 extern char D_004AF278[];
 extern int func_00306158(void *t, unsigned int *elapsed);
-extern int func_00127358(const char *fmt, ...);
+extern int printf(const char *fmt, ...);
 extern int func_003060C0(void *t);
 /* Prints the transfer-rate statistics once more than a second has elapsed. */
 int func_002F6A48(void)
@@ -21,11 +21,11 @@ int func_002F6A48(void)
     if (func_00306158(D_00525540, &ms) != 0) return 1;
     if (ms > 1000) {
         s = &D_00525508;
-        func_00127358(D_004AF1D8, s->r[0].rate, s->r[0].peak);
-        func_00127358(D_004AF200, s->r[1].rate, s->r[1].peak);
-        func_00127358(D_004AF228, s->r[2].rate, s->r[2].peak);
-        func_00127358(D_004AF250, s->r[3].rate, s->r[3].peak);
-        func_00127358(D_004AF278);
+        printf(D_004AF1D8, s->r[0].rate, s->r[0].peak);
+        printf(D_004AF200, s->r[1].rate, s->r[1].peak);
+        printf(D_004AF228, s->r[2].rate, s->r[2].peak);
+        printf(D_004AF250, s->r[3].rate, s->r[3].peak);
+        printf(D_004AF278);
         if (func_003060C0(D_00525540) != 0) return 1;
     }
     return 0;

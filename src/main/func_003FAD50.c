@@ -1,6 +1,6 @@
 extern int Net_SendLocked(char type, int session, int target, int flags, int a, int b, void *c);
-extern void func_00127358(const char *fmt, ...);
-extern int func_00429D30(void);
+extern void printf(const char *fmt, ...);
+extern int DME_Update(void);
 extern int func_0042B1A0(int);
 extern char *strncpy(char *d, const char *s, unsigned int n);
 
@@ -51,19 +51,19 @@ unsigned char NetObj_SendMessage(int a, int b, void *c, int target, int type)
         if (r == 0) {
             ok = 1;
         } else {
-            if (!func_00429D30() && type != 0x40) {
+            if (!DME_Update() && type != 0x40) {
                 r2 = Net_SendLocked(type, D_005721A8, target == -1 ? -1 : target, 2, a, b, c);
                 if (r2 == 0) {
                     ok = 1;
                 } else {
-                    func_00127358(D_004BE2B0, r2);
+                    printf(D_004BE2B0, r2);
                 }
             }
             if (r == 0x25 || r == 0x23) {
                 if (target == -1) {
                     D_0055C9A0++;
                     if (D_0055C9A0 > 25) {
-                        func_00127358(D_004BE2E0);
+                        printf(D_004BE2E0);
                         D_005723B0 = 0;
                         D_005721D8 = 1;
                         strncpy(D_005721E0, D_004BE320, 0x10);
@@ -72,7 +72,7 @@ unsigned char NetObj_SendMessage(int a, int b, void *c, int target, int type)
                 } else {
                     D_0055C9A4[target]++;
                     if (D_0055C9A4[target] > 25) {
-                        func_00127358(D_004BE330);
+                        printf(D_004BE330);
                         D_005723B0 = 0;
                         D_005721D8 = 1;
                         strncpy(D_005721E0, D_004BE320, 0x10);

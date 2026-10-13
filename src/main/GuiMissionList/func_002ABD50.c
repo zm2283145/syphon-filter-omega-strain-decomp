@@ -15,7 +15,7 @@ extern int func_00418420(int, char*);
 extern C2AB* func_003D0940(void*, int, int, int, int, int, char*);
 extern void* memset(void*, int, int);
 extern void func_003D08B0(C2AB*, char*);
-extern L2AB* func_004294C0(void);
+extern L2AB* DME_GetLobby(void);
 extern int func_0044FA40(L2AB*);
 }
 extern "C" void func_002ABD50(W2AB* w) {
@@ -41,7 +41,7 @@ extern "C" void func_002ABD50(W2AB* w) {
     w->fcc = -1;
     w->fc4 = -1;
     w->fc0 = -1;
-    l = func_004294C0();
+    l = DME_GetLobby();
     w->f120 = l ? l->f2480 : -1;
     {
         C2AB* x = w->fb0->f90;

@@ -8,7 +8,7 @@ void SFOLobby_CallUpdateHook(SFOLobby*, int, int);
 int func_003A6670(int);
 void SFOLobby_SetError(SFOLobby*, int, char*, int);
 int func_0010D050(void);
-int func_0010CFF0(int, int);
+int ChangeThreadPriority(int, int);
 void* memset(void*, int, unsigned int);
 int func_1E68080(int, char*, unsigned short, int, unsigned char, char*, int*);
 void DecodeKey_XorB3(char*, int);
@@ -29,7 +29,7 @@ int SFOLobby_DnasAuth(SFOLobby* self)
         SFOLobby_SetError(self, 5, D_004C0D70, 0x27A);
         return 0;
     }
-    old = func_0010CFF0(func_0010D050(), 0x7F);
+    old = ChangeThreadPriority(func_0010D050(), 0x7F);
     if (old < 0)
         old = 2;
     memset(self->password, 0, 0x20);
@@ -37,7 +37,7 @@ int SFOLobby_DnasAuth(SFOLobby* self)
     self->dnasResult = func_1E68080(self->dnasArg, self->dnasData, self->dnasDataLen, 0, D_00585E68, self->password, &self->passwordLen);
     if (self->dnasResult != 0) {
         SFOLobby_SetError(self, 6, D_004C0D70, 0x289);
-        func_0010CFF0(func_0010D050(), old);
+        ChangeThreadPriority(func_0010D050(), old);
         if (func_003A6670(1) == 0) {
             SFOLobby_SetError(self, 5, D_004C0D70, 0x28E);
             return 0;
@@ -46,7 +46,7 @@ int SFOLobby_DnasAuth(SFOLobby* self)
         SFOLobby_CallUpdateHook(self, 3, (int)&r);
         return r == 1;
     }
-    func_0010CFF0(func_0010D050(), old);
+    ChangeThreadPriority(func_0010D050(), old);
     if (func_003A6670(1) == 0) {
         SFOLobby_SetError(self, 5, D_004C0D70, 0x29B);
         return 0;

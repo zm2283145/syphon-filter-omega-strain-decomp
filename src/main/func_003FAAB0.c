@@ -7,14 +7,14 @@ extern char D_0055C7C0[];
 extern char D_0055C7D0[];
 extern char D_0055C7D4[];
 extern unsigned char D_005724B0;
-void func_00127358(void* fmt, int a, int b);
+void printf(void* fmt, int a, int b);
 int func_002EB9A8(void* slot, int addr, int idx);
 void Net_OnRemoteClientJoined(Join_AAB0* j)
 {
     if (j->busy == 0) {
         int s;
         int off;
-        func_00127358("\n\n\n\tRemote client joined the game: %d[%d]\n", j->addr, j->slot);
+        printf("\n\n\n\tRemote client joined the game: %d[%d]\n", j->addr, j->slot);
         {
             int ok = 1;
             if (D_005721C8) ok = D_005721C0;

@@ -1,6 +1,6 @@
 typedef struct { unsigned char d[48]; } Info5f30;
 extern void *memset(void *, int, unsigned int);
-extern int func_0010D060(int id, Info5f30 *info);
+extern int ReferThreadStatus(int id, Info5f30 *info);
 
 int func_00305F30(int id, Info5f30 *out, unsigned int size, int *len)
 {
@@ -10,7 +10,7 @@ int func_00305F30(int id, Info5f30 *out, unsigned int size, int *len)
     if (out == 0) return 2;
     if (size < sizeof(Info5f30)) return 2;
     memset(&info, 0, sizeof(info));
-    if (func_0010D060(id, &info) != -1) {
+    if (ReferThreadStatus(id, &info) != -1) {
         *out = info;
         *len = sizeof(Info5f30);
     }

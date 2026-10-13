@@ -2,10 +2,10 @@
 
 extern void Message_GetScriptTypeKey();
 extern void NetLevelInfoMsg_Send();
-extern void func_0042A150();
+extern void cNetLevelInfoMsg_dtor();
 extern void func_004401E0();
 
 void *D_004E1180[8] = {
-    0, 0, &func_0042A150, &func_004401E0,
+    0, 0, &cNetLevelInfoMsg_dtor, &func_004401E0,
     &NetLevelInfoMsg_Send, &Message_GetScriptTypeKey, 0, 0,
 };

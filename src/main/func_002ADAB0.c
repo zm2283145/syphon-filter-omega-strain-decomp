@@ -10,7 +10,7 @@ void* Gui_GetScreenList(void);
 void* func_00418A80(void* a, char* b, char* c);
 int func_0033CE30(S_002ADAB0* self, int a, char* b, int c, int d, int e);
 void func_0032B4F0(void* pg, int a, char* b, S_002ADAB0* c, int d, int e, int f);
-void* func_004294C0(void);
+void* DME_GetLobby(void);
 char* String_CStr(void* s);
 int FrontEnd_OpenPopup(void* ui, int a, char* b, int c, S_002ADAB0* d, int e);
 int func_0044D9C0(void* g, int a);
@@ -32,7 +32,7 @@ extern "C" int func_002ADAB0(S_002ADAB0* self, void* w, int msg, int sub, char* 
     }
     if (m == 0x1A) {
         if (sub == 0xD) {
-            void* g = func_004294C0();
+            void* g = DME_GetLobby();
             if (g) {
                 int h;
                 char* nm = String_CStr(self->s104);
@@ -53,7 +53,7 @@ extern "C" int func_002ADAB0(S_002ADAB0* self, void* w, int msg, int sub, char* 
         }
         if (sub == 0xC) {
             if (text && *text) {
-                void* g = func_004294C0();
+                void* g = DME_GetLobby();
                 if (g) {
                     int r = SFOLobby_LookupAccountId(g, text);
                     if ((unsigned char)func_00452FF0(g, 0)) {

@@ -7,9 +7,9 @@ extern void func_0010FB10(void *, int);
 extern void func_0010FE30(void *);
 extern int func_0010F948(unsigned int, void *, int, void *, void *, int);
 extern int CreateSema(Sema *);
-extern int func_0010D170(int);
-extern int func_0010D1A0(int);
-int func_00110528(Client *cd, int rpc_number, int mode, void *sendbuf, int ssize, void *recvbuf, int rsize, void *endfunc, void *efarg)
+extern int DeleteSema(int);
+extern int WaitSema(int);
+int sceSifCallRpc(Client *cd, int rpc_number, int mode, void *sendbuf, int ssize, void *recvbuf, int rsize, void *endfunc, void *efarg)
 {
     Sema sema;
     CallPkt *call;
@@ -63,12 +63,12 @@ int func_00110528(Client *cd, int rpc_number, int mode, void *sendbuf, int ssize
     }
     call->rmode = 1;
     if (!func_0010F948(0x8000000A, call, 0x40, sendbuf, (void *)cd->buff, ssize)) {
-        func_0010D170(cd->sema_id);
+        DeleteSema(cd->sema_id);
         func_0010FE30(call);
         return -2;
     }
-    func_0010D1A0(cd->sema_id);
-    func_0010D170(cd->sema_id);
+    WaitSema(cd->sema_id);
+    DeleteSema(cd->sema_id);
     return 0;
 }
 

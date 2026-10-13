@@ -3,7 +3,7 @@ typedef unsigned int u_int;
 
 #define REG(a) (*(volatile unsigned int *)(a))
 
-extern void func_0010D3E0(int);
+extern void FlushCache(int);
 extern int func_001161A0(void);
 extern void func_001161F8(void);
 
@@ -33,7 +33,7 @@ void func_0010BDE8(char *mp, int addr, int size)
         addr += len;
         t++;
     }
-    func_0010D3E0(0);
+    FlushCache(0);
     oldintr = func_001161A0();
     REG(0x1000B430) = (u_int)base & 0xFFFFFFF;
     REG(0x1000B420) = 0;

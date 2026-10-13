@@ -1,8 +1,8 @@
-extern int func_004294C0(void);
+extern int DME_GetLobby(void);
 extern int func_003A6710(int a);
 extern void func_00271280(int a);
 extern void func_002EA4F0(void* a, void* b);
-extern void func_00429510(void);
+extern void DME_CreateLobby(void);
 extern char* func_003CBA90(int id);
 extern int sprintf(char* buf, const char* fmt, ...);
 extern char* func_00128F58(char* d, const char* s);
@@ -50,7 +50,7 @@ int func_002CA710(void* self)
     int len;
     char* ag;
 
-    if (func_004294C0()) {
+    if (DME_GetLobby()) {
         return 0;
     }
     if (D_0048C250) {
@@ -63,8 +63,8 @@ int func_002CA710(void* self)
         }
     }
     func_002EA4F0(func_002CAA70, sfo_malloc_2CA9B0);
-    func_00429510();
-    o = (char*)func_004294C0();
+    DME_CreateLobby();
+    o = (char*)DME_GetLobby();
     p = ids.v;
     ids = D_0048C260;
     text[0] = 0;

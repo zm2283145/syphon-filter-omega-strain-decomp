@@ -16,7 +16,7 @@ extern void FrontEnd_ClosePopup(G33*, int);
 extern int Gui_GetScreenList(void);
 extern W33* func_00418A80(int, char*, char*);
 extern void func_00418840(int, W33*);
-extern int func_004294C0(void);
+extern int DME_GetLobby(void);
 extern int func_00442510(int, int);
 extern int func_0044A230(int);
 extern V33* Gui_GetScreenStack(void);
@@ -57,7 +57,7 @@ extern "C" int func_0033C320(O33* self, int type) {
     if (w) {
         if (type == 6 || type == 2) {
             int x = D_004FFC04->f248;
-            int p = func_004294C0();
+            int p = DME_GetLobby();
             if (!p || !func_00442510(p, x)) {
                 if (h != -1) FrontEnd_ClosePopup(D_004FFC04, h);
                 func_00418840(Gui_GetScreenList(), w);
@@ -65,7 +65,7 @@ extern "C" int func_0033C320(O33* self, int type) {
             }
         }
         if (type == 3) {
-            int p = func_004294C0();
+            int p = DME_GetLobby();
             if (!p || !func_0044A230(p)) {
                 if (h != -1) FrontEnd_ClosePopup(D_004FFC04, h);
                 func_00418840(Gui_GetScreenList(), w);

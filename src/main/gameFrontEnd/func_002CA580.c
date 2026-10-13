@@ -2,7 +2,7 @@
 typedef struct { char p0[0x255C]; int state; } L2CA580;
 extern unsigned char D_0051EEB0;
 extern unsigned char D_005723B8;
-extern L2CA580* func_004294C0(void);
+extern L2CA580* DME_GetLobby(void);
 extern void func_004536B0(L2CA580* l);
 extern int func_00452FD0(L2CA580* l);
 extern int Gui_GetScreenList(void);
@@ -15,7 +15,7 @@ void func_002CA580(void* s)
 {
     L2CA580* l;
     if (D_0051EEB0) return;
-    l = func_004294C0();
+    l = DME_GetLobby();
     if (!l) return;
     func_004536B0(l);
     if (!func_00452FD0(l)) return;

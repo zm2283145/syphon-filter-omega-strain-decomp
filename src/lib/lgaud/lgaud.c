@@ -3,81 +3,74 @@
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
+#include "lgaud.h"
 
 /* merge_units: begin func_00324958 */
-extern int D_0049147C;
-extern int* D_00491474;
-extern int D_0049146C;
-extern char D_0052AD00[];
-extern int func_0010D1A0(int sema);
-extern int func_0010D180(int sema);
-extern int func_00110528(void* cd, int rpc, int mode, void* send, int ssize, void* recv, int rsize, void* end, void* param);
-extern int func_00127358(const char* fmt, ...);
-extern void *memcpy(void *, const void *, unsigned int);int lgAudWrite(int dev, int flag, void *src, int *len)
+int lgAudWrite(int device, int flag, void *src, int *len)
 {
     int ret;
-    if (D_0049147C == -1)
-        return 0x8000000A;
+    if (lgAud_sema == -1)
+        return LGAUD_ERR_NOT_INITIALIZED;
     if (src == 0) {
-        func_00127358("lgAudWrite: invalid parameter (src)\n");
-        return 0x80000004;
+        printf("lgAudWrite: invalid parameter (src)\n");
+        return LGAUD_ERR_INVALID_PARAMETER;
     }
-    if (len == 0 || *len > D_0049146C) {
-        func_00127358("lgAudWrite: invalid parameter (size too big)\n");
-        return 0x80000004;
+    if (len == 0 || *len > lgAud_maxDataSize) {
+        printf("lgAudWrite: invalid parameter (size too big)\n");
+        return LGAUD_ERR_INVALID_PARAMETER;
     }
-    func_0010D1A0(D_0049147C);
+    WaitSema(lgAud_sema);
     {
-        int *buf = D_00491474;
-        buf[3] = dev;
-        buf[8] = *len;
-        memcpy((char *)buf + 0x30, src, *len);
+        lgAudRpcPkt *pkt = lgAud_pkt;
+        pkt->device = device;
+        pkt->u.size = *len;
+        memcpy(LGAUD_PKT_DATA(pkt), src, *len);
     }
-    ((unsigned char *)D_00491474)[0x12] = (unsigned char)flag;
-    if (func_00110528(D_0052AD00, 9, 0, D_00491474, ((*len + 0x3F) >> 4) << 4, D_00491474, 0x30, 0, 0) == 0) {
-        ret = *D_00491474;
-        *len = D_00491474[8];
-        func_0010D180(D_0049147C);
+    lgAud_pkt->flag = (unsigned char)flag;
+    if (sceSifCallRpc(&lgAud_cd, LGAUD_RPC_WRITE, LGAUD_RPC_SYNC, lgAud_pkt, LGAUD_XFER_SIZE(*len), lgAud_pkt, 0x30, 0, 0) == 0) {
+        ret = lgAud_pkt->ret;
+        *len = lgAud_pkt->u.size;
+        SignalSema(lgAud_sema);
         return ret;
     }
     *len = 0;
-    func_00127358("lgAudWrite: rpc call failed\n");
-    func_0010D180(D_0049147C);
-    return 0x80000000;
+    printf("lgAudWrite: rpc call failed\n");
+    SignalSema(lgAud_sema);
+    return LGAUD_ERR_RPC_FAILED;
 }
 /* merge_units: end func_00324958 */
 
 /* merge_units: begin func_00324AC8 */
-int lgAudWriteVag(int dev, int flag, void *src, int *len)
+int lgAudWriteVag(int device, int flag, void *src, int *len)
 {
     int ret;
-    if (D_0049147C == -1)
-        return 0x8000000A;
+    if (lgAud_sema == -1)
+        return LGAUD_ERR_NOT_INITIALIZED;
     if (src == 0) {
-        func_00127358("lgAudWriteVag: invalid parameter (src)\n");
-        return 0x80000004;
+        printf("lgAudWriteVag: invalid parameter (src)\n");
+        return LGAUD_ERR_INVALID_PARAMETER;
     }
-    if (len == 0 || *len > D_0049146C) {
-        func_00127358("lgAudWriteVag: invalid parameter (size too big)\n");
-        return 0x80000004;
+    if (len == 0 || *len > lgAud_maxDataSize) {
+        printf("lgAudWriteVag: invalid parameter (size too big)\n");
+        return LGAUD_ERR_INVALID_PARAMETER;
     }
-    func_0010D1A0(D_0049147C);
+    WaitSema(lgAud_sema);
     {
-        int *buf = D_00491474;
-        buf[3] = dev;
-        buf[8] = *len;
-        memcpy((char *)buf + 0x30, src, *len);
+        lgAudRpcPkt *pkt = lgAud_pkt;
+        pkt->device = device;
+        pkt->u.size = *len;
+        memcpy(LGAUD_PKT_DATA(pkt), src, *len);
     }
-    ((unsigned char *)D_00491474)[0x12] = (unsigned char)flag;
-    if (func_00110528(D_0052AD00, 0x15, 0, D_00491474, ((*len + 0x3F) >> 4) << 4, D_00491474, 0x30, 0, 0) == 0) {
-        ret = *D_00491474;
-        *len = D_00491474[8];
-        func_0010D180(D_0049147C);
+    lgAud_pkt->flag = (unsigned char)flag;
+    if (sceSifCallRpc(&lgAud_cd, LGAUD_RPC_WRITE_VAG, LGAUD_RPC_SYNC, lgAud_pkt, LGAUD_XFER_SIZE(*len), lgAud_pkt, 0x30, 0, 0) == 0) {
+        ret = lgAud_pkt->ret;
+        *len = lgAud_pkt->u.size;
+        SignalSema(lgAud_sema);
         return ret;
     }
     *len = 0;
-    func_00127358("lgAudWriteVag: rpc call failed\n");
-    func_0010D180(D_0049147C);
-    return 0x80000000;
+    printf("lgAudWriteVag: rpc call failed\n");
+    SignalSema(lgAud_sema);
+    return LGAUD_ERR_RPC_FAILED;
 }
 /* merge_units: end func_00324AC8 */

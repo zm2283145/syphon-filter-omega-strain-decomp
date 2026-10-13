@@ -7,7 +7,7 @@ extern "C" {
 int func_0010B378(MovieCtx*);
 void func_0010B398(MovieCtx*);
 void func_0010B250(MovieCtx*, int, int);
-void func_00127358(char*);
+void printf(char*);
 int func_003F5F20(MovieBufs*);
 void func_003F5F70(MovieBufs*);
 int func_003F72D0(char*, char*, int, int, int);
@@ -30,7 +30,7 @@ extern "C" int Movie_DecodeThread(MovieCtx* self)
         int buf;
         if (self->state == 1) {
             ret = -1;
-            func_00127358(D_004BE1C0);
+            printf(D_004BE1C0);
             break;
         }
         while (!(buf = func_003F5F20(&D_0055C460)))

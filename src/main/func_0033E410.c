@@ -5,7 +5,7 @@ typedef struct { char pad[0x10]; void* f10; } W33E4;
 typedef struct { int f0; char name[4]; } I33E4;
 typedef struct { char pad[0x14]; unsigned short flags; char pad2[0x92]; int fa8; } O33E4;
 extern "C" {
-extern int func_004294C0(void);
+extern int DME_GetLobby(void);
 extern int func_00450C60(int, int, char*);
 extern int D_004FFC04;
 extern char D_004B9C60[];
@@ -21,8 +21,8 @@ extern void FrontEnd_ClosePopup(int, int);
 }
 extern "C" void func_0033E410(O33E4* o, I33E4* info) {
     char buf[0x100];
-    if (!o->fa8 || !func_004294C0()) return;
-    if (func_00450C60(func_004294C0(), info->f0, buf)) {
+    if (!o->fa8 || !DME_GetLobby()) return;
+    if (func_00450C60(DME_GetLobby(), info->f0, buf)) {
         int g = D_004FFC04;
         int h = FrontEnd_OpenPopup(g, 0, D_004B9C60, func_0033CE30(o, 0x7D, info->name, 0, 0, 0), 0, 0);
         W33E4* w;

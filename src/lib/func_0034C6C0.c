@@ -1,6 +1,6 @@
 typedef struct { int err; int f4; int f8; int fC; char pad[0x14]; int f24; char pad2[0xC]; int state; } NetCtx_6C0;
 typedef struct { char pad[0x20]; NetCtx_6C0 *ctx; } NetObj_6C0;
-extern void func_0010D3E0(int a);
+extern void FlushCache(int a);
 extern int func_0034A6E8(NetCtx_6C0 *c, NetCtx_6C0 **pp, unsigned char *flag);
 extern int func_0034C8E0(NetObj_6C0 *o, int *out);
 int func_0034C6C0(NetObj_6C0 *o, int *out)
@@ -10,7 +10,7 @@ int func_0034C6C0(NetObj_6C0 *o, int *out)
     int l;
     if (o == 0 || out == 0) return -0x200;
     c = o->ctx;
-    func_0010D3E0(0);
+    FlushCache(0);
     if (c->state == 0 || c->state == 3) {
         unsigned char flag;
         NetCtx_6C0 *p;

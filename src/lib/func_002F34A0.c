@@ -6,7 +6,7 @@ extern unsigned short D_0048C800[];
 
 extern void func_00302088(unsigned int seed);
 extern unsigned int func_00301F40(void);
-extern void func_002EFE18(Blk2F34A0* b, int sum);
+extern void LargeInt_AddInt(Blk2F34A0* b, int sum);
 
 Blk2F34A0 func_002F34A0(void)
 {
@@ -24,6 +24,6 @@ Blk2F34A0 func_002F34A0(void)
         sum += D_0048C800[n];
         n--;
     }
-    func_002EFE18(&t, sum);
+    LargeInt_AddInt(&t, sum);
     return t;
 }

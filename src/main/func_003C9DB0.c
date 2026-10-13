@@ -16,7 +16,7 @@ typedef struct {
 
 extern char D_004DFD80[];
 extern unsigned int func_0042B1A0(int a);
-extern void func_00429CB0(unsigned int dt);
+extern void DME_AddLatencySample(unsigned int dt);
 
 /* cMessage constructor (type 5). */
 cMessage* cMessage_ctor5(cMessage* self, int sender, MsgInfo* info)
@@ -30,6 +30,6 @@ cMessage* cMessage_ctor5(cMessage* self, int sender, MsgInfo* info)
     *(int*)&stamp = *(int*)&info->stamp;
     self->time = stamp.time;
     self->kind = stamp.kind;
-    func_00429CB0(func_0042B1A0(0) - self->time);
+    DME_AddLatencySample(func_0042B1A0(0) - self->time);
     return self;
 }

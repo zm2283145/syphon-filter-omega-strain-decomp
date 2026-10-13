@@ -58,7 +58,7 @@ extern char D_004C0D70[]; /* "SFOLobby_Config.cc" */
 extern char D_004C0E40[]; /* "Dummy universe name" */
 extern char D_004C0E60[]; /* "Dummy description" */
 extern void String_Copy(char* d, const char* s);
-extern void func_0010D3E0(int);
+extern void FlushCache(int);
 extern int func_003A6700(int);
 extern int SFOLobby_ResolveHost(SFOLobby*, char*, char*);
 extern int SFOLobby_DnasAuth(SFOLobby*);
@@ -109,9 +109,9 @@ int SFOLobby_StartNetwork(SFOLobby* self, int id, unsigned char useDnas) {
         SFOLobby_SetError(self, 0x34, D_004C0D70, 0x1B8);
         return 0;
     }
-    func_0010D3E0(0);
+    FlushCache(0);
     QuadCopy_44BAB0(&D_005849C0, &prof->cfg, sizeof(NetCfg_44BAB0) / 16);
-    func_0010D3E0(0);
+    FlushCache(0);
     if (D_00585CCC == 3) {
         if (func_003A6700(D_00585CCC) == 0) {
             SFOLobby_SetError(self, 0xE, D_004C0D70, 0x1D0);

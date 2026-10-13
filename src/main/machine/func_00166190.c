@@ -9,7 +9,7 @@ int Mem_Free(int, int, char *, int);
 int func_0010CE60(int, int);
 int func_0010CF70(int);
 int func_0010CFB0(int);
-int func_0010CFF0(int, int);
+int ChangeThreadPriority(int, int);
 int func_00271CD0(int);
 int func_002720A0(int, int);
 int func_0036D200(char *, int);
@@ -64,7 +64,7 @@ void func_00166190(PS0_00166190 *arg0) {
         }
         D_004EE4E8 = 0;
         D_00533888 -= 1;
-        func_0010CFF0(D_0048A048, 5);
+        ChangeThreadPriority(D_0048A048, 5);
         if (arg0->f274 != 0) {
             func_00271CD0(arg0->f274);
             h = arg0->f274;

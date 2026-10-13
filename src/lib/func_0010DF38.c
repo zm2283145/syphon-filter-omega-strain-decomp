@@ -8,11 +8,11 @@ extern char D_004E2000[];
 extern char D_004E9B70[];
 extern void func_0010DE60(void *);
 extern int CreateSema(SemaParamDF38 *);
-extern int func_0010CF60(ThreadParamDF38 *);
-extern int func_0010D170(int);
-extern int func_0010CF80(int, void *);
+extern int CreateThread(ThreadParamDF38 *);
+extern int DeleteSema(int);
+extern int StartThread(int, void *);
 extern int func_0010D050(void);
-extern int func_0010CFF0(int, int);
+extern int ChangeThreadPriority(int, int);
 int func_0010DF38(void)
 {
     ThreadParamDF38 tp;
@@ -27,14 +27,14 @@ int func_0010DF38(void)
     tp.stack_size = 0x400;
     tp.gp_reg = D_004E9B70;
     tp.initial_priority = 0;
-    D_00486198 = func_0010CF60(&tp);
+    D_00486198 = CreateThread(&tp);
     if (D_00486198 < 0) {
-        func_0010D170(D_004E2400);
+        DeleteSema(D_004E2400);
         return -1;
     }
     D_004E2408[0] = 0;
     D_004E2408[1] = 0;
-    func_0010CF80(D_00486198, D_004E2408);
-    func_0010CFF0(func_0010D050(), 1);
+    StartThread(D_00486198, D_004E2408);
+    ChangeThreadPriority(func_0010D050(), 1);
     return D_00486198;
 }

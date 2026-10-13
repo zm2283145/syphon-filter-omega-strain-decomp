@@ -6,7 +6,7 @@ struct S_00288E90 { char pad0[0x8C]; Txt_00288E90* p8C; char pad90[4]; Txt_00288
 extern "C" {
 extern void* D_004FFC04;
 const unsigned int D_004A9730[4] = { 0x0, 0x0, 0x0, 0x0 };
-void* func_004294C0(void);
+void* DME_GetLobby(void);
 char* String_CStr(void* s);
 int strlen(const char* s);
 char* func_0033CE30(S_00288E90* self, unsigned char a, char* b, int c, int d, int e);
@@ -20,7 +20,7 @@ void FrontEnd_ClosePopup(void* ui, int id);
 }
 extern "C" void func_00288E90(S_00288E90* self)
 {
-    void* g = func_004294C0();
+    void* g = DME_GetLobby();
     char* pw;
     if (!String_CStr(self->p94->s48) || !strlen(String_CStr(self->p94->s48))) {
         Str_00288E90 a;

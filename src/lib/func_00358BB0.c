@@ -8,7 +8,7 @@ extern void func_00357D88(void *);
 extern int func_003581C0(void);
 extern int func_00358158(void);
 extern int func_0010D050(void);
-extern int func_0010D170(int);
+extern int DeleteSema(int);
 void func_00358BB0(N81E0 *n)
 {
     N81E0 *x = n->next;

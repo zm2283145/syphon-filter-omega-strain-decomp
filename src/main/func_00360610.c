@@ -10,7 +10,7 @@ extern void func_00360510(char*);
 extern int String_CtorCStr_13B480(char*, char*);
 extern int func_00138B70(char*, int);
 extern int func_0013D680(char*, char*);
-extern char* func_004294C0(void);
+extern char* DME_GetLobby(void);
 extern int func_0044A1D0(char*);
 extern int func_00452FF0(char*, int);
 extern char* func_0044A070(char*);
@@ -47,7 +47,7 @@ void func_00360610(char* self, int* arg1, Msg* arg2) {
     String_CtorCStr_13B480(s1, (char*)(arg1 + 1));
     func_0013D680(self + 0xB8, s1);
     func_00138B70(s1, 0);
-    o = func_004294C0();
+    o = DME_GetLobby();
     if (o) {
         F_(self, 0xF4, char) = func_0044A1D0(o);
         if (!(unsigned char)func_00452FF0(o, 0)) {

@@ -11,7 +11,7 @@ extern int D_0053DC00;
 extern int func_00118CD8(Info3A6DA0* out, char* name);
 extern char* strncpy(char* d, const char* s, int n);
 extern void SyncDCache(void* p, char* k);
-extern void func_0010DB98(void* p, char* k);
+extern void InvalidDCache(void* p, char* k);
 extern int func_003A7990(int cmd, int size, void* req);
 }
 #pragma push
@@ -29,7 +29,7 @@ extern "C" int func_003A6DA0(Info3A6DA0* out, char* name)
     SyncDCache(D_00493500, k);
     r = func_003A7990(0x69, 0x100, &req);
     if (r == 1) {
-        func_0010DB98(D_00493500, k);
+        InvalidDCache(D_00493500, k);
         *out = D_00493500->info;
     }
     return r;

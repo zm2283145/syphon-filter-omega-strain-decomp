@@ -1,13 +1,13 @@
 #pragma cplusplus on
 typedef struct { void* src; void* dest; int size; int attr; } Dma3F6630;
 extern "C" {
-void func_0010D3E0(int);
+void FlushCache(int);
 int func_0010D520(Dma3F6630*, int);
 }
 static inline void Send3F6630(void* src, void* dest, int size)
 {
     Dma3F6630 t;
-    func_0010D3E0(0);
+    FlushCache(0);
     t.src = src;
     t.dest = dest;
     t.size = size;

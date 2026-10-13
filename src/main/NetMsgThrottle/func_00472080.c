@@ -53,7 +53,7 @@ ThrLIt func_00472060(ThrList* l);
 void func_00472050(ThrLIt* r, const ThrLIt& s);
 ThrLIt func_00138DA0(ThrList* l, const ThrLIt& pos);
 int func_0042B1A0(int);
-void func_00127358(char* fmt, ...);
+void printf(char* fmt, ...);
 void Event_Send(ThrMsg* msg, void* target, int flags);
 void Tree_Successor(void* it);
 void Mem_Free(int pool, void* p, char* file, int line);
@@ -97,7 +97,7 @@ extern "C" void NetMsgThrottle_SendMsg(void)
                 if (e.node == b.node) break;
                 ent = l->head->entry;
                 func_00138DA0(l, ThrLIt(l->head));
-                func_00127358(D_004C3430, now, ++D_00588030, it.node->key);
+                printf(D_004C3430, now, ++D_00588030, it.node->key);
                 Event_Send(ent->msg, ent->target, ent->flags);
                 msg = ent->msg;
                 {

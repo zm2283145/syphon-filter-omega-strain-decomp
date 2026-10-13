@@ -5,7 +5,7 @@ typedef struct {
     B375770* cur[3]; char padC[0x20]; char bufs[0xA0];
     B375770* last0; B375770* lastA; B375770* lastB; int aD8; int idx0; int idxA; int idxB; int size0; int sizeA; int sizeB;
 } S375770;
-extern "C" void func_0010D3E0(int a);
+extern "C" void FlushCache(int a);
 #define R(a) (*(volatile unsigned int*)(a))
 static inline void KickVif(unsigned int base, int bit, int tag, int mode)
 {
@@ -18,7 +18,7 @@ static inline void KickVif(unsigned int base, int bit, int tag, int mode)
         R(base + 0x30) = (unsigned int)tag | 0x80000000;
     } else {
         R(base + 0x30) = (unsigned int)tag & 0x0FFFFFFF;
-        func_0010D3E0(0);
+        FlushCache(0);
     }
     int v = 0x185;
     if (mode) v |= 0x40;
@@ -35,7 +35,7 @@ static inline void KickGif(int tag)
         R(0x1000A030) = (unsigned int)tag | 0x80000000;
     } else {
         R(0x1000A030) = (unsigned int)tag & 0x0FFFFFFF;
-        func_0010D3E0(0);
+        FlushCache(0);
     }
     asm volatile ("sync");
     R(0x1000A000) = 0x185;

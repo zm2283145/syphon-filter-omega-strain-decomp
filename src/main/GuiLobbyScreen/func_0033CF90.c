@@ -1,7 +1,7 @@
 typedef struct O O;
 extern void *D_004FFC04;
 extern char D_004B99D8[];
-extern void *func_004294C0(void);
+extern void *DME_GetLobby(void);
 extern int func_0033D0C0(O *o, void *snd, unsigned short msg, int param, int extra);
 extern char *func_0033CE30(O *o, unsigned char a, char *b, char *c, int d, int e);
 extern int FrontEnd_OpenPopup(void *ui, int a, char *b, char *c, void *d, int e);
@@ -16,7 +16,7 @@ int func_0033CF90(O *o, void *snd, unsigned short msg, int param, int extra)
         return 1;
     }
     if (param == 0x13) {
-        void *owner = func_004294C0();
+        void *owner = DME_GetLobby();
         if (owner) {
             void *ui = D_004FFC04;
             int id = FrontEnd_OpenPopup(ui, 0, D_004B99D8, func_0033CE30(o, 0x56, 0, 0, 0, 0), 0, 0);

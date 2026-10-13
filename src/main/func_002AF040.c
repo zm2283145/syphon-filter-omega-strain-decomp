@@ -6,7 +6,7 @@ typedef struct { int id; int f4; char pad8[0xC - 8]; String fC; char pad18[0x2C 
 typedef struct { char pad0[0x78]; unsigned char b78; char pad79[0x174 - 0x79]; String s174; } S_002AF040;
 extern void* D_004FFC04;
 extern char D_004ABCD0[];
-extern G_002AF040* func_004294C0(void);
+extern G_002AF040* DME_GetLobby(void);
 extern E_002AF040* LobbyArray_At(L_002AF040* l, int i);
 extern char* String_CStr(String* s);
 extern int String_CompareNoCase(String* a, char* b);
@@ -22,7 +22,7 @@ void func_002AF040(S_002AF040* self)
     int n;
     if (!self->b78)
         return;
-    g = func_004294C0();
+    g = DME_GetLobby();
     if (!g)
         return;
     list = &g->list;

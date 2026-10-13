@@ -6,8 +6,8 @@ extern unsigned char D_004F5880[];
 extern char D_004F5820[];
 extern char D_004F58C0[];
 extern void func_00223400(void);
-extern void func_0010D1A0(int);
-extern int func_00110528(void *cd, int fno, int mode, void *send, int ssize, void *recv, int rsize, void *endf, void *endp);
+extern void WaitSema(int);
+extern int sceSifCallRpc(void *cd, int fno, int mode, void *send, int ssize, void *recv, int rsize, void *endf, void *endp);
 extern int func_0010F388(const char *, ...);
 int sceUsbKbSetLEDMode(int a, unsigned int b)
 {
@@ -18,8 +18,8 @@ int sceUsbKbSetLEDMode(int a, unsigned int b)
     D_004F5780.x4[a].mode = b;
     D_004F5880[0] = a;
     D_004F5880[1] = b;
-    func_0010D1A0(D_0048AB18);
-    r = func_00110528(D_004F5820, 5, 1, D_004F5880, 0x10, D_004F58C0, 0x10, func_00223400, 0);
+    WaitSema(D_0048AB18);
+    r = sceSifCallRpc(D_004F5820, 5, 1, D_004F5880, 0x10, D_004F58C0, 0x10, func_00223400, 0);
     if (r) {
         func_0010F388("sceUsbKbSetLEDMode: sceSifCallRpc -> %d
 ", r);

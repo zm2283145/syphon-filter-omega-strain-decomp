@@ -8,7 +8,7 @@
 #pragma push /* merge_units */
 #include "SFOLobby.h"
 
-void func_0010D3E0(int);
+void FlushCache(int);
 int ezNetCtlSetProperties(int);
 int ezNetCtlGetStatus(void*);
 void SFOLobby_SetError(SFOLobby*, int, char*, int);
@@ -28,9 +28,9 @@ int SFOLobby_NetUp(SFOLobby* self, int props)
     int r;
     int now;
 
-    func_0010D3E0(0);
+    FlushCache(0);
     r = ezNetCtlSetProperties(props);
-    func_0010D3E0(0);
+    FlushCache(0);
     if (r < 0) {
         SFOLobby_SetError(self, 7, D_004C0D70, 0x14A);
         return 0;
@@ -178,9 +178,9 @@ int SFOLobby_ListNetConfigs(NetCfg* self, int which)
     LobbyArray_Clear(self->list);
     for (dev = 0; dev < 2; dev++) {
         if (which >= 0 && which != dev) continue;
-        func_0010D3E0(0);
+        FlushCache(0);
         n = ezNetCnfGetCombinationList(D_00497720[dev], 1, &D_00584580);
-        func_0010D3E0(0);
+        FlushCache(0);
         if (n <= 0) {
             switch (n) {
             case 0:
@@ -206,9 +206,9 @@ int SFOLobby_ListNetConfigs(NetCfg* self, int which)
             memcpy(info.b, D_00584580.ent[i].b, 32);
             memcpy(info.c, D_00584580.ent[i].c, 32);
             if (info.type >= 0) {
-                func_0010D3E0(0);
+                FlushCache(0);
                 if (ezNetCnfGetProperties(D_00497720[info.dev], info.a, D_005849C0) == 0) {
-                    func_0010D3E0(0);
+                    FlushCache(0);
                     memcpy(info.prop, D_005849C0, sizeof(info.prop));
                     LobbyArray_Append(self->list, &info);
                 }

@@ -15,26 +15,27 @@
 
 
 extern "C" {
-int Mem_Alloc(int, int, char *, int);                        
-int func_00453E20(int);                             
+int Mem_Alloc(int, int, char *, int);
+int func_00453E20(int); /* SFOLobby constructor ("MediusLobby") */
 extern unsigned char D_00533880;
-extern int D_00572480;
-extern signed char D_00572488;
+extern int g_DmeLobby;
+extern signed char g_DmeLobbyActive;
 }
-extern "C" void func_00429510(void) {
-    int var_s0;
+/* Allocates the SFOLobby (0x26B0 bytes) on first use and enables its updates. */
+extern "C" void DME_CreateLobby(void) {
+    int lobby;
 
-    if (D_00572480 == 0) {
+    if (g_DmeLobby == 0) {
         {
             AllocGuard g;
-        var_s0 = Mem_Alloc(0, 0x26B0, "DME.cc", 0x75D);
+        lobby = Mem_Alloc(0, 0x26B0, "DME.cc", 0x75D);
         }
-        if (var_s0 != 0) {
-            var_s0 = func_00453E20(var_s0);
+        if (lobby != 0) {
+            lobby = func_00453E20(lobby);
         }
-        D_00572480 = var_s0;
+        g_DmeLobby = lobby;
     }
-    D_00572488 = 1;
+    g_DmeLobbyActive = 1;
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00429510 */
@@ -43,26 +44,27 @@ extern "C" void func_00429510(void) {
 #pragma push /* merge_units */
 #pragma cplusplus on
 extern "C" {
-void func_0010CFA0(void);
-void func_0010D080(void);
+void ExitDeleteThread(void);
+void SleepThread(void);
 void func_001161A0(void);
 void func_001161F8(void);
-void func_00429D30(void);
-extern signed char D_00572500;
-extern unsigned char D_00572530;
+void DME_Update(void);
+extern signed char g_DmeThreadExited;
+extern unsigned char g_DmeThreadStopRequest;
 }
-static inline int Done4295E0() { return D_00572530 != 0; }
+static inline int StopRequested() { return g_DmeThreadStopRequest != 0; }
 #pragma bool off
-extern "C" void func_004295E0(void) {
-    while (Done4295E0() ^ 1) {
-        func_00429D30();
+/* DME worker thread: polls the network, then sleeps until DME_TimerHandler wakes it. */
+extern "C" void DME_ThreadMain(void) {
+    while (StopRequested() ^ 1) {
+        DME_Update();
         func_001161F8();
-        func_0010D080();
+        SleepThread();
         func_001161A0();
     }
     func_001161F8();
-    D_00572500 = 1;
-    func_0010CFA0();
+    g_DmeThreadExited = 1;
+    ExitDeleteThread();
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_004295E0 */

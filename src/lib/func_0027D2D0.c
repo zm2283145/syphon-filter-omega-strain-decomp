@@ -1,7 +1,7 @@
-extern void func_0010D190(void);
+extern void iSignalSema(void);
 void func_0027D2D0(void)
 {
-    func_0010D190();
+    iSignalSema();
     __asm__ __volatile__("sync");
     __asm__ __volatile__("ei");
 }

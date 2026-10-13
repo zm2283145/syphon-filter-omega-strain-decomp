@@ -1,42 +1,38 @@
 #include "types.h"
-extern int D_0053DBF8;
-extern int D_00542878;
-extern int D_00542990;
+#include "989snd.h"
+/* snd_BankLoad request: {int arg; char name[];} sent with strlen(name) + 5 bytes */
 extern int D_0053DE80;
 extern char D_0053DE84[];
-extern int D_005428C0;
-extern char D_005428C4[];
-extern char D_00542850[];
-extern char D_004BCA30[];
-extern void func_00127358(char*);
+extern char D_005428C4[]; /* end of snd_rpcResult, for SyncDCache */
+extern void printf(char*);
 extern void String_Copy(char*, char*);
 extern void SyncDCache(int*, char*);
-extern int func_00110720(char*);
+extern int sceSifCheckStatRpc(char*);
 extern void func_003A85E0(void);
-extern void func_0010D3E0(int);
+extern void FlushCache(int);
 extern int strlen(const char*);
-extern int func_00110528(char*, int, int, int*, int, int*, int, int, int);
+extern int sceSifCallRpc(char*, int, int, int*, int, int*, int, int, int);
 int snd_BankLoad(char* name, int arg) {
     int r;
-    D_0053DBF8 = 0;
-    if (D_00542878) {
-        if (!D_00542990) func_00127358("snd_BankLoad: Load already in progress!\n");
+    snd_lastError = 0;
+    if (snd_loadInProgress) {
+        if (!snd_quiet) printf("snd_BankLoad: Load already in progress!\n");
         return 0;
     }
     D_0053DE80 = arg;
     String_Copy(D_0053DE84, name);
-    D_005428C0 = -1;
-    SyncDCache(&D_005428C0, D_005428C4);
-    while (func_00110720(D_00542850)) {
-        if (!D_00542990) func_00127358(D_004BCA30);
+    snd_rpcResult = -1;
+    SyncDCache(&snd_rpcResult, D_005428C4);
+    while (sceSifCheckStatRpc(snd_bankCd)) {
+        if (!snd_quiet) printf(snd_rpcCollisionMsg);
         func_003A85E0();
-        func_0010D3E0(0);
+        FlushCache(0);
     }
-    if (func_00110528(D_00542850, 2, 1, &D_0053DE80, strlen(name) + 5, &D_005428C0, 4, 0, 0) < 0) {
-        if (!D_00542990) func_00127358("989snd.c: RPC call has failed inside snd_BankLoad\n");
-        D_0053DBF8 = 0x106;
+    if (sceSifCallRpc(snd_bankCd, SND_BANK_RPC_LOAD, 1, &D_0053DE80, strlen(name) + 5, &snd_rpcResult, 4, 0, 0) < 0) {
+        if (!snd_quiet) printf("989snd.c: RPC call has failed inside snd_BankLoad\n");
+        snd_lastError = SND_ERR_RPC_FAILED;
         return 0;
     }
-    while ((r = D_005428C0) == -1) func_0010D3E0(0);
+    while ((r = snd_rpcResult) == -1) FlushCache(0);
     return r;
 }

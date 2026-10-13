@@ -11,7 +11,7 @@ Vec_A5D0* func_001339A0(void* arr);
 void PtrVec_Begin(It_A5D0* out, Vec_A5D0* v);
 void PtrVec_End(It_A5D0* out, Vec_A5D0* v);
 void func_00133980(It_A5D0* out, It_A5D0* in);
-void func_00127358(char* fmt, int i);
+void printf(char* fmt, int i);
 extern char D_004BE240[];
 extern unsigned char D_0055C780[];
 extern unsigned char D_005724B0;
@@ -44,7 +44,7 @@ extern "C" void NetObj_LoadNetworkData(void)
                     it.p++;
                 }
             } else {
-                func_00127358(D_004BE240, i);
+                printf(D_004BE240, i);
             }
         }
     }

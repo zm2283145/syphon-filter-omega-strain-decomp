@@ -14,7 +14,7 @@ typedef struct Heap {
 } Heap;
 extern unsigned char D_00492F68;
 extern char D_004BBF50[];
-extern void func_00127358(char* fmt, ...);
+extern void printf(char* fmt, ...);
 extern void func_0036C030(Blk* b, Blk* v);
 extern void func_0036C040(Blk* b, Blk* v);
 extern Blk* func_0036C050(Blk* b);
@@ -66,7 +66,7 @@ unsigned long long func_0036C4F0(Heap* h)
                 sz = func_0036C0B0(b);
                 while (func_0036C050(it) != tgt && func_0036C0B0(func_0036C050(it)) < sz) {
                     if ((char*)func_0036C050(it) < h->base || (char*)func_0036C050(it) > h->cur) {
-                        func_00127358(D_004BBF50, it);
+                        printf(D_004BBF50, it);
                         func_0036C040(it, tgt);
                         break;
                     }

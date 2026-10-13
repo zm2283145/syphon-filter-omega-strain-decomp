@@ -4,7 +4,7 @@
 extern "C" {
 extern void* Mem_Alloc(int pool, int size, char* file, int line);
 extern char D_004ACF10[];
-extern int func_004294C0(void);
+extern int DME_GetLobby(void);
 extern void* LobbyArray_ctor(void* p);
 extern int func_00445E80(int a, void* fn, void* b, void* c, void* d);
 extern void func_002CC260(void);
@@ -23,7 +23,7 @@ extern "C" int func_002CA350(ObjCA350* self)
 {
     void* p;
 
-    if (self->inited || !func_004294C0())
+    if (self->inited || !DME_GetLobby())
         return 0;
     {
         AllocGuard guard;
@@ -47,5 +47,5 @@ extern "C" int func_002CA350(ObjCA350* self)
         p = LobbyArray_ctor(p);
     self->c = p;
     self->inited = 1;
-    return func_00445E80(func_004294C0(), (void*)func_002CC260, self->a, self->b, self->c);
+    return func_00445E80(DME_GetLobby(), (void*)func_002CC260, self->a, self->b, self->c);
 }

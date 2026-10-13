@@ -10,9 +10,9 @@ extern char D_00498CD0[];
 extern char D_00498CF8[];
 extern void func_00118718(void);
 extern int func_0010D1B0(int);
-extern int func_0010D180(int);
-extern int func_0010D060(int, void *);
-extern int func_00118F00(int);
+extern int SignalSema(int);
+extern int ReferThreadStatus(int, void *);
+extern int sceCdSync(int);
 extern void D_0010FBC0(int);
 extern int func_00110358(RpcCd *cd, unsigned int id, int mode);
 extern int func_0010F388(const char *, ...);
@@ -26,9 +26,9 @@ int func_00118CF8(int cmd)
         return 0;
     }
     D_0048789C = cmd;
-    func_0010D060(D_004E9D18, &D_004E9D20);
-    if (func_00118F00(1)) {
-        func_0010D180(D_004878A8);
+    ReferThreadStatus(D_004E9D18, &D_004E9D20);
+    if (sceCdSync(1)) {
+        SignalSema(D_004878A8);
         return 0;
     }
     D_0010FBC0(0);

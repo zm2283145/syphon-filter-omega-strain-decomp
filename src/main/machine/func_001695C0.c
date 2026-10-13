@@ -10,7 +10,7 @@ extern void* D_004FFC04;
 extern char D_0048B2F8[];
 extern char D_005381F0[];
 extern void* func_0010D050(void);
-extern void func_0010CFF0(void* p, int n);
+extern void ChangeThreadPriority(void* p, int n);
 extern void func_003A65F0(int n);
 extern void func_00165E40(F1Game1695* g);
 extern void Game_LoadIni(F1Game1695* g);
@@ -23,7 +23,7 @@ extern void func_002CB8C0(void* p, int n);
 extern void FrontEnd_SetLoadingScreen(void* p, int a, void* b, int c);
 void StringPool_Load(F1Game1695* g)
 {
-    func_0010CFF0(func_0010D050(), 10);
+    ChangeThreadPriority(func_0010D050(), 10);
     func_003A65F0(1);
     func_00165E40(g);
     Game_LoadIni(g);

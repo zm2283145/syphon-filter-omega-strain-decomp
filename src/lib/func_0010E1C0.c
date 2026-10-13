@@ -3,9 +3,9 @@ extern int CreateSema(SemaParamE1C0 *);
 extern int func_00117C68(int, int);
 extern int func_00117E18(int, int (*)(int, int, int, int), int);
 extern int func_0010E288(int, int, int, int);
-extern int func_0010D170(int);
-extern int func_0010D1A0(int);
-int func_0010E1C0(int a)
+extern int DeleteSema(int);
+extern int WaitSema(int);
+int DelayThread(int a)
 {
     SemaParamE1C0 sp;
     int s, sema, r;
@@ -18,10 +18,10 @@ int func_0010E1C0(int a)
     if (sema < 0) return 0x80008003;
     r = func_00117E18(func_00117C68(0, a), func_0010E288, sema);
     if (r < 0) {
-        func_0010D170(sema);
+        DeleteSema(sema);
         return r;
     }
-    func_0010D1A0(sema);
-    func_0010D170(sema);
+    WaitSema(sema);
+    DeleteSema(sema);
     return 0;
 }

@@ -72,17 +72,17 @@ extern void func_0036E220(Obj8450* o, int f);
 extern void func_00412600(void* a, Obj8450* o, int b);
 extern void Alloc_Lock(int id);
 extern int func_0010D050(void);
-extern void func_0010CFF0(int tid, int prio);
+extern void ChangeThreadPriority(int tid, int prio);
 extern void func_00103418(void* db, int psm, short w, short h, int ztest, int zpsm, int clear);
-extern void func_0010D3E0(int a);
+extern void FlushCache(int a);
 extern void func_003F7840(int a);
 extern void func_0010AF48(void);
 extern void func_003F5D80(void* a, int b, int c, int d, int e, int f, int g, int h);
 extern void func_003F6ED0(void* a, int b, int c, int d);
 extern void func_003F5D60(void* a, int b, int c, void* d, int e);
 extern void func_003F6040(void* a, unsigned int b, int c, int d);
-extern int func_0010CF60(ThreadParam8450* tp);
-extern void func_0010CF80(int tid, void* arg);
+extern int CreateThread(ThreadParam8450* tp);
+extern void StartThread(int tid, void* arg);
 extern void func_00103AC0(void* f);
 extern int func_0010CE70(int a, void* f, int b);
 extern void func_0010DD78(int a);
@@ -112,13 +112,13 @@ void func_003F8450(Sys8450* s)
     func_00412600(D_00571CF0, &obj, s->f22C);
     *(volatile int*)0x10003010 = 0;
     Alloc_Lock(5);
-    func_0010CFF0(func_0010D050(), 5);
+    ChangeThreadPriority(func_0010D050(), 5);
     if (D_0055C740) {
         func_00103418(D_0055C230, 0, D_00538200, D_00538204, 0, 0, 1);
     } else {
         func_00103418(D_0055C230, 0, D_00538200, D_00538204 / 2, 0, 0, 1);
     }
-    func_0010D3E0(0);
+    FlushCache(0);
     *(volatile unsigned int*)0x1000E000 |= 3;
     *(volatile unsigned int*)0x1000E010 = 4;
     func_003F7840(s->f30);
@@ -148,16 +148,16 @@ void func_003F8450(Sys8450* s)
     tp.initPriority = 5;
     tp.gpReg = D_004E9B70;
     tp.option = 0;
-    s->f54 = func_0010CF60(&tp);
-    func_0010CF80(s->f54, 0);
+    s->f54 = CreateThread(&tp);
+    StartThread(s->f54, 0);
     tp.entry = func_003F5A10;
     tp.stack = s->f40;
     tp.stackSize = 0x4000;
     tp.initPriority = 5;
     tp.gpReg = D_004E9B70;
     tp.option = 0;
-    s->f50 = func_0010CF60(&tp);
-    func_0010CF80(s->f50, D_0055C480);
+    s->f50 = CreateThread(&tp);
+    StartThread(s->f50, D_0055C480);
     func_00103AC0(func_003F7060);
     D_0055C530 = func_0010CE70(2, func_003F7010, 0);
     func_0010DD78(2);

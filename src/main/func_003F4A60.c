@@ -8,14 +8,14 @@ typedef struct LockedBuf {
     void* lock; /* 0x40 */
 } LockedBuf;
 
-extern void func_0010D1A0(void* lock);
-extern void func_0010D180(void* lock);
+extern void WaitSema(void* lock);
+extern void SignalSema(void* lock);
 
 /* Under the lock, returns base + index * 0x800. */
 int func_003F4A60(LockedBuf* buf) {
     int addr;
-    func_0010D1A0(buf->lock);
+    WaitSema(buf->lock);
     addr = buf->base + (buf->index << 11);
-    func_0010D180(buf->lock);
+    SignalSema(buf->lock);
     return addr;
 }

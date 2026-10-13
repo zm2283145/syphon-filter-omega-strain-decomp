@@ -15,10 +15,10 @@ extern void func_001112E0(void);
 extern int func_001114E8(void);
 extern Fd *func_00110CB0(void);
 extern int CreateSema(Sema *);
-extern int func_0010D170(int);
-extern int func_0010D1A0(int);
-extern int func_0010D180(int);
-extern int func_00110528(void *, int, int, void *, int, void *, int, void *, void *);
+extern int DeleteSema(int);
+extern int WaitSema(int);
+extern int SignalSema(int);
+extern int sceSifCallRpc(void *, int, int, void *, int, void *, int, void *, void *);
 int func_001115B0(const char *name, int flags, ...)
 {
     va_list ap;
@@ -64,29 +64,29 @@ int func_001115B0(const char *name, int flags, ...)
     p->ret = &ret;
     p->sema = sid;
     p->x8 = 4;
-    if (func_00110528(D_004E5F00, 0, 0, &D_004E4800, 0x418, D_004E5440, 4, 0, 0) < 0) {
-        func_0010D170(sid);
+    if (sceSifCallRpc(D_004E5F00, 0, 0, &D_004E4800, 0x418, D_004E5440, 4, 0, 0) < 0) {
+        DeleteSema(sid);
         func_001111E0();
         return -11;
     }
     ok = *(int *)((int)D_004E5440 | 0x20000000);
     func_001111E0();
     if (!ok) {
-        func_0010D170(sid);
+        DeleteSema(sid);
         return -11;
     }
-    func_0010D1A0(sid);
-    func_0010D170(sid);
+    WaitSema(sid);
+    DeleteSema(sid);
     if (ret < 0) {
-        func_0010D1A0(D_00486248);
+        WaitSema(D_00486248);
         fd->flags = 0;
-        func_0010D180(D_00486248);
+        SignalSema(D_00486248);
         return ret;
     }
     ok = idx;
-    func_0010D1A0(D_00486248);
+    WaitSema(D_00486248);
     fd->x0 = ret;
     fd->flags |= flags;
-    func_0010D180(D_00486248);
+    SignalSema(D_00486248);
     return ok;
 }

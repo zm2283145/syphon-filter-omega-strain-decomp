@@ -27,10 +27,10 @@ void* Mem_Alloc(int pool, int size, char* file, int line);
 void func_002C84B0(void);
 void func_002C8460(void);
 int func_0010D050(void);
-void func_0010CFF0(int thread, int prio);
-int func_0010CF60(Thp82F0* p);
-void func_0010CF80(int thread, void* arg);
-int func_0010CE40(int id, void* fn, int arg);
+void ChangeThreadPriority(int thread, int prio);
+int CreateThread(Thp82F0* p);
+void StartThread(int thread, void* arg);
+int AddIntcHandler(int id, void* fn, int arg);
 }
 struct Obj82F0 { char pad[0x310]; unsigned char active; };
 extern "C" void func_002C82F0(Obj82F0* o)
@@ -53,10 +53,10 @@ extern "C" void func_002C82F0(Obj82F0* o)
         tp.initPriority = 5;
         tp.stackSize = (*(int*)dat_0048C340);
         D_0048C348 = func_0010D050();
-        func_0010CFF0(D_0048C348, 10);
-        D_0048C350 = func_0010CF60(&tp);
-        func_0010CF80(D_0048C350, o);
-        D_0048C358 = func_0010CE40(2, (void*)func_002C8460, 0);
+        ChangeThreadPriority(D_0048C348, 10);
+        D_0048C350 = CreateThread(&tp);
+        StartThread(D_0048C350, o);
+        D_0048C358 = AddIntcHandler(2, (void*)func_002C8460, 0);
         Alloc_Unlock(2);
         o->active = 1;
     }

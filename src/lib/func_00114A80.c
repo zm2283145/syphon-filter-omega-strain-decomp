@@ -3,7 +3,7 @@ typedef struct { char d[0xFC]; } Blk252;
 typedef struct { int ret; int size; char name[0xFC]; char data[0xFC]; } RpcBuf;
 extern RpcCd D_004E63C0;
 extern RpcBuf D_004E61C0;
-extern int func_00110528(void *cd, int fno, int mode, void *send, int ssize, void *recv, int rsize, void *endf, void *endp);
+extern int sceSifCallRpc(void *cd, int fno, int mode, void *send, int ssize, void *recv, int rsize, void *endf, void *endp);
 extern int func_001148B8(void);
 extern int func_001149B8(void);
 extern void *memcpy(void *, const void *, unsigned int);
@@ -24,6 +24,6 @@ int func_00114A80(int id, int size, void *data, int *out)
     } else {
         D_004E61C0.size = 0;
     }
-    if (func_00110528(&D_004E63C0, 6, 0, &D_004E61C0, 0x200, &D_004E61C0, 8, 0, 0) < 0) return -0x10001;
+    if (sceSifCallRpc(&D_004E63C0, 6, 0, &D_004E61C0, 0x200, &D_004E61C0, 8, 0, 0) < 0) return -0x10001;
     { int r = D_004E61C0.ret; *out = D_004E61C0.size; return r; }
 }

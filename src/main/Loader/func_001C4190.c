@@ -24,7 +24,7 @@ extern void func_0036B080(void);
 extern void Loader_InitHotboxes(void* l, Pop_1C4190* p);
 extern void Loader_InitFireObjects(void* l, Pop_1C4190* p);
 extern void Pop_FinalizeTerrainList(void* l);
-extern void func_00178C60(Pop_1C4190* p, int f);
+extern void Population_Dtor(Pop_1C4190* p, int f);
 void Loader_LoadLevelData(void* l, void* arc)
 {
     char name[128];
@@ -50,5 +50,5 @@ void Loader_LoadLevelData(void* l, void* arc)
     Loader_InitHotboxes(l, &pop);
     Loader_InitFireObjects(l, &pop);
     Pop_FinalizeTerrainList(l);
-    func_00178C60(&pop, -1);
+    Population_Dtor(&pop, -1);
 }

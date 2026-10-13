@@ -2,14 +2,14 @@
 typedef struct { int type; } E2C8090;
 typedef struct { int a; int count; } L2C8090;
 typedef struct { char pad[0xB73]; unsigned char flag; } A2C8090;
-extern char* func_004294C0(void);
+extern char* DME_GetLobby(void);
 extern A2C8090* Agent_GetSelected(void*, int);
 extern char D_004FFB50;
 extern int D_0052FE80;
 extern E2C8090* LobbyArray_At(L2C8090*, int);
 extern void func_00336EC0(A2C8090*, E2C8090*);
 int func_002C8090(void) {
-    char* g = func_004294C0();
+    char* g = DME_GetLobby();
     A2C8090* ag = Agent_GetSelected(&D_004FFB50, -1);
     int i;
     L2C8090* l;

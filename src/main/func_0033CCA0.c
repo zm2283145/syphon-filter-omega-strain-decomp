@@ -4,7 +4,7 @@ typedef struct { char pad[0x20]; int f20; char pad2[0x18]; int f3c; } L33C;
 typedef struct { char pad[0x10]; int f10; } W33C;
 typedef struct { char pad[0x7C]; W33C* f7c; } O33C;
 typedef struct { char pad[0x31]; unsigned char b31; } G33C;
-extern L33C* func_004294C0(void);
+extern L33C* DME_GetLobby(void);
 extern E33C* func_00450EF0(L33C*, int);
 extern void func_00450EC0(L33C*, int);
 extern unsigned char D_00532DC8;
@@ -16,7 +16,7 @@ extern void func_002CA640(G33C*, int);
 extern void func_002CA6F0(G33C*);
 extern void func_0041E0F0(O33C*, W33C*, int, int, int);
 void func_0033CCA0(O33C* o) {
-    L33C* l = func_004294C0();
+    L33C* l = DME_GetLobby();
     int i;
     E33C* e;
     int n;

@@ -7,35 +7,39 @@
 /* merge_units: begin func_00429380 */
 #pragma push /* merge_units */
 #include "types.h"
+#include "DME.h"
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int func_0010CF60(int *);                           
-int func_0010CF80(int, int);                            
-int func_0010CFF0(int, int);                            
-extern char D_004E9B70;
-extern signed char D_00533880;
-extern int D_00572510;
-extern int D_00572520;
-extern unsigned char D_00572528;
-extern char D_00572540;
+int CreateThread(int *);
+int StartThread(int, int);
+int ChangeThreadPriority(int, int);
+extern char D_004E9B70; /* _gp */
+extern signed char D_00533880; /* allocator must lock Timer0 (DME thread may preempt) */
+extern int g_DmeThreadId;
+extern int g_DmeMainThreadId;
+extern unsigned char D_00572528; /* DME thread running */
+extern char g_DmeThreadStack; /* 0x10000 bytes */
 
-int func_00429380(int arg0) {
-    struct { int f10; int f14; char * f18; int f1C; char * f20; int f24[4]; int f34[2]; int f3C; } sl;
+/* Starts the DME worker thread at `entry`; g_DmeThreadId holds the caller's
+   thread id until it is replaced by the new thread. */
+int DME_CreateThread(int entry) {
+    /* kernel ThreadParam; the array members keep retail's stack layout */
+    struct { int status; int entry; char * stack; int stackSize; char * gp; int prio[4]; int wait[2]; int wakeupCount; } param;
 
     if (D_00572528 == 0) {
-        sl.f14 = arg0;
-        sl.f10 = 0x10;
-        sl.f18 = &D_00572540;
-        sl.f34[0] = 0;
-        sl.f1C = 0x10000;
-        sl.f3C = 0;
-        sl.f20 = &D_004E9B70;
-        D_00572520 = D_00572510;
-        sl.f24[0] = 5;
-        func_0010CFF0(D_00572510, 0xA);
-        D_00572510 = func_0010CF60(&sl.f10);
-        func_0010CF80(D_00572510, 0);
+        param.entry = entry;
+        param.status = 0x10;
+        param.stack = &g_DmeThreadStack;
+        param.wait[0] = 0;
+        param.stackSize = 0x10000;
+        param.wakeupCount = 0;
+        param.gp = &D_004E9B70;
+        g_DmeMainThreadId = g_DmeThreadId;
+        param.prio[0] = 5; /* initPriority */
+        ChangeThreadPriority(g_DmeThreadId, 0xA);
+        g_DmeThreadId = CreateThread(&param.status);
+        StartThread(g_DmeThreadId, 0);
         D_00533880 = 1;
         D_00572528 = 1;
     }
@@ -47,24 +51,25 @@ int func_00429380(int arg0) {
 /* merge_units: begin func_00429430 */
 #pragma push /* merge_units */
 #pragma mpwc_relax on
-int Alloc_Unlock(int);                                  
-int func_0010CE40(int, char *, int);                       
-extern int D_00572518;
-extern char func_004292B0;
+int Alloc_Unlock(int);
+int AddIntcHandler(int, char *, int);
+extern int g_DmeTimerHandlerId;
+extern char DME_TimerHandler;
 
-unsigned char func_00429430(void) {
-    unsigned char var_s0 = 0;
+/* Programs EE Timer 0 and installs DME_TimerHandler on its interrupt line. */
+unsigned char DME_InstallTimer(void) {
+    unsigned char installed = 0;
 
-    *(volatile int *)0x10000010 = 0xC00;
-    *(volatile int *)0x10000020 = 0x24A;
-    *(volatile int *)0x10000000 = 0;
-    *(volatile int *)0x10000010 = 0x382;
-    D_00572518 = func_0010CE40(9, &func_004292B0, 0);
-    if (D_00572518 != -1) {
-        Alloc_Unlock(9);
-        var_s0 = 1;
+    T0_MODE = 0xC00; /* clear EQUF/OVFF */
+    T0_COMP = 0x24A;
+    T0_COUNT = 0;
+    T0_MODE = 0x382; /* BUSCLK/256, CUE, CMPE, OVFE */
+    g_DmeTimerHandlerId = AddIntcHandler(INTC_TIM0, &DME_TimerHandler, 0);
+    if (g_DmeTimerHandlerId != -1) {
+        Alloc_Unlock(INTC_TIM0); /* enables the interrupt */
+        installed = 1;
     }
-    return var_s0;
+    return installed;
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00429430 */
@@ -72,11 +77,12 @@ unsigned char func_00429430(void) {
 /* merge_units: begin func_004294C0 */
 #pragma push /* merge_units */
 #pragma cplusplus on
-extern int D_00572480;
-extern unsigned char D_00572488;
-extern "C" int func_004294C0(void)
+extern int g_DmeLobby;
+extern unsigned char g_DmeLobbyActive;
+/* The SFOLobby instance, or 0 when lobby updates are disabled. */
+extern "C" int DME_GetLobby(void)
 {
-    unsigned char ok = 0; if (D_00572480 && D_00572488) ok = 1; return ok ? D_00572480 : 0;
+    unsigned char ok = 0; if (g_DmeLobby && g_DmeLobbyActive) ok = 1; return ok ? g_DmeLobby : 0;
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_004294C0 */
@@ -91,14 +97,14 @@ extern "C" int func_004294C0(void)
 
 
 #if 0 /* merge_units */
-extern char D_00572488[];
+extern char g_DmeLobbyActive[];
 #endif /* merge_units */
-#define D_00572488 ((char*)&D_00572488) /* merge_units */
+#define g_DmeLobbyActive ((char*)&g_DmeLobbyActive) /* merge_units */
 
 
-void func_00429500(int a0) {
-    *(char*)D_00572488 = a0;
+void DME_SetLobbyActive(int a0) {
+    *(char*)g_DmeLobbyActive = a0;
 }
-#undef D_00572488 /* merge_units */
+#undef g_DmeLobbyActive /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00429500 */

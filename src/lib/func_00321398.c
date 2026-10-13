@@ -5,7 +5,7 @@ extern int func_00322E60(int);
 extern int func_00323248(void);
 extern int func_0031F7C8(void *p);
 extern int func_003214C0(H321 **pp);
-extern int func_00127358(const char *fmt, ...);
+extern int printf(const char *fmt, ...);
 int func_00321398(H321 **pp)
 {
     H321 *h;
@@ -14,11 +14,11 @@ int func_00321398(H321 **pp)
     *pp = 0;
     r = func_00322E60(0);
     if (r == 1) {
-        func_00127358("\nEvaluation period has expired.\nExiting...\n\n");
+        printf("\nEvaluation period has expired.\nExiting...\n\n");
         return 0x1965;
     }
     if (r == -1) {
-        func_00127358("\nClock incorrectly set.  Please adjust to correct date and time.\nExiting...\n\n");
+        printf("\nClock incorrectly set.  Please adjust to correct date and time.\nExiting...\n\n");
         return 0x1965;
     }
     h = D_004E1D34(1, 0x38);

@@ -1,4 +1,4 @@
-int func_002EFCD0(int *a)
+int LargeInt_IsZero(int *a)
 {
     int i;
     for (i = 0; i < 0x20; i++)

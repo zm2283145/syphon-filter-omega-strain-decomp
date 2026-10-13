@@ -19,7 +19,7 @@ struct S_002AC070 : W_002AC070 {
 extern "C" {
 static int D_0048BCB0 = -1;
 void func_002AD770(Vec_002AC070* v);
-void* func_004294C0(void);
+void* DME_GetLobby(void);
 E_002AC070* LobbyArray_At(L_002AC070* l, int i);
 int func_002AC470(S_002AC070* self, E_002AC070* e);
 void func_002AD1F0(Vec_002AC070* v, It_002AC070* pos, int n, It_002AC070* it);
@@ -37,7 +37,7 @@ extern "C" void func_002AC070(S_002AC070* self)
     int i;
     int sel;
     func_002AD770(&self->list);
-    g = func_004294C0();
+    g = DME_GetLobby();
     if (!self->p11C || !g)
         return;
     n = self->p11C->count;

@@ -11,7 +11,7 @@ typedef struct Game {
 extern void func_003CBE90(char* name);
 extern void func_0045A700(int);
 extern char* func_003CBA90(char* key);
-extern void func_00127358(char* fmt, ...);
+extern void printf(char* fmt, ...);
 extern int String_CompareNoCase(char* a, char* b);
 extern int String_CompareN(char* a, char* b, int n);
 extern int strlen(char*);
@@ -36,7 +36,7 @@ void Game_LoadIni(Game* g) {
 
     func_003CBE90("SFO_GAME.INI");
     func_0045A700(D_004FFD2C);
-    { char* mode = func_003CBA90("BOOT_VIDEOMODE"); func_00127358("videomode: %s\n", mode); }
+    { char* mode = func_003CBA90("BOOT_VIDEOMODE"); printf("videomode: %s\n", mode); }
     { int pal = String_CompareNoCase(func_003CBA90("BOOT_VIDEOMODE"), "PAL") == 0; if (pal) {
         g->videoMode = 2;
         g->width = 0x280;

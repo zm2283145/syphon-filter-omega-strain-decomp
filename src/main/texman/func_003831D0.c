@@ -8,7 +8,7 @@ extern int D_00539328;
 extern int D_00539330;
 void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
 void func_00383660(void* self);
-int func_0010CE40(int cause, void* handler, int next);
+int AddIntcHandler(int cause, void* handler, int next);
 void func_00381FB0(void);
 int TexCache_LoadErrorTexture(void* self);
 }
@@ -105,7 +105,7 @@ extern "C" TexCache* func_003831D0(TexCache* self, unsigned int base, int cap)
     self->u14 = 0;
     self->u15 = 0;
     self->u16 = 1;
-    self->handler = func_0010CE40(5, (void*)func_00381FB0, 0);
+    self->handler = AddIntcHandler(5, (void*)func_00381FB0, 0);
     Alloc_Unlock(5);
     *(volatile int*)0x10003010 = 4;
     {

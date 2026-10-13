@@ -2,7 +2,7 @@ extern int func_001161A0(void);
 extern void func_001161F8(void);
 extern int func_0010CE60(int, int);
 extern int Alloc_Lock(int);
-extern int func_0010D170(int);
+extern int DeleteSema(int);
 extern int func_0010F388(const char *, ...);
 extern int D_004F581C;
 extern int D_0048AB18;
@@ -20,7 +20,7 @@ int sceUsbKbEnd(void)
 ");
     }
     if (D_0048AB18 != -1) {
-        if (func_0010D170(D_0048AB18) < 0) {
+        if (DeleteSema(D_0048AB18) < 0) {
             err++;
             func_0010F388("libusbkb.a : DeleteSema() --> error
 ");

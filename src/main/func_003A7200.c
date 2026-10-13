@@ -1,6 +1,6 @@
 #include "types.h"
-extern void func_0010DB98(int*, char*);
-extern int func_00118F00(int);
+extern void InvalidDCache(int*, char*);
+extern int sceCdSync(int);
 extern int func_003A85E0(void);
 extern int func_003A7990(int, int, void*);
 extern int D_0053DC00;
@@ -11,7 +11,7 @@ extern char D_0054283F;
 static inline unsigned char Done3A7200(void) { return !D_00542800; }
 static inline int Poll3A7200(char* k) {
     int t;
-    func_0010DB98(&D_00542800, k);
+    InvalidDCache(&D_00542800, k);
     t = Done3A7200();
     D_0053DC18 = t;
     return t;
@@ -20,7 +20,7 @@ static inline int Sync3A7200(int wait)
 {
     char* k;
     int t;
-    if (D_0053DC00 == 0) return func_00118F00(wait);
+    if (D_0053DC00 == 0) return sceCdSync(wait);
     k = &D_0054283F;
     t = Poll3A7200(k);
     if (t == 1) return 0;

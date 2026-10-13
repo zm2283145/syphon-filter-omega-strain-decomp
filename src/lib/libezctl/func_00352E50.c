@@ -4,7 +4,7 @@ extern char D_00533280[];
 extern char D_004BADB8[];
 extern char D_004BADC0[];
 extern void func_0010F388(const char *, ...);
-extern int func_00110528(char *, int, int, void *, int, void *, int, void *, void *);
+extern int sceSifCallRpc(char *, int, int, void *, int, void *, int, void *, void *);
 extern int func_003532F8(int, int, int, int);
 int ezNetCtlSetProperties(int size)
 {
@@ -20,7 +20,7 @@ int ezNetCtlSetProperties(int size)
         func_0010F388("RPC data size 0x%x exceeds buffer size 0x%x\n", 4, 0x1340);
         return -1;
     }
-    func_00110528(D_00533280, 0, 0, res, 4, res, 4, 0, 0);
+    sceSifCallRpc(D_00533280, 0, 0, res, 4, res, 4, 0, 0);
     if (*res == 0) {
         func_0010F388(D_004BADB8, D_004BADC0);
         func_0010F388("eCtlGetPropertiesAddress returned NULL\n");
@@ -28,7 +28,7 @@ int ezNetCtlSetProperties(int size)
         return -2;
     }
     func_003532F8(size, *res, 0x1340, 0);
-    func_00110528(D_00533280, 1, 0, res, 4, res, 4, 0, 0);
+    sceSifCallRpc(D_00533280, 1, 0, res, 4, res, 4, 0, 0);
     r = *res;
     func_0010F388(D_004BADB8, D_004BADC0);
     func_0010F388("ezNetCtlSetProperties returned %d\n", r);

@@ -1,47 +1,32 @@
-extern int D_0049147C;
-typedef struct { unsigned char Mode; char rest[11]; short x; } AudOpenParam;
-typedef struct {
-    int ret;
-    int x4;
-    int type;
-    int dev;
-    int x10[4];
-    union { AudOpenParam open; int i[4]; } u;
-} AudPkt;
-extern AudPkt* D_00491474;
-extern char D_0052AD00[];
-extern int func_0010D1A0(int sema);
-extern int func_0010D180(int sema);
-extern int func_00110528(void* cd, int rpc, int mode, void* send, int ssize, void* recv, int rsize, void* end, void* param);
-extern int func_00127358(const char* fmt, ...);
+#include "lgaud.h"
 
-int lgAudOpen(int type, AudOpenParam *openparam, int *device)
+int lgAudOpen(int type, lgAudOpenParam *openparam, int *device)
 {
     int ret;
-    if (D_0049147C == -1)
-        return 0x8000000A;
+    if (lgAud_sema == -1)
+        return LGAUD_ERR_NOT_INITIALIZED;
     if (device == 0) {
-        func_00127358("lgAudOpen: invalid parameter (device)\n");
-        return 0x80000004;
+        printf("lgAudOpen: invalid parameter (device)\n");
+        return LGAUD_ERR_INVALID_PARAMETER;
     }
     if (openparam == 0) {
-        func_00127358("lgAudOpen: invalid parameter (openparam)\n");
-        return 0x80000004;
+        printf("lgAudOpen: invalid parameter (openparam)\n");
+        return LGAUD_ERR_INVALID_PARAMETER;
     }
     if (openparam->Mode == 0) {
-        func_00127358("lgAudOpen: invalid parameter (openparam->Mode)\n");
-        return 0x80000004;
+        printf("lgAudOpen: invalid parameter (openparam->Mode)\n");
+        return LGAUD_ERR_INVALID_PARAMETER;
     }
-    func_0010D1A0(D_0049147C);
-    D_00491474->type = type;
-    D_00491474->u.open = *openparam;
-    if (func_00110528(D_0052AD00, 2, 0, D_00491474, 0x30, D_00491474, 0x20, 0, 0) == 0) {
-        ret = D_00491474->ret;
-        *device = D_00491474->dev;
-        func_0010D180(D_0049147C);
+    WaitSema(lgAud_sema);
+    lgAud_pkt->arg = type;
+    lgAud_pkt->u.open = *openparam;
+    if (sceSifCallRpc(&lgAud_cd, LGAUD_RPC_OPEN, LGAUD_RPC_SYNC, lgAud_pkt, 0x30, lgAud_pkt, 0x20, 0, 0) == 0) {
+        ret = lgAud_pkt->ret;
+        *device = lgAud_pkt->device;
+        SignalSema(lgAud_sema);
         return ret;
     }
-    func_00127358("lgAudOpen: rpc call failed\n");
-    func_0010D180(D_0049147C);
-    return 0x80000000;
+    printf("lgAudOpen: rpc call failed\n");
+    SignalSema(lgAud_sema);
+    return LGAUD_ERR_RPC_FAILED;
 }

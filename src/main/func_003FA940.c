@@ -16,7 +16,7 @@ extern "C" {
 extern char D_0055C780[];
 extern unsigned char D_00572400;
 extern char D_0055C7A0[];
-extern void func_00429B30(void);
+extern void DME_SendPlayGameMsg(void);
 extern Peer_A940* func_0040BF10(void);
 extern void func_003FAAA0(Iter_A940* out, void* map);
 extern void func_0021D360(Iter_A940* out, void* map);
@@ -38,7 +38,7 @@ void func_003FA940(int id)
     Iter_A940 e1;
     D_0055C780[id] = 2;
     if (D_00572400) {
-        func_00429B30();
+        DME_SendPlayGameMsg();
     }
     self = func_0040BF10();
     self->Notify(id);

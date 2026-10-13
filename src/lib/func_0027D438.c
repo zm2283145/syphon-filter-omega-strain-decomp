@@ -1,5 +1,5 @@
 extern volatile int D_0048B378;
-extern int func_0010D1A0(int);
+extern int WaitSema(int);
 extern int func_0010D1B0(int);
 extern int func_0027D350(void);
 
@@ -9,7 +9,7 @@ int func_0027D438(int mode)
     if (D_0048B378 < 0) return -1;
     switch (mode) {
     case 0:
-        func_0010D1A0(D_0048B378);
+        WaitSema(D_0048B378);
         r = 0;
         func_0027D350();
         break;

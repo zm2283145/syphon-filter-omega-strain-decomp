@@ -11,7 +11,7 @@ extern unsigned char D_005064A8;
 extern int D_005064B0;
 extern char* D_005064B8;
 void func_0012EE30(void* p);
-void* func_004294C0(void);
+void* DME_GetLobby(void);
 char* func_0033CE30(void* self, int a, int b, int c, int d, int e);
 int FrontEnd_OpenPopup(void* ui, int a, char* b, char* c, void* d, int e);
 void func_001698C0(void);
@@ -30,7 +30,7 @@ extern "C" void func_002A0F60(S_002A0F60* self)
     func_0012EE30(D_004FFB50);
     D_004FFC04->f254 = self->pF4->f40;
     if (!D_004FFC04->b32) {
-        void* g = func_004294C0();
+        void* g = DME_GetLobby();
         if (g) {
             Ui_002A0F60* ui = D_004FFC04;
             int k = ui->f248;

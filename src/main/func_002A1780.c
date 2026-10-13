@@ -37,7 +37,7 @@ void func_002CC260(void);
 Obj_002A1780* func_0041DB80(Self_002A1780* self, char* name);
 void func_0041BEB0(void* w, char* s, int a);
 void func_002A1670(Self_002A1780* self);
-Game_002A1780* func_004294C0(void);
+Game_002A1780* DME_GetLobby(void);
 void func_004426B0(Game_002A1780* g);
 unsigned char func_004518F0(Game_002A1780* g, void* cb, void* a, void* b, void* c);
 char* func_0033CE30(Self_002A1780* self, int a, int b, int c, int d, int e);
@@ -69,7 +69,7 @@ extern "C" void func_002A1780(Self_002A1780* self)
     }
     func_002A1670(self);
     self->bF8 = 0;
-    g = func_004294C0();
+    g = DME_GetLobby();
     if (g) {
         if (g->state == 4) {
             asm { .set reorder }

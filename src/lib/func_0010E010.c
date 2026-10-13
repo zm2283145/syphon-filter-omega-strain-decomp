@@ -3,9 +3,9 @@ typedef struct { int x0; int x4; EE010 e[0x200]; } QE010;
 extern int D_00486198;
 extern QE010 D_004E2408;
 extern int D_004E2400;
-extern void func_0010D190(int);
+extern void iSignalSema(int);
 extern int func_0010D0A0(int);
-int func_0010E010(int tid)
+int iWakeupThread(int tid)
 {
     register int v0 __asm__("$2");
     unsigned int t;
@@ -19,7 +19,7 @@ int func_0010E010(int tid)
     D_004E2408.x4 = i + 1;
     D_004E2408.e[i].a = 0;
     D_004E2408.e[i].b = t;
-    func_0010D190(D_004E2400);
+    iSignalSema(D_004E2400);
     return t;
 }
 

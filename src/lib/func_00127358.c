@@ -2,7 +2,7 @@ typedef struct { int a, b; char *out; } Reent127358;
 typedef struct { char pad[0x54]; Reent127358 *data; } File127358;
 extern Reent127358 *D_00489738;
 extern int func_0012C390(void *, const char *, __builtin_va_list);
-int func_00127358(const char *fmt, ...)
+int printf(const char *fmt, ...)
 {
     int ret;
     __builtin_va_list ap;

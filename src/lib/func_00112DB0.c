@@ -5,7 +5,7 @@ extern int func_001111B0(int);
 extern void func_001112E0(void),func_001111E0(void);
 extern Entry2DB0 *func_00110CB0(void);
 extern int func_00112668(int,int);
-extern int func_0010D1A0(int),func_0010D180(int);
+extern int WaitSema(int),SignalSema(int);
 int func_00112DB0(int path){
  Entry2DB0 *e;
  int r, sem;
@@ -15,9 +15,9 @@ int func_00112DB0(int path){
  e=func_00110CB0();
  if(!e)return -19;
  r=func_00112668(path,9);
- if(r<0){func_0010D1A0(D_00486248);e->used=0;sem=D_00486248;}
- else{func_0010D1A0(D_00486248);e->fd=r;sem=D_00486248;r=e-D_004E5D00;}
- func_0010D180(sem);
+ if(r<0){WaitSema(D_00486248);e->used=0;sem=D_00486248;}
+ else{WaitSema(D_00486248);e->fd=r;sem=D_00486248;r=e-D_004E5D00;}
+ SignalSema(sem);
  return r;
 }
 

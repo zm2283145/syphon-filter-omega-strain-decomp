@@ -1,5 +1,5 @@
 #include "types.h"
-extern char* func_004294C0(void);
+extern char* DME_GetLobby(void);
 extern char D_004FFB50[];
 extern void* Agent_GetSelected(char* name, int index);
 extern int D_0052FE80;
@@ -7,7 +7,7 @@ extern void* func_00336E80(void* agent, int i);
 extern void LobbyArray_Append(void* list, void* item);
 int func_002C7FC0(void)
 {
-    char* owner = func_004294C0();
+    char* owner = DME_GetLobby();
     void* agent = Agent_GetSelected(D_004FFB50, -1);
     void* list;
     int i;

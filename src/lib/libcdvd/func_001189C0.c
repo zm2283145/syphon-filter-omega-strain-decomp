@@ -17,13 +17,13 @@ extern char D_00498CA8[];
 extern char D_00498CB8[];
 extern void func_00118718(void);
 extern int func_0010D1B0(int);
-extern int func_0010D180(int);
-extern int func_0010D060(int, void *);
-extern int func_00118F00(int);
+extern int SignalSema(int);
+extern int ReferThreadStatus(int, void *);
+extern int sceCdSync(int);
 extern void D_0010FBC0(int);
 extern void func_0010FB10(void *, int);
 extern int func_00110358(RpcCd *cd, unsigned int id, int mode);
-extern int func_00110528(RpcCd *, int, int, void *, int, void *, int, void *, void *);
+extern int sceSifCallRpc(RpcCd *, int, int, void *, int, void *, int, void *, void *);
 extern void func_0010F388(const char *, ...);
 
 /* busy-wait; the nop has no C equivalent */
@@ -36,9 +36,9 @@ int sceCdSearchFile(sceCdlFILE *fp, const char *name, int layer)
     func_00118718();
     if (D_004878A8 != func_0010D1B0(D_004878A8)) return 0;
     D_0048789C = 1;
-    func_0010D060(D_004E9D18, &D_004E9D20);
-    if (func_00118F00(1)) {
-        func_0010D180(D_004878A8);
+    ReferThreadStatus(D_004E9D18, &D_004E9D20);
+    if (sceCdSync(1)) {
+        SignalSema(D_004878A8);
         return 0;
     }
     D_0010FBC0(0);
@@ -62,8 +62,8 @@ int sceCdSearchFile(sceCdlFILE *fp, const char *name, int layer)
     D_004E9D80.layer = layer;
     D_004E9D80.dest = &D_004E9D80;
     func_0010FB10(&D_004E9D80, sizeof(SearchBuf));
-    if (func_00110528(&D_004E9F00, 0, 0, &D_004E9D80, sizeof(SearchBuf), &D_004E9EC0, 4, 0, 0) < 0) {
-        func_0010D180(D_004878A8);
+    if (sceSifCallRpc(&D_004E9F00, 0, 0, &D_004E9D80, sizeof(SearchBuf), &D_004E9EC0, 4, 0, 0) < 0) {
+        SignalSema(D_004878A8);
         return 0;
     }
     __builtin_memcpy(fp, (void *)((int)&D_004E9D80 | 0x20000000), sizeof(sceCdlFILE));
@@ -71,6 +71,6 @@ int sceCdSearchFile(sceCdlFILE *fp, const char *name, int layer)
     if (D_00487890 > 0) func_0010F388(D_00498CA8, fp->size);
     if (D_00487890 > 0) func_0010F388(D_00498CB8, fp->lsn);
     ret = *(int *)((int)&D_004E9EC0 | 0x20000000);
-    func_0010D180(D_004878A8);
+    SignalSema(D_004878A8);
     return ret;
 }

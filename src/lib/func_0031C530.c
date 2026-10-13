@@ -13,7 +13,7 @@ typedef struct {
 extern void *(*D_004E1D34)(int, int);
 extern unsigned short D_004E1D4C;
 extern int func_00322E60(int);
-extern void func_00127358(char *);
+extern void printf(char *);
 extern int func_00323248(void);
 extern int func_003179A8(int *sub, int v);
 extern void func_0031C668(Ctx_c530 **out);
@@ -27,11 +27,11 @@ int func_0031C530(Ctx_c530 **out)
     *out = 0;
     r = func_00322E60(0);
     if (r == 1) {
-        func_00127358("\nEvaluation period has expired.\nExiting...\n\n");
+        printf("\nEvaluation period has expired.\nExiting...\n\n");
         return 0x1965;
     }
     if (r == -1) {
-        func_00127358("\nClock incorrectly set.  Please adjust to correct date and time.\nExiting...\n\n");
+        printf("\nClock incorrectly set.  Please adjust to correct date and time.\nExiting...\n\n");
         return 0x1965;
     }
     s = D_004E1D34(1, sizeof(Ctx_c530));

@@ -1,5 +1,5 @@
 typedef struct NetIf_8E0 { int err; int f4; int f8; int state; char pad[0x10]; struct NetIf_8E0 *f20; struct NetIf_8E0 *f24; } NetIf_8E0;
-extern void func_0010D3E0(int a);
+extern void FlushCache(int a);
 extern int func_0034C9A0(NetIf_8E0 *a, NetIf_8E0 *b, int n);
 int func_0034C8E0(NetIf_8E0 *o, int *out)
 {
@@ -9,7 +9,7 @@ int func_0034C8E0(NetIf_8E0 *o, int *out)
     if (o == 0 || out == 0) return -0x200;
     c = o->f24;
     *out = 0;
-    func_0010D3E0(0);
+    FlushCache(0);
     if (c->state == 0) {
         *out = 1;
     } else if (c->state == 3) {

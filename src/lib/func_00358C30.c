@@ -8,7 +8,7 @@ extern void func_00357D88(void *);
 extern int func_003581C0(void);
 extern int func_00358158(void);
 extern int func_0010D050(void);
-extern int func_0010D170(int);
+extern int DeleteSema(int);
 extern void func_00358BB0(N81E0 *);
 
 int func_00358C30(int tid)
@@ -27,7 +27,7 @@ int func_00358C30(int tid)
         }
     }
     if (D_00492CCC <= 0) {
-        func_0010D170(D_00492CC8);
+        DeleteSema(D_00492CC8);
         D_00492CC8 = -1;
         return 0;
     }

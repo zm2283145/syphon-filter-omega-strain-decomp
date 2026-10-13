@@ -9,13 +9,14 @@
 #pragma cplusplus on
 #include "vtable_base_dtor.h"
 
-DEFINE_VTABLE_BASE_DTOR(func_00429BA0, D_004E0EC0, cMessage_dtor)
+DEFINE_VTABLE_BASE_DTOR(cNetPlayGameMsg_dtor, D_004E0EC0, cMessage_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00429BA0 */
 
 /* merge_units: begin func_00429C00 */
 #pragma push /* merge_units */
 #include "types.h"
+#include "DME.h"
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
@@ -24,23 +25,25 @@ extern unsigned char D_005721C8;
 extern unsigned char D_005723C8;
 extern unsigned char D_005724B0;
 
-void func_00429C00(int *arg0) {
-    int var_v1;
+/* Join callback (DME_JoinGame): a client needs two successful results
+   (JOIN_WAIT, then JOINED); the host is joined after the first. */
+void DME_OnJoinResult(int *result) {
+    int isHost;
 
     if (D_005723C8 == 0) {
         D_005723C8 = 1;
     }
-    if (*arg0 == 0) {
-        var_v1 = D_005721C8 ? D_005721C0 : 1;
-        if (var_v1 != 0) {
-            D_005724B0 = 0xA;
-        } else if (D_005724B0 == 9) {
-            D_005724B0 = 0xA;
+    if (*result == 0) {
+        isHost = D_005721C8 ? D_005721C0 : 1;
+        if (isHost != 0) {
+            D_005724B0 = DME_STATE_JOINED;
+        } else if (D_005724B0 == DME_STATE_JOIN_WAIT) {
+            D_005724B0 = DME_STATE_JOINED;
         } else {
-            D_005724B0 = 9;
+            D_005724B0 = DME_STATE_JOIN_WAIT;
         }
     } else {
-        D_005724B0 = 0xB;
+        D_005724B0 = DME_STATE_JOIN_FAILED;
     }
     D_005723C8 = 0;
 }
@@ -50,15 +53,16 @@ void func_00429C00(int *arg0) {
 /* merge_units: begin func_00429CB0 */
 #pragma push /* merge_units */
 #pragma mpwc_relax on
-extern float D_005723D8;
-extern float D_005723E0;
-extern int D_005723E8;
+extern float g_DmeLatencyAvg;
+extern float g_DmeLatencySum;
+extern int g_DmeLatencyCount;
 
-void func_00429CB0(int arg0) {
-    if (arg0 < 0x3E8 && 0 <= arg0) {
-        D_005723E8 += 1;
-        D_005723E0 += 0.001f * (float) arg0;
-        D_005723D8 = D_005723E0 / (float) D_005723E8;
+/* Accumulates a round-trip sample in ms (0..999) into a running average in seconds. */
+void DME_AddLatencySample(int ms) {
+    if (ms < 0x3E8 && 0 <= ms) {
+        g_DmeLatencyCount += 1;
+        g_DmeLatencySum += 0.001f * (float) ms;
+        g_DmeLatencyAvg = g_DmeLatencySum / (float) g_DmeLatencyCount;
     }
 }
 #pragma pop /* merge_units */

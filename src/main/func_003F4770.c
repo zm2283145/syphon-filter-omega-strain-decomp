@@ -15,14 +15,14 @@ typedef struct {
     int head;
 } ReqQueue;
 
-extern void func_0010D1A0(int);
-extern void func_0010D180(int);
+extern void WaitSema(int);
+extern void SignalSema(int);
 extern int func_003F48B0(ReqQueue* q, Req* r);
 
 int func_003F4770(ReqQueue* q, Req* r)
 {
     int ret = 0;
-    func_0010D1A0(q->lock);
+    WaitSema(q->lock);
     if (q->count < q->cap) {
         func_003F48B0(q, r);
         if (r->a >= 0 || r->b >= 0) {
@@ -35,6 +35,6 @@ int func_003F4770(ReqQueue* q, Req* r)
         }
         ret = 1;
     }
-    func_0010D180(q->lock);
+    SignalSema(q->lock);
     return ret;
 }

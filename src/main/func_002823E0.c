@@ -9,7 +9,7 @@ extern "C" {
 extern unsigned char* D_005061D0;
 extern int D_005061C8;
 void Event_PackHeader(Msg2823E0* e, int a1, int* type, int a3, int a4, unsigned int size, void* buf);
-void func_00127358(const char* format, ...);
+void printf(const char* format, ...);
 }
 #pragma push
 #pragma opt_propagation off
@@ -32,7 +32,7 @@ b->len = n;
             *type = D_005061C8;
         }
     }
-    if ((unsigned int)r > 0x10C) func_00127358("size = %d\n", r);
+    if ((unsigned int)r > 0x10C) printf("size = %d\n", r);
     return r;
 }
 #pragma pop

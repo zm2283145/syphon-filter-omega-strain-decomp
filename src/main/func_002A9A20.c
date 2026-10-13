@@ -13,7 +13,7 @@ extern "C" {
 extern void* D_004FFC04;
 extern char D_004AB808[];
 extern char D_004FFB50[];
-G_002A9A20* func_004294C0(void);
+G_002A9A20* DME_GetLobby(void);
 int func_0033CE30(S_002A9A20* self, int a, int b, int c, int d, int e);
 int FrontEnd_OpenPopup(void* ui, int a, char* b, int c, S_002A9A20* d, int e);
 Ag_002A9A20* Agent_GetSelected(void* a, int b);
@@ -28,7 +28,7 @@ void func_00441A10(S_002A9A20* self);
 }
 extern "C" void func_002A9A20(S_002A9A20* self)
 {
-    G_002A9A20* g = func_004294C0();
+    G_002A9A20* g = DME_GetLobby();
     if (g) {
         E_002A9A20* e = LobbyArray_At(self->fA0, self->f9C);
         if (e) {

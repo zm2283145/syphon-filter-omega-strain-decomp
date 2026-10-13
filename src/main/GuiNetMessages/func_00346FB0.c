@@ -7,7 +7,7 @@ typedef struct { void* fn[32]; } VT346;
 typedef struct { VT346* vt; char pad[0x88]; W346* w8c; W346* w90; W346* w94; int p98; int p9c; W346* wa0; W346* wa4; } O346;
 typedef struct { int type; char pad[8]; char name[0x20]; char text[0x20]; } I346;
 typedef struct { int a[4]; } S346;
-extern int func_004294C0(void);
+extern int DME_GetLobby(void);
 extern void func_0041BEB0(W346*, char*, int);
 extern char* Loc_LookupText(char*);
 extern int sprintf(char*, const char*, ...);
@@ -28,7 +28,7 @@ extern "C" void func_00346FB0(O346* self, I346* info) {
     int b0, b1, b2;
     unsigned short mask;
     if (!self->w8c || !self->w90 || !self->w94) return;
-    if (!func_004294C0()) return;
+    if (!DME_GetLobby()) return;
     b0 = (self->w8c->flags & 2) != 0;
     b1 = (self->w90->flags & 2) != 0;
     b2 = (self->w94->flags & 2) != 0;

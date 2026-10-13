@@ -23,7 +23,7 @@ extern char D_004ABCD0[];
 extern char* D_0048BCF0;
 extern char D_004A7520[];
 extern void* D_004FFC04;
-G_002AFA80* func_004294C0(void);
+G_002AFA80* DME_GetLobby(void);
 void func_004426B0(G_002AFA80* g);
 void func_002CC260(void);
 int func_0044B420(G_002AFA80* g, void* cb, void* a, void* b);
@@ -60,7 +60,7 @@ extern "C" void func_002AFA80(Self_002AFA80* self)
     W_002AFA80* w;
     if (self->b80)
         return;
-    g = func_004294C0();
+    g = DME_GetLobby();
     if (g) {
         if (g->f255C == 4)
             func_004426B0(g);
@@ -79,7 +79,7 @@ extern "C" void func_002AFA80(Self_002AFA80* self)
                 func_0013D680(&self->s174, &s2);
                 func_00138B70(&s2, 0);
             }
-            g2 = func_004294C0();
+            g2 = DME_GetLobby();
             if (g2) {
                 char* t = func_0044A060(g2);
                 if (self->p160)

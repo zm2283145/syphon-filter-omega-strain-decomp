@@ -2,16 +2,16 @@
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int func_002EB650(void **, int);                      
-int func_002EBAF8(int *, int);                        
-int func_002EC460(int);                               
-int func_002EC878(int, int);                          
-int func_00325A28(int);                             
-int func_0042B1A0(int);                               
-int func_0042BF90();                                  
-int func_0042C1D0();                                  
-int lgAudClose(int);                                  
-int lgAudStopPlayback(int);                           
+int func_002EB650(void **, int);
+int func_002EBAF8(int *, int);
+int func_002EC460(int);
+int func_002EC878(int, int);
+int lgAudStopRecording(int);
+int func_0042B1A0(int);
+int func_0042BF90();
+int func_0042C1D0();
+int lgAudClose(int);
+int lgAudStopPlayback(int);
 extern int D_00494178;
 extern int D_00497548;
 unsigned int D_00497550[2] = { 0xFFFFFFFF, 0x0 };
@@ -44,14 +44,14 @@ void func_00437BF0(void) {
             D_00582D28 = 1;
         }
         if (D_00582B88 != 0) {
-            if (func_00325A28(D_00497548) == 0x80000006) {
+            if (lgAudStopRecording(D_00497548) == 0x80000006) {
                 D_00582B88 = 0;
             }
             D_00582D08 = func_0042B1A0(1) + 0x7D0;
         }
         D_00583860 = 0;
         if (D_00582B88 != 0) {
-            if (func_00325A28(D_00497548) == 0x80000006) {
+            if (lgAudStopRecording(D_00497548) == 0x80000006) {
                 D_00582B88 = 0;
             }
             D_00582D08 = func_0042B1A0(1) + 0x7D0;

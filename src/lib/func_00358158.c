@@ -1,6 +1,6 @@
 typedef struct { int currentCount; int maxCount; int initCount; int numWaitThreads; unsigned int attr; unsigned int option; } SemaParam8158;
 extern int CreateSema(SemaParam8158 *);
-extern int func_0010D1A0(int);
+extern int WaitSema(int);
 unsigned int D_00492CC8[1] = { 0xFFFFFFFF };
 
 int func_00358158(void)
@@ -15,5 +15,5 @@ int func_00358158(void)
         (*(int*)D_00492CC8) = r;
         if (r < 0) return -1;
     }
-    return func_0010D1A0((*(int*)D_00492CC8)) > -1 ? 0 : -1;
+    return WaitSema((*(int*)D_00492CC8)) > -1 ? 0 : -1;
 }

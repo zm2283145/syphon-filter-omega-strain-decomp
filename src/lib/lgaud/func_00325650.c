@@ -1,26 +1,20 @@
-extern int D_0049147C;
-extern int* D_00491474;
-extern char D_0052AD00[];
-extern int func_0010D1A0(int sema);
-extern int func_0010D180(int sema);
-extern int func_00110528(void* cd, int rpc, int mode, void* send, int ssize, void* recv, int rsize, void* end, void* param);
-extern int func_00127358(const char* fmt, ...);
+#include "lgaud.h"
 
 int lgAudGetAvailableRecordingBytes(int device, int *bytes)
 {
-    int* buf;
-    if (D_0049147C == -1)
-        return 0x8000000A;
-    func_0010D1A0(D_0049147C);
-    buf = D_00491474;
-    buf[3] = device;
-    if (func_00110528(D_0052AD00, 0x12, 0, buf, 0x20, buf, 0x30, 0, 0) == 0) {
-        device = *D_00491474;
-        *bytes = D_00491474[8];
-        func_0010D180(D_0049147C);
+    lgAudRpcPkt *pkt;
+    if (lgAud_sema == -1)
+        return LGAUD_ERR_NOT_INITIALIZED;
+    WaitSema(lgAud_sema);
+    pkt = lgAud_pkt;
+    pkt->device = device;
+    if (sceSifCallRpc(&lgAud_cd, LGAUD_RPC_GET_AVAILABLE_RECORDING_BYTES, LGAUD_RPC_SYNC, pkt, 0x20, pkt, 0x30, 0, 0) == 0) {
+        device = lgAud_pkt->ret;
+        *bytes = lgAud_pkt->u.size;
+        SignalSema(lgAud_sema);
         return device;
     }
-    func_00127358("lgAudGetAvailableRecordingBytes: rpc call failed\n");
-    func_0010D180(D_0049147C);
-    return 0x80000000;
+    printf("lgAudGetAvailableRecordingBytes: rpc call failed\n");
+    SignalSema(lgAud_sema);
+    return LGAUD_ERR_RPC_FAILED;
 }

@@ -35,10 +35,10 @@ void func_002A3A10(S_002A2170* self);
 char* String_CStr(void* s);
 int strcmp(const char* a, const char* b);
 void Pad_Reset(void* p);
-void func_00429B30(void);
+void DME_SendPlayGameMsg(void);
 void* Gui_GetScreenStack(void);
 void GuiStack_SwapScreens(void* ui, S_002A2170* self, void* pg);
-G_002A2170* func_004294C0(void);
+G_002A2170* DME_GetLobby(void);
 char* Loc_LookupText(char* key);
 void func_0041BEB0(void* w, char* s, int a);
 void* Gui_GetScreenList(void);
@@ -66,7 +66,7 @@ extern "C" int func_002A2170(S_002A2170* self, W_002A2170* w, int msg, int sub, 
                         if (self->fC0 == 2) {
                             D_004FFC29 = 0;
                             Pad_Reset(D_0055A300);
-                            func_00429B30();
+                            DME_SendPlayGameMsg();
                             GuiStack_SwapScreens(Gui_GetScreenStack(), self, 0);
                             D_004FFC0C->p30->SetState(4);
                         }
@@ -76,7 +76,7 @@ extern "C" int func_002A2170(S_002A2170* self, W_002A2170* w, int msg, int sub, 
                         if (!self->bD8) {
                             G_002A2170* g;
                             self->bD8 = 1;
-                            g = func_004294C0();
+                            g = DME_GetLobby();
                             if (g)
                                 g->b26A0 = 1;
                         }

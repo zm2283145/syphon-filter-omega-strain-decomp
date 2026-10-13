@@ -45,7 +45,7 @@ extern void func_00411600(Font_18E0* f, const char* s, const char* end, float* w
 extern u64_18E0* func_00410E50(Font_18E0* f, u64_18E0* pkt, float x, const char* s, float y, Vec_18E0* color, void* p, const char* end);
 extern float Math_FMod(float a, float b);
 extern int sprintf(char* buf, const char* fmt, ...);
-extern void func_0010D3E0(int mode);
+extern void FlushCache(int mode);
 extern void func_001161A0(void);
 extern void func_001161F8(void);
 }
@@ -117,7 +117,7 @@ extern "C" void func_004118E0(Sub_18E0* self)
             self->base[2] = (long long)(qwc - 1) | (0x8000 | (0x10000000ULL << 32));
             self->base[3] = 0xE;
         }
-        func_0010D3E0(0);
+        FlushCache(0);
         *self->pkt++ = 0x70000000;
         *self->pkt++ = 0;
         func_001161A0();

@@ -6,24 +6,23 @@
 
 /* merge_units: begin func_002756E0 */
 #pragma push /* merge_units */
-#include "types.h"
-typedef struct { int cap; int count; int* data; } Vec2756;
-typedef struct { char pad[0x78]; Vec2756 list; } Obj2756;
-extern void PtrVector_Resize(Vec2756* v, int n, int* fill);
+#include "bullet_types.h"
+extern void PtrVector_Resize(PtrVec* v, int n, int* fill);
 #pragma opt_strength_reduction off
-void Bullet_LeavePartnerLists(Obj2756* s, int value) {
+/* Removes every occurrence of 'value' from owner->list (swap with the last element), then shrinks it. */
+void Bullet_LeavePartnerLists(BulletOwner* owner, int value) {
     int i;
-    int last = s->list.count - 1;
+    int last = owner->list.count - 1;
     int fill;
     for (i = 0; last >= i; i++) {
-        int* e = &s->list.data[i];
+        int* e = &owner->list.data[i];
         if (*e == value) {
-            *e = s->list.data[last];
+            *e = owner->list.data[last];
             last--;
         }
     }
     fill = 0;
-    PtrVector_Resize(&s->list, last + 1, &fill);
+    PtrVector_Resize(&owner->list, last + 1, &fill);
 }
 #pragma opt_strength_reduction reset
 #pragma pop /* merge_units */
@@ -37,21 +36,20 @@ void Bullet_LeavePartnerLists(Obj2756* s, int value) {
  * until real names are known.
  */
 
-#include "bullet_types.h"
 
 extern int PtrVec_Insert(PtrVec* v, int* pos, int n, int* value);
-extern int func_00275780(PtrVec* v, int* value);
+extern int PtrVec_PushBack_275780(PtrVec* v, int* value);
 
 /* Appends 'value' to the list at +0x78. */
 void BulletPool_Link(BulletOwner* owner, int value) {
     int tmp[1];
 
     tmp[0] = value;
-    func_00275780(&owner->list, tmp);
+    PtrVec_PushBack_275780(&owner->list, tmp);
 }
 
-/* push_back(v, *value) */
-int func_00275780(PtrVec* v, int* value) {
+/* push_back(v, *value): PtrVec_Insert at the end */
+int PtrVec_PushBack_275780(PtrVec* v, int* value) {
     return PtrVec_Insert(v, v->data + v->count, 1, value);
 }
 #pragma pop /* merge_units */

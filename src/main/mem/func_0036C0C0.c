@@ -20,7 +20,7 @@ extern char D_004BBEF0[];
 extern char D_004BBF40[];
 extern char D_004BBF50[];
 extern int sprintf(char* buf, const char* fmt, ...);
-extern void func_00127358(char* fmt, ...);
+extern void printf(char* fmt, ...);
 extern void func_0036C030(Blk* b, Blk* v);
 extern void func_0036C040(Blk* b, Blk* v);
 extern Blk* func_0036C050(Blk* b);
@@ -70,7 +70,7 @@ char* Mem_HeapAlloc(Heap* h, unsigned int size, char* file, int line)
         b = bin->f4;
         while (b != bin) {
             if (!Blk_Valid(b)) {
-                func_00127358(D_004BBEC0);
+                printf(D_004BBEC0);
                 tries = 0;
                 b->f4->f8 = b->f8;
                 b->f8->f4 = b->f4;
@@ -99,7 +99,7 @@ char* Mem_HeapAlloc(Heap* h, unsigned int size, char* file, int line)
         p = h->cur;
         if (p + sz >= h->base + h->limit) {
             sprintf(buf, D_004BBEF0, h->base, p, sz, 0);
-            func_00127358(D_004BBF40, buf);
+            printf(D_004BBF40, buf);
             p = 0;
         } else {
             *(unsigned int*)(p + sz - 4) = sz;
@@ -125,7 +125,7 @@ char* Mem_HeapAlloc(Heap* h, unsigned int size, char* file, int line)
             sz2 = func_0036C0B0(nb);
             while (func_0036C050(it) != tgt && func_0036C0B0(func_0036C050(it)) < sz2) {
                 if ((char*)func_0036C050(it) < h->base || (char*)func_0036C050(it) > h->cur) {
-                    func_00127358(D_004BBF50, it);
+                    printf(D_004BBF50, it);
                     func_0036C040(it, tgt);
                     break;
                 }

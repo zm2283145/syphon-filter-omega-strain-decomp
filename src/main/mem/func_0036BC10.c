@@ -14,7 +14,7 @@ typedef struct Heap {
 } Heap;
 extern char D_004BBE70[];
 extern char D_004BBF50[];
-extern void func_00127358(char* fmt, ...);
+extern void printf(char* fmt, ...);
 extern void func_0036C030(Blk* b, Blk* v);
 extern void func_0036C040(Blk* b, Blk* v);
 extern Blk* func_0036C050(Blk* b);
@@ -33,7 +33,7 @@ void Mem_HeapFree(Heap* h, char* ptr, char* file, int line)
 
     b = (Blk*)(ptr - 0x10);
     if ((char*)b < h->base || (char*)b > h->cur) {
-        func_00127358(D_004BBE70, file, line);
+        printf(D_004BBE70, file, line);
         return;
     }
     tgt = func_0036C060(h, func_0036C0B0(b));
@@ -41,7 +41,7 @@ void Mem_HeapFree(Heap* h, char* ptr, char* file, int line)
     sz = func_0036C0B0(b);
     while (func_0036C050(it) != tgt && func_0036C0B0(func_0036C050(it)) < sz) {
         if ((char*)func_0036C050(it) < h->base || (char*)func_0036C050(it) > h->cur) {
-            func_00127358(D_004BBF50, it);
+            printf(D_004BBF50, it);
             func_0036C040(it, tgt);
             break;
         }
@@ -79,7 +79,7 @@ void Mem_HeapFree(Heap* h, char* ptr, char* file, int line)
         sz = func_0036C0B0(b);
         while (func_0036C050(it) != tgt && func_0036C0B0(func_0036C050(it)) < sz) {
             if ((char*)func_0036C050(it) < h->base || (char*)func_0036C050(it) > h->cur) {
-                func_00127358(D_004BBF50, it);
+                printf(D_004BBF50, it);
                 func_0036C040(it, tgt);
                 break;
             }

@@ -1,7 +1,7 @@
 typedef struct Self { char pad[0x120]; int handle; } Self;
 extern void* D_004FFC04;
 extern char D_004AABF0[];
-extern void* func_004294C0(Self*);
+extern void* DME_GetLobby(Self*);
 extern void func_0029DE70(Self*, int);
 extern int func_0033CE30(Self*, int, int, int, int, int);
 extern int FrontEnd_OpenPopup(void*, int, char*, int, int, int);
@@ -12,7 +12,7 @@ extern int func_004456D0(void*);
 extern void func_004456C0(void*);
 int func_0029D020(Self* self)
 {
-    void* r = func_004294C0(self);
+    void* r = DME_GetLobby(self);
     void* g;
     int h;
     if (r == 0) {

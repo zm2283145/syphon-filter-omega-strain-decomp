@@ -2,12 +2,12 @@
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int CreateSema(char *);                                
-int func_0010CF60(char *);                             
-int func_0010CF80(int, int);                          
-int func_0010D050();                                
-int func_00114F20(char *);                             
-int func_00118870(char *, int);                          
+int CreateSema(char *);
+int CreateThread(char *);
+int StartThread(int, int);
+int func_0010D050();
+int func_00114F20(char *);
+int func_00118870(char *, int);
 extern int D_004934C8;
 extern int D_004934D0;
 extern int D_004934D8;
@@ -29,8 +29,8 @@ void func_003A6390(void) {
         sl.f34 = &func_003A6460;
         sl.f38 = &D_0053BBC0;
         sl.f44[0] = 1;
-        D_004934D0 = func_0010CF60(&sl.f30);
-        func_0010CF80(D_004934D0, D_004934D8);
+        D_004934D0 = CreateThread(&sl.f30);
+        StartThread(D_004934D0, D_004934D8);
         func_00118870(&func_003A6450, D_004934D8);
     }
 }

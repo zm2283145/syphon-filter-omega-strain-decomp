@@ -5,7 +5,7 @@ extern int D_004865E0;
 extern void func_00115A38(int, int);
 extern int func_00115A28(int);
 extern void func_001159E0(unsigned int, void *, int);
-extern void func_0010D3E0(int);
+extern void FlushCache(int);
 
 void func_00115A48(void)
 {
@@ -13,8 +13,8 @@ void func_00115A48(void)
     unsigned int i;
     func_00115A38(D_004865E8[0].a, D_004865E8[0].b);
     func_001159E0(0x80075000, ((char*)dat_00486268), 0x330);
-    func_0010D3E0(0);
-    func_0010D3E0(2);
+    FlushCache(0);
+    FlushCache(2);
     func_00115A38(D_004865E8[1].a, D_004865E8[1].b);
     func_00115A38(D_004865E8[2].a, D_004865E8[2].b);
     p = &D_004865E8[3];

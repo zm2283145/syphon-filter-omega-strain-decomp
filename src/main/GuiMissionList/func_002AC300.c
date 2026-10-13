@@ -17,7 +17,7 @@ typedef struct {
     I2AC300* items;
 } S2AC300;
 extern void func_004235E0(S2AC300* s, int a, int b);
-extern void* func_004294C0(void);
+extern void* DME_GetLobby(void);
 extern void func_00450590(void* p, int a, int b);
 void func_002AC300(S2AC300* s, int a, int sel)
 {
@@ -31,7 +31,7 @@ void func_002AC300(S2AC300* s, int a, int sel)
         s->cur.x8 = it->x8;
     }
     if (s->bBC && !s->bAC) {
-        void* p = func_004294C0();
+        void* p = DME_GetLobby();
         if (p) {
             int v = s->x7C;
             if (v < 0 || v >= s->count) {

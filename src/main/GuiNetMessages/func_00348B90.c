@@ -20,7 +20,7 @@ extern char D_00587C20[];
 extern int Gui_GetScreenList(void);
 extern int func_00418420(int, char*);
 extern C48B90* func_003D0940(void*, int, int, int, int, int, char*);
-extern char* func_004294C0(void);
+extern char* DME_GetLobby(void);
 extern void func_00424410(W48B90*, int*, unsigned int*);
 extern void func_00424430(W48B90*, int, unsigned int);
 }
@@ -40,7 +40,7 @@ extern "C" void func_00348B90(W48B90* w) {
     w->fa0 = c;
     w->fa0->b12 = 1;
     w->fa0->b10 = 2;
-    if (func_004294C0()) w->fa4 = (L48B90*)(func_004294C0() + 0x1C);
+    if (DME_GetLobby()) w->fa4 = (L48B90*)(DME_GetLobby() + 0x1C);
     w->f54 = 0;
     if (w->fa4) w->SetCount(4, w->fa4->f4);
     {

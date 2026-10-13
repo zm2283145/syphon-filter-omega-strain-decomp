@@ -38,8 +38,8 @@ extern char D_0051EE98[];
 extern char D_004DE180[];
 extern void Receiver_Construct(void* self, void* id);
 extern void func_002CE4F0(void* list);
-extern void func_00429510(void);
-extern void func_00429500(int a);
+extern void DME_CreateLobby(void);
+extern void DME_SetLobbyActive(int a);
 ObjC5A0* func_002CC5A0(ObjC5A0* o)
 {
     Receiver_Construct(o, D_0051EE98);
@@ -92,8 +92,8 @@ ObjC5A0* func_002CC5A0(ObjC5A0* o)
     o->names[6][0] = 0;
     o->names[7][0] = 0;
     o->count13C = 0;
-    func_00429510();
-    func_00429500(0);
+    DME_CreateLobby();
+    DME_SetLobbyActive(0);
     o->name2AC[0] = 0;
     o->name26C[0] = 0;
     o->i254 = 4;

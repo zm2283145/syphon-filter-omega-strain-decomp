@@ -1,6 +1,6 @@
 #include "types.h"
 extern unsigned char D_005382C0;
-void func_0010D3E0(int a);
+void FlushCache(int a);
 static inline void Kick_3F79F0(void* tag, int qwc)
 {
     while (*(volatile int*)0x1000A000 & 0x100) {
@@ -11,7 +11,7 @@ static inline void Kick_3F79F0(void* tag, int qwc)
         *(volatile unsigned int*)0x1000A010 = (unsigned int)tag | 0x80000000;
     } else {
         *(volatile unsigned int*)0x1000A010 = (unsigned int)tag;
-        func_0010D3E0(0);
+        FlushCache(0);
     }
     asm volatile ("sync");
     *(volatile int*)0x1000A000 = 0x181;

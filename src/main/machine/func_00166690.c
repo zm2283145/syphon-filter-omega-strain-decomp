@@ -3,9 +3,9 @@
 int Alloc_Lock(int);
 int Alloc_Unlock(int);
 int Mem_Alloc(int, int, char *, int);
-int func_0010CF60(void *);
-int func_0010CF80(int, int);
-int func_0010CFF0(int, int);
+int CreateThread(void *);
+int StartThread(int, int);
+int ChangeThreadPriority(int, int);
 int func_0010D050(void);
 extern int D_0048A030;
 extern int D_0048A040;
@@ -57,8 +57,8 @@ void func_00166690(void *fn) {
     tp.waitType = 0;
     tp.wakeupCount = 0;
     D_0048A048 = func_0010D050();
-    func_0010CFF0(D_0048A048, 0xA);
-    D_0048A030 = func_0010CF60(&tp);
-    func_0010CF80(D_0048A030, 0);
+    ChangeThreadPriority(D_0048A048, 0xA);
+    D_0048A030 = CreateThread(&tp);
+    StartThread(D_0048A030, 0);
 }
 

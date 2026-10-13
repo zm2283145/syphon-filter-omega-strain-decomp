@@ -76,7 +76,7 @@ char D_004BBE00[] = "CD ERROR: 0%x";
 extern int func_003A6ED0(void);
 extern void func_003A6F10(void);
 extern int sprintf(char* buf, const char* fmt, ...);
-extern void func_00127358(char* tag, char* msg);
+extern void printf(char* tag, char* msg);
 int func_00369160(S369160* o)
 {
     char msg2[128];
@@ -88,14 +88,14 @@ int func_00369160(S369160* o)
     if (busy) {
         if (g_FrameCounter - o->a30 > o->a38) {
             sprintf(msg2, D_004BBDE8);
-            func_00127358(D_004BBDF8, msg2);
+            printf(D_004BBDF8, msg2);
             r = -1;
         } else {
             r = 0;
         }
     } else if (err) {
         sprintf(msg1, D_004BBE00, err);
-        func_00127358(D_004BBDF8, msg1);
+        printf(D_004BBDF8, msg1);
         r = -1;
     }
     if (r == -1) {

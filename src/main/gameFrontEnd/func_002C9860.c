@@ -6,7 +6,7 @@ extern void func_001C9710(void*);
 extern void func_002C9C80(void*, int);
 extern void func_002C9E20(void*);
 extern void func_003D1700(void*);
-extern unsigned char* func_004294C0(void);
+extern unsigned char* DME_GetLobby(void);
 extern char* strncpy(char*, const char*, int);
 extern char D_004ACF48[];
 extern char D_004F2CC0[];
@@ -65,7 +65,7 @@ void func_002C9860(Obj9860* self, unsigned char mode)
                 strncpy(D_004FFC90, D_004ACF48, 0x80);
                 func_001C9710(svc);
                 strncpy(D_004FFC90, save.text, 0x80);
-                g = func_004294C0();
+                g = DME_GetLobby();
                 if (g && g[0x2409] == 0) {
                     D_0051EF68 = 1;
                     g[0x2409] = 1;

@@ -13,7 +13,7 @@ extern char D_004AB6B8[];
 extern char D_004FFB50[];
 extern char* D_004FFC04;
 void func_002CC260();
-Lobby2A* func_004294C0(void);
+Lobby2A* DME_GetLobby(void);
 void func_004426B0(Lobby2A*);
 int func_004518F0(Lobby2A*, void (*)(), void*, void*, void*);
 int func_0033CE30(W2A9030*, int, int, int, int, int);
@@ -30,7 +30,7 @@ char* Loc_LookupText(char*);
 extern "C" void func_002A9030(W2A9030* self)
 {
     if (!self->done) {
-        Lobby2A* l = func_004294C0();
+        Lobby2A* l = DME_GetLobby();
         VObj2A* o;
         char* s;
         if (l) {
@@ -47,7 +47,7 @@ extern "C" void func_002A9030(W2A9030* self)
         o = (o != 0 && o->v20(D_004A7520) != 0) ? o : 0;
         if (o) func_0041BEB0(o, Agent_GetSelected(D_004FFB50, -1) + 0x95C, 0);
         func_0033D8E0(self, 0);
-        if (func_004294C0()) func_004515F0(func_004294C0(), 1);
+        if (DME_GetLobby()) func_004515F0(DME_GetLobby(), 1);
         s = Loc_LookupText(D_0048BBD8);
         if (s && self->label) func_0041BEB0(self->label, s, 0);
         if (self->sub) self->sub->flag = 0;

@@ -18,7 +18,7 @@ extern char D_004A96F8[];
 extern char D_004A9718[];
 char* Loc_LookupText(char* key);
 void func_0041BEB0(void* w, char* s, int a);
-void* func_004294C0(void);
+void* DME_GetLobby(void);
 void func_002CA160(void* ui);
 void func_002CC260(void);
 int func_00442750(void* g, void* cb);
@@ -46,7 +46,7 @@ extern "C" void func_002891D0(S_002891D0* self)
         self->bAD = 0;
         return;
     }
-    g = func_004294C0();
+    g = DME_GetLobby();
     if (!g)
         return;
     ok = 1;

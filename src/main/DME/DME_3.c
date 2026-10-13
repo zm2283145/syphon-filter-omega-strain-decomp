@@ -13,29 +13,31 @@
  */
 
 #include "types.h"
+#include "DME.h"
 
 extern int PtrVec_Insert(int, int, int, int);
 
-int func_00429770(int a0, int a1) {
-    int tmp0;
-    int tmp1;
+int PtrVec_PushBack_429770(int vec, int value) {
+    int count;
+    int data;
 
-    tmp0 = *(int*)((char*)a0 + 4);
-    tmp1 = *(int*)((char*)a0 + 8);
-    return PtrVec_Insert(a0, (tmp1 + (tmp0 << 2)), 1, a1);
+    count = *(int*)((char*)vec + 4);
+    data = *(int*)((char*)vec + 8);
+    return PtrVec_Insert(vec, (data + (count << 2)), 1, value);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00429770 */
 
 /* merge_units: begin func_00429790 */
 #pragma push /* merge_units */
+/* status 3 = connect failed */
 typedef struct NetConnInfo_h5 { int session; int status; } NetConnInfo_h5;
 extern int D_00494178;
 extern int D_005721A8;
 extern unsigned char D_005721C8;
 extern unsigned char D_005723C8;
-extern int D_00572470;
-extern int D_00572478;
+extern int g_DmeConnectRetries;
+extern int g_DmeConnectMaxRetries;
 extern signed char D_005724B0;
 extern int Gui_GetScreenStack(void);
 extern void func_0041E0F0(int a, int b, int c, int d, int e);
@@ -51,7 +53,8 @@ static inline int LocalSlot_h5(int session)
     }
     return 0;
 }
-void func_00429790(NetConnInfo_h5* info)
+/* Connect callback (NetGame_Create / Net_ConnectGame). */
+void DME_OnConnectResult(NetConnInfo_h5* info)
 {
     int slot[2];
     if (!D_005723C8) {
@@ -59,12 +62,12 @@ void func_00429790(NetConnInfo_h5* info)
     }
     D_005721A8 = info->session;
     if (info->status == 3) {
-        D_005724B0 = 7;
+        D_005724B0 = DME_STATE_DISCONNECTED;
         if (Gui_GetScreenStack()) {
             func_0041E0F0(Gui_GetScreenStack(), Gui_GetScreenStack(), 0x1E, 0, (int)"F_TO_CONNECT");
         }
     } else {
-        D_005724B0 = 6;
+        D_005724B0 = DME_STATE_CONNECTED;
         D_005721C8 = 1;
         func_002EBAF8(slot, info->session);
         D_00494178 = slot[0];
@@ -73,8 +76,8 @@ void func_00429790(NetConnInfo_h5* info)
             func_0041E0F0(Gui_GetScreenStack(), Gui_GetScreenStack(), 0x1E, 1, 0);
         }
     }
-    D_00572470 = 0;
-    D_00572478 = 0;
+    g_DmeConnectRetries = 0;
+    g_DmeConnectMaxRetries = 0;
     D_005723C8 = 0;
 }
 #pragma pop /* merge_units */
@@ -83,21 +86,21 @@ void func_00429790(NetConnInfo_h5* info)
 /* merge_units: begin func_00429920 */
 #pragma push /* merge_units */
 #pragma cplusplus on
-typedef struct { int kind; int id; } Pk429920;
+typedef struct { int kind; int id; } Pk429920; /* id = client id */
 extern "C" {
-extern int D_005723F0;
+extern int D_005723F0;            /* connected client count */
 extern unsigned char D_00572410;
-extern unsigned char D_005721D8;
+extern unsigned char D_005721D8;   /* disconnect pending; reason in D_005721E0 */
 extern char D_005721E0[];
-extern char D_004BF9D0[];
+extern char D_004BF9D0[]; /* "HOST_DISCONNECT" */
 #if 0 /* merge_units */
 extern unsigned char D_005724B0;
 #endif /* merge_units */
 #define D_005724B0 (*(unsigned char*)&D_005724B0) /* merge_units */
 
-extern unsigned char D_00572418[];
-extern int D_00572424[];
-extern unsigned char D_005721C0;
+extern unsigned char D_00572418[];  /* per-client "disconnected" flags */
+extern int g_DmeClientLevelInfo[];
+extern unsigned char D_005721C0;   /* this machine is the host */
 extern int snprintf(char* buf, int n, const char* fmt, ...);
 extern void func_0043B190(void* p);
 extern void func_0043ACB0(void* p, int id);
@@ -111,7 +114,9 @@ struct Guard_9920 {
     /* order matters: weak first, then the section (see alloc_guard.h) */
     __declspec(weak) __declspec(GUARD_DTOR_9920) ~Guard_9920() { D_005723C8 = 0; }
 };
-extern "C" void func_00429920(Pk429920* p)
+/* Client-left callback: drops the session if the host left, marks the client
+   disconnected and (on the host) clears a pending level-info slot. */
+extern "C" void DME_OnClientDisconnect(Pk429920* p)
 {
     Guard_9920 g;
     int buf;
@@ -123,14 +128,14 @@ extern "C" void func_00429920(Pk429920* p)
         D_00572410 = 1;
         D_005721D8 = 1;
         snprintf(D_005721E0, 0x10, D_004BF9D0);
-        D_005724B0 = 7;
+        D_005724B0 = DME_STATE_DISCONNECTED;
     }
     D_00572418[p->id] = 1;
     if (D_005721C8) ok = D_005721C0; else ok = 1;
     if (ok) {
-        if (D_00572424[3] == -1) D_00572424[3] = 0;
-        else if (D_00572424[2] == -1) D_00572424[2] = 0;
-        else if (D_00572424[1] == -1) D_00572424[1] = 0;
+        if (g_DmeClientLevelInfo[3] == -1) g_DmeClientLevelInfo[3] = 0;
+        else if (g_DmeClientLevelInfo[2] == -1) g_DmeClientLevelInfo[2] = 0;
+        else if (g_DmeClientLevelInfo[1] == -1) g_DmeClientLevelInfo[1] = 0;
     }
     func_0043B190(&buf);
     func_0043ACB0(&buf, p->id);
@@ -148,8 +153,8 @@ extern char D_005721E0[16];
 
 extern int snprintf(char* buf, int size, const char* fmt, ...); /* snprintf-like */
 
-/* Sets two flags and formats the default string into a 16-byte buffer. */
-void func_00429A60(void)
+/* Join-failure callback: records the "HOST_DISCONNECT" disconnect reason. */
+void DME_OnHostDisconnect(void)
 {
     D_00572410 = 1;
     D_005721D8 = 1;
@@ -161,16 +166,17 @@ void func_00429A60(void)
 
 /* merge_units: begin func_00429A90 */
 #pragma push /* merge_units */
-typedef struct { int kind; int id; } Pk429A90;
+typedef struct { int kind; int id; } Pk429A90; /* id = client id */
 #pragma push
 
-void func_00429A90(Pk429A90* p) {
+/* Client-joined callback; the host then sends that client a NetLevelInfoMsg (DME_Update). */
+void DME_OnClientConnect(Pk429A90* p) {
     unsigned char ok;
     if (!D_005723C8) D_005723C8 = 1;
     D_005723F0++;
     D_00572418[p->id] = 0;
     if (D_005721C8) ok = D_005721C0; else ok = 1;
-    if (ok && p->id) D_00572424[p->id] = 0x0FFFFFFE;
+    if (ok && p->id) g_DmeClientLevelInfo[p->id] = DME_LEVELINFO_PENDING;
     D_005723C8 = 0;
 }
 #pragma pop

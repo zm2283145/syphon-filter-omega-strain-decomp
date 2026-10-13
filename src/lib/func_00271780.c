@@ -4,8 +4,8 @@ typedef struct { int x0; int x4; int x8; int xC; int x10; char p[0x10]; int x24;
 extern char D_004A8CF0[];
 extern char D_004FFB00[];
 extern int func_0010F388(const char *, ...);
-extern void func_0010D1A0(int);
-extern void func_0010D170(int);
+extern void WaitSema(int);
+extern void DeleteSema(int);
 extern E1780 *func_002713C0(void *);
 extern int CreateSema(SemaParam1780 *);
 extern void func_00271468(E1780 *);
@@ -19,7 +19,7 @@ int func_00271780(C1780 *c, int a1)
         func_0010F388(D_004A8CF0);
         return -1;
     }
-    func_0010D1A0(c->x28);
+    WaitSema(c->x28);
     e = func_002713C0(D_004FFB00);
     if (e == 0) return -1;
     c->x4 = e->x18;
@@ -39,11 +39,11 @@ int func_00271780(C1780 *c, int a1)
     }
     if (func_0010F948(0x8000001D, e, 0x40, 0, 0, 0) == 0) {
         func_00271468(e);
-        func_0010D170(s);
+        DeleteSema(s);
         return -2;
     }
-    func_0010D1A0(s);
-    func_0010D170(s);
-    func_0010D170(c->x28);
+    WaitSema(s);
+    DeleteSema(s);
+    DeleteSema(c->x28);
     return c->x2C;
 }

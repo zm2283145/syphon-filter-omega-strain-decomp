@@ -44,7 +44,7 @@ extern void cMessage_dtor(SoundMsg* msg, int flags);
 extern void Game_NetSendPauseState(void*, int, int);
 extern int sprintf(char*, const char*, ...);
 extern void func_0041BEB0(Hud*, char*, int);
-extern void func_00429B30(void);
+extern void DME_SendPlayGameMsg(void);
 }
 /* Per-frame update: polls the four player slots, tracks the slot-0 state-3 countdown and plays each slot's join sound once. */
 extern "C" void func_002C03C0(Self* self, float dt) {
@@ -96,7 +96,7 @@ extern "C" void func_002C03C0(Self* self, float dt) {
         D_00506510 += dt;
         sprintf(buf, self->fmt, 10 - (int)(D_00506510 / 30.0f));
         if (self->hud) func_0041BEB0(self->hud, buf, 0);
-        if ((D_005721C8 ? D_005721C0 : 1) && !(D_00506510 <= 300.0f)) func_00429B30();
+        if ((D_005721C8 ? D_005721C0 : 1) && !(D_00506510 <= 300.0f)) DME_SendPlayGameMsg();
     }
 }
 

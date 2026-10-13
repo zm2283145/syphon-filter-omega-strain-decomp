@@ -1,15 +1,14 @@
-extern int D_0049147C;
-extern int* D_00491478;
-extern int func_00127358(const char* fmt, ...);
+#include "lgaud.h"
+
 int lgAudEnumHint(int *hint)
 {
-    if (D_0049147C == -1)
-        return 0x8000000A;
+    if (lgAud_sema == -1)
+        return LGAUD_ERR_NOT_INITIALIZED;
     if (hint == 0) {
-        func_00127358("lgAudEnumHint: invalid parameter (hint)\n");
-        return 0x80000004;
+        printf("lgAudEnumHint: invalid parameter (hint)\n");
+        return LGAUD_ERR_INVALID_PARAMETER;
     }
-    *hint = *D_00491478;
-    *D_00491478 = 0;
+    *hint = *lgAud_enumHint;
+    *lgAud_enumHint = 0;
     return 0;
 }

@@ -3,8 +3,8 @@
 #define NULL 0
 #define VC_(p) ((int (*)())(p))
 #pragma mpwc_relax on
-int func_0010D180(int, int, int);                     
-int func_0010D1A0(int);                               
+int SignalSema(int, int, int);
+int WaitSema(int);
 
 typedef struct { int f0; char p4[4]; int f8; int fC; int f10; int f14; int f18; char p1C[36]; int f40; } PS0_003F53B0;
 #pragma push
@@ -18,7 +18,7 @@ int temp_hi;
 int temp_v1;
 
     temp_s0 = arg4;
-    func_0010D1A0(arg0->f40);
+    WaitSema(arg0->f40);
     temp_a1 = arg0->f10;
     temp_a2 = arg0->f14;
     temp_a0 = arg0->f18;
@@ -35,6 +35,6 @@ int temp_v1;
         *arg3 = arg0->f0;
         *temp_s0 = temp_v1 - (arg0->f18 - temp_hi);
     }
-    func_0010D180(arg0->f40, temp_hi, temp_a2);
+    SignalSema(arg0->f40, temp_hi, temp_a2);
 }
 #pragma pop

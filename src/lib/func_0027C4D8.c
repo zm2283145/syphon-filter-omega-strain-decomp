@@ -8,7 +8,7 @@
 
 extern char D_00504080[];
 extern char D_005040C0[];
-extern int func_00110528(int, int, int, int, int, int, int, int);
+extern int sceSifCallRpc(int, int, int, int, int, int, int, int);
 extern int func_0027C3D0(void);
 extern void func_0027D278(int);
 
@@ -27,7 +27,7 @@ int func_0027C4D8(void) {
     t1 = a3;
     t2 = 0 + 4096;
     t3 = 0;
-    v0 = func_00110528(a0, a1, a2, a3, t0, t1, t2, t3);
+    v0 = sceSifCallRpc(a0, a1, a2, a3, t0, t1, t2, t3);
     v1 = 0 + -1;
     v1 = v1 < v0;
     if (v1 != 0) v0 = 0;

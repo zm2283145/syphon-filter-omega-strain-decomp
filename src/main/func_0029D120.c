@@ -10,7 +10,7 @@ struct S_0029D120 {
 extern "C" {
 extern void* D_004FFC04;
 extern char D_004AABF0[];
-void* func_004294C0(void);
+void* DME_GetLobby(void);
 void func_002CC260(void);
 int SFOLobby_EnterNetworkState(void* g, void* cb, void* a, void* b, void* c);
 void func_00421070(L_0029D120* l);
@@ -29,7 +29,7 @@ void func_00138B70(Str_0029D120* s, int flags);
 }
 extern "C" void func_0029D120(S_0029D120* self)
 {
-    void* g = func_004294C0();
+    void* g = DME_GetLobby();
     if (!g)
         return;
     if (SFOLobby_EnterNetworkState(g, (void*)func_002CC260, self->f98, self->fB4, self->fD0)) {

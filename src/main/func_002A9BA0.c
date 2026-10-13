@@ -25,7 +25,7 @@ extern char* D_0048BBF8;
 extern char* D_0048BBE8;
 extern char D_004A7520[];
 extern char D_004FFB50[];
-G_002A9BA0* func_004294C0(void);
+G_002A9BA0* DME_GetLobby(void);
 void func_004426B0(G_002A9BA0* g);
 void func_002CC260(void);
 int func_00442F40(G_002A9BA0* g, void* cb, void* a);
@@ -64,7 +64,7 @@ extern "C" void func_002A9BA0(S_002A9BA0* self)
     int key;
     if (self->b80)
         return;
-    g = func_004294C0();
+    g = DME_GetLobby();
     if (g) {
         if (g->f255C == 4)
             func_004426B0(g);

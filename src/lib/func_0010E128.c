@@ -3,7 +3,7 @@ typedef struct { int x0; int x4; EE128 e[0x200]; } QE128;
 extern int D_00486198;
 extern QE128 D_004E2408;
 extern int D_004E2400;
-extern void func_0010D190(int);
+extern void iSignalSema(int);
 extern int func_0010D0E0(int);
 int func_0010E128(int tid)
 {
@@ -19,7 +19,7 @@ int func_0010E128(int tid)
     D_004E2408.x4 = i + 1;
     D_004E2408.e[i].a = 2;
     D_004E2408.e[i].b = t;
-    func_0010D190(D_004E2400);
+    iSignalSema(D_004E2400);
     return t;
 }
 

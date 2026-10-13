@@ -14,16 +14,16 @@
 
 #include "types.h"
 
-void func_0042A640(Iter* out, PtrVec* v) {
+void PtrVec_End_42A640(Iter* out, PtrVec* v) {
     out->p = v->data + v->count;
 }
 
-Word* func_0042A660(Word* dst, Word* src) {
+Word* Iter_Copy_42A660(Word* dst, Word* src) {
     dst->value = src->value;
     return dst;
 }
 
-void func_0042A670(Iter* out, PtrVec* v) {
+void PtrVec_Begin_42A670(Iter* out, PtrVec* v) {
     out->p = v->data;
 }
 #pragma pop /* merge_units */
@@ -33,42 +33,43 @@ void func_0042A670(Iter* out, PtrVec* v) {
 #pragma push /* merge_units */
 #pragma cplusplus on
 
-#include "network_session_types.h"
+#include "DME.h"
 
 extern "C" {
-extern int D_00572510;
-extern int D_00572520;
-extern unsigned char D_00572530;
-extern unsigned char D_00572500;
+extern int g_DmeThreadId;
+extern int g_DmeMainThreadId;
+extern unsigned char g_DmeThreadStopRequest;
+extern unsigned char g_DmeThreadExited;
 extern unsigned char D_00572528;
 extern int D_00572508;
-extern unsigned char D_00533880;
-void func_0010D060(int thread, NetworkThreadStatus* status);
-void func_0010CFF0(int thread, int priority);
-int func_0010E010(int thread);
-void func_0010E1C0(int delay);
+extern unsigned char D_00533880; /* allocator must lock Timer0 */
+void ReferThreadStatus(int thread, EeThreadParam* status);
+void ChangeThreadPriority(int thread, int priority);
+int iWakeupThread(int thread);
+void DelayThread(int delay);
 }
 
-/* Stop the worker and clear its coordination and allocator-locking flags. */
-extern "C" void func_0042A680(void)
+/* Stop the DME thread: request the stop, wake it and wait until DME_ThreadMain
+   exits, then clear the thread and allocator-locking flags. */
+extern "C" void DME_StopThread(void)
 {
-    NetworkThreadStatus worker;
-    NetworkThreadStatus current;
-    func_0010D060(D_00572510, &worker);
-    func_0010D060(D_00572520, &current);
-    if (worker.priority <= current.priority)
-        func_0010CFF0(D_00572510, 0);
-    D_00572530 = 1;
-    int thread = func_0010E010(D_00572510);
-    func_0010E1C0(10);
-    if (thread == D_00572510) {
-        while ((D_00572500 != 0) ^ 1)
-            func_0010E1C0(10);
+    EeThreadParam worker;
+    EeThreadParam current;
+    ReferThreadStatus(g_DmeThreadId, &worker);
+    ReferThreadStatus(g_DmeMainThreadId, &current);
+    if (worker.currentPriority <= current.currentPriority)
+        ChangeThreadPriority(g_DmeThreadId, 0);
+    g_DmeThreadStopRequest = 1;
+    int woken = iWakeupThread(g_DmeThreadId);
+    DelayThread(10);
+    if (woken == g_DmeThreadId) {
+        while ((g_DmeThreadExited != 0) ^ 1)
+            DelayThread(10);
     }
-    D_00572530 = 0;
+    g_DmeThreadStopRequest = 0;
     D_00572528 = 0;
     D_00572508 = 0;
-    D_00572500 = 0;
+    g_DmeThreadExited = 0;
     D_00533880 = 0;
 }
 #pragma pop /* merge_units */
@@ -76,11 +77,12 @@ extern "C" void func_0042A680(void)
 
 /* merge_units: begin func_0042A770 */
 #pragma push /* merge_units */
-extern int func_00429380(int);
-extern int func_004295E0(void);
+extern int DME_CreateThread(int);
+extern int DME_ThreadMain(void);
 
-int func_0042A770(void) {
-    return func_00429380((int)func_004295E0);
+/* Starts the DME thread running DME_ThreadMain. */
+int DME_StartThread(void) {
+    return DME_CreateThread((int)DME_ThreadMain);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0042A770 */
@@ -91,44 +93,46 @@ int func_0042A770(void) {
 #define NULL 0
 #define VC_(p) ((int (*)())(p))
 #pragma mpwc_relax on
-int func_002EBCE0(char *);                               
-int Gui_GetScreenStack();                             
-int func_0041E0F0(int, int, int, int, int);                    
-int func_0042ACD0();                                
+int func_002EBCE0(char *);
+int Gui_GetScreenStack();
+int func_0041E0F0(int, int, int, int, int);
+int Net_ConnectGameByName();
 extern signed char D_005721E0;
 extern signed char D_005721F0;
 extern signed char D_005723B0;
 extern signed char D_00572468;
-extern int D_00572470;
-extern int D_00572478;
+extern int g_DmeConnectRetries;
+extern int g_DmeConnectMaxRetries;
 extern signed char D_005724B0;
 
-extern char D_004BF9B8;
-void func_0042A780(void) {
-    int sp2C;
-    int temp_a0;
-    int temp_s0;
+extern char D_004BF9B8; /* "F_TO_CONNECT" */
+/* Retries the connection; after g_DmeConnectMaxRetries failures shows the
+   "F_TO_CONNECT" error, otherwise flags another retry (D_00572468). */
+void Net_RetryConnect(void) {
+    int netTime;
+    int retries;
+    int screens;
 
     D_005723B0 = 0;
-    D_005721E0 = 0;
-    D_005724B0 = 5;
+    D_005721E0 = 0; /* clears the disconnect-reason string */
+    D_005724B0 = DME_STATE_CONNECTING;
     D_005721F0 = 0;
-    if (func_0042ACD0() == 0) {
-        func_002EBCE0(&sp2C);
+    if (Net_ConnectGameByName() == 0) {
+        func_002EBCE0(&netTime);
         return;
     }
-    temp_a0 = D_00572470 + 1;
-    D_00572470 = temp_a0;
-    if (temp_a0 < D_00572478) {
+    retries = g_DmeConnectRetries + 1;
+    g_DmeConnectRetries = retries;
+    if (retries < g_DmeConnectMaxRetries) {
         D_00572468 = 1;
         return;
     }
-    if (Gui_GetScreenStack(temp_a0) != 0) {
-        temp_s0 = Gui_GetScreenStack();
-        func_0041E0F0(temp_s0, Gui_GetScreenStack(), 0x1E, 0, (int)&D_004BF9B8);
+    if (Gui_GetScreenStack(retries) != 0) {
+        screens = Gui_GetScreenStack();
+        func_0041E0F0(screens, Gui_GetScreenStack(), 0x1E, 0, (int)&D_004BF9B8);
     }
-    D_00572470 = 0;
-    D_00572478 = 0;
+    g_DmeConnectRetries = 0;
+    g_DmeConnectMaxRetries = 0;
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0042A780 */

@@ -7,8 +7,8 @@ extern char D_004A8D50[];
 extern char D_004A8D60[];
 extern char D_004FFB00[];
 extern int func_0010F388(const char *, ...);
-extern int func_0010D1A0(int);
-extern void func_0010D170(int);
+extern int WaitSema(int);
+extern void DeleteSema(int);
 extern E18A0 *func_002713C0(void *);
 extern int CreateSema(SemaParam18A0 *);
 extern void func_00271468(E18A0 *);
@@ -24,7 +24,7 @@ int sceSifMCallRpc(C18A0 *cd, int rpc_number, int mode, int send, int ssize, int
         func_0010F388(D_004A8CF0);
         return -1;
     }
-    func_0010D1A0(cd->x28);
+    WaitSema(cd->x28);
     if (send & 0x3F) {
         func_0010F388(D_004A8D18, D_004A8D50, send);
         return -1;
@@ -76,10 +76,10 @@ int sceSifMCallRpc(C18A0 *cd, int rpc_number, int mode, int send, int ssize, int
     e->x30 = 1;
     if (func_0010F948(0x8000001A, e, 0x40, send, cd->x14, ssize) == 0) {
         func_00271468(e);
-        func_0010D170(s);
+        DeleteSema(s);
         return -2;
     }
-    func_0010D1A0(s);
-    func_0010D170(s);
+    WaitSema(s);
+    DeleteSema(s);
     return 0;
 }

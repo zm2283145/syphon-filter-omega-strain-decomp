@@ -13,7 +13,7 @@ extern unsigned char D_004FFBB5;
 extern char D_004FFB50[];
 extern int D_004ACB30[];
 extern const char* D_0048C160[];
-extern void* func_004294C0(void);
+extern void* DME_GetLobby(void);
 extern void* Agent_GetSelected(void* list, int idx);
 extern __int128 func_003FDA40(const char* s);
 extern int func_00332FE0(void* agent, __int128 key);
@@ -26,7 +26,7 @@ int func_002AC470(S_002AC470* self, E_002AC470* e)
     int same;
     if (!e)
         return 0;
-    g = func_004294C0();
+    g = DME_GetLobby();
     if (!g)
         return 0;
     same = e->id == self->f120;

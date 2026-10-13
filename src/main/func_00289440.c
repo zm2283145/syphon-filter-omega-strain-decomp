@@ -16,7 +16,7 @@ struct S_00289440 {
 extern "C" {
 extern Mgr_00289440* D_004FFC04;
 extern char D_004A9730[];
-void* func_004294C0(void);
+void* DME_GetLobby(void);
 char* func_0033CE30(S_00289440* self, int a, int b, int c, int d, int e);
 int FrontEnd_OpenPopup(void* ui, int a, char* b, char* c, S_00289440* d, int e);
 char* String_CStr(void* s);
@@ -43,7 +43,7 @@ static inline void Assign_00289440(S_00289440* self, Str_00289440* d, int id)
 }
 extern "C" void func_00289440(S_00289440* self)
 {
-    void* g = func_004294C0();
+    void* g = DME_GetLobby();
     unsigned char ok;
     char* pw;
     if (!g)

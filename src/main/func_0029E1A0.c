@@ -9,7 +9,7 @@ extern char D_004AABF0[];
 void func_0033D310(S_0029E1A0* self);
 void func_002C82F0(void* ui);
 void func_002C9AA0(void* ui);
-void* func_004294C0(void);
+void* DME_GetLobby(void);
 int func_002CA710(void* ui);
 char* func_0033CE30(S_0029E1A0* self, int a, int b, int c, int d, int e);
 void String_CtorCStr_13B480(Str_0029E1A0* s, const char* c);
@@ -38,7 +38,7 @@ extern "C" void func_0029E1A0(S_0029E1A0* self)
     }
     if (self->f88 == 2) {
         func_002C9AA0(D_004FFC04);
-        if (!func_004294C0() && !func_002CA710(D_004FFC04)) {
+        if (!DME_GetLobby() && !func_002CA710(D_004FFC04)) {
             Str_0029E1A0 a;
             Str_0029E1A0 b;
             self->f88 = 4;
@@ -62,7 +62,7 @@ extern "C" void func_0029E1A0(S_0029E1A0* self)
     }
     if (self->f88 == 7) {
         unsigned char done;
-        void* g = func_004294C0();
+        void* g = DME_GetLobby();
         if (!g) {
             func_0029DE70(self, 1);
             done = 0;

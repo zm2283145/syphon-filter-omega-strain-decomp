@@ -13,7 +13,7 @@ extern void cMessage_dtor(HudObjMsg_2750E0* m, int f);
 extern void Transport_Send(int, HudObjMsg_2750E0*, int, int);
 extern char* Loc_LookupText(char*);
 extern int Loc_FindKeyThunk(char*);
-extern void func_00127358(char*);
+extern void printf(char*);
 extern void ObjMarkerMgr_Insert(void*, int*, char*, char*);
 }
 
@@ -21,7 +21,7 @@ extern "C" void Hud_AddObjective(HudObjGObj_2750E0* obj, char* a, char* b, int q
 {
     char* text = Loc_LookupText(a);
     if (!text || !*text) {
-        func_00127358(D_004A8F80);
+        printf(D_004A8F80);
         return;
     }
     if (!quiet && D_005721C8) {

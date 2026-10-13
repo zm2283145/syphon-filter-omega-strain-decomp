@@ -10,7 +10,7 @@ struct EntryQC { int mode; MsgQC* msg; MsgQC* orig; EntryQC(int md, MsgQC* m, Ms
 struct ObjQC { virtual void v00(); virtual void Handle(MsgQC* m); };
 extern "C" char D_005435C0[];
 extern "C" char D_005435C4[];
-extern "C" void func_00127358(char* msg);
+extern "C" void printf(char* msg);
 extern "C" void MsgQueue_Insert(void* res, void* map, void* key, EntryQC* e);
 extern "C" int MsgQueue_QueueClone(MsgQC* m, ObjQC* target, int mode)
 {
@@ -18,7 +18,7 @@ extern "C" int MsgQueue_QueueClone(MsgQC* m, ObjQC* target, int mode)
         if (mode != 1) {
             MsgQC* c = m->Clone();
             if (!c) {
-                func_00127358("Message Clone Failed (2)!\n");
+                printf("Message Clone Failed (2)!\n");
                 return 0;
             }
             {

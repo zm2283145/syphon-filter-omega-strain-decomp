@@ -2,7 +2,7 @@
 typedef struct { void *pkt_addr; int rpc_id; int sema_id; unsigned int mode; } RpcHdrFEC0;
 typedef struct { RpcHdrFEC0 hdr; unsigned int command; void *buff; void *gp; void (*end_function)(void *); void *end_param; void *server; } RpcClientFEC0;
 typedef struct { char pad[0x1C]; RpcClientFEC0 *client; unsigned int cid; void *server; void *buff; } RpcRendFEC0;
-extern int func_0010D190(int);
+extern int iSignalSema(int);
 extern void func_0010FE30(void *);
 static __inline__ void *ChangeGP_FEC0(void *gp)
 {
@@ -33,7 +33,7 @@ void func_0010FEC0(RpcRendFEC0 *req)
     }
     {
         RpcClientFEC0 *c = req->client;
-        if (c->hdr.sema_id >= 0) func_0010D190(c->hdr.sema_id);
+        if (c->hdr.sema_id >= 0) iSignalSema(c->hdr.sema_id);
         func_0010FE30(c->hdr.pkt_addr);
         c->hdr.pkt_addr = 0;
     }

@@ -28,7 +28,7 @@ extern int* D_0055A830;
 extern char D_004FFBA4[];
 extern "C" char D_004AABC8[];
 static void * const dat_0048B988[2] = { (void*)D_004AABC8, (void*)0x0 };
-void* func_004294C0(void);
+void* DME_GetLobby(void);
 int func_00452FE0(void* g);
 void func_0029CBB0(S_0029E440* self, int a);
 void func_0029DAF0(S_0029E440* self, char* t);
@@ -54,8 +54,8 @@ extern "C" int func_0029E440(S_0029E440* self, void* w, int msg, int sub, char* 
     unsigned short m = msg;
     if (m == 0x2002) {
         unsigned char ok = 0;
-        if (func_004294C0()) {
-            int st = func_00452FE0(func_004294C0());
+        if (DME_GetLobby()) {
+            int st = func_00452FE0(DME_GetLobby());
             bool ne = st != -0x2BD && st != -0x2BF;
             if (!ne)
                 ok = 1;

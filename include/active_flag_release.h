@@ -12,7 +12,7 @@ typedef struct ActiveFlagObj {
 } ActiveFlagObj;
 
 extern void func_0033F0C0(ActiveFlagObj* self);
-extern void* func_004294C0(void);
+extern void* DME_GetLobby(void);
 
 #define DEFINE_ACTIVE_FLAG_RELEASE(name, releaseFn)                           \
     extern void releaseFn(void* p);                                           \
@@ -21,7 +21,7 @@ extern void* func_004294C0(void);
         if (self->active) {                                                   \
             void* p;                                                          \
             func_0033F0C0(self);                                              \
-            p = func_004294C0();                                              \
+            p = DME_GetLobby();                                               \
             if (p)                                                            \
                 releaseFn(p);                                                 \
             self->active = 0;                                                 \

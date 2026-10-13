@@ -12,6 +12,7 @@ locally in git-ignored folders.
 
 See [PROGRESS.md](PROGRESS.md) for the current match percentage, evidence and
 open decisions, and [DECOMP_DEV.md](DECOMP_DEV.md) for listing on decomp.dev.
+To continue the work, start with [docs/HANDOFF.md](docs/HANDOFF.md).
 
 ## Toolchain (identified)
 

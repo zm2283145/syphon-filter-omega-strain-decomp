@@ -7435,5 +7435,9 @@
   "main/func_004178E0": "cwps2-3.0b38",
   "main/func_00417C60": "cwps2-3.0b38",
   "main/sinit/func_004C5D90": "cwps2-3.0b38",
-  "main/sinit/func_004C7500": "cwps2-3.0b38"
+  "main/sinit/func_004C7500": "cwps2-3.0b38",
+  "lib/libdbc/func_0026A620": "ee-gcc2.9-991111",
+  "main/ai/func_0016DC60": "cwps2-3.0b38",
+  "main/func_0020DEE0": "cwps2-3.0b38",
+  "main/gobj/func_003CE850": "cwps2-3.0b38"
 }

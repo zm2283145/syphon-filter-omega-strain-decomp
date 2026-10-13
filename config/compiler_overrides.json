@@ -7380,5 +7380,8 @@
   "main/func_00428450": "cwps2-3.0b38",
   "main/nellymoser_wrapper/func_0042C1E0": "cwps2-3.0b38",
   "main/NetObjectMgr/func_0042E180": "cwps2-3.0b38",
-  "main/func_0043F200": "cwps2-3.0b38"
+  "main/func_0043F200": "cwps2-3.0b38",
+  "main/SFOLobby_Lobby/func_0044FA70": "cwps2-3.0b38",
+  "main/SFOLobby_Lobby/func_00450060": "cwps2-3.0b38",
+  "main/GuiSubTitleDisplay/func_00458A30": "cwps2-3.0b38"
 }

@@ -4,7 +4,7 @@
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin func_0026FC80 */
+/* merge_units: begin cAIDestinationReachedMsg_v02 */
 #pragma push /* merge_units */
 #include "types.h"
 #include "message_pack.h"
@@ -34,9 +34,9 @@ int cAIDestinationReachedMsg_v02(EFC80* e, int a1, int* type, int a3, int a4, un
     return r;
 }
 #pragma pop /* merge_units */
-/* merge_units: end func_0026FC80 */
+/* merge_units: end cAIDestinationReachedMsg_v02 */
 
-/* merge_units: begin func_0026FD50 */
+/* merge_units: begin cAIWaypointReachedMsg_NetReceive */
 #pragma push /* merge_units */
 #pragma cplusplus on
 #include "vslot_pad.h"
@@ -93,9 +93,9 @@ Evt26FD50* p = &e;
 }
 #pragma pop
 #pragma pop /* merge_units */
-/* merge_units: end func_0026FD50 */
+/* merge_units: end cAIWaypointReachedMsg_NetReceive */
 
-/* merge_units: begin func_0026FED0 */
+/* merge_units: begin cAIWaypointReachedMsg_NetRegister */
 #pragma push /* merge_units */
 extern int func_002E9A10(void);
 extern int func_003C9C30(void* p);
@@ -122,9 +122,9 @@ unsigned char cAIWaypointReachedMsg_NetRegister(void) {
     return r;
 }
 #pragma pop /* merge_units */
-/* merge_units: end func_0026FED0 */
+/* merge_units: end cAIWaypointReachedMsg_NetRegister */
 
-/* merge_units: begin func_0026FF60 */
+/* merge_units: begin cAIWaypointReachedMsg_v02 */
 #pragma push /* merge_units */
 typedef struct { char pad[0x78]; int netId; } GFF60;
 typedef struct { char pad[0x1C]; int size; char pad2[4]; GFF60* a; GFF60* b; } EFF60;
@@ -151,9 +151,9 @@ int cAIWaypointReachedMsg_v02(EFF60* e, int a1, int* type, int a3, int a4, unsig
     return r;
 }
 #pragma pop /* merge_units */
-/* merge_units: end func_0026FF60 */
+/* merge_units: end cAIWaypointReachedMsg_v02 */
 
-/* merge_units: begin func_00270030 */
+/* merge_units: begin cAIDeadMsg_NetReceive */
 #pragma push /* merge_units */
 typedef struct { void* vt; int pad[8]; void* who; int pad2[3]; int whoId; int receiverId; } Evt270030;
 typedef struct { int header; int receiverId; int whoId; } Arg270030;
@@ -204,9 +204,9 @@ int cAIDeadMsg_NetReceive(int a0, int a1, int a2, Arg270030* arg) {
 #undef MsgQueue_QueueClone /* merge_units */
 #undef cMessage_dtor /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_00270030 */
+/* merge_units: end cAIDeadMsg_NetReceive */
 
-/* merge_units: begin func_00270100 */
+/* merge_units: begin cAIDeadMsg_NetRegister */
 #pragma push /* merge_units */
 extern int D_004FF0F0;
 extern int cAIDeadMsg_NetReceive();
@@ -223,9 +223,9 @@ unsigned char cAIDeadMsg_NetRegister(void) {
     return r;
 }
 #pragma pop /* merge_units */
-/* merge_units: end func_00270100 */
+/* merge_units: end cAIDeadMsg_NetRegister */
 
-/* merge_units: begin func_00270180 */
+/* merge_units: begin cAIDeadMsg_v02 */
 #pragma push /* merge_units */
 typedef struct { int pad[3]; int id; } AIDeadSrc;
 typedef struct { int pad[7]; int size; int pad2; AIDeadSrc* src; } AIDeadMsg;
@@ -249,9 +249,9 @@ int cAIDeadMsg_v02(AIDeadMsg* self, int a1, int* type, int a3, int t0, unsigned 
 }
 #undef Event_PackHeader /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_00270180 */
+/* merge_units: end cAIDeadMsg_v02 */
 
-/* merge_units: begin func_00270210 */
+/* merge_units: begin cAIDeactivatedMsg_NetReceive */
 #pragma push /* merge_units */
 typedef struct { void* vt; int pad[9]; int receiverId; int pad2; } Evt270210;
 typedef struct { int header; int receiverId; } Arg270210;
@@ -300,9 +300,9 @@ int cAIDeactivatedMsg_NetReceive(int a0, int a1, int a2, Arg270210* arg) {
 #undef MsgQueue_QueueClone /* merge_units */
 #undef cMessage_dtor /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_00270210 */
+/* merge_units: end cAIDeactivatedMsg_NetReceive */
 
-/* merge_units: begin func_002702C0 */
+/* merge_units: begin cAIDeactivatedMsg_NetRegister */
 #pragma push /* merge_units */
 extern int D_004FF0E8;
 extern int cAIDeactivatedMsg_NetReceive();
@@ -318,4 +318,4 @@ unsigned char cAIDeactivatedMsg_NetRegister(void) {
     return r;
 }
 #pragma pop /* merge_units */
-/* merge_units: end func_002702C0 */
+/* merge_units: end cAIDeactivatedMsg_NetRegister */

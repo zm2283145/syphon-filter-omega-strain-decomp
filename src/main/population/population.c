@@ -30,7 +30,7 @@ extern "C" S_8C60* func_00178C60(S_8C60* self, short flag)
 #pragma pop /* merge_units */
 /* merge_units: end func_00178C60 */
 
-/* merge_units: begin func_00178D40 */
+/* merge_units: begin Population_Load */
 #pragma push /* merge_units */
 #pragma cplusplus on
 typedef struct { int a[0x28]; } H178;
@@ -84,4 +84,4 @@ extern "C" P178* Population_Load(P178* p, char* name, void* arg) {
     return p;
 }
 #pragma pop /* merge_units */
-/* merge_units: end func_00178D40 */
+/* merge_units: end Population_Load */

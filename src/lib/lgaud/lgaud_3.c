@@ -4,7 +4,7 @@
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin func_00325728 */
+/* merge_units: begin lgAudGetMixer */
 extern int D_0049147C;
 typedef struct { short v[8]; } lgAudMixer;
 typedef struct { int ret; int x4; int x8; int dev; int x10[4]; union { lgAudMixer mr; int i[4]; } u; } Pkt;
@@ -37,9 +37,9 @@ int lgAudGetMixer(int dev, lgAudMixer *mr)
     func_0010D180(D_0049147C);
     return 0x80000000;
 }
-/* merge_units: end func_00325728 */
+/* merge_units: end lgAudGetMixer */
 
-/* merge_units: begin func_00325848 */
+/* merge_units: begin lgAudSetMixer */
 extern char D_004B8210[];
 
 int lgAudSetMixer(int dev, lgAudMixer *mr)
@@ -63,4 +63,4 @@ int lgAudSetMixer(int dev, lgAudMixer *mr)
     func_0010D180(D_0049147C);
     return 0x80000000;
 }
-/* merge_units: end func_00325848 */
+/* merge_units: end lgAudSetMixer */

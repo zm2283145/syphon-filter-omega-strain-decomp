@@ -69,7 +69,7 @@ void func_00451AE0(int arg0) {
 #pragma pop /* merge_units */
 /* merge_units: end func_00451AE0 */
 
-/* merge_units: begin func_00451B00 */
+/* merge_units: begin SFOLobby_SetError */
 #pragma push /* merge_units */
 #pragma opt_common_subs off
 void SFOLobby_SetError(int arg0, unsigned char arg1, int arg2, int arg3) {
@@ -80,7 +80,7 @@ void SFOLobby_SetError(int arg0, unsigned char arg1, int arg2, int arg3) {
     }
 }
 #pragma pop /* merge_units */
-/* merge_units: end func_00451B00 */
+/* merge_units: end SFOLobby_SetError */
 
 /* merge_units: begin func_00451B30 */
 #pragma push /* merge_units */

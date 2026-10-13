@@ -4,7 +4,7 @@
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin func_0044C620 */
+/* merge_units: begin SFOLobby_RequestMyIp */
 #pragma push /* merge_units */
 #include "SFOLobby.h"
 extern void String_Copy(char*, char*);
@@ -49,9 +49,9 @@ int SFOLobby_RequestMyIp(SFOLobby* s)
 }
 #pragma pop
 #pragma pop /* merge_units */
-/* merge_units: end func_0044C620 */
+/* merge_units: end SFOLobby_RequestMyIp */
 
-/* merge_units: begin func_0044C760 */
+/* merge_units: begin SFOLobby_ConnectDir */
 #pragma push /* merge_units */
 extern int D_00497728;              /* connect timeout */
 extern int D_00497740;              /* connect attempts */
@@ -123,4 +123,4 @@ int SFOLobby_ConnectDir(SFOLobby* self)
 #undef SFOLobby_Poll /* merge_units */
 #undef SFOLobby_SetError /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_0044C760 */
+/* merge_units: end SFOLobby_ConnectDir */

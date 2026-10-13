@@ -4,7 +4,7 @@
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin func_00324D28 */
+/* merge_units: begin lgAudARead */
 extern int D_0049147C;
 typedef struct { int ret; int x4; int x8; int dev; short x10; unsigned char flag; char x13; int x14[3]; int size; } Pkt;
 extern Pkt* D_00491474;
@@ -49,9 +49,9 @@ int lgAudARead(int dev, int flag, void *dest, int *len)
     func_00127358("lgAudARead: rpc call failed\n");
     return 0x80000000;
 }
-/* merge_units: end func_00324D28 */
+/* merge_units: end lgAudARead */
 
-/* merge_units: begin func_00324EA0 */
+/* merge_units: begin lgAudAWrite */
 typedef union { struct { void *src; int *len; int ret; } s; int i[3]; } lgAudWriteReq;
 #if 0 /* merge_units */
 extern lgAudWriteReq D_0052AEB0;
@@ -94,9 +94,9 @@ int lgAudAWrite(int dev, int flag, void *src, int *len)
     return 0x80000000;
 }
 #undef D_0052AEB0 /* merge_units */
-/* merge_units: end func_00324EA0 */
+/* merge_units: end lgAudAWrite */
 
-/* merge_units: begin func_00325028 */
+/* merge_units: begin lgAudAWriteVag */
 #if 0 /* merge_units */
 extern lgAudWriteReq D_0052AEB0;
 #endif /* merge_units */
@@ -136,7 +136,7 @@ int lgAudAWriteVag(int dev, int flag, void *src, int *len)
     return 0x80000000;
 }
 #undef D_0052AEB0 /* merge_units */
-/* merge_units: end func_00325028 */
+/* merge_units: end lgAudAWriteVag */
 
 /* merge_units: begin func_003251B0 */
 extern int D_00491470;

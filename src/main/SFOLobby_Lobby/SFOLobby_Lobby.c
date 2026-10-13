@@ -20,7 +20,7 @@ void func_00450590(SFOLobby* lobby, int start, int end)
 #pragma pop /* merge_units */
 /* merge_units: end func_00450590 */
 
-/* merge_units: begin func_004505C0 */
+/* merge_units: begin SFOLobby_NoInstance */
 #pragma push /* merge_units */
 extern SFOLobby* D_00585E60;
 /* True when no lobby instance exists; every reply callback checks this first. */
@@ -29,4 +29,4 @@ int SFOLobby_NoInstance(void)
     return D_00585E60 == 0;
 }
 #pragma pop /* merge_units */
-/* merge_units: end func_004505C0 */
+/* merge_units: end SFOLobby_NoInstance */

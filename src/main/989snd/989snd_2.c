@@ -140,7 +140,7 @@ int func_003A8240(void) {
 #pragma pop /* merge_units */
 /* merge_units: end func_003A81A0 */
 
-/* merge_units: begin func_003A8260 */
+/* merge_units: begin snd_BankLoadByLoc */
 #pragma push /* merge_units */
 extern void SyncDCache(int*, char*);
 extern void func_0010DB98(int*, char*);
@@ -208,4 +208,4 @@ int snd_BankLoadByLoc(int loc, int size)
 }
 #pragma pop
 #pragma pop /* merge_units */
-/* merge_units: end func_003A8260 */
+/* merge_units: end snd_BankLoadByLoc */

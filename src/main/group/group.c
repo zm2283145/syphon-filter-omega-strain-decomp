@@ -4,7 +4,7 @@
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin func_003D96D0 */
+/* merge_units: begin Script_cGroup_Get */
 #pragma push /* merge_units */
 /*
  * Matched functions (byte-identical with the retail executable).
@@ -33,9 +33,9 @@ int Script_cGroup_GetSize(GroupScriptArg* args) {
     return size;
 }
 #pragma pop /* merge_units */
-/* merge_units: end func_003D96D0 */
+/* merge_units: end Script_cGroup_Get */
 
-/* merge_units: begin func_003D9740 */
+/* merge_units: begin Script_cGroup_Contains */
 #pragma push /* merge_units */
 #if 0 /* merge_units */
 extern void* Group_FromHandle(int handle);
@@ -52,9 +52,9 @@ int Script_cGroup_Contains(int* args)
 }
 #undef Group_FromHandle /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_003D9740 */
+/* merge_units: end Script_cGroup_Contains */
 
-/* merge_units: begin func_003D9790 */
+/* merge_units: begin Script_cGroup_Find */
 #pragma push /* merge_units */
 typedef struct ScriptArgs2 {
     int group;
@@ -82,9 +82,9 @@ int Script_cGroup_Find(ScriptArgs2* args) {
 #undef Group_FromHandle /* merge_units */
 #undef func_003CB1C0 /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_003D9790 */
+/* merge_units: end Script_cGroup_Find */
 
-/* merge_units: begin func_003D97E0 */
+/* merge_units: begin Script_cGroup_Print */
 #pragma push /* merge_units */
 #if 0 /* merge_units */
 extern void* Group_FromHandle(int handle);
@@ -100,9 +100,9 @@ int Script_cGroup_Print(int* args)
 }
 #undef Group_FromHandle /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_003D97E0 */
+/* merge_units: end Script_cGroup_Print */
 
-/* merge_units: begin func_003D9810 */
+/* merge_units: begin Script_cGroup_Randomize */
 #pragma push /* merge_units */
 /*
  * Matched functions (byte-identical with the retail executable).
@@ -118,9 +118,9 @@ int Script_cGroup_Randomize(GroupScriptArg* args) {
     return 0;
 }
 #pragma pop /* merge_units */
-/* merge_units: end func_003D9810 */
+/* merge_units: end Script_cGroup_Randomize */
 
-/* merge_units: begin func_003D9840 */
+/* merge_units: begin Script_cGroup_RemoveAll */
 #pragma push /* merge_units */
 #include "scriptUtils_types.h"
 
@@ -138,9 +138,9 @@ int Script_cGroup_RemoveAll(ScriptArg* args) {
 }
 #undef Group_FromHandle /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_003D9840 */
+/* merge_units: end Script_cGroup_RemoveAll */
 
-/* merge_units: begin func_003D9870 */
+/* merge_units: begin Script_cGroup_Remove */
 #pragma push /* merge_units */
 /*
  * Matched functions (byte-identical with the retail executable).
@@ -179,4 +179,4 @@ int Script_cGroup_Add(GroupScriptArg* args) {
 }
 #undef func_003CB1C0 /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_003D9870 */
+/* merge_units: end Script_cGroup_Remove */

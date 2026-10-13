@@ -4,7 +4,7 @@
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin func_00270330 */
+/* merge_units: begin cAIDeactivatedMsg_v02 */
 #pragma push /* merge_units */
 #include "types.h"
 #include "ai_msg_pack.h"
@@ -13,9 +13,9 @@ AIMSG_PACK_BEGIN(cAIDeactivatedMsg_v02, 0x8)
     Event_PackHeader(self, a1, type, a3, t0, len, buf);
 AIMSG_PACK_END(0x8, D_004FF0E8)
 #pragma pop /* merge_units */
-/* merge_units: end func_00270330 */
+/* merge_units: end cAIDeactivatedMsg_v02 */
 
-/* merge_units: begin func_00270390 */
+/* merge_units: begin cAIActivatedMsg_NetReceive */
 #pragma push /* merge_units */
 typedef struct { void* vt; int pad[8]; void* who; int pad2[3]; int whoId; int receiverId; } Evt270390;
 typedef struct { int header; int receiverId; int whoId; } Arg270390;
@@ -56,9 +56,9 @@ int cAIActivatedMsg_NetReceive(int a0, int a1, int a2, Arg270390* arg) {
 }
 #pragma pop
 #pragma pop /* merge_units */
-/* merge_units: end func_00270390 */
+/* merge_units: end cAIActivatedMsg_NetReceive */
 
-/* merge_units: begin func_00270470 */
+/* merge_units: begin cAIActivatedMsg_NetRegister */
 #pragma push /* merge_units */
 extern int func_002E9A10(void);
 extern int func_003C9C30(void* p);
@@ -85,12 +85,12 @@ unsigned char cAIActivatedMsg_NetRegister(void) {
     return r;
 }
 #pragma pop /* merge_units */
-/* merge_units: end func_00270470 */
+/* merge_units: end cAIActivatedMsg_NetRegister */
 
-/* merge_units: begin func_00270500 */
+/* merge_units: begin cAIActivatedMsg_v02 */
 #pragma push /* merge_units */
 AIMSG_PACK_BEGIN(cAIActivatedMsg_v02, 0xC)
     AIMsg_PackBase(self, a1, type, a3, t0, len, buf);
 AIMSG_PACK_END(0xC, D_004FF0E0)
 #pragma pop /* merge_units */
-/* merge_units: end func_00270500 */
+/* merge_units: end cAIActivatedMsg_v02 */

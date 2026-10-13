@@ -128,7 +128,7 @@ int func_0044CD20(SFOLobby* s)
 #pragma pop /* merge_units */
 /* merge_units: end func_0044CD20 */
 
-/* merge_units: begin func_0044CE60 */
+/* merge_units: begin SFOLobby_ConnectLobby */
 #pragma push /* merge_units */
 extern int Net_ParseIPv4(char*);
 extern int func_004689F8(void*, void*);
@@ -223,4 +223,4 @@ int SFOLobby_ConnectLobby(SFOLobby* s)
     return 1;
 }
 #pragma pop /* merge_units */
-/* merge_units: end func_0044CE60 */
+/* merge_units: end SFOLobby_ConnectLobby */

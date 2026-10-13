@@ -4,7 +4,7 @@
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin func_00324958 */
+/* merge_units: begin lgAudWrite */
 extern int D_0049147C;
 extern int* D_00491474;
 extern int D_0049146C;
@@ -45,9 +45,9 @@ extern void *memcpy(void *, const void *, unsigned int);int lgAudWrite(int dev, 
     func_0010D180(D_0049147C);
     return 0x80000000;
 }
-/* merge_units: end func_00324958 */
+/* merge_units: end lgAudWrite */
 
-/* merge_units: begin func_00324AC8 */
+/* merge_units: begin lgAudWriteVag */
 int lgAudWriteVag(int dev, int flag, void *src, int *len)
 {
     int ret;
@@ -80,4 +80,4 @@ int lgAudWriteVag(int dev, int flag, void *src, int *len)
     func_0010D180(D_0049147C);
     return 0x80000000;
 }
-/* merge_units: end func_00324AC8 */
+/* merge_units: end lgAudWriteVag */

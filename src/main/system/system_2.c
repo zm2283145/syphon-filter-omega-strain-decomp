@@ -4,7 +4,7 @@
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin func_003CB330 */
+/* merge_units: begin Receiver_Destruct */
 #pragma push /* merge_units */
 #pragma cplusplus on
 #include "types.h"
@@ -54,9 +54,9 @@ extern "C" char * Receiver_Destruct(char * arg0, long long arg1) {
     return arg0;
 }
 #pragma pop /* merge_units */
-/* merge_units: end func_003CB330 */
+/* merge_units: end Receiver_Destruct */
 
-/* merge_units: begin func_003CB4B0 */
+/* merge_units: begin Receiver_Construct */
 #pragma push /* merge_units */
 /*
  * Matched functions (byte-identical with the retail executable).
@@ -84,4 +84,4 @@ Receiver* Receiver_Construct(Receiver* self, void* owner) {
 }
 #undef D_004DFDE0 /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_003CB4B0 */
+/* merge_units: end Receiver_Construct */

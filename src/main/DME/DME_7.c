@@ -26,7 +26,7 @@ int func_0042A960(int a0) {
 #pragma pop /* merge_units */
 /* merge_units: end func_0042A960 */
 
-/* merge_units: begin func_0042A980 */
+/* merge_units: begin Net_CreateGame */
 #pragma push /* merge_units */
 typedef struct NetSessCfg_h5 {
     int unk00;
@@ -144,9 +144,9 @@ void Net_CreateGame(void)
     }
 }
 #pragma pop /* merge_units */
-/* merge_units: end func_0042A980 */
+/* merge_units: end Net_CreateGame */
 
-/* merge_units: begin func_0042AB00 */
+/* merge_units: begin Net_ConnectGame */
 #pragma push /* merge_units */
 typedef struct NetSessCfg_n1 {
     int unk00;
@@ -267,7 +267,7 @@ int Net_ConnectGame(void* addr)
     return err;
 }
 #pragma pop /* merge_units */
-/* merge_units: end func_0042AB00 */
+/* merge_units: end Net_ConnectGame */
 
 /* merge_units: begin func_0042ACD0 */
 #pragma push /* merge_units */

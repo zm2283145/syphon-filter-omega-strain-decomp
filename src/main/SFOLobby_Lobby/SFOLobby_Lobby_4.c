@@ -4,7 +4,7 @@
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin func_00451370 */
+/* merge_units: begin SFOLobby_LookupAccountId */
 #pragma push /* merge_units */
 #include "SFOLobby.h"
 /* self as char* is needed for matching (an SFOLobby* parameter changes codegen). */
@@ -89,7 +89,7 @@ int SFOLobby_LookupAccountId(char* o, char* name) {
     return SELF->accountIdReply.accountId;
 }
 #pragma pop /* merge_units */
-/* merge_units: end func_00451370 */
+/* merge_units: end SFOLobby_LookupAccountId */
 
 /* merge_units: begin func_004515F0 */
 #pragma push /* merge_units */

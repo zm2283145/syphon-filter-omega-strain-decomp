@@ -4,7 +4,7 @@
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin func_002756E0 */
+/* merge_units: begin Bullet_LeavePartnerLists */
 #pragma push /* merge_units */
 #include "types.h"
 typedef struct { int cap; int count; int* data; } Vec2756;
@@ -27,9 +27,9 @@ void Bullet_LeavePartnerLists(Obj2756* s, int value) {
 }
 #pragma opt_strength_reduction reset
 #pragma pop /* merge_units */
-/* merge_units: end func_002756E0 */
+/* merge_units: end Bullet_LeavePartnerLists */
 
-/* merge_units: begin func_00275750 */
+/* merge_units: begin BulletPool_Link */
 #pragma push /* merge_units */
 /*
  * Matched functions (byte-identical with the retail executable).
@@ -55,4 +55,4 @@ int func_00275780(PtrVec* v, int* value) {
     return PtrVec_Insert(v, v->data + v->count, 1, value);
 }
 #pragma pop /* merge_units */
-/* merge_units: end func_00275750 */
+/* merge_units: end BulletPool_Link */

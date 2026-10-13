@@ -4,7 +4,7 @@
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin func_0044DB60 */
+/* merge_units: begin SFOLobby_AddBuddy */
 #pragma push /* merge_units */
 #pragma cplusplus on
 #include "SFOLobby.h"
@@ -78,9 +78,9 @@ extern "C" int SFOLobby_AddBuddy(SFOLobby* self, int id)
     return 1;
 }
 #pragma pop /* merge_units */
-/* merge_units: end func_0044DB60 */
+/* merge_units: end SFOLobby_AddBuddy */
 
-/* merge_units: begin func_0044DD20 */
+/* merge_units: begin SFOLobby_LeaveContactsState */
 #pragma push /* merge_units */
 extern void func_00452FC0(SFOLobby*, int);
 extern void LobbyArray_Free(LobbyArray*);
@@ -101,4 +101,4 @@ void SFOLobby_LeaveContactsState(SFOLobby* s)
     }
 }
 #pragma pop /* merge_units */
-/* merge_units: end func_0044DD20 */
+/* merge_units: end SFOLobby_LeaveContactsState */

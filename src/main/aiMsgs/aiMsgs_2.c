@@ -4,7 +4,7 @@
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin func_0026F1D0 */
+/* merge_units: begin cAIUnconsciousMsg_NetReceive */
 #pragma push /* merge_units */
 #include "types.h"
 typedef struct { void* vt; int pad[8]; void* who; int pad2[3]; int whoId; int receiverId; } Evt26F1D0;
@@ -46,9 +46,9 @@ int cAIUnconsciousMsg_NetReceive(int a0, int a1, int a2, Arg26F1D0* arg) {
 }
 #pragma pop
 #pragma pop /* merge_units */
-/* merge_units: end func_0026F1D0 */
+/* merge_units: end cAIUnconsciousMsg_NetReceive */
 
-/* merge_units: begin func_0026F2B0 */
+/* merge_units: begin cAIUnconsciousMsg_NetRegister */
 #pragma push /* merge_units */
 extern int func_002E9A10(void);
 extern int func_003C9C30(void* p);
@@ -68,9 +68,9 @@ unsigned char cAIUnconsciousMsg_NetRegister(void) {
     return r;
 }
 #pragma pop /* merge_units */
-/* merge_units: end func_0026F2B0 */
+/* merge_units: end cAIUnconsciousMsg_NetRegister */
 
-/* merge_units: begin func_0026F360 */
+/* merge_units: begin cAIUnconsciousMsg_v02 */
 #pragma push /* merge_units */
 #include "ai_msg_pack.h"
 
@@ -78,9 +78,9 @@ AIMSG_PACK_BEGIN(cAIUnconsciousMsg_v02, 0xC)
     AIMsg_PackBase(self, a1, type, a3, t0, len, buf);
 AIMSG_PACK_END(0xC, D_004FF120)
 #pragma pop /* merge_units */
-/* merge_units: end func_0026F360 */
+/* merge_units: end cAIUnconsciousMsg_v02 */
 
-/* merge_units: begin func_0026F400 */
+/* merge_units: begin cAIDisguiseTakenMsg_NetReceive */
 #pragma push /* merge_units */
 typedef struct { void* vt; int pad[8]; void* who; int pad2[3]; int whoId; int receiverId; } Evt26F400;
 typedef struct { int header; int receiverId; int whoId; } Arg26F400;
@@ -132,9 +132,9 @@ int cAIDisguiseTakenMsg_NetReceive(int a0, int a1, int a2, Arg26F400* arg) {
 #undef MsgQueue_QueueClone /* merge_units */
 #undef cMessage_dtor /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_0026F400 */
+/* merge_units: end cAIDisguiseTakenMsg_NetReceive */
 
-/* merge_units: begin func_0026F4E0 */
+/* merge_units: begin cAIDisguiseTakenMsg_NetRegister */
 #pragma push /* merge_units */
 extern int D_004FF118;
 extern int cAIDisguiseTakenMsg_NetReceive();
@@ -150,17 +150,17 @@ unsigned char cAIDisguiseTakenMsg_NetRegister(void) {
     return r;
 }
 #pragma pop /* merge_units */
-/* merge_units: end func_0026F4E0 */
+/* merge_units: end cAIDisguiseTakenMsg_NetRegister */
 
-/* merge_units: begin func_0026F570 */
+/* merge_units: begin cAIDisguiseTakenMsg_v02 */
 #pragma push /* merge_units */
 AIMSG_PACK_BEGIN(cAIDisguiseTakenMsg_v02, 0xC)
     AIMsg_PackBase(self, a1, type, a3, t0, len, buf);
 AIMSG_PACK_END(0xC, D_004FF118)
 #pragma pop /* merge_units */
-/* merge_units: end func_0026F570 */
+/* merge_units: end cAIDisguiseTakenMsg_v02 */
 
-/* merge_units: begin func_0026F610 */
+/* merge_units: begin cAIBodyMovedMsg_NetReceive */
 #pragma push /* merge_units */
 typedef struct { void* vt; int pad[8]; void* who; unsigned char flag; char pad2[11]; int whoId; int receiverId; } Evt26F610;
 typedef struct { int header; int receiverId; int whoId; unsigned char flag; } Arg26F610;
@@ -213,9 +213,9 @@ int cAIBodyMovedMsg_NetReceive(int a0, int a1, int a2, Arg26F610* arg) {
 #undef MsgQueue_QueueClone /* merge_units */
 #undef cMessage_dtor /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_0026F610 */
+/* merge_units: end cAIBodyMovedMsg_NetReceive */
 
-/* merge_units: begin func_0026F6F0 */
+/* merge_units: begin cAIBodyMovedMsg_NetRegister */
 #pragma push /* merge_units */
 extern int D_004FF110;
 extern int cAIBodyMovedMsg_NetReceive();
@@ -238,18 +238,18 @@ unsigned char cAIBodyMovedMsg_NetRegister(void) {
     return r;
 }
 #pragma pop /* merge_units */
-/* merge_units: end func_0026F6F0 */
+/* merge_units: end cAIBodyMovedMsg_NetRegister */
 
-/* merge_units: begin func_0026F7A0 */
+/* merge_units: begin cAIBodyMovedMsg_v02 */
 #pragma push /* merge_units */
 AIMSG_PACK_BEGIN(cAIBodyMovedMsg_v02, 0x10)
     AIMsg_PackBase(self, a1, type, a3, t0, len, buf);
     ((unsigned char*)buf)[0xC] = *(unsigned char*)&self->p28;
 AIMSG_PACK_END(0x10, D_004FF110)
 #pragma pop /* merge_units */
-/* merge_units: end func_0026F7A0 */
+/* merge_units: end cAIBodyMovedMsg_v02 */
 
-/* merge_units: begin func_0026F850 */
+/* merge_units: begin cAINewAwarenessMsg_NetReceive */
 #pragma push /* merge_units */
 typedef struct { void* vt; int pad[8]; void* who; signed char flag; char pad2[11]; int whoId; int receiverId; } Evt26F850;
 typedef struct { int header; int receiverId; int whoId; signed char flag; } Arg26F850;
@@ -302,9 +302,9 @@ int cAINewAwarenessMsg_NetReceive(int a0, int a1, int a2, Arg26F850* arg) {
 #undef MsgQueue_QueueClone /* merge_units */
 #undef cMessage_dtor /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_0026F850 */
+/* merge_units: end cAINewAwarenessMsg_NetReceive */
 
-/* merge_units: begin func_0026F930 */
+/* merge_units: begin cAINewAwarenessMsg_NetRegister */
 #pragma push /* merge_units */
 extern int D_004FF108;
 extern int cAINewAwarenessMsg_NetReceive();
@@ -327,18 +327,18 @@ unsigned char cAINewAwarenessMsg_NetRegister(void) {
     return r;
 }
 #pragma pop /* merge_units */
-/* merge_units: end func_0026F930 */
+/* merge_units: end cAINewAwarenessMsg_NetRegister */
 
-/* merge_units: begin func_0026F9E0 */
+/* merge_units: begin cAINewAwarenessMsg_v02 */
 #pragma push /* merge_units */
 AIMSG_PACK_BEGIN(cAINewAwarenessMsg_v02, 0x10)
     AIMsg_PackBase(self, a1, type, a3, t0, len, buf);
     ((char*)buf)[0xC] = *(char*)&self->p28;
 AIMSG_PACK_END(0x10, D_004FF108)
 #pragma pop /* merge_units */
-/* merge_units: end func_0026F9E0 */
+/* merge_units: end cAINewAwarenessMsg_v02 */
 
-/* merge_units: begin func_0026FA90 */
+/* merge_units: begin cAIDestinationReachedMsg_NetReceive */
 #pragma push /* merge_units */
 #pragma cplusplus on
 #include "vslot_pad.h"
@@ -405,9 +405,9 @@ extern "C" int cAIDestinationReachedMsg_NetReceive(int a0, int a1, int a2, Arg26
 #undef MsgQueue_QueueClone /* merge_units */
 #undef cMessage_dtor /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end func_0026FA90 */
+/* merge_units: end cAIDestinationReachedMsg_NetReceive */
 
-/* merge_units: begin func_0026FBF0 */
+/* merge_units: begin cAIDestinationReachedMsg_NetRegister */
 #pragma push /* merge_units */
 extern int D_004FF100;
 extern int cAIDestinationReachedMsg_NetReceive();
@@ -430,4 +430,4 @@ unsigned char cAIDestinationReachedMsg_NetRegister(void) {
     return r;
 }
 #pragma pop /* merge_units */
-/* merge_units: end func_0026FBF0 */
+/* merge_units: end cAIDestinationReachedMsg_NetRegister */

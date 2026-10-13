@@ -36,7 +36,7 @@ Rel* func_001EB880(Rel* r) {
 #pragma pop /* merge_units */
 /* merge_units: end func_001EB850 */
 
-/* merge_units: begin func_001EB8A0 */
+/* merge_units: begin HumanColPreset_Ctor */
 #pragma push /* merge_units */
 #define FLT_MAX 3.4028235e38f
 typedef struct { int v; } Ref;
@@ -92,4 +92,4 @@ HumanColPreset* HumanColPreset_Ctor(HumanColPreset* p)
     return p;
 }
 #pragma pop /* merge_units */
-/* merge_units: end func_001EB8A0 */
+/* merge_units: end HumanColPreset_Ctor */

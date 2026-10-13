@@ -272,7 +272,7 @@ void func_00452F60(LobbyMain* self, LobbyMainCallback cb) {
 #pragma pop /* merge_units */
 /* merge_units: end func_00452F30 */
 
-/* merge_units: begin func_00452F70 */
+/* merge_units: begin SFOLobby_CallUpdateHook */
 #pragma push /* merge_units */
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
@@ -292,7 +292,7 @@ void SFOLobby_CallUpdateHook(char * arg0, int arg1, int arg2) {
 }
 #pragma pop
 #pragma pop /* merge_units */
-/* merge_units: end func_00452F70 */
+/* merge_units: end SFOLobby_CallUpdateHook */
 
 /* merge_units: begin func_00452FC0 */
 #pragma push /* merge_units */
@@ -399,7 +399,7 @@ signed char func_00452FF0(E452* e, char* buf) {
 #pragma pop /* merge_units */
 /* merge_units: end func_00452FF0 */
 
-/* merge_units: begin func_004534A0 */
+/* merge_units: begin SFOLobby_Poll */
 #pragma push /* merge_units */
 #pragma cplusplus on
 extern "C" {
@@ -503,4 +503,4 @@ extern "C" int SFOLobby_Poll(Conn4534A0* self, int start, int timeout, int flag)
     return 1;
 }
 #pragma pop /* merge_units */
-/* merge_units: end func_004534A0 */
+/* merge_units: end SFOLobby_Poll */

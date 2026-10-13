@@ -7401,5 +7401,11 @@
   "main/gameFrontEnd/func_002CB3D0": "cwps2-3.0b38",
   "main/weapon/func_00146460": "cwps2-3.0b38",
   "main/taser/func_00263080": "cwps2-3.0b38",
-  "main/func_00327D90": "cwps2-3.0b38"
+  "main/func_00327D90": "cwps2-3.0b38",
+  "lib/func_00104980": "ee-gcc2.9-991111",
+  "main/game/func_00134110": "cwps2-3.0b38",
+  "main/game/func_00134640": "cwps2-3.0b38",
+  "main/game/func_001350E0": "cwps2-3.0b38",
+  "main/hud/func_00245F00": "cwps2-3.0b38",
+  "main/GuiScoresEquip/func_0035BFB0": "cwps2-3.0b38"
 }

@@ -7641,5 +7641,11 @@
   "main/collision/func_003C3220": "cwps2-3.0b38",
   "main/func_003D1C80": "cwps2-3.0b38",
   "main/func_003D40D0": "cwps2-3.0b38",
-  "main/manUtils/func_004053B0": "cwps2-3.0b38"
+  "main/manUtils/func_004053B0": "cwps2-3.0b38",
+  "main/GameGOBJ/func_00218EA0": "cwps2-3.0b38",
+  "main/func_0036F210": "cwps2-3.0b38",
+  "main/func_00371CF0": "cwps2-3.0b38",
+  "main/func_003A9220": "cwps2-3.0b38",
+  "main/ska/func_003AEF50": "cwps2-3.0b38",
+  "main/ska/func_003B2730": "cwps2-3.0b38"
 }

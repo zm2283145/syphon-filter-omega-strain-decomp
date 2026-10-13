@@ -115,7 +115,10 @@ into translation units. Run it occasionally; see [merge_units.md](merge_units.md
 - GCC 2.96 accepts string literals that span lines. A trailing space before such a line
   break is part of the string, so never strip trailing whitespace across the tree.
 - Ninja does not track header dependencies here. After editing a header, touch every
-  `.c` file that includes it.
+  `.c` file that includes it, including through another header. A fresh source rebuild
+  exposed a duplicate `HumanColPreset` definition hidden by the incremental cache;
+  `humanCollision_types.h` now owns that type and the preset setter uses its fields.
+  When taking over an existing build cache, rebuild all C sources before trusting it.
 - Naming a data symbol in `config/symbol_addrs.txt` makes splat redo its whole split.
 - Python and some editors on Windows write CRLF; convert back to LF before committing.
 - When several workers match in parallel, give each one a disjoint candidate list,

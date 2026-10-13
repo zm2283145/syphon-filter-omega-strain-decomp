@@ -21,26 +21,26 @@ Quad* func_001EAF30(Quad* d, Quad* s) {
 HumanColPreset* HumanColPreset_SetConfig(HumanColPreset* p, int selector, int* mask0, int* mask1,
                                          int* mask2, int* mask3, HumanColPresetCfg* cfg, int enabled) {
     p->selector = selector;
-    p->mask0 = *mask0;
-    p->mask1 = *mask1;
-    p->mask2 = *mask2;
-    p->mask3 = *mask3;
-    p->heightMin = cfg->range0Min;
-    p->heightMax = cfg->range0Max;
-    p->distSqMin = cfg->range1Min;
-    p->distSqMax = cfg->range1Max;
-    p->cosMin = cfg->range2Min;
-    p->cosMax = cfg->range2Max;
-    p->negateFlag = cfg->enabled;
-    p->enabled = enabled;
+    p->masks[0].bits = *mask0;
+    p->masks[1].bits = *mask1;
+    p->masks[2].bits = *mask2;
+    p->masks[3].bits = *mask3;
+    p->cfg.range0Min = cfg->range0Min;
+    p->cfg.range0Max = cfg->range0Max;
+    p->cfg.range1Min = cfg->range1Min;
+    p->cfg.range1Max = cfg->range1Max;
+    p->cfg.range2Min = cfg->range2Min;
+    p->cfg.range2Max = cfg->range2Max;
+    p->cfg.enabled = cfg->enabled;
+    p->descFlag = enabled;
     p->active = 0;
-    p->accepted = 0;
+    p->unk32 = 0;
     p->unk70 = 0;
     p->unk90 = -1;
     p->unk94 = -1;
     p->unk98 = 0;
     p->unkA0 = 0;
-    p->savedHeight = -3.4028234663852886e38f; /* -FLT_MAX */
+    p->bestHeight = -3.4028234663852886e38f; /* -FLT_MAX */
     p->unkE4 = 0;
     return p;
 }

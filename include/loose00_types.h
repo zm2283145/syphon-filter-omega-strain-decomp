@@ -10,40 +10,6 @@
 #include "gobj_types.h"
 #include "humanCollision_types.h"
 
-/* Human collision preset record (0xF0 bytes); nine live in a manager at +0x10.
- * See research HUMAN_COLLISION.md. */
-typedef struct HumanColPreset {
-    unsigned char selector;         /* 0x00 */
-    char pad01[3];
-    int mask0;                      /* 0x04 */
-    int mask1;                      /* 0x08 */
-    int mask2;                      /* 0x0C */
-    int mask3;                      /* 0x10 */
-    float heightMin;                /* 0x14 */
-    float heightMax;                /* 0x18 */
-    float distSqMin;                /* 0x1C */
-    float distSqMax;                /* 0x20 */
-    float cosMin;                   /* 0x24 */
-    float cosMax;                   /* 0x28 */
-    unsigned char negateFlag;       /* 0x2C */
-    char pad2D[3];
-    unsigned char enabled;          /* 0x30 */
-    unsigned char active;           /* 0x31 */
-    unsigned char accepted;         /* 0x32 */
-    char pad33[0x70 - 0x33];
-    unsigned char unk70;            /* 0x70 */
-    char pad71[0x90 - 0x71];
-    int unk90;                      /* 0x90 */
-    int unk94;                      /* 0x94 */
-    int unk98;                      /* 0x98 */
-    char pad9C[4];
-    int unkA0;                      /* 0xA0 */
-    char padA4[0xE0 - 0xA4];
-    float savedHeight;              /* 0xE0 */
-    int unkE4;                      /* 0xE4 */
-    char padE8[8];
-} HumanColPreset;
-
 /* Hit detail block of a line-of-sight result (0x70 bytes, copied by
  * func_00139B00 / func_0013AA30). */
 typedef struct LosHitInfo {

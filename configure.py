@@ -91,14 +91,22 @@ DATA_PIECE_TYPES = (".data", ".rodata", ".sdata")
 
 
 
+def data_only(name):
+    """Data-only C units (tools/data_gen.py): a `[ROM, .data, data/d_<VRAM>]`
+    subsegment without a code subsegment, built from src/data/d_<VRAM>.c."""
+    return bool(name) and name.startswith("data/")
+
+
 def data_pieces(subs):
     """{C unit: [(rom start, type)]} for every unit that links its own data."""
     units = {name for _, typ, name in subs if typ == "c"}
     pieces = {}
     for start, typ, name in subs:
         if typ in DATA_PIECE_TYPES:
-            if name not in units:
+            if name not in units and not data_only(name):
                 sys.exit(f"config/splat.yaml: {typ} subsegment at {start:#x} names {name!r}, which is not a C unit")
+            if data_only(name) and (name in units or not (ROOT / "src" / (name + ".c")).is_file()):
+                sys.exit(f"config/splat.yaml: data-only unit {name!r} needs src/{name}.c and no code subsegment")
             if name in pieces:
                 sys.exit(f"config/splat.yaml: C unit {name} has more than one data subsegment")
             pieces.setdefault(name, []).append((start, typ))
@@ -332,6 +340,23 @@ def main():
     data_objs, relinks = [], []
     for start, typ, name in subs:
         vram = start + seg_vram
+        if typ in DATA_PIECE_TYPES and data_only(name):
+            # A data-only C unit: compiled like a unit with a data block, no
+            # code; its objdiff target is splat's assembly of the block.
+            src = Path("src") / (name + ".c")
+            out = Path("build") / "src" / (name + ".raw.o")
+            obj = Path("build") / "src" / (name + ".o")
+            link = Path("build") / "src" / (name + ".link.o")
+            target_s = Path("asm") / "data" / (name + "." + typ[1:] + ".s")
+            target = Path("build") / "target" / (name + ".o")
+            data_objs.append((out, obj, link, vram, None))
+            c_units.append((src, out, target_s, target, "cc", 16))
+            link_objs.append(link)
+            units.append({"name": name, "target_path": str(target).replace("\\", "/"),
+                          "base_path": str(obj).replace("\\", "/"),
+                          "metadata": {"progress_categories": ["main"], "complete": True,
+                                       "source_path": str(src).replace("\\", "/")}})
+            continue
         if typ in DATA_PIECE_TYPES:
             continue  # linked through the unit's object
         if typ in ("asm", "hasm", "data", "rodata", "bss"):

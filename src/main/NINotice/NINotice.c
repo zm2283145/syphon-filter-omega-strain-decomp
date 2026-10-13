@@ -4,7 +4,7 @@
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin cNINotice_v01 */
+/* merge_units: begin func_002373A0 */
 #pragma push /* merge_units */
 #pragma cplusplus on
 #include "types.h"
@@ -38,18 +38,18 @@ extern "C" M1EEDC0* cNINotice_v01(M1EEDC0* self)
     return p;
 }
 #pragma pop /* merge_units */
-/* merge_units: end cNINotice_v01 */
+/* merge_units: end func_002373A0 */
 
-/* merge_units: begin cNINotice_dtor */
+/* merge_units: begin func_002374A0 */
 #pragma push /* merge_units */
 #pragma cplusplus on
 #include "vtable_base_dtor.h"
 
 DEFINE_VTABLE_BASE_DTOR(cNINotice_dtor, D_004DBEB0, cMessage_dtor)
 #pragma pop /* merge_units */
-/* merge_units: end cNINotice_dtor */
+/* merge_units: end func_002374A0 */
 
-/* merge_units: begin Script_cNINotice_Action */
+/* merge_units: begin func_00237500 */
 #pragma push /* merge_units */
 /*
  * Matched functions (byte-identical with the retail executable).
@@ -78,4 +78,4 @@ int cNINotice_v03(void) {
     return D_004F7D20;
 }
 #pragma pop /* merge_units */
-/* merge_units: end Script_cNINotice_Action */
+/* merge_units: end func_00237500 */

@@ -21,7 +21,7 @@ void* func_0040C1E0(GobjHolder* self) {
 #pragma pop /* merge_units */
 /* merge_units: end func_0040C1E0 */
 
-/* merge_units: begin Object_ToString */
+/* merge_units: begin func_0040C1F0 */
 #pragma push /* merge_units */
 extern char D_00571B80[];
 extern int sprintf(char* buf, const char* fmt, ...);
@@ -33,9 +33,9 @@ char* Object_ToString(unsigned int* id)
     return D_00571B80;
 }
 #pragma pop /* merge_units */
-/* merge_units: end Object_ToString */
+/* merge_units: end func_0040C1F0 */
 
-/* merge_units: begin IdMgr_Allocate */
+/* merge_units: begin func_0040C240 */
 #pragma push /* merge_units */
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
@@ -60,9 +60,9 @@ void IdMgr_Allocate(int *arg0, int arg1) {
     *arg0 = *temp_s2 | (temp_s1 << 0x10);
 }
 #pragma pop /* merge_units */
-/* merge_units: end IdMgr_Allocate */
+/* merge_units: end func_0040C240 */
 
-/* merge_units: begin IdMgr_Init */
+/* merge_units: begin func_0040C2D0 */
 #pragma push /* merge_units */
 #pragma cplusplus on
 #include "alloc_guard.h"
@@ -105,9 +105,9 @@ extern "C" void IdMgr_Init(void)
 }
 #undef D_00571780 /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end IdMgr_Init */
+/* merge_units: end func_0040C2D0 */
 
-/* merge_units: begin Scope_GetParent */
+/* merge_units: begin func_0040C460 */
 #pragma push /* merge_units */
 /*
  * Matched functions (byte-identical with the retail executable).
@@ -123,4 +123,4 @@ GobjScope* Object_GetScope(GobjEntry* self) {
     return self->scope;
 }
 #pragma pop /* merge_units */
-/* merge_units: end Scope_GetParent */
+/* merge_units: end func_0040C460 */

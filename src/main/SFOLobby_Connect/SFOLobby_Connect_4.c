@@ -4,7 +4,7 @@
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin SFOLobby_ConnectAuth */
+/* merge_units: begin func_0044D200 */
 #pragma push /* merge_units */
 #include "SFOLobby.h"
 extern int D_00497728;              /* connect timeout */
@@ -59,7 +59,7 @@ int SFOLobby_ConnectAuth(SFOLobby* self)
     return 1;
 }
 #pragma pop /* merge_units */
-/* merge_units: end SFOLobby_ConnectAuth */
+/* merge_units: end func_0044D200 */
 
 /* merge_units: begin func_0044D3D0 */
 #pragma push /* merge_units */
@@ -127,7 +127,7 @@ int func_0044D3D0(SFOLobby* s)
 #pragma pop /* merge_units */
 /* merge_units: end func_0044D3D0 */
 
-/* merge_units: begin SFOLobby_Authenticate */
+/* merge_units: begin func_0044D510 */
 #pragma push /* merge_units */
 typedef struct { char messageId[0x15]; char sessionKey[0x13]; int f28; unsigned char passwordLen; char password[0x20]; char pad[3]; } R44D;
 extern void LobbyArray_Clear(LobbyArray*);
@@ -193,4 +193,4 @@ int SFOLobby_Authenticate(SFOLobby* o) {
 #undef memset /* merge_units */
 #undef func_0044D3D0 /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end SFOLobby_Authenticate */
+/* merge_units: end func_0044D510 */

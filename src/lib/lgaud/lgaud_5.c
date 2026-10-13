@@ -4,7 +4,7 @@
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin lgAudResumePlayback */
+/* merge_units: begin func_00325C80 */
 extern int D_0049147C;
 extern int* D_00491474;
 extern char D_0052AD00[];
@@ -31,7 +31,7 @@ int lgAudResumePlayback(int device)
     func_0010D180(D_0049147C);
     return 0x80000000;
 }
-/* merge_units: end lgAudResumePlayback */
+/* merge_units: end func_00325C80 */
 
 /* merge_units: begin func_00325D48 */
 extern char D_004B8318[];

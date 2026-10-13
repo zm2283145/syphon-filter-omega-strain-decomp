@@ -4,7 +4,7 @@
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin IdMgr_FindCollision */
+/* merge_units: begin func_0040C480 */
 #pragma push /* merge_units */
 #include "GobjMan_types.h"
 
@@ -24,9 +24,9 @@ GobjEntry* IdMgr_FindCollision(unsigned int category, unsigned int index)
     return IdMgr_IsOccupied(manager, Id_Build(&id, category, index, -1));
 }
 #pragma pop /* merge_units */
-/* merge_units: end IdMgr_FindCollision */
+/* merge_units: end func_0040C480 */
 
-/* merge_units: begin Id_Build */
+/* merge_units: begin func_0040C500 */
 #pragma push /* merge_units */
 /*
  * Matched functions (byte-identical with the retail executable).
@@ -51,9 +51,9 @@ int Id_IsValidCategory(unsigned int category) {
     return category < 256;
 }
 #pragma pop /* merge_units */
-/* merge_units: end Id_Build */
+/* merge_units: end func_0040C500 */
 
-/* merge_units: begin Object_LookupById */
+/* merge_units: begin func_0040C540 */
 #pragma push /* merge_units */
 /* Object_LookupById */
 #if 0 /* merge_units */
@@ -81,7 +81,7 @@ out:
 }
 #undef D_00571740 /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end Object_LookupById */
+/* merge_units: end func_0040C540 */
 
 /* merge_units: begin func_0040C5C0 */
 #pragma push /* merge_units */
@@ -100,7 +100,7 @@ int func_0040C5C0(void) {
 #pragma pop /* merge_units */
 /* merge_units: end func_0040C5C0 */
 
-/* merge_units: begin IdMgr_Destroy */
+/* merge_units: begin func_0040C5D0 */
 #pragma push /* merge_units */
 #pragma cplusplus on
 #include "alloc_guard.h"
@@ -184,4 +184,4 @@ extern "C" void IdMgr_Destroy(void)
 #undef D_00571740 /* merge_units */
 #undef func_0040C5C0 /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end IdMgr_Destroy */
+/* merge_units: end func_0040C5D0 */

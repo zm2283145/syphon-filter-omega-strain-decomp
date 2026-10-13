@@ -15,7 +15,7 @@ DEFINE_OBJ_LIST_DTOR(func_003CB010)
 #pragma pop /* merge_units */
 /* merge_units: end func_003CB010 */
 
-/* merge_units: begin Object_ConstructBase */
+/* merge_units: begin func_003CB090 */
 #pragma push /* merge_units */
 /*
  * Matched functions (byte-identical with the retail executable).
@@ -95,7 +95,7 @@ void* func_003CB220(Receiver* self) {
     return self->owner;
 }
 #pragma pop /* merge_units */
-/* merge_units: end Object_ConstructBase */
+/* merge_units: end func_003CB090 */
 
 /* merge_units: begin func_003CB230 */
 #pragma push /* merge_units */

@@ -4,7 +4,7 @@
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin EventQueue_Remove */
+/* merge_units: begin func_003EA0E0 */
 #pragma push /* merge_units */
 #include "types.h"
 #pragma cplusplus on
@@ -49,9 +49,9 @@ extern "C" void EventQueue_Remove(EQEvent* ev)
     }
 }
 #pragma pop /* merge_units */
-/* merge_units: end EventQueue_Remove */
+/* merge_units: end func_003EA0E0 */
 
-/* merge_units: begin EventQueue_Admit */
+/* merge_units: begin func_003EA1D0 */
 #pragma push /* merge_units */
 #pragma cplusplus on
 #include "alloc_guard.h"
@@ -74,4 +74,4 @@ extern "C" void EventQueue_Admit(F8Ev* e)
     List_End(D_0055A2E0, &e);
 }
 #pragma pop /* merge_units */
-/* merge_units: end EventQueue_Admit */
+/* merge_units: end func_003EA1D0 */

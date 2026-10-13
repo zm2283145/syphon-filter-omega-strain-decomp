@@ -4,7 +4,7 @@
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin cAIGOBJMsg_v02 */
+/* merge_units: begin func_00270630 */
 #pragma push /* merge_units */
 #include "types.h"
 #include "ai_msg_pack.h"
@@ -13,9 +13,9 @@ int cAIGOBJMsg_v02(AIMsgPackObj* self, int a1, int* type, int a3, int t0, unsign
     return -1;
 }
 #pragma pop /* merge_units */
-/* merge_units: end cAIGOBJMsg_v02 */
+/* merge_units: end func_00270630 */
 
-/* merge_units: begin cAIWeaponFiredMsg_v01 */
+/* merge_units: begin func_00270690 */
 #pragma push /* merge_units */
 #pragma cplusplus on
 #include "msg_clone.h"
@@ -40,4 +40,4 @@ MSG_CLONE_BEGIN(cAIWeaponFiredMsg_v01, 0x34, "aiMsgs.hh", 0xFC)
     F(unsigned char, 0x30) = S(unsigned char, 0x30);
 MSG_CLONE_END
 #pragma pop /* merge_units */
-/* merge_units: end cAIWeaponFiredMsg_v01 */
+/* merge_units: end func_00270690 */

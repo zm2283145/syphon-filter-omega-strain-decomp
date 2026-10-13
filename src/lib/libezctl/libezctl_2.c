@@ -4,7 +4,7 @@
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin ezNetCtlPreloadModemCnf */
+/* merge_units: begin func_00353070 */
 extern int D_00492C34;
 extern char D_005332C0[];
 extern char D_00533280[];
@@ -28,7 +28,7 @@ int ezNetCtlPreloadModemCnf(char *name)
     func_0010F388("ezNetCtlPreloadModemCnf returned %d\n", *(int *)res);
     return *(int *)res;
 }
-/* merge_units: end ezNetCtlPreloadModemCnf */
+/* merge_units: end func_00353070 */
 
 /* merge_units: begin func_00353130 */
 extern char D_004BADB8[], D_004BADC0[], D_004BAE08[];
@@ -59,7 +59,7 @@ int func_003531B8(void)
 }
 /* merge_units: end func_003531B8 */
 
-/* merge_units: begin ezNetCtlGetStatus */
+/* merge_units: begin func_00353240 */
 int ezNetCtlGetStatus(int *buf)
 {
     if (!D_00492C34) {
@@ -74,7 +74,7 @@ int ezNetCtlGetStatus(int *buf)
     }
     return *buf;
 }
-/* merge_units: end ezNetCtlGetStatus */
+/* merge_units: end func_00353240 */
 
 /* merge_units: begin func_003532F8 */
 extern int func_0010D520(void *, int);

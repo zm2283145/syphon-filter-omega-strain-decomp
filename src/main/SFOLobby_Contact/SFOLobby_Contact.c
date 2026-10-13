@@ -4,7 +4,7 @@
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin SFOLobby_RequestBuddyList */
+/* merge_units: begin func_0044D860 */
 #pragma push /* merge_units */
 #include "SFOLobby.h"
 extern void String_Copy(char*, char*);
@@ -56,7 +56,7 @@ int SFOLobby_RequestBuddyList(SFOLobby* s, int wait)
     return 1;
 }
 #pragma pop /* merge_units */
-/* merge_units: end SFOLobby_RequestBuddyList */
+/* merge_units: end func_0044D860 */
 
 /* merge_units: begin func_0044D9C0 */
 #pragma push /* merge_units */

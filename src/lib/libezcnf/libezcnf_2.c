@@ -4,7 +4,7 @@
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin ezNetCnfGetCombinationList */
+/* merge_units: begin func_0033F688 */
 extern int D_004928EC;
 extern char D_00533080[];
 extern char D_00533040[];
@@ -34,9 +34,9 @@ int ezNetCnfGetCombinationList(char *name, int a, int b)
     func_0010F388("ezNetCnfGetCombinationList returned %d\n", *(int *)res);
     return *(int *)res;
 }
-/* merge_units: end ezNetCnfGetCombinationList */
+/* merge_units: end func_0033F688 */
 
-/* merge_units: begin ezNetCnfGetCombination */
+/* merge_units: begin func_0033F770 */
 typedef struct { char b[0x68]; } E0033F770;
 typedef struct { int count; char pad[0x2C]; E0033F770 e[1]; } T0033F770;
 E0033F770 *ezNetCnfGetCombination(T0033F770 *t, int idx)
@@ -53,4 +53,4 @@ E0033F770 *ezNetCnfGetCombination(T0033F770 *t, int idx)
     }
     return &t->e[idx - 1];
 }
-/* merge_units: end ezNetCnfGetCombination */
+/* merge_units: end func_0033F770 */

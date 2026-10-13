@@ -55,7 +55,7 @@ int func_00325A28(int device)
 }
 /* merge_units: end func_00325A28 */
 
-/* merge_units: begin lgAudStartPlayback */
+/* merge_units: begin func_00325AF0 */
 int lgAudStartPlayback(int device)
 {
     int* buf;
@@ -74,9 +74,9 @@ int lgAudStartPlayback(int device)
     func_0010D180(D_0049147C);
     return 0x80000000;
 }
-/* merge_units: end lgAudStartPlayback */
+/* merge_units: end func_00325AF0 */
 
-/* merge_units: begin lgAudStopPlayback */
+/* merge_units: begin func_00325BB8 */
 int lgAudStopPlayback(int device)
 {
     int* buf;
@@ -95,4 +95,4 @@ int lgAudStopPlayback(int device)
     func_0010D180(D_0049147C);
     return 0x80000000;
 }
-/* merge_units: end lgAudStopPlayback */
+/* merge_units: end func_00325BB8 */

@@ -4,7 +4,7 @@
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin SFOLobby_NetUp */
+/* merge_units: begin func_0044BDE0 */
 #pragma push /* merge_units */
 #include "SFOLobby.h"
 
@@ -76,9 +76,9 @@ int SFOLobby_NetUp(SFOLobby* self, int props)
     }
 }
 #pragma pop /* merge_units */
-/* merge_units: end SFOLobby_NetUp */
+/* merge_units: end func_0044BDE0 */
 
-/* merge_units: begin SFOLobby_NetDown */
+/* merge_units: begin func_0044BFF0 */
 #pragma push /* merge_units */
 extern int func_003531B8(SFOLobby *);
 #if 0 /* merge_units */
@@ -114,9 +114,9 @@ int SFOLobby_NetDown(SFOLobby *a) {
 }
 #undef SFOLobby_SetError /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end SFOLobby_NetDown */
+/* merge_units: end func_0044BFF0 */
 
-/* merge_units: begin SFOLobby_ListNetConfigs */
+/* merge_units: begin func_0044C0E0 */
 #pragma push /* merge_units */
 typedef struct {
     int type;
@@ -224,9 +224,9 @@ int SFOLobby_ListNetConfigs(NetCfg* self, int which)
 #undef SFOLobby_CallUpdateHook /* merge_units */
 #undef SFOLobby_SetError /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end SFOLobby_ListNetConfigs */
+/* merge_units: end func_0044C0E0 */
 
-/* merge_units: begin SFOLobby_LeaveNetworkState */
+/* merge_units: begin func_0044C3C0 */
 #pragma push /* merge_units */
 extern void LobbyArray_Free(LobbyArray* p);
 extern void func_00452FC0(SFOLobby* self, int a);
@@ -244,7 +244,7 @@ void SFOLobby_LeaveNetworkState(SFOLobby* self)
     }
 }
 #pragma pop /* merge_units */
-/* merge_units: end SFOLobby_LeaveNetworkState */
+/* merge_units: end func_0044C3C0 */
 
 /* merge_units: begin func_0044C420 */
 #pragma push /* merge_units */

@@ -44,7 +44,7 @@ extern "C" void func_003EC130(int d0, PS0_003EC130 *arg1) {
 #pragma pop /* merge_units */
 /* merge_units: end func_003EC130 */
 
-/* merge_units: begin SpecFx_Construct */
+/* merge_units: begin func_003EC1D0 */
 #pragma push /* merge_units */
 /*
  * Matched functions (byte-identical with the retail executable).
@@ -73,7 +73,7 @@ SpecFx* SpecFx_Construct(SpecFx* self) {
     return self;
 }
 #pragma pop /* merge_units */
-/* merge_units: end SpecFx_Construct */
+/* merge_units: end func_003EC1D0 */
 
 /* merge_units: begin func_003EC220 */
 #pragma push /* merge_units */

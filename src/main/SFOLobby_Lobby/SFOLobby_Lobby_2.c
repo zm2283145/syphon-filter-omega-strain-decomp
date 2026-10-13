@@ -4,7 +4,7 @@
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin SFOLobby_CacheAccount */
+/* merge_units: begin func_00450880 */
 #pragma push /* merge_units */
 #include "SFOLobby.h"
 extern LobbyAccountEntry* LobbyArray_At(LobbyArray*, int);
@@ -58,7 +58,7 @@ void SFOLobby_CacheAccount(SFOLobby* s, int id, char* name, int ip, unsigned cha
     }
 }
 #pragma pop /* merge_units */
-/* merge_units: end SFOLobby_CacheAccount */
+/* merge_units: end func_00450880 */
 
 /* merge_units: begin func_00450A00 */
 #pragma push /* merge_units */

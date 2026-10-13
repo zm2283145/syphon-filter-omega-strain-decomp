@@ -4,7 +4,7 @@
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin SFOLobby_JoinLobby */
+/* merge_units: begin func_00442840 */
 #pragma push /* merge_units */
 #pragma opt_loop_invariants off
 #pragma opt_common_subs off
@@ -57,9 +57,9 @@ int SFOLobby_JoinLobby(SFOLobby* self, int index) {
     return 1;
 }
 #pragma pop /* merge_units */
-/* merge_units: end SFOLobby_JoinLobby */
+/* merge_units: end func_00442840 */
 
-/* merge_units: begin SFOLobby_AutoJoin */
+/* merge_units: begin func_00442970 */
 #pragma push /* merge_units */
 #pragma cplusplus on
 #pragma opt_loop_invariants off
@@ -128,9 +128,9 @@ extern "C" int SFOLobby_AutoJoin(SFOLobby* self) {
 #undef LobbyArray_At /* merge_units */
 #undef SFOLobby_JoinLobby /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end SFOLobby_AutoJoin */
+/* merge_units: end func_00442970 */
 
-/* merge_units: begin SFOLobby_ConnectUniverse */
+/* merge_units: begin func_00442B50 */
 #pragma push /* merge_units */
 #define NULL 0
 #pragma mpwc_relax on
@@ -178,9 +178,9 @@ block_10:
 }
 #undef LobbyArray_At /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end SFOLobby_ConnectUniverse */
+/* merge_units: end func_00442B50 */
 
-/* merge_units: begin SFOLobby_ResolveHost */
+/* merge_units: begin func_00442C20 */
 #pragma push /* merge_units */
 typedef struct {
     int type;
@@ -227,9 +227,9 @@ int SFOLobby_ResolveHost(SFOLobby* self, char* hostName, char* out) {
     return 1;
 }
 #pragma pop /* merge_units */
-/* merge_units: end SFOLobby_ResolveHost */
+/* merge_units: end func_00442C20 */
 
-/* merge_units: begin SFOLobby_RequestLobbyList */
+/* merge_units: begin func_00442D80 */
 #pragma push /* merge_units */
 #pragma opt_loop_invariants off
 #pragma opt_common_subs off
@@ -260,4 +260,4 @@ int SFOLobby_RequestLobbyList(SFOLobby* self) {
     return self->reply39CStatus >= 0;
 }
 #pragma pop /* merge_units */
-/* merge_units: end SFOLobby_RequestLobbyList */
+/* merge_units: end func_00442D80 */

@@ -4,7 +4,7 @@
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin IdMgr_IsOccupied */
+/* merge_units: begin func_0040C080 */
 #pragma push /* merge_units */
 #include "types.h"
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
@@ -36,7 +36,7 @@ block_6:
     return NULL;
 }
 #pragma pop /* merge_units */
-/* merge_units: end IdMgr_IsOccupied */
+/* merge_units: end func_0040C080 */
 
 /* merge_units: begin func_0040C0E0 */
 #pragma push /* merge_units */

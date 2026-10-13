@@ -4,7 +4,7 @@
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin cAIPickupableAwarenessMsg_v01 */
+/* merge_units: begin func_0026EBE0 */
 #pragma push /* merge_units */
 #pragma cplusplus on
 #include "msg_clone.h"
@@ -26,9 +26,9 @@ MSG_CLONE_BEGIN(cAIPickupableAwarenessMsg_v01, 0x28, "aiMsgs.hh", 0x10A)
     p->vt = D_004DCBD0;
 MSG_CLONE_END
 #pragma pop /* merge_units */
-/* merge_units: end cAIPickupableAwarenessMsg_v01 */
+/* merge_units: end func_0026EBE0 */
 
-/* merge_units: begin Script_cAIUnconsciousMsg_Who */
+/* merge_units: begin func_0026ECF0 */
 #pragma push /* merge_units */
 /*
  * Matched functions (byte-identical with the retail executable).
@@ -277,9 +277,9 @@ int cAIActivatedMsg_v03(void) {
     return D_004FF128;
 }
 #pragma pop /* merge_units */
-/* merge_units: end Script_cAIUnconsciousMsg_Who */
+/* merge_units: end func_0026ECF0 */
 
-/* merge_units: begin cAIWeaponFiredMsg_ctor */
+/* merge_units: begin func_0026F110 */
 #pragma push /* merge_units */
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
@@ -313,4 +313,4 @@ int cAIWeaponFiredMsg_ctor(int arg0, int arg1, int arg2, int arg3) {
 }
 #undef D_004DCD70 /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end cAIWeaponFiredMsg_ctor */
+/* merge_units: end func_0026F110 */

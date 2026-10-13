@@ -41,7 +41,7 @@ void func_0044B970(char* name, char* arg) {
 #pragma pop /* merge_units */
 /* merge_units: end func_0044B970 */
 
-/* merge_units: begin SFOLobby_StartNetwork */
+/* merge_units: begin func_0044BAB0 */
 #pragma push /* merge_units */
 #include "SFOLobby.h"
 
@@ -175,4 +175,4 @@ int SFOLobby_StartNetwork(SFOLobby* self, int id, unsigned char useDnas) {
     return 1;
 }
 #pragma pop /* merge_units */
-/* merge_units: end SFOLobby_StartNetwork */
+/* merge_units: end func_0044BAB0 */

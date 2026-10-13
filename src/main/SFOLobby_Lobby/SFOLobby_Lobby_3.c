@@ -142,7 +142,7 @@ extern "C" int func_00451050(SFOLobby* self, char* name, int id) {
 #pragma pop /* merge_units */
 /* merge_units: end func_00451050 */
 
-/* merge_units: begin SFOLobby_RequestAccountInfo */
+/* merge_units: begin func_00451200 */
 #pragma push /* merge_units */
 extern int D_00497890;              /* reply timeout */
 extern char func_00446DB0[];
@@ -198,4 +198,4 @@ int SFOLobby_RequestAccountInfo(SFOLobby* s, int id)
 #undef String_Copy /* merge_units */
 #undef memset /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end SFOLobby_RequestAccountInfo */
+/* merge_units: end func_00451200 */

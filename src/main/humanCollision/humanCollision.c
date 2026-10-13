@@ -4,7 +4,7 @@
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin HumanColPreset_Copy */
+/* merge_units: begin func_001EB340 */
 #pragma push /* merge_units */
 /*
  * Matched functions (byte-identical with the retail executable).
@@ -37,9 +37,9 @@ Word* func_001EB390(Word* dst, Word* src) {
     return dst;
 }
 #pragma pop /* merge_units */
-/* merge_units: end HumanColPreset_Copy */
+/* merge_units: end func_001EB340 */
 
-/* merge_units: begin HumanCol_Shutdown */
+/* merge_units: begin func_001EB3A0 */
 #pragma push /* merge_units */
 #pragma cplusplus on
 #include "alloc_guard.h"
@@ -99,9 +99,9 @@ extern "C" void HumanCol_Shutdown(void) {
     }
 }
 #pragma pop /* merge_units */
-/* merge_units: end HumanCol_Shutdown */
+/* merge_units: end func_001EB3A0 */
 
-/* merge_units: begin HumanCol_Init */
+/* merge_units: begin func_001EB5C0 */
 #pragma push /* merge_units */
 #pragma cplusplus on
 #pragma mpwc_relax on
@@ -181,4 +181,4 @@ extern "C" void HumanCol_Init(void) {
 #undef D_004F5360 /* merge_units */
 #undef D_004F5368 /* merge_units */
 #pragma pop /* merge_units */
-/* merge_units: end HumanCol_Init */
+/* merge_units: end func_001EB5C0 */

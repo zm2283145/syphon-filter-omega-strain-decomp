@@ -4,7 +4,7 @@
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin Flashlight_Destroy */
+/* merge_units: begin func_0045B990 */
 #pragma push /* merge_units */
 #pragma cplusplus on
 #include "types.h"
@@ -53,9 +53,9 @@ extern "C" char * Flashlight_Destroy(PS0_0045B990 *arg0, long long arg1) {
     return (char *)(arg0);
 }
 #pragma pop /* merge_units */
-/* merge_units: end Flashlight_Destroy */
+/* merge_units: end func_0045B990 */
 
-/* merge_units: begin Flashlight_Construct */
+/* merge_units: begin func_0045BAD0 */
 #pragma push /* merge_units */
 #pragma cplusplus on
 #pragma mpwc_relax on
@@ -96,4 +96,4 @@ extern "C" char * Flashlight_Construct(char * arg0, int arg1) {
     return arg0;
 }
 #pragma pop /* merge_units */
-/* merge_units: end Flashlight_Construct */
+/* merge_units: end func_0045BAD0 */

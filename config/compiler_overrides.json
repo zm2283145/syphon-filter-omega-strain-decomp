@@ -7452,5 +7452,19 @@
   "main/texman/func_00381F30": "cwps2-3.0b38",
   "main/man/func_00390570": "cwps2-3.0b38",
   "main/scriptManager/func_003E2150": "cwps2-3.0b38",
-  "main/guiManager/func_00418E00": "cwps2-3.0b38"
+  "main/guiManager/func_00418E00": "cwps2-3.0b38",
+  "lib/func_002FAED0": "ee-gcc2.96",
+  "main/func_001D1080": "cwps2-3.0b38",
+  "main/func_00294300": "cwps2-3.0b38",
+  "main/func_002973B0": "cwps2-3.0b38",
+  "main/func_00297C10": "cwps2-3.0b38",
+  "main/gobj/func_003CD630": "cwps2-3.0b38",
+  "main/gobj/func_003CD7A0": "cwps2-3.0b38",
+  "main/gobj/func_003CD920": "cwps2-3.0b38",
+  "main/gobj/func_003CDA60": "cwps2-3.0b38",
+  "main/gobj/func_003CDC20": "cwps2-3.0b38",
+  "main/func_00400620": "cwps2-3.0b38",
+  "main/func_004173B0": "cwps2-3.0b38",
+  "main/func_00423500": "cwps2-3.0b38",
+  "main/inventory/func_00471290": "cwps2-3.0b38"
 }

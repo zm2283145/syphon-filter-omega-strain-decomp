@@ -349,7 +349,7 @@ def main():
             link = Path("build") / "src" / (name + ".link.o")
             target_s = Path("asm") / "data" / (name + "." + typ[1:] + ".s")
             target = Path("build") / "target" / (name + ".o")
-            data_objs.append((out, obj, link, vram, None))
+            data_objs.append((out, obj, link, vram, None, target))
             c_units.append((src, out, target_s, target, "cc", 16))
             link_objs.append(link)
             units.append({"name": name, "target_path": str(target).replace("\\", "/"),
@@ -407,7 +407,7 @@ def main():
                 # (obj) and the link object
                 out = Path("build") / "src" / (name + ".raw.o")
                 link = Path("build") / "src" / (name + ".link.o")
-                data_objs.append((out, obj, link, block[name], text_tail))
+                data_objs.append((out, obj, link, block[name], text_tail, target))
             elif text_tail is not None:
                 link = Path("build") / "src" / (name + ".link.o")
                 relinks.append((obj, link, text_tail, None))
@@ -449,7 +449,7 @@ def main():
         "  command = $python tools/compile_aligned.py $objcopy $align $out $in -- $gcc $gccflags",
         "  description = GCC $in",
         "rule dataobj",
-        "  command = $python tools/data_obj.py $ld $objcopy $in $out $start $text",
+        "  command = $python tools/data_obj.py $ld $objcopy $in $out $start $text $target",
         "  description = DATA $in",
         "  restat = 1",
         "rule tailobj",
@@ -499,10 +499,11 @@ def main():
         lines.append(f"build {ninja_path(target)}: {'as_target' if name in carved else 'as'} {ninja_path(target_s)}")
         lines.append("  align = 16")
     hexa = lambda v: "-" if v is None else f"{v:#x}"
-    for raw, base, link, vram, text in data_objs:
-        lines.append(f"build {ninja_path(base)} {ninja_path(link)}: dataobj {ninja_path(raw)}")
+    for raw, base, link, vram, text, target in data_objs:
+        lines.append(f"build {ninja_path(base)} {ninja_path(link)}: dataobj {ninja_path(raw)} | {ninja_path(target)}")
         lines.append(f"  start = {vram:#x}")
         lines.append(f"  text = {hexa(text)}")
+        lines.append(f"  target = {ninja_path(target)}")
     for obj, link, text, data in relinks:
         lines.append(f"build {ninja_path(link)}: tailobj {ninja_path(obj)}")
         lines.append(f"  text = {hexa(text)}")

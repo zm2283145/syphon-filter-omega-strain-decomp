@@ -6,10 +6,10 @@ public:
     VPAD16(a) VPAD4(b) VPAD2(c) VPAD1(d) virtual void s23(void* x, int y);
 };
 extern "C" {
-void* func_00414790(void);
-Mgr2427* func_004147A0(void);
+void* Gui_GetScreenList(void);
+Mgr2427* Gui_GetScreenStack(void);
 void* func_00418A80(void* a, void* b, void* c);
-void func_00131470(void* p, int v);
+void Game_SetPaused(void* p, int v);
 void func_002427F0(Obj2426* s);
 int func_00241AC0(Obj2426* s);
 void func_0036A240(void* p);
@@ -22,16 +22,16 @@ extern char D_004A7248[];
 }
 extern "C" void func_002429F0(Obj2426* s) {
     if (s->b6A8) return;
-    func_00131470(D_004FFB50, 1);
+    Game_SetPaused(D_004FFB50, 1);
     if (s->b6A9) func_002427F0(s);
     if (!func_00241AC0(s)) func_0036A240(D_0055A300);
     {
-        void* x = func_00418A80(func_00414790(), D_004A7260, "GAMEBACK");
-        func_004147A0()->s23(x, -1);
+        void* x = func_00418A80(Gui_GetScreenList(), D_004A7260, "GAMEBACK");
+        Gui_GetScreenStack()->s23(x, -1);
     }
     {
-        void* x = func_00418A80(func_00414790(), D_004A7248, "INGAMENU");
-        func_004147A0()->s23(x, 0);
+        void* x = func_00418A80(Gui_GetScreenList(), D_004A7248, "INGAMENU");
+        Gui_GetScreenStack()->s23(x, 0);
     }
     func_0045CA20(s->snd, 0);
     func_00437950(0);

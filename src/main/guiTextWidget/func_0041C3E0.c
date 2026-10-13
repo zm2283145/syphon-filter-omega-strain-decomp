@@ -36,7 +36,7 @@ extern char D_004BF2D0[];
 void func_0041EFA0(GuiText* self);
 void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
 GuiTextChild* func_003D0940(void* p, int x, int y, int w, int h, int resource, float* color);
-char* func_001692D0(void* s);
+char* String_CStr(void* s);
 void func_003D08B0(GuiTextChild* child, char* text);
 }
 
@@ -75,7 +75,7 @@ extern "C" void func_0041C3E0(GuiText* self)
     }
     Set75(self, self->s75);
     Set76(self, self->s76);
-    func_003D08B0(self->child, func_001692D0(self->text));
+    func_003D08B0(self->child, String_CStr(self->text));
     self->child->value = self->value;
 }
 

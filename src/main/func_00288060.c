@@ -71,8 +71,8 @@ extern "C" signed char D_004FFBA1;
 
 extern "C" Ent288060* func_0041DB80(Self288060* self, int id);
 extern "C" unsigned char func_00288510(void);
-extern "C" Game288060* func_004147A0(void);
-extern "C" void func_00414B30(Game288060* g, int v);
+extern "C" Game288060* Gui_GetScreenStack(void);
+extern "C" void GuiScreen_SetFocus(Game288060* g, int v);
 extern "C" int func_003698B0(void);
 extern "C" float func_001002D0(int t);
 extern "C" void String_Copy(char* dst, const char* src);
@@ -84,8 +84,8 @@ extern "C" void func_00288060(Self288060* self, float dt)
     unsigned char flag = D_0055A830->x59D != 0;
     if (e) {
         unsigned char s = func_00288510();
-        if (!s && func_004147A0()->x20 == e) {
-            func_00414B30(func_004147A0(), e->x24->v17(e, 1));
+        if (!s && Gui_GetScreenStack()->x20 == e) {
+            GuiScreen_SetFocus(Gui_GetScreenStack(), e->x24->v17(e, 1));
         }
         if (s) {
             e->x14 |= 4;
@@ -95,7 +95,7 @@ extern "C" void func_00288060(Self288060* self, float dt)
     }
     D_004FFBB8 = flag;
     if (self->x48) {
-        if (func_004147A0()->x2C->x8 != self) {
+        if (Gui_GetScreenStack()->x2C->x8 != self) {
             self->x4C = func_001002D0(func_003698B0()) / 1000.0f;
         } else {
             float t = func_001002D0(func_003698B0()) / 1000.0f;

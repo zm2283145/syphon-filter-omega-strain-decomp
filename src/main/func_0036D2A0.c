@@ -2,7 +2,7 @@
 typedef struct { int pad0; int count; } H36D2A0;
 typedef struct { char pad[0x148]; H36D2A0* hdr; unsigned char loaded; char pad14D[0xF]; char* names; } S36D2A0;
 extern int String_CompareNoCase(char* a, char* b);
-int func_0036D2A0(S36D2A0* o, char* name)
+int Hog_FindFileNoCase(S36D2A0* o, char* name)
 {
     int i;
     char* s;

@@ -13,10 +13,10 @@ void* func_004294C0(void);
 int func_002CA710(void* ui);
 char* func_0033CE30(S_0029E1A0* self, int a, int b, int c, int d, int e);
 void String_CtorCStr_13B480(Str_0029E1A0* s, const char* c);
-char* func_001692D0(Str_0029E1A0* s);
-int func_002CAE30(void* ui, int a, char* b, char* c, S_0029E1A0* d, int e);
+char* String_CStr(Str_0029E1A0* s);
+int FrontEnd_OpenPopup(void* ui, int a, char* b, char* c, S_0029E1A0* d, int e);
 void func_002C9AF0(void* ui, int a);
-void func_002CAC80(void* ui, int id);
+void FrontEnd_ClosePopup(void* ui, int id);
 void func_002C81D0(void* ui);
 void func_00138B70(Str_0029E1A0* s, int flags);
 void func_0029D120(S_0029E1A0* self);
@@ -45,11 +45,11 @@ extern "C" void func_0029E1A0(S_0029E1A0* self)
             String_CtorCStr_13B480(&a, func_0033CE30(self, 1, 0, 0, 0, 0));
             String_CtorCStr_13B480(&b, func_0033CE30(self, 4, 0, 0, 0, 0));
             {
-                char* tb = func_001692D0(&b);
-                func_002CAE30(D_004FFC04, 2, func_001692D0(&a), tb, self, 0);
+                char* tb = String_CStr(&b);
+                FrontEnd_OpenPopup(D_004FFC04, 2, String_CStr(&a), tb, self, 0);
             }
             func_002C9AF0(D_004FFC04, 0);
-            func_002CAC80(D_004FFC04, self->f48);
+            FrontEnd_ClosePopup(D_004FFC04, self->f48);
             func_002C81D0(D_004FFC04);
             func_00138B70(&b, 0);
             func_00138B70(&a, 0);
@@ -57,7 +57,7 @@ extern "C" void func_0029E1A0(S_0029E1A0* self)
         }
         func_0029D120(self);
         func_002C81D0(D_004FFC04);
-        func_002CAC80(D_004FFC04, self->f48);
+        FrontEnd_ClosePopup(D_004FFC04, self->f48);
         func_002C9AF0(D_004FFC04, 0);
     }
     if (self->f88 == 7) {
@@ -68,14 +68,14 @@ extern "C" void func_0029E1A0(S_0029E1A0* self)
             done = 0;
         } else {
             void* ui = D_004FFC04;
-            int h = func_002CAE30(ui, 0, D_004AABF0, func_0033CE30(self, 0xD, 0, 0, 0, 0), 0, 0);
+            int h = FrontEnd_OpenPopup(ui, 0, D_004AABF0, func_0033CE30(self, 0xD, 0, 0, 0, 0), 0, 0);
             if (self->f120 != -1)
-                func_002CAC80(D_004FFC04, self->f120);
+                FrontEnd_ClosePopup(D_004FFC04, self->f120);
             func_002CA350(D_004FFC04);
             func_00445570(g);
             if (func_004456D0(g))
                 func_004456C0(g);
-            func_002CAC80(D_004FFC04, h);
+            FrontEnd_ClosePopup(D_004FFC04, h);
             done = 1;
         }
         if (done)

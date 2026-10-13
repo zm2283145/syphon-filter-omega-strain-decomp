@@ -5,5 +5,5 @@
 
 DEFINE_RESIZE_ELEMENT(Elem32_00337490, 32)
 #pragma opt_common_subs off
-DEFINE_VECTOR_RESIZE(func_00337490, Elem32_00337490, func_0033AD90, func_0033AA80)
+DEFINE_VECTOR_RESIZE(func_00337490, Elem32_00337490, func_0033AD90, AgentLevelVec_Erase)
 #pragma opt_common_subs reset

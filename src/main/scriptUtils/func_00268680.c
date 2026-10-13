@@ -10,7 +10,7 @@
 extern int Global_RemoveArray(ScriptArray* array);
 extern int ScriptArray_Create(int arg);
 extern int func_00269090(int value);
-extern ScriptArray* func_002690C0(void* obj);
+extern ScriptArray* ScriptArray_Cast(void* obj);
 
 Word* func_00268680(Word* dst, Word* src) {
     dst->value = src->value;
@@ -42,7 +42,7 @@ Word* func_002686D0(Word* dst, Word* src) {
 
 /* Script native: RemoveArray(args[0]). */
 int Script_RemoveArray(ScriptArg* args) {
-    Global_RemoveArray(func_002690C0(args[0].p));
+    Global_RemoveArray(ScriptArray_Cast(args[0].p));
     return 0;
 }
 

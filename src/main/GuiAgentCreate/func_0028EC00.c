@@ -10,7 +10,7 @@
 extern char D_0055DDA0[];
 extern int func_00403310(void* p);
 extern void func_0040F540(void);
-extern GuiManagerState* func_004147A0(void);
+extern GuiManagerState* Gui_GetScreenStack(void);
 extern int func_0041EBF0(void* self);
 extern int func_0041F090(void* self);
 
@@ -25,7 +25,7 @@ GuiManagerState* func_0028EC40(void* self) {
     GuiManagerState* gui;
 
     func_0041EBF0(self);
-    gui = func_004147A0();
+    gui = Gui_GetScreenStack();
     gui->flags &= ~12;
     return gui;
 }

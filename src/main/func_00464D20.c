@@ -21,7 +21,7 @@ int func_0042B1A0(int v);
 int func_002CAB70(void* p);
 int func_0045BD00(void* p);
 void func_00242740(G_464D20* g);
-M_464D20* func_004147A0(void);
+M_464D20* Gui_GetScreenStack(void);
 void func_00465870(O_464D20* o, float dt);
 
 static inline int IsMine_464D20(void)
@@ -89,7 +89,7 @@ void func_00464D20(O_464D20* o, float dt)
             (*(int*)D_00497BF0) = -1;
         }
         {
-            M_464D20* m = func_004147A0();
+            M_464D20* m = Gui_GetScreenStack();
             L_464D20* l = &m->l;
             if (l->n) o->f74 = l->head->obj;
         }

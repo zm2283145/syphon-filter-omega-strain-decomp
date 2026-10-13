@@ -10,7 +10,7 @@ extern void func_00424A90(W2AB*);
 extern void* Mem_Alloc(int, int, char*, int);
 extern char D_004AB9B0[];
 extern char D_00587C40[];
-extern int func_00414790(void);
+extern int Gui_GetScreenList(void);
 extern int func_00418420(int, char*);
 extern C2AB* func_003D0940(void*, int, int, int, int, int, char*);
 extern void* memset(void*, int, int);
@@ -30,7 +30,7 @@ extern "C" void func_002ABD50(W2AB* w) {
     if (c) {
         int x = (int)w->f3c;
         int y = (int)w->f40;
-        c = func_003D0940(c, 0, 0, x, y, func_00418420(func_00414790(), "callout"), D_00587C40);
+        c = func_003D0940(c, 0, 0, x, y, func_00418420(Gui_GetScreenList(), "callout"), D_00587C40);
     }
     w->fa8 = c;
     w->fa8->b12 = 1;

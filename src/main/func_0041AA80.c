@@ -28,7 +28,7 @@ struct Ev_AA80 {
     unsigned char ch;
 };
 struct G_AA80 { char pad[0x52]; unsigned char alt; };
-extern "C" G_AA80* func_004147A0(void);
+extern "C" G_AA80* Gui_GetScreenStack(void);
 extern "C" int func_0041A180(O_AA80* o, bool fwd);
 extern "C" int func_0041A2C0(O_AA80* o, char* text);
 
@@ -37,12 +37,12 @@ static inline bool Is4(Ev_AA80* e, unsigned short t, unsigned short m, unsigned 
 extern "C" int func_0041AA80(O_AA80* self, Ev_AA80* e)
 {
     if (Is3(e, 2, 0, 0)) {
-        if ((func_004147A0()->alt && e->key == 0x2A) || e->key == 0x4C ||
-            (!func_004147A0()->alt && e->key == 8) || e->key == 0x804C) {
+        if ((Gui_GetScreenStack()->alt && e->key == 0x2A) || e->key == 0x4C ||
+            (!Gui_GetScreenStack()->alt && e->key == 8) || e->key == 0x804C) {
             func_0041A180(self, e->key == 0x4C || e->key == 0x804C);
             return 1;
         }
-        if ((func_004147A0()->alt && e->key == 0x28) || (!func_004147A0()->alt && e->key == 0xA)) {
+        if ((Gui_GetScreenStack()->alt && e->key == 0x28) || (!Gui_GetScreenStack()->alt && e->key == 0xA)) {
             self->target->Activate();
             return 1;
         }

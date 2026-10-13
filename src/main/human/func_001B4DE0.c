@@ -19,7 +19,7 @@ static inline void Vt2_1B4DE0(M_1B4DE0* m, char* a, char* b) { if (m) { m->vt = 
 struct Inner_1B4DE0 { M_1B4DE0 m; char pad[0x1C]; M_1B4DE0 n; };
 static inline void InnerDtor_1B4DE0(Inner_1B4DE0* p) { if (p) { Vt2_1B4DE0(&p->n, ((char*)D_004DA820), ((char*)D_004DA810)); Vt2_1B4DE0(&p->m, ((char*)D_004DA800), ((char*)D_004DA810)); } }
 struct O_1B4DE0 { M_1B4DE0 vt; char pad4[0x9C]; M_1B4DE0 mA0; char padA4[0x3E0 - 0xA4]; char arr[0x9E0 - 0x3E0]; Inner_1B4DE0 inner; };
-extern "C" void* func_001B4DE0(O_1B4DE0* self, short deleteFlag)
+extern "C" void* ActorPhys_Dtor(O_1B4DE0* self, short deleteFlag)
 {
     if (self) {
         self->vt.vt = D_004DAD00;

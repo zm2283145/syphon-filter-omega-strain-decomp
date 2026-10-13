@@ -27,7 +27,7 @@ typedef struct Rec12Vec {
     Rec12* data;
 } Rec12Vec;
 
-/* Gui manager singleton (returned by func_004147A0). */
+/* Gui manager singleton (returned by Gui_GetScreenStack). */
 typedef struct GuiManagerState {
     char pad00[0x68];
     unsigned int flags;             /* 0x68 */

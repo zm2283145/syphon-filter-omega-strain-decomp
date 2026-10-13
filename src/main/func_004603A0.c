@@ -2,9 +2,9 @@
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int func_00414790();                                
-int func_004147A0();                                
-int func_00414AC0(int, char * , int);                  
+int Gui_GetScreenList();                                
+int Gui_GetScreenStack();                                
+int GuiStack_SwapScreens(int, char * , int);                  
 int func_00419530(int, int);                          
 int func_0041EFA0(char * );                            
 int func_0041F960(char *);                             
@@ -21,8 +21,8 @@ void func_004603A0(char * arg0) {
     if (F_(arg0, 0x1B4, int) == 0) {
         temp_v0 = func_0041F960(&D_004C2460);
         if (temp_v0 != 0) {
-            func_00419530(func_00414790(), temp_v0);
-            func_00414AC0(func_004147A0(), arg0, temp_v0);
+            func_00419530(Gui_GetScreenList(), temp_v0);
+            GuiStack_SwapScreens(Gui_GetScreenStack(), arg0, temp_v0);
         }
     } else {
         func_0041EFA0(arg0);

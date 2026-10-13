@@ -7,7 +7,7 @@ struct Self4134B0 { char pad[0x1E4]; List4134B0* list; int arc; };
 struct Hog4134B0 { char pad[0xA0]; };
 
 extern "C" {
-char* func_001692D0(Str4134B0* s);
+char* String_CStr(Str4134B0* s);
 int sprintf(char* buf, const char* fmt, ...);
 void func_0036E5D0(Hog4134B0* h);
 void func_0036E220(Hog4134B0* h, int flags);
@@ -35,7 +35,7 @@ extern "C" bool func_004134B0(Self4134B0* self, Str4134B0* out, const char* name
     for (i = self->list->count - 1; i >= 0; i--) {
         char* p;
         func_0036E5D0(&h);
-        sprintf(buf, "%s\\%s.HOG", func_001692D0(&self->list->data[i]), name);
+        sprintf(buf, "%s\\%s.HOG", String_CStr(&self->list->data[i]), name);
         for (p = buf; *p; p++) {
             char c = *p;
             if (c >= 'a' && c <= 'z')

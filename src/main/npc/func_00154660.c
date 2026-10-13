@@ -64,7 +64,7 @@ void NpcRoute_RequestToNode(Brain_00154660* b, int a);
 Act_00154660* Object_LookupById(int* id);
 int Controller_NotifySeen(Act_00154660* a);
 int NpcRoute_RegionAt(void* v, int z);
-void func_0015FA70(Brain_00154660* b, void* v, int z);
+void NpcPath_RequestRoute(Brain_00154660* b, void* v, int z);
 }
 extern "C" unsigned char NpcAi_ScriptControlMode(Self_00154660* self, Ev_00154660* ev)
 {
@@ -95,7 +95,7 @@ extern "C" unsigned char NpcAi_ScriptControlMode(Self_00154660* self, Ev_0015466
                         z = self->p1B0->f5C;
                         z = NpcRoute_RegionAt(a->GetA().Pos(), z);
                     }
-                    func_0015FA70(self->p1B0, a->GetB().Pos(), z);
+                    NpcPath_RequestRoute(self->p1B0, a->GetB().Pos(), z);
                     self->fE8 = -1;
                 }
             }

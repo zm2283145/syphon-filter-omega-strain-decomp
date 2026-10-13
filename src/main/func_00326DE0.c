@@ -17,7 +17,7 @@ int func_00328140(Menu6DE0*, int, char*, int, char*);
 void func_00328310(Menu6DE0*, int);
 void func_0032A280(void*);
 int func_003329B0(int, int, int, int);
-int func_0036D2A0(int, char*, int);
+int Hog_FindFileNoCase(int, char*, int);
 int sprintf(char*, const char*, ...);
 static inline Grp6DE0* G(Menu6DE0* m, int i) { return &m->groups[i]; }
 void func_00326DE0(Menu6DE0* self, int cat, int selIdx, int selVal, int flag)
@@ -41,7 +41,7 @@ void func_00326DE0(Menu6DE0* self, int cat, int selIdx, int selVal, int flag)
         func_00328310(self, Loc_LookupText(buf));
         for (j = 1; ; j++) {
             sprintf(buf, D_004B8758, cat, i + 1, j);
-            if (func_0036D2A0(db, buf, 1) == -1) break;
+            if (Hog_FindFileNoCase(db, buf, 1) == -1) break;
             ok = 1;
             if (!func_003329B0(agent, cat, i, j - 1)) {
                 if (flag) continue;

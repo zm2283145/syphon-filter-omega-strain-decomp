@@ -9,7 +9,7 @@
 extern int GObj_IdentityB(int handle);
 extern int Global_PerformAction_WithObject(int obj, int action, int target, int arg, int flags, float time);
 extern int func_003CB1C0(int handle);
-extern int func_003E67C0(int obj, int action, int target, int arg, float time);
+extern int ObjectAction_SendKind7(int obj, int action, int target, int arg, float time);
 
 /* PerformAction_WithObject(obj, action, target, arg). */
 int Script_PerformAction_WithObject_2(L4ScriptArg* args) {
@@ -30,6 +30,6 @@ int Script_PerformAction_WithObject(L4ScriptArg* args) {
 
     action = args[1].c;
     obj = func_003CB1C0(args[0].i);
-    func_003E67C0(obj, action, GObj_IdentityB(args[2].i), 0, -1.0f);
+    ObjectAction_SendKind7(obj, action, GObj_IdentityB(args[2].i), 0, -1.0f);
     return 0;
 }

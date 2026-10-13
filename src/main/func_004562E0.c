@@ -15,12 +15,12 @@ extern void* D_004FFC04;
 extern unsigned char D_004FFBA0;
 extern unsigned char D_005721C8;
 char* Loc_LookupText(char* key);
-int func_002CAE30(void* ui, int a, char* b, char* c, Self_4562E0* d, int e);
-void* func_00414790(void);
+int FrontEnd_OpenPopup(void* ui, int a, char* b, char* c, Self_4562E0* d, int e);
+void* Gui_GetScreenList(void);
 Pg_4562E0* func_00418A80(void* a, char* b, char* c);
 Pg_4562E0* func_00418980(void* a, char* b);
 Pg_4562E0* func_0041DB80(Pg_4562E0* a, char* b);
-Ui_4562E0* func_004147A0(void);
+Ui_4562E0* Gui_GetScreenStack(void);
 }
 
 extern "C" {
@@ -47,7 +47,7 @@ char D_004C1C28[] = "QuitMessage";
 }
 static inline void ShowButtons(char* a, char* b)
 {
-    Pg_4562E0* bd = func_00418980(func_00414790(), D_004C1B00);
+    Pg_4562E0* bd = func_00418980(Gui_GetScreenList(), D_004C1B00);
     if (bd) {
         Pg_4562E0* x = func_0041DB80(bd, a);
         Pg_4562E0* y = func_0041DB80(bd, b);
@@ -65,35 +65,35 @@ extern "C" void func_004562E0(Self_4562E0* self, int which)
     Pg_4562E0* pg = 0;
     switch (which) {
     case 0:
-        pg = func_00418A80(func_00414790(), D_004C1B48, D_004C1B58);
+        pg = func_00418A80(Gui_GetScreenList(), D_004C1B48, D_004C1B58);
         break;
     case 1:
-        pg = func_00418A80(func_00414790(), D_004C1B68, D_004C1B78);
+        pg = func_00418A80(Gui_GetScreenList(), D_004C1B68, D_004C1B78);
         break;
     case 2:
-        pg = func_00418A80(func_00414790(), D_004C1B90, D_004C1BA0);
+        pg = func_00418A80(Gui_GetScreenList(), D_004C1B90, D_004C1BA0);
         ShowButtons(D_004C1B18, D_004C1B20);
         break;
     case 3:
-        pg = func_00418A80(func_00414790(), D_004C1BB0, D_004C1BC8);
+        pg = func_00418A80(Gui_GetScreenList(), D_004C1BB0, D_004C1BC8);
         break;
     case 4:
         if (D_005721C8) {
-            pg = func_00418A80(func_00414790(), D_004C1BD0, D_004C1BE0);
+            pg = func_00418A80(Gui_GetScreenList(), D_004C1BD0, D_004C1BE0);
         } else {
-            pg = func_00418A80(func_00414790(), D_004C1BD0, D_004C1BE8);
+            pg = func_00418A80(Gui_GetScreenList(), D_004C1BD0, D_004C1BE8);
         }
         ShowButtons(D_004C1B28, D_004C1B38);
         break;
     case 5:
-        pg = func_00418A80(func_00414790(), D_004C1BF8, D_004C1C08);
+        pg = func_00418A80(Gui_GetScreenList(), D_004C1BF8, D_004C1C08);
         break;
     case 6:
         if (D_004FFBA0 != 0x13 && D_004FFBA0 != 0x14) {
             char* t = Loc_LookupText(D_004C1C18);
             char* m = Loc_LookupText(D_004C1C28);
             if (t && m) {
-                func_002CAE30(D_004FFC04, 5, t, m, self, 0);
+                FrontEnd_OpenPopup(D_004FFC04, 5, t, m, self, 0);
             }
         }
         break;
@@ -103,7 +103,7 @@ extern "C" void func_004562E0(Self_4562E0* self, int which)
         pg->f10 = which;
         pg->flags |= 0x80;
         prev = self->f16;
-        func_004147A0()->Hide(self);
-        func_004147A0()->Show(pg, prev);
+        Gui_GetScreenStack()->Hide(self);
+        Gui_GetScreenStack()->Show(pg, prev);
     }
 }

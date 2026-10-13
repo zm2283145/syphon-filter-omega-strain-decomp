@@ -9,7 +9,7 @@ struct VC00414AC0 { virtual int v0(); virtual int v1(); virtual int v2(); virtua
 extern "C" {
 
 }
-extern "C" void func_00414AC0(void **arg0, int arg1, int arg2) {
+extern "C" void GuiStack_SwapScreens(void **arg0, int arg1, int arg2) {
     if (arg1 != 0) {
         ((VC00414AC0 *)(arg0))->v24();
     }

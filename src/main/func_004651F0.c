@@ -23,13 +23,13 @@ extern char D_004C2948[];
 int String_CompareNoCase(char* a, char* b);
 int func_002CAB70(void* p);
 int func_0045BD00(void* p);
-M_4651F0* func_004147A0(void);
+M_4651F0* Gui_GetScreenStack(void);
 }
 static inline bool NotBusy(void) { return !D_004FFC2C->b6AA && !func_0045BD00(D_004FFC2C->f6A4); }
 extern "C" unsigned char func_004651F0(O_4651F0* o)
 {
     unsigned char r;
-    M_4651F0* m = func_004147A0();
+    M_4651F0* m = Gui_GetScreenStack();
     L_4651F0* l = &m->l;
     r = 0;
     if (l->n) {

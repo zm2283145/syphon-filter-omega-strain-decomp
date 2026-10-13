@@ -67,7 +67,7 @@ void func_003F05A0(Obj05A0* o, int arg1)
     int i;
 
     if (Len05A0(&o->name) > 0) {
-        Copy(&s, s.text, func_001692D0(&o->name));
+        Copy(&s, s.text, String_CStr(&o->name));
         Append((char*)&s, D_004BE048);
         func_0036E5D0(&fm);
         func_0036DFB0(&fm, (char*)&s + 1, arg1);

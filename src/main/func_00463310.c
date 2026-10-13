@@ -15,16 +15,16 @@ typedef struct Screen { char pad[0x250]; int unk250; /* +0x250 */ } Screen;
 
 extern char D_004C2780[];
 extern char D_004C2798[];
-extern "C" Manager* func_004147A0(void);
-extern "C" void* func_00414790(void);
+extern "C" Manager* Gui_GetScreenStack(void);
+extern "C" void* Gui_GetScreenList(void);
 extern "C" void* func_00418A80(void* root, const char* a, const char* b);
-extern "C" void func_00414AC0(Manager* mgr, Screen* screen, void* item);
+extern "C" void GuiStack_SwapScreens(Manager* mgr, Screen* screen, void* item);
 
-/* Passes +0x250 to the manager's virtual +0x68, looks up an item by the two names and hands it to func_00414AC0. */
+/* Passes +0x250 to the manager's virtual +0x68, looks up an item by the two names and hands it to GuiStack_SwapScreens. */
 extern "C" void func_00463310(Screen* self)
 {
     void* item;
-    func_004147A0()->Method68(self->unk250);
-    item = func_00418A80(func_00414790(), D_004C2780, D_004C2798);
-    func_00414AC0(func_004147A0(), self, item);
+    Gui_GetScreenStack()->Method68(self->unk250);
+    item = func_00418A80(Gui_GetScreenList(), D_004C2780, D_004C2798);
+    GuiStack_SwapScreens(Gui_GetScreenStack(), self, item);
 }

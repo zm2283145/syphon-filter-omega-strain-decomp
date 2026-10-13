@@ -8,7 +8,7 @@
 #include "scriptUtils_types.h"
 
 extern int func_00269090(int value);
-extern void* func_002690C0(void* obj);
+extern void* ScriptArray_Cast(void* obj);
 
 void func_00269070(void) {
 }
@@ -24,5 +24,5 @@ int func_00269090(int value) {
 }
 
 void* func_002690B0(void* obj) {
-    return func_002690C0(obj);
+    return ScriptArray_Cast(obj);
 }

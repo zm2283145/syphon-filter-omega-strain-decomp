@@ -2,8 +2,8 @@
 typedef struct { unsigned short type; unsigned short b2; char pad4[2]; unsigned short b6; unsigned short btn; } Ev_33DA00;
 typedef struct { char pad[0x20]; void* f20; } M_33DA00;
 typedef struct { char pad[0x88]; void* f88; void* f8C; int f90; char pad94[4]; void* f98; void* f9C; void* fA0; void* fA4; } O_33DA00;
-M_33DA00* func_004147A0(void);
-void func_00414B30(void* mgr, void* w);
+M_33DA00* Gui_GetScreenStack(void);
+void GuiScreen_SetFocus(void* mgr, void* w);
 void func_0041E0F0(void* a, void* b, int kind, int v, int f);
 void func_0033C320(O_33DA00* o, int v);
 void func_0043D820(void* p, int v);
@@ -21,7 +21,7 @@ static inline int Plain2_33DA00(Ev_33DA00* e, int b) { return Btn2_33DA00(e, b) 
 int func_0033DA00(O_33DA00* o, Ev_33DA00* ev)
 {
     if (Plain_33DA00(ev, 0x10) || Plain2_33DA00(ev, 0x8000)) {
-        if (func_004147A0()->f20 == o->f88) {
+        if (Gui_GetScreenStack()->f20 == o->f88) {
             void* t = 0;
             switch (o->f90) {
             case 0: t = o->f9C; break;
@@ -30,8 +30,8 @@ int func_0033DA00(O_33DA00* o, Ev_33DA00* ev)
             case 3: t = o->fA4; break;
             }
             if (t) {
-                func_00414B30(func_004147A0(), t);
-                { void* w = func_004147A0()->f20; func_0041E0F0(w, func_004147A0(), 0x10, 0, 0); }
+                GuiScreen_SetFocus(Gui_GetScreenStack(), t);
+                { void* w = Gui_GetScreenStack()->f20; func_0041E0F0(w, Gui_GetScreenStack(), 0x10, 0, 0); }
                 return 1;
             }
         } else if (!Plain2_33DA00(ev, 0x8000)) {
@@ -51,8 +51,8 @@ int func_0033DA00(O_33DA00* o, Ev_33DA00* ev)
         func_002AEC60(o->f8C);
         return 1;
     }
-    if (Plain2_33DA00(ev, 0x2000) && func_0033E2A0(o, func_004147A0()->f20, 0)) {
-        { void* w = func_004147A0()->f20; func_0041E0F0(w, func_004147A0(), 0x10, 0, 0); }
+    if (Plain2_33DA00(ev, 0x2000) && func_0033E2A0(o, Gui_GetScreenStack()->f20, 0)) {
+        { void* w = Gui_GetScreenStack()->f20; func_0041E0F0(w, Gui_GetScreenStack(), 0x10, 0, 0); }
         return 1;
     }
     return func_0033CEF0(o, ev);

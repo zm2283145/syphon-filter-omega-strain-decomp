@@ -7,10 +7,10 @@
 #include "types.h"
 #include "scriptUtils_types.h"
 
-extern ScriptArray* func_002690C0(void* obj);
+extern ScriptArray* ScriptArray_Cast(void* obj);
 
 /* Script native: Array.Count(). volatile mirrors the original stack temporary. */
 int Script_Array_Count(ScriptArg* args) {
-    volatile int count = func_002690C0(args[0].p)->count;
+    volatile int count = ScriptArray_Cast(args[0].p)->count;
     return count;
 }

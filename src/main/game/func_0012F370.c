@@ -8,7 +8,7 @@
 
 extern signed char* D_005061D0; /* read cursor into a byte stream */
 
-int func_0012F370(void) {
+int NpcAi_IsPlayer(void) {
     return 0;
 }
 

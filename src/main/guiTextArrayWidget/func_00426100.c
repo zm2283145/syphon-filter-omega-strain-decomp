@@ -13,7 +13,7 @@ void Mem_Free(int pool, void* allocation, char* file, int line);
 void func_00138B70(void* string, int flags);
 TextArrayWidgetChild* func_003D0940(TextArrayWidgetChild* child, int x, int y,
                                   int width, int height, int resource, float* color);
-void* func_00414790(void);
+void* Gui_GetScreenList(void);
 int func_00418420(void* manager, const char* name);
 unsigned int func_0036A2F0(int resource);
 void func_00424820(guiTextArrayWidget* self, unsigned int height);
@@ -70,7 +70,7 @@ extern "C" void func_004261D0(guiTextArrayWidget* self)
 extern "C" void func_004262D0(guiTextArrayWidget* self)
 {
     func_00424BC0(self);
-    self->count = func_00418420(func_00414790(), "callout");
+    self->count = func_00418420(Gui_GetScreenList(), "callout");
     if (self->count) {
         func_00424820(self, func_0036A2F0(self->count) + 4);
         if (self->unk90)

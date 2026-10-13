@@ -40,13 +40,13 @@ extern char g_NpcRouteMgr[];
 int* Event_GetType(Ev_S* ev);
 void* Service_Lookup(void* a, void* b);
 int NpcRoute_IsHeadPending(void* svc, int id);
-void func_0015FA70(Route_S* r, Target_S* t, int node);
+void NpcPath_RequestRoute(Route_S* r, Target_S* t, int node);
 void NpcAi_ApproachSearch(Self_S* self);
 void NpcAi_RequestMode(void* brain, int mode, int arg);
 void NpcAi_SetMovementState(Self_S* self, int a, int b);
-Obj_S* func_0014EE90(Self_S* self);
-void func_0014F2E0(Self_S* self, int a, int b, int c);
-void func_0014EF80(Self_S* self, int node, int a, int b, float t);
+Obj_S* NpcLook_FindFacingObject(Self_S* self);
+void NpcLook_Begin(Self_S* self, int a, int b, int c);
+void NpcLook_AddNodePoints(Self_S* self, int node, int a, int b, float t);
 }
 
 static inline bool Idle(Self_S* self) { return !self->b166; }
@@ -75,7 +75,7 @@ extern "C" unsigned char NpcAi_ModeSearch(Self_S* self, Ev_S* ev)
                         if (self->route->bits60.b3) {
                             Obj_S* o;
                             self->facing = 0;
-                            o = func_0014EE90(self);
+                            o = NpcLook_FindFacingObject(self);
                             if (o && o->f4C == D_004EA770)
                                 self->facing = o;
                             NpcAi_RequestMode(self->brain, 0, 0);
@@ -114,7 +114,7 @@ extern "C" unsigned char NpcAi_ModeSearch(Self_S* self, Ev_S* ev)
                         if (self->b158) {
                             void* svc = Service_Lookup(D_004FFB50, g_NpcRouteMgr);
                             if (node >= 0 && !NpcRoute_IsHeadPending(svc, self->f30))
-                                func_0015FA70(self->route, t, node);
+                                NpcPath_RequestRoute(self->route, t, node);
                         }
                     } else {
                         NpcAi_ApproachSearch(self);
@@ -142,8 +142,8 @@ extern "C" unsigned char NpcAi_ModeSearch(Self_S* self, Ev_S* ev)
         if (k == 6) {
             self->fE8 = 1;
             self->fEC = 2;
-            func_0014F2E0(self, 1, 1, 20);
-            func_0014EF80(self, self->route->f5C, -1, -1, 3.0f);
+            NpcLook_Begin(self, 1, 1, 20);
+            NpcLook_AddNodePoints(self, self->route->f5C, -1, -1, 3.0f);
         } else if (k == 5) {
             if (self->fEC == 1) {
                 int n = self->route->f4C;
@@ -151,8 +151,8 @@ extern "C" unsigned char NpcAi_ModeSearch(Self_S* self, Ev_S* ev)
                     self->fE8 = 1;
                     self->fEC = 2;
                     self->LookFor(10.0f, 10);
-                    func_0014F2E0(self, 1, 1, 20);
-                    func_0014EF80(self, self->route->f5C, n, -1, 2.0f);
+                    NpcLook_Begin(self, 1, 1, 20);
+                    NpcLook_AddNodePoints(self, self->route->f5C, n, -1, 2.0f);
                 } else {
                     self->fEC = 0;
                 }

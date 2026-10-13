@@ -8,20 +8,20 @@ public:
     char s4[0xC];
 };
 extern "C" {
-void* func_00414790(void);
-void* func_004147A0(void);
+void* Gui_GetScreenList(void);
+void* Gui_GetScreenStack(void);
 int func_00418A80(void* mgr, char* a, char* b);
-char* func_001692D0(void* str);
+char* String_CStr(void* str);
 void func_00354E40(int snd, int a, char* s, int b, int c, int d, int e);
-void func_00414AC0(void* mgr, void* self, int snd);
+void GuiStack_SwapScreens(void* mgr, void* self, int snd);
 void func_003569F0(S3569F0* self, char* name, int b, int c, int d, int e);
 }
 void func_003569F0(S3569F0* self, char* name, int b, int c, int d, int e)
 {
-    int s = func_00418A80(func_00414790(), "GuiPersonnelMenu", name);
+    int s = func_00418A80(Gui_GetScreenList(), "GuiPersonnelMenu", name);
     if (s) {
-        char* str = func_001692D0(self->s4);
+        char* str = String_CStr(self->s4);
         func_00354E40(s, self->f54(), str, b, c, d, e);
-        func_00414AC0(func_004147A0(), self, s);
+        GuiStack_SwapScreens(Gui_GetScreenStack(), self, s);
     }
 }

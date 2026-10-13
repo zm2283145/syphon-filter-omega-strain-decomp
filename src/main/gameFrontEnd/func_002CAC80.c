@@ -46,22 +46,22 @@ struct SelfCAC80 {
 };
 
 extern "C" {
-Mgr* func_004147A0(void);
+Mgr* Gui_GetScreenStack(void);
 Node* func_002CAC70(void* p);
 Node* func_002CAC60(void* p);
 void func_002CAC50(Node** it, Node* n);
 void func_002CE070(void* ret, void* list, Node** it);
-int func_001692D0(void* p);
+int String_CStr(void* p);
 void func_002A7E90(Obj258* o, int a, int b, int c, int d, int e);
 }
 
-extern "C" bool func_002CAC80(SelfCAC80* self, int id)
+extern "C" bool FrontEnd_ClosePopup(SelfCAC80* self, int id)
 {
     Obj258* o = self->obj;
     if (!o)
         return 0;
     if (!self->list) {
-        func_004147A0()->Release(o);
+        Gui_GetScreenStack()->Release(o);
         return 0;
     }
     {
@@ -84,13 +84,13 @@ extern "C" bool func_002CAC80(SelfCAC80* self, int id)
         if (self->list) {
             if (first) {
                 Ent* e = &self->head->e;
-                int c = func_001692D0(e->s14);
-                func_002A7E90(self->obj, e->a4, func_001692D0(e->s8), c, e->a20, e->a24);
+                int c = String_CStr(e->s14);
+                func_002A7E90(self->obj, e->a4, String_CStr(e->s8), c, e->a20, e->a24);
                 self->obj->id = e->id;
             }
         } else {
             self->obj->id = -1;
-            func_004147A0()->Release(self->obj);
+            Gui_GetScreenStack()->Release(self->obj);
         }
         return found;
     }

@@ -19,12 +19,12 @@ typedef struct { char pad[0x25C]; int f25C; } G_34D2D0;
 extern "C" {
 extern G_34D2D0* D_004FFC04;
 char D_004BA818[] = "GuiSlideShow"; void func_0034D770(O_34D2D0* o, int k);
-M_34D2D0* func_004147A0(void);
-void* func_00414790(void);
+M_34D2D0* Gui_GetScreenStack(void);
+void* Gui_GetScreenList(void);
 void func_0041E0F0(void* a, void* b, int kind, int v, int f);
 void* func_00418A80(void* mgr, char* a, char* b);
-void func_00414AC0(void* mgr, void* o, void* w);
-char* func_001692D0(void* s);
+void GuiStack_SwapScreens(void* mgr, void* o, void* w);
+char* String_CStr(void* s);
 void func_00327C70(void* w, int a, char* s, int b);
 void func_00328630(void* w);
 int func_00328310(void* w, int v);
@@ -49,17 +49,17 @@ int func_0034D2D0(O_34D2D0* o, Ev_34D2D0* ev)
         case 0x4000: func_0034D770(o, 3); return 1;
         }
     }
-    if (Plain2_34D2D0(ev, 0x40) && func_004147A0()->f20->f10 != -1) {
-        int idx = func_004147A0()->f20->f10;
+    if (Plain2_34D2D0(ev, 0x40) && Gui_GetScreenStack()->f20->f10 != -1) {
+        int idx = Gui_GetScreenStack()->f20->f10;
         void* w;
         E_34D2D0** ep = &o->ents;
         if (((E_34D2D0*)((char*)o->ents + idx * 20))->b8) {
-            func_0041E0F0(o, func_004147A0(), 0x10, 1, 0);
-            w = func_00418A80(func_00414790(), D_004BA818, "ZEUSHELL");
+            func_0041E0F0(o, Gui_GetScreenStack(), 0x10, 1, 0);
+            w = func_00418A80(Gui_GetScreenList(), D_004BA818, "ZEUSHELL");
             if (w) {
                 char b0[16];
                 char b1[16];
-                char* s = func_001692D0(o->s4);
+                char* s = String_CStr(o->s4);
                 int r;
                 func_00327C70(w, o->v19(), s, idx);
                 func_00328630(w);
@@ -68,10 +68,10 @@ int func_0034D2D0(O_34D2D0* o, Ev_34D2D0* ev)
                 if (idx % 4 == 2) idx--;
                 sprintf(b1, "0_%d_%d", o->f64, idx + 1);
                 func_00328140(w, r, b0, D_004FFC04->f25C, b1);
-                func_00414AC0(func_004147A0(), o, w);
+                GuiStack_SwapScreens(Gui_GetScreenStack(), o, w);
             }
         } else {
-            func_0041E0F0(o, func_004147A0(), 0x10, 4, 0);
+            func_0041E0F0(o, Gui_GetScreenStack(), 0x10, 4, 0);
         }
         return 1;
     }

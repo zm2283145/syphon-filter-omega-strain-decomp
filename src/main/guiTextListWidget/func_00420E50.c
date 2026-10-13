@@ -1,7 +1,7 @@
 #include "guiTextListWidget_types.h"
 
 extern void func_003D0810(TextRenderChild* child, const TextRenderStyle* style);
-extern const char* func_001692D0(const void* string);
+extern const char* String_CStr(const void* string);
 extern void func_003D08B0(TextRenderChild* child, const char* text);
 extern void func_003CFAB0(TextRenderChild* child);
 extern void func_00423600(TextRenderWidget* self, void* context, unsigned int index,
@@ -40,7 +40,7 @@ void func_00420E50(TextRenderWidget* self, void* context, unsigned int index,
                          &self->styles[(unsigned char)entry_at(self, index)->unk10]);
         set_position(self->child, rect->x, rect->y);
         set_size(self->child, rect->width, rect->height);
-        func_003D08B0(self->child, func_001692D0(entry_at(self, index)));
+        func_003D08B0(self->child, String_CStr(entry_at(self, index)));
         func_003CFAB0(self->child);
     }
     func_00423600(self, context, index, rect);

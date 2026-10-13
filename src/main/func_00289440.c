@@ -18,8 +18,8 @@ extern Mgr_00289440* D_004FFC04;
 extern char D_004A9730[];
 void* func_004294C0(void);
 char* func_0033CE30(S_00289440* self, int a, int b, int c, int d, int e);
-int func_002CAE30(void* ui, int a, char* b, char* c, S_00289440* d, int e);
-char* func_001692D0(void* s);
+int FrontEnd_OpenPopup(void* ui, int a, char* b, char* c, S_00289440* d, int e);
+char* String_CStr(void* s);
 int func_00445A40(void* g, char* a, char* b);
 int strcmp(const char* a, const char* b);
 void String_Copy(char* d, const char* s);
@@ -31,7 +31,7 @@ void func_0013D680(Str_00289440* d, Str_00289440* s);
 void func_00138B70(Str_00289440* s, int flags);
 int func_00452FF0(void* g, int a);
 int func_002CA070(void* ui);
-void func_002CAC80(void* ui, int id);
+void FrontEnd_ClosePopup(void* ui, int id);
 }
 static inline int StrNe_00289440(const char* a, const char* b) { return strcmp(a, b); }
 static inline void Assign_00289440(S_00289440* self, Str_00289440* d, int id)
@@ -50,9 +50,9 @@ extern "C" void func_00289440(S_00289440* self)
         return;
     {
         void* ui = D_004FFC04;
-        self->fA8 = func_002CAE30(ui, 0, D_004A9730, func_0033CE30(self, 0x1B, 0, 0, 0, 0), 0, 0);
-        pw = func_001692D0(self->p94->s48);
-        ok = func_00445A40(g, func_001692D0(self->p8C->s48), pw);
+        self->fA8 = FrontEnd_OpenPopup(ui, 0, D_004A9730, func_0033CE30(self, 0x1B, 0, 0, 0, 0), 0, 0);
+        pw = String_CStr(self->p94->s48);
+        ok = func_00445A40(g, String_CStr(self->p8C->s48), pw);
     }
     if (ok) {
         unsigned char changed;
@@ -61,13 +61,13 @@ extern "C" void func_00289440(S_00289440* self)
         self->bAC = 0;
         changed = 0;
         cur = self->p9C->name;
-        if (StrNe_00289440(func_001692D0(self->p94->s48), cur)) {
-            String_Copy(self->p9C->name, func_001692D0(self->p94->s48));
+        if (StrNe_00289440(String_CStr(self->p94->s48), cur)) {
+            String_Copy(self->p9C->name, String_CStr(self->p94->s48));
             changed = 1;
         }
-        n = func_001692D0(self->p8C->s48);
+        n = String_CStr(self->p8C->s48);
         if (strcmp(n, func_00336170(self->p9C))) {
-            func_00441C20(self, func_001692D0(self->p8C->s48));
+            func_00441C20(self, String_CStr(self->p8C->s48));
         } else {
             if (D_004FFC04->b265)
                 changed = 1;
@@ -117,10 +117,10 @@ extern "C" void func_00289440(S_00289440* self)
         }
         cb = kind == 4 ? 0x1F : -1;
         {
-            pw = func_001692D0(&b);
-            func_002CAE30(D_004FFC04, kind, func_001692D0(&a), pw, self, cb);
+            pw = String_CStr(&b);
+            FrontEnd_OpenPopup(D_004FFC04, kind, String_CStr(&a), pw, self, cb);
         }
-        func_002CAC80(D_004FFC04, self->fA8);
+        FrontEnd_ClosePopup(D_004FFC04, self->fA8);
         func_00138B70(&b, 0);
         func_00138B70(&a, 0);
         D_004FFC04->b264 = ok;

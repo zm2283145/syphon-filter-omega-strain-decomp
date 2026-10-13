@@ -41,7 +41,7 @@ Game_002A1780* func_004294C0(void);
 void func_004426B0(Game_002A1780* g);
 unsigned char func_004518F0(Game_002A1780* g, void* cb, void* a, void* b, void* c);
 char* func_0033CE30(Self_002A1780* self, int a, int b, int c, int d, int e);
-int func_002CAE30(void* ui, int a, char* b, char* c, Self_002A1780* d, int e);
+int FrontEnd_OpenPopup(void* ui, int a, char* b, char* c, Self_002A1780* d, int e);
 }
 
 static inline Obj_002A1780* AsA(Obj_002A1780* obj) { return (obj && obj->IsA(D_004A7520)) ? obj : 0; }
@@ -81,7 +81,7 @@ extern "C" void func_002A1780(Self_002A1780* self)
                 if (!self->bF8) {
                     asm { .set reorder }
                     char* ui = D_004FFC04;
-                    func_002CAE30(ui, 2, D_004AAFF0, func_0033CE30(self, 0x5A, 0, 0, 0, 0), self, 0xB);
+                    FrontEnd_OpenPopup(ui, 2, D_004AAFF0, func_0033CE30(self, 0x5A, 0, 0, 0, 0), self, 0xB);
                 }
             }
         }

@@ -11,11 +11,11 @@ extern char* D_004FFC2C;
 extern void* GObj_IdentityB(void* obj);
 extern int Global_ClearCallout(char* obj);
 extern int Global_ClearCallout_2(CalloutOwner* obj);
-extern CalloutOwner* func_0014A690(void* obj);
+extern CalloutOwner* NpcScript_GetReceiver(void* obj);
 extern int func_00242B40(char* a0, char* key, int a2, int a3, int a4);
 
 int Script_ClearCallout_2(ScriptArg* args) {
-    Global_ClearCallout_2(func_0014A690(args[0].p));
+    Global_ClearCallout_2(NpcScript_GetReceiver(args[0].p));
     return 0;
 }
 

@@ -14,7 +14,7 @@ typedef struct {
 } S_FFD0;
 int NpcRoute_Step(S_FFD0* self, int i);
 void NpcPath_HoldNode(S_FFD0* self, int id);
-void func_0015FFD0(S_FFD0* self, int id)
+void NpcPath_HoldAtRouteNode(S_FFD0* self, int id)
 {
     if (!self->flag && id != self->cur && id != self->other) {
         T_FFD0* t = self->t;

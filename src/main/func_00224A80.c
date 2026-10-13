@@ -6,11 +6,11 @@
 
 #include "types.h"
 
-void func_00224A80(Iter* out, PtrVec* v) {
+void LosRegionArray_Begin(Iter* out, PtrVec* v) {
     out->p = v->data;
 }
 
-void func_00224A90(Iter* out, PtrVec* v) {
+void LosRegionArray_End(Iter* out, PtrVec* v) {
     out->p = v->data + v->count;
 }
 

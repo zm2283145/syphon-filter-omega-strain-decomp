@@ -100,7 +100,7 @@ typedef struct GuiItem {
     int unk48;                      /* 0x48: -2 after construction */
 } GuiItem;
 
-/* Manager singleton returned by func_004147A0. */
+/* Manager singleton returned by Gui_GetScreenStack. */
 typedef struct GuiManager {
     char pad00[0x68];
     unsigned int flags;             /* 0x68 */

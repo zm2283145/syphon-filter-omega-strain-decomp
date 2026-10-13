@@ -9,13 +9,13 @@
 
 extern char D_004DD460[];   /* GuiSaveAgentWidget vtable */
 extern char D_004E1220[];   /* GuiItem vtable */
-extern int func_00292E80(GuiSaveAgentWidget* self);
+extern int AgentOpen_BuildSlotList(GuiSaveAgentWidget* self);
 extern int func_0041EFA0(GuiWidget* self);
 extern void GuiWidget_ctor(GuiWidget* self);
 
 /* GuiSaveAgentWidget vtable slot 5: own update, then the base widget's. */
 int func_002936E0(GuiSaveAgentWidget* self) {
-    func_00292E80(self);
+    AgentOpen_BuildSlotList(self);
     return func_0041EFA0(&self->base.base);
 }
 

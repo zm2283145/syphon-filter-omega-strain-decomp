@@ -13,13 +13,13 @@ extern char* D_005064B8;
 void func_0012EE30(void* p);
 void* func_004294C0(void);
 char* func_0033CE30(void* self, int a, int b, int c, int d, int e);
-int func_002CAE30(void* ui, int a, char* b, char* c, void* d, int e);
+int FrontEnd_OpenPopup(void* ui, int a, char* b, char* c, void* d, int e);
 void func_001698C0(void);
 void func_00165BC0(void);
 unsigned char func_0044E960(void* g, int a, int b, int c);
 unsigned char func_00452FF0(void* g, int a);
 void func_002A0E80(void* self, int builtin);
-void func_002CAC80(void* ui, int id);
+void FrontEnd_ClosePopup(void* ui, int id);
 void func_002CC260(int a, int b);
 void func_004536B0(void* g);
 void func_002A0DC0(void* self);
@@ -34,7 +34,7 @@ extern "C" void func_002A0F60(S_002A0F60* self)
         if (g) {
             Ui_002A0F60* ui = D_004FFC04;
             int k = ui->f248;
-            int h = func_002CAE30(ui, 0, D_004AAFF0, func_0033CE30(self, 0x16, 0, 0, 0, 0), 0, 0);
+            int h = FrontEnd_OpenPopup(ui, 0, D_004AAFF0, func_0033CE30(self, 0x16, 0, 0, 0, 0), 0, 0);
             int res;
             func_001698C0();
             func_00165BC0();
@@ -44,7 +44,7 @@ extern "C" void func_002A0F60(S_002A0F60* self)
             res = func_0044E960(g, k, self->pF4->f40, self->pF4->b45);
             if (res == 0 && func_00452FF0(g, 0) == 0x31) {
                 func_002A0E80(self, 1);
-                func_002CAC80(D_004FFC04, h);
+                FrontEnd_ClosePopup(D_004FFC04, h);
                 return;
             }
             while (Nz_002A0F60(D_005064A8) ^ 1) {
@@ -55,11 +55,11 @@ extern "C" void func_002A0F60(S_002A0F60* self)
                 bool r = Nz_002A0F60(D_005064B0);
                 if (r == 1 && (unsigned char)res == 1) {
                     func_002A0DC0(self);
-                    func_002CAC80(D_004FFC04, h);
+                    FrontEnd_ClosePopup(D_004FFC04, h);
                     return;
                 }
                 func_002A0E80(self, r == 1);
-                func_002CAC80(D_004FFC04, h);
+                FrontEnd_ClosePopup(D_004FFC04, h);
             }
         }
     }

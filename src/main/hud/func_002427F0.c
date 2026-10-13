@@ -6,15 +6,15 @@ public:
     VPAD16(a) VPAD4(b) VPAD2(c) VPAD1(d) virtual void s23(void* x, int y); virtual void s24(void* x);
 };
 extern "C" {
-void* func_00414790(void);
-Mgr2427* func_004147A0(void);
+void* Gui_GetScreenList(void);
+Mgr2427* Gui_GetScreenStack(void);
 void* func_00418980(void* a, void* b);
 void* func_00418A80(void* a, void* b, void* c);
 extern char D_004A7240[];
 }extern "C" void func_002427F0(Obj2426* s) {
     if (s->b6A9) {
-        void* x = func_00418980(func_00414790(), "GuiMapScreen");
-        if (x) func_004147A0()->s24(x);
+        void* x = func_00418980(Gui_GetScreenList(), "GuiMapScreen");
+        if (x) Gui_GetScreenStack()->s24(x);
         s->b6A9 = 0;
     }
 }

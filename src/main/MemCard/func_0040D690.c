@@ -2,11 +2,11 @@
 typedef struct { char pad[0x1C]; char item[0x1C]; } ED690;
 typedef struct { ED690 e[(0x560) / 0x38]; char pad[0x560 - (0x560 / 0x38) * 0x38]; int count; } PD690;
 typedef struct { PD690* p; } OD690;
-extern int func_0040E370(void* key, void* item);
+extern int MemCardWrap_MatchName(void* key, void* item);
 static inline int d690find(PD690* p, void* key) {
     int i;
     for (i = 0; i < p->count; i++) {
-        if (!((func_0040E370(key, p->e[i].item) != 0) ^ 1))
+        if (!((MemCardWrap_MatchName(key, p->e[i].item) != 0) ^ 1))
             return i;
     }
     return -1;

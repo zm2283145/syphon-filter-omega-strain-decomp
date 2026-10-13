@@ -5,7 +5,7 @@ struct Ctl_61F0 { VPAD16(a) VPAD2(b) VPAD1(c) virtual unsigned char IsPlayer(); 
 struct Hum_61F0 { char pad[0xC]; unsigned int flags; char pad10[0x48]; Ctl_61F0* ctl; };
 extern "C" {
 void* Agent_GetSelected(void*, int);
-int func_00332F90(void*, int);
+int AgentData_HasUnlock(void*, int);
 extern char D_004FFB50[];
 extern float D_0048A2D0;
 extern unsigned char D_005721C8;
@@ -22,7 +22,7 @@ extern "C" int WeaponInv_ClipsForActor(Hum_61F0* h, int n)
     int r = n;
     if (IsPlayer_61F0(h)) {
         int id = LocalId_61F0(h); void* ag = IsPlayerB_61F0(h) ? Agent_GetSelected(D_004FFB50, id) : 0;
-        if (func_00332F90(ag, 5)) {
+        if (AgentData_HasUnlock(ag, 5)) {
             r = (int)(n * D_0048A2D0);
             if (r == n) r++;
         }

@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-void* func_001B2830(char* self) {
+void* VecCurve_GetPrevious(char* self) {
     return self + 16;
 }
 

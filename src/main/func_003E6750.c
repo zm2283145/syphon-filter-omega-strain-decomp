@@ -6,9 +6,9 @@
 
 #include "types.h"
 
-extern int func_003E67C0(int obj, int action, int target, int arg, float time);
+extern int ObjectAction_SendKind7(int obj, int action, int target, int arg, float time);
 
 /* PerformAction without a target object. */
 int Global_PerformAction(int obj, int action) {
-    return func_003E67C0(obj, action, 0, 0, -1.0f);
+    return ObjectAction_SendKind7(obj, action, 0, 0, -1.0f);
 }

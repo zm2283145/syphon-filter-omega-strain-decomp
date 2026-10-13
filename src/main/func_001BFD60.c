@@ -9,8 +9,8 @@ extern void func_001BFEE0(It_1BFD60* out, Str_1BFD60* s);
 extern int func_001BFE90(It_1BFD60* a, It_1BFD60* b);
 extern char* func_001BFED0(It_1BFD60* a);
 extern void func_001BFEB0(It_1BFD60* a);
-extern char* func_001692D0(Str_1BFD60* s);
-extern void func_001BFF40(void* mgr, char* name);
+extern char* String_CStr(Str_1BFD60* s);
+extern void SkaRegistry_LoadAnimation(void* mgr, char* name);
 extern void* D_004FFBD8;
 static inline void Ctor_1BFD60(Str_1BFD60* s) { s->word = 0; s->length = 0; s->data = 0; }
 
@@ -38,7 +38,7 @@ void Global_LoadAnimation(char* name)
         func_0013D680(&s, &t2);
         func_00138B70(&t2, 0);
     }
-    func_001BFF40(D_004FFBD8, func_001692D0(&s));
+    SkaRegistry_LoadAnimation(D_004FFBD8, String_CStr(&s));
     func_00138B70(&s, 0);
 }
 

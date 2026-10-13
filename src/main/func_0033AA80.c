@@ -1,7 +1,7 @@
 #include "types.h"
 typedef struct { int a, b, c, d, e, f, g, h; } E_0033AA80;
 typedef struct { int cap; int count; E_0033AA80* data; } V_0033AA80;
-E_0033AA80* func_0033AA80(V_0033AA80* v, E_0033AA80* first, E_0033AA80* last)
+E_0033AA80* AgentLevelVec_Erase(V_0033AA80* v, E_0033AA80* first, E_0033AA80* last)
 {
     E_0033AA80* end;
     E_0033AA80* s;

@@ -25,7 +25,7 @@ static inline AnimEvent* AnimEvent_Init_18D1A0(AnimEvent* self)
 #pragma opt_rotateloops off
 #pragma opt_strength_reduction off
 #pragma opt_propagation off
-void func_0018D1A0(O_18D1A0* o)
+void Actor_FlashbangHide(O_18D1A0* o)
 {
     int st;
     if (o->target == 0) return;

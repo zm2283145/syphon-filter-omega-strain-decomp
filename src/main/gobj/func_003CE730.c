@@ -5,7 +5,7 @@
 #include "gobj_types.h"
 
 /* Builds a three-word record from one word of a and two words of b. */
-Rel* func_003CE730(Rel* r, int* a, int* b) {
+Rel* FrameTreeEntry_Construct(Rel* r, int* a, int* b) {
     r->a = a[0];
     r->b = b[0];
     r->c = b[1];

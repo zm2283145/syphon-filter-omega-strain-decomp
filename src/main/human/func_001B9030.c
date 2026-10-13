@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-float func_001B9030(void) {
+float AnimChannel_DirectValueZero(void) {
     return 0.0f;
 }
 

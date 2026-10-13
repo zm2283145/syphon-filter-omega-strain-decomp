@@ -32,18 +32,18 @@ extern unsigned char D_005723F8;
 extern unsigned char D_00572400;
 extern char D_004FFB50[];
 void func_002A3A10(S_002A2170* self);
-char* func_001692D0(void* s);
+char* String_CStr(void* s);
 int strcmp(const char* a, const char* b);
-void func_0036A0F0(void* p);
+void Pad_Reset(void* p);
 void func_00429B30(void);
-void* func_004147A0(void);
-void func_00414AC0(void* ui, S_002A2170* self, void* pg);
+void* Gui_GetScreenStack(void);
+void GuiStack_SwapScreens(void* ui, S_002A2170* self, void* pg);
 G_002A2170* func_004294C0(void);
 char* Loc_LookupText(char* key);
 void func_0041BEB0(void* w, char* s, int a);
-void* func_00414790(void);
+void* Gui_GetScreenList(void);
 void* func_00418A80(void* a, char* b, char* c);
-void func_0012FA60(void* a, int b);
+void Game_EndLevel(void* a, int b);
 int func_0041EF10(S_002A2170* self, W_002A2170* w, int msg, int sub, char* text);
 }
 extern "C" int func_002A2170(S_002A2170* self, W_002A2170* w, int msg, int sub, char* text)
@@ -52,7 +52,7 @@ extern "C" int func_002A2170(S_002A2170* self, W_002A2170* w, int msg, int sub, 
     func_002A3A10(self);
     m = msg;
     if (m == 2) {
-        char* n = func_001692D0(w->name);
+        char* n = String_CStr(w->name);
         if (!strcmp(n, D_004AB0B0)) {
             if (D_005721C8) {
                 int ok;
@@ -65,9 +65,9 @@ extern "C" int func_002A2170(S_002A2170* self, W_002A2170* w, int msg, int sub, 
                     if (D_004FFC0C->p30->GetState() == 3) {
                         if (self->fC0 == 2) {
                             D_004FFC29 = 0;
-                            func_0036A0F0(D_0055A300);
+                            Pad_Reset(D_0055A300);
                             func_00429B30();
-                            func_00414AC0(func_004147A0(), self, 0);
+                            GuiStack_SwapScreens(Gui_GetScreenStack(), self, 0);
                             D_004FFC0C->p30->SetState(4);
                         }
                     } else if (self->fC0 > 0) {
@@ -83,8 +83,8 @@ extern "C" int func_002A2170(S_002A2170* self, W_002A2170* w, int msg, int sub, 
                     }
                 } else if (D_00572400) {
                     D_004FFC29 = 0;
-                    func_0036A0F0(D_0055A300);
-                    func_00414AC0(func_004147A0(), self, 0);
+                    Pad_Reset(D_0055A300);
+                    GuiStack_SwapScreens(Gui_GetScreenStack(), self, 0);
                     D_004FFC0C->p30->SetState(4);
                 } else if (D_004FFC0C->p30->GetState() == 1) {
                     char* t;
@@ -101,21 +101,21 @@ extern "C" int func_002A2170(S_002A2170* self, W_002A2170* w, int msg, int sub, 
                 }
             } else {
                 D_004FFC29 = 0;
-                func_0036A0F0(D_0055A300);
-                func_00414AC0(func_004147A0(), self, 0);
+                Pad_Reset(D_0055A300);
+                GuiStack_SwapScreens(Gui_GetScreenStack(), self, 0);
             }
             return 1;
         }
         if (!strcmp(n, "equipbutton")) {
-            void* pg = func_00418A80(func_00414790(), "GuiEquipmentModify", "eqmodify");
+            void* pg = func_00418A80(Gui_GetScreenList(), "GuiEquipmentModify", "eqmodify");
             D_004FFC0C->p30->SetState(1);
-            func_00414AC0(func_004147A0(), self, pg);
+            GuiStack_SwapScreens(Gui_GetScreenStack(), self, pg);
             return 1;
         }
     }
     if (m == 0x1A && !sub) {
-        func_00414AC0(func_004147A0(), self, 0);
-        func_0012FA60(D_004FFB50, 3);
+        GuiStack_SwapScreens(Gui_GetScreenStack(), self, 0);
+        Game_EndLevel(D_004FFB50, 3);
         return 1;
     }
     return func_0041EF10(self, w, msg, sub, text);

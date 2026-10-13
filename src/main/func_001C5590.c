@@ -49,7 +49,7 @@ extern "C" void func_003CCFF0();
 extern "C" void func_003CD090();
 extern "C" void func_003CD110();
 extern "C" void func_003CD1C0();
-extern "C" void func_003CD260();
+extern "C" void PathObj_GetPosition();
 extern "C" void func_003CD420();
 extern "C" void func_003CD4A0();
 extern "C" void func_003CD520();
@@ -61,7 +61,7 @@ extern "C" void func_003CDC20();
 extern "C" void func_003CDD40();
 extern "C" void func_003CDD80();
 extern "C" void func_003CDDC0();
-extern "C" void func_003CDE00();
+extern "C" void Player_GetActiveWeapon();
 extern "C" void func_003CE7D0();
 extern "C" void func_003CE810();
 extern "C" void func_003CEA00();
@@ -81,4 +81,4 @@ extern "C" GobjFlagObj* func_001C5590(GobjFlagObj* self, short deleteFlag)
     }
     return self;
 }
-void * const D_004DAA10[68] = { (void*)0x0, (void*)0x0, (void*)func_001C5590, (void*)Object_HandleMessage, (void*)func_0012ECE0, (void*)Object_GetAttachedOrSelf, (void*)func_0015C090, (void*)func_0012ED00, (void*)func_003CE810, (void*)func_003CE7D0, (void*)func_001C5650, (void*)func_001C5660, (void*)func_0012ED50, (void*)func_003926A0, (void*)func_003926B0, (void*)func_003CEA00, (void*)func_00394740, (void*)func_00394720, (void*)func_001C57A0, (void*)Actor_BasePreLogic, (void*)Actor_BaseWorldUpdate, (void*)Actor_VirtualNop, (void*)func_00394520, (void*)func_00394270, (void*)func_003941A0, (void*)func_001C5710, (void*)func_001C5680, (void*)Node_GetFlag2C, (void*)func_0015BFB0, (void*)func_0015BFC0, (void*)func_0015BFD0, (void*)func_00148870, (void*)func_0015BFF0, (void*)func_0015BFE0, (void*)func_003943A0, (void*)func_001C5670, (void*)Object_AttachTransform, (void*)func_003CDE00, (void*)func_003CDDC0, (void*)func_003CDD80, (void*)func_003CDD40, (void*)func_003CDC20, (void*)func_003CDBE0, (void*)func_003CDA60, (void*)func_003CD920, (void*)func_003CD7A0, (void*)func_0015C010, (void*)func_00153860, (void*)func_0014D340, (void*)func_0015C020, (void*)func_00140E90, (void*)func_0015C030, (void*)func_0015C040, (void*)func_0015C050, (void*)func_003CD520, (void*)func_003CD4A0, (void*)func_003CD420, (void*)func_003CD260, (void*)func_003CD1C0, (void*)func_003CD110, (void*)func_003CD090, (void*)func_003CCFF0, (void*)func_0013E060, (void*)func_0015C080, (void*)Actor_ApplyContactDamage, (void*)func_0015C0A0, (void*)func_00141850, (void*)Controller_DeathNotice };
+void * const D_004DAA10[68] = { (void*)0x0, (void*)0x0, (void*)func_001C5590, (void*)Object_HandleMessage, (void*)func_0012ECE0, (void*)Object_GetAttachedOrSelf, (void*)func_0015C090, (void*)func_0012ED00, (void*)func_003CE810, (void*)func_003CE7D0, (void*)func_001C5650, (void*)func_001C5660, (void*)func_0012ED50, (void*)func_003926A0, (void*)func_003926B0, (void*)func_003CEA00, (void*)func_00394740, (void*)func_00394720, (void*)func_001C57A0, (void*)Actor_BasePreLogic, (void*)Actor_BaseWorldUpdate, (void*)Actor_VirtualNop, (void*)func_00394520, (void*)func_00394270, (void*)func_003941A0, (void*)func_001C5710, (void*)func_001C5680, (void*)Node_GetFlag2C, (void*)func_0015BFB0, (void*)func_0015BFC0, (void*)func_0015BFD0, (void*)func_00148870, (void*)func_0015BFF0, (void*)func_0015BFE0, (void*)func_003943A0, (void*)func_001C5670, (void*)Object_AttachTransform, (void*)Player_GetActiveWeapon, (void*)func_003CDDC0, (void*)func_003CDD80, (void*)func_003CDD40, (void*)func_003CDC20, (void*)func_003CDBE0, (void*)func_003CDA60, (void*)func_003CD920, (void*)func_003CD7A0, (void*)func_0015C010, (void*)func_00153860, (void*)func_0014D340, (void*)func_0015C020, (void*)func_00140E90, (void*)func_0015C030, (void*)func_0015C040, (void*)func_0015C050, (void*)func_003CD520, (void*)func_003CD4A0, (void*)func_003CD420, (void*)PathObj_GetPosition, (void*)func_003CD1C0, (void*)func_003CD110, (void*)func_003CD090, (void*)func_003CCFF0, (void*)func_0013E060, (void*)func_0015C080, (void*)Actor_ApplyContactDamage, (void*)func_0015C0A0, (void*)func_00141850, (void*)Controller_DeathNotice };

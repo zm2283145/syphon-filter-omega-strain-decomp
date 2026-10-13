@@ -1,7 +1,7 @@
 #include "types.h"
 
 /* Stores the bitwise complement of *src into *dst (through stack temporaries); returns 0. */
-int func_001ED7F0(int* dst, int* src)
+int HumanColQueryMask_Not(int* dst, int* src)
 {
     volatile int result;
     volatile int value;

@@ -28,17 +28,17 @@ extern char D_004C0448[]; extern char D_004C0458[]; extern char D_004C0468[];
 extern char D_004C0478[]; extern char D_004C0488[];
 int Agent_GetSelected(void*, int);
 char* Loc_LookupText(char*);
-int func_002CAE30(int, int, char*, char*, void*, int);
-void func_002CAC80(int, int);
-unsigned char func_00333F60(int, int, int);
-unsigned char func_00334110(int);
+int FrontEnd_OpenPopup(int, int, char*, char*, void*, int);
+void FrontEnd_ClosePopup(int, int);
+unsigned char AgentData_Create(int, int, int);
+unsigned char AgentData_Save(int);
 unsigned char func_0045A2A0(int);
 void func_0040DC80(Net_441370*, char*);
 int func_004422D0(int, char*, char*);
 int func_00441780(Obj_441370*);
 }
 
-static inline int ShowDlg(int mgr, int type, char* t, char* m, void* cb, int x) { return func_002CAE30(mgr, type, Loc_LookupText(t), Loc_LookupText(m), cb, x); }
+static inline int ShowDlg(int mgr, int type, char* t, char* m, void* cb, int x) { return FrontEnd_OpenPopup(mgr, type, Loc_LookupText(t), Loc_LookupText(m), cb, x); }
 
 extern "C" void func_00441370(Obj_441370* self)
 {
@@ -57,8 +57,8 @@ extern "C" void func_00441370(Obj_441370* self)
             char addr[0x20];
             if (func_004422D0(self->f50, (char*)Agent_GetSelected(D_004FFB50, -1) + 0x8AC, addr))
                 func_0040DC80(net, addr);
-            if (self->mode == 0) ok = func_00333F60(agent, self->f50, 0);
-            else ok = func_00334110(agent);
+            if (self->mode == 0) ok = AgentData_Create(agent, self->f50, 0);
+            else ok = AgentData_Save(agent);
         }
         old = self->dlg;
         if (!ok) {
@@ -71,7 +71,7 @@ extern "C" void func_00441370(Obj_441370* self)
             self->Close(1);
             D_004FFBBC = net->impl->f5A8;
         }
-        func_002CAC80(D_004FFC04, old);
+        FrontEnd_ClosePopup(D_004FFC04, old);
     }
 }
 

@@ -6,10 +6,10 @@
 #include "types.h"
 #include "path_types.h"
 
-extern int func_0015FFD0(void* a0, int a1);
+extern int NpcPath_HoldAtRouteNode(void* a0, int a1);
 extern void NpcPath_HoldNode(void* a0, int a1);
 
 void NpcPath_RelocateStuck(void* a0, int a1) {
-    func_0015FFD0(a0, a1);
+    NpcPath_HoldAtRouteNode(a0, a1);
     NpcPath_HoldNode(a0, a1);
 }

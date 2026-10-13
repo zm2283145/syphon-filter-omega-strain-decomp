@@ -16,7 +16,7 @@ static inline Tgt_EE90* H_Get(H_EE90* o)
     if (!z && n->key != o->key) ok = 0;
     return ok ? n : 0;
 }
-Tgt_EE90* func_0014EE90(NPC_EE90* self)
+Tgt_EE90* NpcLook_FindFacingObject(NPC_EE90* self)
 {
     N_EE90* it;
     N_EE90* end;

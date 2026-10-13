@@ -6,8 +6,8 @@ typedef struct {
     char pad[8]; Str_416F70 s8; Str_416F70 s14; char pad20[8]; unsigned char b28; char pad29[7];
     char m30[0x40]; char v70[4]; int n74; E_416F70* v78;
 } O_416F70;
-void* func_00414790(void);
-char* func_001692D0(void* s);
+void* Gui_GetScreenList(void);
+char* String_CStr(void* s);
 void String_CtorCStr_13B480(Str_416F70* s, char* c);
 void func_0013D680(Str_416F70* d, Str_416F70* s);
 void func_00138B70(void* s, int f);
@@ -41,7 +41,7 @@ int func_00416F70(O_416F70* o, char** cur)
     unsigned short n;
     s = *cur;
     while (*(*cur)++ != 0);
-    if (s == 0 || *s == 0) s = func_001692D0((char*)func_00414790() + 0x2C);
+    if (s == 0 || *s == 0) s = String_CStr((char*)Gui_GetScreenList() + 0x2C);
     else o->b28 = 1;
     String_CtorCStr_13B480(&t1, s);
     func_0013D680(&o->s8, &t1);

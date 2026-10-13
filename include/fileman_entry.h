@@ -18,7 +18,7 @@
  * Destroy embedded entries in reverse order (b then a), as the game does.
  * Prototypes take void*; #define FILEMAN_ENTRY_NO_PROTOS to keep typed
  * local declarations instead. Some loaders use a 0xA0 aligned(16) local
- * buffer for the same object (func_001BFF40) - keep that as a local type.
+ * buffer for the same object (SkaRegistry_LoadAnimation) - keep that as a local type.
  */
 #include "fileman_types.h"
 #include "layout_assert.h"

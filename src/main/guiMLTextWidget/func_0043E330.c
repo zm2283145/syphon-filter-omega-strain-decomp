@@ -19,7 +19,7 @@ extern char D_004C0110[]; extern char D_004C0100[]; extern char D_004AAE00[];
 extern int D_004976B8;
 void func_0041F150(O_43E330* o);
 void* Mem_Alloc(int pool, int size, char* file, int line);
-void* func_00414790(void);
+void* Gui_GetScreenList(void);
 void* func_00418420(void* mgr, int name);
 T_43E330* func_003D0940(void* p, int a, int b, int c, int d, void* e, char* f);
 W_43E330* func_0041DC70(void* o, int id);
@@ -33,7 +33,7 @@ void func_0043E330(O_43E330* o)
 {
     T_43E330* t;
     func_0041F150(o);
-    o->f4C = func_00418420(func_00414790(), 0);
+    o->f4C = func_00418420(Gui_GetScreenList(), 0);
     t = (T_43E330*)Alloc_43E330(0x60, 0x33);
     if (t) t = func_003D0940(t, 0, 0, (int)o->f3C, (int)o->f40, o->f4C, D_004C0100);
     o->f48 = t;

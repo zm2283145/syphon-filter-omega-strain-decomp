@@ -52,7 +52,7 @@ void ColGather_SetSource(Src*, Shp*);
 Mesh* func_00182270(int);
 void func_003C55C0(Mesh*, Src*, void*);
 int PtrArray_Begin(void*);
-int func_00181CB0(void*);
+int PtrArray_End(void*);
 void func_00181CD0(It*, void*, int*);
 Xf* func_00183220(Actor*);
 int func_001830D0(Actor*);
@@ -112,7 +112,7 @@ void func_003C5190(Gath* self, Src* src, Actor* node, Box* box, Sph* e0)
         tb = PtrArray_Begin(ch);
         func_00181CD0(&ib, ch, &tb);
         p = (Actor**)ib.p;
-        te = func_00181CB0(ch);
+        te = PtrArray_End(ch);
         func_00181CD0(&ie, ch, &te);
         e = (Actor**)ie.p;
         if (NeP(p, *(Actor** volatile*)&ie.p)) {

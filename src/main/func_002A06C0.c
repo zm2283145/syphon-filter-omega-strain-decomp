@@ -24,8 +24,8 @@ extern G_002A06C0* D_0055A830;
 void func_0041EFA0(Self_002A06C0* self);
 void func_002C9AF0(Mgr_002A06C0* m, int a);
 Ctl_002A06C0* func_0041DB80(Self_002A06C0* self, char* name);
-Ui_002A06C0* func_004147A0(void);
-void func_00414B30(Ui_002A06C0* ui, void* w);
+Ui_002A06C0* Gui_GetScreenStack(void);
+void GuiScreen_SetFocus(Ui_002A06C0* ui, void* w);
 }
 
 static inline void SetHidden_002A06C0(Ctl_002A06C0* w, bool h)
@@ -53,8 +53,8 @@ extern "C" void func_002A06C0(Self_002A06C0* self)
             return;
         }
         hide = D_0055A830->b59D && !D_0051EEA0;
-        if (!hide && func_004147A0()->p20 == w) {
-            func_00414B30(func_004147A0(), w->h->Make(w, 1));
+        if (!hide && Gui_GetScreenStack()->p20 == w) {
+            GuiScreen_SetFocus(Gui_GetScreenStack(), w->h->Make(w, 1));
         }
         SetHidden_002A06C0(w, hide);
     }

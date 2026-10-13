@@ -12,7 +12,7 @@ typedef struct {
 extern "C" {
 extern char D_004BEF30[];
 void Mem_Free(int pool, void* p, char* file, int line);
-int func_001692D0(Item_4139C0* it);
+int String_CStr(Item_4139C0* it);
 void func_003E79F0(void* p, int f);
 void func_003F9530(int a, int b);
 void func_004145A0(void* p, int f);
@@ -37,7 +37,7 @@ extern "C" void func_004139C0(Self_4139C0* self)
     if (self->p1EC) {
         int n = self->p1EC->count;
         int j;
-        for (j = 0; j < n; j++) func_003F9530(self->h1E0, func_001692D0(&self->p1EC->data[j]));
+        for (j = 0; j < n; j++) func_003F9530(self->h1E0, String_CStr(&self->p1EC->data[j]));
         { List_4139C0* p = self->p1EC; AllocGuard g; D1_4139C0(p); Mem_Free(0, p, D_004BEF30, 0x53); }
         self->p1EC = 0;
     }

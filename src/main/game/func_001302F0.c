@@ -4,7 +4,7 @@
 #pragma mpwc_relax on
 /*fc*/
 char * Archive_Open(int, char *, int, int);                 
-int func_0036D2A0();                  
+int Hog_FindFileNoCase();                  
 int func_003F9530();                       
 int sprintf();                           
 extern int D_00489BE0;
@@ -23,7 +23,7 @@ int func_001302F0(int arg0) {
         D_00489BE0 = 0;
 loop_5:
         sprintf(sp30, "DEMO%2.2d.PSS", D_00489BE0 + 1);
-        if (func_0036D2A0(temp_v0, sp30, 1) != -1) {
+        if (Hog_FindFileNoCase(temp_v0, sp30, 1) != -1) {
             D_00489BE0 += 1;
             goto loop_5;
         }

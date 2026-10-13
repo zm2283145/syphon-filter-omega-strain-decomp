@@ -8,7 +8,7 @@ typedef struct {
 extern void func_0033D360(T3F050* self);
 extern void func_002ACC80(void* p, int f);
 extern void func_0044F6B0(L3F050* l);
-extern G3F050* func_004147A0(void);
+extern G3F050* Gui_GetScreenStack(void);
 void func_0033F050(T3F050* self)
 {
     func_0033D360(self);
@@ -19,5 +19,5 @@ void func_0033F050(T3F050* self)
     func_0044F6B0(&self->l1);
     func_0044F6B0(&self->l2);
     self->b78 = 0;
-    func_004147A0()->flags &= ~3;
+    Gui_GetScreenStack()->flags &= ~3;
 }

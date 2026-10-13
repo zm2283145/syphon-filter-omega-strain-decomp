@@ -2,7 +2,7 @@
 #pragma cplusplus on
 typedef struct { char pad[0x40]; int cur; int bits[54]; int x11C; int x120; } F6Bits;
 static inline bool F6Test(F6Bits* s, int i) { return ((s->bits[i / 32] >> (i & 31)) & 1) ? true : false; }
-extern "C" void func_0024B410(F6Bits* s)
+extern "C" void PlayerInput_ClearPendingBit11(F6Bits* s)
 {
     int i;
     s->bits[0] &= ~0x800;

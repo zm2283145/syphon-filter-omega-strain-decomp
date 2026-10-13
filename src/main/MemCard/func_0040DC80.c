@@ -2,12 +2,12 @@
 typedef struct { char pad0[0x1C]; char item[0x1C]; } EDC80;
 typedef struct { EDC80 e[0x540 / 0x38]; int mode; char pad1[0x560 - 0x544]; int count; int sel; char pad2[0x59C - 0x568]; unsigned char failed; unsigned char pad3; unsigned char ok; unsigned char pad4; unsigned char done; } PDC80;
 typedef struct { PDC80* p; unsigned char busy; char pad[3]; void (*cb)(void); unsigned char state; } CDC80;
-extern int func_0040E370(void* key, void* item);
+extern int MemCardWrap_MatchName(void* key, void* item);
 extern int func_0040E5D0(PDC80* p);
 static inline int dc80find(PDC80* p, void* key) {
     int i;
     for (i = 0; i < p->count; i++) {
-        if (!((func_0040E370(key, p->e[i].item) != 0) ^ 1))
+        if (!((MemCardWrap_MatchName(key, p->e[i].item) != 0) ^ 1))
             return i;
     }
     return -1;

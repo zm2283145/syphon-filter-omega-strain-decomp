@@ -8,7 +8,7 @@
 
 extern char D_004FFB50[]; /* world object */
 extern int Global_RequestLevelEnd(void);
-extern int func_0012FA60(char* world, int);
+extern int Game_EndLevel(char* world, int);
 
 int Script_RequestLevelEnd(void) {
     Global_RequestLevelEnd();
@@ -16,5 +16,5 @@ int Script_RequestLevelEnd(void) {
 }
 
 int Global_RequestLevelEnd(void) {
-    return func_0012FA60(D_004FFB50, 0);
+    return Game_EndLevel(D_004FFB50, 0);
 }

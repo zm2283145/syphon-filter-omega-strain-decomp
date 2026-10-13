@@ -10,10 +10,10 @@
 extern int D_00571FB0;
 extern int D_00571FB8;
 
-int func_00414790(void) {
+int Gui_GetScreenList(void) {
     return D_00571FB8;
 }
 
-int func_004147A0(void) {
+int Gui_GetScreenStack(void) {
     return D_00571FB0;
 }

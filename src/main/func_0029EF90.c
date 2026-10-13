@@ -36,7 +36,7 @@ void* func_0041DB80(Self_0029EF90* self, char* name);
 void func_004235B0(W_0029EF90* w, int a, int b);
 void func_00421650(W_0029EF90* w, int a);
 void func_0043E200(W_0029EF90* w, char* s);
-void* func_00414790(void);
+void* Gui_GetScreenList(void);
 Page_0029EF90* func_00418A80(void* a, char* b, char* c);
 }
 static inline W_0029EF90* FindAs_0029EF90(Self_0029EF90* self, char* name, char* type)
@@ -72,6 +72,6 @@ extern "C" void func_0029EF90(Self_0029EF90* self)
         func_0043E200(self->f100, "callout");
         self->f100->f60 = 0;
     }
-    self->f108 = func_00418A80(func_00414790(), "GuiWidget", "DNASLOGO");
+    self->f108 = func_00418A80(Gui_GetScreenList(), "GuiWidget", "DNASLOGO");
     self->f108->flags &= ~0x20;
 }

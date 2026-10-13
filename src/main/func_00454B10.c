@@ -23,12 +23,12 @@ void* WeaponDb_Get(void* db, int id);
 void* WeaponInv_GetHeldItem(void* p);
 void func_00175FF0(G_454B10* g, int id);
 void Goggles_Toggle(A_454B10* a);
-M_454B10* func_004147A0(void);
+M_454B10* Gui_GetScreenStack(void);
 void func_0041E0F0(void* a, void* b, int kind, int v, int f);
 void func_00454F80(O_454B10* o, bool f);
 void func_00456160(O_454B10* o);
-void func_00242900(void* p);
-void func_00131470(void* p, int v);
+void Hud_ClosePauseMenu(void* p);
+void Game_SetPaused(void* p, int v);
 int func_00454B10(O_454B10* o, Ev_454B10* ev);
 }
 static inline unsigned char Down_454B10(Ev_454B10* e) { unsigned char r = 0; if (e->type == 1 && e->b2 == 0) r = 1; return r; }
@@ -68,7 +68,7 @@ int func_00454B10(O_454B10* o, Ev_454B10* ev)
                 sent = 1;
                 Goggles_Toggle(a);
             }
-            if (sent) func_0041E0F0(o->f48, func_004147A0(), 0x10, 1, 0);
+            if (sent) func_0041E0F0(o->f48, Gui_GetScreenStack(), 0x10, 1, 0);
         }
     }
     if (Plain_454B10(ev, 1) || Plain2_454B10(ev, 2)) {
@@ -80,9 +80,9 @@ int func_00454B10(O_454B10* o, Ev_454B10* ev)
         return 1;
     }
     if (Plain2_454B10(ev, 0x800)) {
-        func_004147A0()->v24(o);
-        func_00242900(D_004FFC2C);
-        func_00131470(D_004FFB50, 0);
+        Gui_GetScreenStack()->v24(o);
+        Hud_ClosePauseMenu(D_004FFC2C);
+        Game_SetPaused(D_004FFB50, 0);
         return 1;
     }
     return 0;

@@ -6956,5 +6956,18 @@
   "main/fstream/func_003EA6A0": "cwps2-3.0b38",
   "main/func_0044F470": "cwps2-3.0b38",
   "main/SFOLobby_Main/func_00452CD0": "cwps2-3.0b38",
-  "main/func_0045F860": "cwps2-3.0b38"
+  "main/func_0045F860": "cwps2-3.0b38",
+  "lib/LargeInt/func_002F0670": "ee-gcc2.96-G0",
+  "lib/func_0030D2B8": "ee-gcc2.96-G0",
+  "lib/func_00310238": "ee-gcc2.96-G0",
+  "lib/func_002718A0": "ee-gcc2.9-991111",
+  "main/machine/func_00165950": "cwps2-3.0b38",
+  "main/map/func_0026D940": "cwps2-3.0b38",
+  "main/GuiAgentCreate/func_0028E640": "cwps2-3.0b38",
+  "main/AgentData/func_003353F0": "cwps2-3.0b38",
+  "main/GuiAgentModify/func_003428D0": "cwps2-3.0b38",
+  "main/func_003EE840": "cwps2-3.0b38",
+  "main/func_003F7060": "cwps2-3.0b38",
+  "main/SFOLobby_Lobby/func_00451370": "cwps2-3.0b38",
+  "main/func_001C50F0": "cwps2-3.0b50"
 }

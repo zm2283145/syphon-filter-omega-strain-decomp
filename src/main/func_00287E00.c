@@ -8,12 +8,12 @@ extern float func_001002D0(int);
 extern void func_00288310(Obj287E00*, int);
 extern void func_002C81D0(Ui287E00*);
 extern void func_002C82F0(Ui287E00*);
-extern void func_002CAC80(Ui287E00*, int);
-extern int func_002CAE30(Ui287E00*, int, char*, int, int, int);
+extern void FrontEnd_ClosePopup(Ui287E00*, int);
+extern int FrontEnd_OpenPopup(Ui287E00*, int, char*, int, int, int);
 extern int func_003698B0(void);
-extern int func_00414790(void);
-extern int func_004147A0(void);
-extern void func_00414AC0(int, Obj287E00*, int);
+extern int Gui_GetScreenList(void);
+extern int Gui_GetScreenStack(void);
+extern void GuiStack_SwapScreens(int, Obj287E00*, int);
 extern int func_00418A80(int, char*, char*);
 extern int func_0041EF10(Obj287E00*, Msg287E00*, unsigned short, int, int);
 extern char* D_0048B3E8;
@@ -40,7 +40,7 @@ int func_00287E00(Obj287E00* self, Msg287E00* msg, unsigned short id, int a3, in
         }
     } else if (id == 0x1B) {
         if (a3 == 1) {
-            func_002CAC80(D_004FFC04, self->h);
+            FrontEnd_ClosePopup(D_004FFC04, self->h);
             func_00288310(self, 1);
             return 1;
         }
@@ -54,20 +54,20 @@ int func_00287E00(Obj287E00* self, Msg287E00* msg, unsigned short id, int a3, in
                 Ui287E00* ui;
                 func_002C82F0(D_004FFC04);
                 ui = D_004FFC04;
-                tok = func_002CAE30(ui, 0, D_004A9578, Loc_LookupText(D_004A9580), 0, 0);
+                tok = FrontEnd_OpenPopup(ui, 0, D_004A9578, Loc_LookupText(D_004A9580), 0, 0);
             }
-            r = func_00418A80(func_00414790(), D_004A9590, D_004A95A0);
+            r = func_00418A80(Gui_GetScreenList(), D_004A9590, D_004A95A0);
             if (open) {
-                func_002CAC80(D_004FFC04, tok);
+                FrontEnd_ClosePopup(D_004FFC04, tok);
                 func_002C81D0(D_004FFC04);
             }
         } else if (String_AssignCStr_1C43A0(msg->str, D_0048B3F0) == 0) {
-            r = func_00418A80(func_00414790(), D_004A95B0, D_004A95C0);
+            r = func_00418A80(Gui_GetScreenList(), D_004A95B0, D_004A95C0);
         } else if (String_AssignCStr_1C43A0(msg->str, D_0048B3F8) == 0) {
-            r = func_00418A80(func_00414790(), D_004A95D0, D_004A95E0);
+            r = func_00418A80(Gui_GetScreenList(), D_004A95D0, D_004A95E0);
         }
         if (r)
-            func_00414AC0(func_004147A0(), self, r);
+            GuiStack_SwapScreens(Gui_GetScreenStack(), self, r);
         return 1;
     }
     return func_0041EF10(self, msg, id, a3, a4);

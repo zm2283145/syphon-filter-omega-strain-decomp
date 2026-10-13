@@ -7,8 +7,8 @@ extern void func_00413880(char* a, char* b);
 extern void func_004138F0(char* a, char* b);
 extern void func_00413900(char* a, char* b);
 extern void func_00413C70(char* a);
-extern int func_00414790(void);
-extern char* func_004147A0(void);
+extern int Gui_GetScreenList(void);
+extern char* Gui_GetScreenStack(void);
 extern void func_00414900(char* s);
 extern void func_004158C0(char* p, int x);
 extern void func_004185A0(int a, char* b, int c, int d);
@@ -51,21 +51,21 @@ void func_002CB8C0(SelfB8C0* self, int flag)
     func_00414900(flag ? D_004AD048 : D_004AD060);
     {
         char* g = func_001698C0();
-        func_004185A0(func_00414790(), D_004AD078, *(int*)(g + 0x280), 0);
+        func_004185A0(Gui_GetScreenList(), D_004AD078, *(int*)(g + 0x280), 0);
     }
     {
         char* g = func_001698C0();
-        func_004185A0(func_00414790(), D_004AD080, *(int*)(g + 0x284), 0);
+        func_004185A0(Gui_GetScreenList(), D_004AD080, *(int*)(g + 0x284), 0);
     }
     {
         char* g = func_001698C0();
-        func_004185A0(func_00414790(), D_004AD088, *(int*)(g + 0x288), 0);
+        func_004185A0(Gui_GetScreenList(), D_004AD088, *(int*)(g + 0x288), 0);
     }
     func_002CCE80(*(int*)(func_001698C0() + 0x280));
     func_002CCE80(*(int*)(func_001698C0() + 0x284));
     func_002CCE80(*(int*)(func_001698C0() + 0x288));
-    func_004147A0()[0x51] = 0;
-    func_004158C0(func_004147A0(), 1);
+    Gui_GetScreenStack()[0x51] = 0;
+    func_004158C0(Gui_GetScreenStack(), 1);
     func_00413C70(D_00571DC0);
     func_004138F0(D_00571DC0, D_004FFB8C);
     sprintf(buf, D_004AD098, D_0048B2F8);

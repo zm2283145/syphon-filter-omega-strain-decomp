@@ -20,7 +20,7 @@ extern void func_0036E220(void* part, int flags);
 extern void cMessage_dtor(void* msg, int flags);
 extern void SoundAction_CtorVoice(void* action, int kind, char* voice, int a, int b);
 extern void SoundMsg_WrapAction(SoundMsg_327530* msg, void* action);
-extern char* func_001692D0(void* s);
+extern char* String_CStr(void* s);
 extern int func_002071F0(void* s);
 extern void func_0043C890(int w, char* s, int v);
 extern void func_0041BEB0(int w, char* s, int v);
@@ -68,9 +68,9 @@ void func_00327530(Self_327530* self, int sel, int sub)
         Item_327530* item;
         g->sel = sub;
         item = &g->items[sub];
-        if (self->w5C) func_0043C890(self->w5C, func_001692D0(item), item->fC);
-        if (func_002071F0(item->sound)) PlayVoice_327530(self, func_001692D0(item->sound));
-        if (self->w60) func_0041BEB0(self->w60, func_001692D0(g), 0);
+        if (self->w5C) func_0043C890(self->w5C, String_CStr(item), item->fC);
+        if (func_002071F0(item->sound)) PlayVoice_327530(self, String_CStr(item->sound));
+        if (self->w60) func_0041BEB0(self->w60, String_CStr(g), 0);
         if (self->w64) {
             sprintf(buf, "%d/%d", sub + 1, g->n);
             func_0041BEB0(self->w64, buf, 0);

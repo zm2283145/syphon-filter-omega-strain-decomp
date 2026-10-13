@@ -41,7 +41,7 @@ extern void func_0020F190(SoundMsg* msg, SoundRequest* req, Ent* e);
 extern void Event_Send(SoundMsg* msg, void* target, int flags);
 extern void func_0036E220(void* part, int flags);
 extern void cMessage_dtor(SoundMsg* msg, int flags);
-extern void func_0012EEE0(void*, int, int);
+extern void Game_NetSendPauseState(void*, int, int);
 extern int sprintf(char*, const char*, ...);
 extern void func_0041BEB0(Hud*, char*, int);
 extern void func_00429B30(void);
@@ -90,7 +90,7 @@ extern "C" void func_002C03C0(Self* self, float dt) {
             func_0036E220(req.partB, -1);
             func_0036E220(req.partA, -1);
         }
-        func_0012EEE0(D_004FFB50, 0, 0);
+        Game_NetSendPauseState(D_004FFB50, 0, 0);
     }
     if (D_00506508) {
         D_00506510 += dt;

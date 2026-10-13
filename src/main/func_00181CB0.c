@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-int* func_00181CB0(PtrVec* v) {
+int* PtrArray_End(PtrVec* v) {
     return v->data + v->count;
 }
 

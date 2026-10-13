@@ -4,7 +4,7 @@
 #define VC_(p) ((int (*)())(p))
 #pragma mpwc_relax on
 int func_002EBCE0(char *);                               
-int func_004147A0();                             
+int Gui_GetScreenStack();                             
 int func_0041E0F0(int, int, int, int, int);                    
 int func_0042ACD0();                                
 extern signed char D_005721E0;
@@ -35,9 +35,9 @@ void func_0042A780(void) {
         D_00572468 = 1;
         return;
     }
-    if (func_004147A0(temp_a0) != 0) {
-        temp_s0 = func_004147A0();
-        func_0041E0F0(temp_s0, func_004147A0(), 0x1E, 0, (int)&D_004BF9B8);
+    if (Gui_GetScreenStack(temp_a0) != 0) {
+        temp_s0 = Gui_GetScreenStack();
+        func_0041E0F0(temp_s0, Gui_GetScreenStack(), 0x1E, 0, (int)&D_004BF9B8);
     }
     D_00572470 = 0;
     D_00572478 = 0;

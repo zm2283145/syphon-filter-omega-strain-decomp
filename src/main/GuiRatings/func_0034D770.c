@@ -1,8 +1,8 @@
 typedef struct Item { char pad[0x10]; int idx; } Item;
 typedef struct Ui { char pad[0x20]; Item *focus; } Ui;
 typedef struct Self { char pad[0x6C]; void *items[24]; } Self;
-extern Ui *func_004147A0(void);
-extern void func_00414B30(Ui *ui, void *w);
+extern Ui *Gui_GetScreenStack(void);
+extern void GuiScreen_SetFocus(Ui *ui, void *w);
 
 void func_0034D770(Self *self, int dir)
 {
@@ -11,7 +11,7 @@ void func_0034D770(Self *self, int dir)
     int col;
     int row;
 
-    f = func_004147A0()->focus;
+    f = Gui_GetScreenStack()->focus;
     if (f == 0 || (idx = f->idx) == -1)
         return;
     col = idx % 4;
@@ -32,6 +32,6 @@ void func_0034D770(Self *self, int dir)
     }
     col = col < 0 ? 3 : (col >= 4 ? 0 : col);
     row = row < 0 ? 5 : (row >= 6 ? 0 : row);
-    func_00414B30(func_004147A0(), self->items[row * 4 + col]);
+    GuiScreen_SetFocus(Gui_GetScreenStack(), self->items[row * 4 + col]);
 }
 

@@ -11,7 +11,7 @@ extern char D_005721E0[];
 extern char D_005721F0;
 extern char D_004FFB50[];
 char* strncpy(char*, const char*, unsigned int);
-void func_0012FA60(void*, int);
+void Game_EndLevel(void*, int);
 }
 #pragma push
 #pragma opt_propagation off
@@ -26,7 +26,7 @@ extern "C" int func_0020E350(int a0, int a1, int a2, Pk20E350* arg) {
                 strncpy(D_005721E0, "HOST_LEFTGAME", 0x10);
                 D_005721F0 = 0;
             }
-            func_0012FA60(D_004FFB50, p->b8);
+            Game_EndLevel(D_004FFB50, p->b8);
         }
     }
     return 0x10;

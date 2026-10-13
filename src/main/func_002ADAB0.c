@@ -6,15 +6,15 @@ struct S_002ADAB0 {
 extern "C" {
 extern void* D_004FFC04;
 extern char D_004ABB08[];
-void* func_00414790(void);
+void* Gui_GetScreenList(void);
 void* func_00418A80(void* a, char* b, char* c);
 int func_0033CE30(S_002ADAB0* self, int a, char* b, int c, int d, int e);
 void func_0032B4F0(void* pg, int a, char* b, S_002ADAB0* c, int d, int e, int f);
 void* func_004294C0(void);
-char* func_001692D0(void* s);
-int func_002CAE30(void* ui, int a, char* b, int c, S_002ADAB0* d, int e);
+char* String_CStr(void* s);
+int FrontEnd_OpenPopup(void* ui, int a, char* b, int c, S_002ADAB0* d, int e);
 int func_0044D9C0(void* g, int a);
-void func_002CAC80(void* ui, int id);
+void FrontEnd_ClosePopup(void* ui, int id);
 int func_00451370(void* g, char* t);
 int func_00452FF0(void* g, int a);
 void func_0033C7C0(S_002ADAB0* self, int r, char* t);
@@ -25,7 +25,7 @@ extern "C" int func_002ADAB0(S_002ADAB0* self, void* w, int msg, int sub, char* 
 {
     unsigned short m = msg;
     if (m == 2 && w == self->p160) {
-        void* pg = func_00418A80(func_00414790(), "GuiKeyboard", "KEYBOARD");
+        void* pg = func_00418A80(Gui_GetScreenList(), "GuiKeyboard", "KEYBOARD");
         if (pg)
             func_0032B4F0(pg, func_0033CE30(self, 0x40, 0, 0, 0, 0), D_004ABB08, self, 0xF, 0xC, 0);
         return 1;
@@ -35,19 +35,19 @@ extern "C" int func_002ADAB0(S_002ADAB0* self, void* w, int msg, int sub, char* 
             void* g = func_004294C0();
             if (g) {
                 int h;
-                char* nm = func_001692D0(self->s104);
+                char* nm = String_CStr(self->s104);
                 void* ui = D_004FFC04;
-                h = func_002CAE30(ui, 0, D_004ABB08, func_0033CE30(self, 0x36, nm, 0, 0, 0), 0, 0);
+                h = FrontEnd_OpenPopup(ui, 0, D_004ABB08, func_0033CE30(self, 0x36, nm, 0, 0, 0), 0, 0);
                 if (func_0044D9C0(g, self->f100)) {
-                    char* nm2 = func_001692D0(self->s104);
+                    char* nm2 = String_CStr(self->s104);
                     void* ui2 = D_004FFC04;
-                    func_002CAE30(ui2, 2, D_004ABB08, func_0033CE30(self, 0x37, nm2, 0, 0, 0), 0, 0);
+                    FrontEnd_OpenPopup(ui2, 2, D_004ABB08, func_0033CE30(self, 0x37, nm2, 0, 0, 0), 0, 0);
                 } else {
-                    char* nm3 = func_001692D0(self->s104);
+                    char* nm3 = String_CStr(self->s104);
                     void* ui3 = D_004FFC04;
-                    func_002CAE30(ui3, 2, D_004ABB08, func_0033CE30(self, 0x38, nm3, 0, 0, 0), 0, 0);
+                    FrontEnd_OpenPopup(ui3, 2, D_004ABB08, func_0033CE30(self, 0x38, nm3, 0, 0, 0), 0, 0);
                 }
-                func_002CAC80(D_004FFC04, h);
+                FrontEnd_ClosePopup(D_004FFC04, h);
             }
             return 1;
         }
@@ -58,7 +58,7 @@ extern "C" int func_002ADAB0(S_002ADAB0* self, void* w, int msg, int sub, char* 
                     int r = func_00451370(g, text);
                     if ((unsigned char)func_00452FF0(g, 0)) {
                         void* ui = D_004FFC04;
-                        func_002CAE30(ui, 2, D_004ABB08, func_0033CE30(self, 0x17, text, 0, 0, 0), 0, 0);
+                        FrontEnd_OpenPopup(ui, 2, D_004ABB08, func_0033CE30(self, 0x17, text, 0, 0, 0), 0, 0);
                     } else {
                         func_0033C7C0(self, r, text);
                     }

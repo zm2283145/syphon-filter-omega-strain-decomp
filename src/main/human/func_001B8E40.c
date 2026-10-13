@@ -52,7 +52,7 @@ static inline float Wrap(Ch* p, float d)
     return r;
 }
 
-void func_001B8E40(Ch* c, float* dt)
+void AnimChannel_AddOffset(Ch* c, float* dt)
 {
     void* v;
     c->f4 += *dt;

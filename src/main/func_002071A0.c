@@ -6,10 +6,10 @@
 
 #include "types.h"
 
-extern int func_001692D0(int);
+extern int String_CStr(int);
 
 int func_002071A0(int a0) {
-    return func_001692D0(a0);
+    return String_CStr(a0);
 }
 
 void* func_002071B0(void* self) {

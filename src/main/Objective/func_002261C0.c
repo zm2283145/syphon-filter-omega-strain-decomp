@@ -8,11 +8,11 @@
 #include "Objective_types.h"
 
 extern char D_004FFC2C[]; /* global UI receiver */
-extern void func_00242900(int);
+extern void Hud_ClosePauseMenu(int);
 
 void func_002261C0(cObjectiveMan* mgr) {
     if (mgr->unkAC != 0) {
-        func_00242900(*(int*)D_004FFC2C);
+        Hud_ClosePauseMenu(*(int*)D_004FFC2C);
         mgr->unkAC = 0;
     }
 }

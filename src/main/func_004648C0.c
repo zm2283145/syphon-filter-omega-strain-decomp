@@ -10,7 +10,7 @@ int func_0026C180(int a);
 int func_0026C3B0(int a);
 void func_0026D6D0(int a);
 void func_0026D710(int a);
-int func_004147A0(void);
+int Gui_GetScreenStack(void);
 void func_0041E0F0(W48C0* self, int a, int b, int c, int d);
 }
 extern "C" int func_004648C0(W48C0* self, Ev48C0* e)
@@ -32,12 +32,12 @@ extern "C" int func_004648C0(W48C0* self, Ev48C0* e)
         case 8:
             func_0026D710(self->m4C);
             if (func_0026C3B0(self->m4C))
-                func_0041E0F0(self, func_004147A0(), 0x10, 0, 0);
+                func_0041E0F0(self, Gui_GetScreenStack(), 0x10, 0, 0);
             break;
         case 4:
             func_0026D710(self->m4C);
             if (func_0026C180(self->m4C))
-                func_0041E0F0(self, func_004147A0(), 0x10, 0, 0);
+                func_0041E0F0(self, Gui_GetScreenStack(), 0x10, 0, 0);
             break;
         default:
             return 0;

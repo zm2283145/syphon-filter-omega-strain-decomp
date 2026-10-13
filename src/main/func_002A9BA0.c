@@ -30,14 +30,14 @@ void func_004426B0(G_002A9BA0* g);
 void func_002CC260(void);
 int func_00442F40(G_002A9BA0* g, void* cb, void* a);
 int func_0033CE30(S_002A9BA0* self, int a, int b, int c, int d, int e);
-int func_002CAE30(void* ui, int a, char* b, int c, S_002A9BA0* d, int e);
+int FrontEnd_OpenPopup(void* ui, int a, char* b, int c, S_002A9BA0* d, int e);
 void func_0041C0F0(Txt_002A9BA0* t, int a);
 char* Loc_LookupText(char* key);
 void func_0041BEB0(void* w, char* s, int a);
 void* func_0041DB80(S_002A9BA0* self, char* name);
 Ag_002A9BA0* Agent_GetSelected(void* a, int b);
 char* func_00336170(Ag_002A9BA0* ag);
-char* func_001692D0(void* s);
+char* String_CStr(void* s);
 void func_00421070(List_002A9BA0* l);
 unsigned char func_00442D80(G_002A9BA0* g);
 E_002A9BA0* func_0044F290(void* v, int i);
@@ -70,7 +70,7 @@ extern "C" void func_002A9BA0(S_002A9BA0* self)
             func_004426B0(g);
         if (!func_00442F40(g, (void*)func_002CC260, self->fA0)) {
             void* ui = D_004FFC04;
-            func_002CAE30(ui, 2, D_004AB808, func_0033CE30(self, 0x72, 0, 0, 0, 0), self, 0x1E);
+            FrontEnd_OpenPopup(ui, 2, D_004AB808, func_0033CE30(self, 0x72, 0, 0, 0, 0), self, 0x1E);
             return;
         }
     }
@@ -84,7 +84,7 @@ extern "C" void func_002A9BA0(S_002A9BA0* self)
         func_0041BEB0(w, func_00336170(Agent_GetSelected(D_004FFB50, -1)), 0);
     w = FindAs_002A9BA0(self, D_0048BBE8, D_004A7520);
     if (w && self->p88)
-        func_0041BEB0(w, func_001692D0(self->p88->s48), 0);
+        func_0041BEB0(w, String_CStr(self->p88->s48), 0);
     self->f9C = -1;
     ag = Agent_GetSelected(D_004FFB50, -1);
     pr = &ag->prof;
@@ -102,8 +102,8 @@ extern "C" void func_002A9BA0(S_002A9BA0* self)
                     Str_002A9BA0 s;
                     String_CtorCStr_13B480(&s, e->name);
                     func_003FD740(&s);
-                    func_00421290(self->p90, func_001692D0(&s), i, 0);
-                    if (e->f0 == key && !strcmp(func_001692D0(&s), pname))
+                    func_00421290(self->p90, String_CStr(&s), i, 0);
+                    if (e->f0 == key && !strcmp(String_CStr(&s), pname))
                         self->f98 = i;
                     func_00138B70(&s, 0);
                 }
@@ -111,13 +111,13 @@ extern "C" void func_002A9BA0(S_002A9BA0* self)
         }
         if (!ok || !self->p90->f94) {
             void* ui = D_004FFC04;
-            func_002CAE30(ui, 2, D_004AB808, func_0033CE30(self, 0x72, 0, 0, 0, 0), self, 0x1E);
+            FrontEnd_OpenPopup(ui, 2, D_004AB808, func_0033CE30(self, 0x72, 0, 0, 0, 0), self, 0x1E);
             return;
         }
     }
     if (self->f98 == -1) {
         void* ui = D_004FFC04;
-        func_002CAE30(ui, 2, D_004AB808, func_0033CE30(self, 0x6F, 0, 0, 0, 0), 0, 0);
+        FrontEnd_OpenPopup(ui, 2, D_004AB808, func_0033CE30(self, 0x6F, 0, 0, 0, 0), 0, 0);
         if (self->p8C)
             func_0041BEB0(self->p8C, Loc_LookupText("NotSet"), 0);
         pr->fC4 = -1;

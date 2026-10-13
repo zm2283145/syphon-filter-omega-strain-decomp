@@ -16,10 +16,10 @@ struct S_3617C0 { char pad[0x10]; W_3617C0* w10; char pad14[0xE8]; int fFC; char
 struct Ev_3617C0 { unsigned short type; unsigned short b2; char pad4[2]; unsigned short b6; unsigned short btn; };
 typedef struct { void* n; } It_3617C0;
 extern "C" {
-L_3617C0* func_00414790(void);
-M_3617C0* func_004147A0(void);
+L_3617C0* Gui_GetScreenList(void);
+M_3617C0* Gui_GetScreenStack(void);
 void* func_00418A80(void* mgr, char* a, char* b);
-void func_00414AC0(void* mgr, S_3617C0* o, void* w);
+void GuiStack_SwapScreens(void* mgr, S_3617C0* o, void* w);
 void func_002A88C0(It_3617C0* out, void* list, W_3617C0** val);
 void func_002A88B0(It_3617C0* out, void* list);
 int func_002A8890(It_3617C0* a, It_3617C0* b);
@@ -37,20 +37,20 @@ int func_003617C0(S_3617C0* o, Ev_3617C0* ev)
 {
     if (Plain_3617C0(ev, 0x10)) {
         if (o->fFC == 0) {
-            void* w = func_00418A80(func_00414790(), "GuiDossiers", "DOSSIERS");
-            func_00414AC0(func_004147A0(), o, w);
+            void* w = func_00418A80(Gui_GetScreenList(), "GuiDossiers", "DOSSIERS");
+            GuiStack_SwapScreens(Gui_GetScreenStack(), o, w);
         } else {
             W_3617C0* w = o->w10;
             if (w) {
                 W_3617C0* val = w;
                 It_3617C0 res;
                 It_3617C0 end;
-                L_3617C0* l = func_00414790();
+                L_3617C0* l = Gui_GetScreenList();
                 func_002A88C0(&res, l->list, &val);
                 func_002A88B0(&end, l->list);
                 if (func_002A8890(&res, &end)) w->flags |= 2;
             }
-            func_004147A0()->Close(o);
+            Gui_GetScreenStack()->Close(o);
         }
         return 1;
     }

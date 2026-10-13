@@ -10,7 +10,7 @@ extern char D_004FFB50[];
 extern char g_NpcRouteMgr[];
 extern void* Service_Lookup(void*,void*);
 extern int NpcRoute_Request(void*,void*,int,int,int,int,int,int,long long);
-unsigned char func_0015FA70(CxPathFollower2* self,int kind,int region) {
+unsigned char NpcPath_RequestRoute(CxPathFollower2* self,int kind,int region) {
     void* manager=Service_Lookup(D_004FFB50,g_NpcRouteMgr);
     int start=self->start;
     int previous=-1;

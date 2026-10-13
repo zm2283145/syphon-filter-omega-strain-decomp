@@ -7,7 +7,7 @@ void func_0013B180(ChildIterator* result, ChildList* list);
 void func_0028C0B0(ChildIterator* result, const ChildIterator* source);
 void func_0028C0A0(ChildIterator* result, ChildList* list);
 void func_0028C090(ChildIterator* result, const ChildIterator* source);
-void* func_00414790(void);
+void* Gui_GetScreenList(void);
 void func_00418840(void* manager, TraversalWidget* widget);
 }
 
@@ -42,7 +42,7 @@ extern "C" int func_0041EF10(TraversalWidget* self, TraversalWidget* sender, int
         return 1;
     case 25:
         if (self->flags & 0x20) {
-            func_00418840(func_00414790(), self);
+            func_00418840(Gui_GetScreenList(), self);
             return 1;
         }
         break;

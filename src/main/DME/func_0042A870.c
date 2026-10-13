@@ -11,7 +11,7 @@ extern char D_004BF9B8[];
 int Net_ConnectGame(void);
 int Net_CreateGame(void);
 void func_002EBCE0(int* out);
-int func_004147A0(void);
+int Gui_GetScreenStack(void);
 void func_0041E0F0(int a, int b, int c, int d, char* msg);
 
 void Net_StartSession(int join)
@@ -32,8 +32,8 @@ void Net_StartSession(int join)
         func_002EBCE0(&tmp);
         return;
     }
-    if (func_004147A0()) {
-        func_0041E0F0(func_004147A0(), func_004147A0(), 0x1E, 0, join ? D_004BF9B8 : D_004BFA30);
+    if (Gui_GetScreenStack()) {
+        func_0041E0F0(Gui_GetScreenStack(), Gui_GetScreenStack(), 0x1E, 0, join ? D_004BF9B8 : D_004BFA30);
     }
     D_00572470 = 0;
     D_00572478 = 0;

@@ -8,7 +8,7 @@ extern "C" {
 extern void func_0041EFA0(G29B*);
 extern C29B* D_004FFD2C;
 extern void func_0029AA50(G29B*, int);
-extern V29B* func_004147A0(void);
+extern V29B* Gui_GetScreenStack(void);
 extern int String_CompareNoCase(char*, char*);
 extern unsigned char D_005721C8;
 extern unsigned char D_005721C0;
@@ -35,7 +35,7 @@ extern "C" void func_0029B1E0(G29B* g) {
     g->cfg.f1c = c->f1c;
     g->cfg.f20 = c->f20;
     func_0029AA50(g, -1);
-    g->b400 = String_CompareNoCase(func_004147A0()->v19(), "GuiGameCanvas") == 0;
+    g->b400 = String_CompareNoCase(Gui_GetScreenStack()->v19(), "GuiGameCanvas") == 0;
     if (g->b400) {
         if (g->f42c) g->f42c->flags &= ~4;
         if (!D_005721C8 || !ok29B() || func_0029BDB0() < 2) {

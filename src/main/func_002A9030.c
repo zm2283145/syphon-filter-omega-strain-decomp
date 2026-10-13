@@ -17,7 +17,7 @@ Lobby2A* func_004294C0(void);
 void func_004426B0(Lobby2A*);
 int func_004518F0(Lobby2A*, void (*)(), void*, void*, void*);
 int func_0033CE30(W2A9030*, int, int, int, int, int);
-void func_002CAE30(char*, int, char*, int, W2A9030*, int);
+void FrontEnd_OpenPopup(char*, int, char*, int, W2A9030*, int);
 VObj2A* func_0041DB80(W2A9030*, char*);
 void func_0041BEB0(VObj2A*, char*, int);
 char* Agent_GetSelected(void*, int);
@@ -37,7 +37,7 @@ extern "C" void func_002A9030(W2A9030* self)
             if (l->state == 4) func_004426B0(l);
             if (!func_004518F0(l, func_002CC260, self->mAC, self->mC8, self->mE4)) {
                 char* g = D_004FFC04;
-                func_002CAE30(g, 2, D_004AB6B8, func_0033CE30(self, 0x5A, 0, 0, 0, 0), self, 0xB);
+                FrontEnd_OpenPopup(g, 2, D_004AB6B8, func_0033CE30(self, 0x5A, 0, 0, 0, 0), self, 0xB);
             }
         }
         o = func_0041DB80(self, D_0048BBD0);

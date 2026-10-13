@@ -2,7 +2,7 @@
 
 extern int func_0041F210(GuiWidgetStreamRecord* self, char** cursor);
 extern void func_0041BEB0(GuiTextStreamRecord* self, const char* text, int localized);
-extern void* func_00414790(void);
+extern void* Gui_GetScreenList(void);
 extern int func_00418420(void* manager, const char* name);
 
 static inline const char* read_string(char** cursor)
@@ -21,7 +21,7 @@ int func_0041C560(GuiTextStreamRecord* self, char** cursor)
         return 0;
     func_0041BEB0(self, read_string(cursor), 1);
     resource = read_string(cursor);
-    self->resource = func_00418420(func_00414790(), resource);
+    self->resource = func_00418420(Gui_GetScreenList(), resource);
     *cursor = (char*)(((unsigned int)*cursor + 3) & ~3u);
     self->first = *(float*)*cursor;
     *cursor += 4;

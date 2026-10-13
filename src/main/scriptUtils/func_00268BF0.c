@@ -2,7 +2,7 @@
 #pragma global_optimizer off
 typedef union { int i; float f; void* p; } ScriptArg_268BF0;
 typedef struct { float* data; int cap; int count; } Arr_268BF0;
-extern Arr_268BF0* func_002690C0(int h);
+extern Arr_268BF0* ScriptArray_Cast(int h);
 static inline float Get_268BF0(Arr_268BF0* a, int i)
 {
     if (i >= 0 && i < a->count)
@@ -25,7 +25,7 @@ int Script_Array_GetAndRemoveIndex(ScriptArg_268BF0* args)
     int i;
     idx[0] = args[1].i;
     i = *(int*)idx;
-    a = func_002690C0(args[0].i);
+    a = ScriptArray_Cast(args[0].i);
     {
         float v = Get_268BF0(a, i);
         Remove_268BF0(a, i);

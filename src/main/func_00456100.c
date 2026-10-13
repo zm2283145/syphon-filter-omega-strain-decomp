@@ -12,14 +12,14 @@ struct Manager {
 
 extern void* D_004FFC2C;
 extern char D_004FFB50[];
-extern "C" Manager* func_004147A0(void);
-extern "C" void func_00242900(void* p);
-extern "C" void func_00131470(void* p, int n);
+extern "C" Manager* Gui_GetScreenStack(void);
+extern "C" void Hud_ClosePauseMenu(void* p);
+extern "C" void Game_SetPaused(void* p, int n);
 
-/* Hands self to the manager (virtual +0x68), then func_00242900(D_004FFC2C) and func_00131470(D_004FFB50, 0). */
+/* Hands self to the manager (virtual +0x68), then Hud_ClosePauseMenu(D_004FFC2C) and Game_SetPaused(D_004FFB50, 0). */
 extern "C" void func_00456100(void* self)
 {
-    func_004147A0()->Method68(self);
-    func_00242900(D_004FFC2C);
-    func_00131470(D_004FFB50, 0);
+    Gui_GetScreenStack()->Method68(self);
+    Hud_ClosePauseMenu(D_004FFC2C);
+    Game_SetPaused(D_004FFB50, 0);
 }

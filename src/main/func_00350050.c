@@ -22,7 +22,7 @@ public:
 extern "C" {
 extern char* D_00492BC8;
 extern char D_004BAB40[];
-char* func_001692D0(Str* s);
+char* String_CStr(Str* s);
 void func_00426510(Tbl* t, int col, int row, char* s);
 void String_Copy(char* d, char* s);
 int sprintf(char* buf, const char* fmt, ...);
@@ -39,7 +39,7 @@ void func_00350050(Tbl* self)
     for (i = 0; i < self->rows; i++) {
         Item* it = &self->list->data[i];
         int v;
-        func_00426510(self, 0, i, func_001692D0(&it->name));
+        func_00426510(self, 0, i, String_CStr(&it->name));
         v = it->r[0].b;
         if (v == -1) String_Copy(buf, D_00492BC8);
         else sprintf(buf, D_004BAB40, v / 60, v % 60);

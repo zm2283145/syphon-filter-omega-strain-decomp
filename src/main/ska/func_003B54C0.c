@@ -3,7 +3,7 @@ extern int func_002071F0(void* s);
 extern char* func_002071A0(void* s);
 extern void Skas_RegisterClip(int* out, int a, char* name, unsigned int* desc);
 
-void func_003B54C0(int a, void* str, unsigned int* desc)
+void Skas_AppendAnimation(int a, void* str, unsigned int* desc)
 {
     int out;
     char buf[0x30];

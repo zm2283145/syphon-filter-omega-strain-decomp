@@ -40,7 +40,7 @@ static inline void* SD_Alloc(int n, int line)
     AllocGuard g;
     return Mem_Alloc(0, n, D_0049B1D0, line);
 }
-extern "C" void func_00147150(S7150* self, char* name, O7150** out, int idx, int a, int b, int c)
+extern "C" void WeaponDb_LoadModel(S7150* self, char* name, O7150** out, int idx, int a, int b, int c)
 {
     char buf[0x100];
     char* p;

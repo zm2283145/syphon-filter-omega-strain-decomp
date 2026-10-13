@@ -35,7 +35,7 @@ extern char* D_0048B908;
 extern char D_004FFB50[];
 extern char D_004DADF0[];
 extern char D_004DAE10[];
-Ui_00299B90* func_004147A0(void);
+Ui_00299B90* Gui_GetScreenStack(void);
 void func_00299800(S_00299B90* self);
 void func_00299780(S_00299B90* self);
 void func_002998B0(S_00299B90* self);
@@ -81,9 +81,9 @@ extern "C" int func_00299B90(S_00299B90* self, Ev_00299B90* ev)
     {
         bool b = ev->type == 1 && ev->f2 == 0 && ev->btn == 0x10 && ev->f6 == 0;
         if (b) {
-            if (!func_004147A0()->f20 || func_004147A0()->f20->f10 != -1) {
+            if (!Gui_GetScreenStack()->f20 || Gui_GetScreenStack()->f20->f10 != -1) {
                 func_0029AD10(self, 0);
-                if (self->x1C == func_004147A0()) {
+                if (self->x1C == Gui_GetScreenStack()) {
                     func_00299780(self);
                     return 1;
                 }
@@ -95,7 +95,7 @@ extern "C" int func_00299B90(S_00299B90* self, Ev_00299B90* ev)
     }
     {
         bool b = ev->type == 1 && ev->f2 == 0 && ev->btn == 0x2000 && ev->f6 == 0;
-        if (b && func_004147A0()->f20->f10 != -1) {
+        if (b && Gui_GetScreenStack()->f20->f10 != -1) {
             func_002998B0(self);
             return 1;
         }
@@ -109,7 +109,7 @@ extern "C" int func_00299B90(S_00299B90* self, Ev_00299B90* ev)
     {
         if (Held_00299B90(ev, 0x8000) || Held_00299B90(ev, 0x2000)) {
             W_00299B90* w;
-            if (func_004147A0()->f20 == (w = self->p41C)) {
+            if (Gui_GetScreenStack()->f20 == (w = self->p41C)) {
                 SoundEventMsg evm;
                 SoundMsg play;
                 SoundRequest req;

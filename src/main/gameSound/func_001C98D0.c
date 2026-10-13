@@ -11,7 +11,7 @@ typedef struct Arc1C98D0 {
 
 extern Arc1C98D0* Archive_Open(void* a, char* name, int b, int c);
 extern char* Loc_GetLanguageSuffix(void);
-extern int func_0036D2A0(Arc1C98D0* a, char* name, int c);
+extern int Hog_FindFileNoCase(Arc1C98D0* a, char* name, int c);
 extern int func_0036D520(Arc1C98D0* a, int idx);
 extern void func_003A7330(int, int, int);
 extern void func_003A7370(int, int, int, int);
@@ -46,17 +46,17 @@ int func_001C98D0(char* arg0) {
     sprintf(music, D_0049F590);
     arc = Archive_Open(fs, snd, 1, 0);
     if (arc->f14C) {
-        if (func_0036D2A0(arc, "WEPS.BNK", 0) != -1) {
-            F_(arg0, 0x5494, int) = snd_BankLoadByLoc(arc->f84, F_(arc->f148, 0x10, int) + func_0036D520(arc, func_0036D2A0(arc, "WEPS.BNK", 0)));
+        if (Hog_FindFileNoCase(arc, "WEPS.BNK", 0) != -1) {
+            F_(arg0, 0x5494, int) = snd_BankLoadByLoc(arc->f84, F_(arc->f148, 0x10, int) + func_0036D520(arc, Hog_FindFileNoCase(arc, "WEPS.BNK", 0)));
         }
-        if (func_0036D2A0(arc, "ENVIRON.BNK", 0) != -1) {
-            F_(arg0, 0x5490, int) = snd_BankLoadByLoc(arc->f84, F_(arc->f148, 0x10, int) + func_0036D520(arc, func_0036D2A0(arc, "ENVIRON.BNK", 0)));
+        if (Hog_FindFileNoCase(arc, "ENVIRON.BNK", 0) != -1) {
+            F_(arg0, 0x5490, int) = snd_BankLoadByLoc(arc->f84, F_(arc->f148, 0x10, int) + func_0036D520(arc, Hog_FindFileNoCase(arc, "ENVIRON.BNK", 0)));
         }
-        if (func_0036D2A0(arc, "VOX.BNK", 0) != -1) {
-            F_(arg0, 0x5498, int) = snd_BankLoadByLoc(arc->f84, F_(arc->f148, 0x10, int) + func_0036D520(arc, func_0036D2A0(arc, "VOX.BNK", 0)));
+        if (Hog_FindFileNoCase(arc, "VOX.BNK", 0) != -1) {
+            F_(arg0, 0x5498, int) = snd_BankLoadByLoc(arc->f84, F_(arc->f148, 0x10, int) + func_0036D520(arc, Hog_FindFileNoCase(arc, "VOX.BNK", 0)));
         }
-        if (func_0036D2A0(arc, "SHELL.BNK", 0) != -1) {
-            F_(arg0, 0x549C, int) = snd_BankLoadByLoc(arc->f84, F_(arc->f148, 0x10, int) + func_0036D520(arc, func_0036D2A0(arc, "SHELL.BNK", 0)));
+        if (Hog_FindFileNoCase(arc, "SHELL.BNK", 0) != -1) {
+            F_(arg0, 0x549C, int) = snd_BankLoadByLoc(arc->f84, F_(arc->f148, 0x10, int) + func_0036D520(arc, Hog_FindFileNoCase(arc, "SHELL.BNK", 0)));
         }
         func_003F9530(fs, snd);
         Archive_Open(fs, vag, 1, 0);

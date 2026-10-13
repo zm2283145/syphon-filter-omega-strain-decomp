@@ -13,7 +13,7 @@ void func_0036DEC0(File_5310* f);
 void* Mem_Alloc(int a, int size, char* file, int line);
 void String_CtorCStr_13B480(Str_5310* s, char* c);
 void func_00138B70(Str_5310* s, int f);
-void func_003B54C0(Self_5310* self, Str_5310* s, char* buf);
+void Skas_AppendAnimation(Self_5310* self, Str_5310* s, char* buf);
 void func_00146000(void* list, struct Buf_5310* buf);
 extern char D_004BCD70;
 }
@@ -71,7 +71,7 @@ extern "C" void func_003B5310(Self_5310* self, File_5310* f)
     {
         Str_5310 s;
         String_CtorCStr_13B480(&s, f->name);
-        func_003B54C0(self, &s, buf.p);
+        Skas_AppendAnimation(self, &s, buf.p);
         func_00138B70(&s, 0);
     }
     func_00146000(self->list, &buf);

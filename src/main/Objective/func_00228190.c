@@ -5,7 +5,7 @@ typedef struct { char pad[0xC]; int serial; } Tracked;
 typedef struct { Tracked* obj; int serial; } WeakRef;
 
 extern "C" {
-Tracked* func_0014D350(WeakRef* self);
+Tracked* Handle_Resolve(WeakRef* self);
 int func_00273210(void*, int*, void*, char*);
 int Event_Construct(void*, char*);
 int Event_Send(void*, void*, int);
@@ -65,7 +65,7 @@ extern "C" void cObjective_SetMapObject(Obj228* self, Tracked* obj, char* name, 
         g->map.Add(&Get2(&self->ref)->serial, self, name);
     }
     if (!quiet && D_005721C8 && Get1(&self->ref)) {
-        int id = func_0014D350(&self->ref)->serial;
+        int id = Handle_Resolve(&self->ref)->serial;
         Ev228 ev;
         Ev228* e = &ev;
         Event_Construct(e, &D_0051F0B0);

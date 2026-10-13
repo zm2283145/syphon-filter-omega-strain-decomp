@@ -14,7 +14,7 @@ extern void Event_Construct(Msg_3E67C0* m, void* type);
 extern void Event_Send(Msg_3E67C0* m, void* target, int x);
 extern void cMessage_dtor(Msg_3E67C0* m, int f);
 
-void func_003E67C0(Pt2_Tgt* t, char cat, Pt2_Hd* h, unsigned char flag, float val) {
+void ObjectAction_SendKind7(Pt2_Tgt* t, char cat, Pt2_Hd* h, unsigned char flag, float val) {
     int tmp[1];
     int* idp;
     Msg_3E67C0 m;

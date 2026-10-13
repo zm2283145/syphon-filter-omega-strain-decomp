@@ -14,9 +14,9 @@ struct S_002A12F0 { char pad0[0x20]; void* f20; char pad24[0xDC - 0x24]; void* p
 extern "C" {
 void func_002A1590(S_002A12F0* self, int a);
 void func_002A1600(S_002A12F0* self, int a);
-void* func_00414790(void);
+void* Gui_GetScreenList(void);
 Pg_002A12F0* func_00418980(void* a, char* b);
-Ui_002A12F0* func_004147A0(void);
+Ui_002A12F0* Gui_GetScreenStack(void);
 void func_0033C320(S_002A12F0* self, int a);
 void func_002A0F60(S_002A12F0* self);
 int func_0033CEF0(S_002A12F0* self, Ev_002A12F0* ev);
@@ -59,9 +59,9 @@ extern "C" int func_002A12F0(S_002A12F0* self, Ev_002A12F0* ev)
         }
     }
     if (Press_002A12F0(ev, 0x10)) {
-        Pg_002A12F0* p = func_00418980(func_00414790(), "GuiNetJoinMission");
+        Pg_002A12F0* p = func_00418980(Gui_GetScreenList(), "GuiNetJoinMission");
         if (p) {
-            func_004147A0()->Hide(self);
+            Gui_GetScreenStack()->Hide(self);
             p->flags |= 2;
         } else {
             func_0033C320(self, 1);

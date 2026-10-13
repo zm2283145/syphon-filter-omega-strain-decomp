@@ -11,10 +11,10 @@ extern Ui_00295640* D_004FFC04;
 extern char D_004AA288[];
 void func_00294300(S_00295640* self, int a);
 void func_00294F50(S_00295640* self, unsigned char a);
-void* func_004147A0(void);
+void* Gui_GetScreenStack(void);
 void func_0041E0F0(void* a, void* b, int c, int d, int e);
 int func_0033CE30(S_00295640* self, int a, int b, int c, int d, int e);
-int func_002CAE30(void* ui, int a, char* b, int c, S_00295640* d, int e);
+int FrontEnd_OpenPopup(void* ui, int a, char* b, int c, S_00295640* d, int e);
 void func_002955B0(S_00295640* self);
 int func_0033CEF0(S_00295640* self, Ev_00295640* ev);
 }
@@ -35,7 +35,7 @@ extern "C" int func_00295640(S_00295640* self, Ev_00295640* ev)
             if (self->b178[self->f1CC])
                 func_00294300(self, self->c1B4[self->f1CC]);
             else
-                func_0041E0F0(self->p118[self->f1CC], func_004147A0(), 0x10, 4, 0);
+                func_0041E0F0(self->p118[self->f1CC], Gui_GetScreenStack(), 0x10, 4, 0);
             return 1;
         }
         if (b == 0x10) {
@@ -56,7 +56,7 @@ extern "C" int func_00295640(S_00295640* self, Ev_00295640* ev)
             if (st == 0) {
                 Ui_00295640* ui = D_004FFC04;
                 if (ui->b30 && !ui->b32)
-                    self->f2F8 = func_002CAE30(ui, 5, D_004AA288, func_0033CE30(self, 0xE, 0, 0, 0, 0), self, 0x19);
+                    self->f2F8 = FrontEnd_OpenPopup(ui, 5, D_004AA288, func_0033CE30(self, 0xE, 0, 0, 0, 0), self, 0x19);
                 else
                     func_002955B0(self);
             } else {

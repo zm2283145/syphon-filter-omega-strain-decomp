@@ -13,8 +13,8 @@ Plr_29AE60* PlayerSlots_Get(int i);
 void func_00299800(Self_29AE60* self);
 int func_0029BDB0(void);
 void func_002C9270(char* buf, Plr_29AE60* p, int idx, int x);
-Mgr_29AE60* func_004147A0(void);
-void func_00414B30(Mgr_29AE60* m, int x);
+Mgr_29AE60* Gui_GetScreenStack(void);
+void GuiScreen_SetFocus(Mgr_29AE60* m, int x);
 void func_00421070(Menu_29AE60* m);
 void func_00421290(Menu_29AE60* m, char* s, int idx, int x);
 void func_00424430(Menu_29AE60* m, int a, int sel);
@@ -33,7 +33,7 @@ extern "C" void func_0029AE60(Self_29AE60* self)
         if (self->fA8 != 0) {
             self->fA8->flags &= ~4;
         }
-        func_00414B30(func_004147A0(), self->fA4);
+        GuiScreen_SetFocus(Gui_GetScreenStack(), self->fA4);
         return;
     }
     sel = self->menu->sel;
@@ -53,7 +53,7 @@ extern "C" void func_0029AE60(Self_29AE60* self)
     func_00424430(self->menu, 0, sel < self->menu->count ? sel : 0);
     if (self->w434 != 0) {
         unsigned char on = 0;
-        Mgr_29AE60* g = func_004147A0();
+        Mgr_29AE60* g = Gui_GetScreenStack();
         Menu_29AE60* m = self->menu;
         if (g->active == m && m->count != 0) on = 1;
         SetFlag_29AE60(self->w434, 2, on);

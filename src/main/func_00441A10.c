@@ -28,13 +28,13 @@ extern char D_004C0448[]; extern char D_004C04F0[]; extern char D_004C0500[];
 extern char D_004C0510[]; extern char D_004C0520[];
 int* Agent_GetSelected(void*, int);
 char* Loc_LookupText(char*);
-int func_002CAE30(int, int, char*, char*, void*, int);
+int FrontEnd_OpenPopup(int, int, char*, char*, void*, int);
 void func_0040D3C0(Net_441A10*);
 void func_00441960(Obj_441A10*);
 void func_00441C10(void);
 }
 
-static inline int ShowDlg(int mgr, int type, char* t, char* m, void* cb, int x) { return func_002CAE30(mgr, type, Loc_LookupText(t), Loc_LookupText(m), cb, x); }
+static inline int ShowDlg(int mgr, int type, char* t, char* m, void* cb, int x) { return FrontEnd_OpenPopup(mgr, type, Loc_LookupText(t), Loc_LookupText(m), cb, x); }
 
 extern "C" void func_00441A10(Obj_441A10* self)
 {

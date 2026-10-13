@@ -32,11 +32,11 @@ void* func_004294C0(void);
 int func_00452FE0(void* g);
 void func_0029CBB0(S_0029E440* self, int a);
 void func_0029DAF0(S_0029E440* self, char* t);
-Ui_0029E440* func_004147A0(void);
+Ui_0029E440* Gui_GetScreenStack(void);
 Fl_0029E440* func_0041DB80(void* p, char* name);
 int func_0033CE30(S_0029E440* self, int a, int b, int c, int d, int e);
-int func_002CAE30(void* ui, int a, char* b, int c, S_0029E440* d, int e);
-void func_002CAC80(void* ui, int id);
+int FrontEnd_OpenPopup(void* ui, int a, char* b, int c, S_0029E440* d, int e);
+void FrontEnd_ClosePopup(void* ui, int id);
 void func_0029D390(S_0029E440* self);
 void func_0037E320(void* p);
 void* Service_Lookup(void* a, void* b);
@@ -78,7 +78,7 @@ extern "C" int func_0029E440(S_0029E440* self, void* w, int msg, int sub, char* 
             Fl_0029E440* b;
             int old;
             void* ui;
-            func_004147A0()->Show(p, 0x7D0);
+            Gui_GetScreenStack()->Show(p, 0x7D0);
             a = func_0041DB80(self->p108, D_004AAC18);
             if (a)
                 a->flags &= ~2;
@@ -87,9 +87,9 @@ extern "C" int func_0029E440(S_0029E440* self, void* w, int msg, int sub, char* 
                 b->flags |= 2;
             old = self->f11C;
             ui = D_004FFC04;
-            self->f11C = func_002CAE30(ui, 0, D_004AABF0, func_0033CE30(self, 0x82, 0, 0, 0, 0), 0, 0);
+            self->f11C = FrontEnd_OpenPopup(ui, 0, D_004AABF0, func_0033CE30(self, 0x82, 0, 0, 0, 0), 0, 0);
             if (old != -1)
-                func_002CAC80(D_004FFC04, old);
+                FrontEnd_ClosePopup(D_004FFC04, old);
         }
         return 1;
     }
@@ -131,13 +131,13 @@ extern "C" int func_0029E440(S_0029E440* self, void* w, int msg, int sub, char* 
                     func_0029DAF0(self, self->f90);
                 } else {
                     void* ui = D_004FFC04;
-                    func_002CAE30(ui, 5, D_004AABF0, func_0033CE30(self, 0xE, 0, 0, 0, 0), self, 0x1E);
+                    FrontEnd_OpenPopup(ui, 5, D_004AABF0, func_0033CE30(self, 0xE, 0, 0, 0, 0), self, 0x1E);
                 }
             } else if (w == self->fF8) {
                 func_0029DFC0(self);
             } else {
                 void* ui = D_004FFC04;
-                func_002CAE30(ui, 5, D_004AABF0, func_0033CE30(self, 0xE, 0, 0, 0, 0), self, 0x1E);
+                FrontEnd_OpenPopup(ui, 5, D_004AABF0, func_0033CE30(self, 0xE, 0, 0, 0, 0), self, 0x1E);
             }
             return 1;
         }

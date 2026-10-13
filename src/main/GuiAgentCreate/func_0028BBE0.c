@@ -19,23 +19,23 @@ extern char D_004FFB50[];
 extern unsigned char D_004FFBB8;
 extern int D_004FFBBC;
 extern Ui_0028BBE0* D_004FFC04;
-char* func_001692D0(void* s);
+char* String_CStr(void* s);
 void func_0028D610(Self_0028BBE0* self, char* n);
 int strcmp(const char* a, const char* b);
 void func_0028C1D0(void* p);
 void func_0028CB20(Self_0028BBE0* self, int a, int b);
 void func_0028C2A0(Src_0028BBE0* w);
 void* Agent_GetSelected(void* a, int b);
-void func_003340B0(void* ag, char* text);
+void AgentData_SetName(void* ag, char* text);
 void* func_0041DB80(Self_0028BBE0* self, char* name);
 void func_0041BEB0(W_0028BBE0* w, char* s, int a);
 void func_0028BA90(Self_0028BBE0* self);
-void* func_004147A0(void);
-void func_00414B30(void* ui, void* w);
-void func_00333F60(void* ag, int a, int b);
-void* func_00414790(void);
+void* Gui_GetScreenStack(void);
+void GuiScreen_SetFocus(void* ui, void* w);
+void AgentData_Create(void* ag, int a, int b);
+void* Gui_GetScreenList(void);
 void* func_00418A80(void* a, char* b, char* c);
-void func_00414AC0(void* ui, Self_0028BBE0* self, void* pg);
+void GuiStack_SwapScreens(void* ui, Self_0028BBE0* self, void* pg);
 int func_0041EF10(Self_0028BBE0* self, Src_0028BBE0* w, int msg, int sub, char* text);
 }
 static inline W_0028BBE0* FindAs_0028BBE0(Self_0028BBE0* self, char* name, char* type)
@@ -51,7 +51,7 @@ extern "C" int func_0028BBE0(Self_0028BBE0* self, Src_0028BBE0* w, int msg, int 
     if (m == 0) {
         char* n;
         self->fD0 = 0;
-        n = func_001692D0(w->name);
+        n = String_CStr(w->name);
         func_0028D610(self, n);
         if (!strcmp(n, "gender")) {
             self->fCC = 0;
@@ -88,7 +88,7 @@ extern "C" int func_0028BBE0(Self_0028BBE0* self, Src_0028BBE0* w, int msg, int 
             W_0028BBE0* x;
             if (text && *text) {
                 W_0028BBE0* t;
-                func_003340B0(Agent_GetSelected(D_004FFB50, -1), text);
+                AgentData_SetName(Agent_GetSelected(D_004FFB50, -1), text);
                 t = FindAs_0028BBE0(self, "value_agent_name", D_004A7520);
                 if (t)
                     func_0041BEB0(t, text, 0);
@@ -99,18 +99,18 @@ extern "C" int func_0028BBE0(Self_0028BBE0* self, Src_0028BBE0* w, int msg, int 
             }
             x = (W_0028BBE0*)func_0041DB80(self, "agentname");
             if (x)
-                func_00414B30(func_004147A0(), x);
+                GuiScreen_SetFocus(Gui_GetScreenStack(), x);
             return 1;
         } else if (sub == 3) {
             void* pg;
             D_004FFBB8 = 0;
             D_004FFBBC = -1;
-            func_00333F60(Agent_GetSelected(D_004FFB50, -1), 0, 1);
+            AgentData_Create(Agent_GetSelected(D_004FFB50, -1), 0, 1);
             if (D_004FFC04->b2E)
-                pg = func_00418A80(func_00414790(), "GuiCommandCenter", "CMDCENTR");
+                pg = func_00418A80(Gui_GetScreenList(), "GuiCommandCenter", "CMDCENTR");
             else
-                pg = func_00418A80(func_00414790(), "GuiOnlineOfflineSelect", "onoffsel");
-            func_00414AC0(func_004147A0(), self, pg);
+                pg = func_00418A80(Gui_GetScreenList(), "GuiOnlineOfflineSelect", "onoffsel");
+            GuiStack_SwapScreens(Gui_GetScreenStack(), self, pg);
         }
     }
     return func_0041EF10(self, w, msg, sub, text);

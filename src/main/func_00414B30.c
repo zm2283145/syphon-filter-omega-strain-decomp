@@ -11,7 +11,7 @@ struct Node414B30 {
     VC00414B30* obj;      /* 0x44 */
 };
 
-extern "C" void func_00414B30(Node414B30* self, Node414B30* w) {
+extern "C" void GuiScreen_SetFocus(Node414B30* self, Node414B30* w) {
     if (w != self->focus) {
         if (self->focus) {
             self->focus->obj->v8();

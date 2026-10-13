@@ -9,14 +9,14 @@ typedef struct {
     T294250* objs[6];
     unsigned char flag;
 } S294250;
-extern G294250* func_004147A0(void);
+extern G294250* Gui_GetScreenStack(void);
 extern T294250* func_0041D8C0(S294250* s);
 T294250* func_00294250(S294250* s)
 {
     int id;
     T294250* o = s->objs[s->idx];
     if (o && o->id == s->ids[s->idx]) {
-        if (s->flag || (func_004147A0()->t && (id = func_004147A0()->t->id, id != s->ids[s->idx]))) {
+        if (s->flag || (Gui_GetScreenStack()->t && (id = Gui_GetScreenStack()->t->id, id != s->ids[s->idx]))) {
             s->flag = 0;
             return s->objs[s->idx];
         }

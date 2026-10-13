@@ -5,8 +5,8 @@
 #include "types.h"
 
 extern "C" {
-GuiFocusManager* func_004147A0(void);
-void func_00414B30(GuiFocusManager* manager, TraversalWidget* selected);
+GuiFocusManager* Gui_GetScreenStack(void);
+void GuiScreen_SetFocus(GuiFocusManager* manager, TraversalWidget* selected);
 void func_0013B180(ChildIterator* result, ChildList* list);
 void func_0028C0B0(ChildIterator* result, const ChildIterator* source);
 void func_0028C0A0(ChildIterator* result, ChildList* list);
@@ -41,16 +41,16 @@ extern "C" void func_0041E130(TraversalWidget* self, int enabled)
     if ((unsigned char)enabled != ((self->flags & 4) != 0)) {
         if (enabled) {
             self->flags |= 4;
-            if (!func_004147A0()->selected) {
-                GuiFocusManager* manager = func_004147A0();
-                func_00414B30(manager, self->first_descendant());
+            if (!Gui_GetScreenStack()->selected) {
+                GuiFocusManager* manager = Gui_GetScreenStack();
+                GuiScreen_SetFocus(manager, self->first_descendant());
             }
         } else {
-            if (func_004147A0()->selected == self) {
+            if (Gui_GetScreenStack()->selected == self) {
                 TraversalWidget* next = self->owner->find_forward(self, 1);
                 if (next == self)
                     next = 0;
-                func_00414B30(func_004147A0(), next);
+                GuiScreen_SetFocus(Gui_GetScreenStack(), next);
             }
             self->flags &= ~4;
         }
@@ -116,6 +116,6 @@ extern "C" void func_0041E470(TraversalWidget* self)
         func_0028C0A0(&rawEnd, &self->children);
         func_0028C090(&end, &rawEnd);
     }
-    if ((self->flags & 0x100) && func_004147A0()->selected == self)
+    if ((self->flags & 0x100) && Gui_GetScreenStack()->selected == self)
         func_0041E560(self, &(*(Vec4*)D_004BF3C0));
 }

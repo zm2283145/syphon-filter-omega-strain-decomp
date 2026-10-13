@@ -34,7 +34,7 @@ extern char D_004FFB50[];
 extern V4_45DFD0 D_00587CA0; extern V4_45DFD0 D_00587CB0;
 void func_0041F150(O_45DFD0* o);
 void* Mem_Alloc(int pool, int size, char* file, int line);
-void* func_00414790(void);
+void* Gui_GetScreenList(void);
 void* func_00418420(void* mgr, char* name);
 T_45DFD0* func_003D0940(void* p, int a, int b, int c, int d, void* e, char* f);
 W_45DFD0* func_0041DB80(void* o, char* name);
@@ -54,7 +54,7 @@ void func_0045DFD0(O_45DFD0* o)
     T_45DFD0* t;
     func_0041F150(o);
     t = (T_45DFD0*)Alloc_45DFD0(0x60, 0x107);
-    if (t) t = func_003D0940(t, 0, 0, 10, 10, func_00418420(func_00414790(), "callout"), D_00587D80);
+    if (t) t = func_003D0940(t, 0, 0, 10, 10, func_00418420(Gui_GetScreenList(), "callout"), D_00587D80);
     o->f48 = t;
     o->f48->b10 = 2;
     o->f48->b11 = 1;

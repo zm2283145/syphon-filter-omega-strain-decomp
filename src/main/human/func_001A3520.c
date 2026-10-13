@@ -8,7 +8,7 @@ int Event_Send(char **, char * , int);
 int Inventory_HasAnyItem(int);
 int cMessage_dtor(char **, int);
 int WeaponInv_MoveItemsToBackpack(int, int);
-int func_00255A50(int, int, int);
+int WorldInv_AddArmor(int, int, int);
 int Backpack_Construct(char * , int, int);
 int ItemInv_Any(int);
 extern "C" void Message_GetScriptTypeKey();
@@ -33,7 +33,7 @@ extern "C" void Npc_DeadStateDrop(char * arg0) {
             F_(arg0, 0x3464, int) = Backpack_Construct(arg0, 1, 0);
             WeaponInv_MoveItemsToBackpack(inv, F_(arg0, 0x3464, int));
             if (x != 0) {
-                func_00255A50(F_(arg0, 0x3464, int), x, F_(arg0, 0x339C, int));
+                WorldInv_AddArmor(F_(arg0, 0x3464, int), x, F_(arg0, 0x339C, int));
             }
             unsigned char on = *(volatile unsigned char*)&D_005721C8; if (on != 0) { int h; int id; int a = D_005721A8; if (on) { if (D_00494178 == -1) func_002EBAF8(&D_00494178, a); id = D_00494178; } else id = 0;
                 h = F_(arg0, 0x3464, int);

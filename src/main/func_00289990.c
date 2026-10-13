@@ -12,13 +12,13 @@ extern char D_00506340[];
 extern char D_00506350[];
 extern unsigned char D_00506360;
 int func_0033CE30(S_00289990* self, int a, int b, int c, int d, int e);
-int func_002CAE30(void* ui, int a, char* b, int c, S_00289990* d, int e);
+int FrontEnd_OpenPopup(void* ui, int a, char* b, int c, S_00289990* d, int e);
 void func_00289440(S_00289990* self);
 void func_00288E90(S_00289990* self);
-Ui_00289990* func_004147A0(void);
+Ui_00289990* Gui_GetScreenStack(void);
 void func_0028A230(S_00289990* self);
 void func_0028A180(S_00289990* self);
-char* func_001692D0(void* s);
+char* String_CStr(void* s);
 char* strncpy(char* d, const char* s, int n);
 void func_0033C320(S_00289990* self, int a);
 int func_0033CEF0(S_00289990* self, Ev_00289990* ev);
@@ -48,7 +48,7 @@ extern "C" int func_00289990(S_00289990* self, Ev_00289990* ev)
 {
     if (Press_00289990(ev, 0x10)) {
         void* ui = D_004FFC04;
-        func_002CAE30(ui, 5, D_004A9730, func_0033CE30(self, 0xE, 0, 0, 0, 0), self, 0x1E);
+        FrontEnd_OpenPopup(ui, 5, D_004A9730, func_0033CE30(self, 0xE, 0, 0, 0, 0), self, 0x1E);
         return 1;
     } else {
         bool b = ev->type == 1 && ev->f2 == 0 && ev->btn == 0x80 && ev->f6 == 0;
@@ -61,11 +61,11 @@ extern "C" int func_00289990(S_00289990* self, Ev_00289990* ev)
         } else {
             bool c = ev->type == 1 && ev->f2 == 0 && ev->btn == 0x2000 && ev->f6 == 0;
             if (c) {
-                if (func_004147A0()->f20 == self->p88) {
+                if (Gui_GetScreenStack()->f20 == self->p88) {
                     func_0028A230(self);
                     return 1;
                 }
-                if (func_004147A0()->f20 == self->p90) {
+                if (Gui_GetScreenStack()->f20 == self->p90) {
                     func_0028A180(self);
                     return 1;
                 }
@@ -79,8 +79,8 @@ extern "C" int func_00289990(S_00289990* self, Ev_00289990* ev)
             D_00506340[0] = 0;
             D_00506360 = self->bA4;
             if (self->p8C && self->p94) {
-                strncpy(D_00506340, func_001692D0(self->p94->s48), 0xF);
-                strncpy(D_00506350, func_001692D0(self->p8C->s48), 0xF);
+                strncpy(D_00506340, String_CStr(self->p94->s48), 0xF);
+                strncpy(D_00506350, String_CStr(self->p8C->s48), 0xF);
             }
             D_004FFC04->f268 = 7;
             func_0033C320(self, 5);

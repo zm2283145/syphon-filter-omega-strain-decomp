@@ -21,9 +21,9 @@ void func_0028A230(S_00289C80* self);
 void func_0028A180(S_00289C80* self);
 void func_00289440(S_00289C80* self);
 void func_00288E90(S_00289C80* self);
-void* func_004147A0(void);
-void func_00414B30(void* ui, void* w);
-char* func_001692D0(void* s);
+void* Gui_GetScreenStack(void);
+void GuiScreen_SetFocus(void* ui, void* w);
+char* String_CStr(void* s);
 int strcmp(const char* a, const char* b);
 void String_Copy(char* d, const char* s);
 char* func_00336170(Ag_00289C80* ag);
@@ -32,9 +32,9 @@ void func_00441A10(S_00289C80* self);
 char* Loc_LookupText(char* key);
 void func_0041BEB0(void* w, char* s, int a);
 void func_002CA640(void* ui, int a);
-void* func_00414790(void);
+void* Gui_GetScreenList(void);
 void* func_00418A80(void* a, char* b, char* c);
-void func_00414AC0(void* ui, S_00289C80* self, void* pg);
+void GuiStack_SwapScreens(void* ui, S_00289C80* self, void* pg);
 }
 static inline int StrNe_00289C80(const char* a, const char* b) { return strcmp(a, b); }
 extern "C" int func_00289C80(S_00289C80* self, void* w, int msg, int sub, char* text)
@@ -64,7 +64,7 @@ extern "C" int func_00289C80(S_00289C80* self, void* w, int msg, int sub, char* 
             if (self->p98)
                 self->p98->flags |= 4;
             self->p8C->flags &= ~4;
-            func_00414B30(func_004147A0(), self->p88);
+            GuiScreen_SetFocus(Gui_GetScreenStack(), self->p88);
         } else if (w == self->p94) {
             if (a)
                 a->flags |= 4;
@@ -73,7 +73,7 @@ extern "C" int func_00289C80(S_00289C80* self, void* w, int msg, int sub, char* 
             if (self->p98)
                 self->p98->flags |= 4;
             self->p94->flags &= ~4;
-            func_00414B30(func_004147A0(), self->p90);
+            GuiScreen_SetFocus(Gui_GetScreenStack(), self->p90);
         } else {
             return func_0033CF90(self, w, msg, sub);
         }
@@ -88,13 +88,13 @@ extern "C" int func_00289C80(S_00289C80* self, void* w, int msg, int sub, char* 
                 self->bAC = 1;
                 changed = 0;
                 cur = self->p9C->name;
-                if (StrNe_00289C80(func_001692D0(self->p94->s48), cur)) {
-                    String_Copy(self->p9C->name, func_001692D0(self->p94->s48));
+                if (StrNe_00289C80(String_CStr(self->p94->s48), cur)) {
+                    String_Copy(self->p9C->name, String_CStr(self->p94->s48));
                     changed = 1;
                 }
-                n = func_001692D0(self->p8C->s48);
+                n = String_CStr(self->p8C->s48);
                 if (strcmp(n, func_00336170(self->p9C))) {
-                    func_00441C20(self, func_001692D0(self->p8C->s48));
+                    func_00441C20(self, String_CStr(self->p8C->s48));
                 } else {
                     unsigned char* f = &D_004FFC04->b265;
                     if (*f)
@@ -124,8 +124,8 @@ extern "C" int func_00289C80(S_00289C80* self, void* w, int msg, int sub, char* 
             if (sub == 0x1E) {
                 void* pg;
                 func_002CA640(D_004FFC04, 1);
-                pg = func_00418A80(func_00414790(), "GuiOnlineOfflineSelect", "ONOFFSEL");
-                func_00414AC0(func_004147A0(), self, pg);
+                pg = func_00418A80(Gui_GetScreenList(), "GuiOnlineOfflineSelect", "ONOFFSEL");
+                GuiStack_SwapScreens(Gui_GetScreenStack(), self, pg);
                 return 1;
             }
             if (sub == 0x21) {

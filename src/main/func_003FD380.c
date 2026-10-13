@@ -3,7 +3,7 @@ extern unsigned int D_0055CA90;
 extern unsigned char D_0055D450;
 extern int strlen(const char*);
 
-int func_003FD380(const unsigned char* in, char* out, int* digit, int max)
+int AgentFile_DecodeName(const unsigned char* in, char* out, int* digit, int max)
 {
     int len, n, i, d;
     if (!D_0055D450 || !D_0055CA90)

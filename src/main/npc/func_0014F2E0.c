@@ -17,7 +17,7 @@ typedef struct {
 extern void LookSlot_Release(int* out, Container* self, int* value, int** where);
 
 /* Sets a new request if its priority is at least the current one, clearing the pending list. */
-void func_0014F2E0(Npc14F* self, unsigned char a, unsigned char b, int priority)
+void NpcLook_Begin(Npc14F* self, unsigned char a, unsigned char b, int priority)
 {
     if (priority >= self->priority) {
         Container* list = self->list;

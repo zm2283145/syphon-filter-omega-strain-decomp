@@ -15,7 +15,7 @@ extern int GObj_IdentityA(void*);
 extern int ScriptFilter_Dispatch(void* filter, int a0, int a1);
 extern int WeaponInv_EquipItem(void* inventory, int a1);
 extern int* func_001450C0(void);
-extern void* func_0014A690(int handle);
+extern void* NpcScript_GetReceiver(int handle);
 extern void Actor_SetInvulnerable(PlayerActor* actor, int invulnerable);
 extern int* func_0022DE00(void);
 extern int* func_0022F170(void);
@@ -30,7 +30,7 @@ int Script_cPlayer_RestoreBody(void) {
 }
 
 int Script_cPlayer_SwitchBodies(PlayerScriptArg* args) {
-    func_0014A690(args[1].i);
+    NpcScript_GetReceiver(args[1].i);
     return 0;
 }
 

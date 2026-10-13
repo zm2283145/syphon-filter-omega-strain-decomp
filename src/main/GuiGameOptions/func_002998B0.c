@@ -13,8 +13,8 @@ typedef struct {
     int idx;
 } S2998B0;
 extern "C" {
-void* func_004147A0(void);
-void func_00414B30(void* a, int b);
+void* Gui_GetScreenStack(void);
+void GuiScreen_SetFocus(void* a, int b);
 void func_0041E0F0(void* a, void* b, int c, int d, int e);
 void func_002999B0(S2998B0* s);
 }
@@ -24,14 +24,14 @@ extern "C" void func_002998B0(S2998B0* s)
         int r;
         s->items[s->idx]->flags |= 4;
         r = s->items[s->idx]->v.v15();
-        func_00414B30(func_004147A0(), r);
+        GuiScreen_SetFocus(Gui_GetScreenStack(), r);
         s->x20 = r;
     }
     if (s->xAC)
         s->xAC->flags &= ~4;
     if (s->objs[s->idx]) {
         func_0041E0F0(s, s->objs[s->idx], 10, 10, 0);
-        func_0041E0F0(s->objs[s->idx], func_004147A0(), 0x10, 0, 0);
+        func_0041E0F0(s->objs[s->idx], Gui_GetScreenStack(), 0x10, 0, 0);
     }
     func_002999B0(s);
 }

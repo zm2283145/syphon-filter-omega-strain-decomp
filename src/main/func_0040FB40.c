@@ -7,7 +7,7 @@
 #include "types.h"
 #include "loose04_types.h"
 
-extern void func_0040F710(Tree* t, int root);
+extern void World_FreePendingTree(Tree* t, int root);
 
 /* Address of the tree header (end()). */
 int* func_0040FB40(Tree* t) {
@@ -21,7 +21,7 @@ void* func_0040FB50(void* self) {
 /* Erases every node of the tree and resets it to empty. */
 void World_ClearPending(Tree* t) {
     if (t->header != 0) {
-        func_0040F710(t, t->header);
+        World_FreePendingTree(t, t->header);
         t->unk0 = 0;
         t->header = 0;
         t->leftmost = &t->header;

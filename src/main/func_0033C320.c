@@ -9,17 +9,17 @@ extern "C" {
 extern G33* D_004FFC04;
 extern char D_004B99D8[];
 extern char* func_0033CE30(O33*, int, char*, char*, int, int);
-extern int func_002CAE30(G33*, int, char*, char*, int, int);
+extern int FrontEnd_OpenPopup(G33*, int, char*, char*, int, int);
 extern void func_002C82F0(G33*);
 extern void func_002C81D0(G33*);
-extern void func_002CAC80(G33*, int);
-extern int func_00414790(void);
+extern void FrontEnd_ClosePopup(G33*, int);
+extern int Gui_GetScreenList(void);
 extern W33* func_00418A80(int, char*, char*);
 extern void func_00418840(int, W33*);
 extern int func_004294C0(void);
 extern int func_00442510(int, int);
 extern int func_0044A230(int);
-extern V33* func_004147A0(void);
+extern V33* Gui_GetScreenStack(void);
 extern void func_0041E0F0(W33*, V33*, int, int, int);
 }
 extern "C" int func_0033C320(O33* self, int type) {
@@ -38,20 +38,20 @@ extern "C" int func_0033C320(O33* self, int type) {
     h = -1;
     if (c != -1) {
         G33* g = D_004FFC04;
-        h = func_002CAE30(g, 0, D_004B99D8, func_0033CE30(self, (unsigned char)c, 0, 0, 0, 0), 0, 0);
+        h = FrontEnd_OpenPopup(g, 0, D_004B99D8, func_0033CE30(self, (unsigned char)c, 0, 0, 0, 0), 0, 0);
         func_002C82F0(D_004FFC04);
     }
     w = 0;
     switch (type) {
-    case 0: w = func_00418A80(func_00414790(), "GuiOnlineConnect", "ONLINECN"); break;
-    case 1: w = func_00418A80(func_00414790(), "GuiCommandCenter", "CMDCENTR"); break;
-    case 2: w = func_00418A80(func_00414790(), "GuiNetJoinMission", "JOINMIS"); break;
-    case 6: w = func_00418A80(func_00414790(), "GuiMissionSetup", "MSNSETUP"); break;
-    case 3: w = func_00418A80(func_00414790(), "GuiNetAgencyCell", "AGENTCEL"); break;
-    case 4: w = func_00418A80(func_00414790(), "GuiNetContacts", "CONTACTS"); break;
-    case 5: w = func_00418A80(func_00414790(), "GuiOnlineOptions", "ONLIPREF"); break;
-    case 9: w = func_00418A80(func_00414790(), "GuiNetMessages", "NETMESS"); break;
-    case 7: w = func_00418A80(func_00414790(), "GuiAccountLogin", "ACNTLOGN"); break;
+    case 0: w = func_00418A80(Gui_GetScreenList(), "GuiOnlineConnect", "ONLINECN"); break;
+    case 1: w = func_00418A80(Gui_GetScreenList(), "GuiCommandCenter", "CMDCENTR"); break;
+    case 2: w = func_00418A80(Gui_GetScreenList(), "GuiNetJoinMission", "JOINMIS"); break;
+    case 6: w = func_00418A80(Gui_GetScreenList(), "GuiMissionSetup", "MSNSETUP"); break;
+    case 3: w = func_00418A80(Gui_GetScreenList(), "GuiNetAgencyCell", "AGENTCEL"); break;
+    case 4: w = func_00418A80(Gui_GetScreenList(), "GuiNetContacts", "CONTACTS"); break;
+    case 5: w = func_00418A80(Gui_GetScreenList(), "GuiOnlineOptions", "ONLIPREF"); break;
+    case 9: w = func_00418A80(Gui_GetScreenList(), "GuiNetMessages", "NETMESS"); break;
+    case 7: w = func_00418A80(Gui_GetScreenList(), "GuiAccountLogin", "ACNTLOGN"); break;
     }
     if (c != -1) func_002C81D0(D_004FFC04);
     if (w) {
@@ -59,16 +59,16 @@ extern "C" int func_0033C320(O33* self, int type) {
             int x = D_004FFC04->f248;
             int p = func_004294C0();
             if (!p || !func_00442510(p, x)) {
-                if (h != -1) func_002CAC80(D_004FFC04, h);
-                func_00418840(func_00414790(), w);
+                if (h != -1) FrontEnd_ClosePopup(D_004FFC04, h);
+                func_00418840(Gui_GetScreenList(), w);
                 return 0;
             }
         }
         if (type == 3) {
             int p = func_004294C0();
             if (!p || !func_0044A230(p)) {
-                if (h != -1) func_002CAC80(D_004FFC04, h);
-                func_00418840(func_00414790(), w);
+                if (h != -1) FrontEnd_ClosePopup(D_004FFC04, h);
+                func_00418840(Gui_GetScreenList(), w);
                 return 0;
             }
         }
@@ -78,14 +78,14 @@ extern "C" int func_0033C320(O33* self, int type) {
     if (w) {
         V33* m;
         w->flags &= ~2;
-        m = func_004147A0();
+        m = Gui_GetScreenStack();
         m->v23(w, 0);
     }
-    func_004147A0()->v24(self);
-    if (h != -1) func_002CAC80(D_004FFC04, h);
+    Gui_GetScreenStack()->v24(self);
+    if (h != -1) FrontEnd_ClosePopup(D_004FFC04, h);
     if (w) {
         w->flags |= 2;
-        func_0041E0F0(w, func_004147A0(), 0x10, 2, 0);
+        func_0041E0F0(w, Gui_GetScreenStack(), 0x10, 2, 0);
     }
     return 1;
 }

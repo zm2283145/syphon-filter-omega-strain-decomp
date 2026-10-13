@@ -24,14 +24,14 @@ void func_002CC260(void);
 int func_00442750(void* g, void* cb);
 char* func_0033CE30(S_002891D0* self, int a, int b, int c, int d, int e);
 void String_CtorCStr_13B480(Str_002891D0* s, const char* c);
-char* func_001692D0(Str_002891D0* s);
-int func_002CAE30(void* ui, int a, char* b, char* c, S_002891D0* d, int e);
-void func_002CAC80(void* ui, int id);
+char* String_CStr(Str_002891D0* s);
+int FrontEnd_OpenPopup(void* ui, int a, char* b, char* c, S_002891D0* d, int e);
+void FrontEnd_ClosePopup(void* ui, int id);
 void func_00138B70(Str_002891D0* s, int flags);
-void* func_00414790(void);
+void* Gui_GetScreenList(void);
 Pg_002891D0* func_00418A80(void* a, char* b, char* c);
 Pg_002891D0* func_00418980(void* a, char* b);
-Ui_002891D0* func_004147A0(void);
+Ui_002891D0* Gui_GetScreenStack(void);
 void func_0041E0F0(void* a, void* b, int c, int d, int e);
 }
 extern "C" void func_002891D0(S_002891D0* self)
@@ -57,30 +57,30 @@ extern "C" void func_002891D0(S_002891D0* self)
         String_CtorCStr_13B480(&a, func_0033CE30(self, 0x1F, 0, 0, 0, 0));
         String_CtorCStr_13B480(&b, func_0033CE30(self, 0x88, 0, 0, 0, 0));
         {
-            char* tb = func_001692D0(&b);
-            func_002CAE30(D_004FFC04, 2, func_001692D0(&a), tb, self, 0x1E);
+            char* tb = String_CStr(&b);
+            FrontEnd_OpenPopup(D_004FFC04, 2, String_CStr(&a), tb, self, 0x1E);
         }
-        func_002CAC80(D_004FFC04, self->fA8);
+        FrontEnd_ClosePopup(D_004FFC04, self->fA8);
         ok = 0;
         func_00138B70(&b, 0);
         func_00138B70(&a, 0);
     } else {
-        Pg_002891D0* p = func_00418A80(func_00414790(), "GuiCommandCenter", "CMDCENTR");
+        Pg_002891D0* p = func_00418A80(Gui_GetScreenList(), "GuiCommandCenter", "CMDCENTR");
         if (p) {
             p->f10 = 1;
             p->flags &= ~2;
-            func_004147A0()->Show(p, 0);
+            Gui_GetScreenStack()->Show(p, 0);
         }
-        func_002CAC80(D_004FFC04, self->fA8);
+        FrontEnd_ClosePopup(D_004FFC04, self->fA8);
     }
     D_004FFC04->b264 = ok;
     if (ok) {
         Pg_002891D0* q;
-        func_004147A0()->Hide(self);
-        q = func_00418980(func_00414790(), "GuiCommandCenter");
+        Gui_GetScreenStack()->Hide(self);
+        q = func_00418980(Gui_GetScreenList(), "GuiCommandCenter");
         if (q) {
             q->flags |= 2;
-            func_0041E0F0(q, func_004147A0(), 0x10, 2, 0);
+            func_0041E0F0(q, Gui_GetScreenStack(), 0x10, 2, 0);
         }
     }
 }

@@ -12,8 +12,8 @@ void func_0045C760(S_45CA20* o);
 long long func_003698B0(void);
 void func_0045C5E0(S_45CA20* o);
 void func_0041E0F0(void* a, void* b, int kind, int v, int f);
-void* func_004147A0(void);
-void func_00414B30(void* mgr, void* w);
+void* Gui_GetScreenStack(void);
+void GuiScreen_SetFocus(void* mgr, void* w);
 static inline float fmin_45CA20(float a, float b) { float r; asm { min.s r, a, b } return r; }
 
 static inline unsigned char Has_45CA20(unsigned short* p, int m) { return (*p & m) != 0; }
@@ -40,8 +40,8 @@ void func_0045CA20(S_45CA20* o, int on)
         func_0041E0F0(o, o->fA4, 0xB, D_00497AEC[o->fDC], 0);
         func_0041E0F0(o, o->fA0, 6, (int)"onWake", 0);
         o->w->flags |= 0x80;
-        func_00414B30(func_004147A0(), o->w);
-        func_0041E0F0(o->w, func_004147A0(), 0x10, 2, 0);
+        GuiScreen_SetFocus(Gui_GetScreenStack(), o->w);
+        func_0041E0F0(o->w, Gui_GetScreenStack(), 0x10, 2, 0);
     } else {
         float v;
         o->fD4 = 0;
@@ -53,7 +53,7 @@ void func_0045CA20(S_45CA20* o, int on)
         o->w->flags &= ~4;
         func_0041E0F0(o, o->fA0, 6, (int)"onSleep", 0);
         o->w->flags &= ~0x80;
-        func_00414B30(func_004147A0(), o);
-        func_0041E0F0(o->w, func_004147A0(), 0x10, 3, 0);
+        GuiScreen_SetFocus(Gui_GetScreenStack(), o);
+        func_0041E0F0(o->w, Gui_GetScreenStack(), 0x10, 3, 0);
     }
 }

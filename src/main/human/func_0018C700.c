@@ -14,7 +14,7 @@ char* func_0018C700(Iter* it) {
     return (char*)it->p + 64;
 }
 
-int func_0018C710(Iter* a, Iter* b) {
+int NodeMapIter_NotEqual(Iter* a, Iter* b) {
     return !(a->p == b->p);
 }
 

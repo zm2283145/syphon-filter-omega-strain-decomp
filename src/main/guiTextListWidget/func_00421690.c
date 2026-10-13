@@ -7,7 +7,7 @@ extern "C" {
 extern char D_0049AF00[];
 extern char D_004E0C80[];
 extern char D_004E0D20[];
-void* func_00414790(void);
+void* Gui_GetScreenList(void);
 void* func_00418420(void* manager, const char* name);
 unsigned int func_0036A2F0(void* resource);
 void func_00424820(TextRenderWidget* self, unsigned int height);
@@ -76,7 +76,7 @@ static inline void destroy_widget_base(TextRenderWidget* self)
 /* Resolve the named text resource and apply its padded row height when available. */
 extern "C" void func_00421690(TextRenderWidget* self, const char* name)
 {
-    self->resource = func_00418420(func_00414790(), name);
+    self->resource = func_00418420(Gui_GetScreenList(), name);
     if (self->resource)
         func_00424820(self, func_0036A2F0(self->resource) + 4);
 }
@@ -118,7 +118,7 @@ extern "C" void func_004217D0(TextRenderWidget* self)
 extern "C" void func_004218F0(TextRenderWidget* self)
 {
     func_00424BC0(self);
-    self->resource = func_00418420(func_00414790(), 0);
+    self->resource = func_00418420(Gui_GetScreenList(), 0);
     if (self->resource)
         func_00424820(self, func_0036A2F0(self->resource) + 4);
 }

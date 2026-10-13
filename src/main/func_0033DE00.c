@@ -6,7 +6,7 @@ typedef struct {
     char lAC[4]; int count;
 } T3DE00;
 extern void func_0033D310(T3DE00* self);
-extern G3DE00* func_004147A0(void);
+extern G3DE00* Gui_GetScreenStack(void);
 extern T3DE00** func_0033DEF0(void* key);
 extern int func_004294C0(void);
 extern E3DE00* func_0044F290(void* list, int i);
@@ -18,8 +18,8 @@ void func_0033DE00(T3DE00* self)
     int on;
     int i;
     func_0033D310(self);
-    on = *func_0033DEF0(func_004147A0()->key) == self;
-    g = func_004147A0();
+    on = *func_0033DEF0(Gui_GetScreenStack()->key) == self;
+    g = Gui_GetScreenStack();
     if (on)
         g->flags |= 3;
     else

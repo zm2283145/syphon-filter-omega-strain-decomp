@@ -1,7 +1,7 @@
 #include "types.h"
 int String_ToLower(int c);
 unsigned int strlen(const char* s);
-int func_0040E370(char* pat, char* str)
+int MemCardWrap_MatchName(char* pat, char* str)
 {
     char* p;
     char* q;

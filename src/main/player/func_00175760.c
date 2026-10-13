@@ -16,14 +16,14 @@ extern int D_0049D010;
 extern void Event_Construct(Msg_SB* msg, void* name);
 extern void Event_Send(Msg_SB* msg, void* target, int flags);
 extern void cMessage_dtor(Msg_SB* msg, int flags);
-extern GObj_SB* func_0014A690(void* o);
+extern GObj_SB* NpcScript_GetReceiver(void* o);
 extern GObj_SB* GObj_IdentityB(void* o);extern GObj_SB* D_004FFC0C;
 int Script_SwitchBodies(void** args)
 {
     GObj_SB* b;
     Plr_SB* a;
     Plr_SB* bp;
-    b = func_0014A690(args[0]);
+    b = NpcScript_GetReceiver(args[0]);
     bp = b->ctl;
     a = D_004FFC0C->ctl;
     if (a->kind == D_0049D010 && bp->kind == D_0049D010) {

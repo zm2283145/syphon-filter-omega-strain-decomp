@@ -8,7 +8,7 @@ extern unsigned char D_004FFC29;
 extern char D_005381F0[];
 void func_00261130(char* o);
 void func_0037A1E0(void* a);
-Mgr_244B90* func_004147A0(void);
+Mgr_244B90* Gui_GetScreenStack(void);
 void func_0016E880(Word* w, void* l);
 int* func_002440B0(int* dst, int value);
 void func_00244080(Word* w, void* l);
@@ -29,7 +29,7 @@ extern "C" void func_00244B90(char* o)
     if (!D_004FFC29) {
         func_0037A1E0(D_005381F0);
         if (F_(o, 0x6A0, int) && F_(o, 0x6A9, unsigned char)) {
-            func_004147A0()->Refresh();
+            Gui_GetScreenStack()->Refresh();
             for (n = Begin_244B90(o + 0x6E8); n != End_244B90(o + 0x6E8); n = F_(n, 4, char*)) {
                 v = F_(n, 8, char*);
                 a = F_(v, 0x10, W_244B90*);
@@ -42,10 +42,10 @@ extern "C" void func_00244B90(char* o)
         } else {
             func_002434F0(o);
             func_003E7670(F_(o, 0x54, int));
-            func_004147A0()->Refresh();
+            Gui_GetScreenStack()->Refresh();
         }
     } else {
-        func_004147A0()->Refresh();
+        Gui_GetScreenStack()->Refresh();
     }
 }
 

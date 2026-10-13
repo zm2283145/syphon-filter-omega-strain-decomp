@@ -23,15 +23,15 @@ extern char D_004C0448[]; extern char D_004C0458[]; extern char D_004C0468[];
 extern char D_004C0498[]; extern char D_004C04A8[];
 int Agent_GetSelected(void*, int);
 char* Loc_LookupText(char*);
-int func_002CAE30(int, int, char*, char*, void*, int);
-void func_002CAC80(int, int);
+int FrontEnd_OpenPopup(int, int, char*, char*, void*, int);
+void FrontEnd_ClosePopup(int, int);
 int func_0040D740(Net_4415A0*);
 int func_004422D0(int, char*, char*);
 int func_00441780();
 void func_00441370(Obj_4415A0*);
 }
 
-static inline int ShowDlg(int mgr, int type, char* t, char* m, void* cb, int x) { return func_002CAE30(mgr, type, Loc_LookupText(t), Loc_LookupText(m), cb, x); }
+static inline int ShowDlg(int mgr, int type, char* t, char* m, void* cb, int x) { return FrontEnd_OpenPopup(mgr, type, Loc_LookupText(t), Loc_LookupText(m), cb, x); }
 
 extern "C" void func_004415A0(Obj_4415A0* self)
 {
@@ -45,7 +45,7 @@ extern "C" void func_004415A0(Obj_4415A0* self)
         if (!func_0040D740(net)) {
             int old = self->dlg;
             self->dlg = ShowDlg(D_004FFC04, 2, D_004C0468, D_004C04A8, self, 2);
-            func_002CAC80(D_004FFC04, old);
+            FrontEnd_ClosePopup(D_004FFC04, old);
             return;
         }
     }

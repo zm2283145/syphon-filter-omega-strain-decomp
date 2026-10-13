@@ -1,7 +1,7 @@
 #pragma cplusplus on
 #include "types.h"
 #include "vslot_pad.h"
-/* func_00255A50: count a spawn request; on first activation register the object and create its proxy */
+/* WorldInv_AddArmor: count a spawn request; on first activation register the object and create its proxy */
 struct Pt1SpProxy { char pad[0x94]; int id; };
 struct Pt1SpObj {
     VPAD16(a) VPAD4(b) VPAD1(c)
@@ -20,7 +20,7 @@ extern void* D_004FFBD0;
 void Object_Register(Pt1SpObj* o);
 Pt1SpProxy* Hotbox_CreateRuntime(void* mgr, Pt1SpObj* o, int a, int b);
 }
-extern "C" void func_00255A50(Pt1SpObj* o, int a, int b)
+extern "C" void WorldInv_AddArmor(Pt1SpObj* o, int a, int b)
 {
     if (!a)
         return;

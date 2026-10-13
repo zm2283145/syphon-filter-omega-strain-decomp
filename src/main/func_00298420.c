@@ -2,7 +2,7 @@
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int func_001692D0(int);                             
+int String_CStr(int);                             
 int strncpy(signed char *, int, int);                            
 extern signed char D_0048B7A0;
 extern int D_0048B7A4;
@@ -21,7 +21,7 @@ void func_00298420(char * arg0) {
     do {
         temp_v1 = F_(var_s1, 0x2D0, int);
         if (temp_v1 != 0) {
-            strncpy(var_s0 + 8, func_001692D0(temp_v1 + 4), 0x1F);
+            strncpy(var_s0 + 8, String_CStr(temp_v1 + 4), 0x1F);
             F_(var_s0, 0x28, signed char) = 0;
         } else {
             F_(var_s0, 0x8, signed char) = 0;

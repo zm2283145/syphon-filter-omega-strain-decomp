@@ -1,11 +1,11 @@
 #include "types.h"
 typedef union { int i; float f; void* p; } ScriptArg_268D30;
 typedef struct { float* data; int cap; int count; } Arr_268D30;
-extern Arr_268D30* func_002690C0(int h);
+extern Arr_268D30* ScriptArray_Cast(int h);
 extern float Script_RandomIntCore(float max);
 int Script_Array_RandomizeArray(ScriptArg_268D30* args)
 {
-    Arr_268D30* a = func_002690C0(args[0].i);
+    Arr_268D30* a = ScriptArray_Cast(args[0].i);
     int i;
     for (i = a->count; i > 0; i--) {
         int j = (int)Script_RandomIntCore((float)i);

@@ -1,9 +1,9 @@
 #include "types.h"
 typedef struct { float* data; int pad; int count; } ScriptArr_b6;
-extern ScriptArr_b6* func_002690C0(int);
+extern ScriptArr_b6* ScriptArray_Cast(int);
 int Script_Array_Sort(int* args)
 {
- ScriptArr_b6* a = func_002690C0(args[0]);
+ ScriptArr_b6* a = ScriptArray_Cast(args[0]);
  int i, j;
  for (i = 0; i < a->count - 1; i++) {
  for (j = i; j < a->count; j++) {

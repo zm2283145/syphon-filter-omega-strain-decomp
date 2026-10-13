@@ -17,8 +17,8 @@ extern "C" {
 unsigned long long func_003698B0(void);
 float func_001002D0(unsigned long long);
 void func_0040E320(void* p);
-Mgr* func_004147A0(void);
-int func_00414790(void);
+Mgr* Gui_GetScreenStack(void);
+int Gui_GetScreenList(void);
 void func_00415B60(Mgr* m, float dt);
 void func_00419260(int a, float dt);
 void func_00415870(Mgr* m);
@@ -59,11 +59,11 @@ extern "C" void func_002CBB30(ObjCBB30* o)
         if (o->b2A && o->b28)
             func_0040E320(D_0055A830);
         if (D_0051EEB0) {
-            func_00415B60(func_004147A0(), dt);
+            func_00415B60(Gui_GetScreenStack(), dt);
         } else {
-            func_00419260(func_00414790(), dt);
-            func_00415870(func_004147A0());
-            func_004147A0()->Update(dt);
+            func_00419260(Gui_GetScreenList(), dt);
+            func_00415870(Gui_GetScreenStack());
+            Gui_GetScreenStack()->Update(dt);
         }
         o->last = now;
         if (!D_0051EE90) {

@@ -12,11 +12,11 @@ struct S_002A1D20 {
 };
 extern "C" {
 extern void* D_004FFC04;
-Ui_002A1D20* func_004147A0(void);
+Ui_002A1D20* Gui_GetScreenStack(void);
 void func_0041E0F0(void* a, void* b, int c, int d, int e);
-void func_00414B30(void* ui, void* w);
+void GuiScreen_SetFocus(void* ui, void* w);
 char* Loc_LookupText(char* key);
-int func_002CAE30(void* ui, int a, char* b, char* c, S_002A1D20* d, int e);
+int FrontEnd_OpenPopup(void* ui, int a, char* b, char* c, S_002A1D20* d, int e);
 }
 static inline unsigned char Down_002A1D20(Ev_002A1D20* e)
 {
@@ -51,12 +51,12 @@ extern "C" int func_002A1D20(S_002A1D20* self, Ev_002A1D20* ev)
     {
         bool b = ev->type == 1 && ev->f2 == 0 && ev->btn == 0x8000 && ev->f6 == 0;
         if (b) {
-            void* cur = func_004147A0()->f20;
-            func_0041E0F0(cur, func_004147A0(), 0x10, 0, 0);
+            void* cur = Gui_GetScreenStack()->f20;
+            func_0041E0F0(cur, Gui_GetScreenStack(), 0x10, 0, 0);
             {
-                Ui_002A1D20* a = func_004147A0();
-                Ui_002A1D20* u = func_004147A0();
-                func_00414B30(u, self->Next(a->f20, 1));
+                Ui_002A1D20* a = Gui_GetScreenStack();
+                Ui_002A1D20* u = Gui_GetScreenStack();
+                GuiScreen_SetFocus(u, self->Next(a->f20, 1));
             }
             return 1;
         }
@@ -64,12 +64,12 @@ extern "C" int func_002A1D20(S_002A1D20* self, Ev_002A1D20* ev)
     {
         bool b = ev->type == 1 && ev->f2 == 0 && ev->btn == 0x2000 && ev->f6 == 0;
         if (b) {
-            void* cur = func_004147A0()->f20;
-            func_0041E0F0(cur, func_004147A0(), 0x10, 0, 0);
+            void* cur = Gui_GetScreenStack()->f20;
+            func_0041E0F0(cur, Gui_GetScreenStack(), 0x10, 0, 0);
             {
-                Ui_002A1D20* a = func_004147A0();
-                Ui_002A1D20* u = func_004147A0();
-                func_00414B30(u, self->Next(a->f20, 1));
+                Ui_002A1D20* a = Gui_GetScreenStack();
+                Ui_002A1D20* u = Gui_GetScreenStack();
+                GuiScreen_SetFocus(u, self->Next(a->f20, 1));
             }
             return 1;
         }
@@ -80,7 +80,7 @@ extern "C" int func_002A1D20(S_002A1D20* self, Ev_002A1D20* ev)
             char* a = Loc_LookupText("QuitTitle");
             char* c = Loc_LookupText("QuitMessage");
             if (a && c)
-                func_002CAE30(D_004FFC04, 5, a, c, self, 0);
+                FrontEnd_OpenPopup(D_004FFC04, 5, a, c, self, 0);
             return 1;
         }
     }

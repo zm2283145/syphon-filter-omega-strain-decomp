@@ -11,11 +11,11 @@ extern void func_0014F220(It8* out, void* c, int** raw);
 extern void func_0014F1F0(Raw4* out, void* c);
 extern void func_0014F1C0(Raw4* out, void* c);
 extern void func_0014F1E0(It4* out, Raw4* raw);
-extern void func_0014F240(Self14* self, PNode* n, int x, float f);
+extern void NpcLook_AddPoint(Self14* self, PNode* n, int x, float f);
 extern Grp* D_004FFBE8;
 static inline unsigned char ne8(It8 a, It8 b) { return !(a.p == b.p); }
 static inline unsigned char ne4(It4 a, It4 b) { return !(a.p == b.p); }
-void func_0014EF80(Self14* self, int kind, int path, int skip, float f) {
+void NpcLook_AddNodePoints(Self14* self, int kind, int path, int skip, float f) {
     It8 it1;
     It4 it2;
     It8 t84;
@@ -37,7 +37,7 @@ void func_0014EF80(Self14* self, int kind, int path, int skip, float f) {
             int id = *it1.p;
             if (id != skip) {
                 PNode* n = (PNode*)NpcPath_GetNode(id);
-                if (kind < 0 || kind == n->kind) func_0014F240(self, n, self->f160, f);
+                if (kind < 0 || kind == n->kind) NpcLook_AddPoint(self, n, self->f160, f);
             }
             it1.p += 2;
         }
@@ -47,7 +47,7 @@ void func_0014EF80(Self14* self, int kind, int path, int skip, float f) {
         func_0014F1E0(&t80, &raw68);
         it2 = t80;
         while ((func_0014F1C0(&raw64, c), func_0014F1E0(&end2, &raw64), !(it2.p == end2.p))) {
-            func_0014F240(self, (PNode*)NpcPath_GetNode(*it2.p), self->f160, f);
+            NpcLook_AddPoint(self, (PNode*)NpcPath_GetNode(*it2.p), self->f160, f);
             it2.p += 1;
         }
     }

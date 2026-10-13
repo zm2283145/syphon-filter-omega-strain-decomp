@@ -7,6 +7,6 @@
 #include "types.h"
 
 /* Address of 160-byte element i. */
-char* func_001ADB70(char* base, int i) {
+char* Physical_GetLatchSlot(char* base, int i) {
     return base + i * 160;
 }

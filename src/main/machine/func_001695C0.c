@@ -20,7 +20,7 @@ extern void func_00165DD0(F1Game1695* g);
 extern void Renderer_Init(void* p, int a, int b, int c, int d, int e, int f, int g);
 extern void func_00165950(F1Game1695* g);
 extern void func_002CB8C0(void* p, int n);
-extern void func_002C7D90(void* p, int a, void* b, int c);
+extern void FrontEnd_SetLoadingScreen(void* p, int a, void* b, int c);
 void StringPool_Load(F1Game1695* g)
 {
     func_0010CFF0(func_0010D050(), 10);
@@ -36,6 +36,6 @@ void StringPool_Load(F1Game1695* g)
         D_005383C0 = (unsigned char)(int)(D_004C1FC8 * D_004FFD2C->scale);
         func_00165950(g);
         func_002CB8C0(D_004FFC04, 0);
-        func_002C7D90(D_004FFC04, 1, "ROOT", 0);
+        FrontEnd_SetLoadingScreen(D_004FFC04, 1, "ROOT", 0);
     }
 }

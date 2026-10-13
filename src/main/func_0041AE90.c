@@ -7,7 +7,7 @@ typedef __int128 Q128;
 int String_PushBack(char *, int);                          
 int String_Reserve(char *);                              
 int func_00138B70(char *, int);                            
-int func_001692D0(char *);                             
+int String_CStr(char *);                             
 int func_003D08B0(int, int);                          
 
 void func_0041AE90(int arg0, int arg1) {
@@ -19,7 +19,7 @@ void func_0041AE90(int arg0, int arg1) {
         for (var_s0 = 0; var_s0 < arg1; var_s0++) {
                 String_PushBack(&sp40, 0x23);
         }
-        func_003D08B0(arg0, func_001692D0(&sp40));
+        func_003D08B0(arg0, String_CStr(&sp40));
         func_00138B70(&sp40, 0);
     }
 }

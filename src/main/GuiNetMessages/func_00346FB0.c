@@ -13,12 +13,12 @@ extern char* Loc_LookupText(char*);
 extern int sprintf(char*, const char*, ...);
 extern void String_CtorCStr_13B480(S346*, char*);
 extern void func_003FD740(S346*);
-extern char* func_001692D0(S346*);
+extern char* String_CStr(S346*);
 extern void func_00138B70(S346*, int);
 extern char* func_0033CE30(O346*, int, char*, char*, int, int);
 
-extern int func_004147A0(void);
-extern void func_00414B30(int, int);
+extern int Gui_GetScreenStack(void);
+extern void GuiScreen_SetFocus(int, int);
 extern char D_004BA338[];
 }
 extern "C" void func_0041E0F0(O346*, W346*, int, int, int);
@@ -56,7 +56,7 @@ extern "C" void func_00346FB0(O346* self, I346* info) {
         } else if (info->type == 10) {
             String_CtorCStr_13B480(&s, info->text);
             func_003FD740(&s);
-            func_0041BEB0(self->wa0, func_001692D0(&s), 0);
+            func_0041BEB0(self->wa0, String_CStr(&s), 0);
             func_00138B70(&s, 0);
         } else {
             int c = -1;
@@ -88,9 +88,9 @@ extern "C" void func_00346FB0(O346* self, I346* info) {
     if ((self->w8c->flags & 2) && !b0) func_0041E0F0(self, self->w8c, 6, (int)"onWake", 0);
     if ((self->w90->flags & 2) && !b1) func_0041E0F0(self, self->w90, 6, (int)"onWake", 0);
     if ((self->w94->flags & 2) && !b2) func_0041E0F0(self, self->w94, 6, (int)"onWake", 0);
-    func_00414B30(func_004147A0(), 0);
+    GuiScreen_SetFocus(Gui_GetScreenStack(), 0);
     {
-        int r = func_004147A0();
-        func_00414B30(r, ((V346*)self)->v15());
+        int r = Gui_GetScreenStack();
+        GuiScreen_SetFocus(r, ((V346*)self)->v15());
     }
 }

@@ -20,10 +20,10 @@ extern Ui_0029CBB0* D_004FFC04;
 extern char D_004AABF0[];
 char* Loc_LookupText(char* key);
 void func_0041BEB0(void* w, char* s, int a);
-void* func_004147A0(void);
-void func_00414B30(void* mgr, int a);
+void* Gui_GetScreenStack(void);
+void GuiScreen_SetFocus(void* mgr, int a);
 int func_0033CE30(S_0029CBB0* self, int a, int b, int c, int d, int e);
-int func_002CAE30(void* ui, int a, char* b, int c, S_0029CBB0* d, int e);
+int FrontEnd_OpenPopup(void* ui, int a, char* b, int c, S_0029CBB0* d, int e);
 void func_0043DB80(void* w);
 void func_0043DCE0(void* w, char* s);
 Ent_0029CBB0* func_0044F290(NameList_0029CBB0* l, int i);
@@ -32,7 +32,7 @@ void func_0044F7E0(NameList_0029CBB0* l);
 void String_CtorCStr_13B480(Str_0029CBB0* s, const char* c);
 void func_00209620(Str_0029CBB0* d, Str_0029CBB0* s);
 void func_003FD740(Str_0029CBB0* s);
-char* func_001692D0(Str_0029CBB0* s);
+char* String_CStr(Str_0029CBB0* s);
 int func_002071F0(Str_0029CBB0* s);
 void func_00138B70(Str_0029CBB0* s, int flags);
 }
@@ -62,8 +62,8 @@ extern "C" void func_0029CBB0(S_0029CBB0* self, unsigned char sel)
             self->tabs[sel]->flags |= 4;
         }
         {
-            void* mgr = func_004147A0();
-            func_00414B30(mgr, self->v15());
+            void* mgr = Gui_GetScreenStack();
+            GuiScreen_SetFocus(mgr, self->v15());
         }
         if (sel == 1) {
             NameList_0029CBB0* l = 0;
@@ -76,7 +76,7 @@ extern "C" void func_0029CBB0(S_0029CBB0* self, unsigned char sel)
             }
             if (!l) {
                 void* ui = D_004FFC04;
-                func_002CAE30(ui, 2, D_004AABF0, func_0033CE30(self, 5, 0, 0, 0, 0), self, 0);
+                FrontEnd_OpenPopup(ui, 2, D_004AABF0, func_0033CE30(self, 5, 0, 0, 0, 0), self, 0);
                 self->f88 = 4;
                 return;
             }
@@ -94,7 +94,7 @@ extern "C" void func_0029CBB0(S_0029CBB0* self, unsigned char sel)
                     }
                 }
                 func_003FD740(&list1);
-                func_0043DCE0(self->pF4, func_001692D0(&list1));
+                func_0043DCE0(self->pF4, String_CStr(&list1));
                 func_00138B70(&list1, 0);
             }
         } else if (sel == 2) {
@@ -141,7 +141,7 @@ extern "C" void func_0029CBB0(S_0029CBB0* self, unsigned char sel)
                 }
                 if (func_002071F0(&list2)) {
                     func_003FD740(&list2);
-                    func_0043DCE0(self->p100, func_001692D0(&list2));
+                    func_0043DCE0(self->p100, String_CStr(&list2));
                 }
                 func_00138B70(&list2, 0);
             }

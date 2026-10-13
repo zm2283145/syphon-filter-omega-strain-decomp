@@ -8,7 +8,7 @@ void func_0028C0B0(ChildIterator* result, const ChildIterator* source);
 void func_0028C0A0(ChildIterator* result, ChildList* list);
 void func_0028C090(ChildIterator* result, const ChildIterator* source);
 int String_AssignCStr_1C43A0(const void* string, const char* name);
-const char* func_001692D0(const void* string);
+const char* String_CStr(const void* string);
 const char* func_00129C80(const char* text, const char* pattern);
 }
 
@@ -69,7 +69,7 @@ extern "C" TraversalWidget* func_0041DC70(TraversalWidget* self, const char* pat
     ChildIterator begin;
     ChildIterator rawBegin;
     ChildIterator rawEnd;
-    if (func_00129C80(func_001692D0(self->name), pattern))
+    if (func_00129C80(String_CStr(self->name), pattern))
         return self;
     func_0013B180(&rawBegin, &self->children);
     func_0028C0B0(&begin, &rawBegin);

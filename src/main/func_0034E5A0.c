@@ -11,11 +11,11 @@ extern "C" {
 extern int func_00421480(void*);
 extern char D_004FFB50[];
 extern A34E5* Agent_GetSelected(char*, int);
-extern int func_004147A0(void);
+extern int Gui_GetScreenStack(void);
 extern void func_0041E0F0(O34E5*, int, int, int, int);
-extern int func_00414790(void);
+extern int Gui_GetScreenList(void);
 extern void* func_00418A80(int, char*, char*);
-extern char* func_001692D0(void*);
+extern char* String_CStr(void*);
 extern void func_00327C70(void*, int, char*, int);
 extern void func_00328630(void*);
 extern int func_00421430(void*, int);
@@ -24,7 +24,7 @@ extern int sprintf(char*, const char*, ...);
 extern T34E5* func_0034E760(void);
 extern G34E5* D_004FFC04;
 extern void func_00328140(void*, int, char*, int, char*);
-extern void func_00414AC0(int, O34E5*, void*);
+extern void GuiStack_SwapScreens(int, O34E5*, void*);
 }
 extern "C" void func_0034E5A0(O34E5* o, int idx) {
     char buf[0x20];
@@ -33,11 +33,11 @@ extern "C" void func_0034E5A0(O34E5* o, int idx) {
     int x;
     if (sel == -1) return;
     if (!(Agent_GetSelected(D_004FFB50, -1)->fb50->f4 < sel)) {
-    func_0041E0F0(o, func_004147A0(), 0x10, 1, 0);
-    w = func_00418A80(func_00414790(), "GuiSlideShow", "ZEUSHELL");
+    func_0041E0F0(o, Gui_GetScreenStack(), 0x10, 1, 0);
+    w = func_00418A80(Gui_GetScreenList(), "GuiSlideShow", "ZEUSHELL");
     if (!w) return;
     {
-        char* t = func_001692D0(o->f4);
+        char* t = String_CStr(o->f4);
         func_00327C70(w, ((V34E5*)o)->v19(), t, idx);
     }
     func_00328630(w);
@@ -49,8 +49,8 @@ extern "C" void func_0034E5A0(O34E5* o, int idx) {
         tab = func_0034E760();
         func_00328140(w, x, buf, D_004FFC04->f25c, tab->f8[sel].f10);
     }
-    func_00414AC0(func_004147A0(), o, w);
+    GuiStack_SwapScreens(Gui_GetScreenStack(), o, w);
     } else {
-        func_0041E0F0(o, func_004147A0(), 0x10, 4, 0);
+        func_0041E0F0(o, Gui_GetScreenStack(), 0x10, 4, 0);
     }
 }

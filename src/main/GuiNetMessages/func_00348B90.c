@@ -17,7 +17,7 @@ extern void func_00424A90(W48B90*);
 extern void* Mem_Alloc(int, int, char*, int);
 extern char D_004BA3D0[];
 extern char D_00587C20[];
-extern int func_00414790(void);
+extern int Gui_GetScreenList(void);
 extern int func_00418420(int, char*);
 extern C48B90* func_003D0940(void*, int, int, int, int, int, char*);
 extern char* func_004294C0(void);
@@ -35,7 +35,7 @@ extern "C" void func_00348B90(W48B90* w) {
     if (c) {
         int x = (int)w->f3c;
         int y = (int)w->f40;
-        c = func_003D0940(c, 0, 0, x, y, func_00418420(func_00414790(), "callout"), D_00587C20);
+        c = func_003D0940(c, 0, 0, x, y, func_00418420(Gui_GetScreenList(), "callout"), D_00587C20);
     }
     w->fa0 = c;
     w->fa0->b12 = 1;

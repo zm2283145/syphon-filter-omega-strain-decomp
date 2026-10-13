@@ -25,15 +25,15 @@ extern Mgr_00292B90* D_004FFC04;
 extern char D_00493A60;
 extern Blk_00292B90 D_0055D510;
 char* Loc_LookupText(char* key);
-char* func_001692D0(Str_00292B90* s);
+char* String_CStr(Str_00292B90* s);
 int func_00121BC8(char* s);
 Agent_00292B90* Agent_GetSelected(void* a, int b);
-unsigned char func_00334790(Agent_00292B90* a, char* s, int id);
-void* func_00414790(void);
+unsigned char AgentData_Load(Agent_00292B90* a, char* s, int id);
+void* Gui_GetScreenList(void);
 void* func_00418A80(void* a, char* b, char* c);
-void* func_004147A0(void);
-void func_00414AC0(void* a, void* b, void* c);
-int func_002CAE30(void* ui, int a, char* b, char* c, void* d, int e);
+void* Gui_GetScreenStack(void);
+void GuiStack_SwapScreens(void* a, void* b, void* c);
+int FrontEnd_OpenPopup(void* ui, int a, char* b, char* c, void* d, int e);
 int func_00441CA0(void* self, Obj_00292B90* o, int msg);
 }
 
@@ -66,29 +66,29 @@ extern "C" int func_00292B90(void* self, Obj_00292B90* o, int msg)
         }
         o = p;
         if (o) {
-            int id = func_00121BC8(func_001692D0(&o->s4));
+            int id = func_00121BC8(String_CStr(&o->s4));
             Agent_00292B90* ag = (Agent_00292B90*)Agent_GetSelected(D_004FFB50, -1);
-            unsigned char r = func_00334790(ag, func_001692D0(&o->s48), id);
+            unsigned char r = AgentData_Load(ag, String_CStr(&o->s48), id);
             if (r == 0) {
                 void* pg;
                 D_00493A60 = 0;
                 QCopy(&D_0055D510, ag->p9A4, 0x44);
                 if (D_004FFC04->b2E) {
                     asm { .set reorder }
-                    pg = func_00418A80(func_00414790(), D_004A9CA0, D_004A9CB8);
+                    pg = func_00418A80(Gui_GetScreenList(), D_004A9CA0, D_004A9CB8);
                 } else {
                     asm { .set reorder }
-                    pg = func_00418A80(func_00414790(), D_004A9CD0, D_004A9CE8);
+                    pg = func_00418A80(Gui_GetScreenList(), D_004A9CD0, D_004A9CE8);
                 }
-                func_00414AC0(func_004147A0(), self, pg);
+                GuiStack_SwapScreens(Gui_GetScreenStack(), self, pg);
             } else if (r == 2) {
                 Mgr_00292B90* ui = D_004FFC04;
                 char* t = Loc_LookupText(D_004A9D38);
-                func_002CAE30(ui, 2, t, Loc_LookupText(D_004A9D48), self, -1);
+                FrontEnd_OpenPopup(ui, 2, t, Loc_LookupText(D_004A9D48), self, -1);
             } else {
                 Mgr_00292B90* ui = D_004FFC04;
                 char* t = Loc_LookupText(D_004A9D38);
-                func_002CAE30(ui, 2, t, Loc_LookupText(D_004A9D58), self, -1);
+                FrontEnd_OpenPopup(ui, 2, t, Loc_LookupText(D_004A9D58), self, -1);
             }
         }
         return 1;

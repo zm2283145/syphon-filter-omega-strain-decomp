@@ -7,7 +7,7 @@ struct G_368300 { char pad[0x6A8]; unsigned char b6A8; };
 extern "C" {
 extern G_368300* D_004FFC2C;
 void func_00367B20(S_368300* o, int page, int f);
-M_368300* func_004147A0(void);
+M_368300* Gui_GetScreenStack(void);
 void func_0041E0F0(void* w, void* m, int kind, int v, int f);
 void func_00456160(S_368300* o);
 void func_00456100(S_368300* o);
@@ -25,14 +25,14 @@ int func_00368300(S_368300* o, Ev_368300* ev)
     if (Plain_368300(ev, 0x2000)) {
         if (o->page == 0 && o->w64) {
             func_00367B20(o, 1, 0);
-            func_0041E0F0(o->w6C, func_004147A0(), 0x10, 0, 0);
+            func_0041E0F0(o->w6C, Gui_GetScreenStack(), 0x10, 0, 0);
         }
         return 1;
     }
     if (Plain2_368300(ev, 0x8000)) {
         if (o->page == 1 && o->w60) {
             func_00367B20(o, 0, 0);
-            func_0041E0F0(o->w68, func_004147A0(), 0x10, 0, 0);
+            func_0041E0F0(o->w68, Gui_GetScreenStack(), 0x10, 0, 0);
         }
         return 1;
     }
@@ -45,6 +45,6 @@ int func_00368300(S_368300* o, Ev_368300* ev)
         return 1;
     }
     if ((Plain2_368300(ev, 0x4000) || Plain2_368300(ev, 0x1000))
-        && (func_004147A0()->focus == o->w68 || func_004147A0()->focus == o->w6C)) return 1;
+        && (Gui_GetScreenStack()->focus == o->w68 || Gui_GetScreenStack()->focus == o->w6C)) return 1;
     return 0;
 }

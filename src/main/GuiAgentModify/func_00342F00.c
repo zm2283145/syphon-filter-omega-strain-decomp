@@ -8,7 +8,7 @@ extern G342F00* D_004FFC04;
 extern char D_004FFB50[];
 extern void func_0041EFA0(S342F00* o);
 extern void func_0041E0F0(void* self, void* w, int a, int b, int c);
-extern M342F00* func_004147A0(void);
+extern M342F00* Gui_GetScreenStack(void);
 extern A342F00* Agent_GetSelected(void* list, int idx);
 void func_00342F00(S342F00* o)
 {
@@ -18,7 +18,7 @@ void func_00342F00(S342F00* o)
     func_0041EFA0(o);
     if (o->a78) func_0041E0F0(o, o->a78, 10, 0, 0);
     if (o->a78) o->a78->a14 &= ~2;
-    m = func_004147A0();
+    m = Gui_GetScreenStack();
     m->a68 |= 0xC;
     ag = Agent_GetSelected(D_004FFB50, -1);
     ag->aB68 = 0;

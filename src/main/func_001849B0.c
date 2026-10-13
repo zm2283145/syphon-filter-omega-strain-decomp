@@ -3,7 +3,7 @@ typedef struct { void* vtable; char pad[0x20]; unsigned char kind; char pad2[0xB
 extern char D_0055D4E0[];
 extern char D_004D9360[];
 extern void Event_Construct(Msg* m, void* type);
-extern int func_0015A430(Msg* m);
+extern int TeleportMsg_IsMode3(Msg* m);
 extern void* Mtx_GetIdentity(void);
 extern void func_0015A400(Vec4* out, void* v);
 extern void Vec4_CopyAsPoint(Vec4* out, void* v);
@@ -21,7 +21,7 @@ void func_001849B0(void* target, void* pos)
     Event_Construct(m, D_0055D4E0);
     msg.vtable = D_004D9360;
     msg.kind = 0;
-    if (func_0015A430(m)) {
+    if (TeleportMsg_IsMode3(m)) {
         func_0015A400(&a, pos);
         v = &a;
     } else {

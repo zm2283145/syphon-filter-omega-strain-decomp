@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-int* func_001E1B40(PtrVec* v) {
+int* LosCache_End(PtrVec* v) {
     return v->data + v->count;
 }
 

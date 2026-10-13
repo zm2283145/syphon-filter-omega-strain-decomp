@@ -14,11 +14,11 @@ public:
 
 struct Str;
 extern "C" {
-Mgr* func_004147A0(void);
+Mgr* Gui_GetScreenStack(void);
 void* func_002CAC70(void* p);
 void* func_002CAC60(void* p);
 void func_002CAC50(void** it, void* n);
-int func_001692D0(Str* p);
+int String_CStr(Str* p);
 void func_002A7E90(void* o, int a, int b, int c, int d, int e);
 void func_00298690(Str* s);
 void String_CtorCStr_13B480(Str* s, const char* c);
@@ -74,7 +74,7 @@ struct SelfCAE30 {
     int counter;
 };
 
-extern "C" int func_002CAE30(SelfCAE30* self, int a4, const char* n1, const char* n2, int a20, int a24)
+extern "C" int FrontEnd_OpenPopup(SelfCAE30* self, int a4, const char* n1, const char* n2, int a20, int a24)
 {
     if (!self->obj)
         return -1;
@@ -110,14 +110,14 @@ extern "C" int func_002CAE30(SelfCAE30* self, int a4, const char* n1, const char
             func_002CE1A0(ret2, &self->list, &tmp2, &e);
         }
         if (first) {
-            int c = func_001692D0(&e.s14);
-            func_002A7E90(self->obj, e.a4, func_001692D0(&e.s8), c, e.a20, e.a24);
+            int c = String_CStr(&e.s14);
+            func_002A7E90(self->obj, e.a4, String_CStr(&e.s8), c, e.a20, e.a24);
             self->obj->id = e.id;
             {
                 Obj258* o = self->obj;
                 if (!(o->flags & 8)) {
-                    func_004147A0()->Add(o, 1000);
-                    func_0041E0F0(func_004147A0(), func_004147A0(), 0x10, 2, 0);
+                    Gui_GetScreenStack()->Add(o, 1000);
+                    func_0041E0F0(Gui_GetScreenStack(), Gui_GetScreenStack(), 0x10, 2, 0);
                 }
             }
         }

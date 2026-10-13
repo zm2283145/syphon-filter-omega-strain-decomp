@@ -13,10 +13,10 @@ extern void* D_004FFC2C;
 extern char D_004FFB50[];
 void func_0043D820(void* p, int v);
 void func_0043D760(void* p, int v);
-M_455E10* func_004147A0(void);
+M_455E10* Gui_GetScreenStack(void);
 void func_00456160(O_455E10* o);
-void func_00242900(void* p);
-void func_00131470(void* p, int v);
+void Hud_ClosePauseMenu(void* p);
+void Game_SetPaused(void* p, int v);
 int func_00455E10(O_455E10* o, Ev_455E10* ev);
 }
 static inline unsigned char Down_455E10(Ev_455E10* e) { unsigned char r = 0; if (e->type == 1 && e->b2 == 0) r = 1; return r; }
@@ -41,9 +41,9 @@ int func_00455E10(O_455E10* o, Ev_455E10* ev)
         return 1;
     }
     if (Plain2_455E10(ev, 0x800)) {
-        func_004147A0()->v24(o);
-        func_00242900(D_004FFC2C);
-        func_00131470(D_004FFB50, 0);
+        Gui_GetScreenStack()->v24(o);
+        Hud_ClosePauseMenu(D_004FFC2C);
+        Game_SetPaused(D_004FFB50, 0);
         return 1;
     }
     return 0;

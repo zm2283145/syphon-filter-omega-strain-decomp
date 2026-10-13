@@ -23,7 +23,7 @@ extern void Event_Construct(Msg_12EEE0* m, void* type);
 extern void Transport_Send(int a, Msg_12EEE0* m, int b, int c);
 extern void cMessage_dtor(Msg_12EEE0* m, int f);
 
-void func_0012EEE0(int arg0, unsigned char arg1, unsigned char arg2)
+void Game_NetSendPauseState(int arg0, unsigned char arg1, unsigned char arg2)
 {
     Msg_12EEE0 m;
     Msg_12EEE0* p;

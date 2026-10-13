@@ -12,7 +12,7 @@ extern int GObj_IdentityA(void*);
 extern void* GObj_IdentityB(int);
 extern int Global_MakeGOBJInteractable(void* gobj);
 extern int Global_MakeNPCInteractable(void* npc);
-extern void* func_0014A690(int handle);
+extern void* NpcScript_GetReceiver(int handle);
 extern int* Message_GetScriptTypeKeyPtr(void);
 extern void ScriptType_SetParent(int type, int parentType);
 
@@ -37,7 +37,7 @@ int cHotboxMsg_v03(void) {
 
 /* volatile mirrors the original stack temporary. */
 int Script_MakeNPCInteractable(HotboxScriptArg* args) {
-    volatile int hotbox = Global_MakeNPCInteractable(func_0014A690(args[0].i));
+    volatile int hotbox = Global_MakeNPCInteractable(NpcScript_GetReceiver(args[0].i));
     return hotbox;
 }
 

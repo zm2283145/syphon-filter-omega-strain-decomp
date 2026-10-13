@@ -4,7 +4,7 @@ typedef struct { char data[0x50]; } AnimSet;
 typedef struct { char data[0x18]; } AnimRange;
 typedef struct { int handle; int unk4; } AnimRef;
 typedef struct { void* res; char pad[0xC]; char inst[1]; } AnimModel;
-extern void* func_0018C6B0(void* res, int a);
+extern void* ModelCtx_GetAnchorById(void* res, int a);
 extern void AnimEvent_Construct(AnimList* l);
 extern void func_001A1500(AnimSet* s);
 extern void* func_001ADD70(void* inst);
@@ -25,7 +25,7 @@ void AnimModel_InitAnim(AnimModel* m)
     void* inst;
     void* anim;
     if (m->res) {
-        anim = func_0018C6B0(m->res, 0);
+        anim = ModelCtx_GetAnchorById(m->res, 0);
         AnimEvent_Construct(&a);
         AnimEvent_Construct(&b);
         func_001A1500(&set);

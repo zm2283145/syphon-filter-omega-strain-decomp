@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void* func_00141870(void* self) {
+void* WorldObjList_Get(void* self) {
     return self;
 }

@@ -7,7 +7,7 @@
 #include "types.h"
 #include "guiTextArrayWidget_types.h"
 
-extern void* func_00414790(void);
+extern void* Gui_GetScreenList(void);
 extern int func_00418420(void* strings, int id);
 extern TextArrayCell* func_00426590(guiTextArrayWidget* self, int row, int col);
 
@@ -25,7 +25,7 @@ void func_00425D50(guiTextArrayWidget* self, int row, int col, int id) {
     TextArrayCell* cell = func_00426590(self, row, col);
 
     if (cell != 0) {
-        cell->text = func_00418420(func_00414790(), id);
+        cell->text = func_00418420(Gui_GetScreenList(), id);
         cell->flags |= 2;
     }
 }

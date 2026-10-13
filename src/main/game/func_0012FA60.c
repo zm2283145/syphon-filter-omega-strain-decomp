@@ -21,7 +21,7 @@ extern "C" char* Agent_GetSelected(void*, int);
 extern "C" void AgentData_EndLevel(char*, bool);
 
 #pragma opt_propagation off
-extern "C" void func_0012FA60(char* self, signed char arg1)
+extern "C" void Game_EndLevel(char* self, signed char arg1)
 {
     bool end = false;
     unsigned char mode = arg1;

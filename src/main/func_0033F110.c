@@ -31,7 +31,7 @@ W* func_0041DB80(void* o, char* name);
 void* Agent_GetSelected(void* p, int i);
 char* func_00336170(void* a);
 void func_0041BEB0(W* w, char* s, int f);
-Mgr* func_004147A0(void);
+Mgr* Gui_GetScreenStack(void);
 void func_0033F110(O* o);
 }
 static inline W* Cast(W* w, void* t) { return w && w->IsA(t) ? w : 0; }
@@ -60,6 +60,6 @@ void func_0033F110(O* o)
     D_00532FF0 = 0;
     D_00532FF8 = 0;
     D_00533000 = 0;
-    func_004147A0()->flags |= 0xC;
-    func_004147A0()->flags |= 0x3;
+    Gui_GetScreenStack()->flags |= 0xC;
+    Gui_GetScreenStack()->flags |= 0x3;
 }

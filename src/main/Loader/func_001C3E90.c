@@ -11,7 +11,7 @@ extern void func_001C00C0(It_1C3E90* out, int tree);
 extern void Tree_Successor(It_1C3E90* it);
 extern void ModelCtx_FindNodeById(It_1C3E90* out, int* tree, Key_1C3E90* key);
 extern void func_0018C730(It_1C3E90* out, int* tree);
-extern int func_0018C710(It_1C3E90* a, It_1C3E90* b);
+extern int NodeMapIter_NotEqual(It_1C3E90* a, It_1C3E90* b);
 static inline unsigned char EqB_1C3E90(void* a, void* b) { return a == b; }
 static inline int Eq_1C3E90(void* a, void* b) { return a == b; }
 #pragma push
@@ -19,7 +19,7 @@ static inline int Eq_1C3E90(void* a, void* b) { return a == b; }
 #pragma opt_rotateloops off
 #pragma opt_strength_reduction off
 #pragma opt_propagation off
-unsigned char func_001C3E90(void* mgr, char* name)
+unsigned char SkaRegistry_AllModelsHaveKey(void* mgr, char* name)
 {
     It_1C3E90 it;
     It_1C3E90 end;
@@ -41,7 +41,7 @@ unsigned char func_001C3E90(void* mgr, char* name)
         m = *pm;
         ModelCtx_FindNodeById(&f, &m->tree, &key);
         func_0018C730(&g, &m->tree);
-        if (!func_0018C710(&f, &g)) { ok = 0; break; }
+        if (!NodeMapIter_NotEqual(&f, &g)) { ok = 0; break; }
         Tree_Successor(&it);
     }
     return ok;

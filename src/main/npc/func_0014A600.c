@@ -43,7 +43,7 @@ int func_0014A670(int value) {
     return *(int*)(char*)word;
 }
 
-void* func_0014A690(void* self) {
+void* NpcScript_GetReceiver(void* self) {
     return self;
 }
 

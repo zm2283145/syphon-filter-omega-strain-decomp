@@ -13,7 +13,7 @@ extern char D_00586E30[];
 extern char D_00586FD0[];
 extern char D_00587170[];
 char* Loc_LookupText(int key);
-int func_002CAE30(void* ui, int a, char* b, char* c, void* d, int e);
+int FrontEnd_OpenPopup(void* ui, int a, char* b, char* c, void* d, int e);
 int func_0041DF00(void* self, int message, int first, int second);
 int func_00465A50(void* self, void* sender, int message, int first, int second);
 int func_00465B50(void* sender, char* tbl, int message);
@@ -30,7 +30,7 @@ extern "C" int func_00465610(void* self, void* sender, int message, int first, i
             } else {
                 D_004FFC04->f35 = 0;
                 D_004FFC04->f33 = 0;
-                { Ui_00465610* ui = D_004FFC04; func_002CAE30(ui, 2, D_004C2988, Loc_LookupText(second), 0, 0); }
+                { Ui_00465610* ui = D_004FFC04; FrontEnd_OpenPopup(ui, 2, D_004C2988, Loc_LookupText(second), 0, 0); }
             }
         }
         return 1;

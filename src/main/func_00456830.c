@@ -16,11 +16,11 @@ VObj45* func_0041DB80(W456830*, char*);
 int sprintf(char*, const char*, ...);
 char* Loc_LookupText(char*);
 void func_0041BEB0(VObj45*, char*, int);
-Mgr45* func_004147A0(void);
+Mgr45* Gui_GetScreenStack(void);
 void func_004562E0(W456830*, int);
-void func_00242900(int);
-void func_0012FA60(void*, int);
-void func_00131470(void*, int);
+void Hud_ClosePauseMenu(int);
+void Game_EndLevel(void*, int);
+void Game_SetPaused(void*, int);
 int func_003680A0(W456830*, Ev45*, int, int, int);
 }
 
@@ -46,7 +46,7 @@ extern "C" int func_00456830(W456830* self, Ev45* ev, int code, int a3, int a4)
         }
     }
     if (c == 2) {
-        int x; if (func_004147A0()->sel) x = func_004147A0()->sel->id; else {
+        int x; if (Gui_GetScreenStack()->sel) x = Gui_GetScreenStack()->sel->id; else {
             asm { .set reorder } /* barrier: keeps the else block out of the beqz delay slot */
             x = -1;
         }
@@ -57,9 +57,9 @@ extern "C" int func_00456830(W456830* self, Ev45* ev, int code, int a3, int a4)
     }
     if (c == 0x1A && a3 == 0) {
         if (D_004FFBA0 != 0x13 && D_004FFBA0 != 0x14) {
-            func_00242900(D_004FFC2C);
-            func_0012FA60(D_004FFB50, 2);
-            func_00131470(D_004FFB50, 0);
+            Hud_ClosePauseMenu(D_004FFC2C);
+            Game_EndLevel(D_004FFB50, 2);
+            Game_SetPaused(D_004FFB50, 0);
         }
         return 1;
     }

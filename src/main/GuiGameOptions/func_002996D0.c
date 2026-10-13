@@ -6,7 +6,7 @@
 int func_0029AA50(int, int);                                 
 int func_002C9510(int);                               
 int func_002C9860(int, int);                            
-int func_002CAC80(int, int);                          
+int FrontEnd_ClosePopup(int, int);                          
 int func_0045A3A0(int , int);                         
 extern float D_004C1FC8;
 extern int D_004FFC04;
@@ -21,6 +21,6 @@ void func_002996D0(int arg0, int arg1) {
     func_002C9510(D_004FFC04);
     D_005383C0 = (int) (F_(arg0, 0xD4, float) * D_004C1FC8) & 0xFF;
     if (arg1 != 0) {
-        func_002CAC80(D_004FFC04, F_(arg0, 0x48, int));
+        FrontEnd_ClosePopup(D_004FFC04, F_(arg0, 0x48, int));
     }
 }

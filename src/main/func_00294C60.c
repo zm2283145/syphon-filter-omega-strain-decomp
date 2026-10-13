@@ -22,7 +22,7 @@ void String_CtorCStr_13B480(Str_00294C60* s, const char* c);
 void func_0013D680(Str12_00294C60* d, Str_00294C60* s);
 void func_00138B70(Str_00294C60* s, int flags);
 int func_002071F0(Str12_00294C60* s);
-char* func_001692D0(Str12_00294C60* s);
+char* String_CStr(Str12_00294C60* s);
 void func_00294B20(S_00294C60* self, char* t);
 void String_Copy(char* d, const char* s);
 }
@@ -62,7 +62,7 @@ extern "C" void func_00294C60(S_00294C60* self)
                 if (e) {
                     txt = 0;
                 } else {
-                    txt = func_001692D0((Str12_00294C60*)txt);
+                    txt = String_CStr((Str12_00294C60*)txt);
                     asm { .set reorder } /* scheduling barrier: keeps retail's branch layout */
                 }
             }

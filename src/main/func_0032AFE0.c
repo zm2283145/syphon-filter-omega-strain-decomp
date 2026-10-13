@@ -3,7 +3,7 @@ typedef struct { char pad[0xE4]; int fE4; } S_32AFE0;
 typedef struct { char pad[0x20]; void* f20; } M_32AFE0;
 char D_004B8CB8[] = "onGainFocus"; void* func_0032B260(S_32AFE0* o, int id);
 void func_0041E0F0(void* a, void* b, int kind, int v, int f);
-M_32AFE0* func_004147A0(void);
+M_32AFE0* Gui_GetScreenStack(void);
 int String_AssignCStr_1C43A0(char* a, char* b);
 
 void func_0032AFE0(S_32AFE0* o)
@@ -29,7 +29,7 @@ void func_0032AFE0(S_32AFE0* o)
         case 2: if (o->fE4 & 2) on = 1; break;
         case 3: if (o->fE4 & 4) on = 1; break;
         }
-        if (func_004147A0()->f20 == w) {
+        if (Gui_GetScreenStack()->f20 == w) {
             if (str == 0 || String_AssignCStr_1C43A0(str, D_004B8CB8)) func_0041E0F0(o, w, 6, (int)D_004B8CB8, 0);
         } else if (on) {
             if (str == 0 || String_AssignCStr_1C43A0(str, "onPressed")) func_0041E0F0(o, w, 0xC, 0xD, 0);

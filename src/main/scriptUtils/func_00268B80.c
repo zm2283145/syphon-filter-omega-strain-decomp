@@ -2,10 +2,10 @@
 #pragma global_optimizer off
 typedef union { int i; float f; void* p; } ScriptArg_268B80;
 typedef struct { float* data; int cap; int count; } Arr_268B80;
-extern Arr_268B80* func_002690C0(int h);
+extern Arr_268B80* ScriptArray_Cast(int h);
 static inline void SetIdx_268B80(int h, int i, float v)
 {
-    Arr_268B80* a = func_002690C0(h);
+    Arr_268B80* a = ScriptArray_Cast(h);
     if (i >= 0 && i < a->count)
         a->data[i] = v;
 }

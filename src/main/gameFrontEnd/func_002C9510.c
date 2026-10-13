@@ -24,7 +24,7 @@ W_002C9510* func_001698C0(void);
 void func_003D1730(void* p);
 G_002C9510* func_004294C0(void);
 void func_0042A770(void);
-int func_004147A0(void);
+int Gui_GetScreenStack(void);
 void func_0041E0F0(int a, int b, int c, int d, int e);
 char* strncpy(char* d, const char* s, int n);
 void* Service_Lookup(void* a, void* b);
@@ -60,8 +60,8 @@ void func_002C9510(Self_002C9510* self)
                     g->b2409 = 0;
             }
             D_0051EF68 = 0;
-            a = func_004147A0();
-            func_0041E0F0(a, func_004147A0(), 0x10, 5, 0);
+            a = Gui_GetScreenStack();
+            func_0041E0F0(a, Gui_GetScreenStack(), 0x10, 5, 0);
             {
                 char* d = buf.s;
                 const char* s = D_004FFC90;

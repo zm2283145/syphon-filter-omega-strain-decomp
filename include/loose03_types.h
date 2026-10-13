@@ -245,7 +245,7 @@ typedef struct GuiAgentInfo {
     GuiAgentInfoTarget* unk120;        /* 0x120 */
 } GuiAgentInfo;
 
-/* Object returned by func_004147A0 (GUI manager?); unk2C->unk08 is compared to a screen. */
+/* Object returned by Gui_GetScreenStack (GUI manager?); unk2C->unk08 is compared to a screen. */
 typedef struct Obj4147A0Inner {
     char pad00[0x8];
     GuiAgentInfo* unk08;               /* 0x08 */

@@ -58,7 +58,7 @@ extern int func_002EA5B0(NetJoinCfg_n1* cfg);
 extern int func_002EA648(NetJoinCfg_n1* cfg, NetGameOut_n1* out);
 extern char* strncpy(char* d, const char* s, unsigned int n);
 typedef struct NetHost_n1 { char name[0x10]; int unk10; } NetHost_n1;
-extern int func_004147A0(void);
+extern int Gui_GetScreenStack(void);
 extern void func_0041E0F0(int a, int b, int c, int d, int e);
 static inline void MemClear_n1(void* d0, int n0) { int n = n0; void* dst = d0;
     asm {
@@ -128,8 +128,8 @@ int func_0042ACD0(NetHost_n1* host)
     if (err) {
         D_005721A8 = out.handle;
         D_005724B0 = 7;
-        if (func_004147A0()) {
-            func_0041E0F0(func_004147A0(), func_004147A0(), 0x1E, 0, (int)D_004BF9B8);
+        if (Gui_GetScreenStack()) {
+            func_0041E0F0(Gui_GetScreenStack(), Gui_GetScreenStack(), 0x1E, 0, (int)D_004BF9B8);
         }
     }
     return err;

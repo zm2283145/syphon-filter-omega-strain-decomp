@@ -2,7 +2,7 @@
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 int Loc_LookupText(signed char *);                           
-signed char *func_001692D0(int);                             
+signed char *String_CStr(int);                             
 int func_00274A60();                                
 int sprintf(int, int *, int, int);                      
 
@@ -18,7 +18,7 @@ int func_002749B0(int arg0, int arg1) {
     if (temp_v0 == 0) {
         return 0;
     }
-    temp_v0_2 = func_001692D0(arg0 + 0x28);
+    temp_v0_2 = String_CStr(arg0 + 0x28);
     var_a3 = 0;
     if ((temp_v0_2 != NULL) && (*temp_v0_2 != 0)) {
         var_a3 = Loc_LookupText(temp_v0_2);

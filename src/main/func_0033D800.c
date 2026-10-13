@@ -10,8 +10,8 @@ struct VC0033D800 { virtual int v0(); virtual int v1(); virtual int v2(); virtua
 extern "C" {
 int func_002C81D0(...);                               
 int func_002C82F0(...);                               
-int func_00414790(...);                                
-void **func_004147A0(...);                             
+int Gui_GetScreenList(...);                                
+void **Gui_GetScreenStack(...);                             
 int func_00418A80(...);                   
 char * func_004294C0(...);                              
 extern int D_004FFC04;
@@ -26,11 +26,11 @@ extern "C" void func_0033D800(char * arg0) {
         return;
     }
     func_002C82F0(D_004FFC04);
-    temp_s0 = func_00418A80(func_00414790(), "GuiMissionSetup", "MSNSETUP");
+    temp_s0 = func_00418A80(Gui_GetScreenList(), "GuiMissionSetup", "MSNSETUP");
     func_002C81D0(D_004FFC04);
     if (temp_s0 != 0) {
         F_(arg0, 0x14, unsigned short) = (unsigned short) (F_(arg0, 0x14, unsigned short) & 0xFFFD);
-        temp_v0_2 = func_004147A0();
+        temp_v0_2 = Gui_GetScreenStack();
         ((VC0033D800 *)(temp_v0_2))->v23(temp_s0, 0x14);
     }
 }

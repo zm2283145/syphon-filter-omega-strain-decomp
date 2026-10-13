@@ -6,7 +6,7 @@ extern unsigned char D_005721C8;
 extern G_1470* D_004FFC38;
 void func_0026BD60(void);
 void func_0026BE70(unsigned char v);
-void func_00131470(S_1470* self, unsigned char on)
+void Game_SetPaused(S_1470* self, unsigned char on)
 {
     if (!D_005721C8)
         self->on = on;

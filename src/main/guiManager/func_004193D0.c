@@ -18,7 +18,7 @@ int *func_002CCE10(...);
 int func_002CCE20(...);                          
 int func_002CCE30(...);                          
 int func_002CCE40(...);                               
-void **func_004147A0(...);                             
+void **Gui_GetScreenStack(...);                             
 typedef struct { char p0[20]; unsigned short f14; } PS0_004193D0;
 }
 extern "C" void func_004193D0(char *arg0, PS0_004193D0 *arg1) {
@@ -51,8 +51,8 @@ loop_3:
         }
         func_002CCDE0(&sp4C, &sp3C);
         if (F_(sp4C, 0x8, int) != NULL) {
-            if ((func_004147A0() != NULL) && (arg1->f14 & 8)) {
-                temp_v0 = func_004147A0();
+            if ((Gui_GetScreenStack() != NULL) && (arg1->f14 & 8)) {
+                temp_v0 = Gui_GetScreenStack();
                 ((VC004193D0 *)(temp_v0))->v24(arg1);
             }
             temp_a0 = (void **)(F_(F_(sp4C, 0x8, int), 0x44, int));

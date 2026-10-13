@@ -58,8 +58,8 @@ float func_00245810(Obj_244FA0* o);
 void Event_Construct(Msg_244FA0* m, void* p);
 void Event_Send(Msg_244FA0* m, void* target, int flags);
 void cMessage_dtor(Msg_244FA0* m, int flags);
-int func_00414790();
-Svc_244FA0* func_004147A0();
+int Gui_GetScreenList();
+Svc_244FA0* Gui_GetScreenStack();
 void func_00415870(Svc_244FA0* s);
 void func_00419260(int h, float dt);
 }
@@ -130,10 +130,10 @@ extern "C" void func_00244FA0(Obj_244FA0* o, float dt)
         }
     }
     if (!D_004FFC29 || D_005721C8) {
-        func_00419260(func_00414790(), dt);
+        func_00419260(Gui_GetScreenList(), dt);
         if (D_004FFBA0 != 0x13)
-            func_00415870(func_004147A0());
-        func_004147A0()->v22(dt);
+            func_00415870(Gui_GetScreenStack());
+        Gui_GetScreenStack()->v22(dt);
     }
 }
 

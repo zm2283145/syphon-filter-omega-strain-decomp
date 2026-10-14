@@ -1,6 +1,39 @@
+/*
+ * main/decals: decals.cc (2 files, 00279D80-0027A020)
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_00279D80 */
+#pragma push /* merge_units */
 #pragma cplusplus on
 #include "types.h"
 #include "alloc_guard.h"
+extern "C" {
+void Mem_Free(int heap, void* p, char* file, int line);
+void operator_delete(void* p);
+}
+struct S_00279D80 { void** a; void** b; int na; int nb; };
+static inline void Free_00279D80(void* p, int line) { AllocGuard g; Mem_Free(0, p, "decals.cc", line); }
+extern "C" S_00279D80* func_00279D80(S_00279D80* self, short flag)
+{
+    if (self) {
+        int i;
+        for (i = 0; i < self->na; i++) Free_00279D80(self->a[i], 0x87);
+        { int j; for (j = 0; j < self->nb; j++) Free_00279D80(self->b[j], 0x89); }
+        Free_00279D80(self->a, 0x8B);
+        Free_00279D80(self->b, 0x8C);
+        if (flag > 0)
+            operator_delete(self);
+    }
+    return self;
+}
+#pragma pop /* merge_units */
+/* merge_units: end func_00279D80 */
+
+/* merge_units: begin func_0027A020 */
+#pragma push /* merge_units */
+#pragma cplusplus on
 struct Item_27A020 { int f0; char pad4[0x4C]; int f50; int f54; int f58; float f5C; };
 struct Mgr_27A020 {
     Item_27A020** a; Item_27A020** b; int na; int nb; int f10; int f14; int f18; int f1C;
@@ -47,4 +80,5 @@ extern "C" Mgr_27A020* func_0027A020(Mgr_27A020* self, int na, int nb) {
     D_00543798 = self->nb;
     return self;
 }
-
+#pragma pop /* merge_units */
+/* merge_units: end func_0027A020 */

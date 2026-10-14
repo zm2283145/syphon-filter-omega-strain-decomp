@@ -1,5 +1,5 @@
 /*
- * main/FileHalPS2: 5 files, 00368F60-003694D0
+ * main/FileHalPS2: FileHalPS2.cc (9 files, 00368F60-003695C0)
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -15,7 +15,7 @@ extern int g_CdReadStatus;                              /* read status: -1 busy,
 extern int Cd_Sync(int mode);                 /* Cd_Sync: nonzero while busy */
 extern int Cd_Read(int lsn, int sectors, void* buf, CdReadMode* mode); /* Cd_Read */
 extern void Cd_SetCallback(void* cb);                /* Cd_SetCallback */
-extern void FileHal_CdCallback(void);
+extern void FileHal_CdCallback(int reason);
 /* Issue an async read of bufSize bytes at byte offset pos into buf. */
 int FileHal_StartRead(FileHalFile* o, int pos)
 {
@@ -244,3 +244,122 @@ int FileHal_ReadAll(FileHalFile* o)
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003694D0 */
+
+/* merge_units: begin func_003695C0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+extern "C" {
+#if 0 /* merge_units */
+void Mem_Free(int pool, void* p, char* file, int line);
+#endif /* merge_units */
+#define Mem_Free(a0, a1, a2, a3) (Mem_Free((a0), (a1), (a2), (a3))) /* merge_units */
+
+void operator_delete(void* p);
+}
+/* Abort any read, free an owned buffer and reset to the closed state. */
+static inline void FileHal_CloseInline(FileHalFile* s)
+{
+    if (s->handle >= 0) {
+        Cd_Break(); /* sceCdBreak takes no arguments (block FileHal_PollRead declares it) */
+        if (s->ownsBuf) {
+            void* p = s->buf;
+            if (p) {
+                {
+                    AllocGuard g;
+                    Mem_Free(0, p, D_004BBDD0, 0x1DD);
+                }
+                s->bufSize = 0;
+            }
+        }
+        s->handle = -1;
+        s->mode = 0;
+        s->buf = 0;
+        s->path[0] = 0;
+        s->ownsBuf = 0;
+        s->bufSize = 0;
+    }
+}
+/* Close the file. */
+extern "C" void FileHal_Close(FileHalFile* s)
+{
+    FileHal_CloseInline(s);
+}
+#undef Mem_Free /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003695C0 */
+
+/* merge_units: begin func_003696B0 */
+#pragma push /* merge_units */
+int FileHal_Open(FileHalFile* f, char* name, int mode);
+
+/* Open name unless already open (then only the mode changes); returns 1 on success. */
+int FileHal_Reopen(FileHalFile* f, char* name, int mode) {
+    int ret;
+    int closed;
+
+    /* the goto shape reproduces the original's unoptimised branch layout */
+    ret = f->handle;
+    closed = ret < 0;
+    if (closed) goto open;
+    f->mode = mode;
+    goto already_open;
+open:;
+    ret = FileHal_Open(f, name, mode);
+    goto done;
+already_open:;
+    ret = 0 + 1;
+done:;
+    goto out;
+out:
+    return ret;
+}
+#pragma pop /* merge_units */
+/* merge_units: end func_003696B0 */
+
+/* merge_units: begin func_00369700 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+/* Destructor: close, then delete when del > 0. */
+extern "C" FileHalFile* FileHal_Dtor(FileHalFile* self, short del)
+{
+    if (self) {
+        FileHal_CloseInline(self);
+        if (del > 0)
+            operator_delete(self);
+    }
+    return self;
+}
+#pragma pop /* merge_units */
+/* merge_units: end func_00369700 */
+
+/* merge_units: begin func_00369820 */
+#pragma push /* merge_units */
+/* Construct a closed handle, then open name with mode. */
+FileHalFile* FileHal_Ctor(FileHalFile* file, char* name, int mode) {
+    file->handle = -1;
+    file->mode = 0;
+    file->buf = 0;
+    file->path[0] = 0;
+    file->ownsBuf = 0;
+    file->bufSize = 0;
+    FileHal_Open(file, name, mode);
+    return file;
+}
+
+/* Default constructor: closed handle with cleared state. */
+FileHalFile* FileHal_CtorDefault(FileHalFile* file) {
+    file->handle = -1;
+    file->mode = 0;
+    file->buf = 0;
+    file->path[0] = 0;
+    file->ownsBuf = 0;
+    file->bufSize = 0;
+    return file;
+}
+
+/* Cd_SetCallback hook: records the completion reason. */
+void FileHal_CdCallback(int reason) {
+    g_CdReadStatus = reason;
+}
+#pragma pop /* merge_units */
+/* merge_units: end func_00369820 */

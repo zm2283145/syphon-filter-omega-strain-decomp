@@ -1,12 +1,40 @@
 /*
- * main/motionManager: 2 files, 0040F5E0-0040F650
+ * main/motionManager: motionManager.cc (3 files, 0040F570-0040F5E0)
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* merge_units: begin func_0040F5E0 */
+/* merge_units: begin func_0040F570 */
 #pragma push /* merge_units */
 #include "types.h"
+#define NULL 0
+#pragma mpwc_relax on
+int Mem_Free(int, int, char *, int);
+int func_0012F530(char *, int);                     /* scope object dtor */
+int func_00136DA0(char *);                          /* scope object ctor */
+#include "motionManager_types.h"
+MotionManager* MotionManager_Dtor(MotionManager*, short); /* MotionManager dtor */
+extern int g_MotionManager;                              /* MotionManager* */
+
+/* Destroy and free the motion manager. */
+void MotionManager_Shutdown(void) {
+    int scope;
+    int mgr;
+
+    mgr = g_MotionManager;
+    if (mgr != 0) {
+        func_00136DA0((char *)&scope);
+        MotionManager_Dtor((MotionManager *)mgr, -1);
+        Mem_Free(0, mgr, "motionManager.cc", 0x2B);
+        func_0012F530((char *)&scope, -1);
+        g_MotionManager = 0;
+    }
+}
+#pragma pop /* merge_units */
+/* merge_units: end func_0040F570 */
+
+/* merge_units: begin func_0040F5E0 */
+#pragma push /* merge_units */
 #include "motionManager_types.h"
 extern void World_FreePendingTree(MotionManager* t, void* n);
 extern void operator_delete(void* p);
@@ -30,7 +58,6 @@ MotionManager* MotionManager_Dtor(MotionManager* t, short del)
 
 /* merge_units: begin func_0040F650 */
 #pragma push /* merge_units */
-#define NULL 0
 #pragma mpwc_relax on
 int Alloc_Lock(int);
 int Alloc_Unlock(int);
@@ -39,7 +66,6 @@ int MotionManager_Ctor(int, char *, char *);             /* MotionManager ctor (
 extern char D_004BEDD0;                             /* "motionManager.cc" */
 extern unsigned char D_00533880;                    /* allocator locking enabled */
 extern int D_00533888;                              /* allocation guard depth */
-extern int g_MotionManager;                              /* MotionManager* */
 
 /* Create the motion manager once (an inlined AllocGuard wraps the allocation). */
 void MotionManager_Init(void) {

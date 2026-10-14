@@ -2917,7 +2917,7 @@ segments:
       - [0x132C00, asm]
       - [0x132E00, c, main/SpecFxDefs/func_00232E00]
       - [0x132EE0, c, main/SpecFxDefs/func_00232EE0]
-      - [0x132F10, asm]
+      - [0x132F10, c, main/SpecFxDefs/func_00232F10]
       - [0x134070, c, main/SpecFxDefs/SpecFxDefs_234070]
       - [0x134110, asm]
       - [0x134860, c, main/SpecFxDefs/func_00234860]

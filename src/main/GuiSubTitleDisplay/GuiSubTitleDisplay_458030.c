@@ -1,0 +1,105 @@
+/*
+ * main/GuiSubTitleDisplay: range (3 files, 00458030-00458140)
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* headers shared by the blocks below */
+#include "types.h"
+#pragma push
+#pragma cplusplus on
+#include "alloc_guard.h"
+#pragma pop
+
+/* library prototypes shared by the blocks below (C linkage) */
+int Mem_Free();
+
+/* merge_units: begin func_00458030 */
+#pragma push /* merge_units */
+/* True when the queue at +0x6C/+0x70 is empty or its last entry is earlier than the time at +0x54. */
+typedef struct S458030 {
+    char pad[0x54];
+    float t;
+    char pad2[0x14];
+    int n;
+    float* arr;
+} S458030;
+
+#pragma opt_common_subs off
+
+static inline float* End458030(S458030* s) { return s->arr + s->n; }
+
+int func_00458030(S458030* s)
+{
+    return s->n == 0 || End458030(s)[-1] < s->t;
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_00458030(void) {}
+#pragma pop /* merge_units */
+/* merge_units: end func_00458030 */
+
+/* merge_units: begin func_00458080 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+
+/* Release the owned record at +0xA0 (string member at +0x14) under the allocator guard, clear +0xA0/+0xA4. */
+extern "C" {
+void* String_Dtor(void* self, short flags);
+void func_0041EBF0(void* self);
+}
+struct O348AD0 { char pad[0x48]; char* aA0; int aA4; };
+extern "C" void func_00458080(O348AD0* o)
+{
+    char* p;
+    func_0041EBF0(o);
+    p = o->aA0;
+    {
+        AllocGuard guard;
+        if (p) {
+            char* s = p + 0x14;
+            if (s)
+                String_Dtor(s, 0);
+        }
+        Mem_Free(0, p, "GuiSubTitleDisplay.cc", 0x15E);
+    }
+    o->aA0 = 0;
+
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_00458080(void) {}
+#pragma pop /* merge_units */
+/* merge_units: end func_00458080 */
+
+/* merge_units: begin func_00458140 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+typedef struct { char pad[0x10]; unsigned char b10; char pad2[0x47]; unsigned char b58; } C458;
+typedef struct { char pad[0x3C]; float f3c; float f40; char pad2[4]; C458* f48; int f4c; char pad3[0x28]; int f78; } W458;
+extern "C" {
+extern void func_0041EFA0(W458*);
+extern int Gui_GetScreenList(void);
+extern int func_00418420(int, char*);
+extern void* Mem_Alloc(int, int, char*, int);
+extern char D_004C1EB0[];
+extern char D_00587D70[];
+extern C458* func_003D0940(void*, int, int, int, int, int, char*);
+extern int func_0036A2F0(int);
+}
+extern "C" void func_00458140(W458* w) {
+    C458* obj;
+    func_0041EFA0(w);
+    w->f4c = func_00418420(Gui_GetScreenList(), "callout");
+    {
+        AllocGuard g;
+        obj = (C458*)Mem_Alloc(0, 0x60, D_004C1EB0, 0x154);
+    }
+    if (obj) obj = func_003D0940(obj, 0, 0, (int)w->f3c, (int)w->f40, w->f4c, D_00587D70);
+    w->f48 = obj;
+    w->f48->b10 = 0;
+    w->f48->b58 = 1;
+    w->f78 = (int)(w->f40 / (float)func_0036A2F0(w->f4c));
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_00458140(void) {}
+#pragma pop /* merge_units */
+/* merge_units: end func_00458140 */

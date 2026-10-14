@@ -1,0 +1,95 @@
+/*
+ * main/character: range (3 files, 003E5D70-003E5E80)
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* headers shared by the blocks below */
+#include "types.h"
+#pragma push
+#pragma cplusplus on
+#include "alloc_guard.h"
+#pragma pop
+
+/* merge_units: begin func_003E5D70 */
+#pragma push /* merge_units */
+typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V_5E40;
+typedef struct { V_5E40 a; V_5E40 b; float c; float d; int e; } T_5E40;
+T_5E40* func_003E5E40(T_5E40* d, const T_5E40* s); /* gsynth: defined below */
+#pragma cplusplus on
+extern "C" {
+void* Mem_Alloc(int pool, int size, char* file, int line);
+extern char D_004E0100[];
+#if 0 /* merge_units */
+void func_003E5E40(void* dst, void* src);
+#endif /* merge_units */
+#define func_003E5E40(a0, a1) ((void)func_003E5E40((T_5E40 *)(a0), (const T_5E40 *)(a1))) /* merge_units */
+
+void cMessage_ctor3(void* self, void* other);
+}
+struct PM5D70 { void* vtable; char pad[8]; int wC; char pad2[0x20]; char payload[0x30]; };
+extern "C" PM5D70* func_003E5D70(PM5D70* self)
+{
+    PM5D70* p;
+    {
+        AllocGuard guard;
+        p = (PM5D70*)Mem_Alloc(0, 0x60, "character.hh", 0x40E);
+    }
+    if (p) {
+        cMessage_ctor3(p, self);
+        func_003E5E40(p->payload, self->payload);
+        p->vtable = D_004E0100;
+    }
+    p->wC = self->wC;
+    return p;
+}
+#undef func_003E5E40 /* merge_units */
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_003E5D70(void) {}
+#pragma pop /* merge_units */
+/* merge_units: end func_003E5D70 */
+
+/* merge_units: begin func_003E5E40 */
+#pragma push /* merge_units */
+static inline V_5E40* VAsg_(V_5E40* d, const V_5E40* s) { *d = *s; return d; }
+#pragma push
+#pragma peephole off
+#pragma opt_dead_assignments off
+#pragma opt_propagation off
+#pragma opt_common_subs off
+T_5E40* func_003E5E40(T_5E40* d, const T_5E40* s) {
+    void* r;
+    r = VAsg_(&d->a, &s->a); r = VAsg_(&d->b, &s->b); d->c = s->c; d->d = s->d; d->e = s->e; r = d;
+    return r;
+}
+#pragma pop
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_003E5E40(void) {}
+#pragma pop /* merge_units */
+/* merge_units: end func_003E5E40 */
+
+/* merge_units: begin func_003E5E80 */
+#pragma push /* merge_units */
+/* GCC-style VU0 asm (operand form) lets MW schedule the p->x/y/z loads in retail order. */
+typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
+static inline float Dot3(const V4* a, const V4* b)
+{
+    int rv0;
+    float ret;
+    __asm__ volatile("lqc2 vf1, 0x0(%2); lqc2 vf2, 0x0(%3); vmul.xyzw vf3, vf1, vf2; mtsah zero, 0x6; vmulax.w ACC, vf0, vf3x; vmadday.w ACC, vf0, vf3y; vmaddz.w vf4, vf0, vf3z; qmfc2.ni %0, vf4; qfsrv %0, %0, %0; mtc1 %0, %1" : "=&r"(rv0), "=f"(ret) : "r"(a), "r"(b) : "memory");
+    return ret;
+}
+static inline void MK(V4* t, float x, float y, float z, float w) { t->x = x; t->y = y; t->z = z; t->w = w; }
+#pragma peephole off
+#pragma opt_propagation off
+void func_003E5E80(V4* out, const V4* n, const V4* p)
+{
+    V4 t;
+    float d = Dot3(p, n);
+    MK(&t, p->x, p->y, p->z, -d);
+    *out = t;
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_003E5E80(void) {}
+#pragma pop /* merge_units */
+/* merge_units: end func_003E5E80 */

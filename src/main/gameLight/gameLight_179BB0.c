@@ -1,0 +1,56 @@
+/*
+ * main/gameLight: range (2 files, 00179BB0-00179BF0)
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* headers shared by the blocks below */
+#include "types.h"
+
+/* merge_units: begin func_00179BB0 */
+#pragma push /* merge_units */
+/* Compiled as C++ (virtual calls through $t9 only come from real virtual dispatch). */
+#pragma cplusplus on
+
+struct LightBase { int unk0; }; /* data before the vtable pointer (vptr at +4) */
+struct Light : LightBase {
+    virtual void v00(); virtual void v01(); virtual void v02(); virtual void v03(); virtual void v04(); virtual void v05();
+    virtual void v06(); virtual void v07(); virtual void v08();
+    virtual void Method2C(); /* +0x2C */
+};
+
+typedef struct cGameLight { char pad[0x60]; Light* light; /* +0x60 */ } cGameLight;
+
+extern "C" void Object_Activate(cGameLight* self, void* arg);
+
+/* Object_Activate then light object (+0x60) virtual slot +0x2C. */
+extern "C" void cGameSceneLight_Activate(cGameLight* self, void* arg)
+{
+    Object_Activate(self, arg);
+    self->light->Method2C();
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_00179BB0(void) {}
+#pragma pop /* merge_units */
+/* merge_units: end func_00179BB0 */
+
+/* merge_units: begin func_00179BF0 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Empty / constant virtual methods.
+ */
+
+
+void func_00179BF0(void) {
+}
+
+void func_00179C00(void) {
+}
+
+void func_00179C10(void) {
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_00179BF0(void) {}
+#pragma pop /* merge_units */
+/* merge_units: end func_00179BF0 */

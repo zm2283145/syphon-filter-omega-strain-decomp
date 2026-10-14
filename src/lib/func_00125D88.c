@@ -1,4 +1,4 @@
-int func_00125D88(void *r, int *pwc, const char *s, unsigned int n, void *state)
+int _mbtowc_r(void *r, int *pwc, const char *s, unsigned int n, void *state)
 {
   int dummy;
   unsigned char *t = (unsigned char *)s;

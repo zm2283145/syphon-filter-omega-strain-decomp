@@ -21,6 +21,12 @@ has any .rodata, else .data), laid out as if it started at START (so inner
 multiple of 4 bytes, the way the block is cut out of the retail data. With
 TARGET.o (the unit's objdiff target), retail data labels that have no symbol in
 the block (GCC's anonymous `.LC` data) get one, so objdiff can pair them.
+Words in the block that GCC relocates against the code section (jump-table
+entries `.word .L123`: R_MIPS_32 `.text` + offset in the unit) are rewritten
+against the function that holds the offset, with the offset in the function
+in place - the form of the target (`tools/assemble.py --relative-jumptables`)
+and of Metrowerks; otherwise every jump table of a function that does not
+start the unit differs from the target in its bytes.
 
 Uninitialised data (.bss/.sbss/common) cannot be placed yet and is an error.
 """
@@ -33,6 +39,8 @@ import tail_obj
 
 DATA_KINDS = (".data", ".rodata", ".sdata")
 NOBITS = 8
+SHT_REL = 9
+R_MIPS_32 = 2
 SHF_ALLOC, SHF_EXECINSTR = 2, 4
 # not data: assembler bookkeeping, and the C++ exception index the link discards for all units
 NOT_DATA = (".reginfo", ".MIPS.", ".pdr", ".mdebug", ".gnu", ".note", ".exceptix", ".exception")
@@ -150,6 +158,44 @@ def name_block(objcopy, base, kind, labels):
     open(base, "wb").write(blob)
 
 
+def function_relative(blob, kind):
+    """Rewrite the block's R_MIPS_32 relocations against a code section symbol
+    as relocations against the function holding the address (see the docstring)."""
+    secs = sections(blob)
+    data = next((s for s in secs if s[2] == kind), None)
+    if data is None:
+        return
+    data_off, = struct.unpack_from("<I", blob, data[1] + 0x10)
+    syms = symbols(blob, secs)
+    code = {s[0] for s in secs if s[4] & SHF_EXECINSTR}
+    section_syms = {k for k, s in enumerate(syms) if s[4] == 3 and s[5] in code}  # STT_SECTION
+    funcs = {}
+    for k, (_, _, value, sz, typ, shndx) in enumerate(syms):
+        if typ == 2 and shndx in code and sz:  # STT_FUNC
+            funcs.setdefault((shndx, value), (sz, k))
+    for rel in secs:
+        if rel[3] != SHT_REL:
+            continue
+        info, = struct.unpack_from("<I", blob, rel[1] + 0x1C)
+        if info != data[0]:
+            continue
+        off, = struct.unpack_from("<I", blob, rel[1] + 0x10)
+        for j in range(rel[5] // 8):
+            e = off + 8 * j
+            r_offset, r_info = struct.unpack_from("<II", blob, e)
+            sym = r_info >> 8
+            if r_info & 0xFF != R_MIPS_32 or sym not in section_syms:
+                continue
+            addend, = struct.unpack_from("<I", blob, data_off + r_offset)
+            owner = [(value, k) for (shndx, value), (sz, k) in funcs.items()
+                     if shndx == syms[sym][5] and value <= addend < value + sz]
+            if len(owner) != 1:
+                continue
+            value, k = owner[0]
+            struct.pack_into("<I", blob, e + 4, (k << 8) | R_MIPS_32)
+            struct.pack_into("<I", blob, data_off + r_offset, addend - value)
+
+
 def block_kind(names):
     """Section name of a unit's merged data block (= its subsegment type)."""
     for k in (".rodata", ".data", ".sdata"):
@@ -201,6 +247,7 @@ def main():
     if target:
         name_block(objcopy, base, kind, target_labels(target))
     out = bytearray(open(base, "rb").read())
+    function_relative(out, kind)
     secs = sections(out)
     for i, h, name, typ, flags, size, align in secs:
         if name == kind:

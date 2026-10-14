@@ -4,10 +4,10 @@
 #pragma opt_common_subs off
 
 extern "C" {
-int func_0012AC20(char*, char**);
+int strtod(char*, char**);
 float SoftFloat_DoubleToFloat(int);
 char* strchr(const char*, int);
-long func_0012B1F0(char*, char**, int);
+long strtoul(char*, char**, int);
 }
 
 struct V4_3A3A40 {
@@ -51,7 +51,7 @@ struct Mk3A3A40 : V4_3A3A40 {
     Mk3A3A40(float a, float b, float c, float d) { x = a; y = b; z = c; w = d; }
 };
 
-#define RD() SoftFloat_DoubleToFloat(func_0012AC20(s, &s))
+#define RD() SoftFloat_DoubleToFloat(strtod(s, &s))
 #define NL() s = strchr(s, '\n') + 1
 
 extern "C" void func_003A3A40(Obj3A3A40* self, char* str)
@@ -66,7 +66,7 @@ extern "C" void func_003A3A40(Obj3A3A40* self, char* str)
     NL();
     self->fA34 = RD();
     self->fA38 = RD();
-    self->iA3C = func_0012B1F0(s, &s, 10);
+    self->iA3C = strtoul(s, &s, 10);
     NL();
     self->fA40 = RD();
     self->fA44 = RD();
@@ -94,7 +94,7 @@ extern "C" void func_003A3A40(Obj3A3A40* self, char* str)
     self->f9AC = RD();
     NL();
     self->v990 = Mk3A3A40(self->f988, self->f98C, self->f9A0, self->f9A4);
-    self->i8F4 = func_0012B1F0(s, &s, 10);
+    self->i8F4 = strtoul(s, &s, 10);
     if (self->i8F4 != 0) self->iA3C = -1;
     self->f974 = self->f4C;
     self->f978 = (unsigned int)self->b64;

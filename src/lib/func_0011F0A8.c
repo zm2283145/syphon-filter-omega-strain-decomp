@@ -8,9 +8,9 @@ __asm__(".set nomove\n"
         "dpcmp = SoftFloat_UnpackAndCompare\n");
 typedef int __int32_t;
 
-extern double func_00120FC0(double, int); /* scalbn */
+extern double scalbn(double, int); /* scalbn */
 extern double func_00120D20(double);      /* floor */
-#define scalbn func_00120FC0
+#define scalbn scalbn
 #define floor func_00120D20
 
 /* init_jk / PIo2 tables (+ zero, one, two24, twon24) live in unowned .data */

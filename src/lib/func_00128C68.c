@@ -5,7 +5,7 @@ typedef struct { unsigned char* _p; int _r; int _w; short _flags; short _file; u
 extern int D_00489738;
 extern unsigned int strlen(const char*);
 extern int func_00128C60();
-extern int func_0012DD18(FILE_X* fp, const char* fmt, va_list ap);
+extern int __svfscanf(FILE_X* fp, const char* fmt, va_list ap);
 int func_00128C68(const char *str, const char *fmt, ...)
 {
   int ret;
@@ -20,7 +20,7 @@ int func_00128C68(const char *str, const char *fmt, ...)
   f._lb_base = 0;
   f._data = (void*)D_00489738;
   va_start (ap, fmt);
-  ret = func_0012DD18 (&f, fmt, ap);
+  ret = __svfscanf (&f, fmt, ap);
   va_end (ap);
   return ret;
 }

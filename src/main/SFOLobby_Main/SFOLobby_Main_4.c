@@ -171,7 +171,7 @@ extern void func_002E9480(Req1C*);
 extern void func_002E94E0(Req1C*, Res18*);
 extern void func_002F96B8(void*, void*);
 extern int func_00476998(void);
-extern void func_00127DB8(int);
+extern void srand(int);
 extern int Random_Next(void);
 extern int func_00468630(Cb14*, int*);
 extern void func_00352C30(void*);
@@ -212,7 +212,7 @@ int func_00452CD0(Net* s)
     req.f4 = func_00476998();
     req.f8 = s->b23D6 ? 0 : &buf;
     x = D_00572538;
-    func_00127DB8(func_0011C858(func_0011C200(func_0011C7A0(x), func_0011C268(0.0625, SoftFloat_FloatToDouble((float)x)))));
+    srand(func_0011C858(func_0011C200(func_0011C7A0(x), func_0011C268(0.0625, SoftFloat_FloatToDouble((float)x)))));
     req.fC = Random_Next() % 1000 + 6000;
     req.f14 = func_00445F90;
     req.f10 = 1;

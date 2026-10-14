@@ -73,7 +73,7 @@ extern unsigned long D_00489B58;
 extern char *D_00489B60;
 extern unsigned long D_00489B68, D_00489B70;
 extern char *func_00128658(void *, int);
-extern void func_00123D60(void *, void *);
+extern void _free_r(void *, void *);
 #define sbrked_mem (D_00489B78.arena)
 #define initial_top ((mchunkptr)(bin_at(0)))
 #define MINSIZE 16
@@ -96,7 +96,7 @@ extern void func_00125408(void *, INTERNAL_SIZE_T);
  (((unsigned long)((req) + (SIZE_SZ + MALLOC_ALIGN_MASK)) < \
   (unsigned long)(MINSIZE + MALLOC_ALIGN_MASK)) ? ((MINSIZE + MALLOC_ALIGN_MASK) & ~(MALLOC_ALIGN_MASK)) : \
    (((unsigned long)((req) + (SIZE_SZ + MALLOC_ALIGN_MASK))) & ~(MALLOC_ALIGN_MASK)))
-void *func_00125660(void *reent_ptr, unsigned int bytes)
+void *_malloc_r(void *reent_ptr, unsigned int bytes)
 {
     mchunkptr victim;
     INTERNAL_SIZE_T victim_size;

@@ -1,8 +1,8 @@
 typedef struct reent_X { char pad[0x3C]; void (*__cleanup)(void); } reent_X;
 typedef struct { unsigned char* _p; int _r; int _w; short _flags; short _file; unsigned char* _bf_base; int _bf_size; int _lbfsize; void* _cookie; void* _read; void* _write; void* _seek; void* _close; unsigned char* _ub_base; int _ub_size; unsigned char* _up; int _ur; unsigned char _ubuf[3]; unsigned char _nbuf[1]; unsigned char* _lb_base; int _lb_size; int _blksize; int _offset; reent_X* _data; } FILE_X;
 extern void* memcpy(void*, const void*, unsigned int);
-extern int func_001284D8(FILE_X* fp);
-unsigned int func_00123C40(void *buf, unsigned int size, unsigned int count, FILE_X * fp)
+extern int __srefill(FILE_X* fp);
+unsigned int fread(void *buf, unsigned int size, unsigned int count, FILE_X * fp)
 {
   register unsigned int resid;
   register char *p;
@@ -21,7 +21,7 @@ unsigned int func_00123C40(void *buf, unsigned int size, unsigned int count, FIL
       fp->_p += r;
       p += r;
       resid -= r;
-      if (func_001284D8 (fp))
+      if (__srefill (fp))
 	{
 	  return (total - resid) / size;
 	}

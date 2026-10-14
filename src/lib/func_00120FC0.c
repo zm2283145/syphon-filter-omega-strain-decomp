@@ -13,7 +13,7 @@ extern const double D_00499BE0;
 #define twom54 5.55111512312578270212e-17
 extern double func_00120B78(double, double);
 
-double func_00120FC0(double x, int n)
+double scalbn(double x, int n)
 {
 	int k,hx,lx;
 	EXTRACT_WORDS(hx,lx,x);

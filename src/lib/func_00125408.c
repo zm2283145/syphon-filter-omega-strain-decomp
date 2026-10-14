@@ -74,7 +74,7 @@ extern char *D_00489B60;
 unsigned long D_00489B68 = 0;
 unsigned long D_00489B70 = 0;
 extern char *func_00128658(void *, int);
-extern void func_00123D60(void *, void *);
+extern void _free_r(void *, void *);
 #define sbrked_mem (D_00489B78.arena)
 #define initial_top ((mchunkptr)(bin_at(0)))
 #define MINSIZE 16
@@ -145,7 +145,7 @@ void func_00125408(void *reent_ptr, INTERNAL_SIZE_T nb)
             chunk_at_offset(old_top, old_top_size)->size = SIZE_SZ | PREV_INUSE;
             chunk_at_offset(old_top, old_top_size + SIZE_SZ)->size = SIZE_SZ | PREV_INUSE;
             if (old_top_size >= MINSIZE)
-                func_00123D60(reent_ptr, chunk2mem(old_top));
+                _free_r(reent_ptr, chunk2mem(old_top));
         }
     }
 

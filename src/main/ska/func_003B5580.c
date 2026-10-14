@@ -18,7 +18,7 @@ extern void func_00138350(Str2_5580* s, int f);
 extern Tok_5580* func_003B6150(Tok_5580* self, Str2_5580* out);
 extern char* func_00189540(Str2_5580* s);
 extern int atoi(char* s);
-extern long long func_00121BB0(char* s);
+extern long long atof(char* s);
 extern float SoftFloat_DoubleToFloat(long long a);
 extern int func_002071F0(StrP_5580* s);
 extern char* func_002071A0(StrP_5580* s);
@@ -85,7 +85,7 @@ static inline void ReadFloat0(Tok_5580* tok, float* out)
     Str2_5580 t;
     func_00298690(&t);
     func_003B6150(tok, &t);
-    *out = SoftFloat_DoubleToFloat(func_00121BB0(func_00189540(&t)));
+    *out = SoftFloat_DoubleToFloat(atof(func_00189540(&t)));
     func_00138350(&t, -1);
 }
 

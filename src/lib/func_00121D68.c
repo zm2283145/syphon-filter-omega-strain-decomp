@@ -1,5 +1,5 @@
 #include "types.h"
-extern void* func_00125660(void* reent, unsigned int n);
+extern void* _malloc_r(void* reent, unsigned int n);
 extern void* memset(void* p, int c, unsigned int n);
 typedef struct { unsigned int prev_size; unsigned int size; } chunk_00121D68;
 #define mem2chunk(mem) ((chunk_00121D68*)((char*)(mem) - 8))
@@ -20,7 +20,7 @@ void* func_00121D68(void* reent, unsigned int n, unsigned int elem_size)
     chunk_00121D68* p;
     unsigned int csz;
     unsigned int sz = n * elem_size;
-    void* mem = func_00125660(reent, sz);
+    void* mem = _malloc_r(reent, sz);
     if (mem == 0) return 0;
     else {
         p = mem2chunk(mem);

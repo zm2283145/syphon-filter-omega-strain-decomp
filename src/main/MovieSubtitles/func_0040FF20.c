@@ -31,7 +31,7 @@ extern char D_004BEE40[];
 void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
 char* String_CStr(void* s);
 int String_CompareN(char* a, char* b, int n);
-int func_00121BB0(char* s);
+int atof(char* s);
 float SoftFloat_DoubleToFloat(int v);
 void func_003FD2D0(char* s);
 }
@@ -80,12 +80,12 @@ extern "C" void func_0040FF20(Subs40FF20* self, void* line)
         fAlign = SkipWord_40FF20(fType); while (*fAlign && IsSp_40FF20(*fAlign) || IsTab_40FF20(*fAlign)) fAlign++;
         fLang = SkipWord_40FF20(fAlign); while (*fLang && IsSp_40FF20(*fLang) || IsTab_40FF20(*fLang)) fLang++;
         fRest = SkipWord_40FF20(fLang); while (*fRest && IsSp_40FF20(*fRest) || IsTab_40FF20(*fRest)) fRest++;
-        float h1 = SoftFloat_DoubleToFloat(func_00121BB0(t1));
-        float m1 = SoftFloat_DoubleToFloat(func_00121BB0(t1 + 3));
-        float s1 = SoftFloat_DoubleToFloat(func_00121BB0(t1 + 6));
-        float h2 = SoftFloat_DoubleToFloat(func_00121BB0(t2));
-        float m2 = SoftFloat_DoubleToFloat(func_00121BB0(t2 + 3));
-        float s2 = SoftFloat_DoubleToFloat(func_00121BB0(t2 + 6));
+        float h1 = SoftFloat_DoubleToFloat(atof(t1));
+        float m1 = SoftFloat_DoubleToFloat(atof(t1 + 3));
+        float s1 = SoftFloat_DoubleToFloat(atof(t1 + 6));
+        float h2 = SoftFloat_DoubleToFloat(atof(t2));
+        float m2 = SoftFloat_DoubleToFloat(atof(t2 + 3));
+        float s2 = SoftFloat_DoubleToFloat(atof(t2 + 6));
         int flags = 0;
         int lang;
 

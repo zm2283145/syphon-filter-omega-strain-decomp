@@ -1,5 +1,5 @@
 typedef struct { unsigned char *_p; int _r; } FILE;
-extern int func_001284D8(FILE *);
+extern int __srefill(FILE *);
 extern void *func_00125DC0(const void *, int, unsigned int);
 extern void *memcpy(void *, const void *, unsigned int);
 char *func_001235F8(char *buf, int n, FILE *fp)
@@ -15,7 +15,7 @@ char *func_001235F8(char *buf, int n, FILE *fp)
     n--;
     do {
         if ((len = fp->_r) <= 0) {
-            if (func_001284D8(fp)) {
+            if (__srefill(fp)) {
                 if (s == buf)
                     return 0;
                 break;

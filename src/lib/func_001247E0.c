@@ -5,10 +5,10 @@ typedef struct {
 } FILE;
 struct __siov { const void *iov_base; unsigned int iov_len; };
 struct __suio { struct __siov *uio_iov; int uio_iovcnt; int uio_resid; };
-extern int func_0012EBB8(FILE *);
+extern int __swsetup(FILE *);
 extern void *func_00125FE8(void *, const void *, unsigned int);
 extern void *func_00125DC0(const void *, int, unsigned int);
-extern int func_001234E0(FILE *);
+extern int fflush(FILE *);
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
 #define COPY(n) (void) func_00125FE8((void *) fp->_p, (void *) p, (unsigned int) (n))
 #define GETIOV(extra_work) \
@@ -19,8 +19,8 @@ extern int func_001234E0(FILE *);
       len = iov->iov_len; \
       iov++; \
     }
-#define cantwrite(fp) ((((fp)->_flags & 0x0008) == 0 || (fp)->_bf._base == 0) && func_0012EBB8(fp))
-int func_001247E0(register FILE *fp, register struct __suio *uio)
+#define cantwrite(fp) ((((fp)->_flags & 0x0008) == 0 || (fp)->_bf._base == 0) && __swsetup(fp))
+int __sfvwrite(register FILE *fp, register struct __suio *uio)
 {
     register unsigned int len;
     register const char *p;
@@ -58,7 +58,7 @@ int func_001247E0(register FILE *fp, register struct __suio *uio)
             } else if (fp->_p > fp->_bf._base && len > w) {
                 COPY(w);
                 fp->_p += w;
-                if (func_001234E0(fp))
+                if (fflush(fp))
                     goto err;
             } else if (len >= (w = fp->_bf._size)) {
                 w = (*fp->_write)(fp->_cookie, p, w);
@@ -87,7 +87,7 @@ int func_001247E0(register FILE *fp, register struct __suio *uio)
             if (fp->_p > fp->_bf._base && s > w) {
                 COPY(w);
                 fp->_p += w;
-                if (func_001234E0(fp))
+                if (fflush(fp))
                     goto err;
             } else if (s >= (w = fp->_bf._size)) {
                 w = (*fp->_write)(fp->_cookie, p, w);
@@ -100,7 +100,7 @@ int func_001247E0(register FILE *fp, register struct __suio *uio)
                 fp->_p += w;
             }
             if ((nldist -= w) == 0) {
-                if (func_001234E0(fp))
+                if (fflush(fp))
                     goto err;
                 nlknown = 0;
             }

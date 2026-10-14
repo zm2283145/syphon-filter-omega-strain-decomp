@@ -4,10 +4,10 @@
 #pragma opt_common_subs off
 
 extern "C" {
-int func_0012AC20(char*, char**);
+int strtod(char*, char**);
 float SoftFloat_DoubleToFloat(int);
 char* strchr(const char*, int);
-long func_0012B1F0(char*, char**, int);
+long strtoul(char*, char**, int);
 }
 
 struct V4_3A3F80 {
@@ -45,30 +45,30 @@ struct Mk3A3F80 : V4_3A3F80 {
 extern "C" void func_003A3F80(Obj3A3F80* self, char* str, float ver)
 {
     char* s = str;
-    self->f990 = SoftFloat_DoubleToFloat(func_0012AC20(s, &s));
-    self->f994 = SoftFloat_DoubleToFloat(func_0012AC20(s, &s));
+    self->f990 = SoftFloat_DoubleToFloat(strtod(s, &s));
+    self->f994 = SoftFloat_DoubleToFloat(strtod(s, &s));
     s = strchr(s, '\n') + 1;
-    self->f9A0 = SoftFloat_DoubleToFloat(func_0012AC20(s, &s));
-    self->f9A4 = SoftFloat_DoubleToFloat(func_0012AC20(s, &s));
+    self->f9A0 = SoftFloat_DoubleToFloat(strtod(s, &s));
+    self->f9A4 = SoftFloat_DoubleToFloat(strtod(s, &s));
     s = strchr(s, '\n') + 1;
-    self->f998 = SoftFloat_DoubleToFloat(func_0012AC20(s, &s));
-    self->f99C = SoftFloat_DoubleToFloat(func_0012AC20(s, &s));
+    self->f998 = SoftFloat_DoubleToFloat(strtod(s, &s));
+    self->f99C = SoftFloat_DoubleToFloat(strtod(s, &s));
     s = strchr(s, '\n') + 1;
-    self->f9A8 = SoftFloat_DoubleToFloat(func_0012AC20(s, &s));
-    self->f9AC = SoftFloat_DoubleToFloat(func_0012AC20(s, &s));
+    self->f9A8 = SoftFloat_DoubleToFloat(strtod(s, &s));
+    self->f9AC = SoftFloat_DoubleToFloat(strtod(s, &s));
     self->f9AC = self->f9AC / self->f9A8;
     s = strchr(s, '\n') + 1;
-    self->f9B0 = SoftFloat_DoubleToFloat(func_0012AC20(s, &s));
+    self->f9B0 = SoftFloat_DoubleToFloat(strtod(s, &s));
     self->f9B4 = 0.0f;
     s = strchr(s, '\n') + 1;
-    self->f9B8 = SoftFloat_DoubleToFloat(func_0012AC20(s, &s));
-    self->f9BC = SoftFloat_DoubleToFloat(func_0012AC20(s, &s));
+    self->f9B8 = SoftFloat_DoubleToFloat(strtod(s, &s));
+    self->f9BC = SoftFloat_DoubleToFloat(strtod(s, &s));
     s = strchr(s, '\n') + 1;
     if (ver >= 1.5f) {
-        self->f9C0 = SoftFloat_DoubleToFloat(func_0012AC20(s, &s));
-        self->f9C4 = SoftFloat_DoubleToFloat(func_0012AC20(s, &s));
+        self->f9C0 = SoftFloat_DoubleToFloat(strtod(s, &s));
+        self->f9C4 = SoftFloat_DoubleToFloat(strtod(s, &s));
         s = strchr(s, '\n') + 1;
-        self->i8F4 = func_0012B1F0(s, &s, 10);
+        self->i8F4 = strtoul(s, &s, 10);
         s = strchr(s, '\n') + 1;
     } else {
         self->f9C0 = 0.0f;
@@ -76,9 +76,9 @@ extern "C" void func_003A3F80(Obj3A3F80* self, char* str, float ver)
         self->i8F4 = 0;
     }
     if (ver >= 2.0f) {
-        self->i9C8 = func_0012B1F0(s, &s, 10);
+        self->i9C8 = strtoul(s, &s, 10);
         if (self->i9C8 == 0) self->i9C8 = 1;
-        self->b9CC = func_0012B1F0(s, &s, 10) != 0;
+        self->b9CC = strtoul(s, &s, 10) != 0;
         s = strchr(s, '\n') + 1;
     } else {
         self->i9C8 = 1;

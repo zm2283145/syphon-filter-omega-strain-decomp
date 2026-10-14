@@ -10,18 +10,18 @@ typedef struct __sFILE {
 } FILE;
 struct _glue { struct _glue *_next; int _niobs; FILE *_iobs; };
 struct _reent { int _errno; char p0[0x34]; int __sdidinit; char p1[0x1D8 - 0x3C]; struct _glue __sglue; };extern struct _reent *D_00489738;
-extern void func_00123940(struct _reent *);
+extern void __sinit(struct _reent *);
 extern int func_00124BC0(struct _reent *, int (*)(FILE *));
-int func_001234E0(FILE *fp)
+int fflush(FILE *fp)
 {
     int n, t;
     unsigned char *p;
-    if (fp == 0) return func_00124BC0(D_00489738, func_001234E0);
+    if (fp == 0) return func_00124BC0(D_00489738, fflush);
     do {
         if ((fp)->_data == 0)
             (fp)->_data = D_00489738;
         if (!(fp)->_data->__sdidinit)
-            func_00123940((fp)->_data);
+            __sinit((fp)->_data);
     } while (0);
     t = fp->_flags;
     if ((t & 8) == 0 || (p = fp->_bf._base) == 0) return 0;

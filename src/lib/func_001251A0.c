@@ -8,10 +8,10 @@ struct malloc_chunk {
 };
 typedef struct malloc_chunk* mchunkptr;
 struct _reent;
-extern void* func_00125660(struct _reent*, size_t);
+extern void* _malloc_r(struct _reent*, size_t);
 extern void func_001261B0(struct _reent*);
 extern void func_00126230(struct _reent*);
-extern void func_00123D60(struct _reent*, void*);
+extern void _free_r(struct _reent*, void*);
 extern unsigned long func_0011B278(unsigned long, unsigned long);
 
 #define SIZE_SZ (sizeof(INTERNAL_SIZE_T))
@@ -47,12 +47,12 @@ void* func_001251A0(struct _reent* reent_ptr, size_t alignment, size_t bytes)
     mchunkptr remainder;
     long remainder_size;
 
-    if (alignment <= MALLOC_ALIGNMENT) return func_00125660(reent_ptr, bytes);
+    if (alignment <= MALLOC_ALIGNMENT) return _malloc_r(reent_ptr, bytes);
 
     if (alignment < MINSIZE) alignment = MINSIZE;
 
     nb = request2size(bytes);
-    m = (char*)(func_00125660(reent_ptr, nb + alignment + MINSIZE));
+    m = (char*)(_malloc_r(reent_ptr, nb + alignment + MINSIZE));
 
     if (m == 0) return 0;
 
@@ -72,7 +72,7 @@ void* func_001251A0(struct _reent* reent_ptr, size_t alignment, size_t bytes)
         set_head(newp, newsize | PREV_INUSE);
         set_inuse_bit_at_offset(newp, newsize);
         set_head_size(p, leadsize);
-        func_00123D60(reent_ptr, chunk2mem(p));
+        _free_r(reent_ptr, chunk2mem(p));
         p = newp;
     }
 
@@ -83,7 +83,7 @@ void* func_001251A0(struct _reent* reent_ptr, size_t alignment, size_t bytes)
         remainder = chunk_at_offset(p, nb);
         set_head(remainder, remainder_size | PREV_INUSE);
         set_head_size(p, nb);
-        func_00123D60(reent_ptr, chunk2mem(remainder));
+        _free_r(reent_ptr, chunk2mem(remainder));
     }
 
     func_00126230(reent_ptr);

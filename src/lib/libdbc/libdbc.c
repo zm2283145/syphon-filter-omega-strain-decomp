@@ -208,7 +208,7 @@ int sceDbcResetSocket(int a)
 }
 
 /* sceDbcGetDeviceStatus (by its message) */
-int func_0026AAA0(int a)
+int sceDbcGetDeviceStatus(int a)
 {
     D_004F8640[0] = a;
     if (sceSifCallRpc(&D_004F85C8, 0x80001317, 0, D_004F8640, DBC_RPC_SIZE, D_004F8640, DBC_RPC_SIZE, 0, 0) < 0) {

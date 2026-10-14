@@ -9,7 +9,7 @@ dp_l[] = { 0.0, 1.56322085e-06,};
 extern const float D_004995FC;
 extern float func_0011ED00(float x);
 extern float func_00121760(float x);
-extern float func_00121860(float x, int n);
+extern float scalbnf(float x, int n);
 float func_0011E170(float x, float y)
 {
 	const float
@@ -182,7 +182,7 @@ float func_0011E170(float x, float y)
 	z  = one-(r-z);
 	GET_FLOAT_WORD(j,z);
 	j += (n<<23);
-	if((j>>23)<=0) z = func_00121860(z,(int)n);
+	if((j>>23)<=0) z = scalbnf(z,(int)n);
 	else SET_FLOAT_WORD(z,j);
 	return s*z;
 }

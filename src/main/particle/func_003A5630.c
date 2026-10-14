@@ -7,10 +7,10 @@
 extern "C" {
 void* Mem_Alloc(int, int, char*, int);
 void* Ptr_Identity(void*);
-int func_0012AC20(char*, char**);
+int strtod(char*, char**);
 float SoftFloat_DoubleToFloat(int);
 char* strchr(const char*, int);
-int func_0012B1F0(char*, char**, int);
+int strtoul(char*, char**, int);
 void func_003A5890(void*);
 void func_003A43A0(void*, float, char*, int);
 extern char D_004BC5D0[];
@@ -57,10 +57,10 @@ extern "C" Obj3A5630* func_003A5630(void* self, char* str, int arg, Obj3A5630* o
     float ver;
     unsigned char type;
 
-    ver = SoftFloat_DoubleToFloat(func_0012AC20(s, &s));
+    ver = SoftFloat_DoubleToFloat(strtod(s, &s));
     if (ver <= 2.1f) {
         s = strchr(s, '\n') + 1;
-        type = func_0012B1F0(s, &s, 10);
+        type = strtoul(s, &s, 10);
         s = strchr(s, '\n') + 1;
         if (obj) {
             r = obj;

@@ -70,7 +70,7 @@ extern int func_00124058(void *, unsigned int);
     FD->bk = BK->fd = P; \
   } \
 }
-void func_00123D60(void *reent_ptr, void *mem)
+void _free_r(void *reent_ptr, void *mem)
 {
     mchunkptr p;
     INTERNAL_SIZE_T hd;

@@ -12,7 +12,7 @@ typedef int __Long;
 #define DBL_MAX_EXP 1024
 #define IEEE_8087
 #define NULL 0
-#define _dtoa_r func_001220A8
+#define _dtoa_r _dtoa_r
 struct _Bigint { struct _Bigint *_next; int _k, _maxwds, _sign, _wds; __ULong _x[1]; };
 struct _reent { char _pad[0x40]; struct _Bigint *_result; int _result_k; struct _Bigint *_p5s; struct _Bigint **_freelist; };
 extern void *memcpy(void *, const void *, size_t);

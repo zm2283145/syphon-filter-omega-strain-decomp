@@ -3,7 +3,7 @@ typedef union { float value; unsigned int word; } ieee_float_shape_type;
 #define GET_FLOAT_WORD(i,d) do { ieee_float_shape_type gf_u; gf_u.value = (d); (i) = gf_u.word; } while (0)
 #define SET_FLOAT_WORD(d,i) do { ieee_float_shape_type sf_u; sf_u.word = (i); (d) = sf_u.value; } while (0)
 extern float func_00121648(float x, float y);
-float func_00121860(float x, int n)
+float scalbnf(float x, int n)
 {
     const float huge = 1.0e+30, tiny = 1.0e-30;
     int k, ix;

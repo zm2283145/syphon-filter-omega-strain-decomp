@@ -1,5 +1,5 @@
-/* newlib 1.9.0 stdlib/strtod.c: _strtod_r. Retail newlib was built with -g. */
-__asm__(".set nomove\n dpadd = SoftFloat_DoubleAdd\n dpsub = func_0011C200\n dpmul = func_0011C268\n dpdiv = func_0011C4F0\n litodp = func_0011C7A0\n dptoli = func_0011C858\n dpcmp = SoftFloat_UnpackAndCompare\n __floatdidf = func_0011B7E0\n __fixdfdi = func_0011BA88\n");
+/* newlib 1.9.0 stdlib/strtod.c: _strtod_r, strtod and strtodf. Compiler: EE-GCC 2.96 -O2 -G0. Retail newlib was built with -g. */
+__asm__(".set nomove\n dpadd = SoftFloat_DoubleAdd\n dpsub = func_0011C200\n dpmul = func_0011C268\n dpdiv = func_0011C4F0\n litodp = func_0011C7A0\n dptoli = func_0011C858\n dpcmp = SoftFloat_UnpackAndCompare\n __floatdidf = func_0011B7E0\n __fixdfdi = func_0011BA88\n dptofp = SoftFloat_DoubleToFloat\n");
 typedef unsigned int size_t;
 typedef unsigned int __uint32_t;
 typedef int __int32_t;
@@ -12,7 +12,7 @@ typedef int __Long;
 #define DBL_MAX_EXP 1024
 #define IEEE_8087
 #define NULL 0
-#define _strtod_r func_00129D08
+#define _strtod_r _strtod_r
 struct _Bigint { struct _Bigint *_next; int _k, _maxwds, _sign, _wds; __ULong _x[1]; };
 struct _reent { int _errno; char _pad[0x3C]; struct _Bigint *_result; int _result_k; struct _Bigint *_p5s; struct _Bigint **_freelist; };
 extern void *memcpy(void *, const void *, size_t);
@@ -873,3 +873,14 @@ ret:
   return sign ? -rv.d : rv.d;
 }
 
+extern struct _reent *D_00489738;   /* _impure_ptr */
+
+double strtod(const char *s00, char **se)   /* strtod */
+{
+    return _strtod_r(D_00489738, s00, se);
+}
+
+float strtodf(const char *s00, char **se)   /* strtodf */
+{
+    return strtod(s00, se);
+}

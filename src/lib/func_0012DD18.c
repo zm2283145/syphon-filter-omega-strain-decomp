@@ -29,22 +29,22 @@ extern const char D_00499C70[];     /* _ctype_ */
 #define isupper(c) ((_ctype_+1)[(unsigned)(c)]&_U)
 #define isspace(c) ((_ctype_+1)[(unsigned)(c)]&_S)
 
-extern int func_001284D8(FILE *);                       /* __srefill */
-extern int func_0012B398(int, FILE *);                  /* ungetc */
-extern size_t func_00123C40(void *, size_t, size_t, FILE *); /* fread */
-extern long func_00121BF0(const char *);                /* atol */
-extern double func_00121BB0(const char *);              /* atof */
+extern int __srefill(FILE *);                       /* __srefill */
+extern int ungetc(int, FILE *);                  /* ungetc */
+extern size_t fread(void *, size_t, size_t, FILE *); /* fread */
+extern long atol(const char *);                /* atol */
+extern double atof(const char *);              /* atof */
 extern long strtol(const char *, char **, int);  /* strtol */
-extern unsigned long func_0012B1F0(const char *, char **, int); /* strtoul */
+extern unsigned long strtoul(const char *, char **, int); /* strtoul */
 extern int sprintf(char *, const char *, ...);
-#define __srefill func_001284D8
-#define ungetc func_0012B398
-#define fread func_00123C40
-#define atol func_00121BF0
-#define atof func_00121BB0
+#define __srefill __srefill
+#define ungetc ungetc
+#define fread fread
+#define atol atol
+#define atof atof
 #define strtol strtol
-#define strtoul func_0012B1F0
-#define __sccl func_0012E9A8
+#define strtoul strtoul
+#define __sccl __sccl
 
 #define MAXEXP		308
 #define MAXFRACT	39
@@ -81,7 +81,7 @@ extern int sprintf(char *, const char *, ...);
 #define BufferEmpty (fp->_r <= 0 && __srefill(fp))
 
 int
-func_0012DD18 (fp, fmt0, ap)
+__svfscanf (fp, fmt0, ap)
      register FILE *fp;
      char _CONST *fmt0;
      va_list ap;

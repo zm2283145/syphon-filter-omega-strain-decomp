@@ -100,7 +100,10 @@ the code by **section name**:
   shrink by the same amount. The target is assembled with
   `tools/assemble.py --relative-jumptables`, which writes jump-table entries
   `.word .L003FE1C0` as `.word func_003FE110 + 0xb0` - the form the compiler
-  emits - so objdiff sees equal bytes and relocations.
+  emits - so objdiff sees equal bytes and relocations. EE-GCC instead
+  relocates the entries against `.text` plus the offset in the unit, so
+  `tools/data_obj.py` rewrites them in the base to the same form (without
+  it every jump table of a function that does not start its unit fails).
 * A unit whose compiler is not installed falls back to splat's assembly
   (code and data), renamed the same way, so the build still matches.
 

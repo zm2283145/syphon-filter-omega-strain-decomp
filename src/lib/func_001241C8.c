@@ -9,17 +9,17 @@ typedef struct {
 } FILE;
 struct stat { int st_dev; unsigned int st_mode; int a, b; long st_size; char rest[0x50]; };
 extern struct _reent *D_00489738;
-extern void func_00123940(struct _reent *);
-extern int func_001234E0(FILE *);
+extern void __sinit(struct _reent *);
+extern int fflush(FILE *);
 extern void func_00124FE0(FILE *);
 extern int func_00124678(struct _reent *, int, struct stat *);
-extern void func_00123D60(struct _reent *, void *);
-extern int func_001284D8(FILE *);
+extern void _free_r(struct _reent *, void *);
+extern int __srefill(FILE *);
 extern fpos_t func_00128DF8(void *, fpos_t, int);
 #define POS_ERR (-(fpos_t)1)
-#define CHECK_INIT(fp) do { if ((fp)->_data == 0) (fp)->_data = D_00489738; if (!(fp)->_data->__sdidinit) func_00123940((fp)->_data); } while (0)
+#define CHECK_INIT(fp) do { if ((fp)->_data == 0) (fp)->_data = D_00489738; if (!(fp)->_data->__sdidinit) __sinit((fp)->_data); } while (0)
 #define HASUB(fp) ((fp)->_ub._base != 0)
-#define FREEUB(fp) { if ((fp)->_ub._base != (fp)->_ubuf) func_00123D60(fp->_data, (char *)(fp)->_ub._base); (fp)->_ub._base = 0; }
+#define FREEUB(fp) { if ((fp)->_ub._base != (fp)->_ubuf) _free_r(fp->_data, (char *)(fp)->_ub._base); (fp)->_ub._base = 0; }
 int func_001241C8(register FILE *fp, long offset, int whence)
 {
     struct _reent *ptr;
@@ -32,14 +32,14 @@ int func_001241C8(register FILE *fp, long offset, int whence)
     CHECK_INIT(fp);
     ptr = fp->_data;
     if (fp->_flags & 0x100 && fp->_flags & 0x8)
-        func_001234E0(fp);
+        fflush(fp);
     if ((seekfn = fp->_seek) == 0) {
         ptr->_errno = 29;
         return -1;
     }
     switch (whence) {
     case 1:
-        func_001234E0(fp);
+        fflush(fp);
         if (fp->_flags & 0x1000)
             curoff = fp->_offset;
         else {
@@ -135,7 +135,7 @@ int func_001241C8(register FILE *fp, long offset, int whence)
     fp->_flags &= ~0x20;
     n = target - curoff;
     if (n) {
-        if (func_001284D8(fp) || fp->_r < n)
+        if (__srefill(fp) || fp->_r < n)
             goto dumb;
         fp->_p += n;
         fp->_r -= n;
@@ -143,7 +143,7 @@ int func_001241C8(register FILE *fp, long offset, int whence)
     return 0;
 
 dumb:
-    if (func_001234E0(fp) || (*seekfn)(fp->_cookie, offset, whence) == POS_ERR)
+    if (fflush(fp) || (*seekfn)(fp->_cookie, offset, whence) == POS_ERR)
         return -1;
     if (HASUB(fp))
         FREEUB(fp);

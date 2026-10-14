@@ -40,19 +40,19 @@ extern int D_00489740;              /* __mb_cur_max */
 #define _REENT D_00489738
 #define MB_CUR_MAX D_00489740
 
-extern int func_001234E0(FILE *);                            /* fflush */
-extern void func_00123940(struct _reent *);                  /* __sinit */
-extern int func_001247E0(FILE *, struct __suio *);           /* __sfvwrite */
-extern int func_0012EBB8(FILE *);                            /* __swsetup */
-extern int func_00125D88(struct _reent *, wchar_t *, const char *, size_t, int *); /* _mbtowc_r */
+extern int fflush(FILE *);                            /* fflush */
+extern void __sinit(struct _reent *);                  /* __sinit */
+extern int __sfvwrite(FILE *, struct __suio *);           /* __sfvwrite */
+extern int __swsetup(FILE *);                            /* __swsetup */
+extern int _mbtowc_r(struct _reent *, wchar_t *, const char *, size_t, int *); /* _mbtowc_r */
 extern void *func_00125DC0(const void *, int, size_t);       /* memchr */
 extern size_t strlen(const char *);
-#define fflush func_001234E0
-#define __sinit func_00123940
-#define __sfvwrite func_001247E0
+#define fflush fflush
+#define __sinit __sinit
+#define __sfvwrite __sfvwrite
 #define __sprint func_0012B520
-#define __swsetup func_0012EBB8
-#define _mbtowc_r func_00125D88
+#define __swsetup __swsetup
+#define _mbtowc_r _mbtowc_r
 #define memchr func_00125DC0
 
 #define CHECK_INIT(fp) \

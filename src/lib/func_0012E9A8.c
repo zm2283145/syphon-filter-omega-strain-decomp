@@ -1,4 +1,4 @@
-char *func_0012E9A8(register char *tab, register char *fmt)
+char *__sccl(register char *tab, register char *fmt)
 {
     register int c, n, v;
 

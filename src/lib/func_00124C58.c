@@ -1,6 +1,6 @@
 struct siov_00124C58 { const void* iov_base; unsigned int iov_len; };
 struct suio_00124C58 { struct siov_00124C58* uio_iov; int uio_iovcnt; int uio_resid; };
-extern int func_001247E0(void* fp, struct suio_00124C58* uio);
+extern int __sfvwrite(void* fp, struct suio_00124C58* uio);
 unsigned int func_00124C58(const void* buf, unsigned int size, unsigned int count, void* fp)
 {
   unsigned int n;
@@ -12,7 +12,7 @@ unsigned int func_00124C58(const void* buf, unsigned int size, unsigned int coun
   uio.uio_iov = &iov;
   uio.uio_iovcnt = 1;
 
-  if (func_001247E0(fp, &uio) == 0)
+  if (__sfvwrite(fp, &uio) == 0)
     return count;
   return (n - uio.uio_resid) / size;
 }

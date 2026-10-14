@@ -73,7 +73,7 @@ extern unsigned long D_00489B58;
 extern char *D_00489B60;
 extern unsigned long D_00489B68, D_00489B70;
 extern char *func_00128658(void *, int);
-extern void func_00123D60(void *, void *);
+extern void _free_r(void *, void *);
 #define sbrked_mem (D_00489B78.arena)
 #define initial_top ((mchunkptr)(bin_at(0)))
 #define MINSIZE 16
@@ -97,9 +97,9 @@ extern void func_00125408(void *, INTERNAL_SIZE_T);
   (unsigned long)(MINSIZE + MALLOC_ALIGN_MASK)) ? ((MINSIZE + MALLOC_ALIGN_MASK) & ~(MALLOC_ALIGN_MASK)) : \
    (((unsigned long)((req) + (SIZE_SZ + MALLOC_ALIGN_MASK))) & ~(MALLOC_ALIGN_MASK)))
 extern void *memcpy(void *, const void *, unsigned int);
-extern void *func_00125660(void *, unsigned int);
-#define fREe func_00123D60
-#define mALLOc func_00125660
+extern void *_malloc_r(void *, unsigned int);
+#define fREe _free_r
+#define mALLOc _malloc_r
 #define inuse(p) ((((mchunkptr)(((char *)(p)) + ((p)->size & ~PREV_INUSE)))->size) & PREV_INUSE)
 #define prev_inuse(p) ((p)->size & PREV_INUSE)
 #define prev_chunk(p) ((mchunkptr)(((char *)(p)) - ((p)->prev_size)))
@@ -121,7 +121,7 @@ do { \
                                      *mcdst   = *mcsrc  ; \
   } else memcpy(dest, src, mcsz); \
 } while(0)
-void *func_00127F00(void *reent_ptr, void *oldmem, unsigned int bytes)
+void *_realloc_r(void *reent_ptr, void *oldmem, unsigned int bytes)
 {
     INTERNAL_SIZE_T nb;
     mchunkptr oldp;

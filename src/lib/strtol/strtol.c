@@ -1,4 +1,7 @@
+/* newlib strtol.c: _strtol_r and strtol.  Compiler: EE-GCC 2.96 -O2 -G0. */
 struct _reent { int _errno; };
+extern struct _reent *D_00489738;   /* _impure_ptr */
+#define _REENT D_00489738
 extern const char D_00499C70[];
 #define _U 01
 #define _L 02
@@ -11,12 +14,11 @@ extern const char D_00499C70[];
 #define LONG_MAX 0x7fffffffffffffffL
 #define LONG_MIN (-LONG_MAX - 1L)
 #define ERANGE 34
-#define ULONG_MAX 0xffffffffffffffffUL
 extern unsigned long func_0011B278(unsigned long a, unsigned long b) __attribute__((const));
 extern unsigned long func_0011ACF8(unsigned long a, unsigned long b) __attribute__((const));
 extern unsigned long UInt64_Multiply(unsigned long a, unsigned long b) __attribute__((const));
 
-unsigned long func_0012AFC0(struct _reent *rptr, const char *nptr, char **endptr, int base)
+long _strtol_r(struct _reent *rptr, const char *nptr, char **endptr, int base)
 {
     register const char *s = nptr;
     register unsigned long acc;
@@ -41,8 +43,9 @@ unsigned long func_0012AFC0(struct _reent *rptr, const char *nptr, char **endptr
     if (base == 0)
         base = c == '0' ? 8 : 10;
 
-    cutoff = func_0011ACF8((unsigned long)ULONG_MAX, (unsigned long)base);
-    cutlim = func_0011B278((unsigned long)ULONG_MAX, (unsigned long)base);
+    cutoff = neg ? -(unsigned long)LONG_MIN : LONG_MAX;
+    cutlim = func_0011B278(cutoff, (unsigned long)base);
+    cutoff = func_0011ACF8(cutoff, (unsigned long)base);
     for (acc = 0, any = 0;; c = *s++) {
         if (isdigit(c))
             c -= '0';
@@ -61,11 +64,16 @@ unsigned long func_0012AFC0(struct _reent *rptr, const char *nptr, char **endptr
         }
     }
     if (any < 0) {
-        acc = ULONG_MAX;
+        acc = neg ? LONG_MIN : LONG_MAX;
         rptr->_errno = ERANGE;
     } else if (neg)
         acc = -acc;
     if (endptr != 0)
         *endptr = (char *) (any ? s - 1 : nptr);
     return (acc);
+}
+
+long strtol(const char *s, char **ptr, int base)
+{
+    return _strtol_r(_REENT, s, ptr, base);
 }

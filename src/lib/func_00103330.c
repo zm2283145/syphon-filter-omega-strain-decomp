@@ -1,6 +1,6 @@
 extern int scePrintf(const char *, ...);
 
-int func_00103330(unsigned long *tag)
+int sceGsPutDrawEnv(unsigned long *tag)
 {
     unsigned int i = 0;
     while (*(volatile int *)0x1000A000 & 0x100) {

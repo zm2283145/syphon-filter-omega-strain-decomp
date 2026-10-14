@@ -7656,5 +7656,8 @@
   "main/particle/func_00398070": "cwps2-3.0b38",
   "main/Generator/func_0021E620": "cwps2-3.0b38",
   "main/func_00475C00": "cwps2-3.0b38",
-  "main/sinit/func_004C90C0": "cwps2-3.0b38"
+  "main/sinit/func_004C90C0": "cwps2-3.0b38",
+  "main/human/func_00197E00": "cwps2-3.0b38",
+  "main/human/func_001B5FE0": "cwps2-3.0b38",
+  "main/man/func_00386AD0": "cwps2-3.0b38"
 }

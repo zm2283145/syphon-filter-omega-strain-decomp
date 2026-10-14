@@ -6135,6 +6135,7 @@ segments:
       - [0x29A000, asm]
       - [0x29B110, c, main/particle/particle_39B110]
       - [0x29B3A0, asm]
+      - [0x29CB70, c, main/particle/func_0039CB70]
       - [0x29EEF0, c, main/particle/particle_39EEF0]
       - [0x29EF90, asm]
       - [0x29F740, c, main/particle/func_0039F740]

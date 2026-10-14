@@ -37,10 +37,12 @@ PY = str(ROOT / ".venv" / "Scripts" / "python.exe") if os.name == "nt" else sys.
 BASE = 0x100000
 
 KIND_OF = {"cwps2-3.0b38": "mw38", "cwps2-3.0b50": "mw50", "cwps2-3.04": "mw304",
-           "ee-gcc2.96": "gcc296", "ee-gcc2.96-G0": "gcc296g0", "ee-gcc2.9-991111": "gcc29"}
+           "ee-gcc2.96": "gcc296", "ee-gcc2.96-G0": "gcc296g0", "ee-gcc2.9-991111": "gcc29",
+           "ee-gcc2.9-991111-as296": "gcc29as296"}
 ALT_KINDS = {"mw38": ["mw50", "mw", "mw304"], "mw50": ["mw38", "mw", "mw304"], "mw": ["mw38", "mw50", "mw304"],
              "mw304": ["mw38", "mw50", "mw"], "gcc296": ["gcc296g0", "gcc29", "gcc"],
-             "gcc296g0": ["gcc296", "gcc29", "gcc"], "gcc29": ["gcc296g0", "gcc296", "gcc"],
+             "gcc296g0": ["gcc296", "gcc29", "gcc"], "gcc29": ["gcc29as296", "gcc296g0", "gcc296", "gcc"],
+             "gcc29as296": ["gcc29", "gcc296g0", "gcc296", "gcc"],
              "gcc": ["gcc296g0", "gcc296", "gcc29"]}
 
 INS = re.compile(r"\s*/\* ([0-9A-F]+) ([0-9A-F]{8}) ([0-9A-F]{8}) \*/\s+(\S+)\s*(.*?)\s*(?:/\*.*\*/)?\s*$")

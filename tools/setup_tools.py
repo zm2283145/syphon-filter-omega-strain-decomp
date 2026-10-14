@@ -14,6 +14,7 @@
 import argparse
 import io
 import platform
+import shutil
 import stat
 import sys
 import tarfile
@@ -83,6 +84,16 @@ def main():
         for f in dest.rglob("*"):
             if f.is_file():
                 f.chmod(f.stat().st_mode | stat.S_IEXEC)
+
+    # The older SDK objects built with EE-GCC 2.9-ee-991111 (gcc29 in
+    # tools/check_match.py) were mostly assembled by its own gas, but a few
+    # (libcdvd sceCdRead, ...) by the EE-GCC 2.96 gas: ee-gcc2.9-991111-as296
+    # is the 991111 compiler with the 2.96 assembler in place of its own.
+    old, new = TOOLS / "eegcc" / "ee-gcc2.9-991111", TOOLS / "eegcc" / "ee-gcc2.96"
+    hybrid = TOOLS / "eegcc" / "ee-gcc2.9-991111-as296"
+    if old.exists() and new.exists() and not hybrid.exists():
+        shutil.copytree(old, hybrid, symlinks=True)
+        shutil.copy2(new / "ee" / "bin" / "as", hybrid / "ee" / "bin" / "as")
 
     exe = {"Windows": "objdiff-cli-windows-x86_64.exe", "Linux": "objdiff-cli-linux-x86_64",
            "Darwin": "objdiff-cli-macos-arm64"}[sysname]

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Compile a C file and report, per function, whether it matches the retail code.
 
-usage: python tools/check_match.py FILE.c [-c mw,mw304,mw38,mw50,gcc,gcc296,gcc296g0,gcc29] [-I DIR ...]
+usage: python tools/check_match.py FILE.c [-c mw,mw304,mw38,mw50,gcc,gcc296,gcc296g0,gcc29,gcc29as296] [-I DIR ...]
 
 Run from the repository root after a configure + build (it reads
 build/orig/SCUS_972.64.rom and splat's asm/). Each compiler in -c is tried in
@@ -17,6 +17,8 @@ compiler (if any) produces the retail bytes:
   gcc296 EE-GCC 2.96 (-O2), Linux build; through WSL on Windows
   gcc296g0 the same with -G0 (no gp-relative data), as used by part of the library
   gcc29  EE-GCC 2.9-ee-991111 (-O2 -G0), the older SCE SDK code (s-registers saved 16 bytes apart); through WSL
+  gcc29as296 the 991111 compiler with the EE-GCC 2.96 assembler (.tools/eegcc/ee-gcc2.9-991111-as296),
+         for SDK objects whose delay slots were filled by the newer gas (libcdvd sceCdRead, ...)
 
 Relocated fields are masked, then call targets and %hi/%lo pairs are checked
 against the retail addresses (template clones are not interchangeable).
@@ -109,12 +111,12 @@ def compile_with(kind, src, incs, dirs):
         cc = Path(dirs[kind]) / "mwccps2.exe"; flags = MWFLAGS
     elif kind == "gcc":
         cc = ROOT / ".tools" / "eegcc" / "ee-gcc2.95.3-136" / "bin" / "ee-gcc.exe"; flags = GCCFLAGS
-    elif kind in ("gcc296", "gcc296g0", "gcc29"):
-        build = "ee-gcc2.9-991111" if kind == "gcc29" else "ee-gcc2.96"
+    elif kind in ("gcc296", "gcc296g0", "gcc29", "gcc29as296"):
+        build = {"gcc29": "ee-gcc2.9-991111", "gcc29as296": "ee-gcc2.9-991111-as296"}.get(kind, "ee-gcc2.96")
         d = ROOT / ".tools" / "eegcc" / build
         if not (d / "bin" / "ee-gcc").exists():
-            return None, f"{build} not installed under .tools/eegcc"
-        flags = ["-c", "-O2", "-w"] + (["-G0"] if kind in ("gcc296g0", "gcc29") else [])
+            return None, f"{build} not installed under .tools/eegcc (tools/setup_tools.py makes it)"
+        flags = ["-c", "-O2", "-w"] + (["-G0"] if kind in ("gcc296g0", "gcc29", "gcc29as296") else [])
         fd, out = tempfile.mkstemp(suffix=".o", dir=ROOT / "build"); os.close(fd); os.unlink(out)
         cmd = ([sys.executable, str(ROOT / "tools" / "wsl_gcc.py"), str(d)] if IS_WINDOWS else [str(d / "bin" / "ee-gcc")])
         r = subprocess.run(cmd + flags + incs + ["-o", out, str(src)], capture_output=True, text=True, cwd=ROOT)

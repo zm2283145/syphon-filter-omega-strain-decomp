@@ -5017,5 +5017,12 @@
   "lib/func_0030F310": "ee-gcc2.96-G0",
   "main/GameGOBJ/func_0021ADD0": "cwps2-3.0b38",
   "main/backpack/func_002526F0": "cwps2-3.0b38",
-  "main/func_002D5160": "cwps2-3.0b38"
+  "main/func_002D5160": "cwps2-3.0b38",
+  "lib/LargeInt/func_002EFE18": "ee-gcc2.96-G0",
+  "lib/LargeInt/func_002EFE68": "ee-gcc2.96-G0",
+  "main/hotbox/func_00171600": "cwps2-3.0b38",
+  "main/ska/func_003B2950": "cwps2-3.0b38",
+  "main/ska/func_003B2C50": "cwps2-3.0b38",
+  "main/ska/func_003B3A10": "cwps2-3.0b38",
+  "main/func_00413FB0": "cwps2-3.0b38"
 }

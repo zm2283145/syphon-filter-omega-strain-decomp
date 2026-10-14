@@ -5013,5 +5013,9 @@
   "main/weapon/func_00144080": "cwps2-3.0b38",
   "main/func_0022AD30": "cwps2-3.0b38",
   "main/func_001D5E90": "cwps2-3.0b38",
-  "main/func_001D5FA0": "cwps2-3.0b38"
+  "main/func_001D5FA0": "cwps2-3.0b38",
+  "lib/func_0030F310": "ee-gcc2.96-G0",
+  "main/GameGOBJ/func_0021ADD0": "cwps2-3.0b38",
+  "main/backpack/func_002526F0": "cwps2-3.0b38",
+  "main/func_002D5160": "cwps2-3.0b38"
 }

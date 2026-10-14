@@ -3741,3 +3741,11 @@ GuiSaveAgentWidget_HandleEvent = 0x00441A10; // type:func
 GuiSaveAgentWidget_Create = 0x00442450; // type:func
 GuiNewParts_BuildBonusList = 0x0045FAB0; // type:func
 StaticInit_RegisterGobj = 0x004D5A80; // type:func
+
+// Constants that splat would otherwise symbolize as fake data (lui/addiu
+// pairs building 0xFFFF, 0xFFFFF, 0x10000, ... and scratchpad / uncached RAM
+// addresses). ignore:true makes splat emit plain immediates for them.
+ignored_low_constants = 0x00000000; // ignore:true size:0x100000
+ignored_const_FFFFFF = 0x00FFFFFF; // ignore:true
+ignored_uncached_ram = 0x20000000; // ignore:true size:0x2000000
+ignored_scratchpad = 0x70000000; // ignore:true size:0x4000

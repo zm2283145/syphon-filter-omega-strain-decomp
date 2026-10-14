@@ -1,6 +1,40 @@
-#pragma cplusplus on
+/*
+ * main/NetMsgThrottle: NetMsgThrottle.cc (3 files, 00472050-00472370)
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_00472050 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Original translation unit not identified yet; functions are named by address
+ * until real names are known.
+ */
 
 #include "types.h"
+
+/* Iterator copy-assignment. */
+Word* func_00472050(Word* dst, Word* src) {
+    dst->value = src->value;
+    return dst;
+}
+
+/* end(): iterator at the tree header. */
+void func_00472060(Iter* out, Tree* t) {
+    out->p = &t->header;
+}
+
+/* begin(): iterator at the leftmost node. */
+void func_00472070(Iter* out, Tree* t) {
+    out->p = t->leftmost;
+}
+#pragma pop /* merge_units */
+/* merge_units: end func_00472050 */
+
+/* merge_units: begin func_00472080 */
+#pragma push /* merge_units */
+#pragma cplusplus on
 #include "alloc_guard.h"
 
 struct ThrMsg {
@@ -45,12 +79,20 @@ extern char D_00588020[];
 extern int D_00588030;
 extern char D_004C3430[];
 extern char D_004C3410[];
+#if 0 /* merge_units */
 void func_00472070(ThrIt* r, void* map);
+#endif /* merge_units */
+#define func_00472070(a0, a1) (func_00472070((Iter *)(a0), (Tree *)(a1))) /* merge_units */
+
 ThrIt func_00471EA0(void* map);
 void func_00471E90(ThrIt* r, const ThrIt& s);
-ThrLIt func_00472370(ThrList* l);
-ThrLIt func_00472060(ThrList* l);
+/* ThrLIt has constructors, so these return it through a hidden pointer:
+   ThrLIt func_00472370(ThrList *) / ThrLIt func_00472060(ThrList *). */
+void func_00472370(Iter* out, PtrVec* v);
+#if 0 /* merge_units */
 void func_00472050(ThrLIt* r, const ThrLIt& s);
+#endif /* merge_units */
+
 ThrLIt func_00138DA0(ThrList* l, const ThrLIt& pos);
 int func_0042B1A0(int);
 void printf(char* fmt, ...);
@@ -61,8 +103,13 @@ void Mem_Free(int pool, void* p, char* file, int line);
 
 static inline void LGet(ThrList* l, ThrLIt* b, ThrLIt* e)
 {
-    func_00472050(b, func_00472370(l));
-    func_00472050(e, func_00472060(l));
+    ThrLIt t;
+    ThrLIt u;
+
+    func_00472370((Iter*)&t, (PtrVec*)l);
+    func_00472050((Word*)b, (Word*)&t);
+    func_00472060((Iter*)&u, (Tree*)l);
+    func_00472050((Word*)e, (Word*)&u);
 }
 
 static inline int MapNe(ThrIt* it, ThrIt* end)
@@ -116,10 +163,15 @@ extern "C" void NetMsgThrottle_SendMsg(void)
         Tree_Successor(&it);
     }
 }
+#undef func_00472070 /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00472080 */
 
-
-
-
-
-
-
+/* merge_units: begin func_00472370 */
+#pragma push /* merge_units */
+/* begin(): iterator at the first element. */
+void func_00472370(Iter* out, PtrVec* v) {
+    out->p = v->data;
+}
+#pragma pop /* merge_units */
+/* merge_units: end func_00472370 */

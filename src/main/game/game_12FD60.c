@@ -1,0 +1,330 @@
+/*
+ * main/game: range (5 files, 0012FD60-001302F0)
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* headers shared by the blocks below */
+#include "types.h"
+#pragma push
+#pragma cplusplus on
+#include "alloc_guard.h"
+#pragma pop
+
+/* library prototypes shared by the blocks below (C linkage) */
+#include "SFOLobby_helpers.h"
+int Mem_Free();
+int sprintf(void *, const void *, ...);
+
+/* merge_units: begin func_0012FD60 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+extern "C" {
+float World_GetElapsedTime(void);
+int MoviePlayer_Update(void*, float);
+void func_003F9300(void*, int);
+void func_0036B250(int);
+void* Service_Lookup(void*, void*);
+void func_001C9540(void*, int, int);
+void func_00130520(void*, void*, int);
+extern char D_0049A890;
+extern char D_004F2CC0[];
+extern int D_004EA048;
+}
+class Q_12FD60 {
+public:
+    char e[0x10][0x80];
+    int cur;
+    int count;
+    bool AtEnd() { return cur == count; }
+    char* Next() {
+        char* r = 0;
+        int i;
+        cur++;
+        i = cur;
+        if (i <= count) r = e[i - 1];
+        return r;
+    }
+};
+typedef struct {
+    char pad[0xAC];
+    Q_12FD60* q;
+    void* b0;
+} S_12FD60;
+
+#pragma opt_common_subs off
+extern "C" void Game_UpdateMovieQueue(S_12FD60* self)
+{
+    if (self->b0) {
+        bool done = !MoviePlayer_Update(self->b0, World_GetElapsedTime());
+        if (done) {
+            void* p = self->b0;
+            {
+                AllocGuard g;
+                func_003F9300(p, -1);
+                Mem_Free(0, p, &D_0049A890, 0xAE2);
+            }
+            self->b0 = 0;
+            func_0036B250(1);
+            func_001C9540(Service_Lookup(self, D_004F2CC0), 2, D_004EA048);
+        }
+    }
+    if (!self->b0) {
+        Q_12FD60* q = self->q;
+        if (q) {
+            if (!q->AtEnd()) {
+                func_00130520(self, q->Next(), 1);
+            } else {
+                {
+                    AllocGuard g;
+                    Mem_Free(0, q, &D_0049A890, 0xAF7);
+                }
+                self->q = 0;
+            }
+        }
+    }
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_0012FD60(void) {}
+#pragma pop /* merge_units */
+/* merge_units: end func_0012FD60 */
+
+/* merge_units: begin func_0012FF50 */
+#pragma push /* merge_units */
+void func_0012FF50(int a0) {
+    int v1;
+    int cond;
+
+    a0 = *(int*)((char*)a0 + 176);
+    cond = a0 == 0;
+    if (cond) goto L0012FF70;
+    v1 = *(unsigned char*)((char*)a0 + 561);
+    cond = v1 != 0;
+    v1 = 0 + 1;
+    if (cond) goto L0012FF70;
+    *(char*)((char*)a0 + 565) = v1;
+L0012FF70:;
+    goto ret;
+ret:;
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_0012FF50(void) {}
+#pragma pop /* merge_units */
+/* merge_units: end func_0012FF50 */
+
+/* merge_units: begin func_0012FF80 */
+#pragma push /* merge_units */
+int func_001301D0(void* o, char* out); /* gsynth: defined below */
+typedef struct Sub12FF80 {
+    char pad0[0xC4];
+    int id;
+} Sub12FF80;
+
+typedef struct Ent12FF80 {
+    char x0;
+    char name[0x1F];
+} Ent12FF80;
+
+typedef struct Info12FF80 {
+    char pad0[0x38];
+    Ent12FF80 ents[1];
+    char pad58[0xE4];
+    int count;
+    char pad140[0x48];
+    Sub12FF80 sub;
+} Info12FF80;
+
+typedef struct Obj12FF80 {
+    char pad0[0x50];
+    unsigned char state;
+    signed char prev;
+    char pad52[0xF];
+    unsigned char x61;
+    char pad62[0x52];
+    Info12FF80 * volatile info;
+    char padB8[0x88];
+    char name[0x20];
+} Obj12FF80;
+
+extern void *Agent_GetSelected(void *, int);
+extern int String_CompareNoCase(const char *, const char *);
+#if 0 /* merge_units */
+extern int func_001301D0(Obj12FF80 *, char *);
+#endif /* merge_units */
+#define func_001301D0(a0, a1) (func_001301D0((void *)(a0), (a1))) /* merge_units */
+
+#if 0 /* merge_units */
+extern void func_00130520(Obj12FF80 *, char *, int);
+#endif /* merge_units */
+#define func_00130520(a0, a1, a2) (func_00130520((void *)(a0), (void *)(a1), (a2))) /* merge_units */
+
+extern void func_001303F0(Obj12FF80 *, char *);
+extern void func_002C9420(void *);
+extern void func_00332A10(void *, int, int, int);
+extern void func_003328D0(void *, int, int, int, int);
+extern void *D_004FFC04;
+extern signed char D_004FFBA0;
+extern signed char D_004FFBA1;
+
+void func_0012FF80(Obj12FF80 *o)
+{
+    char out[0x80];
+    char sel[0x90];
+    char buf[0x100];
+    const char *a;
+    const char *b;
+    int i;
+
+    if (o->x61 == 0)
+        return;
+    if (o->state != 8) {
+        sel[0] = 0;
+        switch (o->state) {
+        case 7:
+            a = "";
+            b = "INTRO";
+            if (func_001301D0(o, sel) != 0)
+                b = &sel[1];
+            break;
+        case 9:
+            a = "";
+            b = "INTRO";
+            break;
+        case 11:
+            a = o->name;
+            b = "_SOL";
+            break;
+        case 12: {
+            int id;
+            Sub12FF80 *sub;
+            Info12FF80 *in;
+            a = o->name;
+            in = o->info;
+            id = in->sub.id;
+            sub = &in->sub;
+            if (id != -1 && id != 0x11) {
+                func_00332A10(Agent_GetSelected(o, -1), id + 1, 6, 2);
+                func_003328D0(Agent_GetSelected(o, -1), sub->id + 1, 5, 1, 1);
+            }
+            if (String_CompareNoCase(a, "UKRAINE") == 0) {
+                func_002C9420(o->info);
+                o->prev = *(signed char *)&o->state;
+                o->state = 8;
+                func_0012FF80(o);
+                return;
+            }
+            func_002C9420(D_004FFC04);
+            b = "_EOL";
+            D_004FFBA1 = D_004FFBA0;
+            D_004FFBA0 = 8;
+            break;
+        }
+        default:
+            return;
+        }
+        sprintf(out, "%s%s.PSS", a, b);
+        func_00130520(o, out, 1);
+    } else {
+        for (i = 0; i < o->info->count; i++) {
+            sprintf(buf, "%s.PSS", o->info->ents[i].name);
+            func_001303F0(o, buf);
+        }
+    }
+}
+#undef func_001301D0 /* merge_units */
+#undef func_00130520 /* merge_units */
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_0012FF80(void) {}
+#pragma pop /* merge_units */
+/* merge_units: end func_0012FF80 */
+
+/* merge_units: begin func_001301D0 */
+#pragma push /* merge_units */
+int func_001302F0(int arg0); /* gsynth: defined below */
+#if 0 /* merge_units */
+extern int func_001302F0(void *);
+#endif /* merge_units */
+#define func_001302F0(a0) (func_001302F0((int)(a0))) /* merge_units */
+
+extern char D_0049A908[];
+extern int D_004EA050;
+extern int D_00533870;
+
+int func_001301D0(void *o, char *out)
+{
+    char buf[0x20];
+    int count;
+    int r;
+    char *d;
+    char *s;
+    char c;
+    int n;
+
+    count = func_001302F0(o);
+    r = (*(volatile int *)0x10000800 + D_00533870) % count;
+    if (r == D_004EA050 && count > 1) {
+        r = (r == count - 1) ? 0 : r + 1;
+    }
+    D_004EA050 = r;
+    if (r == 0)
+        String_Copy(buf, D_0049A908);
+    else
+        sprintf(buf, "DEMO%2.2d", r);
+    d = out + 1;
+    s = buf;
+    n = 0;
+    while ((*d++ = *s++) != 0) {
+        if (++n >= 0x7E) {
+            n++;
+            d[0] = '\n';
+            d[1] = 0;
+            break;
+        }
+    }
+    out[0] = n;
+    return 1;
+}
+#undef func_001302F0 /* merge_units */
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_001301D0(void) {}
+#pragma pop /* merge_units */
+/* merge_units: end func_001301D0 */
+
+/* merge_units: begin func_001302F0 */
+#pragma push /* merge_units */
+#define F_(b, o, T) (*(T*)((char*)(b) + (o)))
+#define NULL 0
+#pragma mpwc_relax on
+/*fc*/
+char * Archive_Open(int, char *, int, int);                 
+int Hog_FindFileNoCase();                  
+int ArchiveList_CloseNamed();                       
+extern int D_00489BE0;
+
+int func_001302F0(int arg0) {
+    int sp50[32];
+    int sp30[8];
+    char * temp_v0;
+
+    if (D_00489BE0 != -1) {
+        return D_00489BE0;
+    }
+    sprintf(sp50, "ZMEDIA\\ZMOVIES.HOG");
+    temp_v0 = (char *)(Archive_Open(arg0 + 0x3C, sp50, 1, 0));
+    if (F_(temp_v0, 0x14C, unsigned char) != 0) {
+        D_00489BE0 = 0;
+loop_5:
+        sprintf(sp30, "DEMO%2.2d.PSS", D_00489BE0 + 1);
+        if (Hog_FindFileNoCase(temp_v0, sp30, 1) != -1) {
+            D_00489BE0 += 1;
+            goto loop_5;
+        }
+    }
+    ArchiveList_CloseNamed(arg0 + 0x3C, temp_v0);
+    D_00489BE0 += 1;
+    return D_00489BE0;
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_001302F0(void) {}
+#pragma pop /* merge_units */
+/* merge_units: end func_001302F0 */

@@ -7700,5 +7700,9 @@
   "main/func_002810A0": "cwps2-3.0b38",
   "main/NetCreateCharacterMsg/func_002C6B70": "cwps2-3.0b38",
   "main/func_0036F390": "cwps2-3.0b38",
-  "main/func_003E6910": "cwps2-3.0b38"
+  "main/func_003E6910": "cwps2-3.0b38",
+  "main/playerControls/func_002497C0": "cwps2-3.0b38",
+  "main/backpack/func_002542E0": "cwps2-3.0b38",
+  "main/GuiAgentCreate/func_0028F760": "cwps2-3.0b38",
+  "main/GuiEquipmentModify/func_002C1100": "cwps2-3.0b38"
 }

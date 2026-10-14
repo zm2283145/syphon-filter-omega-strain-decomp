@@ -4156,7 +4156,7 @@ segments:
       - [0x17D3A8, c, lib/func_0027D3A8]
       - [0x17D438, c, lib/func_0027D438]
       - [0x17D4D0, c, main/func_0027D4D0]
-      - [0x17D620, asm]
+      - [0x17D620, c, main/func_0027D620]
       - [0x17F7A0, c, main/func_0027F7A0]
       - [0x17F7E0, asm]
       - [0x17F9C0, c, main/func_0027F9C0]

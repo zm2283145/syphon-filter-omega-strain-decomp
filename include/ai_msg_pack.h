@@ -16,7 +16,7 @@ typedef struct AIMsgPackObj {
     void* p24;         /* 0x24 */
     void* p28;         /* 0x28 */
 } AIMsgPackObj;
-extern void Event_PackHeader(AIMsgPackObj* self, int a1, int* type, int a3, int t0, unsigned int len, int* buf);
+extern void Event_PackHeader(void* self, int a1, int* type, int a3, int t0, unsigned int len, void* buf);
 
 static inline void AIMsg_PackBase(AIMsgPackObj* self, int a1, int* type, int a3, int t0, unsigned int len, int* buf) {
     if (len >= 0xC && buf != 0) {

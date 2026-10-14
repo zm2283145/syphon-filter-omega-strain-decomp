@@ -6363,5 +6363,6 @@
   "main/func_00474050": "cwps2-3.0b38",
   "main/human/func_001A92A0": "cwps2-3.0b38",
   "main/npc/func_00159590": "cwps2-3.0b38",
-  "main/SpecFxDefs/func_00232F10": "cwps2-3.0b38"
+  "main/SpecFxDefs/func_00232F10": "cwps2-3.0b38",
+  "main/GameGOBJ/func_00216C60": "cwps2-3.0b38"
 }

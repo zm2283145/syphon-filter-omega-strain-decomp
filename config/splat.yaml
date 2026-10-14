@@ -2705,7 +2705,7 @@ segments:
       - [0x115F30, c, main/GameGOBJ/func_00215F30]
       - [0x115F50, c, main/GameGOBJ/GameGOBJ_215F50]
       - [0x116C50, c, main/GameGOBJ/func_00216C50]
-      - [0x116C60, asm]
+      - [0x116C60, c, main/GameGOBJ/func_00216C60]
       - [0x1181C0, c, main/GameGOBJ/func_002181C0]
       - [0x118200, asm]
       - [0x1186A0, c, main/GameGOBJ/func_002186A0]

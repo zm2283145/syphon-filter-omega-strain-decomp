@@ -7675,5 +7675,10 @@
   "main/playerControls/func_002497C0": "cwps2-3.0b38",
   "main/backpack/func_002542E0": "cwps2-3.0b38",
   "main/GuiAgentCreate/func_0028F760": "cwps2-3.0b38",
-  "main/GuiEquipmentModify/func_002C1100": "cwps2-3.0b38"
+  "main/GuiEquipmentModify/func_002C1100": "cwps2-3.0b38",
+  "lib/func_001112E0": "ee-gcc2.9-991111",
+  "main/GameGOBJ/func_002189E0": "cwps2-3.0b38",
+  "main/NIEvent/func_00240DE0": "cwps2-3.0b38",
+  "main/WaterFx/func_002B3130": "cwps2-3.0b38",
+  "main/particle/func_00398070": "cwps2-3.0b38"
 }

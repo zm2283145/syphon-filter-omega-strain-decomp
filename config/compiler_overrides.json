@@ -7321,5 +7321,16 @@
   "main/func_002909C0": "cwps2-3.0b38",
   "main/func_003D4810": "cwps2-3.0b38",
   "main/human/func_0018D2C0": "cwps2-3.0b38",
-  "main/taser/func_00264E10": "cwps2-3.0b38"
+  "main/taser/func_00264E10": "cwps2-3.0b38",
+  "lib/libmpeg/func_0010A3B0": "ee-gcc2.9-991111",
+  "main/gameCamera/func_00180310": "cwps2-3.0b38",
+  "main/func_001D7480": "cwps2-3.0b38",
+  "main/GameGOBJ/func_00213FE0": "cwps2-3.0b38",
+  "main/func_00224E00": "cwps2-3.0b38",
+  "main/taser/func_00264530": "cwps2-3.0b38",
+  "main/func_00374BC0": "cwps2-3.0b38",
+  "main/particle/func_003A5E30": "cwps2-3.0b38",
+  "main/ska/func_003B0A50": "cwps2-3.0b38",
+  "main/func_003D54B0": "cwps2-3.0b38",
+  "main/GuiGameScreen/func_0045D070": "cwps2-3.0b38"
 }

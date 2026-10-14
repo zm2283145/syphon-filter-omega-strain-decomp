@@ -6842,5 +6842,7 @@
   "main/func_0041ED20": "cwps2-3.0b38",
   "main/particle/func_00399080": "cwps2-3.0b38",
   "main/human/func_00196480": "cwps2-3.0b38",
-  "main/func_00472E10": "cwps2-3.0b38"
+  "main/func_00472E10": "cwps2-3.0b38",
+  "main/playerControls/func_00247D60": "cwps2-3.0b38",
+  "main/bullet/func_00276460": "cwps2-3.0b38"
 }

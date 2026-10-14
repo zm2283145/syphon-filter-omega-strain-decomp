@@ -1133,7 +1133,7 @@ segments:
       - [0x058B40, c, main/npc/func_00158B40]
       - [0x058BC0, c, main/npc/npc_158BC0]
       - [0x059560, c, main/npc/func_00159560]
-      - [0x059590, asm]
+      - [0x059590, c, main/npc/func_00159590]
       - [0x05A3A0, c, main/npc/npc_15A3A0]
       - [0x05A430, c, main/npc/func_0015A430]
       - [0x05A440, c, main/npc/func_0015A440]

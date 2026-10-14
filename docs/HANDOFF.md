@@ -9,8 +9,8 @@ This is the working state and the routine for whoever continues this project
 
 | | |
 |---|---|
-| Functions matched | 13,039 of 14,331 |
-| Code matched | 65.45% |
+| Functions matched | 13,202 of 14,331 |
+| Code matched | 69.42% |
 | Data matched | 99.92% |
 | Full build | reproduces the retail executable byte for byte |
 
@@ -24,10 +24,10 @@ What is left (from `progress/report.json`):
 
 | Function size | Unmatched | Bytes |
 |---|---|---|
-| under 100 bytes | 200 | 5 KB |
-| 100–1,200 bytes | 811 | 445 KB |
-| 1,200–3,000 bytes | 202 | 362 KB |
-| over 3,000 bytes | 79 | 453 KB |
+| under 100 bytes | 194 | 4 KB |
+| 100–1,200 bytes | 688 | 371 KB |
+| 1,200–3,000 bytes | 173 | 302 KB |
+| over 3,000 bytes | 74 | 416 KB |
 
 Almost every remaining function under 1,200 bytes has been attempted at least once,
 most of them by several workers. Code percentage is by bytes, so the large functions
@@ -204,6 +204,28 @@ into translation units. Run it occasionally; see [merge_units.md](merge_units.md
   recomputed index arithmetic). No pragma combination reproduces it yet.
 - **decomp-permuter** found several GCC matches in long runs (20 minutes or more). It
   can't parse the C++ drafts.
+- **mw38 stack-slot order by inline depth:** locals of deeper inlines get later (lower)
+  slots. Wrapping a helper in pass-through inlines moves its temporary down; declaring
+  named struct locals in the outer function and passing them by reference moves them up.
+- **Per-call-site helper copies:** when one inline helper is used at several sites and
+  each site needs a different register or operand order, give each site its own copy.
+- **Hidden return slots:** an inline returning a struct computes the return-slot address
+  at the start of the inline; a hand-written copy (`{ V* pt = &tmp; *pt = *p; }`) fixes
+  the order.
+- **VU0 vector compare:** the original code tests VU0 flags with
+  `vnop` ×4, `cfc2.ni f, vi17`, `bne k, f, done`, `ori r, zero, 1`. This sequence is the
+  only accepted asm that contains a branch.
+
+## Merging into translation units
+
+Matched functions are first committed one per file. Fully matched modules are then merged
+into one translation unit per original source file (`src/main/<mod>/<mod>.c`), checked
+byte for byte over the whole unit's code and data. Merge batches are prepared in
+`build/cleanup/` (not committed) with an apply script that refuses a changed tree and a
+revert list. Gotchas: every merged block ends with an empty `static inline` function so
+the compiler emits each function in the right C/C++ mode; MW 3.0.3 and 3.0b38 order
+locals differently; a shared helper prototype that callers use inconsistently is declared
+K&R in a shared header (for example `include/SFOLobby_helpers.h`).
 
 ## Known blocked work
 

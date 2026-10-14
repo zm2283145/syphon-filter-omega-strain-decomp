@@ -9196,7 +9196,7 @@ segments:
       - [0x2D4300, c, main/func_003D4300]
       - [0x2D4350, asm]
       - [0x2D4800, c, main/func_003D4800]
-      - [0x2D4810, asm]
+      - [0x2D4810, c, main/func_003D4810]
       - [0x2D5260, c, main/func_003D5260]
       - [0x2D5360, c, main/func_003D5360]
       - [0x2D5370, c, main/func_003D5370]

@@ -1,4 +1,6 @@
-/* newlib vfprintf.c (FLOATING_POINT, _NO_LONGLONG, _NO_LONGDBL): _vfprintf_r. Retail newlib was built with -g.
+/* newlib vfprintf.c (FLOATING_POINT, _NO_LONGLONG, _NO_LONGDBL): __sprint, __sbprintf, vfprintf,
+ * _vfprintf_r, cvt and exponent.  Compiler: EE-GCC 2.96 -O2 -G0; retail newlib was built with -g
+ * (emulated by `.set nomove`: gas then skips delay-slot swapping).
  * Retail is a ~1.9.0 snapshot: plain `double _double` (no union init), no `expsize = 0`,
  * no `xdigs = NULL`, but already has the 1.10.0 `if (expt || ndig)` fix. */
 __asm__(".set nomove\n __umoddi3 = func_0011B278\n __udivdi3 = func_0011ACF8\n dpcmp = SoftFloat_UnpackAndCompare\n");
@@ -12,7 +14,12 @@ typedef unsigned long u_long;
 typedef unsigned short u_short;
 typedef unsigned int u_int;
 
-struct _reent;
+/* struct _reent: only the stdio init fields */
+struct _reent {
+    char pad[0x38];
+    int __sdidinit;                         /* +0x38 */
+    void (*__cleanup)(struct _reent *);     /* +0x3C */
+};
 struct __siov { void *iov_base; size_t iov_len; };
 struct __suio { struct __siov *uio_iov; int uio_iovcnt; int uio_resid; };
 struct __sbuf { unsigned char *_base; int _size; };
@@ -33,17 +40,28 @@ extern int D_00489740;              /* __mb_cur_max */
 #define _REENT D_00489738
 #define MB_CUR_MAX D_00489740
 
-extern int func_0012C290(FILE *, struct __suio *);           /* __sprint */
-extern int func_0012C2D8(FILE *, const char *, va_list);     /* __sbprintf */
+extern int func_001234E0(FILE *);                            /* fflush */
+extern void func_00123940(struct _reent *);                  /* __sinit */
+extern int func_001247E0(FILE *, struct __suio *);           /* __sfvwrite */
 extern int func_0012EBB8(FILE *);                            /* __swsetup */
 extern int func_00125D88(struct _reent *, wchar_t *, const char *, size_t, int *); /* _mbtowc_r */
 extern void *func_00125DC0(const void *, int, size_t);       /* memchr */
 extern size_t strlen(const char *);
+#define fflush func_001234E0
+#define __sinit func_00123940
+#define __sfvwrite func_001247E0
 #define __sprint func_0012C290
 #define __sbprintf func_0012C2D8
+#define vfprintf func_0012C390
 #define __swsetup func_0012EBB8
 #define _mbtowc_r func_00125D88
 #define memchr func_00125DC0
+
+#define CHECK_INIT(fp) \
+    do { if ((fp)->_data == 0) (fp)->_data = _REENT; if (!(fp)->_data->__sdidinit) __sinit((fp)->_data); } while (0)
+
+int vfprintf(FILE *fp, const char *fmt0, va_list ap);
+int _vfprintf_r(struct _reent *data, FILE *fp, const char *fmt0, va_list ap);
 
 #define cantwrite(fp) \
 	((((fp)->_flags & __SWR) == 0 || (fp)->_bf._base == NULL) && \
@@ -54,13 +72,16 @@ struct lconv { char *decimal_point; };
 extern struct lconv *func_00124F60(void);                    /* localeconv */
 extern int func_00120F38(double);                            /* isinf */
 extern int Double_IsNaN(double);                             /* isnan */
-extern char *func_0012DA78(struct _reent *, double, int, int, char *, int *, int, int *); /* cvt */
-extern int func_0012DC38(char *, int, int);                  /* exponent */
+extern double func_0011C200(double, double);                 /* __subdf3 */
+extern int SoftFloat_UnpackAndCompare(double, double);       /* __cmpdf2 (dpcmp) */
+extern char *func_001220A8(struct _reent *, double, int, int, int *, int *, char **); /* _dtoa_r */
 #define localeconv func_00124F60
 #define isinf func_00120F38
 #define isnan Double_IsNaN
 #define cvt func_0012DA78
 #define exponent func_0012DC38
+char *cvt(struct _reent *, double, int, int, char *, int *, int, int *);
+int exponent(char *, int, int);
 
 #define	MAXEXP		308
 #define	MAXFRACT	39
@@ -80,6 +101,65 @@ extern int func_0012DC38(char *, int, int);                  /* exponent */
 #define	SHORTINT	0x040
 #define	ZEROPAD		0x080
 #define FPT		0x100
+
+/*
+ * Flush out all the vectors defined by the given uio,
+ * then reset it so that it can be reused.
+ */
+int
+__sprint(FILE *fp, register struct __suio *uio)
+{
+	register int err;
+
+	if (uio->uio_resid == 0) {
+		uio->uio_iovcnt = 0;
+		return (0);
+	}
+	err = __sfvwrite(fp, uio);
+	uio->uio_resid = 0;
+	uio->uio_iovcnt = 0;
+	return (err);
+}
+
+/*
+ * Helper function for `fprintf to unbuffered unix file': creates a
+ * temporary buffer.  We only work on write-only files; this avoids
+ * worries about ungetc buffers and so forth.
+ */
+int
+__sbprintf(register FILE *fp, const char *fmt, va_list ap)
+{
+	int ret;
+	FILE fake;
+	unsigned char buf[1024];
+
+	/* copy the important variables */
+	fake._data = fp->_data;
+	fake._flags = fp->_flags & ~__SNBF;
+	fake._file = fp->_file;
+	fake._cookie = fp->_cookie;
+	fake._write = fp->_write;
+
+	/* set up the buffer */
+	fake._bf._base = fake._p = buf;
+	fake._bf._size = fake._w = sizeof(buf);
+	fake._lbfsize = 0;	/* not actually used, but Just In Case */
+
+	/* do the work, then copy any error status */
+	ret = vfprintf(&fake, fmt, ap);
+	if (ret >= 0 && fflush(&fake))
+		ret = EOF;
+	if (fake._flags & __SERR)
+		fp->_flags |= __SERR;
+	return (ret);
+}
+
+int
+vfprintf(FILE *fp, const char *fmt0, va_list ap)
+{
+	CHECK_INIT (fp);
+	return _vfprintf_r (fp->_data, fp, fmt0, ap);
+}
 
 int
 _vfprintf_r(struct _reent *data, FILE * fp, const char *fmt0, va_list ap)
@@ -516,4 +596,83 @@ done:
 	FLUSH();
 error:
 	return (__sferror(fp) ? EOF : ret);
+}
+
+union double_union {
+	double d;
+	unsigned int i[2];
+};
+#define word0(x) (x.i[1])
+#define Sign_bit 0x80000000
+
+char *
+cvt(struct _reent *data, double value, int ndigits, int flags, char *sign, int *decpt, int ch, int *length)
+{
+	int mode, dsgn;
+	char *digits, *bp, *rve;
+	union double_union tmp;
+
+	if (ch == 'f') {
+		mode = 3;		/* ndigits after the decimal point */
+	} else {
+		/* To obtain ndigits after the decimal point for the 'e'
+		 * and 'E' formats, round to ndigits + 1 significant
+		 * figures.
+		 */
+		if (ch == 'e' || ch == 'E') {
+			ndigits++;
+		}
+		mode = 2;		/* ndigits significant digits */
+	}
+
+	tmp.d = value;
+	if (word0(tmp) & Sign_bit) { /* this will check for < 0 and -0.0 */
+		value = func_0011C200(0, value);
+		*sign = '-';
+	} else
+		*sign = '\000';
+	digits = func_001220A8(data, value, mode, ndigits, decpt, &dsgn, &rve);
+	if ((ch != 'g' && ch != 'G') || flags & ALT) {	/* Print trailing zeros */
+		bp = digits + ndigits;
+		if (ch == 'f') {
+			if (*digits == '0' && SoftFloat_UnpackAndCompare(value, 0) != 0)
+				*decpt = -ndigits + 1;
+			bp += *decpt;
+		}
+		if (SoftFloat_UnpackAndCompare(value, 0) == 0)	/* kludge for __dtoa irregularity */
+			rve = bp;
+		while (rve < bp)
+			*rve++ = '0';
+	}
+	*length = rve - digits;
+	return (digits);
+}
+
+int
+exponent(char *p0, int exp, int fmtch)
+{
+	register char *p, *t;
+	char expbuf[MAXEXP];
+
+	p = p0;
+	*p++ = fmtch;
+	if (exp < 0) {
+		exp = -exp;
+		*p++ = '-';
+	}
+	else
+		*p++ = '+';
+	t = expbuf + MAXEXP;
+	if (exp > 9) {
+		do {
+			*--t = to_char(exp % 10);
+		} while ((exp /= 10) > 9);
+		*--t = to_char(exp);
+		for (; t < expbuf + MAXEXP; *p++ = *t++);
+	}
+	else {
+		*p++ = '0';
+		*p++ = to_char(exp);
+	}
+	return (p - p0);
 }

@@ -30,7 +30,7 @@ Rules of thumb:
 | `sif_rpc_types.h` | lib: SifRpcHeader (0x10), SifRpcClientData (0x28; server@0x24) for sceSifBindRpc/CallRpc wrappers | `SifRpcClientData` | 0 | build/agents/types1/proof/sif_rpc_types_a.c |
 | `frontend.h` | main/frontend: FrontEndScene (0x3C; archives@0x2C, characters@0x38), FrontEndScene_vtable / g_skelManager / g_dataRoot aliases | `FrontEndScene` | 4 | src/main/frontend/func_00229D30.c |
 | `movie_player.h` | main/MoviePlayer: MovieBuffers (10 x {aligned, raw}), MOVIE_BUF_SIZE_0..9, MOVIE_ALIGN64 | `MovieBuffers` | 1 | src/main/MoviePlayer/MoviePlayer.c |
-| `ezNet.h` | lib/libezcnf + libezctl: RPC server ids, function numbers, buffer sizes, aliases for modId/rpcBound/cd/rpcBuf/log strings | `EZNETCNF_*, EZNETCTL_*, ezNetCnf_*, ezNetCtl_*` | 8 | src/lib/libezctl/libezctl.c |
+| `ezNet.h` | lib/libezcnf + libezctl: RPC server ids, function numbers, buffer sizes, aliases for modId/rpcBound/cd/rpcBuf; SIF RPC + scePrintf (void) prototypes | `EZNETCNF_*, EZNETCTL_*, ezNetCnf_*, ezNetCtl_*` | 2 | src/lib/libezctl/libezctl.c |
 | `sound_event.h` | SoundRequest (0x190), SoundEvent (0x1D0, SoundEvent_Ctor users), SoundEventP (0x1C0 aligned16, CtorFromPreset/WrapAction users) + protos | `SoundRequest, SoundEvent, SoundEventP, SOUND_EVENT_NO_PROTOS` | 0 | build/agents/types1/proof/sound_event_a.c |
 | `sso_string.h` | SsoString: 12-byte short/long string {h(isLong:1,len:7), longLen, longData}; SSO_IS_LONG; ctor/dtor/data/assign/reserve protos | `SsoString, SSO_IS_LONG, SSO_STRING_NO_PROTOS` | 0 | build/agents/types1/proof/sso_string_a.c |
 
@@ -227,7 +227,6 @@ Rules of thumb:
 
 | Header | Provides | Use | Users | Example |
 |---|---|---|---|---|
-| `buffer_release_clear.h` | gcc296: release buffer data via func_001247E0 and clear | `DEFINE_BUFFER_RELEASE_CLEAR` | 2 | src/lib/vfprintf/func_0012C290.c |
 | `call_global_hook.h` | Call the function pointer in D_00485E80 (tail calls off) | `DEFINE_CALL_GLOBAL_HOOK` | 3 | src/main/func_00100A80.c |
 | `call_global_hook_p.h` | call_global_hook with the hook symbol as a parameter | `DEFINE_CALL_GLOBAL_HOOK_P` | 0 | - |
 | `call_with_global_arg.h` | gcc296 -G0: tail-call func_0010D1A0 with a global | `DEFINE_CALL_WITH_GLOBAL_ARG` | 2 | src/lib/func_002BC7C8.c |

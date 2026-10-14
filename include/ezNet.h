@@ -12,10 +12,15 @@
  *   calls: refuse with "RPC service not running" unless rpcBound, then
  *         sceSifCallRpc(&cd, fno, 0, rpcBuf, size, rpcBuf, size, 0, 0) with
  *         the reply in the first word of rpcBuf.
- * Every diagnostic is printed as scePrintf(logPrefix, srcFile) ("%s> ",
- * "libezcnf.c"/"libezctl.c") followed by the message.
- * The globals keep their splat names; the aliases below name them.
+ * Every diagnostic is printed as scePrintf("%s> ", "libezcnf.c") (or
+ * "libezctl.c") followed by the message; the strings are the translation
+ * units' own literals.
+ * The module globals live in .data/.bss away from the units' .rodata, so the
+ * units cannot define them; they keep their splat names and the aliases below
+ * name them.
  */
+
+#include "sif_rpc_types.h"
 
 #define EZNET_RPC_BUF_SIZE 0x1340 /* size of each module's rpcBuf */
 #define EZNET_RPC_NAMES_SIZE 0x130 /* request with two 0x100-byte names at +0x10/+0x110 */
@@ -29,11 +34,6 @@
 #define ezNetCnf_rpcBound  D_004928EC /* 1 between ezNetCnfInit and ezNetCnfExit */
 #define ezNetCnf_cd        D_00533040 /* SifRpcClientData */
 #define ezNetCnf_rpcBuf    D_00533080 /* EZNET_RPC_BUF_SIZE send/receive buffer */
-#define ezNetCnf_logPrefix D_004B9D10 /* "%s> " */
-#define ezNetCnf_srcFile   D_004B9D18 /* "libezcnf.c" */
-#define ezNetCnf_msgModuleNotFound D_004B9D28 /* "%s module not found\n" */
-#define ezNetCnf_msgBindFailed     D_004B9D40 /* "Could not bind to RPC service\n" */
-#define ezNetCnf_msgNotRunning     D_004B9D60 /* "RPC service not running\n" */
 
 /* ezNetCtl (eznetctl_inet.irx) */
 #define EZNETCTL_RPC_ID 0x75488909
@@ -49,10 +49,15 @@
 #define ezNetCtl_rpcBound  D_00492C34
 #define ezNetCtl_cd        D_00533280 /* SifRpcClientData */
 #define ezNetCtl_rpcBuf    D_005332C0
-#define ezNetCtl_logPrefix D_004BADB8 /* "%s> " */
-#define ezNetCtl_srcFile   D_004BADC0 /* "libezctl.c" */
-#define ezNetCtl_msgModuleNotFound D_004BADD0 /* "%s module not found\n" */
-#define ezNetCtl_msgBindFailed     D_004BADE8 /* "could not bind to RPC service\n" */
-#define ezNetCtl_msgNotRunning     D_004BAE08 /* "RPC service not running\n" */
+
+/* SDK calls both units make */
+extern void scePrintf(const char *fmt, ...); /* eekernel.h */
+extern int sceSifSearchModuleByName(char *name);
+extern int sceSifBindRpc(SifRpcClientData *cd, unsigned int rpcId, int mode);
+extern int sceSifCallRpc(SifRpcClientData *cd, int fno, int mode, void *send, int ssize, void *recv, int rsize,
+                         void *endFunc, void *endParam);
+extern int sceSifStopModule(int modId, int argLen, int args, int *result);
+extern int sceSifUnloadModule(int modId);
+extern void String_Copy(char *dst, char *src); /* strcpy */
 
 #endif /* EZNET_H */

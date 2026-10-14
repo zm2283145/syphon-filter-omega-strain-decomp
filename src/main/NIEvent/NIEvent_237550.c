@@ -1,0 +1,152 @@
+/*
+ * main/NIEvent: range (4 files, 00237550-002375E0)
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* headers shared by the blocks below */
+#include "types.h"
+
+/* merge_units: begin func_00237550 */
+#pragma push /* merge_units */
+/* Compiled as C++ (virtual calls through $t9 only come from real virtual dispatch). */
+#pragma cplusplus on
+
+typedef union ScriptArg { int i; float f; void* p; unsigned char b; } ScriptArg;
+
+struct cNIEventLight {
+    virtual void v00(); virtual void v01(); virtual void v02(); virtual void v03(); virtual void v04(); virtual void v05();
+    virtual void v06(); virtual void v07(); virtual void v08(); virtual void v09(); virtual void v0A(); virtual void v0B();
+    virtual void v0C(); virtual void v0D(); virtual void v0E(); virtual void v0F(); virtual void v10(); virtual void v11();
+    virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17();
+    virtual void v18(); virtual void v19(); virtual void v1A(); virtual void v1B(); virtual void v1C(); virtual void v1D();
+    virtual void v1E(); virtual void v1F(); virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23();
+    virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
+    virtual void v2A(); virtual void v2B(); virtual void v2C(); virtual void v2D(); virtual void v2E(); virtual void v2F();
+    virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35();
+    virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39(); virtual void v3A(); virtual void v3B();
+    virtual void v3C(); virtual void v3D(); virtual void v3E(); virtual void v3F(); virtual void v40(); virtual void v41();
+    virtual void v42(); virtual void v43(); virtual void v44();
+    virtual void Reset(); /* +0x11C */
+};
+
+/* Script native: cNIEventLight::Reset() on args[0]; returns 0. */
+extern "C" int Script_cNIEventLight_Reset(ScriptArg* args)
+{
+    cNIEventLight* obj = (cNIEventLight*)args[0].p;
+    obj->Reset();
+    return 0;
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_00237550(void) {}
+#pragma pop /* merge_units */
+/* merge_units: end func_00237550 */
+
+/* merge_units: begin func_00237580 */
+#pragma push /* merge_units */
+/* Compiled as C++ (virtual calls through $t9 only come from real virtual dispatch). */
+#pragma cplusplus on
+
+typedef union ScriptArg_00237580 { int i; float f; void* p; } ScriptArg_00237580;
+
+/* Virtual-call view of cNIEventLight: only the slots used here are named (vtable offset in comments). */
+struct cNIEventLight_00237580 {
+    virtual void v00(); virtual void v01(); virtual void v02(); virtual void v03(); virtual void v04(); virtual void v05();
+    virtual void v06(); virtual void v07(); virtual void v08(); virtual void v09(); virtual void v0A(); virtual void v0B();
+    virtual void v0C(); virtual void v0D(); virtual void v0E(); virtual void v0F(); virtual void v10(); virtual void v11();
+    virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17();
+    virtual void v18(); virtual void v19(); virtual void v1A(); virtual void v1B(); virtual void v1C(); virtual void v1D();
+    virtual void v1E(); virtual void v1F(); virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23();
+    virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
+    virtual void v2A(); virtual void v2B(); virtual void v2C(); virtual void v2D(); virtual void v2E(); virtual void v2F();
+    virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35();
+    virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39(); virtual void v3A(); virtual void v3B();
+    virtual void v3C(); virtual void v3D(); virtual void v3E(); virtual void v3F(); virtual void v40(); virtual void v41();
+    virtual void v42(); virtual void v43();
+    virtual void Stop(int now); /* +0x118 */
+};
+
+/* Script native: cNIEventLight::Stop(1) on args[0]; returns 0. */
+extern "C" int Script_cNIEventLight_Stop(ScriptArg_00237580* args)
+{
+    cNIEventLight_00237580* obj = (cNIEventLight_00237580*)args[0].p;
+    obj->Stop(1);
+    return 0;
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_00237580(void) {}
+#pragma pop /* merge_units */
+/* merge_units: end func_00237580 */
+
+/* merge_units: begin func_002375B0 */
+#pragma push /* merge_units */
+/* Compiled as C++ (virtual calls through $t9 only come from real virtual dispatch). */
+#pragma cplusplus on
+
+typedef union ScriptArg_002375B0 { int i; float f; void* p; unsigned char b; signed char c; } ScriptArg_002375B0;
+
+/* Virtual-call view of cNIEventLight: only the slots used here are named (vtable offset in comments). */
+struct cNIEventLight_002375B0 {
+    virtual void v00(); virtual void v01(); virtual void v02(); virtual void v03(); virtual void v04(); virtual void v05();
+    virtual void v06(); virtual void v07(); virtual void v08(); virtual void v09(); virtual void v0A(); virtual void v0B();
+    virtual void v0C(); virtual void v0D(); virtual void v0E(); virtual void v0F(); virtual void v10(); virtual void v11();
+    virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17();
+    virtual void v18(); virtual void v19(); virtual void v1A(); virtual void v1B(); virtual void v1C(); virtual void v1D();
+    virtual void v1E(); virtual void v1F(); virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23();
+    virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
+    virtual void v2A(); virtual void v2B(); virtual void v2C(); virtual void v2D(); virtual void v2E(); virtual void v2F();
+    virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35();
+    virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39(); virtual void v3A(); virtual void v3B();
+    virtual void v3C(); virtual void v3D(); virtual void v3E(); virtual void v3F(); virtual void v40(); virtual void v41();
+    virtual void v42();
+    virtual void Play(); /* +0x114 */
+};
+
+/* Script native: cNIEventLight::Play() on args[0]; returns 0. */
+extern "C" int Script_cNIEventLight_Play(ScriptArg_002375B0* args)
+{
+    cNIEventLight_002375B0* obj = (cNIEventLight_002375B0*)args[0].p;
+    obj->Play();
+    return 0;
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_002375B0(void) {}
+#pragma pop /* merge_units */
+/* merge_units: end func_002375B0 */
+
+/* merge_units: begin func_002375E0 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Original translation unit not identified yet; functions are named by address
+ * until real names are known.
+ */
+
+
+extern int D_004F7CF8; /* cNIEventLight script type key */
+extern int D_004F7D00; /* cNIEventLight script type id */
+extern int D_004F7D20; /* cNINotice script type key */
+extern char D_00555070[]; /* global script filter */
+extern int ScriptFilter_Dispatch(void* filter, int a1, int a2);
+extern int* cGOBJ_GetScriptTypeKeyPtr(void); /* address of the cGObj type key */
+extern int ScriptType_AddAccepted(int type, int acceptedType);
+extern void ScriptType_SetParent(int type, int parentType);
+
+/* cNIEventLight derives from cGObj and accepts cNINotice messages. */
+int ScriptType_cNIEventLight_Init(void) {
+    int* parent = cGOBJ_GetScriptTypeKeyPtr();
+    ScriptType_SetParent(D_004F7D00, *parent);
+    return ScriptType_AddAccepted(D_004F7D00, D_004F7D20);
+}
+
+int cNIEventLight_v0B(void) {
+    return D_004F7CF8;
+}
+
+int cNIEventLight_v0C(int a0, int a1) {
+    return ScriptFilter_Dispatch(D_00555070, a0, a1);
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_002375E0(void) {}
+#pragma pop /* merge_units */
+/* merge_units: end func_002375E0 */

@@ -1,0 +1,220 @@
+/*
+ * main/path: range (5 files, 001639D0-00163E20)
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_001639D0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+
+#include "types.h"
+
+extern "C" {
+extern char D_004D9740[];
+extern char D_004D9730[];
+extern char D_004D9720[];
+void operator_delete(void* allocation);
+}
+
+struct Member_3A3210 { void* vtable; };
+struct Obj_3A3210 {
+    void* vtable;
+    Member_3A3210 a;
+    int pad[2];
+    Member_3A3210 b;
+};
+
+static inline void MemberDtor_3A3210(Member_3A3210* m)
+{
+    if (m) {
+        m->vtable = D_004D9730;
+        if (m)
+            m->vtable = D_004D9720;
+    }
+}
+
+extern "C" Obj_3A3210* func_001639D0(Obj_3A3210* self, short deleteFlag)
+{
+    if (self) {
+        self->vtable = D_004D9740;
+        MemberDtor_3A3210(&self->b);
+        MemberDtor_3A3210(&self->a);
+        if (deleteFlag > 0)
+            operator_delete(self);
+    }
+    return self;
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_001639D0(void) {}
+#pragma pop /* merge_units */
+/* merge_units: end func_001639D0 */
+
+/* merge_units: begin func_00163A70 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+#include "vtable_chain_dtor.h"
+
+/* Deleting destructor: restore the vtable chain, optionally delete. */
+DEFINE_VTABLE_CHAIN_DTOR2(func_00163A70, D_004D9730, D_004D9720)
+#pragma pop /* merge_units */
+/* merge_units: end func_00163A70 */
+
+/* merge_units: begin func_00163AD0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+#include "vslot_pad.h"
+typedef union { __int128 q; float f[4]; } CxRuV4;
+struct CxRuMtx { CxRuV4 rows[4];CxRuV4* Pos(){return rows+3;} };
+struct CxRuActor { VPAD32(a) VPAD16(b) VPAD8(c) VPAD2(d) VPAD1(e)
+    virtual CxRuMtx Matrix();
+    char pad4[8]; int serial;
+};
+struct CxRuBuffer {char pad[0x20];void* nodes;};
+struct CxRuReq { CxRuActor* actor; int serial; int serial2; unsigned char type; char padD[7];CxRuBuffer* buffer;};
+struct CxRuLink { CxRuLink* next; CxRuLink* prev; CxRuReq* req;};
+struct CxRuList { int count; void* unk4; CxRuLink* head;};
+struct CxRuManager { char pad[0x20]; CxRuList queue;};
+struct CxRuIt { CxRuLink* link;};
+extern "C" {
+extern unsigned char D_004ED9D0;
+extern int D_005383C8;
+extern int D_004ED9C0[];
+unsigned char NpcRoute_Search(CxRuReq*);
+unsigned char NpcRoute_ScoreNodes(CxRuReq*);
+void func_00138DA0(CxRuIt*,CxRuList*,CxRuIt*);
+void NpcRouteMgr_FreeRequest(CxRuManager*,CxRuReq*);
+CxRuActor* PlayerSlots_Get(int);
+int NpcRoute_RegionAt(const CxRuV4*,int);
+}
+static inline CxRuActor* CxRu_Get(CxRuReq* req){ bool isNull;bool ok;CxRuActor* actor;actor=req->actor;isNull=!actor;ok=true;if(!isNull)if(actor->serial!=req->serial)ok=false;return ok ? actor:0;}
+
+extern "C" void NpcRoute_Update(CxRuManager* self){
+    if(self->queue.count && !D_004ED9D0){
+        CxRuReq* req;
+        CxRuLink** head;
+        head=&self->queue.head;
+        req=(*head)->req;
+        unsigned char done=1;
+        if(CxRu_Get(req)){
+            if(req->type==1){
+                if(req->buffer && req->buffer->nodes)done=NpcRoute_Search(req);
+            }else done=NpcRoute_ScoreNodes(req);
+        }
+        if(done){
+            CxRuIt out; CxRuIt it;
+            it.link=*head;
+            func_00138DA0(&out,&self->queue,&it);
+            NpcRouteMgr_FreeRequest(self,req);
+        }
+    }
+    int slot=D_005383C8&3;
+    if(slot<4 && PlayerSlots_Get(slot)){
+        const CxRuV4* pos=PlayerSlots_Get(slot)->Matrix().Pos();
+        int* region=&D_004ED9C0[slot];
+        int id=NpcRoute_RegionAt(pos,*region);
+        if(id>=0)*region=id;
+    }
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_00163AD0(void) {}
+#pragma pop /* merge_units */
+/* merge_units: end func_00163AD0 */
+
+/* merge_units: begin func_00163C50 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+#pragma inline_depth(12)
+struct CxRelActor{char pad[0xC];int serial;};
+struct CxRelReq{CxRelActor* actor;int serial;};
+struct CxRelLink{CxRelLink*next;CxRelLink*prev;CxRelReq*req;};
+struct CxRelList{int count;void*unused;CxRelLink*head;};
+struct CxRelManager{char pad[0x20];CxRelList queue;};
+struct CxRelIt{CxRelLink*link;};
+struct CxRelTag{};
+struct CxRelPredicate{CxRelTag tag;CxRelReq**req;CxRelPredicate(const CxRelTag&t,CxRelReq**p):tag(t),req(p){} };
+extern "C" {
+void func_0015F770(CxRelIt*,CxRelList*);
+void func_0015F760(CxRelIt*,CxRelIt*);
+void func_0015F750(CxRelIt*,CxRelList*);
+#if 0 /* merge_units */
+void NpcRouteMgr_FreeRequest(CxRelManager*,CxRelReq*);
+#endif /* merge_units */
+#define NpcRouteMgr_FreeRequest(a0, a1) (NpcRouteMgr_FreeRequest((CxRuManager *)(a0), (CxRuReq *)(a1))) /* merge_units */
+
+void ActiveList_EraseMatching(CxRelList*,CxRelPredicate);
+}
+static inline CxRelActor* CxRel_Get(CxRelReq* req){bool isNull;bool ok;CxRelActor* actor;actor=req->actor;isNull=!actor;ok=true;if(!isNull)if(actor->serial!=req->serial)ok=false;return ok ? actor:0;}
+static inline void CxRel_First0(CxRelIt*out,CxRelList*l){CxRelIt tmp;func_0015F770(&tmp,l);func_0015F760(out,&tmp);}
+static inline void CxRel_First00(CxRelIt*out,CxRelList*l){CxRel_First0(out,l);}
+static inline CxRelLink* CxRel_First(CxRelList*l){CxRelIt out;CxRel_First00(&out,l);return out.link;}
+static inline CxRelIt CxRel_Begin(CxRelList*l){CxRelIt out;CxRelIt converted;CxRel_First00(&converted,l);out.link=converted.link;return out;}
+static inline void CxRel_End0(CxRelIt*out,CxRelList*l){CxRelIt tmp;func_0015F750(&tmp,l);func_0015F760(out,&tmp);}
+static inline void CxRel_End00(CxRelIt*out,CxRelList*l){CxRel_End0(out,l);}
+static inline CxRelLink* CxRel_End(CxRelList*l){CxRelIt out;CxRel_End00(&out,l);return out.link;}
+static inline void CxRel_Erase(CxRelList*l,const CxRelTag& tag,CxRelReq**req){CxRelPredicate p(tag,req);ActiveList_EraseMatching(l,p);}
+static inline void CxRel_Erase0(CxRelList*l,CxRelReq**req){CxRelTag tag;CxRel_Erase(l,tag,req);}
+static inline void ErWrap(CxRelList*l,CxRelReq**r){CxRel_Erase0(l,r);}
+extern "C" void NpcRoute_Release(CxRelManager*self,CxRelActor*actor){
+    bool removed;
+    CxRelLink*first=CxRel_First(&self->queue);
+    do{
+        removed=false;
+        CxRelIt cur=CxRel_Begin(&self->queue);
+        for(;cur.link!=CxRel_End(&self->queue);cur.link=cur.link->prev){
+            if(actor){int*serial=&actor->serial;int id=CxRel_Get(cur.link->req)->serial;if(id!=*serial)continue;}
+            {
+                if(cur.link==first && D_004ED9D0==1)D_004ED9D0=2;
+                NpcRouteMgr_FreeRequest(self,cur.link->req);
+                ErWrap(&self->queue,&cur.link->req);
+                removed=true;
+                break;
+            }
+
+        }
+    }while(removed);
+}
+#undef NpcRouteMgr_FreeRequest /* merge_units */
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_00163C50(void) {}
+#pragma pop /* merge_units */
+/* merge_units: end func_00163C50 */
+
+/* merge_units: begin func_00163E20 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+struct CxIqActor {char pad[0xC];int serial;};
+struct CxIqReq { CxIqActor* actor;int serial;char pad8[4];unsigned char type;};
+struct CxIqLink {CxIqLink* next;CxIqLink* prev;CxIqReq* req;};
+struct CxIqList {int count;void* unused;CxIqLink* head;};
+struct CxIqManager {char pad[0x20];CxIqList queue;};
+struct CxIqIt { CxIqLink* link;CxIqReq* Req(){return link->req;} };
+extern "C" void func_00163FA0(CxIqIt*,CxIqList*);
+extern "C" void func_00163F90(CxIqIt*,CxIqIt*);
+extern "C" void func_00163F60(CxIqIt*,CxIqList*);
+static inline CxIqActor* CxIq_Get(CxIqReq* req){bool isNull;bool ok;CxIqActor* actor;actor=req->actor;isNull=!actor;ok=true;if(!isNull)if(actor->serial!=req->serial)ok=false;return ok ? actor:0;}
+static inline void CxIq_Begin0(CxIqIt*out,CxIqList*l){CxIqIt temp;func_00163FA0(&temp,l);func_00163F90(out,&temp);}
+static inline CxIqIt CxIq_Begin(CxIqList* l){CxIqIt converted;CxIq_Begin0(&converted,l);return converted;}
+static inline void CxIq_End0(CxIqIt*out,CxIqList*l){CxIqIt temp;func_00163F60(&temp,l);func_00163F90(out,&temp);}
+static inline CxIqLink* CxIq_End(CxIqList*l){CxIqIt out;CxIq_End0(&out,l);return out.link;}
+extern "C" CxIqReq* NpcRoute_IsQueued(CxIqManager* self,CxIqActor* actor,int mask){
+    CxIqReq* result=0;
+    if(actor){
+        CxIqIt cur=CxIq_Begin(&self->queue);
+        while(cur.link!=CxIq_End(&self->queue)){
+            int* serial=&actor->serial;
+            CxIqReq* req=cur.Req();
+            int id=CxIq_Get(req)->serial;
+            if(id==*serial && (mask&req->type)){
+                result=req;
+                break;
+            }
+            cur.link=cur.link->prev;
+        }
+    }
+    return result;
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_00163E20(void) {}
+#pragma pop /* merge_units */
+/* merge_units: end func_00163E20 */

@@ -1,0 +1,136 @@
+/*
+ * main/playerControls: range (4 files, 00247320-00247720)
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* headers shared by the blocks below */
+#include "types.h"
+
+/* library prototypes shared by the blocks below (C linkage) */
+int Mem_Free();
+
+/* merge_units: begin func_00247320 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+#include "alloc_guard.h"
+typedef struct { char pad[0x128]; void* buf; } E4Own;
+extern "C" {
+void func_00252FB0(void* p, int n);
+}
+extern "C" void func_00247320(E4Own* o)
+{
+    void* p = o->buf;
+    if (p) {
+        {
+            AllocGuard g;
+            func_00252FB0(p, -1);
+            Mem_Free(0, p, "playerControls.cc", 0xF29);
+        }
+        o->buf = 0;
+    }
+}
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_00247320(void) {}
+#pragma pop /* merge_units */
+/* merge_units: end func_00247320 */
+
+/* merge_units: begin func_002473E0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+struct C5Zone { int id; };
+struct C5Obj2473 { char pad[0x128]; C5Zone* zone; };
+extern "C" bool func_002473E0(C5Obj2473* p, int id) { return p->zone != 0 && id == p->zone->id; }
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_002473E0(void) {}
+#pragma pop /* merge_units */
+/* merge_units: end func_002473E0 */
+
+/* merge_units: begin func_00247410 */
+#pragma push /* merge_units */
+#pragma push
+#pragma cplusplus on
+struct E247720 { unsigned char used; char p1[3]; int v; };
+struct V247720 { int pad; int count; E247720* data; };
+extern "C" void func_00247720(V247720* v, int idx); /* gsynth: defined below */
+#pragma pop
+#pragma cplusplus on
+struct St_247410 {
+    char pad[0x20]; int id; char pad24[0xC]; int prev; char pad34[4]; int cur;
+    bool Entered(int s) { bool np = !(prev == s); return np && cur == s; }
+    bool Left(int s) { return prev == s && !(cur == s); }
+    bool Involves(int s) { return prev == s || cur == s; }
+    bool NotIn(int s) { return !(prev == s) && !(cur == s); }
+};
+typedef struct { float a; float b; } HEnt_247410;
+typedef struct { int x; int y; } Tmp_247410;
+extern "C" {
+void* func_002477E0(Tmp_247410* t, float f);
+void func_002477C0(char* h, void* e);
+void ActorHeading_RetargetLast(char* h, float f);
+int func_002477B0(char* h);
+#if 0 /* merge_units */
+void func_00247720(char* h, int id);
+#endif /* merge_units */
+#define func_00247720(a0, a1) (func_00247720((V247720 *)(a0), (a1))) /* merge_units */
+
+HEnt_247410* History_At(char* h, int id);
+}
+extern "C" void func_00247410(St_247410* s, char* a, int on, float f)
+{
+    float spd;
+    if ((s->Entered(5) && s->NotIn(8)) || (s->Entered(8) && s->NotIn(5)) || (s->Entered(5) && s->Entered(8))) {
+        if (on && s->id == -1) {
+            Tmp_247410 t;
+            if (s->cur == 8)
+                spd = 0.33f;
+            else if (s->cur == 5)
+                spd = 1.0f;
+            func_002477C0(a + 0x3088, func_002477E0(&t, f));
+            ActorHeading_RetargetLast(a + 0x3030, spd);
+            s->id = func_002477B0(a + 0x3030);
+        }
+    } else if ((s->Left(5) && s->cur != 8) || (s->Left(8) && s->cur != 5) || (s->Left(5) && s->Left(8))) {
+        if (s->id != -1) {
+            func_00247720(a + 0x3088, s->id);
+            ActorHeading_RetargetLast(a + 0x3030, -1.0f);
+            s->id = -1;
+        }
+    } else if ((s->cur == 5 || s->cur == 8) && on && s->id != -1) {
+        History_At(a + 0x3088, s->id)->b = f;
+        ActorHeading_RetargetLast(a + 0x3030, -1.0f);
+    }
+}
+#undef func_00247720 /* merge_units */
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_00247410(void) {}
+#pragma pop /* merge_units */
+/* merge_units: end func_00247410 */
+
+/* merge_units: begin func_00247720 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+
+
+extern "C" void func_00250E70(V247720* v, int n, E247720* fill);
+static inline int Used247720(E247720* e) { return e->used != 0; }
+#pragma push
+#pragma bool off
+#pragma opt_strength_reduction off
+extern "C" void func_00247720(V247720* v, int idx)
+{
+    int n;
+    int i;
+    E247720 f;
+    v->data[idx].used = 0;
+    n = 0;
+    for (i = v->count - 1; i >= 0; i--) { if (Used247720(&v->data[i]) ^ 1) continue; n = i + 1; break; }
+    f.used = 1;
+    f.v = 0;
+    func_00250E70(v, n, &f);
+}
+#pragma pop
+/* merge_units: generate this block's code under its own pragmas */
+static inline void merge_flush_func_00247720(void) {}
+#pragma pop /* merge_units */
+/* merge_units: end func_00247720 */

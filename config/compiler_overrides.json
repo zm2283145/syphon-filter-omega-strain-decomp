@@ -6844,5 +6844,7 @@
   "main/human/func_00196480": "cwps2-3.0b38",
   "main/func_00472E10": "cwps2-3.0b38",
   "main/playerControls/func_00247D60": "cwps2-3.0b38",
-  "main/bullet/func_00276460": "cwps2-3.0b38"
+  "main/bullet/func_00276460": "cwps2-3.0b38",
+  "main/scriptManager/func_003DA110": "cwps2-3.0b38",
+  "main/func_00474050": "cwps2-3.0b38"
 }

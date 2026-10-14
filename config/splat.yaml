@@ -1853,6 +1853,7 @@ segments:
       - [0x095EE0, c, main/human/func_00195EE0]
       - [0x0960A0, c, main/human/func_001960A0]
       - [0x0960C0, asm]
+      - [0x096480, c, main/human/func_00196480]
       - [0x0970D0, c, main/human/func_001970D0]
       - [0x097140, asm]
       - [0x097310, c, main/human/func_00197310]

@@ -9,8 +9,8 @@ This is the working state and the routine for whoever continues this project
 
 | | |
 |---|---|
-| Functions matched | 13,240 of 14,331 |
-| Code matched | 72.50% |
+| Functions matched | 13,255 of 14,331 |
+| Code matched | 74.44% |
 | Data matched | 99.92% |
 | Full build | reproduces the retail executable byte for byte |
 
@@ -65,7 +65,10 @@ are also used. Their Linux binaries run natively on Linux and through WSL on Win
 
 On Linux the CodeWarrior compilers run through wibo. A 4-core GitHub codespace does a
 full round build (configure, data generation, configure, ninja, report) in about
-6–7 minutes.
+6–7 minutes. A local WSL (Ubuntu) tree with `ninja -j8` works as well and takes
+about 10–13 minutes. It needs `tools/setup_tools.py` run inside WSL, which creates the
+`ee-gcc2.9-991111-as296` hybrid compiler. Without the hybrid, libcdvd/libmpeg units
+drop out of the report while the executable still matches.
 
 **EE-GCC 2.96 is nondeterministic across CPUs.** Its 32-bit `cc1` reads uninitialized
 memory, so its output depended on which CPU-specific glibc string routines ran and on

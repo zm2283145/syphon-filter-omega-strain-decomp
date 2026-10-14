@@ -5008,5 +5008,8 @@
   "main/human/func_00187360": "cwps2-3.0b38",
   "main/particle/func_0039CB70": "cwps2-3.0b38",
   "main/func_0033E5B0": "cwps2-3.0b38",
-  "main/human/func_001A2C00": "cwps2-3.0b38"
+  "main/human/func_001A2C00": "cwps2-3.0b38",
+  "main/game/func_00137AB0": "cwps2-3.0b38",
+  "main/weapon/func_00144080": "cwps2-3.0b38",
+  "main/func_0022AD30": "cwps2-3.0b38"
 }

@@ -5287,7 +5287,7 @@ segments:
       - [0x23DF00, asm]
       - [0x23E2A0, c, main/func_0033E2A0]
       - [0x23E410, c, main/func_0033E410]
-      - [0x23E5B0, asm]
+      - [0x23E5B0, c, main/func_0033E5B0]
       - [0x23EE40, c, main/func_0033EE40]
       - [0x23EF10, c, main/func_0033EF10]
       - [0x23F050, c, main/func_0033F050]

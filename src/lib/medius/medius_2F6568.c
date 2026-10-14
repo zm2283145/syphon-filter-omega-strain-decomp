@@ -1,0 +1,73 @@
+/*
+ * lib/medius: 4 files, 002F6568-002F66B8
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_002F6568 */
+extern int func_002F6770(int, char **);
+int func_002F6568(int a, int *out)
+{
+    char *p = 0;
+    int r;
+    if (out == 0) return 2;
+    *out = 0;
+    r = func_002F6770(a, &p);
+    if (r) return r;
+    if (p == 0) return 0xA;
+    *out = (int)(p + 4);
+    return 0;
+}
+/* merge_units: end func_002F6568 */
+
+/* merge_units: begin func_002F65C8 */
+int func_002F65C8(int a, unsigned short *out)
+{
+    char *p = 0;
+    int r;
+    if (out == 0) return 2;
+    *out = 0;
+    r = func_002F6770(a, &p);
+    if (r) return r;
+    if (p == 0) return 0xA;
+    *out = *(unsigned short *)(p + 0x14);
+    return 0;
+}
+/* merge_units: end func_002F65C8 */
+
+/* merge_units: begin func_002F6628 */
+extern int func_002F7CD0(int, unsigned char *);
+int func_002F6628(int a, unsigned char *out)
+{
+    char *p = 0;
+    int r;
+    if (out == 0) return 2;
+    r = func_002F6770(a, &p);
+    if (r) return r;
+    if (p == 0) return 0xA;
+    if (*(int *)(p + 8)) return 0xC;
+    if (((unsigned char *)p)[0x16] == 1) {
+        *out = ((unsigned char *)p)[0x16];
+    } else {
+        r = func_002F7CD0(*(int *)(p + 4), out);
+        if (r) return r;
+        p[0x16] = *out;
+    }
+    return 0;
+}
+/* merge_units: end func_002F6628 */
+
+/* merge_units: begin func_002F66B8 */
+extern int Net_AllocZeroed(char **, int);
+int func_002F66B8(char **out)
+{
+    char *p = 0;
+    if (out == 0) return 2;
+    *out = 0;
+    if (Net_AllocZeroed(&p, 0x18)) return 9;
+    if (p == 0) return 0xA;
+    *p = 1;
+    *out = p;
+    return 0;
+}
+/* merge_units: end func_002F66B8 */

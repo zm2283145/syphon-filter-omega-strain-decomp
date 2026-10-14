@@ -1,0 +1,190 @@
+/*
+ * lib/libkernl: 7 files, 00117D68-00118158
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_00117D68 */
+typedef struct N7D68 { struct N7D68 *next; int p[3]; } N7D68;
+extern N7D68 D_004E96C0[];
+extern N7D68 *D_004E9AC0;
+
+int func_00117D68(void)
+{
+    int i;
+    D_004E9AC0 = D_004E96C0;
+    for (i = 0x3F; i >= 0; i--) D_004E96C0[i].next = &D_004E96C0[i + 1];
+    D_004E96C0[0x3F].next = 0;
+    return 0;
+}
+/* merge_units: end func_00117D68 */
+
+/* merge_units: begin func_00117DB8 */
+typedef struct N7DB8 {
+    struct N7DB8 *next;
+    volatile int id;
+    int (*func)(int, int, int, void *);
+    void *arg;
+} N7DB8;
+
+#if 0 /* merge_units */
+extern N7DB8 *volatile D_004E9AC0;
+#endif /* merge_units */
+#define D_004E9AC0 (*(N7DB8 * volatile*)&D_004E9AC0) /* merge_units */
+
+
+int func_00117DB8(int id, int b, int c, N7DB8 *n)
+{
+    int ret = n->func(((int)n << 4) | (id & 0xFE) | 1, b, c, n->arg);
+    if (ret == 0) {
+        n->next = D_004E9AC0;
+        D_004E9AC0 = n;
+        n->id = 0;
+        return -1;
+    }
+    return ret;
+}
+#undef D_004E9AC0 /* merge_units */
+/* merge_units: end func_00117DB8 */
+
+/* merge_units: begin func_00117E18 */
+typedef struct N7E18 { struct N7E18 *next; volatile int id; void *func; void *arg; } N7E18;
+#if 0 /* merge_units */
+extern N7E18 *volatile D_004E9AC0;
+#endif /* merge_units */
+#define D_004E9AC0 (*(N7E18 * volatile*)&D_004E9AC0) /* merge_units */
+
+extern int func_001161A0(void);
+extern void func_001161F8(void);
+extern int func_00117DB8();
+static inline N7E18 *node_alloc(void) { N7E18 *n = D_004E9AC0; if (n) D_004E9AC0 = n->next; return n; }
+extern int func_00117420(void);
+extern int func_00117B40(int, long, void *, void *);
+extern int func_001176B8(int);
+
+int func_00117E18(long t, void *h, void *arg)
+{
+    int s, id;
+    N7E18 *n;
+    if (h == 0) return 0x80000016;
+    s = func_001161A0();
+    n = node_alloc();
+    if (n == 0) {
+        if (s) func_001161F8();
+        return 0x80008005;
+    }
+    id = func_00117420();
+    if (id < 0) {
+        n->next = D_004E9AC0;
+        D_004E9AC0 = n;
+        n->id = 0;
+        if (s) func_001161F8();
+        return id;
+    }
+    n->func = h;
+    n->arg = arg;
+    n->id = id;
+    func_00117B40(id, t, func_00117DB8, n);
+    func_001176B8(id);
+    if (s) func_001161F8();
+    return ((int)n << 4) | (id & 0xFE) | 1;
+}
+#undef D_004E9AC0 /* merge_units */
+/* merge_units: end func_00117E18 */
+
+/* merge_units: begin func_00117F48 */
+#if 0 /* merge_units */
+extern N7E18 *volatile D_004E9AC0;
+#endif /* merge_units */
+#define D_004E9AC0 (*(N7E18 * volatile*)&D_004E9AC0) /* merge_units */
+
+extern int func_001173B0(void);
+extern int func_00117A48(int, long, void *, void *);
+extern int func_00117608(int);
+
+int func_00117F48(long t, void *h, void *arg)
+{
+    int id;
+    N7E18 *n;
+    if (h == 0) return 0x80000016;
+    n = node_alloc();
+    if (n == 0) return 0x80008005;
+    id = func_001173B0();
+    if (id < 0) {
+        n->next = D_004E9AC0;
+        D_004E9AC0 = n;
+        n->id = 0;
+        return id;
+    }
+    n->func = h;
+    n->arg = arg;
+    n->id = id;
+    func_00117A48(id, t, func_00117DB8, n);
+    func_00117608(id);
+    return ((int)n << 4) | (id & 0xFE) | 1;
+}
+#undef D_004E9AC0 /* merge_units */
+/* merge_units: end func_00117F48 */
+
+/* merge_units: begin func_00118038 */
+#if 0 /* merge_units */
+extern N7E18 *volatile D_004E9AC0;
+#endif /* merge_units */
+#define D_004E9AC0 (*(N7E18 * volatile*)&D_004E9AC0) /* merge_units */
+
+extern int func_00117508(int);
+
+int func_00118038(int id)
+{
+    N7E18 *n = (N7E18 *)(((unsigned int)id >> 8) << 4);
+    int s = func_001161A0();
+    if (id < 0 || ((id ^ n->id) & 0xFF)) {
+        if (s) func_001161F8();
+        return 0x80008002;
+    }
+    func_00117508(n->id);
+    n->next = D_004E9AC0;
+    D_004E9AC0 = n;
+    n->id = 0;
+    if (s) func_001161F8();
+    return 0;
+}
+#undef D_004E9AC0 /* merge_units */
+/* merge_units: end func_00118038 */
+
+/* merge_units: begin func_001180E0 */
+#if 0 /* merge_units */
+extern N7E18 *volatile D_004E9AC0;
+#endif /* merge_units */
+#define D_004E9AC0 (*(N7E18 * volatile*)&D_004E9AC0) /* merge_units */
+
+extern int func_00117468(int);
+
+int func_001180E0(int id)
+{
+    N7E18 *n = (N7E18 *)(((unsigned int)id >> 8) << 4);
+    int r;
+    if (id < 0 || ((id ^ n->id) & 0xFF)) return 0x80008002;
+    r = func_00117468(n->id);
+    if (r == 0) {
+        n->next = D_004E9AC0;
+        D_004E9AC0 = n;
+        n->id = 0;
+    }
+    return r;
+}
+#undef D_004E9AC0 /* merge_units */
+/* merge_units: end func_001180E0 */
+
+/* merge_units: begin func_00118158 */
+int D_00487868 = 0;
+int D_0048786C = 0;
+extern char D_004E9AC8[];
+extern void* memset(void* p, int c, unsigned int n);
+void func_00118158(void)
+{
+    D_00487868 = 0;
+    D_0048786C = 0;
+    memset(D_004E9AC8, 0, 0x200);
+}
+/* merge_units: end func_00118158 */

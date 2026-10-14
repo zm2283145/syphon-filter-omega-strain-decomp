@@ -7672,5 +7672,14 @@
   "main/ska/func_003B6BC0": "cwps2-3.0b38",
   "main/ska/func_003BA1B0": "cwps2-3.0b38",
   "main/func_003C8AD0": "cwps2-3.0b38",
-  "main/func_003E9880": "cwps2-3.0b38"
+  "main/func_003E9880": "cwps2-3.0b38",
+  "lib/func_00116DF0": "ee-gcc2.9-991111",
+  "main/game/func_00131C70": "cwps2-3.0b38",
+  "main/func_001E52E0": "cwps2-3.0b38",
+  "main/playerControls/func_00247800": "cwps2-3.0b38",
+  "main/bullet/func_002757A0": "cwps2-3.0b38",
+  "main/func_003A8C80": "cwps2-3.0b38",
+  "main/collision/func_003C1540": "cwps2-3.0b38",
+  "main/func_0045FAB0": "cwps2-3.0b38",
+  "main/func_004728D0": "cwps2-3.0b38"
 }

@@ -7657,5 +7657,21 @@
   "main/AgentData/func_003361E0": "cwps2-3.0b38",
   "main/gobj/func_003CEA10": "cwps2-3.0b38",
   "main/GenInfoObject/func_0043ACE0": "cwps2-3.0b38",
-  "main/func_003FFB20": "cwps2-3.0b38"
+  "main/func_003FFB20": "cwps2-3.0b38",
+  "lib/func_00102888": "ee-gcc2.9-991111",
+  "lib/func_00102A28": "ee-gcc2.9-991111",
+  "lib/func_00104730": "ee-gcc2.9-991111",
+  "lib/func_00105088": "ee-gcc2.9-991111",
+  "lib/func_001054A8": "ee-gcc2.9-991111",
+  "lib/libmpeg/func_00109590": "ee-gcc2.9-991111",
+  "lib/func_00110DA8": "ee-gcc2.9-991111",
+  "lib/func_001119B8": "ee-gcc2.9-991111",
+  "lib/func_00111BF0": "ee-gcc2.9-991111",
+  "lib/func_00111E50": "ee-gcc2.9-991111",
+  "lib/func_00112110": "ee-gcc2.9-991111",
+  "lib/func_00113B50": "ee-gcc2.9-991111",
+  "main/human/func_00188FB0": "cwps2-3.0b38",
+  "main/func_001CEA90": "cwps2-3.0b38",
+  "main/func_00372120": "cwps2-3.0b38",
+  "main/func_003A98D0": "cwps2-3.0b38"
 }

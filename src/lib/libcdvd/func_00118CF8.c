@@ -13,7 +13,7 @@ extern int func_0010D1B0(int);
 extern int SignalSema(int);
 extern int ReferThreadStatus(int, void *);
 extern int sceCdSync(int);
-extern void D_0010FBC0(int);
+extern void func_0010FBC0(int);
 extern int sceSifBindRpc(RpcCd *cd, unsigned int id, int mode);
 extern int scePrintf(const char *, ...);
 
@@ -31,7 +31,7 @@ int func_00118CF8(int cmd)
         SignalSema(D_004878A8);
         return 0;
     }
-    D_0010FBC0(0);
+    func_0010FBC0(0);
     if (D_004878BC >= 0) return 1;
     while (1) {
         if (sceSifBindRpc(&D_00488A50, 0x80000595, 0) < 0) {

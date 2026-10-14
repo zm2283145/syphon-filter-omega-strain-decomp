@@ -14,7 +14,7 @@ extern void func_00118718(void);
 extern int func_0010D1B0(int);
 extern int SignalSema(int);
 extern int func_00118FA0(int);
-extern void D_0010FBC0(int);
+extern void func_0010FBC0(int);
 extern void func_0010FB10(void *, int);
 extern int sceSifBindRpc(RpcCd *cd, unsigned int id, int mode);
 extern int sceSifCallRpc(RpcCd *, int, int, void *, int, void *, int, void *, void *);
@@ -33,7 +33,7 @@ int func_00119510(int mode)
         SignalSema(D_004878AC);
         return mode != 8 ? 6 : -1;
     }
-    D_0010FBC0(0);
+    func_0010FBC0(0);
     if (D_004878C8 < 0) {
         do {
             if (sceSifBindRpc(&D_004E9F50, 0x8000059A, 0) < 0) {

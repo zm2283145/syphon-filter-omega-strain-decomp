@@ -8,7 +8,7 @@ extern SifRpcClientData D_004F85F0;
 extern SifRpcClientData D_004F8618;
 extern int D_004FBB40[16];
 extern char D_004FBAC0[];
-extern void D_0010FBC0(int);
+extern void func_0010FBC0(int);
 extern int sceSifBindRpc(SifRpcClientData*, unsigned int, int);
 extern int func_0026A2D0(void);
 extern int scePrintf(const char*, ...);
@@ -23,7 +23,7 @@ int sceDbcInit(void)
 
     if (D_0048B238 == 1) return 1;
     D_004FBB80 = 0;
-    D_0010FBC0(0);
+    func_0010FBC0(0);
     for (;;) {
         if (sceSifBindRpc(&D_004F85C8, 0x80001300, 0) < 0) {
             func_0026B1C8("libdbc: bind failed\n");

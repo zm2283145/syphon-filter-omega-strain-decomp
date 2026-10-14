@@ -1,6 +1,6 @@
 #include "types.h"
 
-extern void D_0010FBC0(int a);
+extern void func_0010FBC0(int a);
 extern int sceCdInit(int mode);
 extern int scePrintf(const char* fmt, ...);
 extern int sceSifRebootIop(const char* img);
@@ -14,7 +14,7 @@ extern char D_00493480[];
 
 void LibInitModules(int flash)
 {
-    D_0010FBC0(0);
+    func_0010FBC0(0);
     sceCdInit(0);
     if (flash) {
         scePrintf("\nLibInitModules(): Flashing IOP... (%s)\n\n", D_00493480);
@@ -22,7 +22,7 @@ void LibInitModules(int flash)
         }
         while (!func_00115798()) {
         }
-        D_0010FBC0(0);
+        func_0010FBC0(0);
     }
     func_00114368();
     sceCdInit(0);

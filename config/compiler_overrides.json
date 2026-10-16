@@ -4780,5 +4780,10 @@
   "main/gameCamera/func_0017E3F0": "cwps2-3.0b38",
   "main/vu1model/func_00377050": "cwps2-3.0b38",
   "main/ska/func_003B2290": "cwps2-3.0b38",
-  "main/man/func_00389A50": "cwps2-3.0b38"
+  "main/man/func_00389A50": "cwps2-3.0b38",
+  "main/func_001CFAE0": "cwps2-3.0b38",
+  "main/func_001E6230": "cwps2-3.0b38",
+  "main/GuiAgentCreate/func_0028C390": "cwps2-3.0b38",
+  "main/WaterFx/func_002B4050": "cwps2-3.0b38",
+  "main/GuiAgentModify/func_00341F00": "cwps2-3.0b38"
 }

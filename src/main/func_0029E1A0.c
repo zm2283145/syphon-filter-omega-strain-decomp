@@ -6,8 +6,8 @@ extern "C" {
 extern void* D_004FFC04;
 extern unsigned char D_0051EEB0;
 extern char D_004AABF0[];
-void func_0033D310(S_0029E1A0* self);
-void func_002C82F0(void* ui);
+void GuiScreen_Update(S_0029E1A0* self);
+void FrontEnd_StartSplashThread(void* ui);
 void func_002C9AA0(void* ui);
 void* DME_GetLobby(void);
 int func_002CA710(void* ui);
@@ -29,11 +29,11 @@ void func_0029DFC0(S_0029E1A0* self);
 }
 extern "C" void func_0029E1A0(S_0029E1A0* self)
 {
-    func_0033D310(self);
+    GuiScreen_Update(self);
     if (D_0051EEB0)
         return;
     if (!self->f88) {
-        func_002C82F0(D_004FFC04);
+        FrontEnd_StartSplashThread(D_004FFC04);
         self->f88 = 2;
     }
     if (self->f88 == 2) {

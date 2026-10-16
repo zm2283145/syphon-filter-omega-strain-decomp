@@ -11,14 +11,14 @@ typedef struct {
     char x40[4];
     AcNode* x44;
 } AcOwner;
-extern void func_0013B180(AcIter*, void*);
+extern void List_Begin(AcIter*, void*);
 extern void func_0013B170(AcIter*, AcIter*);
 extern void func_0013B160(AcIter*, void*);
 extern void LosMgr_ExecuteEntry(void*);
 extern void func_0013AE00(AcOwner*, void*);
 extern void ObjectList_EraseRange(AcIter*, void*, AcIter*, AcIter*);
 extern AcNode* func_0013ADF0(void*);
-extern void func_00138DA0(AcIter*, void*, AcIter*);
+extern void List_Erase(AcIter*, void*, AcIter*);
 int LosMgr_Update(AcOwner* o)
 {
     AcIter it;
@@ -33,7 +33,7 @@ int LosMgr_Update(AcOwner* o)
     void* obj;
     AcNode* n;
     AcNode* e;
-    func_0013B180(&t1, o->list);
+    List_Begin(&t1, o->list);
     func_0013B170(&it, &t1);
     n = it.n;
     func_0013B160(&t2, o->list);
@@ -52,7 +52,7 @@ int LosMgr_Update(AcOwner* o)
         LosMgr_ExecuteEntry(obj);
         func_0013AE00(o, obj);
         pos.n = o->x44;
-        func_00138DA0(&r2, o->x3c, &pos);
+        List_Erase(&r2, o->x3c, &pos);
     }
     return 1;
 }

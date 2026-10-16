@@ -11,7 +11,7 @@ extern int sprintf(char* buf, const char* fmt, ...);
 extern void func_0036E5D0(HogFile* file);           /* ctor */
 extern void Hog_Register(HogFile* file, char* name, int hog, int b);
 extern int GuiManager_LoadGuiFile(GuiScreenList* self, HogFile* file, int existing);
-extern void func_0036E220(HogFile* file, int flags); /* dtor */
+extern void FileMan_Release(HogFile* file, int flags); /* dtor */
 
 /* Remember name as loaded, open "<name>.GUI" from the given HOG and load its widget tree. */
 int GuiManager_LoadGuiFromHog(GuiScreenList* self, int hog, const char* name, int existing)
@@ -27,6 +27,6 @@ int GuiManager_LoadGuiFromHog(GuiScreenList* self, int hog, const char* name, in
     func_0036E5D0(&file);
     Hog_Register(&file, path, hog, 0);
     root = GuiManager_LoadGuiFile(self, &file, existing);
-    func_0036E220(&file, -1);
+    FileMan_Release(&file, -1);
     return root;
 }

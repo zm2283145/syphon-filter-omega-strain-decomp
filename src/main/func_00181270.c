@@ -34,15 +34,15 @@ void func_0013B260(Scene*);
 void func_00183270(It*, Lst*);
 void func_00183260(It*, It*);
 void func_00183230(It*, Lst*);
-Xf* func_00183220(Actor*);
+Xf* Object_GetRootNode(Actor*);
 Sph* func_00183210(Shape*);
 void func_001831F0(Sph*, Sph*);
 void* Transform_GetUpdated(Xf*);
 void Sphere_Transform(Sph*, void*);
 int Sphere_Overlaps(Sph*, Sph*);
-int func_001830D0(Actor*);
-int* func_00183070(PA*, Actor**);
-int* func_00183050(PA*);
+int GameObject_IsCollisionEnabled(Actor*);
+int* InlinePtrArray_Find(PA*, Actor**);
+int* InlinePtrArray_End(PA*);
 void Bounds_SetEmpty(Bnd*);
 void func_001828E0(Bnd*, Sph*, Actor*, Xf*);
 void ColGather_GatherWrapper(Shape*, void*, void*);
@@ -94,19 +94,19 @@ void Collision_GatherScene(Gath* self, Scene* scene, Sph* sph, int a3)
             act = p;
             Shape* sh = act->GetShape();
             if (sh != 0) {
-                Xf* xf = func_00183220(act);
+                Xf* xf = Object_GetRootNode(act);
                 if (xf != 0) {
                     func_001831F0(&xs, func_00183210(sh));
                     Sphere_Transform(&xs, Transform_GetUpdated(xf));
-                    if ((unsigned char)Sphere_Overlaps(&xs, &e0) && func_001830D0(act)
-                        && func_00183070(&self->list, &act) == func_00183050(&self->list)) {
+                    if ((unsigned char)Sphere_Overlaps(&xs, &e0) && GameObject_IsCollisionEnabled(act)
+                        && InlinePtrArray_Find(&self->list, &act) == InlinePtrArray_End(&self->list)) {
                         Bounds_SetEmpty(&bnd);
                         func_001828E0(&bnd, sph, act, xf);
                         ColGather_GatherWrapper(sh, (void*)0x70000000, &bnd);
                     }
                 } else {
-                    if ((unsigned char)Sphere_Overlaps(func_00183210(sh), &e0) && func_001830D0(act)
-                        && func_00183070(&self->list, &act) == func_00183050(&self->list)) {
+                    if ((unsigned char)Sphere_Overlaps(func_00183210(sh), &e0) && GameObject_IsCollisionEnabled(act)
+                        && InlinePtrArray_Find(&self->list, &act) == InlinePtrArray_End(&self->list)) {
                         ColGather_GatherWrapper(sh, (void*)0x70000000, sph);
                     }
                 }

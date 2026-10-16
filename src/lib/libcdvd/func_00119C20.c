@@ -6,7 +6,7 @@ extern int func_00119010(int);
 extern int sceSifCallRpc(void *cd, int fno, int mode, void *send, int ssize, void *recv, int rsize, void *endf, void *endp);
 extern int SignalSema(int);
 
-int func_00119C20(void)
+int sceCdBreak(void)
 {
     int r;
     if (!func_00119010(0x1E)) return 0;

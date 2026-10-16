@@ -4,7 +4,7 @@ extern int D_00532B34;
 extern E301E0* D_00532B38;
 extern void PtrVec_PushBack_330280(T301E0* self, E301E0** e);
 #pragma opt_strength_reduction off
-void func_003301E0(T301E0* self, int level)
+void AgentData_AppendLockedParts(T301E0* self, int level)
 {
     int i;
     self->count = 0;

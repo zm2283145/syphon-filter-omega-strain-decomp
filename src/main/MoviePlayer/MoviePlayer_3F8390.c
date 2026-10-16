@@ -122,7 +122,7 @@ extern int strlen(const char* s);
 extern char* strncpy(char* d, const char* s, int n);
 extern void String_Copy(char* d, const char* s);
 extern void func_0036E310(Obj8450* o, char* path, void* p);
-extern void func_0036E220(Obj8450* o, int f);
+extern void FileMan_Release(Obj8450* o, int f);
 extern void func_00412600(void* a, Obj8450* o, int b);
 extern void Alloc_Lock(int id);
 extern int func_0010D050(void);
@@ -225,7 +225,7 @@ void func_003F8450(Sys8450* s)
     s->f188 = s->f60;
     s->f18C = s->f60;
     s->f230 = 0;
-    func_0036E220(&obj, -1);
+    FileMan_Release(&obj, -1);
 }
 #undef func_00103AC0 /* merge_units */
 #pragma pop /* merge_units */

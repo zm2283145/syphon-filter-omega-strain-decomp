@@ -13,7 +13,7 @@ typedef struct { unsigned short type; unsigned short b2; char pad4[2]; unsigned 
 typedef struct { char pad[0x90]; int f90; int f94; int f98; unsigned char b9C; char pad9D[0xD4 - 0x9D]; int fD4; } O_45D420;
 int func_0045BD00(O_45D420* o);
 void func_0045BF80(O_45D420* o);
-unsigned long long func_003698B0(void);
+unsigned long long Time_GetMilliseconds(void);
 void func_0045C540(O_45D420* o, int v);
 void func_0045C480(O_45D420* o);
 void func_0045CA20(O_45D420* o, int on);
@@ -32,7 +32,7 @@ int func_0045D420(O_45D420* o, Ev_45D420* ev)
     }
     if (o->fD4 == 1) {
     if (Shift_45D420(ev, 0x100)) {
-        if (!o->b9C && o->f94 == o->f90 && func_003698B0() - o->f98 < 100) func_0045C540(o, 1);
+        if (!o->b9C && o->f94 == o->f90 && Time_GetMilliseconds() - o->f98 < 100) func_0045C540(o, 1);
         func_0045C480(o);
         func_0045CA20(o, 0);
         return 1;

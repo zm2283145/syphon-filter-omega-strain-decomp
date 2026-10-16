@@ -2,7 +2,7 @@
 typedef struct { char pad[0x30]; float f30; } O_1540;
 typedef struct { int pad0; float cur; } M_1540;
 typedef struct { O_1540* obj; int pad4; M_1540* a; M_1540* b; } S_1540;
-extern float func_00272CC0(O_1540* o);
+extern float Game_GetDangerMag(O_1540* o);
 extern void func_003F4510(M_1540* m, float lo, float hi, unsigned char fl);
 extern void func_003F44E0(M_1540* m, float v);
 extern int D_0048B0B0;
@@ -26,7 +26,7 @@ void func_00261540(S_1540* s, int sel, float scale)
     } else {
         m = s->a;
     }
-    f = scale * func_00272CC0(s->obj);
+    f = scale * Game_GetDangerMag(s->obj);
     f = fmin_(f, 1.0f);
     if (!sel) {
         s->obj->f30 = 1.0f;

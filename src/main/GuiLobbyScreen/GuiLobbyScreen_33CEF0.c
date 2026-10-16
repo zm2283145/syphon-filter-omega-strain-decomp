@@ -15,7 +15,7 @@
 int func_0033C320(int, int);                                 
 extern int D_00532FD0;
 
-int func_0033CEF0(int arg0, int arg1) {
+int GuiScreen_HandleInput(int arg0, int arg1) {
     int var_v0;
 
     if (F_(arg0, 0x78, unsigned char) != 0) {
@@ -53,7 +53,7 @@ extern int func_00449770(void *p);
 extern void FrontEnd_ClosePopup(void *ui, int id);
 extern int func_00441CA0(O *o, void *snd, unsigned short msg, int param, int extra);
 
-int func_0033CF90(O *o, void *snd, unsigned short msg, int param, int extra)
+int GuiScreen_HandleEvent(O *o, void *snd, unsigned short msg, int param, int extra)
 {
     if (msg == 0x2000) {
         func_0033D0C0(o, snd, msg, param, extra);

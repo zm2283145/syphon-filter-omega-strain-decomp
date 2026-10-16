@@ -6,11 +6,11 @@
 
 #include "types.h"
 
-extern int func_001396D0(int, int);
+extern int PtrVec_Reserve(int, int);
 extern int func_0025DBD0(int, int);
 
 int func_0025DB90(int a0, int a1) {
-    return func_001396D0(a0, a1);
+    return PtrVec_Reserve(a0, a1);
 }
 
 Rel* func_0025DBA0(Rel* r) {

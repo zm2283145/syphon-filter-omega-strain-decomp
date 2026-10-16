@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-void func_0018A0A0(int* pair) {
+void ActionFlags_Clear(int* pair) {
     pair[0] = 0;
     pair[1] = 0;
 }

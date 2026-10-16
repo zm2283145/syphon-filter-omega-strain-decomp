@@ -42,7 +42,7 @@ struct Blk6B {
 typedef struct { char name[0xCC]; unsigned char fCC; char pCD[0x3B]; unsigned char f108; char p109[3]; int f10C; char p110[0xC]; Blk6B *f11C; char name2[0x1C]; Blk6B *f13C; } Ent6B;
 typedef struct { int f0; unsigned short f4; } Res6B;
 typedef struct { char p0[4]; int *f4; char p8[0xC]; Ent6B *f14; } Wpn6B;
-extern "C" Res6B *func_00147880(Wpn6B *, int);
+extern "C" Res6B *WeaponDb_GetShellRecord(Wpn6B *, int);
 
 static inline int Cmp6B(char *a, char *b) {
     int ca, cb;
@@ -88,7 +88,7 @@ static inline void QCopy6B(void *dd, void *ss, int nn) {
 #pragma opt_loop_invariants off
 #pragma opt_propagation off
 #pragma opt_dead_assignments off
-extern "C" int func_00146B80(Wpn6B *w, char *name, void *src) {
+extern "C" int WeaponDb_CloneModel(Wpn6B *w, char *name, void *src) {
     int cnt = 0;
     int n = w->f4[1];
     int i = 0;
@@ -102,7 +102,7 @@ extern "C" int func_00146B80(Wpn6B *w, char *name, void *src) {
             e->f13C->f40A = i;
             e->f13C->f40D = e->fCC;
             e->f13C->f40E = e->f108;
-            r = func_00147880(w, e->f10C);
+            r = WeaponDb_GetShellRecord(w, e->f10C);
             if (r != 0) {
                 e->f13C->f404 = r->f0;
                 e->f13C->f408 = r->f4;
@@ -131,18 +131,18 @@ typedef struct { char pad[0x40A]; short f40A; char p40C[0xB]; signed char f417; 
 typedef struct { char p0[0x11C]; BlkV *f11C; char p120[0x18]; unsigned char f138; char p139[3]; BlkV *f13C; } Ent;
 typedef struct { char p0[0x14]; Ent *f14; } Wpn;
 extern void func_0038CD90(BlkV* b, int x);
-extern void func_001468E0(Wpn* w, BlkV* name, BlkV* src);
-extern void func_00146460(Wpn* w, BlkV* b);
-void func_00146FC0(Wpn* w, BlkV* b, int x)
+extern void WeaponDb_PropagateModel(Wpn* w, BlkV* name, BlkV* src);
+extern void WeaponDb_FreeModel(Wpn* w, BlkV* b);
+void WeaponDb_OnModelLoaded(Wpn* w, BlkV* b, int x)
 {
     short idx = b->f40A;
     unsigned char kind = b->f419;
     if (idx == -1) {
         if (b->f417 == -1) {
             func_0038CD90(b, x);
-            func_001468E0(w, b, b);
+            WeaponDb_PropagateModel(w, b, b);
         } else {
-            func_00146460(w, b);
+            WeaponDb_FreeModel(w, b);
         }
         return;
     }
@@ -152,9 +152,9 @@ void func_00146FC0(Wpn* w, BlkV* b, int x)
             if (e->f13C) {
                 if (e->f13C->f417 == -1) {
                     func_0038CD90(e->f13C, x);
-                    func_001468E0(w, b, b);
+                    WeaponDb_PropagateModel(w, b, b);
                 } else {
-                    func_00146460(w, e->f13C);
+                    WeaponDb_FreeModel(w, e->f13C);
                     e->f13C = 0;
                 }
             }
@@ -162,9 +162,9 @@ void func_00146FC0(Wpn* w, BlkV* b, int x)
             if (e->f11C && e->f138) {
                 if (e->f11C->f417 == -1) {
                     func_0038CD90(e->f11C, x);
-                    func_001468E0(w, b, b);
+                    WeaponDb_PropagateModel(w, b, b);
                 } else {
-                    func_00146460(w, e->f11C);
+                    WeaponDb_FreeModel(w, e->f11C);
                     e->f11C = 0;
                 }
             }

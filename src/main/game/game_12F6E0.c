@@ -29,7 +29,7 @@ extern int Global_ResetLevel(void);
 extern void Global_ResetStats(void);
 extern int Script_ClearSchedules_3DFB20(void);
 extern void func_0013A290(GameTimerService*);
-extern int func_00247320(int);
+extern int PlayerInput_ClosePickupMenu(int);
 extern int func_002570C0(void);
 extern int func_0025A120(void);
 extern void func_002795A0(int);
@@ -45,7 +45,7 @@ int Global_ResetLevel(void) {
     GameTimerService* svc;
     int agent;
 
-    func_00247320((int)(D_004FFC0C + 0x50));
+    PlayerInput_ClosePickupMenu((int)(D_004FFC0C + 0x50));
     func_002570C0();
     func_0025A120();
     agent = Agent_GetSelected((int)D_004FFB50, -1);

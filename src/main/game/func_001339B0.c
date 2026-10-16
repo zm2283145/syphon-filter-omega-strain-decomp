@@ -15,7 +15,7 @@ typedef struct {
     float q1A8;
     float q1AC;
 } F6Fog;
-void func_001339B0(F6Fog* r)
+void Fog_ComputeTerms(F6Fog* r)
 {
     float a = 255.0f * (1.0f - r->fogNear);
     float b = 255.0f * (1.0f - r->fogFar);

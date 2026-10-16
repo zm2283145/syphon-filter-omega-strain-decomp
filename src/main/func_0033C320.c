@@ -10,7 +10,7 @@ extern G33* D_004FFC04;
 extern char D_004B99D8[];
 extern char* func_0033CE30(O33*, int, char*, char*, int, int);
 extern int FrontEnd_OpenPopup(G33*, int, char*, char*, int, int);
-extern void func_002C82F0(G33*);
+extern void FrontEnd_StartSplashThread(G33*);
 extern void func_002C81D0(G33*);
 extern void FrontEnd_ClosePopup(G33*, int);
 extern int Gui_GetScreenList(void);
@@ -39,7 +39,7 @@ extern "C" int func_0033C320(O33* self, int type) {
     if (c != -1) {
         G33* g = D_004FFC04;
         h = FrontEnd_OpenPopup(g, 0, D_004B99D8, func_0033CE30(self, (unsigned char)c, 0, 0, 0, 0), 0, 0);
-        func_002C82F0(D_004FFC04);
+        FrontEnd_StartSplashThread(D_004FFC04);
     }
     w = 0;
     switch (type) {

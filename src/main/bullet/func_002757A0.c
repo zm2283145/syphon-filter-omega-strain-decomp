@@ -114,12 +114,12 @@ extern char D_005381F0[];
 extern long long D_005381F8;
 extern V4 D_004A90A0[];
 void func_003A1AD0(int h, int k, void* p);
-void func_003820E0(void* m, int idx);
+void Renderer_BindTexture(void* m, int idx);
 void func_0025CD10(void* s);
 void func_0025CA40(void* s);
 void Vec4_Copy(V4* d, const V4* s);
-void func_0025C9D0(V4* d, const V4* s);
-float func_0025F220(void);
+void GuiBatch_AddVertexColor(V4* d, const V4* s);
+float GuiBatch_AddVertexUV(void);
 V4* func_00132000(V4* o, float x, float y, float z, float w);
 void func_00371200(void* s);
 }
@@ -143,8 +143,8 @@ struct V4c_002757A0 {
 static inline V4* UV_002757A0(const V4& uv)
 {
     V4 tmp;
-    float u = uv.x + func_0025F220();
-    return func_00132000(&tmp, u, uv.y + func_0025F220(), uv.z, uv.w);
+    float u = uv.x + GuiBatch_AddVertexUV();
+    return func_00132000(&tmp, u, uv.y + GuiBatch_AddVertexUV(), uv.z, uv.w);
 }
 static inline void Emit_002757A0(const V4& pos, const V4c_002757A0& col, const V4& uv)
 {
@@ -152,7 +152,7 @@ static inline void Emit_002757A0(const V4& pos, const V4c_002757A0& col, const V
     func_0025CA40(D_005381F0);
     e = &RS_002757A0->ents[D_00539210.f10];
     Vec4_Copy(&e->pos[D_00539224 - 1], &pos);
-    func_0025C9D0(&e->c30[D_00539224 - 1], (V4*)&col);
+    GuiBatch_AddVertexColor(&e->c30[D_00539224 - 1], (V4*)&col);
     Vec4_Copy(&e->c34[D_00539224 - 1], UV_002757A0(uv));
     D_005381F8 = 6LL << 32;
 }
@@ -202,7 +202,7 @@ extern "C" void func_002757A0(Bullet_002757A0* b)
         Ent_002757A0* e;
         int saved = D_005392D0;
         D_005392D0 = 5;
-        func_003820E0(D_00539248, b->tex);
+        Renderer_BindTexture(D_00539248, b->tex);
         D_00539238 = Prim_002757A0();
         D_0053923C = Mode_002757A0();
         D_00539228 = 0;

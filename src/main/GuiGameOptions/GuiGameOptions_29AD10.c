@@ -17,12 +17,12 @@ extern void* D_004FFC04;
 extern int func_0045A600(C_AD10*, C_AD10*);
 extern void func_0045A3A0(C_AD10*, int);
 extern void GuiSaveAgentWidget_HandleEvent(G_AD10*);
-extern void func_002C9860(void*, int);
-extern void func_002C9510(void*);
+extern void FrontEnd_SuspendGui(void*, int);
+extern void FrontEnd_ResumeGui(void*);
 extern void* Gui_GetScreenStack(void);
 extern void func_0041E0F0(G_AD10*, void*, int, int, int);
 
-void func_0029AD10(G_AD10* g, int apply) {
+void GuiGameOptions_Close(G_AD10* g, int apply) {
     int diff;
     int m;
     C_AD10* c;
@@ -48,9 +48,9 @@ void func_0029AD10(G_AD10* g, int apply) {
             GuiSaveAgentWidget_HandleEvent(g);
         } else {
             m = diff & 0x800;
-            if (m) func_002C9860(D_004FFC04, 1);
+            if (m) FrontEnd_SuspendGui(D_004FFC04, 1);
             func_0045A3A0(D_004FFD2C, diff);
-            if (m) func_002C9510(D_004FFC04);
+            if (m) FrontEnd_ResumeGui(D_004FFC04);
         }
     } else {
         func_0041E0F0(g, Gui_GetScreenStack(), 0x10, 4, 0);
@@ -73,7 +73,7 @@ struct Self_29AE60 { char pad[0xA4]; int fA4; Wid_29AE60* fA8; char padAC[0x430 
 extern "C" {
 extern unsigned char D_005721C8;
 Plr_29AE60* PlayerSlots_Get(int i);
-void func_00299800(Self_29AE60* self);
+void GuiGameOptions_ShowMenu(Self_29AE60* self);
 int func_0029BDB0(void);
 void func_002C9270(char* buf, Plr_29AE60* p, int idx, int x);
 #if 0 /* merge_units */
@@ -96,7 +96,7 @@ extern "C" void func_0029AE60(Self_29AE60* self)
     int sel;
     if (self->menu == 0) return;
     if (func_0029BDB0() < 2) {
-        func_00299800(self);
+        GuiGameOptions_ShowMenu(self);
         if (self->fA8 != 0) {
             self->fA8->flags &= ~4;
         }
@@ -154,46 +154,46 @@ extern char D_004AA780[];
 extern char D_004FFB50[];
 extern char D_004DADF0[];
 void func_0041EBF0(G_B070*);
-void func_0026BD60(void);
+void PadRumble_Stop(void);
 int func_003EBA50(void);
 void func_003EB750(int);
 void func_0036B250(int);
 void SoundRequest_Ctor(SoundRequest* req, int kind, void* name, int a, int b);
 void SoundEvent_Ctor(SoundEventMsg* msg, void* action, int flags);
 void Event_Send(void* msg, void* target, int flags);
-void func_0036E220(void* part, int flags);
+void FileMan_Release(void* part, int flags);
 void cMessage_dtor(void* msg, int flags);
 
-void func_0029B070(G_B070* self) {
+void GuiGameOptions_Sleep(G_B070* self) {
     SoundEventMsg evm;
     SoundEventMsg evm2;
     SoundRequest req;
     SoundRequest req2;
     func_0041EBF0(self);
-    func_0026BD60();
+    PadRumble_Stop();
     SoundRequest_Ctor(&req, 4, D_0048B908, 0, 0);
     SoundEvent_Ctor(&evm, &req, 0);
-    func_0036E220(req.partB, -1);
-    func_0036E220(req.partA, -1);
+    FileMan_Release(req.partB, -1);
+    FileMan_Release(req.partA, -1);
     evm.flag = 1;
     Event_Send(&evm, D_004FFB50, 1);
     if (!self->b400) {
         SoundRequest_Ctor(&req2, 4, D_004AA780, 0, 0);
         SoundEvent_Ctor(&evm2, &req2, 0);
-        func_0036E220(req2.partB, -1);
-        func_0036E220(req2.partA, -1);
+        FileMan_Release(req2.partB, -1);
+        FileMan_Release(req2.partA, -1);
         evm2.flag = 1;
         Event_Send(&evm2, D_004FFB50, 1);
         func_003EB750(func_003EBA50());
         func_0036B250(1);
         evm2.vtbl = D_004DADF0;
-        func_0036E220(evm2.partB, -1);
-        func_0036E220(evm2.partA, -1);
+        FileMan_Release(evm2.partB, -1);
+        FileMan_Release(evm2.partA, -1);
         cMessage_dtor(&evm2, 0);
     }
     evm.vtbl = D_004DADF0;
-    func_0036E220(evm.partB, -1);
-    func_0036E220(evm.partA, -1);
+    FileMan_Release(evm.partB, -1);
+    FileMan_Release(evm.partA, -1);
     cMessage_dtor(&evm, 0);
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -215,7 +215,7 @@ extern C29B* D_004FFD2C;
 #endif /* merge_units */
 #define D_004FFD2C (*(C29B **)&D_004FFD2C) /* merge_units */
 
-extern void func_0029AA50(G29B*, int);
+extern void GuiGameOptions_Refresh(G29B*, int);
 #if 0 /* merge_units */
 extern V29B* Gui_GetScreenStack(void);
 #endif /* merge_units */
@@ -228,7 +228,7 @@ extern void func_0036B250(int);
 extern void func_0036B3B0(int, int, int);
 }
 static inline int ok29B(void) { return D_005721C8 ? D_005721C0 : 1; }
-extern "C" void func_0029B1E0(G29B* g) {
+extern "C" void GuiGameOptions_Wake(G29B* g) {
     C29B* c;
     func_0041EFA0(g);
     c = D_004FFD2C;
@@ -245,7 +245,7 @@ extern "C" void func_0029B1E0(G29B* g) {
     g->cfg.b19 = c->b19;
     g->cfg.f1c = c->f1c;
     g->cfg.f20 = c->f20;
-    func_0029AA50(g, -1);
+    GuiGameOptions_Refresh(g, -1);
     g->b400 = String_CompareNoCase(Gui_GetScreenStack()->v19(), "GuiGameCanvas") == 0;
     if (g->b400) {
         if (g->f42c) g->f42c->flags &= ~4;

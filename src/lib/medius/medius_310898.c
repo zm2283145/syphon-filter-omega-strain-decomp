@@ -16,7 +16,7 @@ typedef struct {
 } Xml0898;
 extern char D_004B0DA0[];
 extern char *func_0030F0E8(char *buf, int len);
-extern int func_00129C80(const char *a, const char *b);
+extern int strstr(const char *a, const char *b);
 extern char *strncpy(char *d, const char *s, unsigned int n);
 void func_00310898(const char *s, int len, Xml0898 *p)
 {
@@ -26,7 +26,7 @@ void func_00310898(const char *s, int len, Xml0898 *p)
     if (len == 0) return;
     if (isspace(*s)) return;
     name = func_0030F0E8(p->buf, p->bufLen);
-    if (func_00129C80(D_004B0DA0, p->tag) == 0) return;
+    if (strstr(D_004B0DA0, p->tag) == 0) return;
     strncpy(t->names[t->count], name, 0x100);
     strncpy(t->values[t->count], s, len);
     t->values[t->count][len] = 0;

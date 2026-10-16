@@ -41,7 +41,7 @@ Plc* Root_GetWorldPlacement(void* r);
 void Transform_SetOrientation(Plc* d, Plc* s);
 void Placement_Invert(Plc* p);
 void func_00132840(V4* q);
-void func_00132810(V4* a, V4* b, V4* c);
+void Quat_Multiply(V4* a, V4* b, V4* c);
 void func_00132800(V4* d, V4* s);
 int func_001913E0(Nd* n);
 void* func_001913D0(Nd* n);
@@ -67,7 +67,7 @@ extern "C" void func_003626B0(Nd* self, Plc* src)
         ip = &inv;
         p = &self->p;
         func_00132840(&m);
-        func_00132810(&m, &ip->rot, &p->rot);
+        Quat_Multiply(&m, &ip->rot, &p->rot);
         func_00132800(&r, &m);
         { void* xx = &r; /* dead on purpose: retail keeps this addiu */ }
         QC(&p->rot, &r);

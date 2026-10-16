@@ -20,7 +20,7 @@ extern char D_004A4550[];
 extern unsigned char D_005721C8;
 void func_002EC2A8(int a);
 void** func_002151B0(void* v, int i);
-void func_0036E220(void* p, int flag);
+void FileMan_Release(void* p, int flag);
 void func_001736C0(void* p, int flag);
 void func_0013A040(void* p, int flag);
 void func_00145F10(void* p, int flag);
@@ -48,7 +48,7 @@ struct cElevatorGOBJ {
 };
 #pragma opt_strength_reduction off
 static inline void Free_215F50(void* p, int line) { AllocGuard g; Mem_Free(0, p, D_004A4550, line); }
-static inline void SndDtor(ElevSnd* s) { if (s) { func_0036E220(s->b, -1); func_0036E220(s->a, -1); } }
+static inline void SndDtor(ElevSnd* s) { if (s) { FileMan_Release(s->b, -1); FileMan_Release(s->a, -1); } }
 extern "C" cElevatorGOBJ* cElevatorGOBJ_dtor(cElevatorGOBJ* self, short flag)
 {
     if (self) {

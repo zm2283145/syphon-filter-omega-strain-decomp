@@ -5,7 +5,7 @@
 int Event_Send(char **, char *, int);                         
 int SoundEvent_CtorFromPreset(char **, char * , char * );  
 int cMessage_dtor(char **, int);                           
-int func_0036E220(char *, int);                            
+int FileMan_Release(char *, int);                            
 extern char D_004DAE30;
 extern char D_004FFB50;
 extern char func_001C6700;
@@ -26,8 +26,8 @@ int Script_cSoundGOBJ_Trigger(void **arg0) {
         }
         Event_Send(sl.f10, &D_004FFB50, 1);
         sl.f10[0] = &D_004DAE30;
-        func_0036E220(sl.f124, -1);
-        func_0036E220(sl.f88, -1);
+        FileMan_Release(sl.f124, -1);
+        FileMan_Release(sl.f88, -1);
         cMessage_dtor(sl.f10, 0);
     }
     return 0;

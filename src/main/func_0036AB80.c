@@ -24,12 +24,12 @@ typedef struct {
 extern int D_00539248;
 extern void func_0036E5D0(FileMan* f);
 extern void Hog_Register(FileMan* f, char* name, int a, int b);
-extern void func_0036DEF0(FileMan* f);
+extern void FileMan_FindMember(FileMan* f);
 extern int FileMan_GetSize(FileMan* f);
-extern int func_0036D990(FileMan* f, unsigned char** out, int size);
+extern int FileMan_LoadMemberSync(FileMan* f, unsigned char** out, int size);
 extern void func_0036DEC0(FileMan* f);
-extern void func_0036E220(FileMan* f, int flag);
-extern int func_00380A40(int mgr, FileMan* f);
+extern void FileMan_Release(FileMan* f, int flag);
+extern int TexMan_FindOrLoad(int mgr, FileMan* f);
 extern void* memcpy(void* d, const void* s, unsigned int n);
 extern long long SoftFloat_FloatToDouble(float f);
 extern long long func_0011C268(long long a, long long b);
@@ -55,7 +55,7 @@ static inline void Copy(PStr* buf, char* t, const char* s)
 }
 
 static inline unsigned char Rd(unsigned char** pp) { return *(*pp)++; }
-void func_0036AB80(ObjAB80* obj, int arg1, char* name)
+void Font_LoadFnt(ObjAB80* obj, int arg1, char* name)
 {
     FileMan fm;
     PStr s;
@@ -73,9 +73,9 @@ void func_0036AB80(ObjAB80* obj, int arg1, char* name)
     s.len = 0;
     Copy(&s, t, name);
     Hog_Register(&fm, (char*)&s + 1, arg1, 0);
-    func_0036DEF0(&fm);
+    FileMan_FindMember(&fm);
     data = 0;
-    func_0036D990(&fm, &data, FileMan_GetSize(&fm));
+    FileMan_LoadMemberSync(&fm, &data, FileMan_GetSize(&fm));
     func_0036DEC0(&fm);
     p = data;
     ver = p[0];
@@ -97,7 +97,7 @@ void func_0036AB80(ObjAB80* obj, int arg1, char* name)
         obj->f9C = 0x8E;
     }
     if (obj->f9C > 0xB4) {
-        func_0036E220(&fm, -1);
+        FileMan_Release(&fm, -1);
         return;
     }
     memcpy(obj->fA0, p, obj->f9C << 4);
@@ -117,9 +117,9 @@ void func_0036AB80(ObjAB80* obj, int arg1, char* name)
     }
     func_0036E5D0(&fm2);
     Hog_Register(&fm2, (char*)&s + 1, arg1, 0);
-    obj->f0 = func_00380A40(D_00539248, &fm2);
-    func_0036E220(&fm2, -1);
-    func_0036E220(&fm, -1);
+    obj->f0 = TexMan_FindOrLoad(D_00539248, &fm2);
+    FileMan_Release(&fm2, -1);
+    FileMan_Release(&fm, -1);
 }
 
 

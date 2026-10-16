@@ -29,7 +29,7 @@ extern void func_002C9270(char*, char*, int, int);
 extern int func_0012F2C0(void*);
 extern char* func_0012F2B0(char*);
 extern char* func_0012F2A0(char*);
-extern void func_00242FA0(int, char*, char*, int, int, int, float, float);
+extern void Hud_ShowCallout(int, char*, char*, int, int, int, float, float);
 extern float func_0012F290(char*);
 extern void func_0012F280(char*, float);
 
@@ -53,7 +53,7 @@ void func_0012F0D0(void)
             if (p && m.id == func_0012F2E0(p)) {
                 func_0012F2D0(buf);
                 func_002C9270(buf, p, m.id, 1);
-                func_00242FA0(func_0012F2C0(D_004FFB50), func_0012F2B0(p), func_0012F2A0(buf), 0, 0, 0, -1.0f, 0.0f);
+                Hud_ShowCallout(func_0012F2C0(D_004FFB50), func_0012F2B0(p), func_0012F2A0(buf), 0, 0, 0, -1.0f, 0.0f);
                 break;
             }
         }

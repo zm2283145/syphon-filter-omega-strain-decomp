@@ -3,7 +3,7 @@ typedef struct { char pad[0xB8]; char sB8[0x40]; int aF8; char padFC[0x18]; int 
 extern int String_CStr(void* p);
 extern void func_0033C9E0(S361730* o, int a, int b);
 extern void func_0033C7C0(S361730* o, int a, int b);
-extern int func_0033CF90(S361730* o);
+extern int GuiScreen_HandleEvent(S361730* o);
 int func_00361730(S361730* o, int id, unsigned short type)
 {
     if (type == 2) {
@@ -16,5 +16,5 @@ int func_00361730(S361730* o, int id, unsigned short type)
             return 1;
         }
     }
-    return func_0033CF90(o);
+    return GuiScreen_HandleEvent(o);
 }

@@ -12,7 +12,7 @@ extern void* GObj_IdentityB(void* obj);
 extern int Global_ClearCallout(char* obj);
 extern int Global_ClearCallout_2(CalloutOwner* obj);
 extern CalloutOwner* NpcScript_GetReceiver(void* obj);
-extern int func_00242B40(char* a0, char* key, int a2, int a3, int a4);
+extern int Hud_ClearCallout(char* a0, char* key, int a2, int a3, int a4);
 
 int Script_ClearCallout_2(ScriptArg* args) {
     Global_ClearCallout_2(NpcScript_GetReceiver(args[0].p));
@@ -20,7 +20,7 @@ int Script_ClearCallout_2(ScriptArg* args) {
 }
 
 int Global_ClearCallout_2(CalloutOwner* obj) {
-    return func_00242B40(D_004FFC2C, obj->callout + 12, 0, 0, 1);
+    return Hud_ClearCallout(D_004FFC2C, obj->callout + 12, 0, 0, 1);
 }
 
 int Script_ClearCallout(ScriptArg* args) {
@@ -29,5 +29,5 @@ int Script_ClearCallout(ScriptArg* args) {
 }
 
 int Global_ClearCallout(char* obj) {
-    return func_00242B40(D_004FFC2C, obj + 12, 0, 0, 1);
+    return Hud_ClearCallout(D_004FFC2C, obj + 12, 0, 0, 1);
 }

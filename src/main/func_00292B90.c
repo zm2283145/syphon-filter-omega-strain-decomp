@@ -50,7 +50,7 @@ static inline void QCopy(void* d0, void* s0, int n0) { int n = n0; void* d = d0;
         .set reorder
     }
 }
-extern "C" int func_00292B90(void* self, Obj_00292B90* o, int msg)
+extern "C" int GuiAgentLoad_HandleEvent(void* self, Obj_00292B90* o, int msg)
 {
     if ((msg & 0xFFFF) == 2) {
         Obj_00292B90* p;

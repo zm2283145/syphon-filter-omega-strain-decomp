@@ -67,7 +67,7 @@ void String_Copy(char* d, const char* s);
 }
 #pragma push
 #pragma opt_unroll_loops off
-extern "C" Man* func_00392380(Man* self)
+extern "C" Man* ManModel_ClearAttachPoints(Man* self)
 {
     self->box.mn.x = 3.4028235e38f; self->box.mn.y = 3.4028235e38f; self->box.mn.z = 3.4028235e38f; self->box.mn.w = 1.0f;
     self->box.mx.x = -3.4028235e38f; self->box.mx.y = -3.4028235e38f; self->box.mx.z = -3.4028235e38f; self->box.mx.w = 1.0f;

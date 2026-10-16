@@ -123,7 +123,7 @@ extern float D_0048AC44;
 extern char g_TargetVisMgr;
 WNode* WorldObjList_Get(void* l);
 int func_00159570(void* p);
-Cam** func_00159560(void* p);
+Cam** List_Front(void* p);
 Item* WeaponInv_GetHeldItem(Inv* inv);
 int TeamTable_AreEnemies(Tgt* a, Tgt* b);
 void Combat_HitDirection(Mtx3* m, V4* v, V4* out);
@@ -196,7 +196,7 @@ Tgt* Targeting_LockPick(Tgt* self, Tgt* cur, RList* recent)
     V4 off(0.0f, 0.0f, 5.0f, 1.0f);
     Mtx sm = self->GetMtx();
     V4 aim = Xform(sm, off);
-    Cam* cam = func_00159570(&D_004FFC14) ? *func_00159560(&D_004FFC14) : 0;
+    Cam* cam = func_00159570(&D_004FFC14) ? *List_Front(&D_004FFC14) : 0;
     V4 aim2;
     Mtx3 cm = cam->GetMtx();
     aim2 = aim;

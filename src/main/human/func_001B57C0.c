@@ -72,7 +72,7 @@ extern char D_004F12D0[];
 extern char D_004FFB50[];
 extern unsigned char D_005721C8;
 void Mem_Free(int, void*, char*, int);
-void func_00144C70(void*, int);
+void WeaponInv_Dtor(void*, int);
 void func_003CCF30(Npc*);
 void Actor_ShockReaction(Npc*, unsigned char, int, float);
 int func_002D2210(Net*);
@@ -87,9 +87,9 @@ void func_00436BA0(int*, int);
 void func_003FB720(Npc*);
 void Flashlight_Destroy(void*, int);
 void func_001BE780(void*, int);
-void func_0020EBA0(Msg*, char*, Npc*);
+void SoundStopMsg_Ctor(Msg*, char*, Npc*);
 void Event_Send(Msg*, char*, int);
-void func_0036E220(void*, int);
+void FileMan_Release(void*, int);
 void cMessage_dtor(Msg*, int);
 void func_001A02C0(Npc*);
 void cCheckpoint_dtor(void*, int);
@@ -119,12 +119,12 @@ static inline void Unreg(int key)
 static inline void SendDeath(Npc* a)
 {
     Msg m;
-    func_0020EBA0(&m, D_004F12D0, a);
+    SoundStopMsg_Ctor(&m, D_004F12D0, a);
     m.b20 = 1;
     Event_Send(&m, D_004FFB50, 1);
     m.vt = D_004DADF0;
-    func_0036E220(m.sub114, -1);
-    func_0036E220(m.sub78, -1);
+    FileMan_Release(m.sub114, -1);
+    FileMan_Release(m.sub78, -1);
     cMessage_dtor(&m, 0);
 }
 static inline bool IsOn(Npc* a)
@@ -134,7 +134,7 @@ static inline bool IsOn(Npc* a)
     return on;
 }
 
-extern "C" Npc* func_001B57C0(Npc* a, short flag)
+extern "C" Npc* Npc_Dtor(Npc* a, short flag)
 {
     int loc;
     if (a) {
@@ -153,7 +153,7 @@ extern "C" Npc* func_001B57C0(Npc* a, short flag)
         {
             void* p = a->p3524;
             AllocGuard g;
-            func_00144C70(p, -1);
+            WeaponInv_Dtor(p, -1);
             Mem_Free(0, p, D_0049D8D0, 0x3E9);
         }
         if (a->b31FC) {

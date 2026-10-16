@@ -20,7 +20,7 @@ typedef struct {
 extern "C" {
 extern char D_004BC2B8[], D_004BC300[];
 extern char func_003809E0[];
-int func_0036DEF0(int* f);
+int FileMan_FindMember(int* f);
 unsigned int FileMan_GetSize(int* f);
 int func_0036D880(int* f);
 void* Tdx_Read(Obj_37FEA0* o, int* f, int* flags);
@@ -37,13 +37,13 @@ void Tex_BuildGsRegisters(void* t, int a, void* data, int flags);
 
 static inline void Erase(It_37FEA0* out, List_37FEA0* l, It_37FEA0* b) { It_37FEA0 result; It_37FEA0 value; value = *b; func_00383560(&result, l, &value); *out = result; }
 
-extern "C" int func_0037FEA0(Obj_37FEA0* o, int* file, int arg2)
+extern "C" int TexMan_LoadNewTexture(Obj_37FEA0* o, int* file, int arg2)
 {
     int flags;
     void* data;
     int idx;
     void* t;
-    if ((unsigned char)func_0036DEF0(file)) {
+    if ((unsigned char)FileMan_FindMember(file)) {
         return -1;
     }
     if (FileMan_GetSize(file) > 0x100040) {

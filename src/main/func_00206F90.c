@@ -10,7 +10,7 @@ extern void* func_0018A700(void*, void*);
 extern void MotionSelNode_Ctor(void*, void*, void*, void*);
 extern void* func_002070F0(void*, void*);
 extern void MotionRegistry_Register(void*, void*, void*);
-extern void func_00200550(void*, int);
+extern void MotionNodeWrapper_Dtor(void*, int);
 extern void func_00138350(void*, int);
 /* Builds the "blend" selector node over the graph made by func_00207340 and registers it. */
 #pragma optimization_level 1
@@ -29,7 +29,7 @@ int func_00206F90(void* p0, void* p1, void* p2, void* p3, void* p4, void* p5, vo
     func_002072B0(&vE0, &vF0, p2);
     MotionSelNode_Ctor(&vC8, &v70, p1, func_0018A700(&vD8, p7));
     MotionRegistry_Register(p1, func_002070F0(&v50, &vE0), &vC8);
-    func_00200550(&vC8, -1);
+    MotionNodeWrapper_Dtor(&vC8, -1);
     func_00138350(&vE0, -1);
     func_00138350(&vF0, -1);
     func_001F12D0(&vB8, "blend");

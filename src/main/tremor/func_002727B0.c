@@ -5,7 +5,7 @@ extern "C" {
 int Alloc_Lock(int);
 int Alloc_Unlock(int);
 void* Mem_Alloc(int, int, char*, int);
-int func_002728F0(void*, void*);
+int TremorList_Push(void*, void*);
 extern unsigned char D_00533880;
 extern int D_00533888;
 extern char D_004A8EF0[];
@@ -44,5 +44,5 @@ extern "C" void VisionFx_RequestFlash(void* list, V4* col, float a, float b, flo
 { int tmp[2]; const int* p; if (o) p = &o->id; else { tmp[1] = -1; p = &tmp[1]; } f->f34 = *p; }
     }
     q = f;
-    func_002728F0(list, &q);
+    TremorList_Push(list, &q);
 }

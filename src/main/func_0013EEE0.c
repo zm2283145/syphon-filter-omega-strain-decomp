@@ -9,7 +9,7 @@ typedef struct { char* p; } DbIt;
 extern "C" {
 extern void func_0013F800(DbMap* m, void* cmp, void* alloc);
 extern void func_0013F180(DbPair* p, float* f, DbObj** o);
-extern void func_0013F770(DbIt* out, DbMap* m, DbPair* kv);
+extern void SceneDrawMap_Insert(DbIt* out, DbMap* m, DbPair* kv);
 extern void func_0013F170(DbIt* out, DbMap* m);
 extern void func_0013F120(DbIt* out, DbMap* m);
 extern int func_0013F100(DbIt* a, DbIt* b);
@@ -45,7 +45,7 @@ extern "C" void World_DrawBuckets(DbWorld* w, int sorted)
             func_0013F180(&tmp, &f, &o);
             kv.f = tmp.f;
             kv.o = tmp.o;
-            func_0013F770(&res, &m, &kv);
+            SceneDrawMap_Insert(&res, &m, &kv);
         }
         func_0013F170(&it, &m);
         func_0013F120(&e, &m);

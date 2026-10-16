@@ -138,7 +138,7 @@ float Model_GetFirstFloat(void* m);
 V4_L* AnimRate_Init(V4_L* p, float f);
 V4_L* Vec4_Copy_18A350(V4_L* d, V4_L* s);
 void AnimEvent_Construct(Ev_L* e);
-signed char func_0018A2F0(Sel_L* s);
+signed char MotionRequest_GetMode(Sel_L* s);
 void* func_0018A2E0(Sel_L* s);
 float func_0018A2D0(Sel_L* s);
 float func_0018A2C0(Sel_L* s);
@@ -271,7 +271,7 @@ static inline void Install_L(Act_L* a, Sel_L* sel, Rate_L* r)
         an->b5 = 0;
         AnimEvent_Construct(&e1);
         AnimEvent_Construct(&e2);
-        AnimCtl_InstallMotion(an, (void*)out, func_0018A2F0(sel), &vec, &y, &e1, &e2, func_0018A2E0(sel), func_0018A2D0(sel), func_0018A2C0(sel));
+        AnimCtl_InstallMotion(an, (void*)out, MotionRequest_GetMode(sel), &vec, &y, &e1, &e2, func_0018A2E0(sel), func_0018A2D0(sel), func_0018A2C0(sel));
         func_0018A260(&e2, -1);
         func_0018A260(&e1, -1);
     }
@@ -839,7 +839,7 @@ Range_L* func_00192750(Range_L* r, float f0, float f1, unsigned char z);
 void Actor_SetDeathMotionOverride(MA_L* a, char* n, int f);
 unsigned char Secondary_RequestOneShot(Ob2_L* o, Name_L* n, unsigned char kind, AEv_L* p);
 void SoundPosRequest_Ctor(SMsg_L* m, void* req, V4_L* pos);
-void func_0036E220(void* p, int f);
+void FileMan_Release(void* p, int f);
 void World_PushObject(void* w, MA_L* a, int f);
 extern float D_0048A268; extern float D_0048A278;
 extern Cam_L* D_004FFBD0;
@@ -1013,8 +1013,8 @@ extern "C" void Melee_StartAttack(MA_L* a, MA_L* t, int flag)
                         m.b20 = 1;
                         Event_Send(&m, D_004FFB50, 0);
                         m.vt = D_004DAE30;
-                        func_0036E220((char*)&m + 0x114, -1);
-                        func_0036E220((char*)&m + 0x78, -1);
+                        FileMan_Release((char*)&m + 0x114, -1);
+                        FileMan_Release((char*)&m + 0x78, -1);
                         cMessage_dtor(&m, 0);
                     } else if (t == 0) {
                         V4C_L pos = a->GetPos();
@@ -1023,8 +1023,8 @@ extern "C" void Melee_StartAttack(MA_L* a, MA_L* t, int flag)
                         m.b20 = 1;
                         Event_Send(&m, D_004FFB50, 0);
                         m.vt = D_004DAE30;
-                        func_0036E220((char*)&m + 0x114, -1);
-                        func_0036E220((char*)&m + 0x78, -1);
+                        FileMan_Release((char*)&m + 0x114, -1);
+                        FileMan_Release((char*)&m + 0x78, -1);
                         cMessage_dtor(&m, 0);
                     }
                     a->b33E8 = 1;

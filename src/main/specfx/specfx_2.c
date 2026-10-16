@@ -16,7 +16,7 @@
 
 struct VC003EC130 { char vpad[4]; virtual int v0(...); };
 extern "C" {
-int func_00138DA0(...);              
+int List_Erase(...);              
 extern int D_0055C090;
 typedef struct { int f0; char p4[4]; int f8; } PS0_003EC130;
 }
@@ -37,7 +37,7 @@ extern "C" void func_003EC130(int d0, PS0_003EC130 *arg1) {
             F_(temp_s1, 0xC, signed char) = 0;
             D_0055C090 -= 1;
             sp38 = (char *)(arg1->f8);
-            func_00138DA0(&sp3C, arg1, &sp38);
+            List_Erase(&sp3C, arg1, &sp38);
         } while (arg1->f0 > 0);
     }
 }

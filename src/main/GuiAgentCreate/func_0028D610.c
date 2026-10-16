@@ -21,7 +21,7 @@ extern int strcmp(const char* a, const char* b);
 extern int sprintf(char* buf, const char* fmt, ...);
 extern int func_00404690(void* db, __int128 key);
 extern int func_00401DE0(void* db, __int128 key);
-extern void func_0028F220(S_28D610* o);
+extern void GuiAgentCreate_UpdateCount(S_28D610* o);
 extern void func_0041BEB0(W_28D610* w, char* text, int flags);
 extern void func_0041E0F0(S_28D610* o, W_28D610* w, int kind, int v, int f);
 
@@ -30,7 +30,7 @@ static inline void Slider_28D610(S_28D610* o, W_28D610* w, int kind, int v, int 
     if (w) func_0041E0F0(o, w, kind, v, f);
 }
 
-void func_0028D610(S_28D610* o, char* name)
+void GuiAgentCreate_SelectOption(S_28D610* o, char* name)
 {
     char buf[0x10];
     int i;
@@ -46,7 +46,7 @@ void func_0028D610(S_28D610* o, char* name)
             o->mode = D_0048B500[o->row][o->cur].mode;
             o->vE0 = func_00404690(D_0055DDA0, o->items->e[o->slot].a);
             o->vE4 = func_00401DE0(D_0055DDA0, o->items->e[o->slot].b);
-            func_0028F220(o);
+            GuiAgentCreate_UpdateCount(o);
             if (o->w58) o->w58->flags |= 2;
             Slider_28D610(o, o->w58, 10, (int)((100.0f / (float)(o->count - 1)) * (float)o->pos), 0);
             if (o->w5C) {

@@ -41,7 +41,7 @@ typedef struct {
 extern "C" {
 extern char D_004FFB50;
 Agent_09F0* Agent_GetSelected(void* list, int idx);
-char* func_00336170(Agent_09F0* a);
+char* AgentData_GetName(Agent_09F0* a);
 void String_CtorCStr_13B480(Str_09F0* s, const char* c);
 void func_0013D680(void* dst, Str_09F0* s);
 void String_Dtor(Str_09F0* s, short f);
@@ -68,7 +68,7 @@ extern "C" void func_003609F0(Panel_09F0* p)
 
     func_00360510(&p->s88);
     a = Agent_GetSelected(&D_004FFB50, -1);
-    String_CtorCStr_13B480(&s1, func_00336170(a));
+    String_CtorCStr_13B480(&s1, AgentData_GetName(a));
     func_0013D680(p->strB8, &s1);
     String_Dtor(&s1, 0);
     g = DME_GetLobby();

@@ -2,8 +2,8 @@
 typedef struct { char pad[0xD4]; float time; char padD8[0xB71 - 0xD8]; unsigned char flagB71; } AgentT;
 typedef struct { char pad[0x64]; int a64; char pad68[0x70 - 0x68]; void* text; void* text2; char pad78[0x89 - 0x78]; unsigned char useTimer; } S368620;
 extern AgentT* Agent_GetSelected(void* list, int idx);
-extern float func_00245890(int id);
-extern void func_00367D60(S368620* self);
+extern float Hud_GetMissionTime(int id);
+extern void GuiObjectives_FillList(S368620* self);
 extern void func_0041BEB0(void* text, char* str, int flag);
 extern void func_0041C070(void* text, void* color);
 extern void func_0041EFA0(S368620* self);
@@ -15,14 +15,14 @@ extern int D_004FFC2C;
 extern char D_00587D00[];
 extern char D_00587D10[];
 
-void func_00368760(S368620* self) {
+void GuiObjectives_Wake(S368620* self) {
     char buf[32];
     float f;
 
     func_0041EFA0(self);
     if (self->text != 0) {
         if (self->useTimer) {
-            f = func_00245890(D_004FFC2C);
+            f = Hud_GetMissionTime(D_004FFC2C);
         } else {
             f = Agent_GetSelected(D_004FFB50, -1)->time;
             asm { .set reorder } /* scheduling barrier: keeps cvt at the join, not in the b delay slot */
@@ -39,7 +39,7 @@ void func_00368760(S368620* self) {
         }
         func_0041BEB0(self->text, buf, 0);
     }
-    func_00367D60(self);
+    GuiObjectives_FillList(self);
     func_00367B20(self, 0, !self->a64);
 }
 

@@ -20,7 +20,7 @@
 #pragma cplusplus on
 
 /* Call slot 16 unless the object is active. */
-DEFINE_GOBJ_FLAG_SLOT16(func_0023E9B0)
+DEFINE_GOBJ_FLAG_SLOT16(NiEvent_PreLogic)
 #pragma pop /* merge_units */
 /* merge_units: end func_0023E9B0 */
 

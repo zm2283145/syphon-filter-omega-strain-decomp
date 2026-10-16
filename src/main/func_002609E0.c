@@ -4,7 +4,7 @@ typedef struct {
     unsigned char b30; unsigned char b31; char pad32[2];
     int f34; float v38; float v3C; float v40; float v44;
 } Track2609;
-void func_002609E0(Track2609* s, int id, int force) {
+void VisionMgr_SetPendingMode(Track2609* s, int id, int force) {
     if (s->target != id) {
         s->current = id;
         if (force) s->target = id;

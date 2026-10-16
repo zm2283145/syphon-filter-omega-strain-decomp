@@ -14,7 +14,7 @@ typedef struct Widget {
     char pad2C[0x34 - 0x2C];
     float x, y;
 } Widget;
-extern "C" void func_0013B180(ListIter* out, NodeList* list);
+extern "C" void List_Begin(ListIter* out, NodeList* list);
 extern "C" void func_0028C0B0(ListIter* out, ListIter* in);
 extern "C" void func_0028C0A0(ListIter* out, NodeList* list);
 extern "C" void func_0028C090(ListIter* out, ListIter* in);
@@ -33,7 +33,7 @@ extern "C" void func_002A5470(Widget* w, Vec2 off)
         p += off;
         SetPos(w, p);
         list = &w->children;
-        func_0013B180(&beginIt, list);
+        List_Begin(&beginIt, list);
         func_0028C0B0(&it, &beginIt);
         node = it.node;
         func_0028C0A0(&endIt, list);

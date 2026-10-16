@@ -4,7 +4,7 @@
 /*
  * Iteration over a GUI widget's child list (list object at widget +0x28)
  * through the out-of-line list iterator helpers: begin() is
- * func_0013B180 + const-iterator conversion func_0028C0B0, end() is
+ * List_Begin + const-iterator conversion func_0028C0B0, end() is
  * func_0028C0A0 + func_0028C090 and is re-evaluated every iteration.
  * Child widgets: flags (u16) at +0x14, IsA(type) at virtual slot 20,
  * renderer at +0x44 with Show()/Hide() at virtual slots 5/6.
@@ -47,7 +47,7 @@ struct ChildIter {
 };
 
 extern "C" {
-void func_0013B180(ChildIter* result, void* list);
+void List_Begin(ChildIter* result, void* list);
 void func_0028C0B0(ChildIter* result, ChildIter* it);
 void func_0028C0A0(ChildIter* result, void* list);
 void func_0028C090(ChildIter* result, ChildIter* it);
@@ -59,7 +59,7 @@ static inline ChildNode* ChildList_Begin(void* l)
 {
     ChildIter r;
     ChildIter t;
-    func_0013B180(&t, l);
+    List_Begin(&t, l);
     func_0028C0B0(&r, &t);
     return r.p;
 }

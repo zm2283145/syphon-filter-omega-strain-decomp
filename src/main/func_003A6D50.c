@@ -2,7 +2,7 @@
 
 extern char D_0053DC00[];
 extern char D_0053DC08[];
-extern int func_001183B8(int);
+extern int sceCdCallback(int);
 
 int Cd_SetCallback(int a0) {
     int v0;
@@ -11,7 +11,7 @@ int Cd_SetCallback(int a0) {
     v0 = *(int*)(char*)D_0053DC00;
     cond = v0 != 0;
     if (cond) goto L003A6D78;
-    v0 = func_001183B8(a0);
+    v0 = sceCdCallback(a0);
     goto L003A6D88;
 L003A6D78:;
     v0 = *(int*)(char*)D_0053DC08;

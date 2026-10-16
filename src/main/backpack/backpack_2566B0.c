@@ -97,8 +97,8 @@ typedef struct { int pad0; int count; A2O256** items; } A2L256;
 extern float D_004F7F70;
 extern A2L256* D_004F7F30;
 extern float D_0048AF18;
-extern void func_00254770(A2O256* o);
-void func_002568F0(float dt) {
+extern void Backpack_Destroy(A2O256* o);
+void Backpack_Tick(float dt) {
     A2L256* l;
     int i;
     float* t;
@@ -109,7 +109,7 @@ void func_002568F0(float dt) {
         if (!(*t < 0.0f)) {
             *t += dt;
             if (!(l->items[i]->t <= D_0048AF18)) {
-                func_00254770(l->items[i--]);
+                Backpack_Destroy(l->items[i--]);
             }
         }
     }
@@ -126,7 +126,7 @@ static inline void merge_flush_func_002568F0(void) {}
 struct Raw_69C0 { int p; };
 extern "C" {
 void ObjectList_EraseRange(int*, void*, char**, char**);
-Raw_69C0 func_0013B180(void*);
+Raw_69C0 List_Begin(void*);
 Raw_69C0 func_00256B20(void*);
 void func_00256B30(char**, const Raw_69C0&);
 void func_00256B10(char**, const Raw_69C0&);
@@ -141,7 +141,7 @@ extern "C" void func_002569C0(void) {
         {
             char* n;
             char* it;
-            func_00256B30(&it, func_0013B180(&D_004F7F48));
+            func_00256B30(&it, List_Begin(&D_004F7F48));
             n = it;
             while ((func_00256B10(&end, func_00256B20(&D_004F7F48)), n != end)) {
                 void* e = F_(n, 0x8, void*);

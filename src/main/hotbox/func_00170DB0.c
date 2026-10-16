@@ -7,7 +7,7 @@ extern "C" {
 extern char D_004EE688[];
 void ActiveList_EraseMatching(void* list, Pred_0DB0 p);
 }
-extern "C" void func_00170DB0(S_0DB0* self, int id)
+extern "C" void Hotbox_RemoveObjectBox(S_0DB0* self, int id)
 {
     Eq_0DB0 e1;
     Eq_0DB0 e2;

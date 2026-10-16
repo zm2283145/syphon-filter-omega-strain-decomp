@@ -21,7 +21,7 @@ typedef struct GenMsgE6 {
     GenE6* gen;
 } GenMsgE6;
 
-extern "C" int func_0014A670(NpcE6* npc);
+extern "C" int NpcAi_GetIdentity(NpcE6* npc);
 
 /* Script native: the NPC spawned by a generator message (null if dead). */
 static inline bool GenE6_NpcDead(GenE6* g)
@@ -42,5 +42,5 @@ extern "C" int Script_cGeneratorMessageBase_GetNPC(GenMsgE6** args)
     } else {
         npc = 0;
     }
-    return func_0014A670(npc);
+    return NpcAi_GetIdentity(npc);
 }

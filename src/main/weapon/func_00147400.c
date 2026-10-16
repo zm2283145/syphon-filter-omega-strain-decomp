@@ -52,7 +52,7 @@ unsigned char WeaponDb_Load(WeaponDb_147400* db)
     db->loaded = FileMan_LoadFile(db, &e);
     db->recs = (WeaponRec_147400*)(db->data + 0x10);
     if (db->hdr->magic != 4) {
-        func_0036E220(&e, -1);
+        FileMan_Release(&e, -1);
         return 0;
     }
     if (db->loaded) {
@@ -71,6 +71,6 @@ unsigned char WeaponDb_Load(WeaponDb_147400* db)
         }
     }
     r = db->loaded;
-    func_0036E220(&e, -1);
+    FileMan_Release(&e, -1);
     return r;
 }

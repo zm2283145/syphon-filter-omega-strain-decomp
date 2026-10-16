@@ -35,7 +35,7 @@ extern int D_005392D0;
 void func_0025CD10(char* r);
 void func_0025CA40(char* r);
 void Vec4_Copy(void* d, V4* s);
-int* func_0025C9D0(void* out, V4* in);
+int* GuiBatch_AddVertexColor(void* out, V4* in);
 void func_003701B0(char* r);
 }
 
@@ -52,7 +52,7 @@ static inline void Vertex(V4* p, V4* c) {
     func_0025CA40(D_005381F0);
     e = EntAt(D_00539210);
     Vec4_Copy(e->pos + (D_00539224 - 1) * 16, p);
-    func_0025C9D0(e->c30 + (D_00539224 - 1) * 16, c);
+    GuiBatch_AddVertexColor(e->c30 + (D_00539224 - 1) * 16, c);
     D_005381F8 = 0x200000000LL;
 }
 

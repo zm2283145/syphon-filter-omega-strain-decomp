@@ -16,7 +16,7 @@
 #pragma cplusplus on
 extern "C" {
 extern "C" void func_00177E20();
-extern "C" void func_001C80B0();
+extern "C" void SoundPauseEvent_Fire();
 extern void * const D_004DAC30[];
 extern char D_004D9DE0[];
 }
@@ -31,7 +31,7 @@ extern "C" Vt8Object* func_001C61A0(Vt8Object* self, short deleteFlag)
     }
     return self;
 }
-void * const D_004DAC30[8] = { (void*)0x0, (void*)0x0, (void*)func_001C61A0, (void*)func_00177E20, (void*)func_001C80B0, (void*)0x0, (void*)0x0, (void*)0x0 };
+void * const D_004DAC30[8] = { (void*)0x0, (void*)0x0, (void*)func_001C61A0, (void*)func_00177E20, (void*)SoundPauseEvent_Fire, (void*)0x0, (void*)0x0, (void*)0x0 };
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001C61A0(void) {}
 #pragma pop /* merge_units */
@@ -46,7 +46,7 @@ extern void* D_004FFC2C;
 extern char D_0049F490[];
 extern char D_0051F098[];
 extern char D_004DE280[];
-extern void func_00241DA0(void* hud, char* a, char* b);
+extern void Hud_AddPdaQuip(void* hud, char* a, char* b);
 extern void* Loc_LookupText(char* key);
 extern void Hud_PostNotification(void* hud, void* text);
 extern void Event_Construct(Msg_1C6200* m, void* type);
@@ -61,7 +61,7 @@ void func_001C6200(char* name, char* text0, int silent)
     
     if (name) {
         char* text = (!text0 || !*text0) ? D_0049F490 : text0;
-        func_00241DA0(D_004FFC2C, name, text);
+        Hud_AddPdaQuip(D_004FFC2C, name, text);
         {
             void* hud = D_004FFC2C;
             Hud_PostNotification(hud, Loc_LookupText(D_0049F490));

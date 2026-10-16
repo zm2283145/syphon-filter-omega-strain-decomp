@@ -56,12 +56,12 @@ extern void* D_004FFC30;
 extern void* D_004FFC2C;
 extern unsigned char D_0053B540;
 void SoundEvent_CtorFromPreset(Snd* e, void* r, void* owner);
-void func_0020EBA0(Snd2* e, void* r, void* owner);
+void SoundStopMsg_Ctor(Snd2* e, void* r, void* owner);
 void Event_Send(void* m, void* target, int immediate);
 void cMessage_dtor(void* m, int flags);
-void func_0036E220(Str* s, int flag);
-void func_002609E0(void*, int, int);
-void func_00241E30(void*, int);
+void FileMan_Release(Str* s, int flag);
+void VisionMgr_SetPendingMode(void*, int, int);
+void Hud_SelectTextColorTable(void*, int);
 }
 extern "C" void Actor_UpdateNightVisionBlind(Act* a)
 {
@@ -82,8 +82,8 @@ extern "C" void Actor_UpdateNightVisionBlind(Act* a)
                 case 2: m = 2; break;
                 case 3: m = 3; break;
                 }
-                func_002609E0(D_004FFC30, m, 0);
-                func_00241E30(D_004FFC2C, s == 1);
+                VisionMgr_SetPendingMode(D_004FFC30, m, 0);
+                Hud_SelectTextColorTable(D_004FFC2C, s == 1);
                 D_0053B540 = s == 1;
             }
         }
@@ -96,19 +96,19 @@ extern "C" void Actor_UpdateNightVisionBlind(Act* a)
             Event_Send(&ev, D_004FFB50, 0);
             a->b33B9 = 1;
             ev.vt = D_004DAE30;
-            func_0036E220(&ev.s114, -1);
-            func_0036E220(&ev.s78, -1);
+            FileMan_Release(&ev.s114, -1);
+            FileMan_Release(&ev.s78, -1);
             cMessage_dtor(&ev, 0);
         }
     } else if (a->b33B9) {
         Snd2 ev;
-        func_0020EBA0(&ev, D_004F1FD0, a);
+        SoundStopMsg_Ctor(&ev, D_004F1FD0, a);
         ev.flag = 1;
         Event_Send(&ev, D_004FFB50, 0);
         a->b33B9 = 0;
         ev.vt = D_004DADF0;
-        func_0036E220(&ev.s114, -1);
-        func_0036E220(&ev.s78, -1);
+        FileMan_Release(&ev.s114, -1);
+        FileMan_Release(&ev.s78, -1);
         cMessage_dtor(&ev, 0);
     }
 }

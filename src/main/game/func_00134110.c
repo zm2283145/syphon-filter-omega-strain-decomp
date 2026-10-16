@@ -50,7 +50,7 @@ void Pad_Reset(void* p);
 void GuiManager_Update(void* l, float dt);
 void World_PhysicsTraversal(float dt);
 void func_00415870(Stack_134110* s);
-void* func_001698C0(void);
+void* App_GetInstance(void);
 void func_00169390(void* p);
 void* Service_Lookup(void* a, void* b);
 }
@@ -117,7 +117,7 @@ extern "C" void func_00134110(void* svc, unsigned char mode)
         func_00415870(Gui_GetScreenStack());
         Gui_GetScreenStack()->Update(dt);
         Gui_GetScreenStack()->Draw();
-        func_00169390(func_001698C0());
+        func_00169390(App_GetInstance());
         Video_BeginFrame(D_005381F0);
         {
             CMsg m;

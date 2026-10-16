@@ -90,13 +90,13 @@ extern G D_00539210;
 extern char D_005381F0[];
 extern long long D_005381F8;
 extern long long D_004BC1B0[];
-void func_003820E0(void* m, int idx);
+void Renderer_BindTexture(void* m, int idx);
 void func_0025CD10(void* s);
 void func_0025CA40(void* s);
 void func_00371200(void* s);
 void Vec4_Copy(V* d, const V* s);
-void func_0025C9D0(V* d, const V* s);
-float func_0025F220(void);
+void GuiBatch_AddVertexColor(V* d, const V* s);
+float GuiBatch_AddVertexUV(void);
 V* func_00132000(V* o, float x, float y, float z, float w);
 RLink* func_002B3950(RList* l);
 RIter* func_002B3940(RIter* it, RNode* n);
@@ -170,9 +170,9 @@ static inline void Emit_(const V& pos, const V4c& col, const V4c& uv)
     func_0025CA40(D_005381F0);
     e = &RS->ents[D_00539210.f10];
     Vec4_Copy(&e->pos[D_00539224 - 1], &pos);
-    func_0025C9D0(&e->c30[D_00539224 - 1], (V*)&col);
-    u = uv.x + func_0025F220();
-    Vec4_Copy(&e->c34[D_00539224 - 1], func_00132000(&tmp, u, uv.y + func_0025F220(), uv.z, uv.w));
+    GuiBatch_AddVertexColor(&e->c30[D_00539224 - 1], (V*)&col);
+    u = uv.x + GuiBatch_AddVertexUV();
+    Vec4_Copy(&e->c34[D_00539224 - 1], func_00132000(&tmp, u, uv.y + GuiBatch_AddVertexUV(), uv.z, uv.w));
     D_005381F8 = 6LL << 32;
 }
 static inline void Emit(const V& pos, const V4c& col, const V4c& uv) { Emit_(pos, col, uv); }
@@ -197,7 +197,7 @@ extern "C" void WaterFx_RenderRipples(Water* w)
         s = r->alpha * a;
         if (a <= 0.0078125f) continue;
         TexFrame(D_00539248, w->tex, r->frame);
-        func_003820E0(D_00539248, w->tex);
+        Renderer_BindTexture(D_00539248, w->tex);
         { int bl = r->blend; D_005392D8 = D_004BC1B0[bl]; }
         k = w->base + w->range * (1.0f - r->age / 1.2f);
         V c0, c1, c2, c3;

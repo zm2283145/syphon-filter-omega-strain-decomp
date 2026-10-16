@@ -22,7 +22,7 @@ extern void func_0041F080();
 extern void func_0041F090();
 extern void func_0041F210();
 extern void * const D_004DE710[];
-extern void func_0036E220(void* p, int f);
+extern void FileMan_Release(void* p, int f);
 extern void String_Dtor(void* p, int f);
 extern void func_0032A2F0(void* p, int f);
 extern void func_0041F370(void* p, int f);
@@ -30,8 +30,8 @@ extern void operator_delete(void* p);
 static inline void M326CC0_dtor(M326CC0* m)
 {
     if (m) {
-        func_0036E220(m->mE4, -1);
-        func_0036E220(m->m48, -1);
+        FileMan_Release(m->mE4, -1);
+        FileMan_Release(m->m48, -1);
     }
 }
 static inline void C326CC0(void* p) { if (p) func_0032A2F0(p, 0); }

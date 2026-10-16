@@ -9,7 +9,7 @@
 extern int WeaponInv_ClipsForActor(void* a0, int key);
 
 /* def->unk70 * WeaponInv_ClipsForActor(inv->unk88, def->unk74) - slot->unkC for the given slot. */
-int func_00142AE0(Inventory* inv, unsigned char index) {
+int WeaponInv_GetSpareRoom(Inventory* inv, unsigned char index) {
     WeaponDef* def;
     InventorySlot* slot = &inv->slots[index];
 

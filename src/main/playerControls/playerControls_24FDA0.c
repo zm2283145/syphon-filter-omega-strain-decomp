@@ -37,7 +37,7 @@ static inline float WrapPi(float a)
     }
     return a;
 }
-void func_0024FDE0(Vec3* out, Vec3* in)
+void Math_WrapAngleDiff(Vec3* out, Vec3* in)
 {
     float x = WrapPi(in->x);
     float y = WrapPi(in->y);

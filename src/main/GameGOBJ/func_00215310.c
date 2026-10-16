@@ -24,9 +24,9 @@ typedef struct ElevE6 {
 extern "C" char D_004FFB50[];
 extern "C" char D_004DADF0[];
 extern "C" char g_TargetVisMgr[];
-extern "C" void func_0020EBA0(ElevE6Msg* msg, void* key, ElevE6* self);
+extern "C" void SoundStopMsg_Ctor(ElevE6Msg* msg, void* key, ElevE6* self);
 extern "C" void Event_Send(ElevE6Msg*, void*, int);
-extern "C" void func_0036E220(void*, int);
+extern "C" void FileMan_Release(void*, int);
 extern "C" void cMessage_dtor(ElevE6Msg*, int);
 extern "C" void Object_Deactivate(ElevE6* self, void* arg);
 extern "C" void TargetVis_Unregister(void* list, ElevE6* self);
@@ -35,11 +35,11 @@ extern "C" void TargetVis_Unregister(void* list, ElevE6* self);
 extern "C" void cElevatorGOBJ_v16(ElevE6* self, void* arg)
 {
     ElevE6Msg msg;
-    func_0020EBA0(&msg, self->key, self);
+    SoundStopMsg_Ctor(&msg, self->key, self);
     Event_Send(&msg, D_004FFB50, 1);
     msg.vtbl = D_004DADF0;
-    func_0036E220(msg.b, -1);
-    func_0036E220(msg.a, -1);
+    FileMan_Release(msg.b, -1);
+    FileMan_Release(msg.a, -1);
     cMessage_dtor(&msg, 0);
     if (self->child != 0) {
         self->child->Fn(arg);

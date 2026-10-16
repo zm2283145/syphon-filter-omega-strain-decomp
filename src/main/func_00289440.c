@@ -23,7 +23,7 @@ char* String_CStr(void* s);
 int func_00445A40(void* g, char* a, char* b);
 int strcmp(const char* a, const char* b);
 void String_Copy(char* d, const char* s);
-char* func_00336170(Ag_00289440* ag);
+char* AgentData_GetName(Ag_00289440* ag);
 void func_00441C20(S_00289440* self, char* n);
 void GuiSaveAgentWidget_HandleEvent(S_00289440* self);
 void String_CtorCStr_13B480(Str_00289440* s, const char* c);
@@ -66,7 +66,7 @@ extern "C" void func_00289440(S_00289440* self)
             changed = 1;
         }
         n = String_CStr(self->p8C->s48);
-        if (strcmp(n, func_00336170(self->p9C))) {
+        if (strcmp(n, AgentData_GetName(self->p9C))) {
             func_00441C20(self, String_CStr(self->p8C->s48));
         } else {
             if (D_004FFC04->b265)

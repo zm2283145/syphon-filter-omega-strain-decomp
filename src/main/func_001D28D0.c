@@ -8,17 +8,17 @@ typedef struct { int unk0; Table1D2* table; } Obj1D2;
 
 extern Slot1D2 D_004F32B0[];
 extern void func_00132840(Vec16* v);
-extern void* func_001325F0(Vec16* v, void* src);
+extern void* Quat_Assign(Vec16* v, void* src);
 extern void* func_001D2C00(void* inner);
 extern void Quat_MulInPlace(void* dst, void* m);
 extern void func_001D2BA0(Vec16* a, Vec16* b);
 extern void* func_001D2870(void* inner);
-extern void func_001D29F0(void* out, Vec16* v, void* m);
+extern void UpperBody_LimitRotation(void* out, Vec16* v, void* m);
 extern void* func_001D29E0(void* inner);
-extern void func_001D5FA0(Slot1D2* slot);
+extern void UpperBodyIk_World(Slot1D2* slot);
 
 /* Transforms a point and the indexed element's position through slot idx and updates the slot. */
-void func_001D28D0(Obj1D2* self, void* point, int idx)
+void UpperBodyIk_SetRotation(Obj1D2* self, void* point, int idx)
 {
     Vec16 b;
     Vec16 a;
@@ -30,13 +30,13 @@ void func_001D28D0(Obj1D2* self, void* point, int idx)
     out = slot->out;
     pos = &self->table->elems[idx].pos;
     func_00132840(&a);
-    r = func_001325F0(&a, point);
+    r = Quat_Assign(&a, point);
     Quat_MulInPlace(r, func_001D2C00(slot->inner));
     func_00132840(&b);
-    r = func_001325F0(&b, pos);
+    r = Quat_Assign(&b, pos);
     Quat_MulInPlace(r, func_001D2C00(slot->inner));
     func_001D2BA0(&a, &b);
-    func_001D29F0(out, &a, func_001D2870(slot->inner));
+    UpperBody_LimitRotation(out, &a, func_001D2870(slot->inner));
     Quat_MulInPlace(out, func_001D29E0(slot->inner));
-    func_001D5FA0(slot);
+    UpperBodyIk_World(slot);
 }

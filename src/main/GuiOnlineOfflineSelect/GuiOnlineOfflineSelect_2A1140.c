@@ -15,7 +15,7 @@ extern void func_0033C320(Obj_2A1140*, int);
 extern void func_002A0F60(Obj_2A1140*);
 extern void func_002A1590(Obj_2A1140*, int);
 extern void func_002A1600(Obj_2A1140*, int);
-extern int func_0033CF90(Obj_2A1140*, Ctl_2A1140*, unsigned int, int, int);
+extern int GuiScreen_HandleEvent(Obj_2A1140*, Ctl_2A1140*, unsigned int, int, int);
 extern const char* D_0048BA40;
 extern const char* D_0048BA48;
 extern const char* D_0048BA60;
@@ -55,7 +55,7 @@ int func_002A1140(Obj_2A1140* self, Ctl_2A1140* ctl, unsigned int msg, int code,
         D_005064A8 = 1;
         return 1;
     }
-    return func_0033CF90(self, ctl, msg, code, param);
+    return GuiScreen_HandleEvent(self, ctl, msg, code, param);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_002A1140 */
@@ -99,7 +99,7 @@ void func_002A0F60(S_002A12F0* self);
 #endif /* merge_units */
 #define func_002A0F60(a0) (func_002A0F60((Obj_2A1140 *)(a0))) /* merge_units */
 
-int func_0033CEF0(S_002A12F0* self, Ev_002A12F0* ev);
+int GuiScreen_HandleInput(S_002A12F0* self, Ev_002A12F0* ev);
 }
 static inline unsigned char Down_002A12F0(Ev_002A12F0* e)
 {
@@ -154,7 +154,7 @@ extern "C" int func_002A12F0(S_002A12F0* self, Ev_002A12F0* ev)
             return 1;
         }
     }
-    return func_0033CEF0(self, ev);
+    return GuiScreen_HandleInput(self, ev);
 }
 #undef func_002A1590 /* merge_units */
 #undef func_002A1600 /* merge_units */

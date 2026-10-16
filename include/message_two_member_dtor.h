@@ -4,13 +4,13 @@
 /*
  * Deleting destructor of a cMessage-derived message whose payload
  * subobject at +0x30 owns two members (at +0x78 and +0x114) destroyed by
- * func_0036E220: restore the class vtable, destroy the payload members,
+ * FileMan_Release: restore the class vtable, destroy the payload members,
  * run the cMessage base destructor, then delete when deleteFlag > 0.
  * One instantiation per message class (vtable differs).
  * C++ only (#pragma cplusplus on before including).
  */
 extern "C" {
-void func_0036E220(void* member, int flags);
+void FileMan_Release(void* member, int flags);
 void cMessage_dtor(void* self, int flags);
 void operator_delete(void* allocation);
 }
@@ -31,8 +31,8 @@ struct TwoMemberMessage {
         if (self) {                                                           \
             self->vtable = vtableSym;                                         \
             if (self->payload) {                                              \
-                func_0036E220(self->memberB, -1);                             \
-                func_0036E220(self->memberA, -1);                             \
+                FileMan_Release(self->memberB, -1);                             \
+                FileMan_Release(self->memberA, -1);                             \
             }                                                                 \
             cMessage_dtor(self, 0);                                           \
             if (deleteFlag > 0)                                               \

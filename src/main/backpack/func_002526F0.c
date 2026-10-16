@@ -90,10 +90,10 @@ extern int Agent_GetSelected(void* list, int idx);
 extern int AgentData_HasUnlock(int agent, int what);
 extern int WeaponInv_SlotOfItem(int id);
 extern void func_00254CA0(Owner_2526F0* o, int id, int which);
-extern bool func_002558A0(Owner_2526F0* o, int id, int which);
+extern bool Backpack_TakeItem(Owner_2526F0* o, int id, int which);
 extern int WeaponInv_HasAmmoText(Inv_2526F0* inv, int id);
 extern bool func_002559D0(Owner_2526F0* o, int id);
-extern void func_00255500(Owner_2526F0* o, int id, int* a, int* b, int* c);
+extern void Backpack_QueryAmmo(Owner_2526F0* o, int id, int* a, int* b, int* c);
 extern WeaponDef_2526F0* WeaponDb_Get(int db, int id);
 extern int WeaponInv_GetSpare(Inv_2526F0* inv, int slot);
 extern int WeaponInv_GetClip(Inv_2526F0* inv, int slot);
@@ -223,11 +223,11 @@ extern "C" int Pickup_BuildPromptText(Self_2526F0* self, Ctx_2526F0* ctx) {
                 unlocked = true;
             func_00254CA0(self->owner, it->id, 0);
             func_00254CA0(self->owner, it->id, 1);
-            show = func_002558A0(self->owner, it->id, 1);
+            show = Backpack_TakeItem(self->owner, it->id, 1);
             isSlot4 = uslot == 4;
             noAmmo = !WeaponInv_HasAmmoText(inv, it->id);
             cur = func_002559D0(self->owner, it->id);
-            func_00255500(self->owner, it->id, &ammo, &clips, &reserve);
+            Backpack_QueryAmmo(self->owner, it->id, &ammo, &clips, &reserve);
             if (wid > -1) {
                 int spare;
                 WeaponDef_2526F0* wd;

@@ -35,9 +35,9 @@ extern void func_00379780(void *q, int a);
 extern u64_t *func_00379790(void *p, int i);
 extern u64_t *func_003797B0(void *p, int i);
 extern void *func_003797D0(RB810 *o);
-extern u64_t func_003797E0(RB810 *o);
-extern u64_t func_00379840(RB810 *o);
-extern void func_003798A0(RB810 *o);
+extern u64_t Renderer_SetTestReg(RB810 *o);
+extern u64_t Renderer_SetPrmodeReg(RB810 *o);
+extern void Renderer_RestoreRenderState(RB810 *o);
 
 void func_0037B810(RB810 *o, int *rgba, int fbp, unsigned int fbw, int tv, int psm, int ai)
 {
@@ -57,7 +57,7 @@ void func_0037B810(RB810 *o, int *rgba, int fbp, unsigned int fbw, int tv, int p
     x1 = x0 + o->w * 16;
     y1 = y0 + o->h * 16;
     if (o->ready) {
-        func_003798A0(o);
+        Renderer_RestoreRenderState(o);
         o->ready = 0;
     }
     n = 9;
@@ -73,8 +73,8 @@ void func_0037B810(RB810 *o, int *rgba, int fbp, unsigned int fbw, int tv, int p
     q++;
     q->lo = 0xE;
     q->hi = o->f120; q++; q->lo = 0x1A;
-    q->hi = func_00379840(o); q++; q->lo = 0x1B;
-    q->hi = func_003797E0(o); q++; q->lo = 0x47;
+    q->hi = Renderer_SetPrmodeReg(o); q++; q->lo = 0x1B;
+    q->hi = Renderer_SetTestReg(o); q++; q->lo = 0x47;
     q->hi = o->f124; q++; q->lo = 0x46;
     if (o->f10E8 == D_004BC1B0[0]) {
         q->hi = (long long)o->f160 | ((long long)o->f164 << 8) | ((long long)o->f168 << 16); q++;
@@ -152,19 +152,19 @@ extern void *func_003797D0(RB810_0037BD40 *o);
 #define func_003797D0(a0) (func_003797D0((void *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern u64_t func_003797E0(RB810_0037BD40 *o);
+extern u64_t Renderer_SetTestReg(RB810_0037BD40 *o);
 #endif /* merge_units */
-#define func_003797E0(a0) (func_003797E0((void *)(a0))) /* merge_units */
+#define Renderer_SetTestReg(a0) (Renderer_SetTestReg((void *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern u64_t func_00379840(RB810_0037BD40 *o);
+extern u64_t Renderer_SetPrmodeReg(RB810_0037BD40 *o);
 #endif /* merge_units */
-#define func_00379840(a0) (func_00379840((void *)(a0))) /* merge_units */
+#define Renderer_SetPrmodeReg(a0) (Renderer_SetPrmodeReg((void *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_003798A0(RB810_0037BD40 *o);
+extern void Renderer_RestoreRenderState(RB810_0037BD40 *o);
 #endif /* merge_units */
-#define func_003798A0(a0) (func_003798A0((void *)(a0))) /* merge_units */
+#define Renderer_RestoreRenderState(a0) (Renderer_RestoreRenderState((void *)(a0))) /* merge_units */
 
 extern unsigned int func_003BAF20(Sub10CC *s);
 extern int func_003BAF60(Sub10CC *s);
@@ -200,7 +200,7 @@ void func_0037BD40(RB810_0037BD40 *o, int ai)
     tbp = o->tbp[o->cur];
     t20 = func_003BAF20(sub);
     if (o->ready) {
-        func_003798A0(o);
+        Renderer_RestoreRenderState(o);
         o->ready = 0;
     }
     n = 9;
@@ -216,8 +216,8 @@ void func_0037BD40(RB810_0037BD40 *o, int ai)
     q++;
     q->lo = 0xE;
     q->hi = o->f120; q++; q->lo = 0x1A;
-    q->hi = func_00379840(o); q++; q->lo = 0x1B;
-    q->hi = func_003797E0(o); q++; q->lo = 0x47;
+    q->hi = Renderer_SetPrmodeReg(o); q++; q->lo = 0x1B;
+    q->hi = Renderer_SetTestReg(o); q++; q->lo = 0x47;
     q->hi = o->f124; q++; q->lo = 0x46;
     if (o->f10E8 == D_004BC1B0[0]) {
         q->hi = (long long)o->f160 | ((long long)o->f164 << 8) | ((long long)o->f168 << 16); q++;
@@ -260,9 +260,9 @@ void func_0037BD40(RB810_0037BD40 *o, int ai)
     func_003BB010(sub, 1);
 }
 #undef func_003797D0 /* merge_units */
-#undef func_003797E0 /* merge_units */
-#undef func_00379840 /* merge_units */
-#undef func_003798A0 /* merge_units */
+#undef Renderer_SetTestReg /* merge_units */
+#undef Renderer_SetPrmodeReg /* merge_units */
+#undef Renderer_RestoreRenderState /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0037BD40(void) {}
 #pragma pop /* merge_units */

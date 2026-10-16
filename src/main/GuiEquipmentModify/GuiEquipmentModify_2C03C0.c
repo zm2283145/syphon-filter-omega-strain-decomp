@@ -51,7 +51,7 @@ extern char D_004FFB50[];
 extern char D_004DAE10[];
 extern void func_0041E3B0(Self*, float);
 extern Ent* PlayerSlots_Get(int);
-extern void func_001B2E90(Ent*);
+extern void Player_HandleLeftGame(Ent*);
 extern void func_001B2D20(Ent*);
 extern int Appearance_GetBodyKind(void*);
 extern void func_00391020(void*, int);
@@ -59,9 +59,9 @@ extern void SoundRequest_Ctor(SoundRequest* req, int kind, void* name, int a, in
 extern void func_0020F190(SoundMsg* msg, SoundRequest* req, Ent* e);
 extern void Event_Send(SoundMsg* msg, void* target, int flags);
 #if 0 /* merge_units */
-extern void func_0036E220(void* part, int flags);
+extern void FileMan_Release(void* part, int flags);
 #endif /* merge_units */
-#define func_0036E220(a0, a1) (func_0036E220((a0), (a1))) /* merge_units */
+#define FileMan_Release(a0, a1) (FileMan_Release((a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void cMessage_dtor(SoundMsg* msg, int flags);
@@ -84,7 +84,7 @@ extern "C" void func_002C03C0(Self* self, float dt) {
     for (i = 0; i < 4; i++) {
         e = PlayerSlots_Get(i);
         if (!e) continue;
-        if (!e->b14) func_001B2E90(e);
+        if (!e->b14) Player_HandleLeftGame(e);
         func_001B2D20(e);
         if (e->f78() == 3) {
             D_00506508++;
@@ -109,12 +109,12 @@ extern "C" void func_002C03C0(Self* self, float dt) {
             msg.vtbl = D_004DAE10;
             SoundMsg* m = &msg;
             if (m->payload) {
-                func_0036E220(msg.partB, -1);
-                func_0036E220(msg.partA, -1);
+                FileMan_Release(msg.partB, -1);
+                FileMan_Release(msg.partA, -1);
             }
             cMessage_dtor(&msg, 0);
-            func_0036E220(req.partB, -1);
-            func_0036E220(req.partA, -1);
+            FileMan_Release(req.partB, -1);
+            FileMan_Release(req.partA, -1);
         }
         Game_NetSendPauseState(D_004FFB50, 0, 0);
     }
@@ -125,7 +125,7 @@ extern "C" void func_002C03C0(Self* self, float dt) {
         if ((D_005721C8 ? D_005721C0 : 1) && !(D_00506510 <= 300.0f)) DME_SendPlayGameMsg();
     }
 }
-#undef func_0036E220 /* merge_units */
+#undef FileMan_Release /* merge_units */
 #undef cMessage_dtor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002C03C0(void) {}

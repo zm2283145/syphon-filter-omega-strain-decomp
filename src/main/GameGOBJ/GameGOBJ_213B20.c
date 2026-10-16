@@ -35,23 +35,23 @@ extern char D_004DAED0[];
 extern char D_004FFB50[];
 extern char D_004DAE30[];
 extern char D_004DADF0[];
-extern void func_0020EBA0(LdSnd2_00213B20* e, void* action, Lift_00213B20* l);
+extern void SoundStopMsg_Ctor(LdSnd2_00213B20* e, void* action, Lift_00213B20* l);
 extern void Lift_ActivateRecipients(Lift_00213B20* l);
 extern void Event_Construct(LdMsg_00213B20* m, void* type);
 extern void Event_Send(void* m, void* target, int immediate);
 extern void cMessage_dtor(void* m, int flags);
 extern void SoundEvent_CtorFromPreset(LdSnd_00213B20* e, void* preset, Lift_00213B20* l);
-extern void func_0036E220(LdStr_00213B20* s, int flag);
+extern void FileMan_Release(LdStr_00213B20* s, int flag);
 void Lift_FinishArrival(Lift_00213B20* l)
 {
     LdSnd_00213B20 ev;
     LdSnd2_00213B20 ev1;
     LdMsg_00213B20 msg;
-    func_0020EBA0(&ev1, l->action, l);
+    SoundStopMsg_Ctor(&ev1, l->action, l);
     Event_Send(&ev1, D_004FFB50, 1);
     ev1.vt = D_004DADF0;
-    func_0036E220(&ev1.s114, -1);
-    func_0036E220(&ev1.s78, -1);
+    FileMan_Release(&ev1.s114, -1);
+    FileMan_Release(&ev1.s78, -1);
     cMessage_dtor(&ev1, 0);
     SoundEvent_CtorFromPreset(&ev, l->preset, l);
     ev.flag = 1;
@@ -67,8 +67,8 @@ void Lift_FinishArrival(Lift_00213B20* l)
     }
     Lift_ActivateRecipients(l);
     ev.vt = D_004DAE30;
-    func_0036E220(&ev.s114, -1);
-    func_0036E220(&ev.s78, -1);
+    FileMan_Release(&ev.s114, -1);
+    FileMan_Release(&ev.s78, -1);
     cMessage_dtor(&ev, 0);
 }
 /* merge_units: generate this block's code under its own pragmas */

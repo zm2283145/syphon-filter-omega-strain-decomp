@@ -3,9 +3,9 @@
 
 extern "C" {
 extern "C" void func_00293950();
-extern "C" void func_003267D0();
-extern "C" void func_003267E0();
-extern "C" void func_00326810();
+extern "C" void GuiCharacterDisplay_GetClassName();
+extern "C" void GuiCharacterDisplay_IsType();
+extern "C" void GuiCharacterDisplay_Draw();
 extern "C" void func_00326850();
 extern "C" void func_0041D400();
 extern "C" void func_0041D5C0();
@@ -35,4 +35,4 @@ extern "C" VtableObject* func_00326770(VtableObject* self, short deleteFlag)
     }
     return self;
 }
-void * const D_004DE670[24] = { (void*)0x0, (void*)0x0, (void*)func_00326770, (void*)func_0041F150, (void*)func_0041F090, (void*)func_0041F080, (void*)func_0041F070, (void*)func_00326850, (void*)func_0041EBF0, (void*)func_0041E330, (void*)func_0041E2B0, (void*)func_00293950, (void*)func_00326810, (void*)func_0041E230, (void*)func_0041E3B0, (void*)func_0041EF10, (void*)func_0041F210, (void*)func_0041D8C0, (void*)func_0041D780, (void*)func_0041D5C0, (void*)func_0041D400, (void*)func_003267D0, (void*)func_003267E0, (void*)0x0 };
+void * const D_004DE670[24] = { (void*)0x0, (void*)0x0, (void*)func_00326770, (void*)func_0041F150, (void*)func_0041F090, (void*)func_0041F080, (void*)func_0041F070, (void*)func_00326850, (void*)func_0041EBF0, (void*)func_0041E330, (void*)func_0041E2B0, (void*)func_00293950, (void*)GuiCharacterDisplay_Draw, (void*)func_0041E230, (void*)func_0041E3B0, (void*)func_0041EF10, (void*)func_0041F210, (void*)func_0041D8C0, (void*)func_0041D780, (void*)func_0041D5C0, (void*)func_0041D400, (void*)GuiCharacterDisplay_GetClassName, (void*)GuiCharacterDisplay_IsType, (void*)0x0 };

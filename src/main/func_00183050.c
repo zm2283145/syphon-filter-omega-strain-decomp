@@ -8,6 +8,6 @@
 #include "loose00_types.h"
 
 /* End of a counted pointer array {count, items[]}. */
-void** func_00183050(PtrStack* s) {
+void** InlinePtrArray_End(PtrStack* s) {
     return &s->items[s->count];
 }

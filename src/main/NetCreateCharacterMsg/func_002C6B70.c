@@ -84,7 +84,7 @@ int NetMap_BindReceiver(int id, int b, Actor* a);
 void func_00185940(Actor* a, int id);
 void func_00185970(Actor* a, int r);
 void func_002C9270(char*, Actor*, int, int);
-void func_00242FA0(int, char*, char*, int, int, int, float, float);
+void Hud_ShowCallout(int, char*, char*, int, int, int, float, float);
 }
 
 static inline void* NewMem(int size, int line)
@@ -201,5 +201,5 @@ extern "C" void func_002C6B70(Msg* msg, int arg1)
     func_00185970(a, rid);
     buf[0] = 0;
     func_002C9270(buf, a, arg1, 1);
-    func_00242FA0(D_004FFC2C, a->nameC, buf + 1, 0, 0, 0, -1.0f, 0.0f);
+    Hud_ShowCallout(D_004FFC2C, a->nameC, buf + 1, 0, 0, 0, -1.0f, 0.0f);
 }

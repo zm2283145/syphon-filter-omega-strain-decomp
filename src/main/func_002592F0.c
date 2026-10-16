@@ -5,7 +5,7 @@ extern signed char D_004F7FB0;
 extern Box_92F0 D_004F7FC0;
 extern char* D_004FFD30;
 typedef struct { char pad[0x60]; char* p; unsigned char idx; } Self_92F0;
-void* func_002592F0(Self_92F0* self)
+void* WeaponPreview_GetBounds(Self_92F0* self)
 {
     char* p;
     if (!D_004F7FB0) {

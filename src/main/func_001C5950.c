@@ -12,7 +12,7 @@ extern char D_004DF860[]; /* vtable of its intermediate base */
 extern cGOBJ* cGOBJ_ctor(cGOBJ* self, int* desc, int a2, int* a3);
 
 /* Constructor of a cGOBJ-derived object (two inlined constructor levels). */
-UnkGobj001C5950* func_001C5950(UnkGobj001C5950* self, int* desc, int value) {
+UnkGobj001C5950* ParticleGob_Create(UnkGobj001C5950* self, int* desc, int value) {
     int zero[1];
 
     zero[0] = 0;

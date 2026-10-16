@@ -65,7 +65,7 @@ typedef struct A40File {
 
 extern char D_004BC2C8[];
 extern int String_CompareNoCase(const char*, const char*);
-extern int func_0037FEA0(A40Mgr* o, A40File* f, char* name);
+extern int TexMan_LoadNewTexture(A40Mgr* o, A40File* f, char* name);
 extern int func_00380C90(A40It* a, A40It* b);
 extern void func_00380CB0(A40It* out, void* list);
 extern void func_00380CC0(A40It* out, A40It* it, int n);
@@ -73,7 +73,7 @@ extern void func_00380CE0(A40It* out, void* list, A40It* it);
 extern int* func_00380D20(A40It* it);
 extern void func_00380D30(A40It* out, void* list);
 
-int func_00380A40(A40Mgr* o, A40File* f) {
+int TexMan_FindOrLoad(A40Mgr* o, A40File* f) {
     char* s;
     char* end;
     char* p;
@@ -119,7 +119,7 @@ int func_00380A40(A40Mgr* o, A40File* f) {
         o->tex[idx]->refCount++;
         return idx;
     }
-    return func_0037FEA0(o, f, buf);
+    return TexMan_LoadNewTexture(o, f, buf);
     }
     return -1;
 }

@@ -11,16 +11,16 @@ public:
     char pad[0x12C];
     unsigned char flag;
 };
-extern "C" void func_0023DE10(Info0023DDA0* out, Obj0023DDA0* self);
+extern "C" void NiEvent_ComputeWorld(Info0023DDA0* out, Obj0023DDA0* self);
 extern "C" void func_0023DDA0(Obj0023DDA0* self)
 {
     if (self->flag) {
         Info0023DDA0 a;
-        func_0023DE10(&a, self);
+        NiEvent_ComputeWorld(&a, self);
         self->onA(&a);
     } else {
         Info0023DDA0 b;
-        func_0023DE10(&b, self);
+        NiEvent_ComputeWorld(&b, self);
         self->onB(&b);
     }
 }

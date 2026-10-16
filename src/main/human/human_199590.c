@@ -27,7 +27,7 @@ void Hud_SetFlashlightIcon(void* p, int v, unsigned char on);
 void WeaponInv_SetSlotModelState(void* w, int k, unsigned char on);
 void SoundPosRequest_Ctor(F2Ev_199590* e, void* name, V_199590* pos);
 void Event_Send(F2Ev_199590* e, void* tgt, int n);
-void func_0036E220(F2Str_199590* s, int f);
+void FileMan_Release(F2Str_199590* s, int f);
 void cMessage_dtor(F2Ev_199590* e, int f);
 extern void* D_004FFC2C;
 extern char D_004F0DF0[];
@@ -59,8 +59,8 @@ extern "C" void Actor_InfraredSwitch(O_199590* o, unsigned char on)
         ev.flag = 1;
         Event_Send(&ev, D_004FFB50, 0);
         ev.vt = D_004DAE30;
-        func_0036E220(&ev.s114, -1);
-        func_0036E220(&ev.s78, -1);
+        FileMan_Release(&ev.s114, -1);
+        FileMan_Release(&ev.s78, -1);
         cMessage_dtor(&ev, 0);
     }
 }

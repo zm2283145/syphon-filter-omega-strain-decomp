@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void func_0029AD00(char* self, char value) {
+void GuiGameOptions_OnSaveDone(char* self, char value) {
     self[1025] = value;
 }

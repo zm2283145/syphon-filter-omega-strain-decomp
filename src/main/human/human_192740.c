@@ -9,7 +9,7 @@
 
 /* merge_units: begin func_00192740 */
 #pragma push /* merge_units */
-float func_00192740(float x, float lo, float hi) {
+float Math_Clampf(float x, float lo, float hi) {
     float r;
     asm { max.s r, x, lo
  min.s r, r, hi }

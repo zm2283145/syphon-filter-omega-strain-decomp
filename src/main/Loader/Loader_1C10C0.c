@@ -25,7 +25,7 @@ void* Mem_Alloc(int pool, int size, char* file, int line);
 int Pop_FindTag(PopReader_1C10C0* r, int tag);
 Node_1C10C0* Node_Construct(void* p, PopReader_1C10C0* r, int i);
 void func_00165E60(void* a, char* name, int x);
-void* func_001698C0(void);
+void* App_GetInstance(void);
 void PtrVector_Resize(Vec_1C10C0* v, int n, void** fill);
 void func_0040C940(Node_1C10C0* n);
 void World_RegisterNode(void* w, Node_1C10C0* n);
@@ -35,7 +35,7 @@ extern "C" void Loader_InitNodes(void* a0, PopReader_1C10C0* r)
 {
     if (r->cur) {
         int mis;
-        func_00165E60(func_001698C0(), "Initializing Nodes...", 0);
+        func_00165E60(App_GetInstance(), "Initializing Nodes...", 0);
         mis = (int)((unsigned long long)(unsigned int)r->cur & 3);
         if (mis)
             r->cur += 4 - mis;
@@ -99,7 +99,7 @@ extern "C" void Loader_InitEnvironmentSettings(void* a0, PopReader_1C12A0* r)
     int n;
     void* list;
     int i;
-    func_00165E60(func_001698C0(), "Initializing Environment Settings...", 0);
+    func_00165E60(App_GetInstance(), "Initializing Environment Settings...", 0);
     mis = (int)((unsigned long long)(unsigned int)r->cur & 3);
     if (mis)
         r->cur += 4 - mis;

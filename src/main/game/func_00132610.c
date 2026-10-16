@@ -6,19 +6,19 @@ typedef struct { F8Plc world; char pad20[0x30]; F8Plc local; } F8RootW;
 typedef struct F8Root { F8Plc world; char pad20[0x30]; F8Plc local; char pad70[0x30]; unsigned char dirty; char padA1[0xF]; struct F8Root* parent; } F8Root;
 extern F8RootW* Root_Identity(void* self);
 extern int Root_GetParent(F8Root* r);
-extern V4* func_001325F0(V4* d, V4* s);
+extern V4* Quat_Assign(V4* d, V4* s);
 extern V4* Vec4_Copy(V4* d, V4* s);
 extern void* Placement_GetQuat(F8Plc* p);
 extern void* Placement_GetPosition(F8Plc* p);
 extern void func_00132530(F8RootW* w, void* q);
 extern void func_00132510(F8RootW* w, void* pos);
 extern V4* func_00132840(V4* self);
-extern void func_00132810(V4* a, V4* b, V4* c);
+extern void Quat_Multiply(V4* a, V4* b, V4* c);
 extern V4* func_00132800(V4* d, V4* s);
 void Root_RefreshWorldCache(F8Root* r);
 static inline void F8PlcCopy(F8Plc* d, F8Plc* s)
 {
-    func_001325F0(&d->q, &s->q);
+    Quat_Assign(&d->q, &s->q);
     Vec4_Copy(&d->pos, &s->pos);
 }
 static inline F8Plc* ParentPlc_(F8Root* p)
@@ -63,7 +63,7 @@ void Root_RefreshWorldCache(F8Root* r)
         V4* pv;
         { V4* s = &r->local.q; Q6(&r->world.q,s); Q6(&r->world.pos,s+1); }
         func_00132840(&t);
-        func_00132810(&t, &pp->q, &r->world.q);
+        Quat_Multiply(&t, &pp->q, &r->world.q);
         func_00132800(&u, &t);
         r->world.q = u;
         { void* xx = &u; } /* dead: retail's duplicate addiu v1,sp,0x70 */

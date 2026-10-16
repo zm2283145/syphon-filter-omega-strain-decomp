@@ -21,7 +21,7 @@ static inline void S1C9430_release(S1C9430* p)
     if (p->type == 5 && S1C9430_busy(p)) p->state = 2;
     else p->state = 0;
 }
-void func_001C9430(int owner, long long pp)
+void SoundMgr_OnStreamReply(int owner, long long pp)
 {
     S1C9430* p = (S1C9430*)(int)pp;
     if (owner == 0) { S1C9430_release(p); return; }
@@ -54,7 +54,7 @@ static inline void merge_flush_func_001C94D0(void) {}
 /* merge_units: begin func_001C9540 */
 #pragma push /* merge_units */
 extern void snd_SetMasterVolume(int, int);
-void func_001C9540(void* self, unsigned char kind, int v)
+void SoundMgr_SetChannelVolume(void* self, unsigned char kind, int v)
 {
     switch (kind) {
     case 0: snd_SetMasterVolume(0, v); snd_SetMasterVolume(3, v); break;

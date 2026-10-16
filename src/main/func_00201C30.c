@@ -10,13 +10,13 @@
 extern void* D_004DFBF0;
 extern MotionNode* MotionNode_BaseCopy(MotionNode*, MotionNode*);
 extern ObjVec* MotionSlider_CopyChildren(ObjVec*, ObjVec*);
-extern int func_001325F0(int*, int*);
+extern int Quat_Assign(int*, int*);
 extern int func_00201D20(ObjVec*);
 
 /* Copy of the MotionNode base part (type byte and name). */
 MotionNode* func_00201C30(MotionNode* dst, MotionNode* src) {
     dst->type = src->type;
-    func_001325F0(&dst->name, &src->name);
+    Quat_Assign(&dst->name, &src->name);
     return dst;
 }
 

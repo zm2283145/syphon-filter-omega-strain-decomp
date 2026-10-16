@@ -76,7 +76,7 @@ extern void func_00130B00(It_1BFF40* out, void* tree);
 extern void func_001C00C0(It_1BFF40* out, void* tree);
 extern void Skas_AppendAnimation(void* anim, Str_1BFF40* name, void* r);
 extern void Tree_Successor(It_1BFF40* it);
-extern void func_0036E220(File_1BFF40* f, int x);
+extern void FileMan_Release(File_1BFF40* f, int x);
 extern char D_0048B2F8[];
 extern char D_004FFB8C[];
 extern char D_004FFBC0[];
@@ -115,7 +115,7 @@ void SkaRegistry_LoadAnimation(void* mgr, char* name)
             Tree_Successor(&it);
         }
     }
-    func_0036E220(&file, -1);
+    FileMan_Release(&file, -1);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_001BFF40 */

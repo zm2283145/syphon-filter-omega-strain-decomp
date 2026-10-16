@@ -81,14 +81,14 @@ static inline void merge_flush_func_00380D20(void) {}
 /* merge_units: begin func_00380D40 */
 #pragma push /* merge_units */
 extern void func_0036DFB0(void* obj, char* name, void* obj2);
-extern void func_0037FEA0(void* self, void* obj, __int128* name);
-/* Formats a 16-byte name into a buffer, applies it to obj, then forwards to func_0037FEA0. */
+extern void TexMan_LoadNewTexture(void* self, void* obj, __int128* name);
+/* Formats a 16-byte name into a buffer, applies it to obj, then forwards to TexMan_LoadNewTexture. */
 void func_00380D40(void* self, __int128 name, void* obj)
 {
     char buf[80];
     sprintf(buf, "%s.TDX", &name);
     func_0036DFB0(obj, buf, obj);
-    func_0037FEA0(self, obj, &name);
+    TexMan_LoadNewTexture(self, obj, &name);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00380D40(void) {}

@@ -14,7 +14,7 @@ typedef struct { char pad[0x10]; float m[4][4]; } Obj;
 extern int D_004F7DA0[];
 extern Vec4_002440D0 func_003ECB50(int a, float b);
 
-void func_002440D0(Obj* p)
+void Hud_InitCalloutRects(Obj* p)
 {
     int i;
     Vec4_002440D0 v;
@@ -67,11 +67,11 @@ static inline void merge_flush_func_002441E0(void) {}
 
 /* merge_units: begin func_00244240 */
 #pragma push /* merge_units */
-void func_00244280(int arg0); /* gsynth: defined below */
+void Hud_ClearTargetLock(int arg0); /* gsynth: defined below */
 #if 0 /* merge_units */
-extern void func_00244280(int);
+extern void Hud_ClearTargetLock(int);
 #endif /* merge_units */
-#define func_00244280(a0) (func_00244280((a0))) /* merge_units */
+#define Hud_ClearTargetLock(a0) (Hud_ClearTargetLock((a0))) /* merge_units */
 
 extern void func_003E9730(int);
 
@@ -86,11 +86,11 @@ void Hud_OnTargetChanged(int a0) {
     func_003E9730(a0);
 L00244268:;
     a0 = s0;
-    func_00244280(a0);
+    Hud_ClearTargetLock(a0);
     goto ret;
 ret:;
 }
-#undef func_00244280 /* merge_units */
+#undef Hud_ClearTargetLock /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00244240(void) {}
 #pragma pop /* merge_units */
@@ -103,7 +103,7 @@ int func_003E8EB0(int);
 int func_003E9770(int);                               
 
 #pragma opt_common_subs off
-void func_00244280(int arg0) {
+void Hud_ClearTargetLock(int arg0) {
     int temp_a0;
     int temp_a0_2;
 
@@ -129,14 +129,14 @@ static inline void merge_flush_func_00244280(void) {}
 #pragma push /* merge_units */
 typedef struct { char pad[0x68]; void* p68; } Obj_42E0;
 typedef struct { float v[4]; } Buf_42E0;
-extern void func_00260D90(Buf_42E0* out, float t);
+extern void Hud_GetLockColour(Buf_42E0* out, float t);
 extern void func_003E7EE0(void* p, Buf_42E0* b);
 extern void func_003F45A0(void* p, float f);
 
 void func_002442E0(Obj_42E0* o, float t) {
     Buf_42E0 b;
     if (o->p68) {
-        func_00260D90(&b, 1.0f - t);
+        Hud_GetLockColour(&b, 1.0f - t);
         func_003E7EE0(o->p68, &b);
         if (t < 0.95f) func_003F45A0(o->p68, 15.0f * t);
         else func_003F45A0(o->p68, 15.0f);

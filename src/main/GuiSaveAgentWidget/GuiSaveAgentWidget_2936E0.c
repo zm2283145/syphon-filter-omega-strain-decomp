@@ -57,10 +57,10 @@ DEFINE_VTABLE_BASE_DTOR(func_00293770, D_004E1220, func_0041F370)
 
 /* Three-level destructor: restore vtables, run base destructor, optionally delete. */
 extern "C" {
-extern "C" void func_00292AD0();
-extern "C" void func_00292B90();
-extern "C" void func_00292DD0();
-extern "C" void func_00293660();
+extern "C" void GuiAgentLoad_HandleInput();
+extern "C" void GuiAgentLoad_HandleEvent();
+extern "C" void GuiAgentLoad_Wake();
+extern "C" void GuiAgentLoad_Update();
 extern "C" void func_00293850();
 extern "C" void func_00293860();
 extern "C" void func_00293890();
@@ -97,6 +97,6 @@ extern "C" Vtable3Object* func_002937D0(Vtable3Object* self, short deleteFlag)
     }
     return self;
 }
-void * const D_004DD400[24] = { (void*)0x0, (void*)0x0, (void*)func_002937D0, (void*)func_0041F150, (void*)func_0041F090, (void*)func_0041F080, (void*)func_0041F070, (void*)func_00292DD0, (void*)func_0041EBF0, (void*)func_0041E330, (void*)func_0041E2B0, (void*)func_00292AD0, (void*)func_0041E470, (void*)func_0041E230, (void*)func_00293660, (void*)func_00292B90, (void*)func_0041F210, (void*)func_0041D8C0, (void*)func_0041D780, (void*)func_0041D5C0, (void*)func_0041D400, (void*)func_00293850, (void*)func_00293860, (void*)func_00293890 };
+void * const D_004DD400[24] = { (void*)0x0, (void*)0x0, (void*)func_002937D0, (void*)func_0041F150, (void*)func_0041F090, (void*)func_0041F080, (void*)func_0041F070, (void*)GuiAgentLoad_Wake, (void*)func_0041EBF0, (void*)func_0041E330, (void*)func_0041E2B0, (void*)GuiAgentLoad_HandleInput, (void*)func_0041E470, (void*)func_0041E230, (void*)GuiAgentLoad_Update, (void*)GuiAgentLoad_HandleEvent, (void*)func_0041F210, (void*)func_0041D8C0, (void*)func_0041D780, (void*)func_0041D5C0, (void*)func_0041D400, (void*)func_00293850, (void*)func_00293860, (void*)func_00293890 };
 #pragma pop /* merge_units */
 /* merge_units: end func_002937D0 */

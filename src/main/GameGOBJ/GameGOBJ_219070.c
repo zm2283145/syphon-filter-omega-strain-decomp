@@ -51,7 +51,7 @@ extern void Event_Construct(void* m, void* type);
 extern void Event_Send(void* m, void* target, int immediate);
 extern void cMessage_dtor(void* m, int flags);
 extern void SoundEvent_CtorFromPreset(Snd_00219070* e, void* preset, void* owner);
-extern void func_0036E220(Str_00219070* s, int flag);
+extern void FileMan_Release(Str_00219070* s, int flag);
 extern int Object_HandleMessage(Path_00219070* self, void* ev);
 }
 static inline int ObjId_00219070(Obj_00219070* o) { return o ? o->id : 0; }
@@ -80,8 +80,8 @@ extern "C" int PathObj_Receive(Path_00219070* self, void* ev)
             s.flag = 1;
             Event_Send(&s, D_004FFB50, 1);
             s.vt = D_004DAE30;
-            func_0036E220(&s.s114, -1);
-            func_0036E220(&s.s78, -1);
+            FileMan_Release(&s.s114, -1);
+            FileMan_Release(&s.s78, -1);
             cMessage_dtor(&s, 0);
         }
         for (i = 0; i < self->count; i++) {

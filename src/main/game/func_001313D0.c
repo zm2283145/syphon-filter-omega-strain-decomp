@@ -9,7 +9,7 @@
 
 extern ListIter* List_InsertBefore(ListIter* out, LinkList* list, ListIter* pos, int* value);
 extern ListIter* List_PushBack(LinkList* list, int* value);
-extern int func_002426D0(int);
+extern int Hud_SetPlayerId(int);
 
 /* Inserts *value at the front of the list. */
 ListIter* List_PushFront(LinkList* list, int* value) {
@@ -20,10 +20,10 @@ ListIter* List_PushFront(LinkList* list, int* value) {
     return List_InsertBefore(&result, list, &pos, value);
 }
 
-/* Stores the actor in world +0xBC and registers actor->+0x30 (+0xC) with func_002426D0. */
+/* Stores the actor in world +0xBC and registers actor->+0x30 (+0xC) with Hud_SetPlayerId. */
 int World_RegisterActor(char* world, char* actor) {
     *(char**)(world + 0xBC) = actor;
-    return func_002426D0(*(int*)(actor + 0x30) + 12);
+    return Hud_SetPlayerId(*(int*)(actor + 0x30) + 12);
 }
 
 /* Appends node to the list at world +0x9C. */

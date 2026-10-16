@@ -95,8 +95,8 @@ A_342FA0* Agent_GetSelected(void* p, int i);
 #endif /* merge_units */
 #define Agent_GetSelected(a0, a1) ((A_342FA0 *)Agent_GetSelected((a0), (a1))) /* merge_units */
 
-char* func_00336170(A_342FA0* a);
-char* func_00336110(A_342FA0* a);
+char* AgentData_GetName(A_342FA0* a);
+char* AgentData_GetRankText(A_342FA0* a);
 void func_0041BEB0(W_342FA0* w, char* s, int f);
 int Loc_FindKeyThunk(char* k);
 char* Loc_GetTextById(int id);
@@ -148,8 +148,8 @@ void func_00342FA0(O_342FA0* o)
     a = Cast_342FA0(GuiWidget_FindChildByName(o, "value_agent"), D_004A7520);
     b = Cast_342FA0(GuiWidget_FindChildByName(o, "value_rank"), D_004A7520);
     if (Agent_GetSelected(D_004FFB50, -1)->bB70) {
-        func_0041BEB0(a, func_00336170(Agent_GetSelected(D_004FFB50, -1)), 0);
-        func_0041BEB0(b, func_00336110(Agent_GetSelected(D_004FFB50, -1)), 0);
+        func_0041BEB0(a, AgentData_GetName(Agent_GetSelected(D_004FFB50, -1)), 0);
+        func_0041BEB0(b, AgentData_GetRankText(Agent_GetSelected(D_004FFB50, -1)), 0);
     } else {
         func_0041BEB0(a, "Player", 0);
         func_0041BEB0(b, Loc_GetTextById(Loc_FindKeyThunk("Rank_00") + 1), 0);

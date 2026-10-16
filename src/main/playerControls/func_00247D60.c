@@ -119,7 +119,7 @@ void Targeting_LockTimer(Input* s, float dt);
 void func_00244960(char* hud, float f);
 unsigned char WeaponInv_GetHeldClass(char* inv);
 void func_002497C0(void* aim, void* cam, Obj* actor);
-Obj* func_00249B10(Input* s, void* cam, Obj* actor);
+Obj* PlayerInput_AimViewLock(Input* s, void* cam, Obj* actor);
 void PlayerInput_AimViewPointAction(Input* s, void* cam, Obj* actor);
 void PlayerInput_LookAtLockAction(Input* s, Obj* o, Obj* actor);
 Obj* Targeting_LockPick(Obj* actor, Obj* cur, void* recent);
@@ -133,10 +133,10 @@ void func_00249490(Input* s, Obj* actor, V* v);
 int Inventory_GetEquipMode(char* inv);
 int Actor_IsFlashlightOn(Obj* actor);
 int func_00159570(void* p);
-Obj** func_00159560(void* p);
+Obj** List_Front(void* p);
 void Hud_OnTargetChanged(char* hud);
-void func_00244380(char* hud, int* id, int sub);
-void func_00244280(char* hud);
+void Hud_ShowTargetLock(char* hud, int* id, int sub);
+void Hud_ClearTargetLock(char* hud);
 void func_002442E0(char* hud, float f);
 }
 
@@ -209,7 +209,7 @@ extern "C" void Player_RunTargeting(Input* self, void* cam, Obj* actor, bool r1,
                 func_002497C0(self->aim, cam, actor);
                 HSet(&self->lock, 0);
             } else {
-                HSet(&self->lock, func_00249B10(self, cam, actor));
+                HSet(&self->lock, PlayerInput_AimViewLock(self, cam, actor));
             }
             PlayerInput_AimViewPointAction(self, cam, actor);
         }
@@ -282,12 +282,12 @@ extern "C" void Player_RunTargeting(Input* self, void* cam, Obj* actor, bool r1,
         }
     }
     {
-        Obj* cur = func_00159570(D_004FFC14) ? *func_00159560(D_004FFC14) : 0;
+        Obj* cur = func_00159570(D_004FFC14) ? *List_Front(D_004FFC14) : 0;
         if (D_004FFC10 != cur) {
             Hud_OnTargetChanged(hud);
         } else {
-            if (!autoLock && (none.v = -1, id != none.v)) func_00244380(hud, &id, self->sub);
-            else func_00244280(hud);
+            if (!autoLock && (none.v = -1, id != none.v)) Hud_ShowTargetLock(hud, &id, self->sub);
+            else Hud_ClearTargetLock(hud);
         }
     }
 tail:

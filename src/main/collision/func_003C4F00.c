@@ -32,10 +32,10 @@ void func_003C65B0(Scene*);
 void func_00183270(It*, Lst*);
 void func_00183260(It*, It*);
 void func_00183230(It*, Lst*);
-Xf* func_00183220(Actor*);
-int func_001830D0(Actor*);
-int* func_00183070(PA*, Actor**);
-int* func_00183050(PA*);
+Xf* Object_GetRootNode(Actor*);
+int GameObject_IsCollisionEnabled(Actor*);
+int* InlinePtrArray_Find(PA*, Actor**);
+int* InlinePtrArray_End(PA*);
 void func_003C65A0(Q70*);
 void func_003C6440(Q70*, Box*, Actor*, Xf*);
 void func_003C6330(Shape*, void*, void*);
@@ -80,17 +80,17 @@ void Los_GatherCandidates(Gath* self, Scene* scene, Box* box, int a3)
             act = p;
             Shape* sh = act->GetShape();
             if (sh != 0) {
-                Xf* xf = func_00183220(act);
+                Xf* xf = Object_GetRootNode(act);
                 if (xf != 0) {
-                    if (func_001830D0(act)
-                        && func_00183070(&self->list, &act) == func_00183050(&self->list)) {
+                    if (GameObject_IsCollisionEnabled(act)
+                        && InlinePtrArray_Find(&self->list, &act) == InlinePtrArray_End(&self->list)) {
                         func_003C65A0(&q);
                         func_003C6440(&q, box, act, xf);
                         func_003C6330(sh, (void*)0x70000000, &q);
                     }
                 } else {
-                    if (func_001830D0(act)
-                        && func_00183070(&self->list, &act) == func_00183050(&self->list)) {
+                    if (GameObject_IsCollisionEnabled(act)
+                        && InlinePtrArray_Find(&self->list, &act) == InlinePtrArray_End(&self->list)) {
                         func_003C6330(sh, (void*)0x70000000, box);
                     }
                 }

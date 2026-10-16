@@ -10,7 +10,7 @@ void func_0043D820(void* p, int v);
 void func_0043D760(void* p, int v);
 void func_002AEC60(void* p);
 int func_0033E2A0(O_33DA00* o, void* w, int v);
-int func_0033CEF0(O_33DA00* o, Ev_33DA00* ev);
+int GuiScreen_HandleInput(O_33DA00* o, Ev_33DA00* ev);
 static inline unsigned char Down_33DA00(Ev_33DA00* e) { unsigned char r = 0; if (e->type == 1 && e->b2 == 0) r = 1; return r; }
 static inline unsigned char Btn_33DA00(Ev_33DA00* e, int b) { unsigned char r = 0; if (Down_33DA00(e) && e->btn == b) r = 1; return r; }
 static inline unsigned char Plain_33DA00(Ev_33DA00* e, int b) { unsigned char r = 0; if (Btn_33DA00(e, b) && e->b6 == 0) r = 1; return r; }
@@ -55,5 +55,5 @@ int func_0033DA00(O_33DA00* o, Ev_33DA00* ev)
         { void* w = Gui_GetScreenStack()->f20; func_0041E0F0(w, Gui_GetScreenStack(), 0x10, 0, 0); }
         return 1;
     }
-    return func_0033CEF0(o, ev);
+    return GuiScreen_HandleInput(o, ev);
 }

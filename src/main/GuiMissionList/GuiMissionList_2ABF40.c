@@ -261,7 +261,7 @@ extern int D_004ACB30[];
 extern const char* D_0048C160[];
 extern void* Agent_GetSelected(void* list, int idx);
 extern __int128 func_003FDA40(const char* s);
-extern int func_00332FE0(void* agent, __int128 key);
+extern int AgentData_IsLevelDone(void* agent, __int128 key);
 extern unsigned char func_0044A0D0(void* g, int id, int a);
 extern unsigned char func_0044D670(void* g, int id, int a);
 int func_002AC470(S_002AC470* self, E_002AC470* e)
@@ -296,7 +296,7 @@ int func_002AC470(S_002AC470* self, E_002AC470* e)
                 if (cur == -1 || k == cur) {
                     if (D_004FFBB5) {
                         void* ag = Agent_GetSelected(D_004FFB50, -1);
-                        if (!func_00332FE0(ag, func_003FDA40(D_0048C160[D_004ACB30[k]])))
+                        if (!AgentData_IsLevelDone(ag, func_003FDA40(D_0048C160[D_004ACB30[k]])))
                             goto check;
                     }
                     if (e->f34 && e->f34 < e->f38) {

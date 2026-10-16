@@ -23,7 +23,7 @@ void GuiStack_SwapScreens(void* mgr, S_3617C0* o, void* w);
 void func_002A88C0(It_3617C0* out, void* list, W_3617C0** val);
 void func_002A88B0(It_3617C0* out, void* list);
 int func_002A8890(It_3617C0* a, It_3617C0* b);
-int func_0033CEF0(S_3617C0* o);
+int GuiScreen_HandleInput(S_3617C0* o);
 int func_003617C0(S_3617C0* o, Ev_3617C0* ev);
 }
 static inline unsigned char Down_3617C0(Ev_3617C0* e) { unsigned char r = 0; if (e->type == 1 && e->b2 == 0) r = 1; return r; }
@@ -62,5 +62,5 @@ int func_003617C0(S_3617C0* o, Ev_3617C0* ev)
         o->p120->zoom += NoMod2_3617C0(ev) ? 1.0f : -1.0f;
         return 1;
     }
-    return func_0033CEF0(o);
+    return GuiScreen_HandleInput(o);
 }

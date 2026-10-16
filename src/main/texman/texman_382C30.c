@@ -18,7 +18,7 @@ extern N382C30* func_00380270(void* list, int off);
 extern void func_00383560(int* out, void* list, N382C30** it);
 #pragma push
 #pragma opt_common_subs off
-void func_00382C30(M382C30* m, int idx)
+void TexMan_ReleaseSlot(M382C30* m, int idx)
 {
     int r[1];
     N382C30* it[1];

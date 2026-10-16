@@ -22,7 +22,7 @@ void Object_Register(void* o);
 int Pop_FindTag(PopReader_1C30A0* r, int tag);
 void* cNIEventLight_ctor(void* p, PopReader_1C30A0* r);
 void func_00165E60(void* a, char* name, int x);
-void* func_001698C0(void);
+void* App_GetInstance(void);
 }
 extern "C" void Loader_InitNIEventLights(void* a0, PopReader_1C30A0* r)
 {
@@ -33,7 +33,7 @@ extern "C" void Loader_InitNIEventLights(void* a0, PopReader_1C30A0* r)
         if (n) {
             int i;
             int mis;
-            func_00165E60(func_001698C0(), "Initializing NI Event Lights...", 0);
+            func_00165E60(App_GetInstance(), "Initializing NI Event Lights...", 0);
             for (i = 0; i < n; i++) {
                 void* p;
                 {
@@ -78,7 +78,7 @@ extern "C" void Loader_InitNIEventObjects(void* a0, PopReader_1C3210* r, void* x
         if (n) {
             int i;
             int mis;
-            func_00165E60(func_001698C0(), "Initializing NI Event Objects...", 0);
+            func_00165E60(App_GetInstance(), "Initializing NI Event Objects...", 0);
             for (i = 0; i < n; i++) {
                 void* p;
                 {
@@ -122,7 +122,7 @@ extern "C" void Loader_InitSoundGOBJs(void* a0, PopReader_1C3390* r)
         if (n) {
             int i;
             int mis;
-            func_00165E60(func_001698C0(), "Initializing SoundGOBJs...", 0);
+            func_00165E60(App_GetInstance(), "Initializing SoundGOBJs...", 0);
             for (i = 0; i < n; i++) {
                 int kind;
                 void* p;

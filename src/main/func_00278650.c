@@ -52,13 +52,13 @@ extern long long D_005381F8;
 extern int D_00538C64;
 extern char D_00538C68;
 extern long long D_004BC1B0[];
-void func_003820E0(void* m, int idx);
+void Renderer_BindTexture(void* m, int idx);
 void func_0025CD10(void* s);
 void func_0025CA40(void* s);
 void func_00371200(void* s);
 void Vec4_Copy(V* d, const V* s);
-void func_0025C9D0(V* d, const V* s);
-float func_0025F220(void);
+void GuiBatch_AddVertexColor(V* d, const V* s);
+float GuiBatch_AddVertexUV(void);
 V* func_00132000(V* o, float x, float y, float z, float w);
 }
 #define D_00539220 (D_00539210.f20)
@@ -106,9 +106,9 @@ static inline void Emit(const V& pos, const V& col, const V& uv)
     func_0025CA40(D_005381F0);
     e = &RS->ents[D_00539210.f10];
     Vec4_Copy(&e->pos[D_00539224 - 1], &pos);
-    func_0025C9D0(&e->c30[D_00539224 - 1], &col);
-    u = uv.x + func_0025F220();
-    Vec4_Copy(&e->c34[D_00539224 - 1], func_00132000(&tmp, u, uv.y + func_0025F220(), uv.z, uv.w));
+    GuiBatch_AddVertexColor(&e->c30[D_00539224 - 1], &col);
+    u = uv.x + GuiBatch_AddVertexUV();
+    Vec4_Copy(&e->c34[D_00539224 - 1], func_00132000(&tmp, u, uv.y + GuiBatch_AddVertexUV(), uv.z, uv.w));
     D_005381F8 = 6LL << 32;
 }
 static inline bool EndStrip(void)
@@ -131,7 +131,7 @@ static inline bool EndStrip(void)
     return true;
 }
 
-extern "C" void func_00278650(Arg* a)
+extern "C" void DecalMgr_Draw(Arg* a)
 {
     int saved;
     int tex;
@@ -180,7 +180,7 @@ extern "C" void func_00278650(Arg* a)
                 Begin();
                 if (tex != it->tex) {
                     tex = it->tex;
-                    func_003820E0(D_00539248, tex);
+                    Renderer_BindTexture(D_00539248, tex);
                 }
                 if (b != blend) {
                     blend = b;

@@ -10,7 +10,13 @@ extern void Node_GetFlag2C();
 extern void Node_SetFlag2C();
 extern void Object_AttachTransform();
 extern void Object_GetAttachedOrSelf();
+extern void Object_GetEye();
 extern void Object_HandleMessage();
+extern void ParticleGob_Draw();
+extern void ParticleGob_GetBounds();
+extern void ParticleGob_OnAbsent();
+extern void ParticleGob_OnPresent();
+extern void ParticleGob_RequestPar();
 extern void PathObj_GetPosition();
 extern void Player_GetActiveWeapon();
 extern void cPARTICLE_GOBJ_dtor();
@@ -28,7 +34,6 @@ extern void func_0013E060();
 extern void func_00140E90();
 extern void func_00141850();
 extern void func_00148870();
-extern void func_0014D340();
 extern void func_00153860();
 extern void func_0015BFB0();
 extern void func_0015BFC0();
@@ -48,11 +53,6 @@ extern void func_001748B0();
 extern void func_001C5670();
 extern void func_003926A0();
 extern void func_003926B0();
-extern void func_003941A0();
-extern void func_00394270();
-extern void func_003943A0();
-extern void func_00394520();
-extern void func_00394720();
 extern void func_00394740();
 extern void func_00394850();
 extern void func_00394AD0();
@@ -85,15 +85,15 @@ void *D_004DF860[68] = {
     &func_0012ECE0, &Object_GetAttachedOrSelf, &func_0015C090, &func_0012ED00,
     &func_003CE810, &func_003CE7D0, &func_0012ED30, &func_0012ED40,
     &func_0012ED50, &func_003926A0, &func_003926B0, &func_003CEA00,
-    &func_00394740, &func_00394720, &cPARTICLE_GOBJ_v10, &Actor_BasePreLogic,
-    &Actor_BaseWorldUpdate, &Actor_VirtualNop, &func_00394520, &func_00394270,
-    &func_003941A0, &Node_SetFlag2C, &Node_ClearFlag2C, &Node_GetFlag2C,
+    &func_00394740, &ParticleGob_RequestPar, &cPARTICLE_GOBJ_v10, &Actor_BasePreLogic,
+    &Actor_BaseWorldUpdate, &Actor_VirtualNop, &ParticleGob_Draw, &ParticleGob_OnPresent,
+    &ParticleGob_OnAbsent, &Node_SetFlag2C, &Node_ClearFlag2C, &Node_GetFlag2C,
     &func_0015BFB0, &func_0015BFC0, &func_0015BFD0, &func_00148870,
-    &func_0015BFF0, &func_0015BFE0, &func_003943A0, &func_001C5670,
+    &func_0015BFF0, &func_0015BFE0, &ParticleGob_GetBounds, &func_001C5670,
     &Object_AttachTransform, &Player_GetActiveWeapon, &func_003CDDC0, &func_003CDD80,
     &func_003CDD40, &func_003CDC20, &func_003CDBE0, &func_003CDA60,
     &func_003CD920, &func_003CD7A0, &func_0015C010, &func_00153860,
-    &func_0014D340, &func_0015C020, &func_00140E90, &func_0015C030,
+    &Object_GetEye, &func_0015C020, &func_00140E90, &func_0015C030,
     &func_0015C040, &func_0015C050, &func_003CD520, &func_003CD4A0,
     &func_003CD420, &PathObj_GetPosition, &func_003CD1C0, &func_003CD110,
     &func_003CD090, &func_003CCFF0, &func_0013E060, &func_0015C080,
@@ -113,7 +113,7 @@ void *D_004DF970[68] = {
     &func_00394850, &Player_GetActiveWeapon, &func_003CDDC0, &func_003CDD80,
     &func_003CDD40, &func_003CDC20, &func_003CDBE0, &func_003CDA60,
     &func_003CD920, &func_003CD7A0, &func_001748B0, &func_00153860,
-    &func_0014D340, &func_0015C020, &func_00140E90, &func_0015C030,
+    &Object_GetEye, &func_0015C020, &func_00140E90, &func_0015C030,
     &func_0015C040, &func_0015C050, &func_003CD520, &func_003CD4A0,
     &func_003CD420, &PathObj_GetPosition, &func_003CD1C0, &func_003CD110,
     &func_003CD090, &func_003CCFF0, &func_0013E060, &func_0015C080,

@@ -16,7 +16,7 @@ extern char D_004A7520[];
 extern char D_004C1A38[];
 extern char D_004FFB50[];
 extern int Agent_GetSelected(char*, int);
-extern char* func_00336170(int);
+extern char* AgentData_GetName(int);
 extern void func_0041BEB0(V456*, char*, int);
 }
 extern "C" void func_00456F90(void* w) {
@@ -25,7 +25,7 @@ extern "C" void func_00456F90(void* w) {
     p = GuiWidget_FindChildByName(w, "value_agentname");
     p = (p && p->v20(D_004A7520)) ? p : 0;
     if (p) {
-        char* s = func_00336170(Agent_GetSelected(D_004FFB50, -1));
+        char* s = AgentData_GetName(Agent_GetSelected(D_004FFB50, -1));
         func_0041BEB0(p, s ? s : D_004C1A38, 0);
     }
 }

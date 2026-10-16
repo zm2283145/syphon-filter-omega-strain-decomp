@@ -16,7 +16,7 @@ extern char D_004A9708[];
 extern char D_004A9718[];
 extern char D_004A9720[];
 extern char D_004A9730[];
-int func_0033CF90(S_00289C80* self, void* w, int msg, int sub);
+int GuiScreen_HandleEvent(S_00289C80* self, void* w, int msg, int sub);
 void func_0028A230(S_00289C80* self);
 void func_0028A180(S_00289C80* self);
 void func_00289440(S_00289C80* self);
@@ -26,7 +26,7 @@ void GuiScreen_SetFocus(void* ui, void* w);
 char* String_CStr(void* s);
 int strcmp(const char* a, const char* b);
 void String_Copy(char* d, const char* s);
-char* func_00336170(Ag_00289C80* ag);
+char* AgentData_GetName(Ag_00289C80* ag);
 void func_00441C20(S_00289C80* self, char* n);
 void GuiSaveAgentWidget_HandleEvent(S_00289C80* self);
 char* Loc_LookupText(char* key);
@@ -41,7 +41,7 @@ extern "C" int func_00289C80(S_00289C80* self, void* w, int msg, int sub, char* 
 {
     unsigned short m;
     if (D_00506378)
-        return func_0033CF90(self, w, msg, sub);
+        return GuiScreen_HandleEvent(self, w, msg, sub);
     m = msg;
     if (m == 2) {
         Txt_00289C80* a = self->p88;
@@ -75,7 +75,7 @@ extern "C" int func_00289C80(S_00289C80* self, void* w, int msg, int sub, char* 
             self->p94->flags &= ~4;
             GuiScreen_SetFocus(Gui_GetScreenStack(), self->p90);
         } else {
-            return func_0033CF90(self, w, msg, sub);
+            return GuiScreen_HandleEvent(self, w, msg, sub);
         }
         return 1;
     }
@@ -93,7 +93,7 @@ extern "C" int func_00289C80(S_00289C80* self, void* w, int msg, int sub, char* 
                     changed = 1;
                 }
                 n = String_CStr(self->p8C->s48);
-                if (strcmp(n, func_00336170(self->p9C))) {
+                if (strcmp(n, AgentData_GetName(self->p9C))) {
                     func_00441C20(self, String_CStr(self->p8C->s48));
                 } else {
                     unsigned char* f = &D_004FFC04->b265;
@@ -147,5 +147,5 @@ extern "C" int func_00289C80(S_00289C80* self, void* w, int msg, int sub, char* 
             }
         }
     }
-    return func_0033CF90(self, w, msg, sub);
+    return GuiScreen_HandleEvent(self, w, msg, sub);
 }

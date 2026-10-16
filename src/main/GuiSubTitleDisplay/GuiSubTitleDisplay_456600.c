@@ -58,7 +58,7 @@ extern char D_004FFB50[];
 Mgr_4566D0* Gui_GetScreenStack(void);
 void Hud_ClosePauseMenu(void* p);
 void Game_SetPaused(void* p, int v);
-int func_00368300(O_4566D0* o, Ev_4566D0* ev);
+int GuiObjectives_HandleInput(O_4566D0* o, Ev_4566D0* ev);
 int func_004566D0(O_4566D0* o, Ev_4566D0* ev);
 }
 static inline bool Down2_4566D0(Ev_4566D0* e) { return e->type == 1 && e->b2 == 0; }
@@ -79,7 +79,7 @@ int func_004566D0(O_4566D0* o, Ev_4566D0* ev)
             Game_SetPaused(D_004FFB50, 0);
         return 1;
     }
-    return func_00368300(o, ev);
+    return GuiObjectives_HandleInput(o, ev);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_004566D0 */

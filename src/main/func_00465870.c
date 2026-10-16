@@ -10,7 +10,7 @@ extern int D_00497BE8;
 extern int D_004FFC04;
 extern G465* D_004FFC2C;
 extern char D_004FFB50[];
-extern int func_002CABA0(int, int);
+extern int FrontEnd_FindPopup(int, int);
 extern char* Loc_LookupText(char*);
 extern void String_CtorCStr_13B480(S465*, char*);
 extern char* String_CStr(S465*);
@@ -27,7 +27,7 @@ void func_00465870(W465* w, float t) {
         if (ok) D_00587B20++;
         else D_00587B20 = 0;
         if (D_00587B20 >= 3) {
-            if (D_00497BE8 == -1 || !func_002CABA0(D_004FFC04, D_00497BE8)) {
+            if (D_00497BE8 == -1 || !FrontEnd_FindPopup(D_004FFC04, D_00497BE8)) {
                 S465 a;
                 S465 b;
                 String_CtorCStr_13B480(&a, Loc_LookupText("NoCtrlTitle"));

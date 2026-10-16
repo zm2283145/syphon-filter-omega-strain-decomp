@@ -25,7 +25,7 @@ struct N171260 { int m0; N171260* next; Ent171260* data; };
 struct Own171260 { char pad[0x320C]; int state; };
 struct Hb171260 { char pad[0x20]; Own171260* owner; float f24; char list[4]; };
 extern "C" {
-void func_0013B180(int* out, void* list);
+void List_Begin(int* out, void* list);
 void func_00170CE0(N171260** out, int* in);
 void func_00170D20(int* out, void* list);
 void func_00170D10(N171260** out, int* in);
@@ -43,7 +43,7 @@ extern "C" Ent171260* Hotbox_SelectInteraction(Hb171260* h, int mode)
         int t2;
         int bp;
         N171260* n;
-        func_0013B180(&t0, h->list);
+        List_Begin(&t0, h->list);
         func_00170CE0(&it, &t0);
         n = it;
         bp = -1;

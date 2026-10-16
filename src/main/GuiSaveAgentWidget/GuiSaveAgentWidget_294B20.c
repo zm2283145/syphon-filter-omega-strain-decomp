@@ -15,7 +15,7 @@ extern void func_0041BEB0(void* w, char* text, int f);
 static inline int IsZero294B20(int c) { return (c != 0) ^ 1; }
 static inline int IsSp294B20(int c) { return (char)c == ' '; }
 #pragma opt_rotateloops off
-void func_00294B20(S294B20* s, char* str)
+void GuiCommandCenter_SplitLevelName(S294B20* s, char* str)
 {
     char* p;
     char buf[0x70];
@@ -87,12 +87,12 @@ char* Loc_LookupText(char* key);
 void String_CtorCStr_13B480(Str_00294C60* s, const char* c);
 void func_0013D680(Str12_00294C60* d, Str_00294C60* s);
 void String_Dtor(Str_00294C60* s, int flags);
-int func_002071F0(Str12_00294C60* s);
+int String_Length(Str12_00294C60* s);
 char* String_CStr(Str12_00294C60* s);
 #if 0 /* merge_units */
-void func_00294B20(S_00294C60* self, char* t);
+void GuiCommandCenter_SplitLevelName(S_00294C60* self, char* t);
 #endif /* merge_units */
-#define func_00294B20(a0, a1) (func_00294B20((S294B20 *)(a0), (a1))) /* merge_units */
+#define GuiCommandCenter_SplitLevelName(a0, a1) (GuiCommandCenter_SplitLevelName((S294B20 *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
 void String_Copy(char* d, const char* s);
@@ -100,7 +100,7 @@ void String_Copy(char* d, const char* s);
 #define String_Copy(a0, a1) (String_Copy((a0), (char *)(a1))) /* merge_units */
 
 }
-extern "C" void func_00294C60(S_00294C60* self)
+extern "C" void GuiCommandCenter_SetTexts(S_00294C60* self)
 {
     char* key;
     int i;
@@ -132,7 +132,7 @@ extern "C" void func_00294C60(S_00294C60* self)
             }
             txt = (char*)&self->s204[i];
             {
-                bool e = func_002071F0((Str12_00294C60*)txt) == 0;
+                bool e = String_Length((Str12_00294C60*)txt) == 0;
                 if (e) {
                     txt = 0;
                 } else {
@@ -141,7 +141,7 @@ extern "C" void func_00294C60(S_00294C60* self)
                 }
             }
             if (txt)
-                func_00294B20(self, txt);
+                GuiCommandCenter_SplitLevelName(self, txt);
             else
                 func_0041BEB0(self->p98, key, 0);
             {
@@ -164,11 +164,11 @@ extern "C" void func_00294C60(S_00294C60* self)
         else if (k == self->fAC)
             func_0041BEB0(self->pA0, Loc_LookupText("UnlockedMedia"), 0);
         else if (k == self->fB0)
-            func_00294B20(self, Loc_LookupText("Training"));
+            GuiCommandCenter_SplitLevelName(self, Loc_LookupText("Training"));
     }
 }
 #undef func_0041BEB0 /* merge_units */
-#undef func_00294B20 /* merge_units */
+#undef GuiCommandCenter_SplitLevelName /* merge_units */
 #undef String_Copy /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00294C60 */
@@ -177,17 +177,17 @@ extern "C" void func_00294C60(S_00294C60* self)
 #pragma push /* merge_units */
 typedef struct { char pad[0x14]; unsigned short flags; } E294F50;
 typedef struct { char pad[0x118]; E294F50* items[45]; int cur; } S294F50;
-extern int func_002952C0(S294F50* s);
-extern void func_00295090(S294F50* s, int i, int f);
+extern int GuiCommandCenter_GetDefaultSlot(S294F50* s);
+extern void GuiCommandCenter_Select(S294F50* s, int i, int f);
 extern void* Gui_GetScreenStack(void);
 extern void func_0041E0F0(void* a, void* b, int c, int d, int e);
-void func_00294F50(S294F50* s, int dir)
+void GuiCommandCenter_MoveSelection(S294F50* s, int dir)
 {
     int cur = s->cur;
     int i;
     int step;
     if (cur == -1) {
-        func_00295090(s, func_002952C0(s), 1);
+        GuiCommandCenter_Select(s, GuiCommandCenter_GetDefaultSlot(s), 1);
         return;
     }
     {
@@ -207,7 +207,7 @@ void func_00294F50(S294F50* s, int dir)
                 e = s->items[i];
                 if (e && (e->flags & 4) && (e->flags & 2)) {
                     func_0041E0F0(s, Gui_GetScreenStack(), 0x10, 9, 0);
-                    func_00295090(s, i, 1);
+                    GuiCommandCenter_Select(s, i, 1);
                     return;
                 }
             }

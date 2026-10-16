@@ -88,7 +88,7 @@ int Agent_GetSelected(void*,int);int AgentData_IsObjectiveComplete(int,const cha
 int String_CompareNoCase(const char*,const char*);void String_Copy(char*,const char*);int atoi(const char*);char*Loc_LookupText(const char*);int sprintf(char*,const char*,...);
 extern char D_004AA200[],D_004AA210[],D_004AA228[],D_004AA238[],D_004AA248[],D_004AA250[],D_004AA260[],D_004AA268[],D_004AA270[],D_004AA280[],D_004FFB50[],D_004FFC90[];
 }
-extern "C" void func_00294300(CcBindings*self,unsigned char requested){
+extern "C" void GuiCommandCenter_OpenPanel(CcBindings*self,unsigned char requested){
  char label[32],text[32];int objective;
  unsigned prev=self->mode;if(prev){if(self->groups[prev]){self->groups[prev]->flags&=0xfffd;self->groups[self->mode]->flags&=0xfffb;}}
  int mode=requested;

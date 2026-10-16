@@ -1,6 +1,6 @@
 #include "types.h"
 typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
-void func_00132810(V4* a, V4* b, V4* c) {
+void Quat_Multiply(V4* a, V4* b, V4* c) {
     asm {
         lqc2 vf1, 0x0(b)
         lqc2 vf2, 0x0(c)

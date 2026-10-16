@@ -56,7 +56,7 @@ extern void NpcThinkList_Add(Actor_A890* actor);
 extern void NpcThinkList_RemoveActor(Actor_A890* actor);
 extern void ActiveList_EraseMatching(PtrVec* v, Pred_A890 p);
 extern void NpcAi_AddToDeadList(PtrVec* v, cNPC_A890** self);
-extern void func_0013B180(Iter* out, Tree* t);
+extern void List_Begin(Iter* out, Tree* t);
 extern Word* func_0014AB70(Word* dst, Word* src);
 extern void func_0014AB80(Iter* out, Tree* t);
 extern Word* func_0014ABC0(Word* dst, Word* src);
@@ -126,7 +126,7 @@ extern "C" void cNPC_v73(cNPC_A890* self, char on, int send)
             ActiveList_EraseMatching(&D_004EA370, Pred_A890(e, &self));
         }
     } else {
-        func_0013B180(&b2, &D_004EA190);
+        List_Begin(&b2, &D_004EA190);
         func_0014ABC0(&w1, (Word*)&b2);
         n = (Node_A890*)w1.value;
         func_0014AB80(&end3, &D_004EA190);

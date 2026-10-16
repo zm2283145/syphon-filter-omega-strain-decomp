@@ -67,7 +67,7 @@ void Event_Construct(void* e, void* type);
 void Event_Send(void* e, void* target, int a);
 void cMessage_dtor(void* e, int f);
 void SoundEvent_CtorFromPreset(void* e, void* preset, void* src);
-void func_0036E220(void* p, int a);
+void FileMan_Release(void* p, int a);
 }
 extern "C" int Weapon_DryFire(S_1300* self)
 {
@@ -110,8 +110,8 @@ extern "C" int Weapon_DryFire(S_1300* self)
                         se.f20 = 1;
                         Event_Send(&se, D_004FFB50, 0);
                         se.vt = D_004DAE30;
-                        func_0036E220(se.f114, -1);
-                        func_0036E220(se.f78, -1);
+                        FileMan_Release(se.f114, -1);
+                        FileMan_Release(se.f78, -1);
                         cMessage_dtor(&se, 0);
                     }
                 }

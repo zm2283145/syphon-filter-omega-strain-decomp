@@ -90,7 +90,7 @@ static inline int Fix(int i)
     if (i == -1) return LocalId();
     return i;
 }
-extern "C" void func_001B4F40(Act* a)
+extern "C" void Npc_Enable(Act* a)
 {
     int loc;
     int idx;

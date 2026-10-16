@@ -42,7 +42,7 @@ extern "C" {
     void func_0016B300(void*,void*);
     void func_0016B310(void*,void*);
     void func_0016E860(void*,int);
-    void func_0016E880(void*,void*);
+    void List_Begin_16E880(void*,void*);
     extern void* D_0049D010;
     extern char D_004EA190[];
     extern SfAiComponent* D_004FFC0C;
@@ -107,7 +107,7 @@ extern "C" SfGameObject* NpcPerception_NextCandidate(SfAiPerception* arg0, SfGam
 
     container = D_004EA190;
     var_s3 = 0;
-    func_0016E880(&spA8, container);
+    List_Begin_16E880(&spA8, container);
     func_0016E860(&spAC, spA8);
     spCC.p = spAC;
     if (arg1 != 0) {

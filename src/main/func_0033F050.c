@@ -5,13 +5,13 @@ typedef struct {
     void* p88; char p8c[0xA8 - 0x8C]; int fA8;
     L3F050 l0, l1, l2;
 } T3F050;
-extern void func_0033D360(T3F050* self);
+extern void GuiScreen_Sleep(T3F050* self);
 extern void func_002ACC80(void* p, int f);
 extern void LobbyArray_Free(L3F050* l);
 extern G3F050* Gui_GetScreenStack(void);
 void func_0033F050(T3F050* self)
 {
-    func_0033D360(self);
+    GuiScreen_Sleep(self);
     self->fA8 = 0;
     if (self->p88)
         func_002ACC80(self->p88, 0);

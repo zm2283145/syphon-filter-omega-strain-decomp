@@ -6,8 +6,8 @@ struct VC_EE70 { virtual int v0(int); };
 struct Raw_EE70 { int p; };
 extern "C" {
 void Mem_Free(int, void*, char*, int);
-void func_00138DA0(int*, char*, int*);
-Raw_EE70 func_0013B180(void*);
+void List_Erase(int*, char*, int*);
+Raw_EE70 List_Begin(void*);
 Raw_EE70 func_003ED850(void*);
 void func_003EF000(char**, const Raw_EE70&);
 void func_003ED860(char**, const Raw_EE70&);
@@ -20,7 +20,7 @@ extern "C" void func_003EEE70(char* self, VC_EE70* obj) {
         char* n;
         char* cur;
         char* it;
-        func_003EF000(&it, func_0013B180(self + 0x8C));
+        func_003EF000(&it, List_Begin(self + 0x8C));
         n = it;
         while ((func_003ED860(&end, func_003ED850(self + 0x8C)), n != end)) {
             e = F_(n, 0x8, VC_EE70*);
@@ -38,7 +38,7 @@ extern "C" void func_003EEE70(char* self, VC_EE70* obj) {
                     int pos;
                     c = cur;
                     func_0015AF40(&pos, &c);
-                    func_00138DA0(&res, self + 0x8C, &pos);
+                    List_Erase(&res, self + 0x8C, &pos);
                 }
             } else {
                 n = F_(n, 0x4, char*);

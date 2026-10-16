@@ -6,7 +6,7 @@ extern int GuiWidget_FindChildByName(void* self, const char* name);
 extern void func_0041F150(void* self);
 
 /* Looks up four numbered children by name into the ids at +0x4C, then finishes setup. */
-void func_002B1B30(void* self)
+void GuiQuickChat_Init(void* self)
 {
     char buf[0x20];
     Slot* slot;

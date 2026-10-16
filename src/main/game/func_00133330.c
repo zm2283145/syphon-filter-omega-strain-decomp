@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_00133330(char* self) {
+int Camera_GetNode(char* self) {
     return *(int*)(self + 80);
 }

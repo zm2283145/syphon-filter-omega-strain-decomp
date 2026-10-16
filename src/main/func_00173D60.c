@@ -11,7 +11,7 @@ extern void func_001740D0(It_173D60* out, Vec_173D60* v);
 extern void func_001740B0(It_173D60* out, Vec_173D60* v);
 extern int func_00174030(It_173D60* a, It_173D60* b);
 extern int* func_001740A0(It_173D60* it);
-extern int func_00174080(int* a, int* b);
+extern int ObjectKey_Equals(int* a, int* b);
 extern void func_00174070(It_173D60* out, It_173D60* src);
 extern void func_00174050(It_173D60* it);
 extern int* func_00174010(Vec_173D60* v);
@@ -33,7 +33,7 @@ void ZoneMgr_Associate(Zm_173D60* self, char* zone, int recurse, char* other)
         func_001740D0(&it, &self->zones);
         func_001740B0(&end, &self->zones);
         while (func_00174030(&it, &end)) {
-            if (func_00174080(func_001740A0(&it), key)) {
+            if (ObjectKey_Equals(func_001740A0(&it), key)) {
                 func_00174070(&r1, &it);
                 goto found1;
             }
@@ -50,7 +50,7 @@ void ZoneMgr_Associate(Zm_173D60* self, char* zone, int recurse, char* other)
         func_001740D0(&it, &self->zones);
         func_001740B0(&end, &self->zones);
         while (func_00174030(&it, &end)) {
-            if (func_00174080(func_001740A0(&it), key2)) {
+            if (ObjectKey_Equals(func_001740A0(&it), key2)) {
                 func_00174070(&r2, &it);
                 goto found2;
             }

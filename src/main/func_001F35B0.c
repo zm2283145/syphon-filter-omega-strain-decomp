@@ -7,7 +7,7 @@
 #include "types.h"
 #include "loose01_types.h"
 
-extern void func_0013D890(Word*, int);
+extern void List_End_13D890(Word*, int);
 extern Word* func_001F2ED0(Word*, Word*);
 extern Word* func_001F3620(Word*, int);
 
@@ -19,7 +19,7 @@ Word* func_001F35B0(Word* dst, Word* src) {
 void func_001F35E0(Word* self, int a1) {
     Word tmp;
 
-    func_0013D890(&tmp, a1);
+    List_End_13D890(&tmp, a1);
     func_001F3620(self, tmp.value);
 }
 

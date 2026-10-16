@@ -18,7 +18,7 @@ extern char D_004C2680[];
 Stack_462380* Gui_GetScreenStack(void);
 void* Gui_GetScreenList(void);
 void* GuiManager_FindOrLoad(void* a, char* b, char* c);
-int func_00368300(void* self, Ev_462380* ev);
+int GuiObjectives_HandleInput(void* self, Ev_462380* ev);
 }
 static inline unsigned char Down_462380(Ev_462380* e)
 {
@@ -57,5 +57,5 @@ extern "C" int func_00462380(void* self, Ev_462380* ev)
         if (b)
             return 1;
     }
-    return func_00368300(self, ev);
+    return GuiObjectives_HandleInput(self, ev);
 }

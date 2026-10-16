@@ -30,7 +30,7 @@ St7E* Gui_GetScreenStack(void);
 void GuiScreen_SetFocus(St7E* s, W7E* w);
 void func_0041E0F0(S7E* o, St7E* s, int a, int b, int c);
 }
-extern "C" void func_002A7E90(S7E* self, int mode, char* t1, char* t2, int a4, int a5)
+extern "C" void GuiMessageBox_Setup(S7E* self, int mode, char* t1, char* t2, int a4, int a5)
 {
     E7E* e;
     W7E* w;

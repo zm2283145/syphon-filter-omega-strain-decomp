@@ -10,7 +10,7 @@ struct N_414BE0 { int prev; int next; W_414BE0* obj; };
 struct O_414BE0 { char pad[0x20]; W_414BE0* f20; char pad24[4]; int f28; N_414BE0* f2C; char pad30[0x24]; char l54[0xC]; unsigned char b60; };
 extern "C" {
 extern char D_0055A300[];
-int func_00138DA0(...);
+int List_Erase(...);
 int func_0015AF40(...);
 int func_002A8890(...);
 int func_002A88B0(...);
@@ -22,7 +22,7 @@ int func_002CCE30(...);
 int func_002CCE40(...);
 int func_0028C0A0(...);
 int func_0028C090(...);
-void func_0036A240(void* p);
+void Pad_ResetHeldMask(void* p);
 void func_0041E0F0(void* a, void* b, int kind, int v, int f);
 void func_00414BE0(O_414BE0* o, W_414BE0* w);
 }
@@ -69,7 +69,7 @@ loop_1:
         if ((int)r1 != e3a) {
             t1 = r1;
             func_0015AF40(&x1, &t1);
-            func_00138DA0(&y1, o->l54, &x1);
+            List_Erase(&y1, o->l54, &x1);
         }
     }
     func_002CCE40(&it2);
@@ -90,13 +90,13 @@ loop_2:
     if ((int)r2 == e3b) return;
     w->f1C = 0;
     hp = &o->f2C;
-    if (o->f2C->obj == w) func_0036A240(D_0055A300);
+    if (o->f2C->obj == w) Pad_ResetHeldMask(D_0055A300);
     c = ((N_414BE0*)r2)->obj;
     if (c) {
         if (c->flags & 8) c->f44->v6();
         t2 = r2;
         func_0015AF40(&x2, &t2);
-        func_00138DA0(&y2, &o->f28, &x2);
+        List_Erase(&y2, &o->f28, &x2);
     }
     func_0041E0F0(o, w, 0x19, 0, 0);
     if (o->f20 && w->f20 == o->f20) o->f20->f44->v8();

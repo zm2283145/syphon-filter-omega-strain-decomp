@@ -33,7 +33,7 @@ void String_CtorCStr_13B480(Str_0029CBB0* s, const char* c);
 void func_00209620(Str_0029CBB0* d, Str_0029CBB0* s);
 void func_003FD740(Str_0029CBB0* s);
 char* String_CStr(Str_0029CBB0* s);
-int func_002071F0(Str_0029CBB0* s);
+int String_Length(Str_0029CBB0* s);
 void String_Dtor(Str_0029CBB0* s, int flags);
 }
 static inline void SetText_0029CBB0(S_0029CBB0* self, char* key)
@@ -139,7 +139,7 @@ extern "C" void func_0029CBB0(S_0029CBB0* self, unsigned char sel)
                         LobbyArray_Clear(l);
                     }
                 }
-                if (func_002071F0(&list2)) {
+                if (String_Length(&list2)) {
                     func_003FD740(&list2);
                     MLTextWidget_AddText(self->p100, String_CStr(&list2));
                 }

@@ -10,6 +10,6 @@
 extern int PtrVec_Insert(PtrVec* v, int* pos, int n, int value);
 
 /* push_back on a pointer vector. */
-int func_00245EE0(PtrVec* v, int value) {
+int Hud_PushReticleElement(PtrVec* v, int value) {
     return PtrVec_Insert(v, v->data + v->count, 1, value);
 }

@@ -35,7 +35,7 @@ Word* func_003D2620(Word* dst, Word* src) {
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int func_00138DA0(char *, int, char *);                     
+int List_Erase(char *, int, char *);                     
 int func_0015AF40(char *, int *);                        
 int func_003D2110(char *, int);                          
 int func_003D2180(char *, int);                          
@@ -67,7 +67,7 @@ void func_003D2630(int arg0, int arg1) {
     func_003D2710(&sp4C, &sp3C);
     sp48 = sp4C;
     func_0015AF40(&sp40, &sp48);
-    func_00138DA0(&sp44, arg0, &sp40);
+    List_Erase(&sp44, arg0, &sp40);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003D2630 */

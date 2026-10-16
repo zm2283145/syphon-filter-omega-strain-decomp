@@ -29,7 +29,7 @@ Word* func_00174070(Word* dst, Word* src) {
 }
 
 /* Word equality. */
-int func_00174080(Word* a, Word* b) {
+int ObjectKey_Equals(Word* a, Word* b) {
     return a->value == b->value;
 }
 

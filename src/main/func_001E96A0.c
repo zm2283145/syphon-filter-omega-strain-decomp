@@ -6,7 +6,7 @@ extern int D_004A03C8;
 extern void* RootCollection_FindByKey(void* coll, void* key);
 extern void* Root_GetWorldPlacement(void* r);
 extern float* Placement_GetPosition(void* p);
-float func_001E96A0(B5aObj* o) {
+float ActorPhysical_QueryWaterHeight(B5aObj* o) {
     float r;
     if (o->z != D_004A0438) {
         float* p = Placement_GetPosition(Root_GetWorldPlacement(RootCollection_FindByKey(&o->owner->coll, &D_004A03C8)));

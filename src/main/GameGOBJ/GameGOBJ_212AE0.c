@@ -30,8 +30,8 @@ extern char D_004FFB50[];
 extern char D_004DADF0[];
 extern int Event_Send(void* m, void* target, int immediate);
 extern int cMessage_dtor(void* m, int flags);
-extern void func_0020EBA0(Snd2_00212AE0* e, void* preset, void* owner);
-extern int func_0036E220(Str_00212AE0* s, int flag);
+extern void SoundStopMsg_Ctor(Snd2_00212AE0* e, void* preset, void* owner);
+extern int FileMan_Release(Str_00212AE0* s, int flag);
 extern void Object_Deactivate(SndObj_00212AE0* self, int arg);
 void cSoundGOBJ_v16(SndObj_00212AE0* self, int arg)
 {
@@ -44,11 +44,11 @@ void cSoundGOBJ_v16(SndObj_00212AE0* self, int arg)
             owner = 0;
         else
             owner = self;
-        func_0020EBA0(&c, self->preset, owner);
+        SoundStopMsg_Ctor(&c, self->preset, owner);
         Event_Send(&c, D_004FFB50, 1);
         c.vt = D_004DADF0;
-        func_0036E220(&c.s114, -1);
-        func_0036E220(&c.s78, -1);
+        FileMan_Release(&c.s114, -1);
+        FileMan_Release(&c.s78, -1);
         cMessage_dtor(&c, 0);
         self->playing = 0;
     }
@@ -77,9 +77,9 @@ int cMessage_dtor(char **, int);
 #define cMessage_dtor(a0, a1) (cMessage_dtor((void *)(a0), (a1))) /* merge_units */
                            
 #if 0 /* merge_units */
-int func_0036E220(char *, int);
+int FileMan_Release(char *, int);
 #endif /* merge_units */
-#define func_0036E220(a0, a1) (func_0036E220((void *)(a0), (a1))) /* merge_units */
+#define FileMan_Release(a0, a1) (FileMan_Release((void *)(a0), (a1))) /* merge_units */
                             
 extern char D_004DAE30;
 #if 0 /* merge_units */
@@ -108,8 +108,8 @@ void cSoundGOBJ_v15(char * arg0, int arg1) {
             }
             Event_Send(sl.f30, &D_004FFB50, 1);
             sl.f30[0] = &D_004DAE30;
-            func_0036E220(sl.f144, -1);
-            func_0036E220(sl.fA8, -1);
+            FileMan_Release(sl.f144, -1);
+            FileMan_Release(sl.fA8, -1);
             cMessage_dtor(sl.f30, 0);
         }
     }
@@ -118,7 +118,7 @@ void cSoundGOBJ_v15(char * arg0, int arg1) {
 #undef func_001C6700 /* merge_units */
 #undef Event_Send /* merge_units */
 #undef cMessage_dtor /* merge_units */
-#undef func_0036E220 /* merge_units */
+#undef FileMan_Release /* merge_units */
 #undef D_004FFB50 /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00212BB0(void) {}
@@ -162,14 +162,14 @@ extern int SoundEvent_CtorFromPreset(Snd_00212C80* e, void* preset, void* owner)
 #define SoundEvent_CtorFromPreset(a0, a1, a2) (SoundEvent_CtorFromPreset((void *)(a0), (void *)(a1), (void *)(a2))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_0020EBA0(Snd2_00212C80* e, void* preset, void* owner);
+extern void SoundStopMsg_Ctor(Snd2_00212C80* e, void* preset, void* owner);
 #endif /* merge_units */
-#define func_0020EBA0(a0, a1, a2) (func_0020EBA0((void *)(a0), (a1), (a2))) /* merge_units */
+#define SoundStopMsg_Ctor(a0, a1, a2) (SoundStopMsg_Ctor((void *)(a0), (a1), (a2))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int func_0036E220(Str_00212C80* s, int flag);
+extern int FileMan_Release(Str_00212C80* s, int flag);
 #endif /* merge_units */
-#define func_0036E220(a0, a1) (func_0036E220((void *)(a0), (a1))) /* merge_units */
+#define FileMan_Release(a0, a1) (FileMan_Release((void *)(a0), (a1))) /* merge_units */
 
 extern void func_001C6700();
 extern int Object_HandleMessage(SndObj_00212C80* self, void* ev);
@@ -184,8 +184,8 @@ static inline void Play_00212C80(SndObj_00212C80* self, Snd_00212C80* s)
             s->flag = 1;
         Event_Send(s, D_004FFB50, 1);
         s->vt = D_004DAE30;
-        func_0036E220(&s->s114, -1);
-        func_0036E220(&s->s78, -1);
+        FileMan_Release(&s->s114, -1);
+        FileMan_Release(&s->s78, -1);
         cMessage_dtor(s, 0);
     }
 }
@@ -215,11 +215,11 @@ int cSoundGOBJ_v01(SndObj_00212C80* self, void* ev)
                 owner = 0;
             else
                 owner = self;
-            func_0020EBA0(&c, self->preset, owner);
+            SoundStopMsg_Ctor(&c, self->preset, owner);
             Event_Send(&c, D_004FFB50, 1);
             c.vt = D_004DADF0;
-            func_0036E220(&c.s114, -1);
-            func_0036E220(&c.s78, -1);
+            FileMan_Release(&c.s114, -1);
+            FileMan_Release(&c.s78, -1);
             cMessage_dtor(&c, 0);
             self->playing = 0;
             return 1;
@@ -229,8 +229,8 @@ int cSoundGOBJ_v01(SndObj_00212C80* self, void* ev)
 }
 #undef D_004DAE30 /* merge_units */
 #undef SoundEvent_CtorFromPreset /* merge_units */
-#undef func_0020EBA0 /* merge_units */
-#undef func_0036E220 /* merge_units */
+#undef SoundStopMsg_Ctor /* merge_units */
+#undef FileMan_Release /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00212C80(void) {}
 #pragma pop /* merge_units */
@@ -477,9 +477,9 @@ int SoundEvent_CtorFromPreset(LuSnd* e, void* preset, Lift* l);
 #define SoundEvent_CtorFromPreset(a0, a1, a2) (SoundEvent_CtorFromPreset((char * *)(a0), (char *)(a1), (char *)(a2))) /* merge_units */
 
 #if 0 /* merge_units */
-int func_0036E220(LuStr* s, int flag);
+int FileMan_Release(LuStr* s, int flag);
 #endif /* merge_units */
-#define func_0036E220(a0, a1) (func_0036E220((Str_00212AE0 *)(a0), (a1))) /* merge_units */
+#define FileMan_Release(a0, a1) (FileMan_Release((Str_00212AE0 *)(a0), (a1))) /* merge_units */
 
 }
 static inline bool LuIsHost(void) { unsigned char r; if (D_005721C8) r = D_005721C0; else r = true; return r; }
@@ -546,12 +546,12 @@ extern "C" void Lift_Update(Lift* l, float dt)
                 l->fDC = 0;
                 l->fE0 = 0;
                 ev2.vt = D_004DAE30;
-                func_0036E220(&ev2.s114, -1);
-                func_0036E220(&ev2.s78, -1);
+                FileMan_Release(&ev2.s114, -1);
+                FileMan_Release(&ev2.s78, -1);
                 cMessage_dtor(&ev2, 0);
                 ev1.vt = D_004DAE30;
-                func_0036E220(&ev1.s114, -1);
-                func_0036E220(&ev1.s78, -1);
+                FileMan_Release(&ev1.s114, -1);
+                FileMan_Release(&ev1.s78, -1);
                 cMessage_dtor(&ev1, 0);
             }
             break;
@@ -588,7 +588,7 @@ extern "C" void Lift_Update(Lift* l, float dt)
 }
 #undef D_004DAE30 /* merge_units */
 #undef SoundEvent_CtorFromPreset /* merge_units */
-#undef func_0036E220 /* merge_units */
+#undef FileMan_Release /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002135C0(void) {}
 #pragma pop /* merge_units */

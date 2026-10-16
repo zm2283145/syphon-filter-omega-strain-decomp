@@ -32,7 +32,7 @@ typedef struct InventorySlot {
     int unk0;                /* 0x0 */
     int id;                  /* 0x4: weapon id */
     int unk8;                /* 0x8 */
-    int unkC;                /* 0xC: subtracted in func_00142AE0 */
+    int unkC;                /* 0xC: subtracted in WeaponInv_GetSpareRoom */
 } InventorySlot;
 
 /* Actor inventory (actor +0x3524). */

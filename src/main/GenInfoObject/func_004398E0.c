@@ -10,7 +10,7 @@ struct LIt_98E0 { LNode_98E0* node; LIt_98E0() {} };
 extern "C" {
 extern char D_005838B8[];
 extern unsigned char D_005721D0;
-LIt_98E0 func_0013B180(void* list);
+LIt_98E0 List_Begin(void* list);
 void func_00438E10(LIt_98E0* r, const LIt_98E0& s);
 LIt_98E0 func_00438E00(void* list);
 void func_00438DF0(LIt_98E0* r, const LIt_98E0& s);
@@ -39,7 +39,7 @@ extern "C" void func_004398E0(void* self, int* key, int owner)
             NetOwnEnt* p;
             LIt_98E0 it;
 LNode_98E0* n;
-            func_00438E10(&it, func_0013B180(D_005838B8));
+            func_00438E10(&it, List_Begin(D_005838B8));
             n = it.node;
             while (func_00438DF0(&end, func_00438E00(D_005838B8)), n != end.node) {
                 if (n->data->key == *key) break;

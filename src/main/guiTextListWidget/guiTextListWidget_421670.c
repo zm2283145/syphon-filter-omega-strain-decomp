@@ -41,7 +41,7 @@ extern char D_004E0C80[];
 extern char D_004E0D20[];
 void* Gui_GetScreenList(void);
 void* func_00418420(void* manager, const char* name);
-unsigned int func_0036A2F0(void* resource);
+unsigned int Font_GetLineHeight(void* resource);
 void func_00424820(TextRenderWidget* self, unsigned int height);
 void func_00424A50(TextRenderWidget* self);
 void func_00424A90(TextRenderWidget* self);
@@ -109,7 +109,7 @@ extern "C" void func_00421690(TextRenderWidget* self, const char* name)
 {
     self->resource = func_00418420(Gui_GetScreenList(), name);
     if (self->resource)
-        func_00424820(self, func_0036A2F0(self->resource) + 4);
+        func_00424820(self, Font_GetLineHeight(self->resource) + 4);
 }
 
 /* Release the optional text child after the base widget is deactivated. */
@@ -151,7 +151,7 @@ extern "C" void func_004218F0(TextRenderWidget* self)
     func_00424BC0(self);
     self->resource = func_00418420(Gui_GetScreenList(), 0);
     if (self->resource)
-        func_00424820(self, func_0036A2F0(self->resource) + 4);
+        func_00424820(self, Font_GetLineHeight(self->resource) + 4);
 }
 
 /* Destroy the owned text child, entries and base widget before optional deletion. */

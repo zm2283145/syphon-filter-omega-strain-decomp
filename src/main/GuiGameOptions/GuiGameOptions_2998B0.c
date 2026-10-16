@@ -13,7 +13,7 @@
 
 /* merge_units: begin func_002998B0 */
 #pragma push /* merge_units */
-void func_002999B0(int arg0); /* gsynth: defined below */
+void GuiGameOptions_UpdateHints(int arg0); /* gsynth: defined below */
 #pragma cplusplus on
 struct V2998B0 { virtual int v0(); virtual int v1(); virtual int v2(); virtual int v3(); virtual int v4(); virtual int v5(); virtual int v6(); virtual int v7(); virtual int v8(); virtual int v9(); virtual int v10(); virtual int v11(); virtual int v12(); virtual int v13(); virtual int v14(); virtual int v15(); };
 typedef struct { V2998B0 v; char pad[0x10]; unsigned short flags; } E2998B0;
@@ -32,12 +32,12 @@ void* Gui_GetScreenStack(void);
 void GuiScreen_SetFocus(void* a, int b);
 void func_0041E0F0(void* a, void* b, int c, int d, int e);
 #if 0 /* merge_units */
-void func_002999B0(S2998B0* s);
+void GuiGameOptions_UpdateHints(S2998B0* s);
 #endif /* merge_units */
-#define func_002999B0(a0) (func_002999B0((int)(a0))) /* merge_units */
+#define GuiGameOptions_UpdateHints(a0) (GuiGameOptions_UpdateHints((int)(a0))) /* merge_units */
 
 }
-extern "C" void func_002998B0(S2998B0* s)
+extern "C" void GuiGameOptions_Enter(S2998B0* s)
 {
     if (s->items[s->idx]) {
         int r;
@@ -52,9 +52,9 @@ extern "C" void func_002998B0(S2998B0* s)
         func_0041E0F0(s, s->objs[s->idx], 10, 10, 0);
         func_0041E0F0(s->objs[s->idx], Gui_GetScreenStack(), 0x10, 0, 0);
     }
-    func_002999B0(s);
+    GuiGameOptions_UpdateHints(s);
 }
-#undef func_002999B0 /* merge_units */
+#undef GuiGameOptions_UpdateHints /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002998B0(void) {}
 #pragma pop /* merge_units */
@@ -68,7 +68,7 @@ int Loc_LookupText(int *, int );
 int func_0041BEB0(int, int, int);                       
 
 #pragma opt_common_subs off
-void func_002999B0(int arg0) {
+void GuiGameOptions_UpdateHints(int arg0) {
     int *var_a0;
     int temp_a1;
     int temp_a1_2;
@@ -128,12 +128,12 @@ int func_0041BEB0(void* w, char* text, int c);
 
 void func_00424430(void* w, int a, int b);
 #if 0 /* merge_units */
-void func_002999B0(S_299AA0* self);
+void GuiGameOptions_UpdateHints(S_299AA0* self);
 #endif /* merge_units */
-#define func_002999B0(a0) (func_002999B0((int)(a0))) /* merge_units */
+#define GuiGameOptions_UpdateHints(a0) (GuiGameOptions_UpdateHints((int)(a0))) /* merge_units */
 
 
-void func_00299AA0(S_299AA0* self, int idx) {
+void GuiGameOptions_Show(S_299AA0* self, int idx) {
     int i;
     for (i = 0; i < 4; i++) {
         if (self->tabs[i]) {
@@ -152,10 +152,10 @@ void func_00299AA0(S_299AA0* self, int idx) {
         break;
     }
     self->xB4 = idx;
-    func_002999B0(self);
+    GuiGameOptions_UpdateHints(self);
 }
 #undef func_0041BEB0 /* merge_units */
-#undef func_002999B0 /* merge_units */
+#undef GuiGameOptions_UpdateHints /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00299AA0(void) {}
 #pragma pop /* merge_units */
@@ -204,23 +204,23 @@ Ui_00299B90* Gui_GetScreenStack(void);
 #endif /* merge_units */
 #define Gui_GetScreenStack() ((Ui_00299B90 *)Gui_GetScreenStack()) /* merge_units */
 
-void func_00299800(S_00299B90* self);
-void func_00299780(S_00299B90* self);
+void GuiGameOptions_ShowMenu(S_00299B90* self);
+void GuiGameOptions_Leave(S_00299B90* self);
 #if 0 /* merge_units */
-void func_002998B0(S_00299B90* self);
+void GuiGameOptions_Enter(S_00299B90* self);
 #endif /* merge_units */
-#define func_002998B0(a0) (func_002998B0((S2998B0 *)(a0))) /* merge_units */
+#define GuiGameOptions_Enter(a0) (GuiGameOptions_Enter((S2998B0 *)(a0))) /* merge_units */
 
-void func_0029AD10(S_00299B90* self, int a);
+void GuiGameOptions_Close(S_00299B90* self, int a);
 void func_00456100(S_00299B90* self);
 void func_0045A3A0(void* p, int n);
 void SoundRequest_Ctor(SoundRequest* req, int kind, void* name, int a, int b);
 void SoundEvent_Ctor(SoundEventMsg* msg, void* action, int flags);
 void Event_Send(void* msg, void* target, int flags);
 #if 0 /* merge_units */
-void func_0036E220(void* part, int flags);
+void FileMan_Release(void* part, int flags);
 #endif /* merge_units */
-#define func_0036E220(a0, a1) (func_0036E220((a0), (a1))) /* merge_units */
+#define FileMan_Release(a0, a1) (FileMan_Release((a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
 void cMessage_dtor(void* msg, int flags);
@@ -256,19 +256,19 @@ static inline bool Held_00299B90(Ev_00299B90* e, unsigned int b)
     return e->type == 1 && e->f2 == 0 && e->btn == b && e->f6 == 1;
 }
 /* Options page input handler: back/confirm/select buttons, gamma slider sound preview, default fallback. */
-extern "C" int func_00299B90(S_00299B90* self, Ev_00299B90* ev)
+extern "C" int GuiGameOptions_HandleInput(S_00299B90* self, Ev_00299B90* ev)
 {
     {
         bool b = ev->type == 1 && ev->f2 == 0 && ev->btn == 0x10 && ev->f6 == 0;
         if (b) {
             if (!Gui_GetScreenStack()->f20 || Gui_GetScreenStack()->f20->f10 != -1) {
-                func_0029AD10(self, 0);
+                GuiGameOptions_Close(self, 0);
                 if (self->x1C == Gui_GetScreenStack()) {
-                    func_00299780(self);
+                    GuiGameOptions_Leave(self);
                     return 1;
                 }
             } else {
-                func_00299800(self);
+                GuiGameOptions_ShowMenu(self);
                 return 1;
             }
         }
@@ -276,14 +276,14 @@ extern "C" int func_00299B90(S_00299B90* self, Ev_00299B90* ev)
     {
         bool b = ev->type == 1 && ev->f2 == 0 && ev->btn == 0x2000 && ev->f6 == 0;
         if (b && Gui_GetScreenStack()->f20->f10 != -1) {
-            func_002998B0(self);
+            GuiGameOptions_Enter(self);
             return 1;
         }
     }
     if (Press_00299B90(ev, 0x80)) {
         if (self->b400 && self->p84 && (self->p84->flags & 2))
             return 1;
-        func_0029AD10(self, 1);
+        GuiGameOptions_Close(self, 1);
         return 1;
     }
     {
@@ -297,8 +297,8 @@ extern "C" int func_00299B90(S_00299B90* self, Ev_00299B90* ev)
                 func_0045A3A0(self->xB8, 0x20);
                 SoundRequest_Ctor(&req, 4, D_0048B908, 0, 0);
                 SoundEvent_Ctor(&evm, &req, 0);
-                func_0036E220(req.partB, -1);
-                func_0036E220(req.partA, -1);
+                FileMan_Release(req.partB, -1);
+                FileMan_Release(req.partA, -1);
                 evm.flag = 1;
                 Event_Send(&evm, D_004FFB50, 1);
                 SoundAction_CtorVoice(self->action, 4, D_0048B908, 0, 0);
@@ -306,12 +306,12 @@ extern "C" int func_00299B90(S_00299B90* self, Ev_00299B90* ev)
                 play.flag = 1;
                 Event_Send(&play, D_004FFB50, 1);
                 play.vtbl = D_004DAE10;
-                func_0036E220(play.partB, -1);
-                func_0036E220(play.partA, -1);
+                FileMan_Release(play.partB, -1);
+                FileMan_Release(play.partA, -1);
                 cMessage_dtor(&play, 0);
                 evm.vtbl = D_004DADF0;
-                func_0036E220(evm.partB, -1);
-                func_0036E220(evm.partA, -1);
+                FileMan_Release(evm.partB, -1);
+                FileMan_Release(evm.partA, -1);
                 cMessage_dtor(&evm, 0);
                 return 1;
             }
@@ -329,8 +329,8 @@ extern "C" int func_00299B90(S_00299B90* self, Ev_00299B90* ev)
     return 0;
 }
 #undef Gui_GetScreenStack /* merge_units */
-#undef func_002998B0 /* merge_units */
-#undef func_0036E220 /* merge_units */
+#undef GuiGameOptions_Enter /* merge_units */
+#undef FileMan_Release /* merge_units */
 #undef cMessage_dtor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00299B90(void) {}

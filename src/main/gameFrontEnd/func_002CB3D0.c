@@ -64,8 +64,8 @@ extern char D_004DE220[];
 extern char D_004DE200[];
 extern int D_004FFD30;
 extern char D_0055A700[];
-void func_002C9510(Self3D0* self);
-void func_002CB8C0(Self3D0* self, unsigned char flag);
+void FrontEnd_ResumeGui(Self3D0* self);
+void FrontEnd_CreateCanvas(Self3D0* self, unsigned char flag);
 Stk3D0* Gui_GetScreenStack(void);
 int Gui_GetScreenList(void);
 void func_004158C0(Stk3D0* s, int x);
@@ -74,7 +74,7 @@ Scr3D0* GuiManager_FindOrLoad(int l, char* a, char* b);
 int DME_GetLobby(void);
 void func_00453A50(int g);
 void DME_StartThread(void);
-long long func_003698B0(void);
+long long Time_GetMilliseconds(void);
 void FrontEnd_SetLoadingScreen(Self3D0* self, int a, int b, int c);
 char* strncpy(char* d, const char* s, int n);
 void* Service_Lookup(void* a, void* b);
@@ -82,26 +82,26 @@ void Event_Construct(void* m, void* type);
 void Event_Send(void* m, void* target, int immediate);
 void cMessage_dtor(void* m, int flags);
 void func_0041E0F0(Stk3D0* a, Stk3D0* b, int c, int d, int e);
-void func_002C9D50(Self3D0* self);
+void FrontEnd_GetCharacterData(Self3D0* self);
 void func_002C9EE0(Self3D0* self);
 void func_00145160(int a);
 void DME_StopThread(void);
 void func_002CA6F0(Self3D0* self);
 void DME_SetLobbyActive(int a);
-void func_002C8090(Self3D0* self);
+void FrontEnd_FlushMessages(Self3D0* self);
 void func_00453B00(int g, int a);
-W3D0* func_001698C0(void);
+W3D0* App_GetInstance(void);
 void func_003D1730(void* p);
 }
-extern "C" void func_002CB3D0(Self3D0* self, unsigned char flag)
+extern "C" void FrontEnd_StartGui(Self3D0* self, unsigned char flag)
 {
     Scr3D0* scr;
     if (self->b28) return;
     if (self->b37) {
-        func_002C9510(self);
+        FrontEnd_ResumeGui(self);
         return;
     }
-    func_002CB8C0(self, flag);
+    FrontEnd_CreateCanvas(self, flag);
     { Stk3D0* st = Gui_GetScreenStack(); st->b51 = !flag; }
     func_004158C0(Gui_GetScreenStack(), 0);
     func_004158C0(Gui_GetScreenStack(), 1);
@@ -134,7 +134,7 @@ extern "C" void func_002CB3D0(Self3D0* self, unsigned char flag)
             DME_StartThread();
             had = 1;
         }
-        self->x20 = func_003698B0();
+        self->x20 = Time_GetMilliseconds();
         go = 0;
         FrontEnd_SetLoadingScreen(self, 1, 0, 0);
         self->x30C = -1;
@@ -172,7 +172,7 @@ extern "C" void func_002CB3D0(Self3D0* self, unsigned char flag)
         if (self->b2C) {
             GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AD000, D_004AD010);
             GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AD020, D_004AD038);
-            func_002C9D50(self);
+            FrontEnd_GetCharacterData(self);
         }
         if (self->b35) {
             self->b35 = 0;
@@ -190,13 +190,13 @@ extern "C" void func_002CB3D0(Self3D0* self, unsigned char flag)
             func_002CA6F0(self);
             DME_SetLobbyActive(1);
             if (DME_GetLobby()) {
-                func_002C8090(self);
+                FrontEnd_FlushMessages(self);
                 func_00453B00(DME_GetLobby(), 1);
                 DME_SetLobbyActive(0);
             }
         }
     }
-    func_001698C0()->b278 = flag;
+    App_GetInstance()->b278 = flag;
     if (!flag) func_003D1730(D_0055A700);
     self->b28 = 1;
     self->b36 = flag;

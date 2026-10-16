@@ -25,7 +25,7 @@ int MoviePlayer_Update(void*, float);
 void func_003F9300(void*, int);
 void func_0036B250(int);
 void* Service_Lookup(void*, void*);
-void func_001C9540(void*, int, int);
+void SoundMgr_SetChannelVolume(void*, int, int);
 void func_00130520(void*, void*, int);
 extern char D_0049A890;
 extern char D_004F2CC0[];
@@ -66,7 +66,7 @@ extern "C" void Game_UpdateMovieQueue(S_12FD60* self)
             }
             self->b0 = 0;
             func_0036B250(1);
-            func_001C9540(Service_Lookup(self, D_004F2CC0), 2, D_004EA048);
+            SoundMgr_SetChannelVolume(Service_Lookup(self, D_004F2CC0), 2, D_004EA048);
         }
     }
     if (!self->b0) {
@@ -114,7 +114,7 @@ static inline void merge_flush_func_0012FF50(void) {}
 
 /* merge_units: begin func_0012FF80 */
 #pragma push /* merge_units */
-int func_001301D0(void* o, char* out); /* gsynth: defined below */
+int Game_PickAttractMovie(void* o, char* out); /* gsynth: defined below */
 typedef struct Sub12FF80 {
     char pad0[0xC4];
     int id;
@@ -149,9 +149,9 @@ typedef struct Obj12FF80 {
 extern void *Agent_GetSelected(void *, int);
 extern int String_CompareNoCase(const char *, const char *);
 #if 0 /* merge_units */
-extern int func_001301D0(Obj12FF80 *, char *);
+extern int Game_PickAttractMovie(Obj12FF80 *, char *);
 #endif /* merge_units */
-#define func_001301D0(a0, a1) (func_001301D0((void *)(a0), (a1))) /* merge_units */
+#define Game_PickAttractMovie(a0, a1) (Game_PickAttractMovie((void *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void func_00130520(Obj12FF80 *, char *, int);
@@ -160,13 +160,13 @@ extern void func_00130520(Obj12FF80 *, char *, int);
 
 extern void func_001303F0(Obj12FF80 *, char *);
 extern void func_002C9420(void *);
-extern void func_00332A10(void *, int, int, int);
+extern void AgentData_AddLevelProgress(void *, int, int, int);
 extern void func_003328D0(void *, int, int, int, int);
 extern void *D_004FFC04;
 extern signed char D_004FFBA0;
 extern signed char D_004FFBA1;
 
-void func_0012FF80(Obj12FF80 *o)
+void Game_RequestEolMovie(Obj12FF80 *o)
 {
     char out[0x80];
     char sel[0x90];
@@ -183,7 +183,7 @@ void func_0012FF80(Obj12FF80 *o)
         case 7:
             a = "";
             b = "INTRO";
-            if (func_001301D0(o, sel) != 0)
+            if (Game_PickAttractMovie(o, sel) != 0)
                 b = &sel[1];
             break;
         case 9:
@@ -203,14 +203,14 @@ void func_0012FF80(Obj12FF80 *o)
             id = in->sub.id;
             sub = &in->sub;
             if (id != -1 && id != 0x11) {
-                func_00332A10(Agent_GetSelected(o, -1), id + 1, 6, 2);
+                AgentData_AddLevelProgress(Agent_GetSelected(o, -1), id + 1, 6, 2);
                 func_003328D0(Agent_GetSelected(o, -1), sub->id + 1, 5, 1, 1);
             }
             if (String_CompareNoCase(a, "UKRAINE") == 0) {
                 func_002C9420(o->info);
                 o->prev = *(signed char *)&o->state;
                 o->state = 8;
-                func_0012FF80(o);
+                Game_RequestEolMovie(o);
                 return;
             }
             func_002C9420(D_004FFC04);
@@ -231,7 +231,7 @@ void func_0012FF80(Obj12FF80 *o)
         }
     }
 }
-#undef func_001301D0 /* merge_units */
+#undef Game_PickAttractMovie /* merge_units */
 #undef func_00130520 /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0012FF80(void) {}
@@ -240,17 +240,17 @@ static inline void merge_flush_func_0012FF80(void) {}
 
 /* merge_units: begin func_001301D0 */
 #pragma push /* merge_units */
-int func_001302F0(int arg0); /* gsynth: defined below */
+int Game_CountAttractMovies(int arg0); /* gsynth: defined below */
 #if 0 /* merge_units */
-extern int func_001302F0(void *);
+extern int Game_CountAttractMovies(void *);
 #endif /* merge_units */
-#define func_001302F0(a0) (func_001302F0((int)(a0))) /* merge_units */
+#define Game_CountAttractMovies(a0) (Game_CountAttractMovies((int)(a0))) /* merge_units */
 
 extern char D_0049A908[];
 extern int D_004EA050;
 extern int D_00533870;
 
-int func_001301D0(void *o, char *out)
+int Game_PickAttractMovie(void *o, char *out)
 {
     char buf[0x20];
     int count;
@@ -260,7 +260,7 @@ int func_001301D0(void *o, char *out)
     char c;
     int n;
 
-    count = func_001302F0(o);
+    count = Game_CountAttractMovies(o);
     r = (*(volatile int *)0x10000800 + D_00533870) % count;
     if (r == D_004EA050 && count > 1) {
         r = (r == count - 1) ? 0 : r + 1;
@@ -284,7 +284,7 @@ int func_001301D0(void *o, char *out)
     out[0] = n;
     return 1;
 }
-#undef func_001302F0 /* merge_units */
+#undef Game_CountAttractMovies /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001301D0(void) {}
 #pragma pop /* merge_units */
@@ -301,7 +301,7 @@ int Hog_FindFileNoCase();
 int ArchiveList_CloseNamed();                       
 extern int D_00489BE0;
 
-int func_001302F0(int arg0) {
+int Game_CountAttractMovies(int arg0) {
     int sp50[32];
     int sp30[8];
     char * temp_v0;

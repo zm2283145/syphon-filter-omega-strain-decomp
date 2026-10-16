@@ -150,12 +150,12 @@ extern int D_005392D0;
 void func_0025CD10(char* r);
 void func_0025CA40(char* r);
 void Vec4_Copy(void* d, V4* s);
-int* func_0025C9D0(void* out, V4* in);
+int* GuiBatch_AddVertexColor(void* out, V4* in);
 void func_003701B0(char* r);
 void func_0041C150(Self* self);
 Scr* Gui_GetScreenStack(void);
 int func_003CF3A0(int a, float* x, float* y, int d);
-int func_0036A2F0(int a);
+int Font_GetLineHeight(int a);
 extern V4 D_005720E0;
 }
 
@@ -172,7 +172,7 @@ static inline void Vertex(V4* p, V4* c) {
     func_0025CA40(D_005381F0);
     e = EntAt(D_00539210);
     Vec4_Copy(e->pos + (D_00539224 - 1) * 16, p);
-    func_0025C9D0(e->c30 + (D_00539224 - 1) * 16, c);
+    GuiBatch_AddVertexColor(e->c30 + (D_00539224 - 1) * 16, c);
     D_005381F8 = 0x200000000LL;
 }
 
@@ -184,7 +184,7 @@ extern "C" void func_0041A450(Self* self)
     float x = 0;
     float y = 0;
     if (!func_003CF3A0(self->f78, &x, &y, self->f8C)) return;
-    float h = func_0036A2F0(self->f54);
+    float h = Font_GetLineHeight(self->f54);
     int save = D_005392D0;
     { int i = D_00538C64; GQR(MtxAt(i + 1), MtxAt(i)); }
     D_00538C64++;

@@ -32,13 +32,13 @@ typedef struct Widget {
     char pad2C[0x44 - 0x2C];
     Child* child;           /* +0x44 */
 } Widget;
-extern "C" void func_0013B180(ListIter* out, NodeList* list);  /* list.begin() */
+extern "C" void List_Begin(ListIter* out, NodeList* list);  /* list.begin() */
 extern "C" void func_0028C0B0(ListIter* out, ListIter* in);    /* iterator -> const_iterator */
 extern "C" void func_0028C0A0(ListIter* out, NodeList* list);  /* list.end() */
 extern "C" void func_0028C090(ListIter* out, ListIter* in);    /* iterator -> const_iterator */
 
 /* For every other widget in the +0x28 list: clears flag 0x2 and notifies its child (+0x44, virtual +0x20). */
-extern "C" void func_0028C1D0(Widget* self)
+extern "C" void GuiAgentCreate_SleepChildren(Widget* self)
 {
     ListIter endIt;
     ListIter beginIt;
@@ -47,7 +47,7 @@ extern "C" void func_0028C1D0(Widget* self)
     ListNode* node;
     NodeList* list;
     if (self) {
-    func_0013B180(&beginIt, &self->children);
+    List_Begin(&beginIt, &self->children);
     func_0028C0B0(&it, &beginIt);
     node = it.node;
     list = &self->children;
@@ -97,9 +97,9 @@ typedef struct Widget_0028C2A0 {
     Child_0028C2A0* child;           /* +0x44 */
 } Widget_0028C2A0;
 #if 0 /* merge_units */
-extern "C" void func_0013B180(ListIter_0028C2A0* out, NodeList* list);  /* list.begin() */
+extern "C" void List_Begin(ListIter_0028C2A0* out, NodeList* list);  /* list.begin() */
 #endif /* merge_units */
-#define func_0013B180(a0, a1) (func_0013B180((ListIter *)(a0), (a1))) /* merge_units */
+#define List_Begin(a0, a1) (List_Begin((ListIter *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
 extern "C" void func_0028C0B0(ListIter_0028C2A0* out, ListIter_0028C2A0* in);    /* iterator -> const_iterator */
@@ -118,7 +118,7 @@ extern "C" void func_0028C090(ListIter_0028C2A0* out, ListIter_0028C2A0* in);   
 
 
 /* For every other widget in the +0x28 list: sets flag 0x2, notifies its child (+0x44, virtual +0x1C), sets 0x4 and clears 0x80. */
-extern "C" void func_0028C2A0(Widget_0028C2A0* self)
+extern "C" void GuiAgentCreate_WakeChildren(Widget_0028C2A0* self)
 {
     ListIter_0028C2A0 endIt;
     ListIter_0028C2A0 beginIt;
@@ -127,7 +127,7 @@ extern "C" void func_0028C2A0(Widget_0028C2A0* self)
     ListNode_0028C2A0* node;
     NodeList* list;
     if (self) {
-    func_0013B180(&beginIt, &self->children);
+    List_Begin(&beginIt, &self->children);
     func_0028C0B0(&it, &beginIt);
     node = it.node;
     list = &self->children;
@@ -149,7 +149,7 @@ extern "C" void func_0028C2A0(Widget_0028C2A0* self)
     }
     }
 }
-#undef func_0013B180 /* merge_units */
+#undef List_Begin /* merge_units */
 #undef func_0028C0B0 /* merge_units */
 #undef func_0028C0A0 /* merge_units */
 #undef func_0028C090 /* merge_units */

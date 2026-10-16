@@ -9,8 +9,8 @@ int Archive_Open();
 char * Mem_Alloc(int, int, char *, int);                      
 int func_0027B680();                            
 char * func_0027B900(char * , int, char *);              
-int func_0036DEF0();                             
-int func_0036E220();                            
+int FileMan_FindMember();                             
+int FileMan_Release();                            
 int func_0036E4B0();                    
 int sprintf();                           
 extern char D_0048B2F8;
@@ -29,7 +29,7 @@ void func_001674E0(char * arg0) {
     if (F_(arg0, 0x27C, int) == NULL) {
         sprintf(spE0, "%s\\COMMON\\IALOBBYN.HOG", &D_0048B2F8);
         func_0036E4B0(sp40, spE0, 0, 0);
-        if (!(func_0036DEF0(sp40) & 0xFF)) {
+        if (!(FileMan_FindMember(sp40) & 0xFF)) {
             temp_s0 = Archive_Open(&D_004FFB8C, spE0, 0, 0);
             if (D_00533880 != 0) {
                 Alloc_Lock(9);
@@ -47,6 +47,6 @@ void func_001674E0(char * arg0) {
             F_(F_(arg0, 0x27C, int), 0x56, signed char) = 1;
             func_0027B680(F_(arg0, 0x27C, int));
         }
-        func_0036E220(sp40, -1);
+        FileMan_Release(sp40, -1);
     }
 }

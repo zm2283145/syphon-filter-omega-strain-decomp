@@ -324,7 +324,7 @@ extern unsigned char D_005721C8;
 void func_00159580(It_A* out, NpcList_A* l);
 void func_0014ABE0(It_A* out, NpcList_A* l);
 It_A* func_0014ABD0(It_A* dst, It_A* src);
-CamHolder_A** func_00159560(void* v);
+CamHolder_A** List_Front(void* v);
 int func_00159570(void* v);
 Actor_A* PlayerSlots_Get(int i);
 float Math_Cos(float a);
@@ -377,7 +377,7 @@ extern "C" bool Npc_IsDeadRemovalAllowed(Npc_A* self)
         if (found != self->actor) {
             float maxSq = D_0053834C * D_0053834C;
             V_A pos = self->actor->GetPos(-1);
-            Cam_A* c = (func_00159570(D_004FFC14) ? *func_00159560(D_004FFC14) : 0)->cam;
+            Cam_A* c = (func_00159570(D_004FFC14) ? *List_Front(D_004FFC14) : 0)->cam;
             if (c->b50)
                 c->Update();
             pos.Sub(c->pos);

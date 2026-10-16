@@ -36,7 +36,7 @@ extern char D_004FFB50[];
 extern char D_004EA0B0[];
 extern signed char D_0049D024;
 void* Service_Lookup(void* a, void* b);
-int func_00132A30(Actor* a);
+int Actor_GetSkeleton(Actor* a);
 void Model_GetSkeletonNodePos(V* out, int n, int node);
 int LosMgr_TraceBullet(void* mgr, Hit* a, Query* b, V* c, const V& d, void* e1, void* e2, int g, unsigned char h, unsigned char i, int j, unsigned char k);
 }
@@ -50,7 +50,7 @@ extern "C" bool AreaEffect_GasExposure(Eff* self, Actor* actor)
             V from;
             V pos;
             QC(&from, i ? &self->m90[i - 1] : &self->m70);
-            Model_GetSkeletonNodePos(&pos, func_00132A30(actor), D_0049D024);
+            Model_GetSkeletonNodePos(&pos, Actor_GetSkeleton(actor), D_0049D024);
             from.z = pos.z;
             { void* xx = &pos; /* dead on purpose: retail keeps this addiu */ }
             V d(Sub(pos, from));

@@ -15,6 +15,12 @@ extern void Curve_Retarget();
 extern void Curve_SetVelocity();
 extern void Curve_VirtualNop();
 extern void GuiSaveAgentWidget_IsType();
+extern void GuiScreen_HandleEvent();
+extern void GuiScreen_HandleInput();
+extern void GuiScreen_Init();
+extern void GuiScreen_Sleep();
+extern void GuiScreen_Update();
+extern void GuiScreen_Wake();
 extern void Node_ClearFlag2C();
 extern void Node_GetFlag2C();
 extern void Node_SetFlag2C();
@@ -22,6 +28,7 @@ extern void Object_Activate();
 extern void Object_AttachTransform();
 extern void Object_Deactivate();
 extern void Object_GetAttachedOrSelf();
+extern void Object_GetEye();
 extern void Object_HandleMessage();
 extern void PathObj_GetPosition();
 extern void Player_GetActiveWeapon();
@@ -37,7 +44,6 @@ extern void func_0013EE60();
 extern void func_00140E90();
 extern void func_00141850();
 extern void func_00148870();
-extern void func_0014D340();
 extern void func_00153860();
 extern void func_0015BFB0();
 extern void func_0015BFC0();
@@ -67,12 +73,6 @@ extern void func_0029CBA0();
 extern void func_002A8B50();
 extern void func_002A9390();
 extern void func_0033CCA0();
-extern void func_0033CEF0();
-extern void func_0033CF90();
-extern void func_0033D310();
-extern void func_0033D360();
-extern void func_0033D3A0();
-extern void func_0033D3F0();
 extern void func_0033D430();
 extern void func_0033DA00();
 extern void func_0033DE00();
@@ -130,10 +130,10 @@ extern void func_0041F090();
 extern void func_0041F210();
 
 void *D_004DE830[28] = {
-    0, 0, &func_0033D430, &func_0033D3F0,
-    &func_0041F090, &func_0041F080, &func_0041F070, &func_0033D3A0,
-    &func_0033D360, &func_0041E330, &func_0041E2B0, &func_0033CEF0,
-    &func_0041E470, &func_0041E230, &func_0033D310, &func_0033CF90,
+    0, 0, &func_0033D430, &GuiScreen_Init,
+    &func_0041F090, &func_0041F080, &func_0041F070, &GuiScreen_Wake,
+    &GuiScreen_Sleep, &func_0041E330, &func_0041E2B0, &GuiScreen_HandleInput,
+    &func_0041E470, &func_0041E230, &GuiScreen_Update, &GuiScreen_HandleEvent,
     &func_0041F210, &func_0041D8C0, &func_0041D780, &func_0041D5C0,
     &func_0041D400, &func_00293910, &GuiSaveAgentWidget_IsType, &func_00293890,
     &func_0033CCA0, &func_0029CB90, &func_0029CBA0, 0,
@@ -175,7 +175,7 @@ void *D_004DE920[116] = {
     &Object_AttachTransform, &Player_GetActiveWeapon, &func_003CDDC0, &func_003CDD80,
     &func_003CDD40, &func_003CDC20, &func_003CDBE0, &func_003CDA60,
     &func_003CD920, &func_003CD7A0, &func_0015C010, &func_00153860,
-    &func_0014D340, &func_0015C020, &func_00140E90, &func_0015C030,
+    &Object_GetEye, &func_0015C020, &func_00140E90, &func_0015C030,
     &func_0015C040, &func_0015C050, &func_003CD520, &func_003CD4A0,
     &func_003CD420, &PathObj_GetPosition, &func_003CD1C0, &func_003CD110,
     &func_003CD090, &func_003CCFF0, &func_0013E060, &func_0015C080,

@@ -8,6 +8,6 @@
 
 extern int D_004F82A0;
 
-void func_00261350(Word* src) {
+void HudRadar_SetPlayerId(Word* src) {
     D_004F82A0 = src->value;
 }

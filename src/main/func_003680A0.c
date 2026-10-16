@@ -19,7 +19,7 @@ extern Hud3680A0* D_004FFC2C;
 extern char D_00587C90[];
 void* ObjMan_GetService(void);
 T3680A0* ObjMan_GetObjective(void* mgr, int id);
-void func_0016E880(void* out, void* list);
+void List_Begin_16E880(void* out, void* list);
 void func_0026C390(void* out, void* raw);
 void func_0026C320(void* out, void* list);
 void func_0026C350(void* out, void* in);
@@ -32,7 +32,7 @@ int func_0041EF10(void* self, void* sender, unsigned short msg, int a3, int a4);
 }
 
 /* Tab list message handler: on select (0x13) announce every tracked item bound to the chosen objective. */
-extern "C" int func_003680A0(S3680A0* self, void* sender, unsigned short msg, int a3, int a4)
+extern "C" int GuiObjectives_HandleEvent(S3680A0* self, void* sender, unsigned short msg, int a3, int a4)
 {
     if (msg == 0x10 && a3 == 1 && sender != self->w48) return 1;
     if (sender == self->w48) {
@@ -54,7 +54,7 @@ extern "C" int func_003680A0(S3680A0* self, void* sender, unsigned short msg, in
                     void* list = base + 0x24;
                     I3680A0* item;
                     N3680A0* n;
-                    func_0016E880(b, list);
+                    List_Begin_16E880(b, list);
                     func_0026C390(it, b[0]);
                     for (n = it[0]; func_0026C320(t, list), func_0026C350(end, t), n != end[0]; n = n->next) {
                         item = n->item;

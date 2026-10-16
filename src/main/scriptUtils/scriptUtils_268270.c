@@ -43,11 +43,11 @@ static inline void merge_flush_func_00268270(void) {}
 /* merge_units: begin func_002682C0 */
 #pragma push /* merge_units */
 extern void* D_004FFC2C;
-extern void func_00242E40(void* hud, char* label, int a, int b, int c, int d, int e, float x, float y);
+extern void Hud_SetCalloutLabel(void* hud, char* label, int a, int b, int c, int d, int e, float x, float y);
 /* Set a callout label on the HUD. */
 void Global_SetCalloutLabel(Callout002682C0* callout, int a, int x, int d)
 {
-    func_00242E40(D_004FFC2C, callout->label, a, 0, 0, d, 1, (float)x, 0.0f);
+    Hud_SetCalloutLabel(D_004FFC2C, callout->label, a, 0, 0, d, 1, (float)x, 0.0f);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002682C0(void) {}

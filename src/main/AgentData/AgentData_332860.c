@@ -9,7 +9,7 @@
 #include "types.h"
 typedef struct { signed char a, b, c, d; } E332;
 typedef struct { char pad[0xD8]; int count; E332 ent[1]; } H332;
-int func_00332860(H332* h, int a, int b)
+int AgentData_GetBonusFlag(H332* h, int a, int b)
 {
     int i;
     for (i = 0; i < h->count; i++) {
@@ -91,7 +91,7 @@ static inline unsigned char Has32A10(T32A10* self, int a, int b, int c)
     }
     return 0;
 }
-void func_00332A10(T32A10* self, int a, int b, int c)
+void AgentData_AddLevelProgress(T32A10* self, int a, int b, int c)
 {
     if (!Has32A10(self, a, b - 1, c - 1)) {
         E32A10* e = &self->e[self->count++];
@@ -246,7 +246,7 @@ int AgentData_HasUnlock(Pt2_Flags* p, unsigned char bit) {
 #pragma push /* merge_units */
 extern int func_003309C0(__int128 key);
 typedef struct { char pad[0xB08]; int bits[1]; } AgentD2FE0;
-int func_00332FE0(AgentD2FE0* self, __int128 key)
+int AgentData_IsLevelDone(AgentD2FE0* self, __int128 key)
 {
     int i = func_003309C0(key);
     if (i > -1)

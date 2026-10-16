@@ -53,7 +53,7 @@ extern char * D_004EE9D8;
 extern unsigned char D_00533880;
 extern int D_00533888;
 
-void func_001AFB20(void) {
+void Human_InitStatics(void) {
     int sp2C;
     char * temp_s0;
     char * temp_s0_2;

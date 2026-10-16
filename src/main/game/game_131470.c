@@ -14,14 +14,14 @@ typedef struct { char pad[0x67]; unsigned char on; char pad68[0x1DC - 0x68]; Cfg
 typedef struct { char pad[0xC]; unsigned char flag; } G_1470;
 extern unsigned char D_005721C8;
 extern G_1470* D_004FFC38;
-void func_0026BD60(void);
+void PadRumble_Stop(void);
 void func_0026BE70(unsigned char v);
 void Game_SetPaused(S_1470* self, unsigned char on)
 {
     if (!D_005721C8)
         self->on = on;
     if (self->on) {
-        func_0026BD60();
+        PadRumble_Stop();
         func_0026BE70(0);
         D_004FFC38->flag = 1;
     } else {

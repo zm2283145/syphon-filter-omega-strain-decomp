@@ -8,9 +8,9 @@ union TrackerIter { HotboxListNode* p; };
 struct HotMsg { CMSG_HEADER; int action; int code; int value; int who; };
 struct HotboxV { VPAD32(a) VPAD32(b) VPAD2(c) virtual int Test(void*); };
 extern "C" {
-void func_00138DA0(void*,void*,void*);
+void List_Erase(void*,void*,void*);
 void func_0015AF40(void*,void*);
-void func_00170C10(void*,void*);
+void HotboxTracker_LinkBox(void*,void*);
 void func_00170C40(void*,void*);
 int func_00170C50(void*,void*);
 void func_00170C70(void*,void*);
@@ -136,7 +136,7 @@ block_19:
                 cMessage_dtor(&spE0, 0);
                 func_0015AF40(&sp144, &sp17C);
                 func_00170CF0(&sp130, &sp144);
-                func_00138DA0(&sp134, arg2, &sp130);
+                List_Erase(&sp134, arg2, &sp130);
                 func_00170CE0(&sp148, &sp134);
                 sp160.p = sp148;
                 sp17C = sp160;
@@ -194,7 +194,7 @@ block_49:
                             occupied->occupants = 3;
                         }
                     }
-                    func_00170C10(arg2, &sp174);
+                    HotboxTracker_LinkBox(arg2, &sp174);
                     temp_s2_2 = arg0->unk20;
                     temp_s1_2 = sp174->type;
                     Event_Construct(&spA0, &D_004EE698);

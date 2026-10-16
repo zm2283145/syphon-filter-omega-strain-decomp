@@ -1,7 +1,7 @@
 #include "types.h"
 
 /* Returns 2048.0f. */
-float func_0025F220(void)
+float GuiBatch_AddVertexUV(void)
 {
     return 2048.0f;
 }

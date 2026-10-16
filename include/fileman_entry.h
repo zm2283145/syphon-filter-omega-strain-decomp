@@ -13,7 +13,7 @@
  *   func_0036E5D0(&e);                      default ctor (flags = 0)
  *   func_0036E4B0(&e, name, handle, extra); ctor, flags |= 1 (|4 if extra)
  *   func_0036E540(&e, name, handle, extra); ctor, flags |= 2 (|4 if extra)
- *   func_0036E220(&e, -1);         dtor: frees halFile when flags & 0x10,
+ *   FileMan_Release(&e, -1);         dtor: frees halFile when flags & 0x10,
  *                                  deletes when flag > 0 (-1 = in place)
  * Destroy embedded entries in reverse order (b then a), as the game does.
  * Prototypes take void*; #define FILEMAN_ENTRY_NO_PROTOS to keep typed
@@ -32,7 +32,7 @@ extern "C" {
 void* func_0036E5D0(void* entry);
 void* func_0036E4B0(void* entry, const char* name, void* handle, int extra);
 void* func_0036E540(void* entry, const char* name, void* handle, int extra);
-void* func_0036E220(void* entry, int flags); /* flags really short */
+void* FileMan_Release(void* entry, int flags); /* flags really short */
 #ifdef __cplusplus
 }
 #endif

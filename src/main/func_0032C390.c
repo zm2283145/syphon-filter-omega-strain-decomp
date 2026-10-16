@@ -28,8 +28,8 @@ typedef struct { char p0[0x10]; int id; } Arg_C390;
 
 extern void func_0032B2D0(Self_C390* self, int v);
 extern void func_0032B5F0(Self_C390* self, unsigned int flags);
-extern int func_0032C2D0(Self_C390* self, Item_C390* it);
-extern int func_0032AF10(Self_C390* self, unsigned char c);
+extern int GuiKeyboard_GetModifierIndex(Self_C390* self, Item_C390* it);
+extern int GuiKeyboard_IsCharAllowed(Self_C390* self, unsigned char c);
 extern int func_003FD6B0(unsigned short key);
 extern void func_0041A100(Menu_C390* m, int sel);
 extern void func_0041A180(Menu_C390* m, int sel);
@@ -41,7 +41,7 @@ static inline int StrSize(Str_C390* s) { return (s->h.w & 1) ? s->size : (unsign
 
 static inline Entry_C390* Lookup(Self_C390* o, Item_C390* it)
 {
-    int k = func_0032C2D0(o, it);
+    int k = GuiKeyboard_GetModifierIndex(o, it);
     if (it->flags & (4 << k)) {
         Table_C390* t = o->tab;
         int i;
@@ -54,7 +54,7 @@ static inline Entry_C390* Lookup(Self_C390* o, Item_C390* it)
 
 static inline unsigned char Remap(Self_C390* o, Item_C390* it)
 {
-    int k = func_0032C2D0(o, it);
+    int k = GuiKeyboard_GetModifierIndex(o, it);
     unsigned short key = it->keys[k];
     Entry_C390* m = o->cur;
     if (m) {
@@ -67,7 +67,7 @@ static inline unsigned char Remap(Self_C390* o, Item_C390* it)
     return func_003FD6B0(key);
 }
 
-int func_0032C390(Self_C390* self, Arg_C390* arg, unsigned short msg, int a3, int param)
+int GuiKeyboard_HandleEvent(Self_C390* self, Arg_C390* arg, unsigned short msg, int a3, int param)
 {
     if (msg == 0x2000) {
         func_0032B2D0(self, 0);
@@ -128,7 +128,7 @@ int func_0032C390(Self_C390* self, Arg_C390* arg, unsigned short msg, int a3, in
                     int idx = self->index[id];
                     if (idx != -1) {
                         Item_C390* it = &self->tab->items[idx];
-                        int slot = func_0032C2D0(self, it);
+                        int slot = GuiKeyboard_GetModifierIndex(self, it);
                         if (it->flags & (4 << slot)) {
                             self->cur = Lookup(self, it);
                         } else {
@@ -141,7 +141,7 @@ int func_0032C390(Self_C390* self, Arg_C390* arg, unsigned short msg, int a3, in
             }
             if (prev != self->cur) func_0032B5F0(self, self->flags);
             if (self->menu && found && ch != 0xFF) {
-                if ((unsigned char)func_0032AF10(self, ch) && StrSize(&self->menu->name) < self->max) {
+                if ((unsigned char)GuiKeyboard_IsCharAllowed(self, ch) && StrSize(&self->menu->name) < self->max) {
                     char buf[2];
                     buf[0] = ch;
                     buf[1] = 0;

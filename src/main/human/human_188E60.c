@@ -46,7 +46,7 @@ extern char D_004DAE30[];
 extern void SoundRequest_Ctor(E4Req* r, int a, char* b, int c, int d);
 extern void SoundEvent_CtorFromPreset(E4Ev* e, E4Req* r, int preset);
 extern void Event_Send(E4Ev* e, char* tgt, int n);
-extern void func_0036E220(E4Str* s, int flag);
+extern void FileMan_Release(E4Str* s, int flag);
 extern void cMessage_dtor(E4Ev* e, int flag);
 void Actor_SendSoundImmediate(int preset)
 {
@@ -57,11 +57,11 @@ void Actor_SendSoundImmediate(int preset)
     ev.flag = 1;
     Event_Send(&ev, D_004FFB50, 1);
     ev.vt = D_004DAE30;
-    func_0036E220(&ev.s114, -1);
-    func_0036E220(&ev.s78, -1);
+    FileMan_Release(&ev.s114, -1);
+    FileMan_Release(&ev.s78, -1);
     cMessage_dtor(&ev, 0);
-    func_0036E220(&req.sE4, -1);
-    func_0036E220(&req.s48, -1);
+    FileMan_Release(&req.sE4, -1);
+    FileMan_Release(&req.s48, -1);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00188F00(void) {}
@@ -123,10 +123,10 @@ extern char D_0049D960[];
 extern float D_004A0438;
 extern float D_0049CF40;
 extern float D_0049CF38;
-float func_001E96A0(Ground* g);
-void func_001E9710(V* hit, Ground* g, unsigned char* ok, int n, float r);
+float ActorPhysical_QueryWaterHeight(Ground* g);
+void ActorPhysical_ProbeSurface(V* hit, Ground* g, unsigned char* ok, int n, float r);
 Mat* Material_Lookup(void* ref);
-char* func_00189540(void* p);
+char* String_CStr_189540(void* p);
 #if 0 /* merge_units */
 void SoundRequest_Ctor(SReq* r, int a, char* b, int c, int d);
 #endif /* merge_units */
@@ -144,9 +144,9 @@ void Event_Send(SEv* e, char* tgt, int n);
 #define Event_Send(a0, a1, a2) (Event_Send((E4Ev *)(a0), (a1), (a2))) /* merge_units */
 
 #if 0 /* merge_units */
-void func_0036E220(SStr* s, int flag);
+void FileMan_Release(SStr* s, int flag);
 #endif /* merge_units */
-#define func_0036E220(a0, a1) (func_0036E220((E4Str *)(a0), (a1))) /* merge_units */
+#define FileMan_Release(a0, a1) (FileMan_Release((E4Str *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
 void cMessage_dtor(SEv* e, int flag);
@@ -192,7 +192,7 @@ extern "C" void Actor_SurfaceSoundEffects(Actor* a, unsigned char mode, int forc
     if (a->g == 0)
         return;
     unsigned char water = a->g->fE4 != D_004A0438;
-    float depth = func_001E96A0(a->g);
+    float depth = ActorPhysical_QueryWaterHeight(a->g);
     if (!water) {
         V hit;
         unsigned char ok;
@@ -201,7 +201,7 @@ extern "C" void Actor_SurfaceSoundEffects(Actor* a, unsigned char mode, int forc
             n = 1;
         else
             n = 2;
-        func_001E9710(&hit, a->g, &ok, n, 2.25f);
+        ActorPhysical_ProbeSurface(&hit, a->g, &ok, n, 2.25f);
         if (ok) {
             Mat* mat = Material_Lookup(GetB(a->g)->ref);
             int idx = Crouched(a) ? 4 : 1;
@@ -211,7 +211,7 @@ extern "C" void Actor_SurfaceSoundEffects(Actor* a, unsigned char mode, int forc
                 int f = a->flags;
                 char* nm;
                 if (((f >> 2) & 1) || ((f >> 1) & 1) || ((f >> 4) & 1) || a->state == 0x15 || force) {
-                    nm = func_00189540(Sub(mat, idx)->name);
+                    nm = String_CStr_189540(Sub(mat, idx)->name);
                 } else {
                     snd = 1;
                     nm = D_0049D920;
@@ -223,11 +223,11 @@ extern "C" void Actor_SurfaceSoundEffects(Actor* a, unsigned char mode, int forc
                 ev.flag = 1;
                 Event_Send(&ev, D_004FFB50, 0);
                 ev.vt = D_004DAE30;
-                func_0036E220(&ev.s114, -1);
-                func_0036E220(&ev.s78, -1);
+                FileMan_Release(&ev.s114, -1);
+                FileMan_Release(&ev.s78, -1);
                 cMessage_dtor(&ev, 0);
-                func_0036E220(&req.sE4, -1);
-                func_0036E220(&req.s48, -1);
+                FileMan_Release(&req.sE4, -1);
+                FileMan_Release(&req.s48, -1);
                 }
             } else {
                 int f = a->flags;
@@ -247,11 +247,11 @@ extern "C" void Actor_SurfaceSoundEffects(Actor* a, unsigned char mode, int forc
                 ev.flag = 1;
                 Event_Send(&ev, D_004FFB50, 1);
                 ev.vt = D_004DAE30;
-                func_0036E220(&ev.s114, -1);
-                func_0036E220(&ev.s78, -1);
+                FileMan_Release(&ev.s114, -1);
+                FileMan_Release(&ev.s78, -1);
                 cMessage_dtor(&ev, 0);
-                func_0036E220(&req.sE4, -1);
-                func_0036E220(&req.s48, -1);
+                FileMan_Release(&req.sE4, -1);
+                FileMan_Release(&req.s48, -1);
             }
             int fx = mat->e[(unsigned char)idx].fx;
             if (fx != -1 && fx != -2) {
@@ -291,17 +291,17 @@ extern "C" void Actor_SurfaceSoundEffects(Actor* a, unsigned char mode, int forc
         ev.flag = 1;
         Event_Send(&ev, D_004FFB50, 1);
         ev.vt = D_004DAE30;
-        func_0036E220(&ev.s114, -1);
-        func_0036E220(&ev.s78, -1);
+        FileMan_Release(&ev.s114, -1);
+        FileMan_Release(&ev.s78, -1);
         cMessage_dtor(&ev, 0);
-        func_0036E220(&req.sE4, -1);
-        func_0036E220(&req.s48, -1);
+        FileMan_Release(&req.sE4, -1);
+        FileMan_Release(&req.s48, -1);
     }
 }
 #undef SoundRequest_Ctor /* merge_units */
 #undef SoundEvent_CtorFromPreset /* merge_units */
 #undef Event_Send /* merge_units */
-#undef func_0036E220 /* merge_units */
+#undef FileMan_Release /* merge_units */
 #undef cMessage_dtor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00188FB0(void) {}

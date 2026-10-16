@@ -4,9 +4,17 @@ extern void Actor_ApplyContactDamage();
 extern void Actor_BaseWorldUpdate();
 extern void Actor_VirtualNop();
 extern void Controller_DeathNotice();
+extern void NiEventBlast_Fire();
+extern void NiEvent_Play();
+extern void NiEvent_PreLogic();
+extern void NiEvent_Reset();
+extern void NiEvent_Stop();
+extern void NiPositionTrack_Update();
+extern void NiSwitchTrack_Update();
 extern void Node_GetFlag2C();
 extern void Object_AttachTransform();
 extern void Object_GetAttachedOrSelf();
+extern void Object_GetEye();
 extern void PathObj_GetPosition();
 extern void Player_GetActiveWeapon();
 extern void cNIEventOBJ_dtor();
@@ -35,7 +43,6 @@ extern void func_0013E060();
 extern void func_00140E90();
 extern void func_00141850();
 extern void func_00148870();
-extern void func_0014D340();
 extern void func_00153860();
 extern void func_0015BFB0();
 extern void func_0015BFC0();
@@ -47,14 +54,7 @@ extern void func_0015C040();
 extern void func_0015C050();
 extern void func_0015C080();
 extern void func_0015C0A0();
-extern void func_00239960();
 extern void func_002399A0();
-extern void func_0023D290();
-extern void func_0023D6D0();
-extern void func_0023E720();
-extern void func_0023E790();
-extern void func_0023E820();
-extern void func_0023E9B0();
 extern void func_0023FCD0();
 extern void func_0023FCE0();
 extern void func_0023FCF0();
@@ -81,7 +81,7 @@ extern void func_003CEA00();
 
 int D_004DC024[1] = { 0 };
 
-void *D_004DC028[4] __attribute__((aligned(8))) = { 0, 0, &func_00239960, 0 };
+void *D_004DC028[4] __attribute__((aligned(8))) = { 0, 0, &NiEventBlast_Fire, 0 };
 
 void *D_004DC038[6] __attribute__((aligned(8))) = {
     0, 0, &func_002399A0, 0,
@@ -93,7 +93,7 @@ void *D_004DC050[80] = {
     &func_0012ECE0, &Object_GetAttachedOrSelf, &func_0023FCF0, &func_0012ED00,
     &func_003CE810, &func_003CE7D0, &cNIEventOBJ_v08, &cNIEventOBJ_v09,
     &func_0012ED50, &cNIEventOBJ_v0B, &cNIEventOBJ_v0C, &func_003CEA00,
-    &func_003CE9F0, &func_003CE9E0, &cNIEventOBJ_v10, &func_0023E9B0,
+    &func_003CE9F0, &func_003CE9E0, &cNIEventOBJ_v10, &NiEvent_PreLogic,
     &Actor_BaseWorldUpdate, &Actor_VirtualNop, &cNIEventOBJ_v14, &cNIEventOBJ_v15,
     &cNIEventOBJ_v16, &cNIEventOBJ_v17, &cNIEventOBJ_v18, &Node_GetFlag2C,
     &func_0015BFB0, &func_0015BFC0, &func_0015BFD0, &func_00148870,
@@ -101,12 +101,12 @@ void *D_004DC050[80] = {
     &Object_AttachTransform, &Player_GetActiveWeapon, &func_003CDDC0, &func_003CDD80,
     &func_003CDD40, &func_003CDC20, &func_003CDBE0, &func_003CDA60,
     &func_003CD920, &func_003CD7A0, &cNIEventOBJ_v2C, &func_00153860,
-    &func_0014D340, &func_0015C020, &func_00140E90, &func_0015C030,
+    &Object_GetEye, &func_0015C020, &func_00140E90, &func_0015C030,
     &func_0015C040, &func_0015C050, &func_003CD520, &func_003CD4A0,
     &func_003CD420, &PathObj_GetPosition, &func_003CD1C0, &func_003CD110,
     &func_003CD090, &func_003CCFF0, &func_0013E060, &func_0015C080,
     &Actor_ApplyContactDamage, &func_0015C0A0, &func_00141850, &Controller_DeathNotice,
-    &cNIEventOBJ_v42, &func_0023E820, &func_0023E790, &func_0023E720,
-    &cNIEventOBJ_v46, &cNIEventOBJ_v47, &cNIEventOBJ_v48, &func_0023D290,
-    &func_0023D6D0, &cNIEventOBJ_v4B, 0, 0,
+    &cNIEventOBJ_v42, &NiEvent_Play, &NiEvent_Stop, &NiEvent_Reset,
+    &cNIEventOBJ_v46, &cNIEventOBJ_v47, &cNIEventOBJ_v48, &NiPositionTrack_Update,
+    &NiSwitchTrack_Update, &cNIEventOBJ_v4B, 0, 0,
 };

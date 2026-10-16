@@ -16,15 +16,15 @@ int Mem_Free();
 #include "alloc_guard.h"
 typedef struct { char pad[0x128]; void* buf; } E4Own;
 extern "C" {
-void func_00252FB0(void* p, int n);
+void PickupMenu_Destroy(void* p, int n);
 }
-extern "C" void func_00247320(E4Own* o)
+extern "C" void PlayerInput_ClosePickupMenu(E4Own* o)
 {
     void* p = o->buf;
     if (p) {
         {
             AllocGuard g;
-            func_00252FB0(p, -1);
+            PickupMenu_Destroy(p, -1);
             Mem_Free(0, p, "playerControls.cc", 0xF29);
         }
         o->buf = 0;
@@ -40,7 +40,7 @@ static inline void merge_flush_func_00247320(void) {}
 #pragma cplusplus on
 struct C5Zone { int id; };
 struct C5Obj2473 { char pad[0x128]; C5Zone* zone; };
-extern "C" bool func_002473E0(C5Obj2473* p, int id) { return p->zone != 0 && id == p->zone->id; }
+extern "C" bool PlayerInput_IsPickupMenuForZone(C5Obj2473* p, int id) { return p->zone != 0 && id == p->zone->id; }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002473E0(void) {}
 #pragma pop /* merge_units */
@@ -76,7 +76,7 @@ void func_00247720(char* h, int id);
 
 HEnt_247410* History_At(char* h, int id);
 }
-extern "C" void func_00247410(St_247410* s, char* a, int on, float f)
+extern "C" void PlayerInput_UpdateAimHeading(St_247410* s, char* a, int on, float f)
 {
     float spd;
     if ((s->Entered(5) && s->NotIn(8)) || (s->Entered(8) && s->NotIn(5)) || (s->Entered(5) && s->Entered(8))) {

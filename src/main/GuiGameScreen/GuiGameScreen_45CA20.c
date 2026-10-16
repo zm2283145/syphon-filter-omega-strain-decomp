@@ -22,7 +22,7 @@ extern G_45CA20* D_004FFC2C;
 extern int D_00497ACC[];
 extern int D_00497AEC[];
 void func_0045C760(S_45CA20* o);
-long long func_003698B0(void);
+long long Time_GetMilliseconds(void);
 void func_0045C5E0(S_45CA20* o);
 void func_0041E0F0(void* a, void* b, int kind, int v, int f);
 void* Gui_GetScreenStack(void);
@@ -44,7 +44,7 @@ void func_0045CA20(S_45CA20* o, int on)
         o->w->flags |= 4;
         func_0045C760(o);
         o->f94 = o->f90;
-        o->f98 = func_003698B0();
+        o->f98 = Time_GetMilliseconds();
         o->f9C = 0;
         func_0045C5E0(o);
         if (o->fD4 == 0 && o->fD0 == 0) func_0041E0F0(o, o->fA4, 0xA, D_00497ACC[o->fDC], 0);

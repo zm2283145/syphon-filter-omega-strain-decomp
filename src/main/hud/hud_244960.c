@@ -10,12 +10,12 @@
 /* merge_units: begin func_00244960 */
 #pragma push /* merge_units */
 typedef struct { char pad[0x68]; void* obj; } O4960;
-extern void func_00260D90(void* tmp);
+extern void Hud_GetLockColour(void* tmp);
 extern void func_003E7EE0(void* obj, void* tmp);
 void func_00244960(O4960* self) {
     if (self->obj) {
         char tmp[16];
-        func_00260D90(tmp);
+        Hud_GetLockColour(tmp);
         func_003E7EE0(self->obj, tmp);
     }
 }
@@ -28,7 +28,7 @@ static inline void merge_flush_func_00244960(void) {}
 #pragma push /* merge_units */
 extern void func_003E8DE0(int, int);
 
-void func_002449A0(int a0) {
+void Hud_HideNoFire(int a0) {
     int a1;
     int cond;
 
@@ -48,7 +48,7 @@ static inline void merge_flush_func_002449A0(void) {}
 
 /* merge_units: begin func_002449D0 */
 #pragma push /* merge_units */
-void func_002449D0(int a0) {
+void Hud_ShowNoFire(int a0) {
     int a1;
     int cond;
 

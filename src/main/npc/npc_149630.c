@@ -2526,7 +2526,7 @@ int ScriptType_cNPC_Init(void) {
     return ScriptType_AddAccepted(D_004EA3F8, *iface);
 }
 
-int func_0014A670(int value) {
+int NpcAi_GetIdentity(int value) {
     int word[1];
 
     *(int*)(char*)word = value;

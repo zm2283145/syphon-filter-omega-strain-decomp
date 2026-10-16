@@ -8,7 +8,7 @@
 
 extern int sceCdSearchFile(int, int, int);
 
-int func_00118CD8(int a0, int a1) {
+int sceCdSearchFile_Thunk(int a0, int a1) {
     int tmp0;
 
     tmp0 = sceCdSearchFile(a0, a1, 0);

@@ -23,7 +23,7 @@ static inline void merge_flush_func_00176590(void) {}
 typedef struct { char pad[0x30]; char* obj; char pad2[0x1A8 - 0x34]; float maxv; } S1765B0;
 extern int D_004FFC2C;
 extern char* Loc_LookupText(char* key);
-extern void func_00242FA0(int a, char* b, char* c, int d, int e, int f, float g, float h);
+extern void Hud_ShowCallout(int a, char* b, char* c, int d, int e, int f, float g, float h);
 void cPlayer_v26(S1765B0* p, int a1, int a2, int flag, float v)
 {
     if (v > p->maxv) {
@@ -34,7 +34,7 @@ void cPlayer_v26(S1765B0* p, int a1, int a2, int flag, float v)
         int d;
         d = D_004FFC2C;
         s = p->obj + 0xC;
-        func_00242FA0(d, s, Loc_LookupText("headshot"), 0, 0, 0, 0.1f, 1.0f);
+        Hud_ShowCallout(d, s, Loc_LookupText("headshot"), 0, 0, 0, 0.1f, 1.0f);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */

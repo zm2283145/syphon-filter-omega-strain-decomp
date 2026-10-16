@@ -15,16 +15,16 @@ int Mem_Free();
 typedef struct { char pad[0x10]; int count; } E2List;
 extern void func_0036E5D0(void*);
 extern void func_0036E140(void*, void*, int, int);
-extern int func_00380A40(E2List*, void*);
-extern void func_0036E220(void*, int);
+extern int TexMan_FindOrLoad(E2List*, void*);
+extern void FileMan_Release(void*, int);
 int TexCache_LoadErrorTexture(E2List* s) {
     char buf[0xA0];
     int r;
     func_0036E5D0(buf);
     func_0036E140(buf, "GAMEDATA\\COMMON\\ERROR.TDX", 0, 0);
-    r = func_00380A40(s, buf);
+    r = TexMan_FindOrLoad(s, buf);
     if (r == -1) r = s->count - 1;
-    func_0036E220(buf, -1);
+    FileMan_Release(buf, -1);
     return r;
 }
 /* merge_units: generate this block's code under its own pragmas */

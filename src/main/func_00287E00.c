@@ -5,12 +5,12 @@ typedef struct { int m0; char str[4]; } Msg287E00;
 extern int Loc_LookupText(char*);
 extern int String_AssignCStr_1C43A0(void*, char*);
 extern float SoftFloat_U64ToFloat(int);
-extern void func_00288310(Obj287E00*, int);
+extern void GuiTitleScreen_CheckMemCard(Obj287E00*, int);
 extern void func_002C81D0(Ui287E00*);
-extern void func_002C82F0(Ui287E00*);
+extern void FrontEnd_StartSplashThread(Ui287E00*);
 extern void FrontEnd_ClosePopup(Ui287E00*, int);
 extern int FrontEnd_OpenPopup(Ui287E00*, int, char*, int, int, int);
-extern int func_003698B0(void);
+extern int Time_GetMilliseconds(void);
 extern int Gui_GetScreenList(void);
 extern int Gui_GetScreenStack(void);
 extern void GuiStack_SwapScreens(int, Obj287E00*, int);
@@ -30,9 +30,9 @@ extern char D_004A95E0[];
 extern char D_004FFBB8;
 extern Ui287E00* D_004FFC04;
 
-int func_00287E00(Obj287E00* self, Msg287E00* msg, unsigned short id, int a3, int a4)
+int GuiTitleScreen_HandleEvent(Obj287E00* self, Msg287E00* msg, unsigned short id, int a3, int a4)
 {
-    self->t = SoftFloat_U64ToFloat(func_003698B0()) / 1000.0f;
+    self->t = SoftFloat_U64ToFloat(Time_GetMilliseconds()) / 1000.0f;
     if (id == 0x1A) {
         if (a3 == 1) {
             D_004FFBB8 = 0;
@@ -41,7 +41,7 @@ int func_00287E00(Obj287E00* self, Msg287E00* msg, unsigned short id, int a3, in
     } else if (id == 0x1B) {
         if (a3 == 1) {
             FrontEnd_ClosePopup(D_004FFC04, self->h);
-            func_00288310(self, 1);
+            GuiTitleScreen_CheckMemCard(self, 1);
             return 1;
         }
     }
@@ -52,7 +52,7 @@ int func_00287E00(Obj287E00* self, Msg287E00* msg, unsigned short id, int a3, in
             int tok = -2;
             if (open) {
                 Ui287E00* ui;
-                func_002C82F0(D_004FFC04);
+                FrontEnd_StartSplashThread(D_004FFC04);
                 ui = D_004FFC04;
                 tok = FrontEnd_OpenPopup(ui, 0, D_004A9578, Loc_LookupText(D_004A9580), 0, 0);
             }

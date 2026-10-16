@@ -13,7 +13,7 @@ int sprintf(void *, const void *, ...);
 /* merge_units: begin func_002C7C40 */
 #pragma push /* merge_units */
 #pragma opt_propagation off
-extern long long func_003698B0(void);
+extern long long Time_GetMilliseconds(void);
 extern int D_0048C368;
 extern int D_0051EF98;
 extern char* func_002CCA30(void);
@@ -22,7 +22,7 @@ void func_002C7C40(int a, int b)
 {
     char buf[0x100];
     char* fmt;
-    int t = func_003698B0();
+    int t = Time_GetMilliseconds();
     D_0048C368 = b;
     D_0051EF98 = t;
     fmt = "gamedata\\frontend\\lang\\%s\\%s.tdx";
@@ -41,9 +41,9 @@ extern int D_0048C360;
 extern int D_0051EF88;
 extern int D_0051EF90;
 #if 0 /* merge_units */
-extern unsigned long long func_003698B0(void);
+extern unsigned long long Time_GetMilliseconds(void);
 #endif /* merge_units */
-#define func_003698B0() ((unsigned long long)func_003698B0()) /* merge_units */
+#define Time_GetMilliseconds() ((unsigned long long)Time_GetMilliseconds()) /* merge_units */
 
 extern int Gui_GetScreenStack(void);
 extern void func_0041E0F0(int, int, int, int, int);
@@ -57,7 +57,7 @@ int func_002C7CB0(char* self) {
         return 1;
     }
     t = D_0051EF78 + D_0048C360;
-    if (t < func_003698B0()) {
+    if (t < Time_GetMilliseconds()) {
         return 1;
     }
     h = D_0051EF88;
@@ -70,7 +70,7 @@ int func_002C7CB0(char* self) {
     }
     return 0;
 }
-#undef func_003698B0 /* merge_units */
+#undef Time_GetMilliseconds /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002C7CB0(void) {}
 #pragma pop /* merge_units */

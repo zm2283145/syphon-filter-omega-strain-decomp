@@ -3,7 +3,7 @@
 #define NULL 0
 #pragma mpwc_relax on
 /*fc*/
-int func_0013B180();                       
+int List_Begin();                       
 int func_0027AA80();                      
 int func_0027AC70();                        
 int func_0027AC80();                       
@@ -30,7 +30,7 @@ void func_0027AB60(char * arg0) {
     } else if (temp_v0 == 1) {
         F_(arg0, 0x38, int) = 0;
         func_003E8DE0(F_(arg0, 0x28, int), 1);
-        func_0013B180(&sp34, arg0 + 0x2C);
+        List_Begin(&sp34, arg0 + 0x2C);
         func_0027AA80(&sp38, &sp34);
         var_s0 = sp38;
         func_0027AC80(&sp30, arg0 + 0x2C);

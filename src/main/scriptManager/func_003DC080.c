@@ -12,7 +12,7 @@ void Mem_Free(int heap, void* p, char* file, int line);
 void FileHal_Dtor(void* p, int flag);
 int* FileHal_Ctor(void* p, char* name, int mode);
 void func_0036DEC0(void* h);
-int func_0036DEF0(void* h);
+int FileMan_FindMember(void* h);
 void func_0036E140(void* h, char* name, int* f, int a);
 void Hog_Register(void* h, char* name, int size, int a);
 char* strrchr(const char* s, int c);
@@ -59,7 +59,7 @@ extern "C" void FileMan_Open(S_003DC080* s, char* name, int mode)
             char* p = strrchr(name, '\\');
             name = p ? p + 1 : name;
             Hog_Register(s->hog, name, s->size, 0);
-            s->b8 = (unsigned char)func_0036DEF0(s->hog) == 0;
+            s->b8 = (unsigned char)FileMan_FindMember(s->hog) == 0;
             return;
         }
     } else if (mode == 1) {

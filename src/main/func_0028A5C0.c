@@ -29,7 +29,7 @@ extern int D_0048B410;
 extern int D_0048B418;
 extern int D_0048B420;
 extern int D_0048B428;
-void func_0033D3F0(void);
+void GuiScreen_Init(void);
 int Agent_GetSelected(void* a, int b);
 W28A5C0* GuiWidget_FindChildByName(S_28A5C0* a, int b);
 char* Loc_LookupText(char* key);
@@ -38,7 +38,7 @@ void func_0041BEB0(void* w, char* s, int a);
 extern "C" void func_0028A5C0(S_28A5C0* self)
 {
     W28A5C0* p;
-    func_0033D3F0();
+    GuiScreen_Init();
     self->f9C = Agent_GetSelected(D_004FFB50, -1);
     self->p88 = GuiWidget_FindChildByName(self, D_0048B400);
     p = GuiWidget_FindChildByName(self, D_0048B408);

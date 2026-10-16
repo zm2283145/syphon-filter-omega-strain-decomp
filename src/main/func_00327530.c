@@ -16,12 +16,12 @@ extern char D_004DAE10[];
 extern char D_004B8790[];
 extern void SoundEvent_Ctor(SoundEventMsg_327530* msg, void* action, int flags);
 extern void Event_Send(void* msg, void* target, int flags);
-extern void func_0036E220(void* part, int flags);
+extern void FileMan_Release(void* part, int flags);
 extern void cMessage_dtor(void* msg, int flags);
 extern void SoundAction_CtorVoice(void* action, int kind, char* voice, int a, int b);
 extern void SoundMsg_WrapAction(SoundMsg_327530* msg, void* action);
 extern char* String_CStr(void* s);
-extern int func_002071F0(void* s);
+extern int String_Length(void* s);
 extern void func_0043C890(int w, char* s, int v);
 extern void func_0041BEB0(int w, char* s, int v);
 extern int sprintf(char* buf, const char* fmt, ...);
@@ -38,8 +38,8 @@ static inline void PlayVoice_327530(Self_327530* self, char* voice)
     stop.flag = 1;
     Event_Send(&stop, D_004FFB50, 1);
     stop.vtbl = D_004DADF0;
-    func_0036E220(stop.partB, -1);
-    func_0036E220(stop.partA, -1);
+    FileMan_Release(stop.partB, -1);
+    FileMan_Release(stop.partA, -1);
     cMessage_dtor(&stop, 0);
     SoundAction_CtorVoice(self->action, 4, voice, 0, 0);
     self->playing = 0;
@@ -47,8 +47,8 @@ static inline void PlayVoice_327530(Self_327530* self, char* voice)
     play.flag = 1;
     Event_Send(&play, D_004FFB50, 1);
     play.vtbl = D_004DAE10;
-    func_0036E220(play.partB, -1);
-    func_0036E220(play.partA, -1);
+    FileMan_Release(play.partB, -1);
+    FileMan_Release(play.partA, -1);
     cMessage_dtor(&play, 0);
 }
 
@@ -69,7 +69,7 @@ void func_00327530(Self_327530* self, int sel, int sub)
         g->sel = sub;
         item = &g->items[sub];
         if (self->w5C) func_0043C890(self->w5C, String_CStr(item), item->fC);
-        if (func_002071F0(item->sound)) PlayVoice_327530(self, String_CStr(item->sound));
+        if (String_Length(item->sound)) PlayVoice_327530(self, String_CStr(item->sound));
         if (self->w60) func_0041BEB0(self->w60, String_CStr(g), 0);
         if (self->w64) {
             sprintf(buf, "%d/%d", sub + 1, g->n);

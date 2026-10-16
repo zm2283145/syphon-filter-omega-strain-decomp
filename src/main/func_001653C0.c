@@ -9,7 +9,7 @@
 
 extern int D_0055A278; /* current interface font */
 extern int Global_SetInterfaceFont(int font);
-extern FontOwner* func_001698C0(void);
+extern FontOwner* App_GetInstance(void);
 
 /* Script native: SetInterfaceFont(byte index). */
 int Script_SetInterfaceFont(unsigned char* args) {
@@ -24,7 +24,7 @@ int Global_SetInterfaceFont(int font) {
     FontOwner* owner;
     int handle;
 
-    owner = func_001698C0();
+    owner = App_GetInstance();
     handle = owner->fonts[font & 255];
     D_0055A278 = handle;
     return (int)owner;

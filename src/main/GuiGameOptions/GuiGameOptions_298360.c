@@ -48,7 +48,7 @@ void func_00298360(int arg0) {
 int String_CStr(int);                             
 int strncpy(signed char *, int, int);
 
-void func_00298420(char * arg0) {
+void GuiCommandCenter_SaveState(char * arg0) {
     int var_s2;
     int temp_v1;
     char * var_s1;
@@ -116,7 +116,7 @@ extern void __construct_array(void* arr, void (*ctor)(void*), void (*dtor)(void*
 extern void func_00298690(void*);
 extern void func_00138350(void*);
 
-Scr_2984D0* func_002984D0(Scr_2984D0* s)
+Scr_2984D0* GuiCommandCenter_ctor(Scr_2984D0* s)
 {
     int i;
     GuiScreen_ctor(s);

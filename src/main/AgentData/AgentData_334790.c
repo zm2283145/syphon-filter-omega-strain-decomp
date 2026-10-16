@@ -63,7 +63,7 @@ extern Ent4110 D_0052FE90[];
 extern char *D_004926D0;
 extern char D_005329A0[];
 extern char D_004B92B0[];
-void func_002C8090(void *p);
+void FrontEnd_FlushMessages(void *p);
 int func_00334780(void);
 int AgentFile_EncodeName(const char *in, char *out, int digit, unsigned int max);
 int MemCardWrap_Write(Mc4110 *mc, char *name, void *buf, int size, int flag);

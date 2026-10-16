@@ -46,7 +46,7 @@ extern char D_005329A0[];
 extern char D_004B92B0[];
 void *memcpy(void *d, const void *s, unsigned int n);
 int strlen(const char *s);
-void func_002C8090(void *p);
+void FrontEnd_FlushMessages(void *p);
 int func_00334780(void);
 int AgentFile_EncodeName(const char *in, char *out, int digit, unsigned int max);
 int MemCardWrap_Write(Mc4110 *mc, char *name, void *buf, int size, int flag);
@@ -75,7 +75,7 @@ extern "C" int AgentData_Save(A4110 *self)
     int i;
     r = 0;
     if (self->name8AC[0] != 0) {
-        func_002C8090(D_004FFC04);
+        FrontEnd_FlushMessages(D_004FFC04);
         mc = &D_0055A830;
         if (Idle4110(mc) && mc->cfg->b59D) {
             D_0052FDF0 = (char *)D_0052AFD0;

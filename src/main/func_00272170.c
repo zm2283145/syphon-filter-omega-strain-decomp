@@ -8,7 +8,7 @@
 #include "loose01_types.h"
 
 /* Clears all 14 slots (handle at 0x00 is left untouched). */
-void func_00272170(SlotTable14* self) {
+void LoadingScreen_Reset(SlotTable14* self) {
     self->slots[0] = 0;
     self->slots[1] = 0;
     self->slots[2] = 0;

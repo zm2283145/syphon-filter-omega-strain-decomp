@@ -58,7 +58,7 @@ float Model_GetFirstFloat(void* m);
 Vec4_898F0* AnimRate_Init(Vec4_898F0* p, float f);
 Vec4_898F0* Vec4_Copy_18A350(Vec4_898F0* d, Vec4_898F0* s);
 void AnimEvent_Construct(Ev_898F0* e);
-signed char func_0018A2F0(Sel_898F0* s);
+signed char MotionRequest_GetMode(Sel_898F0* s);
 void* func_0018A2E0(Sel_898F0* s);
 float func_0018A2D0(Sel_898F0* s);
 float func_0018A2C0(Sel_898F0* s);
@@ -74,11 +74,11 @@ void AnimPriority_Helper1(void* p);
 void AnimPriority_Helper0(void* p, int index, unsigned char on);
 void Actor_EnterDeadState(Act_898F0* a);
 void ActionPriority_Reset(void* p, int v);
-void func_0018A0A0(void* p);
+void ActionFlags_Clear(void* p);
 void func_0038CBF0(void* p);
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void EventQueue_Admit(void* p);
-void* func_00183220(void* p);
+void* Object_GetRootNode(void* p);
 void* Transform_GetUpdated(void* p);
 void Actor_RequestTeleport(Act_898F0* a, void* t);
 void Actor_Ignite(float f, Act_898F0* a, int b, int c, int d, int e);
@@ -155,7 +155,7 @@ extern "C" void Actor_Revive(Act_898F0* self)
         an->b5 = 0;
         AnimEvent_Construct(&e1);
         AnimEvent_Construct(&e2);
-        AnimCtl_InstallMotion(an, out, func_0018A2F0(&sel), &vec, &y, &e1, &e2, func_0018A2E0(&sel), func_0018A2D0(&sel), func_0018A2C0(&sel));
+        AnimCtl_InstallMotion(an, out, MotionRequest_GetMode(&sel), &vec, &y, &e1, &e2, func_0018A2E0(&sel), func_0018A2D0(&sel), func_0018A2C0(&sel));
         func_0018A260(&e2, -1);
         func_0018A260(&e1, -1);
     }
@@ -171,7 +171,7 @@ extern "C" void Actor_Revive(Act_898F0* self)
     Actor_EnterDeadState(self);
     Prio_898F0(self->prio, 0x1F);
     ActionPriority_Reset(self->prio, 0);
-    func_0018A0A0(self->f3248);
+    ActionFlags_Clear(self->f3248);
     if (self->s3310) self->s3310->f374 = D_004A03E0;
     func_0038CBF0(self->f60);
     {
@@ -201,7 +201,7 @@ extern "C" void Actor_Revive(Act_898F0* self)
             self->b3269 = 1;
         }
     }
-    Actor_RequestTeleport(self, Transform_GetUpdated(func_00183220(self->f33F0)));
+    Actor_RequestTeleport(self, Transform_GetUpdated(Object_GetRootNode(self->f33F0)));
     self->b30AC = 0;
     self->f33B0 = 0;
     Actor_Ignite(-1.0f, self, 0, 0, 0, 0);

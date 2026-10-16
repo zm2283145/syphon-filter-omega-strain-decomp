@@ -54,10 +54,10 @@ void func_003C55C0(Mesh*, Src*, void*);
 int PtrArray_Begin(void*);
 int PtrArray_End(void*);
 void func_00181CD0(It*, void*, int*);
-Xf* func_00183220(Actor*);
-int func_001830D0(Actor*);
-int* func_00183070(PA*, Actor**);
-int* func_00183050(PA*);
+Xf* Object_GetRootNode(Actor*);
+int GameObject_IsCollisionEnabled(Actor*);
+int* InlinePtrArray_Find(PA*, Actor**);
+int* InlinePtrArray_End(PA*);
 void func_003C65A0(Q70*);
 void func_003C6440(Q70*, Box*, Actor*, Xf*);
 void func_003C6330(Shp*, Src*, void*);
@@ -123,17 +123,17 @@ void func_003C5190(Gath* self, Src* src, Actor* node, Box* box, Sph* e0)
                 act = a;
                 s = a->GetShape();
                 if (s != 0) {
-                    Xf* x = func_00183220(act);
+                    Xf* x = Object_GetRootNode(act);
                     if (x != 0) {
-                        if (func_001830D0(act)
-                            && func_00183070(&self->list, &act) == func_00183050(&self->list)) {
+                        if (GameObject_IsCollisionEnabled(act)
+                            && InlinePtrArray_Find(&self->list, &act) == InlinePtrArray_End(&self->list)) {
                             func_003C65A0(&q);
                             func_003C6440(&q, box, act, x);
                             func_003C6330(s, src, &q);
                         }
                     } else {
-                        if (func_001830D0(act)
-                            && func_00183070(&self->list, &act) == func_00183050(&self->list)) {
+                        if (GameObject_IsCollisionEnabled(act)
+                            && InlinePtrArray_Find(&self->list, &act) == InlinePtrArray_End(&self->list)) {
                             func_003C6330(s, src, box);
                         }
                     }

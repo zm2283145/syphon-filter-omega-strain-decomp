@@ -2,7 +2,7 @@
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int func_0036E220(char *, int);                            
+int FileMan_Release(char *, int);                            
 int func_0036E4B0(char *, char *, int, int);                    
 int func_0037B2F0(char *, int, int);                       
 int func_003EAA60(int, char *, int);                       
@@ -23,7 +23,7 @@ char * func_003BBBC0(char * arg0, short arg1) {
                 sprintf(spD0, "%s.TDX", arg0);
                 func_0036E4B0(sp30, spD0, 0, 0);
                 func_003EAA60(func_003EBA50(), sp30, 1);
-                func_0036E220(sp30, -1);
+                FileMan_Release(sp30, -1);
             } else {
                 func_0037B2F0(&D_005381F0, F_(arg0, 0x44, int), -1);
             }

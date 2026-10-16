@@ -21,7 +21,7 @@ extern "C" {
 extern char D_004EA370[], D_0055D4E0[], D_004D9360[];
 extern void NpcThinkList_Add(Obj*);
 extern void NpcAi_AddToDeadList(void*, Self**);
-extern Ctl* func_00158540(Self*);
+extern Ctl* AiController_GetActor(Self*);
 extern float Vec4_GetX(V4*);
 extern float Vec4_GetY(V4*);
 extern float Vec4_GetZ(V4*);
@@ -61,7 +61,7 @@ extern "C" void func_002D40A0(Self* self)
             } else {
                 NpcAi_AddToDeadList(D_004EA370, &self);
             }
-            if (func_00158540(self) && func_00158540(self)->tgt) {
+            if (AiController_GetActor(self) && AiController_GetActor(self)->tgt) {
                 V4 pos;
                 float ang;
                 M4 mtx;
@@ -71,11 +71,11 @@ extern "C" void func_002D40A0(Self* self)
                 V4 a2;
                 V4 b2;
                 V4* v;
-                Tgt* t = func_00158540(self)->tgt;
+                Tgt* t = AiController_GetActor(self)->tgt;
                 pos.x = t->px;
                 pos.y = t->py;
                 pos.z = t->pz;
-                ang = func_00158540(self)->tgt->ang;
+                ang = AiController_GetActor(self)->tgt->ang;
                 axis.x = 0.0f;
                 axis.y = 0.0f;
                 axis.z = 1.0f;
@@ -100,7 +100,7 @@ extern "C" void func_002D40A0(Self* self)
                 msg.vtable = D_004D9360;
                 cMessage_dtor(&msg, 0);
             }
-            if (!WeaponInv_IsFullAuto(func_00158540(self)->inv)) {
+            if (!WeaponInv_IsFullAuto(AiController_GetActor(self)->inv)) {
                 self->f8C = 0.2f + 0.01f * (float)(unsigned int)(self->obj->hC & 0xF);
             } else {
                 self->f8C = 0.0f;

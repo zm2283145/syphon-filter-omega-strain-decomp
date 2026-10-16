@@ -93,7 +93,7 @@ void func_00472370(Iter* out, PtrVec* v);
 void func_00472050(ThrLIt* r, const ThrLIt& s);
 #endif /* merge_units */
 
-ThrLIt func_00138DA0(ThrList* l, const ThrLIt& pos);
+ThrLIt List_Erase(ThrList* l, const ThrLIt& pos);
 int func_0042B1A0(int);
 void printf(char* fmt, ...);
 void Event_Send(ThrMsg* msg, void* target, int flags);
@@ -143,7 +143,7 @@ extern "C" void NetMsgThrottle_SendMsg(void)
                 LGet(l, &b, &e);
                 if (e.node == b.node) break;
                 ent = l->head->entry;
-                func_00138DA0(l, ThrLIt(l->head));
+                List_Erase(l, ThrLIt(l->head));
                 printf(D_004C3430, now, ++D_00588030, it.node->key);
                 Event_Send(ent->msg, ent->target, ent->flags);
                 msg = ent->msg;

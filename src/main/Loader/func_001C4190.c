@@ -4,7 +4,7 @@ extern char D_0048B2F8[];
 extern char D_004FFB50[];
 extern char D_004FFC90[];
 extern void func_00165E60(void* a, char* name, int x);
-extern void* func_001698C0(void);
+extern void* App_GetInstance(void);
 extern int sprintf(char* buf, const char* fmt, ...);
 extern int Archive_Open(void* a, char* name, int b, int c);
 extern void Population_Load(Pop_1C4190* p, char* name, int h);
@@ -30,7 +30,7 @@ void Loader_LoadLevelData(void* l, void* arc)
     char name[128];
     Pop_1C4190 pop;
     int h;
-    func_00165E60(func_001698C0(), "Loading Level Data...", 0);
+    func_00165E60(App_GetInstance(), "Loading Level Data...", 0);
     sprintf(name, "%s\\%s\\DATA.HOG", D_0048B2F8, D_004FFC90, D_004FFC90);
     h = Archive_Open(arc, name, 1, 0);
     Population_Load(&pop, D_004FFC90, h);

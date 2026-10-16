@@ -7,7 +7,7 @@
 #include "types.h"
 #include "loose00_types.h"
 
-FloatPair* func_001E5700(FloatPair* self, float value) {
+FloatPair* Vec4_Lerp_1E5700(FloatPair* self, float value) {
     self->b = value;
     return self;
 }

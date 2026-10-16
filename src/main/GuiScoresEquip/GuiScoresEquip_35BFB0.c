@@ -82,7 +82,7 @@ WDef_35BFB0* WeaponDb_Get(void* table, int id);
 int cAgentData_GetStat(Agent_35BFB0* a, int stat);
 char func_0012B290(char c);
 Agent_35BFB0* func_00185C70(Player_35BFB0* p, unsigned char* flag);
-char* func_00336170(Agent_35BFB0* a);
+char* AgentData_GetName(Agent_35BFB0* a);
 void func_0041BEB0(W_35BFB0* w, char* text, int flags);
 void func_0041E0F0(Screen_35BFB0* s, W_35BFB0* w, int a, int b, int c);
 void func_0041E3B0(Screen_35BFB0* s, float dt);
@@ -152,8 +152,8 @@ extern "C" void func_0035BFB0(Screen_35BFB0* s, float dt)
                 char key[0x20];
                 unsigned int k;
                 int d;
-                func_0041BEB0(s->rows[slot][0], func_00336170(a), 0);
-                func_0041BEB0(s->rows[slot][13], func_00336170(a), 0);
+                func_0041BEB0(s->rows[slot][0], AgentData_GetName(a), 0);
+                func_0041BEB0(s->rows[slot][13], AgentData_GetName(a), 0);
                 sprintf(key, D_004BB558, slot);
                 sprintf(D_00533790, D_004BB568, 0x11, Loc_LookupText(key), 0x10);
                 for (k = 0; k < strlen(D_00533790); k++)

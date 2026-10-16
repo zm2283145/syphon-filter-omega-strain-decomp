@@ -25,7 +25,7 @@ int func_002731C0(...);
 int func_002731D0(...);
 int func_002731E0(...);
 int func_002731F0(...);
-int func_0013B180(...);
+int List_Begin(...);
 int func_0013D680(...);
 int func_003E7EE0(...);
 int String_CtorCStr_13B480(...);
@@ -48,7 +48,7 @@ static inline bool IsMapKind(MRec* r) { return r->kind == 1 || r->kind == 2; }
 static inline void beg0(It* o, char* l) { It r; func_002731F0(&r, l); func_002731E0(o, &r); }
 static inline void end0(It* o, char* l) { It r; func_002731D0(&r, l); func_002731E0(o, &r); }
 static inline void end1(It* o, char* l) { It r; func_002731B0(&r, l); func_002731A0(o, &r); }
-static inline void beg2(It* o, char* l) { It r; func_0013B180(&r, l); func_002731C0(o, &r); }
+static inline void beg2(It* o, char* l) { It r; List_Begin(&r, l); func_002731C0(o, &r); }
 static inline bool ne(It* a, It* b) { return a->p != b->p; }
 static inline void adv(It* a) { a->p = F_(a->p, 4, char*); }
 static inline MRec* deref(It* a) { return F_(a->p, 8, MRec*); }

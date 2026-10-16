@@ -74,7 +74,7 @@ void Shadow_ResetProjectors(void* list);
 void Shadow_AddProjectorSlot(void* list, Caster_92F0* c, V4_92F0* pos, V4_92F0* dir, float a, float b, int c2);
 }
 
-extern "C" void func_002792F0(Self_92F0* self)
+extern "C" void DecalMgr_DrawBloodProjectors(Self_92F0* self)
 {
     int i;
     Shadow_ResetProjectors(D_00543790);

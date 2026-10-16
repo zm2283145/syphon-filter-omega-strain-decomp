@@ -64,7 +64,7 @@ void Event_Construct(void* m, void* type);
 void Event_Send(void* m, void* target, int immediate);
 void cMessage_dtor(void* m, int flags);
 void SoundEvent_CtorFromPreset(Snd_00186BF0* e, void* preset, void* owner);
-void func_0036E220(Str_00186BF0* s, int flag);
+void FileMan_Release(Str_00186BF0* s, int flag);
 void Actor_SetHealth(Npc_00186BF0* self, int a, int b);
 void func_0038CBF0(void* p);
 void WeaponInv_ReleaseHeldObject(int a);
@@ -160,8 +160,8 @@ extern "C" void Actor_Kill(Npc_00186BF0* self, int a1, Att_00186BF0* att, int a3
             s.flag = 1;
             Event_Send(&s, D_004FFB50, 0);
             s.vt = D_004DAE30;
-            func_0036E220(&s.s114, -1);
-            func_0036E220(&s.s78, -1);
+            FileMan_Release(&s.s114, -1);
+            FileMan_Release(&s.s78, -1);
             cMessage_dtor(&s, 0);
         }
         Controller_DeathNotice(self, a1, att, a3, type, pos);

@@ -255,7 +255,7 @@ void Mtx44_SetRotation(M* m, float a, float b, float c, float d, float e, float 
 void Blast_Prepare(Obj* obj, int dmg, float fdmg, float r0, float r1, unsigned char flag, V* at, unsigned char skipHumans, int quiet);
 void func_00231F00(M* m, float a, float b);
 int* SpecFx_GetEffectDef(int id);
-void func_002797C0(void* r, V* p, int id, int z, float f);
+void DecalMgr_AddBloodDecal(void* r, V* p, int id, int z, float f);
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void AreaEffect_Construct(void* self, Obj* o, V pos, Type* t, int f);
 void Effect_CreateInstance(int id, M* m);
@@ -365,7 +365,7 @@ static inline void BuildFrame(M* m, V* d, const V& z) { BuildFrame2(m, d, z); }
 struct VQ : V { VQ(float a, float b, float c, float d) : V(a, b, c, d) { V* p = this; (void)p; } };
 // 128-bit sq zero store (quadword clear), not expressible in C
 static inline void QZero(V* p) { __asm__ volatile("sq $zero, 0x0(%0)" : : "r"(p) : "memory"); }
-static inline void ReqKill(SoundRequest* r) { func_0036E220(&r->b, -1); func_0036E220(&r->a, -1); SoundRequest* p = r; (void)p; }
+static inline void ReqKill(SoundRequest* r) { FileMan_Release(&r->b, -1); FileMan_Release(&r->a, -1); SoundRequest* p = r; (void)p; }
 
 extern "C" void Projectile_Update(Projectile* s, float dt)
 {
@@ -478,8 +478,8 @@ extern "C" void Projectile_Update(Projectile* s, float dt)
                         Event_Send(&ev, D_004FFB50, 0);
                         s->age = 0.0f;
                         ev.vtable = D_004DAE30;
-                        func_0036E220(&ev.req.b, -1);
-                        func_0036E220(&ev.req.a, -1);
+                        FileMan_Release(&ev.req.b, -1);
+                        FileMan_Release(&ev.req.a, -1);
                         cMessage_dtor(&ev, 0);
                         ReqKill(&req);
 
@@ -537,7 +537,7 @@ extern "C" void Projectile_Update(Projectile* s, float dt)
                 float dist = Len(&move);
                 V d = impact.Sub2(s->prev);
                 V p = s->prev + d * 0.9f;
-                func_002797C0(D_004FFC3C, &p, id, z, D_0048AFA0);
+                DecalMgr_AddBloodDecal(D_004FFC3C, &p, id, z, D_0048AFA0);
             }
         }
         if (HGet(&s->owner)) {
@@ -574,10 +574,10 @@ extern "C" void Projectile_Update(Projectile* s, float dt)
         Object_DeleteLater(s, D_0048AF28);
         s->retired = 1;
         ev.vtable = D_004DAE30;
-        func_0036E220(&ev.req.b, -1);
-        func_0036E220(&ev.req.a, -1);
+        FileMan_Release(&ev.req.b, -1);
+        FileMan_Release(&ev.req.a, -1);
         cMessage_dtor(&ev, 0);
-        func_0036E220(&req.b, -1);
-        func_0036E220(&req.a, -1);
+        FileMan_Release(&req.b, -1);
+        FileMan_Release(&req.a, -1);
     }
 }

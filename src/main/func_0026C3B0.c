@@ -7,7 +7,7 @@ typedef struct Obj { char pad[0x24]; LList list; } Obj;
 
 extern int func_00272AC0(Obj* o);
 extern void func_00272AD0(Obj* o, int v);
-extern void func_0016E880(LIt* out, LList* l);
+extern void List_Begin_16E880(LIt* out, LList* l);
 extern LIt* func_0026C390(LIt* out, LNode* n);
 extern void func_0026C320(LIt* out, LList* l);
 extern LIt* func_0026C350(LIt* dst, LIt* src);
@@ -33,7 +33,7 @@ int func_0026C3B0(Obj** self) {
         func_00272AD0(*self, b.node->data);
     } else {
         if (l->count > 1) {
-        func_0016E880(&t, l);
+        List_Begin_16E880(&t, l);
         func_0026C390(&r, t.node);
         n = r.node;
         while (func_0026C320(&es, l), func_0026C350(&ec, &es), n != ec.node) {

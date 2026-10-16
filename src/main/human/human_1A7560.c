@@ -33,7 +33,7 @@ void* Root_GetWorldPlacement(void*);
 void Transform_SetOrientation(Plc*, void*);
 void Placement_Invert(Plc*);
 void func_00132840(V*);
-void func_00132810(V*, V*, V*);
+void Quat_Multiply(V*, V*, V*);
 void func_00132800(V*, V*);
 void Root_GetWorldPose(struct S* s);
 void Root_RefreshWorldCache(void*);
@@ -105,7 +105,7 @@ void Root_GetWorldPose(S* s)
         V r;
         V q;
         func_00132840(&q);
-        func_00132810(&q, &pi->rot, &p->rot);
+        Quat_Multiply(&q, &pi->rot, &p->rot);
         func_00132800(&r, &q);
         p->rot = r;
         QRot(&p->pos, &pi->rot);

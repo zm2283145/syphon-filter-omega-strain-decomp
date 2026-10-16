@@ -13,8 +13,8 @@ typedef struct { int x,y,w,h; unsigned char align,flip,center,pad13; char str[12
 extern char *String_CStr(void*);
 extern void String_Copy(char*,const char*);
 extern void func_00129708(char*,const char*,int);
-extern int func_0036A2F0(void*);
-extern int func_0036AA50(void*,const char*,int);
+extern int Font_GetLineHeight(void*);
+extern int Font_GetStringWidth(void*,const char*,int);
 extern int strlen(const char*);
 extern int func_003D04C0(TextLayout*);
 extern char D_004BD310[];
@@ -71,14 +71,14 @@ s32 func_003CF3A0(TextLayout *arg0, f32 *arg1, f32 *arg2, s32 arg3) {
     var_f23 = (float)arg0->x;
     var_f22 = (float)arg0->y;
     if (arg0->flip != 0) {
-        var_f22 -= (f32) (arg0->h - func_0036A2F0(temp_a0));
+        var_f22 -= (f32) (arg0->h - Font_GetLineHeight(temp_a0));
     }
     var_v0 = arg0->w;
     var_v0=var_v0>0?var_v0:-var_v0;
     temp_f21 = var_f23 + (f32) var_v0;
     if (arg0->center != 0) {
         temp_s1 = func_003D04C0(arg0);
-        var_f22-=(float)(arg0->h/2-(temp_s1*func_0036A2F0(arg0->font))/2);
+        var_f22-=(float)(arg0->h/2-(temp_s1*Font_GetLineHeight(arg0->font))/2);
     }
     temp_v0_2 = String_CStr(arg0->str);
     var_s4 = temp_v0_2;
@@ -93,12 +93,12 @@ loop_16:
         if (func_003D04C0(arg0) != 1) {
             return 0;
         }
-        temp_f1 = (f32) func_0036AA50(arg0->font, var_s4, strlen(var_s4));
+        temp_f1 = (f32) Font_GetStringWidth(arg0->font, var_s4, strlen(var_s4));
         if ((var_f23 + temp_f1) < temp_f21) {
             var_f23 += temp_f1;
             String_Copy(spE0, var_s4);
         } else {
-            temp_f20 = (f32) func_0036AA50(arg0->font, D_004BD310, 3);
+            temp_f20 = (f32) Font_GetStringWidth(arg0->font, D_004BD310, 3);
             temp_f24 = temp_f21 - (var_f23 + temp_f20);
             if (temp_f24 <= 0.0f) {
                 var_f23 += temp_f20;
@@ -113,7 +113,7 @@ loop_31:
                 var_s2++;
                 temp_s1_2=var_s0;
                 var_s4++;
-                var_s0=func_0036AA50(arg0->font,spE0,var_s2);
+                var_s0=Font_GetStringWidth(arg0->font,spE0,var_s2);
                 if(!((float)var_s0<=temp_f24)){var_s0=temp_s1_2;var_s2--;}
 check31:
                 temp_v1_2=*var_s4;
@@ -131,7 +131,7 @@ end31:
         goto block_75;
     }
     if (arg0->noWrap != 0) {
-        var_f23 += (f32) func_0036AA50(arg0->font, var_s4, strlen(var_s4));
+        var_f23 += (f32) Font_GetStringWidth(arg0->font, var_s4, strlen(var_s4));
         String_Copy(spE0, var_s4);
         var_s4 = 0;
     } else {
@@ -152,7 +152,7 @@ loop_44:
         } else {
             var_s3 = strlen(var_s4) + 1;
         }
-        var_s0 = func_0036AA50(arg0->font, var_s4, var_s3);
+        var_s0 = Font_GetStringWidth(arg0->font, var_s4, var_s3);
         if (((var_f23 + (f32) var_s0) < temp_f21) || ((var_f23 == (f32) (s32) arg0->x) && (arg0->wrap == 1.0f))) {
             func_00129708(spE0, var_s4, var_s3);
             var_s4 = var_s1;
@@ -167,7 +167,7 @@ loop_44:
             var_s0=0;
             if(var_s0<var_s3){output=spE0+buflen;
             do {
-                temp_v0_6=func_0036AA50(arg0->font,var_s4,var_s0+1);
+                temp_v0_6=Font_GetStringWidth(arg0->font,var_s4,var_s0+1);
                 if(!((var_f23+(float)temp_v0_6)<temp_f21))break;
                 var_s7=temp_v0_6;buflen++;next++;
                 *output=var_s4[var_s0];var_s0++;output++;
@@ -199,12 +199,12 @@ block_75:
     }
     if (&temp_fp[strlen(spE0)] >= limit[0]) {
         *spD8 = var_f22;
-        *spDC = var_f23 + (f32) func_0036AA50(arg0->font, spE0, limit[0] - temp_fp);
+        *spDC = var_f23 + (f32) Font_GetStringWidth(arg0->font, spE0, limit[0] - temp_fp);
         return 1;
     }
     temp_s0 = (arg0->flip != 0) ? -1 : 1;
     var_f23 = (f32) (s32) arg0->x;
-    var_f22 -= (f32) (temp_s0 * func_0036A2F0(arg0->font));
+    var_f22 -= (f32) (temp_s0 * Font_GetLineHeight(arg0->font));
     if ((var_s4 != 0) && (*var_s4 == 0x20)) {
         do {
             var_s4 += 1;
@@ -294,7 +294,7 @@ void func_003CFAB0(TextLayout *arg0) {
         var_f23 = (f32) arg0->x;
         temp_f22 = (f32) arg0->y;
         if (arg0->flip != 0) {
-            temp_f22-=(float)(arg0->h-func_0036A2F0(temp_a0));
+            temp_f22-=(float)(arg0->h-Font_GetLineHeight(temp_a0));
         }
         var_v0 = arg0->w;
         var_v0=var_v0>0?var_v0:-var_v0;
@@ -302,7 +302,7 @@ void func_003CFAB0(TextLayout *arg0) {
         temp_f21 = var_f23 + (f32) var_v0;
         if (arg0->center != 0) {
             var_fp = func_003D04C0(arg0);
-            temp_f22-=(float)(arg0->h/2-(var_fp*func_0036A2F0(arg0->font))/2);
+            temp_f22-=(float)(arg0->h/2-(var_fp*Font_GetLineHeight(arg0->font))/2);
         }
         var_s4 = String_CStr(arg0->str);
         temp_v0 = *(s32 *)0x10000800 + D_00533870;
@@ -323,7 +323,7 @@ void func_003CFAB0(TextLayout *arg0) {
             }}
         }
         if (arg0->align == 3) {
-            temp_v0_3 = func_0036AA50(arg0->font, var_s4, 0x200);
+            temp_v0_3 = Font_GetStringWidth(arg0->font, var_s4, 0x200);
             temp_f0_2 = arg0->speed;
             if (temp_f20 > arg0->speed) {
                 arg0->scroll += temp_f20 / arg0->speed;
@@ -353,12 +353,12 @@ void func_003CFAB0(TextLayout *arg0) {
                 if (temp_v0_4 != 0) {
                     *temp_v0_4 = 0;
                 }
-                temp_f1_3 = (f32) func_0036AA50(arg0->font, spC0, strlen(spC0));
+                temp_f1_3 = (f32) Font_GetStringWidth(arg0->font, spC0, strlen(spC0));
                 if ((var_f23 + temp_f1_3) < temp_f21) {
                     var_f23 += temp_f1_3;
                     var_s4=temp_v0_4?temp_v0_4+1:0;
                 } else {
-                    temp_f20_2 = (f32) func_0036AA50(arg0->font, D_004BD310, 3);
+                    temp_f20_2 = (f32) Font_GetStringWidth(arg0->font, D_004BD310, 3);
                     temp_f24 = temp_f21 - (var_f23 + temp_f20_2);
                     if (temp_f24 <= 0.0f) {
                         var_f23 += temp_f20_2;
@@ -372,7 +372,7 @@ loop_55:
                     if(temp_v1==10)goto end55;
                     spC0[var_s2]=temp_v1;var_s2++;
                     temp_s1=var_s0;var_s4++;
-                    var_s0=func_0036AA50(arg0->font,spC0,var_s2);
+                    var_s0=Font_GetStringWidth(arg0->font,spC0,var_s2);
                     if(!((float)var_s0<=temp_f24)){var_s0=temp_s1;var_s2--;}
 check55:
                     temp_v1=*var_s4;
@@ -399,7 +399,7 @@ ellipse_done:
                     var_s4 = 0;
                 }
             } else if (arg0->noWrap != 0) {
-                var_f23 += (f32) func_0036AA50(arg0->font, var_s4, strlen(var_s4));
+                var_f23 += (f32) Font_GetStringWidth(arg0->font, var_s4, strlen(var_s4));
                 String_Copy(spC0, var_s4);
                 var_s4 = 0;
             } else {
@@ -420,7 +420,7 @@ loop_76:
                 } else {
                     var_s3 = strlen(var_s4) + 1;
                 }
-                var_s0 = func_0036AA50(arg0->font, var_s4, var_s3);
+                var_s0 = Font_GetStringWidth(arg0->font, var_s4, var_s3);
                 if (((var_f23 + (f32) var_s0) < temp_f21) || ((var_f23 == (f32) arg0->x) && (arg0->wrap == 1.0f))) {
                     func_00129708(spC0, var_s4, var_s3);
                     var_s4 = var_s1;
@@ -435,7 +435,7 @@ loop_76:
             var_s0=0;
             if(var_s0<var_s3){output=spC0+buflen;
             do {
-                temp_v0_8=func_0036AA50(arg0->font,var_s4,var_s0+1);
+                temp_v0_8=Font_GetStringWidth(arg0->font,var_s4,var_s0+1);
                 if(!((var_f23+(float)temp_v0_8)<temp_f21))break;
                 var_s7=temp_v0_8;buflen++;next++;
                 *output=var_s4[var_s0];var_s0++;output++;
@@ -467,7 +467,7 @@ block_102:
             func_0036A330(arg0->font,spC0,var_f23,temp_f22,0.001f,rgba,0.0f,0.0f,0.0f);
             var_f23 = (f32) arg0->x;
             temp_s0 = (arg0->flip != 0) ? -1 : 1;
-            temp_f22-=(float)(temp_s0*func_0036A2F0(arg0->font));
+            temp_f22-=(float)(temp_s0*Font_GetLineHeight(arg0->font));
             if ((var_s4 != 0) && (*var_s4 == 0x20)) {
                 do {
                     var_s4 += 1;

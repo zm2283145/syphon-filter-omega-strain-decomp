@@ -31,7 +31,7 @@ extern char D_004AA640[];
 extern char D_004A7520[];
 extern char D_004AAE20[];
 extern char D_004AAE00[];
-void func_0033D3F0(Self_0029EF90* self);
+void GuiScreen_Init(Self_0029EF90* self);
 void* GuiWidget_FindChildByName(Self_0029EF90* self, char* name);
 void func_004235B0(W_0029EF90* w, int a, int b);
 void func_00421650(W_0029EF90* w, int a);
@@ -46,7 +46,7 @@ static inline W_0029EF90* FindAs_0029EF90(Self_0029EF90* self, char* name, char*
 }
 extern "C" void func_0029EF90(Self_0029EF90* self)
 {
-    func_0033D3F0(self);
+    GuiScreen_Init(self);
     self->f10C = GuiWidget_FindChildByName(self, D_0048B920);
     self->f110 = GuiWidget_FindChildByName(self, D_0048B938);
     self->f114 = GuiWidget_FindChildByName(self, D_0048B968);

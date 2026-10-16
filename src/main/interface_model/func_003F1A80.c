@@ -7,7 +7,7 @@
 #include "types.h"
 #include "interface_model_types.h"
 
-extern int func_001396D0(int a0, int a1);
+extern int PtrVec_Reserve(int a0, int a1);
 extern OwnedVec* func_003F1BF0(OwnedVec* v);
 
 /* Clears the three vector words. */
@@ -19,7 +19,7 @@ OwnedVec* func_003F1A80(OwnedVec* v) {
 }
 
 int func_003F1AA0(int a0, int a1) {
-    return func_001396D0(a0, a1);
+    return PtrVec_Reserve(a0, a1);
 }
 
 /* Reads one word from a stream cursor. */

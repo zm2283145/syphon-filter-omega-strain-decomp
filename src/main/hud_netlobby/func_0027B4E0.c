@@ -2,7 +2,7 @@
 #include "types.h"
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 
-void func_0013B180(void* out, void* list);
+void List_Begin(void* out, void* list);
 void func_0027AA80(void* out, void* in);
 void func_0027AC70(void* out, void* in);
 void func_0027AC80(void* out, void* list);
@@ -34,7 +34,7 @@ void func_0027B4E0(char* arg0) {
     } else if (F_(arg0, 0x3C, int) == 1) {
         int j = 0;
         char* n;
-        func_0013B180(&sp54, arg0 + 0x2C);
+        List_Begin(&sp54, arg0 + 0x2C);
         func_0027AA80(&sp58, &sp54);
         n = sp58;
         func_0027AC80(&sp50, arg0 + 0x2C);

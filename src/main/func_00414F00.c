@@ -41,7 +41,7 @@ LIt_414F00* func_0015AF40(LIt_414F00* out, LIt_414F00* in);
 void List_InsertBefore(LIt_414F00* out, List_414F00* list, LIt_414F00* pos, W_414F00** v);
 int func_0041E0F0(W_414F00* a, W_414F00* b, int msg, int c, int d);
 void func_0041EE50(W_414F00* w);
-void func_0036A240(void* p);
+void Pad_ResetHeldMask(void* p);
 extern char D_0055A300[];
 }
 
@@ -80,7 +80,7 @@ extern "C" void func_00414F00(W_414F00* o, W_414F00* w, int pri)
     w->comp->Show();
     func_0041E0F0(o, w, 0x18, 0, 0);
     if (o->children.size > 0 && o->children.first->value == w) {
-        func_0036A240(D_0055A300);
+        Pad_ResetHeldMask(D_0055A300);
         if (o->focus) o->focus->comp->Unfocus();
         o->focus = w->focus;
         if (o->focus == 0) o->focus = w->DefaultFocus();

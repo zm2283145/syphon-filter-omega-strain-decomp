@@ -22,12 +22,12 @@ struct NC710 { int m0; NC710* next; SC710* data; };
 struct HC710 { char pad[0x10]; float f10; };
 extern int D_0055C090;
 extern "C" {
-void func_0013B180(int* out, void* list);
+void List_Begin(int* out, void* list);
 void func_003EC6B0(NC710** out, int* in);
 void func_003EC6A0(int* out, void* list);
 void func_003EC690(NC710** out, int* in);
 void func_0015AF40(int* out, NC710** in);
-void func_00138DA0(int* out, void* list, int* in);
+void List_Erase(int* out, void* list, int* in);
 }
 extern "C" void func_003EC710(HC710* self, void* list, float dt)
 {
@@ -40,7 +40,7 @@ extern "C" void func_003EC710(HC710* self, void* list, float dt)
     int t2;
     SC710* s;
     NC710* n;
-    func_0013B180(&t1, list);
+    List_Begin(&t1, list);
     func_003EC6B0(&it, &t1);
     for (n = it; func_003EC6A0(&t2, list), func_003EC690(&e, &t2), n != e; ) {
         s = n->data;
@@ -61,7 +61,7 @@ extern "C" void func_003EC710(HC710* self, void* list, float dt)
             old = cur;
             D_0055C090--;
             func_0015AF40(&t3, &old);
-            func_00138DA0(&t4, list, &t3);
+            List_Erase(&t4, list, &t3);
         } else {
             n = n->next;
         }

@@ -43,12 +43,12 @@ void String_Copy(void* d, char* s);
 void func_0041BEB0(W_3688C0* w, char* s, int f);
 char* Loc_LookupText(char* k);
 void func_0041C0F0(W_3688C0* w, int v);
-void func_003688C0(O_3688C0* o);
+void GuiObjectives_Init(O_3688C0* o);
 }
 static inline W_3688C0* Cast_3688C0(W_3688C0* w, void* t) { return w && w->IsA(t) ? w : 0; }
 static inline void SetC_3688C0(W_3688C0* w, V4_3688C0 c) { w->cB0.x = c.x; w->cB0.y = c.y; w->cB0.z = c.z; w->cB0.w = c.w; }
 
-void func_003688C0(O_3688C0* o)
+void GuiObjectives_Init(O_3688C0* o)
 {
     int i;
     W_3688C0* t;

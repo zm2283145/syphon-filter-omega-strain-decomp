@@ -43,7 +43,7 @@ int FileHal_StartRead(FileHalFile* o, int pos)
 #pragma push /* merge_units */
 extern int sprintf(char*, const char*, ...);
 extern char func_0012B290(int);                     /* toupper */
-extern int func_00119708(int);                      /* disk ready: 2 when ready */
+extern int sceCdDiskReady(int);                      /* disk ready: 2 when ready */
 extern int Cd_SearchFile(FileHalCdInfo*, char*);    /* Cd_SearchFile */
 /* Look up "\NAME;1" on the disc; returns 1 when found. */
 int FileHal_Open(FileHalFile* f, char* name, int mode) {
@@ -56,7 +56,7 @@ int FileHal_Open(FileHalFile* f, char* name, int mode) {
     for (i = 0; f->path[i]; i++) f->path[i] = func_0012B290(f->path[i]);
     i = 0;
     r = 0;
-    while (i++ < 0xFF && r != 2) r = func_00119708(0);
+    while (i++ < 0xFF && r != 2) r = sceCdDiskReady(0);
     f->handle = Cd_SearchFile(&f->info, f->path);
     f->size = f->info.size;
     if (!f->handle) f->handle = -1;

@@ -13,9 +13,9 @@ extern unsigned char D_0055A701;
 extern Kb_32C860 D_0055A700;
 extern void func_0041E3B0(Self_32C860* self);
 extern void func_0032B5F0(Self_32C860* self, unsigned int flags);
-extern void func_0032AFE0(Self_32C860* self);
+extern void GuiKeyboard_RefreshSpecialKeys(Self_32C860* self);
 
-void func_0032C860(Self_32C860* self)
+void GuiKeyboard_Update(Self_32C860* self)
 {
     Kb_32C860* k;
     func_0041E3B0(self);
@@ -46,5 +46,5 @@ void func_0032C860(Self_32C860* self)
         self->mods = f;
         if (changed) func_0032B5F0(self, self->flags);
     }
-    func_0032AFE0(self);
+    GuiKeyboard_RefreshSpecialKeys(self);
 }

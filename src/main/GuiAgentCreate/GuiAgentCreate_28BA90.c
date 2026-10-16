@@ -67,7 +67,7 @@ void FrontEnd_OpenPopup(int a, int b, int t1, int t2, Screen* s, int c);
 }
 /* opt_propagation off + the Holder* local keep the lui/addiu/lw 0 form for D_0055A830. */
 #pragma opt_propagation off
-extern "C" void func_0028BA90(Screen* self)
+extern "C" void GuiAgentCreate_Save(Screen* self)
 {
     Look look;
     QMoveP(&look, &self->data->prof, 0x44);
@@ -123,10 +123,10 @@ extern Ui_0028BBE0* D_004FFC04;
 #define D_004FFC04 (*(Ui_0028BBE0 **)&D_004FFC04) /* merge_units */
 
 char* String_CStr(void* s);
-void func_0028D610(Self_0028BBE0* self, char* n);
-void func_0028C1D0(void* p);
-void func_0028CB20(Self_0028BBE0* self, int a, int b);
-void func_0028C2A0(Src_0028BBE0* w);
+void GuiAgentCreate_SelectOption(Self_0028BBE0* self, char* n);
+void GuiAgentCreate_SleepChildren(void* p);
+void GuiAgentCreate_Randomize(Self_0028BBE0* self, int a, int b);
+void GuiAgentCreate_WakeChildren(Src_0028BBE0* w);
 #if 0 /* merge_units */
 void* Agent_GetSelected(void* a, int b);
 #endif /* merge_units */
@@ -136,9 +136,9 @@ void AgentData_SetName(void* ag, char* text);
 void* GuiWidget_FindChildByName(Self_0028BBE0* self, char* name);
 void func_0041BEB0(W_0028BBE0* w, char* s, int a);
 #if 0 /* merge_units */
-void func_0028BA90(Self_0028BBE0* self);
+void GuiAgentCreate_Save(Self_0028BBE0* self);
 #endif /* merge_units */
-#define func_0028BA90(a0) (func_0028BA90((Screen *)(a0))) /* merge_units */
+#define GuiAgentCreate_Save(a0) (GuiAgentCreate_Save((Screen *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
 void* Gui_GetScreenStack(void);
@@ -169,7 +169,7 @@ static inline W_0028BBE0* FindAs_0028BBE0(Self_0028BBE0* self, char* name, char*
     W_0028BBE0* w = (W_0028BBE0*)GuiWidget_FindChildByName(self, name);
     return (w && w->IsA(type)) ? w : 0;
 }
-extern "C" int func_0028BBE0(Self_0028BBE0* self, Src_0028BBE0* w, int msg, int sub, char* text)
+extern "C" int GuiAgentCreate_HandleEvent(Self_0028BBE0* self, Src_0028BBE0* w, int msg, int sub, char* text)
 {
     unsigned short m = msg;
     if (m == 0x10 && sub == 1)
@@ -178,33 +178,33 @@ extern "C" int func_0028BBE0(Self_0028BBE0* self, Src_0028BBE0* w, int msg, int 
         char* n;
         self->fD0 = 0;
         n = String_CStr(w->name);
-        func_0028D610(self, n);
+        GuiAgentCreate_SelectOption(self, n);
         if (!strcmp(n, "gender")) {
             self->fCC = 0;
             self->fD0 = 1;
         }
         if (!strcmp(n, "randomize")) {
-            func_0028C1D0(self->f4C);
+            GuiAgentCreate_SleepChildren(self->f4C);
             self->fCC = 1;
             self->fD0 = 1;
-            func_0028CB20(self, 1, 0);
+            GuiAgentCreate_Randomize(self, 1, 0);
         }
         if (!strcmp(n, "body")) {
-            func_0028C2A0(w);
-            func_0028C1D0(self->f50);
+            GuiAgentCreate_WakeChildren(w);
+            GuiAgentCreate_SleepChildren(self->f50);
             self->fCC = 2;
             self->fD0 = 1;
         }
         if (!strcmp(n, "head")) {
-            func_0028C2A0(w);
-            func_0028C1D0(self->f4C);
+            GuiAgentCreate_WakeChildren(w);
+            GuiAgentCreate_SleepChildren(self->f4C);
             if (!self->fD8 && self->f54)
                 self->f54->flags &= ~2;
             self->fCC = 3;
             self->fD0 = 1;
         }
         if (!strcmp(n, "agentname")) {
-            func_0028C1D0(self->f50);
+            GuiAgentCreate_SleepChildren(self->f50);
             self->fCC = 4;
             self->fD0 = 1;
         }
@@ -220,7 +220,7 @@ extern "C" int func_0028BBE0(Self_0028BBE0* self, Src_0028BBE0* w, int msg, int 
                     func_0041BEB0(t, text, 0);
             }
             if (sub == 2 && text && *text) {
-                func_0028BA90(self);
+                GuiAgentCreate_Save(self);
                 return 1;
             }
             x = (W_0028BBE0*)GuiWidget_FindChildByName(self, "agentname");
@@ -243,7 +243,7 @@ extern "C" int func_0028BBE0(Self_0028BBE0* self, Src_0028BBE0* w, int msg, int 
 }
 #undef D_004FFC04 /* merge_units */
 #undef Agent_GetSelected /* merge_units */
-#undef func_0028BA90 /* merge_units */
+#undef GuiAgentCreate_Save /* merge_units */
 #undef Gui_GetScreenStack /* merge_units */
 #undef Gui_GetScreenList /* merge_units */
 #undef GuiManager_FindOrLoad /* merge_units */

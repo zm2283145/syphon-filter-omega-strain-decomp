@@ -90,17 +90,17 @@ int FrontEnd_OpenPopup(void* fe, int kind, char* title, char* text, Hud_A190* ow
 void String_CtorCStr_13B480(Str_A190* s, char* text);
 char* String_CStr(Str_A190* s);
 void String_Dtor(Str_A190* s, int flags);
-void func_00299AA0(Hud_A190* self, int idx);
-void func_002998B0(Hud_A190* self);
+void GuiGameOptions_Show(Hud_A190* self, int idx);
+void GuiGameOptions_Enter(Hud_A190* self);
 void func_002996D0(Hud_A190* self, int a);
-void func_0029AA50(Hud_A190* self, int mask);
+void GuiGameOptions_Refresh(Hud_A190* self, int mask);
 void func_0045A3A0(void* p, int mask);
-void func_0026BDE0(float f, int a, int b, int c, int d);
+void PadRumble_Start(float f, int a, int b, int c, int d);
 int func_00421430(Wdg_A190* w, int idx);
 int func_00421480(Wdg_A190* w, int idx);
-void func_002C9860(void* fe, int a);
-void func_002C9510(void* fe);
-long long func_003698B0(void);
+void FrontEnd_SuspendGui(void* fe, int a);
+void FrontEnd_ResumeGui(void* fe);
+long long Time_GetMilliseconds(void);
 void Event_Construct(void* msg, void* type);
 void Transport_Send(int a, void* msg, int b, int c);
 void Event_Send(void* msg, void* target, int flags);
@@ -110,9 +110,9 @@ void cMessage_dtor(void* msg, int flags);
 #define cMessage_dtor(a0, a1) (cMessage_dtor((a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-void func_0036E220(void* part, int flags);
+void FileMan_Release(void* part, int flags);
 #endif /* merge_units */
-#define func_0036E220(a0, a1) (func_0036E220((a0), (a1))) /* merge_units */
+#define FileMan_Release(a0, a1) (FileMan_Release((a0), (a1))) /* merge_units */
 
 void SoundAction_CtorVoice(void* action, int kind, char* voice, int a, int b);
 void EffectMsg_WrapRequest(void* msg, void* action);
@@ -122,10 +122,10 @@ static inline unsigned char IsLocal_A190(Plr_A190* p) { unsigned char r = 0; if 
 static inline int LocalId_A190(Plr_A190* p) { int id; if (D_005721C8) { if (IsLocal_A190(p)) id = ((p->flags & 0x7F000000) >> 24) - 1; else id = -1; } else id = 0; return id; }
 static inline Plr_A190* AsHuman_A190(Plr_A190* p) { return (p && p->kind == D_0049D010) ? p : 0; }
 
-extern "C" int func_0029A190(Hud_A190* self, Wdg_A190* w, unsigned short msg, int sub, int text)
+extern "C" int GuiGameOptions_HandleEvent(Hud_A190* self, Wdg_A190* w, unsigned short msg, int sub, int text)
 {
     if (msg == 0 && w->id != -1) {
-        func_00299AA0(self, w->id);
+        GuiGameOptions_Show(self, w->id);
         return 1;
     }
     if (msg == 0x10 && sub == 1 && w->id != -1) {
@@ -146,33 +146,33 @@ extern "C" int func_0029A190(Hud_A190* self, Wdg_A190* w, unsigned short msg, in
     }
     if (msg == 2) {
         if (w->id != -1) {
-            func_002998B0(self);
+            GuiGameOptions_Enter(self);
             return 1;
         }
         if (w == self->w408) {
             self->bBC = !self->bBC;
             func_0045A3A0(self->xB8, 1);
-            func_0029AA50(self, 1);
+            GuiGameOptions_Refresh(self, 1);
         } else if (w == self->w40C) {
             self->bBD = !self->bBD;
             func_0045A3A0(self->xB8, 2);
-            func_0029AA50(self, 2);
-            if (self->bBD) func_0026BDE0(1.0f, 0, 1, 0xFF, 1);
+            GuiGameOptions_Refresh(self, 2);
+            if (self->bBD) PadRumble_Start(1.0f, 0, 1, 0xFF, 1);
         }
         if (w == self->w410) {
             self->bBE = !self->bBE;
             func_0045A3A0(self->xB8, 4);
-            func_0029AA50(self, 4);
+            GuiGameOptions_Refresh(self, 4);
         }
         if (w == self->w414) {
             self->bBF = !self->bBF;
             func_0045A3A0(self->xB8, 8);
-            func_0029AA50(self, 8);
+            GuiGameOptions_Refresh(self, 8);
         } else if (w == self->w424) {
             self->iCC++;
             if (self->iCC >= 2) self->iCC = 0;
             func_0045A3A0(self->xB8, 0x80);
-            func_0029AA50(self, 0x80);
+            GuiGameOptions_Refresh(self, 0x80);
         } else if (w == self->w42C) {
             self->iD8++;
             if (self->iD8 >= 2) self->iD8 = 0;
@@ -182,14 +182,14 @@ extern "C" int func_0029A190(Hud_A190* self, Wdg_A190* w, unsigned short msg, in
                 String_CtorCStr_13B480(&t, Loc_LookupText(D_004AA7B0));
                 String_CtorCStr_13B480(&s, Loc_LookupText(D_004AA7C0));
                 { char* txt = String_CStr(&s); FrontEnd_OpenPopup(D_004FFC04, 5, String_CStr(&t), txt, self, 0xB); }
-                func_0029AA50(self, 0x800);
+                GuiGameOptions_Refresh(self, 0x800);
                 String_Dtor(&s, 0);
                 String_Dtor(&t, 0);
             } else {
-                func_002C9860(D_004FFC04, 1);
+                FrontEnd_SuspendGui(D_004FFC04, 1);
                 func_0045A3A0(self->xB8, 0x800);
-                func_002C9510(D_004FFC04);
-                func_0029AA50(self, 0x800);
+                FrontEnd_ResumeGui(D_004FFC04);
+                GuiGameOptions_Refresh(self, 0x800);
             }
         }
         return 1;
@@ -203,15 +203,15 @@ extern "C" int func_0029A190(Hud_A190* self, Wdg_A190* w, unsigned short msg, in
                 String_CtorCStr_13B480(&s, Loc_LookupText(D_004AA7E0));
                 { char* txt = String_CStr(&s); self->popup = FrontEnd_OpenPopup(D_004FFC04, 5, String_CStr(&t), txt, self, 0xC); }
                 self->x78 = 1;
-                self->x7C = func_003698B0();
-                func_002C9860(D_004FFC04, 1);
+                self->x7C = Time_GetMilliseconds();
+                FrontEnd_SuspendGui(D_004FFC04, 1);
                 func_0045A3A0(self->xB8, 0x800);
-                func_002C9510(D_004FFC04);
+                FrontEnd_ResumeGui(D_004FFC04);
                 String_Dtor(&s, 0);
                 String_Dtor(&t, 0);
             } else {
                 self->iD8 = 0;
-                func_0029AA50(self, 0x800);
+                GuiGameOptions_Refresh(self, 0x800);
             }
             return 1;
         }
@@ -254,8 +254,8 @@ extern "C" int func_0029A190(Hud_A190* self, Wdg_A190* w, unsigned short msg, in
             ev.flag = 1;
             Event_Send(&ev, D_004FFB50, 1);
             ev.vtbl = D_004DAE30;
-            func_0036E220(ev.partB, -1);
-            func_0036E220(ev.partA, -1);
+            FileMan_Release(ev.partB, -1);
+            FileMan_Release(ev.partA, -1);
             cMessage_dtor(&ev, 0);
         } else if (w == self->w41C) {
         } else if (w == self->w420) {
@@ -270,7 +270,7 @@ extern "C" int func_0029A190(Hud_A190* self, Wdg_A190* w, unsigned short msg, in
     return func_00441CA0(self, w, msg, sub, text);
 }
 #undef cMessage_dtor /* merge_units */
-#undef func_0036E220 /* merge_units */
+#undef FileMan_Release /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0029A190(void) {}
 #pragma pop /* merge_units */

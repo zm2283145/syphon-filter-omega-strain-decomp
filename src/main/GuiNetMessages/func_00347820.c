@@ -43,7 +43,7 @@ extern char D_004BA3B0[];
 extern V47820 D_00587B50;
 extern V47820 D_00587B60;
 extern const char* D_00492B98;
-void func_0033D3F0(Screen47820* self);
+void GuiScreen_Init(Screen47820* self);
 Obj47820* GuiWidget_FindChildByName(Screen47820* self, const char* name);
 int Gui_GetScreenList(void);
 Sp47820* func_00418420(int mgr, char* name);
@@ -58,7 +58,7 @@ static inline Obj47820* As47820(Obj47820* obj, const char* type)
 extern "C" void func_00347820(Screen47820* self)
 {
     Sp47820* sp;
-    func_0033D3F0(self);
+    GuiScreen_Init(self);
     self->f88 = As47820(GuiWidget_FindChildByName(self, *(const char**)dat_00492B60), D_004BA540);
     self->f8C = As47820(GuiWidget_FindChildByName(self, *(const char**)dat_00492B68), D_004A9870);
     self->f90 = As47820(GuiWidget_FindChildByName(self, *(const char**)dat_00492B70), D_004A9870);

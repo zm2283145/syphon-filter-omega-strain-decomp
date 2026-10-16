@@ -36,7 +36,7 @@ static inline void merge_flush_func_00336D80(void) {}
 
 /* merge_units: begin func_00336DC0 */
 #pragma push /* merge_units */
-extern int func_001396D0(int, int);
+extern int PtrVec_Reserve(int, int);
 extern Rel* func_00336E40(Rel* r);
 
 Rel* func_00336DC0(Rel* r) {
@@ -47,7 +47,7 @@ Rel* func_00336DC0(Rel* r) {
 }
 
 int func_00336DE0(int a0, int a1) {
-    return func_001396D0(a0, a1);
+    return PtrVec_Reserve(a0, a1);
 }
 
 Rel* func_00336DF0(Rel* r) {

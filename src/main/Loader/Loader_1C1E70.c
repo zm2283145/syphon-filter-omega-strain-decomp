@@ -64,7 +64,7 @@ extern BodyTbl D_0055DDA0;
 extern void* D_004FFD44;
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void func_00165E60(void* a, char* name, int x);
-void* func_001698C0(void);
+void* App_GetInstance(void);
 int Archive_Open(void* a, char* name, int b, int c);
 void Hog_Register(void* hog, char* name, int h, int b);
 void TexCache_AddThermalTextures(void* hog);
@@ -110,7 +110,7 @@ extern "C" void Pop_LoadNPC(void* unused, PopReader* r, void* arc)
     char name[128];
     FileManEntry e;
     func_0036E5D0(&e);
-    func_00165E60(func_001698C0(), D_0049F050, 0);
+    func_00165E60(App_GetInstance(), D_0049F050, 0);
     sprintf(thermal, D_0049F070, D_0048B2F8);
     sprintf(name, D_0049F090, D_0048B2F8);
     Hog_Register(D_0057124C, D_0049F0A8, Archive_Open(arc, name, 1, 0), 1);
@@ -118,7 +118,7 @@ extern "C" void Pop_LoadNPC(void* unused, PopReader* r, void* arc)
     TexCache_AddThermalTextures(D_005711B0);
     Expression_Init();
     if (!(unsigned char)Pop_FindTag(r, 0x3A43504E)) {
-        func_0036E220(&e, -1);
+        FileMan_Release(&e, -1);
         return;
     }
     {
@@ -170,7 +170,7 @@ extern "C" void Pop_LoadNPC(void* unused, PopReader* r, void* arc)
         }
     }
     if (!(unsigned char)Pop_FindTag(r, 0x3A4E4547)) {
-        func_0036E220(&e, -1);
+        FileMan_Release(&e, -1);
         return;
     }
     {
@@ -199,7 +199,7 @@ extern "C" void Pop_LoadNPC(void* unused, PopReader* r, void* arc)
         }
     }
     func_00403FC0(&D_0055DDA0);
-    func_0036E220(&e, -1);
+    FileMan_Release(&e, -1);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001C1E70(void) {}
@@ -217,9 +217,9 @@ struct ActTerrain {
 
 extern "C" {
 #if 0 /* merge_units */
-void* func_001698C0();
+void* App_GetInstance();
 #endif /* merge_units */
-#define func_001698C0() (func_001698C0()) /* merge_units */
+#define App_GetInstance() (App_GetInstance()) /* merge_units */
 
 #if 0 /* merge_units */
 void func_00165E60(void*, const char*, int);
@@ -273,7 +273,7 @@ static inline void Push(LoaderOwnedVec* v, int* k)
 extern "C" void Loader_InitActivationMap(void* unused, PopReader* r)
 {
     int key;
-    func_00165E60(func_001698C0(), D_0049F0D0, 0);
+    func_00165E60(App_GetInstance(), D_0049F0D0, 0);
     int mis = (int)((unsigned long long)(unsigned int)r->cur & 3);
     if (mis)
         r->cur += 4 - mis;
@@ -336,7 +336,7 @@ extern "C" void Loader_InitActivationMap(void* unused, PopReader* r)
         }
     }
 }
-#undef func_001698C0 /* merge_units */
+#undef App_GetInstance /* merge_units */
 #undef func_00165E60 /* merge_units */
 #undef Mem_Alloc /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */

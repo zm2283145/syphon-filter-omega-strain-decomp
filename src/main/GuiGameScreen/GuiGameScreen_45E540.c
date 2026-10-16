@@ -29,7 +29,7 @@ typedef struct {
 extern char D_004E1620[];
 extern void GuiWidget_ctor(Widget0045E540* w);
 extern void func_001C10A0(List0045E540* list);
-extern void func_001396D0(List0045E540* list, int n);
+extern void PtrVec_Reserve(List0045E540* list, int n);
 /* Constructor. */
 Widget0045E540* func_0045E540(Widget0045E540* w)
 {
@@ -53,8 +53,8 @@ Widget0045E540* func_0045E540(Widget0045E540* w)
     w->unkE4 = 0;
     w->unkE8 = 0;
     w->unkEC = 0;
-    func_001396D0(b, 8);
-    func_001396D0(a, 8);
+    PtrVec_Reserve(b, 8);
+    PtrVec_Reserve(a, 8);
     w->unkD8 = 0;
     return w;
 }

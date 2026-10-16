@@ -111,7 +111,7 @@ extern WDef_2320* WeaponDb_Get(void* db, int id);
 #endif /* merge_units */
 #define WeaponDb_Get(a0, a1) ((WDef_2320 *)WeaponDb_Get((int)(a0), (a1))) /* merge_units */
 
-extern void func_00255AF0(void* o, int id, int d, int c, int z);
+extern void Backpack_AddWeapon(void* o, int id, int d, int c, int z);
 extern void WeaponInv_RemoveSlot(INV* self, unsigned char slot, int a, int b, int c);
 void WeaponInv_MoveItemsToBackpack(INV* self, void* o)
 {
@@ -121,7 +121,7 @@ void WeaponInv_MoveItemsToBackpack(INV* self, void* o)
     for (i = 7; i >= 0; i--) {
         E_INV* e = (E_INV*)((char*)self + i * 16 + 4);
         if (e->id != -1 && WeaponDb_Get(D_004FFD30, e->id)->xA8) {
-            func_00255AF0(o, e->id, e->d, e->c, 0);
+            Backpack_AddWeapon(o, e->id, e->d, e->c, 0);
             WeaponInv_RemoveSlot(self, i, 0, 0, 0);
         }
     }

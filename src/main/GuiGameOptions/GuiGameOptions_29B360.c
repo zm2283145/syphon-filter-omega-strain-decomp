@@ -52,7 +52,7 @@ static inline W_0029B360* FindAs_0029B360(S_0029B360* self, char* name, char* ty
     return (w && w->IsA(type)) ? w : 0;
 }
 /* Looks up the child widgets and localised strings of the page. */
-extern "C" void func_0029B360(S_0029B360* self)
+extern "C" void GuiGameOptions_Init(S_0029B360* self)
 {
     char buf[32];
     int i;
@@ -124,16 +124,16 @@ typedef struct Obj29B920 {
 } Obj29B920;
 void func_0041E3B0(Obj29B920* o, float dt);
 void func_0026BC20(float f);
-unsigned long func_003698B0(void);
+unsigned long Time_GetMilliseconds(void);
 void func_002996D0(Obj29B920* o, int a);
 void func_0029AE60(Obj29B920* o);
 int func_0029BDB0(void);
-void func_0029B920(Obj29B920* o, float dt)
+void GuiGameOptions_Update(Obj29B920* o, float dt)
 {
     func_0041E3B0(o, dt);
     func_0026BC20(dt / 30.0f);
     if (o->state == 1) {
-        if (func_003698B0() - o->t > 8000) {
+        if (Time_GetMilliseconds() - o->t > 8000) {
             func_002996D0(o, 1);
         }
     }
@@ -182,7 +182,7 @@ static inline void Req_Init(SoundRequest* p, int type, __int128 name, Voice_BA10
     p->x184 = -1;
     p->x180 = x180;
 }
-G_BA10* func_0029BA10(G_BA10* self) {
+G_BA10* GuiGameOptions_Create(G_BA10* self) {
     SoundRequest* p;
     GuiWidget_ctor(self);
     self->vtbl = D_004E1220;

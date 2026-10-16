@@ -21,8 +21,8 @@ void func_004546C0(S_4546C0* self, char* name)
     if (self->f4C)
         func_00459450(self->f4C);
     m1.vtable = D_004DADF0;
-    func_0036E220(&m1.req.b, -1);
-    func_0036E220(&m1.req.a, -1);
+    FileMan_Release(&m1.req.b, -1);
+    FileMan_Release(&m1.req.a, -1);
     cMessage_dtor(&m1, 0);
     t = Loc_LookupText(name);
     if (t && self->f4C)
@@ -32,7 +32,7 @@ void func_004546C0(S_4546C0* self, char* name)
     m2.kind = 1;
     Event_Send(&m2, D_004FFB50, 1);
     m2.vtable = D_004DAE10;
-    func_0036E220(&m2.req.b, -1);
-    func_0036E220(&m2.req.a, -1);
+    FileMan_Release(&m2.req.b, -1);
+    FileMan_Release(&m2.req.a, -1);
     cMessage_dtor(&m2, 0);
 }

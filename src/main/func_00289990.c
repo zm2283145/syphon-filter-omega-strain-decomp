@@ -21,7 +21,7 @@ void func_0028A180(S_00289990* self);
 char* String_CStr(void* s);
 char* strncpy(char* d, const char* s, int n);
 void func_0033C320(S_00289990* self, int a);
-int func_0033CEF0(S_00289990* self, Ev_00289990* ev);
+int GuiScreen_HandleInput(S_00289990* self, Ev_00289990* ev);
 }
 static inline unsigned char Down_00289990(Ev_00289990* e)
 {
@@ -87,5 +87,5 @@ extern "C" int func_00289990(S_00289990* self, Ev_00289990* ev)
             return 1;
         }
     }
-    return func_0033CEF0(self, ev);
+    return GuiScreen_HandleInput(self, ev);
 }

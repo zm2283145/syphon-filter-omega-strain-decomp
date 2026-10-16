@@ -6,7 +6,7 @@
 
 #include "types.h"
 
-Vec4* func_001E5420(Vec4* d, Vec4* s) {
+Vec4* ActorPhysical_SetFloorPlane(Vec4* d, Vec4* s) {
     *d = *s;
     return d;
 }

@@ -27,8 +27,8 @@ int func_00454440(S_454440* self, void* ev, unsigned short code, int a3, int idx
         if (self->f4C)
             func_00459450(self->f4C);
         msg.vtable = D_004DADF0;
-        func_0036E220(&msg.req.b, -1);
-        func_0036E220(&msg.req.a, -1);
+        FileMan_Release(&msg.req.b, -1);
+        FileMan_Release(&msg.req.a, -1);
         cMessage_dtor(&msg, 0);
         return 1;
     }

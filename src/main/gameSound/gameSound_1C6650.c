@@ -13,7 +13,7 @@ int Event_Send(void*, void*, int);
 int SoundEvent_Ctor(void*, void*, int);
 int SoundRequest_Ctor(void*, int, void*, int, int);
 int cMessage_dtor(void*, int);
-int func_0036E220(void*, int);
+int FileMan_Release(void*, int);
 extern char D_004DADF0[];
 extern char D_004FFB50[];
 extern unsigned char func_001C6700(void);
@@ -29,11 +29,11 @@ void Global_StopAllQuips(void) {
         SoundEvent_Ctor(&L.sp10, &L.sp1E0, 0);
         Event_Send(&L.sp10, D_004FFB50, 0);
         L.sp10.vt = D_004DADF0;
-        func_0036E220(&L.sp124, -1);
-        func_0036E220(&L.sp88, -1);
+        FileMan_Release(&L.sp124, -1);
+        FileMan_Release(&L.sp88, -1);
         cMessage_dtor(&L.sp10, 0);
-        func_0036E220(&L.sp2C4, -1);
-        func_0036E220(&L.sp228, -1);
+        FileMan_Release(&L.sp2C4, -1);
+        FileMan_Release(&L.sp228, -1);
     }
 }
 #pragma pop

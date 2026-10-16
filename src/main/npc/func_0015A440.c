@@ -143,7 +143,7 @@ int func_00434190(Lock_A440*, int*, int);
 int func_00433EC0(Lock_A440*, int*, int);
 void func_00435D80(Lock_A440*, int*, int);
 NpcObj_A440* Object_ClosestPlayerDistSq(NpcObj_A440*, float*);
-void func_0013B180(Raw_A440*, void*);
+void List_Begin(Raw_A440*, void*);
 void func_0015AD60(Node_A440**, Raw_A440*);
 void func_0015AD50(Raw_A440*, void*);
 void func_0015AD40(Node_A440**, Raw_A440*);
@@ -171,7 +171,7 @@ void NetGame_InitLocalSlot(int*, int);
 static inline void MkBegin(Node_A440** t)
 {
     Raw_A440 b;
-    func_0013B180(&b, D_004EA1B0);
+    List_Begin(&b, D_004EA1B0);
     func_0015AD60(t, &b);
 }
 static inline Node_A440* Begin()

@@ -32,8 +32,8 @@ typedef struct {
 } ModelL;
 extern "C" {
 extern char D_00535D20[];
-extern void func_0036DEF0(void* f);
-extern void func_0036D990(void* f, ModelL* m, int z);
+extern void FileMan_FindMember(void* f);
+extern void FileMan_LoadMemberSync(void* f, ModelL* m, int z);
 extern void func_0036DEC0(void* f);
 extern void Model_BindTextures(ModelL* m, void* t);
 extern void Model_FoldMaterialFlags(ModelL* m);
@@ -45,8 +45,8 @@ extern void LightMgr_Register(void* mgr, int id, ModelL* m, int i);
 /* Relocates a freshly read model header in place, then counts triangles, binds textures,
    registers lights and sizes the draw list. */
 extern "C" void Model_Load(ModelL* m, void* f, void* tex) {
-    func_0036DEF0(f);
-    func_0036D990(f, m, 0);
+    FileMan_FindMember(f);
+    FileMan_LoadMemberSync(f, m, 0);
     func_0036DEC0(f);
     m->hdr = (HdrL*)m->base;
     if (!m->hdr->loaded) {

@@ -87,13 +87,13 @@ typedef struct { int a; char name[0x94]; T3BC* f98; } S3BC;
 typedef struct { char pad[0x16C]; int f16c; unsigned char b170; char p171[3]; char f174[0x3C]; float m[24]; } O3BC;
 extern void func_0036D630(O3BC*);
 extern void func_00377C30(char*);
-extern void func_0036DEF0(S3BC*);
-extern void func_0036D990(S3BC*, int*, int);
+extern void FileMan_FindMember(S3BC*);
+extern void FileMan_LoadMemberSync(S3BC*, int*, int);
 extern void func_0036D540(O3BC*, char*, int, int);
 extern char* strchr(const char*, int);
 extern void func_0036E540(H3BC*, char*, O3BC*, int);
 extern void Model_Load(char*, H3BC*, int);
-extern void func_0036E220(H3BC*, int);
+extern void FileMan_Release(H3BC*, int);
 O3BC* func_003BCC70(O3BC* o, S3BC* src, int arg) {
     H3BC h;
     func_0036D630(o);
@@ -105,8 +105,8 @@ O3BC* func_003BCC70(O3BC* o, S3BC* src, int arg) {
     o->m[12] = 0.0f; o->m[13] = 0.0f; o->m[14] = 0.0f; o->m[15] = 1.0f;
     o->m[16] = 0.0f; o->m[17] = 0.0f; o->m[18] = 0.0f; o->m[19] = 0.0f;
     o->m[20] = 0.0f; o->m[21] = 0.0f; o->m[22] = 0.0f; o->m[23] = 0.0f;
-    func_0036DEF0(src);
-    func_0036D990(src, &o->f16c, 0);
+    FileMan_FindMember(src);
+    FileMan_LoadMemberSync(src, &o->f16c, 0);
     if (src->f98->b14c == 2) o->b170 = 1;
     else o->b170 = 0;
     func_0036D540(o, src->name, o->f16c, 0);
@@ -116,7 +116,7 @@ O3BC* func_003BCC70(O3BC* o, S3BC* src, int arg) {
         func_0036E540(&h, name, o, 0);
     }
     Model_Load(o->f174, &h, arg);
-    func_0036E220(&h, -1);
+    FileMan_Release(&h, -1);
     return o;
 }
 /* merge_units: generate this block's code under its own pragmas */

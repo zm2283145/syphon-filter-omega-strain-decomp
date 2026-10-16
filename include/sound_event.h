@@ -10,7 +10,7 @@
  * SoundEvent (0x1D0) = CMsg header + SoundRequest at +0x30 + 0x10 tail,
  *   built by SoundEvent_Ctor 0x0020ECB0 (ev, action, 0). After Event_Send
  *   the vtable is reset to D_004DADF0 (or D_004DAE30), then
- *     func_0036E220(&ev.req.b, -1); func_0036E220(&ev.req.a, -1);
+ *     FileMan_Release(&ev.req.b, -1); FileMan_Release(&ev.req.a, -1);
  *     cMessage_dtor(&ev, 0);
  * SoundEventP (0x1C0, aligned 16) is the shorter form built by
  *   SoundEvent_CtorFromPreset 0x0020F990 / SoundMsg_WrapAction 0x0020F2A0.

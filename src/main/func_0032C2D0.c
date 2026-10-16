@@ -2,7 +2,7 @@
 typedef struct { char p0[0xE4]; unsigned int flags; } O32C2D0;
 typedef struct { char p0[0xA]; unsigned char flags; } I32C2D0;
 /* Picks which of the item's key slots (0-3) applies for the object's current mode bits. */
-int func_0032C2D0(O32C2D0* o, I32C2D0* it)
+int GuiKeyboard_GetModifierIndex(O32C2D0* o, I32C2D0* it)
 {
     unsigned int f = o->flags;
     int r;

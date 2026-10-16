@@ -54,7 +54,7 @@ extern __int128* D_005712F8[2];
 extern __int128* D_005714F0[2][2];
 extern unsigned char D_00571500[2][2];
 extern unsigned char D_00571510[2][2][24];
-int func_0036D380(Npc_S* npc, int i);
+int Hog_GetEntrySize(Npc_S* npc, int i);
 char* Archive_GetMemberName(Npc_S* npc, int i);
 __int128* func_0036D4E0(Npc_S* npc, int i);
 void Appearance_RegistryKey(char* dst, int n, char* src);
@@ -97,7 +97,7 @@ void Skf_Register(Cache_S* c, Npc_S* npc)
         KU key;
         KU k2;
         char* ks = key.s;
-        a = func_0036D380(npc, i);
+        a = Hog_GetEntrySize(npc, i);
         if (!a) continue;
         name = Archive_GetMemberName(npc, i);
         pkt = func_0036D4E0(npc, i);

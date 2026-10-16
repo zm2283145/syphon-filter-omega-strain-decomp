@@ -2,7 +2,7 @@
 typedef struct { int m0; char name[0x94]; int m98; } YA910;
 typedef struct { int m0; unsigned char type; char pad[3]; YA910* y; } XA910;
 typedef struct NA910 { int m0; struct NA910* next; XA910* data; } NA910;
-extern void func_0013B180(int* out, void* list);
+extern void List_Begin(int* out, void* list);
 extern void func_003EA900(NA910** out, int* in);
 extern void func_003EA8F0(int* out, void* list);
 extern void func_003EA8E0(NA910** out, int* in);
@@ -18,7 +18,7 @@ XA910* func_003EA910(void* self, YA910* key, int type)
     int b;
     int a;
     NA910* n;
-    func_0013B180(&t1, self);
+    List_Begin(&t1, self);
     func_003EA900(&it, &t1);
     for (n = it; func_003EA8F0(&t2, self), func_003EA8E0(&e, &t2), n != e; n = n->next) {
         YA910* y;

@@ -12,7 +12,7 @@ typedef struct {
 } Obj_394520;
 extern "C" void func_003A1AD0(int target, int arg, void* data);
 
-extern "C" void func_00394520(Obj_394520* o)
+extern "C" void ParticleGob_Draw(Obj_394520* o)
 {
     if (o->target != 0) {
         Node_394520* n = o->node;

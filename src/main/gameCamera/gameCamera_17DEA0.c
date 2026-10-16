@@ -23,7 +23,7 @@ static const float dat_0048A168[2] = { 0.0f, 0.0f };
 extern "C" int Curve_CountDown(void*, float);
 extern "C" int Curve_HasRemaining(void*);
 extern "C" float Curve_Hermite(void*);
-extern "C" void func_0017DEA0(DCurve* p, float dt, float b) {
+extern "C" void KickCurve_Advance(DCurve* p, float dt, float b) {
     if (!(p->f38 <= 0.0f)) {
         p->f38 -= dt;
         if (p->f38 <= 0.0f) {

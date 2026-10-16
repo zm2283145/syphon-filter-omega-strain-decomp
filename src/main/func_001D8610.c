@@ -16,7 +16,7 @@ extern void* Vec4_GetZero(void);
 extern void Vec4_Assign(void* d, void* s);
 extern void Quat_SetIdentity(Q_1D8610* q);
 extern void func_00132800(Q_1D8610* d, Q_1D8610* s);
-E_1D8610* func_001D8610(E_1D8610* arr)
+E_1D8610* UpperBodyLook_ClearRecords(E_1D8610* arr)
 {
     E_1D8610* e = arr;
     do {

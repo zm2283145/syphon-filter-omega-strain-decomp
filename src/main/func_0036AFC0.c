@@ -17,7 +17,7 @@ typedef struct Obj36A {
 extern char D_004DF630[]; /* vtable */
 
 /* Constructor: sets the vtable, eight (0.5, 0.5, 0.5, 1) entries, enabled = 1. */
-Obj36A* func_0036AFC0(Obj36A* self) {
+Obj36A* Font_ctor(Obj36A* self) {
     int i;
     self->vtable = D_004DF630;
     for (i = 0; i < 8; i++) {

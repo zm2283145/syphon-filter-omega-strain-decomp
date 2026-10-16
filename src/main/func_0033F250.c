@@ -34,7 +34,7 @@ extern const char* D_004928C0;
 extern const char* D_004928C8;
 extern const char* D_004928D0;
 extern const char* D_004928D8;
-void func_0033D3F0(Screen3F250* self);
+void GuiScreen_Init(Screen3F250* self);
 Obj3F250* GuiWidget_FindChildByName(Screen3F250* self, const char* name);
 void MLTextWidget_SetFont(List3F250* l, char* s);
 }
@@ -47,7 +47,7 @@ static inline Obj3F250* As3F250(Obj3F250* obj, const char* type)
 /* Screen init: base init, then looks up the child widgets and sets up the list. */
 extern "C" void func_0033F250(Screen3F250* self)
 {
-    func_0033D3F0(self);
+    GuiScreen_Init(self);
     self->f88 = As3F250(GuiWidget_FindChildByName(self, D_004928B0), D_004B9CF0);
     self->f8C = (List3F250*)As3F250(GuiWidget_FindChildByName(self, D_004928B8), D_004B9CE0);
     self->f8C->f7C = As3F250(GuiWidget_FindChildByName(self, D_004B9CC8), D_004AAE00);

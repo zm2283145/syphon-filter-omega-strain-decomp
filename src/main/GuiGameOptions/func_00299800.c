@@ -14,7 +14,7 @@ extern void GuiScreen_SetFocus(void* ctx, void* item);
 extern void func_0041E0F0(void* item, void* ctx, int a, int b, int c);
 
 /* Activates the current menu item: un-hides its widget, focuses it; then shows the cursor. */
-void func_00299800(Menu299* m)
+void GuiGameOptions_ShowMenu(Menu299* m)
 {
     if (m->items[m->index]) {
         m->widgets[m->index]->flags &= ~4;

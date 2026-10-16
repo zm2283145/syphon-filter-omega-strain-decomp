@@ -7,11 +7,11 @@
 #include "types.h"
 #include "loose01_types.h"
 
-unsigned char func_00260940(unsigned char* self) {
+unsigned char VisionFade_IsDone(unsigned char* self) {
     return self[1];
 }
 
-void func_00260950(Unk260940* self, float a, float b, float c, float d) {
+void VisionFade_Start(Unk260940* self, float a, float b, float c, float d) {
     self->unk08 = a;
     self->unk0C = b;
     self->unk10 = c;

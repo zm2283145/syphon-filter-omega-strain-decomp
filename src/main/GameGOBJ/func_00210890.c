@@ -5,7 +5,7 @@
 extern int D_004FFC0C;
 extern char D_004FFB50[];
 extern char D_004DADF0[];
-extern void func_0020EBA0(SoundEvent* ev, void* src, void* voice);
+extern void SoundStopMsg_Ctor(SoundEvent* ev, void* src, void* voice);
 
 int Script_cSoundGOBJ_KillSnd(void** arg0) {
     SoundEvent ev;
@@ -14,11 +14,11 @@ int Script_cSoundGOBJ_KillSnd(void** arg0) {
     if (F_(o, 0x1F2, unsigned char)) v = o;
     else if (D_004FFC0C) v = 0;
     else v = o;
-    func_0020EBA0(&ev, o + 0x60, v);
+    SoundStopMsg_Ctor(&ev, o + 0x60, v);
     Event_Send(&ev, D_004FFB50, 1);
     ev.vtable = D_004DADF0;
-    func_0036E220(&ev.req.b, -1);
-    func_0036E220(&ev.req.a, -1);
+    FileMan_Release(&ev.req.b, -1);
+    FileMan_Release(&ev.req.a, -1);
     cMessage_dtor(&ev, 0);
     F_(o, 0x1F0, unsigned char) = 0;
     return 0;

@@ -20,7 +20,7 @@ char * Agent_GetSelected(...);
 int GuiSaveAgentWidget_HandleEvent(...);                            
 extern char D_004FFB50;
 }
-extern "C" void func_002955B0(char * arg0) {
+extern "C" void GuiCommandCenter_Exit(char * arg0) {
     int var_v1;
     char * temp_v0;
 
@@ -52,20 +52,20 @@ struct S_00295640 {
 extern "C" {
 extern Ui_00295640* D_004FFC04;
 extern char D_004AA288[];
-void func_00294300(S_00295640* self, int a);
-void func_00294F50(S_00295640* self, unsigned char a);
+void GuiCommandCenter_OpenPanel(S_00295640* self, int a);
+void GuiCommandCenter_MoveSelection(S_00295640* self, unsigned char a);
 void* Gui_GetScreenStack(void);
 void func_0041E0F0(void* a, void* b, int c, int d, int e);
 int func_0033CE30(S_00295640* self, int a, int b, int c, int d, int e);
 int FrontEnd_OpenPopup(void* ui, int a, char* b, int c, S_00295640* d, int e);
 #if 0 /* merge_units */
-void func_002955B0(S_00295640* self);
+void GuiCommandCenter_Exit(S_00295640* self);
 #endif /* merge_units */
-#define func_002955B0(a0) ((void)func_002955B0((char *)(a0))) /* merge_units */
+#define GuiCommandCenter_Exit(a0) ((void)GuiCommandCenter_Exit((char *)(a0))) /* merge_units */
 
-int func_0033CEF0(S_00295640* self, Ev_00295640* ev);
+int GuiScreen_HandleInput(S_00295640* self, Ev_00295640* ev);
 }
-extern "C" int func_00295640(S_00295640* self, Ev_00295640* ev)
+extern "C" int GuiCommandCenter_HandleInput(S_00295640* self, Ev_00295640* ev)
 {
     bool down = ev->type == 1 && ev->f2 == 0 && ev->f6 == 0;
     if (down) {
@@ -74,13 +74,13 @@ extern "C" int func_00295640(S_00295640* self, Ev_00295640* ev)
         case 4:
         case 8:
             if (self->b1D4)
-                func_00294300(self, 0);
-            func_00294F50(self, ev->btn == 4 ? 4 : 8);
+                GuiCommandCenter_OpenPanel(self, 0);
+            GuiCommandCenter_MoveSelection(self, ev->btn == 4 ? 4 : 8);
             return 1;
         }
         if (b == 0x40 && !self->b1D4 && self->f1CC != -1) {
             if (self->b178[self->f1CC])
-                func_00294300(self, self->c1B4[self->f1CC]);
+                GuiCommandCenter_OpenPanel(self, self->c1B4[self->f1CC]);
             else
                 func_0041E0F0(self->p118[self->f1CC], Gui_GetScreenStack(), 0x10, 4, 0);
             return 1;
@@ -90,14 +90,14 @@ extern "C" int func_00295640(S_00295640* self, Ev_00295640* ev)
             if (st == 4) {
                 self->f2E0 = 0;
                 if (self->f1CC == 0x14)
-                    func_00294300(self, 0);
+                    GuiCommandCenter_OpenPanel(self, 0);
                 else
-                    func_00294300(self, 1);
+                    GuiCommandCenter_OpenPanel(self, 1);
                 return 1;
             }
             if (st == 5) {
                 self->f2E4 = 0;
-                func_00294300(self, 4);
+                GuiCommandCenter_OpenPanel(self, 4);
                 return 1;
             }
             if (st == 0) {
@@ -105,15 +105,15 @@ extern "C" int func_00295640(S_00295640* self, Ev_00295640* ev)
                 if (ui->b30 && !ui->b32)
                     self->f2F8 = FrontEnd_OpenPopup(ui, 5, D_004AA288, func_0033CE30(self, 0xE, 0, 0, 0, 0), self, 0x19);
                 else
-                    func_002955B0(self);
+                    GuiCommandCenter_Exit(self);
             } else {
-                func_00294300(self, 0);
+                GuiCommandCenter_OpenPanel(self, 0);
             }
             return 1;
         }
     }
-    return func_0033CEF0(self, ev);
+    return GuiScreen_HandleInput(self, ev);
 }
-#undef func_002955B0 /* merge_units */
+#undef GuiCommandCenter_Exit /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00295640 */

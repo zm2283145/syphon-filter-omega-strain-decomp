@@ -7,11 +7,11 @@
 extern "C" {
 extern "C" void GuiObjectives_GetClassName();
 extern "C" void func_00367AF0();
-extern "C" void func_003680A0();
-extern "C" void func_00368300();
-extern "C" void func_00368620();
-extern "C" void func_00368760();
-extern "C" void func_003688C0();
+extern "C" void GuiObjectives_HandleEvent();
+extern "C" void GuiObjectives_HandleInput();
+extern "C" void GuiObjectives_Update();
+extern "C" void GuiObjectives_Wake();
+extern "C" void GuiObjectives_Init();
 extern "C" void func_0041D400();
 extern "C" void func_0041D5C0();
 extern "C" void func_0041D780();
@@ -38,4 +38,4 @@ extern "C" VtableObject* func_00367A80(VtableObject* self, short deleteFlag)
     }
     return self;
 }
-void * const D_004DF5C0[24] = { (void*)0x0, (void*)0x0, (void*)func_00367A80, (void*)func_003688C0, (void*)func_0041F090, (void*)func_0041F080, (void*)func_0041F070, (void*)func_00368760, (void*)func_0041EBF0, (void*)func_0041E330, (void*)func_0041E2B0, (void*)func_00368300, (void*)func_0041E470, (void*)func_0041E230, (void*)func_00368620, (void*)func_003680A0, (void*)func_0041F210, (void*)func_0041D8C0, (void*)func_0041D780, (void*)func_0041D5C0, (void*)func_0041D400, (void*)GuiObjectives_GetClassName, (void*)func_00367AF0, (void*)0x0 };
+void * const D_004DF5C0[24] = { (void*)0x0, (void*)0x0, (void*)func_00367A80, (void*)GuiObjectives_Init, (void*)func_0041F090, (void*)func_0041F080, (void*)func_0041F070, (void*)GuiObjectives_Wake, (void*)func_0041EBF0, (void*)func_0041E330, (void*)func_0041E2B0, (void*)GuiObjectives_HandleInput, (void*)func_0041E470, (void*)func_0041E230, (void*)GuiObjectives_Update, (void*)GuiObjectives_HandleEvent, (void*)func_0041F210, (void*)func_0041D8C0, (void*)func_0041D780, (void*)func_0041D5C0, (void*)func_0041D400, (void*)GuiObjectives_GetClassName, (void*)func_00367AF0, (void*)0x0 };

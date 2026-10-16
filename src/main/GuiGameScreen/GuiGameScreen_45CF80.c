@@ -64,7 +64,7 @@ extern "C" {
 void String_CtorCStr_13B480(void* s);
 void String_Dtor(void* s, int z);
 void func_0013D680(void* d, void* s);
-int func_0036AA50(int font, const char* s, int n);
+int Font_GetStringWidth(int font, const char* s, int n);
 void func_003E8040(O45D070* o, M4* m);
 void func_003ECB50(V4* out, float f, int x);
 int func_003EE840(int a, void* b);
@@ -142,7 +142,7 @@ extern "C" void func_0045D070(W45D070* w, const char* text, unsigned char color,
             }
             D_00497B10 = 0;
         }
-        { int font = w->label->font; if (font) width = func_0036AA50(font, text, 0x200);
+        { int font = w->label->font; if (font) width = Font_GetStringWidth(font, text, 0x200);
         else width = 0.0f; }
         if (width > D_00586228 && D_00586228 > 0.0f) {
             M4CopyB(&m, &D_005861D0);

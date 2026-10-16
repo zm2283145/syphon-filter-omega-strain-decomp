@@ -23,7 +23,7 @@ void* func_0018A2E0(char* self) {
     return self + 76;
 }
 
-signed char func_0018A2F0(signed char* self) {
+signed char MotionRequest_GetMode(signed char* self) {
     return self[72];
 }
 

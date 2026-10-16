@@ -21,7 +21,7 @@ extern void scePrintf(const char *, ...);
 /* busy-wait; the nop has no C equivalent */
 #define DELAY(j) { j = 0x100000; do { j--; __asm__ volatile("nop"); } while (j != -1); }
 
-int func_00119708(int mode)
+int sceCdDiskReady(int mode)
 {
     int i;
     int ret;

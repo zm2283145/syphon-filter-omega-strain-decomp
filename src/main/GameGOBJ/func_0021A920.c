@@ -11,6 +11,6 @@ void func_0021A920(void* self) {
     Actor_BaseLogicUpdate(self);
 }
 
-int func_0021A930(void* self, int a1) {
+int cGameGOBJ_Receive(void* self, int a1) {
     return Object_HandleMessage(self, a1);
 }

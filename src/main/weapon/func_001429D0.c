@@ -19,10 +19,10 @@ extern unsigned char D_005721C8;
 extern void Event_Construct(Msg_INV* msg, void* name);
 extern void Event_Send(Msg_INV* msg, void* target, int flags);
 extern void cMessage_dtor(Msg_INV* msg, int flags);
-extern int func_00142AE0(INV* self, unsigned char slot);
-int func_001429D0(INV* self, unsigned char slot, int req, int quiet)
+extern int WeaponInv_GetSpareRoom(INV* self, unsigned char slot);
+int WeaponInv_AddSpare(INV* self, unsigned char slot, int req, int quiet)
 {
-    int room = func_00142AE0(self, slot);
+    int room = WeaponInv_GetSpareRoom(self, slot);
     int n = (req < room || quiet) ? req : room;
     self->e[slot].d += n;
     if (D_005721C8 && !quiet) {

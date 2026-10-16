@@ -16,7 +16,7 @@ struct TIt { TNode* node; TIt() {} };
 extern "C" {
 void Mem_Free(int pool, void* p, char* file, int line);
 void ObjectList_EraseRange(int* out, void* list, LNode** first, LNode** last);
-LIt func_0013B180(void* list);
+LIt List_Begin(void* list);
 LIt func_0043B180(void* list);
 LIt func_00438E00(void* list);
 void func_00438E10(LIt* out, const LIt& in);
@@ -46,7 +46,7 @@ extern unsigned char D_005838A2;
 extern unsigned char D_005838A3;
 }
 
-static inline void LB1(LIt* o, void* L) { func_00438E10(o, func_0013B180(L)); }
+static inline void LB1(LIt* o, void* L) { func_00438E10(o, List_Begin(L)); }
 static inline void LB2(LIt* o, void* L) { func_00438DF0(o, func_0043B180(L)); }
 static inline void LE(LIt* o, void* L) { func_00438DF0(o, func_00438E00(L)); }
 static inline void TE(TIt* o, void* T) { func_00439360(o, func_00439370(T)); }

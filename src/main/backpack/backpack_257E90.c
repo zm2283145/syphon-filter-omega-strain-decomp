@@ -12,9 +12,9 @@
 #pragma push /* merge_units */
 typedef struct Backpack{void*vt;char pad[0x2F8];void*actor;}Backpack;
 extern char D_004DC350[];extern void*D_004FFBD0;
-void func_00170DB0(void*,void*);void Object_Unregister(void*);void Object_DeleteLater(void*,float);void cGOBJ_dtor(Backpack*,int);void operator_delete(void*);
+void Hotbox_RemoveObjectBox(void*,void*);void Object_Unregister(void*);void Object_DeleteLater(void*,float);void cGOBJ_dtor(Backpack*,int);void operator_delete(void*);
 Backpack*cBackpack_dtor(Backpack*self,int flags){
- if(self){self->vt=D_004DC350;if(self->actor){func_00170DB0(D_004FFBD0,self->actor);Object_Unregister(self->actor);Object_DeleteLater(self->actor,0.1f);self->actor=0;}
+ if(self){self->vt=D_004DC350;if(self->actor){Hotbox_RemoveObjectBox(D_004FFBD0,self->actor);Object_Unregister(self->actor);Object_DeleteLater(self->actor,0.1f);self->actor=0;}
  cGOBJ_dtor(self,0);if((short)flags>0)operator_delete(self);}
  return self;
 }
@@ -27,7 +27,7 @@ static inline void merge_flush_func_00257E90(void) {}
 #pragma push /* merge_units */
 #pragma push
 #pragma cplusplus on
-extern "C" void func_00258330(void* self, int preserve); /* gsynth: defined below */
+extern "C" void Backpack_Reset(void* self, int preserve); /* gsynth: defined below */
 #pragma pop
 #pragma cplusplus on
 #pragma push
@@ -52,12 +52,12 @@ extern int D_004FFBD0;
 
 void cGOBJ_ctor(Backpack_00257F30*,int*,int,void*);
 #if 0 /* merge_units */
-void func_00258330(Backpack_00257F30*,int);
+void Backpack_Reset(Backpack_00257F30*,int);
 #endif /* merge_units */
-#define func_00258330(a0, a1) (func_00258330((void *)(a0), (a1))) /* merge_units */
+#define Backpack_Reset(a0, a1) (Backpack_Reset((void *)(a0), (a1))) /* merge_units */
 
 Weapon* WeaponDb_Get(int,int);
-void func_00255AF0(Backpack_00257F30*,int,int,int,int);
+void Backpack_AddWeapon(Backpack_00257F30*,int,int,int,int);
 void Object_Register(Backpack_00257F30*);
 Link* Hotbox_CreateRuntime(int,Backpack_00257F30*,int,int);
 int IdMgr_FindCollision(int,int);
@@ -72,7 +72,7 @@ extern "C" Backpack_00257F30* cBackpack_ctor(Backpack_00257F30* obj0,Reader* r0)
  V4 pos;
  cGOBJ_ctor(obj,&id,0,D_004F7F68);
  *(void**)obj=D_004DC350;obj->x304=-2;obj->x300=0;
- func_00258330(obj,0);obj->attach(D_0055C9F0,0);
+ Backpack_Reset(obj,0);obj->attach(D_0055C9F0,0);
  int hi=Read(r);int lo=Read(r);obj->id=lo|(hi<<16);
  ReadFloat(r,&pos.x);ReadFloat(r,&pos.y);ReadFloat(r,&pos.z);pos.w=1.0f;
  obj->transform->set(&pos);
@@ -86,7 +86,7 @@ extern "C" Backpack_00257F30* cBackpack_ctor(Backpack_00257F30* obj0,Reader* r0)
    w=WeaponDb_Get(D_004FFD30,weapon);
    if(amount>0 || !w->unit) {
     if(w->kind==1 || w->kind==7) {amount*=n;n=1;}
-    j=0;if(0<n){do {func_00255AF0(obj,weapon,(amount-1)*w->unit,w->unit,flag);j++;}while(j<n);}
+    j=0;if(0<n){do {Backpack_AddWeapon(obj,weapon,(amount-1)*w->unit,w->unit,flag);j++;}while(j<n);}
    }
   }
  slot++;}while(slot<3);
@@ -100,7 +100,7 @@ extern "C" Backpack_00257F30* cBackpack_ctor(Backpack_00257F30* obj0,Reader* r0)
 }
 #pragma pop
 #undef D_004FFBD0 /* merge_units */
-#undef func_00258330 /* merge_units */
+#undef Backpack_Reset /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00257F30(void) {}
 #pragma pop /* merge_units */
@@ -118,7 +118,7 @@ struct Tables{char pad[0x3524];WeaponInfo*weapons;};
 struct World{char pad[0x30];Tables*tables;};
 extern "C" World*D_004FFC0C;
 struct Id{volatile int value;Id(int v):value(v){}}; static inline const Id* Identity(const Id*p){return p;} static inline void Assign(Id*d,const Id*s){d->value=s->value;}
-extern "C" void func_00258330(void*self,int preserve){
+extern "C" void Backpack_Reset(void*self,int preserve){
  WeaponInfo*weapons=D_004FFC0C->tables->weapons;int i=0;char*p=(char*)self;
  do{int flags=weapons[F(p,0x64,unsigned char)].flags;if(!preserve||flags>-1){F(p,0x130,int)=0;F(p,0x134,unsigned char)=0;}i++;p+=0xD4;}while(i<3);
  if(!preserve){F(self,0x2FC,int)=0;F(self,0x30C,int)=2;}

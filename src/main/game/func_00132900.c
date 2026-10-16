@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void func_00132900(char* self) {
+void TransformNode_ClearDirty(char* self) {
     self[80] = 0;
 }

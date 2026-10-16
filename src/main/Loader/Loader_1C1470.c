@@ -146,13 +146,13 @@ void* cGameSceneLight_ctor(void* p, PopReader_1C1770* r);
 void* cGameDirectionalLight_ctor(void* p, PopReader_1C1770* r);
 void cGameLight_dtor(void* p, int f);
 void func_00165E60(void* a, char* name, int x);
-void* func_001698C0(void);
+void* App_GetInstance(void);
 }
 extern "C" void Loader_InitLights(void* a0, PopReader_1C1770* r)
 {
     if (r->cur) {
         int mis;
-        func_00165E60(func_001698C0(), "Initializing Lights...", 0);
+        func_00165E60(App_GetInstance(), "Initializing Lights...", 0);
         mis = (int)((unsigned long long)(unsigned int)r->cur & 3);
         if (mis)
             r->cur += 4 - mis;
@@ -217,7 +217,7 @@ typedef struct G4PopReader {
     int* cur;
 } G4PopReader;
 extern char D_00535D20[];
-extern void* func_001698C0(void);
+extern void* App_GetInstance(void);
 #if 0 /* merge_units */
 extern void func_00165E60(void* h, void* s, int f);
 #endif /* merge_units */
@@ -242,7 +242,7 @@ void Loader_AllocateLights(void* level, G4PopReader* r)
     if (r->cur == 0) {
         return;
     }
-    func_00165E60(func_001698C0(), "Allocating Lights...", 0);
+    func_00165E60(App_GetInstance(), "Allocating Lights...", 0);
     G4_Align(r);
     if (!(unsigned char)Pop_FindTag(r, 0x3A544E50)) {
         return;
@@ -280,7 +280,7 @@ int Pop_FindTag(PopReader_1C1B60* r, int tag);
 #endif /* merge_units */
 #define Pop_FindTag(a0, a1) (Pop_FindTag((PopReader_1C1470 *)(a0), (a1))) /* merge_units */
 
-Sky_1C1B60* func_001C5E50(void* p, void* a, int arc, PopReader_1C1B60* r, int n);
+Sky_1C1B60* SkyboxGob_Create(void* p, void* a, int arc, PopReader_1C1B60* r, int n);
 int Archive_Open(void* a, char* name, int b, int c);
 }
 extern "C" void Loader_InitSkybox(void* a0, void* a1, PopReader_1C1B60* r, void* arc)
@@ -289,7 +289,7 @@ extern "C" void Loader_InitSkybox(void* a0, void* a1, PopReader_1C1B60* r, void*
         char name[128];
         int h;
         int n;
-        func_00165E60(func_001698C0(), "Initializing Skybox...", 0);
+        func_00165E60(App_GetInstance(), "Initializing Skybox...", 0);
         sprintf(name, "%s\\%s\\TEX.HOG", D_0048B2F8, D_004FFC90, D_004FFC90);
         h = Archive_Open(arc, name, 0, 0);
         n = *(int*)r->cur;
@@ -301,7 +301,7 @@ extern "C" void Loader_InitSkybox(void* a0, void* a1, PopReader_1C1B60* r, void*
                 p = (Sky_1C1B60*)Mem_Alloc(0, 0x94, D_0049EE88, 0x3F3);
             }
             if (p)
-                p = func_001C5E50(p, a1, h, r, n);
+                p = SkyboxGob_Create(p, a1, h, r, n);
             Object_Register(p);
             n -= p->count;
         }
@@ -323,11 +323,11 @@ int Pop_FindTag(PopReader_1C1CE0* r, int tag);
 #endif /* merge_units */
 #define Pop_FindTag(a0, a1) (Pop_FindTag((PopReader_1C1470 *)(a0), (a1))) /* merge_units */
 
-void* func_001C59D0(void* p, PopReader_1C1CE0* r);
+void* Loader_ReadParticleRecord(void* p, PopReader_1C1CE0* r);
 }
 extern "C" void Loader_LoadParticles(void* a0, PopReader_1C1CE0* r)
 {
-    func_00165E60(func_001698C0(), "Loading Particles...", 0);
+    func_00165E60(App_GetInstance(), "Loading Particles...", 0);
     if ((unsigned char)Pop_FindTag(r, 0x3A524C50)) {
         int mis;
         mis = (int)((unsigned long long)(unsigned int)r->cur & 3);
@@ -345,7 +345,7 @@ extern "C" void Loader_LoadParticles(void* a0, PopReader_1C1CE0* r)
                 p = Mem_Alloc(0, 0x74, D_0049EE88, 0x3C9);
             }
             if (p)
-                p = func_001C59D0(p, r);
+                p = Loader_ReadParticleRecord(p, r);
             Object_Register(p);
         }
         }

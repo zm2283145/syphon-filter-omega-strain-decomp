@@ -9,6 +9,6 @@
 char D_004B8660[] = "GuiCharacterDisplay";   /* "GuiCharacterDisplay" */
 
 /* Class name getter: "GuiCharacterDisplay". */
-char* func_003267D0(void) {
+char* GuiCharacterDisplay_GetClassName(void) {
     return D_004B8660;
 }

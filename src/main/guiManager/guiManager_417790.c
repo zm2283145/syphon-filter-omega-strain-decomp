@@ -133,7 +133,7 @@ struct O_4178E0 {
 };
 extern "C" {
 char* String_CStr(Str_4178E0* s);
-int func_002071F0(Str_4178E0* s);
+int String_Length(Str_4178E0* s);
 int func_00412F80(void* db, char* name);
 int* func_00413370(void* db, int id);
 void* func_003EE840(int scene, char* name);
@@ -142,7 +142,7 @@ void func_003E8DE0(void* i, int a);
 void func_003E8040(void* i, void* p);
 extern char D_004BF070[];
 }
-static inline bool Empty_4178E0(Str_4178E0* s) { return func_002071F0(s) == 0; }
+static inline bool Empty_4178E0(Str_4178E0* s) { return String_Length(s) == 0; }
 
 extern "C" void func_004178E0(O_4178E0* o)
 {

@@ -16,7 +16,7 @@ typedef struct {
     unsigned char* bufs[0x20];
     unsigned short numGroups;
 } Model_B8D0;
-void func_0038B8D0(Model_B8D0* m)
+void ManModel_SaturateGore(Model_B8D0* m)
 {
     unsigned int i;
     unsigned int n;

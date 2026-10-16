@@ -66,12 +66,12 @@ void Event_Send(void*, void*, int);
 void cMessage_dtor(void*, int);
 Svc* Service_Lookup(void*, void*);
 void SoundEvent_CtorFromPreset(void*, void*, Actor*);
-void func_0036E220(void*, int);
-void func_00242FA0(float, int, const int*, void*, int, float, int, int);
+void FileMan_Release(void*, int);
+void Hud_ShowCallout(float, int, const int*, void*, int, float, int, int);
 void Actor_Ignite(Actor*, float, int, int, int, int);
 void Actor_ApplyContactDamage(Actor*, float, Actor*, unsigned char, unsigned char, int*, unsigned char, V*);
 int Random_Next(void);
-void func_0026BDE0(float, int, int, int, int);
+void PadRumble_Start(float, int, int, int, int);
 int Actor_HandleCombatEvent(Actor* self, float dmg, Actor* src, unsigned char loc, unsigned char type, int* armor, unsigned char flag, V* hitPos);
 }
 
@@ -179,7 +179,7 @@ int Actor_HandleCombatEvent(Actor* self, float dmg, Actor* src, unsigned char lo
             if (type != 9) self->armorHP = (int)((float)self->armorHP - armorDmg);
             snd2 = D_004EF730;
             if (IsHuman(src) && !IsHuman(self))
-                func_00242FA0(5.0f, D_004FFC2C, &self->serial, D_0049D8F0, -1, 0.0f, 0, 0);
+                Hud_ShowCallout(5.0f, D_004FFC2C, &self->serial, D_0049D8F0, -1, 0.0f, 0, 0);
         }
         arm -= BodyPenetrationResistance;
     } else {
@@ -224,8 +224,8 @@ int Actor_HandleCombatEvent(Actor* self, float dmg, Actor* src, unsigned char lo
                     float m = 2147483648.0f;
                     int r = (int)(5.0f * ((float)Random_Next() / (1.0f + m)));
                     int r2 = r + 5;
-                    func_0026BDE0(0.033333335f * (float)r, 0, 1, 0, 1);
-                    func_0026BDE0(0.033333335f * (float)r2, 0, 0, vol, 1);
+                    PadRumble_Start(0.033333335f * (float)r, 0, 1, 0, 1);
+                    PadRumble_Start(0.033333335f * (float)r2, 0, 0, vol, 1);
                 }
             } else if (!self->ctrl->IsHuman()) {
                 snd1 = self->team == 1 ? D_004F0290 : D_004EFF50;
@@ -242,8 +242,8 @@ int Actor_HandleCombatEvent(Actor* self, float dmg, Actor* src, unsigned char lo
         e.kind = 1;
         Event_Send(&e, D_004FFB50, 1);
         e.vtable = D_004DAE30;
-        func_0036E220(&e.s114, -1);
-        func_0036E220(&e.s78, -1);
+        FileMan_Release(&e.s114, -1);
+        FileMan_Release(&e.s78, -1);
         cMessage_dtor(&e, 0);
     }
     if (snd2) {
@@ -252,8 +252,8 @@ int Actor_HandleCombatEvent(Actor* self, float dmg, Actor* src, unsigned char lo
         e.kind = 1;
         Event_Send(&e, D_004FFB50, 1);
         e.vtable = D_004DAE30;
-        func_0036E220(&e.s114, -1);
-        func_0036E220(&e.s78, -1);
+        FileMan_Release(&e.s114, -1);
+        FileMan_Release(&e.s78, -1);
         cMessage_dtor(&e, 0);
     }
     if (armor) *armor = arm;

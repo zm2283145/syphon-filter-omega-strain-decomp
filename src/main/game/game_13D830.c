@@ -50,7 +50,7 @@ Iter* func_0013D870(Iter* out, int* node) {
     return out;
 }
 
-void func_0013D890(Iter* out, Tree* t) {
+void List_End_13D890(Iter* out, Tree* t) {
     out->p = &t->header;
 }
 #pragma pop /* merge_units */

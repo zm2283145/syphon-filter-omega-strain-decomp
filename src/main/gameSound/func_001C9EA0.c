@@ -26,12 +26,12 @@ extern char D_004F2CC0[];
 extern void* Receiver_Construct(void* self, void* info);
 extern void* __construct_array(void* array, void* ctor, void* dtor, int size, int count);
 extern void* func_001C9F10(void* channel, int flags);
-extern void* func_001C9F80(void* channel);
+extern void* SoundSlot_Ctor(void* channel);
 
 SoundMgr* SoundMgr_Construct(SoundMgr* self) {
     Receiver_Construct(self, D_004F2CC0);
     self->vtable = ((char*)D_004DACB0);
-    __construct_array(self->channels, func_001C9F80, func_001C9F10, sizeof(SoundChannel), 50);
+    __construct_array(self->channels, SoundSlot_Ctor, func_001C9F10, sizeof(SoundChannel), 50);
     self->unk54A8 = 0;
     self->unk54AC = 0;
     self->unk54B0 = 0;

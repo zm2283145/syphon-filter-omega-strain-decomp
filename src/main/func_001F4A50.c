@@ -30,7 +30,7 @@ extern void* func_0018A700(void*, int);
 extern void MotionSelNode_Ctor(void*, void*, void*, void*);
 extern void* MotionRegistry_MakeKey(void*, void*);
 extern void MotionRegistry_Register(void*, void*, void*);
-extern void func_00200550(void*, int);
+extern void MotionNodeWrapper_Dtor(void*, int);
 /* Builds and registers one block of motion-graph nodes. */
 #pragma optimization_level 1
 void MotionGraph_BuildCore(void* p0)
@@ -3483,6 +3483,6 @@ void MotionGraph_BuildCore(void* p0)
     func_001F3C70(&vA80, -1);
     MotionSelNode_Ctor(&v950, CanonicalKey_Construct(&v960, "sliderCoreMotions"), p0, func_0018A700(&v48, -1));
     MotionRegistry_Register(p0, MotionRegistry_MakeKey(&v990, "CoreMotions"), &v950);
-    func_00200550(&v950, -1);
+    MotionNodeWrapper_Dtor(&v950, -1);
 }
 #pragma optimization_level reset

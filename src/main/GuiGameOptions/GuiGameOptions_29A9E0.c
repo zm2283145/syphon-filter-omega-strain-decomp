@@ -60,7 +60,7 @@ struct Hud_AA50 {
     char* t464;
 };
 
-extern "C" void func_0029AA50(Hud_AA50* h, int mask)
+extern "C" void GuiGameOptions_Refresh(Hud_AA50* h, int mask)
 {
     float k10 = 10.0f;
     float k5 = 5.0f;

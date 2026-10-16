@@ -25,13 +25,13 @@ extern char D_0049B308[];
 void* Mem_Alloc(int pool, int size, char* file, int line);
 char* strrchr(const char* s, int c);
 void Hog_Register(void* h, char* name, int x, int f);
-int func_0036DEF0(void* h);
-int func_00147880(void* self, int x);
-void func_0038D530(void* o, char* name, int idx, int x, int a, int b, int c, int d);
-void func_00146B80(void* self, char* name, void* o);
+int FileMan_FindMember(void* h);
+int WeaponDb_GetShellRecord(void* self, int x);
+void ManModel_ctor(void* o, char* name, int idx, int x, int a, int b, int c, int d);
+void WeaponDb_CloneModel(void* self, char* name, void* o);
 int func_003EBA50(void);
 void AsyncLoader_QueueLoad(int q, void* h, void* cb, void* o, int a, int b, int c);
-void func_00147110(void);
+void WeaponDb_LoadCallback(void);
 }
 inline void* operator new(unsigned int, void* p) { return p; }
 struct E7150 { E7150() {} char pad[0x20]; };
@@ -66,15 +66,15 @@ extern "C" void WeaponDb_LoadModel(S7150* self, char* name, O7150** out, int idx
     if (!p) p = &buf[strlen(buf)];
     String_Copy(p, D_0049B308);
     Hog_Register(self->hog, buf, self->xB4, 1);
-    if ((unsigned char)func_0036DEF0(self->hog)) return;
+    if ((unsigned char)FileMan_FindMember(self->hog)) return;
     x = 0;
-    if (idx >= 0) x = func_00147880(self, ((R7150*)((char*)self->recs + idx * 0x140))->x10C);
+    if (idx >= 0) x = WeaponDb_GetShellRecord(self, ((R7150*)((char*)self->recs + idx * 0x140))->x10C);
     {
         *out = new (SD_Alloc(sizeof(O7150), 0x153)) O7150;
     }
-    func_0038D530(*out, buf, idx, x, a, 1, b, c);
-    func_00146B80(self, buf, *out);
-    AsyncLoader_QueueLoad(func_003EBA50(), self->hog, (void*)func_00147110, *out, 0, 1, 1);
+    ManModel_ctor(*out, buf, idx, x, a, 1, b, c);
+    WeaponDb_CloneModel(self, buf, *out);
+    AsyncLoader_QueueLoad(func_003EBA50(), self->hog, (void*)WeaponDb_LoadCallback, *out, 0, 1, 1);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00147150(void) {}
@@ -84,14 +84,14 @@ static inline void merge_flush_func_00147150(void) {}
 /* merge_units: begin func_00147390 */
 #pragma push /* merge_units */
 extern void WeaponDb_LoadResources(void* self);
-extern void func_0036E220(void* p, int flag);
+extern void FileMan_Release(void* p, int flag);
 extern void func_003CC0F0(void* self, int flag);
 extern void operator_delete(void* p);
 void* func_00147390(char* self, short flag)
 {
     if (self) {
         WeaponDb_LoadResources(self);
-        func_0036E220(self + 0x1C, -1);
+        FileMan_Release(self + 0x1C, -1);
         func_003CC0F0(self, 0);
         if (flag > 0)
             operator_delete(self);

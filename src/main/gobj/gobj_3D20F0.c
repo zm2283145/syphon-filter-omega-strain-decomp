@@ -273,7 +273,7 @@ struct Obj_24B0 : Base_24B0 { virtual void Update(float); virtual void Reset(); 
 struct Raw_24B0 { int p; };
 struct S_24B0 { int a, b, c; unsigned char dirty; };
 extern "C" {
-Raw_24B0 func_0013B180(void*);
+Raw_24B0 List_Begin(void*);
 Raw_24B0 func_003D2610(void*);
 void func_003D2620(char**, const Raw_24B0&);
 void func_003D2600(char**, const Raw_24B0&);
@@ -284,7 +284,7 @@ extern "C" void ListenerList_Update(S_24B0* self, float dt) {
     if (self->dirty) {
         char* it;
         char* n;
-        func_003D2620(&it, func_0013B180(self));
+        func_003D2620(&it, List_Begin(self));
         n = it;
         while ((func_003D2600(&end1, func_003D2610(self)), n != end1)) {
             F_(n, 0x8, Obj_24B0*)->Reset();
@@ -295,7 +295,7 @@ extern "C" void ListenerList_Update(S_24B0* self, float dt) {
     {
         char* it;
         char* n;
-        func_003D2620(&it, func_0013B180(self));
+        func_003D2620(&it, List_Begin(self));
         n = it;
         while ((func_003D2600(&end2, func_003D2610(self)), n != end2)) {
             F_(n, 0x8, Obj_24B0*)->Update(dt);

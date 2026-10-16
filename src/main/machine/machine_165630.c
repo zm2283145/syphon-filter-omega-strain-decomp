@@ -34,7 +34,7 @@ extern void func_003FE110(int);
 extern char* Loc_GetLanguageName(unsigned char id);
 extern void Loc_SetLanguage(unsigned char id);
 extern char* Loc_GetCurrentLanguageName(void);
-extern int func_00129C80(char* a, char* b);
+extern int strstr(char* a, char* b);
 
 extern int D_004FFD2C;
 extern char D_004FFBB5;
@@ -97,7 +97,7 @@ void Game_LoadIni(Game* g) {
     }
     v = func_003CBA90("BOOT_VALID_LANGUAGES");
     if (v && *v) {
-        if (func_00129C80(v, Loc_GetCurrentLanguageName()) == 0) {
+        if (strstr(v, Loc_GetCurrentLanguageName()) == 0) {
             for (j = 0; j < 7; j++) {
                 char* name = Loc_GetLanguageName(j);
                 if (String_CompareN(v, name, strlen(name)) == 0) {
@@ -147,7 +147,7 @@ typedef struct {
 } R165;
 typedef struct { char pad[0x248]; int i248; char p24C[0x280 - 0x24C]; int i280[3]; } O165;
 extern R165* Archive_Open(void*, char*, int, int);
-extern void func_0036AB80(int, R165*, int);
+extern void Font_LoadFnt(int, R165*, int);
 extern int* func_003D1020(void);
 extern I165 D_0048A060;
 extern char D_0048B2F8[];
@@ -175,7 +175,7 @@ extern int D_0055C730;
 extern int D_0055C734;
 extern unsigned char D_0055C738;
 
-void func_00165950(O165* o) {
+void Boot_LoadFonts(O165* o) {
     char buf[0x50];
     I165 I165 = D_0048A060;
     R165* r;
@@ -184,7 +184,7 @@ void func_00165950(O165* o) {
     sprintf(buf, D_0049C360, D_0048B2F8);
     r = Archive_Open(D_004FFB8C, buf, 0, 0);
     for (i = 0; i < 3; i++) {
-        func_0036AB80(o->i280[i], r, I165.v[i]);
+        Font_LoadFnt(o->i280[i], r, I165.v[i]);
     }
     x = o->i280[0];
     *func_003D1020() = x;
@@ -276,7 +276,7 @@ extern signed char D_0051EEA0;
 extern unsigned char D_0051EEA8;
 extern unsigned char D_005723D0;
 
-void func_00165BC0(void) {
+void App_InitSystemsOnce(void) {
     if (D_004EE530 == 0) {
         D_004EE530 = 1;
         func_003A6710(1);

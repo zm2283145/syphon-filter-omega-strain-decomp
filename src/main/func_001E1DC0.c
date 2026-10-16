@@ -25,7 +25,7 @@ extern char* func_00183AF0(SurfOwnerE6* owner, int* key);
 /* Returns the surface entry for an index, or a static default for old formats. */
 typedef struct { SurfOwnerE6* owner; } SurfRefE6;
 typedef struct { int pad; SurfRefE6* ref; } SurfCtxE6;
-SurfE6* func_001E1DC0(SurfCtxE6* ctx, int index)
+SurfE6* Col_DefaultSurface(SurfCtxE6* ctx, int index)
 {
     int key[1];
     SurfOwnerE6* owner = ctx->ref->owner;

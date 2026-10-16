@@ -13,7 +13,7 @@ extern double func_0011EDD0(double x, double y);
 extern double func_0011FBF8(double x, double y, int iy);
 extern int func_0011CA20(double x, double *y);
 
-double func_00120BC0(double x)
+double Math_CosDouble(double x)
 {
 	double y[2],z=0.0;
 	int n,ix;
@@ -173,7 +173,7 @@ double scalbn(double x, int n)
 __asm__(".set nomove\n"
         "dpsub = func_0011C200\n");
 
-double func_001211A8(double x)
+double Math_SinDouble(double x)
 {
 	double y[2],z=0.0;
 	int n,ix;

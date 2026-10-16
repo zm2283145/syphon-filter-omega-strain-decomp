@@ -12,7 +12,7 @@
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 int WeaponInv_SlotOfItem(int);                             
 
-int func_002553E0(int self, int *output, char * table) {
+int Backpack_ListItems(int self, int *output, char * table) {
     char *slot;
     int count;
     int deferred;
@@ -70,7 +70,7 @@ static inline void merge_flush_func_002553E0(void) {}
 typedef struct AmmoEntry{int primary[4];int secondary[4];int item,count;}AmmoEntry;
 typedef struct AmmoSlot{unsigned char kind;char pad[3];AmmoEntry entries[5];int count;unsigned char active;char padD1[3];}AmmoSlot;
 typedef struct BackpackQuery{char pad[0x64];AmmoSlot slots[3];}BackpackQuery;
-void func_00255500(BackpackQuery*self,int item,int*lastPrimary,int*lastSecondary,int*total){
+void Backpack_QueryAmmo(BackpackQuery*self,int item,int*lastPrimary,int*lastSecondary,int*total){
  AmmoSlot*slot;int i;AmmoEntry*entry;int j;int k;int kind;
  kind=WeaponInv_SlotOfItem(item);slot=self->slots;i=0;kind=(unsigned char)kind;goto outer_test;
  outer_body:

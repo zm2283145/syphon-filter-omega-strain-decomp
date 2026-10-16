@@ -29,7 +29,7 @@ extern float func_00375330(char*);
 extern float func_00375360(char*);
 extern int func_00190E50(float);
 
-void func_00374DF0(Vp374* self) {
+void Renderer_RefreshCamera(Vp374* self) {
     float sx, sy, ox, oy, w, h;
     float a, b, c, half, hw, hh;
     float l, t, r, bt;

@@ -22,7 +22,7 @@ extern int D_004DADF0;
 extern void SoundRequest_Ctor(SndCmd*, signed char, int, int, int);
 extern void SoundEvent_Ctor(EventMsg*, void*, int);
 extern void Event_Send(EventMsg*, void*, int);
-extern void func_0036E220(void*, int);
+extern void FileMan_Release(void*, int);
 extern void cMessage_dtor(EventMsg*, int);
 
 /* Global: StopSnd(channel, id) - broadcasts a stop-sound event. */
@@ -31,12 +31,12 @@ void Global_StopSnd(int channel, int id) {
     EventMsg msg;
     SoundRequest_Ctor(&cmd, (signed char)channel, id, 0, 0);
     SoundEvent_Ctor(&msg, &cmd, 0);
-    func_0036E220(cmd.partB, -1);
-    func_0036E220(cmd.partA, -1);
+    FileMan_Release(cmd.partB, -1);
+    FileMan_Release(cmd.partA, -1);
     msg.immediate = 1;
     Event_Send(&msg, &D_004FFB50, 0);
     msg.vtable = &D_004DADF0;
-    func_0036E220(msg.partB, -1);
-    func_0036E220(msg.partA, -1);
+    FileMan_Release(msg.partB, -1);
+    FileMan_Release(msg.partA, -1);
     cMessage_dtor(&msg, 0);
 }

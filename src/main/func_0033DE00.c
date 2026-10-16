@@ -5,7 +5,7 @@ typedef struct {
     char p0[0x8C]; void* p8C; char p90[0xAC - 0x90];
     char lAC[4]; int count;
 } T3DE00;
-extern void func_0033D310(T3DE00* self);
+extern void GuiScreen_Update(T3DE00* self);
 extern G3DE00* Gui_GetScreenStack(void);
 extern T3DE00** func_0033DEF0(void* key);
 extern int DME_GetLobby(void);
@@ -17,7 +17,7 @@ void func_0033DE00(T3DE00* self)
     G3DE00* g;
     int on;
     int i;
-    func_0033D310(self);
+    GuiScreen_Update(self);
     on = *func_0033DEF0(Gui_GetScreenStack()->key) == self;
     g = Gui_GetScreenStack();
     if (on)

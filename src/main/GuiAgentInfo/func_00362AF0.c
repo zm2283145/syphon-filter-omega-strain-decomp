@@ -40,14 +40,14 @@ extern "C" {
 Nd* Root_GetParent(Nd* n);
 void Root_RefreshWorldCache(Nd* n);
 Nd* Root_Identity(Nd* n);
-void func_001325F0(V4* d, V4* s);
+void Quat_Assign(V4* d, V4* s);
 void Vec4_Copy(V4* d, V4* s);
 V4* Placement_GetQuat(Plc* p);
 V4* Placement_GetPosition(Plc* p);
 void func_00132530(Plc* p, V4* q);
 void func_00132510(Plc* p, V4* v);
 void func_00132840(V4* q);
-void func_00132810(V4* a, V4* b, V4* c);
+void Quat_Multiply(V4* a, V4* b, V4* c);
 void func_00132800(V4* d, V4* s);
 }
 static inline Plc* WorldX(Nd* n)
@@ -66,7 +66,7 @@ static inline void Refresh(Nd* n)
         Plc* w;
         Plc* l = &Root_Identity(n)->local;
         w = &Root_Identity(n)->world;
-        func_001325F0(&w->rot, &l->rot);
+        Quat_Assign(&w->rot, &l->rot);
         Vec4_Copy(&w->pos, &l->pos);
         Plc* w2 = &Root_Identity(n)->world;
         func_00132530(w2, Placement_GetQuat(gw));
@@ -91,7 +91,7 @@ extern "C" void func_00362AF0(Nd* self)
         V4 r;
         V4 m;
         func_00132840(&m);
-        func_00132810(&m, &pw->rot, &self->world.rot);
+        Quat_Multiply(&m, &pw->rot, &self->world.rot);
         func_00132800(&r, &m);
         { void* xx = &r; /* dead on purpose: retail keeps this addiu */ }
         V4* v = &self->world.pos;

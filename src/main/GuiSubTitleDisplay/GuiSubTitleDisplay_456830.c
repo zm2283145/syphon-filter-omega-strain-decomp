@@ -29,7 +29,7 @@ void func_004562E0(W456830*, int);
 void Hud_ClosePauseMenu(int);
 void Game_EndLevel(void*, int);
 void Game_SetPaused(void*, int);
-int func_003680A0(W456830*, Ev45*, int, int, int);
+int GuiObjectives_HandleEvent(W456830*, Ev45*, int, int, int);
 }
 
 extern "C" int func_00456830(W456830* self, Ev45* ev, int code, int a3, int a4)
@@ -71,7 +71,7 @@ extern "C" int func_00456830(W456830* self, Ev45* ev, int code, int a3, int a4)
         }
         return 1;
     }
-    return func_003680A0(self, ev, code, a3, a4);
+    return GuiObjectives_HandleEvent(self, ev, code, a3, a4);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00456830 */
@@ -123,7 +123,7 @@ struct C_456AB0 { char p[0x14]; unsigned short flags; };
 struct W_456AB0 { char p[0x10]; int focus; char p14[0x8C - 0x14]; C_456AB0* f8C; void* items[8]; int id; };
 extern "C" {
 extern unsigned char D_004FFBB7;
-void func_00368760(W_456AB0*);
+void GuiObjectives_Wake(W_456AB0*);
 #if 0 /* merge_units */
 VObj_456AB0* GuiWidget_FindChildByName(W_456AB0*, char*);
 #endif /* merge_units */
@@ -146,7 +146,7 @@ extern "C" void func_00456AB0(W_456AB0* self)
 {
     VObj_456AB0* o;
     char buf[16];
-    func_00368760(self);
+    GuiObjectives_Wake(self);
     self->id = 0;
     o = GuiWidget_FindChildByName(self, D_004C1C60);
     o = (o != 0 && o->v20(D_004A7520) != 0) ? o : 0;

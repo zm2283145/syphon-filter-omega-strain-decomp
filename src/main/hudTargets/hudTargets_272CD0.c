@@ -11,7 +11,7 @@
 #pragma push /* merge_units */
 typedef struct { int pad[3]; int key; } Node2CD0;
 typedef struct { char pad[0x34]; Node2CD0* node; int key; } Obj2CD0;
-Node2CD0* func_00272CD0(Obj2CD0* o) {
+Node2CD0* HudTargets_GetWaypoint(Obj2CD0* o) {
     Node2CD0* n = o->node;
     unsigned char ok = 1;
     int z = (n != 0) ^ 1;
@@ -25,7 +25,7 @@ static inline void merge_flush_func_00272CD0(void) {}
 
 /* merge_units: begin func_00272D10 */
 #pragma push /* merge_units */
-void func_00272D10(int a0, int a1) {
+void HudTargets_SelectWaypoint(int a0, int a1) {
     int loc[1];
     int v1;
     int cond;

@@ -116,7 +116,7 @@ void Actor_UpdatePairChannels(Actor* a, float dt);
 void Actor_PrepareNeutralChannels(Actor* a, int b, int c, int d, int e);
 void func_0019D6E0(void* p, int a, int b);
 void func_0019D6C0(void* p, int a, int b);
-float func_001E96A0(Ctl* c);
+float ActorPhysical_QueryWaterHeight(Ctl* c);
 void Mtx44_SetRotation(M4* m, float, float, float, float, float, float, float, float, float);
 V4* Root_GetWorldQuat(void* r);
 void Root_SetWorldOrientation(Root* r, V4* q);
@@ -141,8 +141,8 @@ void Mtx_SetTranslation(M4* m, V4* p);
 V4* func_0019D1A0(M4* m);
 V4* func_0019D190(M4* m);
 float Vec4_GetZ(V4* v);
-float func_0019D180(V4* v);
-float func_0019D170(V4* v);
+float Vec_HeadingFromYX(V4* v);
+float Vec_HeadingFromNegXY(V4* v);
 }
 static inline float MinZ(float a, float b) { float r = 0.0f; asm { min.s r, a, b } return r; }
 static inline float MinK(float a, float x) { float k; float b; k = 0.0f; a = 1.0f; k = 1.5f; b = k * x; asm { min.s k, a, b } return k; }
@@ -412,9 +412,9 @@ struct M4Q { V4 r[4]; M4Q(V4* q) { Quat_ToMatrix((M4*)this, q); } };
 static inline void CopyM(M4* d, const M4Q& s) { Mtx34_Copy(d, (M4*)&s); }
 static inline VV V1A0(M4* m) { return *(VV*)func_0019D1A0(m); }
 static inline VV V190(M4* m) { return *(VV*)func_0019D190(m); }
-static inline float PickH(const VV& a, const VV& b) { if (Vec4_GetZ((V4*)&a) < Vec4_GetZ((V4*)&b)) return func_0019D180((V4*)&a); return func_0019D170((V4*)&b); }
+static inline float PickH(const VV& a, const VV& b) { if (Vec4_GetZ((V4*)&a) < Vec4_GetZ((V4*)&b)) return Vec_HeadingFromYX((V4*)&a); return Vec_HeadingFromNegXY((V4*)&b); }
 static inline void WorldM(M4* m, char* w) { M4 rot; Quat_ToMatrix(&rot, Placement_GetQuat(w)); Mtx34_Copy(m, &rot); }
-static inline float PickH2(M4* m) { V4 va; V4 vb; Vec4_Assign(&va, func_0019D1A0(m)); Vec4_Assign(&vb, func_0019D190(m)); if (Vec4_GetZ(&va) < Vec4_GetZ(&vb)) return func_0019D180(&va); return func_0019D170(&vb); }
+static inline float PickH2(M4* m) { V4 va; V4 vb; Vec4_Assign(&va, func_0019D1A0(m)); Vec4_Assign(&vb, func_0019D190(m)); if (Vec4_GetZ(&va) < Vec4_GetZ(&vb)) return Vec_HeadingFromYX(&va); return Vec_HeadingFromNegXY(&vb); }
 static inline void WorldMW(M4* m, char* w) { WorldM(m, w); }
 static inline float PickHW(M4* m) { return PickH2(m); }
 static inline float HeadingFromWorld(Actor* a, float dt)
@@ -753,7 +753,7 @@ extern "C" void Actor_UpdateAnimationState(Actor* a, float dt)
                     if (a->ctl && a->ctl->fE4 != D_004A0438) {
                         float r;
                         f21 = 2.25f;
-                        r = func_001E96A0(a->ctl);
+                        r = ActorPhysical_QueryWaterHeight(a->ctl);
                         { float v = 0.5f + (0.5f / f21) * (f21 - r); v = Clamp01L(v); f20 = MinZ(v, f20); }
                     }
                     if (s5 || s4) f20 = MinZ(0.5f, f20);

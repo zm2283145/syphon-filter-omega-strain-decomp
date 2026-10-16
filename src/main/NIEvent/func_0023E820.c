@@ -14,7 +14,7 @@ extern void Event_Send(EventMsg24* msg, void* target, int flags);
 extern void cMessage_dtor(EventMsg24* msg, int flags);
 
 /* Builds a stack event message and sends it to target. */
-void func_0023E820(void* target) {
+void NiEvent_Play(void* target) {
     EventMsg24 msg;
     Event_Construct(&msg, D_004F7C28);
     msg.vtbl = D_004DC2F0;

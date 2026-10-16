@@ -194,13 +194,13 @@ extern char D_004A6F38[];
 extern char D_004FFC14[];
 extern char D_004EE688[];
 extern char D_0053B5C0[];
-Cam10** func_00159560(void* p);
+Cam10** List_Front(void* p);
 void func_00232EE0(It10* out, void* list);
 It10* func_00232EF0(It10* dst, It10* src);
 void func_00232F00(It10* out, void* list);
 void func_0013B160(It10* out, void* list);
 void func_00234070(It10* dst, It10* src);
-void func_0016E880(ONode10** out, void* list);
+void List_Begin_16E880(ONode10** out, void* list);
 void func_002340F0(OIt10* dst, ONode10* n);
 void func_00234090(OIt10* out, void* list);
 void func_00234080(OIt10* dst, OIt10* src);
@@ -238,7 +238,7 @@ static inline void EndI_(It10* out, void* l) { It10 t; func_00232EE0(&t, l); fun
 static inline void EndI(It10* out, void* l) { EndI_(out, l); }
 static inline void End(It10* out, void* l) { EndI(out, l); }
 static inline bool NotEnd(It10* it, void* l) { It10 end; End(&end, l); return it->n != end.n; }
-static inline void OBegI_(OIt10* out, void* l) { ONode10* raw; func_0016E880(&raw, l); func_002340F0(out, raw); }
+static inline void OBegI_(OIt10* out, void* l) { ONode10* raw; List_Begin_16E880(&raw, l); func_002340F0(out, raw); }
 static inline void OBegI(OIt10* out, void* l) { OBegI_(out, l); }
 static inline void OBegin0(OIt10* out, void* l) { OIt10 t; OBegI(&t, l); *out = t; }
 static inline void OBegin(OIt10* out, void* l) { OBegin0(out, l); }
@@ -312,7 +312,7 @@ extern "C" void func_00232F10(Self10* self, float dt)
     Cam10* cam;
     Entry10* e;
 
-    cam = *func_00159560(D_004FFC14);
+    cam = *List_Front(D_004FFC14);
     if (cam && self->c4 >= 0) {
         M4 m;
         UM(&m);
@@ -427,7 +427,7 @@ extern "C" void func_00232F10(Self10* self, float dt)
                 b2 = func_00234110(&big, e->obj->GetBox());
                 SetCP(&m, &b2, V4());
                 func_003A3340(e->t, cam, &b2, self->id != 0x16);
-                func_003A3310(e->t, scale, ((CamF*)*func_00159560(D_004FFC14))->f60);
+                func_003A3310(e->t, scale, ((CamF*)*List_Front(D_004FFC14))->f60);
                 func_003A2400(e->t, dt, &m, 0);
             }
         }

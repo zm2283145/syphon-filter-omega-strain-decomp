@@ -15,6 +15,6 @@ int func_002071C0(Word* self) {
     return (func_002071B0(self)->value & 1) != 0;
 }
 
-void func_002071F0(void) {
+void String_Length(void) {
     func_00207200();
 }

@@ -25,11 +25,11 @@ extern char D_004F2CC0[];
 extern int D_005383C0;
 extern void func_0026BE70(int v);
 extern void* Service_Lookup(char* a, char* b);
-extern void func_001C9540(void* svc, int ch, int v);
-extern void func_001C9670(void* svc, int v);
+extern void SoundMgr_SetChannelVolume(void* svc, int ch, int v);
+extern void SoundMgr_SetOutputMode(void* svc, int v);
 extern char* func_003CBA90(char* key);
 extern int String_CompareNoCase(char* a, char* b);
-extern void* func_001698C0(void);
+extern void* App_GetInstance(void);
 extern void Options_SetVideoMode(void* a, int mode);
 void func_0045A3A0(LightCfg_h5* cfg, unsigned int mask)
 {
@@ -55,25 +55,25 @@ void func_0045A3A0(LightCfg_h5* cfg, unsigned int mask)
     if (mask & 0x10) {
         svc = Service_Lookup(D_004FFB50, D_004F2CC0);
         if (svc) {
-            func_001C9540(svc, 0, (int)(1024.0f * cfg->vol0));
+            SoundMgr_SetChannelVolume(svc, 0, (int)(1024.0f * cfg->vol0));
         }
     }
     if (mask & 0x20) {
         svc = Service_Lookup(D_004FFB50, D_004F2CC0);
         if (svc) {
-            func_001C9540(svc, 2, (int)(1024.0f * cfg->vol2));
+            SoundMgr_SetChannelVolume(svc, 2, (int)(1024.0f * cfg->vol2));
         }
     }
     if (mask & 0x40) {
         svc = Service_Lookup(D_004FFB50, D_004F2CC0);
         if (svc) {
-            func_001C9540(svc, 1, (int)(1024.0f * cfg->vol1));
+            SoundMgr_SetChannelVolume(svc, 1, (int)(1024.0f * cfg->vol1));
         }
     }
     if (mask & 0x80) {
         svc = Service_Lookup(D_004FFB50, D_004F2CC0);
         if (svc) {
-            func_001C9670(svc, cfg->mode14);
+            SoundMgr_SetOutputMode(svc, cfg->mode14);
         }
     }
     if (mask & 0x400) {
@@ -83,6 +83,6 @@ void func_0045A3A0(LightCfg_h5* cfg, unsigned int mask)
         int same = String_CompareNoCase(func_003CBA90("BOOT_VIDEOMODE"), "PAL") == 0;
         int mode;
         mode = cfg->alt == 0 ? (same ? 2 : 0) : 4;
-        Options_SetVideoMode(func_001698C0(), mode);
+        Options_SetVideoMode(App_GetInstance(), mode);
     }
 }

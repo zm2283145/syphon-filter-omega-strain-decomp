@@ -31,7 +31,7 @@ extern "C" void func_0041F210();
 extern void * const D_004DF020[];
 extern char D_004DF0B0[];
 void operator_delete(void* allocation);
-void func_0036E220(void* self, int flags);
+void FileMan_Release(void* self, int flags);
 void* String_Dtor(void* self, short deleteFlag);
 void* func_0041F370(void* self, short deleteFlag);
 }
@@ -42,8 +42,8 @@ extern "C" O3548B0* func_003548B0(O3548B0* self, short deleteFlag)
         self->vtable = ((char*)D_004DF020);
         char* p = (char*)self + 0xB0;
         if (p) {
-            func_0036E220((char*)self + 0x194, -1);
-            func_0036E220((char*)self + 0xF8, -1);
+            FileMan_Release((char*)self + 0x194, -1);
+            FileMan_Release((char*)self + 0xF8, -1);
         }
         char* a = (char*)self + 0x78;
         if (a)

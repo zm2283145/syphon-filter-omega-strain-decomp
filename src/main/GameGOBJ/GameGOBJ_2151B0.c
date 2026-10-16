@@ -55,9 +55,9 @@ typedef struct ElevatorMsg {
 extern char D_004FFB50[];
 extern char D_004DADF0[];
 extern char g_TargetVisMgr[];
-extern "C" void func_0020EBA0(ElevatorMsg* msg, int* floors, cElevatorGOBJ_002151C0* self);
+extern "C" void SoundStopMsg_Ctor(ElevatorMsg* msg, int* floors, cElevatorGOBJ_002151C0* self);
 extern "C" void Event_Send(ElevatorMsg* msg, void* queue, int flag);
-extern "C" void func_0036E220(void* member, int flag);
+extern "C" void FileMan_Release(void* member, int flag);
 extern "C" void cMessage_dtor(ElevatorMsg* msg, int flag);
 extern "C" void TargetVis_Unregister(void* list, cElevatorGOBJ_002151C0* obj);
 extern "C" void func_003CE7D0(cElevatorGOBJ_002151C0* self);
@@ -66,12 +66,12 @@ extern "C" void func_003CE7D0(cElevatorGOBJ_002151C0* self);
 extern "C" void cElevatorGOBJ_v07(cElevatorGOBJ_002151C0* self)
 {
     ElevatorMsg msg;
-    func_0020EBA0(&msg, &self->floors, self);
+    SoundStopMsg_Ctor(&msg, &self->floors, self);
     Event_Send(&msg, D_004FFB50, 1);
     /* ~ElevatorMsg() */
     msg.vtable = D_004DADF0;
-    func_0036E220(msg.memberB, -1);
-    func_0036E220(msg.memberA, -1);
+    FileMan_Release(msg.memberB, -1);
+    FileMan_Release(msg.memberA, -1);
     cMessage_dtor(&msg, 0);
     if (self->door)
         self->door->Method60(1);

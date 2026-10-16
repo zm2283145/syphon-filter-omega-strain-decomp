@@ -22,7 +22,7 @@ extern void func_00282160(int* out);
 extern void Melee_StartAttack(G_197380* g, int id, int b);
 static inline void ReadS8_197380(signed char* out) { signed char v = *D_005061D0; D_005061D0++; *out = v; }
 static inline void ReadI_197380(int* out) { int t; func_00282160(&t); *out = t; }
-void func_00197380(G_197380* g)
+void MeleeMsg_CreateFromNet(G_197380* g)
 {
     Msg_197380 msg;
     signed char* bp;
@@ -66,7 +66,7 @@ extern void func_00197500(Q* out);
 extern void* func_00185080(void);
 extern int func_00185060(void* self, void* key);
 extern void Actor_StartStarThrow(void* self, int* id, Q* pos);
-void func_00197440(void* self)
+void StarThrowMsg_CreateFromNet(void* self)
 {
     Msg_197440 msg;
     int* ip;

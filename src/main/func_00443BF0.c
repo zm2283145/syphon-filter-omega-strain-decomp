@@ -4,7 +4,7 @@
 extern "C" {
 void* memset(void*, int, unsigned int);
 void* memcpy(void*, const void*, unsigned int);
-char* func_00129C80(const char*, const char*);
+char* strstr(const char*, const char*);
 char* strchr(const char*, int);
 int strlen(const char*);
 void func_004434A0(void*, char*, char*);
@@ -29,7 +29,7 @@ extern "C" void func_00443BF0(void* self, char* text, int len, int mode)
         if (n < 0 || (unsigned)n >= 0x100) return;
         memset(line, 0, sizeof(line));
         memcpy(line, text + start, n);
-        c = func_00129C80(line, D_004C0B10);
+        c = strstr(line, D_004C0B10);
         if (c) *c = 0;
         key = line;
         while ((bool)*key && *key <= ' ') key++;

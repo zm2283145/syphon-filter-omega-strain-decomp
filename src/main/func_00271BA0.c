@@ -17,7 +17,7 @@ int func_00271BA0(HandleHolder* self, float f) {
 }
 
 /* Resets the current slot record (index D_00538C60) and calls func_003E7670 on the handle. */
-int func_00271BB0(HandleHolder* self) {
+int LoadingScreen_Draw(HandleHolder* self) {
     Slot110View* slot = (Slot110View*)(D_005381F0 + D_00538C60 * 272);
 
     slot->unk2E0 = 0;

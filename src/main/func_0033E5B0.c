@@ -43,10 +43,10 @@ extern void func_0044E340(Lobby5B0*);
 extern unsigned char func_00452FF0(Lobby5B0*, int);
 extern void func_004536B0(Lobby5B0*);
 extern void func_0012EE30(char*);
-extern void func_001698C0(void);
-extern void func_00165BC0(void);
+extern void App_GetInstance(void);
+extern void App_InitSystemsOnce(void);
 extern void LevelSelect_SetLevel(void*, int);
-extern unsigned long long func_003698B0(void);
+extern unsigned long long Time_GetMilliseconds(void);
 extern void func_002CC260(int, int);
 extern char* Loc_LookupText(char*);
 extern void func_0042B1F0(void);
@@ -162,16 +162,16 @@ extern "C" void func_0033E5B0(O5B0* o, Info5B0* info, int arg2) {
         if (n < 1 || n > 4) n = 4;
         D_004FFC04->f254 = n;
         func_0012EE30(D_004FFB50);
-        func_001698C0();
-        func_00165BC0();
+        App_GetInstance();
+        App_InitSystemsOnce();
         lobby->f2560 = lobby->f255C;
         saved = D_004FFC04->f24C;
         ls = D_004FFC04->ls;
         LevelSelect_SetLevel(ls, D_004ACB30[info->rest.w[7]]);
         if (func_0044E430(lobby, info->rest.w[9])) {
             bool timeout;
-            int deadline = (int)func_003698B0() + 60000;
-            while (!D_00532FF0 && deadline > func_003698B0()) {
+            int deadline = (int)Time_GetMilliseconds() + 60000;
+            while (!D_00532FF0 && deadline > Time_GetMilliseconds()) {
                 func_002CC260(0, 0);
                 func_004536B0(lobby);
                 DME_Update();

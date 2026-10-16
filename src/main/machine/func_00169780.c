@@ -9,7 +9,7 @@
 extern "C" {
 /*fc*/
 int Mem_Alloc(...);                        
-int func_0036AFC0(...);                             
+int Font_ctor(...);                             
 int ListReceiver_Ctor(...);                                  
 int func_003E7D60(...);                     
 int func_0042B850(...);                            
@@ -19,7 +19,7 @@ extern unsigned char D_00533880;
 extern char D_0055A700;
 extern int g_FrameCounter;
 }
-extern "C" char * func_00169780(char * arg0) {
+extern "C" char * App_Ctor(char * arg0) {
     int var_s2;
     int var_s1;
     int var_s0;
@@ -43,7 +43,7 @@ extern "C" char * func_00169780(char * arg0) {
         var_s1 = Mem_Alloc(0, 0x8A80, &D_0049C390, 0x97);
         }
         if (var_s1 != 0) {
-            var_s1 = func_0036AFC0(var_s1);
+            var_s1 = Font_ctor(var_s1);
         }
         F_((arg0 + var_s0), 0x280, int) = var_s1;
         var_s2 += 1;

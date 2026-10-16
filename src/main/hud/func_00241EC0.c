@@ -9,16 +9,16 @@ extern "C" {
 extern char D_004FFC14[];
 extern void* D_004FFC10;
 int func_00159570(void*);
-void** func_00159560(void*);
+void** List_Front(void*);
 void func_00244A10(Hud*);
 void func_00244A00(Hud*);
-void func_002449A0(Hud*);
+void Hud_HideNoFire(Hud*);
 Spr** func_00242180(SprVec*, int);
 void func_003E8DE0(Spr*, int);
 void func_003F45A0(Spr*, float);
 void func_003F44E0(Spr*, float);
 }
-static inline void* GetCam() { if (func_00159570(D_004FFC14)) return *func_00159560(D_004FFC14); return 0; }
+static inline void* GetCam() { if (func_00159570(D_004FFC14)) return *List_Front(D_004FFC14); return 0; }
 static inline bool IsNoCross(Ent* e) {
     unsigned char b = 0;
     unsigned int k = e->type - 3;
@@ -71,8 +71,8 @@ extern "C" int Hud_UpdateCrosshair(Hud* h, int on, int a2_, Ent* e, Tgt* t)
         Select(h, idx);
         Unselect(h, h->cur);
     }
-    if (idx < 0) func_002449A0(h);
-    if (e && e->type == 1) func_002449A0(h);
+    if (idx < 0) Hud_HideNoFire(h);
+    if (e && e->type == 1) Hud_HideNoFire(h);
     for (int i = 0; i < h->v.n; i++) {
         if (i != idx - 1 && h->v.data[i]->f4 == 0.0f)
             func_003E8DE0(*func_00242180(&h->v, i), 0);

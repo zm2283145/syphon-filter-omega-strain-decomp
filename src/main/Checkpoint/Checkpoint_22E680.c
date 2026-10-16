@@ -132,8 +132,8 @@ static inline void merge_flush_func_0022E800(void) {}
 typedef struct { char pad[0x6C]; float timer; int text; } B8_Ckpt;
 typedef struct { char pad[0x280]; int fonts[1]; } B8_Res;
 extern char D_004F7960;
-extern B8_Res* func_001698C0(void);
-extern int func_0036AA50(int font, int text, int flags);
+extern B8_Res* App_GetInstance(void);
+extern int Font_GetStringWidth(int font, int text, int flags);
 extern int func_003D1020(void);
 extern void func_003D0EF0(int ctx, int text, int font, float* col, int x, int y);
 void cCheckpoint_v10(B8_Ckpt* p, float dt) {
@@ -149,8 +149,8 @@ void cCheckpoint_v10(B8_Ckpt* p, float dt) {
     col[2] = 1.0f;
     col[3] = a;
     idx = D_004F7960;
-    font = *(int*)((unsigned char)idx * 4 + (int)func_001698C0() + 0x280);
-    w = func_0036AA50(font, p->text, 0x200);
+    font = *(int*)((unsigned char)idx * 4 + (int)App_GetInstance() + 0x280);
+    w = Font_GetStringWidth(font, p->text, 0x200);
     func_003D0EF0(func_003D1020(), p->text, font, col, -(w / 2), 0);
     p->timer -= dt;
 }

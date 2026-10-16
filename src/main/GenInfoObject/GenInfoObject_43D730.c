@@ -95,8 +95,8 @@ extern char D_005381F0[];
 extern int D_00538C64;
 extern char D_00538C68;
 void func_0041E470(Self* self);
-int func_0036A2F0(Font* f);
-LineIter func_0013B180(LineList*);
+int Font_GetLineHeight(Font* f);
+LineIter List_Begin(LineList*);
 LineIter func_0043DB60(LineList*);
 void func_0043DB70(LineIter*, const LineIter&);
 void func_0043DB50(LineIter*, const LineIter&);
@@ -122,7 +122,7 @@ extern "C" void func_0043D8B0(Self* self)
         LineIter n;
         LineIter end;
         LineIter it;
-        int lineH = func_0036A2F0(self->font);
+        int lineH = Font_GetLineHeight(self->font);
         int y = (int)self->y;
         int i = 0;
         int cnt = 1;
@@ -135,7 +135,7 @@ extern "C" void func_0043D8B0(Self* self)
             saved.w = f->a;
         }
         self->font->SetColor(self->color);
-        func_0043DB70(&it, func_0013B180(&self->lines));
+        func_0043DB70(&it, List_Begin(&self->lines));
         for (n = it; func_0043DB50(&end, func_0043DB60(&self->lines)), n.node != end.node; n.node = n.node->next) {
             if (i++ < self->scrollPos) continue;
             self->textBox->SetPos((int)self->x, y);

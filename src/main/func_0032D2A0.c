@@ -51,7 +51,7 @@ extern void* D_0049261C; extern int D_00492620;
 extern void* D_00492628; extern int D_0049262C;
 extern void* D_00492634; extern int D_00492638;
 
-Widget0032D2A0* func_0032D2A0(Widget0032D2A0* w)
+Widget0032D2A0* GuiKeyboard_ctor(Widget0032D2A0* w)
 {
     List0032D2A0 *l, *l2, *l3, *l4, *l5, *l6, *l7;
     GuiWidget_ctor(w);

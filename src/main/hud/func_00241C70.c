@@ -8,7 +8,7 @@ int Alloc_Unlock();
 int Archive_Open();                     
 int Hog_Register();                   
 int Mem_Alloc();                        
-int func_0036E220();                            
+int FileMan_Release();                            
 int func_0036E5D0();                               
 int Interface_Ctor();                        
 int sprintf();                      
@@ -40,6 +40,6 @@ int func_00241C70(char *arg0, int arg1) {
     if (var_s0 != 0) {
         var_s0 = Interface_Ctor(var_s0, sp30);
     }
-    func_0036E220(sp30, -1);
+    FileMan_Release(sp30, -1);
     return var_s0;
 }

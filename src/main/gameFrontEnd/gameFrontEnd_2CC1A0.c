@@ -49,8 +49,8 @@ extern struct ObjCC260* D_004FFC04;
 
 extern unsigned char D_0051EEB0;
 extern char D_0055A300[];
-void func_002CBAD0(struct ObjCC260*);
-void func_002CBB30(struct ObjCC260*);
+void FrontEnd_DrawGui(struct ObjCC260*);
+void FrontEnd_UpdateGui(struct ObjCC260*);
 void Pad_Reset(void*);
 void* Gui_GetScreenStack(void);
 void func_00415870(void*);
@@ -66,23 +66,23 @@ void func_002CC260(int arg0, int arg1)
     D_0051EEB0 = 1;
     if (arg0 == 0) {
         if (D_004FFC04->b310 == 0 || arg1 == 0x3039) {
-            func_002CBB30(D_004FFC04);
-            func_002CBAD0(D_004FFC04);
+            FrontEnd_UpdateGui(D_004FFC04);
+            FrontEnd_DrawGui(D_004FFC04);
         }
     } else if (arg0 == 1) {
         Pad_Reset(D_0055A300);
         func_00415870(Gui_GetScreenStack());
         if (D_004FFC04->b310 == 0) {
-            func_002CBB30(D_004FFC04);
-            func_002CBAD0(D_004FFC04);
+            FrontEnd_UpdateGui(D_004FFC04);
+            FrontEnd_DrawGui(D_004FFC04);
         }
     } else if (arg0 == 2) {
         if (arg1 == 2) {
             func_0041DF00(Gui_GetScreenStack(), 0x2001, 0, 0);
             if (D_004FFC04->b310 == 0) {
                 for (i = 0; i < 3; i++) {
-                    func_002CBB30(D_004FFC04);
-                    func_002CBAD0(D_004FFC04);
+                    FrontEnd_UpdateGui(D_004FFC04);
+                    FrontEnd_DrawGui(D_004FFC04);
                 }
             }
         }
@@ -108,9 +108,9 @@ extern int D_005383D4;
 extern void func_0045A150(void* p);
 extern void func_002CC980(void);
 extern char* func_003CBA90(char* key);
-extern void func_002CB3D0(ObjC3E0* o, int a);
-extern HudC3E0* func_001698C0(void);
-void func_002CC3E0(ObjC3E0* o)
+extern void FrontEnd_StartGui(ObjC3E0* o, int a);
+extern HudC3E0* App_GetInstance(void);
+void FrontEnd_FirstEntry(ObjC3E0* o)
 {
     if ((*(unsigned char*)dat_0048C248)) {
         char* s;
@@ -122,8 +122,8 @@ void func_002CC3E0(ObjC3E0* o)
             strncpy(o->name, s, 0x40);
         (*(unsigned char*)dat_0048C248) = 0;
     }
-    func_002CB3D0(o, 0);
-    D_005383D4 = (func_001698C0()->mode == 2) ? 0x32 : 0x3C;
+    FrontEnd_StartGui(o, 0);
+    D_005383D4 = (App_GetInstance()->mode == 2) ? 0x32 : 0x3C;
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002CC3E0(void) {}

@@ -126,7 +126,7 @@ struct Ev_3473E0 { unsigned short type; unsigned short b2; char pad4[2]; unsigne
 extern "C" {
 extern int D_00532FD0;
 int func_0033C320(S_3473E0* o, int v);
-int func_0033CEF0(S_3473E0* o);
+int GuiScreen_HandleInput(S_3473E0* o);
 int func_003473E0(S_3473E0* o, Ev_3473E0* ev);
 }
 static inline unsigned char Down_3473E0(Ev_3473E0* e) { unsigned char r = 0; if (e->type == 1 && e->b2 == 0) r = 1; return r; }
@@ -146,7 +146,7 @@ int func_003473E0(S_3473E0* o, Ev_3473E0* ev)
     if (Plain2_3473E0(ev, 0x4000) && o->p88) return o->p88->obj->Activate();
     if (Plain2_3473E0(ev, 0x2000)) ev->btn = 0x1000;
     else if (Plain2_3473E0(ev, 0x8000)) ev->btn = 0x4000;
-    return (ev->type == 1 && ev->b2 == 0 && ev->btn == 0x800 && ev->b6 == 0) ? 1 : func_0033CEF0(o);
+    return (ev->type == 1 && ev->b2 == 0 && ev->btn == 0x800 && ev->b6 == 0) ? 1 : GuiScreen_HandleInput(o);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003473E0(void) {}

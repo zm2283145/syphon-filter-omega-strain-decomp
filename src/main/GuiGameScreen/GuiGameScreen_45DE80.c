@@ -103,7 +103,7 @@ void* func_00418420(void* mgr, char* name);
 T_45DFD0* func_003D0940(void* p, int a, int b, int c, int d, void* e, char* f);
 W_45DFD0* GuiWidget_FindChildByName(void* o, char* name);
 void func_0041C0F0(W_45DFD0* w, int v);
-char* func_0012F5D0(void* p, int id);
+char* Game_GetPlayerNameSlot(void* p, int id);
 void func_0041BEB0(W_45DFD0* w, char* s, int f);
 void func_0045CC90(O_45DFD0* o);
 void func_0045DFD0(O_45DFD0* o);
@@ -138,7 +138,7 @@ void func_0045DFD0(O_45DFD0* o)
     o->f114 = Cast_45DFD0(GuiWidget_FindChildByName(o, "value_codename"), D_004A7520);
     if (o->f114) {
         if (D_005721C8) {
-            char* s = func_0012F5D0(D_004FFB50, NetLocalId());
+            char* s = Game_GetPlayerNameSlot(D_004FFB50, NetLocalId());
             func_0041BEB0(o->f114, s ? s : D_004C2268, 0);
             o->f114->flags |= 2;
         } else {

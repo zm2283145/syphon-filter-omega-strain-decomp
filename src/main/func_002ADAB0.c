@@ -9,7 +9,7 @@ extern char D_004ABB08[];
 void* Gui_GetScreenList(void);
 void* GuiManager_FindOrLoad(void* a, char* b, char* c);
 int func_0033CE30(S_002ADAB0* self, int a, char* b, int c, int d, int e);
-void func_0032B4F0(void* pg, int a, char* b, S_002ADAB0* c, int d, int e, int f);
+void GuiKeyboard_Open(void* pg, int a, char* b, S_002ADAB0* c, int d, int e, int f);
 void* DME_GetLobby(void);
 char* String_CStr(void* s);
 int FrontEnd_OpenPopup(void* ui, int a, char* b, int c, S_002ADAB0* d, int e);
@@ -27,7 +27,7 @@ extern "C" int func_002ADAB0(S_002ADAB0* self, void* w, int msg, int sub, char* 
     if (m == 2 && w == self->p160) {
         void* pg = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiKeyboard", "KEYBOARD");
         if (pg)
-            func_0032B4F0(pg, func_0033CE30(self, 0x40, 0, 0, 0, 0), D_004ABB08, self, 0xF, 0xC, 0);
+            GuiKeyboard_Open(pg, func_0033CE30(self, 0x40, 0, 0, 0, 0), D_004ABB08, self, 0xF, 0xC, 0);
         return 1;
     }
     if (m == 0x1A) {

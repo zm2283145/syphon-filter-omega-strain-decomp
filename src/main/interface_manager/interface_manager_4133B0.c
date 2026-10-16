@@ -85,10 +85,10 @@ char* String_CStr(Str4134B0* s);
 #define String_CStr(a0) (String_CStr((Str4133B0 *)(a0))) /* merge_units */
 
 void func_0036E5D0(Hog4134B0* h);
-void func_0036E220(Hog4134B0* h, int flags);
+void FileMan_Release(Hog4134B0* h, int flags);
 void func_0036E140(Hog4134B0* h, char* name, int a, int b);
 void Hog_Register(Hog4134B0* h, char* name, int arc, int z);
-int func_0036DEF0(Hog4134B0* h);
+int FileMan_FindMember(Hog4134B0* h);
 void String_CtorCStr_13B480(Str4134B0* s, char* src);
 void func_0013D680(Str4134B0* dst, Str4134B0* src);
 #if 0 /* merge_units */
@@ -121,8 +121,8 @@ extern "C" bool func_004134B0(Self4134B0* self, Str4134B0* out, const char* name
                 *p -= 0x20;
         }
         func_0036E140(&h, buf, 0, 0);
-        if ((unsigned char)func_0036DEF0(&h)) {
-            func_0036E220(&h, -1);
+        if ((unsigned char)FileMan_FindMember(&h)) {
+            FileMan_Release(&h, -1);
             continue;
         }
         {
@@ -132,15 +132,15 @@ extern "C" bool func_004134B0(Self4134B0* self, Str4134B0* out, const char* name
         }
         if (isPak)
             *isPak = 0;
-        func_0036E220(&h, -1);
+        FileMan_Release(&h, -1);
         return true;
     }
     if (self->arc) {
         func_0036E5D0(&h2);
         sprintf(buf2, "%s.HOG", name);
         Hog_Register(&h2, buf2, self->arc, 0);
-        if ((unsigned char)func_0036DEF0(&h2)) {
-            func_0036E220(&h2, -1);
+        if ((unsigned char)FileMan_FindMember(&h2)) {
+            FileMan_Release(&h2, -1);
             return false;
         }
         {
@@ -150,7 +150,7 @@ extern "C" bool func_004134B0(Self4134B0* self, Str4134B0* out, const char* name
         }
         if (isPak)
             *isPak = 1;
-        func_0036E220(&h2, -1);
+        FileMan_Release(&h2, -1);
         return true;
     }
     return false;

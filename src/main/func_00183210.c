@@ -12,6 +12,6 @@ char* func_00183210(NodeRef* self) {
     return self->node + 16;
 }
 
-int func_00183220(Unk00183220* self) {
+int Object_GetRootNode(Unk00183220* self) {
     return self->unk50;
 }

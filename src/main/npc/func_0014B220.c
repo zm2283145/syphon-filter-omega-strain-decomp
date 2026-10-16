@@ -18,7 +18,7 @@ struct E2Npc {
 };
 struct E2Handle { E2Npc* obj; int serial; };
 struct E2Node { int f0; E2Node* next; E2Handle* handle; };
-extern "C" void func_0013B180(int*, void*);
+extern "C" void List_Begin(int*, void*);
 extern "C" void func_0014ABC0(E2Node**, int*);
 extern "C" void func_0014AB80(int*, void*);
 extern "C" void func_0014AB70(E2Node**, int*);
@@ -41,7 +41,7 @@ extern "C" int NpcAi_CountThinking(void)
     E2Node* it;
     int b;
     int count = 0;
-    func_0013B180(&b, D_004EA190);
+    List_Begin(&b, D_004EA190);
     func_0014ABC0(&it, &b);
     for (E2Node* n = it; E2End(&e), n != e; n = n->next) {
         if (!E2Idle(E2Get(n->handle)->GetState())) count++;

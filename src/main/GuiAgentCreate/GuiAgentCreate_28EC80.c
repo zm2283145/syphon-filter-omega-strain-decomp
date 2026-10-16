@@ -27,11 +27,11 @@ void func_0041EFA0(void);
 void func_0041E0F0(S_28EC80* a, int b, int c, int d, int e);
 int Agent_GetSelected(void* a, int b);
 W28EC80* GuiWidget_FindChildByName(S_28EC80* a, char* b);
-char* func_00336170(int a);
+char* AgentData_GetName(int a);
 void func_0041BEB0(void* w, char* s, int a);
 G_28EC80* Gui_GetScreenStack(void);
 }
-extern "C" void func_0028EC80(S_28EC80* self)
+extern "C" void GuiAgentCreate_Wake(S_28EC80* self)
 {
     W28EC80* p;
     D_004FFC04->b2F = 1;
@@ -41,7 +41,7 @@ extern "C" void func_0028EC80(S_28EC80* self)
     p = GuiWidget_FindChildByName(self, D_004A99B0);
     p = (p && p->IsA(D_004A7520)) ? p : 0;
     if (p)
-        func_0041BEB0(p, func_00336170(Agent_GetSelected(D_004FFB50, -1)), 0);
+        func_0041BEB0(p, AgentData_GetName(Agent_GetSelected(D_004FFB50, -1)), 0);
     Gui_GetScreenStack()->f68 |= 0xC;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -98,7 +98,7 @@ static inline W_0028ED60* FindAs_0028ED60(Self_0028ED60* self, char* name, char*
     W_0028ED60* w = (W_0028ED60*)GuiWidget_FindChildByName(self, name);
     return (w && w->IsA(type)) ? w : 0;
 }
-extern "C" void func_0028ED60(Self_0028ED60* self)
+extern "C" void GuiAgentCreate_Init(Self_0028ED60* self)
 {
     W_0028ED60* w;
     Aw_0028ED60 a;

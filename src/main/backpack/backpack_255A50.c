@@ -115,7 +115,7 @@ static inline void CreateLink(BP* bp) {
     }
 }
 
-extern "C" void func_00255AF0(BP* bp, int item, int amount, int extra, unsigned char flag) {
+extern "C" void Backpack_AddWeapon(BP* bp, int item, int amount, int extra, unsigned char flag) {
     int kind = WeaponInv_SlotOfItem(item);
     unsigned char k = kind;
     int found = -1;
@@ -224,7 +224,7 @@ static inline void CreateLink_00255CF0(BP_00255CF0* bp) {
     }
 }
 
-extern "C" void func_00255CF0(BP_00255CF0* bp, int item) {
+extern "C" void Backpack_MarkFlagSlot(BP_00255CF0* bp, int item) {
     signed char s = WeaponInv_SlotOfItem(item);
     bp->unk134 = 1;
     bp->slot = s;
@@ -323,11 +323,11 @@ static inline void merge_flush_func_00255E50(void) {}
 /* merge_units: begin func_00255F10 */
 #pragma push /* merge_units */
 typedef struct { char pad[0x134]; unsigned char b134; char pad2[0x2F1 - 0x135]; unsigned char b2F1; unsigned char b2F2; } Obj255F;
-extern void func_00255F60(Obj255F* s);
-extern void func_00254990(Obj255F* s);
-void func_00255F10(Obj255F* s) {
-    func_00255F60(s);
-    func_00254990(s);
+extern void Backpack_UpdateBoxPriority(Obj255F* s);
+extern void Backpack_CheckEmpty(Obj255F* s);
+void Backpack_Finish(Obj255F* s) {
+    Backpack_UpdateBoxPriority(s);
+    Backpack_CheckEmpty(s);
     s->b2F2 = 0;
     if (s->b2F1) {
         s->b134 = 0;

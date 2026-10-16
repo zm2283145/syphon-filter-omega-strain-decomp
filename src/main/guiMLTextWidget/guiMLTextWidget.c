@@ -18,7 +18,7 @@ struct LineIter { MLTextLine* node; };
 extern "C" {
 void Mem_Free(int, void*, char*, int);
 void ObjectList_EraseRange(int*, MLTextLineList*, MLTextLine**, MLTextLine**);
-LineIter func_0013B180(MLTextLineList*);                 /* begin() */
+LineIter List_Begin(MLTextLineList*);                 /* begin() */
 LineIter func_0043DB60(MLTextLineList*);                 /* end() */
 void func_0043DB70(MLTextLine**, const LineIter&);       /* iterator copy */
 void func_0043DB50(MLTextLine**, const LineIter&);       /* iterator copy */
@@ -31,7 +31,7 @@ extern "C" void MLTextWidget_Clear(MLTextWidget* self) {
         {
             MLTextLine* n;
             MLTextLine* it;
-            func_0043DB70(&it, func_0013B180(&self->lines));
+            func_0043DB70(&it, List_Begin(&self->lines));
             n = it;
             while ((func_0043DB50(&end, func_0043DB60(&self->lines)), n != end)) {
                 void* text = n->text;
@@ -68,9 +68,9 @@ void Mem_Free(int pool, void* p, char* file, int line);
 #endif /* merge_units */
 #define Mem_Free(a0, a1, a2, a3) (Mem_Free((a0), (a1), (a2), (a3))) /* merge_units */
 
-int func_0036AA50(void* font, const char* s, int n);     /* text width in pixels */
+int Font_GetStringWidth(void* font, const char* s, int n);     /* text width in pixels */
 void MLTextLineList_PushBack(MLTextLineList* list, char* const& text);
-void func_00138DA0(void* res, MLTextLineList* list, MLTextLine* const& it); /* erase */
+void List_Erase(void* res, MLTextLineList* list, MLTextLine* const& it); /* erase */
 }
 
 /*
@@ -93,7 +93,7 @@ extern "C" void MLTextWidget_AddText(MLTextWidget* self, char* text)
     width = (int)self->width;
     wrapAt = 0;
     while (*cur) {
-        if (*cur == '\n' || func_0036AA50(self->font, lineStart, cur - lineStart + 1) >= width) {
+        if (*cur == '\n' || Font_GetStringWidth(self->font, lineStart, cur - lineStart + 1) >= width) {
             if (*cur == '\n') {
                 wrapAt = cur;
                 cur++;
@@ -149,7 +149,7 @@ extern "C" void MLTextWidget_AddText(MLTextWidget* self, char* text)
             {
                 int res;
                 MLTextLine* it = self->lines.first;
-                func_00138DA0(&res, &self->lines, it);
+                List_Erase(&res, &self->lines, it);
             }
         }
     }
@@ -235,7 +235,7 @@ extern "C" void MLTextWidget_SetColor(MLTextWidget* w, Q0043E1A0* in)
 
 /* merge_units: begin func_0043E200 */
 #pragma push /* merge_units */
-extern int func_0036A2F0(int font);            /* font line height */
+extern int Font_GetLineHeight(int font);            /* font line height */
 extern int Gui_GetScreenList(void);
 extern int func_00418420(int, int);            /* look up font by name (0 = default) */
 #pragma push
@@ -246,7 +246,7 @@ void MLTextWidget_SetFont(MLTextWidget* w, const char* fontName)
     w->font = (void*)func_00418420(Gui_GetScreenList(), (int)fontName);
     box = w->textBox;
     if (box != 0) box->font = w->font;
-    w->maxLines = (int)w->height / func_0036A2F0((int)w->font);
+    w->maxLines = (int)w->height / Font_GetLineHeight((int)w->font);
     w->visibleLines = w->maxLines;
 }
 #pragma pop
@@ -324,9 +324,9 @@ void* func_00418420(void* mgr, int name);
 GuiTextBox* func_003D0940(void* p, int x, int y, int w, int h, void* font, char* color); /* text box ctor */
 W_43E330* func_0041DC70(void* o, int id); /* find child by id */
 #if 0 /* merge_units */
-int func_0036A2F0(void* p);
+int Font_GetLineHeight(void* p);
 #endif /* merge_units */
-#define func_0036A2F0(a0) (func_0036A2F0((int)(a0))) /* merge_units */
+#define Font_GetLineHeight(a0) (Font_GetLineHeight((int)(a0))) /* merge_units */
 
 
 void MLTextWidget_Setup(MLTextWidget* o);
@@ -345,12 +345,12 @@ void MLTextWidget_Setup(MLTextWidget* o)
     o->textBox = box;
     o->textBox->unk10 = 0;
     o->textBox->unk58 = 1;
-    o->maxLines = (int)o->height / func_0036A2F0(o->font);
+    o->maxLines = (int)o->height / Font_GetLineHeight(o->font);
     o->visibleLines = o->maxLines;
     o->scrollBar = (struct GuiWidget43BEF0*)Cast_43E330(func_0041DC70(o, D_004976B8), D_004AAE00);
 }
 #undef Gui_GetScreenList /* merge_units */
 #undef func_00418420 /* merge_units */
-#undef func_0036A2F0 /* merge_units */
+#undef Font_GetLineHeight /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0043E330 */

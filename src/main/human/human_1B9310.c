@@ -136,7 +136,7 @@ extern char D_004DAE30[];
 extern void SoundRequest_Ctor(F2Req* r, int a, char* b, int c, int d);
 extern void SoundEvent_CtorFromPreset(F2Ev* e, F2Req* r, int preset);
 extern void Event_Send(F2Ev* e, char* tgt, int n);
-extern void func_0036E220(F2Str* s, int flag);
+extern void FileMan_Release(F2Str* s, int flag);
 extern void cMessage_dtor(F2Ev* e, int flag);
 extern void Actor_SurfaceSoundEffects(int preset, int a, int b);
 static inline void Play_F2(int preset)
@@ -148,13 +148,13 @@ static inline void Play_F2(int preset)
     ev.flag = 1;
     Event_Send(&ev, D_004FFB50, 1);
     ev.vt = D_004DAE30;
-    func_0036E220(&ev.s114, -1);
-    func_0036E220(&ev.s78, -1);
+    FileMan_Release(&ev.s114, -1);
+    FileMan_Release(&ev.s78, -1);
     cMessage_dtor(&ev, 0);
-    func_0036E220(&req.sE4, -1);
-    func_0036E220(&req.s48, -1);
+    FileMan_Release(&req.sE4, -1);
+    FileMan_Release(&req.s48, -1);
 }
-void func_001B95C0(F2Arg* a)
+void ActorSoundEvent_Fire(F2Arg* a)
 {
     switch (a->kind) {
     case 0:

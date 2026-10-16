@@ -16,7 +16,7 @@ extern void func_00316C80();
 void * const D_004DE610[8] = { (void*)0x0, (void*)0x0, (void*)func_001425C0, (void*)func_00316A80, (void*)func_00316C80, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
 W_2450* WeaponDb_Get(void* db, int id);
 void Equip_ClearSlot(void* eq, unsigned char kind, int slot);
-void func_00145630(void* db, int id, int a);
+void WeaponDb_Unload(void* db, int id, int a);
 void Event_Construct(Ev_2450* e, void* type);
 void Event_Send(Ev_2450* e, void* target, int a);
 void cMessage_dtor(Ev_2450* e, int f);
@@ -38,7 +38,7 @@ void WeaponInv_RemoveSlot(S_2450* self, int slot, int unused, int drop, int remo
     }
     Equip_ClearSlot(self->own->equip, kind, i);
     if (drop && !WeaponDb_Get(D_004FFD30, s->id)->keep)
-        func_00145630(D_004FFD30, s->id, 0);
+        WeaponDb_Unload(D_004FFD30, s->id, 0);
     s->id = -1;
     if (D_005721C8 && !remote) {
         Ev_2450 e;

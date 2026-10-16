@@ -63,7 +63,7 @@ void func_0026C570(S_26C8D0* s);
 #define func_0026C570(a0) (func_0026C570((Self26C8 *)(a0))) /* merge_units */
 
 void func_002C9170(Buf_26C8D0* b, int key, int c);
-void func_00242FA0(int a, M_26C8D0* m, char* text, int n, int b, int c, float f0, float f1);
+void Hud_ShowCallout(int a, M_26C8D0* m, char* text, int n, int b, int c, float f0, float f1);
 void func_0026C8D0(S_26C8D0* s, M_26C8D0* m);
 }
 static inline unsigned char IsPlayer_26C8D0(Hum_26C8D0* h) { unsigned char r = 0; if (h->ctl && h->ctl->IsPlayer()) r = 1; return r; }
@@ -85,7 +85,7 @@ void func_0026C8D0(S_26C8D0* s, M_26C8D0* m)
                 Buf_26C8D0 buf;
                 buf.b0 = 0;
                 func_002C9170(&buf, id, 1);
-                func_00242FA0(D_004FFC2C, m, buf.text, 4, 1, 0, -1.0f, -1.0f);
+                Hud_ShowCallout(D_004FFC2C, m, buf.text, 4, 1, 0, -1.0f, -1.0f);
             }
         }
     }

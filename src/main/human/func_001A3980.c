@@ -106,9 +106,9 @@ extern float D_004A03E0; extern float D_004A0438;
 extern int D_004BDD00;
 void SoundRequest_Ctor(Req_L* r, int a, char* b, int c, int d);
 void SoundEvent_CtorFromPreset(void* e, void* r, void* owner);
-void func_0020EBA0(Snd2_L* e, void* r, void* owner);
+void SoundStopMsg_Ctor(Snd2_L* e, void* r, void* owner);
 void Event_Send(void* m, void* tgt, int n);
-void func_0036E220(Str_L* s, int flag);
+void FileMan_Release(Str_L* s, int flag);
 void cMessage_dtor(void* m, int flag);
 void Event_Construct(void* m, void* t);
 unsigned char AnimPriority_Helper3(void* bits, int index);
@@ -117,11 +117,11 @@ void AnimPriority_Helper1(void* p);
 void AnimPriority_Helper0(void* p, int index, unsigned char on);
 void Physical_SetModeBit(void* p, int b);
 void Physical_ClearModeBit(void* p, int b);
-void func_001E96A0(Phys_L* p);
+void ActorPhysical_QueryWaterHeight(Phys_L* p);
 void World_PopObject(void* w);
 void* Object_LookupById(int* id);
 int* SpecFx_GetEffectDef(int k);
-void* func_00132A30(void* o);
+void* Actor_GetSkeleton(void* o);
 void Effect_SpawnDirectional(int def, void* a, void* b);
 Q_L* Root_GetWorldQuat(Root_L* r);
 void Root_SetWorldOrientation(Root_L* r, const void* q);
@@ -148,8 +148,8 @@ void* func_0019D1A0(Mtx_L* m);
 void* func_0019D190(Mtx_L* m);
 void Vec4_Assign(Q_L* d, void* s);
 float Vec4_GetZ(Q_L* v);
-float func_0019D180(Q_L* v);
-float func_0019D170(Q_L* v);
+float Vec_HeadingFromYX(Q_L* v);
+float Vec_HeadingFromNegXY(Q_L* v);
 void Ladder_ReleaseAlignment(Act_L* a);
 void Actor_SendSoundImmediate(Act_L* a);
 void Root_SetWorldPlacement(Root_L* r, Plc_L* p);
@@ -188,11 +188,11 @@ static inline void Prio_L(char* p, signed char k, int v)
         ev.flag = 1; \
         Event_Send(&ev, D_004FFB50, IMM); \
         ev.vt = D_004DAE30; \
-        func_0036E220(&ev.s114, -1); \
-        func_0036E220(&ev.s78, -1); \
+        FileMan_Release(&ev.s114, -1); \
+        FileMan_Release(&ev.s78, -1); \
         cMessage_dtor(&ev, 0); \
-        func_0036E220(&req.sE4, -1); \
-        func_0036E220(&req.s48, -1); \
+        FileMan_Release(&req.sE4, -1); \
+        FileMan_Release(&req.s48, -1); \
     }
 #define SNDP(PRESET) \
     { \
@@ -202,8 +202,8 @@ static inline void Prio_L(char* p, signed char k, int v)
         ev.flag = 1; \
         Event_Send(&ev, D_004FFB50, 0); \
         ev.vt = D_004DAE30; \
-        func_0036E220(&ev.s114, -1); \
-        func_0036E220(&ev.s78, -1); \
+        FileMan_Release(&ev.s114, -1); \
+        FileMan_Release(&ev.s78, -1); \
         cMessage_dtor(&ev, 0); \
     }
 
@@ -385,8 +385,8 @@ static inline float Yaw_L(const Q_L* rp)
         Q_L vb;
         Vec4_Assign(&va, func_0019D1A0(mp));
         Vec4_Assign(&vb, func_0019D190(mp));
-        if (Vec4_GetZ(&va) < Vec4_GetZ(&vb)) return func_0019D180(&va);
-        return func_0019D170(&vb);
+        if (Vec4_GetZ(&va) < Vec4_GetZ(&vb)) return Vec_HeadingFromYX(&va);
+        return Vec_HeadingFromNegXY(&vb);
     }
 }
 
@@ -448,8 +448,8 @@ struct MtxQ_L {
         Q_L vb;
         Vec4_Assign(&va, func_0019D1A0((Mtx_L*)this));
         Vec4_Assign(&vb, func_0019D190((Mtx_L*)this));
-        if (Vec4_GetZ(&va) < Vec4_GetZ(&vb)) return func_0019D180(&va);
-        return func_0019D170(&vb);
+        if (Vec4_GetZ(&va) < Vec4_GetZ(&vb)) return Vec_HeadingFromYX(&va);
+        return Vec_HeadingFromNegXY(&vb);
     }
 } __attribute__((aligned(16)));
 
@@ -473,7 +473,7 @@ extern "C" int AnimToken_Handle(Act_L* a, Ev_L* e)
             if (PhysOn_L(a)) {
                 Phys_L* p = a->phys;
                 bool mv = p->fE4 != D_004A0438;
-                func_001E96A0(a->phys);
+                ActorPhysical_QueryWaterHeight(a->phys);
                 if (!mv) {
                     SND(1, ((a->f3248 >> 2) & 1) == 0 ? D_0049E1C8 : D_0049D920, 0)
                 }
@@ -545,7 +545,7 @@ extern "C" int AnimToken_Handle(Act_L* a, Ev_L* e)
             Q_L dir;
             Plc3_L t;
             Q_L pos;
-            Model_GetComponentTransform(&t, func_00132A30(o), D_0049D023);
+            Model_GetComponentTransform(&t, Actor_GetSkeleton(o), D_0049D023);
             V4CopySD(&pos, &t.p);
             if (def > -1) Effect_SpawnDirectional(def, &dir, &pos);
             SNDP(D_004F24B0)
@@ -940,15 +940,15 @@ extern "C" int AnimToken_Handle(Act_L* a, Ev_L* e)
             Req_L req;
             Snd2_L ev;
             SoundRequest_Ctor(&req, 0, D_0049E1E8, 0, 0);
-            func_0020EBA0(&ev, &req, a);
+            SoundStopMsg_Ctor(&ev, &req, a);
             ev.flag = 1;
             Event_Send(&ev, D_004FFB50, 1);
             ev.vt = D_004DADF0;
-            func_0036E220(&ev.s114, -1);
-            func_0036E220(&ev.s78, -1);
+            FileMan_Release(&ev.s114, -1);
+            FileMan_Release(&ev.s78, -1);
             cMessage_dtor(&ev, 0);
-            func_0036E220(&req.sE4, -1);
-            func_0036E220(&req.s48, -1);
+            FileMan_Release(&req.sE4, -1);
+            FileMan_Release(&req.s48, -1);
         }
         if (e->type != 0x54 && e->type != 0x59) break;
     case 0x53:

@@ -11,7 +11,7 @@ extern char D_004EF078[];
 extern char D_004DA9F0[];
 extern char D_004DCF10[];
 /* net handler: shock the target to death when it accepts the request */
-void func_00184F90(void* target)
+void Actor_OnShockMessage(void* target)
 {
     Msg_4F90 m;
     Event_Construct(&m, D_004EF078);

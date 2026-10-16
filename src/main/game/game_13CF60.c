@@ -98,10 +98,10 @@ extern char *func_0013D5B0(void *);
 extern void func_0013D590(void *, char **);
 extern void func_0012F3D0(char *, char *);
 extern void DME_InstallTimer(void);
-extern int func_001698C0(void);
+extern int App_GetInstance(void);
 extern void StringPool_Load(int);
-extern void func_001694B0(int);
-extern void func_00165BC0(void);
+extern void App_BindIopRpc(int);
+extern void App_InitSystemsOnce(void);
 extern void Net_RetryConnect(char *);
 extern void DME_Update(void);
 extern int Game_MainUpdate(int);
@@ -221,19 +221,19 @@ int Game_ParseCommandLine(int argc, char **argv)
     }
     DME_InstallTimer();
     if (run) D_004FFBB2 = 1;
-    StringPool_Load(func_001698C0());
+    StringPool_Load(App_GetInstance());
     if (skip) {
-        func_001694B0(func_001698C0());
+        App_BindIopRpc(App_GetInstance());
     } else {
         if (D_005721C8 && host) {
-            func_001694B0(func_001698C0());
-            func_00165BC0();
+            App_BindIopRpc(App_GetInstance());
+            App_InitSystemsOnce();
             if (named) {
                 Net_RetryConnect(name);
                 while (D_005724B0 == 5) DME_Update();
             }
         }
-        while (Game_MainUpdate(func_001698C0())) {
+        while (Game_MainUpdate(App_GetInstance())) {
         }
     }
     /* Exit(0) is an inlined EE kernel syscall */

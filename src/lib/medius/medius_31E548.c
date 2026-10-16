@@ -2,7 +2,7 @@
 extern volatile float D_004E1C64;
 extern float D_004E1C68;
 extern float D_004E1C6C;
-extern float func_00121B30(float, float);
+extern float Math_Powf(float, float);
 typedef struct { int pad0; float y; } S;
 
 short func_0031E548(S* s, short h)
@@ -20,12 +20,12 @@ short func_0031E548(S* s, short h)
     if (e == 0.0f)
         return 0;
     if (e < 0.0f) {
-        r = -func_00121B30(10.0f, -e * D_004E1C64);
+        r = -Math_Powf(10.0f, -e * D_004E1C64);
         if (r < D_004E1C68)
             r = D_004E1C68;
         return (short)(int)((r + 1.0f) * 4000.0f);
     } else {
-        r = func_00121B30(10.0f, e * D_004E1C64);
+        r = Math_Powf(10.0f, e * D_004E1C64);
         if (D_004E1C6C < r)
             r = D_004E1C6C;
         return (short)(int)((r - 1.0f) * 4000.0f);

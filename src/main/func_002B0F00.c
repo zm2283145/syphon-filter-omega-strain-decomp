@@ -11,7 +11,7 @@ extern char D_0052ACD8[];
 extern char D_004DE630[];
 extern char D_004DCF10[];
 int Loc_FindKeyThunk(int key);
-void func_0012F5C0(void* list, int id, int key);
+void Game_SetPlayerLocation(void* list, int id, int key);
 void Event_Construct(Msg_2B0F00* m, void* type);
 void Event_Send(Msg_2B0F00* m, Hum_2B0F00* h, int a);
 void cMessage_dtor(Msg_2B0F00* m, int flags);
@@ -23,7 +23,7 @@ extern "C" void Global_SetLocation(Hum_2B0F00* h, int key)
     if (!h || LocalId_2B0F00(h) < 0 || LocalId_2B0F00(h) >= 4)
         return;
     key = Loc_FindKeyThunk(key);
-    func_0012F5C0(D_004FFB50, LocalId_2B0F00(h), key);
+    Game_SetPlayerLocation(D_004FFB50, LocalId_2B0F00(h), key);
     if (D_005721C8) {
         Msg_2B0F00 m;
         Event_Construct(&m, D_0052ACD8);

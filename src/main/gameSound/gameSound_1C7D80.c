@@ -68,7 +68,7 @@ void snd_ContinueAllSoundsInGroup(int);
 void snd_PauseAllSoundsInGroup(int);
 }
 
-extern "C" void func_001C7E00(Self_7E00* self, int on)
+extern "C" void SoundMgr_Pause(Self_7E00* self, int on)
 {
     Slot_7E00* found = 0;
     int i;
@@ -136,7 +136,7 @@ static inline void merge_flush_func_001C7E00(void) {}
 typedef struct { char pad[0xC]; unsigned char on; } S1C80B0;
 extern void snd_PauseAllSoundsInGroup(int);
 extern void snd_ContinueAllSoundsInGroup(int);
-void func_001C80B0(S1C80B0* s) { if (s->on) snd_PauseAllSoundsInGroup(2); else snd_ContinueAllSoundsInGroup(2); }
+void SoundPauseEvent_Fire(S1C80B0* s) { if (s->on) snd_PauseAllSoundsInGroup(2); else snd_ContinueAllSoundsInGroup(2); }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001C80B0(void) {}
 #pragma pop /* merge_units */
@@ -170,7 +170,7 @@ extern "C" {
 extern char D_0049F4B0[];
 extern char D_0049F4F0[];
 int String_CompareNoCase(char*, char*);
-void func_001C83A0(Self_80F0*, signed char, int, int);
+void SoundMgr_TransitionMusic(Self_80F0*, signed char, int, int);
 }
 
 extern "C" void GameSound_StopSound(Self_80F0* self, Slot_80F0* d)
@@ -182,11 +182,11 @@ extern "C" void GameSound_StopSound(Self_80F0* self, Slot_80F0* d)
     Slot_80F0* s;
     int i;
     if (d->type == 5) {
-        func_001C83A0(self, d->type, 0, 0);
+        SoundMgr_TransitionMusic(self, d->type, 0, 0);
         return;
     }
     if (d->type == 4) {
-        func_001C83A0(self, d->type, 0, 1);
+        SoundMgr_TransitionMusic(self, d->type, 0, 1);
         return;
     }
     matched = 0;

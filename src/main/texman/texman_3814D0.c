@@ -48,10 +48,10 @@ typedef struct { char pad[0x98]; F3814D0* f; } A3814D0;
 typedef struct { char pad[8]; char** names; int pad0C; int count; } S3814D0;
 typedef struct { int pad0; char path[0x9C]; } B3814D0;
 extern void func_0036E5D0(void*);
-extern void func_0036E220(void*, int);
+extern void FileMan_Release(void*, int);
 extern int Archive_GetMemberName(void*, int);
 extern void func_0036DFB0(void*, int, void*);
-extern void func_0036DEF0(void*);
+extern void FileMan_FindMember(void*);
 extern int String_CompareNoCase(char*, char*);
 #if 0 /* merge_units */
 extern void Tdx_Clone(void*, void*, int);
@@ -72,7 +72,7 @@ void func_003814D0(S3814D0* self, A3814D0* arg1)
     for (i = 0; i < n; i++) {
         char* path = buf.path;
         func_0036DFB0(&buf, Archive_GetMemberName(f, i), arg1);
-        func_0036DEF0(&buf);
+        FileMan_FindMember(&buf);
         if (String_CompareNoCase(path + strlen(path) - 3, D_004BC2C8) == 0) {
             char* s = path;
             char* end = s + strlen(s);
@@ -99,7 +99,7 @@ void func_003814D0(S3814D0* self, A3814D0* arg1)
                 Tdx_Clone(self, &buf, idx);
         }
     }
-    func_0036E220(&buf, -1);
+    FileMan_Release(&buf, -1);
 }
 #undef Tdx_Clone /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */

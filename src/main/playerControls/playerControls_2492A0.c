@@ -15,7 +15,7 @@ struct Obj2492A0 { char p[0xC]; int id; };
 struct T2492A0 { char p[0x3C]; int flags; char p40[0x7C]; unsigned char bBC; char pBD[3]; Obj2492A0* tgt; int tid; Obj2492A0* lk; int lid; char pD0[0x14]; int fE4; };
 extern "C" {
 extern void* D_004FFC2C;
-void func_00244280(void* p);
+void Hud_ClearTargetLock(void* p);
 }
 static inline Obj2492A0* Get2492A0(T2492A0* s) {
     bool isNull;
@@ -38,7 +38,7 @@ extern "C" void HudTargets_DropLock(T2492A0* t, Obj2492A0* o)
         t->fE4 = -1;
         Set2492A0(t, 0);
         t->bBC = 1;
-        if ((t->flags >> 5) & 1) func_00244280(D_004FFC2C);
+        if ((t->flags >> 5) & 1) Hud_ClearTargetLock(D_004FFC2C);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */

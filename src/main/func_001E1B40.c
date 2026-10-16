@@ -10,6 +10,6 @@ int* LosCache_End(PtrVec* v) {
     return v->data + v->count;
 }
 
-void func_001E1B60(Iter* out, void* self, Iter* src) {
+void CachedCollection_End(Iter* out, void* self, Iter* src) {
     out->p = src->p;
 }

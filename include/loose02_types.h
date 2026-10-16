@@ -271,7 +271,7 @@ typedef struct GuiQuickChat {
 /* GuiCharacterDisplay (table D_004DE670). */
 typedef struct GuiCharacterDisplay {
     GuiWidget base;                 /* 0x00 */
-    void (*onDestroy)(void);        /* 0x48: called by func_00326810 when set */
+    void (*onDestroy)(void);        /* 0x48: called by GuiCharacterDisplay_Draw when set */
 } GuiCharacterDisplay;
 
 /* GuiMissionList (table D_004DDB80); derives from the widget built by func_00424C50. */
@@ -308,7 +308,7 @@ typedef struct GameMachine {
     char data140[1];                /* 0x140 */
 } GameMachine;
 
-/* Command-center style screen used by func_00297350 / func_00298250. */
+/* Command-center style screen used by GuiCommandCenter_Deactivate / GuiCommandCenter_RestoreState. */
 typedef struct GuiCommandCenter {
     char pad00[0x80];
     unsigned char active;           /* 0x80 */

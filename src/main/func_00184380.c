@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-void* func_00184380(char* self) {
+void* Actor_GetBounds(char* self) {
     return self + 11904;
 }

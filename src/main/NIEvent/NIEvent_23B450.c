@@ -71,7 +71,7 @@ void Mtx_Multiply(M4_23B4C0* a, M4_23B4C0* b);
 #endif /* merge_units */
 #define Mtx_Multiply(a0, a1) ((void)Mtx_Multiply((V4 *)(a0), (V4 *)(a1))) /* merge_units */
 
-bool func_00239A90(Rot_23B4C0* p, float dt);
+bool NiRotationTrack_Update(Rot_23B4C0* p, float dt);
 }
 static inline void MakeRot_23B4C0(M4_23B4C0* m, const V4_23B4C0& a, float ang) { Mtx_MakeAxisRotation(m, a.x, a.y, a.z, ang); }
 class Elem_23B4C0 {
@@ -110,7 +110,7 @@ public:
 static inline void Finish_23B4C0(Rot_23B4C0* r) {
     r->flag = 1;
     if (r->state == -1)
-        func_00239A90(r, r->data[(unsigned)(r->n - 1)].t - r->t);
+        NiRotationTrack_Update(r, r->data[(unsigned)(r->n - 1)].t - r->t);
 }
 #pragma push
 #pragma opt_strength_reduction off

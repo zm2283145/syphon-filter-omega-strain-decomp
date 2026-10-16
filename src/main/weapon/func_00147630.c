@@ -4,7 +4,7 @@ int Alloc_Lock();
 int Alloc_Unlock();
 int FileMan_LoadFile();
 int Mem_Free(int, void*, char*, int);
-int func_0036E220();
+int FileMan_Release();
 int func_0036E4B0();
 int sprintf();
 void* memcpy(void*, const void*, unsigned int);
@@ -87,5 +87,5 @@ void WeaponDb_LoadReloadVariant(WDb* db) {
     D_00533888 -= 1;
     db->data = old;
     db->hdr = (WHdr*)db->data;
-    func_0036E220(sp40, -1);
+    FileMan_Release(sp40, -1);
 }

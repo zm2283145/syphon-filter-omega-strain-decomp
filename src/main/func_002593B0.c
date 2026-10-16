@@ -7,7 +7,7 @@ int func_003836B0(int, int, char *, int);
 extern char *D_004FFD30;
 extern char D_0055C9F0;
 
-void func_002593B0(char * arg0) {
+void WeaponPreview_Draw(char * arg0) {
     int var_a0;
     unsigned char temp_a1;
 

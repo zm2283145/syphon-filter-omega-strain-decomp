@@ -30,7 +30,7 @@ extern int D_00538C60;
 extern int D_00538C64;
 extern char D_00538C68;
 extern int D_005392D0;
-void func_0013B180(LIt* out, void* list);
+void List_Begin(LIt* out, void* list);
 void func_0028C0B0(LIt* out, LIt* in);
 void func_0028C0A0(LIt* out, void* list);
 void func_0028C090(LIt* out, LIt* in);
@@ -76,7 +76,7 @@ extern "C" void func_00415BB0(Self* self)
         { Mtx* c = MtxAt(D_00538C64); MM(c, c, &m); }
         D_00538C68 = 1;
         D_005392D0 = save | 4;
-        func_0013B180(&beginTmp, self->children);
+        List_Begin(&beginTmp, self->children);
         func_0028C0B0(&first, &beginTmp);
         for (it = first; func_0028C0A0(&endTmp, self->children), func_0028C090(&last, &endTmp), it.node != last.node; it.node = it.node->next) {
             if (it.node->value->flags & 2) {

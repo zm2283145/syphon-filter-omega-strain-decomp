@@ -9,7 +9,7 @@ void func_0041BEB0(void* w, char* s, int a);
 void func_0041A100(void* w, int a);
 Stk* Gui_GetScreenStack(void);
 }
-extern "C" void func_0032B4F0(Dlg* d, char* title, char* body, int a, int b, int c, unsigned char e)
+extern "C" void GuiKeyboard_Open(Dlg* d, char* title, char* body, int a, int b, int c, unsigned char e)
 {
     if (d->title) func_0041BEB0(d->title, title ? title : D_004B8CF0, 0);
     if (d->body) {

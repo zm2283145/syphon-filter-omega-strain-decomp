@@ -40,9 +40,9 @@ typedef struct {
 
 extern "C" {
 extern char D_004BEE90[];
-int func_0036DEF0(void* file);
+int FileMan_FindMember(void* file);
 int FileMan_GetSize(void* file);
-void func_0036D990(void* file, char** out, int z);
+void FileMan_LoadMemberSync(void* file, char** out, int z);
 void func_0036DEC0(void* file);
 void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
 void func_0040FBC0(Subs410C20* self, const char* s, const char* end);
@@ -101,11 +101,11 @@ extern "C" void func_00410C20(Subs410C20* self, void* file, int lang)
     char* e;
     self->lang = lang;
     self->mode = 0;
-    if ((unsigned char)func_0036DEF0(file)) return;
+    if ((unsigned char)FileMan_FindMember(file)) return;
     size = FileMan_GetSize(file);
     buf = Alloc_410C20(size);
     MemClear_410C20(buf, size);
-    func_0036D990(file, (char**)&buf, 0);
+    FileMan_LoadMemberSync(file, (char**)&buf, 0);
     func_0036DEC0(file);
     {
     unsigned char* u = (unsigned char*)buf;

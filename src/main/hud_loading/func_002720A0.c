@@ -6,7 +6,7 @@ void operator_delete(void* allocation);
 void Interface_Dtor(void* p, int flag);
 }
 struct OwnedPtrHolder { void* p; };
-extern "C" OwnedPtrHolder* func_002720A0(OwnedPtrHolder* self, short deleteFlag) {
+extern "C" OwnedPtrHolder* LoadingScreen_dtor(OwnedPtrHolder* self, short deleteFlag) {
     if (self) {
         void* p = self->p;
         {

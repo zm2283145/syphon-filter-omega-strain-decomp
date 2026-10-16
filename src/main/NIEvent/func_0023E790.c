@@ -5,7 +5,7 @@ extern char D_004DC2F0[];
 extern void Event_Construct(Msg0023E790* m, void* name);
 extern void Event_Send(Msg0023E790* m, void* target, int a);
 extern void cMessage_dtor(Msg0023E790* m, int flags);
-void func_0023E790(void* target, int flag)
+void NiEvent_Stop(void* target, int flag)
 {
     Msg0023E790 m;
     Event_Construct(&m, D_004F7C28);

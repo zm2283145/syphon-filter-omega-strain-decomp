@@ -14,7 +14,7 @@ public:
 typedef struct { void* vtable; char pad[0x2C]; } Msg;
 
 extern "C" {
-unsigned long long func_003698B0(void);
+unsigned long long Time_GetMilliseconds(void);
 float SoftFloat_U64ToFloat(unsigned long long);
 void func_0040E320(void* p);
 Mgr* Gui_GetScreenStack(void);
@@ -46,10 +46,10 @@ struct ObjCBB30 {
     unsigned char b2D;
 };
 
-extern "C" void func_002CBB30(ObjCBB30* o)
+extern "C" void FrontEnd_UpdateGui(ObjCBB30* o)
 {
     if (o->b28 || o->b2D) {
-        unsigned long long now = func_003698B0();
+        unsigned long long now = Time_GetMilliseconds();
         float dt;
         if (!o->last)
             o->last = 0;

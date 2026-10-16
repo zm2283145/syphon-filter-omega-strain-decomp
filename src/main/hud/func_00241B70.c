@@ -6,14 +6,14 @@ int Alloc_Lock(int);
 int Alloc_Unlock(int);                                  
 int Hog_Register(char *, char *, int, int);                     
 int Mem_Alloc(int, int, char *, int);                        
-int func_0036E220(char *, int);                            
+int FileMan_Release(char *, int);                            
 int func_0036E5D0(char *);                               
 int Interface_Ctor(int, char *);                        
 int sprintf(char *, char *, int);                           
 extern unsigned char D_00533880;
 extern int D_00533888;
 
-int func_00241B70(int arg0, int arg1) {
+int LoadingScreen_BuildIeScreen(int arg0, int arg1) {
     int spD0[12];
     int sp30[40];
     int var_s0;
@@ -33,6 +33,6 @@ int func_00241B70(int arg0, int arg1) {
     if (var_s0 != 0) {
         var_s0 = Interface_Ctor(var_s0, sp30);
     }
-    func_0036E220(sp30, -1);
+    FileMan_Release(sp30, -1);
     return var_s0;
 }

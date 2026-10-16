@@ -1,7 +1,7 @@
 #pragma cplusplus on
 #include "types.h"
 #include "gui_widget_vslots.h"
-extern "C" void func_0036E220(void* part, int flags);
+extern "C" void FileMan_Release(void* part, int flags);
 
 typedef struct SoundRequest {
     char pad000[0x48];
@@ -95,17 +95,17 @@ void func_00391020(void* skel, int snd);
 void SoundRequest_Ctor(SoundRequest* req, int kind, void* name, int a, int b);
 void func_0020F190(EffectMsg* msg, SoundRequest* req, void* p);
 void Event_Send(EffectMsg* msg, void* target, int flags);
-void func_0036E220(void* part, int flags);
+void FileMan_Release(void* part, int flags);
 void cMessage_dtor(void* msg, int flags);
 void Game_NetSendPauseState(void* a, int b, int c);
 void Skel_Rebind(Skel_2A2F00* s, void* src);
 Bk_2A2F00* func_00185C70(Pl_2A2F00* p);
-char* func_00336170(Bk_2A2F00* b);
-char* func_00336110(Bk_2A2F00* b);
+char* AgentData_GetName(Bk_2A2F00* b);
+char* AgentData_GetRankText(Bk_2A2F00* b);
 void func_0041BEB0(void* w, char* s, int a);
 char* Loc_LookupText(char* key);
 void func_0041E0F0(void* self, void* w, int a, int b, int c);
-void func_001B2E90(Pl_2A2F00* p);
+void Player_HandleLeftGame(Pl_2A2F00* p);
 void func_001B2D20(Pl_2A2F00* p);
 int sprintf(void*, const void*, ...);
 void DME_SendPlayGameMsg(void);
@@ -180,12 +180,12 @@ extern "C" void func_002A2F00(S_2A2F00* self, float dt)
                     msg.vtbl = D_004DAE10;
                     EffectMsg* m = &msg;
                     if (m->sub30) {
-                        func_0036E220(msg.partB, -1);
-                        func_0036E220(msg.partA, -1);
+                        FileMan_Release(msg.partB, -1);
+                        FileMan_Release(msg.partA, -1);
                     }
                     cMessage_dtor(&msg, 0);
-                    func_0036E220(req.partB, -1);
-                    func_0036E220(req.partA, -1);
+                    FileMan_Release(req.partB, -1);
+                    FileMan_Release(req.partA, -1);
                 }
                 Game_NetSendPauseState(D_004FFB50, 0, 0);
             }
@@ -194,8 +194,8 @@ extern "C" void func_002A2F00(S_2A2F00* self, float dt)
             if (func_00185C70(p) && func_00185C70(p)->bB70) {
                 long long* c = &D_00506520[k];
                 if (*c > 10) {
-                    func_0041BEB0(wName, func_00336170(func_00185C70(p)), 0);
-                    func_0041BEB0(wRank, func_00336110(func_00185C70(p)), 0);
+                    func_0041BEB0(wName, AgentData_GetName(func_00185C70(p)), 0);
+                    func_0041BEB0(wRank, AgentData_GetRankText(func_00185C70(p)), 0);
                 } else {
                     func_0041BEB0(wName, D_004AB160, 0);
                     func_0041BEB0(wRank, D_004AB160, 0);
@@ -256,7 +256,7 @@ extern "C" void func_002A2F00(S_2A2F00* self, float dt)
             if (p->local)
                 D_00506500 = i;
             else
-                func_001B2E90(p);
+                Player_HandleLeftGame(p);
             func_001B2D20(p);
         } else {
             self->skel[i]->b2C3A = -1;

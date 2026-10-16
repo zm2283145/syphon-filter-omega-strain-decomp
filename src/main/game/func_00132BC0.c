@@ -13,7 +13,7 @@ void Object_Register(void*);
 void TargetVis_Register(void*, void*);
 void World_PushObjectFromAction(void*, void*);
 void func_00176F30(Obj132BC0*, void*);
-void* func_0013EE70(void*, int);
+void* ZoneTracker_Ctor(void*, int);
 void* func_0013D9F0(void);
 void List_PushBack_132E20(void*, void* const&);
 extern char D_0049A890[];
@@ -63,7 +63,7 @@ extern "C" void World_SetupView(World132BC0* w)
         o = Mem_Alloc(0, 0xC, D_0049A890, 0x549);
     }
     if (o)
-        o = func_0013EE70(o, w->bc->v30);
+        o = ZoneTracker_Ctor(o, w->bc->v30);
     w->d0 = o;
     {
         void* t = w->d0;

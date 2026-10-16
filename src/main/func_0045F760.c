@@ -28,7 +28,7 @@ extern char D_004DADF0[];
 extern char D_004DAE10[];
 extern void SoundEvent_Ctor(SoundEventMsg* msg, void* action, int flags);
 extern void Event_Send(void* msg, void* target, int flags);
-extern void func_0036E220(void* part, int flags);
+extern void FileMan_Release(void* part, int flags);
 extern void cMessage_dtor(void* msg, int flags);
 extern void SoundAction_CtorVoice(void* action, int kind, int voice, int a, int b);
 extern void SoundMsg_WrapAction(SoundMsg* msg, void* action);
@@ -41,8 +41,8 @@ void func_0045F760(VoiceOwner* self, int voice) {
     SoundEvent_Ctor(&stop, self->action, 0);
     Event_Send(&stop, D_004FFB50, 1);
     stop.vtbl = D_004DADF0;
-    func_0036E220(stop.partB, -1);
-    func_0036E220(stop.partA, -1);
+    FileMan_Release(stop.partB, -1);
+    FileMan_Release(stop.partA, -1);
     cMessage_dtor(&stop, 0);
     SoundAction_CtorVoice(self->action, 4, voice, 0, 0);
     self->playing = 0;
@@ -50,7 +50,7 @@ void func_0045F760(VoiceOwner* self, int voice) {
     play.flag = 1;
     Event_Send(&play, D_004FFB50, 1);
     play.vtbl = D_004DAE10;
-    func_0036E220(play.partB, -1);
-    func_0036E220(play.partA, -1);
+    FileMan_Release(play.partB, -1);
+    FileMan_Release(play.partA, -1);
     cMessage_dtor(&play, 0);
 }

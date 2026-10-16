@@ -19,7 +19,7 @@
 extern int List_InsertBefore(HotboxListIter* out, Tree* list, HotboxListIter* pos, int* value);
 
 /* Inserts value with end() as the position hint; the result iterator is discarded. */
-int func_00170C10(Tree* list, int* value) {
+int HotboxTracker_LinkBox(Tree* list, int* value) {
     HotboxListIter end;
     HotboxListIter result;
 

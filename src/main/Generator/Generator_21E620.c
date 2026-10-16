@@ -83,7 +83,7 @@ extern unsigned char D_005721C8;
 void* Mem_Alloc(int pool, int size, char* file, int line);
 int Random_Next(void);
 void ActorObj_BuildNodeMatrix(GsMtx* out, GsActor* a);
-GsObj* func_001B7B00(void* p, GsMtx* m, int route, int a, int b, void* c, int d, void* e, GsKey* key, int rnd);
+GsObj* Npc_ConstructSpawned(void* p, GsMtx* m, int route, int a, int b, void* c, int d, void* e, GsKey* key, int rnd);
 void func_00436C00(void* ctx);
 void func_00435F30(void* ctx, int* id, int slot);
 void func_00436BA0(void* ctx, int v);
@@ -127,7 +127,7 @@ extern "C" void Generator_Spawn(GsGen* gen, GsActor* actor, int idx)
             k1.key = kp;
             k1.count = c;
             ActorObj_BuildNodeMatrix(&m1, actor);
-            obj = func_001B7B00(obj, &m1, route, gen->x64, gen->x68, gen->x6C, 2, gen->xA8, &k1, rnd);
+            obj = Npc_ConstructSpawned(obj, &m1, route, gen->x64, gen->x68, gen->x6C, 2, gen->xA8, &k1, rnd);
         }
         obj->SetNet(1);
         func_00436C00(ctx);
@@ -148,7 +148,7 @@ extern "C" void Generator_Spawn(GsGen* gen, GsActor* actor, int idx)
             k2.key = kp;
             k2.count = c;
             ActorObj_BuildNodeMatrix(&m2, actor);
-            obj = func_001B7B00(obj, &m2, route, gen->x64, gen->x68, gen->x6C, 2, gen->xA8, &k2, rnd);
+            obj = Npc_ConstructSpawned(obj, &m2, route, gen->x64, gen->x68, gen->x6C, 2, gen->xA8, &k2, rnd);
         }
     }
     obj->spawned = 1;

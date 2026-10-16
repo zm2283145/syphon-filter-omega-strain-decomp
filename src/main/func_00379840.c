@@ -6,7 +6,7 @@ typedef struct Flags8 {
 } Flags8;
 
 /* Packs eight flag words into a bitmask (bits 3..10). */
-unsigned long func_00379840(Flags8* o) {
+unsigned long Renderer_SetPrmodeReg(Flags8* o) {
     unsigned long m = ((unsigned long)o->f[0] << 3) | ((unsigned long)o->f[1] << 4);
     m = ((unsigned long)o->f[2] << 5) | m;
     m = ((unsigned long)o->f[3] << 6) | m;

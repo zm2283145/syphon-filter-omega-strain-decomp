@@ -30,7 +30,7 @@ extern char D_004A7520[];
 extern char D_004AA640[];
 extern const char* D_0048BBF0;
 
-void func_0033D3F0(Screen9FE0* self);
+void GuiScreen_Init(Screen9FE0* self);
 Obj9FE0* GuiWidget_FindChildByName(Screen9FE0* self, const char* name);
 }
 
@@ -46,7 +46,7 @@ static inline Obj9FE0* AsB9FE0(Obj9FE0* obj)
 /* Screen init: base init, looks up the named child widgets and links the extra one to the second. */
 extern "C" void func_002A9FE0(Screen9FE0* self)
 {
-    func_0033D3F0(self);
+    GuiScreen_Init(self);
     self->item0 = AsA9FE0(GuiWidget_FindChildByName(self, *(const char**)dat_0048BC00));
     self->item1 = (Sub9FE0*)AsB9FE0(GuiWidget_FindChildByName(self, *(const char**)dat_0048BC08));
     self->item2 = AsA9FE0(GuiWidget_FindChildByName(self, D_0048BBF0));

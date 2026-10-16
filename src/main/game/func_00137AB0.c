@@ -24,7 +24,7 @@ void* func_0045A7A0(void* p);
 void* func_002CC5A0(void* p);
 void* func_00147910(void* p);
 void func_003CAC40(void* w, void* p);
-void func_001396D0(void* p, int n);
+void PtrVec_Reserve(void* p, int n);
 }
 
 struct Sub2C_WC { char pad[0xC]; unsigned char bC; };
@@ -223,7 +223,7 @@ extern "C" World_WC* World_Construct(World_WC* w)
         w->fB4 = p;
     }
     func_003CAC40(w, w->fB4);
-    func_001396D0(&w->m2C, 0x100);
+    PtrVec_Reserve(&w->m2C, 0x100);
     w->f98 = 0;
     w->f90 = 0;
     w->f10 = 0;

@@ -8,7 +8,7 @@ extern int sprintf(char* buf, const char* fmt, ...);
 extern void func_0036E5D0(TextObj* obj);
 extern void Hog_Register(TextObj* obj, char* text, int color, int flags);
 extern void func_003E7AD0(void* target, TextObj* obj);
-extern void func_0036E220(TextObj* obj, int flags);
+extern void FileMan_Release(TextObj* obj, int flags);
 
 /* Builds and attaches a text object for each of the 20 active labels. */
 void func_00412ED0(Label412* self)
@@ -25,7 +25,7 @@ void func_00412ED0(Label412* self)
             func_0036E5D0(&obj);
             Hog_Register(&obj, buf, p->color, 0);
             func_003E7AD0(p->target, &obj);
-            func_0036E220(&obj, -1);
+            FileMan_Release(&obj, -1);
         }
     }
 }

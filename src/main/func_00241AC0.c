@@ -9,7 +9,7 @@ Mgr* Gui_GetScreenStack(void);
 }
 /* Going through an inline wrapper keeps the bool locals from being folded. */
 static inline Mgr* M() { return Gui_GetScreenStack(); }
-extern "C" bool func_00241AC0(void)
+extern "C" bool Hud_IsGuiFocused(void)
 {
     bool r = 1;
     if (!func_002CAB70(D_004FFC04)) {

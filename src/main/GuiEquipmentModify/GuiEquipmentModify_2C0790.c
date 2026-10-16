@@ -31,8 +31,8 @@ int Loc_FindKeyThunk(char*);
 char* Loc_GetTextById(int);
 char* Loc_LookupText(char*);
 Agent* func_00185C70(int);
-char* func_00336110(Agent*);
-char* func_00336170(Agent*);
+char* AgentData_GetRankText(Agent*);
+char* AgentData_GetName(Agent*);
 void func_0041BEB0(Widget*, char*, int);
 void func_0041F150();
 void func_00421070(Widget*);
@@ -134,8 +134,8 @@ extern "C" void func_002C0790(Screen* arg0) {
     var_s2 = (Widget*)GuiFindAs(arg0, D_004AC4F8, D_004A7520);
     var_s1_5 = (Widget*)GuiFindAs(arg0, D_004AC508, D_004A7520);
     if (func_00185C70(arg0->unk48)->unkB70 != 0) {
-        func_0041BEB0(var_s2, func_00336170(func_00185C70(arg0->unk48)), 0);
-        func_0041BEB0(var_s1_5, func_00336110(func_00185C70(arg0->unk48)), 0);
+        func_0041BEB0(var_s2, AgentData_GetName(func_00185C70(arg0->unk48)), 0);
+        func_0041BEB0(var_s1_5, AgentData_GetRankText(func_00185C70(arg0->unk48)), 0);
     } else {
         func_0041BEB0(var_s2, D_004AC518, 0);
         func_0041BEB0(var_s1_5, Loc_GetTextById(Loc_FindKeyThunk(D_004AC520) + 1), 0);
@@ -456,7 +456,7 @@ static inline V4_1100* Splat_1100(V4_1100* t, float) { float z = 0.0f; return fu
 extern "C" {
 void Vec4_Copy_18A350(Rate_1100* d, V4_1100* s);
 void AnimEvent_Construct(Ev_1100* e);
-int func_0018A2F0(Req_1100* r);
+int MotionRequest_GetMode(Req_1100* r);
 int func_0018A2E0(Req_1100* r);
 float func_0018A2D0(Req_1100* r);
 float func_0018A2C0(Req_1100* r);
@@ -549,7 +549,7 @@ static inline void Install_1100(Anim_1100* an, int* selp, Req_1100* rq, Word_110
                 an->b5 = 0;
                 AnimEvent_Construct(&e0);
                 AnimEvent_Construct(&e1);
-                AnimCtl_InstallMotion(an, *selp, func_0018A2F0(rq), &rate, wp, &e0, &e1, func_0018A2E0(rq), func_0018A2D0(rq), func_0018A2C0(rq));
+                AnimCtl_InstallMotion(an, *selp, MotionRequest_GetMode(rq), &rate, wp, &e0, &e1, func_0018A2E0(rq), func_0018A2D0(rq), func_0018A2C0(rq));
                 func_0018A260(&e1, -1);
                 func_0018A260(&e0, -1);
 }

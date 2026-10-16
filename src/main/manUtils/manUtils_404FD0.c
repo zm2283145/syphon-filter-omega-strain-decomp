@@ -55,7 +55,7 @@ extern int D_00539248;
 extern int D_00571300;
 void func_00128F58(char* d, char* s);
 void func_0036E5D0(MC_File* f);
-void func_0036E220(void* f, int del);
+void FileMan_Release(void* f, int del);
 void func_0036E140(MC_File* f, char* name, int a, int b);
 void* func_003EBA50(void);
 void func_003EAA60(void* m, MC_File* f, int a);
@@ -138,9 +138,9 @@ MC_State* func_00404FD0(MC_State* s, short del)
         s->bufE8 = 0;
         s->hasE8 = 0;
         D_00571300 = 1;
-        func_0036E220(&fm, -1);
-        func_0036E220((char*)s + 0x134AC, -1);
-        func_0036E220((char*)s + 0x13410, -1);
+        FileMan_Release(&fm, -1);
+        FileMan_Release((char*)s + 0x134AC, -1);
+        FileMan_Release((char*)s + 0x13410, -1);
         if (del > 0)
             operator_delete(s);
     }
@@ -182,12 +182,12 @@ void func_0036E140(File* f, const char* path, int a, int b);
 #endif /* merge_units */
 #define func_0036E140(a0, a1, a2, a3) (func_0036E140((MC_File *)(a0), (char *)(a1), (a2), (a3))) /* merge_units */
 
-int func_0036DEF0(File* f);
+int FileMan_FindMember(File* f);
 void func_0036DEC0(File* f);
 #if 0 /* merge_units */
-void func_0036E220(File* f, int flags);
+void FileMan_Release(File* f, int flags);
 #endif /* merge_units */
-#define func_0036E220(a0, a1) (func_0036E220((void *)(a0), (a1))) /* merge_units */
+#define FileMan_Release(a0, a1) (FileMan_Release((void *)(a0), (a1))) /* merge_units */
 
 }
 struct Man {
@@ -254,38 +254,38 @@ extern "C" void ManUtils_LoadSKL(Man* self)
         File f;
         func_0036E5D0(&f);
         func_0036E140(&f, D_004BE8C0, 0, 0);
-        if ((unsigned char)func_0036DEF0(&f)) {
+        if ((unsigned char)FileMan_FindMember(&f)) {
             char buf[0x80];
             sprintf(buf, D_004BE770, f.name);
-            func_0036E220(&f, -1);
+            FileMan_Release(&f, -1);
             goto next1;
         }
         int size = FileMan_GetSize(&f);
         Appearance_PackText(D_0055D510, FileMan_ReadData(&f), size);
         func_0036DEC0(&f);
-        func_0036E220(&f, -1);
+        FileMan_Release(&f, -1);
     }
 next1:;
     {
         File f;
         func_0036E5D0(&f);
         func_0036E140(&f, D_004BE8E0, 0, 0);
-        if ((unsigned char)func_0036DEF0(&f)) {
+        if ((unsigned char)FileMan_FindMember(&f)) {
             char buf[0x80];
             sprintf(buf, D_004BE770, f.name);
-            func_0036E220(&f, -1);
+            FileMan_Release(&f, -1);
             return;
         }
         int size = FileMan_GetSize(&f);
         Appearance_PackText(D_0055D950, FileMan_ReadData(&f), size);
         func_0036DEC0(&f);
-        func_0036E220(&f, -1);
+        FileMan_Release(&f, -1);
     }
 }
 #pragma pop
 #undef func_0036E5D0 /* merge_units */
 #undef func_0036E140 /* merge_units */
-#undef func_0036E220 /* merge_units */
+#undef FileMan_Release /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_004053B0(void) {}
 #pragma pop /* merge_units */

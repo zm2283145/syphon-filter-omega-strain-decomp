@@ -11,7 +11,7 @@
 #include "buf_holder_dtor.h"
 
 /* Destroy a buffer holder: free its buffer, optionally delete. */
-DEFINE_BUF_HOLDER_DTOR(func_0032ADE0)
+DEFINE_BUF_HOLDER_DTOR(GuiKeyboard_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_0032ADE0 */
 
@@ -55,7 +55,7 @@ typedef struct { union { SS32 s; unsigned int w; } h; unsigned int size; } Str32
 typedef struct { char p[0x48]; Str32 name; } Obj32;
 typedef struct { char p[0x4C]; Obj32 *o; } Own32;
 static inline unsigned int size32(Str32 *s) { return (s->h.w & 1) ? s->size : (unsigned char)s->h.s.len; }
-int func_0032AF10(Own32 *arg0, int c) {
+int GuiKeyboard_IsCharAllowed(Own32 *arg0, int c) {
     if ((unsigned char)c == 0x20 && size32(&arg0->o->name) == 0) return 0;
     return 1;
 }
@@ -64,26 +64,26 @@ int func_0032AF10(Own32 *arg0, int c) {
 
 /* merge_units: begin func_0032AF70 */
 #pragma push /* merge_units */
-extern int func_0032B260(int, int);
+extern int GuiKeyboard_FindKey(int, int);
 
-int func_0032AF70(int a0, int a1) {
+int GuiKeyboard_IsSpecialKey(int a0, int a1) {
     int s0, s1, v0;
     int cond;
 
     s1 = a0;
     s0 = a1;
     a1 = 0 + 1002;
-    v0 = func_0032B260(a0, a1);
+    v0 = GuiKeyboard_FindKey(a0, a1);
     cond = s0 == v0;
     a0 = s1;
     if (cond) goto L0032AFC0;
     a1 = 0 + 1032;
-    v0 = func_0032B260(a0, a1);
+    v0 = GuiKeyboard_FindKey(a0, a1);
     cond = s0 == v0;
     a0 = s1;
     if (cond) goto L0032AFC0;
     a1 = 0 + 57;
-    v0 = func_0032B260(a0, a1);
+    v0 = GuiKeyboard_FindKey(a0, a1);
     cond = s0 == v0;
     if (cond) goto L0032AFC0;
     v0 = 0;

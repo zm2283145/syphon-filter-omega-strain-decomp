@@ -7,7 +7,7 @@ struct O9A60 { char pad[0xC]; int serial; };
 struct H9A60 { O9A60* p; int serial; };
 extern "C" {
 extern H9A60 D_00583878;
-void* func_00133330(O9A60* o);
+void* Camera_GetNode(O9A60* o);
 void Transform_GetInverseMatrix(M9A60* out, void* t);
 }
 
@@ -31,7 +31,7 @@ extern "C" void func_003E9A60(V9A60* v)
     if (o) {
         M9A60 m;
         M9A60* pm;
-        Transform_GetInverseMatrix(&m, func_00133330(o));
+        Transform_GetInverseMatrix(&m, Camera_GetNode(o));
         pm = &m;
         asm {
             lqc2 vf8, 0x0(v)

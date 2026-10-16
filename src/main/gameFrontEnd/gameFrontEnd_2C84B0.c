@@ -22,7 +22,7 @@ extern unsigned char D_00572528;
 extern unsigned char D_005723C8;
 extern void SleepThread(void);
 extern void func_0010D0D0(int);
-extern void func_0010D0F0(int);
+extern void SuspendThread(int);
 extern void func_002CC260(int, int);
 extern O2C84B0* DME_GetLobby(void);
 extern void func_004536B0(O2C84B0* o);
@@ -100,7 +100,7 @@ static inline void SpLoad(void* src)
 #pragma opt_common_subs off
 #pragma opt_propagation off
 #pragma opt_rotateloops off
-extern "C" void func_002C84B0(int arg)
+extern "C" void FrontEnd_SplashThreadMain(int arg)
 {
     char buf[0x4000];
     int last;
@@ -136,7 +136,7 @@ extern "C" void func_002C84B0(int arg)
                 D_00587B38 = 0;
                 D_0051EE90 = 0;
                 SpLoad(buf);
-                func_0010D0F0(D_0048C348);
+                SuspendThread(D_0048C348);
                 last = DivTime();
             }
             SleepThread();
@@ -201,18 +201,18 @@ extern int D_00538C64;
 extern char D_00538C68;
 extern V4_002C8840 D_00539170;
 extern long long D_004BC1B0;
-void func_003820E0(void* m, int idx);
+void Renderer_BindTexture(void* m, int idx);
 void func_0025CD10(void* s);
 void func_0025CA40(void* s);
 void Vec4_Copy(V4_002C8840* d, V4_002C8840* s);
-void func_0025C9D0(V4_002C8840* d, V4_002C8840* s);
-float func_0025F220(void);
+void GuiBatch_AddVertexColor(V4_002C8840* d, V4_002C8840* s);
+float GuiBatch_AddVertexUV(void);
 V4_002C8840* func_00132000(V4_002C8840* o, float x, float y, float z, float w);
 void func_00370550(void* s);
 void Video_BeginFrame(void* s);
 void func_0036E4B0(void* s, char* name, int a, int b);
-void func_0036E220(void* s, int a);
-int func_00380A40(void* m, void* s);
+void FileMan_Release(void* s, int a);
+int TexMan_FindOrLoad(void* m, void* s);
 void func_003813A0(void* m, int idx, int a, int b);
 }
 #define D_00539224 (D_00539210.f24)
@@ -241,9 +241,9 @@ static inline void Emit_002C8840(const V4c_002C8840& pos, const V4c_002C8840& co
     func_0025CA40(D_005381F0);
     e = &RS_002C8840->ents[D_00539210.f10];
     Vec4_Copy(&e->pos[D_00539224 - 1], (V4_002C8840*)&pos);
-    func_0025C9D0(&e->c30[D_00539224 - 1], (V4_002C8840*)&col);
-    u = uv.x + func_0025F220();
-    Vec4_Copy(&e->c34[D_00539224 - 1], func_00132000(&tmp, u, uv.y + func_0025F220(), uv.z, uv.w));
+    GuiBatch_AddVertexColor(&e->c30[D_00539224 - 1], (V4_002C8840*)&col);
+    u = uv.x + GuiBatch_AddVertexUV();
+    Vec4_Copy(&e->c34[D_00539224 - 1], func_00132000(&tmp, u, uv.y + GuiBatch_AddVertexUV(), uv.z, uv.w));
     D_005381F8 = 6LL << 32;
 }
 static inline unsigned char Prim_002C8840(void) { if (D_005392D0 & 1) return 3; return 2; }
@@ -261,9 +261,9 @@ extern "C" void func_002C8840(char* name)
     int vp;
     if (name == 0 || *name == 0) return;
     func_0036E4B0(&str, name, 0, 0);
-    idx = func_00380A40(D_00539248, &str);
+    idx = TexMan_FindOrLoad(D_00539248, &str);
     if (idx == -1) {
-        func_0036E220(&str, -1);
+        FileMan_Release(&str, -1);
         return;
     }
     saved = D_005392D0;
@@ -272,7 +272,7 @@ extern "C" void func_002C8840(char* name)
     UM_002C8840(&RS_002C8840->mtx[D_00538C64]);
     D_00538C68 = 1;
     D_005392D0 = 1;
-    func_003820E0(D_00539248, idx);
+    Renderer_BindTexture(D_00539248, idx);
     vp = (int)&D_00539170;
     {
         Slot_002C8840* s = SLOT_002C8840(D_00538C60);
@@ -326,7 +326,7 @@ extern "C" void func_002C8840(char* name)
     }
     D_005392D0 = saved;
     func_003813A0(D_00539248, idx, 0, 1);
-    func_0036E220(&str, -1);
+    FileMan_Release(&str, -1);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002C8840(void) {}

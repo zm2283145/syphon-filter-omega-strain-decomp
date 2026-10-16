@@ -3,7 +3,7 @@
 #include "gui_traversal_types.h"
 
 extern "C" {
-void func_0013B180(ChildIterator* result, ChildList* list);
+void List_Begin(ChildIterator* result, ChildList* list);
 void func_0028C0B0(ChildIterator* result, const ChildIterator* source);
 void func_0028C0A0(ChildIterator* result, ChildList* list);
 void func_0028C090(ChildIterator* result, const ChildIterator* source);
@@ -27,7 +27,7 @@ extern "C" int func_0041DDC0(TraversalWidget* self, int message, int first, int 
     TraversalWidget* parent = self->parent;
     if (!parent)
         return 0;
-    func_0013B180(&rawBegin, &parent->children);
+    List_Begin(&rawBegin, &parent->children);
     func_0028C0B0(&begin, &rawBegin);
     ChildList* children = &parent->children;
     ChildNode* node = begin.node;
@@ -50,7 +50,7 @@ extern "C" int func_0041DF00(TraversalWidget* self, int message, int first, int 
     ChildIterator begin;
     ChildIterator rawBegin;
     ChildIterator rawEnd;
-    func_0013B180(&rawBegin, &self->children);
+    List_Begin(&rawBegin, &self->children);
     func_0028C0B0(&begin, &rawBegin);
     ChildNode* node = begin.node;
     func_0028C0A0(&rawEnd, &self->children);

@@ -16,7 +16,7 @@ typedef struct {
 } Panel27A;
 extern void func_003E8DE0(void* widget, int visible);
 extern void func_003F45A0(void* widget, float alpha);
-extern void func_0013B180(Iter27A* out, List27A* list);
+extern void List_Begin(Iter27A* out, List27A* list);
 extern void func_0027AA80(Iter27A* out, Iter27A* in);
 extern void func_0027AC80(Iter27A* out, List27A* list);
 extern void func_0027AC70(Iter27A* out, Iter27A* in);
@@ -43,7 +43,7 @@ void func_0027AC90(Panel27A* p)
     func_003E8DE0(p->w10, 0);
     func_003F45A0(p->w10, 0.0f);
     func_003E8DE0(p->w28, 0);
-    func_0013B180(&beginRaw, &p->items);
+    List_Begin(&beginRaw, &p->items);
     func_0027AA80(&it, &beginRaw);
     node = it.node;
     if (node != List_End(&p->items, &endRaw, &end)) {

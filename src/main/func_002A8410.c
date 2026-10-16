@@ -29,7 +29,7 @@ static inline W_002A8410* FindAs_002A8410(Self_002A8410* self, char* name, char*
     W_002A8410* w = (W_002A8410*)GuiWidget_FindChildByName(self, name);
     return (w && w->IsA(type)) ? w : 0;
 }
-extern "C" void func_002A8410(Self_002A8410* self)
+extern "C" void GuiMessageBox_Init(Self_002A8410* self)
 {
     char buf[0x80];
     int i;

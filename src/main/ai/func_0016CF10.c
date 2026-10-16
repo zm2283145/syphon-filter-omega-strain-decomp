@@ -37,14 +37,14 @@ AObj* PlayerSlots_Get(int);
 float Weapon_GetHeldRange(void*);
 void __register_global_object(void*, void*, void*);
 void cMessage_dtor(void*, int);
-void func_00138DA0(void*, void*, void*);
+void List_Erase(void*, void*, void*);
 void func_0015AF40(void*, void*);
 void func_0016BB80(void*, void*);
 void func_0016BB90(void*, void*);
 void func_0016BBA0(void*, void*);
 void func_0016DB20(void*, void*);
 void func_0016DB30(void*, void*);
-void func_0013DFD0(void*, int);
+void StaticInit_FloorContactVecs(void*, int);
 extern char D_0049C650[];
 extern int D_0049D010;
 extern char D_004D9340[], D_004DCC90[], D_004DCD70[], D_004EE550[], D_004EE568[], D_004EE580[];
@@ -133,7 +133,7 @@ static inline void FreeRec(ARec* r, int line) {
     if (D_00533880) Alloc_Unlock(9);
     D_00533888--;
 }
-static inline void Er2(void* recs, void* a, Raw* t) { char y[4], x[4]; void* pa = a; func_0016DB30(x, pa); func_00138DA0(y, recs, x); func_0016DB20(t, y); }
+static inline void Er2(void* recs, void* a, Raw* t) { char y[4], x[4]; void* pa = a; func_0016DB30(x, pa); List_Erase(y, recs, x); func_0016DB20(t, y); }
 static inline void Er1(void* recs, AIt* it, AIt* r) { Raw t; char a[4]; func_0015AF40(a, it); Er2(recs, a, &t); r->p = t.p; }
 static inline void Bg2(void* recs, AIt* b) { void* s; func_0016BBA0(&s, recs); func_0016BB90(b, &s); }
 /* Retail reserves two unused depth-1 iterator slots above the erase temps; dead address-taken locals reproduce them. */
@@ -195,7 +195,7 @@ extern "C" void NpcPerception_UpdateRecords(SfAiPerception* p, float dt) {
                     if (!rec->sent) {
                         done = 1;
                         if (D_004EE560 == 0) {
-                            __register_global_object(D_004EE580, (void*)&func_0013DFD0, D_004EE568);
+                            __register_global_object(D_004EE580, (void*)&StaticInit_FloorContactVecs, D_004EE568);
                             D_004EE560 = 1;
                         }
                         if (Player(obj->ctrl)) done = (unsigned char)((ObjV*)obj)->Type(D_004EE580);

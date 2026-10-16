@@ -21,7 +21,7 @@ void* Hotbox_GetBounds(char* self) {
 }
 
 /* Set the object's +0x2C flag. */
-void func_00173670(cGOBJ* obj) {
+void Hotbox_Enable_173670(cGOBJ* obj) {
     obj->unk2C = 1;
 }
 

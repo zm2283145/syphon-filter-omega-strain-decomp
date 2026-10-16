@@ -28,7 +28,7 @@ int Object_Deactivate(...);
 extern unsigned char D_00533880;
 }
 #pragma opt_common_subs off
-extern "C" void func_003941A0(char * arg0, int arg1) {
+extern "C" void ParticleGob_OnAbsent(char * arg0, int arg1) {
     int temp_s2;
 
     temp_s2 = F_(arg0, 0x64, int);
@@ -90,7 +90,7 @@ Tracer394270* Tracer_Create(void* p, int id, void* pos, float scale);
 void Object_Activate(Self394270* self, int arg);
 }
 
-extern "C" void func_00394270(Self394270* self, int arg)
+extern "C" void ParticleGob_OnPresent(Self394270* self, int arg)
 {
     if (self->id != -1 && self->tracer == 0) {
         void* p;
@@ -132,7 +132,7 @@ typedef struct {
 extern Box *func_003A2A90(void *);
 extern signed char D_0053B4C0;
 extern Box D_0053B4D0;
-Box *func_003943A0(Obj *o)
+Box *ParticleGob_GetBounds(Obj *o)
 {
     if (o->mdl != 0) {
     if (o->scale == 1.0f) return func_003A2A90(o->mdl);

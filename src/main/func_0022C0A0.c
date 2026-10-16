@@ -12,7 +12,7 @@ extern MarkerTarget* GObj_IdentityB(void*);
 extern int Global_ClearRadarBlip(MarkerTarget*);
 extern void Global_SetWaypoint(MarkerTarget*);
 extern int ObjMarkerMgr_Remove(void*, int*, int);
-extern void func_00272D10(void*, MarkerTarget*);
+extern void HudTargets_SelectWaypoint(void*, MarkerTarget*);
 
 int Script_SetWaypoint(ScriptArg* args) {
     Global_SetWaypoint(GObj_IdentityB(args[0].p));
@@ -20,7 +20,7 @@ int Script_SetWaypoint(ScriptArg* args) {
 }
 
 void Global_SetWaypoint(MarkerTarget* obj) {
-    func_00272D10(D_004FFC2C->markerMgr, obj);
+    HudTargets_SelectWaypoint(D_004FFC2C->markerMgr, obj);
 }
 
 int Script_ClearRadarBlip(ScriptArg* args) {

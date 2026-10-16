@@ -54,20 +54,20 @@ extern char D_004F7A08[];
 extern char D_004DBA00[];
 extern char D_004DCF10[];
 extern Tgt_244FA0* D_004FFC0C;
-float func_00245890();
+float Hud_GetMissionTime();
 int func_00330C30(void* p, unsigned char b);
 int ObjMan_GetService();
 int ObjMan_GetTotalCount(int s);
-int func_002270C0(int s, int* buf, int n, int k);
+int ObjectiveMgr_GetCompleted(int s, int* buf, int n, int k);
 void Objective_QueueThresholdVoice(int a, int b);
 void func_003F9E60(void* p, float dt);
-void func_00242330(Obj_244FA0* o, float dt);
+void Hud_UpdateCallouts(Obj_244FA0* o, float dt);
 int Object_LookupById(void* id);
 void HudTargets_Update(void* h, int t);
 void Hud_UpdateAmmoText(Obj_244FA0* o, int t);
 void func_003E79C0(int h, float dt);
-void func_0026D620(int h, float dt);
-bool func_00244D10(void* t, float now);
+void HudMap_Update(int h, float dt);
+bool HudTimer_Update(void* t, float now);
 float func_00245810(Obj_244FA0* o);
 void Event_Construct(Msg_244FA0* m, void* p);
 void Event_Send(Msg_244FA0* m, void* target, int flags);
@@ -77,12 +77,12 @@ Svc_244FA0* Gui_GetScreenStack();
 void func_00415870(Svc_244FA0* s);
 void GuiManager_Update(int h, float dt);
 }
-extern "C" void func_00244FA0(Obj_244FA0* o, float dt)
+extern "C" void Hud_Update(Obj_244FA0* o, float dt)
 {
     if (!D_004FFBB7) {
         o->f6DC += dt;
         unsigned char flag = D_005721C8;
-        float cur = func_00245890();
+        float cur = Hud_GetMissionTime();
         float max = (float)func_00330C30(D_004FFC90, flag);
         float q = max / 4.0f;
         float h = max / 2.0f;
@@ -90,32 +90,32 @@ extern "C" void func_00244FA0(Obj_244FA0* o, float dt)
         int total = ObjMan_GetTotalCount(ObjMan_GetService());
         int buf[20];
         if (D_004F7DD8 < q && !(cur < q)) {
-            int n = func_002270C0(ObjMan_GetService(), buf, 20, 1);
+            int n = ObjectiveMgr_GetCompleted(ObjMan_GetService(), buf, 20, 1);
             if (flag && !n)
                 Objective_QueueThresholdVoice(0x15, 2);
         } else if (D_004F7DD8 < h && !(cur < h)) {
-            int n = func_002270C0(ObjMan_GetService(), buf, 20, 1);
+            int n = ObjectiveMgr_GetCompleted(ObjMan_GetService(), buf, 20, 1);
             if (n < total / 2)
                 Objective_QueueThresholdVoice(0x15, 3);
             else if (flag)
                 Objective_QueueThresholdVoice(0x15, 2);
         } else if (D_004F7DD8 < t && !(cur < t)) {
-            if ((float)func_002270C0(ObjMan_GetService(), buf, 20, 1) < 0.75f * (float)total)
+            if ((float)ObjectiveMgr_GetCompleted(ObjMan_GetService(), buf, 20, 1) < 0.75f * (float)total)
                 Objective_QueueThresholdVoice(0x15, 4);
         }
         D_004F7DD8 = cur;
     }
     func_003F9E60(o->x100, dt);
     if (o->i6E8)
-        func_00242330(o, dt);
+        Hud_UpdateCallouts(o, dt);
     int tgt = Object_LookupById(D_004F7DB8);
     o->sub.v0(tgt);
     HudTargets_Update(o->hud, tgt);
     Hud_UpdateAmmoText(o, tgt);
     func_003E79C0(o->i54, dt);
     if (o->i6A0)
-        func_0026D620(o->i6A0, dt);
-    if (func_00244D10(&o->f6AC, o->f6DC)) {
+        HudMap_Update(o->i6A0, dt);
+    if (HudTimer_Update(&o->f6AC, o->f6DC)) {
         Msg_244FA0 m;
         Event_Construct(&m, D_004F7A08);
         m.vt = D_004DBA00;
@@ -131,7 +131,7 @@ extern "C" void func_00244FA0(Obj_244FA0* o, float dt)
         if (o->f6B4 <= o->f6AC)
             busy = 0;
     }
-    if (!busy && func_00244D10(o->t6C4, func_00245810(o))) {
+    if (!busy && HudTimer_Update(o->t6C4, func_00245810(o))) {
         if (!D_005721C8 || (D_005721C8 ? D_005721C0 : 1)) {
             Msg_244FA0 m;
             Event_Construct(&m, D_004F7A08);
@@ -187,7 +187,7 @@ extern char D_004FFB50[];
 extern char D_004DAE10[];
 extern char D_004A72A8[];
 void func_0036E5D0(void* m);
-void func_0036E220(void* part, int flags);
+void FileMan_Release(void* part, int flags);
 #if 0 /* merge_units */
 void cMessage_dtor(void* msg, int flags);
 #endif /* merge_units */
@@ -238,12 +238,12 @@ extern "C" void Objective_QueueThresholdVoice(int a, int b)
         m.flag = 1;
         Event_Send(&m, D_004FFB50, 1);
         m.vtbl = D_004DAE10;
-        func_0036E220(m.partB, -1);
-        func_0036E220(m.partA, -1);
+        FileMan_Release(m.partB, -1);
+        FileMan_Release(m.partA, -1);
         cMessage_dtor(&m, 0);
     }
-    func_0036E220(pb, -1);
-    func_0036E220(pa, -1);
+    FileMan_Release(pb, -1);
+    FileMan_Release(pa, -1);
 }
 #pragma pop
 #undef cMessage_dtor /* merge_units */
@@ -282,7 +282,7 @@ extern float func_00245810(char* o);
 #define func_00245810(a0) (func_00245810((void *)(a0))) /* merge_units */
 
 extern int Loc_LookupText(char* key);
-extern void func_00244EE0(void* t, int text, float time);
+extern void HudTimer_Start(void* t, int text, float time);
 extern void EffectMsg_WrapRequest(EMsg_245560* m, void* a);
 #if 0 /* merge_units */
 extern void Event_Send(void* m, void* target, int a);
@@ -290,9 +290,9 @@ extern void Event_Send(void* m, void* target, int a);
 #define Event_Send(a0, a1, a2) (Event_Send((void *)(a0), (a1), (a2))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_0036E220(void* member, int flags);
+extern void FileMan_Release(void* member, int flags);
 #endif /* merge_units */
-#define func_0036E220(a0, a1) (func_0036E220((a0), (a1))) /* merge_units */
+#define FileMan_Release(a0, a1) (FileMan_Release((a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void Event_Construct(Msg_245560* m, void* type);
@@ -309,7 +309,7 @@ void func_00245560(char* o, char* key, float f)
 {
     EMsg_245560 em;
     float t = f + func_00245810(o);
-    func_00244EE0(o + 0x6C4, key ? Loc_LookupText(key) : 0, t);
+    HudTimer_Start(o + 0x6C4, key ? Loc_LookupText(key) : 0, t);
     EffectMsg_WrapRequest(&em, D_004F0F90);
     em.b20 = 1;
     Event_Send(&em, D_004FFB50, 0);
@@ -331,14 +331,14 @@ void func_00245560(char* o, char* key, float f)
         cMessage_dtor(&m, 0);
     }
     em.vtable = D_004DAE30;
-    func_0036E220(em.memberB, -1);
-    func_0036E220(em.memberA, -1);
+    FileMan_Release(em.memberB, -1);
+    FileMan_Release(em.memberA, -1);
     cMessage_dtor(&em, 0);
 }
 #undef D_004FFC0C /* merge_units */
 #undef func_00245810 /* merge_units */
 #undef Event_Send /* merge_units */
-#undef func_0036E220 /* merge_units */
+#undef FileMan_Release /* merge_units */
 #undef Event_Construct /* merge_units */
 #undef cMessage_dtor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */

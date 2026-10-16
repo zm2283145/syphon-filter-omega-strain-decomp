@@ -18,7 +18,7 @@ extern int func_0023DA90(PtrVec* v);
 extern int* func_0023DAA0(PtrVec* v, int i);
 extern int* func_0023DAB0(PtrVec* v, int i);
 extern int func_0023DAC0(NodeObj* o);
-extern int func_001830D0(NodeObj* o);
+extern int GameObject_IsCollisionEnabled(NodeObj* o);
 extern int func_0023D810(NodeObj* o, int flag);
 
 #define COUNTS(o, flag) (!(flag) || (o)->state == 3 || (o)->state == 1 || (o)->state == 6)
@@ -41,7 +41,7 @@ static inline int L2(NodeObj* p, int flag)
     } else {
         int m = 0;
         int k;
-        if (func_001830D0(p)) {
+        if (GameObject_IsCollisionEnabled(p)) {
             if (COUNTS(p, flag)) m++;
         }
         for (k = 0; k < func_0023DA90(&p->kids); k++) {
@@ -67,7 +67,7 @@ int func_0023DAD0(NodeObj* self, int flag)
             NodeObj* g = *(NodeObj**)func_0023DAB0(&self->kids, j);
             int m = 0;
             int k;
-            if (func_001830D0(g)) {
+            if (GameObject_IsCollisionEnabled(g)) {
                 if (COUNTS(g, flag)) m++;
             }
             for (k = 0; k < func_0023DA90(&g->kids); k++) {

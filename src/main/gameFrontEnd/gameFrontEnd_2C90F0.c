@@ -95,8 +95,8 @@ static inline void merge_flush_func_002C9170(void) {}
 #pragma push /* merge_units */
 #pragma opt_propagation off
 extern void* func_00185C70(int id);
-extern char* func_00336170(void* p);
-extern char* func_0012F5D0(void* tbl, int id);
+extern char* AgentData_GetName(void* p);
+extern char* Game_GetPlayerNameSlot(void* tbl, int id);
 extern char D_004FFB50[];
 extern char D_004ACF28[];
 
@@ -132,10 +132,10 @@ void func_002C9270(char* buf, int id, int nameId, int newline)
     char tmp[0x70];
     char c;
     if (func_00185C70(id) && ((Ent9270*)func_00185C70(id))->active) {
-        Append(buf, func_00336170(func_00185C70(id)));
+        Append(buf, AgentData_GetName(func_00185C70(id)));
     }
     c = newline ? '\n' : ' ';
-    sprintf(tmp, D_004ACF28, (char)c, 0x11, func_0012F5D0(D_004FFB50, nameId), 0x10);
+    sprintf(tmp, D_004ACF28, (char)c, 0x11, Game_GetPlayerNameSlot(D_004FFB50, nameId), 0x10);
     Append(buf, tmp);
 }
 /* merge_units: generate this block's code under its own pragmas */

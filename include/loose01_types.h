@@ -70,7 +70,7 @@ typedef struct MotionNode {
     void* vtable;          /* 0x00 */
     char type;             /* 0x04: 2 = slider, 3 = node built by func_001F2B70 */
     char pad05[0xB];
-    int name;              /* 0x10: initialized by func_00132800, copied by func_001325F0 */
+    int name;              /* 0x10: initialized by func_00132800, copied by Quat_Assign */
     char pad14[0xC];
 } MotionNode;
 
@@ -211,7 +211,7 @@ typedef struct Unk260940 {
     float unk14;           /* 0x14 */
 } Unk260940;
 
-/* Object with four words cleared by func_00251350. */
+/* Object with four words cleared by PickupMenuEntry_ctor. */
 typedef struct Unk251350 {
     char pad00[0xC];
     int unk0C;             /* 0x0C */

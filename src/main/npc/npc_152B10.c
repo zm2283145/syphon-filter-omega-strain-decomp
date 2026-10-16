@@ -196,7 +196,7 @@ extern void NpcPerception_AddAwareness(void* p, void* src, int kind, float amt);
 #endif /* merge_units */
 #define NpcPerception_AddAwareness(a0, a1, a2, a3) (NpcPerception_AddAwareness((void *)(a0), (void *)(a1), (a2), (a3))) /* merge_units */
 
-extern unsigned char func_0025AC00(Src_52FD0* s);
+extern unsigned char Projectile_IsFlashbang(Src_52FD0* s);
 extern void NpcAi_RequestAction(Npc_52FD0* n, int a, int b, float t);
 extern unsigned char NpcAi_RequestMode(int* p, int v, int pri);
 static inline void Notice_52FD0(Npc_52FD0* self, Src_52FD0* src)
@@ -227,7 +227,7 @@ void cNPC_v32(Npc_52FD0* self, int kind, Src_52FD0* src, float amt)
     if ((unsigned char)kind == 5) {
         if (self->mode != 10) {
             Notice_52FD0(self, src);
-            if (func_0025AC00(src) == 3) {
+            if (Projectile_IsFlashbang(src) == 3) {
                 NpcAi_RequestAction(self, 8, 0, 5.0f);
                 return;
             }

@@ -53,7 +53,7 @@ extern Word_003D0C10* func_003D0DA0(Word_003D0C10* w, void* v);
 extern void func_003D0D90(Word_003D0C10* w, void* v);
 extern Word_003D0C10* func_003D0D80(Word_003D0C10* d, Word_003D0C10* s);
 extern void func_003D0D70(Word_003D0C10* w, void* v);
-extern int func_00189540(void* p);
+extern int String_CStr_189540(void* p);
 extern void func_0036A330(int a0, int a1, void* a2, float x, float y, float z, float p, float q, float r);
 extern void func_003CFAB0(int c);
 extern void func_003D10B0(Word_003D0C10* out, int* size, Word_003D0C10* first, Word_003D0C10* last);
@@ -73,7 +73,7 @@ void func_003D0C10(Obj3D* o)
         pe = &end;
         for (; ne3D(n, pe); n = n->next) {
             int* s = (int*)((char*)n + 0x10);
-            func_0036A330(s[3], func_00189540(s), s + 4, *(float*)(s + 8), *(float*)(s + 9), 0.001f, 0.0f, 0.0f, 0.0f);
+            func_0036A330(s[3], String_CStr_189540(s), s + 4, *(float*)(s + 8), *(float*)(s + 9), 0.001f, 0.0f, 0.0f, 0.0f);
         }
         func_003D0D90(&a, o->vec);
         func_003D0D80(&b, &a);

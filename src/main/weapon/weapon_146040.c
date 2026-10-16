@@ -48,9 +48,9 @@ typedef struct { char p0[0x148]; Tbl46 *f148; } Src46;
 typedef struct { char p0[0xB8]; Obj46 *slot[7]; } Slot46;
 extern "C" char *Archive_GetMemberName(Src46 *, int);
 extern "C" int func_0036D4E0(Src46 *, int);
-extern "C" void func_0038D530(Obj46 *, char *, int, int, int, int, int, int);
+extern "C" void ManModel_ctor(Obj46 *, char *, int, int, int, int, int, int);
 extern "C" void func_0038CD90(Obj46 *, int);
-extern "C" void func_00146B80(void *, Obj46 *, Obj46 *);
+extern "C" void WeaponDb_CloneModel(void *, Obj46 *, Obj46 *);
 
 static inline int NameCmp_46(const char *a, const char *b)
 {
@@ -72,7 +72,7 @@ static inline int NameCmp_46(const char *a, const char *b)
 
 #define OBJ46_NEW(o, line) do { if (D_00533880) Alloc_Lock(9); D_00533888++; o = (Obj46 *)Mem_Alloc(0, 0x420, D_0049B1D0, line); if (D_00533880) Alloc_Unlock(9); D_00533888--; o = new (o) Obj46; } while (0)
 
-extern "C" void func_00146040(Slot46 *self, Src46 *src)
+extern "C" void WeaponDb_LoadShellsArchive(Slot46 *self, Src46 *src)
 {
     int n __attribute__((aligned(32))) = src->f148->f4;
     int i;
@@ -84,16 +84,16 @@ extern "C" void func_00146040(Slot46 *self, Src46 *src)
         for (k = 0; k < 7; k++) {
             if (NameCmp_46(D_00489CC0[k], name) == 0) {
                 self->slot[k] = new (0x293) Obj46;
-                func_0038D530(self->slot[k], D_00489CC0[k], k, 0, 0, 0, 0, 0);
+                ManModel_ctor(self->slot[k], D_00489CC0[k], k, 0, 0, 0, 0, 0);
                 func_0038CD90(self->slot[k], x);
                 found = 1;
             }
         }
         if (!found) {
             Obj46 *t = new (0x2B4) Obj46;
-            func_0038D530(t, name, 0, 0, 0, 0, 0, 0);
+            ManModel_ctor(t, name, 0, 0, 0, 0, 0, 0);
             func_0038CD90(t, x);
-            func_00146B80(self, t, t);
+            WeaponDb_CloneModel(self, t, t);
             if (D_00533880) Alloc_Lock(9);
             D_00533888++;
             Mem_Free(0, t, D_0049B1D0, 0x2BC);
@@ -156,7 +156,7 @@ static inline void FreeAll(Wpn64 *w, char *name, int n, int& cnt)
         }
     }
 }
-extern "C" void func_00146460(Wpn64 *w, char *name)
+extern "C" void WeaponDb_FreeModel(Wpn64 *w, char *name)
 {
     int cnt;
     char* const nm = name; /* const copy: keeps its own register (s3) */
@@ -191,7 +191,7 @@ typedef struct { char pad[0x404]; int f404; unsigned short f408; short f40A; cha
 typedef struct { char name[0xCC]; unsigned char fCC; char pCD[0x3B]; unsigned char f108; char p109[3]; int f10C; char p110[0xC]; BlkV *f11C; char name2[0x1C]; BlkV *f13C; } Ent;
 typedef struct { int f0; unsigned short f4; } Res;
 typedef struct { char p0[4]; int *f4; char p8[0xC]; Ent *f14; } Wpn;
-Res *func_00147880(Wpn *, int, int);
+Res *WeaponDb_GetShellRecord(Wpn *, int, int);
 
 static inline int Cmp(char *a, char *b) {
     int ca, cb;
@@ -231,7 +231,7 @@ static inline void QCopy(void *dd, void *ss, int nn) {
     }
 }
 
-void func_001468E0(Wpn *w, char *name, Blk *src) {
+void WeaponDb_PropagateModel(Wpn *w, char *name, Blk *src) {
     int n = w->f4[1];
     int i = 0;
     while (i < n) {
@@ -247,7 +247,7 @@ void func_001468E0(Wpn *w, char *name, Blk *src) {
             e->f13C->f40A = i;
             e->f13C->f40D = e->fCC;
             e->f13C->f40E = e->f108;
-            r = func_00147880(w, e->f10C, save);
+            r = WeaponDb_GetShellRecord(w, e->f10C, save);
             if (r != NULL) {
                 e->f13C->f404 = r->f0;
                 e->f13C->f408 = r->f4;

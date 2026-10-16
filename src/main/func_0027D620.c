@@ -34,11 +34,11 @@ s32 Secondary_RootWeight(int, int);         /* extern */
 int Vec4_SetOrigin(int);                              /* extern */
 f32 VecCurve_SetDuration(f32, int);                /* extern */
 int VecPair_Copy(int, int);                        /* extern */
-s32 func_00132A30(int);                         /* extern */
+s32 Actor_GetSkeleton(int);                         /* extern */
 int func_0017A5F0(int);                        /* extern */
 int func_0027F7A0(int);          /* extern */
-int func_0027FA40(int, void*, int);            /* extern */
-s32 func_00280070(int, void*, int, int, int, int);        /* extern */
+int PlayerCamera_UpdateR1Pick(int, void*, int);            /* extern */
+s32 PlayerCamera_LookAtLock(int, void*, int, int, int, int);        /* extern */
 int func_00280390(int, int, s8, int);          /* extern */
 int func_00280470(int, int, int, int);    /* extern */
 int func_00281220(int, int);                        /* extern */
@@ -810,7 +810,7 @@ void PlayerCamera_Follow(int arg0, int arg1) {
                     float up = 0.25f;
                     QuatF v;
                     Mtx sp410;
-                    Model_GetComponentTransform(((int)&sp410), func_00132A30(var_s5), D_0049D024);
+                    Model_GetComponentTransform(((int)&sp410), Actor_GetSkeleton(var_s5), D_0049D024);
                     Mtx* pm = &sp410;
                     v.x = 0.0f; v.z = up; v.y = 0.0f; v.w = 1.0f;
                     QuatF* pv = &v;
@@ -1070,7 +1070,7 @@ block_152:
             if ((*(u8*)((char*)(temp_s0_3) + 0x50)) != 0) {
                 ((VCam*)temp_s0_3)->s20();
             }
-            if (func_00280070(arg0, &sp4E0, arg1, 4, temp_s2, temp_s0_3 + 0x40) & 0xFF) {
+            if (PlayerCamera_LookAtLock(arg0, &sp4E0, arg1, 4, temp_s2, temp_s0_3 + 0x40) & 0xFF) {
                 (*(f32*)((char*)(arg0) + 0xD70)) = sp4E0.x;
                 (*(f32*)((char*)(arg0) + 0xD78)) = sp4E0.z;
             }
@@ -1084,7 +1084,7 @@ block_152:
             { void* dp = &sp520; void* sp = &sp2F0; s128 q; f32* pd = (f32*)((char*)arg0 + 0xD70); __asm__ volatile("lq %0, 0x0(%1)" : "=&r"(q) : "r"(sp) : "memory"); var_f20 = 0.0f; __asm__ volatile("sq %0, 0x0(%1)" : : "r"(q), "r"(dp) : "memory"); var_s1 = true; sp54C = *pd; }
         } else if ((temp_v1_8 >> 1) & 1) {
             Mtx sp270;
-            func_0027FA40(arg0, &sp520, arg1);
+            PlayerCamera_UpdateR1Pick(arg0, &sp520, arg1);
             QuatToMtxB(&sp270, &sp520);
             FE2(((int)&sp4C0), ((int)&sp270));
             {

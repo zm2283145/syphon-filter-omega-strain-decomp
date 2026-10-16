@@ -9,7 +9,7 @@
 extern "C" {
 /*fc*/
 int Mem_Free(...);                         
-int func_0013B180(...);                          
+int List_Begin(...);                          
 int func_00396A90(...);                            
 int func_00396AF0(...);                        
 int func_00396B00(...);                          
@@ -19,7 +19,7 @@ int operator_delete(...);
 extern unsigned char D_00533880;
 }
 #pragma inline_depth(10)
-static inline void itb_(char **o, char *l) { int r; func_0013B180(&r, l); func_00396B10(o, &r); }
+static inline void itb_(char **o, char *l) { int r; List_Begin(&r, l); func_00396B10(o, &r); }
 static inline void ite_(char **o, char *l) { int r; func_00396B00(&r, l); func_00396AF0(o, &r); }
 extern "C" int func_00396910(int arg0, long long arg1) {
     int sp6C;

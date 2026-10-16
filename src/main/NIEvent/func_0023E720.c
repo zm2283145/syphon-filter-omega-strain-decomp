@@ -6,7 +6,7 @@ extern void Event_Construct(Msg0023E720* ev, void* desc);
 extern void Event_Send(Msg0023E720* ev, void* target, int flags);
 extern void cMessage_dtor(Msg0023E720* ev, int flags);
 /* Send a type-2 message to the target. */
-void func_0023E720(void* target)
+void NiEvent_Reset(void* target)
 {
     Msg0023E720 ev;
     Event_Construct(&ev, D_004F7C28);

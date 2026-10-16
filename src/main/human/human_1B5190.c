@@ -48,7 +48,7 @@ void func_002D2110(void*);
 void ActorPhys_ReleaseWaterEffect(VObj*);
 }
 
-extern "C" void func_001B5190(Act* a, int arg)
+extern "C" void Npc_Deactivate(Act* a, int arg)
 {
     int loc;
     VObj* o;

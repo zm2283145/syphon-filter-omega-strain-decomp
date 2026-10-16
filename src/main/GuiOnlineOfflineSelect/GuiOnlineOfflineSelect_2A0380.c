@@ -14,7 +14,7 @@
 /* Play a sound on a matching event. */
 extern "C" { char D_004AAED8[] = "GuiTitleScreen"; }
 extern "C" { char D_004AAEE8[] = "titlescr"; }
-DEFINE_EVENT_SOUND_CHECK(func_002A0380, D_004AAED8, D_004AAEE8)
+DEFINE_EVENT_SOUND_CHECK(GuiOnlineOfflineSelect_HandleInput, D_004AAED8, D_004AAEE8)
 #pragma pop /* merge_units */
 /* merge_units: end func_002A0380 */
 
@@ -25,7 +25,7 @@ typedef struct { char pad[0x10]; int enabled; } Item;
 extern Game* D_004FFC04;
 extern char D_004AAEB0[];
 extern char D_004AAEC8[];
-extern void func_002CCA20(Game*, int);
+extern void FrontEnd_SetOnlineMode(Game*, int);
 extern void* Gui_GetScreenList(void);
 #if 0 /* merge_units */
 extern Item* GuiManager_FindOrLoad(void*, const char*, const char*);
@@ -42,7 +42,7 @@ extern void GuiStack_SwapScreens(void*, void*, Item*);
 void func_002A0440(void* arg)
 {
     Item* item;
-    func_002CCA20(D_004FFC04, 0);
+    FrontEnd_SetOnlineMode(D_004FFC04, 0);
     D_004FFC04->flag = 0;
     item = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AAEB0, D_004AAEC8);
     item->enabled = 1;
@@ -65,9 +65,9 @@ extern Hud32* D_004FFC04;
 extern char D_004AAE80[];
 extern char D_004AAE98[];
 #if 0 /* merge_units */
-extern void func_002CCA20(Hud32* hud, int a1);
+extern void FrontEnd_SetOnlineMode(Hud32* hud, int a1);
 #endif /* merge_units */
-#define func_002CCA20(a0, a1) (func_002CCA20((Game *)(a0), (a1))) /* merge_units */
+#define FrontEnd_SetOnlineMode(a0, a1) (FrontEnd_SetOnlineMode((Game *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void* GuiManager_FindOrLoad(void* manager, const char* a, const char* b);
@@ -85,13 +85,13 @@ void func_002A04C0(void* self)
 {
     void* handle;
     D_00532FE8 = 0;
-    func_002CCA20(D_004FFC04, 1);
+    FrontEnd_SetOnlineMode(D_004FFC04, 1);
     D_004FFC04->flag = 0;
     handle = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AAE80, D_004AAE98);
     GuiStack_SwapScreens(Gui_GetScreenStack(), self, handle);
 }
 #undef D_004FFC04 /* merge_units */
-#undef func_002CCA20 /* merge_units */
+#undef FrontEnd_SetOnlineMode /* merge_units */
 #undef GuiManager_FindOrLoad /* merge_units */
 #undef GuiStack_SwapScreens /* merge_units */
 #pragma pop /* merge_units */
@@ -165,7 +165,7 @@ static inline void SetHidden_002A05B0(Ctl_002A05B0* w, bool h)
     else
         w->flags &= ~4;
 }
-extern "C" void func_002A05B0(Self_002A05B0* self)
+extern "C" void GuiOnlineOfflineSelect_Update(Self_002A05B0* self)
 {
     Ctl_002A05B0* w;
     func_0041E3B0(self);
@@ -244,7 +244,7 @@ static inline void SetHidden_002A06C0(Ctl_002A06C0* w, bool h)
         w->flags &= ~4;
 }
 
-extern "C" void func_002A06C0(Self_002A06C0* self)
+extern "C" void GuiOnlineOfflineSelect_Wake(Self_002A06C0* self)
 {
     Ctl_002A06C0* w;
     func_0041EFA0(self);
@@ -330,7 +330,7 @@ static inline void SetHidden_002A0860(Ctl_002A0860* w, bool h)
     else
         w->flags &= ~4;
 }
-extern "C" void func_002A0860(Self_002A0860* self)
+extern "C" void GuiOnlineOfflineSelect_UpdateOnline(Self_002A0860* self)
 {
     Ctl_002A0860* w;
     
@@ -385,7 +385,7 @@ W2A0970* GuiWidget_FindChildByName(S2A0970* s, const char* name);
 
 static inline int Nz2A0970(unsigned char v) { return v != 0; }
 /* Screen init: copies the global mode flag and shows/hides two widgets accordingly. */
-extern "C" void func_002A0970(S2A0970* s)
+extern "C" void GuiOnlineOfflineSelect_Init(S2A0970* s)
 {
     W2A0970* w;
     func_0041F150(s);

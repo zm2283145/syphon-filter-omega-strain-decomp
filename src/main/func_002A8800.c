@@ -6,7 +6,7 @@ extern void func_002A88C0(int* it, void* set, int* key);
 extern void func_002A88B0(int* it, void* set);
 extern int func_002A8890(int* a, int* b);
 /* Returns o when it is the root widget or is registered with the manager, else 0. */
-void* func_002A8800(void* o)
+void* GuiMessageBox_ValidateTarget(void* o)
 {
     Mgr2A8800* m;
 int key[1];

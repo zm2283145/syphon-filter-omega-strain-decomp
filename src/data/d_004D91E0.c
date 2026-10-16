@@ -8,12 +8,12 @@ extern void Light_GetCoronaFlag();
 extern void Light_GetCoronaSize();
 extern void Light_SetPosition();
 extern void Message_GetScriptTypeKey();
+extern void PointLightComp_Start();
 extern void cOutOfAmmoMsg_dtor();
 extern void cOutOfAmmoMsg_v01();
 extern void cOutOfAmmoMsg_v03();
 extern void func_001449B0();
 extern void func_001479A0();
-extern void func_001479D0();
 extern void func_00147A00();
 extern void func_00147A10();
 extern void func_00147A20();
@@ -25,14 +25,14 @@ void *D_004D91E0[8] = {
 };
 
 void *D_004D9200[16] = {
-    0, 0, &Light_Destruct, &func_001479D0,
+    0, 0, &Light_Destruct, &PointLightComp_Start,
     (void *)0x1479e0, &func_00147A00, &func_00147A10, &func_001479A0,
     &Light_GetCoronaSize, &Light_GetCoronaFlag, &Light_SetPosition, &Light_Enable,
     &Light_Disable, (void *)0x1479f0, 0, 0,
 };
 
 void *D_004D9240[16] = {
-    0, 0, 0, &func_001479D0,
+    0, 0, 0, &PointLightComp_Start,
     (void *)0x1479e0, &func_00147A00, &func_00147A10, &func_001479A0,
     &Light_GetCoronaSize, &Light_GetCoronaFlag, &Light_SetPosition, &Light_Enable,
     &Light_Disable, (void *)0x1479f0, 0, 0,

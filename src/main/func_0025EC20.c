@@ -48,12 +48,12 @@ extern int D_00538C64;
 extern char D_00538C68;
 extern V4_0025EC20 D_00539170;
 extern long long D_004BC1B0;
-void func_003820E0(void* m, int idx);
+void Renderer_BindTexture(void* m, int idx);
 void func_0025CD10(void* s);
 void func_0025CA40(void* s);
 void Vec4_Copy(V4_0025EC20* d, V4_0025EC20* s);
-void func_0025C9D0(V4_0025EC20* d, V4_0025EC20* s);
-float func_0025F220(void);
+void GuiBatch_AddVertexColor(V4_0025EC20* d, V4_0025EC20* s);
+float GuiBatch_AddVertexUV(void);
 V4_0025EC20* func_00132000(V4_0025EC20* o, float x, float y, float z, float w);
 void func_00370550(void* s);
 }
@@ -83,9 +83,9 @@ static inline void Emit_0025EC20(const V4c_0025EC20& pos, const V4c_0025EC20& co
     func_0025CA40(D_005381F0);
     e = &RS_0025EC20->ents[D_00539210.f10];
     Vec4_Copy(&e->pos[D_00539224 - 1], (V4_0025EC20*)&pos);
-    func_0025C9D0(&e->c30[D_00539224 - 1], (V4_0025EC20*)&col);
-    u = uv.x + func_0025F220();
-    Vec4_Copy(&e->c34[D_00539224 - 1], func_00132000(&tmp, u, uv.y + func_0025F220(), uv.z, uv.w));
+    GuiBatch_AddVertexColor(&e->c30[D_00539224 - 1], (V4_0025EC20*)&col);
+    u = uv.x + GuiBatch_AddVertexUV();
+    Vec4_Copy(&e->c34[D_00539224 - 1], func_00132000(&tmp, u, uv.y + GuiBatch_AddVertexUV(), uv.z, uv.w));
     D_005381F8 = 6LL << 32;
 }
 static inline unsigned char Prim_0025EC20(void) { if (D_005392D0 & 1) return 3; return 2; }
@@ -95,7 +95,7 @@ static inline void Setup_0025EC20(Arg_0025EC20* a, const V4_0025EC20* vp)
 {
     D_005392D0 = 5;
     D_005392D8 = D_004BC1B0;
-    func_003820E0(D_00539248, a->tex);
+    Renderer_BindTexture(D_00539248, a->tex);
     D_00538C60++;
     { Slot_0025EC20* s0 = SLOT_0025EC20(D_00538C60); s0->f2F6 = 1; }
     {

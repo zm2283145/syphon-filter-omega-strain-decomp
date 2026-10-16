@@ -58,7 +58,7 @@ extern char D_0049C088[];
 extern char D_004A4550[];
 extern char D_004FFB50[];
 void cGOBJ_ctor(GObj_21ADD0* o, int* id, int kind, void* info);
-void func_001365C0(Rel_21ADD0* r);
+void PtrVec_InitEmpty(Rel_21ADD0* r);
 void func_0021B770(Rel_21ADD0* r);
 int String_CompareNoCase(const char* a, const char* b);
 char* strchr(const char* s, int c);
@@ -68,10 +68,10 @@ void* Mem_Alloc(int heap, int size, char* file, int line);
 void func_003D9D30(Name_21ADD0* n, char* s);
 void Mtx_SetBasis(Mat_21ADD0* m, V4_21ADD0* a, V4_21ADD0* b, V4_21ADD0* c);
 void Mtx_SetTranslation(Mat_21ADD0* m, V4_21ADD0* t);
-void func_001396D0(RelFlag_21ADD0* r, int n);
+void PtrVec_Reserve(RelFlag_21ADD0* r, int n);
 GObj_21ADD0* IdMgr_FindCollision(int region, int id);
-unsigned char func_0036DEF0(void* e);
-unsigned char func_00130F40(void* m, char* name, int* out);
+unsigned char FileMan_FindMember(void* e);
+unsigned char Game_FindNamedResource(void* m, char* name, int* out);
 VUM_21ADD0* cVUM_GOBJ_ctor2(void* p, int* a);
 void func_00130D10(void* m, VUM_21ADD0* v, char* name, int z);
 void func_0036DEC0(void* e);
@@ -155,7 +155,7 @@ extern "C" GObj_21ADD0* cGameGOBJ_ctor(GObj_21ADD0* self, int arg, Reader_21ADD0
     *(void**)self = D_004DB4C0;
     {
         RelFlag_21ADD0* rf = &self->r74;
-        func_001365C0(&rf->rel);
+        PtrVec_InitEmpty(&rf->rel);
         rf->flag = 1;
     }
     {
@@ -198,7 +198,7 @@ self->name18 = NewName_21ADD0();
         ReadInt_21ADD0(r, &ib[i]);
     }
     ReadInt_21ADD0(r, &self->f70);
-    func_001396D0(&self->r74, self->f70);
+    PtrVec_Reserve(&self->r74, self->f70);
     for (i = 0; i < self->f70; i++) {
         int a = Read_21ADD0(r);
         int b = Read_21ADD0(r);
@@ -212,10 +212,10 @@ self->name18 = NewName_21ADD0();
         self->idC = id;
         self->id10 = id;
     }
-    if (self->b60 && func_0036DEF0(&e) == 0) {
+    if (self->b60 && FileMan_FindMember(&e) == 0) {
         unsigned char have;
         got = 0;
-        have = func_00130F40(D_004FFB50, s, &got);
+        have = Game_FindNamedResource(D_004FFB50, s, &got);
         {
             VUM_21ADD0* v = (VUM_21ADD0*)New_21ADD0(0x1F4, D_004A4550, 0xBC);
             if (v) {
@@ -259,7 +259,7 @@ self->name18 = NewName_21ADD0();
         int id = self->id10;
         NetMap_BindReceiver(id, ObjId_21ADD0(), self);
     }
-    func_0036E220(&e, -1);
+    FileMan_Release(&e, -1);
     return self;
 }
 

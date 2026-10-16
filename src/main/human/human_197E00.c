@@ -31,7 +31,7 @@ float MotionCtrl_GetSelectorMetric(C5Motion* m, void* arg); /* gsynth: defined b
 #pragma opt_rotateloops off
 extern "C" {
 void func_0036E5D0(void* s);
-void func_0036E220(void* s, int flag);
+void FileMan_Release(void* s, int flag);
 #if 0 /* merge_units */
 void* func_00198760(void* d, const void* s);
 #endif /* merge_units */
@@ -89,7 +89,7 @@ struct SReq {
         p->x186 = 0;
     }
     SReq(int type, char* name, int voice, int x) { SoundRequest_Ctor(this, type, name, voice, x); }
-    __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~SReq() { func_0036E220(&sE4, -1); func_0036E220(&s48, -1); }
+    __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~SReq() { FileMan_Release(&sE4, -1); FileMan_Release(&s48, -1); }
 };
 struct SEv {
     void* vt;
@@ -164,7 +164,7 @@ extern float D_0048A280;
 extern int D_004BDD00;
 extern char D_004DAE30[];
 extern char D_004FFB50[];
-int func_00198F30(void* ctrl, Key* k);
+int MotionCtrl_IsSelectorPlaying(void* ctrl, Key* k);
 float Actor_GetGaitPhase(void* ctrl, Key* k);
 #if 0 /* merge_units */
 float MotionCtrl_GetSelectorMetric(void* ctrl, Key* k);
@@ -191,8 +191,8 @@ static inline void PlayEv(SReq* r, ActorX* a, int now)
     ev.flag = 1;
     Event_Send(&ev, D_004FFB50, now);
     ev.vt = D_004DAE30;
-    func_0036E220(&ev.s114, -1);
-    func_0036E220(&ev.s78, -1);
+    FileMan_Release(&ev.s114, -1);
+    FileMan_Release(&ev.s78, -1);
     cMessage_dtor(&ev, 0);
 }
 extern "C" void Actor_UpdateAnimationEvents(ActorX* a)
@@ -201,7 +201,7 @@ extern "C" void Actor_UpdateAnimationEvents(ActorX* a)
     Key k2(5);
     char* root = (char*)a + 0x2EC0; SReq* snd = 0;
     SReq req;
-    if (func_00198F30(root + 0x10, &k1) && HasCtl(a)) {
+    if (MotionCtrl_IsSelectorPlaying(root + 0x10, &k1) && HasCtl(a)) {
         float p1;
         float h;
         float ph = Actor_GetGaitPhase(root + 0x10, &k1);
@@ -231,7 +231,7 @@ extern "C" void Actor_UpdateAnimationEvents(ActorX* a)
     } else {
         a->phase1 = 0.0f;
     }
-    if (func_00198F30(root + 0x10, &k2)) {
+    if (MotionCtrl_IsSelectorPlaying(root + 0x10, &k2)) {
         float p2;
         float t;
         float ph = Actor_GetGaitPhase(root + 0x10, &k2);
@@ -259,8 +259,8 @@ extern "C" void Actor_UpdateAnimationEvents(ActorX* a)
         ev.flag = now;
         Event_Send(&ev, D_004FFB50, now);
         ev.vt = D_004DAE30;
-        func_0036E220(&ev.s114, -1);
-        func_0036E220(&ev.s78, -1);
+        FileMan_Release(&ev.s114, -1);
+        FileMan_Release(&ev.s78, -1);
         cMessage_dtor(&ev, 0);
     }
     if (a->sec && a->st33E4 == 1) {
@@ -284,8 +284,8 @@ extern "C" void Actor_UpdateAnimationEvents(ActorX* a)
                     ev.flag = 1;
                     Event_Send(&ev, D_004FFB50, 0);
                     ev.vt = D_004DAE30;
-                    func_0036E220(&ev.s114, -1);
-                    func_0036E220(&ev.s78, -1);
+                    FileMan_Release(&ev.s114, -1);
+                    FileMan_Release(&ev.s78, -1);
                     cMessage_dtor(&ev, 0);
                 }
             }

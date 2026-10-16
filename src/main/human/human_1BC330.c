@@ -10,7 +10,7 @@
 /* merge_units: begin func_001BC330 */
 #pragma push /* merge_units */
 typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
-void func_001BC330(V4* a, V4* b) {
+void Xform_Translate_1BC330(V4* a, V4* b) {
     char* pv1 = (char*)a + 0x10;
     asm {
         lqc2 vf1, 0x30(pv1)

@@ -131,7 +131,7 @@ float Model_GetFirstFloat(void* m);
 V4_L* AnimRate_Init(V4_L* p, float f);
 V4_L* Vec4_Copy_18A350(V4_L* d, V4_L* s);
 void AnimEvent_Construct(Ev_L* e);
-signed char func_0018A2F0(Sel_L* s);
+signed char MotionRequest_GetMode(Sel_L* s);
 void* func_0018A2E0(Sel_L* s);
 float func_0018A2D0(Sel_L* s);
 float func_0018A2C0(Sel_L* s);
@@ -265,7 +265,7 @@ static inline void Install_L(Act_L* a, Sel_L* sel, Rate_L* r)
         an->b5 = 0;
         AnimEvent_Construct(&e1);
         AnimEvent_Construct(&e2);
-        AnimCtl_InstallMotion(an, (void*)out, func_0018A2F0(sel), &vec, &y, &e1, &e2, func_0018A2E0(sel), func_0018A2D0(sel), func_0018A2C0(sel));
+        AnimCtl_InstallMotion(an, (void*)out, MotionRequest_GetMode(sel), &vec, &y, &e1, &e2, func_0018A2E0(sel), func_0018A2D0(sel), func_0018A2C0(sel));
         func_0018A260(&e2, -1);
         func_0018A260(&e1, -1);
     }

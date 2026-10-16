@@ -4,7 +4,7 @@ struct Ev48C0 { unsigned short type; unsigned short sub; unsigned short x4; unsi
 struct W48C0 { char pad[0x4C]; int m4C; };
 extern int D_004FFC2C;
 extern "C" {
-void func_002427A0(int a);
+void Hud_ToggleMap(int a);
 void func_0026C130(int a);
 int func_0026C180(int a);
 int func_0026C3B0(int a);
@@ -24,7 +24,7 @@ extern "C" int func_004648C0(W48C0* self, Ev48C0* e)
     if (press) {
         switch (e->key) {
         case 0x10:
-            func_002427A0(D_004FFC2C);
+            Hud_ToggleMap(D_004FFC2C);
             break;
         case 0x100:
             func_0026C130(self->m4C);

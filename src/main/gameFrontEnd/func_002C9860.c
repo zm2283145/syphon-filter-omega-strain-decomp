@@ -1,8 +1,8 @@
 
 extern void* Service_Lookup(void* a, void* b);
 extern void func_001450F0(int);
-extern char* func_001698C0(void);
-extern void func_001C9710(void*);
+extern char* App_GetInstance(void);
+extern void SoundMgr_UnloadLevel(void*);
 extern void func_002C9C80(void*, int);
 extern void func_002C9E20(void*);
 extern void func_003D1700(void*);
@@ -48,10 +48,10 @@ static inline void Copy(PStr* buf, const char* s)
     buf->len = n;
 }
 
-void func_002C9860(Obj9860* self, unsigned char mode)
+void FrontEnd_SuspendGui(Obj9860* self, unsigned char mode)
 {
     if (self->f37 == 0) {
-        { char* q = func_001698C0(); q[0x278] = 1; }
+        { char* q = App_GetInstance(); q[0x278] = 1; }
         func_003D1700(D_0055A700);
         switch (mode) {
         case 0: {
@@ -63,7 +63,7 @@ void func_002C9860(Obj9860* self, unsigned char mode)
                 unsigned char* g;
                 Copy(&save, D_004FFC90);
                 strncpy(D_004FFC90, D_004ACF48, 0x80);
-                func_001C9710(svc);
+                SoundMgr_UnloadLevel(svc);
                 strncpy(D_004FFC90, save.text, 0x80);
                 g = DME_GetLobby();
                 if (g && g[0x2409] == 0) {

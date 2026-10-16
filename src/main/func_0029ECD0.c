@@ -9,7 +9,7 @@
 
 extern GameMachine* D_004FFC04;
 extern int FrontEnd_ClosePopup(GameMachine* machine, int arg);
-extern void func_0033D360(GuiScreen* self);
+extern void GuiScreen_Sleep(GuiScreen* self);
 extern GuiManager* Gui_GetScreenStack(void);
 extern int LobbyArray_Free(GuiSlot* slot);
 
@@ -17,7 +17,7 @@ extern int LobbyArray_Free(GuiSlot* slot);
 int func_0029ECD0(GuiOnlineConnect* self) {
     GuiManager* mgr;
 
-    func_0033D360(&self->base);
+    GuiScreen_Sleep(&self->base);
     LobbyArray_Free(&self->slots[0]);
     LobbyArray_Free(&self->slots[1]);
     LobbyArray_Free(&self->slots[2]);

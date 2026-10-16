@@ -14,7 +14,7 @@ typedef struct {
 } SoapParse0598;
 
 extern int String_CompareN(const char *, const char *, unsigned int);
-extern char *func_00129C80(const char *searchee, const char *lookfor);
+extern char *strstr(const char *searchee, const char *lookfor);
 extern int func_0030EFD0(char *a, char *b, char *tag);
 extern char *strncpy(char *, const char *, unsigned int);
 extern unsigned int strlen(const char *);
@@ -55,7 +55,7 @@ void func_00310598(char *tag, char **attrs, SoapParse0598 *c)
                 break;
             }
         }
-    } else if (func_00129C80(D_004B0DA0, tag)) {
+    } else if (strstr(D_004B0DA0, tag)) {
         strncpy(c->name, tag, 0x100);
         for (j = 0; attrs[j] != 0; j++) {
             switch (j) {
@@ -74,9 +74,9 @@ void func_00310598(char *tag, char **attrs, SoapParse0598 *c)
 /* merge_units: begin func_00310820 */
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #if 0 /* merge_units */
-int func_00129C80(int *, int);
+int strstr(int *, int);
 #endif /* merge_units */
-#define func_00129C80(a0, a1) ((int)func_00129C80((const char *)(a0), (const char *)(a1))) /* merge_units */
+#define strstr(a0, a1) ((int)strstr((const char *)(a0), (const char *)(a1))) /* merge_units */
                         
 int func_0030F050(int, int, int);                   
 #if 0 /* merge_units */
@@ -90,11 +90,11 @@ void func_00310820(int arg0, int arg1) {
         if (func_0030F050(arg1 + 0x108, arg1 + 0x208, arg0) == 0) {
             F_(arg1, 0x20C, unsigned char) = 1U;
         }
-        if (func_00129C80(&D_004B0DA0, arg0) != 0) {
+        if (strstr(&D_004B0DA0, arg0) != 0) {
             F_(arg1, 0x8, signed char) = 0xA;
         }
     }
 }
-#undef func_00129C80 /* merge_units */
+#undef strstr /* merge_units */
 #undef D_004B0DA0 /* merge_units */
 /* merge_units: end func_00310820 */

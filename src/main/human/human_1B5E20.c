@@ -242,13 +242,13 @@ void* Mem_Alloc(int, int, char*, int);
 void ItemList_Init(void*);
 void* Flashlight_Construct(void*, Act*);
 void func_0036E5D0(Hog*);
-void func_0036E220(Hog*, int);
+void FileMan_Release(Hog*, int);
 void Actor_SetHealth(Act*, int, int);
 void NetGame_InitLocalSlot(int*, int);
 Skl* SklRegistry_Find(char*, char*);
 int Archive_Open(char*, char*, int, int);
 void Hog_Register(Hog*, char*, int, int);
-int func_0036DEF0(Hog*);
+int FileMan_FindMember(Hog*);
 int FileMan_GetSize(Hog*);
 void func_00406700(Skl*, Hog*, int);
 void WeaponInv_Add(void*, int, int, int, int, int);
@@ -264,7 +264,7 @@ int AgentData_HasUnlock(int, int);
 struct HogH {
     Hog h;
     HogH() { func_0036E5D0(&h); }
-    __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~HogH() { func_0036E220(&h, -1); }
+    __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~HogH() { FileMan_Release(&h, -1); }
 };
 static inline void* Alloc(int size, int line)
 {
@@ -378,7 +378,7 @@ extern "C" bool Npc_Initialize(Act* a, Mtx* mtx, char* name, int health, int max
             sk = SklRegistry_Find(&D_0055D4F8, a->x3318);
             if (!sk) {
                 Hog_Register(&hog.h, a->x3318, Archive_Open(&D_004FFB8C, path, 0, 0), 0);
-                if ((unsigned char)func_0036DEF0(&hog.h)) {
+                if ((unsigned char)FileMan_FindMember(&hog.h)) {
                     char err[0x40];
                     sprintf(err, D_0049E940, name);
                     return 0;
@@ -391,7 +391,7 @@ extern "C" bool Npc_Initialize(Act* a, Mtx* mtx, char* name, int health, int max
             sk = SklRegistry_Find(&D_0055D4F8, name);
             if (!sk) {
                 Hog_Register(&hog.h, name, Archive_Open(&D_004FFB8C, path, 0, 0), 0);
-                if ((unsigned char)func_0036DEF0(&hog.h)) {
+                if ((unsigned char)FileMan_FindMember(&hog.h)) {
                     char err[0x40];
                     sprintf(err, D_0049E940, name);
                     return 0;

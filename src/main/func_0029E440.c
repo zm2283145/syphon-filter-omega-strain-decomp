@@ -40,14 +40,14 @@ void FrontEnd_ClosePopup(void* ui, int id);
 void func_0029D390(S_0029E440* self);
 void func_0037E320(void* p);
 void* Service_Lookup(void* a, void* b);
-void func_001C9710(void* svc);
+void SoundMgr_UnloadLevel(void* svc);
 void func_002B4FA8(int id);
 void func_002B4E50(void);
-void* func_00189540(void* p);
+void* String_CStr_189540(void* p);
 void func_0044B970(void* a, char* b);
 void func_0029DE70(S_0029E440* self, int a);
 void func_0029DFC0(S_0029E440* self);
-int func_0033CF90(S_0029E440* self, void* w, int msg, int sub);
+int GuiScreen_HandleEvent(S_0029E440* self, void* w, int msg, int sub);
 }
 extern "C" int func_0029E440(S_0029E440* self, void* w, int msg, int sub, char* text)
 {
@@ -105,12 +105,12 @@ extern "C" int func_0029E440(S_0029E440* self, void* w, int msg, int sub, char* 
                 func_0037E320(D_005381F0);
                 svc = Service_Lookup(D_004FFB50, D_004F2CC0);
                 if (svc)
-                    func_001C9710(svc);
+                    SoundMgr_UnloadLevel(svc);
                 id = D_0055A830 ? *D_0055A830 : -1;
                 if (id != -1)
                     func_002B4FA8(id);
                 func_002B4E50();
-                func_0044B970(func_00189540(D_004FFBA4), (*(char**)dat_0048B988));
+                func_0044B970(String_CStr_189540(D_004FFBA4), (*(char**)dat_0048B988));
             } else if (sub == 0x1F) {
                 self->f88 = 5;
             } else {
@@ -146,5 +146,5 @@ extern "C" int func_0029E440(S_0029E440* self, void* w, int msg, int sub, char* 
             return 1;
         }
     }
-    return func_0033CF90(self, w, msg, sub);
+    return GuiScreen_HandleEvent(self, w, msg, sub);
 }

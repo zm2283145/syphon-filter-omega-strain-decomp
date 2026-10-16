@@ -36,9 +36,9 @@ extern void Event_Send(E2SoundMsg*, void*, int);
 #define Event_Send(a0, a1, a2) (Event_Send((void *)(a0), (a1), (a2))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_0036E220(void*, int);
+extern void FileMan_Release(void*, int);
 #endif /* merge_units */
-#define func_0036E220(a0, a1) ((void)func_0036E220((a0), (a1))) /* merge_units */
+#define FileMan_Release(a0, a1) ((void)FileMan_Release((a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void cMessage_dtor(E2SoundMsg*, int);
@@ -57,17 +57,17 @@ void Voice_PlayQuip(char* name, int arg) {
         SoundMsg_WrapAction(&msg, &req);
         Event_Send(&msg, D_004FFB50, 0);
         msg.vtbl = D_004DAE10;
-        func_0036E220(msg.b, -1);
-        func_0036E220(msg.a, -1);
+        FileMan_Release(msg.b, -1);
+        FileMan_Release(msg.a, -1);
         cMessage_dtor(&msg, 0);
     }
-    func_0036E220(req.b, -1);
-    func_0036E220(req.a, -1);
+    FileMan_Release(req.b, -1);
+    FileMan_Release(req.a, -1);
 }
 #undef SoundRequest_Ctor /* merge_units */
 #undef SoundMsg_WrapAction /* merge_units */
 #undef Event_Send /* merge_units */
-#undef func_0036E220 /* merge_units */
+#undef FileMan_Release /* merge_units */
 #undef cMessage_dtor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001C67C0(void) {}
@@ -92,8 +92,8 @@ extern "C" void Global_StopMusic(const char* name, Hum_6890* h)
     SoundRequest req;
     SoundRequest_Ctor(&req, 5, name, 0, 0);
     SoundEvent_Ctor(&ev, &req, 1);
-    func_0036E220(&req.b, -1);
-    func_0036E220(&req.a, -1);
+    FileMan_Release(&req.b, -1);
+    FileMan_Release(&req.a, -1);
     if (D_005721C8) {
         if (h->b14) {
             ev.kind = 1;
@@ -105,8 +105,8 @@ extern "C" void Global_StopMusic(const char* name, Hum_6890* h)
         Event_Send(&ev, D_004FFB50, 0);
     }
     ev.vtable = D_004DADF0;
-    func_0036E220(&ev.req.b, -1);
-    func_0036E220(&ev.req.a, -1);
+    FileMan_Release(&ev.req.b, -1);
+    FileMan_Release(&ev.req.a, -1);
     cMessage_dtor(&ev, 0);
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -129,8 +129,8 @@ extern "C" void Global_PlayMusic(const char* name, Hum_6890* h)
     SoundRequest req;
     SoundRequest_Ctor(&req, 5, name, 0, 0);
     EffectMsg_WrapRequest(&ev, &req);
-    func_0036E220(&req.b, -1);
-    func_0036E220(&req.a, -1);
+    FileMan_Release(&req.b, -1);
+    FileMan_Release(&req.a, -1);
     if (D_005721C8) {
         if (h->b14) {
             ev.kind = 1;
@@ -142,8 +142,8 @@ extern "C" void Global_PlayMusic(const char* name, Hum_6890* h)
         Event_Send(&ev, D_004FFB50, 0);
     }
     ev.vtable = D_004DAE30;
-    func_0036E220(&ev.req.b, -1);
-    func_0036E220(&ev.req.a, -1);
+    FileMan_Release(&ev.req.b, -1);
+    FileMan_Release(&ev.req.a, -1);
     cMessage_dtor(&ev, 0);
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -196,9 +196,9 @@ extern void Event_Send(EventMsg*, void*, int);
 #define Event_Send(a0, a1, a2) (Event_Send((void *)(a0), (a1), (a2))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_0036E220(void*, int);
+extern void FileMan_Release(void*, int);
 #endif /* merge_units */
-#define func_0036E220(a0, a1) ((void)func_0036E220((a0), (a1))) /* merge_units */
+#define FileMan_Release(a0, a1) ((void)FileMan_Release((a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void cMessage_dtor(EventMsg*, int);
@@ -211,13 +211,13 @@ void Sound_StopForObject(int channel, int id, int obj) {
     SndCmd cmd;
     SoundRequest_Ctor(&cmd, (signed char)channel, id, obj, 0);
     SoundEvent_Ctor(&msg, &cmd, 0);
-    func_0036E220(cmd.partB, -1);
-    func_0036E220(cmd.partA, -1);
+    FileMan_Release(cmd.partB, -1);
+    FileMan_Release(cmd.partA, -1);
     if (!D_005721C8 || !Snd_Allowed()) msg.immediate = 1;
     Event_Send(&msg, &D_004FFB50, 0);
     msg.vtable = &D_004DADF0;
-    func_0036E220(msg.partB, -1);
-    func_0036E220(msg.partA, -1);
+    FileMan_Release(msg.partB, -1);
+    FileMan_Release(msg.partA, -1);
     cMessage_dtor(&msg, 0);
 }
 #undef D_004FFB50 /* merge_units */
@@ -225,7 +225,7 @@ void Sound_StopForObject(int channel, int id, int obj) {
 #undef SoundRequest_Ctor /* merge_units */
 #undef SoundEvent_Ctor /* merge_units */
 #undef Event_Send /* merge_units */
-#undef func_0036E220 /* merge_units */
+#undef FileMan_Release /* merge_units */
 #undef cMessage_dtor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001C6B70(void) {}

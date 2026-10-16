@@ -25,7 +25,7 @@ static inline void Req_Default(SoundRequest* p) {
     p->x186 = 0;
 }
 typedef struct { int type; int pad[3]; __int128 name; } Src_EBA0;
-SoundEvent* func_0020EBA0(SoundEvent* ev, Src_EBA0* src, Voice_F190* voice) {
+SoundEvent* SoundStopMsg_Ctor(SoundEvent* ev, Src_EBA0* src, Voice_F190* voice) {
     SoundRequest* p;
     Event_Construct(ev, D_004F53D8);
     ev->vtable = D_004DADF0;

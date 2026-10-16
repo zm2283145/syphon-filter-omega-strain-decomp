@@ -27,7 +27,7 @@ extern unsigned char D_005721C0;
 extern unsigned char D_005721C8;
 void cGOBJ_ctor(Part_59D0*, int*, int, void*);
 void* func_0036E5D0(void* entry);
-void* func_0036E220(void* entry, int flags);
+void* FileMan_Release(void* entry, int flags);
 void Mtx_FromRowsAndTranslation(Mtx* m, const V4& a, const V4& b, const V4& c, const V4& t);
 void Mtx_SetBasis(Mtx* m, V4* a, V4* b, V4* c);
 void Mtx_SetTranslation(Mtx* m, V4* t);
@@ -60,7 +60,7 @@ static inline void ReadV(Reader* r, V4* v, float w)
 static inline unsigned char IsLocal() {unsigned char r;if(D_005721C8)r=D_005721C0;else {r=1; asm { .set reorder }}return r;}
 #pragma inline_depth(10)
 static inline int LocalId() { int r=0;int a=D_005721A8;if(*(volatile unsigned char*)&D_005721C8) { if(D_00494178==-1)NetGame_InitLocalSlot(&D_00494178,a);r=D_00494178; }else { asm { .set reorder } }return r; }
-extern "C" Part_59D0* func_001C59D0(Part_59D0* self, Reader* r)
+extern "C" Part_59D0* Loader_ReadParticleRecord(Part_59D0* self, Reader* r)
 {
     FEnt fe;
     Xf x;
@@ -134,7 +134,7 @@ extern "C" Part_59D0* func_001C59D0(Part_59D0* self, Reader* r)
             NetMap_BindReceiver(h, nid, self);
         }
     }
-    func_0036E220(&fe, -1);
+    FileMan_Release(&fe, -1);
     return self;
 }
 

@@ -5,7 +5,7 @@ typedef struct {
     char pad[0x1C]; float f1C; float f20; float f24; float f28; float f2C; Src_D640* p30; float f34;
 } Ch_D640;
 
-void func_002726F0(Ch_D640* c, float x, float d) {
+void CameraShake_Apply(Ch_D640* c, float x, float d) {
     float s;
     *(float*)((char*)c + 0x10) = x;
     if (d >= 0.0f) {

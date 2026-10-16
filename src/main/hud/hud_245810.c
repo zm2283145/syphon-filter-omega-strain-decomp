@@ -41,7 +41,7 @@ static inline void merge_flush_func_00245810(void) {}
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 float func_00245810();
 
-float func_00245890(int arg0) {
+float Hud_GetMissionTime(int arg0) {
     if (D_005721C8 != 0) {
         return func_00245810() - F_(arg0, 0x6E0, float);
     }
@@ -72,13 +72,13 @@ extern char D_004DC4A0[];
 extern int D_004FFC04;
 void ActiveList_EraseMatching(void* list, Pred_2458E0 p);
 void func_00242E30(It_2458E0* out, char* l);
-void func_002426B0(It_2458E0* out, char* l);
+void CalloutList_End(It_2458E0* out, char* l);
 void func_002426A0(It_2458E0* out, It_2458E0* in);
 void func_003E7EC0(int a, int b);
 void func_003E9770(int a);
 void func_003E8EB0(int a);
 void Interface_Dtor(void* p, int f);
-void func_002CB160(int a);
+void FrontEnd_TeardownGui(int a);
 void func_00245D80(void* p, int f);
 void cGOBJ_dtor(void* p, int f);
 void func_003FA4B0(void* p, int f);
@@ -91,7 +91,7 @@ void __dl__FPv(void* p);
 static inline Pred_2458E0 MakePred_(void** r) { Eq_2458E0 e; return Pred_2458E0(e, r); }
 static inline void Unreg_(Self_2458E0* s, int* o) { *o = 0; ActiveList_EraseMatching(s->x90, MakePred_((void**)&o)); }
 static inline void BeginI_(It_2458E0* out, char* l) { It_2458E0 t; func_00242E30(&t, l); func_002426A0(out, &t); }
-static inline void EndI_(It_2458E0* out, char* l) { It_2458E0 t; func_002426B0(&t, l); func_002426A0(out, &t); }
+static inline void EndI_(It_2458E0* out, char* l) { It_2458E0 t; CalloutList_End(&t, l); func_002426A0(out, &t); }
 static inline void Begin_(It_2458E0* out, char* l) { BeginI_(out, l); }
 static inline void End_(It_2458E0* out, char* l) { EndI_(out, l); }
 static inline void DelEnt_(Ent_2458E0* e) { AllocGuard g; if (e) { if (e->c) func_003E7EC0(e->c, 0); if (e->d) func_003E9770(e->d); } Mem_Free(0, e, D_004A7210, 0x1A9); }
@@ -119,7 +119,7 @@ extern "C" Self_2458E0* func_002458E0(Self_2458E0* self, short flag)
             DelV_(self->x6A0);
         }
         Del54_(self->x54);
-        func_002CB160(D_004FFC04);
+        FrontEnd_TeardownGui(D_004FFC04);
         if (self->x6E8)
             func_00245D80(self->x6E8, 0);
         if (&self->x634) {

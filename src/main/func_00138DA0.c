@@ -4,4 +4,4 @@
 #include "object_list_erase_one.h"
 
 /* Erase one node from a linked list. */
-DEFINE_OBJECT_LIST_ERASE_ONE(func_00138DA0)
+DEFINE_OBJECT_LIST_ERASE_ONE(List_Erase)

@@ -19,7 +19,7 @@ extern void func_0041E0F0(void* a, void* b, int a2, int a3, int a4);
 extern void func_002469F0(EntryVec* v, Entry21* pos, int n, Entry21* value);
 
 /* Appends a (name, value) entry to the vector after notifying the UI. */
-void func_00241DA0(EntryVec* self, const char* value, const char* name)
+void Hud_AddPdaQuip(EntryVec* self, const char* value, const char* name)
 {
     Entry21 e;
     void* ui;
@@ -52,12 +52,12 @@ extern float D_0055A280;
 extern float D_0055A284;
 extern float D_0055A288;
 extern float D_0055A28C;
-extern void func_00260EC0(int);
+extern void Hud_SelectColourRamp(int);
 
 /* Selects one of two color presets and publishes it to the global color. */
-void func_00241E30(Obj6E4* o, int alt) {
+void Hud_SelectTextColorTable(Obj6E4* o, int alt) {
     Color4* c;
-    func_00260EC0(alt);
+    Hud_SelectColourRamp(alt);
     o->color = alt ? &D_004F7D70 : &D_004F7D60;
     c = o->color;
     D_0055A280 = c->r;

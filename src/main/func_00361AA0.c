@@ -19,18 +19,18 @@ extern "C" {
 extern char D_004BB978[]; extern char D_004BB988[]; extern char D_004BB998[]; extern char D_004BB9A8[];
 extern char D_004BB9B8[]; extern char D_004BB9C8[];extern char D_004A7520[]; extern char D_004ABAB0[]; extern char D_004A9870[]; extern char D_004B88F0[]; extern char D_004BBBB0[];
 extern void* D_004FFC04;
-void func_0033D3F0(O_361AA0* o);
+void GuiScreen_Init(O_361AA0* o);
 W_361AA0* GuiWidget_FindChildByName(void* o, char* name);
 void func_0041C0D0(W_361AA0* w, int v);
 void func_00424820(W_361AA0* w, int v);
-void func_002C9D50(void* p);
+void FrontEnd_GetCharacterData(void* p);
 void func_00361AA0(O_361AA0* o);
 }
 static inline W_361AA0* Cast_361AA0(W_361AA0* w, void* t) { return w && w->IsA(t) ? w : 0; }
 
 void func_00361AA0(O_361AA0* o)
 {
-    func_0033D3F0(o);
+    GuiScreen_Init(o);
     o->f100 = Cast_361AA0(GuiWidget_FindChildByName(o, D_004BB978), D_004A7520);
     o->f104 = Cast_361AA0(GuiWidget_FindChildByName(o, D_004BB988), D_004A7520);
     o->f108 = Cast_361AA0(GuiWidget_FindChildByName(o, D_004BB998), D_004A7520);
@@ -45,5 +45,5 @@ void func_00361AA0(O_361AA0* o)
     o->f110->flags &= ~0x80;
     func_00424820(o->f110, o->f110->f5C - 2);
     func_00424820(o->f10C, o->f10C->f5C - 4);
-    func_002C9D50(D_004FFC04);
+    FrontEnd_GetCharacterData(D_004FFC04);
 }

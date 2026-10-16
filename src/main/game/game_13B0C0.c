@@ -62,7 +62,7 @@ Word* func_0013B170(Word* dst, Word* src) {
     return dst;
 }
 
-void func_0013B180(Iter* out, PtrVec* v) {
+void List_Begin(Iter* out, PtrVec* v) {
     out->p = v->data;
 }
 #pragma pop /* merge_units */

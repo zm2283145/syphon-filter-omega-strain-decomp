@@ -215,7 +215,7 @@ void func_00189F40(void* p, int f);
 void func_00189FD0(void* p, int f);
 void func_0018A040(void* p, int f);
 void func_0018A260(void* p, int f);
-int func_0018A2F0(void* s);
+int MotionRequest_GetMode(void* s);
 void* func_0018A2E0(void* s);
 float func_0018A2D0(void* s);
 float func_0018A2C0(void* s);
@@ -476,7 +476,7 @@ inline void CtlS::Sel(Buf_A0* selp, V4* rtp)
         s[5] = 0;
         AnimEvent_Construct(&e1);
         AnimEvent_Construct(&e2);
-        md = func_0018A2F0(selp);
+        md = MotionRequest_GetMode(selp);
         pp = func_0018A2E0(selp);
         g0 = func_0018A2D0(selp);
         AnimCtl_InstallMotion(s, out, md, &rr, &y, &e1, &e2, pp, g0, func_0018A2C0(selp));
@@ -505,7 +505,7 @@ inline void CtlS::Sel2(Buf_A0* rsel, Buf_A0* selp, V4* rtp)
         s[5] = 0;
         AnimEvent_Construct(&e1);
         AnimEvent_Construct(&e2);
-        md = func_0018A2F0(selp);
+        md = MotionRequest_GetMode(selp);
         pp = func_0018A2E0(selp);
         g0 = func_0018A2D0(selp);
         AnimCtl_InstallMotion(s, out, md, &rr, &y, &e1, &e2, pp, g0, func_0018A2C0(selp));
@@ -874,7 +874,7 @@ inline void CtlT::SelX(const RTU& rtr, const ST& sr)
         s[5] = 0;
         AnimEvent_Construct(&e1);
         AnimEvent_Construct(&e2);
-        md = func_0018A2F0(selp);
+        md = MotionRequest_GetMode(selp);
         pp = func_0018A2E0(selp);
         g0 = func_0018A2D0(selp);
         AnimCtl_InstallMotion(s, out, md, &rr, &y, &e1, &e2, pp, g0, func_0018A2C0(selp));
@@ -906,7 +906,7 @@ inline void CtlT::SelX2(const RTU& rtr, const ST& sr)
         s[5] = 0;
         AnimEvent_Construct(&e1);
         AnimEvent_Construct(&e2);
-        md = func_0018A2F0(selp);
+        md = MotionRequest_GetMode(selp);
         pp = func_0018A2E0(selp);
         g0 = func_0018A2D0(selp);
         AnimCtl_InstallMotion(s, out, md, &rr, &y, &e1, &e2, pp, g0, func_0018A2C0(selp));

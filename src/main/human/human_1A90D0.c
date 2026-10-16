@@ -37,7 +37,7 @@ static inline void merge_flush_func_001A90D0(void) {}
 #pragma push /* merge_units */
 #pragma push
 #pragma opt_common_subs off
-V4 func_001A9160(V4* b, V4* c, float s) {
+V4 Vec4_Lerp(V4* b, V4* c, float s) {
     V4 l0;
     V4* q1 = &l0;
     int rv1;

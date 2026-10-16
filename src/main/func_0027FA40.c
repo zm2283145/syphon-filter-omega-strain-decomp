@@ -57,7 +57,7 @@ struct Cam {
     int GetX50() const { return Get() ? Get()->x50 : 0; }
 };
 extern "C" {
-extern void func_00280070(Cam*, Vec3f*, int, int, int, Quat*);
+extern void PlayerCamera_LookAtLock(Cam*, Vec3f*, int, int, int, Quat*);
 extern void Mtx_ToEuler(Vec3f*, float*);
 extern float func_00280040(Vec3f*);
 extern float* func_00280050(Vec3f*);
@@ -67,7 +67,7 @@ extern float* func_0027FF90(Vec3f*);
 extern float func_0027FFA0(Vec3f*);
 extern float* func_0027FFB0(Vec3f*);
 extern Vec3f* func_0027FF60(Vec3f*, Vec3f*);
-extern float func_0027FFC0(float);
+extern float Math_WrapAnglePi(float);
 extern float Math_Cos(float);
 extern float Math_Sin(float);
 extern float fabsf(float);
@@ -78,12 +78,12 @@ static inline void Wrap(Vec3f* t, Vec3f& d)
 {
     Vec3f r;
     func_00280060(&r);
-    *func_00280050(&r) = func_0027FFC0(func_00280040(&d));
-    *func_0027FFB0(&r) = func_0027FFC0(func_0027FFA0(&d));
-    *func_0027FF90(&r) = func_0027FFC0(func_0027FF80(&d));
+    *func_00280050(&r) = Math_WrapAnglePi(func_00280040(&d));
+    *func_0027FFB0(&r) = Math_WrapAnglePi(func_0027FFA0(&d));
+    *func_0027FF90(&r) = Math_WrapAnglePi(func_0027FF80(&d));
     func_0027FF60(t, &r);
 }
-extern "C" void func_0027FA40(Cam* self, Quat* out)
+extern "C" void PlayerCamera_UpdateR1Pick(Cam* self, Quat* out)
 {
     if (self->GetX50()) {
         if (self->Get()->Ready()) {
@@ -97,7 +97,7 @@ extern "C" void func_0027FA40(Cam* self, Quat* out)
             int a2;
             q2 = Quat(true);
             { void* yy = &q2; }
-            func_00280070(self, &tgt, a2, 10, 0, &q2);
+            PlayerCamera_LookAtLock(self, &tgt, a2, 10, 0, &q2);
             n = self->x50;
             if (n->b50) n->Refresh();
             Mtx_ToEuler(&e, n->m10);

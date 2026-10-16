@@ -5,7 +5,7 @@ extern char D_0055A340[];
 extern char D_0055A500[];
 extern int func_00369920(int, int, int);
 
-int func_0026BD60(void) {
+int PadRumble_Stop(void) {
     int a0, a1, a2, v0, v1;
     int cond;
 

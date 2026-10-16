@@ -16,26 +16,26 @@ struct W_244B90 { virtual void v0(); virtual void v1(); virtual void v2(); virtu
 extern "C" {
 extern unsigned char D_004FFC29;
 extern char D_005381F0[];
-void func_00261130(char* o);
+void HudRadar_ComputeMarkerMatrix(char* o);
 void func_0037A1E0(void* a);
 Mgr_244B90* Gui_GetScreenStack(void);
-void func_0016E880(Word* w, void* l);
+void List_Begin_16E880(Word* w, void* l);
 int* func_002440B0(int* dst, int value);
 void func_00244080(Word* w, void* l);
 Word* func_00244070(Word* dst, Word* src);
 void func_003E7670(int a);
-void func_002434F0(char* o);
+void Hud_DrawCallouts(char* o);
 }
-#define Begin_244B90(l) (func_0016E880(&tmp, l), func_002440B0(&r, tmp.value), (char*)r)
+#define Begin_244B90(l) (List_Begin_16E880(&tmp, l), func_002440B0(&r, tmp.value), (char*)r)
 #define End_244B90(l) (func_00244080(&e, l), func_00244070(&e2, &e), (char*)e2.value)
 
-extern "C" void func_00244B90(char* o)
+extern "C" void Hud_Draw(char* o)
 {
     char* n;
     char* v;
     W_244B90* a;
     Word e2; int r; Word tmp; Word e;
-    func_00261130(o);
+    HudRadar_ComputeMarkerMatrix(o);
     if (!D_004FFC29) {
         func_0037A1E0(D_005381F0);
         if (F_(o, 0x6A0, int) && F_(o, 0x6A9, unsigned char)) {
@@ -50,7 +50,7 @@ extern "C" void func_00244B90(char* o)
             func_003E7670(F_(o, 0x54, int));
             func_0037A1E0(D_005381F0);
         } else {
-            func_002434F0(o);
+            Hud_DrawCallouts(o);
             func_003E7670(F_(o, 0x54, int));
             Gui_GetScreenStack()->Refresh();
         }
@@ -73,9 +73,9 @@ typedef struct { float r, g, b, a; } Col_244D10;
 extern "C" int ScriptEvent_TimeFormat(char* buf, float seconds);
 extern "C" void func_0041C070(Tx_244D10* t, Col_244D10* c);
 extern "C" void func_0041BEB0(Tx_244D10* t, char* text, int zero);
-extern "C" int func_002071F0(void* p);
+extern "C" int String_Length(void* p);
 
-extern "C" bool func_00244D10(T_244D10* t, float now)
+extern "C" bool HudTimer_Update(T_244D10* t, float now)
 {
     unsigned char running = t->time > now;
     bool expired = 0;
@@ -110,7 +110,7 @@ extern "C" bool func_00244D10(T_244D10* t, float now)
                 func_0041C070(t->text, &c);
                 func_0041BEB0(t->text, buf, 0);
                 t->text->flags |= 2;
-                if (func_002071F0(t->obj->sub))
+                if (String_Length(t->obj->sub))
                     t->obj->flags |= 2;
             }
             t->bC = show;
@@ -134,7 +134,7 @@ extern void func_0041BEB0(void* target, const char* text, int zero);
 #endif /* merge_units */
 #define func_0041BEB0(a0, a1, a2) (func_0041BEB0((void *)(a0), (void *)(a1), (a2))) /* merge_units */
 
-void func_00244EE0(T4EE0* t, char* text, float time) {
+void HudTimer_Start(T4EE0* t, char* text, float time) {
     t->time = time;
     t->f8 = 0;
     t->b4 = 0;

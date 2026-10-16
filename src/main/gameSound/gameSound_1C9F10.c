@@ -14,7 +14,7 @@
 #pragma push /* merge_units */
 #pragma cplusplus on
 extern "C" {
-void func_0036E220(void* member, int flags);
+void FileMan_Release(void* member, int flags);
 void operator_delete(void* p);
 }
 struct P1C9F10 { char pad[0x20]; char payload[0x48]; char memberA[0x9C]; char memberB[4]; };
@@ -22,8 +22,8 @@ extern "C" P1C9F10* func_001C9F10(P1C9F10* self, short deleteFlag)
 {
     if (self) {
         if (self->payload) {
-            func_0036E220(self->memberB, -1);
-            func_0036E220(self->memberA, -1);
+            FileMan_Release(self->memberB, -1);
+            FileMan_Release(self->memberA, -1);
         }
         if (deleteFlag > 0) operator_delete(self);
     }
@@ -57,7 +57,7 @@ extern "C" void func_0036E5D0(void* m);
 /* constructor: reset two members, ids, mask, handle (copied through a stack temp) */
 #pragma push
 #pragma opt_propagation off
-extern "C" char* func_001C9F80(char* self)
+extern "C" char* SoundSlot_Ctor(char* self)
 {
     P1C9F80* p;
     *(int*)(self + 0x44) = -2;

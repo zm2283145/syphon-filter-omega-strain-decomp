@@ -8,7 +8,7 @@ public:
 extern "C" unsigned char D_00532FE8;
 extern "C" void func_0041E3B0(C3D310* self);
 extern "C" void func_0033D0C0(C3D310* self);
-extern "C" void func_0033D310(C3D310* self)
+extern "C" void GuiScreen_Update(C3D310* self)
 {
     func_0041E3B0(self);
     self->Slot22();

@@ -15,8 +15,8 @@ extern "C" void func_0028A470();
 extern "C" void func_0028A4B0();
 extern "C" void func_0028A5C0();
 extern "C" void func_0033CCA0();
-extern "C" void func_0033D310();
-extern "C" void func_0033D360();
+extern "C" void GuiScreen_Update();
+extern "C" void GuiScreen_Sleep();
 extern "C" void func_0041D400();
 extern "C" void func_0041D5C0();
 extern "C" void func_0041D780();
@@ -42,4 +42,4 @@ extern "C" VtableObject* func_00288D40(VtableObject* self, short deleteFlag)
     }
     return self;
 }
-void * const D_004DD120[28] = { (void*)0x0, (void*)0x0, (void*)func_00288D40, (void*)func_0028A5C0, (void*)func_0041F090, (void*)func_0041F080, (void*)func_0041F070, (void*)func_0028A4B0, (void*)func_0033D360, (void*)func_0041E330, (void*)func_0041E2B0, (void*)func_00289990, (void*)func_0041E470, (void*)func_0041E230, (void*)func_0033D310, (void*)func_00289C80, (void*)func_0041F210, (void*)func_0041D8C0, (void*)func_0041D780, (void*)func_0041D5C0, (void*)func_0041D400, (void*)func_00288DA0, (void*)GuiAccountLogin_IsType, (void*)func_002891D0, (void*)func_0033CCA0, (void*)func_0028A470, (void*)func_0028A430, (void*)0x0 };
+void * const D_004DD120[28] = { (void*)0x0, (void*)0x0, (void*)func_00288D40, (void*)func_0028A5C0, (void*)func_0041F090, (void*)func_0041F080, (void*)func_0041F070, (void*)func_0028A4B0, (void*)GuiScreen_Sleep, (void*)func_0041E330, (void*)func_0041E2B0, (void*)func_00289990, (void*)func_0041E470, (void*)func_0041E230, (void*)GuiScreen_Update, (void*)func_00289C80, (void*)func_0041F210, (void*)func_0041D8C0, (void*)func_0041D780, (void*)func_0041D5C0, (void*)func_0041D400, (void*)func_00288DA0, (void*)GuiAccountLogin_IsType, (void*)func_002891D0, (void*)func_0033CCA0, (void*)func_0028A470, (void*)func_0028A430, (void*)0x0 };

@@ -28,7 +28,7 @@ GuiWidget* GuiManager_ReadTree(GuiScreenList* self, char** cursor, GuiWidget* ex
 #include "types.h"
 #include "guiManager.h"
 
-extern void func_0036DEF0(void* f);             /* file: begin access */
+extern void FileMan_FindMember(void* f);             /* file: begin access */
 extern char* FileMan_ReadData(void* f);
 extern void func_0036DEC0(void* f);             /* file: end access */
 
@@ -42,7 +42,7 @@ GuiWidget* GuiManager_LoadGuiFile(GuiScreenList* self, void* file, GuiWidget* ex
     char m1;
     char m2;
     GuiWidget* root;
-    func_0036DEF0(file);
+    FileMan_FindMember(file);
     p = FileMan_ReadData(file);
     m0 = Rd8_419020(&p);
     m1 = Rd8_419020(&p);

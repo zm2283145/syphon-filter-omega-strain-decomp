@@ -16,7 +16,7 @@ extern void IdMgr_Allocate(int*, int);
 extern void cGOBJ_ctor(Obj68*, int*, int, int*);
 
 /* Constructor: base init with resource 0xF5, then sets the vtable and defaults. */
-Obj68* func_00259420(Obj68* o) {
+Obj68* WeaponPreview_ctor(Obj68* o) {
     int extra = 0;
     int res;
     IdMgr_Allocate(&res, 0xF5);

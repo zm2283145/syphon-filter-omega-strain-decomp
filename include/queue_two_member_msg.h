@@ -3,7 +3,7 @@
 
 /*
  * Script command that builds a stack message (whose payload members at
- * +0x78 and +0x114 are destroyed by func_0036E220) with ctor(&msg, arg),
+ * +0x78 and +0x114 are destroyed by FileMan_Release) with ctor(&msg, arg),
  * queues a clone of it when networking is active (D_005721D0), and destroys
  * it again. D_005723C8 is a re-entrancy flag set for the duration.
  * Returns 0x30. msgSize is the message size (stack frame layout).
@@ -12,7 +12,7 @@ extern unsigned char D_005723C8;
 extern unsigned char D_005721D0;
 extern char D_004FFB50[];
 extern void MsgQueue_QueueClone(void* msg, void* queue, int a, int b);
-extern void func_0036E220(void* member, int flags);
+extern void FileMan_Release(void* member, int flags);
 extern void cMessage_dtor(void* self, int flags);
 
 #define DEFINE_QUEUE_TWO_MEMBER_MSG(name, msgSize, ctor, vtableSym)          \
@@ -33,8 +33,8 @@ extern void cMessage_dtor(void* self, int flags);
             ctor(&msg, arg);                                                  \
             MsgQueue_QueueClone(&msg, D_004FFB50, 0, 0);                      \
             msg.vtable = vtableSym;                                           \
-            func_0036E220(msg.memberB, -1);                                   \
-            func_0036E220(msg.memberA, -1);                                   \
+            FileMan_Release(msg.memberB, -1);                                   \
+            FileMan_Release(msg.memberA, -1);                                   \
             cMessage_dtor(&msg, 0);                                           \
         }                                                                     \
         D_005723C8 = 0;                                                       \

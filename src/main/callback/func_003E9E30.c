@@ -12,10 +12,10 @@ extern char g_EventQueue[];                   /* queued events */
 extern EQEvent* g_EventQueueRunning;                 /* event currently running */
 void Mem_Free(int,void*,char*,int);
 void ActiveList_EraseMatching(void*,EQPred);
-void func_0013B180(EQPos*,void*);void EQList_End(EQPos*,void*);void EQList_Begin(EQPos*,void*);
+void List_Begin(EQPos*,void*);void EQList_End(EQPos*,void*);void EQList_Begin(EQPos*,void*);
 void EQPos_CopyConst(EQPos*,const EQPos*);void EQPos_Copy(EQPos*,const EQPos*);
 }
-static inline void BeginQ(EQPos*p){EQPos r;func_0013B180(&r,g_EventQueue);EQPos_CopyConst(p,&r);}
+static inline void BeginQ(EQPos*p){EQPos r;List_Begin(&r,g_EventQueue);EQPos_CopyConst(p,&r);}
 static inline void EndQ(EQPos*p){EQPos r;EQList_End(&r,g_EventQueue);EQPos_Copy(p,&r);}
 static inline void Restart(EQPos*p){EQPos r;EQList_Begin(&r,g_EventQueue);EQPos_Copy(p,&r);}
 static inline int Neq(const EQPos&a,const EQPos&b){return a.p!=b.p;}

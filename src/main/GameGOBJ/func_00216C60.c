@@ -182,8 +182,8 @@ extern "C" void PathObj_Update(PathObj* self, float dt)
             ev.kind = 1;
             Event_Send(&ev, D_004FFB50, 1);
             ev.vtable = D_004DAE30;
-            func_0036E220(&ev.req.b, -1);
-            func_0036E220(&ev.req.a, -1);
+            FileMan_Release(&ev.req.b, -1);
+            FileMan_Release(&ev.req.a, -1);
             cMessage_dtor(&ev, 0);
         }
         for (int i = 0; i < self->nKids; i++) {

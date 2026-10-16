@@ -73,7 +73,7 @@ static inline void Push(SnRoute* r, int v) { r->nodes[r->count] = v; r->count++;
 static inline void Construct(SnMsg* m) { Event_Construct(m, D_004ED9B8); m->vt = D_004D9760; m->kind = 2; m->id = -1; }
 static inline void Destroy(SnMsg* loc) { loc->vt = D_004D9760; cMessage_dtor(loc, 0); }
 #pragma opt_propagation off
-extern "C" bool func_0015FE80(SnPath* self, int node)
+extern "C" bool NpcRoute_StartToLinkNode(SnPath* self, int node)
 {
     bool r = false;
     SnRoute* rt = self->route;

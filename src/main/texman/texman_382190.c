@@ -160,7 +160,7 @@ extern "C" {
 
 extern "C" void func_00382190(TexCache* self);
 
-extern "C" void func_00382540(TexCache* self)
+extern "C" void TexMan_UploadSlots(TexCache* self)
 {
     bool dirty;
     unsigned int addr;

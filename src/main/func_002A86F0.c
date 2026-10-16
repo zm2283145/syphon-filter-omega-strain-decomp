@@ -19,7 +19,7 @@ typedef struct Selector {
 extern void func_0041EFA0(Selector* self);
 
 /* Updates the base, then in state 5 copies the selected entry's value to current. */
-void func_002A86F0(Selector* self) {
+void GuiMessageBox_Wake(Selector* self) {
     func_0041EFA0(self);
     if (self->state == 5) {
         self->current = self->entries[self->index].value;

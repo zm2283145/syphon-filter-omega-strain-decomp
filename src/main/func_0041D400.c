@@ -6,7 +6,7 @@ extern "C" {
 extern TraversalWidget* D_00572138;
 extern TraversalWidget* D_00572140;
 void func_0013B160(ChildIterator* result, ChildList* list);
-void func_0013B180(ChildIterator* result, ChildList* list);
+void List_Begin(ChildIterator* result, ChildList* list);
 void func_002A89A0(ChildIterator* result, ChildList* list);
 void func_0028C0A0(ChildIterator* result, ChildList* list);
 void func_0028C0B0(ChildIterator* result, const ChildIterator* source);
@@ -78,7 +78,7 @@ extern "C" TraversalWidget* func_0041D5C0(TraversalWidget* self, TraversalWidget
     if (boundary == self)
         D_00572138 = self;
     TraversalWidget* found = 0;
-    func_0013B180(&rawBegin, &self->children);
+    List_Begin(&rawBegin, &self->children);
     func_0028C0B0(&begin, &rawBegin);
     ChildNode* node = begin.node;
     func_0028C0A0(&rawEnd, &self->children);
@@ -135,7 +135,7 @@ extern "C" TraversalWidget* func_0041D8C0(TraversalWidget* self)
     ChildIterator begin;
     ChildIterator rawBegin;
     ChildIterator rawEnd;
-    func_0013B180(&rawBegin, &self->children);
+    List_Begin(&rawBegin, &self->children);
     func_0028C0B0(&begin, &rawBegin);
     ChildNode* node = begin.node;
     func_0028C0A0(&rawEnd, &self->children);

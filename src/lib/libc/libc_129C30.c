@@ -22,7 +22,7 @@ char* strrchr(const char* s, int i)
 /* merge_units: end func_00129C30 */
 
 /* merge_units: begin func_00129C80 */
-char* func_00129C80(const char* searchee, const char* lookfor)
+char* strstr(const char* searchee, const char* lookfor)
 {
     if (*searchee == 0) {
         if (*lookfor) return (char*)0;

@@ -22,7 +22,7 @@ typedef struct Widget {
     char pad2C[0x44 - 0x2C];
     Child* child;           /* +0x44 */
 } Widget;
-extern "C" void func_0013B180(ListIter* out, NodeList* list);  /* list.begin() */
+extern "C" void List_Begin(ListIter* out, NodeList* list);  /* list.begin() */
 extern "C" void func_0028C0B0(ListIter* out, ListIter* in);    /* iterator -> const_iterator */
 extern "C" void func_0028C0A0(ListIter* out, NodeList* list);  /* list.end() */
 extern "C" void func_0028C090(ListIter* out, ListIter* in);    /* iterator -> const_iterator */
@@ -36,7 +36,7 @@ extern "C" void func_0041F150(Widget* self)
     ListIter last;
     ListNode* node;
     self->flags |= 1;
-    func_0013B180(&beginIt, &self->children);
+    List_Begin(&beginIt, &self->children);
     func_0028C0B0(&it, &beginIt);
     node = it.node;
     func_0028C0A0(&endIt, &self->children);

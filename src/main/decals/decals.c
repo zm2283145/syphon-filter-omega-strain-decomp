@@ -41,11 +41,11 @@ struct Mgr_27A020 {
 };
 extern "C" {
 void* Mem_Alloc(int pool, int size, char* file, int line);
-void func_00278460(void* p, int n);
+void BloodDecal_BuildDirections(void* p, int n);
 extern char D_004A9238[];
 extern int D_00543798;
 }
-extern "C" Mgr_27A020* func_0027A020(Mgr_27A020* self, int na, int nb) {
+extern "C" Mgr_27A020* DecalMgr_ctor(Mgr_27A020* self, int na, int nb) {
     self->a = 0;
     self->b = 0;
     self->na = na;
@@ -76,7 +76,7 @@ extern "C" Mgr_27A020* func_0027A020(Mgr_27A020* self, int na, int nb) {
     }
     self->f20 = (int)(0.1f * (float)self->na);
     self->f24 = (int)(0.1f * (float)self->nb);
-    func_00278460(self->f30, 0x20);
+    BloodDecal_BuildDirections(self->f30, 0x20);
     D_00543798 = self->nb;
     return self;
 }

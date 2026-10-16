@@ -8,7 +8,7 @@
 #include "loose01_types.h"
 
 extern void* D_004FFB50;
-extern int func_001302F0(void*);
+extern int Game_CountAttractMovies(void*);
 extern int func_0041F150(Unk288A80*);
 
 int* func_002888B0(PtrVec* v, int i) {
@@ -27,7 +27,7 @@ int func_002888E0(Unk288A80* self) {
     int selected;
 
     func_0041F150(self);
-    selected = func_001302F0(&D_004FFB50);
+    selected = Game_CountAttractMovies(&D_004FFB50);
     self->unk48 = selected != 0;
     return selected;
 }

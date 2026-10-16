@@ -7,7 +7,7 @@
 extern "C" {
 GuiFocusManager* Gui_GetScreenStack(void);
 void GuiScreen_SetFocus(GuiFocusManager* manager, TraversalWidget* selected);
-void func_0013B180(ChildIterator* result, ChildList* list);
+void List_Begin(ChildIterator* result, ChildList* list);
 void func_0028C0B0(ChildIterator* result, const ChildIterator* source);
 void func_0028C0A0(ChildIterator* result, ChildList* list);
 void func_0028C090(ChildIterator* result, const ChildIterator* source);
@@ -82,7 +82,7 @@ extern "C" void func_0041E3B0(TraversalWidget* self, float elapsed)
     ChildIterator begin;
     ChildIterator rawBegin;
     ChildIterator rawEnd;
-    func_0013B180(&rawBegin, &self->children);
+    List_Begin(&rawBegin, &self->children);
     func_0028C0B0(&begin, &rawBegin);
     ChildNode* node = begin.node;
     func_0028C0A0(&rawEnd, &self->children);
@@ -103,7 +103,7 @@ extern "C" void func_0041E470(TraversalWidget* self)
     ChildIterator begin;
     ChildIterator rawBegin;
     ChildIterator rawEnd;
-    func_0013B180(&rawBegin, &self->children);
+    List_Begin(&rawBegin, &self->children);
     func_0028C0B0(&begin, &rawBegin);
     ChildNode* node = begin.node;
     func_0028C0A0(&rawEnd, &self->children);

@@ -125,7 +125,7 @@ typedef struct Actor {
 
 extern char D_004DF740[];
 extern void cGOBJ_ctor(Actor* self, int* name, int type, int* extra);
-extern void func_00392380(void*);
+extern void ManModel_ClearAttachPoints(void*);
 extern void func_00393FA0(void*);
 extern void SkelNode_Construct(SkelNode*);
 extern void func_00393F30(void*, int, SkelNode*);
@@ -151,7 +151,7 @@ Actor* Actor_Construct(Actor* me, int* name, int* extra)
     Actor* self = me;
     cGOBJ_ctor(me, name, 2, extra);
     self->vt = D_004DF740;
-    func_00392380(self->x60);
+    ManModel_ClearAttachPoints(self->x60);
     s = &self->x2E50;
     s->x0 = 0;
     func_00393FA0(s->x4);

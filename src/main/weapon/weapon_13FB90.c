@@ -57,7 +57,7 @@ void SoundRequest_Ctor(Req_FB90* r, int a, void* preset, int b, int c);
 void SoundEvent_CtorFromPreset(Snd_FB90* e, Req_FB90* r, void* owner);
 void Event_Send(void* msg, void* target, int immediate);
 void cMessage_dtor(void* msg, int flags);
-void func_0036E220(Str_FB90* s, int flag);
+void FileMan_Release(Str_FB90* s, int flag);
 
 void Weapon_StartReload(W_FB90* self)
 {
@@ -92,11 +92,11 @@ void Weapon_StartReload(W_FB90* self)
         snd.flag = 1;
         Event_Send(&snd, D_004FFB50, 0);
         snd.vt = D_004DAE30;
-        func_0036E220(&snd.s114, -1);
-        func_0036E220(&snd.s78, -1);
+        FileMan_Release(&snd.s114, -1);
+        FileMan_Release(&snd.s78, -1);
         cMessage_dtor(&snd, 0);
-        func_0036E220(&req.sE4, -1);
-        func_0036E220(&req.s48, -1);
+        FileMan_Release(&req.sE4, -1);
+        FileMan_Release(&req.s48, -1);
     }
 }
 #undef Weapon_TransferSpareRounds /* merge_units */

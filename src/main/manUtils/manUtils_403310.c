@@ -76,9 +76,9 @@ extern char D_004BE7F0[];
 
 extern char D_004BE800[];
 void* Mem_Alloc(int, int, char*, int);
-int func_0036DEF0(void*);
+int FileMan_FindMember(void*);
 int FileMan_GetSize(void*);
-int func_0036D990(void*, char**, int);
+int FileMan_LoadMemberSync(void*, char**, int);
 void func_0036DEC0(void*);
 int func_00128C68(char*, char*, ...);
 }
@@ -91,7 +91,7 @@ extern "C" void Appearance_LoadPartSortTable(App* self, char* path) {
  char* buf;
  func_0036E4B0(&fe, path, 0, 0);
  int count = 0;
- if ((unsigned char)func_0036DEF0(&fe)) { func_0036E220(&fe, -1); return; }
+ if ((unsigned char)FileMan_FindMember(&fe)) { FileMan_Release(&fe, -1); return; }
  int size = FileMan_GetSize(&fe);
  int blocks = (size + 0x10) >> 4;
  char* p;
@@ -100,7 +100,7 @@ extern "C" void Appearance_LoadPartSortTable(App* self, char* path) {
   p = (char*)Mem_Alloc(0, blocks << 4, D_004BE7F0, 0x9E8);
  }
  buf = p;
- func_0036D990(&fe, &buf, size);
+ FileMan_LoadMemberSync(&fe, &buf, size);
  func_0036DEC0(&fe);
  char* base = buf;
  char* dst = base;
@@ -134,7 +134,7 @@ extern "C" void Appearance_LoadPartSortTable(App* self, char* path) {
   AllocGuard g;
   Mem_Free(0, q, D_004BE7F0, 0xA1D);
  }
- func_0036E220(&fe, -1);
+ FileMan_Release(&fe, -1);
 }
 #undef D_004BE7F0 /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
@@ -163,9 +163,9 @@ extern void func_0036E4B0(FileMan* f, char* name, int a, int b);
 #define func_0036E4B0(a0, a1, a2, a3) ((void)func_0036E4B0((void *)(a0), (const char *)(a1), (void *)(a2), (a3))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int func_0036DEF0(FileMan* f);
+extern int FileMan_FindMember(FileMan* f);
 #endif /* merge_units */
-#define func_0036DEF0(a0) (func_0036DEF0((void *)(a0))) /* merge_units */
+#define FileMan_FindMember(a0) (FileMan_FindMember((void *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
 extern int FileMan_GetSize(FileMan* f);
@@ -178,9 +178,9 @@ extern void* Mem_Alloc(int pool, int size, char* file, int line);
 #define Mem_Alloc(a0, a1, a2, a3) (Mem_Alloc((a0), (a1), (a2), (a3))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int func_0036D990(FileMan* f, __int128** out, int size);
+extern int FileMan_LoadMemberSync(FileMan* f, __int128** out, int size);
 #endif /* merge_units */
-#define func_0036D990(a0, a1, a2) (func_0036D990((void *)(a0), (char * *)(a1), (a2))) /* merge_units */
+#define FileMan_LoadMemberSync(a0, a1, a2) (FileMan_LoadMemberSync((void *)(a0), (char * *)(a1), (a2))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void func_0036DEC0(FileMan* f);
@@ -188,9 +188,9 @@ extern void func_0036DEC0(FileMan* f);
 #define func_0036DEC0(a0) (func_0036DEC0((void *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_0036E220(FileMan* f, int a);
+extern void FileMan_Release(FileMan* f, int a);
 #endif /* merge_units */
-#define func_0036E220(a0, a1) ((void)func_0036E220((void *)(a0), (a1))) /* merge_units */
+#define FileMan_Release(a0, a1) ((void)FileMan_Release((void *)(a0), (a1))) /* merge_units */
 
 void func_004037F0(Obj37F0* s, char* name);
 }
@@ -211,7 +211,7 @@ void func_004037F0(Obj37F0* s, char* name)
     __int128* p;
     void* mem;
     func_0036E4B0(&fm, name, 0, 0);
-    if (!(unsigned char)func_0036DEF0(&fm)) {
+    if (!(unsigned char)FileMan_FindMember(&fm)) {
         size = FileMan_GetSize(&fm);
         if (D_00533880) Alloc_Lock(9);
         D_00533888++;
@@ -219,7 +219,7 @@ void func_004037F0(Obj37F0* s, char* name)
         if (D_00533880) Alloc_Unlock(9);
         D_00533888--;
         s->buf = (__int128*)mem;
-        func_0036D990(&fm, &s->buf, size);
+        FileMan_LoadMemberSync(&fm, &s->buf, size);
         func_0036DEC0(&fm);
         p = s->buf;
         if (p) {
@@ -230,16 +230,16 @@ void func_004037F0(Obj37F0* s, char* name)
             }
         }
     }
-    func_0036E220(&fm, -1);
+    FileMan_Release(&fm, -1);
 }
 #undef D_004BE7F0 /* merge_units */
 #undef func_0036E4B0 /* merge_units */
-#undef func_0036DEF0 /* merge_units */
+#undef FileMan_FindMember /* merge_units */
 #undef FileMan_GetSize /* merge_units */
 #undef Mem_Alloc /* merge_units */
-#undef func_0036D990 /* merge_units */
+#undef FileMan_LoadMemberSync /* merge_units */
 #undef func_0036DEC0 /* merge_units */
-#undef func_0036E220 /* merge_units */
+#undef FileMan_Release /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_004037F0(void) {}
 #pragma pop /* merge_units */
@@ -297,7 +297,7 @@ extern __int128 D_0055DE00;
 extern __int128 D_0055DDA0;
 extern int String_CompareN(char* a, char* b, int n);
 extern void func_0036DFB0(void* f, char* name, void* src);
-extern short func_0037FEA0(int lib, void* f, void* key);
+extern short TexMan_LoadNewTexture(int lib, void* f, void* key);
 extern short TexCache_LoadErrorTexture(int lib);
 static inline __int128 a3and(__int128 a, __int128 b) {
     __int128 t;
@@ -357,10 +357,10 @@ void TexCache_LoadPartTexture(A3State* st, __int128 key, void* f, short* outA, s
     sprintf(buf, "%s.TDX", (char*)&key);
     buf[14] = '0';
     func_0036DFB0(f, buf, f);
-    st->tex[i].a = func_0037FEA0(D_00539248, f, &key);
+    st->tex[i].a = TexMan_LoadNewTexture(D_00539248, f, &key);
     buf[14] = '1';
     func_0036DFB0(f, buf, f);
-    st->tex[i].b = func_0037FEA0(D_00539248, f, &key);
+    st->tex[i].b = TexMan_LoadNewTexture(D_00539248, f, &key);
     if (st->tex[i].a == -1)
         st->tex[i].a = TexCache_LoadErrorTexture(D_00539248);
     if (st->tex[i].b == -1)
@@ -394,9 +394,9 @@ extern void func_0036E5D0(H2Reg* r);
 #define func_0036E5D0(a0) ((void)func_0036E5D0((void *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_0036E220(H2Reg* r, int del);
+extern void FileMan_Release(H2Reg* r, int del);
 #endif /* merge_units */
-#define func_0036E220(a0, a1) ((void)func_0036E220((void *)(a0), (a1))) /* merge_units */
+#define FileMan_Release(a0, a1) ((void)FileMan_Release((void *)(a0), (a1))) /* merge_units */
 
 extern char* Archive_GetMemberName(H2Hog* h, int i);
 extern int Hog_Register(H2Reg* r, char* name, H2Hog* h, int opt);
@@ -467,10 +467,10 @@ void TexCache_RegisterNpcTex(H2State* st, H2Hog* hog) {
         }
     }
     st->loaded = st->count;
-    func_0036E220(&reg, -1);
+    FileMan_Release(&reg, -1);
 }
 #undef func_0036E5D0 /* merge_units */
-#undef func_0036E220 /* merge_units */
+#undef FileMan_Release /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00403D20(void) {}
 #pragma pop /* merge_units */

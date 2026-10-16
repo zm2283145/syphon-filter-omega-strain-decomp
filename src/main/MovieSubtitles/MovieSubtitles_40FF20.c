@@ -164,8 +164,8 @@ extern "C" {
 void String_CtorCStr_13B480(Key_410630* s, const char* c);
 void String_Dtor(Key_410630* s, short f);
 int func_00410C10(void* line, Key_410630* key);
-char* func_00189540(void* line);
-int func_002071F0(Key_410630* key);
+char* String_CStr_189540(void* line);
+int String_Length(Key_410630* key);
 int atoi(char* s);
 }
 
@@ -192,7 +192,7 @@ static inline char* Find_410630(void* line, const char* name)
     p = 0;
     int r = func_00410C10(line, &key);
     if (r > -1) {
-        p = func_00189540(line) + r + func_002071F0(&key);
+        p = String_CStr_189540(line) + r + String_Length(&key);
         while (*p == ' ' || *p == '\t') p++;
     }
     String_Dtor(&key, 0);

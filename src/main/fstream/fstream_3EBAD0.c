@@ -37,7 +37,7 @@ struct Req_EBAD0 {
 
 extern "C" {
 extern char D_004BE010;
-void func_0036E220(char* f, int a);
+void FileMan_Release(char* f, int a);
 }
 
 static inline Sub_EBAD0* ReqSub_EBAD0(Req_EBAD0* r)
@@ -71,7 +71,7 @@ extern "C" int func_003EBAD0(Req_EBAD0* r, int release)
     if (r->owned) {
         char* f = r->file;
         AllocGuard g;
-        func_0036E220(f, -1);
+        FileMan_Release(f, -1);
         Mem_Free(0, f, &D_004BE010, 0x134);
     }
     r->cb = 0;
@@ -119,14 +119,14 @@ struct Req_EBC90 {
 };
 
 extern "C" {
-void func_0036DEF0(char* f);
+void FileMan_FindMember(char* f);
 int FileMan_GetSize(char* f);
 #if 0 /* merge_units */
 int func_003EBDD0(Sub_EBC90* s, int size);
 #endif /* merge_units */
 #define func_003EBDD0(a0, a1) (func_003EBDD0((Sub_EBDD0 *)(a0), (a1))) /* merge_units */
 
-void func_0036D950(char* f, int* data, int size);
+void FileMan_ReadMember(char* f, int* data, int size);
 }
 
 static inline Sub_EBC90* ReqSub_EBC90(Req_EBC90* r)
@@ -142,7 +142,7 @@ static inline int SubData_EBC90(Sub_EBC90* s)
 extern "C" int func_003EBC90(Req_EBC90* r)
 {
     Sub_EBC90* s = ReqSub_EBC90(r);
-    func_0036DEF0(r->file);
+    FileMan_FindMember(r->file);
     int data = 0;
     int size = FileMan_GetSize(r->file);
     if (!func_003EBDD0(s, size))
@@ -150,7 +150,7 @@ extern "C" int func_003EBC90(Req_EBC90* r)
     r->state = 1;
     if (!s->bC) {
         data = SubData_EBC90(s);
-        func_0036D950(r->file, &data, size);
+        FileMan_ReadMember(r->file, &data, size);
     } else {
         if (r->state == 1 || r->state == 3) {
             Sub_EBC90* t = ReqSub_EBC90(r);

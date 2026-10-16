@@ -27,7 +27,7 @@ void func_0029D390(O_DAF0*);
 void String_CtorCStr_13B480(Str_DAF0*, char*);
 void func_0013D680(Str_DAF0*, Str_DAF0*);
 void String_Dtor(Str_DAF0*, int);
-int func_002071F0(Str_DAF0*);
+int String_Length(Str_DAF0*);
 char* String_CStr(Str_DAF0*);
 }
 
@@ -95,7 +95,7 @@ extern "C" void func_0029DAF0(O_DAF0* o, void* arg) {
         String_Dtor(&t3, 0);
         break;
     }
-    if (func_002071F0(&msg)) {
+    if (String_Length(&msg)) {
         char* m = String_CStr(&msg);
         FrontEnd_OpenPopup(D_004FFC04, 2, String_CStr(&title), m, o, 0);
     }

@@ -3,7 +3,7 @@ typedef struct { char pad[0xC]; int fx0; int fx1; void* s0; void* s1; } Obj_2512
 extern void Object_DeleteLater(int fx, float t);
 extern void func_003E8EB0(void* s);
 extern void operator_delete(void* p);
-Obj_251290* func_00251290(Obj_251290* o, short flag)
+Obj_251290* PickupMenuEntry_dtor(Obj_251290* o, short flag)
 {
     if (o) {
         if (o->fx0)

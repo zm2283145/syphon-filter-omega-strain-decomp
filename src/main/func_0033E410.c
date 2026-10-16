@@ -11,7 +11,7 @@ extern int D_004FFC04;
 extern char D_004B9C60[];
 extern char* func_0033CE30(O33E4*, int, char*, int, int, int);
 extern int FrontEnd_OpenPopup(int, int, char*, char*, int, int);
-extern void func_002C82F0(int);
+extern void FrontEnd_StartSplashThread(int);
 extern void func_002C81D0(int);
 extern int Gui_GetScreenList(void);
 extern W33E4* GuiManager_FindOrLoad(int, char*, char*);
@@ -26,7 +26,7 @@ extern "C" void func_0033E410(O33E4* o, I33E4* info) {
         int g = D_004FFC04;
         int h = FrontEnd_OpenPopup(g, 0, D_004B9C60, func_0033CE30(o, 0x7D, info->name, 0, 0, 0), 0, 0);
         W33E4* w;
-        func_002C82F0(D_004FFC04);
+        FrontEnd_StartSplashThread(D_004FFC04);
         w = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiAgentInfo", "AGNTINFO");
         func_002C81D0(D_004FFC04);
         if (w) {

@@ -20,12 +20,12 @@ typedef struct S295090 {
 } S295090;
 extern Ui295090* D_004FFC04;
 extern int D_005063D0[];
-extern void func_00294300(S295090* s, int a);
-extern void func_00294C60(S295090* s);
+extern void GuiCommandCenter_OpenPanel(S295090* s, int a);
+extern void GuiCommandCenter_SetTexts(S295090* s);
 extern void func_00296B70(S295090* s, int a);
 extern void func_0041E0F0(void* a, void* b, int c, int d, int e);
 
-void func_00295090(S295090* s, int i, int f)
+void GuiCommandCenter_Select(S295090* s, int i, int f)
 {
     if (s->focus) {
         if (s->b178[s->cur]) {
@@ -47,14 +47,14 @@ void func_00295090(S295090* s, int i, int f)
             return;
     }
     if (f)
-        func_00294300(s, 0);
+        GuiCommandCenter_OpenPanel(s, 0);
     s->focus = s->items[i];
     s->cur = i;
     if (s->b178[s->cur])
         func_0041E0F0(s, s->focus, 6, (int)"onGainFocus", 0);
     else
         func_0041E0F0(s, s->focus, 6, (int)"onDeactivate", 0);
-    func_00294C60(s);
+    GuiCommandCenter_SetTexts(s);
     if (i > 0x10 || s->b178[s->cur] || D_004FFC04->b30)
         func_00296B70(s, -1);
     else
@@ -77,16 +77,16 @@ typedef struct {
 extern char D_004FFB50;
 extern char* D_0048C160[];
 int Agent_GetSelected(void*, int);
-int func_00332FE0(int, __int128);
+int AgentData_IsLevelDone(int, __int128);
 __int128 func_003FDA40(char*);
 
-int func_002952C0(Self_52C0* self) {
+int GuiCommandCenter_GetDefaultSlot(Self_52C0* self) {
     int idx;
     int k;
     int i;
     idx = -1;
     for (k = 0; k < 0x11; k++) {
-        if (func_00332FE0(Agent_GetSelected(&D_004FFB50, -1), func_003FDA40(D_0048C160[k]))) idx = k;
+        if (AgentData_IsLevelDone(Agent_GetSelected(&D_004FFB50, -1), func_003FDA40(D_0048C160[k]))) idx = k;
     }
     if (idx == 0 || self->f1CC == -1) return 0x16;
     if (idx != -1) return idx;
@@ -125,7 +125,7 @@ extern void FrontEnd_ClosePopup(G295*, int);
 extern int Gui_GetScreenStack(void);
 extern void GuiStack_SwapScreens(int, O295*, void*);
 extern void func_002982C0(O295*);
-void func_00295430(O295* o) {
+void GuiCommandCenter_Leave(O295* o) {
     void* w;
     G295* g;
     if (!o->b2f4) return;

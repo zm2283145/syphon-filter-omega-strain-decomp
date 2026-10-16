@@ -18,7 +18,7 @@ O_00281680* Object_LookupById(int* id);
 void func_002536D0(O_00281680* o);
 void func_002579E0(O_00281680* o);
 int NetGame_InitLocalSlot(int* id, int session);
-void func_001762C0(int a, O_00281680* o);
+void Player_HandlePickupTrigger(int a, O_00281680* o);
 void Hud_PostNotification(int a, char* s);
 void Event_Construct(M_00281680* m, void* type);
 void Event_Send(M_00281680* m, void* target, int flags);
@@ -97,7 +97,7 @@ extern "C" void func_00281680(S_00281680* p, T_00281680* t) {
         int o = p->obj->owner; if (o != LocalId_00281680()) {
             p->obj->owner = LocalId_00281680();
             { O_00281680* ob = p->obj; if (!ob->b2F2) ob->b2F2 = 1; }
-            func_001762C0(D_004FFC0C, p->obj);
+            Player_HandlePickupTrigger(D_004FFC0C, p->obj);
         }
     } }
 }

@@ -109,7 +109,7 @@ extern unsigned char D_004FFBA0;
 extern void* D_004FFC04;
 extern void* D_004F77A0;
 extern unsigned char D_005721C8;
-void func_002C9D50(void* p);
+void FrontEnd_GetCharacterData(void* p);
 void GuiWidget_ctor(Self_D430* self);
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void cGOBJ_ctor(void* p, int* a, int b, int* c);
@@ -140,7 +140,7 @@ float Model_GetFirstFloat(void* m);
 V4_D430* AnimRate_Init(Rate_D430* r, float f);
 void Vec4_Copy_18A350(Rate_D430* d, V4_D430* s);
 void AnimEvent_Construct(Ev_D430* e);
-int func_0018A2F0(Req_D430* r);
+int MotionRequest_GetMode(Req_D430* r);
 int func_0018A2E0(Req_D430* r);
 float func_0018A2D0(Req_D430* r);
 float func_0018A2C0(Req_D430* r);
@@ -189,7 +189,7 @@ static inline void Install_D430(Anim_D430* an, int* selp, Req_D430* rq, Word_D43
                 an->b5 = 0;
                 AnimEvent_Construct(&e0);
                 AnimEvent_Construct(&e1);
-                AnimCtl_InstallMotion(an, *selp, func_0018A2F0(rq), &rate, wp, &e0, &e1, func_0018A2E0(rq), func_0018A2D0(rq), func_0018A2C0(rq));
+                AnimCtl_InstallMotion(an, *selp, MotionRequest_GetMode(rq), &rate, wp, &e0, &e1, func_0018A2E0(rq), func_0018A2D0(rq), func_0018A2C0(rq));
                 func_0018A260(&e1, -1);
                 func_0018A260(&e0, -1);
 }
@@ -295,7 +295,7 @@ extern "C" Self_D430* func_0035D430(Self_D430* p0)
     GuiWidget_ctor(p0);
     self->vt = D_004DF140;
     { V4E_D430* p = self->pos; V4E_D430* e = self->pos + 4; do { p++; } while (p != e); }
-    if (D_004FFBA0 == 2) func_002C9D50(D_004FFC04);
+    if (D_004FFBA0 == 2) FrontEnd_GetCharacterData(D_004FFC04);
     {
         void* p;
         p = Alloc_D430(0x68, 0x54);

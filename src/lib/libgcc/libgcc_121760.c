@@ -21,7 +21,7 @@ float func_00121760(float x)
 /* merge_units: begin func_00121788 */
 #define FLT_UWORD_IS_ZERO(x) ((x)<0x00800000L)
 #define huge 1.0e30f
-float func_00121788(float x)
+float Math_Floorf(float x)
 {
     int i0, j0;
     unsigned int i, ix;

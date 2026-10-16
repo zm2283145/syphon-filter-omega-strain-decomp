@@ -8,7 +8,7 @@ typedef struct {
     Name27A8 name; int x50; unsigned char b54; unsigned char b55;
 } Menu27A8;
 extern unsigned char D_00504040;
-extern void func_0013B180(It27A8 *r, void *l);
+extern void List_Begin(It27A8 *r, void *l);
 extern void func_0027AA80(It27A8 *r, It27A8 *s);
 extern char *func_0027AA90(void *l);
 extern void func_0027AB60(Menu27A8 *s);
@@ -38,7 +38,7 @@ void func_0027A8B0(Menu27A8 *s)
             Node27A8 *n;
             Entry27A8 *e;
             int i;
-            func_0013B180(&t, &s->count);
+            List_Begin(&t, &s->count);
             func_0027AA80(&it, &t);
             n = it.p;
             for (i = 0; i < s->sel; i++) n = n->next;

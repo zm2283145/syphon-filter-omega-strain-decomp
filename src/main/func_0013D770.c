@@ -11,7 +11,7 @@ struct E3ZIt {
     E3ZIt& operator++() { p.n = p.n->next; return *this; }
 };
 
-extern "C" E3ZIt* func_0013D890(E3ZIt* out, E3ZList* l);
+extern "C" E3ZIt* List_End_13D890(E3ZIt* out, E3ZList* l);
 extern "C" E3ZIt* func_0013D870(E3ZIt* out, E3ZNode* n);
 extern "C" E3ZIt* func_0013D840(E3ZIt* out, E3ZList* l);
 extern "C" E3ZIt* func_0013D830(E3ZIt* out, E3ZIt* src);
@@ -24,7 +24,7 @@ extern "C" E3ZItem* func_0013D770(E3ZList* l, int key) {
     E3ZIt a;
     E3ZIt b;
     E3ZNode* end;
-    func_0013D890(&a, l);
+    List_End_13D890(&a, l);
     func_0013D870(&e, a.p.n);
     end = e.p.n;
     func_0013D840(&b, l);

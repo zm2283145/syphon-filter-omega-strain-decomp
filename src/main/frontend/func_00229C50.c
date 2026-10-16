@@ -8,7 +8,7 @@
 
 extern "C" {
 int Mem_Alloc(...);                        
-int func_001698C0(...);                                  
+int App_GetInstance(...);                                  
 int FrontEndScene_LoadSkeletons(...);                               
 int func_0022A040(...);                       
 int MotionManager_Init(...);                                  
@@ -28,7 +28,7 @@ extern "C" void FrontEndScene_Init(FrontEndScene* self) {
     MotionManager_Init();
     D_00543790 = 0;
     D_00543794 = 0;
-    func_001698C0();
+    App_GetInstance();
     {
         AllocGuard g;
     characters = Mem_Alloc(0, 0x18, ((int*)"frontend.cc"), 0x76);

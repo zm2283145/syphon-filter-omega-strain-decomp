@@ -17,7 +17,7 @@ char* String_CStr(Str_0029E8C0* s);
 void String_Dtor(Str_0029E8C0* s, int flags);
 void func_0043D820(void* p, int a);
 void func_0043D760(void* p, int a);
-int func_0033CEF0(S_0029E8C0* self, Ev_0029E8C0* ev);
+int GuiScreen_HandleInput(S_0029E8C0* self, Ev_0029E8C0* ev);
 }
 static inline unsigned char Down_0029E8C0(Ev_0029E8C0* e)
 {
@@ -87,5 +87,5 @@ extern "C" int func_0029E8C0(S_0029E8C0* self, Ev_0029E8C0* ev)
             }
         }
     }
-    return func_0033CEF0(self, ev);
+    return GuiScreen_HandleInput(self, ev);
 }

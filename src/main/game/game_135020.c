@@ -144,27 +144,27 @@ void* World_GetActorArray(void);
 void World_SetupView(World_1350E0* w);
 void World_UpdateZoneTrackers(void* z);
 void func_0012F630(World_1350E0* w);
-void func_001307F0(World_1350E0* w);
+void Game_CreateHud(World_1350E0* w);
 void func_001360D0(int n);
 void func_001365E0(void* p);
 void func_001366F0(void* p);
 void Game_LoadParResources(void* p);
 Zone_1350E0* func_0013D770(void* z, int id);
 void* func_0013D9F0(void);
-void func_00166430(void* a, int b, char* c);
-Snd_1350E0* func_001698C0(void);
+void LoadingScreen_Start(void* a, int b, char* c);
+Snd_1350E0* App_GetInstance(void);
 void func_0016F510(void);
-void func_001AFB20(void);
+void Human_InitStatics(void);
 void func_001C01D0(int a, void* b);
-void func_001C98D0(void* p);
-void func_001C9BF0(void* p);
+void SoundMgr_LoadLevel(void* p);
+void SoundMgr_Init(void* p);
 void func_00257380(void);
 void func_0026BE70(unsigned char b);
-void* func_0027A020(void* p, int a, int b);
+void* DecalMgr_ctor(void* p, int a, int b);
 void LevelSelect_FindByName(void* a, void* b);
 void func_00335D50(void* a, int b);
-int func_0036DEF0(Path_1350E0* p);
-void func_0036E220(void* p, int f);
+int FileMan_FindMember(Path_1350E0* p);
+void FileMan_Release(void* p, int f);
 void func_0036E4B0(Path_1350E0* p, char* name, int a, int b);
 void func_003A3910(void* p, int n);
 void func_003CAC40(World_1350E0* w, void* p);
@@ -216,7 +216,7 @@ extern "C" void World_Setup(World_1350E0* w)
         w->f1F8 = p;
     }
     func_00257380();
-    func_001698C0();
+    App_GetInstance();
     if (w->f98 == 0) {
         Coll_1350E0* p;
         { if (D_00533880) Alloc_Lock(9); D_00533888++; p = (Coll_1350E0*)Mem_Alloc(0, 0x10, D_0049A890, 0x1EC); if (D_00533880) Alloc_Unlock(9); D_00533888--; }
@@ -238,15 +238,15 @@ extern "C" void World_Setup(World_1350E0* w)
     Loc_LoadMissionPool(D_0048B2F8, D_004FFC90);
     sprintf(path, D_0049AA70, D_0048B2F8, D_004FFC90);
     func_0036E4B0(&pf, path, 0, 0);
-    if ((unsigned char)func_0036DEF0(&pf)) {
+    if ((unsigned char)FileMan_FindMember(&pf)) {
         sprintf(path, D_0049AA90, D_0048B2F8);
     }
-    func_00166430(func_001698C0(), 0, path);
+    LoadingScreen_Start(App_GetInstance(), 0, path);
     func_003A3910(D_0053B540, 0x1388);
     {
         void* p;
         { if (D_00533880) Alloc_Lock(9); D_00533888++; p = Mem_Alloc(0, 0x230, D_0049A890, 0x20C); if (D_00533880) Alloc_Unlock(9); D_00533888--; }
-        if (p) p = func_0027A020(p, 0x64, 0x14);
+        if (p) p = DecalMgr_ctor(p, 0x64, 0x14);
         w->fEC = p;
     }
     {
@@ -261,7 +261,7 @@ extern "C" void World_Setup(World_1350E0* w)
     ColScratch_Init(0x96, 0, 0, 0);
     LosProvider_Create(0x12C);
     MotionManager_Init();
-    func_001AFB20();
+    Human_InitStatics();
     ColScratch_Init(0, 0, 0, 0);
     func_001360D0(0x320);
     func_0026BE70(w->f1DC->b5);
@@ -275,12 +275,12 @@ extern "C" void World_Setup(World_1350E0* w)
         func_003CAC40(w, p);
     }
     svc = Service_Lookup(w, D_004F2CC0);
-    if (D_00489BA8) func_001C9BF0(svc);
-    func_001C98D0(svc);
+    if (D_00489BA8) SoundMgr_Init(svc);
+    SoundMgr_LoadLevel(svc);
     SoundRequest_Ctor(&req, 5, D_0049A908, 0, 0);
     EffectMsg_WrapRequest(&m, &req);
-    func_0036E220(req.partB, -1);
-    func_0036E220(req.partA, -1);
+    FileMan_Release(req.partB, -1);
+    FileMan_Release(req.partA, -1);
     m.flag = 1;
     Event_Send(&m, D_004FFB50, 0);
     func_001C01D0(w->f88, w->f3C);
@@ -289,7 +289,7 @@ extern "C" void World_Setup(World_1350E0* w)
     func_004089F0(D_0053BB90, Archive_Open(w->f3C, arc, 0, 0));
     Game_LoadParResources(w->f3C);
     World_SetupView(w);
-    func_001307F0(w);
+    Game_CreateHud(w);
     Event_Construct(&cm, D_004F53F0);
     cm.vtable = D_004D90E0;
     Event_Send(&cm, w->fBC, 1);
@@ -316,15 +316,15 @@ extern "C" void World_Setup(World_1350E0* w)
     w->b1C6 = 0;
     w->b1C7 = 0;
     {
-        Snd_1350E0* s = func_001698C0();
+        Snd_1350E0* s = App_GetInstance();
         s->b278 = 1;
     }
     w->f1F0 = 0;
     m.vtbl = D_004DAE30;
-    func_0036E220(m.partB, -1);
-    func_0036E220(m.partA, -1);
+    FileMan_Release(m.partB, -1);
+    FileMan_Release(m.partA, -1);
     cMessage_dtor(&m, 0);
-    func_0036E220(&pf, -1);
+    FileMan_Release(&pf, -1);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001350E0(void) {}

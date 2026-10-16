@@ -56,7 +56,7 @@ extern "C" void func_0013E060();
 extern "C" void func_00140E90();
 extern "C" void func_00141850();
 extern "C" void func_00148870();
-extern "C" void func_0014D340();
+extern "C" void Object_GetEye();
 extern "C" void func_00153860();
 extern "C" void func_0015BFB0();
 extern "C" void func_0015BFC0();
@@ -94,14 +94,14 @@ extern "C" void func_003CE810();
 extern "C" void func_003CE9E0();
 extern "C" void func_003CE9F0();
 extern "C" void func_003CEA00();
-void * const D_004DC350[68] = { (void*)0x0, (void*)0x0, (void*)cBackpack_dtor, (void*)cBackpack_v01, (void*)func_0012ECE0, (void*)Object_GetAttachedOrSelf, (void*)func_0015C090, (void*)func_0012ED00, (void*)func_003CE810, (void*)func_003CE7D0, (void*)func_0012ED30, (void*)func_0012ED40, (void*)func_0012ED50, (void*)cBackpack_v0B, (void*)cBackpack_v0C, (void*)func_003CEA00, (void*)func_003CE9F0, (void*)func_003CE9E0, (void*)cBackpack_v10, (void*)Actor_BasePreLogic, (void*)Actor_BaseWorldUpdate, (void*)Actor_VirtualNop, (void*)cBackpack_v14, (void*)Object_Activate, (void*)Object_Deactivate, (void*)Node_SetFlag2C, (void*)Node_ClearFlag2C, (void*)Node_GetFlag2C, (void*)func_0015BFB0, (void*)func_0015BFC0, (void*)func_0015BFD0, (void*)func_00148870, (void*)func_0015BFF0, (void*)func_0015BFE0, (void*)cBackpack_v20, (void*)func_0015C000, (void*)Object_AttachTransform, (void*)Player_GetActiveWeapon, (void*)func_003CDDC0, (void*)func_003CDD80, (void*)func_003CDD40, (void*)func_003CDC20, (void*)cBackpack_v28, (void*)func_003CDA60, (void*)func_003CD920, (void*)func_003CD7A0, (void*)func_0015C010, (void*)func_00153860, (void*)func_0014D340, (void*)func_0015C020, (void*)func_00140E90, (void*)func_0015C030, (void*)func_0015C040, (void*)func_0015C050, (void*)func_003CD520, (void*)func_003CD4A0, (void*)func_003CD420, (void*)PathObj_GetPosition, (void*)func_003CD1C0, (void*)func_003CD110, (void*)func_003CD090, (void*)func_003CCFF0, (void*)func_0013E060, (void*)func_0015C080, (void*)Actor_ApplyContactDamage, (void*)func_0015C0A0, (void*)func_00141850, (void*)Controller_DeathNotice };
+void * const D_004DC350[68] = { (void*)0x0, (void*)0x0, (void*)cBackpack_dtor, (void*)cBackpack_v01, (void*)func_0012ECE0, (void*)Object_GetAttachedOrSelf, (void*)func_0015C090, (void*)func_0012ED00, (void*)func_003CE810, (void*)func_003CE7D0, (void*)func_0012ED30, (void*)func_0012ED40, (void*)func_0012ED50, (void*)cBackpack_v0B, (void*)cBackpack_v0C, (void*)func_003CEA00, (void*)func_003CE9F0, (void*)func_003CE9E0, (void*)cBackpack_v10, (void*)Actor_BasePreLogic, (void*)Actor_BaseWorldUpdate, (void*)Actor_VirtualNop, (void*)cBackpack_v14, (void*)Object_Activate, (void*)Object_Deactivate, (void*)Node_SetFlag2C, (void*)Node_ClearFlag2C, (void*)Node_GetFlag2C, (void*)func_0015BFB0, (void*)func_0015BFC0, (void*)func_0015BFD0, (void*)func_00148870, (void*)func_0015BFF0, (void*)func_0015BFE0, (void*)cBackpack_v20, (void*)func_0015C000, (void*)Object_AttachTransform, (void*)Player_GetActiveWeapon, (void*)func_003CDDC0, (void*)func_003CDD80, (void*)func_003CDD40, (void*)func_003CDC20, (void*)cBackpack_v28, (void*)func_003CDA60, (void*)func_003CD920, (void*)func_003CD7A0, (void*)func_0015C010, (void*)func_00153860, (void*)Object_GetEye, (void*)func_0015C020, (void*)func_00140E90, (void*)func_0015C030, (void*)func_0015C040, (void*)func_0015C050, (void*)func_003CD520, (void*)func_003CD4A0, (void*)func_003CD420, (void*)PathObj_GetPosition, (void*)func_003CD1C0, (void*)func_003CD110, (void*)func_003CD090, (void*)func_003CCFF0, (void*)func_0013E060, (void*)func_0015C080, (void*)Actor_ApplyContactDamage, (void*)func_0015C0A0, (void*)func_00141850, (void*)Controller_DeathNotice };
 extern char D_0055C9F0[];
 void* Mem_Alloc(int,int,char*,int);
-void func_00257A40();
+void Backpack_CheckCap();
 void IdMgr_Allocate(int*,int);
 void cGOBJ_ctor(void*,int*,int,int*);
-void func_00258330(Backpack*,int);
-void func_00257620(int,Backpack**);
+void Backpack_Reset(Backpack*,int);
+void Backpack_AppendToList(int,Backpack**);
 Mat func_001A32A0(void*);
 void func_002561D0(Backpack*,Mat*,int);
 void func_002566B0(Backpack*,void*);
@@ -119,7 +119,7 @@ static inline void ConstructBack(Backpack* obj,int* id) {
  cGOBJ_ctor(obj,id,3,&z);
  *(void**)obj=((char*)D_004DC350);
  obj->x304=-2;obj->x300=0;obj->flag2f=1;
- func_00258330(obj,0);
+ Backpack_Reset(obj,0);
  obj->attach(D_0055C9F0,0);
  obj->dropped=1;obj->flag60=0;obj->timer=D_004F7F70;
 }
@@ -133,10 +133,10 @@ static inline void Bind(Backpack* obj) {
 extern "C" Backpack* Backpack_Construct(void* actor,int carry,int* id) {
  Backpack* result=0;
  int registry=D_004F7F30;
- func_00257A40();
+ Backpack_CheckCap();
  Backpack* obj=(Backpack*)AllocBack();
  if(obj) ConstructBack(obj,id);
- result=obj;func_00257620(registry,&result);
+ result=obj;Backpack_AppendToList(registry,&result);
  if(actor) {Mat m=func_001A32A0(actor);func_002561D0(result,&m,1);}
  else {Mat m;VU0_UnitMatrix(&m);func_002561D0(result,&m,1);}
  if(carry) { /* Preserve the carry branch before clearing the owner. */ asm { .set reorder } } else actor=0;

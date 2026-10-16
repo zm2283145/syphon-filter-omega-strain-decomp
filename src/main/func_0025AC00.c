@@ -11,7 +11,7 @@ typedef struct Holder120 {
 } Holder120;
 
 /* Returns the signed byte at obj+0xBC of the linked object, or 0. */
-int func_0025AC00(Holder120* h) {
+int Projectile_IsFlashbang(Holder120* h) {
     if (h->obj != 0) return h->obj->value;
     return 0;
 }

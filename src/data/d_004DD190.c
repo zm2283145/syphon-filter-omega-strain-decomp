@@ -14,6 +14,18 @@ extern void Controller_DeathNotice();
 extern void Curve_Retarget();
 extern void Curve_SetVelocity();
 extern void Curve_VirtualNop();
+extern void GuiAgentCreate_Create();
+extern void GuiAgentCreate_Deinit();
+extern void GuiAgentCreate_Draw();
+extern void GuiAgentCreate_GetClassName();
+extern void GuiAgentCreate_HandleEvent();
+extern void GuiAgentCreate_HandleInput();
+extern void GuiAgentCreate_Init();
+extern void GuiAgentCreate_IsType();
+extern void GuiAgentCreate_Sleep();
+extern void GuiAgentCreate_Update();
+extern void GuiAgentCreate_Wake();
+extern void GuiAgentCreate_dtor();
 extern void Node_ClearFlag2C();
 extern void Node_GetFlag2C();
 extern void Node_SetFlag2C();
@@ -21,6 +33,7 @@ extern void Object_Activate();
 extern void Object_AttachTransform();
 extern void Object_Deactivate();
 extern void Object_GetAttachedOrSelf();
+extern void Object_GetEye();
 extern void Object_HandleMessage();
 extern void PathObj_GetPosition();
 extern void Player_GetActiveWeapon();
@@ -36,7 +49,6 @@ extern void func_0013EE60();
 extern void func_00140E90();
 extern void func_00141850();
 extern void func_00148870();
-extern void func_0014D340();
 extern void func_00153860();
 extern void func_0015BFB0();
 extern void func_0015BFC0();
@@ -60,18 +72,6 @@ extern void func_00180790();
 extern void func_001807A0();
 extern void func_001AEFE0();
 extern void func_0028B2C0();
-extern void func_0028B380();
-extern void func_0028B390();
-extern void func_0028B3C0();
-extern void func_0028BBE0();
-extern void func_0028E600();
-extern void func_0028EA40();
-extern void func_0028EC00();
-extern void func_0028EC40();
-extern void func_0028EC80();
-extern void func_0028ED60();
-extern void func_0028F520();
-extern void func_002926B0();
 extern void func_003CCFF0();
 extern void func_003CD090();
 extern void func_003CD110();
@@ -108,12 +108,12 @@ void *D_004DD190[8] = {
 };
 
 void *D_004DD1B0[116] = {
-    0, 0, &func_0028F520, &func_0028ED60,
-    &func_0028EC00, &func_0041F080, &func_0041F070, &func_0028EC80,
-    &func_0028EC40, &func_0041E330, &func_0041E2B0, &func_0028B3C0,
-    &func_0028E600, &func_0041E230, &func_0028EA40, &func_0028BBE0,
+    0, 0, &GuiAgentCreate_dtor, &GuiAgentCreate_Init,
+    &GuiAgentCreate_Deinit, &func_0041F080, &func_0041F070, &GuiAgentCreate_Wake,
+    &GuiAgentCreate_Sleep, &func_0041E330, &func_0041E2B0, &GuiAgentCreate_HandleInput,
+    &GuiAgentCreate_Draw, &func_0041E230, &GuiAgentCreate_Update, &GuiAgentCreate_HandleEvent,
     &func_0041F210, &func_0041D8C0, &func_0041D780, &func_0041D5C0,
-    &func_0041D400, &func_0028B380, &func_0028B390, 0,
+    &func_0041D400, &GuiAgentCreate_GetClassName, &GuiAgentCreate_IsType, 0,
     0, 0, &func_0017ECD0, &func_00180020,
     0, 0, &Curve_Retarget, &Curve_VirtualNop,
     &Curve_SetVelocity, 0, 0, 0,
@@ -132,7 +132,7 @@ void *D_004DD1B0[116] = {
     &Object_AttachTransform, &Player_GetActiveWeapon, &func_003CDDC0, &func_003CDD80,
     &func_003CDD40, &func_003CDC20, &func_003CDBE0, &func_003CDA60,
     &func_003CD920, &func_003CD7A0, &func_0015C010, &func_00153860,
-    &func_0014D340, &func_0015C020, &func_00140E90, &func_0015C030,
+    &Object_GetEye, &func_0015C020, &func_00140E90, &func_0015C030,
     &func_0015C040, &func_0015C050, &func_003CD520, &func_003CD4A0,
     &func_003CD420, &PathObj_GetPosition, &func_003CD1C0, &func_003CD110,
     &func_003CD090, &func_003CCFF0, &func_0013E060, &func_0015C080,
@@ -140,6 +140,6 @@ void *D_004DD1B0[116] = {
 };
 
 void *D_004DD380[8] = {
-    0, 0, &func_002926B0, 0,
+    0, 0, &GuiAgentCreate_Create, 0,
     0, 0, 0, 0,
 };

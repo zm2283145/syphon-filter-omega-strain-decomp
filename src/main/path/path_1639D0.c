@@ -82,7 +82,7 @@ extern int D_005383C8;
 extern int D_004ED9C0[];
 unsigned char NpcRoute_Search(CxRuReq*);
 unsigned char NpcRoute_ScoreNodes(CxRuReq*);
-void func_00138DA0(CxRuIt*,CxRuList*,CxRuIt*);
+void List_Erase(CxRuIt*,CxRuList*,CxRuIt*);
 void NpcRouteMgr_FreeRequest(CxRuManager*,CxRuReq*);
 CxRuActor* PlayerSlots_Get(int);
 int NpcRoute_RegionAt(const CxRuV4*,int);
@@ -104,7 +104,7 @@ extern "C" void NpcRoute_Update(CxRuManager* self){
         if(done){
             CxRuIt out; CxRuIt it;
             it.link=*head;
-            func_00138DA0(&out,&self->queue,&it);
+            List_Erase(&out,&self->queue,&it);
             NpcRouteMgr_FreeRequest(self,req);
         }
     }

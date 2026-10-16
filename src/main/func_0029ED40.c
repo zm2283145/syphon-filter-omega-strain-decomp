@@ -12,7 +12,7 @@ extern Ui_0029ED40* D_004FFC04;
 extern char D_004AABF0[];
 extern char D_004FFB50[];
 extern char D_0055A830[];
-void func_0033D3A0(void);
+void GuiScreen_Wake(void);
 void func_0040D5D0(void* p);
 void func_0029CBB0(S_0029ED40* self, int a);
 char* func_0033CE30(S_0029ED40* self, int a, int b, int c, int d, int e);
@@ -25,7 +25,7 @@ G_0029ED40* Gui_GetScreenStack(void);
 }
 extern "C" void func_0029ED40(S_0029ED40* self)
 {
-    func_0033D3A0();
+    GuiScreen_Wake();
     D_004FFC04->b2A = 0;
     func_0040D5D0(D_0055A830);
     self->b94 = 0;

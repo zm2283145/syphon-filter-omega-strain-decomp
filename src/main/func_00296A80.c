@@ -2,7 +2,7 @@
 typedef struct { char pad[0x88]; int h; } F296A80_Obj;
 extern int func_0041E0F0(void* o, int a, int b, int c, int d);
 extern int Gui_GetScreenStack(void);
-void func_00296A80(F296A80_Obj* o, float t) {
+void GuiCommandCenter_UpdateBgCircle(F296A80_Obj* o, float t) {
     float tab[11] = { 34.0f, 159.0f, 280.0f, 397.0f, 509.0f, 621.0f, 723.0f, 824.0f, 928.0f, 1009.0f, 1108.0f };
     if (o->h != 0) {
         float cur = 0.0f;

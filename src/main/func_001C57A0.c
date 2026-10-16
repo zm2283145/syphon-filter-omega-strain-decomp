@@ -12,9 +12,9 @@ extern void SoundPosRequest_Ctor(M1C5*, R1C5*, int*);
 extern void Event_Send(M1C5*, char*, int);
 extern char D_004FFB50[];
 extern char D_004DAE30[];
-extern void func_0036E220(void*, int);
+extern void FileMan_Release(void*, int);
 extern void cMessage_dtor(M1C5*, int);
-void func_001C57A0(G1C5* g) {
+void ParticleGob_Update(G1C5* g) {
     int x[4];
     R1C5 req;
     M1C5 msg;
@@ -28,9 +28,9 @@ void func_001C57A0(G1C5* g) {
     msg.b20 = 1;
     Event_Send(&msg, D_004FFB50, 0);
     msg.vt = D_004DAE30;
-    func_0036E220((char*)&msg + 0x114, -1);
-    func_0036E220((char*)&msg + 0x78, -1);
+    FileMan_Release((char*)&msg + 0x114, -1);
+    FileMan_Release((char*)&msg + 0x78, -1);
     cMessage_dtor(&msg, 0);
-    func_0036E220((char*)&req + 0xE4, -1);
-    func_0036E220((char*)&req + 0x48, -1);
+    FileMan_Release((char*)&req + 0xE4, -1);
+    FileMan_Release((char*)&req + 0x48, -1);
 }

@@ -6,7 +6,7 @@ typedef struct { char pad[0xC]; unsigned short hC; } D2D29C0;
 typedef struct { char pad[0x30]; D2D29C0* x30; char pad34[0x150 - 0x34]; unsigned short id; } S2D29C0;
 typedef struct { char pad[0x30]; char x30[4]; } X2D29C0;
 typedef struct { char* p; int n; } B2D29C0;
-extern A2D29C0* func_00158540(S2D29C0* s, X2D29C0* x);
+extern A2D29C0* AiController_GetActor(S2D29C0* s, X2D29C0* x);
 extern void NpcThinkList_RemoveActor(D2D29C0* d);
 extern char* Object_LookupById(unsigned short* id);
 extern void Actor_InitComponents(A2D29C0* a, int n, B2D29C0* b, int c);
@@ -15,7 +15,7 @@ void func_002D29C0(S2D29C0* s, X2D29C0* x)
 {
     A2D29C0* a;
     void* p = x->x30;
-    a = func_00158540(s, x);
+    a = AiController_GetActor(s, x);
     NpcThinkList_RemoveActor(s->x30);
     if (s->id) {
         B2D29C0 b;

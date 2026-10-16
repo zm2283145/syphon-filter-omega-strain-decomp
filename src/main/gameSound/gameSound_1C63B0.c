@@ -16,7 +16,7 @@ extern void* D_004FFC2C;
 extern char D_0049F490[];
 extern char D_0051F098[];
 extern char D_004DE280[];
-extern void func_00241DA0(void* hud, char* a, char* b);
+extern void Hud_AddPdaQuip(void* hud, char* a, char* b);
 extern void* Loc_LookupText(char* key);
 extern void Hud_PostNotification(void* hud, void* text);
 extern void Event_Construct(Msg_1C63B0* m, void* type);
@@ -36,7 +36,7 @@ int Script_AddPDAQuip_2(ScriptArg_1C63B0* args)
     text = *(char**)b;
     if (name) {
         text = (!text || !*text) ? D_0049F490 : text;
-        func_00241DA0(D_004FFC2C, name, text);
+        Hud_AddPdaQuip(D_004FFC2C, name, text);
         {
             void* hud = D_004FFC2C;
             Hud_PostNotification(hud, Loc_LookupText(D_0049F490));
@@ -78,7 +78,7 @@ int Script_AddPDAQuip(ScriptArg_1C63B0* args)
     name = *(char**)a;
     if (name) {
         { char* t0 = 0; text = (t0 && *t0) ? t0 : D_0049F490; }
-        func_00241DA0(D_004FFC2C, name, text);
+        Hud_AddPdaQuip(D_004FFC2C, name, text);
         {
             void* hud = D_004FFC2C;
             Hud_PostNotification(hud, Loc_LookupText(D_0049F490));

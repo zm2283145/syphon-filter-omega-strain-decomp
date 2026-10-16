@@ -15,7 +15,7 @@ int sprintf(void *, const void *, ...);
 extern void snd_ContinueAllSoundsInGroup(int);
 extern void snd_PauseAllSoundsInGroup(int);
 
-void func_001C96D0(int a0, int a1) {
+void SoundMgr_SetGroupsPaused(int a0, int a1) {
     int cond;
 
     cond = a1 == 0;
@@ -52,7 +52,7 @@ extern char D_0049F550[];
 extern char D_0049F570[];
 extern char D_0049F590[];
 #pragma opt_propagation off
-void func_001C9710(char* arg0) {
+void SoundMgr_UnloadLevel(char* arg0) {
     int i;
     func_003A7FE0();
     func_003A7310();
@@ -125,7 +125,7 @@ extern int func_003F9600(void* a, char* name);
 extern int snd_BankLoadByLoc(int loc, int size);
 extern signed char D_0048A330;
 
-int func_001C98D0(char* arg0) {
+int SoundMgr_LoadLevel(char* arg0) {
     char snd[0x80];
     char vag[0x80];
     char vagloc[0x80];
@@ -184,7 +184,7 @@ int func_003A80F0(int, int);
 int func_003A8120(int, int *);                          
 extern char * D_004FFD2C;
 
-void func_001C9BF0(char * arg0) {
+void SoundMgr_Init(char * arg0) {
     struct { int f10; int f14; int f18; int f1C; int f20; int f24[3]; } sl;
     int var_a1;
     char * temp_v0;
@@ -252,19 +252,19 @@ extern int D_004F53C8;
 extern int D_004F53D8;
 extern int D_004F53E8;
 #if 0 /* merge_units */
-void func_001C9BF0(void*);
+void SoundMgr_Init(void*);
 #endif /* merge_units */
-#define func_001C9BF0(a0) (func_001C9BF0((char *)(a0))) /* merge_units */
+#define SoundMgr_Init(a0) (SoundMgr_Init((char *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-int func_001C98D0(void*);
+int SoundMgr_LoadLevel(void*);
 #endif /* merge_units */
-#define func_001C98D0(a0) (func_001C98D0((char *)(a0))) /* merge_units */
+#define SoundMgr_LoadLevel(a0) (SoundMgr_LoadLevel((char *)(a0))) /* merge_units */
 
-void func_001C8E10(void*);
+void SoundMgr_Frame(void*);
 void SoundMgr_ProcessAction(void*, void*);
 void GameSound_StopSound(void*, void*);
-void func_001C7E00(void*, unsigned char);
+void SoundMgr_Pause(void*, unsigned char);
 int Receiver_HandleEventBase(void*, void*);
 }
 struct Msg { char pad[0x24]; unsigned char b24; char pad2[0xB]; char data[1]; };
@@ -273,11 +273,11 @@ extern "C" unsigned char SoundMgr_OnMessage(void* self, Msg* msg)
     unsigned char r = 1;
     int t = *Event_GetType(msg);
     if (t == D_004F5370) {
-        func_001C9BF0(self);
+        SoundMgr_Init(self);
     } else if (t = *Event_GetType(msg), t == D_004F5378) {
-        func_001C98D0(self);
+        SoundMgr_LoadLevel(self);
     } else if (t = *Event_GetType(msg), t == D_005436B0) {
-        func_001C8E10(self);
+        SoundMgr_Frame(self);
     } else if (t = *Event_GetType(msg), t == D_004F53B8) {
         SoundMgr_ProcessAction(self, msg->data);
     } else if (t = *Event_GetType(msg), t == D_004F53C8) {
@@ -285,14 +285,14 @@ extern "C" unsigned char SoundMgr_OnMessage(void* self, Msg* msg)
     } else if (t = *Event_GetType(msg), t == D_004F53D8) {
         GameSound_StopSound(self, msg->data);
     } else if (t = *Event_GetType(msg), t == D_004F53E8) {
-        func_001C7E00(self, msg->b24);
+        SoundMgr_Pause(self, msg->b24);
     } else {
         r = Receiver_HandleEventBase(self, msg);
     }
     return r;
 }
-#undef func_001C9BF0 /* merge_units */
-#undef func_001C98D0 /* merge_units */
+#undef SoundMgr_Init /* merge_units */
+#undef SoundMgr_LoadLevel /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001C9D00(void) {}
 #pragma pop /* merge_units */

@@ -4,7 +4,7 @@
 extern "C" {
 extern char D_0049A890[];
 void Mem_Free(int heap, void* p, char* file, int line);
-void func_001396D0(void* p, int a);
+void PtrVec_Reserve(void* p, int a);
 }
 struct E_00130B10 { int x0; void* a; void* b; };
 struct S_00130B10 { char pad[0x2C]; char m2C[4]; int n; E_00130B10** arr; };
@@ -24,5 +24,5 @@ extern "C" void func_00130B10(S_00130B10* self)
         Free_00130B10(e, 0x950);
     }
     self->n = 0;
-    func_001396D0(self->m2C, 0x100);
+    PtrVec_Reserve(self->m2C, 0x100);
 }

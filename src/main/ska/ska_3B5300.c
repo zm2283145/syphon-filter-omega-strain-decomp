@@ -26,9 +26,9 @@ struct Buf_5310 { char* p; };
 typedef struct { int a; char name[1]; } File_5310;
 typedef struct { char pad[0x14]; char list[1]; } Self_5310;
 extern "C" {
-int func_0036DEF0(File_5310* f);
+int FileMan_FindMember(File_5310* f);
 int FileMan_GetSize(File_5310* f);
-int func_0036D990(File_5310* f, char** buf, int size);
+int FileMan_LoadMemberSync(File_5310* f, char** buf, int size);
 void func_0036DEC0(File_5310* f);
 void* Mem_Alloc(int a, int size, char* file, int line);
 void String_CtorCStr_13B480(Str_5310* s, char* c);
@@ -83,12 +83,12 @@ extern "C" void func_003B5310(Self_5310* self, File_5310* f)
     Buf_5310 tmp;
     int size;
     int r;
-    if (func_0036DEF0(f) & 0xFF) return;
+    if (FileMan_FindMember(f) & 0xFF) return;
     size = FileMan_GetSize(f);
     { char* p; { AllocGuard g; p = (char*)Mem_Alloc(0, size, &D_004BCD70, 0x1A3); } buf.p = p; }
     if (!buf.p) return;
     tmp = buf;
-    r = func_0036D990(f, &tmp.p, size);
+    r = FileMan_LoadMemberSync(f, &tmp.p, size);
     func_0036DEC0(f);
     if (r & 0xFF) return;
     { char* dst; char* src = tmp.p; dst = buf.p; if (src != dst) MemCopy_5310(dst, src, size); }
@@ -108,7 +108,7 @@ static inline void merge_flush_func_003B5310(void) {}
 
 /* merge_units: begin func_003B54C0 */
 #pragma push /* merge_units */
-extern int func_002071F0(void* s);
+extern int String_Length(void* s);
 extern char* func_002071A0(void* s);
 extern void Skas_RegisterClip(int* out, int a, char* name, unsigned int* desc);
 
@@ -120,7 +120,7 @@ void Skas_AppendAnimation(int a, void* str, unsigned int* desc)
         int i;
         for (i = 0; i < 0x2F; i++) {
             char c;
-            if (i < func_002071F0(str)) c = func_002071A0(str)[i]; else c = 0;
+            if (i < String_Length(str)) c = func_002071A0(str)[i]; else c = 0;
             buf[i] = c;
         }
         buf[i] = 0;
@@ -166,14 +166,14 @@ extern Tok_5580* func_003B6150(Tok_5580* self, Str2_5580* out);
 #endif /* merge_units */
 #define func_003B6150(a0, a1) ((Tok_5580 *)func_003B6150((Tok_6150 *)(a0), (Str_6150 *)(a1))) /* merge_units */
 
-extern char* func_00189540(Str2_5580* s);
+extern char* String_CStr_189540(Str2_5580* s);
 extern int atoi(char* s);
 extern long long atof(char* s);
 extern float SoftFloat_DoubleToFloat(long long a);
 #if 0 /* merge_units */
-extern int func_002071F0(StrP_5580* s);
+extern int String_Length(StrP_5580* s);
 #endif /* merge_units */
-#define func_002071F0(a0) (func_002071F0((void *)(a0))) /* merge_units */
+#define String_Length(a0) (String_Length((void *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
 extern char* func_002071A0(StrP_5580* s);
@@ -190,7 +190,7 @@ extern void Skas_RegisterClip(int* out, void* self, char* name, unsigned int* cl
 #define Skas_RegisterClip(a0, a1, a2, a3) (Skas_RegisterClip((a0), (int)(a1), (a2), (a3))) /* merge_units */
 
 extern void AnchorKeys_Reserve(Vec_5580* v, unsigned int n);
-extern void func_001396D0(Vec_5580* v, int n);
+extern void PtrVec_Reserve(Vec_5580* v, int n);
 extern char D_004BD008[];
 extern char D_00499C70[];
 extern char D_004BCD78[];
@@ -235,7 +235,7 @@ static inline int ReadInt0(Tok_5580* tok)
     Str2_5580 t;
     func_00298690(&t);
     func_003B6150(tok, &t);
-    r = atoi(func_00189540(&t));
+    r = atoi(String_CStr_189540(&t));
     func_00138350(&t, -1);
     return r;
 }
@@ -245,7 +245,7 @@ static inline void ReadFloat0(Tok_5580* tok, float* out)
     Str2_5580 t;
     func_00298690(&t);
     func_003B6150(tok, &t);
-    *out = SoftFloat_DoubleToFloat(atof(func_00189540(&t)));
+    *out = SoftFloat_DoubleToFloat(atof(String_CStr_189540(&t)));
     func_00138350(&t, -1);
 }
 
@@ -318,7 +318,7 @@ extern "C" void Skas_Load(Skas_5580* self, Tok_5580* tok, void* list)
                             case 1: {
                                 int i;
                                 for (i = 0; i < sizeof(key); i++)
-                                    key[i] = (i < func_002071F0(&a)) ? func_002071A0(&a)[i] : 0;
+                                    key[i] = (i < String_Length(&a)) ? func_002071A0(&a)[i] : 0;
                                 func_0022A360(&self->keys, self->keys.data + self->keys.count, 1, key);
                                 break;
                             }
@@ -347,7 +347,7 @@ extern "C" void Skas_Load(Skas_5580* self, Tok_5580* tok, void* list)
                                     char name[0x30];
                                     int i;
                                     for (i = 0; i < 0x2F; i++)
-                                        name[i] = (i < func_002071F0(&c)) ? func_002071A0(&c)[i] : 0;
+                                        name[i] = (i < String_Length(&c)) ? func_002071A0(&c)[i] : 0;
                                     name[i] = 0;
                                     Skas_RegisterClip(&clipRes, self, name, clip);
                                 }
@@ -364,7 +364,7 @@ extern "C" void Skas_Load(Skas_5580* self, Tok_5580* tok, void* list)
         }
         if (pass == 0) {
             AnchorKeys_Reserve(&self->keys, nKeys);
-            func_001396D0(&self->clips, nClips);
+            PtrVec_Reserve(&self->clips, nClips);
             tok->pos = 0;
             tok->empty = 0;
         }
@@ -373,7 +373,7 @@ extern "C" void Skas_Load(Skas_5580* self, Tok_5580* tok, void* list)
 #undef String_CtorCStr_13B480 /* merge_units */
 #undef String_Dtor /* merge_units */
 #undef func_003B6150 /* merge_units */
-#undef func_002071F0 /* merge_units */
+#undef String_Length /* merge_units */
 #undef func_002071A0 /* merge_units */
 #undef Skas_RegisterClip /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */

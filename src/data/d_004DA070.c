@@ -19,9 +19,11 @@ extern void Node_GetFlag2C();
 extern void Node_SetFlag2C();
 extern void Object_AttachTransform();
 extern void Object_GetAttachedOrSelf();
+extern void Object_GetEye();
 extern void Object_HandleMessage();
 extern void PathObj_GetPosition();
 extern void Player_GetActiveWeapon();
+extern void PointLightComp_Start();
 extern void cGameDirectionalLight_dtor();
 extern void cGameDirectionalLight_v0B();
 extern void cGameDirectionalLight_v0C();
@@ -43,11 +45,9 @@ extern void func_0013EE60();
 extern void func_00140E90();
 extern void func_00141850();
 extern void func_001479A0();
-extern void func_001479D0();
 extern void func_00147A00();
 extern void func_00147A10();
 extern void func_00148870();
-extern void func_0014D340();
 extern void func_00153860();
 extern void func_0015BFB0();
 extern void func_0015BFC0();
@@ -89,7 +89,7 @@ extern void func_003CE9D0();
 extern void func_003CEA00();
 
 void *D_004DA070[16] = {
-    0, 0, &DirLight_Destruct, &func_001479D0,
+    0, 0, &DirLight_Destruct, &PointLightComp_Start,
     (void *)0x1479e0, &func_00147A00, &func_00147A10, &func_001479A0,
     &Light_GetCoronaSize, &Light_GetCoronaFlag, &Light_SetPosition, &Light_Enable,
     &Light_Disable, (void *)0x1479f0, 0, 0,
@@ -108,7 +108,7 @@ void *D_004DA0B0[72] = {
     &Object_AttachTransform, &Player_GetActiveWeapon, &func_003CDDC0, &func_003CDD80,
     &func_003CDD40, &func_003CDC20, &func_003CDBE0, &func_003CDA60,
     &func_003CD920, &func_003CD7A0, &func_0015C010, &func_00153860,
-    &func_0014D340, &func_0015C020, &func_00140E90, &func_0015C030,
+    &Object_GetEye, &func_0015C020, &func_00140E90, &func_0015C030,
     &func_0015C040, &func_0015C050, &func_003CD520, &func_003CD4A0,
     &func_003CD420, &PathObj_GetPosition, &func_003CD1C0, &func_003CD110,
     &func_003CD090, &func_003CCFF0, &func_0013E060, &func_0015C080,
@@ -129,7 +129,7 @@ void *D_004DA1D0[72] = {
     &Object_AttachTransform, &Player_GetActiveWeapon, &func_003CDDC0, &func_003CDD80,
     &func_003CDD40, &func_003CDC20, &func_003CDBE0, &func_003CDA60,
     &func_003CD920, &func_003CD7A0, &func_0015C010, &func_00153860,
-    &func_0014D340, &func_0015C020, &func_00140E90, &func_0015C030,
+    &Object_GetEye, &func_0015C020, &func_00140E90, &func_0015C030,
     &func_0015C040, &func_0015C050, &func_003CD520, &func_003CD4A0,
     &func_003CD420, &PathObj_GetPosition, &func_003CD1C0, &func_003CD110,
     &func_003CD090, &func_003CCFF0, &func_0013E060, &func_0015C080,

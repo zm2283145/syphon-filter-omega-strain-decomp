@@ -13,7 +13,7 @@ extern int func_0041EFA0(GuiWidget* self);
 extern void GuiWidget_ctor(GuiWidget* self);
 
 /* GuiCharacterDisplay vtable slot 10: base call, then the optional callback. */
-void func_00326810(GuiCharacterDisplay* self) {
+void GuiCharacterDisplay_Draw(GuiCharacterDisplay* self) {
     func_0041E470(&self->base);
     if (self->onDestroy != 0) {
         self->onDestroy();

@@ -20,7 +20,7 @@ int String_CompareNoCase(char* a, char* b);
 void* memcpy(void* d, const void* s, unsigned int n);
 void func_0036E5D0(void* h);
 void func_0036DEC0(void* h);
-void func_0036E220(void* h, int f);
+void FileMan_Release(void* h, int f);
 void FileHal_Dtor(void* p, int f);
 int* FileMan_ReadData(void* h);
 int FileMan_GetSize(void* h);
@@ -107,7 +107,7 @@ struct ScriptFile {
         buf = 0;
         data = 0;
         ok = 0;
-        func_0036E220(hog, -1);
+        FileMan_Release(hog, -1);
     }
     int ReadInt() { int* p = cur; cur = p + 1; return *p; }
     bool ReadBool() { return ReadInt() != 0; }

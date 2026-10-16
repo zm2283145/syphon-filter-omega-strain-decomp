@@ -27,7 +27,7 @@ Word* func_0013D940(Word* dst, Word* src) {
 typedef struct Nd_D950 { struct Nd_D950* prev; struct Nd_D950* next; int obj; } Nd_D950;
 struct It_D950 { Nd_D950* n; It_D950() {} void operator=(const It_D950& o) { const float* s = (const float*)&o; float* d = (float*)this; *d = *s; } };
 extern "C" {
-void func_0013B180(It_D950*, int);
+void List_Begin(It_D950*, int);
 void func_0013B160(It_D950*, int);
 #if 0 /* merge_units */
 void func_0013D940(It_D950*, It_D950*);
@@ -48,7 +48,7 @@ extern "C" void func_0013D950(int l)
     It_D950 t1;
     It_D950 t2;
     Nd_D950* n;
-    func_0013B180(&t1, l);
+    List_Begin(&t1, l);
     func_0013D940(&b, &t1);
     n = b.n;
     func_0013B160(&t2, l);

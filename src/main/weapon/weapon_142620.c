@@ -89,7 +89,7 @@ extern void cMessage_dtor(Msg_INV* msg, int flags);
 #endif /* merge_units */
 #define cMessage_dtor(a0, a1) (cMessage_dtor((void *)(a0), (a1))) /* merge_units */
 
-int func_00142760(INV* self, unsigned char slot, int v, int quiet)
+int WeaponInv_SetClip(INV* self, unsigned char slot, int v, int quiet)
 {
     self->e[slot].d = v;
     if (D_005721C8 && !quiet) {
@@ -118,40 +118,40 @@ static inline void merge_flush_func_00142760(void) {}
 /* merge_units: begin func_00142830 */
 #pragma push /* merge_units */
 typedef struct { char pad[0xF0]; unsigned char state; char pad2[0x10C-0xF1]; int team; } S2960;
-int func_00142960(void* unused, S2960* a, S2960* b); /* gsynth: defined below */typedef struct { int a; int id; int c; int d; } E_830;
+int WeaponInv_IsSameAmmo(void* unused, S2960* a, S2960* b); /* gsynth: defined below */typedef struct { int a; int id; int c; int d; } E_830;
 typedef struct { int pad; E_830 e[7]; char pad2[0x84 - 0x74]; signed char held; } INV_830;
 extern int D_004FFD30;
 extern void* WeaponInv_GetHeldItem(INV_830* self);
 extern void* WeaponDb_Get(int db, int id);
 #if 0 /* merge_units */
-extern int func_00142960(INV_830* self, void* a, void* b);
+extern int WeaponInv_IsSameAmmo(INV_830* self, void* a, void* b);
 #endif /* merge_units */
-#define func_00142960(a0, a1, a2) (func_00142960((void *)(a0), (void *)(a1), (void *)(a2))) /* merge_units */
+#define WeaponInv_IsSameAmmo(a0, a1, a2) (WeaponInv_IsSameAmmo((void *)(a0), (void *)(a1), (void *)(a2))) /* merge_units */
 
-extern int func_001429D0(INV_830* self, int slot, int req, int quiet);
-extern void func_00143D60(INV_830* self);
-int func_00142830(INV_830* self, void* who, int req)
+extern int WeaponInv_AddSpare(INV_830* self, int slot, int req, int quiet);
+extern void WeaponInv_DualShare(INV_830* self);
+int WeaponInv_AddAmmo(INV_830* self, void* who, int req)
 {
     int total = 0;
     void* held = WeaponInv_GetHeldItem(self);
     int i;
-    if (held && func_00142960(self, held, who)) {
-        total = func_001429D0(self, self->held, req, 0);
+    if (held && WeaponInv_IsSameAmmo(self, held, who)) {
+        total = WeaponInv_AddSpare(self, self->held, req, 0);
         req -= total;
     }
     for (i = 0; req && i < 6; i++) {
         if (i != (unsigned char)self->held && self->e[i].id != -1) {
-            if (func_00142960(self, WeaponDb_Get(D_004FFD30, self->e[i].id), who)) {
-                int n = func_001429D0(self, (unsigned char)i, req, 0);
+            if (WeaponInv_IsSameAmmo(self, WeaponDb_Get(D_004FFD30, self->e[i].id), who)) {
+                int n = WeaponInv_AddSpare(self, (unsigned char)i, req, 0);
                 total += n;
                 req -= n;
             }
         }
     }
-    func_00143D60(self);
+    WeaponInv_DualShare(self);
     return total;
 }
-#undef func_00142960 /* merge_units */
+#undef WeaponInv_IsSameAmmo /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00142830(void) {}
 #pragma pop /* merge_units */
@@ -159,7 +159,7 @@ static inline void merge_flush_func_00142830(void) {}
 
 /* merge_units: begin func_00142960 */
 #pragma push /* merge_units */
-int func_00142960(void* unused, S2960* a, S2960* b)
+int WeaponInv_IsSameAmmo(void* unused, S2960* a, S2960* b)
 {
     if (a && b) {
         if (a == b)

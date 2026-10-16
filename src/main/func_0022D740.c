@@ -24,7 +24,7 @@ struct Pred22D740 {
 };
 
 extern "C" {
-bool func_0022D820(Pred22D740* self, Handle22D740* x, Handle22D740* y);
+bool WeakHandle_EqualsPred(Pred22D740* self, Handle22D740* x, Handle22D740* y);
 void Player_ClearRecentTargets(Node22D740** result, List22D740* list, Node22D740** first, Node22D740** last);
 }
 
@@ -37,10 +37,10 @@ extern "C" void TargetVis_LeaveRecent(List22D740* self, Pred22D740 pred) {
     if (i != end) {
     tp = &pred.target;
     do {
-        if (func_0022D820(&pred, &i->value, *tp)) {
+        if (WeakHandle_EqualsPred(&pred, &i->value, *tp)) {
             Node22D740* j = i->next;
             while (j != end) {
-                if (!func_0022D820(&pred, &j->value, *tp)) {
+                if (!WeakHandle_EqualsPred(&pred, &j->value, *tp)) {
                     break;
                 }
                 j = j->next;

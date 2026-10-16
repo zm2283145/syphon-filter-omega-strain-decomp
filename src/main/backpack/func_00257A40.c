@@ -31,7 +31,7 @@ extern unsigned char D_005721C8;
 extern int D_004FFBD0;
 int func_001A3730(Owner_7A40* o);
 int NetGame_InitLocalSlot(int*, int);
-void func_00170DB0(int, void*);
+void Hotbox_RemoveObjectBox(int, void*);
 int Object_Unregister(void*);
 int Object_DeleteLater(void*, float);
 }
@@ -43,7 +43,7 @@ static inline bool HolderReady(BP_7A40* bp) {
 }
 
 #pragma opt_strength_reduction off
-extern "C" void func_00257A40(void) {
+extern "C" void Backpack_CheckCap(void) {
     List_7A40* list = D_004F7F30;
     int n;
     int cnt;
@@ -94,7 +94,7 @@ extern "C" void func_00257A40(void) {
             sel->b2F2 = 1;
             sel->timer = 0.0f;
             if (sel->fx) {
-                func_00170DB0(D_004FFBD0, sel->fx);
+                Hotbox_RemoveObjectBox(D_004FFBD0, sel->fx);
                 Object_Unregister(sel->fx);
                 Object_DeleteLater(sel->fx, 0.1f);
                 sel->fx = 0;

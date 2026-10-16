@@ -61,15 +61,15 @@ extern char D_0055A300[];
 extern unsigned char D_005724B0;
 int sprintf(char* d, const char* f, ...);
 void func_0036E4B0(void* a, char* p, int b, int c);
-int func_0036DEF0(void* a);
-void func_0036E220(void* a, int b);
+int FileMan_FindMember(void* a);
+void FileMan_Release(void* a, int b);
 int Archive_Open(void* a, char* p, int b, int c);
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void Mem_Free(int pool, void* p, char* file, int line);
 Obj_00167630* func_0027B900(void* p, int ar, char* name);
 void func_0027B680(Obj_00167630* o);
 void func_0027B690(Obj_00167630* o, int flags);
-void func_00165BC0(void);
+void App_InitSystemsOnce(void);
 void Video_BeginFrame(void* p);
 void func_0027A740(Obj_00167630* o, void* pad);
 float SoftFloat_U64ToFloat(unsigned long long t);
@@ -113,7 +113,7 @@ extern "C" void func_00167630(void* arg)
         D_004EE4B0 = 1;
     }
     if (!D_004EE4A0) {
-        func_00165BC0();
+        App_InitSystemsOnce();
         D_004EE4A0 = 1;
     }
     if (D_004EE498 == 0) {
@@ -121,7 +121,7 @@ extern "C" void func_00167630(void* arg)
         char ar[0xA0];
         sprintf(path, D_0049C430, D_0048B2F8);
         func_0036E4B0(ar, path, 0, 0);
-        if (!(func_0036DEF0(ar) & 0xFF)) {
+        if (!(FileMan_FindMember(ar) & 0xFF)) {
             int h = Archive_Open(D_004FFB8C, path, 0, 0);
             void* p;
             if (D_00533880) Alloc_Lock(9);
@@ -133,7 +133,7 @@ extern "C" void func_00167630(void* arg)
             D_004EE498 = (Obj_00167630*)p;
             func_0027B680(D_004EE498);
         }
-        func_0036E220(ar, -1);
+        FileMan_Release(ar, -1);
         return;
     }
     {

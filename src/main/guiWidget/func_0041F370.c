@@ -11,7 +11,7 @@ extern "C" {
 extern char D_004E0B40[];
 extern char D_004E09B0[];
 extern int D_00572130;
-ChildIterator func_0013B180(ChildList* list);
+ChildIterator List_Begin(ChildList* list);
 void func_0028C0B0(ChildIterator* result, const ChildIterator& source);
 ChildIterator func_0028C0A0(ChildList* list);
 void func_0028C090(ChildIterator* result, const ChildIterator& source);
@@ -62,7 +62,7 @@ extern "C" TraversalWidget* func_0041F370(TraversalWidget* self, short deleteFla
         GuiOwnedObject* child;
         ChildNode* node;
         *(void**)self = D_004E0B40;
-        func_0028C0B0(&begin, func_0013B180(&self->children));
+        func_0028C0B0(&begin, List_Begin(&self->children));
         node = begin.node;
         while (has_child(node, &self->children, &end)) {
             child = (GuiOwnedObject*)node->widget;

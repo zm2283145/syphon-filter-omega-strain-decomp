@@ -1,6 +1,6 @@
 #pragma opt_propagation off
-extern char* func_001698C0(void);
-extern void func_00165950(char* g);
+extern char* App_GetInstance(void);
+extern void Boot_LoadFonts(char* g);
 extern void func_002CCE80(int x);
 extern void func_004136F0(char* a, char* b);
 extern void func_00413880(char* a, char* b);
@@ -40,30 +40,30 @@ typedef struct {
     char f2F6;
 } SlotB8C0;
 
-void func_002CB8C0(SelfB8C0* self, int flag)
+void FrontEnd_CreateCanvas(SelfB8C0* self, int flag)
 {
     char buf[0x80];
 
     if (self->done) {
         return;
     }
-    func_00165950(func_001698C0());
+    Boot_LoadFonts(App_GetInstance());
     func_00414900(flag ? D_004AD048 : D_004AD060);
     {
-        char* g = func_001698C0();
+        char* g = App_GetInstance();
         func_004185A0(Gui_GetScreenList(), D_004AD078, *(int*)(g + 0x280), 0);
     }
     {
-        char* g = func_001698C0();
+        char* g = App_GetInstance();
         func_004185A0(Gui_GetScreenList(), D_004AD080, *(int*)(g + 0x284), 0);
     }
     {
-        char* g = func_001698C0();
+        char* g = App_GetInstance();
         func_004185A0(Gui_GetScreenList(), D_004AD088, *(int*)(g + 0x288), 0);
     }
-    func_002CCE80(*(int*)(func_001698C0() + 0x280));
-    func_002CCE80(*(int*)(func_001698C0() + 0x284));
-    func_002CCE80(*(int*)(func_001698C0() + 0x288));
+    func_002CCE80(*(int*)(App_GetInstance() + 0x280));
+    func_002CCE80(*(int*)(App_GetInstance() + 0x284));
+    func_002CCE80(*(int*)(App_GetInstance() + 0x288));
     Gui_GetScreenStack()[0x51] = 0;
     func_004158C0(Gui_GetScreenStack(), 1);
     func_00413C70(D_00571DC0);

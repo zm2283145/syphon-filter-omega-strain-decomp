@@ -41,7 +41,7 @@ extern int sceCdSync(int);
 extern void *D_004E9D00;
 extern int volatile D_004E9D04;
 
-void *func_001183B8(void *fn)
+void *sceCdCallback(void *fn)
 {
     register int gp __asm__("$28");
     int s;

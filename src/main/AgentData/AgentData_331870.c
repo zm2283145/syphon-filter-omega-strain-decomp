@@ -41,13 +41,13 @@ static inline void merge_flush_func_00331870(void) {}
 typedef struct { int cap; int count; int* data; } PtrVec2500;
 typedef struct { char pad0[0xB58]; char awards[4]; int numAwards; char pad1[0xB68 - 0xB60]; unsigned char reduced; char pad2[3]; int best; } AgentData2500;
 extern int AgentData_TotalPoints(AgentData2500* a);
-extern void func_003301E0(PtrVec2500* v, int pts);
+extern void AgentData_AppendLockedParts(PtrVec2500* v, int pts);
 extern int* func_002888B0(void* vec, int i);
 extern void PtrVector_Resize(PtrVec2500* v, int n, int* fill);
 #pragma opt_strength_reduction off
 void AgentData_FilterAwards(AgentData2500* a, PtrVec2500* list) {
     int i;
-    func_003301E0(list, AgentData_TotalPoints(a));
+    AgentData_AppendLockedParts(list, AgentData_TotalPoints(a));
     for (i = 0; i < a->numAwards; i++) {
         int j;
         int last;

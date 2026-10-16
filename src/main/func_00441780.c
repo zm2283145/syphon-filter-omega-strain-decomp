@@ -29,7 +29,7 @@ int func_004422D0(int, char*, char*);
 void GuiSaveAgentWidget_HandleEvent(Obj_441780*);
 int sprintf(char*, const char*, ...);
 char* strncpy(char*, const char*, int);
-char* func_00129C80(const char*, const char*);
+char* strstr(const char*, const char*);
 char* func_00128F58(char*, const char*);
 void String_Copy(char*, const char*);
 }
@@ -62,7 +62,7 @@ extern "C" int func_00441780(Obj_441780* self)
         int n;
         sprintf(num, D_004C04C0, have);
         fmt = Loc_LookupText(D_004C04C8);
-        p = func_00129C80(fmt, D_004C04D8);
+        p = strstr(fmt, D_004C04D8);
         n = p - fmt;
         if (p) {
             strncpy(msg, fmt, n);

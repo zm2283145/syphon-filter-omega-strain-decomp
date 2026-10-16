@@ -18,8 +18,8 @@ typedef struct { float r; int pad[3]; V4 c; } Sphere_18A0;
 void func_003C18A0(Sphere_18A0* out, Box_18A0* b); /* gsynth: defined below */typedef struct { int pad[7]; int f1C; } ColData_f3;
 typedef struct { ColData_f3* data; unsigned char loaded; char pad[11]; int f10; } ColHolder_f3;
 typedef struct { int w[11]; } ColTmp_f3;
-extern int func_0036DEF0(void* f);
-extern void func_0036D990(void* f, int* out, int z);
+extern int FileMan_FindMember(void* f);
+extern void FileMan_LoadMemberSync(void* f, int* out, int z);
 extern void func_0036DEC0(void* f);
 extern void Col_Relocate(ColData_f3* d);
 extern void* func_003C19A0(ColData_f3* d);
@@ -39,11 +39,11 @@ int Col_Load(ColHolder_f3* c, void* file)
     ColTmp_f3 tmp;
     if (c->data == 0) {
         buf[0] = 0;
-        if ((unsigned char)func_0036DEF0(file)) {
+        if ((unsigned char)FileMan_FindMember(file)) {
             c->loaded = 1;
             return 0;
         }
-        func_0036D990(file, buf, 0);
+        FileMan_LoadMemberSync(file, buf, 0);
         func_0036DEC0(file);
         c->data = (ColData_f3*)buf[0];
         Col_Relocate(c->data);

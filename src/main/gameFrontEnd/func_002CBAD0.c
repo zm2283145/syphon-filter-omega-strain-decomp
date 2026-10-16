@@ -7,7 +7,7 @@ extern char D_005381F0[];
 void Video_BeginFrame(void* p);
 }
 struct ObjBAD0 { char pad[0x28]; unsigned char a; char pad2[4]; unsigned char b; };
-extern "C" void func_002CBAD0(ObjBAD0* o)
+extern "C" void FrontEnd_DrawGui(ObjBAD0* o)
 {
     if (o->a || o->b) {
         Gui_GetScreenStack()->slot21();

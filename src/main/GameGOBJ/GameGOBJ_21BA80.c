@@ -63,7 +63,7 @@ static inline void merge_flush_func_0021BB90(void) {}
 #pragma cplusplus on
 
 extern "C" {
-void func_0036E220(void* member, int flags);
+void FileMan_Release(void* member, int flags);
 void cGOBJ_dtor(void* self, int flags);
 void operator_delete(void* allocation);
 extern char D_004DAF30[];
@@ -82,8 +82,8 @@ extern "C" SoundGobj0021BCB0* cSoundGOBJ_dtor(SoundGobj0021BCB0* self, short del
     if (self) {
         self->vtable = D_004DAF30;
         if (self->payload) {
-            func_0036E220(self->memberB, -1);
-            func_0036E220(self->memberA, -1);
+            FileMan_Release(self->memberB, -1);
+            FileMan_Release(self->memberA, -1);
         }
         cGOBJ_dtor(self, 0);
         if (deleteFlag > 0)

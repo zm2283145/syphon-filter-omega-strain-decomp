@@ -5,7 +5,7 @@
 struct Raw_B690 { int p; };
 extern "C" {
 void Mem_Free(int, void*, char*, int);
-Raw_B690 func_0013B180(void*);
+Raw_B690 List_Begin(void*);
 Raw_B690 func_0027AC80(void*);
 void func_0027AA80(char**, const Raw_B690&);
 void func_0027AC70(char**, const Raw_B690&);
@@ -22,7 +22,7 @@ extern "C" char* func_0027B690(char* self, short flag) {
             char* e;
             char* n;
             char* it;
-            func_0027AA80(&it, func_0013B180(self + 0x2C));
+            func_0027AA80(&it, List_Begin(self + 0x2C));
             n = it;
             while ((func_0027AC70(&end, func_0027AC80(self + 0x2C)), n != end)) {
                 e = F_(n, 0x8, char*);

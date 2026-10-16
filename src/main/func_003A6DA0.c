@@ -8,7 +8,7 @@ extern "C" {
 extern Buf3A6DA0 D_00542940;
 static Buf3A6DA0* D_00493500 = &D_00542940;
 extern int D_0053DC00;
-extern int func_00118CD8(Info3A6DA0* out, char* name);
+extern int sceCdSearchFile_Thunk(Info3A6DA0* out, char* name);
 extern char* strncpy(char* d, const char* s, int n);
 extern void SyncDCache(void* p, char* k);
 extern void InvalidDCache(void* p, char* k);
@@ -21,7 +21,7 @@ extern "C" int Cd_SearchFile(Info3A6DA0* out, char* name)
     struct { Buf3A6DA0* buf; char path[0xFC]; } req;
     int r;
     char* k;
-    if (D_0053DC00 == 0) return func_00118CD8(out, name);
+    if (D_0053DC00 == 0) return sceCdSearchFile_Thunk(out, name);
     req.buf = D_00493500;
     strncpy(req.path, name, 0xFC);
     req.path[0xFB] = 0;

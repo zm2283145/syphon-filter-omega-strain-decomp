@@ -2,7 +2,7 @@
 
 extern void func_003E8DE0(int, int);
 
-void func_00271C60(int a0) {
+void LoadingScreen_DrawPressX(int a0) {
     int a1, s0;
     int cond;
 

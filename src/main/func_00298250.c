@@ -16,22 +16,22 @@ unsigned char D_0048B7E8[32] __attribute__((aligned(8))) = { 0 };
 unsigned char D_0048B808[32] __attribute__((aligned(8))) = { 0 };
 unsigned char D_0048B828[32] __attribute__((aligned(8))) = { 0 };
 unsigned char D_0048B848[32] __attribute__((aligned(8))) = { 0 };
-extern int func_00294300(GuiCommandCenter* self, int arg);
+extern int GuiCommandCenter_OpenPanel(GuiCommandCenter* self, int arg);
 extern void func_00294AB0(GuiCommandCenter* self);
-extern int func_00295090(GuiCommandCenter* self, int selection, int arg);
-extern int func_002952C0(GuiCommandCenter* self);
+extern int GuiCommandCenter_Select(GuiCommandCenter* self, int selection, int arg);
+extern int GuiCommandCenter_GetDefaultSlot(GuiCommandCenter* self);
 extern void func_00298310(void);
 extern void func_00298360(GuiCommandCenter* self);
 
 /* Refreshes the screen, picking a default selection when none is set. */
-int func_00298250(GuiCommandCenter* self) {
+int GuiCommandCenter_RestoreState(GuiCommandCenter* self) {
     func_00298360(self);
     if (self->selection == -1) {
         func_00294AB0(self);
-        self->selection = func_002952C0(self);
+        self->selection = GuiCommandCenter_GetDefaultSlot(self);
     }
-    func_00295090(self, self->selection, 0);
-    return func_00294300(self, self->unk1D4);
+    GuiCommandCenter_Select(self, self->selection, 0);
+    return GuiCommandCenter_OpenPanel(self, self->unk1D4);
 }
 
 /* Resets the selection state and the shared globals. */

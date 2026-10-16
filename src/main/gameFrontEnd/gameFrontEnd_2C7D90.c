@@ -75,8 +75,8 @@ extern void func_002C81D0(Self7D90* self);
 #endif /* merge_units */
 #define func_002C81D0(a0) (func_002C81D0((Obj81D0 *)(a0))) /* merge_units */
 
-extern void func_002C82F0(Self7D90* self);
-extern long long func_003698B0(unsigned char on);
+extern void FrontEnd_StartSplashThread(Self7D90* self);
+extern long long Time_GetMilliseconds(unsigned char on);
 extern int Gui_GetScreenList(void);
 extern VObj* Gui_GetScreenStack(void);
 extern int GuiManager_FindOrLoad(int a, char* b, char* c);
@@ -108,7 +108,7 @@ extern "C" void FrontEnd_SetLoadingScreen(Self7D90* self, int on, char* a, char*
         return;
     }
     if (on) {
-        D_0051EF78 = func_003698B0((unsigned char)on);
+        D_0051EF78 = Time_GetMilliseconds((unsigned char)on);
     }
     if (!D_004FFBB2) {
         if (on) {
@@ -139,7 +139,7 @@ extern "C" void FrontEnd_SetLoadingScreen(Self7D90* self, int on, char* a, char*
                 }
             }
         }
-        func_002C82F0(self);
+        FrontEnd_StartSplashThread(self);
     } else {
         func_002C81D0(self);
         {
@@ -204,7 +204,7 @@ extern char D_004FFB50;
 
 #define LobbyArray_At(a0, a1) ((E2C8090 *)LobbyArray_At((a0), (a1))) /* merge_units */
 extern void func_00336EC0(A2C8090*, E2C8090*);
-int func_002C8090(void) {
+int FrontEnd_FlushMessages(void) {
     char* g = DME_GetLobby();
     A2C8090* ag = Agent_GetSelected(&D_004FFB50, -1);
     int i;

@@ -74,10 +74,10 @@ T2CA0* func_003E2CA0(T2CA0* self, short del)
 
 extern char D_004938D0;
 extern char D_00559F18;
-extern int func_001396D0(int, int);
+extern int PtrVec_Reserve(int, int);
 
 int func_003E2D20(int a0, int a1) {
-    return func_001396D0(a0, a1);
+    return PtrVec_Reserve(a0, a1);
 }
 
 Rel* func_003E2D30(Rel* r) {
@@ -88,7 +88,7 @@ Rel* func_003E2D30(Rel* r) {
 }
 
 int func_003E2D50(int a0, int a1) {
-    return func_001396D0(a0, a1);
+    return PtrVec_Reserve(a0, a1);
 }
 
 Rel* func_003E2D60(Rel* r) {

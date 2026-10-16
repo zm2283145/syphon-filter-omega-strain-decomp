@@ -34,10 +34,10 @@ extern char D_004BBC70[];
 extern char D_004BBC80[];
 void* ObjMan_GetService(void);
 int ObjMan_GetTotalCount(void* mgr);
-int func_002270A0(void* mgr, O367D60** out, int max);
-int func_002270C0(void* mgr, O367D60** out, int max, unsigned char flag);
-int func_002270E0(void* mgr, O367D60** out, int max);
-int func_00227100(void* mgr, O367D60** out, int max);
+int ObjectiveMgr_GetFailed(void* mgr, O367D60** out, int max);
+int ObjectiveMgr_GetCompleted(void* mgr, O367D60** out, int max, unsigned char flag);
+int ObjectiveMgr_GetOpenParameters(void* mgr, O367D60** out, int max);
+int ObjectiveMgr_GetOpenObjectives(void* mgr, O367D60** out, int max);
 void func_00421070(void* list);
 void func_00421290(void* list, int a, int b, int c);
 int func_004215E0(void* list, int sel);
@@ -54,7 +54,7 @@ static inline void SetSize(L367D60* w, float ww, float hh)
 }
 
 /* Refresh the object list tabs and resize the list widget to its rows. */
-extern "C" void func_00367D60(S367D60* self)
+extern "C" void GuiObjectives_FillList(S367D60* self)
 {
     void* mgr;
     char buf[0x20];
@@ -68,7 +68,7 @@ extern "C" void func_00367D60(S367D60* self)
     {
         LtrWidget* w = Ltr_Cast(GuiWidget_FindChildByName(self, D_004BBC70));
         if (w) {
-            int n = func_002270C0(mgr, tmp, 0x14, 1);
+            int n = ObjectiveMgr_GetCompleted(mgr, tmp, 0x14, 1);
             sprintf(buf, D_004BBC80, n, ObjMan_GetTotalCount(mgr));
             func_0041BEB0(w, buf, 0);
         }
@@ -79,10 +79,10 @@ extern "C" void func_00367D60(S367D60* self)
             int n;
             int j;
             switch (i) {
-            case 0: n = func_00227100(mgr, objs, 0x20); break;
-            case 1: n = func_002270E0(mgr, objs, 0x20); break;
-            case 2: n = func_002270C0(mgr, objs, 0x20, self->b88); break;
-            case 3: n = func_002270A0(mgr, objs, 0x20); break;
+            case 0: n = ObjectiveMgr_GetOpenObjectives(mgr, objs, 0x20); break;
+            case 1: n = ObjectiveMgr_GetOpenParameters(mgr, objs, 0x20); break;
+            case 2: n = ObjectiveMgr_GetCompleted(mgr, objs, 0x20, self->b88); break;
+            case 3: n = ObjectiveMgr_GetFailed(mgr, objs, 0x20); break;
             default: return;
             }
             func_00421070(self->lists[i]);

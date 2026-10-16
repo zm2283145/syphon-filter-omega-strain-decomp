@@ -8,11 +8,11 @@
 #include "GuiGameScreen_types.h"
 
 extern char D_0055A300[];
-extern void func_0036A240(void* p);
+extern void Pad_ResetHeldMask(void* p);
 extern void* Gui_GetScreenStack(void);
 extern void GuiScreen_SetFocus(void* gui, int a1);
 
 void func_0045DE40(int a0) {
     GuiScreen_SetFocus(Gui_GetScreenStack(), a0);
-    func_0036A240(D_0055A300);
+    Pad_ResetHeldMask(D_0055A300);
 }

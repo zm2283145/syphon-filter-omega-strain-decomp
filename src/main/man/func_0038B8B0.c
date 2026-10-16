@@ -8,6 +8,6 @@
 
 extern int D_004933D0[256];
 
-void func_0038B8B0(int index, int value) {
+void WoundEffectIds_Set(int index, int value) {
     D_004933D0[index & 0xFF] = value;
 }

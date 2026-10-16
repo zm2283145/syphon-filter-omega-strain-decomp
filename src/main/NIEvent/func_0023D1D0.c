@@ -35,7 +35,7 @@ public:
     M64 mtx;            /* 0xF0 */
 };
 
-extern "C" void func_0023D1D0(Obj* self, float dt)
+extern "C" void NiEventLight_Step(Obj* self, float dt)
 {
     unsigned char a = self->TestA(dt);
     unsigned char b = self->TestB(dt);

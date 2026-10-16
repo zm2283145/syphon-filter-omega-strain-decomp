@@ -6,7 +6,7 @@
 #include "npc_types.h"
 
 /* Address of the second word of the vector's first element. */
-int* func_00159560(PtrVec* v) {
+int* List_Front(PtrVec* v) {
     return v->data + 2;
 }
 

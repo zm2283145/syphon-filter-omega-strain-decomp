@@ -43,7 +43,7 @@ static inline void merge_flush_func_00231F00(void) {}
 
 /* merge_units: begin func_00231F60 */
 #pragma push /* merge_units */
-void func_00232050(void* list, void* owner, float x, float y); /* gsynth: defined below */typedef struct { float x, y, z, w; } V4_f4;
+void EffectService_Schedule(void* list, void* owner, float x, float y); /* gsynth: defined below */typedef struct { float x, y, z, w; } V4_f4;
 
 
 typedef struct { int pad0; void* vt; } LObj_f4;
@@ -60,9 +60,9 @@ extern void LevelLight_InitPoint(LObj_f4*, int, V4_f4*, float*, int);
 extern void func_00179530(LObj_f4*, float);
 extern void func_00179520(LObj_f4*, float);
 #if 0 /* merge_units */
-extern void func_00232050(LFx_f4*, LObj_f4*, float, float);
+extern void EffectService_Schedule(LFx_f4*, LObj_f4*, float, float);
 #endif /* merge_units */
-#define func_00232050(a0, a1, a2, a3) (func_00232050((void *)(a0), (void *)(a1), (a2), (a3))) /* merge_units */
+#define EffectService_Schedule(a0, a1, a2, a3) (EffectService_Schedule((void *)(a0), (void *)(a1), (a2), (a3))) /* merge_units */
 
 LFx_f4* func_00231F60(LFx_f4* self, LDesc_f4* d)
 {
@@ -81,11 +81,11 @@ LFx_f4* func_00231F60(LFx_f4* self, LDesc_f4* d)
         func_00179520(o, b);
     }
     if (o) {
-        func_00232050(self, o, 0.0f, d->c);
+        EffectService_Schedule(self, o, 0.0f, d->c);
     }
     return self;
 }
-#undef func_00232050 /* merge_units */
+#undef EffectService_Schedule /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00231F60(void) {}
 #pragma pop /* merge_units */
@@ -104,7 +104,7 @@ extern FxSlot232050 D_0055A890[384];
 extern int D_0055C090;
 extern void* func_002320F0(void* list, FxSlot232050** value);
 
-void func_00232050(void* list, void* owner, float x, float y) {
+void EffectService_Schedule(void* list, void* owner, float x, float y) {
     FxSlot232050* found = 0;
     FxSlot232050* tmp;
     float off = *(float*)((char*)list + 0x10);

@@ -39,7 +39,7 @@ struct Obj {
 extern "C" int ItemInv_Any(int);
 static inline bool A(Tgt* t) { bool v = t->b2D && t->b2C && !t->b2E && t->b3468; return v; }
 static inline bool B(Tgt* t) { bool v = t->b2D && t->b2C && !t->b2E && t->b3469; return v; }
-extern "C" void func_00255F60(Obj* o)
+extern "C" void Backpack_UpdateBoxPriority(Obj* o)
 {
     if (o->ctl) {
         int m = 0;
@@ -61,14 +61,14 @@ static inline void merge_flush_func_00255F60(void) {}
 #pragma push /* merge_units */
 typedef struct { char pad[0x2FC]; int effect; char pad300[0x14]; int unk314; } Obj002579E0;
 extern void* D_004FFBD0;
-extern void func_00170DB0(void* mgr, int effect);
+extern void Hotbox_RemoveObjectBox(void* mgr, int effect);
 extern void Object_Unregister(int effect);
 extern void Object_DeleteLater(int effect, float time);
 /* Stop and release the attached effect. */
 void func_00256120(Obj002579E0* obj)
 {
     if (obj->effect) {
-        func_00170DB0(D_004FFBD0, obj->effect);
+        Hotbox_RemoveObjectBox(D_004FFBD0, obj->effect);
         Object_Unregister(obj->effect);
         Object_DeleteLater(obj->effect, 0.1f);
         obj->effect = 0;

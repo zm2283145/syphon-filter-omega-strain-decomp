@@ -44,9 +44,9 @@ extern void SoundRequest_Ctor(SoundRequest* req, int kind, void* name, int a, in
 extern void EffectMsg_WrapRequest(EffectMsg* msg, SoundRequest* req);
 extern void Event_Send(EffectMsg* msg, int target, int flags);
 #if 0 /* merge_units */
-extern void func_0036E220(void* part, int flags);
+extern void FileMan_Release(void* part, int flags);
 #endif /* merge_units */
-#define func_0036E220(a0, a1) (func_0036E220((a0), (a1))) /* merge_units */
+#define FileMan_Release(a0, a1) (FileMan_Release((a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void cMessage_dtor(EffectMsg* msg, int flags);
@@ -63,18 +63,18 @@ void func_002C9AF0(char* self, unsigned char kind) {
         target = Service_Lookup(D_004FFB50, D_004F2CC0);
         SoundRequest_Ctor(&req, 5, D_0048C148[kind], 0, 0);
         EffectMsg_WrapRequest(&msg, &req);
-        func_0036E220(req.partB, -1);
-        func_0036E220(req.partA, -1);
+        FileMan_Release(req.partB, -1);
+        FileMan_Release(req.partA, -1);
         msg.flag = 1;
         Event_Send(&msg, target, 1);
         *(int*)(self + 0x30C) = kind;
         msg.vtbl = D_004DAE30;
-        func_0036E220(msg.partB, -1);
-        func_0036E220(msg.partA, -1);
+        FileMan_Release(msg.partB, -1);
+        FileMan_Release(msg.partA, -1);
         cMessage_dtor(&msg, 0);
     }
 }
-#undef func_0036E220 /* merge_units */
+#undef FileMan_Release /* merge_units */
 #undef cMessage_dtor /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002C9AF0(void) {}
@@ -131,7 +131,7 @@ void* FrontEndScene_ctor(void* p);
 void FrontEndScene_Init(void* p);
 }
 struct Obj9D50 { char pad[0x260]; void* timer; };
-extern "C" void func_002C9D50(Obj9D50* o)
+extern "C" void FrontEnd_GetCharacterData(Obj9D50* o)
 {
     if (!o->timer) {
         void* p;

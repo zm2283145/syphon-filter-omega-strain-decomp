@@ -5,6 +5,7 @@ extern void Actor_BasePreLogic();
 extern void Actor_BaseWorldUpdate();
 extern void Actor_VirtualNop();
 extern void Controller_DeathNotice();
+extern void HudBlip_Draw();
 extern void Node_ClearFlag2C();
 extern void Node_GetFlag2C();
 extern void Node_SetFlag2C();
@@ -12,6 +13,7 @@ extern void Object_Activate();
 extern void Object_AttachTransform();
 extern void Object_Deactivate();
 extern void Object_GetAttachedOrSelf();
+extern void Object_GetEye();
 extern void Object_HandleMessage();
 extern void PathObj_GetPosition();
 extern void Player_GetActiveWeapon();
@@ -27,7 +29,6 @@ extern void func_0013EE60();
 extern void func_00140E90();
 extern void func_00141850();
 extern void func_00148870();
-extern void func_0014D340();
 extern void func_00153860();
 extern void func_0015BFB0();
 extern void func_0015BFC0();
@@ -43,7 +44,6 @@ extern void func_0015C050();
 extern void func_0015C080();
 extern void func_0015C090();
 extern void func_0015C0A0();
-extern void func_002610F0();
 extern void func_003CCFF0();
 extern void func_003CD090();
 extern void func_003CD110();
@@ -74,14 +74,14 @@ void *D_004E0360[72] = {
     &func_003CE810, &func_003CE7D0, &func_0012ED30, &func_0012ED40,
     &func_0012ED50, &cGOBJ_v0B, &cGOBJ_v0C, &func_003CEA00,
     &func_003CE9F0, &func_003CE9E0, &func_003E9880, &Actor_BasePreLogic,
-    &Actor_BaseWorldUpdate, &Actor_VirtualNop, &func_002610F0, &Object_Activate,
+    &Actor_BaseWorldUpdate, &Actor_VirtualNop, &HudBlip_Draw, &Object_Activate,
     &Object_Deactivate, &Node_SetFlag2C, &Node_ClearFlag2C, &Node_GetFlag2C,
     &func_0015BFB0, &func_0015BFC0, &func_0015BFD0, &func_00148870,
     &func_0015BFF0, &func_0015BFE0, &func_0013EE60, &func_0015C000,
     &Object_AttachTransform, &Player_GetActiveWeapon, &func_003CDDC0, &func_003CDD80,
     &func_003CDD40, &func_003CDC20, &func_003CDBE0, &func_003CDA60,
     &func_003CD920, &func_003CD7A0, &func_0015C010, &func_00153860,
-    &func_0014D340, &func_0015C020, &func_00140E90, &func_0015C030,
+    &Object_GetEye, &func_0015C020, &func_00140E90, &func_0015C030,
     &func_0015C040, &func_0015C050, &func_003CD520, &func_003CD4A0,
     &func_003CD420, &PathObj_GetPosition, &func_003CD1C0, &func_003CD110,
     &func_003CD090, &func_003CCFF0, &func_0013E060, &func_0015C080,

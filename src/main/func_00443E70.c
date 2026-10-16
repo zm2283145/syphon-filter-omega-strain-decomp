@@ -1,9 +1,9 @@
 #include "types.h"
 
-extern int func_003698B0(void);
+extern int Time_GetMilliseconds(void);
 
-/* Calls func_003698B0 and returns its result. */
+/* Calls Time_GetMilliseconds and returns its result. */
 long long Lobby_GetTime(void)
 {
-    return func_003698B0();
+    return Time_GetMilliseconds();
 }

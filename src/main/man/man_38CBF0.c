@@ -67,7 +67,7 @@ void func_0038CC70(Cc70Obj* self)
         func_0036E140(&e, path, 0, 0);
         func_003EAA60(func_003EBA50(), &e, 1);
         self->dirty = 0;
-        func_0036E220(&e, -1);
+        FileMan_Release(&e, -1);
     }
     if (self->state < 0) {
         self->state = -2;

@@ -6,7 +6,7 @@
 int Event_Send();                         
 int SoundEvent_Ctor();                    
 int cMessage_dtor();                           
-int func_0036E220();                            
+int FileMan_Release();                            
 int func_0041F070();                                  
 int func_00459450();                               
 extern char D_004DADF0;
@@ -25,7 +25,7 @@ void func_00454880(char * arg0) {
         func_00459450(temp_a0);
     }
     sl.f20[0] = &D_004DADF0;
-    func_0036E220(sl.f134, -1);
-    func_0036E220(sl.f98, -1);
+    FileMan_Release(sl.f134, -1);
+    FileMan_Release(sl.f98, -1);
     cMessage_dtor(sl.f20, 0);
 }

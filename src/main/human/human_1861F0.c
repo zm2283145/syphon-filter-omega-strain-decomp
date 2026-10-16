@@ -89,11 +89,11 @@ extern char D_004E0840[];
 void Actor_ShockReaction(Npc_00186360* self, int a, int b, float f);
 void SoundRequest_Ctor(Req_00186360* r, int a, char* name, int b, int c);
 void SoundEvent_CtorFromPreset(Snd_00186360* e, Req_00186360* r, void* owner);
-void func_0020EBA0(Snd2_00186360* e, Req_00186360* r, void* owner);
+void SoundStopMsg_Ctor(Snd2_00186360* e, Req_00186360* r, void* owner);
 void Event_Construct(void* m, void* type);
 void Event_Send(void* m, void* target, int immediate);
 void cMessage_dtor(void* m, int flags);
-void func_0036E220(Str_00186360* s, int flag);
+void FileMan_Release(Str_00186360* s, int flag);
 }
 static inline int GetId_00186360(Obj_00186360* o, int& t)
 {
@@ -130,11 +130,11 @@ extern "C" void Actor_Ignite(Npc_00186360* self, unsigned char on, Obj_00186360*
             ev.flag = 1;
             Event_Send(&ev, D_004FFB50, 0);
             ev.vt = D_004DAE30;
-            func_0036E220(&ev.s114, -1);
-            func_0036E220(&ev.s78, -1);
+            FileMan_Release(&ev.s114, -1);
+            FileMan_Release(&ev.s78, -1);
             cMessage_dtor(&ev, 0);
-            func_0036E220(&req.sE4, -1);
-            func_0036E220(&req.s48, -1);
+            FileMan_Release(&req.sE4, -1);
+            FileMan_Release(&req.s48, -1);
         }
     } else if (!self->b326A) {
         Actor_ShockReaction(self, 0, 0, 1.0f);
@@ -143,15 +143,15 @@ extern "C" void Actor_Ignite(Npc_00186360* self, unsigned char on, Obj_00186360*
             Req_00186360 req;
             Snd2_00186360 ev;
             SoundRequest_Ctor(&req, 1, D_0049D8E0, 0, 0);
-            func_0020EBA0(&ev, &req, self);
+            SoundStopMsg_Ctor(&ev, &req, self);
             ev.flag = 1;
             Event_Send(&ev, D_004FFB50, 0);
             ev.vt = D_004DADF0;
-            func_0036E220(&ev.s114, -1);
-            func_0036E220(&ev.s78, -1);
+            FileMan_Release(&ev.s114, -1);
+            FileMan_Release(&ev.s78, -1);
             cMessage_dtor(&ev, 0);
-            func_0036E220(&req.sE4, -1);
-            func_0036E220(&req.s48, -1);
+            FileMan_Release(&req.sE4, -1);
+            FileMan_Release(&req.s48, -1);
         }
     }
     if (D_005721C8 && !quiet) {

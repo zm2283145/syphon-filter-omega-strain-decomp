@@ -56,7 +56,7 @@ static inline int B13Player() {
 #pragma bool off
 static inline int InputOk(Input*p){return p->type==1 && p->device==0 && p->action==0;}
 #pragma pop
-extern "C" int func_002B1350(Screen* arg0, Input* arg1) {
+extern "C" int GuiQuickChat_HandleInput(Screen* arg0, Input* arg1) {
     EventMessage msg;
     char sp2D0[32];
     char sp2B0[32];

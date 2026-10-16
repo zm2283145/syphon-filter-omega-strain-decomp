@@ -47,7 +47,7 @@ typedef struct IntPair {
     int b;                          /* 0x04 */
 } IntPair;
 
-/* Owner + value + flag (func_0013EE70). */
+/* Owner + value + flag (ZoneTracker_Ctor). */
 typedef struct Unk0013EE70 {
     int owner;                      /* 0x00 */
     unsigned char valid;            /* 0x04 */
@@ -183,7 +183,7 @@ typedef struct VecE0Array {
     ElemE0* data;                   /* 0x08 */
 } VecE0Array;
 
-/* cGOBJ-derived object built by func_001C5950 (at least 0x74 bytes). */
+/* cGOBJ-derived object built by ParticleGob_Create (at least 0x74 bytes). */
 typedef struct UnkGobj001C5950 {
     cGOBJ base;                     /* 0x00 */
     int unk60;                      /* 0x60: constructor argument */
@@ -284,7 +284,7 @@ typedef struct AnimScalar {
     float unk0C;                    /* 0x0C */
 } AnimScalar;
 
-/* Object returned by func_001698C0; font handles at +0x280. */
+/* Object returned by App_GetInstance; font handles at +0x280. */
 typedef struct FontOwner {
     char pad000[0x280];
     int fonts[1];                   /* 0x280 */

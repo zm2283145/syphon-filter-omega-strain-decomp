@@ -29,7 +29,7 @@ void func_001C0720(void*);
 void func_001C05E0(void*);
 void func_001C0540(void*);
 int func_0036D4E0(Arc_1C01D0* a, int i);
-int func_0036D380(Arc_1C01D0* a, int i);
+int Hog_GetEntrySize(Arc_1C01D0* a, int i);
 char* Archive_GetMemberName(Arc_1C01D0* a, int i);
 void func_003B6270(Ska_1C01D0* p, int a, int b, Arc_1C01D0* c);
 void String_CtorCStr_13B480(Str_1C01D0* s, char* c);
@@ -75,7 +75,7 @@ extern "C" void func_001C01D0(void* self, void* fs)
         }
         {
             int x = func_0036D4E0(a, i);
-            func_003B6270(p, x, func_0036D380(a, i), tex);
+            func_003B6270(p, x, Hog_GetEntrySize(a, i), tex);
         }
         {
             Str_1C01D0 s;

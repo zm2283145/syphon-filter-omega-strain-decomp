@@ -18,7 +18,7 @@ extern char D_004DCF10[];
 extern char* D_004FFC2C;
 char* Loc_LookupText(char* s);
 int Loc_FindKeyThunk(char* s);
-void func_00244EE0(char* t, char* text, float time);
+void HudTimer_Start(char* t, char* text, float time);
 }
 #pragma opt_propagation off
 extern "C" void Global_SetPersonalTimer(Obj_7860* obj, char* text, float time)
@@ -27,7 +27,7 @@ extern "C" void Global_SetPersonalTimer(Obj_7860* obj, char* text, float time)
     if (obj->net && obj->net->IsActive()) net = 1;
     if (net) {
         if (obj->local) {
-            func_00244EE0(D_004FFC2C + 0x6AC, text ? Loc_LookupText(text) : 0, time + *(float*)(D_004FFC2C + 0x6DC));
+            HudTimer_Start(D_004FFC2C + 0x6AC, text ? Loc_LookupText(text) : 0, time + *(float*)(D_004FFC2C + 0x6DC));
         } else {
             TimerMsg_7860 m;
             TimerMsg_7860* p = &m;

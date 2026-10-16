@@ -25,6 +25,6 @@ DEFINE_LABEL_TEXT_REFRESH(func_00292A20, D_004A9D08)
 /* Play a sound on a matching event. */
 extern "C" { char D_004A9D18[] = "GuiTitleScreen"; }
 extern "C" { char D_004A9D28[] = "titlescr"; }
-DEFINE_EVENT_SOUND_CHECK(func_00292AD0, D_004A9D18, D_004A9D28)
+DEFINE_EVENT_SOUND_CHECK(GuiAgentLoad_HandleInput, D_004A9D18, D_004A9D28)
 #pragma pop /* merge_units */
 /* merge_units: end func_00292AD0 */

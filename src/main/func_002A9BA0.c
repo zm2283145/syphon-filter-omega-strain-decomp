@@ -36,7 +36,7 @@ char* Loc_LookupText(char* key);
 void func_0041BEB0(void* w, char* s, int a);
 void* GuiWidget_FindChildByName(S_002A9BA0* self, char* name);
 Ag_002A9BA0* Agent_GetSelected(void* a, int b);
-char* func_00336170(Ag_002A9BA0* ag);
+char* AgentData_GetName(Ag_002A9BA0* ag);
 char* String_CStr(void* s);
 void func_00421070(List_002A9BA0* l);
 unsigned char SFOLobby_RequestLobbyList(G_002A9BA0* g);
@@ -81,7 +81,7 @@ extern "C" void func_002A9BA0(S_002A9BA0* self)
     }
     w = FindAs_002A9BA0(self, D_0048BBF8, D_004A7520);
     if (w)
-        func_0041BEB0(w, func_00336170(Agent_GetSelected(D_004FFB50, -1)), 0);
+        func_0041BEB0(w, AgentData_GetName(Agent_GetSelected(D_004FFB50, -1)), 0);
     w = FindAs_002A9BA0(self, D_0048BBE8, D_004A7520);
     if (w && self->p88)
         func_0041BEB0(w, String_CStr(self->p88->s48), 0);

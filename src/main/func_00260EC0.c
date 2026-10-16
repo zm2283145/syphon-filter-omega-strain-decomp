@@ -8,6 +8,6 @@
 
 extern char D_004F8258;
 
-void func_00260EC0(int value) {
+void Hud_SelectColourRamp(int value) {
     D_004F8258 = value;
 }

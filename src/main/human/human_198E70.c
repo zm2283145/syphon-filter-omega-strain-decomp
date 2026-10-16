@@ -87,7 +87,7 @@ void* func_00198F20(void* self) {
     return self;
 }
 
-int func_00198F30(char* self, int key) {
+int MotionCtrl_IsSelectorPlaying(char* self, int key) {
     char* last;
     int found;
 

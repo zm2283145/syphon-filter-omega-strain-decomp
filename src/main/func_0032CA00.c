@@ -26,7 +26,7 @@ void func_0032B5F0(Self_32CA00* self, unsigned int flags);
 Stack_32CA00* Gui_GetScreenStack(void);
 W_32CA00*** func_00171EC0(Vec_32CA00* v);
 VC_32CA00* func_0032C110(W_32CA00* w);
-int func_0032AF70(Self_32CA00* self, W_32CA00* w);
+int GuiKeyboard_IsSpecialKey(Self_32CA00* self, W_32CA00* w);
 }
 
 static inline float clamp01(float x) { float lo = 0.0f; float hi = 1.0f; asm { max.s lo, x, lo; min.s lo, lo, hi } return lo; }
@@ -40,12 +40,12 @@ static inline void Focus(Self_32CA00* self, W_32CA00* w)
         if (ss->focus) func_0032C110(ss->focus)->v8();
         ss->focus = w;
         if (w) {
-            if (!func_0032AF70(self, w)) func_0032C110(w)->v7();
+            if (!GuiKeyboard_IsSpecialKey(self, w)) func_0032C110(w)->v7();
         }
     }
 }
 
-extern "C" void func_0032CA00(Self_32CA00* self)
+extern "C" void GuiKeyboard_Wake(Self_32CA00* self)
 {
     func_0041EFA0(self);
     self->sel = 0;

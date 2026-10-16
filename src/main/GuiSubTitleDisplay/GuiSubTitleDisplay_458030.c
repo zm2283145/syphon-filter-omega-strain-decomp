@@ -83,7 +83,7 @@ extern void* Mem_Alloc(int, int, char*, int);
 extern char D_004C1EB0[];
 extern char D_00587D70[];
 extern C458* func_003D0940(void*, int, int, int, int, int, char*);
-extern int func_0036A2F0(int);
+extern int Font_GetLineHeight(int);
 }
 extern "C" void func_00458140(W458* w) {
     C458* obj;
@@ -97,7 +97,7 @@ extern "C" void func_00458140(W458* w) {
     w->f48 = obj;
     w->f48->b10 = 0;
     w->f48->b58 = 1;
-    w->f78 = (int)(w->f40 / (float)func_0036A2F0(w->f4c));
+    w->f78 = (int)(w->f40 / (float)Font_GetLineHeight(w->f4c));
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00458140(void) {}

@@ -33,7 +33,7 @@ extern void WaterFx_PointSplash(void* fx, float a, float b);
 extern void SoundRequest_Ctor(SoundRequest* req, int kind, void* name, int a, int b);
 extern void SoundPosRequest_Ctor(SoundMsg* msg, SoundRequest* req, Hit08* hit);
 extern void Event_Send(SoundMsg* msg, void* target, int flags);
-extern void func_0036E220(void* part, int flags);
+extern void FileMan_Release(void* part, int flags);
 extern void cMessage_dtor(SoundMsg* msg, int flags);
 
 /* On a flagged hit, spawns a water splash and broadcasts the impact sound. */
@@ -47,10 +47,10 @@ void func_00278160(void* self, Hit08* hit, HitFlags* info) {
         msg.flag = 1;
         Event_Send(&msg, D_004FFB50, 1);
         msg.vtbl = D_004DAE30;
-        func_0036E220(msg.partB, -1);
-        func_0036E220(msg.partA, -1);
+        FileMan_Release(msg.partB, -1);
+        FileMan_Release(msg.partA, -1);
         cMessage_dtor(&msg, 0);
-        func_0036E220(req.partB, -1);
-        func_0036E220(req.partA, -1);
+        FileMan_Release(req.partB, -1);
+        FileMan_Release(req.partA, -1);
     }
 }

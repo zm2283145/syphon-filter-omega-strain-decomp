@@ -6,9 +6,9 @@ typedef struct { int d[0x2A]; } FEnt;
 extern EntVec D_00532B30;
 extern char D_004B9280[];
 extern void *func_0036E5D0(void *);
-extern void *func_0036E220(void *, int);
+extern void *FileMan_Release(void *, int);
 extern void Hog_Register(void *, const char *, int, int);
-extern int func_0036DEF0(void *);
+extern int FileMan_FindMember(void *);
 extern char *FileMan_ReadData(void *);
 extern int FileMan_GetSize(void *);
 extern ColVec *func_003305A0(ColVec *);
@@ -37,7 +37,7 @@ void PartsTable_Load(int arg)
     char *q;
     func_0036E5D0(&f);
     Hog_Register(&f, D_004B9280, arg, 0);
-    if (!(func_0036DEF0(&f) & 0xFF)) {
+    if (!(FileMan_FindMember(&f) & 0xFF)) {
         p = FileMan_ReadData(&f);
         left = FileMan_GetSize(&f);
         first = 1;
@@ -96,7 +96,7 @@ void PartsTable_Load(int arg)
 
         func_0033A590(&v, 0);
     }
-    func_0036E220(&f, -1);
+    FileMan_Release(&f, -1);
 }
 
 

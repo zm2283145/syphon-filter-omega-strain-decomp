@@ -5,7 +5,7 @@ typedef union { int i; float f; } ScriptArg;
 
 extern SoundMgr175* D_004FFC2C;
 extern int Loc_LookupText(int id);
-extern void func_00244EE0(void* timer, int obj, float time);
+extern void HudTimer_Start(void* timer, int obj, float time);
 
 /* Script native: starts the player timer with the given time and optional target. */
 int Script_cPlayer_SetTimer_2(ScriptArg* args)
@@ -18,6 +18,6 @@ int Script_cPlayer_SetTimer_2(ScriptArg* args)
     *(int*)timeArg = args[1].i;
     time = *timeArg;
     id = *(int*)idArg ? Loc_LookupText(*(int*)idArg) : 0;
-    func_00244EE0(D_004FFC2C->timer, id, time + D_004FFC2C->baseTime);
+    HudTimer_Start(D_004FFC2C->timer, id, time + D_004FFC2C->baseTime);
     return 0;
 }

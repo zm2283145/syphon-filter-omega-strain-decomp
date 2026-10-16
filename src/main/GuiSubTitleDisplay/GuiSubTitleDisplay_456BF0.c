@@ -23,11 +23,11 @@ extern char D_004C1A38[];
 extern char D_004C1C60[];
 extern char D_004C1C70[];
 char* Loc_LookupText(char*);
-void func_0013B180(void*, void*);
+void List_Begin(void*, void*);
 void func_0028C090(void*, void*);
 void func_0028C0A0(void*, void*);
 void func_0028C0B0(void*, void*);
-void func_003688C0(void*);
+void GuiObjectives_Init(void*);
 void func_0041BEB0(void*, char*, int);
 int sprintf(char*, const char*, ...);
 void func_00456BF0(O456* o);
@@ -46,7 +46,7 @@ void func_00456BF0(O456* o)
     if (o->acc) {
         int i = 0;
         LNode* n;
-        func_0013B180(&a, o->acc + 0x28);
+        List_Begin(&a, o->acc + 0x28);
         func_0028C0B0(&it, &a);
         n = it;
         while ((func_0028C0A0(&t, o->acc + 0x28), func_0028C090(&end, &t), n != end) && i < 7) {
@@ -57,7 +57,7 @@ void func_00456BF0(O456* o)
         }
     }
     o->f8C = GuiWidget_FindChildByName(o, D_00497978);
-    func_003688C0(o);
+    GuiObjectives_Init(o);
     o->fB0 = 0;
     w = GuiFindAs(o, D_004C1C60, D_004A7520);
     if (w) {
@@ -81,7 +81,7 @@ void func_00456BF0(O456* o)
 #include "loose05_types.h"
 
 /* vtable */
-extern void func_00368620();
+extern void GuiObjectives_Update();
 extern void func_0041D400();
 extern void func_0041D5C0();
 extern void func_0041D780();
@@ -102,7 +102,7 @@ extern void func_00456BF0();
 extern void func_004573C0();
 extern void func_00457430();
 extern void func_00457440();
-void * const D_004E1430[24] = { (void*)0x0, (void*)0x0, (void*)func_004573C0, (void*)func_00456BF0, (void*)func_0041F090, (void*)func_0041F080, (void*)func_0041F070, (void*)func_00456AB0, (void*)func_00456A30, (void*)func_0041E330, (void*)func_0041E2B0, (void*)func_004566D0, (void*)func_0041E470, (void*)func_0041E230, (void*)func_00368620, (void*)func_00456830, (void*)func_0041F210, (void*)func_00456A60, (void*)func_0041D780, (void*)func_0041D5C0, (void*)func_0041D400, (void*)func_00457430, (void*)func_00457440, (void*)0x0 };
+void * const D_004E1430[24] = { (void*)0x0, (void*)0x0, (void*)func_004573C0, (void*)func_00456BF0, (void*)func_0041F090, (void*)func_0041F080, (void*)func_0041F070, (void*)func_00456AB0, (void*)func_00456A30, (void*)func_0041E330, (void*)func_0041E2B0, (void*)func_004566D0, (void*)func_0041E470, (void*)func_0041E230, (void*)GuiObjectives_Update, (void*)func_00456830, (void*)func_0041F210, (void*)func_00456A60, (void*)func_0041D780, (void*)func_0041D5C0, (void*)func_0041D400, (void*)func_00457430, (void*)func_00457440, (void*)0x0 };
 extern int GuiObjectives_ctor(void* self, int a1, int a2);
 
 /* Constructor: base built by GuiObjectives_ctor, fields cleared, flag bit 5 cleared. */
@@ -136,7 +136,7 @@ DEFINE_VTABLE_BASE_DTOR(func_00456E00, D_004DF5C0, func_0041F370)
 #pragma push /* merge_units */
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 int Service_Lookup(int *, int *);                       
-int func_001C96D0(int, int);                            
+int SoundMgr_SetGroupsPaused(int, int);                            
 int func_003F9E30(int, int);                            
 int func_0041EBF0(int);                               
 extern int D_004F2CC0;
@@ -146,7 +146,7 @@ extern unsigned char D_005721C8;
 
 void func_00456E60(int arg0) {
     if (D_005721C8 == 0) {
-        func_001C96D0(Service_Lookup(&D_004FFB50, &D_004F2CC0), 0);
+        SoundMgr_SetGroupsPaused(Service_Lookup(&D_004FFB50, &D_004F2CC0), 0);
     }
     func_003F9E30(D_004FFC2C + 0x100, 1);
     func_0041EBF0(arg0);
@@ -161,7 +161,7 @@ int func_0041EFA0(int);
 
 void func_00456ED0(int arg0) {
     if (D_005721C8 == 0) {
-        func_001C96D0(Service_Lookup(&D_004FFB50, &D_004F2CC0), 1);
+        SoundMgr_SetGroupsPaused(Service_Lookup(&D_004FFB50, &D_004F2CC0), 1);
     }
     func_003F9E30(D_004FFC2C + 0x100, 0);
     func_0041EFA0(arg0);

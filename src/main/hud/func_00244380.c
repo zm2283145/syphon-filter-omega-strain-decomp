@@ -38,7 +38,7 @@ extern "C" void func_0013EE60();
 extern "C" void func_00140E90();
 extern "C" void func_00141850();
 extern "C" void func_00148870();
-extern "C" void func_0014D340();
+extern "C" void Object_GetEye();
 extern "C" void func_00153860();
 extern "C" void func_0015BFB0();
 extern "C" void func_0015BFC0();
@@ -54,7 +54,7 @@ extern "C" void func_0015C050();
 extern "C" void func_0015C080();
 extern "C" void func_0015C090();
 extern "C" void func_0015C0A0();
-extern "C" void func_002610F0();
+extern "C" void HudBlip_Draw();
 extern "C" void func_003CCFF0();
 extern "C" void func_003CD090();
 extern "C" void func_003CD110();
@@ -82,11 +82,11 @@ extern "C" void Object_HandleMessage();
 extern "C" void func_003E96F0();
 extern "C" void func_003E9880();
 extern "C" void func_003E9BA0();
-void * const D_004E0480[72] = { (void*)0x0, (void*)0x0, (void*)func_003E9BA0, (void*)Object_HandleMessage, (void*)func_0012ECE0, (void*)Object_GetAttachedOrSelf, (void*)func_0015C090, (void*)func_0012ED00, (void*)func_003CE810, (void*)func_003CE7D0, (void*)func_0012ED30, (void*)func_0012ED40, (void*)func_0012ED50, (void*)cGOBJ_v0B, (void*)cGOBJ_v0C, (void*)func_003CEA00, (void*)func_003CE9F0, (void*)func_003CE9E0, (void*)func_003E9880, (void*)Actor_BasePreLogic, (void*)Actor_BaseWorldUpdate, (void*)Actor_VirtualNop, (void*)func_002610F0, (void*)Object_Activate, (void*)Object_Deactivate, (void*)Node_SetFlag2C, (void*)Node_ClearFlag2C, (void*)Node_GetFlag2C, (void*)func_0015BFB0, (void*)func_0015BFC0, (void*)func_0015BFD0, (void*)func_00148870, (void*)func_0015BFF0, (void*)func_0015BFE0, (void*)func_0013EE60, (void*)func_0015C000, (void*)Object_AttachTransform, (void*)Player_GetActiveWeapon, (void*)func_003CDDC0, (void*)func_003CDD80, (void*)func_003CDD40, (void*)func_003CDC20, (void*)func_003CDBE0, (void*)func_003CDA60, (void*)func_003CD920, (void*)func_003CD7A0, (void*)func_0015C010, (void*)func_00153860, (void*)func_0014D340, (void*)func_0015C020, (void*)func_00140E90, (void*)func_0015C030, (void*)func_0015C040, (void*)func_0015C050, (void*)func_003CD520, (void*)func_003CD4A0, (void*)func_003CD420, (void*)PathObj_GetPosition, (void*)func_003CD1C0, (void*)func_003CD110, (void*)func_003CD090, (void*)func_003CCFF0, (void*)func_0013E060, (void*)func_0015C080, (void*)Actor_ApplyContactDamage, (void*)func_0015C0A0, (void*)func_00141850, (void*)Controller_DeathNotice, (void*)func_003E96F0, (void*)0x0, (void*)0x0, (void*)0x0 };
+void * const D_004E0480[72] = { (void*)0x0, (void*)0x0, (void*)func_003E9BA0, (void*)Object_HandleMessage, (void*)func_0012ECE0, (void*)Object_GetAttachedOrSelf, (void*)func_0015C090, (void*)func_0012ED00, (void*)func_003CE810, (void*)func_003CE7D0, (void*)func_0012ED30, (void*)func_0012ED40, (void*)func_0012ED50, (void*)cGOBJ_v0B, (void*)cGOBJ_v0C, (void*)func_003CEA00, (void*)func_003CE9F0, (void*)func_003CE9E0, (void*)func_003E9880, (void*)Actor_BasePreLogic, (void*)Actor_BaseWorldUpdate, (void*)Actor_VirtualNop, (void*)HudBlip_Draw, (void*)Object_Activate, (void*)Object_Deactivate, (void*)Node_SetFlag2C, (void*)Node_ClearFlag2C, (void*)Node_GetFlag2C, (void*)func_0015BFB0, (void*)func_0015BFC0, (void*)func_0015BFD0, (void*)func_00148870, (void*)func_0015BFF0, (void*)func_0015BFE0, (void*)func_0013EE60, (void*)func_0015C000, (void*)Object_AttachTransform, (void*)Player_GetActiveWeapon, (void*)func_003CDDC0, (void*)func_003CDD80, (void*)func_003CDD40, (void*)func_003CDC20, (void*)func_003CDBE0, (void*)func_003CDA60, (void*)func_003CD920, (void*)func_003CD7A0, (void*)func_0015C010, (void*)func_00153860, (void*)Object_GetEye, (void*)func_0015C020, (void*)func_00140E90, (void*)func_0015C030, (void*)func_0015C040, (void*)func_0015C050, (void*)func_003CD520, (void*)func_003CD4A0, (void*)func_003CD420, (void*)PathObj_GetPosition, (void*)func_003CD1C0, (void*)func_003CD110, (void*)func_003CD090, (void*)func_003CCFF0, (void*)func_0013E060, (void*)func_0015C080, (void*)Actor_ApplyContactDamage, (void*)func_0015C0A0, (void*)func_00141850, (void*)Controller_DeathNotice, (void*)func_003E96F0, (void*)0x0, (void*)0x0, (void*)0x0 };
 extern unsigned char D_00533880;
 typedef struct { char p0[92]; int f5C; int f60; int f64; int f68; } PS0_00244380;
 }
-extern "C" void func_00244380(PS0_00244380 *arg0, int arg1, int arg2) {
+extern "C" void Hud_ShowTargetLock(PS0_00244380 *arg0, int arg1, int arg2) {
     char **temp_a0;
     char **temp_s0;
     char **temp_s0_2;

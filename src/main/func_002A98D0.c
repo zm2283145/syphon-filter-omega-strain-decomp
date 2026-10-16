@@ -5,7 +5,7 @@ struct S_002A98D0 { char pad0[0x98]; int f98; int f9C; };
 extern "C" {
 void func_002A96A0(S_002A98D0* self, int a);
 void func_002A9A20(S_002A98D0* self);
-int func_0033CEF0(S_002A98D0* self, Ev_002A98D0* ev);
+int GuiScreen_HandleInput(S_002A98D0* self, Ev_002A98D0* ev);
 }
 static inline unsigned char Down_002A98D0(Ev_002A98D0* e)
 {
@@ -46,5 +46,5 @@ extern "C" int func_002A98D0(S_002A98D0* self, Ev_002A98D0* ev)
             return 1;
         }
     }
-    return func_0033CEF0(self, ev);
+    return GuiScreen_HandleInput(self, ev);
 }

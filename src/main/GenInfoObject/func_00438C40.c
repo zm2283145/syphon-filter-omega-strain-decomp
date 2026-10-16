@@ -6,15 +6,15 @@ struct Raw_8C40 { int p; };
 struct Ent_8C40 { int key; unsigned char lo : 4; unsigned char hi : 4; char pad[3]; };
 extern "C" {
 void Mem_Free(int, void*, char*, int);
-void func_00138DA0(int*, char*, int*);
-Raw_8C40 func_0013B180(void*);
+void List_Erase(int*, char*, int*);
+Raw_8C40 List_Begin(void*);
 Raw_8C40 func_00438E00(void*);
 void func_00438E10(char**, const Raw_8C40&);
 void func_00438DF0(char**, const Raw_8C40&);
 void func_0015AF40(int*, char**);
 extern char D_005838D8;
 }
-#define Begin_8C40(o) func_00438E10(o, func_0013B180(&D_005838D8))
+#define Begin_8C40(o) func_00438E10(o, List_Begin(&D_005838D8))
 #define End_8C40(o) func_00438DF0(o, func_00438E00(&D_005838D8))
 extern "C" void func_00438C40(Ent_8C40* tbl) {
     char* end;
@@ -42,7 +42,7 @@ extern "C" void func_00438C40(Ent_8C40* tbl) {
                 int pos;
                 c = cur;
                 func_0015AF40(&pos, &c);
-                func_00138DA0(&res, &D_005838D8, &pos);
+                List_Erase(&res, &D_005838D8, &pos);
             }
         }
     }

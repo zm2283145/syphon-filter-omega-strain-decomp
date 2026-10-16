@@ -37,8 +37,8 @@ void Mem_Free(int, void *, char *, int);
 int func_00128C68(char *, char *, ...);
 void func_00136DA0(int *);
 void func_0012F530(int *, int);
-int func_0036A2F0(int);
-int func_0036AA50(int, char *, int);
+int Font_GetLineHeight(int);
+int Font_GetStringWidth(int, char *, int);
 void func_00458900(SubDisp *);
 void func_00459320(SubList *, int);
 int func_00459380(int *, SubList **);
@@ -140,7 +140,7 @@ int func_00458A30(SubDisp *self)
                     return 0;
                 if (val.i != 0) {
                     Push(list, &val);
-                    width += func_0036AA50(self->font, self->text + val.h, val.i);
+                    width += Font_GetStringWidth(self->font, self->text + val.h, val.i);
                     val.f = width;
                     val.i = 0;
                 }
@@ -165,7 +165,7 @@ int func_00458A30(SubDisp *self)
                 }
                 if (val.i != 0) {
                     Push(list, &val);
-                    width += func_0036AA50(self->font, self->text + val.h, val.i);
+                    width += Font_GetStringWidth(self->font, self->text + val.h, val.i);
                     val.f = width;
                     val.i = 0;
                     val.a = 0;
@@ -194,7 +194,7 @@ int func_00458A30(SubDisp *self)
                 }
                 val.f = 0;
                 width = 0;
-                val.g += func_0036A2F0(self->font);
+                val.g += Font_GetLineHeight(self->font);
                 val.a = nf;
                 val.h = p - self->text;
                 val.i = 0;
@@ -204,7 +204,7 @@ int func_00458A30(SubDisp *self)
             char *s;
             val.i++;
             s = self->text + val.h;
-            if (maxw < width + func_0036AA50(self->font, s, val.i)) {
+            if (maxw < width + Font_GetStringWidth(self->font, s, val.i)) {
                 int len = val.i;
                 int k;
                 bool found = false;
@@ -236,7 +236,7 @@ int func_00458A30(SubDisp *self)
                 }
                 val.f = 0;
                 width = 0;
-                val.g += func_0036A2F0(self->font);
+                val.g += Font_GetLineHeight(self->font);
                 val.a = 0;
             }
             p++;

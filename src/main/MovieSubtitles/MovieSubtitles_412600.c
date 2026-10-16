@@ -74,8 +74,8 @@ extern char D_00538C68;
 extern IdList* D_00539248;
 void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
 void FlushCache(int);
-void func_0036AFC0(VBig*);
-void func_0036AB80(VBig*, int*, const char*);
+void Font_ctor(VBig*);
+void Font_LoadFnt(VBig*, int*, const char*);
 void func_00382910(IdList*);
 void Video_BeginFrame(void*);
 void func_00410C20(Subs* self, void* file, int lang);
@@ -128,7 +128,7 @@ static inline Subs* NewSubs(void) {
 static inline VBig* NewVBig(void) {
     VBig* v = (VBig*)Alloc(sizeof(VBig), 0xB4);
     if (v) {
-        func_0036AFC0(v);
+        Font_ctor(v);
         v->vtbl = D_004E08B8;
     }
     return v;
@@ -183,7 +183,7 @@ extern "C" void func_00412600(Self* self, void* file, int lang)
         if (self->p54 == 0) {
             if (name == 0) name = D_004BEEE8;
             self->p54 = NewVBig();
-            func_0036AB80(self->p54, &D_0055C5D0, name);
+            Font_LoadFnt(self->p54, &D_0055C5D0, name);
             { IdList* l = D_00539248; l->n = 0; l->f16 = 0; }
             AddId(D_00539248, *(int*)self->p54);
             func_00382910(D_00539248);

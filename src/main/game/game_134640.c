@@ -98,7 +98,7 @@ void func_001784B0(void* p);
 void func_001AF7A0(void);
 void func_001C3B00(void* p);
 void func_001C9680(void* p);
-void func_001C9710(void* p);
+void SoundMgr_UnloadLevel(void* p);
 void func_00224140(void* p);
 void func_002261C0(void* p);
 void func_0022D3C0(void* p);
@@ -108,9 +108,9 @@ void func_002458E0(void* p, int f);
 void func_002569C0(void);
 void func_00257150(void);
 void func_0025FBB0(void* p);
-void func_002609E0(void* p, int a, int b);
+void VisionMgr_SetPendingMode(void* p, int a, int b);
 void func_002683F0(void);
-void func_0026BD60(void);
+void PadRumble_Stop(void);
 void func_0026BE70(int a);
 void func_00272920(void* p, int f);
 void func_00275550(void);
@@ -192,7 +192,7 @@ extern "C" void World_Teardown(World_134640* w)
         Mem_Free(0, p, D_0049A890, 0x2CF);
     }
     w->fEC = 0;
-    func_0026BD60();
+    PadRumble_Stop();
     func_0026BE70(0);
     {
         void* p = w->f8C;
@@ -201,7 +201,7 @@ extern "C" void World_Teardown(World_134640* w)
         Mem_Free(0, p, D_0049A890, 0x2D3);
     }
     w->f8C = 0;
-    func_002609E0(w->fE0, 0, 1);
+    VisionMgr_SetPendingMode(w->fE0, 0, 1);
     ScreenFx_Start(w->fE0, 0, 0.0f, 0.0f, 0.0f, 0.0f);
     func_0025FBB0(w->fE0);
     WaterFx_Clear(w->fE4);
@@ -258,7 +258,7 @@ extern "C" void World_Teardown(World_134640* w)
     func_00132A40(w);
     WeaponDb_LoadResources(w->f1E0);
     func_004702A0();
-    if (svc) func_001C9710(svc);
+    if (svc) SoundMgr_UnloadLevel(svc);
     func_0013E070(w->fD0);
     EventQueue_ClearAll();
     IdMgr_Destroy();

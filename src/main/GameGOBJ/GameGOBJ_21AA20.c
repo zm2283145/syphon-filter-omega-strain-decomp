@@ -54,7 +54,7 @@ extern "C" void Event_Construct(C1Msg_21A9* m, void* type);
 extern "C" void func_003FF930(C1Msg_21A9* m, int target);
 extern "C" void cMessage_dtor(C1Msg_21A9* m, int flags);
 #pragma opt_strength_reduction off
-extern "C" void func_0021AA20(C1Obj_21A9* o)
+extern "C" void cGameGOBJ_Enable(C1Obj_21A9* o)
 {
     int i;
     if (D_005721C8) {

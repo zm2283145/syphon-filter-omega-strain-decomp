@@ -37,7 +37,7 @@ extern "C" void func_0013E060();
 extern "C" void func_00140E90();
 extern "C" void func_00141850();
 extern "C" void func_00148870();
-extern "C" void func_0014D340();
+extern "C" void Object_GetEye();
 extern "C" void func_00153860();
 extern "C" void func_0015BFB0();
 extern "C" void func_0015BFC0();
@@ -61,7 +61,7 @@ extern "C" void func_001729B0();
 extern "C" void func_00173640();
 extern "C" void func_00173650();
 extern "C" void Hotbox_GetBounds();
-extern "C" void func_00173670();
+extern "C" void Hotbox_Enable_173670();
 extern "C" void func_00173680();
 extern "C" void func_00173690();
 extern "C" void func_001736A0();
@@ -103,7 +103,7 @@ extern "C" VtableMemberObject* cHotbox_dtor(VtableMemberObject* self,
     }
     return self;
 }
-void * const D_004D9AC0[72] = { (void*)0x0, (void*)0x0, (void*)cHotbox_dtor, (void*)cHotbox_v01, (void*)func_0012ECE0, (void*)Object_GetAttachedOrSelf, (void*)func_001736B0, (void*)func_0012ED00, (void*)func_00173690, (void*)func_001736A0, (void*)func_00173670, (void*)func_00173680, (void*)func_001729B0, (void*)func_0016FE50, (void*)Hotbox_ScriptFilter, (void*)func_003CEA00, (void*)func_00173640, (void*)func_00173650, (void*)Actor_BaseLogicUpdate, (void*)Actor_BasePreLogic, (void*)Actor_BaseWorldUpdate, (void*)Actor_VirtualNop, (void*)func_001729A0, (void*)Object_Activate, (void*)Object_Deactivate, (void*)Hotbox_Enable, (void*)Hotbox_Disable, (void*)Node_GetFlag2C, (void*)func_0015BFB0, (void*)func_0015BFC0, (void*)func_0015BFD0, (void*)func_00148870, (void*)func_0015BFF0, (void*)func_0015BFE0, (void*)Hotbox_GetBounds, (void*)func_0015C000, (void*)Object_AttachTransform, (void*)Player_GetActiveWeapon, (void*)func_003CDDC0, (void*)func_003CDD80, (void*)func_003CDD40, (void*)func_003CDC20, (void*)func_003CDBE0, (void*)func_003CDA60, (void*)func_003CD920, (void*)func_003CD7A0, (void*)func_0015C010, (void*)func_00153860, (void*)func_0014D340, (void*)func_0015C020, (void*)func_00140E90, (void*)func_0015C030, (void*)func_0015C040, (void*)func_0015C050, (void*)func_003CD520, (void*)func_003CD4A0, (void*)func_003CD420, (void*)PathObj_GetPosition, (void*)func_003CD1C0, (void*)func_003CD110, (void*)func_003CD090, (void*)func_003CCFF0, (void*)func_0013E060, (void*)func_0015C080, (void*)Actor_ApplyContactDamage, (void*)func_0015C0A0, (void*)func_00141850, (void*)Controller_DeathNotice, (void*)Hotbox_Contains, (void*)cHotbox_v43, (void*)0x0, (void*)0x0 };
+void * const D_004D9AC0[72] = { (void*)0x0, (void*)0x0, (void*)cHotbox_dtor, (void*)cHotbox_v01, (void*)func_0012ECE0, (void*)Object_GetAttachedOrSelf, (void*)func_001736B0, (void*)func_0012ED00, (void*)func_00173690, (void*)func_001736A0, (void*)Hotbox_Enable_173670, (void*)func_00173680, (void*)func_001729B0, (void*)func_0016FE50, (void*)Hotbox_ScriptFilter, (void*)func_003CEA00, (void*)func_00173640, (void*)func_00173650, (void*)Actor_BaseLogicUpdate, (void*)Actor_BasePreLogic, (void*)Actor_BaseWorldUpdate, (void*)Actor_VirtualNop, (void*)func_001729A0, (void*)Object_Activate, (void*)Object_Deactivate, (void*)Hotbox_Enable, (void*)Hotbox_Disable, (void*)Node_GetFlag2C, (void*)func_0015BFB0, (void*)func_0015BFC0, (void*)func_0015BFD0, (void*)func_00148870, (void*)func_0015BFF0, (void*)func_0015BFE0, (void*)Hotbox_GetBounds, (void*)func_0015C000, (void*)Object_AttachTransform, (void*)Player_GetActiveWeapon, (void*)func_003CDDC0, (void*)func_003CDD80, (void*)func_003CDD40, (void*)func_003CDC20, (void*)func_003CDBE0, (void*)func_003CDA60, (void*)func_003CD920, (void*)func_003CD7A0, (void*)func_0015C010, (void*)func_00153860, (void*)Object_GetEye, (void*)func_0015C020, (void*)func_00140E90, (void*)func_0015C030, (void*)func_0015C040, (void*)func_0015C050, (void*)func_003CD520, (void*)func_003CD4A0, (void*)func_003CD420, (void*)PathObj_GetPosition, (void*)func_003CD1C0, (void*)func_003CD110, (void*)func_003CD090, (void*)func_003CCFF0, (void*)func_0013E060, (void*)func_0015C080, (void*)Actor_ApplyContactDamage, (void*)func_0015C0A0, (void*)func_00141850, (void*)Controller_DeathNotice, (void*)Hotbox_Contains, (void*)cHotbox_v43, (void*)0x0, (void*)0x0 };
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00172A60(void) {}
 #pragma pop /* merge_units */
@@ -147,12 +147,12 @@ extern int D_005721A8;
 extern unsigned char D_005721C0;
 extern unsigned char D_005721C8;
 void cGOBJ_ctor(Hotbox*, int*, int, void*);
-void func_001365C0(Items_172AE0*);
+void PtrVec_InitEmpty(Items_172AE0*);
 void Mtx_SetBasis(Mtx* m, V4* a, V4* b, V4* c);
 void Mtx_SetTranslation(Mtx* m, V4* t);
 int IdMgr_FindCollision(int, int);
 void ZoneMgr_Associate(int, Hotbox*, int, int);
-void func_00171C70(Items_172AE0*, int*);
+void PtrVec_PushBack_171C70(Items_172AE0*, int*);
 void Event_Construct(void*, char*);
 void Event_Send(void*, int, int);
 void cMessage_dtor(void*, int);
@@ -208,7 +208,7 @@ extern "C" Hotbox* cHotbox_ctor(Hotbox* self, Reader* r, int type)
     Msg_172AE0* pm;
     cGOBJ_ctor(self, &gid, 8, D_004EE6B8);
     *(void**)self = D_004D9AC0;
-    { Items_172AE0* it = &self->items; func_001365C0(it); it->bC = 1; }
+    { Items_172AE0* it = &self->items; PtrVec_InitEmpty(it); it->bC = 1; }
     self->bmin.x = 3.4028235e38f;
     self->bmin.y = 3.4028235e38f;
     self->bmin.z = 3.4028235e38f;
@@ -254,7 +254,7 @@ extern "C" Hotbox* cHotbox_ctor(Hotbox* self, Reader* r, int type)
         int b = Read(r);
         c = IdMgr_FindCollision(a, b);
         if (c) {
-            func_00171C70(&self->items, &c);
+            PtrVec_PushBack_171C70(&self->items, &c);
             if (self->type == 1 || self->type == 6 || self->type == 7) {
                 pm = &msg;
                 Init(pm);

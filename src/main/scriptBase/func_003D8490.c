@@ -6,10 +6,10 @@
 
 #include "types.h"
 
-extern int func_001396D0(int, int);
+extern int PtrVec_Reserve(int, int);
 
 int func_003D8490(int a0, int a1) {
-    return func_001396D0(a0, a1);
+    return PtrVec_Reserve(a0, a1);
 }
 
 Rel* func_003D84A0(Rel* r) {
@@ -20,7 +20,7 @@ Rel* func_003D84A0(Rel* r) {
 }
 
 int func_003D84C0(int a0, int a1) {
-    return func_001396D0(a0, a1);
+    return PtrVec_Reserve(a0, a1);
 }
 
 Rel* func_003D84D0(Rel* r) {

@@ -43,7 +43,7 @@ static inline void Del28F520(V28F520* o, int line)
     o->v0(-1);
     Mem_Free(0, o, "GuiAgentCreate.cc", line);
 }
-extern "C" O28F520* func_0028F520(O28F520* self, short del)
+extern "C" O28F520* GuiAgentCreate_dtor(O28F520* self, short del)
 {
     if (self) {
         int i;
@@ -194,7 +194,7 @@ extern char D_0048B470[2][11][6];
 extern Tab_F760 D_0048B500[2][11];
 extern GDef_F760 D_0056F9B0;
 void GuiWidget_ctor(Self_F760* self);
-void func_002C9D50(int a);
+void FrontEnd_GetCharacterData(int a);
 void Skl_Load(void* a, char* b, char* c);
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void cGOBJ_ctor(void* p, int* a, int b, int* c);
@@ -226,8 +226,8 @@ void ActorModel_Setup(Man_F760* m, int flag);
 void Skel_ApplyScalePreset(Man_F760* m, int a);
 int func_00404690(void* db, __int128 key);
 int func_00401DE0(void* db, __int128 key);
-void func_0028F220(Self_F760* self);
-Self_F760* func_0028F760(Self_F760* self);
+void GuiAgentCreate_UpdateCount(Self_F760* self);
+Self_F760* GuiAgentCreate_ctor(Self_F760* self);
 }
 
 static inline void SetH_F760(Man_F760* m, H_F760* o) { m->f2D70 = o; { int d; m->f2D74 = *(o ? &o->serial : (d = -1, &d)); } }
@@ -370,7 +370,7 @@ static inline void Tail_F760(Self_F760* self, int i, V4_F760& v)
                 SetB_F760(*pm, 1);
             }
 }
-extern "C" Self_F760* func_0028F760(Self_F760* p0)
+extern "C" Self_F760* GuiAgentCreate_ctor(Self_F760* p0)
 {
     int i;
     Self_F760* self = p0;
@@ -379,7 +379,7 @@ extern "C" Self_F760* func_0028F760(Self_F760* p0)
     self->flags |= 0x20;
     self->fCC = -1;
     self->fD0 = 1;
-    func_002C9D50(D_004FFC04);
+    FrontEnd_GetCharacterData(D_004FFC04);
     D_00493A60 = -1;
     Skl_Load(D_0055DDA0, D_004A9AC0, D_004A9AE0);
     {
@@ -516,7 +516,7 @@ extern "C" Self_F760* func_0028F760(Self_F760* p0)
     self->fEE = D_0048B500[self->fD8][self->fEF].mode;
     self->fE0 = func_00404690(D_0055DDA0, MANP_F760(self->f70)->e[(signed char)self->fED].a);
     self->fE4 = func_00401DE0(D_0055DDA0, MANP_F760(self->f70)->e[(signed char)self->fED].b);
-    func_0028F220(self);
+    GuiAgentCreate_UpdateCount(self);
     self->fC0 = 0;
     self->name = D_0056F9B0.name;
     self->f90 = D_0056F9B0.i;

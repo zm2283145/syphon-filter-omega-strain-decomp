@@ -14,12 +14,12 @@ typedef struct {
 typedef struct { char pad[0xA70]; int cur; } CtxCur;
 extern char D_00537F80[];
 extern u64_t* func_00375C30(void* q, int a, int b, int c, int d, int e);
-extern void func_00374DF0(Ent* e);
+extern void Renderer_RefreshCamera(Ent* e);
 
 typedef struct { u64_t lo, hi; } GsQ_98A0;
 /* Builds the GS environment packet (FRAME/ZBUF/XYOFFSET/SCISSOR/ALPHA/FBA/TEXA via A+D)
    for the current buffer entry; the A+D pairs straddle quadwords. */
-void func_003798A0(Ctx* c)
+void Renderer_RestoreRenderState(Ctx* c)
 {
     GsQ_98A0* q = (GsQ_98A0*)func_00375C30(D_00537F80, 1, 1, 0x10, 0, 1);
     Ent* e;
@@ -31,7 +31,7 @@ void func_003798A0(Ctx* c)
     q++;
     q->lo = 0xE;
     e = &c->ents[((CtxCur*)c)->cur];
-    func_00374DF0(e);
+    Renderer_RefreshCamera(e);
     c->scissor = e->v108;
     q->hi = c->frame1; q++; q->lo = 0x4C;
     q->hi = c->frame2; q++; q->lo = 0x4D;

@@ -7,11 +7,11 @@
 #include "types.h"
 #include "loose00_types.h"
 
-extern int func_001396D0(int, int);
+extern int PtrVec_Reserve(int, int);
 extern int func_00173970(LinkList* list);
 
 int func_00173900(int a0, int a1) {
-    return func_001396D0(a0, a1);
+    return PtrVec_Reserve(a0, a1);
 }
 
 Rel* func_00173910(Rel* r) {

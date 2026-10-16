@@ -11,12 +11,12 @@ struct NpcPurgeIt { NpcPurgeNode* node; NpcPurgeIt() {} };
 extern "C" {
 extern char D_004BFCA0[];
 void Mem_Free(int pool, void* p, char* file, int line);
-NpcPurgeIt func_0013B180(void* list);
+NpcPurgeIt List_Begin(void* list);
 void func_00432740(NpcPurgeIt* r, const NpcPurgeIt& s);
 NpcPurgeIt func_00432730(void* list);
 void func_00432720(NpcPurgeIt* r, const NpcPurgeIt& s);
 void func_0015AF40(NpcPurgeIt* r, NpcPurgeNode** n);
-void func_00138DA0(NpcPurgeIt* r, void* list, NpcPurgeIt* pos);
+void List_Erase(NpcPurgeIt* r, void* list, NpcPurgeIt* pos);
 }
 #define DEFINE_NPC_INFO_PURGE(name, list, flagval, line)                        \
     extern "C" { extern char list[]; }                                          \
@@ -24,7 +24,7 @@ void func_00138DA0(NpcPurgeIt* r, void* list, NpcPurgeIt* pos);
     {                                                                           \
         NpcPurgeIt end; NpcPurgeIt it; NpcPurgeEnt* e; NpcInfoRec* found;       \
         NpcPurgeNode* n; NpcPurgeNode* cur;                                     \
-        func_00432740(&it, func_0013B180(list));                                \
+        func_00432740(&it, List_Begin(list));                                \
         n = it.node;                                                            \
         while (func_00432720(&end, func_00432730(list)), n != end.node) {       \
             cur = n; e = cur->data; n = n->next;                                \
@@ -42,7 +42,7 @@ void func_00138DA0(NpcPurgeIt* r, void* list, NpcPurgeIt* pos);
                 {                                                               \
                     NpcPurgeNode* c = cur; NpcPurgeIt b; NpcPurgeIt a;          \
                     func_0015AF40(&a, &c);                                      \
-                    func_00138DA0(&b, list, &a);                                \
+                    List_Erase(&b, list, &a);                                \
                 }                                                               \
             }                                                                   \
         }                                                                       \

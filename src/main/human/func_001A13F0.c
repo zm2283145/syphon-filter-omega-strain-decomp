@@ -14,7 +14,7 @@ extern void Event_Construct(Msg* m, void* type);
 extern void cMessage_dtor(Msg* m, int flags);
 extern void AnimCtl_InstallMotion(void* ctl, int id, int a2, int a3, void* p, Msg* m1, Msg* m2, int a7, float f0, float f1);
 /* Installs a motion on the actor's anim controller (self+0x34) with two empty stack messages. */
-void func_001A13F0(char* self, int* motion, int a2, int a3, int a4)
+void Actor_ReinstallRetainedMotion(char* self, int* motion, int a2, int a3, int a4)
 {
     Msg m1;
     Msg m2;

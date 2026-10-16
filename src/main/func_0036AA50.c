@@ -14,7 +14,7 @@ typedef struct {
 } Font;
 extern FontMgr* D_00539248;
 
-int func_0036AA50(Font* font, const unsigned char* s, int n) {
+int Font_GetStringWidth(Font* font, const unsigned char* s, int n) {
     float scale = (int)D_00539248->tex[font->texId]->hdr[2];
     float w = 0.0f;
     int c;

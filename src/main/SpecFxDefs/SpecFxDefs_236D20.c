@@ -19,7 +19,7 @@ extern "C" {
 extern char D_004A6E38[];
 void func_003A2BA0(void* p, int n);
 }
-extern "C" void func_00236D20(E4Own* o)
+extern "C" void ParticleEffectComp_Stop(E4Own* o)
 {
     void* p = o->buf;
     if (p) {
@@ -54,7 +54,7 @@ extern char D_004A6E38;
 
 extern unsigned char D_00533880;
 }
-extern "C" void func_00236DE0(char * arg0) {
+extern "C" void ParticleEffectComp_Start(char * arg0) {
     int var_s1;
 
     {
@@ -86,7 +86,7 @@ struct Raw00236EA0 { int id; void* vt; };
 extern "C" char D_004DBE90[];
 extern "C" char D_004D9280[];
 extern "C" void func_003EC950(void* p);
-extern "C" Obj00236EA0* func_00236EA0(Obj00236EA0* self, short deleteFlag)
+extern "C" Obj00236EA0* ParticleEffectComp_Destroy(Obj00236EA0* self, short deleteFlag)
 {
     if (self) {
         Raw00236EA0* r = (Raw00236EA0*)self;

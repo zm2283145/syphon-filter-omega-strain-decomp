@@ -8,7 +8,7 @@
 
 struct VC003EC300 { char vpad[20]; virtual int v0(); virtual int v1(); virtual int v2(...); };
 extern "C" {
-int func_0013B180(...);                          
+int List_Begin(...);                          
 int func_003EC3B0(...);                        
 int func_003EC3C0(...);                          
 int func_003EC3D0(...);                      
@@ -22,7 +22,7 @@ extern "C" void func_003EC300(void) {
     char * temp_a0;
     char * var_s0;
 
-    func_0013B180(&sp24, &D_0055C0A8);
+    List_Begin(&sp24, &D_0055C0A8);
     func_003EC3D0(&sp28, &sp24);
     var_s0 = sp28;
     func_003EC3C0(&sp20, &D_0055C0A8);

@@ -61,7 +61,7 @@ static inline void FinJ_D530(V4_D530* a, V4_D530* pv0, V4_D530* b)
     __asm__ volatile("lqc2 vf1, 0x0(%0); lqc2 vf2, 0x0(%1); lqc2 vf3, 0x0(%2); vmini.xyz vf1, vf1, vf3; vmax.xyz vf2, vf2, vf3; sqc2 vf1, 0x0(%0); sqc2 vf2, 0x0(%1)" : : "r"(a), "r"(pv0), "r"(b) : "memory");
 }
 
-extern "C" void func_0038D530(Obj_D530* self, char* name, int idx, Id_D530* id,
+extern "C" void ManModel_ctor(Obj_D530* self, char* name, int idx, Id_D530* id,
                               int a, int b, int c, int d)
 {
     Appearance_RegistryKey(self->name, 0x1F, name);

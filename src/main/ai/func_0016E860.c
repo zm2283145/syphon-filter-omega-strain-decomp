@@ -12,6 +12,6 @@ Word* func_0016E860(Word* self, int value) {
     return self;
 }
 
-void func_0016E880(Iter* out, PtrVec* v) {
+void List_Begin_16E880(Iter* out, PtrVec* v) {
     out->p = v->data;
 }

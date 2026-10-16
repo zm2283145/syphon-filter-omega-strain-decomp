@@ -39,7 +39,7 @@ struct Owner_2397F0 { char pad[0xC]; unsigned int flags; };
 extern "C" {
 extern char D_004DC038[];
 extern void * const D_004DC018[];
-void func_00239780();
+void NiEventSound_Fire();
 extern char** D_004F7C70;
 extern int D_004F7C78;
 extern int D_004F7C80;
@@ -50,7 +50,7 @@ void SoundAction_CtorVoice(void* action, int kind, char* name, Owner_2397F0* own
 static inline float RdF(Reader_2397F0* r){ float t = *(float*)r->cur; r->cur += 4; return t; }
 #pragma push
 #pragma opt_propagation off
-extern "C" Track_2397F0* func_002397F0(Track_2397F0* self, Reader_2397F0* r, Owner_2397F0* o)
+extern "C" Track_2397F0* NiEventSound_CtorFromStream(Track_2397F0* self, Reader_2397F0* r, Owner_2397F0* o)
 {
     P_2397F0* p;
     int id;
@@ -87,7 +87,7 @@ extern "C" Track_2397F0* func_002397F0(Track_2397F0* self, Reader_2397F0* r, Own
     return self;
 }
 #pragma pop
-extern "C" void * const D_004DC018[3] = { (void*)0x0, (void*)0x0, (void*)func_00239780 };
+extern "C" void * const D_004DC018[3] = { (void*)0x0, (void*)0x0, (void*)NiEventSound_Fire };
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002397F0(void) {}
 #pragma pop /* merge_units */
@@ -97,7 +97,7 @@ static inline void merge_flush_func_002397F0(void) {}
 #pragma push /* merge_units */
 typedef struct { char pad[0xC]; float c; float d; float a; float b; } S239960;
 extern void Blast_Prepare(int, int, int, int, int, int, float, float, float);
-void func_00239960(S239960* s, int x)
+void NiEventBlast_Fire(S239960* s, int x)
 {
     Blast_Prepare(x, (int)s->a, 1, 0, 0, 0, s->b, s->c, s->d);
 }

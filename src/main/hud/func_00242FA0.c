@@ -22,16 +22,16 @@ void* Mem_Alloc(int pool, int size, char* file, int line);
 void* func_0013D5C0(int size, int pool, char* file, int line);
 void func_0016F7E0(void* dst, void* src);
 void func_00242E30(It_242FA0* out, char* l);
-void func_002426B0(It_242FA0* out, char* l);
+void CalloutList_End(It_242FA0* out, char* l);
 void func_002426A0(It_242FA0* out, It_242FA0* in);
-void func_00243430(char* l, Ent_242FA0** v);
+void CalloutList_PushBack(char* l, Ent_242FA0** v);
 void func_00243460(float f, int h);
 void func_00243480(int h, int v);
 void func_00243490(int h, int v);
 int func_002434A0(int c);
 int func_002434B0(void* self, int c, int* key);
 int func_003E99B0(void* self, int c, int* key);
-void func_00260D90(Buf_242FA0* out, float t);
+void Hud_GetLockColour(Buf_242FA0* out, float t);
 int func_003D04C0(int h);
 void func_003D0810(int a, char* b);
 void func_003E7EC0(int c, int a);
@@ -43,11 +43,11 @@ void func_003F44E0(float f, int c);
 
 static inline void BeginI_(It_242FA0* out, char* l) { It_242FA0 t; func_00242E30(&t, l); func_002426A0(out, &t); }
 static inline void Begin_(It_242FA0* out, char* l) { BeginI_(out, l); }
-static inline void EndI_(It_242FA0* out, char* l) { It_242FA0 t; func_002426B0(&t, l); func_002426A0(out, &t); }
+static inline void EndI_(It_242FA0* out, char* l) { It_242FA0 t; CalloutList_End(&t, l); func_002426A0(out, &t); }
 static inline void End_(It_242FA0* out, char* l) { EndI_(out, l); }
 
 #pragma opt_dead_assignments off
-int func_00242FA0(char* o, float scale, float fade, int* key, int a2, int id, int big, signed char kind)
+int Hud_ShowCallout(char* o, float scale, float fade, int* key, int a2, int id, int big, signed char kind)
 {
     It_242FA0 it;
     Ent_242FA0* p;
@@ -119,7 +119,7 @@ int func_00242FA0(char* o, float scale, float fade, int* key, int a2, int id, in
         }
         p = e;
         if (p->c) func_003E8DE0(p->c, 0);
-        func_00243430(o + 0x6E8, &p);
+        CalloutList_PushBack(o + 0x6E8, &p);
     } else {
         p = it.n->ent;
         func_003E7EC0(p->c, a2);
@@ -131,7 +131,7 @@ int func_00242FA0(char* o, float scale, float fade, int* key, int a2, int id, in
         ((char*)p->c)[0x19] = 0;
         func_003D0810(*(int*)((char*)p->c + 0x74), D_00587DB0);
     } else {
-        func_00260D90(&buf, fade);
+        Hud_GetLockColour(&buf, fade);
         func_003E7EE0(p->c, &buf);
         func_003D0810(*(int*)((char*)p->c + 0x74), D_00587DA0);
     }

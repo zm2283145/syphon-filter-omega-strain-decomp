@@ -34,7 +34,7 @@ extern char D_004FFB50[];
 extern char* D_004FFC2C;
 extern void* D_004FFD44;
 char* Loc_LookupText(char*);
-char* func_0012F5D0(char*, int);
+char* Game_GetPlayerNameSlot(char*, int);
 int sprintf(char*, const char*, ...);
 void Notify_Insert(char*, char*, Color*, int, int);
 void Actor_BuildVoiceKey(Act*, int);
@@ -72,7 +72,7 @@ static inline unsigned char Mp()
     if (D_005721C8) return D_005721C0;
     return 1;
 }
-extern "C" bool func_001B2E90(Act* a)
+extern "C" bool Player_HandleLeftGame(Act* a)
 {
     bool ret = 0;
     int idx;
@@ -84,7 +84,7 @@ extern "C" bool func_001B2E90(Act* a)
             int key;
             int pl = NetIdx(a);
             char* fmt = Loc_LookupText(D_0049E8B0);
-            sprintf(buf, fmt, func_0012F5D0(D_004FFB50, pl));
+            sprintf(buf, fmt, Game_GetPlayerNameSlot(D_004FFB50, pl));
             c.r = 1.0f;
             c.g = 0.0f;
             c.b = 0.0f;

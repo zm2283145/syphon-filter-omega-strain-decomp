@@ -60,7 +60,7 @@ void* Mem_Alloc(int pool, int size, char* file, int line);
 void func_0016EFE0(void* dst, Src_89D0* obj);
 void func_0016E890(void* a, int id, void* b, void* c);
 void func_001613E0(void* dst, Sub_89D0* s);
-void* func_00161930(void* p, int arg);
+void* NpcFollowerBuf_Init(void* p, int arg);
 void func_001614C0(void* dst, void* obj);
 }
 extern "C" void func_001489D0(char* self, Src_89D0* obj)
@@ -81,7 +81,7 @@ extern "C" void func_001489D0(char* self, Src_89D0* obj)
             p = Mem_Alloc(0, 0x30, "path.hh", 0x1CC);
         }
         if (p)
-            p = func_00161930(p, s->arg);
+            p = NpcFollowerBuf_Init(p, s->arg);
         s->obj = p;
     }
     func_001614C0(self + 0x1B0, s->obj);
@@ -160,7 +160,7 @@ extern "C" void func_00148B50(char* self, Src_8B50* obj)
             p = Mem_Alloc(0, 0x30, D_0049C080, 0x1CC);
         }
         if (p)
-            p = func_00161930(p, s->arg);
+            p = NpcFollowerBuf_Init(p, s->arg);
         s->obj = p;
     }
     func_00161610(self + 0x1B0, s->obj);

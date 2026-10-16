@@ -1,4 +1,4 @@
-// func_001D5E90: copy the source position into the object transform, then apply the parent rotation/translation (VU0).
+// UpperBodyIk_Position: copy the source position into the object transform, then apply the parent rotation/translation (VU0).
 #pragma cplusplus on
 #include "types.h"
 #pragma always_inline on
@@ -60,7 +60,7 @@ static inline void ApplyParent(Obj* rx, Obj* px, V& p)
     }
 }
 
-extern "C" void func_001D5E90(Obj* o)
+extern "C" void UpperBodyIk_Position(Obj* o)
 {
     o->xf.Pos() = o->src->Get();
     if (o->parent) {

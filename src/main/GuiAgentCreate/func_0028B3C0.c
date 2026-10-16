@@ -23,20 +23,20 @@ extern char D_004A9910[];
 extern char D_004A9920[];
 void Appearance_RemoveBlankPairs(Blk_0028B3C0* b);
 void* Agent_GetSelected(void* a, int b);
-char* func_00336170(void* ag);
-void func_0028BA90(Self_0028B3C0* self);
+char* AgentData_GetName(void* ag);
+void GuiAgentCreate_Save(Self_0028B3C0* self);
 void* Gui_GetScreenList(void);
 void* GuiManager_FindOrLoad(void* a, char* b, char* c);
 char* Loc_LookupText(char* key);
-void func_0032B4F0(void* pg, char* title, char* text, Self_0028B3C0* self, int a, int b, int c);
+void GuiKeyboard_Open(void* pg, char* title, char* text, Self_0028B3C0* self, int a, int b, int c);
 void* Gui_GetScreenStack(void);
 void GuiStack_SwapScreens(void* a, void* b, void* c);
 void func_0041E0F0(void* a, void* b, int kind, int v, int f);
 void func_0028C0C0(void* p);
 void func_0028BF90(void* p);
 void GuiScreen_SetFocus(void* ui, void* w);
-void func_0028C390(Self_0028B3C0* self, int a, int b);
-int func_0028B3C0(Self_0028B3C0* self, Ev_0028B3C0* ev);
+void GuiAgentCreate_StepOption(Self_0028B3C0* self, int a, int b);
+int GuiAgentCreate_HandleInput(Self_0028B3C0* self, Ev_0028B3C0* ev);
 }
 
 static inline void QCopy_0028B3C0(void* d0, void* s0, int n0) { int n = n0; void* d = d0; void* s = s0;
@@ -57,7 +57,7 @@ static inline unsigned char Down_0028B3C0(Ev_0028B3C0* e) { unsigned char r = 0;
 static inline unsigned char Btn_0028B3C0(Ev_0028B3C0* e, int b) { unsigned char r = 0; if (Down_0028B3C0(e) != 0 && e->btn == b) r = 1; return r; }
 static inline unsigned char Plain_0028B3C0(Ev_0028B3C0* e, int b) { unsigned char r = 0; if (Btn_0028B3C0(e, b) != 0 && e->b6 == 0) r = 1; return r; }
 
-extern "C" int func_0028B3C0(Self_0028B3C0* self, Ev_0028B3C0* ev)
+extern "C" int GuiAgentCreate_HandleInput(Self_0028B3C0* self, Ev_0028B3C0* ev)
 {
     if (Plain_0028B3C0(ev, 0x40)) {
     }
@@ -70,16 +70,16 @@ extern "C" int func_0028B3C0(Self_0028B3C0* self, Ev_0028B3C0* ev)
         QCopy_0028B3C0(&D_0055D510[D_00493A60], App_0028B3C0(self->f70->sub60), 0x44);
         Appearance_RemoveBlankPairs(&D_0055D510[D_00493A60]);
         ag = Agent_GetSelected(D_004FFB50, -1);
-        n = func_00336170(ag);
+        n = AgentData_GetName(ag);
         if (!n || !*n) {
             pg = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004A98E0, D_004A98F0);
             if (pg) {
                 char* t = Loc_LookupText(D_004A9900);
-                func_0032B4F0(pg, t, func_00336170(ag), self, 0xF, 2, 1);
+                GuiKeyboard_Open(pg, t, AgentData_GetName(ag), self, 0xF, 2, 1);
             }
             return 1;
         }
-        func_0028BA90(self);
+        GuiAgentCreate_Save(self);
         return 1;
     }
     if (Plain_0028B3C0(ev, 0x10)) {
@@ -105,7 +105,7 @@ extern "C" int func_0028B3C0(Self_0028B3C0* self, Ev_0028B3C0* ev)
             void* pg = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004A98E0, D_004A98F0);
             if (pg) {
                 char* t = Loc_LookupText(D_004A9900);
-                func_0032B4F0(pg, t, func_00336170(ag), self, 0xF, 1, 1);
+                GuiKeyboard_Open(pg, t, AgentData_GetName(ag), self, 0xF, 1, 1);
             }
         }
     }
@@ -121,8 +121,8 @@ extern "C" int func_0028B3C0(Self_0028B3C0* self, Ev_0028B3C0* ev)
         }
     }
     if (Plain_0028B3C0(ev, 4))
-        func_0028C390(self, 1, 0);
+        GuiAgentCreate_StepOption(self, 1, 0);
     if (Plain_0028B3C0(ev, 8))
-        func_0028C390(self, 0, 1);
+        GuiAgentCreate_StepOption(self, 0, 1);
     return 0;
 }

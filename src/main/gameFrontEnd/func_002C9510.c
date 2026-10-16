@@ -20,7 +20,7 @@ extern char D_004DE200[];
 extern int D_004FFD30;
 extern char D_005381F0[];
 void func_00412ED0(void* p);
-W_002C9510* func_001698C0(void);
+W_002C9510* App_GetInstance(void);
 void func_003D1730(void* p);
 G_002C9510* DME_GetLobby(void);
 void DME_StartThread(void);
@@ -33,16 +33,16 @@ void Event_Send(void* m, void* target, int immediate);
 void cMessage_dtor(void* m, int flags);
 void func_002C9AF0(Self_002C9510* self, int v);
 void DME_StopThread(void);
-void func_00165950(W_002C9510* w);
+void Boot_LoadFonts(W_002C9510* w);
 void func_002C9EE0(Self_002C9510* self);
 void func_00145160(int a);
 void func_002CCA40(int a, int b, int c);
 void Video_BeginFrame(void* p);
-void func_002C9510(Self_002C9510* self)
+void FrontEnd_ResumeGui(Self_002C9510* self)
 {
     if (self->b37) {
         func_00412ED0(D_00571DC0);
-        func_001698C0()->b278 = 0;
+        App_GetInstance()->b278 = 0;
         func_003D1730(D_0055A700);
         switch (self->b38) {
         case 0: {
@@ -99,7 +99,7 @@ void func_002C9510(Self_002C9510* self)
             break;
         }
         case 1:
-            func_00165950(func_001698C0());
+            Boot_LoadFonts(App_GetInstance());
             break;
         }
         func_002C9EE0(self);

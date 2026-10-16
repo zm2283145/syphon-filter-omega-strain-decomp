@@ -42,7 +42,7 @@ typedef struct { char* name; int pad4; int count; int** refs; } E397B20;
 typedef struct { int pad0; int count; E397B20** items; } L397B20;
 typedef struct { char pad[0x1C]; unsigned char loaded; } S397B20;
 extern void func_0036E5D0(void*);
-extern void func_0036E220(void*, int);
+extern void FileMan_Release(void*, int);
 extern void Hog_Register(void*, char*, int, int);
 extern void func_003A58E0(S397B20*, void*);
 extern int func_003A35C0(void*, char*);
@@ -104,7 +104,7 @@ void func_00397B20(S397B20* self, int arg1)
     }
     D_0053BB58 = 0;
     self->loaded = 1;
-    func_0036E220(buf, -1);
+    FileMan_Release(buf, -1);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00397B20(void) {}

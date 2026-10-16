@@ -51,10 +51,10 @@ extern int D_004FFBD0;
 int WeaponInv_SlotOfItem(int id);
 void* WeaponDb_Get(int db, int item);
 int func_001A3730(Owner_00254990* o);
-void func_00170DB0(int, void*);
+void Hotbox_RemoveObjectBox(int, void*);
 int Object_Unregister(void*);
 int Object_DeleteLater(void*, float);
-void func_00254770(BP* bp);
+void Backpack_Destroy(BP* bp);
 }
 
 static inline bool HolderReady(BP* bp) {
@@ -63,7 +63,7 @@ static inline bool HolderReady(BP* bp) {
     return r;
 }
 
-extern "C" void func_00254990(BP* bp) {
+extern "C" void Backpack_CheckEmpty(BP* bp) {
     Slot* s;
     int i;
     bool ok;
@@ -103,13 +103,13 @@ extern "C" void func_00254990(BP* bp) {
     if (all) {
         if (bp->b60 == 1) {
             if (bp->fx) {
-                func_00170DB0(D_004FFBD0, bp->fx);
+                Hotbox_RemoveObjectBox(D_004FFBD0, bp->fx);
                 Object_Unregister(bp->fx);
                 Object_DeleteLater(bp->fx, 0.1f);
                 bp->fx = 0;
             }
         } else {
-            func_00254770(bp);
+            Backpack_Destroy(bp);
         }
     }
 }

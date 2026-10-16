@@ -20,7 +20,7 @@ extern float func_003D0810(PickupMenu* text, char* color);
 
 /* Applies the pickup-menu text colour to a model's text object (model +0x74),
  * setting the two flags at +0x10/+0x11 first. */
-float func_00251040(PickupMenu* text) {
+float PickupMenuEntry_SetPickupColor(PickupMenu* text) {
     text->unk10 = 1;
     text->unk11 = 1;
     return func_003D0810(text, D_004F7E70);
@@ -35,7 +35,7 @@ float func_00251040(PickupMenu* text) {
 /* Interface model instance (0x80 bytes, made by func_003EF010); +0x74 is its text object. */
 struct PickupMenuModel { char pad[0x74]; int text; };
 /* The pickup menu: one or two interface models (the second is only made when
- * t == 0), each paired with a 0x68-byte game object (func_00259420). */
+ * t == 0), each paired with a 0x68-byte game object (WeaponPreview_ctor). */
 struct PickupMenuObj {
     signed char kind;        /* 0x00 */
     char pad1[3];
@@ -56,15 +56,15 @@ PickupMenuModel* func_003EF010(int tmpl);
 void func_003F45A0(float t, PickupMenuModel* m);
 void func_003F44E0(float t, PickupMenuModel* m);
 #if 0 /* merge_units */
-void func_00251040(int x);
+void PickupMenuEntry_SetPickupColor(int x);
 #endif /* merge_units */
-#define func_00251040(a0) ((void)func_00251040((PickupMenu *)(a0))) /* merge_units */
+#define PickupMenuEntry_SetPickupColor(a0) ((void)PickupMenuEntry_SetPickupColor((PickupMenu *)(a0))) /* merge_units */
 
-void* func_00259420(void* obj);
+void* WeaponPreview_ctor(void* obj);
 void func_003EEBE0(int node, int visible, int recurse); /* show/hide a model tree */
 }
 /* Sets up the pickup menu: instantiates the panel model(s) and their game objects. */
-extern "C" void func_00251060(PickupMenuObj* s, signed char kind, int id, int t)
+extern "C" void PickupMenu_AddEntry(PickupMenuObj* s, signed char kind, int id, int t)
 {
     void* p;
     s->kind = kind;
@@ -73,13 +73,13 @@ extern "C" void func_00251060(PickupMenuObj* s, signed char kind, int id, int t)
     s->model1 = func_003EF010(D_004F7E90);
     func_003F45A0(t, s->model1);
     func_003F44E0(t + D_0048AEF8, s->model1);
-    func_00251040(s->model1->text);
+    PickupMenuEntry_SetPickupColor(s->model1->text);
     {
         AllocGuard g;
         p = Mem_Alloc(0, 0x68, D_004A7998, 0x352);
     }
     if (p)
-        p = func_00259420(p);
+        p = WeaponPreview_ctor(p);
     s->obj1 = p;
     if (t) {
         func_003EEBE0(D_004F7E98, 0, 1);
@@ -89,15 +89,15 @@ extern "C" void func_00251060(PickupMenuObj* s, signed char kind, int id, int t)
     s->model2 = func_003EF010(D_004F7E98);
     func_003F45A0(t, s->model2);
     func_003F44E0(t + D_0048AEF8, s->model2);
-    func_00251040(s->model2->text);
+    PickupMenuEntry_SetPickupColor(s->model2->text);
     {
         AllocGuard g;
         p = Mem_Alloc(0, 0x68, D_004A7998, 0x35D);
     }
     if (p)
-        p = func_00259420(p);
+        p = WeaponPreview_ctor(p);
     s->obj2 = p;
 }
-#undef func_00251040 /* merge_units */
+#undef PickupMenuEntry_SetPickupColor /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00251060 */

@@ -8,11 +8,11 @@ extern char D_0055D510[];
 extern char D_0055D950[];
 extern void func_0036E5D0(SklFile_h5* f);
 extern void func_0036E140(SklFile_h5* f, char* path, int a, int b);
-extern int func_0036DEF0(SklFile_h5* f);
+extern int FileMan_FindMember(SklFile_h5* f);
 extern int FileMan_GetSize(SklFile_h5* f);
 extern void* FileMan_ReadData(SklFile_h5* f);
 extern void func_0036DEC0(SklFile_h5* f);
-extern void func_0036E220(SklFile_h5* f, int flags);
+extern void FileMan_Release(SklFile_h5* f, int flags);
 extern int sprintf(char* buf, const char* fmt, ...);
 extern void Appearance_PackText(char* dst, void* text, int len);
 void Skl_Load(void* self, char* skelPath, char* animPath)
@@ -22,30 +22,30 @@ void Skl_Load(void* self, char* skelPath, char* animPath)
         SklFile_h5 f;
         func_0036E5D0(&f);
         func_0036E140(&f, skelPath, 0, 0);
-        if ((unsigned char)func_0036DEF0(&f)) {
+        if ((unsigned char)FileMan_FindMember(&f)) {
             char msg[128];
             sprintf(msg, "Failed to open %s in LoadSKL\n", f.name);
-            func_0036E220(&f, -1);
+            FileMan_Release(&f, -1);
         } else {
             int len = FileMan_GetSize(&f);
             Appearance_PackText(D_0055D510, FileMan_ReadData(&f), len);
             func_0036DEC0(&f);
-            func_0036E220(&f, -1);
+            FileMan_Release(&f, -1);
         }
     }
     {
         SklFile_h5 f;
         func_0036E5D0(&f);
         func_0036E140(&f, animPath, 0, 0);
-        if ((unsigned char)func_0036DEF0(&f)) {
+        if ((unsigned char)FileMan_FindMember(&f)) {
             char msg[128];
             sprintf(msg, "Failed to open %s in LoadSKL\n", f.name);
-            func_0036E220(&f, -1);
+            FileMan_Release(&f, -1);
         } else {
             int len = FileMan_GetSize(&f);
             Appearance_PackText(D_0055D950, FileMan_ReadData(&f), len);
             func_0036DEC0(&f);
-            func_0036E220(&f, -1);
+            FileMan_Release(&f, -1);
         }
     }
 }

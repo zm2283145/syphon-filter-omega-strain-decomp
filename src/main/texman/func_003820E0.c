@@ -9,7 +9,7 @@ typedef struct TdxMgr {
 extern int D_005392D0;
 extern int D_00539250;
 
-void func_003820E0(TdxMgr* m, int idx)
+void Renderer_BindTexture(TdxMgr* m, int idx)
 {
     TexE* e = m->ents[idx];
     if (D_005392D0 & 4) {

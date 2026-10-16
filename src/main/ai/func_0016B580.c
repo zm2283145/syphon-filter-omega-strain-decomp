@@ -18,7 +18,7 @@ void __register_global_object(void*,void*,void*);
 void func_0016BB80(void*,void*);
 void func_0016BB90(void*,void*);
 void func_0016BBA0(void*,void*);
-void func_0013DFD0(void*,int);
+void StaticInit_FloorContactVecs(void*,int);
 extern signed char D_004EE590;
 extern char D_004EE598[],D_004EE5B0[];
 }
@@ -141,7 +141,7 @@ block_14:
                             skipP:
                             if (var_s0) {
                                 if (D_004EE590 == 0) {
-                                    __register_global_object(D_004EE5B0, (void*)&func_0013DFD0, D_004EE598);
+                                    __register_global_object(D_004EE5B0, (void*)&StaticInit_FloorContactVecs, D_004EE598);
                                     D_004EE590 = 1;
                                 }
                                 var_s2 = ((ObjectV*)temp_s1_2)->Type(D_004EE5B0);

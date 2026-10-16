@@ -30,9 +30,9 @@ extern "C" {
 R_26D620* func_00272AC0(int a);
 void func_0026D040(S_26D620* s, float t);
 void func_003E79C0(int h, float t);
-void func_0026D620(S_26D620* s, float dt);
+void HudMap_Update(S_26D620* s, float dt);
 }
-void func_0026D620(S_26D620* s, float dt)
+void HudMap_Update(S_26D620* s, float dt)
 {
     if (s->x94 > 0.0f) {
         s->x94 -= dt;

@@ -45,7 +45,7 @@ extern void* func_0018A700(void*, int);
 extern void MotionSelNode_Ctor(void*, void*, void*, void*);
 extern void* MotionRegistry_MakeKey(void*, void*);
 extern void MotionRegistry_Register(void*, void*, void*);
-extern void func_00200550(void*, int);
+extern void MotionNodeWrapper_Dtor(void*, int);
 extern void func_001F23C0(void*, int);
 /* Builds and registers one block of motion-graph nodes. */
 #pragma optimization_level 1
@@ -173,7 +173,7 @@ void func_00204FC0(void* p0)
     func_001F2540(&s7C0.m7F8, -1);
     MotionSelNode_Ctor(&v7B0, CanonicalKey_Construct(&v40, "switchCrawl"), p0, func_0018A700(&s7C0.m7C0, -1));
     MotionRegistry_Register(p0, MotionRegistry_MakeKey(&v70, "Crawl"), &v7B0);
-    func_00200550(&v7B0, -1);
+    MotionNodeWrapper_Dtor(&v7B0, -1);
     func_001F23C0(&v750, -1);
     func_001F23C0(&v780, -1);
 }

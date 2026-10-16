@@ -11,7 +11,7 @@ extern void func_00272280(int);
 extern int func_003EEBE0(int, int, int);
 
 /* Releases all 14 slots, then calls func_003EEBE0 on the owner's handle. */
-int func_00271CD0(SlotTable14* self) {
+int LoadingScreen_Release(SlotTable14* self) {
     func_00272280(self->slots[0]);
     func_00272280(self->slots[1]);
     func_00272280(self->slots[2]);

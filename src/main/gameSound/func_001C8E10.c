@@ -62,15 +62,15 @@ int String_CompareNoCase(const char*, const char*);
 void String_Copy(char*, const char*);
 int Hog_FindFileNoCase(Arc_8E10*, char*, int);
 int func_0036D520(Arc_8E10*, int);
-void func_001C78E0(Self_8E10*, Req_8E10*, int*, int*);
+void SoundMgr_GetVolumePan(Self_8E10*, Req_8E10*, int*, int*);
 void func_003A7F50(int);
 int snd_GetMasterVolume(int);
 void snd_StopSound(int);
 void snd_FlushSoundCommands(void);
-void func_00245E00(int, char*, int, int);
+void HudObject_Subtitle(int, char*, int, int);
 int FileMan_ReadData(FME_8E10*);
 void Lpd_Init(void*, int, int);
-void func_001C9430(void);
+void SoundMgr_OnStreamReply(void);
 int func_003A7190(int, int, int, int, int, int, int, int, int, long long, void (*)(void), unsigned long long);
 int func_003A7F00(int, int, int, int, int, int, void (*)(void), unsigned long long);
 }
@@ -104,7 +104,7 @@ static inline Voice_8E10* GetVoice2(Req_8E10* r)
             ok = false;
     return ok ? t : 0;
 }
-extern "C" void func_001C8E10(Self_8E10* self)
+extern "C" void SoundMgr_Frame(Self_8E10* self)
 {
     int vol;
     int pan;
@@ -128,13 +128,13 @@ extern "C" void func_001C8E10(Self_8E10* self)
                 if (Hog_FindFileNoCase(self->hog, buf, 0) != -1) {
                     func_003A7F50(2);
                     int s = Off(self->hog, Hog_FindFileNoCase(self->hog, buf, 0)) / 2048; const int b = self->hog->f84; int sec = b + s;
-                    func_003A7190(sec, 0, 0, 0, 0x400, -1, 1, 0, 0, self->ent[i].x14 ? 4 : 0, func_001C9430, (unsigned int)r);
+                    func_003A7190(sec, 0, 0, 0, 0x400, -1, 1, 0, 0, self->ent[i].x14 ? 4 : 0, SoundMgr_OnStreamReply, (unsigned int)r);
                     r->state = 1;
                 }
             }
         } else if (IsActive(r)) {
             Voice_8E10* v = GetVoice(r);
-            func_001C78E0(self, r, &vol, &pan);
+            SoundMgr_GetVolumePan(self, r, &vol, &pan);
             if (r->type == 4) {
                 if (IsLoading(r) && (!v || (v && v->State() != 3))) {
                     func_003A7F50(4);
@@ -142,12 +142,12 @@ extern "C" void func_001C8E10(Self_8E10* self)
                     int sec = FSec(&r->a);
                     if (snd_GetMasterVolume(2)) {
                         if (!v)
-                            func_003A7190(sec, 0, 0, 0, vol, pan, 2, 0, 0, 0, func_001C9430, (unsigned int)r);
+                            func_003A7190(sec, 0, 0, 0, vol, pan, 2, 0, 0, 0, SoundMgr_OnStreamReply, (unsigned int)r);
                         else
-                            func_003A7190(sec, 0, 0, 0, vol, pan, 0xE, 0, 0, 0, func_001C9430, (unsigned int)r);
+                            func_003A7190(sec, 0, 0, 0, vol, pan, 0xE, 0, 0, 0, SoundMgr_OnStreamReply, (unsigned int)r);
                     }
                     if (r->x186 && D_004FFC2C)
-                        func_00245E00(D_004FFC2C, r->name, 0, 0);
+                        HudObject_Subtitle(D_004FFC2C, r->name, 0, 0);
                     if (r->state == 4 && v && r->b.b94 && v->b49 == 2)
                         Lpd_Init(v->x60, FileMan_ReadData(&r->b), 0);
                     r->state = 1;
@@ -161,7 +161,7 @@ extern "C" void func_001C8E10(Self_8E10* self)
                     if (v2 && v2->b49 == 2)
                         v2->x2DC8 = 0;
                 }
-                func_003A7F00(r->x40, 5, vol, pan, 0, 0, func_001C9430, (unsigned int)r);
+                func_003A7F00(r->x40, 5, vol, pan, 0, 0, SoundMgr_OnStreamReply, (unsigned int)r);
                 r->state = 1;
             }
         }

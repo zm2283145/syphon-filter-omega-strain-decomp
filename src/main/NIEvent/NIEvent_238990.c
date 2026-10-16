@@ -26,7 +26,7 @@ public:
     float t;
 };
 struct A1_Obj { int a0; unsigned char active; float time; int pad; int count; A1_Item** items; };
-extern "C" bool func_00238990(A1_Obj* o, float dt) {
+extern "C" bool NiEventList_Advance(A1_Obj* o, float dt) {
     bool ret = false;
     float t = o->time + dt;
     int i;
@@ -57,8 +57,8 @@ typedef struct Cue_00238A50 { void* vt; float f4; int type; float fC; float f10;
 extern "C" {
 void* Mem_Alloc(int heap, int size, char* file, int line);
 void PtrVector_Resize(Vec_00238A50* v, int n, void** fill);
-void* func_00239610(void* p, Pop_00238A50* r, int owner);
-void* func_002397F0(void* p, Pop_00238A50* r, int owner);
+void* NiEventType4_CtorFromStream(void* p, Pop_00238A50* r, int owner);
+void* NiEventSound_CtorFromStream(void* p, Pop_00238A50* r, int owner);
 extern char D_004DC028[];
 extern char D_004DC038[];
 }
@@ -119,7 +119,7 @@ extern "C" void NiEvent_ReadEvents(Trk_00238A50* self, int owner, Pop_00238A50* 
             {
             Cue_00238A50* p = (Cue_00238A50*)Alloc_00238A50(0x1A0, 0x6CB);
             if (p)
-                p = (Cue_00238A50*)func_002397F0(p, r, owner);
+                p = (Cue_00238A50*)NiEventSound_CtorFromStream(p, r, owner);
             c = p;
             }
             break;
@@ -138,7 +138,7 @@ extern "C" void NiEvent_ReadEvents(Trk_00238A50* self, int owner, Pop_00238A50* 
             {
             Cue_00238A50* p = (Cue_00238A50*)Alloc_00238A50(0x1A0, 0x6D3);
             if (p)
-                p = (Cue_00238A50*)func_00239610(p, r, owner);
+                p = (Cue_00238A50*)NiEventType4_CtorFromStream(p, r, owner);
             c = p;
             }
             break;

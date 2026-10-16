@@ -1,6 +1,6 @@
 extern char *strncpy(char *, const char *, unsigned int);
 extern unsigned int strlen(const char *);
-extern char *func_00129C80(char *, const char *);
+extern char *strstr(char *, const char *);
 extern int atoi(const char *);
 extern char D_004ADB50[];
 int func_002DD380(unsigned char *out, const char *s)
@@ -15,7 +15,7 @@ int func_002DD380(unsigned char *out, const char *s)
         if (strlen(buf) == 0)
             return 0x17;
         for (; i < 3; i++) {
-            char *q = func_00129C80(p, D_004ADB50);
+            char *q = strstr(p, D_004ADB50);
             if (q == 0)
                 return 0xA;
             *q = 0;

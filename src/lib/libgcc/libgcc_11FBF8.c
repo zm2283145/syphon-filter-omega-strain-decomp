@@ -82,9 +82,9 @@ static const float dat_00499B18[20] = { 1.5703125f, 0.00045776368f, 2.5987624e-5
 #define init_jk ((const int*)dat_00499B08)
 #define PIo2 ((const float*)dat_00499B18)
 extern float scalbnf(float x, int n);
-extern float func_00121788(float x);
+extern float Math_Floorf(float x);
 #define scalbnf scalbnf
-#define floorf func_00121788
+#define floorf Math_Floorf
 int Math_RemPio2Kernel(float *x, float *y, int e0, int nx, int prec, const int *ipio2)
 {
 	const float

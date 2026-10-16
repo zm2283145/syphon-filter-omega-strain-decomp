@@ -55,7 +55,7 @@ extern "C" {
 void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
 extern char D_004BCFE8[];
 extern char D_004BCFF0[];
-Raw func_0013B180(AnimGroup* g);
+Raw List_Begin(AnimGroup* g);
 void func_00396B10(LIt* out, const Raw& r);
 Raw func_00396B00(AnimGroup* g);
 void func_00396AF0(LIt* out, const Raw& r);
@@ -118,7 +118,7 @@ static inline void Contrib_Init(Contrib* c, int id, float t)
     c->f33 = 0;
 }
 
-static inline void LBegin(LIt* o, AnimGroup* g) { func_00396B10(o, func_0013B180(g)); }
+static inline void LBegin(LIt* o, AnimGroup* g) { func_00396B10(o, List_Begin(g)); }
 static inline void LEnd(LIt* o, AnimGroup* g) { func_00396AF0(o, func_00396B00(g)); }
 static inline Contrib* Contrib_New(char* file, int line)
 {

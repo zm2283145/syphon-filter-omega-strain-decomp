@@ -143,7 +143,7 @@ static inline void merge_flush_func_0022A040(void) {}
 
 /* merge_units: begin func_0022A140 */
 #pragma push /* merge_units */
-extern void func_001AFB20(void);
+extern void Human_InitStatics(void);
 extern int func_0036E140(void* h, const char* name, int arg, int opt);
 extern void func_003B5310(void* a, void* e);
 extern int func_0022A200(void* v, void* value);
@@ -163,7 +163,7 @@ void func_0022A140(void)
     unsigned char done;
     unsigned int i;
     const char* s;
-    func_001AFB20();
+    Human_InitStatics();
     func_0036E5D0(&e);
     func_0036E140(&e, D_004A6340, 0, 0);
     func_003B5310(D_004F77A0, &e);
@@ -176,7 +176,7 @@ void func_0022A140(void)
         s++;
     }
     func_0022A200(D_004F77A0 + 4, tag);
-    func_0036E220(&e, -1);
+    FileMan_Release(&e, -1);
 }
 #undef D_004F77A0 /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */

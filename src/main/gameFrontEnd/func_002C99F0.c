@@ -9,14 +9,14 @@ typedef struct FlagMsg {
 
 extern char D_004FFB50[];
 extern char D_004D97F0[];
-extern void func_0020E860(FlagMsg* msg);
+extern void SoundPauseMsg_Ctor(FlagMsg* msg);
 extern void Event_Send(FlagMsg* msg, void* target, int flags);
 extern void cMessage_dtor(FlagMsg* msg, int flags);
 
 /* Broadcasts a flagged message. */
 void func_002C99F0(void) {
     FlagMsg msg;
-    func_0020E860(&msg);
+    SoundPauseMsg_Ctor(&msg);
     msg.flag = 1;
     Event_Send(&msg, D_004FFB50, 1);
     msg.vtbl = D_004D97F0;

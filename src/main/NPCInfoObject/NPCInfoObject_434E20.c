@@ -25,7 +25,7 @@ int Mem_Free();
 
 extern "C" {
 char * Mem_Alloc(...);                      
-int func_00138DA0(...);                     
+int List_Erase(...);                     
                           
 int func_0015AF40(...);                      
                         
@@ -38,11 +38,11 @@ extern char D_00582AB0;
 extern char D_00582AD0;
 }
 struct Raw_4E20 { int p; Raw_4E20() {} };
-extern "C" Raw_4E20 func_0013B180(void*);
+extern "C" Raw_4E20 List_Begin(void*);
 extern "C" Raw_4E20 func_00432730(void*);
 extern "C" void func_00432740(char**, const Raw_4E20&);
 extern "C" void func_00432720(char**, const Raw_4E20&);
-static inline void Begin_4E20(char** out) { func_00432740(out, func_0013B180(&D_00582AB0)); }
+static inline void Begin_4E20(char** out) { func_00432740(out, List_Begin(&D_00582AB0)); }
 static inline void End_4E20(char** out) { func_00432720(out, func_00432730(&D_00582AB0)); }
 
 
@@ -92,7 +92,7 @@ extern "C" void func_00434E20(int d0, char * arg1) {
                 int sp60;
                 sp68 = temp_s0_2;
                 func_0015AF40(&sp60, &sp68);
-                func_00138DA0(&sp64, &D_00582AB0, &sp60);
+                List_Erase(&sp64, &D_00582AB0, &sp60);
                 }
             }
     }
@@ -112,7 +112,7 @@ static inline void merge_flush_func_00434E20(void) {}
 
 extern "C" {
 }
-static inline void Begin_4E20_00435070(char** out) { func_00432740(out, func_0013B180(&D_00582AD0)); }
+static inline void Begin_4E20_00435070(char** out) { func_00432740(out, List_Begin(&D_00582AD0)); }
 static inline void End_4E20_00435070(char** out) { func_00432720(out, func_00432730(&D_00582AD0)); }
 
 
@@ -162,7 +162,7 @@ extern "C" void func_00435070(int d0, char * arg1) {
                 int sp60;
                 sp68 = temp_s0_2;
                 func_0015AF40(&sp60, &sp68);
-                func_00138DA0(&sp64, &D_00582AD0, &sp60);
+                List_Erase(&sp64, &D_00582AD0, &sp60);
                 }
             }
     }

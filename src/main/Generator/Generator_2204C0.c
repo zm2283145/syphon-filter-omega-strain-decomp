@@ -76,7 +76,7 @@ LNode** func_0021DFE0(It* it, LNode* n);
 LNode** func_0021DFF0(It* it, LNode* n);
 void Node_GetTranslation(V* out, void* node);
 Obj* PlayerSlots_Get(int i);
-Obj** func_00159560(void* v);
+Obj** List_Front(void* v);
 float Math_Cos(float a);
 Obj* Object_ClosestPlayerDistSq(void* node, int a);
 Svc* Service_Lookup(void* a, void* b);
@@ -154,10 +154,10 @@ extern "C" int Generator_SpawnTest(Gen* self, void* node)
             float ang = 0.87266463f;
             V d;
             Node_GetTranslation(&d, node);
-            d.SubEq(SubPos((*func_00159560(D_004FFC14))->sub));
+            d.SubEq(SubPos((*List_Front(D_004FFC14))->sub));
             d.z = 0.0f;
             d.Normalize();
-            V f = SubMtx((*func_00159560(D_004FFC14))->sub).r1;
+            V f = SubMtx((*List_Front(D_004FFC14))->sub).r1;
             f.z = 0.0f;
             float dot = f.Dot(d);
             if (dot + (1.0f - Math_Cos(ang)) < 1.0f) {
@@ -171,8 +171,8 @@ extern "C" int Generator_SpawnTest(Gen* self, void* node)
                 V start;
                 Node_GetTranslation(&start, node);
                 start.z += 6.0f;
-                end = SubPos((*func_00159560(D_004FFC14))->sub);
-                end.AddEq(SubMtx((*func_00159560(D_004FFC14))->sub).r1 * 1.5f);
+                end = SubPos((*List_Front(D_004FFC14))->sub);
+                end.AddEq(SubMtx((*List_Front(D_004FFC14))->sub).r1 * 1.5f);
                 end.SubEq(start);
                 HitRes res;
                 DoRay(svc, &res, start, end, pl, cl);

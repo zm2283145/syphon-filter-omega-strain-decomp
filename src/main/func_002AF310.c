@@ -6,7 +6,7 @@ extern "C" {
     void FrontEnd_ClosePopup(int,int);
     int FrontEnd_OpenPopup(int,int,char*,int,Screen* = 0,int = 0);
     int Gui_GetScreenList();
-    void func_0032B4F0(int,int,char*,Screen*,int,int,int);
+    void GuiKeyboard_Open(int,int,char*,Screen*,int,int,int);
     void func_0033C320(Screen*,int);
     void func_0033C9E0(Screen*,int,char*);
     int func_0033CE30(Screen*,int,char*,char*,int = 0,int = 0);
@@ -46,14 +46,14 @@ extern "C" int func_002AF310(Screen* arg0, int arg1, int arg2, int arg3, char* a
         if (arg1 == temp_s4->unk168) {
             int temp_v0 = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004ABCD8, D_004ABCE8);
             if (temp_v0 != 0) {
-                func_0032B4F0(temp_v0, func_0033CE30(temp_s4, 0x49, 0, 0), D_004ABCD0, temp_s4, 15, 16, 0);
+                GuiKeyboard_Open(temp_v0, func_0033CE30(temp_s4, 0x49, 0, 0), D_004ABCD0, temp_s4, 15, 16, 0);
             }
             return 1;
         }
         if (arg1 == temp_s4->unk16C) {
             int temp_v0_2 = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004ABCD8, D_004ABCE8);
             if (temp_v0_2 != 0) {
-                func_0032B4F0(temp_v0_2, func_0033CE30(temp_s4, 0x41, 0, 0), D_004ABCD0, temp_s4, 40, 14, 0);
+                GuiKeyboard_Open(temp_v0_2, func_0033CE30(temp_s4, 0x41, 0, 0), D_004ABCD0, temp_s4, 40, 14, 0);
             }
             return 1;
         }

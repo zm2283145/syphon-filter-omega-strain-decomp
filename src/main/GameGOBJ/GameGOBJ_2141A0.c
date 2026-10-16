@@ -144,8 +144,8 @@ struct Lift214470 { char p[0x70]; int count; char list[8]; Car214470** cars; cha
 extern "C" {
 extern char D_004FFB50[];
 extern char D_004DADF0[];
-void func_0020EBA0(ElevatorMsg214470* msg, int* floors, Lift214470* self);
-void func_0036E220(void* member, int flag);
+void SoundStopMsg_Ctor(ElevatorMsg214470* msg, int* floors, Lift214470* self);
+void FileMan_Release(void* member, int flag);
 #if 0 /* merge_units */
 Ent214470** func_00172990(void* list, int i);
 #endif /* merge_units */
@@ -164,11 +164,11 @@ extern "C" unsigned char func_00214470(Lift214470* l)
     Msg214470 m;
     {
         ElevatorMsg214470 msg;
-        func_0020EBA0(&msg, &l->floors, l);
+        SoundStopMsg_Ctor(&msg, &l->floors, l);
         Event_Send(&msg, D_004FFB50, 1);
         msg.vtable = D_004DADF0;
-        func_0036E220(msg.memberB, -1);
-        func_0036E220(msg.memberA, -1);
+        FileMan_Release(msg.memberB, -1);
+        FileMan_Release(msg.memberA, -1);
         cMessage_dtor(&msg, 0);
     }
     for (i = 0; i < l->count; i++) {

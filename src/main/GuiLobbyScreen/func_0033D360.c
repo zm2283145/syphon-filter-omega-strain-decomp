@@ -13,7 +13,7 @@ struct Object {
 extern "C" void func_0041EBF0(Object* self);
 
 /* Calls func_0041EBF0 then virtual slot +0x68. */
-extern "C" void func_0033D360(Object* self)
+extern "C" void GuiScreen_Sleep(Object* self)
 {
     func_0041EBF0(self);
     self->Method68();

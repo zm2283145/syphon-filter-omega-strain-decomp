@@ -53,7 +53,7 @@ void func_003E7AD0(Interface* self, void* arg) {
 #pragma push /* merge_units */
 #pragma cplusplus on
 extern "C" {
-extern void func_0036DEF0(void*);
+extern void FileMan_FindMember(void*);
 extern unsigned char* FileMan_ReadData(void*);
 extern int D_0055C0B8;                              /* u16 read from the interface file header */
 extern char D_004BDEC8[];                           /* "interface.cc" */
@@ -72,7 +72,7 @@ extern "C" Interface* Interface_Ctor(Interface* o, void* src) {
     void* s;
     o->model = 0;
     o->preview = 0;
-    func_0036DEF0(src);
+    FileMan_FindMember(src);
     p = FileMan_ReadData(src);
     p++;
     p++;

@@ -65,11 +65,11 @@ extern char D_004AA248[], D_004AA268[], D_004AA288[], D_004AA368[], D_004AA378[]
 extern char D_004AA3B0[], D_004AA3C0[], D_004AA3D0[], D_004AA3E0[], D_004AA3F0[], D_004AA400[], D_004AA410[];
 extern char D_004AA418[], D_004AA428[], D_004AA430[], D_004AA448[], D_004AA450[], D_004AA460[], D_004AA468[];
 extern char D_004AA478[], D_004AA488[], D_004AA490[], D_004AA498[], D_004AA4A0[];
-void func_002C8090(Ui_2958B0* ui);
+void FrontEnd_FlushMessages(Ui_2958B0* ui);
 void func_002C81D0(Ui_2958B0* ui);
-void func_002C82F0(Ui_2958B0* ui);
-void func_002955B0(S_2958B0* self);
-void func_00294300(S_2958B0* self, int a);
+void FrontEnd_StartSplashThread(Ui_2958B0* ui);
+void GuiCommandCenter_Exit(S_2958B0* self);
+void GuiCommandCenter_OpenPanel(S_2958B0* self, int a);
 void func_002972E0(S_2958B0* self);
 void FrontEnd_ClosePopup(Ui_2958B0* ui, int id);
 int FrontEnd_OpenPopup(Ui_2958B0* ui, int kind, char* title, char* text, S_2958B0* owner, int cb);
@@ -78,7 +78,7 @@ void* Gui_GetScreenStack(void);
 void* GuiManager_FindOrLoad(void* list, char* a, char* b);
 void GuiStack_SwapScreens(void* stack, S_2958B0* from, void* to);
 char* func_0033CE30(S_2958B0* self, int id, int a, char* s, int b, int c);
-void func_0032B4F0(void* scr, char* text, char* title, S_2958B0* owner, int a, int b, int c);
+void GuiKeyboard_Open(void* scr, char* text, char* title, S_2958B0* owner, int a, int b, int c);
 int DME_GetLobby(void);
 int func_0044AF60(int lobby, char* s);
 int func_00452FF0(int lobby, int a);
@@ -97,7 +97,7 @@ void func_00327C70(void* scr, int id, char* s, int a);
 void func_00326DE0(void* scr, int a, int b, int c, int d);
 int sprintf(char* d, const char* f, ...);
 char* Loc_LookupText(char* s);
-int func_0033CF90(S_2958B0* self, Msg_2958B0* msg, unsigned short type, int sub, char* str);
+int GuiScreen_HandleEvent(S_2958B0* self, Msg_2958B0* msg, unsigned short type, int sub, char* str);
 }
 
 extern "C" int func_002958B0(S_2958B0* self, Msg_2958B0* msg, unsigned short type, int sub, char* str)
@@ -114,15 +114,15 @@ extern "C" int func_002958B0(S_2958B0* self, Msg_2958B0* msg, unsigned short typ
         return 1;
     if (type == 0x1B || type == 0x1A) {
         if (sub == 0x19 && type == 0x1A) {
-            func_002C8090(D_004FFC04);
-            func_002955B0(self);
+            FrontEnd_FlushMessages(D_004FFC04);
+            GuiCommandCenter_Exit(self);
             FrontEnd_ClosePopup(D_004FFC04, self->f2F8);
             return 1;
         }
         if (sub == 0x1A && type == 0x1A) {
             void* scr = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AA368, D_004AA378);
             if (scr)
-                func_0032B4F0(scr, func_0033CE30(self, 0x5D, 0, 0, 0, 0), D_004AA288, self, 0xF, 0x1B, 0);
+                GuiKeyboard_Open(scr, func_0033CE30(self, 0x5D, 0, 0, 0, 0), D_004AA288, self, 0xF, 0x1B, 0);
             return 1;
         }
         if (sub == 0x1B && type == 0x1A) {
@@ -155,7 +155,7 @@ extern "C" int func_002958B0(S_2958B0* self, Msg_2958B0* msg, unsigned short typ
         if (sub == 0x1C && type == 0x1A) {
             void* scr = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AA368, D_004AA378);
             if (scr)
-                func_0032B4F0(scr, func_0033CE30(self, 0x5D, 0, 0, 0, 0), D_004AA288, self, 0xF, 0x1B, 0);
+                GuiKeyboard_Open(scr, func_0033CE30(self, 0x5D, 0, 0, 0, 0), D_004AA288, self, 0xF, 0x1B, 0);
             return 1;
         }
     }
@@ -167,7 +167,7 @@ extern "C" int func_002958B0(S_2958B0* self, Msg_2958B0* msg, unsigned short typ
             void* scr;
             Lvl_2958B0* ls;
             if (!String_AssignCStr_1C43A0(&msg->name, D_0048B700)) {
-                func_00294300(self, 4);
+                GuiCommandCenter_OpenPanel(self, 4);
                 return 1;
             }
             v = self->f1CC;
@@ -222,7 +222,7 @@ extern "C" int func_002958B0(S_2958B0* self, Msg_2958B0* msg, unsigned short typ
                 unsigned char noLobby = !D_004FFC04->f260;
                 int popup = -2;
                 if (noLobby) {
-                    func_002C82F0(D_004FFC04);
+                    FrontEnd_StartSplashThread(D_004FFC04);
                     Ui_2958B0* ui = D_004FFC04;
                     popup = FrontEnd_OpenPopup(ui, 0, D_004AA288, Loc_LookupText(D_004AA3B0), 0, 0);
                 }
@@ -268,12 +268,12 @@ extern "C" int func_002958B0(S_2958B0* self, Msg_2958B0* msg, unsigned short typ
                 func_0033C320(self, 5);
                 return 1;
             }
-            func_00294300(self, 0);
+            GuiCommandCenter_OpenPanel(self, 0);
         } else if (id == self->f1E8) {
             void* scr;
             int v = msg->f10;
             if (v == 5) {
-                func_00294300(self, 5);
+                GuiCommandCenter_OpenPanel(self, 5);
                 return 1;
             }
             if (v != -1) {
@@ -330,7 +330,7 @@ extern "C" int func_002958B0(S_2958B0* self, Msg_2958B0* msg, unsigned short typ
     }
     if (type == 0)
         self->p2D0[self->b1D4] = msg;
-    return func_0033CF90(self, msg, type, sub, str);
+    return GuiScreen_HandleEvent(self, msg, type, sub, str);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_002958B0 */
@@ -348,8 +348,8 @@ typedef struct S_00296660 {
 static const float dat_004AA1F8[2] = { 500.0f, 0.0f };
 extern Col_00296660 D_00587B80;
 extern Col_00296660 D_00587B90;
-void func_00296A80(S_00296660* self);
-void func_0033D310(S_00296660* self, float dt);
+void GuiCommandCenter_UpdateBgCircle(S_00296660* self);
+void GuiScreen_Update(S_00296660* self, float dt);
 float Math_FMod(float x, float y);
 void func_002986B0(float t, Col_00296660* out, Col_00296660* a, Col_00296660* b);
 #if 0 /* merge_units */
@@ -357,22 +357,22 @@ Ag_00296660* Agent_GetSelected(void* a, int b);
 #endif /* merge_units */
 #define Agent_GetSelected(a0, a1) ((Ag_00296660 *)Agent_GetSelected((a0), (a1))) /* merge_units */
 
-int func_00332860(Ag_00296660* ag, int a, int b);
+int AgentData_GetBonusFlag(Ag_00296660* ag, int a, int b);
 int func_00332950(Ag_00296660* ag, int a, int b, int c);
 void func_0041C070(W_00296660* w, Col_00296660* c);
 /* abs.s has no C spelling in MW */
 static inline float Fabs_00296660(float x) { float r; asm { abs.s r, x } return r; }
 
 /* Per-frame update of a menu page: pulses the highlight colour of the enabled entries. */
-void func_00296660(S_00296660* self, float dt)
+void GuiCommandCenter_Update(S_00296660* self, float dt)
 {
     Col_00296660 col;
     Ag_00296660* ag;
 int n;
 int i;
     unsigned char st;
-    func_00296A80(self);
-    func_0033D310(self, dt);
+    GuiCommandCenter_UpdateBgCircle(self);
+    GuiScreen_Update(self, dt);
     st = self->state;
     if (!(st == 1 || (unsigned int)(st - 3) <= 1 || st == 5))
         return;
@@ -389,7 +389,7 @@ int i;
         if (n != -1) {
             for (i = 0; i < 6; i++) {
                 if (self->w198[i]) {
-                    if (func_00332860(ag, n, i))
+                    if (AgentData_GetBonusFlag(ag, n, i))
                         func_0041C070(self->w198[i], &col);
                     else
                         func_0041C070(self->w198[i], &D_00587B80);
@@ -411,7 +411,7 @@ int i;
     }
     if (self->state == 1 && self->p2EC) {
         if (self->f1CC < 0x11) {
-            if (func_00332860(ag, self->f1CC + 1, -1))
+            if (AgentData_GetBonusFlag(ag, self->f1CC + 1, -1))
                 func_0041C070(self->p2EC, &col);
             else
                 func_0041C070(self->p2EC, &D_00587B80);

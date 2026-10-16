@@ -12,17 +12,17 @@
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 int __destroy_array(int , int *, int, int);               
-int func_00255F10(int);                               
+int Backpack_Finish(int);                               
 int func_003E8EB0(int);                               
 int operator_delete(int );                          
-extern int func_00251290;
+extern int PickupMenuEntry_dtor;
 
-int func_00252FB0(int arg0, long long arg1) {
+int PickupMenu_Destroy(int arg0, long long arg1) {
     int temp_a0;
     int temp_a0_2;
 
     if (arg0 != NULL) {
-        func_00255F10(F_(arg0, 0x0, int));
+        Backpack_Finish(F_(arg0, 0x0, int));
         func_003E8EB0(F_(arg0, 0x9C, int));
         func_003E8EB0(F_(arg0, 0xA0, int));
         func_003E8EB0(F_(arg0, 0xA4, int));
@@ -36,7 +36,7 @@ int func_00252FB0(int arg0, long long arg1) {
         if (temp_a0_2 != 0) {
             func_003E8EB0(temp_a0_2);
         }
-        __destroy_array(arg0 + 4, &func_00251290, 0x1C, 5);
+        __destroy_array(arg0 + 4, &PickupMenuEntry_dtor, 0x1C, 5);
         if (((long long) (arg1 << 0x30) >> 0x30) > 0) {
             operator_delete(arg0);
         }
@@ -128,10 +128,10 @@ typedef struct Self_253070 {
 
 extern "C" {
 extern void __construct_array(void* p, void* ctor, void* dtor, int size, int n);
-extern int func_00251350;
-extern void func_00251060(Item_253070* it, int kind, int id, int flag);
-extern Widget_253070* func_002535E0(void* root, char* name);
-extern int func_002553E0(Owner_253070* o, int* out, int a, int n);
+extern int PickupMenuEntry_ctor;
+extern void PickupMenu_AddEntry(Item_253070* it, int kind, int id, int flag);
+extern Widget_253070* PickupMenu_FindElement(void* root, char* name);
+extern int Backpack_ListItems(Owner_253070* o, int* out, int a, int n);
 extern int func_00255E50(Owner_253070* o);
 extern int func_00255D90(Owner_253070* o);
 extern int func_003EEB30(void* root, char* name);
@@ -140,7 +140,7 @@ extern void func_003F44E0(Widget_253070* w, float v);
 extern void func_003E7EC0(Widget_253070* w, char* text);
 extern char* Loc_LookupText(char* key);
 extern int Agent_GetSelected(void* list, int idx);
-extern char* func_00336170(int agent);
+extern char* AgentData_GetName(int agent);
 extern void func_003D0810(Lbl_253070* l, void* color);
 
 extern int D_0048AEF0;
@@ -188,7 +188,7 @@ static inline Target_253070* Handle_Get(Owner_253070* h) {
     return ok ? t : 0;
 }
 
-extern "C" Self_253070* func_00253070(Self_253070* self, void* root, Owner_253070* owner, Ctx_253070* ctx, int optA, unsigned char optB) {
+extern "C" Self_253070* PickupMenu_Build(Self_253070* self, void* root, Owner_253070* owner, Ctx_253070* ctx, int optA, unsigned char optB) {
     int ids[5];
     Item_253070* it;
     int n;
@@ -198,48 +198,48 @@ extern "C" Self_253070* func_00253070(Self_253070* self, void* root, Owner_25307
     Target_253070* t;
 
     self->owner = owner;
-    __construct_array(self->items, &func_00251350, &func_00251290, 0x1C, 5);
+    __construct_array(self->items, &PickupMenuEntry_ctor, &PickupMenuEntry_dtor, 0x1C, 5);
     self->count = 0;
     it = self->items;
     self->unk94 = 0;
     self->unk98 = optB ? D_0048AF00 : 0;
-    self->w9C = func_002535E0(root, D_004A7A40);
-    self->wA0 = func_002535E0(root, D_004A7A50);
-    self->wA4 = func_002535E0(root, D_004A7A60);
-    self->wA8 = func_002535E0(self->w9C->unk70, D_004A7A70);
-    self->wAC = func_002535E0(self->w9C->unk70, D_004A7A90);
+    self->w9C = PickupMenu_FindElement(root, D_004A7A40);
+    self->wA0 = PickupMenu_FindElement(root, D_004A7A50);
+    self->wA4 = PickupMenu_FindElement(root, D_004A7A60);
+    self->wA8 = PickupMenu_FindElement(self->w9C->unk70, D_004A7A70);
+    self->wAC = PickupMenu_FindElement(self->w9C->unk70, D_004A7A90);
     if (optB) {
-        self->wB0 = func_002535E0(root, D_004A7AA0);
-        self->wB4 = func_002535E0(root, D_004A7AB0);
+        self->wB0 = PickupMenu_FindElement(root, D_004A7AA0);
+        self->wB4 = PickupMenu_FindElement(root, D_004A7AB0);
     } else {
         self->wB4 = 0;
         self->wB0 = 0;
     }
-    n = func_002553E0(self->owner, ids, ctx->unk3524, 5);
+    n = Backpack_ListItems(self->owner, ids, ctx->unk3524, 5);
     {
         void* r = self->w9C->unk70;
         D_004F7E90 = func_003EEB30(r, D_004A7AB8);
         D_004F7E98 = func_003EEB30(r, D_004A7AC0);
     }
     for (i = 0; i < n; i++) {
-        func_00251060(it, 0, ids[i], self->unk98);
+        PickupMenu_AddEntry(it, 0, ids[i], self->unk98);
         it++;
         self->count++;
     }
     a = optA && func_00255E50(self->owner);
     b = optA && func_00255D90(self->owner);
     if (self->count + a + b < 5 && Owner_Get2E8(self->owner) > 0) {
-        func_00251060(it, 2, -1, optB);
+        PickupMenu_AddEntry(it, 2, -1, optB);
         it++;
         self->count++;
     }
     if (a) {
-        func_00251060(it, 3, -1, 0);
+        PickupMenu_AddEntry(it, 3, -1, 0);
         it++;
         self->count++;
     }
     if (b) {
-        func_00251060(it, 4, -1, 0);
+        PickupMenu_AddEntry(it, 4, -1, 0);
         it++;
         self->count++;
     }
@@ -252,7 +252,7 @@ extern "C" Self_253070* func_00253070(Self_253070* self, void* root, Owner_25307
             if (self->count < 5) {
                 ListEnt_253070* e = List_At(l, j);
                 if (e->enabled) {
-                    func_00251060(it, 5, e->id, 0);
+                    PickupMenu_AddEntry(it, 5, e->id, 0);
                     it->unk8 = 0;
                     it++;
                     self->count++;
@@ -275,7 +275,7 @@ extern "C" Self_253070* func_00253070(Self_253070* self, void* root, Owner_25307
         Lbl_253070* l;
         func_003E7EC0(self->wA0, Loc_LookupText(D_004A7AD8));
         func_003E7EC0(self->wA4, Loc_LookupText(D_004A7AE0));
-        func_003E7EC0(self->wA8, func_00336170(Agent_GetSelected(D_004FFB50, -1)));
+        func_003E7EC0(self->wA8, AgentData_GetName(Agent_GetSelected(D_004FFB50, -1)));
         l = self->wA8->unk74;
         l->unk10 = 2;
         func_003D0810(l, D_004F7E70);

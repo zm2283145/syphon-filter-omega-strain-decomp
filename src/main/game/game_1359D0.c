@@ -29,6 +29,6 @@ DEFINE_MESSAGE_TWO_MEMBER_DTOR(func_001359D0, D_004DAE30)
 #pragma cplusplus on
 
 /* Destructor: destroy two members, optionally delete. */
-DEFINE_TWO_MEMBER_DTOR(func_00135A60, func_0036E220, 0x48, 0xE4)
+DEFINE_TWO_MEMBER_DTOR(func_00135A60, FileMan_Release, 0x48, 0xE4)
 #pragma pop /* merge_units */
 /* merge_units: end func_00135A60 */

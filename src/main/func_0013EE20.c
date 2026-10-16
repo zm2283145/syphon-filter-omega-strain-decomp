@@ -38,7 +38,7 @@ int func_0013EE60(void) {
 }
 
 /* Init: owner, a value from TerrainList_GetFirst and a set flag. */
-Unk0013EE70* func_0013EE70(Unk0013EE70* self, int owner) {
+Unk0013EE70* ZoneTracker_Ctor(Unk0013EE70* self, int owner) {
     int value;
 
     self->owner = owner;

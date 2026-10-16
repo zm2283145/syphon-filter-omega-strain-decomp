@@ -27,16 +27,16 @@ extern "C" {
 extern unsigned char D_00493990;
 extern char D_004BE010;
 void* Mem_Alloc(int a, int size, char* file, int line);
-int func_0036D8E0(char* f);
+int FileMan_PollRead(char* f);
 void func_003EA6A0(Loader_EAE60* l, int a);
 Req_EAE60* func_003EA910(Loader_EAE60* l, char* name, int kind);
 void List_PushBack_3EB310(Loader_EAE60* l, Req_EAE60** r);
 char* func_0036E5D0(void* p);
 void func_0036DFB0(char* f, char* a, char* b);
-void func_0036DEF0(char* f);
+void FileMan_FindMember(char* f);
 int FileMan_GetSize(char* f);
 int func_003EBDD0(Sub_EAE60* s, int size);
-void func_0036D990(char* f, int* buf, int size);
+void FileMan_LoadMemberSync(char* f, int* buf, int size);
 }
 
 static inline bool ReqCheck_EAE60(Req_EAE60* r)
@@ -44,7 +44,7 @@ static inline bool ReqCheck_EAE60(Req_EAE60* r)
     unsigned char s = r->state;
     if (s == 3 || s == 6) return true;
     if (r->file) {
-        int v = func_0036D8E0(r->file);
+        int v = FileMan_PollRead(r->file);
         if (v) {
             if (v == -1) r->state = 4;
             else if (r->state != 2) r->state = 3;
@@ -144,14 +144,14 @@ extern "C" int AsyncLoader_QueueLoad(Loader_EAE60* ldr, char* name, void (*cb)(S
         Sub_EAE60* s = ReqSub_EAE60(q);
         int buf;
         int size;
-        func_0036DEF0(q->file);
+        FileMan_FindMember(q->file);
         buf = 0;
         size = FileMan_GetSize(q->file);
         if (func_003EBDD0(s, size)) {
             q->state = 1;
             if (!s->bC) {
                 buf = SubData_EAE60(s);
-                func_0036D990(q->file, &buf, size);
+                FileMan_LoadMemberSync(q->file, &buf, size);
             }
             if (q->state == 1 || q->state == 3) {
                 Sub_EAE60* t = ReqSub_EAE60(q);

@@ -67,12 +67,12 @@ extern void func_003D8ED0(ObjC0*);
 #endif /* merge_units */
 #define func_003D8ED0(a0) ((void)func_003D8ED0((void *)(a0))) /* merge_units */
 
-extern void func_001396D0(ObjC0*, int);
+extern void PtrVec_Reserve(ObjC0*, int);
 
-/* Constructor: base init, then func_001396D0(self, *src) and flag byte at +0xC. */
+/* Constructor: base init, then PtrVec_Reserve(self, *src) and flag byte at +0xC. */
 ObjC0* func_003D8E80(ObjC0* o, int* src, int flag) {
     func_003D8ED0(o);
-    func_001396D0(o, *src);
+    PtrVec_Reserve(o, *src);
     o->flag = flag;
     return o;
 }
@@ -100,19 +100,19 @@ static inline void merge_flush_func_003D8ED0(void) {}
 typedef struct { char pad[0xC]; unsigned char flag; } Obj003D8EF0;
 extern void func_003D8F40(Obj003D8EF0* obj, int* src, unsigned char flag);
 #if 0 /* merge_units */
-extern void func_001396D0(Obj003D8EF0* obj, int value);
+extern void PtrVec_Reserve(Obj003D8EF0* obj, int value);
 #endif /* merge_units */
-#define func_001396D0(a0, a1) (func_001396D0((void *)(a0), (a1))) /* merge_units */
+#define PtrVec_Reserve(a0, a1) (PtrVec_Reserve((void *)(a0), (a1))) /* merge_units */
 
 /* Construct from src and flag; returns obj. */
 Obj003D8EF0* func_003D8EF0(Obj003D8EF0* obj, int* src, unsigned char flag)
 {
     func_003D8F40(obj, src, flag);
-    func_001396D0(obj, *src);
+    PtrVec_Reserve(obj, *src);
     obj->flag = flag;
     return obj;
 }
-#undef func_001396D0 /* merge_units */
+#undef PtrVec_Reserve /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003D8EF0(void) {}
 #pragma pop /* merge_units */

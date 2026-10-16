@@ -55,7 +55,7 @@ extern void Event_Construct(void* msg, void* name);
 extern void Event_Send(void* msg, void* target, int immediate);
 extern void cMessage_dtor(void* msg, int flags);
 extern void SoundEvent_CtorFromPreset(Pt1StSnd* e, void* preset, void* owner);
-extern void func_0036E220(Pt1StStr* s, int flag);
+extern void FileMan_Release(Pt1StStr* s, int flag);
 extern void Actor_ShockReaction(Pt1StActor* a, int kind, int b, float f);
 
 void Global_ShockToDeath(Pt1StActor* a, char flag, int notify, float time, float arg)
@@ -91,8 +91,8 @@ void Global_ShockToDeath(Pt1StActor* a, char flag, int notify, float time, float
         sm.vt = D_004E0840;
         cMessage_dtor(&sm, 0);
         snd.vt = D_004DAE30;
-        func_0036E220(&snd.s114, -1);
-        func_0036E220(&snd.s78, -1);
+        FileMan_Release(&snd.s114, -1);
+        FileMan_Release(&snd.s78, -1);
         cMessage_dtor(&snd, 0);
     } else {
         if (!(time <= a->shockMax))

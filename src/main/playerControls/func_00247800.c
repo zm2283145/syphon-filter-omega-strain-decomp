@@ -69,7 +69,7 @@ extern float D_004A9330;
 unsigned char WeaponInv_GetHeldClass(int);
 Id_7800* func_0015AC90(Id_7800*, int);
 Id_7800* func_00247D50(Obj_7800*);
-void func_001CA840(Q7*, int);
+void Quat_DampTowardIdentity(Q7*, int);
 void Camera_ApplyInput(Cam_7800* cam, Out_7800* out, Player_7800* pl, Q7* a3, Q7* t0, Q7* t1, Q7* t2);
 }
 struct HS_7800 { Obj_7800* obj; int id; };
@@ -151,7 +151,7 @@ void Camera_ApplyInput(Cam_7800* cam, Out_7800* out, Player_7800* pl, Q7* a3, Q7
         }
     }
     if (pl->f3314) {
-        func_001CA840(&v, pl->f3314);
+        Quat_DampTowardIdentity(&v, pl->f3314);
     } else {
         ((int*)&v)[0] = 0; ((int*)&v)[1] = 0; ((int*)&v)[2] = 0; ((int*)&v)[3] = 0;
     }

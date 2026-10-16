@@ -33,7 +33,7 @@ void func_00451AE0();
    caller passes only the lobby, so no prototype. */
 void func_00452FC0();
 
-/* 0x00443E70: the current time (func_003698B0's result).  Defined returning
+/* 0x00443E70: the current time (Time_GetMilliseconds's result).  Defined returning
    `long long`; every caller declares and uses it as int. */
 int Lobby_GetTime(void);
 

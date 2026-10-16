@@ -1,7 +1,7 @@
 typedef struct { char c[0x26]; } M2F5A58;
 static const M2F5A58 months_init = { "JanFebMarAprMayJunJulAugSepOctNovDec" };
 extern int sprintf(char *, const char *, ...);
-extern char *func_00129C80(const char *, const char *);
+extern char *strstr(const char *, const char *);
 extern int atoi(const char *);
 extern char *strncpy(char *, const char *, unsigned int);
 int func_002F5A58(char *out, short n)
@@ -16,7 +16,7 @@ int func_002F5A58(char *out, short n)
     date = "Mar  8 2004";
     tm = "12:07:01";
     sprintf(mon, "%.3s", date);
-    m = (func_00129C80(months.c, mon) - months.c) / 3 + 1;
+    m = (strstr(months.c, mon) - months.c) / 3 + 1;
     sprintf(buf, "%.2d.%.2d.%.4s.%.2s.%.2s.%.2s", m, atoi(date + 4), date + 7, tm, tm + 3, tm + 6);
     strncpy(out, buf, n);
     return 0;

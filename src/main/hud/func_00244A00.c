@@ -7,8 +7,8 @@
 #include "types.h"
 #include "hud_types.h"
 
-extern void func_00244280(void* self);
+extern void Hud_ClearTargetLock(void* self);
 
 void func_00244A00(void* self) {
-    func_00244280(self);
+    Hud_ClearTargetLock(self);
 }

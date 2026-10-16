@@ -211,7 +211,7 @@ extern void AgentOpen_BuildSlotList(S293660*);
 #define AgentOpen_BuildSlotList(a0) ((void)AgentOpen_BuildSlotList((GuiSaveAgentWidget *)(a0))) /* merge_units */
 
 extern void func_0041E3B0(S293660*, float);
-void func_00293660(S293660* s, float dt) {
+void GuiAgentLoad_Update(S293660* s, float dt) {
     s->t += dt;
     if (!(s->t <= 1.0f)) {
         AgentOpen_BuildSlotList(s);

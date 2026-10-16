@@ -28,12 +28,12 @@ struct U_415950 {
     virtual void Update(float dt);
 };
 extern "C" {
-void func_0013B180(LIt_415950* out, void* list);
+void List_Begin(LIt_415950* out, void* list);
 void func_0028C0B0(LIt_415950* out, LIt_415950* in);
 void func_0028C0A0(LIt_415950* out, void* list);
 void func_0028C090(LIt_415950* out, LIt_415950* in);
 void func_002CCE50(List_415950* list, W_415950** v);
-void func_00138DA0(LIt_415950* out, List_415950* list, LIt_415950* pos);
+void List_Erase(LIt_415950* out, List_415950* list, LIt_415950* pos);
 W_415950** func_00415B20(List_415950* list);
 }
 
@@ -60,7 +60,7 @@ extern "C" void func_00415950(W_415950* o, float dt)
             }
             o->b50 = 0;
         }
-        func_0013B180(&beginTmp, o->children);
+        List_Begin(&beginTmp, o->children);
         func_0028C0B0(&it, &beginTmp);
         n = it.node;
         func_0028C0A0(&endTmp, o->children);
@@ -80,11 +80,11 @@ extern "C" void func_00415950(W_415950* o, float dt)
                 ((U_415950*)w)->Update(dt);
                 if (o->queue.size && w == o->queue.head->value) {
                     pos1.node = o->queue.head;
-                    func_00138DA0(&res1, &o->queue, &pos1);
+                    List_Erase(&res1, &o->queue, &pos1);
                 }
             } else {
                 pos2.node = o->queue.head;
-                func_00138DA0(&res2, &o->queue, &pos2);
+                List_Erase(&res2, &o->queue, &pos2);
             }
         }
         o->busy = 0;

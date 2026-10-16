@@ -49,7 +49,7 @@ E5830 **func_003305C0(V5830 *v);
 const char *Loc_GetStoredKey(int name);
 int Awards_MatchKeyPattern(A5830 *agent, const char *a, const char *name, int c);
 int String_CompareNoCase(const char *a, const char *b);
-float func_00245890(void *ui);
+float Hud_GetMissionTime(void *ui);
 void AgentData_SetObjectiveBit(A5830 *agent, char *name, int notify);
 void awards_SetAwardsAndBonuses(A5830 *agent, int a, int b);
 void func_002888C0(Awd5830 *a);
@@ -93,7 +93,7 @@ extern "C" void AgentData_EndLevel(A5830 *self, unsigned char done)
     char buf[32];
     Awd5830 awd;
     self->bB74 = done;
-    if (self->fD4 < 0.0f) self->fD4 = func_00245890(D_004FFC2C);
+    if (self->fD4 < 0.0f) self->fD4 = Hud_GetMissionTime(D_004FFC2C);
     for (i = 0; i < self->nLevels; i++) {
         rec = &self->recs[i];
         name = Loc_GetStoredKey(D_00532AF8[i].name);

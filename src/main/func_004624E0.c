@@ -29,7 +29,7 @@ extern unsigned char D_005721C8;
 extern char D_004C2698[];
 extern char D_004C26B0[];
 extern char D_004C26C8[];
-void func_00368760(Self_4624E0* self);
+void GuiObjectives_Wake(Self_4624E0* self);
 Agent_4624E0* Agent_GetSelected(void* mgr, int idx);
 int cAgentData_GetStat(Agent_4624E0* agent, int stat);
 int sprintf(char* buf, const char* fmt, ...);
@@ -45,7 +45,7 @@ void func_004624E0(Self_4624E0* self)
     int n;
     char buf[32];
     W_4624E0* w;
-    func_00368760(self);
+    GuiObjectives_Wake(self);
     agent = Agent_GetSelected(D_004FFB50, -1);
     n = D_004FFD28;
     if (cAgentData_GetStat(agent, 0x19) > 0)

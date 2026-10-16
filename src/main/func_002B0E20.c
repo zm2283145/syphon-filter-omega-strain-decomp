@@ -7,8 +7,8 @@
 extern "C" {
 extern "C" void func_002B0E80();
 extern "C" void func_002B0E90();
-extern "C" void func_002B1350();
-extern "C" void func_002B1B30();
+extern "C" void GuiQuickChat_HandleInput();
+extern "C" void GuiQuickChat_Init();
 extern "C" void func_0041D400();
 extern "C" void func_0041D5C0();
 extern "C" void func_0041D780();
@@ -38,4 +38,4 @@ extern "C" VtableObject* func_002B0E20(VtableObject* self, short deleteFlag)
     }
     return self;
 }
-void * const D_004DDE60[24] = { (void*)0x0, (void*)0x0, (void*)func_002B0E20, (void*)func_002B1B30, (void*)func_0041F090, (void*)func_0041F080, (void*)func_0041F070, (void*)func_0041EFA0, (void*)func_0041EBF0, (void*)func_0041E330, (void*)func_0041E2B0, (void*)func_002B1350, (void*)func_0041E470, (void*)func_0041E230, (void*)func_0041E3B0, (void*)func_0041EF10, (void*)func_0041F210, (void*)func_0041D8C0, (void*)func_0041D780, (void*)func_0041D5C0, (void*)func_0041D400, (void*)func_002B0E80, (void*)func_002B0E90, (void*)0x0 };
+void * const D_004DDE60[24] = { (void*)0x0, (void*)0x0, (void*)func_002B0E20, (void*)GuiQuickChat_Init, (void*)func_0041F090, (void*)func_0041F080, (void*)func_0041F070, (void*)func_0041EFA0, (void*)func_0041EBF0, (void*)func_0041E330, (void*)func_0041E2B0, (void*)GuiQuickChat_HandleInput, (void*)func_0041E470, (void*)func_0041E230, (void*)func_0041E3B0, (void*)func_0041EF10, (void*)func_0041F210, (void*)func_0041D8C0, (void*)func_0041D780, (void*)func_0041D5C0, (void*)func_0041D400, (void*)func_002B0E80, (void*)func_002B0E90, (void*)0x0 };

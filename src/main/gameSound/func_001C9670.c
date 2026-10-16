@@ -11,7 +11,7 @@ extern void func_003A7FE0(void);
 extern void func_003A80F0(int a0);
 extern int snd_FlushSoundCommands(void);
 
-void func_001C9670(int unused, int a1) {
+void SoundMgr_SetOutputMode(int unused, int a1) {
     func_003A80F0(a1);
 }
 

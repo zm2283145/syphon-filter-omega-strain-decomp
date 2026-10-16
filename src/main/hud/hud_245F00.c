@@ -133,18 +133,18 @@ void Hud_SetGoggles(Hud_245F00* h, int on);
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void ObjMarkerMgr_ctor(void* p);
 void ScalarCollection_Init(void* p);
-Snd_245F00* func_001698C0(void);
+Snd_245F00* App_GetInstance(void);
 void** func_00241C70(int a, int b);
-void func_00241E30(Hud_245F00* h, int a);
-void func_002440D0(Hud_245F00* h);
+void Hud_SelectTextColorTable(Hud_245F00* h, int a);
+void Hud_InitCalloutRects(Hud_245F00* h);
 void func_00246540(void* mgr, Link_245F00** l);
 void func_00246570(void* p);
 void func_00246590(Hud_245F00* h);
-void func_00259420(void* p);
-int func_00260D50(void* a, char* name);
-void func_002619B0(void* a, void* b);
-Link_245F00* func_0026E070(void* p, int a, int b);
-void func_002CB3D0(void* a, int b);
+void WeaponPreview_ctor(void* p);
+int Hud_FindOrCreateElement(void* a, char* name);
+void HudRadar_ctor(void* a, void* b);
+Link_245F00* HudMap_ctor(void* p, int a, int b);
+void FrontEnd_StartGui(void* a, int b);
 void func_003E7EB0(void* a, void* b);
 void func_003E8DE0(int a, int b);
 void func_003EE830(void* a, int b);
@@ -162,7 +162,7 @@ Widget_245F00* GuiWidget_FindChildByName(void* a, char* name);
 static inline void* Alloc_245F00(int n, int line) { AllocGuard g; return Mem_Alloc(0, n, D_004A7210, line); }
 static inline void Reg_245F00(void* mgr, Link_245F00* l) { l->owner = mgr; func_00246540(mgr, &l); }
 static inline Widget_245F00* Cast_245F00(Widget_245F00* w, void* t) { return w && w->IsA(t) ? w : 0; }
-extern "C" Hud_245F00* func_00245F00(Hud_245F00* h, int a1, int a2, int a3)
+extern "C" Hud_245F00* HudObject_ctor(Hud_245F00* h, int a1, int a2, int a3)
 {
     void* root;
     void* grp;
@@ -183,18 +183,18 @@ extern "C" Hud_245F00* func_00245F00(Hud_245F00* h, int a1, int a2, int a3)
         s->bC = 1;
     }
     ObjMarkerMgr_ctor(h->m90);
-    func_002619B0(&h->mD0, func_003EEB30(*h->f54, D_004A72F8));
+    HudRadar_ctor(&h->mD0, func_003EEB30(*h->f54, D_004A72F8));
     h->fEC = 0;
     {
         signed char c = D_004F7D40;
-        int v = *(int*)((unsigned char)c * 4 + (char*)func_001698C0()->f280);
-        func_003FA500(h->m100, func_00260D50(*h->f54, D_004A7308), v);
+        int v = *(int*)((unsigned char)c * 4 + (char*)App_GetInstance()->f280);
+        func_003FA500(h->m100, Hud_FindOrCreateElement(*h->f54, D_004A7308), v);
     }
-    func_00259420(h->m634);
+    WeaponPreview_ctor(h->m634);
     {
         Link_245F00* p;
         p = (Link_245F00*)Alloc_245F00(0xA0, 0xE0);
-        if (p) p = func_0026E070(p, h->f50, a3);
+        if (p) p = HudMap_ctor(p, h->f50, a3);
         h->f6A0 = p;
     }
     h->f6A4 = 0;
@@ -219,9 +219,9 @@ extern "C" Hud_245F00* func_00245F00(Hud_245F00* h, int a1, int a2, int a3)
     func_003EE830(h->f60, 1);
     grp = func_003EEB30(root, D_004A7310);
     func_003EEBE0(grp, 1, 1);
-    h->f6C = func_00260D50(grp, D_004A7328);
-    h->f70 = func_00260D50(grp, D_004A7338);
-    h->f74 = func_00260D50(root, D_004A7348);
+    h->f6C = Hud_FindOrCreateElement(grp, D_004A7328);
+    h->f70 = Hud_FindOrCreateElement(grp, D_004A7338);
+    h->f74 = Hud_FindOrCreateElement(root, D_004A7348);
     Hud_SetGoggles(h, 0);
     h->f8C = -1;
     func_003FA1B0(h->m100, 0);
@@ -246,17 +246,17 @@ extern "C" Hud_245F00* func_00245F00(Hud_245F00* h, int a1, int a2, int a3)
     D_004F7DA4->b62 = 1;
     D_004F7DA8->b62 = 1;
     D_004F7DAC->b62 = 1;
-    func_002440D0(h);
+    Hud_InitCalloutRects(h);
     D_004F7DB0 = (Node_245F00*)func_003EEB30(root, D_004A73E8);
     D_004F7DB0->b62 = 1;
     func_003EEBE0(D_004F7DB0, 0, 1);
-    h->f78 = func_00260D50(root, D_004A73F8);
+    h->f78 = Hud_FindOrCreateElement(root, D_004A73F8);
     func_003E8DE0(h->f78, 0);
-    func_00241E30(h, 0);
+    Hud_SelectTextColorTable(h, 0);
     h->fF0 = 0;
     h->f6DC = 0;
     h->f6E0 = -1.0f;
-    func_002CB3D0(D_004FFC04, 1);
+    FrontEnd_StartGui(D_004FFC04, 1);
     h->f6A4 = func_004187C0(Gui_GetScreenList(), D_004A7400, D_004A7410);
     Gui_GetScreenStack()->Show(h->f6A4, 0);
     wa = Cast_245F00(GuiWidget_FindChildByName(h->f6A4, D_004A7420), D_004A7520);

@@ -15,7 +15,7 @@ extern char D_004B88F0[];
 void func_0041F150(S460BB0*);
 int func_002C9EE0(void*);
 TraversalWidget* GuiWidget_FindChildByName(void*, const char*);
-void func_0013B180(ChildIterator* result, ChildList* list);
+void List_Begin(ChildIterator* result, ChildList* list);
 void func_0028C0B0(ChildIterator* result, const ChildIterator* source);
 void func_0028C0A0(ChildIterator* result, ChildList* list);
 void func_0028C090(ChildIterator* result, const ChildIterator* source);
@@ -37,7 +37,7 @@ void func_00460BB0(S460BB0* self)
                 ChildIterator rawBegin;
                 ChildIterator rawEnd;
                 int i;
-                func_0013B180(&rawBegin, list);
+                List_Begin(&rawBegin, list);
                 func_0028C0B0(&begin, &rawBegin);
                 node = begin.node;
                 func_0028C0A0(&rawEnd, list);

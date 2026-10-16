@@ -40,27 +40,27 @@ typedef struct { int a[0x28]; } H178;
 extern "C" {
 extern int sprintf(char*, const char*, ...);
 extern void func_0036E540(H178*, char*, void*, int);
-extern int func_0036DEF0(H178*);
+extern int FileMan_FindMember(H178*);
 extern void func_0036E140(H178*, char*, int, int);
 extern int FileMan_GetSize(H178*);
 extern void* Mem_Alloc(int, int, char*, int);
 extern char D_0049CDA0[];
 extern char D_0048B2F8[];
-extern void func_0036D990(H178*, void**, int);
+extern void FileMan_LoadMemberSync(H178*, void**, int);
 extern void func_0036DEC0(H178*);
 extern void* FileMan_ReadData(H178*);
-extern void func_0036E220(H178*, int);
+extern void FileMan_Release(H178*, int);
 }
 extern "C" Population* Population_Load(Population* p, char* name, void* arg) {
     char buf[0x90];
     H178 h;
     sprintf(buf, "%s.pop", name);
     func_0036E540(&h, buf, arg, 0);
-    if ((unsigned char)func_0036DEF0(&h)) {
+    if ((unsigned char)FileMan_FindMember(&h)) {
         void* m;
         sprintf(buf, "%s\\%s\\DATA.POP", D_0048B2F8, name, name);
         func_0036E140(&h, buf, 0, 0);
-        func_0036DEF0(&h);
+        FileMan_FindMember(&h);
         p->size = FileMan_GetSize(&h);
         p->ownsData = 1;
         {
@@ -72,7 +72,7 @@ extern "C" Population* Population_Load(Population* p, char* name, void* arg) {
         if (D_00533880) Alloc_Unlock(9);
         D_00533888--;
         p->data = m;
-        func_0036D990(&h, &p->data, p->size);
+        FileMan_LoadMemberSync(&h, &p->data, p->size);
         func_0036DEC0(&h);
     } else {
         p->ownsData = 0;
@@ -82,7 +82,7 @@ extern "C" Population* Population_Load(Population* p, char* name, void* arg) {
     p->cursor = p->data;
     p->count = *(int*)p->cursor;
     p->cursor = (char*)p->cursor + 4;
-    func_0036E220(&h, -1);
+    FileMan_Release(&h, -1);
     return p;
 }
 #pragma pop /* merge_units */

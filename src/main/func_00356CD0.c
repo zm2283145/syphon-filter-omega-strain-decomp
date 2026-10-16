@@ -32,7 +32,7 @@ void func_0041F150(S_356CD0* o);
 W_356CD0* GuiWidget_FindChildByName(void* self, char* name);
 void func_0041BEB0(W_356CD0* w, char* text, int flags);
 int Agent_GetSelected(void* a, int i);
-char* func_00336170(int agent);
+char* AgentData_GetName(int agent);
 void func_00356CD0(S_356CD0* o);
 }
 static inline W_356CD0* cast_356CD0(W_356CD0* w, char* type)
@@ -58,5 +58,5 @@ void func_00356CD0(S_356CD0* o)
     }
     o->w50 = cast_356CD0(GuiWidget_FindChildByName(o, D_00492C98), D_004B88F0);
     w = cast_356CD0(GuiWidget_FindChildByName(o, D_00492C80), D_004A7520);
-    if (w) func_0041BEB0(w, func_00336170(Agent_GetSelected(D_004FFB50, -1)), 0);
+    if (w) func_0041BEB0(w, AgentData_GetName(Agent_GetSelected(D_004FFB50, -1)), 0);
 }

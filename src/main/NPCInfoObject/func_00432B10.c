@@ -6,8 +6,8 @@ struct Raw_2B10 { int p; };
 struct Ent_2B10 { int key; unsigned char b4, b5, b6, b7, b8, b9; char pad[6]; };
 extern "C" {
 void Mem_Free(int, void*, char*, int);
-void func_00138DA0(int*, char*, int*);
-Raw_2B10 func_0013B180(void*);
+void List_Erase(int*, char*, int*);
+Raw_2B10 List_Begin(void*);
 Raw_2B10 func_00432730(void*);
 void func_00432740(char**, const Raw_2B10&);
 void func_00432720(char**, const Raw_2B10&);
@@ -16,7 +16,7 @@ int func_004361C0(int*, int);
 extern char D_004BFCA0;
 extern char D_00582AF0;
 }
-#define Begin_2B10(o) func_00432740(o, func_0013B180(&D_00582AF0))
+#define Begin_2B10(o) func_00432740(o, List_Begin(&D_00582AF0))
 #define End_2B10(o) func_00432720(o, func_00432730(&D_00582AF0))
 extern "C" void func_00432B10(int d0, Ent_2B10* tbl) {
     int k[1];
@@ -55,7 +55,7 @@ extern "C" void func_00432B10(int d0, Ent_2B10* tbl) {
                         int pos;
                         c = cur;
                         func_0015AF40(&pos, &c);
-                        func_00138DA0(&res, &D_00582AF0, &pos);
+                        List_Erase(&res, &D_00582AF0, &pos);
                     }
                 }
             }

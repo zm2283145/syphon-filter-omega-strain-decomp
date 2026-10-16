@@ -23,10 +23,10 @@ int func_00121B18(float f12) {
 /* merge_units: end func_00121B18 */
 
 /* merge_units: begin func_00121B30 */
-extern int func_0011E170(float, float);
+extern int Math_PowfKernel(float, float);
 
-int func_00121B30(float f12, float f13) {
-    return func_0011E170(f12, f13);
+int Math_Powf(float f12, float f13) {
+    return Math_PowfKernel(f12, f13);
 }
 /* merge_units: end func_00121B30 */
 

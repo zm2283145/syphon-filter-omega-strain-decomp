@@ -9,13 +9,13 @@
 
 /* merge_units: begin func_00136540 */
 #pragma push /* merge_units */
-Rel* func_001365C0(Rel* r); /* gsynth: defined below */int func_001365B0(int a0, int a1); /* gsynth: defined below */typedef struct { char pad[0xC]; unsigned char flag; } Sub00136540;
+Rel* PtrVec_InitEmpty(Rel* r); /* gsynth: defined below */int func_001365B0(int a0, int a1); /* gsynth: defined below */typedef struct { char pad[0xC]; unsigned char flag; } Sub00136540;
 typedef struct { void* vtable; Sub00136540 sub; char pad[0x14 - 4 - sizeof(Sub00136540)]; int unk14; } Obj00136540;
 extern char D_004D9140[];
 #if 0 /* merge_units */
-extern void func_001365C0(Sub00136540* sub);
+extern void PtrVec_InitEmpty(Sub00136540* sub);
 #endif /* merge_units */
-#define func_001365C0(a0) ((void)func_001365C0((void *)(a0))) /* merge_units */
+#define PtrVec_InitEmpty(a0) ((void)PtrVec_InitEmpty((void *)(a0))) /* merge_units */
 
 extern int func_001361D0(void* src);
 #if 0 /* merge_units */
@@ -29,13 +29,13 @@ Obj00136540* func_00136540(Obj00136540* obj, void* src)
     Sub00136540* sub;
     obj->vtable = D_004D9140;
     sub = &obj->sub;
-    func_001365C0(sub);
+    PtrVec_InitEmpty(sub);
     func_001365B0(sub, func_001361D0(src));
     sub->flag = 1;
     obj->unk14 = 0;
     return obj;
 }
-#undef func_001365C0 /* merge_units */
+#undef PtrVec_InitEmpty /* merge_units */
 #undef func_001365B0 /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00136540(void) {}
@@ -51,13 +51,13 @@ static inline void merge_flush_func_00136540(void) {}
  */
 
 
-extern int func_001396D0(int, int);
+extern int PtrVec_Reserve(int, int);
 
 int func_001365B0(int a0, int a1) {
-    return func_001396D0(a0, a1);
+    return PtrVec_Reserve(a0, a1);
 }
 
-Rel* func_001365C0(Rel* r) {
+Rel* PtrVec_InitEmpty(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;

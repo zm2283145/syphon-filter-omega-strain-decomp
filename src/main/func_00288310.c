@@ -37,12 +37,12 @@ extern int Agent_GetSelected(void* list, int idx);
 extern int AgentData_GetSaveSize(int agent);
 extern int func_0040D580(Mgr288310* m, int v);
 extern int sprintf(char* buf, const char* fmt, ...);
-extern char* func_00129C80(const char* s, const char* sub);
+extern char* strstr(const char* s, const char* sub);
 extern char* strncpy(char* d, const char* s, int n);
 extern void func_00128F58(char* d, const char* s);
 extern void String_Copy(char* d, const char* s);
 
-void func_00288310(Self288310* self, int force)
+void GuiTitleScreen_CheckMemCard(Self288310* self, int force)
 {
     char buf[0x108];
     char num[8];
@@ -67,7 +67,7 @@ void func_00288310(Self288310* self, int force)
                 void* ui;
                 sprintf(num, D_004A9610, need);
                 text = Loc_LookupText(D_004A9618);
-                p = func_00129C80(text, D_004A9628);
+                p = strstr(text, D_004A9628);
                 if (p) {
                     int n = p - text;
                     strncpy(buf, text, n);

@@ -18,7 +18,7 @@ extern char D_004DAE10[];
 extern void SoundRequest_Ctor(SoundRequest* req, int kind, int a, int b, int c);
 extern void SoundMsg_WrapAction(SoundMsg* msg, SoundRequest* req);
 extern void Event_Send(SoundMsg* msg, void* target, int flags);
-extern void func_0036E220(void* part, int flags);
+extern void FileMan_Release(void* part, int flags);
 extern void cMessage_dtor(SoundMsg* msg, int flags);
 
 /* Builds a quip sound request and broadcasts it as a sound message. */
@@ -29,9 +29,9 @@ void Global_PlayQuip(int a, int b, int c) {
     SoundMsg_WrapAction(&msg, &req);
     Event_Send(&msg, D_004FFB50, 0);
     msg.vtbl = D_004DAE10;
-    func_0036E220(msg.partB, -1);
-    func_0036E220(msg.partA, -1);
+    FileMan_Release(msg.partB, -1);
+    FileMan_Release(msg.partA, -1);
     cMessage_dtor(&msg, 0);
-    func_0036E220(req.partB, -1);
-    func_0036E220(req.partA, -1);
+    FileMan_Release(req.partB, -1);
+    FileMan_Release(req.partA, -1);
 }

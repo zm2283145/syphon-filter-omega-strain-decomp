@@ -100,7 +100,7 @@ extern unsigned char D_00533880;
 extern int D_00533888;
 
 typedef struct { int f0; char p4[43]; signed char f2F; char p30[48]; int f60; int f64; short f68; char p6A[6]; int f70; int f74; int f78; int f7C; int f80; int f84; } PS0_00236810;
-char * func_00236810(PS0_00236810 *arg0, int arg1, int arg2, int arg3, float farg0) {
+char * FireEffectObj_Ctor(PS0_00236810 *arg0, int arg1, int arg2, int arg3, float farg0) {
     int sp9C;
     int sp98;
     int var_s0;

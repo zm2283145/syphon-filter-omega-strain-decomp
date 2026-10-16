@@ -25,20 +25,20 @@ void func_004139C0(void* p);
 void func_002C81D0(Self_002CB160* self);
 void Video_BeginFrame(void* p);
 void Mem_Free(int heap, void* p, char* file, int line);
-W_002CB160* func_001698C0(void);
+W_002CB160* App_GetInstance(void);
 void func_003D1700(void* p);
 void func_002C9E20(Self_002CB160* self);
 void func_001450F0(int a);
 void func_002C9C80(Self_002CB160* self, int a);
 void* Service_Lookup(void* a, void* b);
 char* strncpy(char* d, const char* s, int n);
-void func_001C9710(void* svc);
+void SoundMgr_UnloadLevel(void* svc);
 void* DME_GetLobby(void);
 void func_004538D0(void* g);
 void func_0037E320(void* p);
 void func_002CDEF0(Node_002CB160** out, int* list, Node_002CB160** first, Node_002CB160** last);
 }
-extern "C" void func_002CB160(Self_002CB160* self)
+extern "C" void FrontEnd_TeardownGui(Self_002CB160* self)
 {
     if (self->b28) {
         func_004147B0();
@@ -58,7 +58,7 @@ extern "C" void func_002CB160(Self_002CB160* self)
                 Mem_Free(0, p, D_004ACF10, 0x465);
             }
             self->p260 = 0;
-            { W_002CB160* w = func_001698C0(); w->b278 = 1; }
+            { W_002CB160* w = App_GetInstance(); w->b278 = 1; }
             func_003D1700(D_0055A700);
             func_002C9E20(self);
             func_001450F0(D_004FFD30);
@@ -81,7 +81,7 @@ extern "C" void func_002CB160(Self_002CB160* self)
                     buf.len = n;
                 }
                 strncpy(D_004FFC90, D_004ACF48, 0x80);
-                func_001C9710(svc);
+                SoundMgr_UnloadLevel(svc);
                 strncpy(D_004FFC90, buf.s, 0x80);
             }
             if (DME_GetLobby())

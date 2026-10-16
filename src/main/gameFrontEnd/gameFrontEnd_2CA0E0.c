@@ -217,7 +217,7 @@ extern G2CA640* DME_GetLobby(void);
 #define DME_GetLobby() ((G2CA640 *)DME_GetLobby()) /* merge_units */
 
 extern void func_00445850(G2CA640* g);
-extern void func_002C8090(S2CA640* s);
+extern void FrontEnd_FlushMessages(S2CA640* s);
 #if 0 /* merge_units */
 extern void func_00453B00(G2CA640* g, int a);
 #endif /* merge_units */
@@ -231,7 +231,7 @@ int func_002CA640(S2CA640* s, int a)
         if (s->b264 && DME_GetLobby()->mode != 10)
             func_00445850(DME_GetLobby());
         s->b264 = 0;
-        func_002C8090(s);
+        FrontEnd_FlushMessages(s);
         func_00453B00(DME_GetLobby(), a);
         DME_SetLobbyActive(0);
         return 1;

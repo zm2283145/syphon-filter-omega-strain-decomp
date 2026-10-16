@@ -10,7 +10,7 @@
 /* merge_units: begin func_00255860 */
 #pragma push /* merge_units */
 typedef struct { char pad[0x2E4]; int pending; int a; int b; } Q255;
-int func_00255860(Q255* s, int* a, int* b) {
+int Backpack_TakeArmor(Q255* s, int* a, int* b) {
     if (s->pending) {
         s->pending--;
         *a = s->a;
@@ -35,7 +35,7 @@ typedef struct { char pad[0x64]; Slot_558A0 slots[3]; } Pack_558A0;
 extern int WeaponInv_SlotOfItem(int key);
 static inline void Cp_558A0(Ent_558A0* d, Ent_558A0* s) { d->a = s->a; d->b = s->b; d->id = s->id; d->ref = s->ref; }
 #pragma opt_rotateloops off
-int func_002558A0(Pack_558A0* s, int id, int keep)
+int Backpack_TakeItem(Pack_558A0* s, int id, int keep)
 {
     Slot_558A0* p; int i;
     int t;

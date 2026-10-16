@@ -243,7 +243,7 @@ extern const float D_004995FC;
 extern float func_0011ED00(float x);
 extern float func_00121760(float x);
 extern float scalbnf(float x, int n);
-float func_0011E170(float x, float y)
+float Math_PowfKernel(float x, float y)
 {
 	const float
 	zero    =  0.0,

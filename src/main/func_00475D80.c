@@ -37,7 +37,7 @@ void Ladder_BlendToTarget(Ladder* l, float t)
     V* q1 = &l0;
     V* c = &tgt;
     int rv1;
-    /* VU0 lerp (same sequence as src/main/human/func_001A9160.c) */
+    /* VU0 lerp (same sequence as src/main/human/Vec4_Lerp.c) */
     __asm__ volatile("lqc2 vf1, 0x0(%1); lqc2 vf2, 0x0(%2); mfc1 %0, %3; qmtc2.ni %0, vf3; vaddax.xyzw ACC, vf1, vf0x; vmaddax.xyzw ACC, vf2, vf3x; vmsubx.xyzw vf4, vf1, vf3x; sqc2 vf4, 0x0(%4)"
                      : "=&r"(rv1) : "r"(pos), "r"(c), "f"(k), "r"(q1) : "memory");
     p = tp.Set(l0).Pt();

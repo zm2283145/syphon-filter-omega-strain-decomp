@@ -9,7 +9,7 @@ public:
     Sub3D3A0* sub;
 };
 extern "C" void func_0041EFA0(C3D3A0* self);
-extern "C" void func_0033D3A0(C3D3A0* self)
+extern "C" void GuiScreen_Wake(C3D3A0* self)
 {
     func_0041EFA0(self);
     self->Slot23();

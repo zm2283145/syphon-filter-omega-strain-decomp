@@ -61,7 +61,7 @@ extern float D_0049D038;
 void* func_0015AC90(int* p, int v);
 unsigned char func_001960A0(int* a, int* b);
 void* Object_LookupById(int* id);
-void* func_00133330(void* o);
+void* Camera_GetNode(void* o);
 void* Transform_GetUpdated(void* p);
 Plc_L* Mtx_ToPlacement(Plc_L* d, void* m);
 void* Mtx_GetIdentity(void);
@@ -82,7 +82,7 @@ float Model_GetFirstFloat(void* m);
 V4_L* AnimRate_Init(V4_L* p, float f);
 V4_L* Vec4_Copy_18A350(V4_L* d, V4_L* s);
 void AnimEvent_Construct(Ev_L* e);
-signed char func_0018A2F0(Sel_L* s);
+signed char MotionRequest_GetMode(Sel_L* s);
 void* func_0018A2E0(Sel_L* s);
 float func_0018A2D0(Sel_L* s);
 float func_0018A2C0(Sel_L* s);
@@ -182,7 +182,7 @@ static inline void Install_L(Act_L* a, Sel_L* sel, Rate_L* r)
         an->b5 = 0;
         AnimEvent_Construct(&e1);
         AnimEvent_Construct(&e2);
-        AnimCtl_InstallMotion(an, out, func_0018A2F0(sel), &vec, &y, &e1, &e2, func_0018A2E0(sel), func_0018A2D0(sel), func_0018A2C0(sel));
+        AnimCtl_InstallMotion(an, out, MotionRequest_GetMode(sel), &vec, &y, &e1, &e2, func_0018A2E0(sel), func_0018A2D0(sel), func_0018A2C0(sel));
         func_0018A260(&e2, -1);
         func_0018A260(&e1, -1);
     }
@@ -204,7 +204,7 @@ static inline void Bind_L(Act_L* a, void* o, Msg_L* msg, int idx)
         Plc_L* pp = &msg->plc;
         *func_00195DD0(s + 0x1F0, idx) = o;
         Transform_SetOrientation(func_00195DC0(s + 0x200, idx), pp);
-        p = o ? func_00133330(o) : 0;
+        p = o ? Camera_GetNode(o) : 0;
         if (p) m = Transform_GetUpdated(p); else m = Mtx_GetIdentity();
         Transform_SetOrientation(func_00195DC0(s + 0x260, idx), Mtx_ToPlacement(&t, m));
         *func_00195DB0(s + 0x2C0, idx) = 1;
@@ -219,7 +219,7 @@ static inline void GetPlc_L(Plc_L* pplc, Msg_L* msg, int* pt)
         Plc_L t7B0;
         Plc_L t790;
         obj = func_001960A0(&msg->id, (int*)func_0015AC90(pt, -1)) != 0 ? Object_LookupById(&msg->id) : 0;
-        parent = obj ? func_00133330(obj) : 0;
+        parent = obj ? Camera_GetNode(obj) : 0;
         if (parent) {
             Placement_ApplyParent(&t790, &msg->plc, Mtx_ToPlacement(&t7B0, Transform_GetUpdated(parent)));
             src = &t790;

@@ -8,7 +8,7 @@
 
 extern int List_InsertBefore(int, int, int, int);
 
-int func_002728F0(int a0, int a1) {
+int TremorList_Push(int a0, int a1) {
     int loc[2];
     int a2, a3, v0;
 

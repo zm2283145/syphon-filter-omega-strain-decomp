@@ -41,12 +41,12 @@ struct Node_23C010 {
 extern "C" {
 extern int D_004F7C60;
 int* func_0023A550(PtrVec* v, int i);
-void func_0023C010(Node_23C010* self, int arg);
+void NiEvent_SetTreePresence(Node_23C010* self, int arg);
 void Object_Activate(Node_23C010* self, int arg);
 }
 #pragma push
 #pragma opt_strength_reduction off
-extern "C" void func_0023C010(Node_23C010* self, int arg)
+extern "C" void NiEvent_SetTreePresence(Node_23C010* self, int arg)
 {
     int i;
     if (self->target)
@@ -54,7 +54,7 @@ extern "C" void func_0023C010(Node_23C010* self, int arg)
     for (i = 0; i < self->children.count; i++) {
         Child_23C010* c = (Child_23C010*)*func_0023A550(&self->children, i);
         if (c->kind == D_004F7C60)
-            func_0023C010((Node_23C010*)self->children.data[i], arg);
+            NiEvent_SetTreePresence((Node_23C010*)self->children.data[i], arg);
         else
             ((Target_23C010*)self->children.data[i])->slot21(arg);
     }

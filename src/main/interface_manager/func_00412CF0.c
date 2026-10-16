@@ -24,10 +24,10 @@ extern void* D_00539248;
 void Interface_Dtor(void* p, int flags);
 void Mem_Free(int pool, void* allocation, char* file, int line);
 void func_0036E5D0(Hog412CF0* h);
-void func_0036E220(Hog412CF0* h, int flags);
+void FileMan_Release(Hog412CF0* h, int flags);
 char* Archive_GetMemberName(Arc412CF0* a, int i);
 void Hog_Register(Hog412CF0* h, char* name, Arc412CF0* a, int z);
-int func_0036DEF0(Hog412CF0* h);
+int FileMan_FindMember(Hog412CF0* h);
 void func_003816F0(void* mgr, Hog412CF0* h);
 Str412CF0* String_Replace(Str412CF0* self, unsigned int pos, unsigned int n, const char* first, const char* last, TagChar412CF0 tag);
 void ArchiveList_CloseNamed(void* t, Arc412CF0* a);
@@ -74,10 +74,10 @@ extern "C" void func_00412CF0(Self412CF0* self, int idx)
         n = arc->info->count;
         for (i = 0; i < n; i++) {
             Hog_Register(&h, Archive_GetMemberName(arc, i), arc, 0);
-            func_0036DEF0(&h);
+            FileMan_FindMember(&h);
             func_003816F0(D_00539248, &h);
         }
-        func_0036E220(&h, -1);
+        FileMan_Release(&h, -1);
     }
     {
         TagChar412CF0 tag;

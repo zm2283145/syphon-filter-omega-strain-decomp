@@ -17,7 +17,7 @@ extern int func_0023DA90(PtrVec* v);
 extern int* func_0023DAA0(PtrVec* v, int i);
 extern int* func_0023DAB0(PtrVec* v, int i);
 extern int func_0023DAC0(NodeObj* o);
-extern int func_001830D0(NodeObj* o);
+extern int GameObject_IsCollisionEnabled(NodeObj* o);
 
 #define COUNTS(o, flag) (!(flag) || (o)->state == 3 || (o)->state == 1 || (o)->state == 6)
 #pragma push
@@ -41,7 +41,7 @@ int func_0023D810(NodeObj* self, int flag)
             NodeObj* g = *(NodeObj**)func_0023DAB0(&c->kids, j);
             int m = 0;
             int k;
-            if (func_001830D0(g)) {
+            if (GameObject_IsCollisionEnabled(g)) {
                 if (COUNTS(g, flag)) m++;
             }
             for (k = 0; k < func_0023DA90(&g->kids); k++) {

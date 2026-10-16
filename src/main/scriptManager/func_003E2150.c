@@ -42,7 +42,7 @@ void func_003E2520(FA_E2150*, unsigned int, int*);
 void** func_003E2510(PV_E2150*, int);
 void func_00175240(void*, int);
 void ScriptStr_Release(Mgr_E2150*, void*);
-void func_001396D0(PV_E2150*, int);
+void PtrVec_Reserve(PV_E2150*, int);
 void func_003D7960(void);
 void func_003E3320(int*, Mgr_E2150*, int*, int*);
 }
@@ -126,9 +126,9 @@ extern "C" void Script_Cleanup(Mgr_E2150* m)
     }
     while (*(volatile int*)&m->strs.count > 0)
         ScriptStr_Release(m, Back_E2150(&m->strs));
-    func_001396D0(&m->strs, 0x80);
+    PtrVec_Reserve(&m->strs, 0x80);
     m->objs.count = 0;
-    func_001396D0(&m->objs, 0x100);
+    PtrVec_Reserve(&m->objs, 0x100);
     m->x4E70 = m->x4E6C + m->x4E78;
     m->x4E7C = 0;
     m->x4E90 = 0;

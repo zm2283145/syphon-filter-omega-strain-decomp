@@ -25,8 +25,8 @@ Mgr2427* Gui_GetScreenStack(void);
 void* GuiManager_FindOrLoad(void* a, void* b, void* c);
 void Game_SetPaused(void* p, int v);
 void func_002427F0(Obj2426* s);
-int func_00241AC0(Obj2426* s);
-void func_0036A240(void* p);
+int Hud_IsGuiFocused(Obj2426* s);
+void Pad_ResetHeldMask(void* p);
 void func_0045CA20(void* p, int v);
 void func_00437950(int v);
 extern char D_004FFB50[];
@@ -34,11 +34,11 @@ extern char D_0055A300[];
 extern char D_004A7260[];
 extern char D_004A7248[];
 }
-extern "C" void func_002429F0(Obj2426* s) {
+extern "C" void Hud_OpenPauseMenu(Obj2426* s) {
     if (s->b6A8) return;
     Game_SetPaused(D_004FFB50, 1);
     if (s->b6A9) func_002427F0(s);
-    if (!func_00241AC0(s)) func_0036A240(D_0055A300);
+    if (!Hud_IsGuiFocused(s)) Pad_ResetHeldMask(D_0055A300);
     {
         void* x = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004A7260, "GAMEBACK");
         Gui_GetScreenStack()->s23(x, -1);
@@ -89,10 +89,10 @@ void Event_Construct(Msg_242B40* m, void* type);
 void Transport_Send(int a, Msg_242B40* m, int b, int c);
 void cMessage_dtor(Msg_242B40* m, int flags);
 void func_00242E30(It_242B40* out, char* l);
-void func_002426B0(It_242B40* out, char* l);
+void CalloutList_End(It_242B40* out, char* l);
 void func_002426A0(It_242B40* out, It_242B40* in);
 void func_0015AF40(It_242B40* out, It_242B40* in);
-void func_00138DA0(It_242B40* out, char* l, It_242B40* pos);
+void List_Erase(It_242B40* out, char* l, It_242B40* pos);
 void func_003F45A0(int a, float f);
 void func_003E8DE0(int a, int b);
 void func_003E7EC0(int a, int b);
@@ -100,12 +100,12 @@ void func_003E9770(int a);
 
 static inline void BeginI_(It_242B40* out, char* l) { It_242B40 t; func_00242E30(&t, l); func_002426A0(out, &t); }
 static inline void Begin_(It_242B40* out, char* l) { BeginI_(out, l); }
-static inline void EndI_(It_242B40* out, char* l) { It_242B40 t; func_002426B0(&t, l); func_002426A0(out, &t); }
+static inline void EndI_(It_242B40* out, char* l) { It_242B40 t; CalloutList_End(&t, l); func_002426A0(out, &t); }
 static inline void End_(It_242B40* out, char* l) { EndI_(out, l); }
-static inline void EraseI_(char* l, Node_242B40* n) { It_242B40 ac; It_242B40 a8; It_242B40 a4; ac.n = n; func_0015AF40(&a4, &ac); func_00138DA0(&a8, l, &a4); }
+static inline void EraseI_(char* l, Node_242B40* n) { It_242B40 ac; It_242B40 a8; It_242B40 a4; ac.n = n; func_0015AF40(&a4, &ac); List_Erase(&a8, l, &a4); }
 
 #pragma opt_dead_assignments off
-int func_00242B40(char* o, int* key, int id, signed char flag, int send)
+int Hud_ClearCallout(char* o, int* key, int id, signed char flag, int send)
 {
     Msg_242B40 m;
     It_242B40 it;

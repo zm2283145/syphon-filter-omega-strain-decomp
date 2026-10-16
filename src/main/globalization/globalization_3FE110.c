@@ -59,7 +59,7 @@ extern char D_0055CA70[];
 void* Mem_Alloc(int, int, char*, int);
 void FileHal_Dtor(void*,int);
 void func_0036DEC0(void*);
-void func_0036E220(void*,int);
+void FileMan_Release(void*,int);
 void func_0036E5D0(void*);
 void FileMan_Open(void*,char*,int);
 void* FileMan_ReadData(void*);
@@ -80,7 +80,7 @@ struct Stream {
   size=0;
   { void* p=owned; if(p) { AllocGuard g; Mem_Free(0,p,D_004BDC18,0x4B); } }
   a8=0;owned=0;ac=0;ready=0;
-  func_0036E220(hog,-1);
+  FileMan_Release(hog,-1);
  }
 };
 struct LocEntry { char pad[0x10]; };

@@ -25,7 +25,7 @@ typedef struct Table {
     Entry** entries;
 } Table;
 
-int func_00130F40(Table* t, const char* name, int* out)
+int Game_FindNamedResource(Table* t, const char* name, int* out)
 {
     int i;
     for (i = 0; i < t->count; i++) {
@@ -148,7 +148,7 @@ extern AlObj_f3* D_00583878;
 #endif /* merge_units */
 #define D_00583878 (*(AlObj_f3 **)&D_00583878) /* merge_units */
 
-extern void func_00138DA0(AlNode_f3** out, int* list, AlNode_f3** it);
+extern void List_Erase(AlNode_f3** out, int* list, AlNode_f3** it);
 AlObj_f3* ActiveList_RemoveFirst(AlList_f3* l);
 }
 static inline void AlSetCurrent_f3(AlObj_f3* o)
@@ -176,7 +176,7 @@ AlObj_f3* ActiveList_RemoveFirst(AlList_f3* l)
     n = *hp;
     obj = n->obj;
     it[0] = n;
-    func_00138DA0(ret, &l->list, it);
+    List_Erase(ret, &l->list, it);
     obj->Deactivate(1);
     next = (*hp)->obj;
     if (next) {

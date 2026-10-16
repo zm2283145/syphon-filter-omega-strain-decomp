@@ -36,7 +36,7 @@ extern "C" void func_002CBAC0();
 extern "C" void Receiver_GetScriptTypeKey();
 extern "C" void Receiver_ScriptDispatch();
 extern void * const D_004DE180[];
-void func_002CB160(void* self);
+void FrontEnd_TeardownGui(void* self);
 #if 0 /* merge_units */
 void func_002CC520(void* m, int flags);
 #endif /* merge_units */
@@ -56,7 +56,7 @@ extern "C" ObjC480* func_002CC480(ObjC480* self, short deleteFlag)
         void* m;
         self->vtable = ((char*)D_004DE180);
         if (self->active)
-            func_002CB160(self);
+            FrontEnd_TeardownGui(self);
         m = self->member;
         if (m)
             func_002CC520(m, 0);

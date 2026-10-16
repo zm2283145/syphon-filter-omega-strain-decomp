@@ -4,7 +4,7 @@
 typedef struct { char* name; void* skel; } Pt2_SkelEnt;
 typedef struct Pt2_SkelNode { int pad; struct Pt2_SkelNode* next; Pt2_SkelEnt* e; } Pt2_SkelNode;
 extern char D_005429B0[];
-extern void func_0016E880(void*, void*);
+extern void List_Begin_16E880(void*, void*);
 extern void func_003AA270(void*, void*);
 extern void func_003AA240(void*, void*);
 extern void func_003AA230(void*, void*);
@@ -16,7 +16,7 @@ void* Skel_Find(void* list, char* name) {
     void* b[1];
     int t[1];
     Pt2_SkelNode* n;
-    func_0016E880(b, list);
+    List_Begin_16E880(b, list);
     func_003AA270(it, b[0]);
     for (n = it[0]; func_003AA240(t, list), func_003AA230(end, t), n != end[0]; n = n->next) {
         if (strcmp(n->e->name, name) == 0) return n->e->skel;

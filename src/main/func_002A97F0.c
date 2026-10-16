@@ -4,7 +4,7 @@ extern int func_00421480(int a, int b);
 extern char* func_00421430(int a, int b);
 extern void func_0041BEB0(void* w, char* text, int f);
 extern void func_002A96A0(S2A97F0* s, int f);
-extern int func_0033CF90(S2A97F0* s, int a, unsigned short b, int c, int d);
+extern int GuiScreen_HandleEvent(S2A97F0* s, int a, unsigned short b, int c, int d);
 int func_002A97F0(S2A97F0* s, int a, unsigned short b, int c, int d)
 {
     if (s->x90 == a && b == 0x13) {
@@ -16,5 +16,5 @@ int func_002A97F0(S2A97F0* s, int a, unsigned short b, int c, int d)
         func_002A96A0(s, 0);
         return 1;
     }
-    return func_0033CF90(s, a, b, c, d);
+    return GuiScreen_HandleEvent(s, a, b, c, d);
 }

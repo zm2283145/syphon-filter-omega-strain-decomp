@@ -1034,7 +1034,7 @@ typedef struct { char p[0xAC]; unsigned char bAC; } Man225CF0;
 typedef struct { char p[0x2C]; unsigned char kind; char p2D[3]; int stage; int id; } Ev225CF0;
 extern int D_005436B0;
 int* Event_GetType(void* ev);
-void func_00226200(); /* gsynth: defined below */
+void ObjectiveMgr_DrawOverlay(); /* gsynth: defined below */
 #if 0 /* merge_units */
 void ObjMan_StartStage(Man225CF0* m, int stage, int f);
 #endif /* merge_units */
@@ -1046,7 +1046,7 @@ unsigned char cObjectiveMan_v01(Man225CF0* self, Ev225CF0* ev)
     unsigned char r = 0;
     int t = *Event_GetType(ev);
     if (t == D_005436B0) {
-        if (self->bAC) func_00226200(self, 0);
+        if (self->bAC) ObjectiveMgr_DrawOverlay(self, 0);
         r = 1;
     } else {
         t = *Event_GetType(ev);
@@ -1235,7 +1235,7 @@ static inline void merge_flush_func_00225F00(void) {}
 
 /* merge_units: begin func_00225FA0 */
 #pragma push /* merge_units */
-int func_002270C0(void* a, void* b, void* c, unsigned char flag); /* gsynth: defined below */
+int ObjectiveMgr_GetCompleted(void* a, void* b, void* c, unsigned char flag); /* gsynth: defined below */
 typedef struct { char pad0[0xA4]; int cur; char pad1[0x1130-0xA8]; int counts[32]; int total; } ObjManD4;
 int ObjMan_GetTotalCount(ObjManD4* m); /* gsynth: defined below */
 typedef struct { void* vtable; char base[0x18]; int f1C; unsigned char b20; char p21[0xB]; unsigned char b2C; char p2D[3]; int f30; char p34[0x1C]; } Msg225FA0;
@@ -1271,9 +1271,9 @@ int ObjMan_GetTotalCount(void* s);
 #define ObjMan_GetTotalCount(a0) (ObjMan_GetTotalCount((void *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-int func_002270C0(void* s, int* buf, int n, int f);
+int ObjectiveMgr_GetCompleted(void* s, int* buf, int n, int f);
 #endif /* merge_units */
-#define func_002270C0(a0, a1, a2, a3) (func_002270C0((a0), (void *)(a1), (void *)(a2), (unsigned char)(a3))) /* merge_units */
+#define ObjectiveMgr_GetCompleted(a0, a1, a2, a3) (ObjectiveMgr_GetCompleted((a0), (void *)(a1), (void *)(a2), (unsigned char)(a3))) /* merge_units */
 
 void Objective_QueueThresholdVoice(int id, int f);
 void Actor_BuildVoiceKey(void* a, int v);
@@ -1305,7 +1305,7 @@ void Objective_Succeed(void* self, void* obj, Act225FA0* actor)
     Objective_SetCompleted(obj);
     total = ObjMan_GetTotalCount(ObjMan_GetService());
     half = total / 2;
-    n = func_002270C0(ObjMan_GetService(), buf, 0x14, 1);
+    n = ObjectiveMgr_GetCompleted(ObjMan_GetService(), buf, 0x14, 1);
     if (n == total) Objective_QueueThresholdVoice(0x17, 1);
     else if (n >= half && n - 1 < half) Objective_QueueThresholdVoice(0x16, 1);
     if (actor && actor->kind == D_0049D010) Actor_BuildVoiceKey(actor, 0xD);
@@ -1317,7 +1317,7 @@ void Objective_Succeed(void* self, void* obj, Act225FA0* actor)
 #undef cMessage_dtor /* merge_units */
 #undef ObjMan_GetService /* merge_units */
 #undef ObjMan_GetTotalCount /* merge_units */
-#undef func_002270C0 /* merge_units */
+#undef ObjectiveMgr_GetCompleted /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00225FA0(void) {}
 #pragma pop /* merge_units */
@@ -1457,21 +1457,21 @@ extern char D_004A5D08[];
 extern char D_004A5D30[];
 extern char D_004F7580[];
 extern char D_004F75A0[];
-extern FontMgr* func_001698C0(void);
-extern int func_0036A2F0(int font);
+extern FontMgr* App_GetInstance(void);
+extern int Font_GetLineHeight(int font);
 extern void* func_003D1020(void);
 extern void func_003D0EF0(void* ctx, char* text, int font, char* color, int x, int y);
 
 static inline int GetFont(signed char i)
 {
-    return *(int*)((char*)func_001698C0()->fonts + ((unsigned char)i << 2));
+    return *(int*)((char*)App_GetInstance()->fonts + ((unsigned char)i << 2));
 }
-extern void func_00226D60(ObjMgr* self, int* x, int* y, int* count, char* color);
-extern void func_002265F0();
-extern void func_002262F0();
-extern void func_00226910(ObjMgr* self, int* x, int* y, int* count, char* color);
+extern void ObjectiveMgr_DrawMissionSection(ObjMgr* self, int* x, int* y, int* count, char* color);
+extern void ObjectiveMgr_DrawCompletedSection();
+extern void ObjectiveMgr_DrawFailedSection();
+extern void ObjectiveMgr_DrawParametersSection(ObjMgr* self, int* x, int* y, int* count, char* color);
 
-void func_00226200(ObjMgr* self, char* color)
+void ObjectiveMgr_DrawOverlay(ObjMgr* self, char* color)
 {
     int y = 0x8C;
     int x = -0x69;
@@ -1480,14 +1480,14 @@ void func_00226200(ObjMgr* self, char* color)
     int font;
 
     font = GetFont(D_0048AB20);
-    step = func_0036A2F0(font) + 2;
-    func_00226D60(self, &x, &y, &count, color);
+    step = Font_GetLineHeight(font) + 2;
+    ObjectiveMgr_DrawMissionSection(self, &x, &y, &count, color);
     y -= step;
-    func_002265F0(self, &x, &y, &count, color);
+    ObjectiveMgr_DrawCompletedSection(self, &x, &y, &count, color);
     y -= step;
-    func_002262F0(self, &x, &y, &count, color);
+    ObjectiveMgr_DrawFailedSection(self, &x, &y, &count, color);
     y -= step;
-    func_00226910(self, &x, &y, &count, color);
+    ObjectiveMgr_DrawParametersSection(self, &x, &y, &count, color);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00226200(void) {}
@@ -1520,7 +1520,7 @@ typedef struct {
 extern char D_004A5D10[];
 extern char D_004F75B0[];
 
-void func_002262F0(ObjMgr_002262F0* self, int* x, int* y, int* count, char* color)
+void ObjectiveMgr_DrawFailedSection(ObjMgr_002262F0* self, int* x, int* y, int* count, char* color)
 {
     int titleFont;
     int font;
@@ -1531,7 +1531,7 @@ void func_002262F0(ObjMgr_002262F0* self, int* x, int* y, int* count, char* colo
 
     titleFont = GetFont(D_004F7560);
     font = GetFont(D_0048AB20);
-    step = func_0036A2F0(font) + 2;
+    step = Font_GetLineHeight(font) + 2;
     none = D_004A5D08;
     c = color ? color : D_004F7580;
     func_003D0EF0(func_003D1020(), D_004A5D10, titleFont, c, *x, *y);
@@ -1571,7 +1571,7 @@ static inline void merge_flush_func_002262F0(void) {}
 /* merge_units: begin func_002265F0 */
 #pragma push /* merge_units */
 /* Draws the objective list (state 1, kind != 5) with a heading; prints the placeholder when empty. */
-void func_002265F0(ObjMgr* self, int* x, int* y, int* count, char* color)
+void ObjectiveMgr_DrawCompletedSection(ObjMgr* self, int* x, int* y, int* count, char* color)
 {
     int titleFont;
     int font;
@@ -1582,7 +1582,7 @@ void func_002265F0(ObjMgr* self, int* x, int* y, int* count, char* color)
 
     titleFont = GetFont(D_004F7560);
     font = GetFont(D_0048AB20);
-    step = func_0036A2F0(font) + 2;
+    step = Font_GetLineHeight(font) + 2;
     none = D_004A5D08;
     c = color ? color : D_004F7580;
     func_003D0EF0(func_003D1020(), D_004A5D30, titleFont, c, *x, *y);
@@ -1644,7 +1644,7 @@ static inline int CountKind5(ObjMgr* self)
     }
     return n;
 }
-extern "C" void func_00226910(ObjMgr* self, int* x, int* y, int* count, char* color)
+extern "C" void ObjectiveMgr_DrawParametersSection(ObjMgr* self, int* x, int* y, int* count, char* color)
 {
     int titleFont;
     int font;
@@ -1655,7 +1655,7 @@ extern "C" void func_00226910(ObjMgr* self, int* x, int* y, int* count, char* co
 
     titleFont = GetFont(D_004F7560);
     font = GetFont(D_0048AB20);
-    step = func_0036A2F0(font) + 2;
+    step = Font_GetLineHeight(font) + 2;
     none = D_004A5D08;
     if (CountKind5(self) == 0)
         return;
@@ -1702,7 +1702,7 @@ extern "C" {
 extern char D_004A5D70[];
 }
 
-extern "C" void func_00226D60(ObjMgr* self, int* x, int* y, int* count, char* color)
+extern "C" void ObjectiveMgr_DrawMissionSection(ObjMgr* self, int* x, int* y, int* count, char* color)
 {
     int titleFont;
     int font;
@@ -1713,7 +1713,7 @@ extern "C" void func_00226D60(ObjMgr* self, int* x, int* y, int* count, char* co
 
     titleFont = GetFont(D_004F7560);
     font = GetFont(D_0048AB20);
-    step = func_0036A2F0(font) + 2;
+    step = Font_GetLineHeight(font) + 2;
     none = D_004A5D08;
     c = color ? color : D_004F7580;
     func_003D0EF0(func_003D1020(), D_004A5D70, titleFont, c, *x, *y);
@@ -1784,7 +1784,7 @@ extern int ObjMan_GatherObjectives(cObjectiveMan*, cObjective**, int, int, int, 
 #define ObjMan_GatherObjectives(a0, a1, a2, a3, a4, a5, a6, a7) (ObjMan_GatherObjectives((void *)(a0), (void *)(a1), (a2), (a3), (a4), (a5), (a6), (a7))) /* merge_units */
 
 
-int func_002270A0(cObjectiveMan* mgr, cObjective** out, int max) {
+int ObjectiveMgr_GetFailed(cObjectiveMan* mgr, cObjective** out, int max) {
     return ObjMan_GatherObjectives(mgr, out, max, 1, -1, -1, -1, 1);
 }
 #undef ObjMan_GatherObjectives /* merge_units */
@@ -1802,7 +1802,7 @@ extern int ObjMan_GatherObjectives(void* a, void* b, void* c, int d, int e, int 
 
 
 /* Wrapper: gathers objectives with a negated team mask and fixed defaults. */
-int func_002270C0(void* a, void* b, void* c, unsigned char flag) {
+int ObjectiveMgr_GetCompleted(void* a, void* b, void* c, unsigned char flag) {
     return ObjMan_GatherObjectives(a, b, c, 1, -1, -flag, 1, -1);
 }
 #undef ObjMan_GatherObjectives /* merge_units */
@@ -1819,11 +1819,11 @@ extern int ObjMan_GatherObjectives(cObjectiveMan*, cObjective**, int, int, int, 
 #define ObjMan_GatherObjectives(a0, a1, a2, a3, a4, a5, a6, a7) (ObjMan_GatherObjectives((void *)(a0), (void *)(a1), (a2), (a3), (a4), (a5), (a6), (a7))) /* merge_units */
 
 
-int func_002270E0(cObjectiveMan* mgr, cObjective** out, int max) {
+int ObjectiveMgr_GetOpenParameters(cObjectiveMan* mgr, cObjective** out, int max) {
     return ObjMan_GatherObjectives(mgr, out, max, 1, 0, 1, -1, -1);
 }
 
-int func_00227100(cObjectiveMan* mgr, cObjective** out, int max) {
+int ObjectiveMgr_GetOpenObjectives(cObjectiveMan* mgr, cObjective** out, int max) {
     return ObjMan_GatherObjectives(mgr, out, max, 1, 0, 0, -1, -1);
 }
 #undef ObjMan_GatherObjectives /* merge_units */
@@ -2138,24 +2138,24 @@ static inline void merge_flush_func_00227880(void) {}
 /* merge_units: begin func_002278D0 */
 #pragma push /* merge_units */
 typedef struct { float r, g, b, a; } ColorF;
-void func_00227A40(ColorF* out, int r, int g, int b, float a); /* gsynth: defined below */
+void ObjectiveColor_SetRgba(ColorF* out, int r, int g, int b, float a); /* gsynth: defined below */
 /*
  * Matched functions (byte-identical with the retail executable).
  * Script global: sets the failed objective text colour (16-byte colour record
- * at D_004F75B0) through the shared colour setter func_00227A40.
+ * at D_004F75B0) through the shared colour setter ObjectiveColor_SetRgba.
  */
 
 
 #if 0 /* merge_units */
-extern float func_00227A40(int, int, int, int, float);
+extern float ObjectiveColor_SetRgba(int, int, int, int, float);
 #endif /* merge_units */
-#define func_00227A40(a0, a1, a2, a3, a4) (func_00227A40((void *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
+#define ObjectiveColor_SetRgba(a0, a1, a2, a3, a4) (ObjectiveColor_SetRgba((void *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
 
 
 void Global_SetObjectiveFailColor(int r, int g, int b, float a) {
-    func_00227A40((int)D_004F75B0, r, g, b, a);
+    ObjectiveColor_SetRgba((int)D_004F75B0, r, g, b, a);
 }
-#undef func_00227A40 /* merge_units */
+#undef ObjectiveColor_SetRgba /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002278D0(void) {}
 #pragma pop /* merge_units */
@@ -2194,20 +2194,20 @@ static inline void merge_flush_func_002278F0(void) {}
 /*
  * Matched functions (byte-identical with the retail executable).
  * Script global: sets the completed objective text colour (16-byte colour record
- * at D_004F75A0) through the shared colour setter func_00227A40.
+ * at D_004F75A0) through the shared colour setter ObjectiveColor_SetRgba.
  */
 
 
 #if 0 /* merge_units */
-extern float func_00227A40(int, int, int, int, float);
+extern float ObjectiveColor_SetRgba(int, int, int, int, float);
 #endif /* merge_units */
-#define func_00227A40(a0, a1, a2, a3, a4) (func_00227A40((void *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
+#define ObjectiveColor_SetRgba(a0, a1, a2, a3, a4) (ObjectiveColor_SetRgba((void *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
 
 
 void Global_SetObjectiveSuccColor(int r, int g, int b, float a) {
-    func_00227A40((int)D_004F75A0, r, g, b, a);
+    ObjectiveColor_SetRgba((int)D_004F75A0, r, g, b, a);
 }
-#undef func_00227A40 /* merge_units */
+#undef ObjectiveColor_SetRgba /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00227940(void) {}
 #pragma pop /* merge_units */
@@ -2255,20 +2255,20 @@ static inline void merge_flush_func_00227960(void) {}
 /*
  * Matched functions (byte-identical with the retail executable).
  * Script global: sets the current objective text colour (16-byte colour record
- * at D_004F7590) through the shared colour setter func_00227A40.
+ * at D_004F7590) through the shared colour setter ObjectiveColor_SetRgba.
  */
 
 
 #if 0 /* merge_units */
-extern float func_00227A40(int, int, int, int, float);
+extern float ObjectiveColor_SetRgba(int, int, int, int, float);
 #endif /* merge_units */
-#define func_00227A40(a0, a1, a2, a3, a4) (func_00227A40((void *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
+#define ObjectiveColor_SetRgba(a0, a1, a2, a3, a4) (ObjectiveColor_SetRgba((void *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
 
 
 void Global_SetObjectiveCurrColor(int r, int g, int b, float a) {
-    func_00227A40((int)D_004F7590, r, g, b, a);
+    ObjectiveColor_SetRgba((int)D_004F7590, r, g, b, a);
 }
-#undef func_00227A40 /* merge_units */
+#undef ObjectiveColor_SetRgba /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002279B0(void) {}
 #pragma pop /* merge_units */
@@ -2310,20 +2310,20 @@ static inline void merge_flush_func_002279D0(void) {}
 /*
  * Matched functions (byte-identical with the retail executable).
  * Script global: sets the default objective text colour (16-byte colour record
- * at D_004F7580) through the shared colour setter func_00227A40.
+ * at D_004F7580) through the shared colour setter ObjectiveColor_SetRgba.
  */
 
 
 #if 0 /* merge_units */
-extern float func_00227A40(int, int, int, int, float);
+extern float ObjectiveColor_SetRgba(int, int, int, int, float);
 #endif /* merge_units */
-#define func_00227A40(a0, a1, a2, a3, a4) (func_00227A40((void *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
+#define ObjectiveColor_SetRgba(a0, a1, a2, a3, a4) (ObjectiveColor_SetRgba((void *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
 
 
 void Global_SetObjectiveColor(int r, int g, int b, float a) {
-    func_00227A40((int)D_004F7580, r, g, b, a);
+    ObjectiveColor_SetRgba((int)D_004F7580, r, g, b, a);
 }
-#undef func_00227A40 /* merge_units */
+#undef ObjectiveColor_SetRgba /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00227A20(void) {}
 #pragma pop /* merge_units */
@@ -2332,7 +2332,7 @@ static inline void merge_flush_func_00227A20(void) {}
 /* merge_units: begin func_00227A40 */
 #pragma push /* merge_units */
 /* Converts 0-255 integer RGB to floats in [0,1] and sets alpha. */
-void func_00227A40(ColorF* out, int r, int g, int b, float a)
+void ObjectiveColor_SetRgba(ColorF* out, int r, int g, int b, float a)
 {
     out->r = r / 255.0f;
     out->g = g / 255.0f;

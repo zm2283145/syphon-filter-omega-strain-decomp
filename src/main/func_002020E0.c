@@ -40,7 +40,7 @@ extern void* func_0018A700(void*, int);
 extern void MotionSelNode_Ctor(void*, void*, void*, void*);
 extern void* MotionRegistry_MakeKey(void*, void*);
 extern void MotionRegistry_Register(void*, void*, void*);
-extern void func_00200550(void*, int);
+extern void MotionNodeWrapper_Dtor(void*, int);
 extern void func_003B43C0(void*, void*, void*, int, int);
 /* Builds and registers one block of motion-graph nodes. */
 #pragma optimization_level 1
@@ -519,16 +519,16 @@ void func_002020E0(void* p0)
     func_001F3C70(&v1DF0, -1);
     MotionSelNode_Ctor(&s1DA0.m1DA8, CanonicalKey_Construct(&v380, "sliderLadderClimbUp_LeftHand"), p0, func_0018A700(&s1DA0.m1DB8, 3));
     MotionRegistry_Register(p0, MotionRegistry_MakeKey(&v3B0, "blendLadderClimbUp_LeftHand"), &s1DA0.m1DA8);
-    func_00200550(&s1DA0.m1DA8, -1);
+    MotionNodeWrapper_Dtor(&s1DA0.m1DA8, -1);
     MotionSelNode_Ctor(&v1D90, CanonicalKey_Construct(&v330, "sliderLadderClimbDown_LeftHand"), p0, func_0018A700(&s1DA0.m1DA0, 3));
     MotionRegistry_Register(p0, MotionRegistry_MakeKey(&v360, "blendLadderClimbDown_LeftHand"), &v1D90);
-    func_00200550(&v1D90, -1);
+    MotionNodeWrapper_Dtor(&v1D90, -1);
     MotionSelNode_Ctor(&s1D70.m1D78, CanonicalKey_Construct(&v2E0, "sliderLadderClimbUp_RightHand"), p0, func_0018A700(&s1D70.m1D88, 3));
     MotionRegistry_Register(p0, MotionRegistry_MakeKey(&v310, "blendLadderClimbUp_RightHand"), &s1D70.m1D78);
-    func_00200550(&s1D70.m1D78, -1);
+    MotionNodeWrapper_Dtor(&s1D70.m1D78, -1);
     MotionSelNode_Ctor(&v1D60, CanonicalKey_Construct(&v290, "sliderLadderClimbDown_RightHand"), p0, func_0018A700(&s1D70.m1D70, 3));
     MotionRegistry_Register(p0, MotionRegistry_MakeKey(&v2C0, "blendLadderClimbDown_RightHand"), &v1D60);
-    func_00200550(&v1D60, -1);
+    MotionNodeWrapper_Dtor(&v1D60, -1);
     func_003B41E0(&v1D0, CanonicalKey_Construct(&v230, "slide_down_ladder"), p0, 0, 0, func_0017DE50(&v220, 0.0f, 0.0f, 0.0f), -1, 3, 0, 0.0f, 1e+03f);
     MotionSlider_RegisterNode(&v2044, p0, CanonicalKey_Construct(&v260, "animLadderSlideSlow"), &v1D0);
     func_003B28F0(&v1D0, -1);

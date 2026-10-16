@@ -30,7 +30,7 @@ extern char D_004FFB50[];
 extern char D_004DAE30[];
 extern char D_004A79A8[];
 void func_0036E5D0(void* m);
-void func_0036E220(void* part, int flags);
+void FileMan_Release(void* part, int flags);
 void cMessage_dtor(void* msg, int flags);
 void Event_Send(void* msg, void* target, int flags);
 void SoundAction_CtorVoice(void* action, int kind, char* name, int a, int b);
@@ -38,7 +38,7 @@ void EffectMsg_WrapRequest(Msg_2517D0* msg, void* action);
 }
 #pragma push
 #pragma opt_propagation off
-extern "C" void func_002517D0(Self_2517D0* s)
+extern "C" void PickupMenu_CursorNext(Self_2517D0* s)
 {
     if (s->cur + 1 < s->count) {
         Act_2517D0 act;
@@ -68,12 +68,12 @@ extern "C" void func_002517D0(Self_2517D0* s)
         m.flag = 1;
         Event_Send(&m, D_004FFB50, 1);
         m.vtbl = D_004DAE30;
-        func_0036E220(m.partB, -1);
-        func_0036E220(m.partA, -1);
+        FileMan_Release(m.partB, -1);
+        FileMan_Release(m.partA, -1);
         cMessage_dtor(&m, 0);
         s->cur++;
-        func_0036E220(pb, -1);
-        func_0036E220(pa, -1);
+        FileMan_Release(pb, -1);
+        FileMan_Release(pa, -1);
     }
 }
 #pragma pop

@@ -7,17 +7,17 @@ extern unsigned char D_005721C8;
 extern char D_0051EE48[];
 extern char D_004DE0F0[];
 extern int Loc_LookupText(char* key);
-extern void func_00242FA0(int a0, int* a1, float f0, float f1, int text, int a3, signed char c0, signed char c1);
+extern void Hud_ShowCallout(int a0, int* a1, float f0, float f1, int text, int a3, signed char c0, signed char c1);
 extern void Event_Construct(Msg_242E40* m, void* type);
 extern char* strncpy(char*, const char*, int);
 extern void Transport_Send(int a, Msg_242E40* m, int b, int c);
 extern void cMessage_dtor(Msg_242E40* m, int f);
 
-void func_00242E40(int a0, int* a1, float f0, float f1, char* key, int a3, signed char c0, signed char c1, int send)
+void Hud_SetCalloutLabel(int a0, int* a1, float f0, float f1, char* key, int a3, signed char c0, signed char c1, int send)
 {
     int text = Loc_LookupText(key);
     if (text) {
-        func_00242FA0(a0, a1, f0, f1, text, a3, c0, c1);
+        Hud_ShowCallout(a0, a1, f0, f1, text, a3, c0, c1);
         if (D_005721C8 && send) {
             Msg_242E40 m;
             Msg_242E40* p = &m;

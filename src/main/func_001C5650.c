@@ -7,7 +7,7 @@
 #include "types.h"
 #include "loose00_types.h"
 
-/* Accessors of the object built by func_001C5950. */
+/* Accessors of the object built by ParticleGob_Create. */
 void func_001C5650(UnkGobj001C5950* self) {
     self->base.unk2C = 1;
 }

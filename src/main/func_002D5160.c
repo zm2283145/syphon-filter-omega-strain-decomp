@@ -38,7 +38,7 @@ struct FMsg : CMsg { unsigned char b24; char p25[3]; int x28;
 extern "C" {
 
 Obj* Object_LookupById(int*);
-Ctl* func_00158540(Self*);
+Ctl* AiController_GetActor(Self*);
 int Weapon_CanAttack(Inv*);
 void func_002D4E70(Self*, Obj*);
 float Vec4_GetX(V4*);
@@ -113,7 +113,7 @@ static inline float Len(V4* a) {
 static inline const V4* Ad(const V4& v) { return &v; }
 static inline const M4* AdM(const M4& v) { return &v; }
 static inline void SetT(M4* m, const V4& v) { V4_Copy(&m->r[3], &v); }
-static inline void SetTgtPos(Self* s, const V4& v) { Tgt* t2 = func_00158540(s)->tgt; t2->px = v.x; t2->py = v.y; t2->pz = v.z; }
+static inline void SetTgtPos(Self* s, const V4& v) { Tgt* t2 = AiController_GetActor(s)->tgt; t2->px = v.x; t2->py = v.y; t2->pz = v.z; }
 inline V4& V4::operator-=(const V4& o) { V4* d = this; V4* a = this; Sub(d, a, (V4*)&o); return *this; }
 static inline bool Idle(Obj* o) { return !(o->b2E != 0); }
 static inline bool Active(Obj* o) { bool b = 0; bool a = 0; if (o->b2D && o->b2C) a = 1; if (a && Idle(o)) b = 1; return b; }
@@ -162,20 +162,20 @@ extern "C" void func_002D5160(Self* self, float dt)
         o = tgt;
         if (!self->flag->on || (tgt && !Active(tgt)) || Dying(self->obj)) o = 0;
         c = self->ref->c;
-        self->f60(o, CurId(func_00158540(self)->inv), c);
+        self->f60(o, CurId(AiController_GetActor(self)->inv), c);
     }
     if (!Dying(self->obj)) {
-        if (Weapon_CanAttack(func_00158540(self)->inv)) {
+        if (Weapon_CanAttack(AiController_GetActor(self)->inv)) {
             if (self->f88 > 0.0f) self->f88 -= dt;
             if (self->f84 > 0.0f) self->f84 -= dt;
         }
         func_002D4E70(self, tgt);
-        if (func_00158540(self)->tgt) {
+        if (AiController_GetActor(self)->tgt) {
             Tgt* t;
             float base;
             Ctl* ctl;
             len = 0.0f;
-            t = func_00158540(self)->tgt;
+            t = AiController_GetActor(self)->tgt;
             pos.x = t->px;
             pos.y = t->py;
             pos.z = t->pz;
@@ -185,7 +185,7 @@ extern "C" void func_002D5160(Self* self, float dt)
             if (!IsZero(&diff)) Normalize(&len, &diff);
             if (self->bf2) {
                 if (self->node) {
-                    float ang = func_00158540(self)->tgt->ang;
+                    float ang = AiController_GetActor(self)->tgt->ang;
                     Msg* m;
                     MakeRot(&mtx, CV(0.0f, 0.0f, 1.0f), ang);
                     SetT(&mtx, Node_GetTranslation(self->node));
@@ -210,9 +210,9 @@ extern "C" void func_002D5160(Self* self, float dt)
                 NpcAi_ModeFollow(self, (FMsg*)&(const FMsg&)FMsg());
             } else {
                 self->b1EE = 0;
-                if (len > 4.0f && func_00158540(self)->x320C != 0x10 && (self->obj->x38 == 0x80 || HasReady(func_00158540(self)))) {
+                if (len > 4.0f && AiController_GetActor(self)->x320C != 0x10 && (self->obj->x38 == 0x80 || HasReady(AiController_GetActor(self)))) {
                     Msg* m2;
-                    Tgt* t3 = func_00158540(self)->tgt;
+                    Tgt* t3 = AiController_GetActor(self)->tgt;
                     p2.x = t3->px;
                     p2.y = t3->py;
                     p2.z = t3->pz;
@@ -243,7 +243,7 @@ extern "C" void func_002D5160(Self* self, float dt)
                     }
                 }
             }
-            ctl = func_00158540(self);
+            ctl = AiController_GetActor(self);
             base = ctl->tgt ? ctl->tgt->f3C : ctl->f30E0;
             if (self->b1EE == 1) {
                 if (self->f200 < base) self->f200 = base;
@@ -256,7 +256,7 @@ extern "C" void func_002D5160(Self* self, float dt)
             } else {
                 self->f200 = base;
             }
-            if (self->x150 == 0 && !((func_00158540(self)->x3210 >> 22) & 1)) {
+            if (self->x150 == 0 && !((AiController_GetActor(self)->x3210 >> 22) & 1)) {
                 if (self->b158 == 0 && !(self->node && NodeActive(self->node))) {
                     if (self->f204 > 1.0f) {
                         self->obj->f60(1);
@@ -287,17 +287,17 @@ extern "C" void func_002D5160(Self* self, float dt)
                 NpcThinkList_RemoveActor(self->obj);
                 NpcAi_AddToDeadList(D_004EA370, &self);
             }
-        } else if (func_00158540(self) && func_00158540(self)->tgt) {
-            Tgt* t4 = func_00158540(self)->tgt;
+        } else if (AiController_GetActor(self) && AiController_GetActor(self)->tgt) {
+            Tgt* t4 = AiController_GetActor(self)->tgt;
             pos3.x = t4->px;
             pos3.y = t4->py;
             pos3.z = t4->pz;
             V4_Copy(&diff3, &pos3);
             diff3 -= self->obj->Mtx().T();
             diff3.w = 1.0f;
-            if (Len(&diff3) > 4.0f && self->obj->x38 == 0x80 && !((func_00158540(self)->x3210 >> 22) & 1)) {
+            if (Len(&diff3) > 4.0f && self->obj->x38 == 0x80 && !((AiController_GetActor(self)->x3210 >> 22) & 1)) {
                 Msg* m4;
-                Tgt* t5 = func_00158540(self)->tgt;
+                Tgt* t5 = AiController_GetActor(self)->tgt;
                 p4.x = t5->px;
                 p4.y = t5->py;
                 p4.z = t5->pz;

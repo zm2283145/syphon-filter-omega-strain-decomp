@@ -23,14 +23,14 @@ int sprintf(void *, const void *, ...);
 /* merge_units: begin func_0023C100 */
 #pragma push /* merge_units */
 typedef struct B5hObj { char pad[0x94]; struct B5hObj* next; } B5hObj;
-extern void func_0023C010(B5hObj* o);
+extern void NiEvent_SetTreePresence(B5hObj* o);
 void cNIEventOBJ_v15(B5hObj* o) {
     B5hObj* n = o->next;
     while (n) {
         o = n;
         n = n->next;
     }
-    func_0023C010(o);
+    NiEvent_SetTreePresence(o);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0023C100(void) {}
@@ -152,7 +152,7 @@ struct Self_23C1C0 {
 extern "C" {
 extern char D_004A6FA8[];
 void* Mem_Alloc(int pool, int size, char* file, int line);
-Tgt_23C1C0* func_001C5950(void* p, int* desc, int v);
+Tgt_23C1C0* ParticleGob_Create(void* p, int* desc, int v);
 }
 extern "C" void NiEvent_LoadParticleAsset(Self_23C1C0* self, Pop_23C1C0* r)
 {
@@ -168,7 +168,7 @@ extern "C" void NiEvent_LoadParticleAsset(Self_23C1C0* self, Pop_23C1C0* r)
     }
     if (t) {
         zero = 0;
-        t = func_001C5950(t, &zero, -1);
+        t = ParticleGob_Create(t, &zero, -1);
     }
     self->tgt = t;
     self->tgt->SetXform(x);
@@ -227,12 +227,12 @@ static inline char* ReadStr_23C3C0(Pop_23C3C0* r)
 extern "C" {
 extern char D_004FFB50[];
 void func_0036E5D0(Obj_23C3C0* o);
-void func_0036E220(Obj_23C3C0* o, int f);
+void FileMan_Release(Obj_23C3C0* o, int f);
 void Hog_Register(Obj_23C3C0* o, char* path, int a, int b);
-int func_0036DEF0(Obj_23C3C0* o);
+int FileMan_FindMember(Obj_23C3C0* o);
 void func_0036DEC0(Obj_23C3C0* o);
 int func_00131010(char* mgr, char* name, char* buf, int* out);
-void func_00130F40(char* mgr, char* buf, int* out);
+void Game_FindNamedResource(char* mgr, char* buf, int* out);
 void func_00130D10(char* mgr, Tgt_23C3C0* t, char* name, char* buf);
 void* cVUM_GOBJ_ctor2(void* p, const D_23C3C0& d);
 }
@@ -248,12 +248,12 @@ extern "C" void NiEvent_LoadModelAsset(Self_23C3C0* self, int mode, Pop_23C3C0* 
     name = ReadStr_23C3C0(r);
     sprintf(buf, "%s.HOG", id);
     Hog_Register(&obj, buf, mode, 1);
-    if (!(unsigned char)func_0036DEF0(&obj)) {
+    if (!(unsigned char)FileMan_FindMember(&obj)) {
         unsigned char found;
         a = 0;
         b = 0;
         found = func_00131010(D_004FFB50, name, buf, &a);
-        func_00130F40(D_004FFB50, buf, &b);
+        Game_FindNamedResource(D_004FFB50, buf, &b);
         self->tgt = NewTgt_23C3C0();
         self->tgt->owner = self;
         if (!found) {
@@ -267,7 +267,7 @@ extern "C" void NiEvent_LoadModelAsset(Self_23C3C0* self, int mode, Pop_23C3C0* 
     } else {
         self->tgt = 0;
     }
-    func_0036E220(&obj, -1);
+    FileMan_Release(&obj, -1);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0023C3C0(void) {}

@@ -16,7 +16,7 @@ typedef struct F8Root { char pad0[0xA0]; unsigned char dirty; char padA1[0xF]; s
 extern F8RootW* Root_Identity(void* self);
 extern int Root_GetParent(F8Root* r);
 extern void Root_RefreshWorldCache(F8Root* r);
-extern Vec4* func_001325F0(Vec4* d, Vec4* s);
+extern Vec4* Quat_Assign(Vec4* d, Vec4* s);
 extern Vec4* Vec4_Copy(Vec4* d, Vec4* s);
 extern void* Placement_GetQuat(F8Plc* p);
 extern void* Placement_GetPosition(F8Plc* p);
@@ -28,7 +28,7 @@ extern void func_00132510(F8RootW* w, void* pos);
 
 static inline void F8PlcCopy(F8Plc* d, F8Plc* s)
 {
-    func_001325F0(&d->q, &s->q);
+    Quat_Assign(&d->q, &s->q);
     Vec4_Copy(&d->pos, &s->pos);
 }
 F8RootW* Root_GetWorldPlacement(F8Root* r)

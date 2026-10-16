@@ -55,7 +55,7 @@ Svc* Service_Lookup(void* a, void* b);
 void Event_Construct(void* m, void* type);
 void cMessage_dtor(void* m, int flags);
 void func_00244960(char* h, float f);
-void func_00244580(char* h, V* a, V* b);
+void Hud_ShowThrowMarker(char* h, V* a, V* b);
 Item* WeaponInv_GetHeldItem(int inv);
 }
 extern "C" unsigned char func_002497C0(V* out, Obj* obj, Plr* p)
@@ -100,7 +100,7 @@ extern "C" unsigned char func_002497C0(V* out, Obj* obj, Plr* p)
         *out = b;
         d = -m.r1;
     }
-    func_00244580(hud, out, &d);
+    Hud_ShowThrowMarker(hud, out, &d);
     msg.vt = D_004D9180;
     cMessage_dtor(&msg, 0);
     return r;
@@ -128,13 +128,13 @@ extern char D_004A75B8[];
 float Weapon_GetHeldRange(Wpn_249B10* w);
 float Flashlight_BeamProbe(Pl_249B10* p, Probe_249B10* pr, int n);
 int TeamTable_AreEnemies(Pl_249B10* p, Hit_249B10* h);
-void func_002449D0(char* h);
-void func_002449A0(char* h);
+void Hud_ShowNoFire(char* h);
+void Hud_HideNoFire(char* h);
 int Loc_LookupText(char* key);
-void func_00242FA0(char* a0, int* a1, float f0, float f1, int text, int a3, signed char c0, signed char c1);
+void Hud_ShowCallout(char* a0, int* a1, float f0, float f1, int text, int a3, signed char c0, signed char c1);
 }
 static inline bool IsKind23(Hit_249B10* h) { unsigned char k = h->Kind(); return k == 2 || k == 3; }
-extern "C" Hit_249B10* func_00249B10(int a0, int a1, Pl_249B10* p)
+extern "C" Hit_249B10* PlayerInput_AimViewLock(int a0, int a1, Pl_249B10* p)
 {
     Probe_249B10 pr;
     Mat_249B10 m;
@@ -156,9 +156,9 @@ extern "C" Hit_249B10* func_00249B10(int a0, int a1, Pl_249B10* p)
     r = Flashlight_BeamProbe(p, &pr, 0x10);
     if (pr.hit && !TeamTable_AreEnemies(p, pr.hit)) {
         pr.kind = 0;
-        func_002449D0(D_004FFC2C);
+        Hud_ShowNoFire(D_004FFC2C);
     } else {
-        func_002449A0(D_004FFC2C);
+        Hud_HideNoFire(D_004FFC2C);
     }
     show = pr.kind == 2 && !IsKind23(pr.hit);
     h = D_004FFC2C;
@@ -168,7 +168,7 @@ extern "C" Hit_249B10* func_00249B10(int a0, int a1, Pl_249B10* p)
         func_00244960(h, 0.0f);
     if (show) {
         int* idp = &((HitData_249B10*)pr.hit)->id;
-        func_00242FA0(h, idp, 0.1f, 1.0f, Loc_LookupText(D_004A75B8), 0, 0, 0);
+        Hud_ShowCallout(h, idp, 0.1f, 1.0f, Loc_LookupText(D_004A75B8), 0, 0, 0);
     }
     p->wpn->beam = r;
     return pr.hit;

@@ -16,7 +16,7 @@ int Mem_Free();
 
 /* merge_units: begin func_001642E0 */
 #pragma push /* merge_units */
-extern int func_00138DA0(int, int, int);
+extern int List_Erase(int, int, int);
 
 int NpcRouteMgr_TakeFreeRequest(int a0) {
     int loc[2];
@@ -33,7 +33,7 @@ int NpcRouteMgr_TakeFreeRequest(int a0) {
     s0 = *(int*)((char*)v0 + 8);
     a0 = (int)((char*)loc + 4);
     *(int*)(char*)loc = v0;
-    v0 = func_00138DA0(a0, a1, a2);
+    v0 = List_Erase(a0, a1, a2);
 L00164318:;
     v0 = s0;
     goto ret;

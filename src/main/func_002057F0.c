@@ -35,7 +35,7 @@ extern Pair* func_0018A700(Pair* p, int a);
 extern SelNode* MotionSelNode_Ctor(SelNode* s, Name* n, void* obj, Pair* p);
 extern RegKey* MotionRegistry_MakeKey(RegKey* k, const char* s);
 extern void MotionRegistry_Register(void* obj, RegKey* k, SelNode* s);
-extern void func_00200550(SelNode* s, int flags);
+extern void MotionNodeWrapper_Dtor(SelNode* s, int flags);
 /* Registers the turn bindings and the turn slider of a motion graph. */
 #pragma optimization_level 1
 void func_002057F0(void* obj)
@@ -75,6 +75,6 @@ void func_002057F0(void* obj)
     func_001F3C70(&s.list, -1);
     MotionSelNode_Ctor(&s.sp.n, CanonicalKey_Construct(&n13, "sliderRollBack"), obj, func_0018A700(&s.sp.p, 2));
     MotionRegistry_Register(obj, MotionRegistry_MakeKey(&key, "RollBack"), &s.sp.n);
-    func_00200550(&s.sp.n, -1);
+    MotionNodeWrapper_Dtor(&s.sp.n, -1);
 }
 #pragma optimization_level reset

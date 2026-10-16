@@ -42,7 +42,7 @@ typedef struct {
     int pad30[4];
 } TP_00166690;
 
-void func_00166690(void *fn) {
+void LoadingScreen_StartThread(void *fn) {
     TP_00166690 tp;
     int size;
     int mem;
@@ -82,7 +82,7 @@ extern int D_004EE4C8;
 extern int D_004EE4F8;
 int iWakeupThread(int);
 
-int func_001667C0(int cause) {
+int LoadingScreen_VblankHandler(int cause) {
     D_004EE4C8 += 1;
     if (D_0048A030 != -1) {
         if (D_004EE4F8 == 0) {

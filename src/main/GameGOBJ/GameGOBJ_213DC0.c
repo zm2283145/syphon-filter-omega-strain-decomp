@@ -33,7 +33,7 @@ extern void Event_Construct(LdMsg_f3* m, void* type);
 extern void Event_Send(void* m, void* target, int immediate);
 extern void cMessage_dtor(void* m, int flags);
 extern void SoundEvent_CtorFromPreset(LdSnd_f3* e, void* preset, Lift_f3* l);
-extern void func_0036E220(LdStr_f3* s, int flag);
+extern void FileMan_Release(LdStr_f3* s, int flag);
 unsigned char Lift_OpenDoors(Lift_f3* l)
 {
     LdSnd_f3 ev;
@@ -54,8 +54,8 @@ unsigned char Lift_OpenDoors(Lift_f3* l)
         ev.flag = 1;
         Event_Send(&ev, D_004FFB50, 1);
         ev.vt = D_004DAE30;
-        func_0036E220(&ev.s114, -1);
-        func_0036E220(&ev.s78, -1);
+        FileMan_Release(&ev.s114, -1);
+        FileMan_Release(&ev.s78, -1);
         cMessage_dtor(&ev, 0);
     } else {
         r = 1;

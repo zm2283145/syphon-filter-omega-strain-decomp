@@ -23,7 +23,7 @@ extern "C" {}typedef struct LNode_9D00 { struct LNode_9D00* prev; struct LNode_9
 struct LIt_9D00 { LNode_9D00* node; LIt_9D00() {} };
 extern "C" {
 extern char D_005838D8[];
-LIt_9D00 func_0013B180(void* list);
+LIt_9D00 List_Begin(void* list);
 void func_00438E10(LIt_9D00* r, const LIt_9D00& s);
 LIt_9D00 func_00438E00(void* list);
 void func_00438DF0(LIt_9D00* r, const LIt_9D00& s);
@@ -41,7 +41,7 @@ extern "C" void func_00439D00(void* self, int* key, int owner)
         LIt_9D00 it;
         int o; if (owner >= 0) o = owner; else o = 0xF;
         LNode_9D00* n;
-        func_00438E10(&it, func_0013B180(D_005838D8));
+        func_00438E10(&it, List_Begin(D_005838D8));
         n = it.node;
         while (func_00438DF0(&end, func_00438E00(D_005838D8)), n != end.node) {
             NetOwnEnt* d = n->data;

@@ -10,7 +10,7 @@ extern int D_004EA048;
 extern char D_0049A950[];
 extern char D_0049A890[];
 extern int func_001C94D0(int, int);
-extern void func_001C9540(int, int, int);
+extern void SoundMgr_SetChannelVolume(int, int, int);
 extern void func_0036B250(int);
 extern void func_0036B3B0(int, int, int);
 extern void func_0036E5D0(H130*);
@@ -23,14 +23,14 @@ extern void func_003F7FB0(int);
 extern void func_003F7FA0(int);
 extern void* Mem_Alloc(int, int, char*, int);
 extern void* func_003F9380(void*, H130*, unsigned char);
-extern void func_0036E220(H130*, int);
+extern void FileMan_Release(H130*, int);
 }
 extern "C" void func_00130520(O130* o, void* name, unsigned char flag) {
     int svc;
     if (!o->b61) return;
     svc = Service_Lookup(o, D_004F2CC0);
     D_004EA048 = func_001C94D0(svc, 2);
-    func_001C9540(svc, 2, 0x400);
+    SoundMgr_SetChannelVolume(svc, 2, 0x400);
     if (!o->fb0) {
         H130 hog;
         int lang;
@@ -72,6 +72,6 @@ extern "C" void func_00130520(O130* o, void* name, unsigned char flag) {
         }
         if (p) p = func_003F9380(p, &hog, sel);
         o->fb0 = p;
-        func_0036E220(&hog, -1);
+        FileMan_Release(&hog, -1);
     }
 }

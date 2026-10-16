@@ -26,13 +26,13 @@ extern char D_00537F80[];
 extern Mtx4 D_005390F0;
 extern Mtx4 D_005390B0;
 extern void Renderer_UpdateCameraMatrices(void* r);
-extern void func_00374DF0(Cam* c);
+extern void Renderer_RefreshCamera(Cam* c);
 extern void* func_00375C30(void* q, int a, int b, int n, int c, int d);
 }
 typedef struct { char pad[0x150]; __int128 q150; } Obj7C70;
 static inline Cam* CurCam() { return (Cam*)(D_005381F0 + D_00538C60 * 0x110 + 0x1F0); }
-static inline __int128* CamQ(Cam* c) { func_00374DF0(c); if (c->useA) return &c->qB0; return &c->qD0; }
-static inline float* CamMtx(Cam* c) { func_00374DF0(c); if (c->useA) return c->mA; return c->mB; }
+static inline __int128* CamQ(Cam* c) { Renderer_RefreshCamera(c); if (c->useA) return &c->qB0; return &c->qD0; }
+static inline float* CamMtx(Cam* c) { Renderer_RefreshCamera(c); if (c->useA) return c->mA; return c->mB; }
 
 /* Refreshes camera matrices and uploads view/projection matrices, camera vectors, the object's
    vector at +0x150 and the viewport scale as a 14-qword VU packet. */
@@ -42,8 +42,8 @@ extern "C" void func_00377C70(Obj7C70* o) {
     Renderer_UpdateCameraMatrices(D_005381F0);
     Mtx4* proj = &D_005390B0;
     Cam* c;
-    c = CurCam(); func_00374DF0(c); __int128* p90 = &c->q90;
-    c = CurCam(); func_00374DF0(c); __int128* pA0 = &c->qA0;
+    c = CurCam(); Renderer_RefreshCamera(c); __int128* p90 = &c->q90;
+    c = CurCam(); Renderer_RefreshCamera(c); __int128* pA0 = &c->qA0;
     __int128* pB0 = CamQ(CurCam());
     V4f k = D_00493320;
     float wa = D_00538258[D_00538278];

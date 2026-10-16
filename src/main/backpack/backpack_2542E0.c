@@ -130,7 +130,7 @@ extern char D_004DCF10[];
 int* Event_GetType(void* ev);
 Obj_00254600* Object_LookupById(int* id);
 void Transport_Send(int target, Msg_00254600* msg, int a, int b);
-void func_001762C0(Ctl_00254600* c, Bp_00254600* b);
+void Player_HandlePickupTrigger(Ctl_00254600* c, Bp_00254600* b);
 int Object_HandleMessage(Bp_00254600* b, Ev_00254600* ev);
 }
 extern "C" int cBackpack_v01(Bp_00254600* bp, Ev_00254600* ev)
@@ -143,7 +143,7 @@ extern "C" int cBackpack_v01(Bp_00254600* bp, Ev_00254600* ev)
             int who = c->GetId();
             if (bp->b2F3 || bp->owner == who) {
                 if (bp->f314 < 0.0f) {
-                    func_001762C0(c, bp);
+                    Player_HandlePickupTrigger(c, bp);
                 }
             } else {
                 if (D_005721C8) {

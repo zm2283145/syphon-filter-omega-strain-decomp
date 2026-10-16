@@ -78,7 +78,7 @@ int func_0036D880(S36D880* o)
 #pragma push /* merge_units */
 typedef struct { unsigned int flags; char pad[0x94]; char* a98; } S36D8E0;
 extern int FileHal_PollRead(char* p);
-int func_0036D8E0(S36D8E0* o)
+int FileMan_PollRead(S36D8E0* o)
 {
     int r = 1;
     if (o->flags & 4) {
@@ -98,7 +98,7 @@ extern int func_0036CAC0(void* target, int id, int value, int flag);
 typedef struct { unsigned int flags; char pad[0x80]; short id; char pad2[0x12]; void* target; } Obj;
 
 /* If flag bit 1 is set, forwards *value to the target and returns true. */
-unsigned char func_0036D950(Obj* self, int* value)
+unsigned char FileMan_ReadMember(Obj* self, int* value)
 {
     unsigned char result = 0;
     if (self->flags & 2) {
@@ -122,14 +122,14 @@ int func_0036CAC0(void* f, int idx, void* buf, int off);
 #endif /* merge_units */
 #define func_0036CAC0(a0, a1, a2, a3) (func_0036CAC0((a0), (a1), (int)(a2), (a3))) /* merge_units */
 
-int func_0036D380(void* f, int idx);
+int Hog_GetEntrySize(void* f, int idx);
 char* func_0036D4E0(void* f, int idx);
 }
 static inline char* Get(H36D990* h) { return h->p8 ? h->p8 : h->p0; }
 static inline int GetSize(S36D990* o)
 {
     unsigned int f = o->flags;
-    if (f & 2) return func_0036D380(o->a98, o->idx);
+    if (f & 2) return Hog_GetEntrySize(o->a98, o->idx);
     if (f & 1) return (*(int*)(o->a98 + 0x2C) / 0x800) * 0x800 + 0x800;
     return 0;
 }
@@ -138,7 +138,7 @@ static inline void* Alloc36D990(int size, int line)
     AllocGuard g;
     return Mem_Alloc(0, size, D_004BBF90, line);
 }
-extern "C" int func_0036D990(S36D990* o, char** out, int size)
+extern "C" int FileMan_LoadMemberSync(S36D990* o, char** out, int size)
 {
     unsigned int f;
     int err;
@@ -250,21 +250,21 @@ extern "C" int func_0036DDC0(FME_36DDC0* f)
 #pragma push /* merge_units */
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #if 0 /* merge_units */
-int func_0036D380(int, int);
+int Hog_GetEntrySize(int, int);
 #endif /* merge_units */
-#define func_0036D380(a0, a1) (func_0036D380((void *)(a0), (a1))) /* merge_units */
+#define Hog_GetEntrySize(a0, a1) (Hog_GetEntrySize((void *)(a0), (a1))) /* merge_units */
 
 int FileMan_GetSize(char * arg0) {
     int f = F_(arg0, 0x0, int);
     if (f & 2) {
-        return func_0036D380(F_(arg0, 0x98, int), F_(arg0, 0x84, short));
+        return Hog_GetEntrySize(F_(arg0, 0x98, int), F_(arg0, 0x84, short));
     }
     if (f & 1) {
         return (F_(F_(arg0, 0x98, int), 0x2C, int) / 0x800) * 0x800 + 0x800;
     }
     return 0;
 }
-#undef func_0036D380 /* merge_units */
+#undef Hog_GetEntrySize /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0036DE50 */
 
@@ -299,7 +299,7 @@ extern int func_0036D680(X36DEF0* x);
 #define func_0036D680(a0) ((int)func_0036D680((void *)(a0))) /* merge_units */
 
 /* Polls the stream state: 1 idle, 2 not ready, 3 failed open, 0 opened, 5 nothing to do. */
-int func_0036DEF0(X36DEF0* x)
+int FileMan_FindMember(X36DEF0* x)
 {
     if (x->flags == 0) return 1;
     if (x->flags & 2) {
@@ -416,7 +416,7 @@ void FileHal_Dtor(void* p, int n);
 void operator_delete(void* p);
 }
 typedef struct { int flags; char pad4[0x94]; void* p98; } F8Obj_36E;
-extern "C" F8Obj_36E* func_0036E220(F8Obj_36E* o, short del)
+extern "C" F8Obj_36E* FileMan_Release(F8Obj_36E* o, short del)
 {
     if (o) {
         if (o->flags & 0x10) {

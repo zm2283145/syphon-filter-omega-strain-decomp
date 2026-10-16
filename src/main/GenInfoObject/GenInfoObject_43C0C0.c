@@ -64,12 +64,12 @@ extern int D_0053923C;
 extern TexMan* D_00539248;
 extern int D_005392D0;
 void func_0041E470(Self* self);
-void func_003820E0(TexMan* m, int idx);
+void Renderer_BindTexture(TexMan* m, int idx);
 void func_0025CD10(char* r);
 void func_0025CA40(char* r);
 void Vec4_Copy(void* d, const void* s);
-void func_0025C9D0(void* out, const void* in);
-float func_0025F220(void);
+void GuiBatch_AddVertexColor(void* out, const void* in);
+float GuiBatch_AddVertexUV(void);
 V4* func_00132000(V4* o, float x, float y, float z, float w);
 void func_00370550(char* r);
 }
@@ -90,9 +90,9 @@ static inline void Emit(const V4& pos, const V4& col, const V4c& uv)
     func_0025CA40(D_005381F0);
     e = EntAt(D_00539210);
     Vec4_Copy(e->pos + (D_00539224 - 1) * 16, &pos);
-    func_0025C9D0(e->c30 + (D_00539224 - 1) * 16, &col);
-    u = uv.x + func_0025F220();
-    Vec4_Copy(e->c34 + (D_00539224 - 1) * 16, func_00132000(&tmp, u, uv.y + func_0025F220(), uv.z, uv.w));
+    GuiBatch_AddVertexColor(e->c30 + (D_00539224 - 1) * 16, &col);
+    u = uv.x + GuiBatch_AddVertexUV();
+    Vec4_Copy(e->c34 + (D_00539224 - 1) * 16, func_00132000(&tmp, u, uv.y + GuiBatch_AddVertexUV(), uv.z, uv.w));
     D_005381F8 = 6LL << 32;
 }
 
@@ -106,7 +106,7 @@ extern "C" void func_0043C0F0(Self* self)
     UM(MtxAt(D_00538C64));
     D_00538C68 = 1;
     D_005392D0 = 5;
-    func_003820E0(D_00539248, self->tex);
+    Renderer_BindTexture(D_00539248, self->tex);
     {
         Slot* s = SlotAt(D_00538C60);
         float* v = D_00539170;
@@ -214,11 +214,11 @@ void func_0043C6E0(int arg0) {
 /*fc*/
 int Hog_Register();                   
 int String_CStr();                          
-int func_002071F0();                             
-int func_0036E220();                            
+int String_Length();                             
+int FileMan_Release();                            
 int func_0036E4B0();                    
 int func_0036E5D0();                               
-int func_00380A40();                        
+int TexMan_FindOrLoad();                        
 #if 0 /* merge_units */
 extern int D_00539248;
 #endif /* merge_units */
@@ -230,18 +230,18 @@ extern int D_00539248;
 int func_0043C730(char * arg0) {
     struct { int f20[40]; int fC0[40]; } sl;
 
-    if (func_002071F0(arg0 + 0x50) == 0) {
+    if (String_Length(arg0 + 0x50) == 0) {
         return 0;
     }
     if (F_(arg0, 0x4C, int) != 0) {
         func_0036E5D0(sl.fC0);
         Hog_Register(sl.fC0, String_CStr(arg0 + 0x50), F_(arg0, 0x4C, int), 0);
-        F_(arg0, 0x48, int) = func_00380A40(D_00539248, sl.fC0);
-        func_0036E220(sl.fC0, -1);
+        F_(arg0, 0x48, int) = TexMan_FindOrLoad(D_00539248, sl.fC0);
+        FileMan_Release(sl.fC0, -1);
     } else {
         func_0036E4B0(sl.f20, String_CStr(arg0 + 0x50), 0, 0);
-        F_(arg0, 0x48, int) = func_00380A40(D_00539248, sl.f20);
-        func_0036E220(sl.f20, -1);
+        F_(arg0, 0x48, int) = TexMan_FindOrLoad(D_00539248, sl.f20);
+        FileMan_Release(sl.f20, -1);
     }
     return ~F_(arg0, 0x48, int) != 0;
 }

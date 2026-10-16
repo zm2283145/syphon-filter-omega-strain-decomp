@@ -7,7 +7,7 @@
 /* merge_units: begin func_002D0658 */
 extern void *memset(void *, int, unsigned int);
 extern char *strncpy(char *, const char *, unsigned int);
-extern char *func_00129C80(char *, const char *);
+extern char *strstr(char *, const char *);
 extern int atoi(const char *);
 extern char D_004AD3C8[];
 extern char D_004AD3D0[];
@@ -22,7 +22,7 @@ int func_002D0658(unsigned char *out, const char *s)
     if (s != 0 && out != 0) {
         strncpy(buf, s, 16);
         for (; i < 3; i++) {
-            char *q = func_00129C80(p, D_004AD3D0);
+            char *q = strstr(p, D_004AD3D0);
             *q = 0;
             out[i] = atoi(p);
             p = q + 1;
@@ -39,9 +39,9 @@ typedef struct { char c[0x26]; } M00468708;
 static const M00468708 months_init = { "JanFebMarAprMayJunJulAugSepOctNovDec" };
 extern int sprintf(char *, const char *, ...);
 #if 0 /* merge_units */
-extern char *func_00129C80(const char *, const char *);
+extern char *strstr(const char *, const char *);
 #endif /* merge_units */
-#define func_00129C80(a0, a1) (func_00129C80((char *)(a0), (a1))) /* merge_units */
+#define strstr(a0, a1) (strstr((char *)(a0), (a1))) /* merge_units */
 
 int func_002D0728(char *out)
 {
@@ -51,9 +51,9 @@ int func_002D0728(char *out)
     char *date = "Nov 25 2003";
     char *tm = "16:14:00";
     sprintf(mon, "%.3s", date);
-    n = (func_00129C80(months.c, mon) - months.c) / 3 + 1;
+    n = (strstr(months.c, mon) - months.c) / 3 + 1;
     sprintf(out, "%.2d.%.2d.%.4s.%.2s.%.2s.%.2s", n, atoi(date + 4), date + 7, tm, tm + 3, tm + 6);
     return 0;
 }
-#undef func_00129C80 /* merge_units */
+#undef strstr /* merge_units */
 /* merge_units: end func_002D0728 */

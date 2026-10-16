@@ -3,8 +3,8 @@
 #include "alloc_guard.h"
 typedef struct { char* name; int count; int a, b; } N3A9;
 extern "C" {
-extern void func_0036DEF0(void*);
-extern void func_0036D990(void*, int*, int);
+extern void FileMan_FindMember(void*);
+extern void FileMan_LoadMemberSync(void*, int*, int);
 extern void func_0036DEC0(void*);
 extern void* Mem_Alloc(int, int, char*, int);
 extern char D_004BCCF8[];
@@ -18,8 +18,8 @@ extern "C" void Skel_ReadFile(int* out, void* list, char* name, void* file) {
     int cnt;
     N3A9* node;
     n[0] = 0;
-    func_0036DEF0(file);
-    func_0036D990(file, n, 0);
+    FileMan_FindMember(file);
+    FileMan_LoadMemberSync(file, n, 0);
     func_0036DEC0(file);
     cnt = n[0];
     {

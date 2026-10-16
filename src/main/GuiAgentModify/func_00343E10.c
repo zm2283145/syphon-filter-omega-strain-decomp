@@ -132,7 +132,7 @@ extern TabS_E10 D_00492A01[16];
 extern TabP_E10 D_00492A02[16];
 extern GDef_E10 D_0056F9B0;
 void GuiWidget_ctor(Self_E10* self);
-void func_002C9D50(int a);
+void FrontEnd_GetCharacterData(int a);
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void cGOBJ_ctor(void* p, int* a, int b, int* c);
 void Object_AttachTransform(void* p, void* t, int a);
@@ -310,7 +310,7 @@ extern "C" Self_E10* func_00343E10(Self_E10* p0)
     self->fEC = -1;
     self->fF0 = 0;
     self->f7C = 0;
-    func_002C9D50(D_004FFC04);
+    FrontEnd_GetCharacterData(D_004FFC04);
     {
         void* p;
         p = Alloc_E10(0x68, 0x11C);

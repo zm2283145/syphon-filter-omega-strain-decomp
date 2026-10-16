@@ -189,7 +189,7 @@ static inline void merge_flush_func_00176260(void) {}
 extern "C" {
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void Pickup_PerformAction(void* o, void* c);
-void* func_00253070(void* p, void* s, void* o, void* c, int a, int b);
+void* PickupMenu_Build(void* p, void* s, void* o, void* c, int a, int b);
 }
 typedef struct { void* first; } L_62C0;
 typedef struct { char pad[0x54]; L_62C0* list; } Game_62C0;
@@ -205,7 +205,7 @@ typedef struct {
     char pad3[0x184 - 0x17D]; int x184;
     char pad4[0x1BC - 0x188]; unsigned char reset;
 } S_62C0;
-extern "C" void func_001762C0(S_62C0* self, Obj_62C0* o)
+extern "C" void Player_HandlePickupTrigger(S_62C0* self, Obj_62C0* o)
 {
     void* c = self->ctl;
     if (self->reset) {
@@ -223,7 +223,7 @@ extern "C" void func_001762C0(S_62C0* self, Obj_62C0* o)
             p = Mem_Alloc(0, 0xB8, "player.cc", 0x27A);
         }
         if (p)
-            p = func_00253070(p, s, o, c, self->x184 <= 0, 0);
+            p = PickupMenu_Build(p, s, o, c, self->x184 <= 0, 0);
         self->fx = p;
     }
 }

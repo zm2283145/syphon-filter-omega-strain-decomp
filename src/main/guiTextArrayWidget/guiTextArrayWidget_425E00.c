@@ -38,12 +38,12 @@ typedef struct { char pad[0x20]; void* inst; } P425E20;
 typedef struct { char pad[0x90]; P425E20* peer; void* inst; } T425E20;
 extern void* Gui_GetScreenList(void);
 extern void* func_00418420(void* a, int b);
-extern char* func_0036A2F0(void* i);
+extern char* Font_GetLineHeight(void* i);
 extern void func_00424820(T425E20* t, void* p);
 void func_00425E20(T425E20* t, int a) {
     t->inst = func_00418420(Gui_GetScreenList(), a);
     if (t->inst) {
-        { char* p = func_0036A2F0(t->inst) + 4; func_00424820(t, p); }
+        { char* p = Font_GetLineHeight(t->inst) + 4; func_00424820(t, p); }
         if (t->peer) t->peer->inst = t->inst;
     }
 }
@@ -135,9 +135,9 @@ int func_00418420(void* manager, const char* name);
 #define func_00418420(a0, a1) ((int)func_00418420((a0), (int)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
-unsigned int func_0036A2F0(int resource);
+unsigned int Font_GetLineHeight(int resource);
 #endif /* merge_units */
-#define func_0036A2F0(a0) ((unsigned int)func_0036A2F0((void *)(a0))) /* merge_units */
+#define Font_GetLineHeight(a0) ((unsigned int)Font_GetLineHeight((void *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
 void func_00424820(guiTextArrayWidget* self, unsigned int height);
@@ -199,13 +199,13 @@ extern "C" void func_004262D0(guiTextArrayWidget* self)
     func_00424BC0(self);
     self->count = func_00418420(Gui_GetScreenList(), "callout");
     if (self->count) {
-        func_00424820(self, func_0036A2F0(self->count) + 4);
+        func_00424820(self, Font_GetLineHeight(self->count) + 4);
         if (self->unk90)
             self->unk90->resource = self->count;
     }
 }
 #undef func_00418420 /* merge_units */
-#undef func_0036A2F0 /* merge_units */
+#undef Font_GetLineHeight /* merge_units */
 #undef func_00424820 /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00426100(void) {}

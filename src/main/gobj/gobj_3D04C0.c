@@ -21,11 +21,11 @@ typedef struct {
     unsigned char b5A;
     unsigned char b5B;
 } T04C0;
-extern int func_002071F0(void* s);
+extern int String_Length(void* s);
 extern char* String_CStr(void* s);
 extern char* strchr(const char* s, int c);
 extern int strlen(const char* s);
-extern int func_0036AA50(void* font, const char* s, int n);
+extern int Font_GetStringWidth(void* font, const char* s, int n);
 
 int func_003D04C0(T04C0* t)
 {
@@ -35,7 +35,7 @@ int func_003D04C0(T04C0* t)
     char* q;
     int lines, cnt, wd, i, len, w;
 
-    if (!func_002071F0(t->str) || t->b58)
+    if (!String_Length(t->str) || t->b58)
         return 1;
     if (t->b5B) {
         char* s = String_CStr(t->str);
@@ -73,14 +73,14 @@ int func_003D04C0(T04C0* t)
                 cnt = next - p;
             else
                 cnt = strlen(p) + 1;
-            wd = func_0036AA50(t->font, p, cnt);
+            wd = Font_GetStringWidth(t->font, p, cnt);
             if (x + wd < right || (x == (float)t->x0 && t->align == 1.0f)) {
                 p = next;
                 x += wd;
             } else if (t->align != 1.0f && x <= lim) {
                 q = p;
                 for (i = 0; i < cnt; i++) {
-                    if (!(x + func_0036AA50(t->font, p, i + 1) < right))
+                    if (!(x + Font_GetStringWidth(t->font, p, i + 1) < right))
                         break;
                     q++;
                 }

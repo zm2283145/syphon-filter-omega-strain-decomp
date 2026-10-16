@@ -11,7 +11,7 @@
 #define NULL 0
 #pragma mpwc_relax on
 int Agent_GetSelected(char *, int, int, signed char);               
-int func_00332A10(int, int, int, int);                    
+int AgentData_AddLevelProgress(int, int, int, int);                    
 const unsigned int D_004ACB30[12] = { 0x0, 0x1, 0x2, 0x4, 0x5, 0x8, 0xC, 0xD, 0x10, 0x0, 0x0, 0x0 };
 extern char D_004FFB50;
 extern signed char D_004FFBA0;
@@ -32,7 +32,7 @@ void func_002A0DC0(void) {
     F_(D_004FFC04, 0x33, signed char) = 1;
     temp_s0 = F_(D_004FFC04, 0x248, int);
     if (temp_s0 != -1) {
-        func_00332A10(Agent_GetSelected(&D_004FFB50, -1, 3, temp_a3), F_(&(*(char*)D_004ACB30), (temp_s0 * 4), int) + 1, 6, 1);
+        AgentData_AddLevelProgress(Agent_GetSelected(&D_004FFB50, -1, 3, temp_a3), F_(&(*(char*)D_004ACB30), (temp_s0 * 4), int) + 1, 6, 1);
     }
     D_005064A8 = 0;
     D_005064B0 = 0;

@@ -32,7 +32,7 @@ void* Root_GetWorldPlacement(void*);
 void Transform_SetOrientation(Plc*, void*);
 void Placement_Invert(Plc*);
 void func_00132840(V*);
-void func_00132810(V*, V*, V*);
+void Quat_Multiply(V*, V*, V*);
 void func_00132800(V*, V*);
 void func_0019FE90(struct S* s, Plc* in);
 }
@@ -94,7 +94,7 @@ void func_0019FE90(S* s, Plc* in)
         V r;
         V q;
         func_00132840(&q);
-        func_00132810(&q, &pi->rot, &p->rot);
+        Quat_Multiply(&q, &pi->rot, &p->rot);
         func_00132800(&r, &q);
         p->rot = r;
         QRot(&p->pos, &pi->rot);
@@ -118,7 +118,7 @@ extern void* Root_GetParent(R*);
 
 extern void* Root_GetWorldPlacement(void*);
 extern V4* Placement_GetQuat(void*);
-extern V4* func_001325F0(V4*, V4*);
+extern V4* Quat_Assign(V4*, V4*);
 extern V4* func_0019D4E0(V4*);
 static inline void QRot_(V4* q, V4* v) {
     asm {
@@ -151,7 +151,7 @@ void func_0019FFC0(R* self, V4* q)
     V4 t;
     {V4* d = &self->q; asm { .set reorder } *d = *q;}
     if (self->parent) {
-        func_001325F0(&t, Placement_GetQuat(Root_GetWorldPlacement(Root_GetParent(self))));
+        Quat_Assign(&t, Placement_GetQuat(Root_GetWorldPlacement(Root_GetParent(self))));
         func_0019D4E0(&t);
         QRot_(&t, &self->q);
     }

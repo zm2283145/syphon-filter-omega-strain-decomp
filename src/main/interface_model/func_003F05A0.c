@@ -15,8 +15,8 @@ extern int D_00539248;
 extern char D_004BE048[];
 extern void func_0036E5D0(FileMan05A0* f);
 extern void func_0036DFB0(FileMan05A0* f, char* name, int a);
-extern void func_0036E220(FileMan05A0* f, int flag);
-extern int func_00380A40(int mgr, FileMan05A0* f);
+extern void FileMan_Release(FileMan05A0* f, int flag);
+extern int TexMan_FindOrLoad(int mgr, FileMan05A0* f);
 
 static inline void Copy(PStr05A0* buf, char* t, const char* s)
 {
@@ -71,8 +71,8 @@ void func_003F05A0(Obj05A0* o, int arg1)
         Append((char*)&s, D_004BE048);
         func_0036E5D0(&fm);
         func_0036DFB0(&fm, (char*)&s + 1, arg1);
-        o->f18 = func_00380A40(D_00539248, &fm);
-        func_0036E220(&fm, -1);
+        o->f18 = TexMan_FindOrLoad(D_00539248, &fm);
+        FileMan_Release(&fm, -1);
     }
     for (i = 0; i < o->count; i++) {
         func_003F05A0(o->kids[i], arg1);

@@ -16,7 +16,7 @@
  */
 
 
-void func_001C93F0(void) {
+void SoundMgr_OnBankUserData(void) {
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001C93F0(void) {}
@@ -33,7 +33,7 @@ typedef struct State44 {
 } State44;
 
 /* Advances state 3 to 4 once the ready flag is set. */
-void func_001C9400(void* unused, State44* obj) {
+void SoundMgr_OnLpdLoaded(void* unused, State44* obj) {
     if (obj->state == 3 && obj->ready) {
         obj->state = 4;
     }

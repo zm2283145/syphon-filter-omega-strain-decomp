@@ -184,12 +184,12 @@ extern "C" {
 extern char D_004DF970[];
 void cGOBJ_dtor(void* self, int flag);
 void func_0036D5D0(void* p, int flag);
-void func_0036E220(void* p, int flag);
+void FileMan_Release(void* p, int flag);
 void func_00377BD0(void* p, int flag);
 void func_003C1790(void* p);
 void operator_delete(void* p);
 }
-static inline void DelA_00395950(void* p, int line) { AllocGuard g; func_0036E220(p, -1); Mem_Free(0, p, D_004BC430, line); }
+static inline void DelA_00395950(void* p, int line) { AllocGuard g; FileMan_Release(p, -1); Mem_Free(0, p, D_004BC430, line); }
 static inline void DelB_00395950(void* p, int line) { AllocGuard g; func_00377BD0(p, -1); Mem_Free(0, p, D_004BC430, line); }
 struct S_00395950 {
     void* vt; char pad4[0x5C]; int i60; int i64; void* p68; char pad6c[4]; void* p70; char m74[0x1E0 - 0x74];

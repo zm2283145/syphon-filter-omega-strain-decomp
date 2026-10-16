@@ -115,8 +115,8 @@ static inline void merge_flush_func_00432230(void) {}
 struct Raw_2750 { int p; };
 
 extern "C" {
-void func_00138DA0(int*, char*, int*);
-Raw_2750 func_0013B180(void*);
+void List_Erase(int*, char*, int*);
+Raw_2750 List_Begin(void*);
 Raw_2750 func_00432730(void*);
 void func_00432740(char**, const Raw_2750&);
 void func_00432720(char**, const Raw_2750&);
@@ -125,7 +125,7 @@ extern char D_00582B30;
 extern unsigned char D_005721C0;
 extern unsigned char D_005721C8;
 }
-#define Begin_2750(o) func_00432740(o, func_0013B180(&D_00582B30))
+#define Begin_2750(o) func_00432740(o, List_Begin(&D_00582B30))
 #define End_2750(o) func_00432720(o, func_00432730(&D_00582B30))
 static inline unsigned char IsHost_2510() { if (D_005721C8) return D_005721C0; return 1; }
 extern "C" void func_00432510(int d0, Ent_2750* tbl, int key) {
@@ -161,7 +161,7 @@ extern "C" void func_00432510(int d0, Ent_2750* tbl, int key) {
                     int pos;
                     c = cur;
                     func_0015AF40(&pos, &c);
-                    func_00138DA0(&res, &D_00582B30, &pos);
+                    List_Erase(&res, &D_00582B30, &pos);
                 }
             }
         }

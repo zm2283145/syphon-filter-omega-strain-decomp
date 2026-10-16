@@ -193,14 +193,14 @@ extern signed char D_0053BB50;
 extern V4 D_004BC5A0;
 extern V4 D_004BC5B0;
 extern V4 D_004BC5C0;
-void func_003820E0(void* m, int idx);
+void Renderer_BindTexture(void* m, int idx);
 void func_0025CD10(void* s);
 void func_0025CA40(void* s);
 void func_00371170(void* s);
 void func_00371200(void* s);
 void Vec4_Copy(V4* d, const V4* s);
-void func_0025C9D0(V4* d, const V4* s);
-float func_0025F220(void);
+void GuiBatch_AddVertexColor(V4* d, const V4* s);
+float GuiBatch_AddVertexUV(void);
 V4* func_00132000(V4* o, float x, float y, float z, float w);
 int func_003A3430(void* mgr, void* key);
 void* func_00234BB0(void* self, int n);
@@ -249,14 +249,14 @@ static inline void EmitC(const V4& pos, const V4& col)
     func_0025CA40(D_005381F0);
     e = &RS->ents[D_00539210.f10];
     Vec4_Copy(&e->pos[D_00539224 - 1], &pos);
-    func_0025C9D0(&e->c30[D_00539224 - 1], &col);
+    GuiBatch_AddVertexColor(&e->c30[D_00539224 - 1], &col);
     D_005381F8 = 2LL << 32;
 }
 static inline V4* UV(const V4& uv)
 {
     V4 tmp;
-    float u = uv.x + func_0025F220();
-    return func_00132000(&tmp, u, uv.y + func_0025F220(), uv.z, uv.w);
+    float u = uv.x + GuiBatch_AddVertexUV();
+    return func_00132000(&tmp, u, uv.y + GuiBatch_AddVertexUV(), uv.z, uv.w);
 }
 static inline V4* UVW0(const V4& uv) { return UV(uv); }
 static inline V4* UVW1(const V4& uv) { return UVW0(uv); }
@@ -266,7 +266,7 @@ static inline void Emit(V4 pos, const V4& col, const V4& uv)
     func_0025CA40(D_005381F0);
     e = &RS->ents[D_00539210.f10];
     Vec4_Copy(&e->pos[D_00539224 - 1], &pos);
-    func_0025C9D0(&e->c30[D_00539224 - 1], &col);
+    GuiBatch_AddVertexColor(&e->c30[D_00539224 - 1], &col);
     Vec4_Copy(&e->c34[D_00539224 - 1], UVW1(uv));
     D_005381F8 = 6LL << 32;
 }
@@ -326,7 +326,7 @@ extern "C" void func_00399080(Self* self)
     if (found) {
         int j;
         c2.Set(0.0f, 0.0f, 0.0f, self->info->f14);
-        func_003820E0(D_00539248, found->f74);
+        Renderer_BindTexture(D_00539248, found->f74);
         start = self->f6C / 12;
         for (j = 0; j < start; j++) {
             Elem* e = At(self, j);
@@ -345,7 +345,7 @@ extern "C" void func_00399080(Self* self)
         if (n > 0) Flush(n);
     }
     }
-    func_003820E0(D_00539248, self->info->f74);
+    Renderer_BindTexture(D_00539248, self->info->f74);
     if (self->f130 == 1) {
         c3.Set(0.0f, 0.0f, 0.0f, self->info->f14);
         for (i = start; i < self->f6C; i++) {

@@ -19,7 +19,7 @@ Float3* func_0017DE50(Float3* v, float x, float y, float z) {
     return v;
 }
 
-int func_0017DE70(void) {
+int Random_Next_Thunk(void) {
     return Random_Next();
 }
 

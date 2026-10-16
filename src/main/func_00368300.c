@@ -11,7 +11,7 @@ M_368300* Gui_GetScreenStack(void);
 void func_0041E0F0(void* w, void* m, int kind, int v, int f);
 void func_00456160(S_368300* o);
 void func_00456100(S_368300* o);
-int func_00368300(S_368300* o, Ev_368300* ev);
+int GuiObjectives_HandleInput(S_368300* o, Ev_368300* ev);
 }
 static inline unsigned char Down_368300(Ev_368300* e) { unsigned char r = 0; if (e->type == 1 && e->b2 == 0) r = 1; return r; }
 static inline unsigned char Btn_368300(Ev_368300* e, int b) { unsigned char r = 0; if (Down_368300(e) && e->btn == b) r = 1; return r; }
@@ -20,7 +20,7 @@ static inline bool Down2_368300(Ev_368300* e) { return e->type == 1 && e->b2 == 
 static inline bool Btn2_368300(Ev_368300* e, int b) { return Down2_368300(e) && e->btn == b; }
 static inline bool Plain2_368300(Ev_368300* e, int b) { return Btn2_368300(e, b) && e->b6 == 0; }
 
-int func_00368300(S_368300* o, Ev_368300* ev)
+int GuiObjectives_HandleInput(S_368300* o, Ev_368300* ev)
 {
     if (Plain_368300(ev, 0x2000)) {
         if (o->page == 0 && o->w64) {

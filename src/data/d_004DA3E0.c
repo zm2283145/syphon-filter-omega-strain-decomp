@@ -5,6 +5,7 @@ extern void Actor_BasePreLogic();
 extern void Actor_BaseWorldUpdate();
 extern void Actor_Draw();
 extern void Actor_GetBodyCenter();
+extern void Actor_GetBounds();
 extern void Actor_GetEyeNode();
 extern void Actor_GetFloorContactPos();
 extern void Actor_GetFloorContactRecord();
@@ -34,6 +35,9 @@ extern void Node_ClearFlag2C();
 extern void Node_GetFlag2C();
 extern void Node_SetFlag2C();
 extern void Npc_Activate();
+extern void Npc_Deactivate();
+extern void Npc_Dtor();
+extern void Npc_Enable();
 extern void Npc_HandleMessage();
 extern void Npc_InitModel();
 extern void Npc_PreUpdate();
@@ -42,6 +46,7 @@ extern void Object_Activate();
 extern void Object_AttachTransform();
 extern void Object_Deactivate();
 extern void Object_GetAttachedOrSelf();
+extern void Object_GetEye();
 extern void Object_HandleMessage();
 extern void PathObj_GetPosition();
 extern void Player_GetActiveWeapon();
@@ -60,7 +65,6 @@ extern void func_0013EE60();
 extern void func_00140E90();
 extern void func_00141850();
 extern void func_00148870();
-extern void func_0014D340();
 extern void func_00153860();
 extern void func_0015BFB0();
 extern void func_0015BFC0();
@@ -95,7 +99,6 @@ extern void func_00180780();
 extern void func_00180790();
 extern void func_001807A0();
 extern void func_00180B50();
-extern void func_00184380();
 extern void func_00184390();
 extern void func_00184480();
 extern void func_00184560();
@@ -120,9 +123,6 @@ extern void func_001B3950();
 extern void func_001B3960();
 extern void func_001B3A60();
 extern void func_001B4970();
-extern void func_001B4F40();
-extern void func_001B5190();
-extern void func_001B57C0();
 extern void func_001B8790();
 extern void func_003CCFF0();
 extern void func_003CD090();
@@ -175,7 +175,7 @@ void *D_004DA470[68] = {
     &Object_AttachTransform, &Player_GetActiveWeapon, &func_003CDDC0, &func_003CDD80,
     &func_003CDD40, &func_003CDC20, &func_003CDBE0, &func_003CDA60,
     &func_003CD920, &func_003CD7A0, &func_0015C010, &func_00153860,
-    &func_0014D340, &func_0015C020, &func_00140E90, &func_0015C030,
+    &Object_GetEye, &func_0015C020, &func_00140E90, &func_0015C030,
     &func_0015C040, &func_0015C050, &func_003CD520, &func_003CD4A0,
     &func_003CD420, &PathObj_GetPosition, &func_003CD1C0, &func_003CD110,
     &func_003CD090, &func_003CCFF0, &func_0013E060, &func_0015C080,
@@ -195,7 +195,7 @@ void *D_004DA580[68] = {
     &Object_AttachTransform, &Player_GetActiveWeapon, &func_00180B50, &func_003CDD80,
     &func_003CDD40, &func_003CDC20, &func_003CDBE0, &func_003CDA60,
     &func_003CD920, &func_003CD7A0, &func_0015C010, &func_00153860,
-    &func_0014D340, &func_0015C020, &func_00140E90, &func_0015C030,
+    &Object_GetEye, &func_0015C020, &func_00140E90, &func_0015C030,
     &func_0015C040, &func_0015C050, &func_003CD520, &func_003CD4A0,
     &func_003CD420, &PathObj_GetPosition, &func_003CD1C0, &func_003CD110,
     &func_003CD090, &func_003CCFF0, &func_0013E060, &func_0015C080,
@@ -203,15 +203,15 @@ void *D_004DA580[68] = {
 };
 
 void *D_004DA690[70] = {
-    0, 0, &func_001B57C0, &Npc_HandleMessage,
+    0, 0, &Npc_Dtor, &Npc_HandleMessage,
     &func_0012ECE0, &Object_GetAttachedOrSelf, &func_00184CC0, &func_00185A30,
-    &func_001B4F40, &func_001B4970, &func_001B3A60, &func_001B3960,
+    &Npc_Enable, &func_001B4970, &func_001B3A60, &func_001B3960,
     &func_0012ED50, &cGOBJ_v0B, &cGOBJ_v0C, &func_003CEA00,
     &func_001B3950, &Npc_InitModel, &Npc_Update, &Npc_PreUpdate,
     &Actor_WorldUpdate, &Actor_VirtualNop, &Actor_Draw, &Npc_Activate,
-    &func_001B5190, &Node_SetFlag2C, &Node_ClearFlag2C, &Node_GetFlag2C,
+    &Npc_Deactivate, &Node_SetFlag2C, &Node_ClearFlag2C, &Node_GetFlag2C,
     &func_00184CA0, &func_00184C60, &func_00184C80, &Actor_IsReplica,
-    &func_0015BFF0, &func_0015BFE0, &func_00184380, &func_0015C000,
+    &func_0015BFF0, &func_0015BFE0, &Actor_GetBounds, &func_0015C000,
     &Object_AttachTransform, &func_00184390, &func_00184480, &func_00184560,
     &func_00184630, &func_00184640, &func_00184720, &func_001847F0,
     &func_001848D0, &func_001849B0, &func_0015C010, &func_00184AF0,

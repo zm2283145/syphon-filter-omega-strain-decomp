@@ -12,7 +12,7 @@ typedef struct Mgr {
 typedef struct Pair { int a; int b; } Pair;
 extern Mgr* D_00539248;
 extern void func_00382D30(Mgr*, int);
-extern void func_00382540(Mgr*);
+extern void TexMan_UploadSlots(Mgr*);
 
 static inline void Push(Mgr* m, int id)
 {
@@ -35,6 +35,6 @@ void func_003BB060(Pair* p)
     m->f16 = 0;
     Push(D_00539248, p->a);
     if (p->b != -1) Push(D_00539248, p->b);
-    func_00382540(D_00539248);
+    TexMan_UploadSlots(D_00539248);
 }
 

@@ -37,7 +37,7 @@ extern void* D_0051EF70;
 extern char D_004ACF10[];
 extern char D_004E9B70[];
 void* Mem_Alloc(int pool, int size, char* file, int line);
-void func_002C84B0(void);
+void FrontEnd_SplashThreadMain(void);
 int func_002C8460(void);
 int func_0010D050(void);
 void ChangeThreadPriority(int thread, int prio);
@@ -46,7 +46,7 @@ void StartThread(int thread, void* arg);
 int AddIntcHandler(int id, void* fn, int arg);
 }
 struct Obj82F0 { char pad[0x310]; unsigned char active; };
-extern "C" void func_002C82F0(Obj82F0* o)
+extern "C" void FrontEnd_StartSplashThread(Obj82F0* o)
 {
     if (!o->active) {
         Thp82F0 tp;
@@ -58,7 +58,7 @@ extern "C" void func_002C82F0(Obj82F0* o)
         }
         tp.status = 0x10;
         D_0051EF70 = p;
-        tp.entry = (void*)func_002C84B0;
+        tp.entry = (void*)FrontEnd_SplashThreadMain;
         tp.stack = (void*)((unsigned int)p & ~0xF);
         tp.waitType = 0;
         tp.wakeupCount = 0;

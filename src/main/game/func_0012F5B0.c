@@ -13,11 +13,11 @@ int func_0012F5B0(NameSlotTable* t, int i) {
     return t->values[i];
 }
 
-void func_0012F5C0(NameSlotTable* t, int i, int value) {
+void Game_SetPlayerLocation(NameSlotTable* t, int i, int value) {
     t->values[i] = value;
 }
 
-char* func_0012F5D0(NameSlotTable* t, int i) {
+char* Game_GetPlayerNameSlot(NameSlotTable* t, int i) {
     return t->names[i];
 }
 

@@ -20,14 +20,14 @@ extern unsigned char* D_004FFC04;
 int Agent_GetSelected(void*, int);
 void func_00296FA0(List_7020*);
 void func_003334C0(int, int, List_7020*);
-int func_00332FE0(int, __int128);
+int AgentData_IsLevelDone(int, __int128);
 __int128 func_003FDA40(char*);
 char* Loc_GetStoredKey(int);
 int String_CompareNoCase(char*, char*);
 void func_00299360(List_7020*, int);
 
 #pragma opt_strength_reduction off
-void func_00297020(char* self) {
+void GuiCommandCenter_IsLevelOpen(char* self) {
     int k;
     int i;
     unsigned char ok;
@@ -53,7 +53,7 @@ void func_00297020(char* self) {
                 if (name) {
                     if (i != 0x11) {
                         int s = Agent_GetSelected(&D_004FFB50, -1);
-                        if (func_00332FE0(s, func_003FDA40(name))) ok = 1;
+                        if (AgentData_IsLevelDone(s, func_003FDA40(name))) ok = 1;
                     } else {
                         ok = 1;
                     }
@@ -92,7 +92,7 @@ void func_00297020(char* self) {
 #pragma mpwc_relax on
 /*fc*/
 int Agent_GetSelected();                      
-signed char func_00332860();
+signed char AgentData_GetBonusFlag();
 
 void func_002972E0(int arg0) {
     int temp_s1;
@@ -103,7 +103,7 @@ void func_002972E0(int arg0) {
     temp_s1 = Agent_GetSelected(&D_004FFB50, -1);
     var_s0 = 0;
     do {
-        temp_v0 = func_00332860(temp_s1, var_s0 + 1, -1);
+        temp_v0 = AgentData_GetBonusFlag(temp_s1, var_s0 + 1, -1);
         temp_v1 = (char *)(arg0 + var_s0);
         var_s0 += 1;
         F_(temp_v1, 0xF8, signed char) = temp_v0;
@@ -122,17 +122,17 @@ void func_002972E0(int arg0) {
 
 #include "loose02_types.h"
 
-extern void func_00298420(GuiCommandCenter* self);
+extern void GuiCommandCenter_SaveState(GuiCommandCenter* self);
 extern GuiManager* Gui_GetScreenStack(void);
 
 /* Deactivates the screen: clears manager flags 0x0C and resets the selection. */
-void func_00297350(GuiCommandCenter* self) {
+void GuiCommandCenter_Deactivate(GuiCommandCenter* self) {
     GuiManager* mgr;
 
     if (self->active != 0) {
         mgr = Gui_GetScreenStack();
         mgr->flags &= ~0xC;
-        func_00298420(self);
+        GuiCommandCenter_SaveState(self);
         self->selection = -1;
         self->unk1D0 = 0;
         self->active = 0;
@@ -161,16 +161,16 @@ GuiManager*Gui_GetScreenStack();
 #endif /* merge_units */
 #define Gui_GetScreenStack() (Gui_GetScreenStack()) /* merge_units */
 CcNetwork*DME_GetLobby();int func_00442750(void*,void(*)());void func_002CC260();
-void func_0041BEB0(void*,const char*,int);void func_0041E0F0(void*,void*,int,int,int);char*Loc_LookupText(const char*);int sprintf(char*,const char*,...);const char*func_00336170(int);const char*func_00336110(int);int AgentData_TotalPoints(int);int func_00336060(int,const char*);int AgentData_IsObjectiveComplete(int,const char*);
+void func_0041BEB0(void*,const char*,int);void func_0041E0F0(void*,void*,int,int,int);char*Loc_LookupText(const char*);int sprintf(char*,const char*,...);const char*AgentData_GetName(int);const char*AgentData_GetRankText(int);int AgentData_TotalPoints(int);int func_00336060(int,const char*);int AgentData_IsObjectiveComplete(int,const char*);
 #if 0 /* merge_units */
-void func_00297020(void*);
+void GuiCommandCenter_IsLevelOpen(void*);
 #endif /* merge_units */
-#define func_00297020(a0) (func_00297020((char *)(a0))) /* merge_units */
+#define GuiCommandCenter_IsLevelOpen(a0) (GuiCommandCenter_IsLevelOpen((char *)(a0))) /* merge_units */
 #if 0 /* merge_units */
 void func_002972E0(void*);
 #endif /* merge_units */
 #define func_002972E0(a0) (func_002972E0((int)(a0))) /* merge_units */
-void func_002C9AF0(void*,int);void func_00298250(void*);const char*func_0033CE30(void*,int,int,int,int,int);int FrontEnd_OpenPopup(void*,int,const char*,const char*,void*,int);
+void func_002C9AF0(void*,int);void GuiCommandCenter_RestoreState(void*);const char*func_0033CE30(void*,int,int,int,int,int);int FrontEnd_OpenPopup(void*,int,const char*,const char*,void*,int);
 #if 0 /* merge_units */
 extern CcGameState*D_004FFC04;
 #endif /* merge_units */
@@ -183,7 +183,7 @@ extern char*D_0048C1A0;
 extern char*D_0048B658;extern char*D_0048B660;extern char*D_0048B680;extern char*D_0048B688;extern char*D_0048B690;extern char*D_0048B698;extern char*D_0048B6A0;extern char*D_0048B6F8;extern char*D_0048B708;
 extern char D_004A7520[],D_004A9870[],D_004AA270[],D_004AA288[],D_004AA2C8[],D_004AA2E8[],D_004AA308[],D_004AA4A8[],D_004AA4B8[],D_004AA4C8[];
 }
-extern "C" void func_002973B0(CcBindings*self){
+extern "C" void GuiCommandCenter_Activate(CcBindings*self){
  SsoString title,message;char score[32],key[16];
  if(!self->screen.active){
   GuiManager*stack=Gui_GetScreenStack();stack->flags|=12;
@@ -197,23 +197,23 @@ extern "C" void func_002973B0(CcBindings*self){
   if(self->childa8){bool enabled=online&&!mode;if(enabled)self->childa8->flags|=4;else self->childa8->flags&=0xfffb;if(!online||mode)func_0041E0F0(self,self->childa8,6,(int)D_004AA308,0);}
   GuiWidget*w3=(GuiWidget*)GuiWidget_FindChildByName(self,D_0048B658);if(w3){bool enabled=online&&!mode;if(enabled)w3->flags|=2;else w3->flags&=0xfffd;}
   GuiWidget*w4=(GuiWidget*)GuiWidget_FindChildByName(self,D_0048B660);if(w4){bool enabled=!online||mode;if(enabled)w4->flags|=2;else w4->flags&=0xfffd;}
-  GuiWidget*name=(GuiWidget*)GuiFindAs(self,D_0048B680,D_004A7520);if(name)func_0041BEB0(name,func_00336170(Agent_GetSelected(D_004FFB50,-1)),0);
-  GuiWidget*rank=(GuiWidget*)GuiFindAs(self,D_0048B688,D_004A7520);if(rank)func_0041BEB0(rank,func_00336110(Agent_GetSelected(D_004FFB50,-1)),0);
+  GuiWidget*name=(GuiWidget*)GuiFindAs(self,D_0048B680,D_004A7520);if(name)func_0041BEB0(name,AgentData_GetName(Agent_GetSelected(D_004FFB50,-1)),0);
+  GuiWidget*rank=(GuiWidget*)GuiFindAs(self,D_0048B688,D_004A7520);if(rank)func_0041BEB0(rank,AgentData_GetRankText(Agent_GetSelected(D_004FFB50,-1)),0);
   GuiWidget*points=(GuiWidget*)GuiFindAs(self,D_0048B690,D_004A7520);if(points){sprintf(score,D_004AA4C8,AgentData_TotalPoints(Agent_GetSelected(D_004FFB50,-1)));func_0041BEB0(points,score,0);}
   if(D_004FFC04->mode||!D_004FFC04->online){GuiWidget*a=(GuiWidget*)GuiWidget_FindChildByName(self,D_0048B6A0);if(a)a->flags&=0xfffd;GuiWidget*b=(GuiWidget*)GuiWidget_FindChildByName(self,D_0048B698);if(b)b->flags&=0xfffd;}
   else{GuiWidget*a=(GuiWidget*)GuiFindAs(self,D_0048B698,D_004A7520);if(a){func_0041BEB0(a,(char*)(Agent_GetSelected(D_004FFB50,-1)+0x95c),0);a->flags|=2;}GuiWidget*b=(GuiWidget*)GuiWidget_FindChildByName(self,D_0048B6A0);if(b)b->flags|=2;}
-  func_00297020(self);self->unlocked[17]=0;self->unlocked[18]=0;self->unlocked[19]=0;self->unlocked[21]=D_004FFC04->online;self->unlocked[20]=0;
+  GuiCommandCenter_IsLevelOpen(self);self->unlocked[17]=0;self->unlocked[18]=0;self->unlocked[19]=0;self->unlocked[21]=D_004FFC04->online;self->unlocked[20]=0;
   const char*current=D_0048C1A0;
   if(current){int record=func_00336060(Agent_GetSelected(D_004FFB50,-1),current);if(record){sprintf(key,D_004AA270,record);if(AgentData_IsObjectiveComplete(Agent_GetSelected(D_004FFB50,-1),key))self->unlocked[20]=1;}}
   func_002972E0(self);
   {int i;CcBindings*walk;i=0;walk=self;for(;i<24;i++,walk=(CcBindings*)((char*)walk+4)){if(walk->buttons[0]){if(!self->unlocked[i])func_0041E0F0(self,walk->buttons[0],6,(int)D_004AA2E8,0);else if((i<17&&self->states[i])||(i==20&&self->states[17]))func_0041E0F0(self,walk->buttons[0],6,(int)D_004AA2C8,0);}}
-  }func_002C9AF0(D_004FFC04,0);func_00298250(self);
+  }func_002C9AF0(D_004FFC04,0);GuiCommandCenter_RestoreState(self);
   if(popup){String_CtorCStr_13B480(&title,func_0033CE30(self,20,0,0,0,0));String_CtorCStr_13B480(&message,func_0033CE30(self,134,0,0,0,0));char*msg=String_CStr(&message);self->popupId=FrontEnd_OpenPopup(D_004FFC04,2,String_CStr(&title),msg,self,25);String_Dtor(&message,0);String_Dtor(&title,0);}
   self->screen.active=1;
  }
 }
 #undef Gui_GetScreenStack /* merge_units */
-#undef func_00297020 /* merge_units */
+#undef GuiCommandCenter_IsLevelOpen /* merge_units */
 #undef func_002972E0 /* merge_units */
 #undef D_004FFC04 /* merge_units */
 #undef D_004FFB50 /* merge_units */
@@ -227,9 +227,9 @@ typedef struct Panel { char pad[0xB0]; V4 c0; V4 c1; V4 c2; } Panel;
 typedef struct Self { char pad[0x10]; int state; char pad2[0x194 - 0x14]; Panel* panel; } Self;
 extern V4 D_00587BA0, D_00587BB0, D_00587BC0;
 extern void func_002982C0(Self*);
-extern void func_0033D3A0(Self*);
+extern void GuiScreen_Wake(Self*);
 static inline void SetV4(V4* d, V4 s) { d->x = s.x; d->y = s.y; d->z = s.z; d->w = s.w; }
-void func_00297B10(Self* self)
+void GuiCommandCenter_Wake(Self* self)
 {
     if (self->state == 1) {
         func_002982C0(self);
@@ -240,7 +240,7 @@ void func_00297B10(Self* self)
         SetV4(&self->panel->c1, D_00587BB0);
         SetV4(&self->panel->c2, D_00587BC0);
     }
-    func_0033D3A0(self);
+    GuiScreen_Wake(self);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00297B10 */
@@ -257,9 +257,9 @@ struct CcBindings_00297C10 {
 };
 extern "C" {
 extern char* D_0048B650;extern char* D_0048B668;extern char* D_0048B670;extern char* D_0048B678;extern char* D_0048B6A8;extern char* D_0048B6B0;extern char* D_0048B6B8;extern char* D_0048B6C0;extern char* D_0048B6C8;extern char* D_0048B6D0;extern char* D_0048B6D8;extern char* D_0048B6E0[];extern char* D_0048B700;extern char* D_0048B728;extern char* D_0048B770[];extern char* D_0048B788;extern char* D_0048B790;
-extern char D_004A7520[],D_004A9870[],D_004AA4D0[],D_004AA4D8[],D_004AA4E0[],D_004AA4E8[],D_004AA4F8[],D_004AA640[];void func_0033D3F0(void*);void func_00421670(void*,int);void func_00421690(void*,const char*);
+extern char D_004A7520[],D_004A9870[],D_004AA4D0[],D_004AA4D8[],D_004AA4E0[],D_004AA4E8[],D_004AA4F8[],D_004AA640[];void GuiScreen_Init(void*);void func_00421670(void*,int);void func_00421690(void*,const char*);
 }
-extern "C" void func_00297C10(CcBindings_00297C10*self){
+extern "C" void GuiCommandCenter_Init(CcBindings_00297C10*self){
  char a[32],b[32],c[32];int i;CcBindings_00297C10*walk;
  self->root=(GuiWidget*)GuiWidget_FindChildByName(self,D_0048B650);
  self->child8c=(GuiWidget*)GuiWidget_FindChildByName(self,D_0048B6C8);
@@ -284,7 +284,7 @@ extern "C" void func_00297C10(CcBindings_00297C10*self){
  self->child2f0=(GuiWidget*)GuiFindAs(self,D_0048B728,D_004A9870);
  for(int i=0;i<10;i++){sprintf(c,D_004AA4E0,i+1);self->tail[i]=(GuiWidget*)GuiFindAs(self,c,D_004A9870);}
  GuiWidget*w=(GuiWidget*)GuiWidget_FindChildByName(self,D_004AA4E8);if(w)w->flags&=0xfffd;
- func_0033D3F0(self);
+ GuiScreen_Init(self);
  self->child190=(GuiWidget*)GuiWidget_FindChildByName(self,D_0048B788);if(self->child190)self->child190->flags&=0xfffd;
  self->child194=(GuiWidget*)GuiFindAs(self,D_0048B790,D_004AA640);if(self->child194){func_00421670(self->child194,2);func_00421690(self->child194,D_004AA4F8);self->child194->flags&=0xff7f;}
 }

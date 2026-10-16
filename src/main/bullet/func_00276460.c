@@ -172,11 +172,11 @@ void func_003A2400(Emitter* e, float dt, M* m, int z);
 void func_003A2BA0(Emitter* e, int f);
 void Projectile_QueryCandidates(Query* q);
 Material* Material_Lookup(void* ref);
-const char* func_00189540(void* s);
+const char* String_CStr_189540(void* s);
 void SoundRequest_Ctor(SoundRequest* req, int kind, const char* name, int a, int b);
 void SoundPosRequest_Ctor(SoundMsg* msg, SoundRequest* req, V* pos);
 void Event_Send(void* msg, void* target, int flags);
-void func_0036E220(void* part, int flags);
+void FileMan_Release(void* part, int flags);
 void cMessage_dtor(void* msg, int flags);
 V* func_00132000(V* v, float x, float y, float z, float w);
 float Vec4_GetZ(V* v);
@@ -188,11 +188,11 @@ void Vec4_Assign(V* d, V* s);
 void Mtx_FromRowsAndTranslation(M* m, V* a, V* b, V* c, V* t);
 void Effect_CreateInstance(int id, void* m);
 void Effect_SpawnById(int id, void* m);
-void func_00279CA0(void* r, M* m, int id, signed char size, Obj* o, float f);
+void DecalMgr_AddBulletDecal(void* r, M* m, int id, signed char size, Obj* o, float f);
 int* SpecFx_GetEffectDef(int id);
 void* Service_Lookup(void* a, void* b);
 void AiSound_SendImpactNoise(void* msg, float a, float b, int* id, V* pos, signed char kind);
-void func_002797C0(void* r, V* p, int id, int z, float f);
+void DecalMgr_AddBloodDecal(void* r, V* p, int id, int z, float f);
 void Blast_Prepare(Obj* o, int a, int b, V* p, int c, int d, float e, float f, float g);
 char* Agent_GetSelected(void* list, int idx);
 void Stats_Add(char* agent, int stat, int n);
@@ -313,16 +313,16 @@ extern "C" void BulletPool_UpdateAll(Bullet* s, float dt)
                         SoundRequest req;
                         SoundMsg msg;
                         unsigned char j = fb ? 0 : mi;
-                        SoundRequest_Ctor(&req, snd, func_00189540(mat->e[j].name), 0, 0);
+                        SoundRequest_Ctor(&req, snd, String_CStr_189540(mat->e[j].name), 0, 0);
                         SoundPosRequest_Ctor(&msg, &req, &s->pos);
                         msg.flag = 1;
                         Event_Send(&msg, D_004FFB50, 0);
                         msg.vtbl = D_004DAE30;
-                        func_0036E220(msg.partB, -1);
-                        func_0036E220(msg.partA, -1);
+                        FileMan_Release(msg.partB, -1);
+                        FileMan_Release(msg.partA, -1);
                         cMessage_dtor(&msg, 0);
-                        func_0036E220(req.partB, -1);
-                        func_0036E220(req.partA, -1);
+                        FileMan_Release(req.partB, -1);
+                        FileMan_Release(req.partA, -1);
                     }
                 } else {
                     SoundMsg msg;
@@ -330,8 +330,8 @@ extern "C" void BulletPool_UpdateAll(Bullet* s, float dt)
                     msg.flag = 1;
                     Event_Send(&msg, D_004FFB50, 0);
                     msg.vtbl = D_004DAE30;
-                    func_0036E220(msg.partB, -1);
-                    func_0036E220(msg.partA, -1);
+                    FileMan_Release(msg.partB, -1);
+                    FileMan_Release(msg.partA, -1);
                     cMessage_dtor(&msg, 0);
                 }
             }
@@ -362,10 +362,10 @@ extern "C" void BulletPool_UpdateAll(Bullet* s, float dt)
                         float sc = mat->e[mi].scale;
                         S3 sz = D_0048B350;
                         signed char z = sz.c[mat->e[mi].size];
-                        func_00279CA0(D_004FFC3C, &m, fx2, z, HGet(&s->h70), sc);
+                        DecalMgr_AddBulletDecal(D_004FFC3C, &m, fx2, z, HGet(&s->h70), sc);
                     }
                 } else {
-                    int id = *SpecFx_GetEffectDef(0x24); func_00279CA0(D_004FFC3C, &m, id, 8, HGet(&s->h70), 0.2f);
+                    int id = *SpecFx_GetEffectDef(0x24); DecalMgr_AddBulletDecal(D_004FFC3C, &m, id, 8, HGet(&s->h70), 0.2f);
                 }
             }
             if (HGet(&s->h68)) {
@@ -385,7 +385,7 @@ extern "C" void BulletPool_UpdateAll(Bullet* s, float dt)
                         V a = s->pos; int z = 0;
                         V d = s->m3 - s->pos;
                         a += Scl(&d);
-                        func_002797C0(D_004FFC3C, &a, id, z, D_0048B320);
+                        DecalMgr_AddBloodDecal(D_004FFC3C, &a, id, z, D_0048B320);
                     }
                 }
                 if (s->type->rC4 > 0.0f) {
@@ -395,7 +395,7 @@ extern "C" void BulletPool_UpdateAll(Bullet* s, float dt)
                     V b = a;
                     Blast_Prepare(HGet(&s->h68), s->type->d64, 1, &b, 0, 1, 1.0f, s->type->rC4, s->type->rC8);
                     int id = *SpecFx_GetEffectDef(0x25);
-                    if (id > -1) { int z = 0; func_002797C0(D_004FFC3C, &a, id, z, D_0048B328); }
+                    if (id > -1) { int z = 0; DecalMgr_AddBloodDecal(D_004FFC3C, &a, id, z, D_0048B328); }
                 }
             }
         }
@@ -418,11 +418,11 @@ extern "C" void BulletPool_UpdateAll(Bullet* s, float dt)
                     msg.flag = 1;
                     Event_Send(&msg, D_004FFB50, 0);
                     msg.vtbl = D_004DAE30;
-                    func_0036E220(msg.partB, -1);
-                    func_0036E220(msg.partA, -1);
+                    FileMan_Release(msg.partB, -1);
+                    FileMan_Release(msg.partA, -1);
                     cMessage_dtor(&msg, 0);
-                    func_0036E220(req.partB, -1);
-                    func_0036E220(req.partA, -1);
+                    FileMan_Release(req.partB, -1);
+                    FileMan_Release(req.partA, -1);
                 }
             }
             if (q.hit && s->b119) {

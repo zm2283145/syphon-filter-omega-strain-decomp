@@ -104,7 +104,7 @@ void Equip_SwapSlots(WiEquip* e, int a, int b);
 void SoundPosRequest_Ctor(WiSnd* e, void* preset, WiId* id);
 void Event_Send(void* msg, void* target, int immediate);
 void cMessage_dtor(void* msg, int flags);
-void func_0036E220(WiStr* s, int flag);
+void FileMan_Release(WiStr* s, int flag);
 }
 static inline int WiIsNone(int x) { return x == -1; }
 static inline bool WiBusy(WiOwner* o)
@@ -138,8 +138,8 @@ extern "C" bool WeaponInv_Equip(WiInv* self, unsigned char slot)
                 snd.flag = 1;
                 Event_Send(&snd, D_004FFB50, 0);
                 snd.vt = D_004DAE30;
-                func_0036E220(&snd.s114, -1);
-                func_0036E220(&snd.s78, -1);
+                FileMan_Release(&snd.s114, -1);
+                FileMan_Release(&snd.s78, -1);
                 cMessage_dtor(&snd, 0);
             }
         }

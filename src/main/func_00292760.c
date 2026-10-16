@@ -11,7 +11,7 @@ extern "C" void func_00292820();
 extern "C" void func_002928E0();
 extern "C" void func_00292980();
 extern "C" void func_00292A20();
-extern "C" void func_00293660();
+extern "C" void GuiAgentLoad_Update();
 extern "C" void func_0041D400();
 extern "C" void func_0041D5C0();
 extern "C" void func_0041D780();
@@ -47,4 +47,4 @@ extern "C" Vtable3Object* func_00292760(Vtable3Object* self, short deleteFlag)
     }
     return self;
 }
-void * const D_004DD3A0[24] = { (void*)0x0, (void*)0x0, (void*)func_00292760, (void*)func_0041F150, (void*)func_0041F090, (void*)func_0041F080, (void*)func_0041F070, (void*)func_00292A20, (void*)func_0041EBF0, (void*)func_0041E330, (void*)func_0041E2B0, (void*)func_00292820, (void*)func_0041E470, (void*)func_0041E230, (void*)func_00293660, (void*)func_00292980, (void*)func_0041F210, (void*)func_0041D8C0, (void*)func_0041D780, (void*)func_0041D5C0, (void*)func_0041D400, (void*)func_002927E0, (void*)func_002927F0, (void*)func_002928E0 };
+void * const D_004DD3A0[24] = { (void*)0x0, (void*)0x0, (void*)func_00292760, (void*)func_0041F150, (void*)func_0041F090, (void*)func_0041F080, (void*)func_0041F070, (void*)func_00292A20, (void*)func_0041EBF0, (void*)func_0041E330, (void*)func_0041E2B0, (void*)func_00292820, (void*)func_0041E470, (void*)func_0041E230, (void*)GuiAgentLoad_Update, (void*)func_00292980, (void*)func_0041F210, (void*)func_0041D8C0, (void*)func_0041D780, (void*)func_0041D5C0, (void*)func_0041D400, (void*)func_002927E0, (void*)func_002927F0, (void*)func_002928E0 };

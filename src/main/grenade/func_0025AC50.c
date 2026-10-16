@@ -26,7 +26,7 @@ extern V_AC5 D_00535D40;
 extern unsigned char D_00535D60;
 extern unsigned char D_00535D61;
 void func_003836B0(void* a, int b, void* c, int d);
-void func_0025AC50(O_AC5* o);
+void ThrownProjectile_Draw(O_AC5* o);
 }
 static inline unsigned char eq4_(V_AC5* a, V_AC5* b) {
     int k, f, r;
@@ -54,7 +54,7 @@ static inline unsigned char eq4_(V_AC5* a, V_AC5* b) {
 #pragma bool off
 #pragma opt_common_subs off
 
-void func_0025AC50(O_AC5* o)
+void ThrownProjectile_Draw(O_AC5* o)
 {
     if (!o->xE4) {
         void* m; R_AC5* r; V_AC5 p = o->GetPos();

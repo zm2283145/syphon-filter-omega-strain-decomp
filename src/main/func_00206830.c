@@ -29,7 +29,7 @@ extern void* func_0018A700(void*, int);
 extern void MotionSelNode_Ctor(void*, void*, void*, void*);
 extern void* MotionRegistry_MakeKey(void*, void*);
 extern void MotionRegistry_Register(void*, void*, void*);
-extern void func_00200550(void*, int);
+extern void MotionNodeWrapper_Dtor(void*, int);
 /* Builds and registers the run-roll-back-left motion nodes. */
 #pragma optimization_level 1
 void func_00206830(void* p0)
@@ -80,6 +80,6 @@ void func_00206830(void* p0)
     func_001F3C70(&v318, -1);
     MotionSelNode_Ctor(&s2D0.m2D0, CanonicalKey_Construct(&v30, "sliderRunRollBackLeft"), p0, func_0018A700(&s2D0.m2E0, 2));
     MotionRegistry_Register(p0, MotionRegistry_MakeKey(&v60, "RunRollBackLeft"), &s2D0.m2D0);
-    func_00200550(&s2D0.m2D0, -1);
+    MotionNodeWrapper_Dtor(&s2D0.m2D0, -1);
 }
 #pragma optimization_level reset

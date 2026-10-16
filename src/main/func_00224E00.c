@@ -22,16 +22,16 @@ struct Iter {
 struct Self { char pad[0x1F4]; PtrVec list; };
 extern "C" {
 extern GObj** LosCache_End(PtrVec* v);
-extern Iter func_001E1B60(PtrVec* self, GObj** const& src);
+extern Iter CachedCollection_End(PtrVec* self, GObj** const& src);
 extern Iter Iter_Begin(PtrVec* v);
 extern Iter Iter_Assign(const Iter& s);
 extern int D_004EE780;
-unsigned char func_00224E00(Self* self);
+unsigned char Zone_IsReady(Self* self);
 }
-static inline void EndO(Iter* o, PtrVec* v) { *o = func_001E1B60(v, LosCache_End(v)); }
+static inline void EndO(Iter* o, PtrVec* v) { *o = CachedCollection_End(v, LosCache_End(v)); }
 static inline Iter FirstI(PtrVec* v) { return Iter_Assign(Iter_Begin(v)); }
 inline bool GObj::Own() { return x4C == D_004EE780; }
-unsigned char func_00224E00(Self* self)
+unsigned char Zone_IsReady(Self* self)
 {
     unsigned char r = 1;
     PtrVec* v = &self->list;

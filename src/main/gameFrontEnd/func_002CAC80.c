@@ -52,7 +52,7 @@ Node* func_002CAC60(void* p);
 void func_002CAC50(Node** it, Node* n);
 void func_002CE070(void* ret, void* list, Node** it);
 int String_CStr(void* p);
-void func_002A7E90(Obj258* o, int a, int b, int c, int d, int e);
+void GuiMessageBox_Setup(Obj258* o, int a, int b, int c, int d, int e);
 }
 
 extern "C" bool FrontEnd_ClosePopup(SelfCAC80* self, int id)
@@ -85,7 +85,7 @@ extern "C" bool FrontEnd_ClosePopup(SelfCAC80* self, int id)
             if (first) {
                 Ent* e = &self->head->e;
                 int c = String_CStr(e->s14);
-                func_002A7E90(self->obj, e->a4, String_CStr(e->s8), c, e->a20, e->a24);
+                GuiMessageBox_Setup(self->obj, e->a4, String_CStr(e->s8), c, e->a20, e->a24);
                 self->obj->id = e->id;
             }
         } else {

@@ -67,7 +67,7 @@ typedef struct Holder {
 } Holder;
 
 /* Returns the target's virtual +0xB8 result while enabled, else 0. */
-extern "C" int func_0021BD90(Holder* self)
+extern "C" int cGameGOBJ_GetModelCol(Holder* self)
 {
     if (!self->enabled)
         return 0;

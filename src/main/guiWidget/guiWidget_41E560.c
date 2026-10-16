@@ -1,3 +1,11 @@
+/*
+ * main/guiWidget: 8 files, 0041E560-0041F090
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_0041E560 */
+#pragma push /* merge_units */
 #pragma opt_rebuildconditionals off
 #pragma cplusplus on
 
@@ -111,4 +119,255 @@ extern "C" void GuiWidget_DrawFocusHighlight(Widget* self, V4* colorp)
     D_00538C68 = 1;
     D_00538C64--;
 }
+#pragma pop /* merge_units */
+/* merge_units: end func_0041E560 */
 
+/* merge_units: begin func_0041EB70 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Original translation unit not identified yet; functions are named by address
+ * until real names are known.
+ */
+
+
+Quad* func_0041EB70(Quad* d, Quad* s) {
+    d->a = s->a;
+    d->b = s->b;
+    d->c = s->c;
+    d->d = s->d;
+    return d;
+}
+#pragma pop /* merge_units */
+/* merge_units: end func_0041EB70 */
+
+/* merge_units: begin func_0041EBA0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+#include "vslot_pad.h"
+struct W41EBA0;
+struct H41EBA0 { VPAD8(a) VPAD4(b) VPAD1(c) virtual void OnEvent(W41EBA0* w, int kind, int x, int y); };
+struct W41EBA0 { char pad[0x34]; float x; float y; char p3C[8]; H41EBA0* handler; };
+extern "C" void func_0041EBA0(W41EBA0* w, float x, float y)
+{
+    w->x = x;
+    w->y = y;
+    if (w) w->handler->OnEvent(w, 0x12, (int)x, (int)y);
+}
+#pragma pop /* merge_units */
+/* merge_units: end func_0041EBA0 */
+
+/* merge_units: begin func_0041EBF0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+
+#include "gui_traversal_types.h"
+
+extern "C" {
+void List_Begin(ChildIterator* result, ChildList* list);
+void func_0028C0B0(ChildIterator* result, const ChildIterator* source);
+void func_0028C0A0(ChildIterator* result, ChildList* list);
+void func_0028C090(ChildIterator* result, const ChildIterator* source);
+void GuiWidget_CheckSleep(TraversalWidget* self);
+}
+
+static inline unsigned char notify(TraversalWidget* receiver, TraversalWidget* sender,
+                                  int message)
+{
+    if (receiver)
+        return receiver->handler->on_message(sender, message, 0, 0);
+    return 0;
+}
+
+/* Propagate the requested state to children, then check for completion. */
+extern "C" void func_0041EBF0(TraversalWidget* self)
+{
+    ChildIterator end;
+    ChildIterator begin;
+    ChildIterator rawBegin;
+    ChildIterator rawEnd;
+    if (self->flags & 8) {
+        self->flags |= 0x10;
+        int requested = (notify(self, self, 15) != 0) ^ 1;
+        if (requested)
+            self->flags |= 8;
+        else
+            self->flags &= ~8;
+        List_Begin(&rawBegin, &self->children);
+        func_0028C0B0(&begin, &rawBegin);
+        ChildNode* node = begin.node;
+        func_0028C0A0(&rawEnd, &self->children);
+        func_0028C090(&end, &rawEnd);
+        while (node != end.node) {
+            node->widget->handler->propagate_state();
+            node = node->next;
+            func_0028C0A0(&rawEnd, &self->children);
+            func_0028C090(&end, &rawEnd);
+        }
+        GuiWidget_CheckSleep(self);
+    }
+}
+#pragma pop /* merge_units */
+/* merge_units: end func_0041EBF0 */
+
+/* merge_units: begin func_0041ED20 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+#pragma opt_lifetimes off
+#pragma opt_propagation off
+
+extern "C" {
+}
+
+/* Once every child accepts the completion message, clear pending and notify the parent. */
+extern "C" void GuiWidget_CheckSleep(TraversalWidget* self)
+{
+    ChildIterator end;
+    ChildIterator begin;
+    ChildIterator rawBegin;
+    ChildIterator rawEnd;
+    if ((self->flags & 0x10) && !(self->flags & 8)) {
+        List_Begin(&rawBegin, &self->children);
+        func_0028C0B0(&begin, &rawBegin);
+        ChildNode* node = begin.node;
+        func_0028C0A0(&rawEnd, &self->children);
+        func_0028C090(&end, &rawEnd);
+        ChildNode* e = end.node;
+        if (node != e) do {
+            if (!notify(node->widget, self, 15)) return;
+            node = node->next;
+            func_0028C0A0(&rawEnd, &self->children);
+            func_0028C090(&end, &rawEnd);
+            e = end.node;
+        } while (node != e);
+        self->flags &= ~0x10;
+        notify(self->parent, self, 3);
+    }
+}
+#pragma pop /* merge_units */
+/* merge_units: end func_0041ED20 */
+
+/* merge_units: begin func_0041EE50 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+
+extern "C" {
+void* Gui_GetScreenList(void);
+void GuiManager_ReleaseRoot(void* manager, TraversalWidget* widget);
+}
+
+/* Clear pending and requested state throughout the live child hierarchy. */
+extern "C" void func_0041EE50(TraversalWidget* self)
+{
+    ChildIterator end;
+    ChildIterator begin;
+    ChildIterator rawBegin;
+    ChildIterator rawEnd;
+    self->flags &= ~0x10;
+    self->flags &= ~8;
+    List_Begin(&rawBegin, &self->children);
+    func_0028C0B0(&begin, &rawBegin);
+    ChildNode* node = begin.node;
+    func_0028C0A0(&rawEnd, &self->children);
+    func_0028C090(&end, &rawEnd);
+    while (node != end.node) {
+        func_0041EE50(node->widget);
+        node = node->next;
+        func_0028C0A0(&rawEnd, &self->children);
+        func_0028C090(&end, &rawEnd);
+    }
+}
+
+/* Handle state completion and flagged removal requests; reject other messages. */
+extern "C" int GuiWidget_OnEvent(TraversalWidget* self, TraversalWidget* sender, int message)
+{
+    switch ((unsigned short)message) {
+    case 15:
+        self->flags &= ~8;
+        return 1;
+    case 25:
+        if (self->flags & 0x20) {
+            GuiManager_ReleaseRoot(Gui_GetScreenList(), self);
+            return 1;
+        }
+        break;
+    }
+    return 0;
+}
+
+/* Request state on every child only when the parent was not already requested. */
+extern "C" void func_0041EFA0(TraversalWidget* self)
+{
+    ChildIterator end;
+    ChildIterator begin;
+    ChildIterator rawBegin;
+    ChildIterator rawEnd;
+    if (!(self->flags & 8)) {
+        self->flags |= 8;
+        List_Begin(&rawBegin, &self->children);
+        func_0028C0B0(&begin, &rawBegin);
+        ChildNode* node = begin.node;
+        func_0028C0A0(&rawEnd, &self->children);
+        func_0028C090(&end, &rawEnd);
+        while (node != end.node) {
+            node->widget->handler->request_state();
+            node = node->next;
+            func_0028C0A0(&rawEnd, &self->children);
+            func_0028C090(&end, &rawEnd);
+        }
+    }
+}
+#pragma pop /* merge_units */
+/* merge_units: end func_0041EE50 */
+
+/* merge_units: begin func_0041F070 */
+#pragma push /* merge_units */
+#include "loose04_types.h"
+
+/* Clears GuiWidget flag bit 2. */
+void func_0041F070(GuiWidget* self) {
+    unsigned int flags;
+
+    flags = self->flags; /* zero-extended load keeps the match */
+    self->flags = flags & 65531;
+}
+
+/* Sets GuiWidget flag bit 2. */
+void func_0041F080(GuiWidget* self) {
+    unsigned int flags;
+
+    flags = self->flags;
+    self->flags = flags | 4;
+}
+#pragma pop /* merge_units */
+/* merge_units: end func_0041F070 */
+
+/* merge_units: begin func_0041F090 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+
+extern "C" {
+}
+
+/* Clear the registration flag and notify every child in live list order. */
+extern "C" void GuiWidget_Deinit(TraversalWidget* self)
+{
+    ChildIterator end;
+    ChildIterator begin;
+    ChildIterator rawBegin;
+    ChildIterator rawEnd;
+    self->flags &= ~1;
+    List_Begin(&rawBegin, &self->children);
+    func_0028C0B0(&begin, &rawBegin);
+    ChildNode* node = begin.node;
+    func_0028C0A0(&rawEnd, &self->children);
+    func_0028C090(&end, &rawEnd);
+    while (node != end.node) {
+        node->widget->handler->on_unregistered();
+        node = node->next;
+        func_0028C0A0(&rawEnd, &self->children);
+        func_0028C090(&end, &rawEnd);
+    }
+}
+#pragma pop /* merge_units */
+/* merge_units: end func_0041F090 */

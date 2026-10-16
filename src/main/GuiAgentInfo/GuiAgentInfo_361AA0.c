@@ -1,3 +1,11 @@
+/*
+ * main/GuiAgentInfo: 2 files, 00361AA0-00361D90
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_00361AA0 */
+#pragma push /* merge_units */
 #pragma cplusplus on
 #include "types.h"
 struct W_361AA0 {
@@ -47,3 +55,35 @@ void func_00361AA0(O_361AA0* o)
     GuiArrayWidget_RowHeight(o->f10C, o->f10C->f5C - 4);
     FrontEnd_GetCharacterData(D_004FFC04);
 }
+#pragma pop /* merge_units */
+/* merge_units: end func_00361AA0 */
+
+/* merge_units: begin func_00361D90 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * GuiAgentInfo constructor (vtable D_004DF350); derives from the screen base
+ * built by GuiScreen_ctor (GuiLobbyScreen.cc range).
+ */
+
+#include "loose03_types.h"
+
+extern char D_004DF350[];       /* GuiAgentInfo vtable */
+extern int func_00298690(void*);
+extern int GuiScreen_ctor(GuiAgentInfo*);
+
+/* GuiAgentInfo constructor. */
+GuiAgentInfo* GuiAgentInfo_ctor(GuiAgentInfo* self) {
+    GuiAgentInfoMember88* member;
+
+    GuiScreen_ctor(self);
+    member = &self->unk88;
+    self->base.vtable = D_004DF350;
+    func_00298690(member->unk30);
+    func_00298690(member->unk3C);
+    self->base.screenId = 8;
+    self->unkFC = 0;
+    return self;
+}
+#pragma pop /* merge_units */
+/* merge_units: end func_00361D90 */

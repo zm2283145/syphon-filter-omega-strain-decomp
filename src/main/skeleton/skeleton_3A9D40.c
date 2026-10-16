@@ -1,3 +1,11 @@
+/*
+ * main/skeleton: 3 files, 003A9D40-003A9F20
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_003A9D40 */
+#pragma push /* merge_units */
 #include "types.h"
 #include "vu0_ops.h"
 #pragma cplusplus on
@@ -84,6 +92,74 @@ extern "C" void HitVolumes_NodeMatrices(HitVolumes_9D40* self, Mtx_9D40* out, Mt
         out++;
     }
 }
+#pragma pop /* merge_units */
+/* merge_units: end func_003A9D40 */
+
+/* merge_units: begin func_003A9F00 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Original translation unit not identified yet (just before skeleton.cc);
+ * functions are named by address until real names are known.
+ */
+
+#include "loose03_types.h"
+
+extern int SkelNodes_Construct(SkelNodes*);
+extern void func_003A9450(SkelNodes*);
+
+void func_003A9F00(SkelNodes* self) {
+    self->unk14 = 0;
+    func_003A9450(self);
+}
+
+/* Sets unk14 then constructs the node set. */
+int SkelNodes_ConstructActive(SkelNodes* self) {
+    self->unk14 = 1;
+    return SkelNodes_Construct(self);
+}
+#pragma pop /* merge_units */
+/* merge_units: end func_003A9F00 */
+
+/* merge_units: begin func_003A9F20 */
+#pragma push /* merge_units */
+typedef struct ModelSrc {
+    int** model;  /* 0x00 */
+    int unk04;    /* 0x04 */
+} ModelSrc;
+
+typedef struct ModelCtx {
+    int** model;          /* 0x00 */
+    char scales[0x10];    /* 0x04 */
+    unsigned char hasSkel;/* 0x14 */
+    char pad15[0x13];
+    int unk28;            /* 0x28 */
+} ModelCtx;
+
+typedef struct Vec3f {
+    float x, y, z;
+} Vec3f;
+
+extern void BoneScales_Init(void* scales, int* bones, Vec3f* scale);
+#if 0 /* merge_units */
+extern void SkelNodes_Construct(ModelCtx* ctx);
+#endif /* merge_units */
+#define SkelNodes_Construct(a0) ((void)SkelNodes_Construct((SkelNodes *)(a0))) /* merge_units */
 
 
-
+/* Initializes a model context from src with unit bone scale. */
+void ModelCtx_Init(ModelCtx* ctx, ModelSrc* src) {
+    Vec3f scale;
+    ctx->model = src->model;
+    ctx->unk28 = src->unk04;
+    scale.x = 1.0f;
+    scale.y = 1.0f;
+    scale.z = 1.0f;
+    BoneScales_Init(ctx->scales, *ctx->model, &scale);
+    if (ctx->hasSkel) {
+        SkelNodes_Construct(ctx);
+    }
+}
+#undef SkelNodes_Construct /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003A9F20 */

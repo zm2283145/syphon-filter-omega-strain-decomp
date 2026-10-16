@@ -1,3 +1,11 @@
+/*
+ * main/vu1model: 3 files, 00377920-00377C30
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_00377920 */
+#pragma push /* merge_units */
 #pragma cplusplus on
 #include "types.h"
 typedef struct { char pad[0x58]; int n; } MatL;
@@ -88,4 +96,43 @@ extern "C" void Model_Load(ModelL* m, void* f, void* tex) {
     Model_SetupMaterialFx(m);
     m->hdr->loaded = 1;
 }
+#pragma pop /* merge_units */
+/* merge_units: end func_00377920 */
 
+/* merge_units: begin func_00377BD0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+#include "self_call_dtor.h"
+
+DEFINE_SELF_CALL_DTOR(func_00377BD0, Model_Unload)
+#pragma pop /* merge_units */
+/* merge_units: end func_00377BD0 */
+
+/* merge_units: begin func_00377C30 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Original translation unit not identified yet; functions are named by address
+ * until real names are known.
+ */
+
+#include "loose03_types.h"
+
+/* Rec377C30 constructor: zero all words, set the flag byte. */
+Rec377C30* func_00377C30(Rec377C30* self) {
+    self->unk[0] = 0;
+    self->unk[1] = 0;
+    self->unk[2] = 0;
+    self->unk[3] = 0;
+    self->unk[4] = 0;
+    self->unk[5] = 0;
+    self->unk[6] = 0;
+    self->unk[7] = 0;
+    self->unk[8] = 0;
+    self->unk[9] = 0;
+    self->unk[10] = 0;
+    self->unk2C = 1;
+    return self;
+}
+#pragma pop /* merge_units */
+/* merge_units: end func_00377C30 */

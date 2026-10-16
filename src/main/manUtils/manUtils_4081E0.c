@@ -1,3 +1,11 @@
+/*
+ * main/manUtils: 3 files, 004081E0-00408470
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_004081E0 */
+#pragma push /* merge_units */
 #pragma cplusplus on
 #include "types.h"
 #include "net_recv_guard.h"
@@ -54,3 +62,29 @@ Obj4081E0* o;
     return 0x18;
 }
 #pragma pop
+#pragma pop /* merge_units */
+/* merge_units: end func_004081E0 */
+
+/* merge_units: begin func_004083D0 */
+#pragma push /* merge_units */
+#include "message_pack.h"
+
+#define PACK_BODY(e, b) MP_U(b, 8) = MP_U(e, 0x2E); MP_I(b, 0xC) = MP_I(MP_P(e, 0x28), 0xC); MP_H(b, 0x10) = MP_U(e, 0x2D); MP_H(b, 0x14) = MP_I(e, 0x24); MP_H(b, 0x12) = MP_U(e, 0x2C);
+
+DEFINE_MESSAGE_PACK(cDamageMsg_v02, 0x18, D_005716F8, PACK_BODY)
+#pragma pop /* merge_units */
+/* merge_units: end func_004083D0 */
+
+/* merge_units: begin func_00408470 */
+#pragma push /* merge_units */
+typedef struct { int a; int b; unsigned char ready; } O470;
+extern int func_004084D0(O470* o, const char* name, unsigned char* out);
+unsigned char MaterialProps_Find(O470* o, const char* name) {
+    unsigned char r = 0;
+    if (!o->ready || !name || !*name)
+        return 0;
+    func_004084D0(o, name, &r);
+    return r;
+}
+#pragma pop /* merge_units */
+/* merge_units: end func_00408470 */

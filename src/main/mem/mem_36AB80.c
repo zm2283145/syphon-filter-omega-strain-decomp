@@ -1,3 +1,11 @@
+/*
+ * main/mem: 3 files, 0036AB80-0036AFC0
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_0036AB80 */
+#pragma push /* merge_units */
 #pragma opt_propagation off
 #include "types.h"
 typedef struct {
@@ -121,9 +129,70 @@ void Font_LoadFnt(ObjAB80* obj, int arg1, char* name)
     FileMan_Release(&fm2, -1);
     FileMan_Release(&fm, -1);
 }
+#pragma pop /* merge_units */
+/* merge_units: end func_0036AB80 */
+
+/* merge_units: begin func_0036AF40 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+
+/* Deleting destructor: restore the vtable of the subobject at +0x8A74, release the handle at +0. */
+extern "C" {
+extern void * const D_004DF630[];
+void operator_delete(void* allocation);
+void func_003813A0(int mgr, int handle, int flags);
+}
+struct O36AF40 { int handle; char pad[0x8A70]; void* vtable; };
+extern "C" O36AF40* func_0036AF40(O36AF40* self, short deleteFlag)
+{
+    if (self) {
+        self->vtable = ((char*)D_004DF630);
+        func_003813A0(D_00539248, self->handle, 0);
+        if (deleteFlag > 0)
+            operator_delete(self);
+    }
+    return self;
+}
+void * const D_004DF630[4] = { (void*)0x0, (void*)0x0, (void*)func_0036AF40, (void*)0x0 };
+#pragma pop /* merge_units */
+/* merge_units: end func_0036AF40 */
+
+/* merge_units: begin func_0036AFC0 */
+#pragma push /* merge_units */
+typedef struct Scale4 {
+    float x, y, z, w;
+} Scale4;
+
+typedef struct Obj36A {
+    char pad[0x10];
+    Scale4 scales[8];
+    unsigned char enabled;
+    char pad2[0xB];
+    int unk9C;
+    char pad3[0x8A74 - 0xA0];
+    void* vtable;
+} Obj36A;
+
+#if 0 /* merge_units */
+extern char D_004DF630[]; /* vtable */
+#endif /* merge_units */
+#define D_004DF630 ((char*)&D_004DF630) /* merge_units */
 
 
-
-
-
-
+/* Constructor: sets the vtable, eight (0.5, 0.5, 0.5, 1) entries, enabled = 1. */
+Obj36A* Font_ctor(Obj36A* self) {
+    int i;
+    self->vtable = D_004DF630;
+    for (i = 0; i < 8; i++) {
+        self->scales[i].x = 0.5f;
+        self->scales[i].y = 0.5f;
+        self->scales[i].z = 0.5f;
+        self->scales[i].w = 1.0f;
+    }
+    self->enabled = 1;
+    self->unk9C = 0;
+    return self;
+}
+#undef D_004DF630 /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0036AFC0 */

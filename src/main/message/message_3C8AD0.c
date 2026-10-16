@@ -1,3 +1,11 @@
+/*
+ * main/message: 3 files, 003C8AD0-003C8C40
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_003C8AD0 */
+#pragma push /* merge_units */
 #include "types.h"
 typedef struct { int a, b, c, d; } I4;
 extern float D_005383A8;
@@ -56,4 +64,40 @@ void* s = D_005390F0; __int128 t; void* d = vu + 1;
         asm { ctc2.ni m, vi27 }
     }
 }
+#pragma pop /* merge_units */
+/* merge_units: end func_003C8AD0 */
 
+/* merge_units: begin func_003C8BF0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+
+#include "trivial_dtor.h"
+
+/* Deleting destructor with nothing to destroy. */
+DEFINE_TRIVIAL_DTOR(func_003C8BF0)
+#pragma pop /* merge_units */
+/* merge_units: end func_003C8BF0 */
+
+/* merge_units: begin func_003C8C40 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Script type key accessors for Message (just before message.cc).
+ */
+
+#include "loose03_types.h"
+
+extern int D_00543610;          /* Message script type key */
+
+void func_003C8C40(void) {
+}
+
+int* Message_GetScriptTypeKeyPtr(void) {
+    return &D_00543610;
+}
+
+int Message_GetScriptTypeKey(void) {
+    return D_00543610;
+}
+#pragma pop /* merge_units */
+/* merge_units: end func_003C8C40 */

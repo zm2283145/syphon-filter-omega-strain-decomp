@@ -1,4 +1,12 @@
 /*
+ * main/weapon: 2 files, 00147910-001479B0
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_00147910 */
+#pragma push /* merge_units */
+/*
  * Matched functions (byte-identical with the retail executable).
  * Original translation unit not identified yet; functions are named by address
  * until real names are known.
@@ -45,3 +53,15 @@ int Global_ReloadWeapons(void) {
 
 void func_001479A0(void) {
 }
+#pragma pop /* merge_units */
+/* merge_units: end func_00147910 */
+
+/* merge_units: begin func_001479B0 */
+#pragma push /* merge_units */
+/* Returns 1.0f. */
+float Light_GetCoronaSize(void)
+{
+    return 1.0f;
+}
+#pragma pop /* merge_units */
+/* merge_units: end func_001479B0 */

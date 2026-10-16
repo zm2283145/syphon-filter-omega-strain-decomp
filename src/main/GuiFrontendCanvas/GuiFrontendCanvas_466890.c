@@ -1,3 +1,11 @@
+/*
+ * main/GuiFrontendCanvas: 2 files, 00466890-00466960
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_00466890 */
+#pragma push /* merge_units */
 #pragma cplusplus on
 #include "types.h"
 #include "alloc_guard.h"
@@ -22,3 +30,27 @@ extern "C" G00466890* func_00466890(void)
     }
     return p;
 }
+#pragma pop /* merge_units */
+/* merge_units: end func_00466890 */
+
+/* merge_units: begin func_00466960 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+extern "C" {
+extern char D_004C2B38[];extern char D_004E19B0[];
+}
+struct G00466960 { void* vtable; };extern "C" G00466960* func_00466960(void)
+{
+    G00466960* p;
+    {
+        AllocGuard guard;
+        p = (G00466960*)Mem_Alloc(0, 0x70, D_004C2B38, 0x2A);
+    }
+    if (p) {
+        func_004160A0(p);
+        p->vtable = D_004E1A20; p->vtable = D_004E19B0; GW(0x6C) = 0;
+    }
+    return p;
+}
+#pragma pop /* merge_units */
+/* merge_units: end func_00466960 */

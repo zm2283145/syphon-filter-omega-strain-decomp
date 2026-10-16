@@ -1,3 +1,11 @@
+/*
+ * main/callback: 5 files, 003E9550-003E9940
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_003E9550 */
+#pragma push /* merge_units */
 #pragma cplusplus on
 #include "types.h"
 #include "vslot_pad.h"
@@ -79,5 +87,166 @@ extern "C" void func_003E9550(S_9550* self)
         func_003E8040(self->target, &m);
     }
 }
+#pragma pop /* merge_units */
+/* merge_units: end func_003E9550 */
 
+/* merge_units: begin func_003E96F0 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Original translation unit not identified yet; functions are named by address
+ * until real names are known.
+ */
 
+#include "loose04_types.h"
+
+extern void IeElement_SetPosition(int, void*);
+extern void HudTracker_ToCameraSpace(void*);
+extern float IeElement_Fade(int, float);
+extern void IeElement_EvaluateAt(int, float);
+
+void func_003E96F0(Unk3E96F0* self) {
+    HudTracker_ToCameraSpace(self->unk70);
+    IeElement_SetPosition(self->unk60, self->unk70);
+}
+
+void func_003E9730(Unk3E96F0* self) {
+    IeElement_EvaluateAt(self->unk60, 0.0f);
+    self->unk84 = 1;
+}
+
+void HudTracker_Kill(Unk3E96F0* self) {
+    IeElement_Fade(self->unk60, 0.0f);
+    self->unk84 = 1;
+}
+
+void HudTracker_Attach(Unk3E96F0* self, int* value, int arg) {
+    self->unk68 = *value;
+    self->unk64 = 1;
+    self->unk80 = arg;
+}
+#pragma pop /* merge_units */
+/* merge_units: end func_003E96F0 */
+
+/* merge_units: begin func_003E97D0 */
+#pragma push /* merge_units */
+#include "v4_asm_copy.h"
+typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V3E97D0;
+typedef struct { char mtx[0x110]; } Cam3E97D0;
+typedef struct { char p0[0x1F0]; Cam3E97D0 cams[1]; } W3E97D0;
+typedef struct { char p0[0x60]; int h; char p64[0xC]; V3E97D0 dir; } S3E97D0;
+#if 0 /* merge_units */
+extern void HudTracker_ToCameraSpace(V3E97D0*);
+#endif /* merge_units */
+#define HudTracker_ToCameraSpace(a0) (HudTracker_ToCameraSpace((void *)(a0))) /* merge_units */
+
+extern void Renderer_ProjectToScreen(V3E97D0* out, void* m, V3E97D0* v);
+#if 0 /* merge_units */
+extern void IeElement_SetPosition(int h, V3E97D0* v);
+#endif /* merge_units */
+#define IeElement_SetPosition(a0, a1) (IeElement_SetPosition((a0), (void *)(a1))) /* merge_units */
+
+extern W3E97D0 D_005381F0;
+extern int D_00538C60;
+#pragma push
+#pragma opt_common_subs off
+#pragma opt_propagation off
+void HudTracker_Draw(S3E97D0* s)
+{
+    V3E97D0 t;
+    unsigned char neg;
+    HudTracker_ToCameraSpace(&s->dir);
+    neg = s->dir.y < 0.0f;
+    Renderer_ProjectToScreen(&t, D_005381F0.cams[D_00538C60].mtx, &s->dir);
+    {
+        V3E97D0* d = &s->dir;
+        V3E97D0* q = &t;
+        V4Copy(d, q);
+    }
+    if (neg) s->dir.z = -s->dir.z;
+    IeElement_SetPosition(s->h, &s->dir);
+}
+#pragma pop
+#undef HudTracker_ToCameraSpace /* merge_units */
+#undef IeElement_SetPosition /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003E97D0 */
+
+/* merge_units: begin func_003E9880 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+struct V_E98 { __int128 q; V_E98() {} V_E98& operator=(const V_E98& o) { V_E98* pd = this; const V_E98* ps = &o; asm volatile { lq ps, 0(ps); sq ps, 0(pd) } return *this; } };
+struct Obj_E98 {
+    virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+    virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+    virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+    virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+    virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23(); virtual void v24();
+    virtual void v25(); virtual void v26(); virtual void v27(); virtual void v28(); virtual void v29();
+    virtual void v30(); virtual void v31(); virtual void v32(); virtual void v33(); virtual void v34();
+    virtual void v35(); virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
+    virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43(); virtual void v44(); virtual void v45();
+    virtual V_E98 GetNodePos(int node);
+};
+struct T_E98 { int a; float y; };
+struct S_E98 {
+    char pad[0x60];
+    T_E98* x60;
+    unsigned char x64;
+    char pad65[3];
+    int x68;
+    char pad6C[4];
+    V_E98 x70;
+    int x80;
+    unsigned char x84;
+};
+extern "C" {
+#if 0 /* merge_units */
+Obj_E98* Object_LookupById(int* id);
+#endif /* merge_units */
+#define Object_LookupById(a0) ((Obj_E98 *)Object_LookupById((a0))) /* merge_units */
+
+void Object_Unregister(S_E98* s);
+void Object_DeleteLater(S_E98* s, float t);
+void HudTracker_Update(S_E98* s);
+}
+void HudTracker_Update(S_E98* s)
+{
+    if (s->x64) {
+        Obj_E98* o = Object_LookupById(&s->x68);
+        if (o) {
+            s->x70 = o->GetNodePos(s->x80);
+        } else {
+            s->x64 = 0;
+        }
+    }
+    if (s->x84 && s->x60->y < 0.5f) {
+        Object_Unregister(s);
+        Object_DeleteLater(s, 0.1f);
+        s->x84 = 0;
+    }
+}
+#undef Object_LookupById /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003E9880 */
+
+/* merge_units: begin func_003E9940 */
+#pragma push /* merge_units */
+typedef struct { void* vt; char pad[0x5C]; void* m60; } G9940;
+extern char D_004E05A0[];
+extern void IeElement_Release(void* p);
+extern void cGOBJ_dtor(void* self, short del);
+extern void operator_delete(void* p);
+G9940* func_003E9940(G9940* self, short del)
+{
+    if (self) {
+        self->vt = D_004E05A0;
+        IeElement_Release(self->m60);
+        cGOBJ_dtor(self, 0);
+        if (del > 0)
+            operator_delete(self);
+    }
+    return self;
+}
+#pragma pop /* merge_units */
+/* merge_units: end func_003E9940 */

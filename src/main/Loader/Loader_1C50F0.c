@@ -1,3 +1,11 @@
+/*
+ * main/Loader: 2 files, 001C50F0-001C5370
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_001C50F0 */
+#pragma push /* merge_units */
 #pragma cplusplus on
 #include "types.h"
 #include "tstr_types.h"
@@ -42,4 +50,23 @@ extern "C" void func_001C50F0(PRVec_1C50F0* v, int* first, int* last)
     }
     v->count = n;
 }
+#pragma pop /* merge_units */
+/* merge_units: end func_001C50F0 */
 
+/* merge_units: begin func_001C5370 */
+#pragma push /* merge_units */
+typedef struct { char unused; } Alloc;
+typedef struct { int* begin; int* end; int* cap; } IntVec;
+extern void func_001C53C0(IntVec* v, int* first, int* last, Alloc alloc);
+/* Constructs a vector as a copy of the range held by src. */
+IntVec* func_001C5370(IntVec* v, PtrVec* src)
+{
+    Alloc alloc;
+    v->begin = 0;
+    v->end = 0;
+    v->cap = 0;
+    func_001C53C0(v, src->data, src->data + src->count, alloc);
+    return v;
+}
+#pragma pop /* merge_units */
+/* merge_units: end func_001C5370 */

@@ -1,3 +1,11 @@
+/*
+ * main/NetMsgThrottle: 2 files, 004768E0-00476970
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_004768E0 */
+#pragma push /* merge_units */
 #include "types.h"
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
@@ -26,3 +34,32 @@ void func_004768E0(int arg0) {
     sl.f20[0] = &D_004DCF10;
     cMessage_dtor(sl.f20, 0);
 }
+#pragma pop /* merge_units */
+/* merge_units: end func_004768E0 */
+
+/* merge_units: begin func_00476970 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * cActivateBodyTossMsg method; address lies after NetMsgThrottle.cc (ends 0x00472370).
+ */
+
+#include "loose05_types.h"
+
+#if 0 /* merge_units */
+extern unsigned char* D_005061D0; /* write cursor of a byte stream */
+#endif /* merge_units */
+#define D_005061D0 (*(unsigned char **)&D_005061D0) /* merge_units */
+
+
+/* Appends the message's byte at +0x24 to the stream and advances the cursor. */
+void cActivateBodyTossMsg_v04(BodyTossMsg* self) {
+    unsigned char value;
+
+    value = self->unk24;
+    *D_005061D0 = value;
+    D_005061D0 = D_005061D0 + 1;
+}
+#undef D_005061D0 /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_00476970 */

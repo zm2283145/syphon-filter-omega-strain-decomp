@@ -1,3 +1,11 @@
+/*
+ * main/gui: 2 files, 00414620-00414790
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_00414620 */
+#pragma push /* merge_units */
 #pragma cplusplus on
 #include "types.h"
 #include "alloc_guard.h"
@@ -29,3 +37,28 @@ extern "C" void func_00414620(char * arg0, int arg1, int arg2, char *arg3, char 
     Mem_Free(arg1, arg0, arg3, arg4);
     }
 }
+#pragma pop /* merge_units */
+/* merge_units: end func_00414620 */
+
+/* merge_units: begin func_00414790 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Original translation unit not identified yet; functions are named by address
+ * until real names are known.
+ */
+
+#include "loose04_types.h"
+
+extern int D_00571FB0;
+extern int D_00571FB8;
+
+int Gui_GetScreenList(void) {
+    return D_00571FB8;
+}
+
+int Gui_GetScreenStack(void) {
+    return D_00571FB0;
+}
+#pragma pop /* merge_units */
+/* merge_units: end func_00414790 */

@@ -1,3 +1,11 @@
+/*
+ * main/npc: 2 files, 00147A20-00147B40
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_00147A20 */
+#pragma push /* merge_units */
 #pragma cplusplus on
 #include "msg_clone.h"
 extern "C" char D_004D92A0[];
@@ -18,3 +26,14 @@ MSG_CLONE_BEGIN(func_00147A20, 0x30, "ai.hh", 0x14C)
     F(float, 0x28) = S(float, 0x28);
     F(float, 0x2C) = S(float, 0x2C);
 MSG_CLONE_END
+#pragma pop /* merge_units */
+/* merge_units: end func_00147A20 */
+
+/* merge_units: begin func_00147B40 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+#include "vtable_base_dtor.h"
+
+DEFINE_VTABLE_BASE_DTOR(func_00147B40, D_004D92A0, cMessage_dtor)
+#pragma pop /* merge_units */
+/* merge_units: end func_00147B40 */

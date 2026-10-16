@@ -1,3 +1,11 @@
+/*
+ * main/ska: 6 files, 003BAC20-003BAFC0
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_003BAC20 */
+#pragma push /* merge_units */
 #pragma cplusplus on
 #include "types.h"
 #pragma always_inline on
@@ -66,4 +74,110 @@ extern "C" SkelNode* SkelNode_Construct(SkelNode* d)
     d->v1C0 = QZero();
     return d;
 }
+#pragma pop /* merge_units */
+/* merge_units: end func_003BAC20 */
 
+/* merge_units: begin func_003BAE50 */
+#pragma push /* merge_units */
+typedef struct { char pad[0x60]; unsigned char a; unsigned char b; } BAE50Item;
+typedef struct { int pad[2]; BAE50Item** items; } BAE50Tbl;
+typedef struct { int i0; int i1; } BAE50Pair;
+extern BAE50Tbl* D_00539248;
+int ShadowBuf_IsResident(BAE50Pair* p) {
+    BAE50Item** arr = D_00539248->items;
+    int r = (arr[p->i0]->a & arr[p->i0]->b) != 0;
+    if (p->i1 != -1) {
+        unsigned char res = 0;
+        if (r) {
+            if (arr[p->i1]->a & arr[p->i1]->b) res = 1;
+        }
+        r = res;
+    }
+    return r;
+}
+#pragma pop /* merge_units */
+/* merge_units: end func_003BAE50 */
+
+/* merge_units: begin func_003BAED0 */
+#pragma push /* merge_units */
+/* Texture base page (in 32-block units) of the referenced entry, 0 if none. */
+typedef struct { unsigned char pad[0x50]; unsigned long long tex0; } Tex_3BAED0;
+typedef struct { int pad0[2]; Tex_3BAED0** entries; } Table_3BAED0;
+typedef struct { int pad0; int index; } Ref_3BAED0;
+#if 0 /* merge_units */
+extern Table_3BAED0* D_00539248;
+#endif /* merge_units */
+#define D_00539248 (*(Table_3BAED0 **)&D_00539248) /* merge_units */
+
+
+unsigned int func_003BAED0(Ref_3BAED0* r)
+{
+    if (r->index != -1)
+        return (unsigned int)(int)(D_00539248->entries[r->index]->tex0 & 0x3FFF) >> 5;
+    return 0;
+}
+#undef D_00539248 /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003BAED0 */
+
+/* merge_units: begin func_003BAF20 */
+#pragma push /* merge_units */
+typedef struct { char pad[0x50]; unsigned long bits; } Entry50;
+typedef struct { char pad[8]; Entry50** entries; } EntryTable;
+
+#if 0 /* merge_units */
+extern EntryTable* D_00539248;
+#endif /* merge_units */
+#define D_00539248 (*(EntryTable **)&D_00539248) /* merge_units */
+
+
+/* Returns bits 5..13 of the 64-bit field at +0x50 of the indexed table entry. */
+unsigned int func_003BAF20(int* index)
+{
+    return (unsigned int)(int)(D_00539248->entries[*index]->bits & 0x3FFF) >> 5;
+}
+#undef D_00539248 /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003BAF20 */
+
+/* merge_units: begin func_003BAF60 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Look up a texture by the index stored in a handle and return a size field
+ * of its info header. Original translation unit not identified yet.
+ */
+
+#include "loose03_types.h"
+
+#if 0 /* merge_units */
+extern TexRegistry* D_00539248;
+#endif /* merge_units */
+#define D_00539248 (*(TexRegistry **)&D_00539248) /* merge_units */
+
+
+int func_003BAF60(int* handle) {
+    return D_00539248->entries[*handle]->info->unk06;
+}
+
+int func_003BAF90(int* handle) {
+    return D_00539248->entries[*handle]->info->unk04;
+}
+#undef D_00539248 /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003BAF60 */
+
+/* merge_units: begin func_003BAFC0 */
+#pragma push /* merge_units */
+#if 0 /* merge_units */
+extern void* D_00539248;
+#endif /* merge_units */
+#define D_00539248 (*(void **)&D_00539248) /* merge_units */
+
+extern void TexMan_ReleaseSlot(void*, int);
+typedef struct { int a; int b; } Pair_003BAFC0;
+/* Applies the global handler to the first id and, if valid, the second id. */
+void RenderTarget_Release(Pair_003BAFC0* p) { TexMan_ReleaseSlot(D_00539248, p->a); if (p->b != -1) TexMan_ReleaseSlot(D_00539248, p->b); }
+#undef D_00539248 /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_003BAFC0 */

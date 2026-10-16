@@ -1,3 +1,11 @@
+/*
+ * main/man: 6 files, 00392380-00392670
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_00392380 */
+#pragma push /* merge_units */
 #pragma cplusplus on
 #include "types.h"
 #pragma always_inline on
@@ -100,10 +108,132 @@ extern "C" Man* ManModel_ClearAttachPoints(Man* self)
     return self;
 }
 #pragma pop
+#pragma pop /* merge_units */
+/* merge_units: end func_00392380 */
+
+/* merge_units: begin func_003925C0 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Original translation unit not identified yet; functions are named by address
+ * until real names are known.
+ */
 
 
+int func_003925C0(void) {
+    return 0;
+}
+#pragma pop /* merge_units */
+/* merge_units: end func_003925C0 */
 
+/* merge_units: begin func_003925D0 */
+#pragma push /* merge_units */
+/* Compiled as C++ (virtual calls through $t9 only come from real virtual dispatch). */
+#pragma cplusplus on
 
+typedef union ScriptArg { int i; float f; void* p; unsigned char b; signed char c; } ScriptArg;
 
+/* Virtual-call view of cPARTICLE_GOBJ: only the slots used here are named (vtable offset in comments). */
+struct cPARTICLE_GOBJ {
+    virtual void v00(); virtual void v01(); virtual void v02(); virtual void v03(); virtual void v04(); virtual void v05();
+    virtual void v06(); virtual void v07(); virtual void v08(); virtual void v09(); virtual void v0A(); virtual void v0B();
+    virtual void v0C(); virtual void v0D(); virtual void v0E(); virtual void v0F(); virtual void v10(); virtual void v11();
+    virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17();
+    virtual void v18(); virtual void v19(); virtual void v1A(); virtual void v1B(); virtual void v1C(); virtual void v1D();
+    virtual void v1E(); virtual void v1F(); virtual void v20();
+    virtual void ScaleBBox(float value); /* +0x8C */
+};
 
+/* Script native: cPARTICLE_GOBJ::ScaleBBox((float)args[1]); the argument goes through a stack temporary. Returns 0. */
+extern "C" int Script_cPARTICLE_GOBJ_ScaleBBox(ScriptArg* args)
+{
+    int part[1];
+    cPARTICLE_GOBJ* obj;
+    part[0] = args[1].i;
+    obj = (cPARTICLE_GOBJ*)args[0].p;
+    obj->ScaleBBox(*(float*)part);
+    return 0;
+}
+#pragma pop /* merge_units */
+/* merge_units: end func_003925D0 */
 
+/* merge_units: begin func_00392610 */
+#pragma push /* merge_units */
+/* Compiled as C++ (virtual calls through $t9 only come from real virtual dispatch). */
+#pragma cplusplus on
+
+typedef union ScriptArg_00392610 { int i; float f; void* p; unsigned char b; } ScriptArg_00392610;
+
+struct cPARTICLE_GOBJ_00392610 {
+    virtual void v00(); virtual void v01(); virtual void v02(); virtual void v03(); virtual void v04(); virtual void v05();
+    virtual void v06(); virtual void v07(); virtual void v08(); virtual void v09(); virtual void v0A(); virtual void v0B();
+    virtual void v0C(); virtual void v0D(); virtual void v0E(); virtual void v0F(); virtual void v10(); virtual void v11();
+    virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17();
+    virtual void Disable(int value); /* +0x68 */
+};
+
+/* Script native: cPARTICLE_GOBJ::Disable(-1) on args[0]; returns 0. */
+extern "C" int Script_cPARTICLE_GOBJ_Disable(ScriptArg_00392610* args)
+{
+    cPARTICLE_GOBJ_00392610* obj = (cPARTICLE_GOBJ_00392610*)args[0].p;
+    obj->Disable(-1);
+    return 0;
+}
+#pragma pop /* merge_units */
+/* merge_units: end func_00392610 */
+
+/* merge_units: begin func_00392640 */
+#pragma push /* merge_units */
+/* Compiled as C++ (virtual calls through $t9 only come from real virtual dispatch). */
+#pragma cplusplus on
+
+typedef union ScriptArg_00392640 { int i; float f; void* p; } ScriptArg_00392640;
+
+/* Virtual-call view of cPARTICLE_GOBJ: only the slots used here are named (vtable offset in comments). */
+struct cPARTICLE_GOBJ_00392640 {
+    virtual void v00(); virtual void v01(); virtual void v02(); virtual void v03(); virtual void v04(); virtual void v05();
+    virtual void v06(); virtual void v07(); virtual void v08(); virtual void v09(); virtual void v0A(); virtual void v0B();
+    virtual void v0C(); virtual void v0D(); virtual void v0E(); virtual void v0F(); virtual void v10(); virtual void v11();
+    virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16();
+    virtual void Enable(int mode); /* +0x64 */
+};
+
+/* Script native: cPARTICLE_GOBJ::Enable(-1) on args[0]; returns 0. */
+extern "C" int Script_cPARTICLE_GOBJ_Enable(ScriptArg_00392640* args)
+{
+    cPARTICLE_GOBJ_00392640* obj = (cPARTICLE_GOBJ_00392640*)args[0].p;
+    obj->Enable(-1);
+    return 0;
+}
+#pragma pop /* merge_units */
+/* merge_units: end func_00392640 */
+
+/* merge_units: begin func_00392670 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Script type registration for cPARTICLE_GOBJ (code follows the man.cc range).
+ */
+
+#include "loose03_types.h"
+
+extern int D_0053B500;
+extern int D_0053B508;          /* cPARTICLE_GOBJ script type */
+extern char D_00555070[];       /* script filter context */
+extern int ScriptFilter_Dispatch(void* ctx, int a0, int a1);
+extern int* cGOBJ_GetScriptTypeKeyPtr(void);
+extern void ScriptType_SetParent(int type, int parent);
+
+void ScriptType_cPARTICLE_GOBJ_Init(void) {
+    ScriptType_SetParent(D_0053B508, *cGOBJ_GetScriptTypeKeyPtr());
+}
+
+int func_003926A0(void) {
+    return D_0053B500;
+}
+
+int func_003926B0(int a0, int a1) {
+    return ScriptFilter_Dispatch(D_00555070, a0, a1);
+}
+#pragma pop /* merge_units */
+/* merge_units: end func_00392670 */

@@ -1,3 +1,11 @@
+/*
+ * main/callback: 3 files, 003E9A60-003E9BA0
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_003E9A60 */
+#pragma push /* merge_units */
 #pragma cplusplus on
 #include "types.h"
 #pragma opt_rebuildconditionals off
@@ -47,6 +55,51 @@ extern "C" void HudTracker_ToCameraSpace(V9A60* v)
         }
     }
 }
+#pragma pop /* merge_units */
+/* merge_units: end func_003E9A60 */
 
+/* merge_units: begin func_003E9B20 */
+#pragma push /* merge_units */
+typedef struct { void* vt; char pad[0x5C]; void* m60; } G9B20;
+extern char D_004E0360[];
+extern char D_004E05A0[];
+extern void IeElement_Release(void* p);
+extern void cGOBJ_dtor(void* self, short del);
+extern void operator_delete(void* p);
+G9B20* func_003E9B20(G9B20* self, short del)
+{
+    if (self) {
+        self->vt = D_004E0360;
+        if (self) {
+            self->vt = D_004E05A0;
+            IeElement_Release(self->m60);
+            cGOBJ_dtor(self, 0);
+        }
+        if (del > 0)
+            operator_delete(self);
+    }
+    return self;
+}
+#pragma pop /* merge_units */
+/* merge_units: end func_003E9B20 */
 
-
+/* merge_units: begin func_003E9BA0 */
+#pragma push /* merge_units */
+typedef struct { void* vt; char pad[0x5C]; void* m60; } G9BA0;
+extern char D_004E0480[];
+G9BA0* HudTracker_Delete(G9BA0* self, short del)
+{
+    if (self) {
+        self->vt = D_004E0480;
+        if (self) {
+            self->vt = D_004E05A0;
+            IeElement_Release(self->m60);
+            cGOBJ_dtor(self, 0);
+        }
+        if (del > 0)
+            operator_delete(self);
+    }
+    return self;
+}
+#pragma pop /* merge_units */
+/* merge_units: end func_003E9BA0 */

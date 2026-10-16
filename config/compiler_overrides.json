@@ -4619,5 +4619,13 @@
   "main/human/func_001A3170": "cwps2-3.0b38",
   "main/NIEvent/func_0023A250": "cwps2-3.0b38",
   "main/func_002C5E50": "cwps2-3.0b38",
-  "main/func_003C6440": "cwps2-3.0b38"
+  "main/func_003C6440": "cwps2-3.0b38",
+  "lib/func_002D9C10": "ee-gcc2.96",
+  "lib/func_002FD718": "ee-gcc2.96",
+  "main/human/func_00192FE0": "cwps2-3.0b38",
+  "main/human/func_001A2B20": "cwps2-3.0b38",
+  "main/SpecFxDefs/func_00236380": "cwps2-3.0b38",
+  "main/GuiEquipmentModify/func_002BDC10": "cwps2-3.0b38",
+  "main/func_002D1290": "cwps2-3.0b38",
+  "main/ska/func_003ADDE0": "cwps2-3.0b38"
 }

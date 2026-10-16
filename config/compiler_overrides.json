@@ -4613,5 +4613,11 @@
   "main/player/func_00175B00": "cwps2-3.0b38",
   "main/human/func_001AD710": "cwps2-3.0b38",
   "main/func_001D7CE0": "cwps2-3.0b38",
-  "main/func_004411F0": "cwps2-3.0b38"
+  "main/func_004411F0": "cwps2-3.0b38",
+  "main/gameCamera/func_0017CAE0": "cwps2-3.0b38",
+  "main/human/func_00184AF0": "cwps2-3.0b38",
+  "main/human/func_001A3170": "cwps2-3.0b38",
+  "main/NIEvent/func_0023A250": "cwps2-3.0b38",
+  "main/func_002C5E50": "cwps2-3.0b38",
+  "main/func_003C6440": "cwps2-3.0b38"
 }

@@ -4627,5 +4627,12 @@
   "main/SpecFxDefs/func_00236380": "cwps2-3.0b38",
   "main/GuiEquipmentModify/func_002BDC10": "cwps2-3.0b38",
   "main/func_002D1290": "cwps2-3.0b38",
-  "main/ska/func_003ADDE0": "cwps2-3.0b38"
+  "main/ska/func_003ADDE0": "cwps2-3.0b38",
+  "main/npc/func_0014E0C0": "cwps2-3.0b38",
+  "main/hotbox/func_001734F0": "cwps2-3.0b38",
+  "main/func_00178AA0": "cwps2-3.0b38",
+  "main/SpecFxDefs/func_00236BE0": "cwps2-3.0b38",
+  "main/ska/func_003B2370": "cwps2-3.0b38",
+  "main/func_003CAB50": "cwps2-3.0b38",
+  "main/guiTextListWidget/func_00420F90": "cwps2-3.0b38"
 }

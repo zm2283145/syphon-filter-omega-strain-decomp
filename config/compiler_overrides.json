@@ -5024,5 +5024,8 @@
   "main/ska/func_003B2950": "cwps2-3.0b38",
   "main/ska/func_003B2C50": "cwps2-3.0b38",
   "main/ska/func_003B3A10": "cwps2-3.0b38",
-  "main/func_00413FB0": "cwps2-3.0b38"
+  "main/func_00413FB0": "cwps2-3.0b38",
+  "main/gameCamera/func_0017E3F0": "cwps2-3.0b38",
+  "main/vu1model/func_00377050": "cwps2-3.0b38",
+  "main/ska/func_003B2290": "cwps2-3.0b38"
 }

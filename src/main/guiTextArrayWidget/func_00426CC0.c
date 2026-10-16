@@ -8,14 +8,14 @@
 #include "guiTextArrayWidget_types.h"
 
 extern char D_004E0DC0[];   /* guiTextArrayWidget vtable */
-extern void* func_00424C50(void* self);
+extern void* GuiArrayWidget_ctor(void* self);
 extern Rel* func_00427000(Rel* r);
 
 /* guiTextArrayWidget constructor. */
 guiTextArrayWidget* guiTextArrayWidget_ctor(guiTextArrayWidget* self) {
     TextArrayStore* store;
 
-    func_00424C50(self);
+    GuiArrayWidget_ctor(self);
     store = &self->store;
     self->vtable = D_004E0DC0;
     func_00427000((Rel*)store);

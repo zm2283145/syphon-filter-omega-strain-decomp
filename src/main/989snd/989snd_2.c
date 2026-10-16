@@ -11,7 +11,7 @@
 /* 0x30-byte argument block of command 0x5C (role unknown); `flags` says which fields are valid */
 typedef struct { union { int i; long long l; } u; int d; int e; __int128 c; short f1; short f2; char p24[4]; int flags; char p2C[4]; } P3A8070;
 extern int snd_SendIOPCommandNoWait(int cmd, int size, void* data, int x, long long y);
-int func_003A8070(int a, long long b, __int128 c, int d, int e, short f1, short f2, int x, long long y)
+int snd_PlaySoundVolPan(int a, long long b, __int128 c, int d, int e, short f1, short f2, int x, long long y)
 {
     P3A8070 p;
     int* fl = &p.flags;
@@ -44,7 +44,7 @@ extern int snd_SendIOPCommandNoWait(int, int, int, int, int);
 
 
 /* Command 0xB with one word (role unknown). */
-void func_003A80F0(int a0) {
+void snd_SetPlaybackMode(int a0) {
     int loc[1];
     int a1, a2, a3, t0, v0;
 
@@ -72,7 +72,7 @@ extern int snd_SendIOPCommandNoWait(int cmd, int size, void* data, int x, int y)
 #endif /* merge_units */
 #define snd_SendIOPCommandNoWait(a0, a1, a2, a3, a4) (snd_SendIOPCommandNoWait((a0), (a1), (a2), (a3), (long long)(a4))) /* merge_units */
 
-int func_003A8120(int a, S3A8120* s)
+int snd_SetMasterVolumeDucker(int a, S3A8120* s)
 {
     P3A8120 p;
     S3A8120* d = &p.s;
@@ -169,7 +169,7 @@ extern int D_00542904;
 /*
  * CD-busy check: without D_0053DC00 set this is sceCdSync(w); otherwise it
  * polls the busy word D_00542800 (invalidating the cached copy first) and
- * records the result in D_0053DC18. Same helpers as func_003A7200.
+ * records the result in D_0053DC18. Same helpers as snd_CloseVAGStreaming.
  */
 static inline unsigned char Done3A8260(void) { return !D_00542800; }
 static inline int Poll3A8260(char* k) {

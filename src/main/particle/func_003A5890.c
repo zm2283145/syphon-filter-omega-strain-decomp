@@ -3,7 +3,7 @@
 typedef struct { void* vt; char pad[0x88C]; float mn[4]; float mx[4]; } BoundsObj;
 extern char D_004DFAA0[];
 /* Constructor: sets vtable and empty bounds. */
-BoundsObj* func_003A5890(BoundsObj* o)
+BoundsObj* ParticleDef_ParseType1(BoundsObj* o)
 {
     o->vt = D_004DFAA0;
     o->mn[0] = FLT_MAX; o->mn[1] = FLT_MAX; o->mn[2] = FLT_MAX; o->mn[3] = 1.0f;

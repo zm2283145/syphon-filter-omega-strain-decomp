@@ -37,7 +37,7 @@ void List_Erase(LIt_415950* out, List_415950* list, LIt_415950* pos);
 W_415950** func_00415B20(List_415950* list);
 }
 
-extern "C" void func_00415950(W_415950* o, float dt)
+extern "C" void GuiCanvas_UpdateStack(W_415950* o, float dt)
 {
     if (o->flags & 4) {
         LIt_415950 last;

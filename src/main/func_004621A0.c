@@ -5,18 +5,18 @@ extern "C" {
 extern "C" void GuiEndGameObjectives_IsType();
 extern "C" void GuiObjectives_HandleEvent();
 extern "C" void GuiObjectives_Init();
-extern "C" void func_0041D400();
-extern "C" void func_0041D5C0();
-extern "C" void func_0041D780();
-extern "C" void func_0041D8C0();
+extern "C" void GuiWidget_FocusPrev();
+extern "C" void GuiWidget_FocusNext();
+extern "C" void GuiWidget_FocusLast();
+extern "C" void GuiWidget_FocusFirst();
 extern "C" void func_0041E230();
 extern "C" void func_0041E2B0();
 extern "C" void func_0041E330();
-extern "C" void func_0041E470();
+extern "C" void GuiWidget_Draw();
 extern "C" void func_0041EBF0();
 extern "C" void func_0041F070();
 extern "C" void func_0041F080();
-extern "C" void func_0041F090();
+extern "C" void GuiWidget_Deinit();
 extern "C" void func_0041F210();
 extern "C" void func_00462270();
 extern "C" void func_00462340();
@@ -27,7 +27,7 @@ extern char D_004DF5C0[];
 void operator_delete(void* allocation);
 void FileMan_Release(void* self, int flags);
 void func_00461DC0(void* self, int flags);
-void func_0041F370(void* self, int flags);
+void GuiWidget_Destroy(void* self, int flags);
 }
 struct O4621A0 { void* vtable; };
 extern "C" O4621A0* func_004621A0(O4621A0* self, short deleteFlag)
@@ -55,11 +55,11 @@ extern "C" O4621A0* func_004621A0(O4621A0* self, short deleteFlag)
         }
         if (self) {
             self->vtable = D_004DF5C0;
-            func_0041F370(self, 0);
+            GuiWidget_Destroy(self, 0);
         }
         if (deleteFlag > 0)
             operator_delete(self);
     }
     return self;
 }
-void * const D_004E17C0[24] = { (void*)0x0, (void*)0x0, (void*)func_004621A0, (void*)GuiObjectives_Init, (void*)func_0041F090, (void*)func_0041F080, (void*)func_0041F070, (void*)func_004624E0, (void*)func_0041EBF0, (void*)func_0041E330, (void*)func_0041E2B0, (void*)func_00462380, (void*)func_0041E470, (void*)func_0041E230, (void*)func_00462270, (void*)GuiObjectives_HandleEvent, (void*)func_0041F210, (void*)func_0041D8C0, (void*)func_0041D780, (void*)func_0041D5C0, (void*)func_0041D400, (void*)func_00462340, (void*)GuiEndGameObjectives_IsType, (void*)0x0 };
+void * const D_004E17C0[24] = { (void*)0x0, (void*)0x0, (void*)func_004621A0, (void*)GuiObjectives_Init, (void*)GuiWidget_Deinit, (void*)func_0041F080, (void*)func_0041F070, (void*)func_004624E0, (void*)func_0041EBF0, (void*)func_0041E330, (void*)func_0041E2B0, (void*)func_00462380, (void*)GuiWidget_Draw, (void*)func_0041E230, (void*)func_00462270, (void*)GuiObjectives_HandleEvent, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)func_00462340, (void*)GuiEndGameObjectives_IsType, (void*)0x0 };

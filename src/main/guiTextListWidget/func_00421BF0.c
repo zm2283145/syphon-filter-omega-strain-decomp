@@ -36,14 +36,14 @@ typedef struct Widget {
 } Widget;
 
 extern char D_004E0C80[];
-extern "C" void func_00424C50(Widget* self);
+extern "C" void GuiArrayWidget_ctor(Widget* self);
 extern "C" void func_00421F10(Anim* anim);
 
 /* Constructor: base init, vtable D_004E0C80, animation sub-object, default mode 2 and colour/scale defaults. */
-extern "C" Widget* func_00421BF0(Widget* self)
+extern "C" Widget* GuiTextListWidget_ctor(Widget* self)
 {
     Anim* anim;
-    func_00424C50(self);
+    GuiArrayWidget_ctor(self);
     self->vtable = D_004E0C80;
     anim = &self->anim;
     func_00421F10(anim);

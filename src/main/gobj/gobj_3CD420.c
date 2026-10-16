@@ -22,7 +22,7 @@ typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;struct N_3C
 struct X_3CD420 { char pad[0x50]; N_3CD420* n; };
 #pragma push
 #pragma opt_common_subs off
-extern "C" void func_003CD420(V4* out, X_3CD420* x) {
+extern "C" void Node_GetLightRefPoint(V4* out, X_3CD420* x) {
     N_3CD420* n = x->n;
     if (n) {
         if (n->dirty) n->Update();

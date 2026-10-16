@@ -23,7 +23,7 @@ void List_Begin_16E880(Word* w, void* l);
 int* func_002440B0(int* dst, int value);
 void func_00244080(Word* w, void* l);
 Word* func_00244070(Word* dst, Word* src);
-void func_003E7670(int a);
+void IeScreen_Draw(int a);
 void Hud_DrawCallouts(char* o);
 }
 #define Begin_244B90(l) (List_Begin_16E880(&tmp, l), func_002440B0(&r, tmp.value), (char*)r)
@@ -47,11 +47,11 @@ extern "C" void Hud_Draw(char* o)
                     a->Draw();
                 }
             }
-            func_003E7670(F_(o, 0x54, int));
+            IeScreen_Draw(F_(o, 0x54, int));
             func_0037A1E0(D_005381F0);
         } else {
             Hud_DrawCallouts(o);
-            func_003E7670(F_(o, 0x54, int));
+            IeScreen_Draw(F_(o, 0x54, int));
             Gui_GetScreenStack()->Refresh();
         }
     } else {
@@ -71,8 +71,8 @@ typedef struct { char pad[0x14]; unsigned short flags; char pad16[0x32]; char su
 typedef struct { float time; unsigned char b4; char pad5[3]; float f8; unsigned char bC; char padD[3]; Ob_244D10* obj; Tx_244D10* text; } T_244D10;
 typedef struct { float r, g, b, a; } Col_244D10;
 extern "C" int ScriptEvent_TimeFormat(char* buf, float seconds);
-extern "C" void func_0041C070(Tx_244D10* t, Col_244D10* c);
-extern "C" void func_0041BEB0(Tx_244D10* t, char* text, int zero);
+extern "C" void GuiTextWidget_SetColour(Tx_244D10* t, Col_244D10* c);
+extern "C" void GuiTextWidget_SetText(Tx_244D10* t, char* text, int zero);
 extern "C" int String_Length(void* p);
 
 extern "C" bool HudTimer_Update(T_244D10* t, float now)
@@ -107,8 +107,8 @@ extern "C" bool HudTimer_Update(T_244D10* t, float now)
                 }
             }
             if (show) {
-                func_0041C070(t->text, &c);
-                func_0041BEB0(t->text, buf, 0);
+                GuiTextWidget_SetColour(t->text, &c);
+                GuiTextWidget_SetText(t->text, buf, 0);
                 t->text->flags |= 2;
                 if (String_Length(t->obj->sub))
                     t->obj->flags |= 2;
@@ -130,18 +130,18 @@ static inline void merge_flush_func_00244D10(void) {}
 typedef struct { float time; unsigned char b4; char pad5[3]; int f8; int pad; void* target; } T4EE0;
 extern char D_004A7218[];
 #if 0 /* merge_units */
-extern void func_0041BEB0(void* target, const char* text, int zero);
+extern void GuiTextWidget_SetText(void* target, const char* text, int zero);
 #endif /* merge_units */
-#define func_0041BEB0(a0, a1, a2) (func_0041BEB0((void *)(a0), (void *)(a1), (a2))) /* merge_units */
+#define GuiTextWidget_SetText(a0, a1, a2) (GuiTextWidget_SetText((void *)(a0), (void *)(a1), (a2))) /* merge_units */
 
 void HudTimer_Start(T4EE0* t, char* text, float time) {
     t->time = time;
     t->f8 = 0;
     t->b4 = 0;
     if (t->target)
-        func_0041BEB0(t->target, text ? text : D_004A7218, 0);
+        GuiTextWidget_SetText(t->target, text ? text : D_004A7218, 0);
 }
-#undef func_0041BEB0 /* merge_units */
+#undef GuiTextWidget_SetText /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00244EE0(void) {}
 #pragma pop /* merge_units */

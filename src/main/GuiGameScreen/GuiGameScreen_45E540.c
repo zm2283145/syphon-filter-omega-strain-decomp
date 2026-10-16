@@ -31,7 +31,7 @@ extern void GuiWidget_ctor(Widget0045E540* w);
 extern void func_001C10A0(List0045E540* list);
 extern void PtrVec_Reserve(List0045E540* list, int n);
 /* Constructor. */
-Widget0045E540* func_0045E540(Widget0045E540* w)
+Widget0045E540* GuiGameScreen_ctor(Widget0045E540* w)
 {
     List0045E540* b;
     List0045E540* a;
@@ -76,7 +76,7 @@ extern void* GObj_IdentityB(void* obj);
 extern int Global_ClearInteract(void* obj);
 extern void Global_DisplayInteract(int text, int flag);
 extern int Global_DisplayInteract_2(void* obj, int text, int flag);
-extern void func_0045EC60(void);
+extern void GameScreen_ClearInteractLocal(void);
 
 /* Script native: ClearInteract(obj). */
 int Script_ClearInteract_2(ScriptArg* args) {
@@ -86,7 +86,7 @@ int Script_ClearInteract_2(ScriptArg* args) {
 
 /* Script native: ClearInteract(). */
 int Script_ClearInteract(void) {
-    func_0045EC60();
+    GameScreen_ClearInteractLocal();
     return 0;
 }
 

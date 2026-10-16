@@ -55,7 +55,7 @@ extern char D_004AA288[];
 void GuiCommandCenter_OpenPanel(S_00295640* self, int a);
 void GuiCommandCenter_MoveSelection(S_00295640* self, unsigned char a);
 void* Gui_GetScreenStack(void);
-void func_0041E0F0(void* a, void* b, int c, int d, int e);
+void GuiWidget_SendEvent(void* a, void* b, int c, int d, int e);
 int func_0033CE30(S_00295640* self, int a, int b, int c, int d, int e);
 int FrontEnd_OpenPopup(void* ui, int a, char* b, int c, S_00295640* d, int e);
 #if 0 /* merge_units */
@@ -82,7 +82,7 @@ extern "C" int GuiCommandCenter_HandleInput(S_00295640* self, Ev_00295640* ev)
             if (self->b178[self->f1CC])
                 GuiCommandCenter_OpenPanel(self, self->c1B4[self->f1CC]);
             else
-                func_0041E0F0(self->p118[self->f1CC], Gui_GetScreenStack(), 0x10, 4, 0);
+                GuiWidget_SendEvent(self->p118[self->f1CC], Gui_GetScreenStack(), 0x10, 4, 0);
             return 1;
         }
         if (b == 0x10) {

@@ -10,12 +10,12 @@
 /* merge_units: begin func_00394720 */
 #pragma push /* merge_units */
 extern char D_0053B540[];
-extern void func_00398070(void* list, int value, void* item);
+extern void ParticleLib_Request(void* list, int value, void* item);
 
 /* Registers the object's +0x60 sub-object in the global list D_0053B540. */
 void ParticleGob_RequestPar(char* self, int* arg)
 {
-    func_00398070(D_0053B540, *arg, self + 0x60);
+    ParticleLib_Request(D_0053B540, *arg, self + 0x60);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00394720(void) {}

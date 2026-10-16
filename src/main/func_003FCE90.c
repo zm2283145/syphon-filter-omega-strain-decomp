@@ -6,7 +6,7 @@ Word* func_003FCF60(Word* dst, Word* src);
 void func_003FCF70(Word* out, PtrVec* v);
 void func_003FCF90(Word* out, PtrVec* self, Word* src);
 int func_003FCFA0(PtrVec* v);
-void func_003F45A0(void* item, float t);
+void IeElement_EvaluateAt(void* item, float t);
 }
 
 #pragma bool off
@@ -27,6 +27,6 @@ extern "C" void func_003FCE90(Holder* self, float t)
     void** p;
     GetBegin(&it, &self->items);
     for (p = (void**)it.value; GetEnd(&end, &self->items), Ne((int)p, end.value); p++) {
-        func_003F45A0(*p, t);
+        IeElement_EvaluateAt(*p, t);
     }
 }

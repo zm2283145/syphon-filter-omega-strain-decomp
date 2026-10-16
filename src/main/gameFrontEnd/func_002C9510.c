@@ -25,7 +25,7 @@ void func_003D1730(void* p);
 G_002C9510* DME_GetLobby(void);
 void DME_StartThread(void);
 int Gui_GetScreenStack(void);
-void func_0041E0F0(int a, int b, int c, int d, int e);
+void GuiWidget_SendEvent(int a, int b, int c, int d, int e);
 char* strncpy(char* d, const char* s, int n);
 void* Service_Lookup(void* a, void* b);
 void Event_Construct(void* m, void* type);
@@ -61,7 +61,7 @@ void FrontEnd_ResumeGui(Self_002C9510* self)
             }
             D_0051EF68 = 0;
             a = Gui_GetScreenStack();
-            func_0041E0F0(a, Gui_GetScreenStack(), 0x10, 5, 0);
+            GuiWidget_SendEvent(a, Gui_GetScreenStack(), 0x10, 5, 0);
             {
                 char* d = buf.s;
                 const char* s = D_004FFC90;

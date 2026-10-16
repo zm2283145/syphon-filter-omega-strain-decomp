@@ -112,7 +112,7 @@ void Projectile_QueryCandidates(Query* q);
 int func_001B8740(Tgt* t);
 void Hud_ShowCallout(float a, float b, int c, void* pos, void* name, int d, int e, int f);
 void func_00266BA0(void* a, Mtx* m, int n, Seg* s);
-void func_003A2400(float dt, int a, Mtx* m, int b);
+void ParticleInst_Update(float dt, int a, Mtx* m, int b);
 void func_00264BB0(HeldItem* h, Tgt* t, int part);
 void func_00265790(float a, HeldItem* h, int b);
 int func_00265910(HeldItem* h);
@@ -232,7 +232,7 @@ extern "C" void HeldItem_UpdateFlight(HeldItem* self, float dt) {
     Emit(self, a);
     Emit(self, b);
     *(V4*)self->m60.m[3] = b;
-    func_003A2400(dt, self->xC0, &self->m60, 0);
+    ParticleInst_Update(dt, self->xC0, &self->m60, 0);
     if (live && q.hit && q.tgt) {
         self->Clear();
         unsigned char k = q.tgt->Kind();

@@ -168,8 +168,8 @@ extern char D_004A91A0[];
 extern char D_004A91B0[];
 extern void* D_004FFC3C;
 void ParticleEmitter_SetRate(Emitter* e, float r);
-void func_003A2400(Emitter* e, float dt, M* m, int z);
-void func_003A2BA0(Emitter* e, int f);
+void ParticleInst_Update(Emitter* e, float dt, M* m, int z);
+void ParticleInst_Kill(Emitter* e, int f);
 void Projectile_QueryCandidates(Query* q);
 Material* Material_Lookup(void* ref);
 const char* String_CStr_189540(void* s);
@@ -249,7 +249,7 @@ extern "C" void BulletPool_UpdateAll(Bullet* s, float dt)
             float r = 1.0f; float b = s->age / (float)ty->t3C; for (int i = 0; i < D_0048B340; i++) r *= b;
             ParticleEmitter_SetRate(s->emitter, D_0048B330 + r * (D_0048B338 - D_0048B330));
         }
-        func_003A2400(s->emitter, dt, (M*)&s->m0, 0);
+        ParticleInst_Update(s->emitter, dt, (M*)&s->m0, 0);
     }
     if (s->active) {
         float step = dt * s->speed;
@@ -438,7 +438,7 @@ extern "C" void BulletPool_UpdateAll(Bullet* s, float dt)
             if (e->busy == 0) {
                 {
                     AllocGuard g;
-                    func_003A2BA0(e, -1);
+                    ParticleInst_Kill(e, -1);
                     Mem_Free(0, e, D_004A91A0, 0x216);
                 }
                 s->emitter = 0;

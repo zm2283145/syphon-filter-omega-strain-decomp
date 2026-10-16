@@ -5,7 +5,7 @@ typedef struct { char pad[0x3524]; I242* f3524; } P242;
 typedef struct { char pad[0xD4]; int fd4; int fd8; } T242;
 typedef struct { char pad[0x694]; int f694; unsigned char b698; char p699[3]; void* f69c; char pad2[4]; T242* f6a4; unsigned char b6a8; } H242;
 typedef struct { char pad[0xF0]; unsigned char bf0; char pad2[0x2B]; int f11c; char pad3[0x1C]; int f13c; } W242;
-extern void func_003E7EC0(void*, char*);
+extern void IeElement_SetText(void*, char*);
 extern char D_004A7218[];
 extern int WeaponInv_GetHeldClass(I242*);
 extern int WeaponInv_GetSpare(I242*, int);
@@ -22,7 +22,7 @@ void Hud_UpdateAmmoText(H242* h, P242* p) {
     if (inv->b84 != 6) id = inv->s[inv->b84].id;
     else id = -1;
     if (id == -1) {
-        func_003E7EC0(h->f69c, D_004A7218);
+        IeElement_SetText(h->f69c, D_004A7218);
         h->f694 = h->f6a4->fd8;
         h->b698 = 7;
         return;
@@ -36,7 +36,7 @@ void Hud_UpdateAmmoText(H242* h, P242* p) {
             sprintf(buf, "%d/%d", a, WeaponInv_GetSpare(inv, 6));
         }
     }
-    func_003E7EC0(h->f69c, buf);
+    IeElement_SetText(h->f69c, buf);
     w = WeaponDb_Get(D_004FFD30, id);
     if (w->bf0 == 7) {
         h->f694 = w->f11c;

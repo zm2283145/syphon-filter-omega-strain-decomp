@@ -26,7 +26,7 @@ extern int String_ToLower(int c);
 
 static inline unsigned int Min_3A5550(unsigned int a, unsigned int b) { return a < b ? a : b; }
 
-void func_003A5550(char* out, const char* path, unsigned int n)
+void ParticleLib_NormalizeName(char* out, const char* path, unsigned int n)
 {
     char* p;
     char buf[0x80];
@@ -72,8 +72,8 @@ char* strchr(const char*, int);
 #define strchr(a0, a1) (strchr((a0), (a1))) /* merge_units */
 
 int strtoul(char*, char**, int);
-void func_003A5890(void*);
-void func_003A43A0(void*, float, char*, int);
+void ParticleDef_ParseType1(void*);
+void ParticleDef_ParseCommon(void*, float, char*, int);
 extern char D_004BC5D0[];
 extern char D_004DFB90[];
 extern char D_004DFB70[];
@@ -100,7 +100,7 @@ inline Obj3A5630* Ctor3A5630(Obj3A5630* r, char* vt, int end)
 {
     if (r) {
         Elem3A5630* e;
-        func_003A5890(r);
+        ParticleDef_ParseType1(r);
         r->vt = vt;
         e = r->e;
         do {
@@ -111,7 +111,7 @@ inline Obj3A5630* Ctor3A5630(Obj3A5630* r, char* vt, int end)
     return r;
 }
 
-extern "C" Obj3A5630* func_003A5630(void* self, char* str, int arg, Obj3A5630* obj)
+extern "C" Obj3A5630* ParticleDef_Parse(void* self, char* str, int arg, Obj3A5630* obj)
 {
     char* s = str;
     Obj3A5630* r = 0;
@@ -131,7 +131,7 @@ extern "C" Obj3A5630* func_003A5630(void* self, char* str, int arg, Obj3A5630* o
             r = Ctor3A5630((Obj3A5630*)Alloc3A5630(0xA70, 0x1AF), D_004DFB70, 0xA20);
         }
         r->type = type;
-        func_003A43A0(r, ver, s, arg);
+        ParticleDef_ParseCommon(r, ver, s, arg);
     }
     return r;
 }

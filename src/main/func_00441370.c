@@ -32,7 +32,7 @@ int FrontEnd_OpenPopup(int, int, char*, char*, void*, int);
 void FrontEnd_ClosePopup(int, int);
 unsigned char AgentData_Create(int, int, int);
 unsigned char AgentData_Save(int);
-unsigned char func_0045A2A0(int);
+unsigned char GameOptions_WriteConfigFile(int);
 void func_0040DC80(Net_441370*, char*);
 int func_004422D0(int, char*, char*);
 int func_00441780(Obj_441370*);
@@ -52,7 +52,7 @@ extern "C" void func_00441370(Obj_441370* self)
             self->dlg = ShowDlg(D_004FFC04, 0, D_004C0448, D_004C0458, self, 0);
         }
         if (self->mode == 4) {
-            ok = func_0045A2A0(D_004FFD2C);
+            ok = GameOptions_WriteConfigFile(D_004FFD2C);
         } else {
             char addr[0x20];
             if (func_004422D0(self->f50, (char*)Agent_GetSelected(D_004FFB50, -1) + 0x8AC, addr))

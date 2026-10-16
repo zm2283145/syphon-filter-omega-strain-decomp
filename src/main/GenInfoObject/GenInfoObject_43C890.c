@@ -67,7 +67,7 @@ extern void* D_00539248;
 #endif /* merge_units */
 #define D_00539248 (*(void **)&D_00539248) /* merge_units */
 
-extern void func_0041F090(Obj* self);
+extern void GuiWidget_Deinit(Obj* self);
 #if 0 /* merge_units */
 extern void func_003813A0(void* mgr, int handle, int a2);
 #endif /* merge_units */
@@ -93,7 +93,7 @@ extern void String_Dtor(String* s, int flags);
 void func_0043CA20(Obj* self)
 {
     String tmp;
-    func_0041F090(self);
+    GuiWidget_Deinit(self);
     if (self->handle != -1) {
         func_003813A0(D_00539248, self->handle, 0);
         self->handle = -1;

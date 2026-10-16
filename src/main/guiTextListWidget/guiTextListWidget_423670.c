@@ -12,7 +12,7 @@
 
 extern "C" {
 int func_00423BE0(GuiGridWidget* self, unsigned int visibleRow);
-void func_0041E470(GuiGridWidget* self);
+void GuiWidget_Draw(GuiGridWidget* self);
 }
 
 /* Draw visible column backgrounds, row backgrounds and cells before drawing children. */
@@ -77,7 +77,7 @@ extern "C" void func_00423670(GuiGridWidget* self)
         }
         cellY -= (float)self->rowHeight;
     }
-    func_0041E470(self);
+    GuiWidget_Draw(self);
 }
 
 static inline int magnitude(int value)
@@ -113,8 +113,8 @@ extern "C" int func_00423BE0(GuiGridWidget* self, unsigned int visibleRow)
 #pragma cplusplus on
 
 extern "C" {
-void func_00424430(GuiGridWidget* self, unsigned int column, unsigned int row);
-void func_0041E040(GuiGridWidget* self, int message, unsigned int first, unsigned int second);
+void GuiArrayWidget_Select(GuiGridWidget* self, unsigned int column, unsigned int row);
+void GuiWidget_SendEventUp(GuiGridWidget* self, int message, unsigned int first, unsigned int second);
 }
 
 static inline unsigned char is_button_event(const GuiGridInput* input)
@@ -134,16 +134,16 @@ static inline bool pressed(const GuiGridInput* input, unsigned short button)
 static inline void notify_change(GuiGridWidget* self, unsigned int column, unsigned int row)
 {
     if (column != self->selectedColumn || row != self->selectedRow)
-        func_0041E040(self, 16, 0, 0);
+        GuiWidget_SendEventUp(self, 16, 0, 0);
 }
 
 /* Handle grid confirmation and navigation while preserving boundary and wrap behavior. */
-extern "C" int func_00423CC0(GuiGridWidget* self, const GuiGridInput* input)
+extern "C" int GuiArrayWidget_OnInput(GuiGridWidget* self, const GuiGridInput* input)
 {
     if (is_button_event(input)) {
         if (pressed(input, 0x40)) {
-            func_0041E040(self, 16, 1, 0);
-            func_0041E040(self, 19, self->selectedColumn, self->selectedRow);
+            GuiWidget_SendEventUp(self, 16, 1, 0);
+            GuiWidget_SendEventUp(self, 19, self->selectedColumn, self->selectedRow);
             return 1;
         }
         unsigned int column = self->selectedColumn;
@@ -151,17 +151,17 @@ extern "C" int func_00423CC0(GuiGridWidget* self, const GuiGridInput* input)
         if (self->selectionMode != 1 && self->rows) {
             if (pressed(input, 0x1000)) {
                 if (row)
-                    func_00424430(self, column, row - 1);
+                    GuiArrayWidget_Select(self, column, row - 1);
                 else if (self->wrapRows && self->rows > 1)
-                    func_00424430(self, column, self->rows - 1);
+                    GuiArrayWidget_Select(self, column, self->rows - 1);
                 notify_change(self, column, row);
                 return 1;
             }
             if (pressed(input, 0x4000)) {
                 if (row != self->rows - 1)
-                    func_00424430(self, column, row + 1);
+                    GuiArrayWidget_Select(self, column, row + 1);
                 else if (self->wrapRows && self->rows > 1)
-                    func_00424430(self, column, 0);
+                    GuiArrayWidget_Select(self, column, 0);
                 notify_change(self, column, row);
                 return 1;
             }
@@ -175,7 +175,7 @@ extern "C" int func_00423CC0(GuiGridWidget* self, const GuiGridInput* input)
                             else
                                 target = 0;
                         }
-                        func_00424430(self, column, target);
+                        GuiArrayWidget_Select(self, column, target);
                         notify_change(self, column, row);
                     }
                     return 1;
@@ -189,7 +189,7 @@ extern "C" int func_00423CC0(GuiGridWidget* self, const GuiGridInput* input)
                             else
                                 target = self->rows - 1;
                         }
-                        func_00424430(self, column, target);
+                        GuiArrayWidget_Select(self, column, target);
                         notify_change(self, column, row);
                     }
                     return 1;
@@ -200,17 +200,17 @@ extern "C" int func_00423CC0(GuiGridWidget* self, const GuiGridInput* input)
             /* Retail horizontal edge handling reselects the edge instead of wrapping. */
             if (pressed(input, 0x2000)) {
                 if (column != self->columns - 1)
-                    func_00424430(self, column + 1, row);
+                    GuiArrayWidget_Select(self, column + 1, row);
                 else if (self->wrapRows && self->columns > 1)
-                    func_00424430(self, self->columns - 1, row);
+                    GuiArrayWidget_Select(self, self->columns - 1, row);
                 notify_change(self, column, row);
                 return 1;
             }
             if (pressed(input, 0x8000)) {
                 if (column)
-                    func_00424430(self, column - 1, row);
+                    GuiArrayWidget_Select(self, column - 1, row);
                 else if (self->wrapRows && self->columns > 1)
-                    func_00424430(self, 0, row);
+                    GuiArrayWidget_Select(self, 0, row);
                 notify_change(self, column, row);
                 return 1;
             }
@@ -249,14 +249,14 @@ void func_00424410(GuiWidget424C50* self, int* outA, int* outB) {
 #pragma cplusplus on
 
 extern "C" {
-void func_00424670(GuiGridWidget* self, unsigned int column, unsigned int row);
+void GuiArrayWidget_Scroll(GuiGridWidget* self, unsigned int column, unsigned int row);
 void func_0041EBA0(GuiGridWidget* widget, float x, float y);
 void func_0043BC70(void* scrollbar, int first, unsigned int value, int minimum,
                    unsigned int maximum);
 }
 
 /* Notify selection changes, reveal the selected cell and update its indicators. */
-extern "C" void func_00424430(GuiGridWidget* self, unsigned int column, unsigned int row)
+extern "C" void GuiArrayWidget_Select(GuiGridWidget* self, unsigned int column, unsigned int row)
 {
     if (!self->columns && !self->rows) {
         self->selectedColumn = column;
@@ -268,7 +268,7 @@ extern "C" void func_00424430(GuiGridWidget* self, unsigned int column, unsigned
             self->selectedRow = row;
             self->on_selected(self->selectedColumn, self->selectedRow);
             if (!self->fixedViewport)
-                func_00424670(self, self->selectedColumn, self->selectedRow);
+                GuiArrayWidget_Scroll(self, self->selectedColumn, self->selectedRow);
         }
         if (self->marker && self->selectionMode == 2) {
             float y = self->y;
@@ -283,7 +283,7 @@ extern "C" void func_00424430(GuiGridWidget* self, unsigned int column, unsigned
 }
 
 /* Test whether the cell lies inside the current viewport, unless it is fixed. */
-extern "C" bool func_004245D0(GuiGridWidget* self, unsigned int column, unsigned int row)
+extern "C" bool GuiArrayWidget_IsCellVisible(GuiGridWidget* self, unsigned int column, unsigned int row)
 {
     if (self->fixedViewport)
         return true;
@@ -294,7 +294,7 @@ extern "C" bool func_004245D0(GuiGridWidget* self, unsigned int column, unsigned
 }
 
 /* Move the viewport enough to include the cell and clamp its last visible row. */
-extern "C" void func_00424670(GuiGridWidget* self, unsigned int column, unsigned int row)
+extern "C" void GuiArrayWidget_Scroll(GuiGridWidget* self, unsigned int column, unsigned int row)
 {
     if (!self->fixedViewport) {
         if (column < self->firstColumn)
@@ -335,7 +335,7 @@ extern void func_0043BC70(void*, int, int, int, int);
 #endif /* merge_units */
 #define func_0043BC70(a0, a1, a2, a3, a4) (func_0043BC70((a0), (a1), (unsigned int)(a2), (a3), (unsigned int)(a4))) /* merge_units */
 
-void func_00424750(O424* o, int a, int b) {
+void GuiArrayWidget_SetDims(O424* o, int a, int b) {
     o->n48 = a;
     o->f4c = b;
     o->f70 = a;
@@ -368,14 +368,14 @@ int func_00424800(PtrVec* v, int value) {
 extern "C" unsigned int func_004249A0(GuiGridWidget* self, unsigned int column);
 
 /* Set the row height and recompute the number of complete visible rows. */
-extern "C" void func_00424820(GuiGridWidget* self, unsigned int height)
+extern "C" void GuiArrayWidget_RowHeight(GuiGridWidget* self, unsigned int height)
 {
     self->rowHeight = height;
     self->visibleRows = (unsigned int)(self->height / (float)self->rowHeight);
 }
 
 /* Let the last column consume remaining width, falling back to its requested size. */
-extern "C" void func_004248C0(GuiGridWidget* self, unsigned int column, unsigned int width)
+extern "C" void GuiArrayWidget_ColumnWidth(GuiGridWidget* self, unsigned int column, unsigned int width)
 {
     if (column < self->columns - 1)
         self->columnWidths[column] = width;
@@ -417,7 +417,7 @@ struct Widget {
 extern "C" void func_0041E2B0(Widget* self);
 
 /* func_0041E2B0 then virtual slot +0x70 with fields +0x50/+0x54. */
-extern "C" void func_004249D0(Widget* self)
+extern "C" void GuiArrayWidget_OnLoseFocus(Widget* self)
 {
     func_0041E2B0(self);
     self->Method70(self->unk50, self->unk54);
@@ -446,7 +446,7 @@ struct Widget_00424A10 {
 extern "C" void func_0041E330(Widget_00424A10* self);
 
 /* Runs func_0041E330, then the virtual at vtable+0x6C with the two words at +0x50/+0x54. */
-extern "C" void func_00424A10(Widget_00424A10* self)
+extern "C" void GuiArrayWidget_OnGainFocus(Widget_00424A10* self)
 {
     func_0041E330(self);
     self->Method6C(self->unk50, self->unk54);
@@ -478,23 +478,23 @@ extern "C" void func_00424A50(Widget* self)
 extern "C" {
 void func_0041EFA0(GuiGridWidget* self);
 #if 0 /* merge_units */
-void func_004248C0(GuiGridWidget* self, unsigned int column, unsigned int width);
+void GuiArrayWidget_ColumnWidth(GuiGridWidget* self, unsigned int column, unsigned int width);
 #endif /* merge_units */
-#define func_004248C0(a0, a1, a2) ((void)func_004248C0((a0), (a1), (a2))) /* merge_units */
+#define GuiArrayWidget_ColumnWidth(a0, a1, a2) ((void)GuiArrayWidget_ColumnWidth((a0), (a1), (a2))) /* merge_units */
 
 }
 
 /* Reset selection, refresh visible dimensions and notify the initial selected cell. */
-extern "C" void func_00424A90(GuiGridWidget* self)
+extern "C" void GuiArrayWidget_OnWake(GuiGridWidget* self)
 {
     func_0041EFA0(self);
     self->selectedColumn = 0;
     self->selectedRow = 0;
     self->visibleRows = (unsigned int)(self->height / (float)self->rowHeight);
     if (self->columns == 1)
-        func_004248C0(self, 0, (unsigned int)self->width);
+        GuiArrayWidget_ColumnWidth(self, 0, (unsigned int)self->width);
     self->on_selected(self->selectedColumn, self->selectedRow);
 }
-#undef func_004248C0 /* merge_units */
+#undef GuiArrayWidget_ColumnWidth /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00424A90 */

@@ -17,7 +17,7 @@
 struct VC00456600 { virtual int v0(); virtual int v1(); virtual int v2(); virtual int v3(); virtual int v4(); virtual int v5(); virtual int v6(); virtual int v7(); virtual int v8(); virtual int v9(); virtual int v10(); virtual int v11(); virtual int v12(); virtual int v13(); virtual int v14(); virtual int v15(); virtual int v16(); virtual int v17(); virtual int v18(); virtual int v19(); virtual int v20(...); };
 extern "C" {
 int Loc_LookupText(...);                             
-int func_0041BEB0(...);                   
+int GuiTextWidget_SetText(...);                   
 void **GuiWidget_FindChildByName(...);                          
 int sprintf(...);                           
 extern int D_004A7520;
@@ -35,10 +35,10 @@ extern "C" void func_00456600(int arg0, int arg1) {
         sprintf(sp30, ((int*)"StartMenuOpt%d"), arg1);
         temp_v0 = Loc_LookupText(sp30);
         if (temp_v0 != NULL) {
-            func_0041BEB0(var_s0, temp_v0, 0);
+            GuiTextWidget_SetText(var_s0, temp_v0, 0);
             return;
         }
-        func_0041BEB0(var_s0, &D_004C1A38, 0);
+        GuiTextWidget_SetText(var_s0, &D_004C1A38, 0);
     }
 }
 #pragma pop /* merge_units */
@@ -59,13 +59,13 @@ Mgr_4566D0* Gui_GetScreenStack(void);
 void Hud_ClosePauseMenu(void* p);
 void Game_SetPaused(void* p, int v);
 int GuiObjectives_HandleInput(O_4566D0* o, Ev_4566D0* ev);
-int func_004566D0(O_4566D0* o, Ev_4566D0* ev);
+int GuiStartMenu_OnInput(O_4566D0* o, Ev_4566D0* ev);
 }
 static inline bool Down2_4566D0(Ev_4566D0* e) { return e->type == 1 && e->b2 == 0; }
 static inline bool Btn2_4566D0(Ev_4566D0* e, int b) { return Down2_4566D0(e) && e->btn == b; }
 static inline bool Plain2_4566D0(Ev_4566D0* e, int b) { return Btn2_4566D0(e, b) && e->b6 == 0; }
 
-int func_004566D0(O_4566D0* o, Ev_4566D0* ev)
+int GuiStartMenu_OnInput(O_4566D0* o, Ev_4566D0* ev)
 {
     if (Plain2_4566D0(ev, 0x10) && Gui_GetScreenStack()->sel->f1C == o->fAC) {
         Hud_ClosePauseMenu(D_004FFC2C);

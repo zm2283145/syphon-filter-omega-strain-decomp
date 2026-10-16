@@ -23,7 +23,7 @@ int Mem_Free();
 
 
 extern "C" {
-int func_003A2BA0(...);                            
+int ParticleInst_Kill(...);                            
 int Object_Deactivate(...);                         
 extern unsigned char D_00533880;
 }
@@ -35,7 +35,7 @@ extern "C" void ParticleGob_OnAbsent(char * arg0, int arg1) {
     if (temp_s2 != 0) {
         {
             AllocGuard g;
-        func_003A2BA0(temp_s2, -1);
+        ParticleInst_Kill(temp_s2, -1);
         Mem_Free(0, temp_s2, "gameobj.cc", 0x286);
         }
         F_(arg0, 0x64, int) = 0;
@@ -129,13 +129,13 @@ typedef struct {
     char pad68[8];
     float scale;
 } Obj;
-extern Box *func_003A2A90(void *);
+extern Box *ParticleInst_ComputeBounds(void *);
 extern signed char D_0053B4C0;
 extern Box D_0053B4D0;
 Box *ParticleGob_GetBounds(Obj *o)
 {
     if (o->mdl != 0) {
-    if (o->scale == 1.0f) return func_003A2A90(o->mdl);
+    if (o->scale == 1.0f) return ParticleInst_ComputeBounds(o->mdl);
     if (!D_0053B4C0) {
         D_0053B4D0.min.x = 3.4028235e38f;
         D_0053B4D0.min.y = 3.4028235e38f;
@@ -147,12 +147,12 @@ Box *ParticleGob_GetBounds(Obj *o)
         D_0053B4D0.max.w = 1.0f;
         D_0053B4C0 = 1;
     }
-    Q43(&D_0053B4D0.min, &func_003A2A90(o->mdl)->min);
-    D_0053B4D0.min.x = o->scale * func_003A2A90(o->mdl)->min.x;
-    D_0053B4D0.min.y = o->scale * func_003A2A90(o->mdl)->min.y;
-    Q43(&D_0053B4D0.max, &func_003A2A90(o->mdl)->max); { void* xx = &D_0053B4D0.max; /* dead on purpose: retail keeps this addiu */ }
-    D_0053B4D0.max.x = o->scale * func_003A2A90(o->mdl)->max.x;
-    D_0053B4D0.max.y = o->scale * func_003A2A90(o->mdl)->max.y;
+    Q43(&D_0053B4D0.min, &ParticleInst_ComputeBounds(o->mdl)->min);
+    D_0053B4D0.min.x = o->scale * ParticleInst_ComputeBounds(o->mdl)->min.x;
+    D_0053B4D0.min.y = o->scale * ParticleInst_ComputeBounds(o->mdl)->min.y;
+    Q43(&D_0053B4D0.max, &ParticleInst_ComputeBounds(o->mdl)->max); { void* xx = &D_0053B4D0.max; /* dead on purpose: retail keeps this addiu */ }
+    D_0053B4D0.max.x = o->scale * ParticleInst_ComputeBounds(o->mdl)->max.x;
+    D_0053B4D0.max.y = o->scale * ParticleInst_ComputeBounds(o->mdl)->max.y;
     return &D_0053B4D0;
     }
     return 0;

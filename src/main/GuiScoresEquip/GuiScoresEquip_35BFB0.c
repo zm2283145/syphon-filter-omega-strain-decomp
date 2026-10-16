@@ -83,9 +83,9 @@ int cAgentData_GetStat(Agent_35BFB0* a, int stat);
 char func_0012B290(char c);
 Agent_35BFB0* func_00185C70(Player_35BFB0* p, unsigned char* flag);
 char* AgentData_GetName(Agent_35BFB0* a);
-void func_0041BEB0(W_35BFB0* w, char* text, int flags);
-void func_0041E0F0(Screen_35BFB0* s, W_35BFB0* w, int a, int b, int c);
-void func_0041E3B0(Screen_35BFB0* s, float dt);
+void GuiTextWidget_SetText(W_35BFB0* w, char* text, int flags);
+void GuiWidget_SendEvent(Screen_35BFB0* s, W_35BFB0* w, int a, int b, int c);
+void GuiWidget_Update(Screen_35BFB0* s, float dt);
 float func_0042B320(int i);
 #define strlen(a0) ((unsigned int)strlen((a0))) /* merge_units */
 }
@@ -96,9 +96,9 @@ static inline void SetLoc_35BFB0(W_35BFB0* w, char* key)
 {
     char* t = Loc_LookupText(key);
     if (t)
-        func_0041BEB0(w, t, 0);
+        GuiTextWidget_SetText(w, t, 0);
     else
-        func_0041BEB0(w, key, 0);
+        GuiTextWidget_SetText(w, key, 0);
 }
 
 static inline void ShowItem_35BFB0(W_35BFB0* w, Item_35BFB0* it)
@@ -107,7 +107,7 @@ static inline void ShowItem_35BFB0(W_35BFB0* w, Item_35BFB0* it)
         WDef_35BFB0* d = WeaponDb_Get(D_004FFD30, it->id);
         SetLoc_35BFB0(w, d->name);
     } else {
-        func_0041BEB0(w, D_004BB530, 0);
+        GuiTextWidget_SetText(w, D_004BB530, 0);
     }
 }
 
@@ -116,11 +116,11 @@ static inline void ShowItem_35BFB0(W_35BFB0* w, Item_35BFB0* it)
         WDef_35BFB0* d = WeaponDb_Get(D_004FFD30, (IT)->id); \
         char* t = Loc_LookupText(d->name); \
         if (t) \
-            func_0041BEB0(W, t, 0); \
+            GuiTextWidget_SetText(W, t, 0); \
         else \
-            func_0041BEB0(W, d->name, 0); \
+            GuiTextWidget_SetText(W, d->name, 0); \
     } else { \
-        func_0041BEB0(W, D_004BB530, 0); \
+        GuiTextWidget_SetText(W, D_004BB530, 0); \
     }
 
 static const float kPi_35BFB0 = 3.1415927f;
@@ -129,10 +129,10 @@ extern "C" void func_0035BFB0(Screen_35BFB0* s, float dt)
     int i;
     for (i = 0; i < 4; i++) {
         if (s->rows[i][0]) {
-            func_0041BEB0(s->rows[i][0], D_004BB530, 0);
-            func_0041BEB0(s->rows[i][1], D_004BB530, 0);
-            func_0041BEB0(s->rows[i][13], D_004BB530, 0);
-            func_0041BEB0(s->rows[i][14], D_004BB530, 0);
+            GuiTextWidget_SetText(s->rows[i][0], D_004BB530, 0);
+            GuiTextWidget_SetText(s->rows[i][1], D_004BB530, 0);
+            GuiTextWidget_SetText(s->rows[i][13], D_004BB530, 0);
+            GuiTextWidget_SetText(s->rows[i][14], D_004BB530, 0);
         }
     }
     {
@@ -152,45 +152,45 @@ extern "C" void func_0035BFB0(Screen_35BFB0* s, float dt)
                 char key[0x20];
                 unsigned int k;
                 int d;
-                func_0041BEB0(s->rows[slot][0], AgentData_GetName(a), 0);
-                func_0041BEB0(s->rows[slot][13], AgentData_GetName(a), 0);
+                GuiTextWidget_SetText(s->rows[slot][0], AgentData_GetName(a), 0);
+                GuiTextWidget_SetText(s->rows[slot][13], AgentData_GetName(a), 0);
                 sprintf(key, D_004BB558, slot);
                 sprintf(D_00533790, D_004BB568, 0x11, Loc_LookupText(key), 0x10);
                 for (k = 0; k < strlen(D_00533790); k++)
                     D_00533790[k] = func_0012B290(D_00533790[k]);
-                func_0041BEB0(s->rows[slot][1], D_00533790, 0);
-                func_0041BEB0(s->rows[slot][14], D_00533790, 0);
+                GuiTextWidget_SetText(s->rows[slot][1], D_00533790, 0);
+                GuiTextWidget_SetText(s->rows[slot][14], D_00533790, 0);
                 sprintf(buf, D_004BB578, cAgentData_GetStat(a, 0x1B));
-                func_0041BEB0(s->rows[slot][2], buf, 0);
+                GuiTextWidget_SetText(s->rows[slot][2], buf, 0);
                 sprintf(buf, D_004BB578, cAgentData_GetStat(a, 0x1C));
-                func_0041BEB0(s->rows[slot][3], buf, 0);
+                GuiTextWidget_SetText(s->rows[slot][3], buf, 0);
                 sprintf(buf, D_004BB578, cAgentData_GetStat(a, 0x14));
-                func_0041BEB0(s->rows[slot][4], buf, 0);
+                GuiTextWidget_SetText(s->rows[slot][4], buf, 0);
                 sprintf(buf, D_004BB578, cAgentData_GetStat(a, 0x13));
-                func_0041BEB0(s->rows[slot][5], buf, 0);
+                GuiTextWidget_SetText(s->rows[slot][5], buf, 0);
                 sprintf(buf, D_004BB578, cAgentData_GetStat(a, 0x16));
-                func_0041BEB0(s->rows[slot][6], buf, 0);
+                GuiTextWidget_SetText(s->rows[slot][6], buf, 0);
                 sprintf(buf, D_004BB578, cAgentData_GetStat(a, 0x12));
-                func_0041BEB0(s->rows[slot][7], buf, 0);
+                GuiTextWidget_SetText(s->rows[slot][7], buf, 0);
                 d = cAgentData_GetStat(a, 0x1B);
                 if (d == 0) d = 1;
                 sprintf(buf, D_004BB580, cAgentData_GetStat(a, 0x1C) * 100 / d);
-                func_0041BEB0(s->rows[slot][9], buf, 0);
+                GuiTextWidget_SetText(s->rows[slot][9], buf, 0);
                 d = cAgentData_GetStat(a, 0x1D);
                 if (d == 0) d = 1;
                 sprintf(buf, D_004BB580, cAgentData_GetStat(a, 0x1E) * 100 / d);
-                func_0041BEB0(s->rows[slot][8], buf, 0);
+                GuiTextWidget_SetText(s->rows[slot][8], buf, 0);
                 sprintf(buf, D_004BB578, cAgentData_GetStat(a, 0x18));
-                func_0041BEB0(s->rows[slot][10], buf, 0);
+                GuiTextWidget_SetText(s->rows[slot][10], buf, 0);
                 sprintf(buf, D_004BB578, cAgentData_GetStat(a, 0x19));
-                func_0041BEB0(s->rows[slot][11], buf, 0);
+                GuiTextWidget_SetText(s->rows[slot][11], buf, 0);
                 sprintf(buf, D_004BB578, cAgentData_GetStat(a, 0x1A));
-                func_0041BEB0(s->rows[slot][12], buf, 0);
+                GuiTextWidget_SetText(s->rows[slot][12], buf, 0);
             } else {
                 int j;
-                func_0041BEB0(s->rows[slot][0], D_004BB530, 0);
-                for (j = 2; j < 13; j++) func_0041BEB0(s->rows[slot][j], D_004BB588, 0);
-                for (j = 15; j < 20; j++) func_0041BEB0(s->rows[slot][j], D_004BB530, 0);
+                GuiTextWidget_SetText(s->rows[slot][0], D_004BB530, 0);
+                for (j = 2; j < 13; j++) GuiTextWidget_SetText(s->rows[slot][j], D_004BB588, 0);
+                for (j = 15; j < 20; j++) GuiTextWidget_SetText(s->rows[slot][j], D_004BB530, 0);
             }
             if (s->skel[slot]->inv.arr[0]) {
                 WDef_35BFB0* d = WeaponDb_Get(D_004FFD30, s->skel[slot]->inv.arr[0]->id);
@@ -208,9 +208,9 @@ extern "C" void func_0035BFB0(Screen_35BFB0* s, float dt)
         } else {
             s->skel[n]->b2C3A = -1;
             if (s->rows[n][0]) {
-                func_0041BEB0(s->rows[n][0], D_004BB530, 0);
-                for (i = 2; i < 13; i++) func_0041BEB0(s->rows[n][i], D_004BB588, 0);
-                for (i = 15; i < 20; i++) func_0041BEB0(s->rows[n][i], D_004BB530, 0);
+                GuiTextWidget_SetText(s->rows[n][0], D_004BB530, 0);
+                for (i = 2; i < 13; i++) GuiTextWidget_SetText(s->rows[n][i], D_004BB588, 0);
+                for (i = 15; i < 20; i++) GuiTextWidget_SetText(s->rows[n][i], D_004BB530, 0);
             }
         }
         if (s->f230[n][0]) {
@@ -242,7 +242,7 @@ extern "C" void func_0035BFB0(Screen_35BFB0* s, float dt)
                         } else {
                             idx = 0;
                         }
-                        func_0041E0F0(s, s->f48[m], 0xB, s->f58 + (int)((float)(s->f5C - s->f58) * (1.0f - func_0042B320(idx))), 0);
+                        GuiWidget_SendEvent(s, s->f48[m], 0xB, s->f58 + (int)((float)(s->f5C - s->f58) * (1.0f - func_0042B320(idx))), 0);
                     }
                 } else {
                     s->f48[m]->flags &= ~2;
@@ -259,7 +259,7 @@ extern "C" void func_0035BFB0(Screen_35BFB0* s, float dt)
         else if (s->f1C8 < -3.1415927f)
             s->f1C8 += 6.2831855f;
     }
-    func_0041E3B0(s, dt);
+    GuiWidget_Update(s, dt);
 }
 #undef strlen /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
@@ -311,9 +311,9 @@ extern char D_004A9870[];
 void func_0041EFA0(S35CBF0* o);
 W35CBF0* GuiWidget_FindChildByName(void* self, char* name);
 #if 0 /* merge_units */
-void func_0041BEB0(W35CBF0* w, char* text, int flags);
+void GuiTextWidget_SetText(W35CBF0* w, char* text, int flags);
 #endif /* merge_units */
-#define func_0041BEB0(a0, a1, a2) (func_0041BEB0((W_35BFB0 *)(a0), (a1), (a2))) /* merge_units */
+#define GuiTextWidget_SetText(a0, a1, a2) (GuiTextWidget_SetText((W_35BFB0 *)(a0), (a1), (a2))) /* merge_units */
 
 void func_0035CBF0(S35CBF0* o);
 }
@@ -335,11 +335,11 @@ void func_0035CBF0(S35CBF0* o)
     c = cast35CBF0(GuiWidget_FindChildByName(o, D_004BB500));
     if (c) {
         char* t = Loc_LookupText(D_004BB520);
-        func_0041BEB0(c, t ? t : D_004BB530, 0);
+        GuiTextWidget_SetText(c, t ? t : D_004BB530, 0);
     }
     o->a22C = 1;
 }
-#undef func_0041BEB0 /* merge_units */
+#undef GuiTextWidget_SetText /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0035CBF0(void) {}
 #pragma pop /* merge_units */

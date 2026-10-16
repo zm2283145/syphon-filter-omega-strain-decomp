@@ -9,7 +9,7 @@ typedef struct {
 } Obj;
 extern void *DME_GetLobby(void);
 extern void func_004515F0(void *p, int v);
-extern void func_00424430(void *p, int a, int b);
+extern void GuiArrayWidget_Select(void *p, int a, int b);
 extern void func_002ABF40(void *p, unsigned char mode);
 extern void func_002ACC80(void *p, void *cur);
 
@@ -32,7 +32,7 @@ void func_0033D8E0(Obj *o, unsigned char mode)
         }
     }
     if (o->ui) {
-        func_00424430(o->ui, 0, 0);
+        GuiArrayWidget_Select(o->ui, 0, 0);
         func_002ABF40(o->ui, mode);
         func_002ACC80(o->ui, o->cur);
     }

@@ -44,7 +44,7 @@ void* func_00423250(SsoString* str, const char* first, const char* last)
 
 /* Factory: allocate and construct. */
 extern "C" { char D_004BF5F8[] = "guiWidget.hh"; }
-DEFINE_GUARDED_NEW_CTOR(func_004232A0, 0x100, D_004BF5F8, func_00421BF0)
+DEFINE_GUARDED_NEW_CTOR(func_004232A0, 0x100, D_004BF5F8, GuiTextListWidget_ctor)
 #pragma pop /* merge_units */
 /* merge_units: end func_004232A0 */
 
@@ -54,7 +54,7 @@ DEFINE_GUARDED_NEW_CTOR(func_004232A0, 0x100, D_004BF5F8, func_00421BF0)
 #include "vtable_member_base_dtor.h"
 
 /* Derived destructor: member, then base, optionally delete. */
-DEFINE_VTABLE_MEMBER_BASE_DTOR(func_00423350, D_004E0D20, 0x60, func_0013A040, func_0041F370)
+DEFINE_VTABLE_MEMBER_BASE_DTOR(func_00423350, D_004E0D20, 0x60, func_0013A040, GuiWidget_Destroy)
 #pragma pop /* merge_units */
 /* merge_units: end func_00423350 */
 

@@ -29,13 +29,13 @@ extern char D_004A9610[];
 extern char D_004A9618[];
 extern char D_004A9628[];
 
-extern void func_0040D3C0(Mgr288310* m);
+extern void MemCard_Refresh(Mgr288310* m);
 extern int func_00288510(void);
 extern char* Loc_LookupText(const char* key);
 extern int FrontEnd_OpenPopup(void* ui, int kind, const char* a, const char* b, Self288310* owner, int flag);
 extern int Agent_GetSelected(void* list, int idx);
 extern int AgentData_GetSaveSize(int agent);
-extern int func_0040D580(Mgr288310* m, int v);
+extern int MemCard_GetSpaceNeeded(Mgr288310* m, int v);
 extern int sprintf(char* buf, const char* fmt, ...);
 extern char* strstr(const char* s, const char* sub);
 extern char* strncpy(char* d, const char* s, int n);
@@ -52,7 +52,7 @@ void GuiTitleScreen_CheckMemCard(Self288310* self, int force)
         return;
     D_00506330 = 1;
     m = &D_0055A830;
-    func_0040D3C0(m);
+    MemCard_Refresh(m);
     if (!func_00288510()) {
         if (!m->cfg->x59D) {
             void* ui = D_004FFC04;
@@ -60,7 +60,7 @@ void GuiTitleScreen_CheckMemCard(Self288310* self, int force)
             self->x50 = FrontEnd_OpenPopup(ui, 4, a, Loc_LookupText(D_004A9600), self, 1);
         } else if (m->cfg->x59E) {
             int have = m->cfg->x5A4;
-            int need = func_0040D580(m, AgentData_GetSaveSize(Agent_GetSelected(D_004FFB50, -1)));
+            int need = MemCard_GetSpaceNeeded(m, AgentData_GetSaveSize(Agent_GetSelected(D_004FFB50, -1)));
             if (have < need) {
                 char* text;
                 char* p;

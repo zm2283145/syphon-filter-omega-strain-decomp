@@ -37,13 +37,13 @@ static inline void merge_flush_func_00425E00(void) {}
 typedef struct { char pad[0x20]; void* inst; } P425E20;
 typedef struct { char pad[0x90]; P425E20* peer; void* inst; } T425E20;
 extern void* Gui_GetScreenList(void);
-extern void* func_00418420(void* a, int b);
+extern void* GuiFont_Find(void* a, int b);
 extern char* Font_GetLineHeight(void* i);
-extern void func_00424820(T425E20* t, void* p);
+extern void GuiArrayWidget_RowHeight(T425E20* t, void* p);
 void func_00425E20(T425E20* t, int a) {
-    t->inst = func_00418420(Gui_GetScreenList(), a);
+    t->inst = GuiFont_Find(Gui_GetScreenList(), a);
     if (t->inst) {
-        { char* p = Font_GetLineHeight(t->inst) + 4; func_00424820(t, p); }
+        { char* p = Font_GetLineHeight(t->inst) + 4; GuiArrayWidget_RowHeight(t, p); }
         if (t->peer) t->peer->inst = t->inst;
     }
 }
@@ -72,10 +72,10 @@ extern int D_00538C64;
 extern char D_00538C68;
 void func_00423600(Self* self, int a, int b, float* r);
 Item* func_00426590(Self* self, int a, int b);
-void func_003D0810(Child* c, void* p);
+void TextObj_SetColour(Child* c, void* p);
 char* String_CStr(void* s);
-void func_003D08B0(Child* c, char* text);
-void func_003CFAB0(Child* c);
+void TextObj_SetText(Child* c, char* text);
+void TextObj_Draw(Child* c);
 }
 
 static inline void SetPos(Child* c, int x, int y) { c->x = x; c->y = y; }
@@ -95,20 +95,20 @@ extern "C" void func_00425EA0(Self* self, int a, int b, float* r)
     if (it == 0) return;
     if (it->flags & 1) SetF10(self->child, it->f10);
     if (it->flags & 2) SetF20(self->child, it->f14);
-    if (it->flags & 4) func_003D0810(self->child, it->f20);
+    if (it->flags & 4) TextObj_SetColour(self->child, it->f20);
     { int i = D_00538C64; GQR(MtxAt(i + 1), MtxAt(i)); }
     D_00538C64++;
     UM(MtxAt(D_00538C64));
     D_00538C68 = 1;
     SetPos(self->child, (int)r[0], (int)r[1]);
     SetSize(self->child, (int)r[2], (int)r[3]);
-    func_003D08B0(self->child, String_CStr(it));
-    func_003CFAB0(self->child);
+    TextObj_SetText(self->child, String_CStr(it));
+    TextObj_Draw(self->child);
     D_00538C64--;
     D_00538C68 = 1;
     if (it->flags & 1) SetF10(self->child, self->f98);
     if (it->flags & 2) SetF20(self->child, self->f94);
-    if (it->flags & 4) func_003D0810(self->child, self->fA0);
+    if (it->flags & 4) TextObj_SetColour(self->child, self->fA0);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00425EA0(void) {}
@@ -122,17 +122,17 @@ static inline void merge_flush_func_00425EA0(void) {}
 extern "C" {
 extern char D_004BF790[];
 void func_00424A50(guiTextArrayWidget* self);
-void func_00424A90(guiTextArrayWidget* self);
-void func_00424BC0(guiTextArrayWidget* self);
+void GuiArrayWidget_OnWake(guiTextArrayWidget* self);
+void GuiArrayWidget_Init(guiTextArrayWidget* self);
 void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
 void String_Dtor(void* string, int flags);
-TextArrayWidgetChild* func_003D0940(TextArrayWidgetChild* child, int x, int y,
+TextArrayWidgetChild* TextObj_Construct(TextArrayWidgetChild* child, int x, int y,
                                   int width, int height, int resource, float* color);
 void* Gui_GetScreenList(void);
 #if 0 /* merge_units */
-int func_00418420(void* manager, const char* name);
+int GuiFont_Find(void* manager, const char* name);
 #endif /* merge_units */
-#define func_00418420(a0, a1) ((int)func_00418420((a0), (int)(a1))) /* merge_units */
+#define GuiFont_Find(a0, a1) ((int)GuiFont_Find((a0), (int)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
 unsigned int Font_GetLineHeight(int resource);
@@ -140,9 +140,9 @@ unsigned int Font_GetLineHeight(int resource);
 #define Font_GetLineHeight(a0) ((unsigned int)Font_GetLineHeight((void *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-void func_00424820(guiTextArrayWidget* self, unsigned int height);
+void GuiArrayWidget_RowHeight(guiTextArrayWidget* self, unsigned int height);
 #endif /* merge_units */
-#define func_00424820(a0, a1) (func_00424820((T425E20 *)(a0), (void *)(a1))) /* merge_units */
+#define GuiArrayWidget_RowHeight(a0, a1) (GuiArrayWidget_RowHeight((T425E20 *)(a0), (void *)(a1))) /* merge_units */
 
 }
 
@@ -176,7 +176,7 @@ extern "C" void func_00426100(guiTextArrayWidget* self)
 /* Create a text child for the current resource and copy the array's display state. */
 extern "C" void func_004261D0(guiTextArrayWidget* self)
 {
-    func_00424A90(self);
+    GuiArrayWidget_OnWake(self);
     if (self->count) {
         TextArrayWidgetChild* child;
         {
@@ -185,7 +185,7 @@ extern "C" void func_004261D0(guiTextArrayWidget* self)
                                                     D_004BF790, 0x6C);
         }
         if (child)
-            child = func_003D0940(child, 0, 0, 10, 10, self->count, self->color);
+            child = TextObj_Construct(child, 0, 0, 10, 10, self->count, self->color);
         self->unk90 = child;
         self->unk90->enabled = 1;
         self->unk90->state = self->unk98;
@@ -196,17 +196,17 @@ extern "C" void func_004261D0(guiTextArrayWidget* self)
 /* Resolve the default resource, refresh row height and update an existing child. */
 extern "C" void func_004262D0(guiTextArrayWidget* self)
 {
-    func_00424BC0(self);
-    self->count = func_00418420(Gui_GetScreenList(), "callout");
+    GuiArrayWidget_Init(self);
+    self->count = GuiFont_Find(Gui_GetScreenList(), "callout");
     if (self->count) {
-        func_00424820(self, Font_GetLineHeight(self->count) + 4);
+        GuiArrayWidget_RowHeight(self, Font_GetLineHeight(self->count) + 4);
         if (self->unk90)
             self->unk90->resource = self->count;
     }
 }
-#undef func_00418420 /* merge_units */
+#undef GuiFont_Find /* merge_units */
 #undef Font_GetLineHeight /* merge_units */
-#undef func_00424820 /* merge_units */
+#undef GuiArrayWidget_RowHeight /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00426100(void) {}
 #pragma pop /* merge_units */
@@ -214,14 +214,14 @@ static inline void merge_flush_func_00426100(void) {}
 
 /* merge_units: begin func_00426350 */
 #pragma push /* merge_units */
-extern void func_00424750(guiTextArrayWidget* self, unsigned int columns, unsigned int rows);
+extern void GuiArrayWidget_SetDims(guiTextArrayWidget* self, unsigned int columns, unsigned int rows);
 extern void func_00426600(guiTextArrayWidget* self, unsigned int columns, unsigned int rows);
 
 /* Update the base dimensions and rebuild the cells only when the shape changes. */
 void func_00426350(guiTextArrayWidget* self, unsigned int columns, unsigned int rows)
 {
     if (columns != self->columns || rows != self->rows) {
-        func_00424750(self, columns, rows);
+        GuiArrayWidget_SetDims(self, columns, rows);
         func_00426600(self, columns, rows);
     }
 }

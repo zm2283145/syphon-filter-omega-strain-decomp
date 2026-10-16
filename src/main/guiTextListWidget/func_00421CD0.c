@@ -10,7 +10,7 @@ extern char D_004E0D20[];
 extern char D_0049AF00[];
 void func_00423000(TextListEntryVec* entries, int flags);
 void func_0013A040(void* state, int flags);
-void func_0041F370(TextRenderWidget* self, int flags);
+void GuiWidget_Destroy(TextRenderWidget* self, int flags);
 void Mem_Free(int pool, void* allocation, char* file, int line);
 void operator_delete(void* allocation);
 }
@@ -61,7 +61,7 @@ extern "C" TextRenderWidget* func_00421DA0(TextRenderWidget* self, short deleteF
     if (self) {
         self->vtable = D_004E0D20;
         destroy_state(self->baseState);
-        func_0041F370(self, 0);
+        GuiWidget_Destroy(self, 0);
         if (deleteFlag > 0)
             operator_delete(self);
     }

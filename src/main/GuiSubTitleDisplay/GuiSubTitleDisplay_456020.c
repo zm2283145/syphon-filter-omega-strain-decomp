@@ -35,13 +35,13 @@ static void * const dat_00497980[1] = { (void*)D_004C19A0 };
 static void * const dat_00497988[3] = { (void*)D_004C19B0, (void*)0x0, (void*)D_004C19C0 };
 extern "C" char D_004AAE20[];
 extern "C" char D_004AAE00[];
-extern "C" void func_0041F150(Screen_456020* self);
+extern "C" void GuiWidget_Init(Screen_456020* self);
 extern "C" Widget_456020* GuiWidget_FindChildByName(Screen_456020* self, int id);
 
 extern "C" void func_00456020(Screen_456020* self)
 {
     Widget_456020* child;
-    func_0041F150(self);
+    GuiWidget_Init(self);
     child = GuiWidget_FindChildByName(self, (*(int*)dat_00497980));
     child = (child && child->IsA(D_004AAE20)) ? child : 0;
     self->panel = (Panel_456020*)child;
@@ -76,7 +76,7 @@ extern "C" void Hud_ClosePauseMenu(void* p);
 extern "C" void Game_SetPaused(void* p, int n);
 
 /* Hands self to the manager (virtual +0x68), then Hud_ClosePauseMenu(D_004FFC2C) and Game_SetPaused(D_004FFB50, 0). */
-extern "C" void func_00456100(void* self)
+extern "C" void GuiStartMenu_CloseAll(void* self)
 {
     Gui_GetScreenStack()->Method68(self);
     Hud_ClosePauseMenu(D_004FFC2C);

@@ -29,7 +29,7 @@ void func_003EC690(NC710** out, int* in);
 void func_0015AF40(int* out, NC710** in);
 void List_Erase(int* out, void* list, int* in);
 }
-extern "C" void func_003EC710(HC710* self, void* list, float dt)
+extern "C" void Effect_UpdateSlots(HC710* self, void* list, float dt)
 {
     NC710* e;
     NC710* it;
@@ -107,7 +107,7 @@ extern "C" void func_003EC950(void* node)
 #pragma push /* merge_units */
 #pragma cplusplus on
 extern "C" { void* Mem_Alloc(int pool, int size, char* file, int line); }
-extern "C" void* func_003EC9F0(int size)
+extern "C" void* EffectComponent_Alloc(int size)
 {
     AllocGuard guard;
     return Mem_Alloc(0, size, D_004BE020, 0x12);

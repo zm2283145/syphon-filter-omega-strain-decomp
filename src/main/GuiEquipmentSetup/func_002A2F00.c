@@ -102,15 +102,15 @@ void Skel_Rebind(Skel_2A2F00* s, void* src);
 Bk_2A2F00* func_00185C70(Pl_2A2F00* p);
 char* AgentData_GetName(Bk_2A2F00* b);
 char* AgentData_GetRankText(Bk_2A2F00* b);
-void func_0041BEB0(void* w, char* s, int a);
+void GuiTextWidget_SetText(void* w, char* s, int a);
 char* Loc_LookupText(char* key);
-void func_0041E0F0(void* self, void* w, int a, int b, int c);
+void GuiWidget_SendEvent(void* self, void* w, int a, int b, int c);
 void Player_HandleLeftGame(Pl_2A2F00* p);
 void func_001B2D20(Pl_2A2F00* p);
 int sprintf(void*, const void*, ...);
 void DME_SendPlayGameMsg(void);
 Stack_2A2F00* Gui_GetScreenStack(void);
-void func_0041E3B0(S_2A2F00* self, float dt);
+void GuiWidget_Update(S_2A2F00* self, float dt);
 }
 
 static inline W_2A2F00* FindAs(void* self, char* n, char* t)
@@ -194,16 +194,16 @@ extern "C" void func_002A2F00(S_2A2F00* self, float dt)
             if (func_00185C70(p) && func_00185C70(p)->bB70) {
                 long long* c = &D_00506520[k];
                 if (*c > 10) {
-                    func_0041BEB0(wName, AgentData_GetName(func_00185C70(p)), 0);
-                    func_0041BEB0(wRank, AgentData_GetRankText(func_00185C70(p)), 0);
+                    GuiTextWidget_SetText(wName, AgentData_GetName(func_00185C70(p)), 0);
+                    GuiTextWidget_SetText(wRank, AgentData_GetRankText(func_00185C70(p)), 0);
                 } else {
-                    func_0041BEB0(wName, D_004AB160, 0);
-                    func_0041BEB0(wRank, D_004AB160, 0);
+                    GuiTextWidget_SetText(wName, D_004AB160, 0);
+                    GuiTextWidget_SetText(wRank, D_004AB160, 0);
                 }
                 (*c)++;
             } else {
-                func_0041BEB0(wName, D_004AB160, 0);
-                func_0041BEB0(wRank, D_004AB160, 0);
+                GuiTextWidget_SetText(wName, D_004AB160, 0);
+                GuiTextWidget_SetText(wRank, D_004AB160, 0);
             }
             st = p->GetState();
             if (st == 0) {
@@ -234,7 +234,7 @@ extern "C" void func_002A2F00(S_2A2F00* self, float dt)
                 D_00506508 = 0;
                 self->timer->flags &= ~2;
             }
-            func_0041BEB0(wStatus, t, 0);
+            GuiTextWidget_SetText(wStatus, t, 0);
             if (p->local) {
                 Slot_2A2F00* s = p->slot;
                 if (s)
@@ -244,11 +244,11 @@ extern "C" void func_002A2F00(S_2A2F00* self, float dt)
                 wIcon->flags |= 2;
                 if (i == me) {
                     if (p->local)
-                        func_0041E0F0(self, wIcon, 10, 1, 0);
+                        GuiWidget_SendEvent(self, wIcon, 10, 1, 0);
                     else
-                        func_0041E0F0(self, wIcon, 10, 2, 0);
+                        GuiWidget_SendEvent(self, wIcon, 10, 2, 0);
                 } else {
-                    func_0041E0F0(self, wIcon, 10, 0, 0);
+                    GuiWidget_SendEvent(self, wIcon, 10, 0, 0);
                 }
             } else {
                 wIcon->flags &= ~2;
@@ -261,9 +261,9 @@ extern "C" void func_002A2F00(S_2A2F00* self, float dt)
         } else {
             self->skel[i]->b2C3A = -1;
             wIcon->flags &= ~2;
-            func_0041BEB0(wName, D_004AB160, 0);
-            func_0041BEB0(wRank, D_004AB160, 0);
-            func_0041BEB0(wStatus, D_004AB160, 0);
+            GuiTextWidget_SetText(wName, D_004AB160, 0);
+            GuiTextWidget_SetText(wRank, D_004AB160, 0);
+            GuiTextWidget_SetText(wStatus, D_004AB160, 0);
             D_00506518[i] = 0;
             D_00506520[i] = 0;
         }
@@ -273,7 +273,7 @@ extern "C" void func_002A2F00(S_2A2F00* self, float dt)
             unsigned char ok;
             D_00506510 += dt;
             sprintf(buf, self->timerFmt, 10 - (int)(D_00506510 / 30.0f));
-            func_0041BEB0(self->timer, buf, 0);
+            GuiTextWidget_SetText(self->timer, buf, 0);
             if (D_005721C8)
                 ok = D_005721C0;
             else
@@ -301,7 +301,7 @@ extern "C" void func_002A2F00(S_2A2F00* self, float dt)
                 t = Loc_LookupText(D_004AB1A0);
             w = FIND(D_004AB0B0, D_004A9870);
             if (t && w)
-                func_0041BEB0(w, t, 0);
+                GuiTextWidget_SetText(w, t, 0);
         }
     }
     if (!Gui_GetScreenStack()->n28 || Gui_GetScreenStack()->p2C->top != self) {
@@ -315,5 +315,5 @@ extern "C" void func_002A2F00(S_2A2F00* self, float dt)
         else if (self->angle < -pi)
             self->angle += 6.2831855f;
     }
-    func_0041E3B0(self, dt);
+    GuiWidget_Update(self, dt);
 }

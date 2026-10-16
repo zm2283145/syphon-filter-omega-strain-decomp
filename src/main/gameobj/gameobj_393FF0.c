@@ -138,7 +138,7 @@ static inline void merge_flush_func_00393FF0(void) {}
 
 /* merge_units: begin func_00394140 */
 #pragma push /* merge_units */
-extern int func_003A2650(int, int);
+extern int ParticleInst_GetPosition(int, int);
 
 int func_00394140(int a0) {
     int a1, v0;
@@ -148,7 +148,7 @@ int func_00394140(int a0) {
     cond = a0 == 0;
     v0 = 0;
     if (cond) goto L00394160;
-    v0 = func_003A2650(a0, a1);
+    v0 = ParticleInst_GetPosition(a0, a1);
 L00394160:;
     goto ret;
 ret:

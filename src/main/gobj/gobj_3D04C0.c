@@ -27,7 +27,7 @@ extern char* strchr(const char* s, int c);
 extern int strlen(const char* s);
 extern int Font_GetStringWidth(void* font, const char* s, int n);
 
-int func_003D04C0(T04C0* t)
+int TextObj_GetLineCount(T04C0* t)
 {
     float x, right, lim;
     char* p;
@@ -106,7 +106,7 @@ int func_003D04C0(T04C0* t)
 /* merge_units: begin func_003D0810 */
 #pragma push /* merge_units */
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
-void func_003D0810(int arg0, int arg1) {
+void TextObj_SetColour(int arg0, int arg1) {
     if (F_(arg0, 0x59, unsigned char) == 0) {
         F_(arg0, 0x30, float) = F_(arg1, 0x0, float);
         F_(arg0, 0x34, float) = F_(arg1, 0x4, float);
@@ -120,7 +120,7 @@ void func_003D0810(int arg0, int arg1) {
 /* merge_units: begin func_003D0850 */
 #pragma push /* merge_units */
 typedef struct { char pad[0x3C]; float f3C; char pad40[0xC]; float f4C; float f50; char pad54[5]; char b59; } S3D0850;
-void func_003D0850(S3D0850* s, float x, float t) {
+void TextObj_StartFade(S3D0850* s, float x, float t) {
     if (t == 0.0f) {
         s->f3C = x;
         s->b59 = 0;
@@ -144,7 +144,7 @@ int String_Replace(void*, int, int, int, int, Tag_08B0);
 int String_Dtor();                            
 int func_0013D680();                          
 
-void func_003D08B0(char * arg0, int arg1) {
+void TextObj_SetText(char * arg0, int arg1) {
     int sp20[3];
 
     if (arg1 != 0) {
@@ -171,7 +171,7 @@ extern M3D1020 D_00543760;
 extern char D_00543764[];
 extern char D_00543770[];
 extern char D_00543748[];
-extern char func_003D0B90[];
+extern char TextManager_Destroy[];
 extern int D_004937F0;
 extern void func_003D1560(void* p);
 extern void ScalarCollection_Init(void* p);
@@ -186,7 +186,7 @@ static inline M3D1020* Def_3D0940(void)
         func_003D1560(D_00543764);
         ScalarCollection_Init(D_00543770);
         m->b1C = 1;
-        __register_global_object(m, func_003D0B90, D_00543748);
+        __register_global_object(m, TextManager_Destroy, D_00543748);
         D_00543740 = 1;
     }
     return &D_00543760;
@@ -206,7 +206,7 @@ typedef struct S3D0940 {
     float f54;
     unsigned char b58, b59, b5A, b5B;
 } S3D0940;
-S3D0940* func_003D0940(S3D0940* s, int a, int b, int c, int d, int e, V4_940* v)
+S3D0940* TextObj_Construct(S3D0940* s, int a, int b, int c, int d, int e, V4_940* v)
 {
     s->a0 = a;
     s->a4 = b;

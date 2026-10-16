@@ -17,7 +17,7 @@ int strcmp(const void *, const void *);
 extern char* String_CStr(const void* text);
 
 /* Return the selected entry's string data, or null for an invalid index. */
-char* func_00421430(TextListWidget* self, int index) {
+char* GuiTextListWidget_GetItemText(TextListWidget* self, int index) {
     if (index < 0 || index >= self->entries.count) {
         return 0;
     }
@@ -36,7 +36,7 @@ static inline TextListEntry* entry_at(TextListWidget* self, int index)
 }
 
 /* Return the entry's value, or -1 when the index is outside the list. */
-int func_00421480(TextListWidget* self, int index)
+int GuiTextListWidget_GetItemId(TextListWidget* self, int index)
 {
     if (index < 0 || index >= self->entries.count)
         return -1;
@@ -73,7 +73,7 @@ extern char* String_CStr(E421540* e);
 #define String_CStr(a0) (String_CStr((void *)(a0))) /* merge_units */
 
 #pragma opt_strength_reduction off
-int func_00421540(O421540* o, const char* name)
+int GuiTextListWidget_FindByText(O421540* o, const char* name)
 {
     int i;
     for (i = 0; i < o->count; i++) {
@@ -95,7 +95,7 @@ typedef struct { char p[0xC]; int id; char p10[4]; } E4215E0;
 typedef struct { char p[0x94]; int count; E4215E0* items; } L4215E0;
 #pragma push
 #pragma opt_common_subs off
-int func_004215E0(L4215E0* l, int id)
+int GuiTextListWidget_FindById(L4215E0* l, int id)
 {
     int i;
     for (i = 0; i < l->count; i++) if (((E4215E0*)((char*)l->items + i * sizeof(E4215E0)))->id == id) return i;

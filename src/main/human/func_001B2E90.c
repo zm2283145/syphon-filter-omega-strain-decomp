@@ -44,7 +44,7 @@ void func_001B31A0(Iter*, char*);
 void func_001B3170(Iter*, char*, int*);
 int func_001B3150(Iter*, Iter*);
 int ReceiverMap_Erase(char*, Iter*);
-void func_0040B720(void*, Act*);
+void ActorWorld_RequestRemove(void*, Act*);
 void Object_DeleteLater(Act*, float);
 void func_002EC2A8(int);
 void func_00257040(int);
@@ -105,7 +105,7 @@ extern "C" bool Player_HandleLeftGame(Act* a)
                     ReceiverMap_Erase(D_0055C7A0, &g);
                 }
             }
-            func_0040B720(D_004FFD44, a);
+            ActorWorld_RequestRemove(D_004FFD44, a);
             Object_DeleteLater(a, 0.1f);
             a->Fn60(1);
             ret = 1;

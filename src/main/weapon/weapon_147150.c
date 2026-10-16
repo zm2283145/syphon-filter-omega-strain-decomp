@@ -29,7 +29,7 @@ int FileMan_FindMember(void* h);
 int WeaponDb_GetShellRecord(void* self, int x);
 void ManModel_ctor(void* o, char* name, int idx, int x, int a, int b, int c, int d);
 void WeaponDb_CloneModel(void* self, char* name, void* o);
-int func_003EBA50(void);
+int Fstream_GetLoader(void);
 void AsyncLoader_QueueLoad(int q, void* h, void* cb, void* o, int a, int b, int c);
 void WeaponDb_LoadCallback(void);
 }
@@ -74,7 +74,7 @@ extern "C" void WeaponDb_LoadModel(S7150* self, char* name, O7150** out, int idx
     }
     ManModel_ctor(*out, buf, idx, x, a, 1, b, c);
     WeaponDb_CloneModel(self, buf, *out);
-    AsyncLoader_QueueLoad(func_003EBA50(), self->hog, (void*)WeaponDb_LoadCallback, *out, 0, 1, 1);
+    AsyncLoader_QueueLoad(Fstream_GetLoader(), self->hog, (void*)WeaponDb_LoadCallback, *out, 0, 1, 1);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00147150(void) {}

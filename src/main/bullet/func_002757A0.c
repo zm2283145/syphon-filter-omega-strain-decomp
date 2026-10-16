@@ -113,7 +113,7 @@ extern G_002757A0 D_00539210;
 extern char D_005381F0[];
 extern long long D_005381F8;
 extern V4 D_004A90A0[];
-void func_003A1AD0(int h, int k, void* p);
+void ParticleInst_Draw(int h, int k, void* p);
 void Renderer_BindTexture(void* m, int idx);
 void func_0025CD10(void* s);
 void func_0025CA40(void* s);
@@ -181,7 +181,7 @@ static inline void Restart_002757A0(void)
 
 extern "C" void func_002757A0(Bullet_002757A0* b)
 {
-    if (b->f115 && b->f110) func_003A1AD0(b->f110, 2, b->f20);
+    if (b->f115 && b->f110) ParticleInst_Draw(b->f110, 2, b->f20);
     if (b->f116 && b->f110 == 0) {
         V4* pos = &b->pos;
         V4 tail = *pos - Mul2(b->dir, b->len);

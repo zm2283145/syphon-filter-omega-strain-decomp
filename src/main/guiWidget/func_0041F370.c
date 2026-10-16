@@ -54,7 +54,7 @@ static inline void destroy_base(TraversalWidget* self)
 }
 
 /* Destroy owned children and a separate handler under the allocator guard. */
-extern "C" TraversalWidget* func_0041F370(TraversalWidget* self, short deleteFlag)
+extern "C" TraversalWidget* GuiWidget_Destroy(TraversalWidget* self, short deleteFlag)
 {
     if (self) {
         ChildIterator end;

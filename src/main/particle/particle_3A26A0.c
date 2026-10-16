@@ -60,9 +60,9 @@ struct Mgr3A26A0 {
 };
 
 extern "C" {
-Node3A26A0* func_003A0EA0(void* p, Node3A26A0* ins, Desc3A26A0* d, int a, float f);
-Node3A26A0* func_00398E20(void* p, Node3A26A0* ins, Desc3A26A0* d, int a, float f);
-Node3A26A0* func_0039F860(void* p, Node3A26A0* ins, Desc3A26A0* d, int a, float f, V43A26A0* v);
+Node3A26A0* ParticleEmitter_Construct(void* p, Node3A26A0* ins, Desc3A26A0* d, int a, float f);
+Node3A26A0* PhysEmitter_Construct(void* p, Node3A26A0* ins, Desc3A26A0* d, int a, float f);
+Node3A26A0* ShatterEmitter_Construct(void* p, Node3A26A0* ins, Desc3A26A0* d, int a, float f, V43A26A0* v);
 }
 
 static inline void* Alloc3A26A0(int size, int line)
@@ -75,11 +75,11 @@ static inline Node3A26A0* New3A26A0(Node3A26A0* ins, Desc3A26A0* d, int a3, floa
 {
     void* t = Alloc3A26A0(0x180, 0x59C);
     if (t)
-        t = func_003A0EA0(t, ins, d, a3, f);
+        t = ParticleEmitter_Construct(t, ins, d, a3, f);
     return (Node3A26A0*)t;
 }
 
-extern "C" Node3A26A0* func_003A26A0(Mgr3A26A0* mgr, Node3A26A0* ins, int name, int a3, float f)
+extern "C" Node3A26A0* ParticleEmitter_SpawnChildren(Mgr3A26A0* mgr, Node3A26A0* ins, int name, int a3, float f)
 {
     Node3A26A0* t;
     bool found;
@@ -95,7 +95,7 @@ extern "C" Node3A26A0* func_003A26A0(Mgr3A26A0* mgr, Node3A26A0* ins, int name, 
     } else if (!ins || !ins->bC) {
         t = (Node3A26A0*)Alloc3A26A0(0x130, 0x5A3);
         if (t)
-            t = func_00398E20(t, ins, d, a3, mgr->f50);
+            t = PhysEmitter_Construct(t, ins, d, a3, mgr->f50);
         if (ins && ins->IsAttached())
             after = 1;
     } else {
@@ -106,7 +106,7 @@ extern "C" Node3A26A0* func_003A26A0(Mgr3A26A0* mgr, Node3A26A0* ins, int name, 
             v.y = 1.0f;
             v.z = 0.0f;
             v.w = 0.0f;
-            t = func_0039F860(t, ins, d, a3, mgr->f50, &v);
+            t = ShatterEmitter_Construct(t, ins, d, a3, mgr->f50, &v);
         }
     }
     found = 0;
@@ -179,8 +179,8 @@ struct Box {
 struct Data { char pad[0x890]; Box box; };
 struct Obj { char pad[0x24]; Data* d; char pad28[0x18]; V pos; char pad50[0x19]; unsigned char f69; Box* Get() { return &d->box; } };
 extern "C" Box D_0053B660;
-extern "C" Box* func_003A2A90(Obj* o);
-Box* func_003A2A90(Obj* o)
+extern "C" Box* ParticleInst_ComputeBounds(Obj* o);
+Box* ParticleInst_ComputeBounds(Obj* o)
 {
     if (!o->f69) return &o->d->box;
     {
@@ -242,7 +242,7 @@ static inline void NodeDtor_3A2BA0(Node_3A2BA0* m)
     }
 }
 
-extern "C" Self_3A2BA0* func_003A2BA0(Self_3A2BA0* self, short deleteFlag)
+extern "C" Self_3A2BA0* ParticleInst_Kill(Self_3A2BA0* self, short deleteFlag)
 {
     if (self) {
         while (self->count != 0) {
@@ -351,21 +351,21 @@ struct TracerTC {
 
 extern "C" {
 #if 0 /* merge_units */
-NodeTC* func_003A0EA0(void* p, NodeTC* ins, DescTC* d, int a, float f);
+NodeTC* ParticleEmitter_Construct(void* p, NodeTC* ins, DescTC* d, int a, float f);
 #endif /* merge_units */
-#define func_003A0EA0(a0, a1, a2, a3, a4) ((NodeTC *)func_003A0EA0((a0), (Node3A26A0 *)(a1), (Desc3A26A0 *)(a2), (a3), (a4))) /* merge_units */
+#define ParticleEmitter_Construct(a0, a1, a2, a3, a4) ((NodeTC *)ParticleEmitter_Construct((a0), (Node3A26A0 *)(a1), (Desc3A26A0 *)(a2), (a3), (a4))) /* merge_units */
 
 #if 0 /* merge_units */
-NodeTC* func_00398E20(void* p, NodeTC* ins, DescTC* d, int a, float f);
+NodeTC* PhysEmitter_Construct(void* p, NodeTC* ins, DescTC* d, int a, float f);
 #endif /* merge_units */
-#define func_00398E20(a0, a1, a2, a3, a4) ((NodeTC *)func_00398E20((a0), (Node3A26A0 *)(a1), (Desc3A26A0 *)(a2), (a3), (a4))) /* merge_units */
+#define PhysEmitter_Construct(a0, a1, a2, a3, a4) ((NodeTC *)PhysEmitter_Construct((a0), (Node3A26A0 *)(a1), (Desc3A26A0 *)(a2), (a3), (a4))) /* merge_units */
 
 #if 0 /* merge_units */
-NodeTC* func_0039F860(void* p, NodeTC* ins, DescTC* d, int a, float f, V4TC* v);
+NodeTC* ShatterEmitter_Construct(void* p, NodeTC* ins, DescTC* d, int a, float f, V4TC* v);
 #endif /* merge_units */
-#define func_0039F860(a0, a1, a2, a3, a4, a5) ((NodeTC *)func_0039F860((a0), (Node3A26A0 *)(a1), (Desc3A26A0 *)(a2), (a3), (a4), (V43A26A0 *)(a5))) /* merge_units */
+#define ShatterEmitter_Construct(a0, a1, a2, a3, a4, a5) ((NodeTC *)ShatterEmitter_Construct((a0), (Node3A26A0 *)(a1), (Desc3A26A0 *)(a2), (a3), (a4), (V43A26A0 *)(a5))) /* merge_units */
 
-NodeTC* func_0039B3A0(void* p, NodeTC* ins, DescTC* d, int a, float f, V4TC* v);
+NodeTC* WeatherEmitter_Construct(void* p, NodeTC* ins, DescTC* d, int a, float f, V4TC* v);
 TracerTC* Tracer_Create(TracerTC* self, int name, int a3, float f);
 }
 
@@ -379,7 +379,7 @@ static inline NodeTC* New1TC(TracerTC* self, int a3)
 {
     void* t = AllocTC(0x180, 0x52D);
     if (t)
-        t = func_003A0EA0(t, 0, self->desc, a3, self->x50);
+        t = ParticleEmitter_Construct(t, 0, self->desc, a3, self->x50);
     return (NodeTC*)t;
 }
 
@@ -392,7 +392,7 @@ static inline NodeTC* New2TC(TracerTC* self, int a3)
         v.y = 1.0f;
         v.z = 0.0f;
         v.w = 0.0f;
-        t = func_0039F860(t, 0, self->desc, a3, self->x50, &v);
+        t = ShatterEmitter_Construct(t, 0, self->desc, a3, self->x50, &v);
     }
     return (NodeTC*)t;
 }
@@ -406,7 +406,7 @@ static inline NodeTC* New3TC(TracerTC* self, int a3)
         v.y = 1.0f;
         v.z = 0.0f;
         v.w = 0.0f;
-        t = func_0039B3A0(t, 0, self->desc, a3, self->x50, &v);
+        t = WeatherEmitter_Construct(t, 0, self->desc, a3, self->x50, &v);
     }
     return (NodeTC*)t;
 }
@@ -415,7 +415,7 @@ static inline NodeTC* New4TC(TracerTC* self, int a3)
 {
     void* t = AllocTC(0x130, 0x53B);
     if (t)
-        t = func_00398E20(t, 0, self->desc, a3, self->x50);
+        t = PhysEmitter_Construct(t, 0, self->desc, a3, self->x50);
     return (NodeTC*)t;
 }
 
@@ -469,9 +469,9 @@ extern "C" TracerTC* Tracer_Create(TracerTC* self, int name, int a3, float f)
     self->count++;
     return self;
 }
-#undef func_003A0EA0 /* merge_units */
-#undef func_00398E20 /* merge_units */
-#undef func_0039F860 /* merge_units */
+#undef ParticleEmitter_Construct /* merge_units */
+#undef PhysEmitter_Construct /* merge_units */
+#undef ShatterEmitter_Construct /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003A2DD0(void) {}
 #pragma pop /* merge_units */

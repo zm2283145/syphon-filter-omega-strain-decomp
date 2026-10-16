@@ -23,7 +23,7 @@ DEFINE_BUF_HOLDER_DTOR_SHALLOW(func_00344AA0)
 #include "vtable_base_dtor.h"
 
 /* Derived destructor: restore vtable, run base destructor, optionally delete. */
-DEFINE_VTABLE_BASE_DTOR(func_00344B90, D_004E1220, func_0041F370)
+DEFINE_VTABLE_BASE_DTOR(func_00344B90, D_004E1220, GuiWidget_Destroy)
 #pragma pop /* merge_units */
 /* merge_units: end func_00344B90 */
 

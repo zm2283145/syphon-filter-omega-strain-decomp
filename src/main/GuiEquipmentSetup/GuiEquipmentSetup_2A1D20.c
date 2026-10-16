@@ -26,7 +26,7 @@ struct S_002A1D20 {
 extern "C" {
 extern void* D_004FFC04;
 Ui_002A1D20* Gui_GetScreenStack(void);
-void func_0041E0F0(void* a, void* b, int c, int d, int e);
+void GuiWidget_SendEvent(void* a, void* b, int c, int d, int e);
 void GuiScreen_SetFocus(void* ui, void* w);
 char* Loc_LookupText(char* key);
 int FrontEnd_OpenPopup(void* ui, int a, char* b, char* c, S_002A1D20* d, int e);
@@ -65,7 +65,7 @@ extern "C" int func_002A1D20(S_002A1D20* self, Ev_002A1D20* ev)
         bool b = ev->type == 1 && ev->f2 == 0 && ev->btn == 0x8000 && ev->f6 == 0;
         if (b) {
             void* cur = Gui_GetScreenStack()->f20;
-            func_0041E0F0(cur, Gui_GetScreenStack(), 0x10, 0, 0);
+            GuiWidget_SendEvent(cur, Gui_GetScreenStack(), 0x10, 0, 0);
             {
                 Ui_002A1D20* a = Gui_GetScreenStack();
                 Ui_002A1D20* u = Gui_GetScreenStack();
@@ -78,7 +78,7 @@ extern "C" int func_002A1D20(S_002A1D20* self, Ev_002A1D20* ev)
         bool b = ev->type == 1 && ev->f2 == 0 && ev->btn == 0x2000 && ev->f6 == 0;
         if (b) {
             void* cur = Gui_GetScreenStack()->f20;
-            func_0041E0F0(cur, Gui_GetScreenStack(), 0x10, 0, 0);
+            GuiWidget_SendEvent(cur, Gui_GetScreenStack(), 0x10, 0, 0);
             {
                 Ui_002A1D20* a = Gui_GetScreenStack();
                 Ui_002A1D20* u = Gui_GetScreenStack();
@@ -165,11 +165,11 @@ void* Gui_GetScreenStack(void);
 
 void GuiStack_SwapScreens(void* ui, S_002A2170* self, void* pg);
 G_002A2170* DME_GetLobby(void);
-void func_0041BEB0(void* w, char* s, int a);
+void GuiTextWidget_SetText(void* w, char* s, int a);
 void* Gui_GetScreenList(void);
 void* GuiManager_FindOrLoad(void* a, char* b, char* c);
 void Game_EndLevel(void* a, int b);
-int func_0041EF10(S_002A2170* self, W_002A2170* w, int msg, int sub, char* text);
+int GuiWidget_OnEvent(S_002A2170* self, W_002A2170* w, int msg, int sub, char* text);
 }
 extern "C" int func_002A2170(S_002A2170* self, W_002A2170* w, int msg, int sub, char* text)
 {
@@ -216,13 +216,13 @@ extern "C" int func_002A2170(S_002A2170* self, W_002A2170* w, int msg, int sub, 
                     D_004FFC0C->p30->SetState(2);
                     t = Loc_LookupText("EQS_WAITING");
                     if (t)
-                        func_0041BEB0(w, t, 0);
+                        GuiTextWidget_SetText(w, t, 0);
                 } else {
                     char* t;
                     D_004FFC0C->p30->SetState(1);
                     t = Loc_LookupText("EQS_EQUIP");
                     if (t)
-                        func_0041BEB0(w, t, 0);
+                        GuiTextWidget_SetText(w, t, 0);
                 }
             } else {
                 D_004FFC29 = 0;
@@ -243,7 +243,7 @@ extern "C" int func_002A2170(S_002A2170* self, W_002A2170* w, int msg, int sub, 
         Game_EndLevel(D_004FFB50, 3);
         return 1;
     }
-    return func_0041EF10(self, w, msg, sub, text);
+    return GuiWidget_OnEvent(self, w, msg, sub, text);
 }
 #undef Gui_GetScreenStack /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */

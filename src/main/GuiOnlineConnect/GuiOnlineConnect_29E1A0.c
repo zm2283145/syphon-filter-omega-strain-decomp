@@ -1,0 +1,387 @@
+/*
+ * main/GuiOnlineConnect: 3 files, 0029E1A0-0029E8C0
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_0029E1A0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+#include "types.h"
+struct Str_0029E1A0 { char d[0x10]; };
+struct S_0029E1A0 { char pad0[0x48]; int f48; char pad4C[0x3C]; int f88; char pad8C[0x120 - 0x8C]; int f120; };
+extern "C" {
+extern void* D_004FFC04;
+extern unsigned char D_0051EEB0;
+extern char D_004AABF0[];
+void GuiScreen_Update(S_0029E1A0* self);
+void FrontEnd_StartSplashThread(void* ui);
+void func_002C9AA0(void* ui);
+void* DME_GetLobby(void);
+int func_002CA710(void* ui);
+char* func_0033CE30(S_0029E1A0* self, int a, int b, int c, int d, int e);
+void String_CtorCStr_13B480(Str_0029E1A0* s, const char* c);
+char* String_CStr(Str_0029E1A0* s);
+int FrontEnd_OpenPopup(void* ui, int a, char* b, char* c, S_0029E1A0* d, int e);
+void func_002C9AF0(void* ui, int a);
+void FrontEnd_ClosePopup(void* ui, int id);
+void func_002C81D0(void* ui);
+void String_Dtor(Str_0029E1A0* s, int flags);
+void func_0029D120(S_0029E1A0* self);
+void func_0029DE70(S_0029E1A0* self, int a);
+void func_002CA350(void* ui);
+void func_00445570(void* g);
+int func_004456D0(void* g);
+void func_004456C0(void* g);
+void func_0029DFC0(S_0029E1A0* self);
+}
+extern "C" void func_0029E1A0(S_0029E1A0* self)
+{
+    GuiScreen_Update(self);
+    if (D_0051EEB0)
+        return;
+    if (!self->f88) {
+        FrontEnd_StartSplashThread(D_004FFC04);
+        self->f88 = 2;
+    }
+    if (self->f88 == 2) {
+        func_002C9AA0(D_004FFC04);
+        if (!DME_GetLobby() && !func_002CA710(D_004FFC04)) {
+            Str_0029E1A0 a;
+            Str_0029E1A0 b;
+            self->f88 = 4;
+            String_CtorCStr_13B480(&a, func_0033CE30(self, 1, 0, 0, 0, 0));
+            String_CtorCStr_13B480(&b, func_0033CE30(self, 4, 0, 0, 0, 0));
+            {
+                char* tb = String_CStr(&b);
+                FrontEnd_OpenPopup(D_004FFC04, 2, String_CStr(&a), tb, self, 0);
+            }
+            func_002C9AF0(D_004FFC04, 0);
+            FrontEnd_ClosePopup(D_004FFC04, self->f48);
+            func_002C81D0(D_004FFC04);
+            String_Dtor(&b, 0);
+            String_Dtor(&a, 0);
+            return;
+        }
+        func_0029D120(self);
+        func_002C81D0(D_004FFC04);
+        FrontEnd_ClosePopup(D_004FFC04, self->f48);
+        func_002C9AF0(D_004FFC04, 0);
+    }
+    if (self->f88 == 7) {
+        unsigned char done;
+        void* g = DME_GetLobby();
+        if (!g) {
+            func_0029DE70(self, 1);
+            done = 0;
+        } else {
+            void* ui = D_004FFC04;
+            int h = FrontEnd_OpenPopup(ui, 0, D_004AABF0, func_0033CE30(self, 0xD, 0, 0, 0, 0), 0, 0);
+            if (self->f120 != -1)
+                FrontEnd_ClosePopup(D_004FFC04, self->f120);
+            func_002CA350(D_004FFC04);
+            func_00445570(g);
+            if (func_004456D0(g))
+                func_004456C0(g);
+            FrontEnd_ClosePopup(D_004FFC04, h);
+            done = 1;
+        }
+        if (done)
+            func_0029DFC0(self);
+    }
+}
+#pragma pop /* merge_units */
+/* merge_units: end func_0029E1A0 */
+
+/* merge_units: begin func_0029E440 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+struct Fl_0029E440 { char pad[0x14]; unsigned short flags; };
+struct Ui_0029E440 {
+    virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+    virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
+    virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14();
+    virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+    virtual void v20(); virtual void v21(); virtual void v22();
+    virtual void Show(void* p, int a);
+};
+struct Self_0029E440 {
+    char pad0[0x88]; int f88; char pad8C[4]; char* f90; unsigned char b91x[1]; char pad95_[0x95 - 0x95];
+};
+struct S_0029E440 {
+    char pad0[0x88]; int f88; char pad8C[4]; char* f90; char pad94; unsigned char b95; char pad96[0xF8 - 0x96];
+    void* fF8; void* fFC; char pad100[4]; void* f104; void* p108; char pad10C[0x11C - 0x10C]; int f11C;
+};
+extern "C" {
+extern char D_004AAC18[];
+extern char D_004AAC28[];
+extern char D_005381F0[];
+extern char D_004FFB50[];
+extern char D_004F2CC0[];
+extern int* D_0055A830;
+extern char D_004FFBA4[];
+extern "C" char D_004AABC8[];
+static void * const dat_0048B988[2] = { (void*)D_004AABC8, (void*)0x0 };
+int func_00452FE0(void* g);
+void func_0029CBB0(S_0029E440* self, int a);
+void func_0029DAF0(S_0029E440* self, char* t);
+Ui_0029E440* Gui_GetScreenStack(void);
+Fl_0029E440* GuiWidget_FindChildByName(void* p, char* name);
+#if 0 /* merge_units */
+int func_0033CE30(S_0029E440* self, int a, int b, int c, int d, int e);
+#endif /* merge_units */
+#define func_0033CE30(a0, a1, a2, a3, a4, a5) ((int)func_0033CE30((S_0029E1A0 *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
+
+#if 0 /* merge_units */
+int FrontEnd_OpenPopup(void* ui, int a, char* b, int c, S_0029E440* d, int e);
+#endif /* merge_units */
+#define FrontEnd_OpenPopup(a0, a1, a2, a3, a4, a5) (FrontEnd_OpenPopup((a0), (a1), (a2), (char *)(a3), (S_0029E1A0 *)(a4), (a5))) /* merge_units */
+
+void func_0029D390(S_0029E440* self);
+void func_0037E320(void* p);
+void* Service_Lookup(void* a, void* b);
+void SoundMgr_UnloadLevel(void* svc);
+void func_002B4FA8(int id);
+void func_002B4E50(void);
+void* String_CStr_189540(void* p);
+void func_0044B970(void* a, char* b);
+#if 0 /* merge_units */
+void func_0029DE70(S_0029E440* self, int a);
+#endif /* merge_units */
+#define func_0029DE70(a0, a1) (func_0029DE70((S_0029E1A0 *)(a0), (a1))) /* merge_units */
+
+#if 0 /* merge_units */
+void func_0029DFC0(S_0029E440* self);
+#endif /* merge_units */
+#define func_0029DFC0(a0) (func_0029DFC0((S_0029E1A0 *)(a0))) /* merge_units */
+
+int GuiScreen_HandleEvent(S_0029E440* self, void* w, int msg, int sub);
+}
+extern "C" int func_0029E440(S_0029E440* self, void* w, int msg, int sub, char* text)
+{
+    unsigned short m = msg;
+    if (m == 0x2002) {
+        unsigned char ok = 0;
+        if (DME_GetLobby()) {
+            int st = func_00452FE0(DME_GetLobby());
+            bool ne = st != -0x2BD && st != -0x2BF;
+            if (!ne)
+                ok = 1;
+        }
+        if (ok && sub)
+            *(int*)sub = 1;
+        self->b95 = 1;
+        return 1;
+    }
+    if (self->f88 == 5 && m == 0x13) {
+        self->f90 = text;
+        func_0029CBB0(self, 4);
+        func_0029DAF0(self, self->f90);
+        return 1;
+    }
+    if (m == 0x2001) {
+        void* p = self->p108;
+        if (p) {
+            Fl_0029E440* a;
+            Fl_0029E440* b;
+            int old;
+            void* ui;
+            Gui_GetScreenStack()->Show(p, 0x7D0);
+            a = GuiWidget_FindChildByName(self->p108, D_004AAC18);
+            if (a)
+                a->flags &= ~2;
+            b = GuiWidget_FindChildByName(self->p108, D_004AAC28);
+            if (b)
+                b->flags |= 2;
+            old = self->f11C;
+            ui = D_004FFC04;
+            self->f11C = FrontEnd_OpenPopup(ui, 0, D_004AABF0, func_0033CE30(self, 0x82, 0, 0, 0, 0), 0, 0);
+            if (old != -1)
+                FrontEnd_ClosePopup(D_004FFC04, old);
+        }
+        return 1;
+    }
+    if (m == 0x1B || m == 0x1A) {
+        if (sub == 0x20) {
+            func_0029D390(self);
+            return 1;
+        }
+        if (self->f88 == 3) {
+            if (m == 0x1A) {
+                void* svc;
+                int id;
+                func_0037E320(D_005381F0);
+                svc = Service_Lookup(D_004FFB50, D_004F2CC0);
+                if (svc)
+                    SoundMgr_UnloadLevel(svc);
+                id = D_0055A830 ? *D_0055A830 : -1;
+                if (id != -1)
+                    func_002B4FA8(id);
+                func_002B4E50();
+                func_0044B970(String_CStr_189540(D_004FFBA4), (*(char**)dat_0048B988));
+            } else if (sub == 0x1F) {
+                self->f88 = 5;
+            } else {
+                func_0029DE70(self, 0);
+            }
+        }
+        if (self->f88 == 4 && m == 0x1A)
+            func_0029DE70(self, 0);
+        if (sub == 0x1E && m == 0x1A)
+            func_0029DE70(self, 0);
+        return 1;
+    }
+    if (m == 2) {
+        if (w == self->fF8 || w == self->fFC) {
+            if (self->f88 == 1) {
+                func_0029CBB0(self, 4);
+                if (w == self->fF8) {
+                    func_0029DAF0(self, self->f90);
+                } else {
+                    void* ui = D_004FFC04;
+                    FrontEnd_OpenPopup(ui, 5, D_004AABF0, func_0033CE30(self, 0xE, 0, 0, 0, 0), self, 0x1E);
+                }
+            } else if (w == self->fF8) {
+                func_0029DFC0(self);
+            } else {
+                void* ui = D_004FFC04;
+                FrontEnd_OpenPopup(ui, 5, D_004AABF0, func_0033CE30(self, 0xE, 0, 0, 0, 0), self, 0x1E);
+            }
+            return 1;
+        }
+        if (w == self->f104) {
+            func_0029DFC0(self);
+            return 1;
+        }
+    }
+    return GuiScreen_HandleEvent(self, w, msg, sub);
+}
+#undef func_0033CE30 /* merge_units */
+#undef FrontEnd_OpenPopup /* merge_units */
+#undef func_0029DE70 /* merge_units */
+#undef func_0029DFC0 /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0029E440 */
+
+/* merge_units: begin func_0029E8C0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+struct Ev_0029E8C0 { unsigned short type; unsigned short f2; unsigned short f4; unsigned short f6; unsigned short btn; };
+struct Str_0029E8C0 { char d[0x10]; };
+struct Fl_0029E8C0 { char pad[0x14]; unsigned short flags; };
+struct S_0029E8C0 {
+    char pad0[0x88]; int f88; char pad8C[0xF4 - 0x8C]; void* pF4; char padF8[8]; void* p100; char pad104[0xC]; Fl_0029E8C0* p110; Fl_0029E8C0* p114;
+};
+extern "C" {
+#if 0 /* merge_units */
+void func_0029DE70(S_0029E8C0* self, int a);
+#endif /* merge_units */
+#define func_0029DE70(a0, a1) (func_0029DE70((S_0029E1A0 *)(a0), (a1))) /* merge_units */
+
+#if 0 /* merge_units */
+char* func_0033CE30(S_0029E8C0* self, int a, int b, int c, int d, int e);
+#endif /* merge_units */
+#define func_0033CE30(a0, a1, a2, a3, a4, a5) (func_0033CE30((S_0029E1A0 *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
+
+#if 0 /* merge_units */
+int FrontEnd_OpenPopup(void* ui, int a, char* b, char* c, S_0029E8C0* d, int e);
+#endif /* merge_units */
+#define FrontEnd_OpenPopup(a0, a1, a2, a3, a4, a5) (FrontEnd_OpenPopup((a0), (a1), (a2), (a3), (S_0029E1A0 *)(a4), (a5))) /* merge_units */
+
+#if 0 /* merge_units */
+void String_CtorCStr_13B480(Str_0029E8C0* s, const char* c);
+#endif /* merge_units */
+#define String_CtorCStr_13B480(a0, a1) (String_CtorCStr_13B480((Str_0029E1A0 *)(a0), (a1))) /* merge_units */
+
+#if 0 /* merge_units */
+char* String_CStr(Str_0029E8C0* s);
+#endif /* merge_units */
+#define String_CStr(a0) (String_CStr((Str_0029E1A0 *)(a0))) /* merge_units */
+
+#if 0 /* merge_units */
+void String_Dtor(Str_0029E8C0* s, int flags);
+#endif /* merge_units */
+#define String_Dtor(a0, a1) (String_Dtor((Str_0029E1A0 *)(a0), (a1))) /* merge_units */
+
+void func_0043D820(void* p, int a);
+void func_0043D760(void* p, int a);
+int GuiScreen_HandleInput(S_0029E8C0* self, Ev_0029E8C0* ev);
+}
+static inline unsigned char Down_0029E8C0(Ev_0029E8C0* e)
+{
+    unsigned char r = 0;
+    if (e->type == 1 && e->f2 == 0)
+        r = 1;
+    return r;
+}
+static inline unsigned char Btn_0029E8C0(Ev_0029E8C0* e, unsigned int b)
+{
+    unsigned char r = 0;
+    if (Down_0029E8C0(e) && e->btn == b)
+        r = 1;
+    return r;
+}
+static inline unsigned char Press_0029E8C0(Ev_0029E8C0* e, unsigned int b)
+{
+    unsigned char r = 0;
+    if (Btn_0029E8C0(e, b) && e->f6 == 0)
+        r = 1;
+    return r;
+}
+extern "C" int func_0029E8C0(S_0029E8C0* self, Ev_0029E8C0* ev)
+{
+    if (Press_0029E8C0(ev, 0x10)) {
+        if (self->f88 == 5 || self->f88 == 1) {
+            func_0029DE70(self, 0);
+        } else {
+            void* ui = D_004FFC04;
+            FrontEnd_OpenPopup(ui, 5, D_004AABF0, func_0033CE30(self, 0xE, 0, 0, 0, 0), self, 0x1E);
+        }
+        return 1;
+    } else {
+        bool b = ev->type == 1 && ev->f2 == 0 && ev->btn == 0x20 && ev->f6 == 0;
+        if (b) {
+            if (self->f88 == 5) {
+                Str_0029E8C0 a;
+                Str_0029E8C0 c;
+                self->f88 = 3;
+                String_CtorCStr_13B480(&a, func_0033CE30(self, 7, 0, 0, 0, 0));
+                String_CtorCStr_13B480(&c, func_0033CE30(self, 8, 0, 0, 0, 0));
+                {
+                    char* tc = String_CStr(&c);
+                    FrontEnd_OpenPopup(D_004FFC04, 5, String_CStr(&a), tc, self, 0x1F);
+                }
+                String_Dtor(&c, 0);
+                String_Dtor(&a, 0);
+            }
+            return 1;
+        } else {
+            bool d = ev->type == 1 && ev->f2 == 0 && ev->btn == 8 && ev->f6 == 0;
+            if (d) {
+                if (self->p110 && (self->p110->flags & 2))
+                    func_0043D820(self->pF4, 0);
+                else if (self->p114 && (self->p114->flags & 2))
+                    func_0043D820(self->p100, 0);
+                return 1;
+            } else {
+                bool e = ev->type == 1 && ev->f2 == 0 && ev->btn == 4 && ev->f6 == 0;
+                if (e) {
+                    if (self->p110 && (self->p110->flags & 2))
+                        func_0043D760(self->pF4, 0);
+                    else if (self->p114 && (self->p114->flags & 2))
+                        func_0043D760(self->p100, 0);
+                    return 1;
+                }
+            }
+        }
+    }
+    return GuiScreen_HandleInput(self, ev);
+}
+#undef func_0029DE70 /* merge_units */
+#undef func_0033CE30 /* merge_units */
+#undef FrontEnd_OpenPopup /* merge_units */
+#undef String_CtorCStr_13B480 /* merge_units */
+#undef String_CStr /* merge_units */
+#undef String_Dtor /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0029E8C0 */

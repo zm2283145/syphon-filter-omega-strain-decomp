@@ -82,9 +82,9 @@ struct S_002ACB70 : W_002ACB70 {
 };
 extern "C" {
 void func_002AC070(S_002ACB70* self);
-void func_00424430(S_002ACB70* self, int a, int b);
-int func_004245D0(S_002ACB70* self, int a, unsigned int b);
-void func_00424670(S_002ACB70* self, int a, unsigned int b);
+void GuiArrayWidget_Select(S_002ACB70* self, int a, int b);
+int GuiArrayWidget_IsCellVisible(S_002ACB70* self, int a, unsigned int b);
+void GuiArrayWidget_Scroll(S_002ACB70* self, int a, unsigned int b);
 void LobbyArray_SetDirty(void* p, int a);
 }
 static inline void Upd_(S_002ACB70* s, int n) { s->SetCount(s->f48, n); }
@@ -96,7 +96,7 @@ extern "C" void func_002ACB70(S_002ACB70* self)
         old = self->f54 - self->f7C;
     func_002AC070(self);
     Upd_(self, self->count);
-    func_00424430(self, 0, self->fCC);
+    GuiArrayWidget_Select(self, 0, self->fCC);
     if (self->f54 >= self->f7C) {
         unsigned int d = self->f54 - self->f7C;
         if (d != old) {
@@ -111,8 +111,8 @@ extern "C" void func_002ACB70(S_002ACB70* self)
             self->f7C = v;
         }
     }
-    if (!func_004245D0(self, self->f50, self->f54))
-        func_00424670(self, self->f50, self->f54);
+    if (!GuiArrayWidget_IsCellVisible(self, self->f50, self->f54))
+        GuiArrayWidget_Scroll(self, self->f50, self->f54);
     if (self->p11C)
         LobbyArray_SetDirty(self->p11C, 0);
 }

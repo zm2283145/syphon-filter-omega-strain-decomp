@@ -94,14 +94,14 @@ extern "C" {
 extern char D_005381F0[];
 extern int D_00538C64;
 extern char D_00538C68;
-void func_0041E470(Self* self);
+void GuiWidget_Draw(Self* self);
 int Font_GetLineHeight(Font* f);
 LineIter List_Begin(LineList*);
 LineIter func_0043DB60(LineList*);
 void func_0043DB70(LineIter*, const LineIter&);
 void func_0043DB50(LineIter*, const LineIter&);
-void func_003D08B0(Box* b, char* text);
-void func_003CFAB0(Box* b);
+void TextObj_SetText(Box* b, char* text);
+void TextObj_Draw(Box* b);
 }
 
 static inline Mtx* MtxAt(int i) { return &((Render*)D_005381F0)->mtx[i]; }
@@ -112,7 +112,7 @@ static inline void SetColor(Font* f, V4 c) { f->r = c.x; f->g = c.y; f->b = c.z;
 
 extern "C" void func_0043D8B0(Self* self)
 {
-    func_0041E470(self);
+    GuiWidget_Draw(self);
     if (self->textBox == 0 || self->font == 0) return;
     { int i = D_00538C64; GQR(MtxAt(i + 1), MtxAt(i)); }
     D_00538C64++;
@@ -139,8 +139,8 @@ extern "C" void func_0043D8B0(Self* self)
         for (n = it; func_0043DB50(&end, func_0043DB60(&self->lines)), n.node != end.node; n.node = n.node->next) {
             if (i++ < self->scrollPos) continue;
             self->textBox->SetPos((int)self->x, y);
-            func_003D08B0(self->textBox, n.node->text);
-            func_003CFAB0(self->textBox);
+            TextObj_SetText(self->textBox, n.node->text);
+            TextObj_Draw(self->textBox);
             y -= lineH;
             if (!(cnt++ < self->visibleLines)) break;
         }

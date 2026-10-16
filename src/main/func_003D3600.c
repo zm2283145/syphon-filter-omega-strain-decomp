@@ -35,7 +35,7 @@ Vec4* func_003D3650(Vec4* v, float x, float y, float z, float w) {
 }
 
 /* Returns the current entry. */
-L4Entry110* func_003D3670(Unk3D3670* self) {
+L4Entry110* Renderer_GetCurrentCamera(Unk3D3670* self) {
     return &self->entries[self->cur];
 }
 

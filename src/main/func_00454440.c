@@ -11,7 +11,7 @@ extern void String_Copy(char*, char*);
 extern void func_00459450(void*);
 extern void func_004546C0(S_454440*, char*);
 extern void func_004214C0(Box_454440*, int, int);
-extern int func_0041EF10(S_454440*, void*, unsigned short, int, int);
+extern int GuiWidget_OnEvent(S_454440*, void*, unsigned short, int, int);
 
 #pragma push
 #pragma opt_propagation off
@@ -44,7 +44,7 @@ int func_00454440(S_454440* self, void* ev, unsigned short code, int a3, int idx
             func_004214C0(self->box, idx, 1);
         return 1;
     }
-    return func_0041EF10(self, ev, code, a3, idx);
+    return GuiWidget_OnEvent(self, ev, code, a3, idx);
 }
 #pragma pop
 

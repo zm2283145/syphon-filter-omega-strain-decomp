@@ -25,12 +25,12 @@ struct O_41A180 {
     char pad54[0x38];
     int cursor;
 };
-extern "C" void func_0041A100(O_41A180* o, int c);
+extern "C" void GuiTextEditWidget_ClampCursor(O_41A180* o, int c);
 extern "C" void String_Replace(Str_41A180* s, int pos, int count, const char* first, const char* last, Alloc_41A180 a);
 
-extern "C" int func_0041A180(O_41A180* o, int fwd)
+extern "C" int GuiTextEditWidget_Delete(O_41A180* o, int fwd)
 {
-    func_0041A100(o, o->cursor);
+    GuiTextEditWidget_ClampCursor(o, o->cursor);
     if (o->str.Size() == 0) return 0;
     if (fwd) {
         if (o->cursor == o->str.Size()) return 0;
@@ -74,13 +74,13 @@ void func_003B52B0(Str_41A2C0* out, Str_41A2C0* s, int a, int b);
 void func_002072B0(Str_41A2C0* out, Str_41A2C0* a, Str_41A2C0* b);
 void func_0013D680(Str_41A2C0* d, Str_41A2C0* s);
 #if 0 /* merge_units */
-void func_0041A100(O_41A2C0* o, int c);
+void GuiTextEditWidget_ClampCursor(O_41A2C0* o, int c);
 #endif /* merge_units */
-#define func_0041A100(a0, a1) ((void)func_0041A100((O_41A180 *)(a0), (a1))) /* merge_units */
+#define GuiTextEditWidget_ClampCursor(a0, a1) ((void)GuiTextEditWidget_ClampCursor((O_41A180 *)(a0), (a1))) /* merge_units */
 
 }
 
-extern "C" int func_0041A2C0(O_41A2C0* o, char* text)
+extern "C" int GuiTextEditWidget_Insert(O_41A2C0* o, char* text)
 {
     Str_41A2C0 s;
     Str_41A2C0 left;
@@ -101,14 +101,14 @@ extern "C" int func_0041A2C0(O_41A2C0* o, char* text)
         String_Dtor(&t2, 0);
         String_Dtor(&t1, 0);
     }
-    func_0041A100(o, o->cursor + s.Size());
+    GuiTextEditWidget_ClampCursor(o, o->cursor + s.Size());
     o->Changed();
     String_Dtor(&right, 0);
     String_Dtor(&left, 0);
     String_Dtor(&s, 0);
     return 1;
 }
-#undef func_0041A100 /* merge_units */
+#undef GuiTextEditWidget_ClampCursor /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0041A2C0 */
 
@@ -152,7 +152,7 @@ void func_0025CA40(char* r);
 void Vec4_Copy(void* d, V4* s);
 int* GuiBatch_AddVertexColor(void* out, V4* in);
 void func_003701B0(char* r);
-void func_0041C150(Self* self);
+void GuiTextWidget_Draw(Self* self);
 Scr* Gui_GetScreenStack(void);
 int func_003CF3A0(int a, float* x, float* y, int d);
 int Font_GetLineHeight(int a);
@@ -176,9 +176,9 @@ static inline void Vertex(V4* p, V4* c) {
     D_005381F8 = 0x200000000LL;
 }
 
-extern "C" void func_0041A450(Self* self)
+extern "C" void GuiTextEditWidget_Draw(Self* self)
 {
-    func_0041C150(self);
+    GuiTextWidget_Draw(self);
     if (self->f78 == 0) return;
     if (self->f88 == 0 && Gui_GetScreenStack()->top != self) return;
     float x = 0;

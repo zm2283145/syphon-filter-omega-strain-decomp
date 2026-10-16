@@ -40,12 +40,12 @@ extern int sprintf(char* buf, const char* fmt, ...);
 extern int func_00404690(void* db, __int128 key);
 extern int func_00401DE0(void* db, __int128 key);
 extern void func_00343940(S_341C50* o);
-extern void func_0041BEB0(W_341C50* w, char* text, int flags);
-extern void func_0041E0F0(S_341C50* o, W_341C50* w, int kind, int v, int f);
+extern void GuiTextWidget_SetText(W_341C50* w, char* text, int flags);
+extern void GuiWidget_SendEvent(S_341C50* o, W_341C50* w, int kind, int v, int f);
 
 static inline void Slider_341C50(S_341C50* o, W_341C50* w, int kind, int v, int f)
 {
-    if (w) func_0041E0F0(o, w, kind, v, f);
+    if (w) GuiWidget_SendEvent(o, w, kind, v, f);
 }
 
 void func_00341C50(S_341C50* o, char* name)
@@ -78,16 +78,16 @@ void func_00341C50(S_341C50* o, char* name)
             if (o->w7C) {
                 if (o->count) {
                     sprintf(buf, D_004B9F70, o->pos + 1, o->count);
-                    func_0041BEB0(o->w7C, buf, 0);
+                    GuiTextWidget_SetText(o->w7C, buf, 0);
                 } else {
-                    func_0041BEB0(o->w7C, D_004B9F78, 0);
+                    GuiTextWidget_SetText(o->w7C, D_004B9F78, 0);
                 }
             }
         } else {
             o->count = 0;
             o->pos = 0;
             if (o->w78) o->w78->flags &= ~2;
-            if (o->w7C) func_0041BEB0(o->w7C, D_004B9F20, 0);
+            if (o->w7C) GuiTextWidget_SetText(o->w7C, D_004B9F20, 0);
         }
     }
 }

@@ -51,11 +51,11 @@ extern char D_004A7520[];
 extern char D_004C1D88[];
 extern char D_004AAE20[];
 extern char D_004AAE00[];
-void func_0041F150(S_455610* s);
+void GuiWidget_Init(S_455610* s);
 }
 extern "C" void func_00455610(S_455610* s)
 {
-    func_0041F150(s);
+    GuiWidget_Init(s);
     s->f48 = GuiFindAs(s, D_00497998, D_004BB3D0);
     s->f50 = GuiFindAs(s, D_004C1A60, D_004A7520);
     s->f54 = GuiFindAs(s, D_004C19C0, D_004C1D88);
@@ -72,16 +72,16 @@ extern "C" void func_00455610(S_455610* s)
 /* merge_units: begin func_004557C0 */
 #pragma push /* merge_units */
 typedef struct { unsigned short a0; unsigned short a2; short pad4; unsigned short a6; unsigned short a8; } E4557C0;
-extern int func_00456160(void* self, E4557C0* e);
-extern int func_00423CC0(void* self, E4557C0* e);
+extern int GuiStartMenu_ReturnToMenu(void* self, E4557C0* e);
+extern int GuiArrayWidget_OnInput(void* self, E4557C0* e);
 int func_004557C0(void* self, E4557C0* e)
 {
     int b = e->a0 == 1 && e->a2 == 0 && e->a8 == 0x10 && e->a6 == 0;
     if (b) {
-        func_00456160(self, e);
+        GuiStartMenu_ReturnToMenu(self, e);
         return 1;
     }
-    return func_00423CC0(self, e);
+    return GuiArrayWidget_OnInput(self, e);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_004557C0 */

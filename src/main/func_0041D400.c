@@ -29,7 +29,7 @@ static inline unsigned char selectable(TraversalWidget* widget)
 }
 
 /* Search backwards after the boundary, restarting at the edge when requested. */
-extern "C" TraversalWidget* func_0041D400(TraversalWidget* self, TraversalWidget* boundary, int restart)
+extern "C" TraversalWidget* GuiWidget_FocusPrev(TraversalWidget* self, TraversalWidget* boundary, int restart)
 {
     ChildIterator end;
     ChildIterator begin;
@@ -65,7 +65,7 @@ extern "C" TraversalWidget* func_0041D400(TraversalWidget* self, TraversalWidget
 }
 
 /* Search forwards after the boundary, restarting at the edge when requested. */
-extern "C" TraversalWidget* func_0041D5C0(TraversalWidget* self, TraversalWidget* boundary, int restart)
+extern "C" TraversalWidget* GuiWidget_FocusNext(TraversalWidget* self, TraversalWidget* boundary, int restart)
 {
     ChildIterator end;
     ChildIterator begin;
@@ -101,7 +101,7 @@ extern "C" TraversalWidget* func_0041D5C0(TraversalWidget* self, TraversalWidget
 }
 
 /* Search the child list backwards, preserving the live end iterator. */
-extern "C" TraversalWidget* func_0041D780(TraversalWidget* self)
+extern "C" TraversalWidget* GuiWidget_FocusLast(TraversalWidget* self)
 {
     ChildIterator end;
     ChildIterator begin;
@@ -129,7 +129,7 @@ extern "C" TraversalWidget* func_0041D780(TraversalWidget* self)
 }
 
 /* Search the child list forwards, preserving the live end iterator. */
-extern "C" TraversalWidget* func_0041D8C0(TraversalWidget* self)
+extern "C" TraversalWidget* GuiWidget_FocusFirst(TraversalWidget* self)
 {
     ChildIterator end;
     ChildIterator begin;

@@ -24,9 +24,9 @@ void* WeaponInv_GetHeldItem(void* p);
 void func_00175FF0(G_454B10* g, int id);
 void Goggles_Toggle(A_454B10* a);
 M_454B10* Gui_GetScreenStack(void);
-void func_0041E0F0(void* a, void* b, int kind, int v, int f);
+void GuiWidget_SendEvent(void* a, void* b, int kind, int v, int f);
 void func_00454F80(O_454B10* o, bool f);
-void func_00456160(O_454B10* o);
+void GuiStartMenu_ReturnToMenu(O_454B10* o);
 void Hud_ClosePauseMenu(void* p);
 void Game_SetPaused(void* p, int v);
 int func_00454B10(O_454B10* o, Ev_454B10* ev);
@@ -68,7 +68,7 @@ int func_00454B10(O_454B10* o, Ev_454B10* ev)
                 sent = 1;
                 Goggles_Toggle(a);
             }
-            if (sent) func_0041E0F0(o->f48, Gui_GetScreenStack(), 0x10, 1, 0);
+            if (sent) GuiWidget_SendEvent(o->f48, Gui_GetScreenStack(), 0x10, 1, 0);
         }
     }
     if (Plain_454B10(ev, 1) || Plain2_454B10(ev, 2)) {
@@ -76,7 +76,7 @@ int func_00454B10(O_454B10* o, Ev_454B10* ev)
         return 1;
     }
     if (Plain2_454B10(ev, 0x10)) {
-        func_00456160(o);
+        GuiStartMenu_ReturnToMenu(o);
         return 1;
     }
     if (Plain2_454B10(ev, 0x800)) {

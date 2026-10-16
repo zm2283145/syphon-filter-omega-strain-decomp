@@ -82,7 +82,7 @@ extern VObj* Gui_GetScreenStack(void);
 extern int GuiManager_FindOrLoad(int a, char* b, char* c);
 extern void GuiManager_Update(int a, float f);
 extern int GuiWidget_FindChildByName(int h, char* name);
-extern int func_0041E0F0(VObj* o, int h, int n, int name, int out);
+extern int GuiWidget_SendEvent(VObj* o, int h, int n, int name, int out);
 extern char D_004ACEA8[];
 extern char D_004ACEB0[];
 extern char D_004ACEB8[];
@@ -133,7 +133,7 @@ extern "C" void FrontEnd_SetLoadingScreen(Self7D90* self, int on, char* a, char*
                 int h = D_0051EF88;
                 if (h) {
                     Prop* p = 0;
-                    if (func_0041E0F0(Gui_GetScreenStack(), h, 4, (int)D_004ACED8, (int)&p) && p->type == 1) {
+                    if (GuiWidget_SendEvent(Gui_GetScreenStack(), h, 4, (int)D_004ACED8, (int)&p) && p->type == 1) {
                         D_0051EF90 = p->value;
                     }
                 }

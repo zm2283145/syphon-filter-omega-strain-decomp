@@ -30,7 +30,7 @@ extern char D_004DD1B0[];
 extern char D_0055DDA0[];
 void func_00403310(void* p);
 void func_0040F540(void);
-void func_0041F370(void* p, int f);
+void GuiWidget_Destroy(void* p, int f);
 #if 0 /* merge_units */
 void operator_delete(void* p);
 #endif /* merge_units */
@@ -55,7 +55,7 @@ extern "C" O28F520* GuiAgentCreate_dtor(O28F520* self, short del)
         }
         func_00403310(D_0055DDA0);
         func_0040F540();
-        func_0041F370(self, 0);
+        GuiWidget_Destroy(self, 0);
         if (del > 0)
             operator_delete(self);
     }

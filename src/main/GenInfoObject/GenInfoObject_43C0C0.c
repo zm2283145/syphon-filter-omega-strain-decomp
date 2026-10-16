@@ -63,7 +63,7 @@ extern int D_00539238;
 extern int D_0053923C;
 extern TexMan* D_00539248;
 extern int D_005392D0;
-void func_0041E470(Self* self);
+void GuiWidget_Draw(Self* self);
 void Renderer_BindTexture(TexMan* m, int idx);
 void func_0025CD10(char* r);
 void func_0025CA40(char* r);
@@ -98,7 +98,7 @@ static inline void Emit(const V4& pos, const V4& col, const V4c& uv)
 
 extern "C" void func_0043C0F0(Self* self)
 {
-    func_0041E470(self);
+    GuiWidget_Draw(self);
     if (self->tex == -1) return;
     int save = D_005392D0;
     { int i = D_00538C64; GQR(MtxAt(i + 1), MtxAt(i)); }

@@ -18,7 +18,7 @@ extern void FileMan_Release(SoundPart* p, int flags);
 extern void cMessage_dtor(SoundEvent* ev, int flags);
 
 /* Builds a local sound event for id and sends it to the sound system; returns 1. */
-int func_00465B50(void* self, int id)
+int GuiSound_Stop(void* self, int id)
 {
     SoundEvent ev;
     SoundEvent_Ctor(&ev, id, 0);

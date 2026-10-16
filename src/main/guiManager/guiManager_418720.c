@@ -39,10 +39,10 @@ int func_00418780(L4WordVec* v, int a1, int value) {
 
 /* merge_units: begin func_004187C0 */
 #pragma push /* merge_units */
-extern int func_0041F960(void* b);
+extern int GuiFactory_CreateWidget(void* b);
 extern void* GuiManager_LoadGui(void* a, void* c, int r);
-void* func_004187C0(void* a, void* b, void* c) {
-    int r = func_0041F960(b);
+void* GuiManager_CreateRoot(void* a, void* b, void* c) {
+    int r = GuiFactory_CreateWidget(b);
     if (!r) return 0;
     /* .set reorder barrier keeps the empty then-arm */
     return GuiManager_LoadGui(a, c ? c : b, r);
@@ -67,10 +67,10 @@ int *func_002CCE10();
 int func_002CCE20();                          
 int func_002CCE30();                          
 int func_002CCE40();                               
-int func_00418E00();                    
+int GuiManager_UnloadRoot();                    
 
 typedef struct { char pad[0x18]; unsigned short cnt; } N418;
-int func_00418840(char *arg0, char *arg1) {
+int GuiManager_ReleaseRoot(char *arg0, char *arg1) {
     char * sp4C;
     int sp48;
     int sp44;
@@ -110,7 +110,7 @@ loop_1:
         temp_a1->cnt--;
     }
     if (temp_a1->cnt == 0) {
-        func_00418E00(arg0, temp_a1, 0);
+        GuiManager_UnloadRoot(arg0, temp_a1, 0);
     }
     return 1;
 }

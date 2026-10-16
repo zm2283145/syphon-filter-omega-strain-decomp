@@ -4,7 +4,7 @@ typedef struct { char pad[0x20]; void* f20; } M_33DA00;
 typedef struct { char pad[0x88]; void* f88; void* f8C; int f90; char pad94[4]; void* f98; void* f9C; void* fA0; void* fA4; } O_33DA00;
 M_33DA00* Gui_GetScreenStack(void);
 void GuiScreen_SetFocus(void* mgr, void* w);
-void func_0041E0F0(void* a, void* b, int kind, int v, int f);
+void GuiWidget_SendEvent(void* a, void* b, int kind, int v, int f);
 void func_0033C320(O_33DA00* o, int v);
 void func_0043D820(void* p, int v);
 void func_0043D760(void* p, int v);
@@ -31,7 +31,7 @@ int func_0033DA00(O_33DA00* o, Ev_33DA00* ev)
             }
             if (t) {
                 GuiScreen_SetFocus(Gui_GetScreenStack(), t);
-                { void* w = Gui_GetScreenStack()->f20; func_0041E0F0(w, Gui_GetScreenStack(), 0x10, 0, 0); }
+                { void* w = Gui_GetScreenStack()->f20; GuiWidget_SendEvent(w, Gui_GetScreenStack(), 0x10, 0, 0); }
                 return 1;
             }
         } else if (!Plain2_33DA00(ev, 0x8000)) {
@@ -52,7 +52,7 @@ int func_0033DA00(O_33DA00* o, Ev_33DA00* ev)
         return 1;
     }
     if (Plain2_33DA00(ev, 0x2000) && func_0033E2A0(o, Gui_GetScreenStack()->f20, 0)) {
-        { void* w = Gui_GetScreenStack()->f20; func_0041E0F0(w, Gui_GetScreenStack(), 0x10, 0, 0); }
+        { void* w = Gui_GetScreenStack()->f20; GuiWidget_SendEvent(w, Gui_GetScreenStack(), 0x10, 0, 0); }
         return 1;
     }
     return GuiScreen_HandleInput(o, ev);

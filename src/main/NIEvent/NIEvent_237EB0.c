@@ -147,7 +147,7 @@ static inline void Resize8_7F80(V8_7F80* v, int n, const E8_7F80& f = E8_7F80())
 static inline void Assign8_7F80(V8_7F80* v, int n, const E8_7F80& fill) { Resize8_7F80(v, 0); Resize8_7F80(v, n, fill); }
 int IdMgr_FindCollision(int region, int id);
 void ZoneMgr_Associate(int found, Light_7F80* o, int a, int b);
-void func_003CDF20(Light_7F80* o);
+void Node_ClearLocalMatrix(Light_7F80* o);
 }
 static inline int RdI_7F80(Reader_7F80* r) { int t = *(int*)r->cur; r->cur += 4; return t; }
 static inline float RdF_7F80(Reader_7F80* r) { float t = *(float*)r->cur; r->cur += 4; return t; }
@@ -283,7 +283,7 @@ extern "C" Light_7F80* cNIEventLight_ctor(Light_7F80* self, Reader_7F80* r)
     VCX_7F80(pp, &self->keys.data[0].pos);
     self->bDC = Fl_7F80(&self->flags)->on;
     self->v60(1, pp);
-    func_003CDF20(self);
+    Node_ClearLocalMatrix(self);
     {
         Mat_7F80 m;
         VCX_7F80(&m.r[3], &self->posE0);
@@ -366,11 +366,11 @@ extern void func_0023FCF0();
 extern void func_003CCFF0();
 extern void func_003CD090();
 extern void func_003CD110();
-extern void func_003CD1C0();
+extern void Node_GetComponentMatrix();
 extern void PathObj_GetPosition();
-extern void func_003CD420();
+extern void Node_GetLightRefPoint();
 extern void func_003CD4A0();
-extern void func_003CD520();
+extern void Node_GetWorldMatrix();
 extern void func_003CD7A0();
 extern void func_003CD920();
 extern void func_003CDA60();
@@ -415,7 +415,7 @@ char **func_00238780(char **arg0, long long arg1) {
     }
     return arg0;
 }
-void * const D_004DC190[80] = { (void*)0x0, (void*)0x0, (void*)func_00238780, (void*)NiEvent_HandlePlayMsg, (void*)func_0012ECE0, (void*)Object_GetAttachedOrSelf, (void*)func_0023FCF0, (void*)func_0012ED00, (void*)func_003CE810, (void*)func_003CE7D0, (void*)func_0012ED30, (void*)func_0012ED40, (void*)func_0012ED50, (void*)cGOBJ_v0B, (void*)cGOBJ_v0C, (void*)func_003CEA00, (void*)func_003CE9F0, (void*)func_003CE9E0, (void*)func_0023EA10, (void*)NiEvent_PreLogic, (void*)Actor_BaseWorldUpdate, (void*)Actor_VirtualNop, (void*)func_003CE9D0, (void*)Object_Activate, (void*)Object_Deactivate, (void*)Node_SetFlag2C, (void*)Node_ClearFlag2C, (void*)Node_GetFlag2C, (void*)func_0015BFB0, (void*)func_0015BFC0, (void*)func_0015BFD0, (void*)func_00148870, (void*)func_0023FCE0, (void*)func_0023FCD0, (void*)func_0013EE60, (void*)func_0015C000, (void*)Object_AttachTransform, (void*)Player_GetActiveWeapon, (void*)func_003CDDC0, (void*)func_003CDD80, (void*)func_003CDD40, (void*)func_003CDC20, (void*)func_003CDBE0, (void*)func_003CDA60, (void*)func_003CD920, (void*)func_003CD7A0, (void*)func_0015C010, (void*)func_00153860, (void*)Object_GetEye, (void*)func_0015C020, (void*)func_00140E90, (void*)func_0015C030, (void*)func_0015C040, (void*)func_0015C050, (void*)func_003CD520, (void*)func_003CD4A0, (void*)func_003CD420, (void*)PathObj_GetPosition, (void*)func_003CD1C0, (void*)func_003CD110, (void*)func_003CD090, (void*)func_003CCFF0, (void*)func_0013E060, (void*)func_0015C080, (void*)Actor_ApplyContactDamage, (void*)func_0015C0A0, (void*)func_00141850, (void*)Controller_DeathNotice, (void*)func_0023EA50, (void*)NiEvent_Play, (void*)NiEvent_Stop, (void*)NiEvent_Reset, (void*)func_0023DDA0, (void*)func_0023EE90, (void*)func_0023E5D0, (void*)NiPositionTrack_Update, (void*)NiSwitchTrack_Update, (void*)NiEventLight_Step, (void*)0x0, (void*)0x0 };
+void * const D_004DC190[80] = { (void*)0x0, (void*)0x0, (void*)func_00238780, (void*)NiEvent_HandlePlayMsg, (void*)func_0012ECE0, (void*)Object_GetAttachedOrSelf, (void*)func_0023FCF0, (void*)func_0012ED00, (void*)func_003CE810, (void*)func_003CE7D0, (void*)func_0012ED30, (void*)func_0012ED40, (void*)func_0012ED50, (void*)cGOBJ_v0B, (void*)cGOBJ_v0C, (void*)func_003CEA00, (void*)func_003CE9F0, (void*)func_003CE9E0, (void*)func_0023EA10, (void*)NiEvent_PreLogic, (void*)Actor_BaseWorldUpdate, (void*)Actor_VirtualNop, (void*)func_003CE9D0, (void*)Object_Activate, (void*)Object_Deactivate, (void*)Node_SetFlag2C, (void*)Node_ClearFlag2C, (void*)Node_GetFlag2C, (void*)func_0015BFB0, (void*)func_0015BFC0, (void*)func_0015BFD0, (void*)func_00148870, (void*)func_0023FCE0, (void*)func_0023FCD0, (void*)func_0013EE60, (void*)func_0015C000, (void*)Object_AttachTransform, (void*)Player_GetActiveWeapon, (void*)func_003CDDC0, (void*)func_003CDD80, (void*)func_003CDD40, (void*)func_003CDC20, (void*)func_003CDBE0, (void*)func_003CDA60, (void*)func_003CD920, (void*)func_003CD7A0, (void*)func_0015C010, (void*)func_00153860, (void*)Object_GetEye, (void*)func_0015C020, (void*)func_00140E90, (void*)func_0015C030, (void*)func_0015C040, (void*)func_0015C050, (void*)Node_GetWorldMatrix, (void*)func_003CD4A0, (void*)Node_GetLightRefPoint, (void*)PathObj_GetPosition, (void*)Node_GetComponentMatrix, (void*)func_003CD110, (void*)func_003CD090, (void*)func_003CCFF0, (void*)func_0013E060, (void*)func_0015C080, (void*)Actor_ApplyContactDamage, (void*)func_0015C0A0, (void*)func_00141850, (void*)Controller_DeathNotice, (void*)func_0023EA50, (void*)NiEvent_Play, (void*)NiEvent_Stop, (void*)NiEvent_Reset, (void*)func_0023DDA0, (void*)func_0023EE90, (void*)func_0023E5D0, (void*)NiPositionTrack_Update, (void*)NiSwitchTrack_Update, (void*)NiEventLight_Step, (void*)0x0, (void*)0x0 };
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00238780(void) {}
 #pragma pop /* merge_units */

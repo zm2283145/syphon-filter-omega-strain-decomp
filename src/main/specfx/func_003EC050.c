@@ -12,8 +12,8 @@ int Mem_Free(...);
 int func_003EC130(...);                            
 int func_003EC8E0(...);                         
 extern int D_004BE020;
-extern "C" void func_003EC5E0();
-extern "C" void func_003EC6C0();
+extern "C" void Effect_Draw();
+extern "C" void Effect_Update();
 extern void * const D_004E0760[];
 extern unsigned char D_00533880;
 }
@@ -31,4 +31,4 @@ extern "C" int func_003EC050(int arg0, long long arg1) {
     }
     return arg0;
 }
-void * const D_004E0760[8] = { (void*)0x0, (void*)0x0, (void*)func_003EC050, (void*)func_003EC6C0, (void*)func_003EC5E0, (void*)0x0, (void*)0x0, (void*)0x0 };
+void * const D_004E0760[8] = { (void*)0x0, (void*)0x0, (void*)func_003EC050, (void*)Effect_Update, (void*)Effect_Draw, (void*)0x0, (void*)0x0, (void*)0x0 };

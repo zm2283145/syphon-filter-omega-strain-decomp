@@ -50,7 +50,7 @@ void func_00423500(S* s)
 
 #include "loose04_types.h"
 
-extern int func_0041E040(Unk423540*, int, int, int);
+extern int GuiWidget_SendEventUp(Unk423540*, int, int, int);
 
 void func_00423540(Unk423540* self, int* out) {
     *out = self->unk84;
@@ -81,11 +81,11 @@ void func_004235B0(Unk423540* self, int a, int b) {
 }
 
 int func_004235C0(Unk423540* self, int a, int b) {
-    return func_0041E040(self, 21, a, b);
+    return GuiWidget_SendEventUp(self, 21, a, b);
 }
 
 int func_004235E0(Unk423540* self, int a, int b) {
-    return func_0041E040(self, 20, a, b);
+    return GuiWidget_SendEventUp(self, 20, a, b);
 }
 
 void func_00423600(void) {

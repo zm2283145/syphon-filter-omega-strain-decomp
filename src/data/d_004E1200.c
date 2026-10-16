@@ -2,28 +2,28 @@
 
 extern void GuiSaveAgentWidget_Create();
 extern void GuiSaveAgentWidget_IsType();
+extern void GuiSaveAgentWidget_OnEvent();
+extern void GuiWidget_Deinit();
+extern void GuiWidget_Draw();
+extern void GuiWidget_FocusFirst();
+extern void GuiWidget_FocusLast();
+extern void GuiWidget_FocusNext();
+extern void GuiWidget_FocusPrev();
+extern void GuiWidget_Init();
+extern void GuiWidget_Update();
 extern void func_00293770();
 extern void func_00293890();
 extern void func_00293910();
 extern void func_00293950();
-extern void func_0041D400();
-extern void func_0041D5C0();
-extern void func_0041D780();
-extern void func_0041D8C0();
 extern void func_0041E230();
 extern void func_0041E2B0();
 extern void func_0041E330();
-extern void func_0041E3B0();
-extern void func_0041E470();
 extern void func_0041EBF0();
 extern void func_0041EFA0();
 extern void func_0041F070();
 extern void func_0041F080();
-extern void func_0041F090();
-extern void func_0041F150();
 extern void func_0041F210();
 extern void func_00441270();
-extern void func_00441CA0();
 
 void *D_004E1200[8] = {
     0, 0, &func_00441270, 0,
@@ -31,12 +31,12 @@ void *D_004E1200[8] = {
 };
 
 void *D_004E1220[24] = {
-    0, 0, &func_00293770, &func_0041F150,
-    &func_0041F090, &func_0041F080, &func_0041F070, &func_0041EFA0,
+    0, 0, &func_00293770, &GuiWidget_Init,
+    &GuiWidget_Deinit, &func_0041F080, &func_0041F070, &func_0041EFA0,
     &func_0041EBF0, &func_0041E330, &func_0041E2B0, &func_00293950,
-    &func_0041E470, &func_0041E230, &func_0041E3B0, &func_00441CA0,
-    &func_0041F210, &func_0041D8C0, &func_0041D780, &func_0041D5C0,
-    &func_0041D400, &func_00293910, &GuiSaveAgentWidget_IsType, &func_00293890,
+    &GuiWidget_Draw, &func_0041E230, &GuiWidget_Update, &GuiSaveAgentWidget_OnEvent,
+    &func_0041F210, &GuiWidget_FocusFirst, &GuiWidget_FocusLast, &GuiWidget_FocusNext,
+    &GuiWidget_FocusPrev, &func_00293910, &GuiSaveAgentWidget_IsType, &func_00293890,
 };
 
 void *D_004E1280[4] = { 0, 0, &GuiSaveAgentWidget_Create, 0 };

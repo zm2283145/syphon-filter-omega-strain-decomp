@@ -41,7 +41,7 @@ extern AnimTbl* D_00539248;
 int Random_Next(void);
 static inline float RandF() { return (float)Random_Next() / 2147483648.0f; }
 
-void func_003D1960(Seq* s, float dt)
+void TexFrameAnim_Update(Seq* s, float dt)
 {
     Anim* a;
     int v;
@@ -171,7 +171,7 @@ static inline void Wrap(V& v)
     if (v.y < -1.0f) v.y += 1.0f;
 }
 
-extern "C" void func_003D1C80(Scroll* s, float dt)
+extern "C" void UvScrollAnim_Update(Scroll* s, float dt)
 {
     float du = s->du * dt;
     float dv = s->dv * dt;
@@ -202,7 +202,7 @@ typedef struct Link2 {
 } Link2;
 
 /* Clears the two words at +0x10/+0x14 of both linked objects. */
-void func_003D1E70(Link2* l) {
+void UvScrollAnim_Init(Link2* l) {
     Pair10* a = l->first;
     Pair10* b = l->second;
     a->a = 0;

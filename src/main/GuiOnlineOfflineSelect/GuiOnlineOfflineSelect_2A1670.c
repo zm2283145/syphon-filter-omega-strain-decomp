@@ -12,7 +12,7 @@ typedef struct { char pad[0xE8]; void* valueLabel; void* nameLabel; char pad2[4]
 extern char D_004AAFF0[];
 extern int sprintf(char* buf, const char* fmt, ...);
 extern char* Loc_LookupText(const char* key);
-extern void func_0041BEB0(void* label, const char* text, int flags);
+extern void GuiTextWidget_SetText(void* label, const char* text, int flags);
 /* Fills the panel's name (localised, with fallback) and value labels. */
 void func_002A1670(Panel* p)
 {
@@ -20,9 +20,9 @@ void func_002A1670(Panel* p)
     char* text;
     sprintf(buf, "FilterType%d", p->info->id);
     text = Loc_LookupText(buf);
-    func_0041BEB0(p->nameLabel, text ? text : D_004AAFF0, 0);
+    GuiTextWidget_SetText(p->nameLabel, text ? text : D_004AAFF0, 0);
     sprintf(buf, "%d", p->info->value);
-    func_0041BEB0(p->valueLabel, buf, 0);
+    GuiTextWidget_SetText(p->valueLabel, buf, 0);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_002A1670 */
@@ -99,9 +99,9 @@ extern int D_005064B8;
 void func_002CC260(void);
 Obj_002A1780* GuiWidget_FindChildByName(Self_002A1780* self, char* name);
 #if 0 /* merge_units */
-void func_0041BEB0(void* w, char* s, int a);
+void GuiTextWidget_SetText(void* w, char* s, int a);
 #endif /* merge_units */
-#define func_0041BEB0(a0, a1, a2) (func_0041BEB0((a0), (const char *)(a1), (a2))) /* merge_units */
+#define GuiTextWidget_SetText(a0, a1, a2) (GuiTextWidget_SetText((a0), (const char *)(a1), (a2))) /* merge_units */
 
 #if 0 /* merge_units */
 void func_002A1670(Self_002A1780* self);
@@ -140,7 +140,7 @@ extern "C" void func_002A1780(Self_002A1780* self)
     CAST(p);
     if (p) {
         asm { .set reorder }
-        func_0041BEB0(p, D_004FFC04 + 0x1C8, 0);
+        GuiTextWidget_SetText(p, D_004FFC04 + 0x1C8, 0);
     }
     func_002A1670(self);
     self->bF8 = 0;
@@ -166,7 +166,7 @@ extern "C" void func_002A1780(Self_002A1780* self)
     D_005064B8 = 0;
     self->b80 = 1;
 }
-#undef func_0041BEB0 /* merge_units */
+#undef GuiTextWidget_SetText /* merge_units */
 #undef func_002A1670 /* merge_units */
 #undef DME_GetLobby /* merge_units */
 #pragma pop /* merge_units */

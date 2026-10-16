@@ -49,7 +49,7 @@ public:
     unsigned char ready;        /* 0x16C */
 };
 
-extern "C" unsigned char func_0039EF10(Obj9EF10* self, float now)
+extern "C" unsigned char ShatterEmitter_IsDead(Obj9EF10* self, float now)
 {
     unsigned char r;
     if (self->owner == 0) r = self->ready;

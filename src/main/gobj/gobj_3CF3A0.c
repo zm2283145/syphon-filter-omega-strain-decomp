@@ -8,7 +8,7 @@
 #pragma push /* merge_units */
 #include "types.h"
 typedef int s32; typedef unsigned int u32; typedef char s8; typedef unsigned char u8; typedef float f32; typedef long long s64;
-/* Text layout follows the matched line counter func_003D04C0. */
+/* Text layout follows the matched line counter TextObj_GetLineCount. */
 typedef struct { int x,y,w,h; unsigned char align,flip,center,pad13; char str[12]; void *font; char pad24[12]; float color[4]; float scroll,last,speed,alphaSpeed,alphaEnd,wrap; unsigned char noWrap,fade,done,ellipsis; } TextLayout;
 extern char *String_CStr(void*);
 extern void String_Copy(char*,const char*);
@@ -16,7 +16,7 @@ extern void func_00129708(char*,const char*,int);
 extern int Font_GetLineHeight(void*);
 extern int Font_GetStringWidth(void*,const char*,int);
 extern int strlen(const char*);
-extern int func_003D04C0(TextLayout*);
+extern int TextObj_GetLineCount(TextLayout*);
 extern char D_004BD310[];
 s32 func_003CF3A0(TextLayout *arg0, f32 *arg1, f32 *arg2, s32 arg3) {
     char spE0[256];
@@ -77,7 +77,7 @@ s32 func_003CF3A0(TextLayout *arg0, f32 *arg1, f32 *arg2, s32 arg3) {
     var_v0=var_v0>0?var_v0:-var_v0;
     temp_f21 = var_f23 + (f32) var_v0;
     if (arg0->center != 0) {
-        temp_s1 = func_003D04C0(arg0);
+        temp_s1 = TextObj_GetLineCount(arg0);
         var_f22-=(float)(arg0->h/2-(temp_s1*Font_GetLineHeight(arg0->font))/2);
     }
     temp_v0_2 = String_CStr(arg0->str);
@@ -90,7 +90,7 @@ loop_16:
     spE0[0] = 0;
     temp_fp = var_s4;
     if (arg0->ellipsis != 0) {
-        if (func_003D04C0(arg0) != 1) {
+        if (TextObj_GetLineCount(arg0) != 1) {
             return 0;
         }
         temp_f1 = (f32) Font_GetStringWidth(arg0->font, var_s4, strlen(var_s4));
@@ -230,7 +230,7 @@ static inline int DivTicks(long long n,int divisor){
  return result;
 }
 static inline float FadeAlpha(float a,float rate,float delta){return a+rate*delta;}
-void func_003CFAB0(TextLayout *arg0) {
+void TextObj_Draw(TextLayout *arg0) {
     float rgba[4];
     char spC0[256];
     int temp_f0_3;
@@ -301,7 +301,7 @@ void func_003CFAB0(TextLayout *arg0) {
         var_fp = -1;
         temp_f21 = var_f23 + (f32) var_v0;
         if (arg0->center != 0) {
-            var_fp = func_003D04C0(arg0);
+            var_fp = TextObj_GetLineCount(arg0);
             temp_f22-=(float)(arg0->h/2-(var_fp*Font_GetLineHeight(arg0->font))/2);
         }
         var_s4 = String_CStr(arg0->str);
@@ -346,7 +346,7 @@ void func_003CFAB0(TextLayout *arg0) {
             spC0[0] = 0;
             if (arg0->ellipsis != 0) {
                 if (var_fp == -1) {
-                    var_fp = func_003D04C0(arg0);
+                    var_fp = TextObj_GetLineCount(arg0);
                 }
                 strncpy(spC0, var_s4, 0x100);
                 temp_v0_4 = strchr(spC0, 0xA);

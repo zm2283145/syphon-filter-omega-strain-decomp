@@ -1,13 +1,13 @@
 #include "types.h"
 
-extern void* func_003EEB30(void* p);
-extern int func_003EF010(void* obj);
+extern void* IeNode_FindChild(void* p);
+extern int IeElement_Create(void* obj);
 
-/* Resolves an object with func_003EEB30 and returns func_003EF010 of it, or 0 if none. */
+/* Resolves an object with IeNode_FindChild and returns IeElement_Create of it, or 0 if none. */
 int Hud_FindOrCreateElement(void* p)
 {
-    void* obj = func_003EEB30(p);
+    void* obj = IeNode_FindChild(p);
     if (obj)
-        return func_003EF010(obj);
+        return IeElement_Create(obj);
     return 0;
 }

@@ -151,7 +151,7 @@ extern int func_002EA5B0(NetJoinCfg* cfg);
 extern int func_002EA648(NetJoinCfg* cfg, DmeGameOut* out);
 extern void* memcpy(void* d, const void* s, unsigned int n);
 extern int Gui_GetScreenStack(void);
-extern void func_0041E0F0(int a, int b, int c, int d, int e);
+extern void GuiWidget_SendEvent(int a, int b, int c, int d, int e);
 static inline void MemClear_n1(void* d0, int n0) { int n = n0; void* dst = d0;
     asm {
         .set noreorder
@@ -219,7 +219,7 @@ int Net_ConnectGame(void* addr)
         D_005721A8 = out.handle;
         D_005724B0 = DME_STATE_DISCONNECTED;
         if (Gui_GetScreenStack()) {
-            func_0041E0F0(Gui_GetScreenStack(), Gui_GetScreenStack(), 0x1E, 0, (int)D_004BF9B8);
+            GuiWidget_SendEvent(Gui_GetScreenStack(), Gui_GetScreenStack(), 0x1E, 0, (int)D_004BF9B8);
         }
     }
     return err;
@@ -333,7 +333,7 @@ int Net_ConnectGameByName(DmeGameAddress* host)
         D_005721A8 = out.handle;
         D_005724B0 = DME_STATE_DISCONNECTED;
         if (Gui_GetScreenStack()) {
-            func_0041E0F0(Gui_GetScreenStack(), Gui_GetScreenStack(), 0x1E, 0, (int)D_004BF9B8);
+            GuiWidget_SendEvent(Gui_GetScreenStack(), Gui_GetScreenStack(), 0x1E, 0, (int)D_004BF9B8);
         }
     }
     return err;

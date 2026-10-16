@@ -27,7 +27,7 @@ struct O_417790 {
     E_417790* cur;
     bool Done();
 };
-extern "C" void func_003F43D0(I_417790* i, float dt);
+extern "C" void IeElement_UpdateAnimation(I_417790* i, float dt);
 
 inline bool O_417790::Done()
 {
@@ -35,9 +35,9 @@ inline bool O_417790::Done()
     return false;
 }
 
-extern "C" void func_00417790(O_417790* o, float dt)
+extern "C" void GuiInterfaceDecorator_Update(O_417790* o, float dt)
 {
-    if (o->inst) func_003F43D0(o->inst, dt);
+    if (o->inst) IeElement_UpdateAnimation(o->inst, dt);
     {
         unsigned short& f = o->w->flags;
         if ((f & 0x10) && (f & 8)) {
@@ -68,16 +68,16 @@ typedef struct GuiWidget {
 } GuiWidget;
 
 extern char D_00571DC0[];
-extern "C" void func_003E8EB0(void* p);
+extern "C" void IeElement_Release(void* p);
 extern "C" void func_00412CF0(void* mgr, int handle);
 
-/* Notifies the child (virtual +0x10); if a handle (+0x20) is held, releases it (func_003E8EB0 on +0x24, func_00412CF0) and resets it to -1. */
+/* Notifies the child (virtual +0x10); if a handle (+0x20) is held, releases it (IeElement_Release on +0x24, func_00412CF0) and resets it to -1. */
 extern "C" void func_00417870(GuiWidget* self)
 {
     self->child->Method10();
     if (self->handle != -1) {
     if (self->unk24)
-    func_003E8EB0(self->unk24);
+    IeElement_Release(self->unk24);
     func_00412CF0(D_00571DC0, self->handle);
     self->handle = -1;
     }
@@ -134,23 +134,23 @@ struct O_4178E0 {
 extern "C" {
 char* String_CStr(Str_4178E0* s);
 int String_Length(Str_4178E0* s);
-int func_00412F80(void* db, char* name);
-int* func_00413370(void* db, int id);
-void* func_003EE840(int scene, char* name);
-void* func_003EF010(void* n);
-void func_003E8DE0(void* i, int a);
+int GuiManager_FindInterface(void* db, char* name);
+int* GuiManager_ResolveInterface(void* db, int id);
+void* IeNode_FindNode(int scene, char* name);
+void* IeElement_Create(void* n);
+void IeElement_SetShown(void* i, int a);
 void func_003E8040(void* i, void* p);
 extern char D_004BF070[];
 }
 static inline bool Empty_4178E0(Str_4178E0* s) { return String_Length(s) == 0; }
 
-extern "C" void func_004178E0(O_4178E0* o)
+extern "C" void GuiInterfaceDecorator_Init(O_4178E0* o)
 {
     int* rec;
     o->w->Reset();
-    o->id = func_00412F80(D_00571DC0, String_CStr(&o->file));
+    o->id = GuiManager_FindInterface(D_00571DC0, String_CStr(&o->file));
     if (o->id == -1) return;
-    rec = func_00413370(D_00571DC0, o->id);
+    rec = GuiManager_ResolveInterface(D_00571DC0, o->id);
     if (rec && *rec) {
         PStr_4178E0 buf;
         void* n;
@@ -170,10 +170,10 @@ extern "C" void func_004178E0(O_4178E0* o)
             buf.len = n;
         }
         if (o->w->f1C == 0) Cat_4178E0(&buf, D_004BF070);
-        n = func_003EE840(*rec, (char*)&buf + 1);
+        n = IeNode_FindNode(*rec, (char*)&buf + 1);
         if (n) {
-            o->inst = func_003EF010(n);
-            func_003E8DE0(o->inst, 0);
+            o->inst = IeElement_Create(n);
+            IeElement_SetShown(o->inst, 0);
             func_003E8040(o->inst, o->f30);
         }
     }

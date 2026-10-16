@@ -75,8 +75,8 @@ struct Obj {
     unsigned char x128;
 };
 extern "C" {
-void func_003A1760(Obj* self, Mgr* mgr, M* m, float f, V* v);
-void func_00398470(Obj* self, M* m);
+void ParticleEmitterBase_Update(Obj* self, Mgr* mgr, M* m, float f, V* v);
+void PhysEmitter_StepParticles(Obj* self, M* m);
 #if 0 /* merge_units */
 void func_00398D90(M* d, M* s);
 #endif /* merge_units */
@@ -84,11 +84,11 @@ void func_00398D90(M* d, M* s);
 
 V* Mtx_TransformByTranspose(V* v, M* m);
 void* func_003A3430(void* mgr, void* key);
-Obj* func_003A26A0(Mgr* mgr, Obj* ins, void* name, M* m, float f);
+Obj* ParticleEmitter_SpawnChildren(Mgr* mgr, Obj* ins, void* name, M* m, float f);
 extern char D_0053B540[];
 }
 static inline V* XformT(V* v, M* m) { M t; func_00398D90(&t, m); return Mtx_TransformByTranspose(v, &t); }
-extern "C" void func_00398B20(Obj* self, Mgr* mgr, M* m, V* v, float f)
+extern "C" void PhysEmitter_Update(Obj* self, Mgr* mgr, M* m, V* v, float f)
 {
     V tmp;
     M id;
@@ -99,8 +99,8 @@ extern "C" void func_00398B20(Obj* self, Mgr* mgr, M* m, V* v, float f)
             self->x128 = 1;
         }
     }
-    func_003A1760(self, mgr, m, f, v);
-    func_00398470(self, m);
+    ParticleEmitterBase_Update(self, mgr, m, f, v);
+    PhysEmitter_StepParticles(self, m);
     if (v && self->info->x68 > 0.01f) {
         tmp = *v;
         float s = self->info->x68;
@@ -114,7 +114,7 @@ extern "C" void func_00398B20(Obj* self, Mgr* mgr, M* m, V* v, float f)
         if (self->x124 > 0) {
             void* xx = &id;
             UnitMtx(&id);
-            Obj* n = func_003A26A0(mgr, 0, func_003A3430(D_0053B540, self->info->x170), &id, f);
+            Obj* n = ParticleEmitter_SpawnChildren(mgr, 0, func_003A3430(D_0053B540, self->info->x170), &id, f);
             if (!self->info->x9CC) {
                 self->x124--;
             }
@@ -208,14 +208,14 @@ struct Obj_00398E20 {
     int x124;
     unsigned char x128;
 };
-extern "C" Obj_00398E20* func_003A1990(Obj_00398E20* self, Obj_00398E20* parent, Info_00398E20* info, float f);
+extern "C" Obj_00398E20* ParticleEmitterBase_Construct(Obj_00398E20* self, Obj_00398E20* parent, Info_00398E20* info, float f);
 extern void* const D_004DFA80[];
 extern W D_00538350;
-extern "C" Obj_00398E20* func_00398E20(Obj_00398E20* self, Obj_00398E20* parent, Info_00398E20* info, float f, M_00398E20* m)
+extern "C" Obj_00398E20* PhysEmitter_Construct(Obj_00398E20* self, Obj_00398E20* parent, Info_00398E20* info, float f, M_00398E20* m)
 {
     M_00398E20 r;
     W c;
-    func_003A1990(self, parent, info, f);
+    ParticleEmitterBase_Construct(self, parent, info, f);
     self->vt = (void*)D_004DFA80;
     {
         V_00398E20* p = self->a;

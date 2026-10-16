@@ -27,7 +27,7 @@ int func_002731E0(...);
 int func_002731F0(...);
 int List_Begin(...);
 int func_0013D680(...);
-int func_003E7EE0(...);
+int IeElement_SetColour(...);
 int String_CtorCStr_13B480(...);
 int ObjMarker_ConstructIcon(...);
 char* ObjMarkerRecord_Init(...);

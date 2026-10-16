@@ -56,9 +56,9 @@ extern "C" void func_003EC130(int d0, PS0_003EC130 *arg1) {
 /* SpecFx vtable */
 extern char D_004E0760[];
 /* vtable installed while the base part is built */
-extern void func_003EC5E0();
-extern void func_003EC6C0();
-void * const D_004E0780[8] = { (void*)0x0, (void*)0x0, (void*)0x0, (void*)func_003EC6C0, (void*)func_003EC5E0, (void*)0x0, (void*)0x0, (void*)0x0 };
+extern void Effect_Draw();
+extern void Effect_Update();
+void * const D_004E0780[8] = { (void*)0x0, (void*)0x0, (void*)0x0, (void*)Effect_Update, (void*)Effect_Draw, (void*)0x0, (void*)0x0, (void*)0x0 };
 extern int ScalarCollection_Init(void* list);
 extern void SpecFx_Register(SpecFx* fx);
 

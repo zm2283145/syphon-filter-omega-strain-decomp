@@ -9,25 +9,25 @@ extern "C" {
 extern char D_004BF790[];
 extern char D_0049AF00[];
 extern "C" void GuiTextArrayWidget_IsType();
-extern "C" void func_0041D400();
-extern "C" void func_0041D5C0();
-extern "C" void func_0041D780();
-extern "C" void func_0041D8C0();
+extern "C" void GuiWidget_FocusPrev();
+extern "C" void GuiWidget_FocusNext();
+extern "C" void GuiWidget_FocusLast();
+extern "C" void GuiWidget_FocusFirst();
 extern "C" void func_0041E230();
-extern "C" void func_0041E3B0();
-extern "C" void func_0041EF10();
+extern "C" void GuiWidget_Update();
+extern "C" void GuiWidget_OnEvent();
 extern "C" void func_0041F070();
 extern "C" void func_0041F080();
-extern "C" void func_0041F090();
+extern "C" void GuiWidget_Deinit();
 extern "C" void func_0041F210();
 extern "C" void func_004235C0();
 extern "C" void func_004235E0();
 extern "C" void func_00423610();
 extern "C" void func_00423660();
 extern "C" void func_00423670();
-extern "C" void func_00423CC0();
-extern "C" void func_004249D0();
-extern "C" void func_00424A10();
+extern "C" void GuiArrayWidget_OnInput();
+extern "C" void GuiArrayWidget_OnLoseFocus();
+extern "C" void GuiArrayWidget_OnGainFocus();
 extern "C" void func_00425BB0();
 extern "C" void func_00425EA0();
 extern "C" void func_00426100();
@@ -41,7 +41,7 @@ void func_004263C0(guiTextArrayWidget* self);
 void String_Dtor(void* string, int flags);
 TextArrayStore* func_00426BD0(TextArrayStore* store, short flags);
 void func_0013B2E0(void* state, int flags);
-void func_0041F370(guiTextArrayWidget* self, int flags);
+void GuiWidget_Destroy(guiTextArrayWidget* self, int flags);
 void func_0013B340(TextArrayStore* store, int flags);
 void Mem_Free(int pool, void* allocation, char* file, int line);
 void operator_delete(void* allocation);
@@ -88,7 +88,7 @@ static inline void destroy_widget_base(guiTextArrayWidget* self)
     if (self) {
         self->vtable = D_004E0D20;
         func_0013B2E0(self->baseState, -1);
-        func_0041F370(self, 0);
+        GuiWidget_Destroy(self, 0);
     }
 }
 
@@ -170,4 +170,4 @@ extern "C" TextArrayStore* func_00426BD0(TextArrayStore* self, short deleteFlag)
     }
     return self;
 }
-void * const D_004E0DC0[30] = { (void*)0x0, (void*)0x0, (void*)func_00426940, (void*)func_004262D0, (void*)func_0041F090, (void*)func_0041F080, (void*)func_0041F070, (void*)func_004261D0, (void*)func_00426100, (void*)func_00424A10, (void*)func_004249D0, (void*)func_00423CC0, (void*)func_00423670, (void*)func_0041E230, (void*)func_0041E3B0, (void*)func_0041EF10, (void*)func_0041F210, (void*)func_0041D8C0, (void*)func_0041D780, (void*)func_0041D5C0, (void*)func_0041D400, (void*)func_00425BB0, (void*)GuiTextArrayWidget_IsType, (void*)func_00426350, (void*)func_00423660, (void*)func_00423610, (void*)func_00425EA0, (void*)func_004235E0, (void*)func_004235C0, (void*)0x0 };
+void * const D_004E0DC0[30] = { (void*)0x0, (void*)0x0, (void*)func_00426940, (void*)func_004262D0, (void*)GuiWidget_Deinit, (void*)func_0041F080, (void*)func_0041F070, (void*)func_004261D0, (void*)func_00426100, (void*)GuiArrayWidget_OnGainFocus, (void*)GuiArrayWidget_OnLoseFocus, (void*)GuiArrayWidget_OnInput, (void*)func_00423670, (void*)func_0041E230, (void*)GuiWidget_Update, (void*)GuiWidget_OnEvent, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)func_00425BB0, (void*)GuiTextArrayWidget_IsType, (void*)func_00426350, (void*)func_00423660, (void*)func_00423610, (void*)func_00425EA0, (void*)func_004235E0, (void*)func_004235C0, (void*)0x0 };

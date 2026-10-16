@@ -40,20 +40,20 @@ extern char D_0049AF00[];
 extern char D_004E0C80[];
 extern char D_004E0D20[];
 void* Gui_GetScreenList(void);
-void* func_00418420(void* manager, const char* name);
+void* GuiFont_Find(void* manager, const char* name);
 unsigned int Font_GetLineHeight(void* resource);
-void func_00424820(TextRenderWidget* self, unsigned int height);
+void GuiArrayWidget_RowHeight(TextRenderWidget* self, unsigned int height);
 void func_00424A50(TextRenderWidget* self);
-void func_00424A90(TextRenderWidget* self);
-void func_00424BC0(TextRenderWidget* self);
+void GuiArrayWidget_OnWake(TextRenderWidget* self);
+void GuiArrayWidget_Init(TextRenderWidget* self);
 void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
 void String_Dtor(void* string, int flags);
-TextRenderChild* func_003D0940(TextRenderChild* self, int x, int y,
+TextRenderChild* TextObj_Construct(TextRenderChild* self, int x, int y,
                              int width, int height, void* resource,
                              TextRenderStyle* style);
 void func_00423000(TextListEntryVec* entries, int flags);
 void func_0013B2E0(void* state, int flags);
-void func_0041F370(TextRenderWidget* self, int flags);
+void GuiWidget_Destroy(TextRenderWidget* self, int flags);
 void func_0013B340(TextListEntryVec* entries, int flags);
 void operator_delete(void* allocation);
 }
@@ -100,20 +100,20 @@ static inline void destroy_widget_base(TextRenderWidget* self)
     if (self) {
         self->vtable = D_004E0D20;
         func_0013B2E0(self->baseState, -1);
-        func_0041F370(self, 0);
+        GuiWidget_Destroy(self, 0);
     }
 }
 
 /* Resolve the named text resource and apply its padded row height when available. */
 extern "C" void func_00421690(TextRenderWidget* self, const char* name)
 {
-    self->resource = func_00418420(Gui_GetScreenList(), name);
+    self->resource = GuiFont_Find(Gui_GetScreenList(), name);
     if (self->resource)
-        func_00424820(self, Font_GetLineHeight(self->resource) + 4);
+        GuiArrayWidget_RowHeight(self, Font_GetLineHeight(self->resource) + 4);
 }
 
 /* Release the optional text child after the base widget is deactivated. */
-extern "C" void func_00421700(TextRenderWidget* self)
+extern "C" void GuiTextListWidget_OnSleep(TextRenderWidget* self)
 {
     func_00424A50(self);
     TextRenderChild* child = self->child;
@@ -124,9 +124,9 @@ extern "C" void func_00421700(TextRenderWidget* self)
 }
 
 /* Lazily construct the text child and synchronize its active state. */
-extern "C" void func_004217D0(TextRenderWidget* self)
+extern "C" void GuiTextListWidget_OnWake(TextRenderWidget* self)
 {
-    func_00424A90(self);
+    GuiArrayWidget_OnWake(self);
     if (!self->child) {
         TextRenderChild* child;
         {
@@ -135,7 +135,7 @@ extern "C" void func_004217D0(TextRenderWidget* self)
                                               "guiTextListWidget.cc", 0x37);
         }
         if (child)
-            child = func_003D0940(child, 0, 0, (int)self->width, (int)self->height,
+            child = TextObj_Construct(child, 0, 0, (int)self->width, (int)self->height,
                                  self->resource, &self->styles[0]);
         self->child = child;
     }
@@ -146,12 +146,12 @@ extern "C" void func_004217D0(TextRenderWidget* self)
 }
 
 /* Restore the default resource after the base widget reset. */
-extern "C" void func_004218F0(TextRenderWidget* self)
+extern "C" void GuiTextListWidget_Init(TextRenderWidget* self)
 {
-    func_00424BC0(self);
-    self->resource = func_00418420(Gui_GetScreenList(), 0);
+    GuiArrayWidget_Init(self);
+    self->resource = GuiFont_Find(Gui_GetScreenList(), 0);
     if (self->resource)
-        func_00424820(self, Font_GetLineHeight(self->resource) + 4);
+        GuiArrayWidget_RowHeight(self, Font_GetLineHeight(self->resource) + 4);
 }
 
 /* Destroy the owned text child, entries and base widget before optional deletion. */

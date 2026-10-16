@@ -7,7 +7,7 @@ extern void func_003EA900(NA910** out, int* in);
 extern void func_003EA8F0(int* out, void* list);
 extern void func_003EA8E0(NA910** out, int* in);
 extern int String_CompareNoCase(const char* a, const char* b);
-XA910* func_003EA910(void* self, YA910* key, int type)
+XA910* Fstream_FindRequest(void* self, YA910* key, int type)
 {
     XA910* found = 0;
     NA910* e;

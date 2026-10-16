@@ -17,7 +17,7 @@ typedef struct { char pad[0xB68]; unsigned char aB68; char padB69[9]; unsigned c
 extern G342F00* D_004FFC04;
 extern char D_004FFB50[];
 extern void func_0041EFA0(S342F00* o);
-extern void func_0041E0F0(void* self, void* w, int a, int b, int c);
+extern void GuiWidget_SendEvent(void* self, void* w, int a, int b, int c);
 extern M342F00* Gui_GetScreenStack(void);
 extern A342F00* Agent_GetSelected(void* list, int idx);
 void func_00342F00(S342F00* o)
@@ -26,7 +26,7 @@ void func_00342F00(S342F00* o)
     A342F00* ag;
     D_004FFC04->a2F = 1;
     func_0041EFA0(o);
-    if (o->a78) func_0041E0F0(o, o->a78, 10, 0, 0);
+    if (o->a78) GuiWidget_SendEvent(o, o->a78, 10, 0, 0);
     if (o->a78) o->a78->a14 &= ~2;
     m = Gui_GetScreenStack();
     m->a68 |= 0xC;
@@ -79,7 +79,7 @@ extern char D_004B9F58[]; extern char D_004B9F50[]; extern char D_004B9F60[]; ex
 extern char D_004B9F20[];
 extern char D_004A9870[]; extern char D_004A9C40[]; extern char D_004A7520[]; extern char D_004B88F0[]; extern char D_004A9BF0[];
 extern O_342FA0* D_005331D0;
-void func_0041F150(O_342FA0* o);
+void GuiWidget_Init(O_342FA0* o);
 int Appearance_FindPairByType(void* p, char* name);
 void func_003437C0(O_342FA0* o, int v);
 #if 0 /* merge_units */
@@ -97,7 +97,7 @@ A_342FA0* Agent_GetSelected(void* p, int i);
 
 char* AgentData_GetName(A_342FA0* a);
 char* AgentData_GetRankText(A_342FA0* a);
-void func_0041BEB0(W_342FA0* w, char* s, int f);
+void GuiTextWidget_SetText(W_342FA0* w, char* s, int f);
 int Loc_FindKeyThunk(char* k);
 char* Loc_GetTextById(int id);
 void func_00340850(O_342FA0* o);
@@ -110,7 +110,7 @@ void func_00342FA0(O_342FA0* o)
     W_342FA0* p;
     W_342FA0* a;
     W_342FA0* b;
-    func_0041F150(o);
+    GuiWidget_Init(o);
     o->f114 = Appearance_FindPairByType(o->f8C->fA0, "TATT1");
     o->f118 = Appearance_FindPairByType(o->f8C->fA0, "TATT2");
     o->f11C = Appearance_FindPairByType(o->f8C->fA0, "TATT3");
@@ -148,13 +148,13 @@ void func_00342FA0(O_342FA0* o)
     a = Cast_342FA0(GuiWidget_FindChildByName(o, "value_agent"), D_004A7520);
     b = Cast_342FA0(GuiWidget_FindChildByName(o, "value_rank"), D_004A7520);
     if (Agent_GetSelected(D_004FFB50, -1)->bB70) {
-        func_0041BEB0(a, AgentData_GetName(Agent_GetSelected(D_004FFB50, -1)), 0);
-        func_0041BEB0(b, AgentData_GetRankText(Agent_GetSelected(D_004FFB50, -1)), 0);
+        GuiTextWidget_SetText(a, AgentData_GetName(Agent_GetSelected(D_004FFB50, -1)), 0);
+        GuiTextWidget_SetText(b, AgentData_GetRankText(Agent_GetSelected(D_004FFB50, -1)), 0);
     } else {
-        func_0041BEB0(a, "Player", 0);
-        func_0041BEB0(b, Loc_GetTextById(Loc_FindKeyThunk("Rank_00") + 1), 0);
+        GuiTextWidget_SetText(a, "Player", 0);
+        GuiTextWidget_SetText(b, Loc_GetTextById(Loc_FindKeyThunk("Rank_00") + 1), 0);
     }
-    if (o->f7C) func_0041BEB0(o->f7C, D_004B9F20, 0);
+    if (o->f7C) GuiTextWidget_SetText(o->f7C, D_004B9F20, 0);
     func_00340850(o);
 }
 #undef func_00343680 /* merge_units */

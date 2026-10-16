@@ -63,7 +63,7 @@ void String_Copy(char*, const char*);
 int Hog_FindFileNoCase(Arc_8E10*, char*, int);
 int func_0036D520(Arc_8E10*, int);
 void SoundMgr_GetVolumePan(Self_8E10*, Req_8E10*, int*, int*);
-void func_003A7F50(int);
+void snd_StopVAGStreamsInGroup(int);
 int snd_GetMasterVolume(int);
 void snd_StopSound(int);
 void snd_FlushSoundCommands(void);
@@ -71,8 +71,8 @@ void HudObject_Subtitle(int, char*, int, int);
 int FileMan_ReadData(FME_8E10*);
 void Lpd_Init(void*, int, int);
 void SoundMgr_OnStreamReply(void);
-int func_003A7190(int, int, int, int, int, int, int, int, int, long long, void (*)(void), unsigned long long);
-int func_003A7F00(int, int, int, int, int, int, void (*)(void), unsigned long long);
+int snd_PlayVAGStream(int, int, int, int, int, int, int, int, int, long long, void (*)(void), unsigned long long);
+int snd_RestartVAGStream(int, int, int, int, int, int, void (*)(void), unsigned long long);
 }
 
 static inline int Off(Arc_8E10* a, int idx) { return *(int*)(a->f148 + 0x10) + func_0036D520(a, idx); }
@@ -126,9 +126,9 @@ extern "C" void SoundMgr_Frame(Self_8E10* self)
                     sprintf(buf, D_0049F548, r->name);
                 }
                 if (Hog_FindFileNoCase(self->hog, buf, 0) != -1) {
-                    func_003A7F50(2);
+                    snd_StopVAGStreamsInGroup(2);
                     int s = Off(self->hog, Hog_FindFileNoCase(self->hog, buf, 0)) / 2048; const int b = self->hog->f84; int sec = b + s;
-                    func_003A7190(sec, 0, 0, 0, 0x400, -1, 1, 0, 0, self->ent[i].x14 ? 4 : 0, SoundMgr_OnStreamReply, (unsigned int)r);
+                    snd_PlayVAGStream(sec, 0, 0, 0, 0x400, -1, 1, 0, 0, self->ent[i].x14 ? 4 : 0, SoundMgr_OnStreamReply, (unsigned int)r);
                     r->state = 1;
                 }
             }
@@ -137,14 +137,14 @@ extern "C" void SoundMgr_Frame(Self_8E10* self)
             SoundMgr_GetVolumePan(self, r, &vol, &pan);
             if (r->type == 4) {
                 if (IsLoading(r) && (!v || (v && v->State() != 3))) {
-                    func_003A7F50(4);
-                    func_003A7F50(0x4000);
+                    snd_StopVAGStreamsInGroup(4);
+                    snd_StopVAGStreamsInGroup(0x4000);
                     int sec = FSec(&r->a);
                     if (snd_GetMasterVolume(2)) {
                         if (!v)
-                            func_003A7190(sec, 0, 0, 0, vol, pan, 2, 0, 0, 0, SoundMgr_OnStreamReply, (unsigned int)r);
+                            snd_PlayVAGStream(sec, 0, 0, 0, vol, pan, 2, 0, 0, 0, SoundMgr_OnStreamReply, (unsigned int)r);
                         else
-                            func_003A7190(sec, 0, 0, 0, vol, pan, 0xE, 0, 0, 0, SoundMgr_OnStreamReply, (unsigned int)r);
+                            snd_PlayVAGStream(sec, 0, 0, 0, vol, pan, 0xE, 0, 0, 0, SoundMgr_OnStreamReply, (unsigned int)r);
                     }
                     if (r->x186 && D_004FFC2C)
                         HudObject_Subtitle(D_004FFC2C, r->name, 0, 0);
@@ -161,7 +161,7 @@ extern "C" void SoundMgr_Frame(Self_8E10* self)
                     if (v2 && v2->b49 == 2)
                         v2->x2DC8 = 0;
                 }
-                func_003A7F00(r->x40, 5, vol, pan, 0, 0, SoundMgr_OnStreamReply, (unsigned int)r);
+                snd_RestartVAGStream(r->x40, 5, vol, pan, 0, 0, SoundMgr_OnStreamReply, (unsigned int)r);
                 r->state = 1;
             }
         }

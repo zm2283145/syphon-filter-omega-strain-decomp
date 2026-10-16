@@ -52,7 +52,7 @@ extern char D_004BB540[];
 extern char D_004A9870[];
 W35D0A0* GuiWidget_FindChildByName(void* self, char* name);
 char* Loc_LookupText(char* key);
-void func_0041BEB0(W35D0A0* w, char* text, int flags);
+void GuiTextWidget_SetText(W35D0A0* w, char* text, int flags);
 void func_0035D0A0(S35D0A0* o, int mode);
 }
 static inline W35D0A0* cast35D0A0(W35D0A0* w)
@@ -79,7 +79,7 @@ void func_0035D0A0(S35D0A0* o, int mode)
     c = cast35D0A0(GuiWidget_FindChildByName(o, D_004BB500));
     if (c) {
         char* t = Loc_LookupText(mode == 0 ? D_004BB520 : D_004BB540);
-        func_0041BEB0(c, t ? t : D_004BB530, 0);
+        GuiTextWidget_SetText(c, t ? t : D_004BB530, 0);
     }
 }
 #pragma pop /* merge_units */
@@ -101,7 +101,7 @@ void Mem_Free(int pool, void* p, char* file, int line);
 void func_00403310(void* p);
 void func_0040F540(void);
 void func_002BDC10(void* p);
-void func_0041F370(void* p, int f);
+void GuiWidget_Destroy(void* p, int f);
 void operator_delete(void* p);
 }
 static inline void Del0035D1F0(V0035D1F0* o, int line)
@@ -123,7 +123,7 @@ extern "C" O0035D1F0* func_0035D1F0(O0035D1F0* self, short del)
             Del0035D1F0(self->items[i], 0xBF);
         }
         func_0040F540();
-        func_0041F370(self, 0);
+        GuiWidget_Destroy(self, 0);
         if (del > 0)
             operator_delete(self);
     }

@@ -279,7 +279,7 @@ void func_003D9D30(Node_212EE0* n, char* name);
 void Mtx_SetBasis(Mtx* m, V4* a, V4* b, V4* c);
 void Mtx_SetTranslation(Mtx* m, V4* t);
 void SoundAction_CtorVoice(void* action, int kind, char* name, void* a, int b);
-void func_003CDF20(SoundGOBJ*);
+void Node_ClearLocalMatrix(SoundGOBJ*);
 int IdMgr_FindCollision(int, int);
 void ZoneMgr_Associate(int, SoundGOBJ*, int, int);
 }
@@ -369,7 +369,7 @@ extern "C" SoundGOBJ* cSoundGOBJ_ctor(SoundGOBJ* obj, Reader* r, unsigned char t
     ver = 0;
     if (r->version > 0x34) ver = Read(r);
     SoundAction_CtorVoice(&obj->snd, ver, name, obj, 0);
-    func_003CDF20(obj);
+    Node_ClearLocalMatrix(obj);
     obj->SetMatrix(&m, 0);
     obj->Enable(1);
     for (i = 0; i < n; i++) {

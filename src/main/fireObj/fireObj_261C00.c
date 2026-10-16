@@ -26,7 +26,7 @@ extern void Event_Construct(Msg_261C90* m, void* type);
 #endif /* merge_units */
 #define Event_Construct(a0, a1) (Event_Construct((void *)(a0), (a1))) /* merge_units */
 
-extern void func_003FF650(Msg_261C90* m, int id, int x);
+extern void NetMsg_Send(Msg_261C90* m, int id, int x);
 #if 0 /* merge_units */
 extern void cMessage_dtor(Msg_261C90* m, int flags);
 #endif /* merge_units */
@@ -39,7 +39,7 @@ void cFireObj_v18(S_261C90* s)
     msg.vtable = D_004E0860;
     msg.target = -1;
     msg.flags = 0x40;
-    func_003FF650(&msg, s->id, -1);
+    NetMsg_Send(&msg, s->id, -1);
     s->state = 0;
     msg.vtable = D_004E0860;
     cMessage_dtor(&msg, 0);

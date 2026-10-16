@@ -25,7 +25,7 @@ struct V3641C0 { virtual void v0(int f); virtual int v1(); virtual int v2(); vir
 struct O3641C0 { char pad[0x48]; V3641C0* p48; char pad4C[0x44]; V3641C0* p90; };
 extern "C" {
 extern void* D_004FFC04;
-void func_0041F090(void* p);
+void GuiWidget_Deinit(void* p);
 void func_002C9C80(void* p, int f);
 }
 static inline void Del3641C0(V3641C0* o, int line)
@@ -36,7 +36,7 @@ static inline void Del3641C0(V3641C0* o, int line)
 }
 extern "C" void func_003641C0(O3641C0* s)
 {
-    func_0041F090(s);
+    GuiWidget_Deinit(s);
     func_002C9C80(D_004FFC04, 0);
     if (s->p48) {
         s->p48->v22(1);

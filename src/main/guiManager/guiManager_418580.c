@@ -43,7 +43,7 @@ extern void func_001BFEB0(It_4185A0* a);
 extern void func_00418780(Pair_4185A0* out, Str_4185A0* k, int v);
 extern void func_00419D10(Res_4185A0* out, O_4185A0* o, Pair_4185A0* p);
 
-unsigned char func_004185A0(O_4185A0* o, char* name, int w, int force)
+unsigned char GuiFont_Register(O_4185A0* o, char* name, int w, int force)
 {
     if (name == 0 || w == 0) return 0;
     if (force || o->def == 0) o->def = w;

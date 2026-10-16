@@ -48,9 +48,9 @@ extern Net_002A3BF0* D_004FFC0C;
 extern G_002A3BF0* D_004FFC04;
 extern void* D_00506550;
 extern int D_00506508;
-void func_0041F150(void);
+void GuiWidget_Init(void);
 char* Loc_LookupText(char* key);
-void func_0041BEB0(void* w, char* s, int a);
+void GuiTextWidget_SetText(void* w, char* s, int a);
 char* func_0035CB30(int n);
 int func_002A5460(void);
 void func_002A5470(W_002A3BF0* w, Vec2 off);
@@ -70,7 +70,7 @@ extern "C" void func_002A3BF0(S_002A3BF0* self0)
     int i;
     W_002A3BF0* w;
     S_002A3BF0* self = self0;
-    func_0041F150();
+    GuiWidget_Init();
     {
     W_002A3BF0* w0 = FIND(D_004AB1B0, D_004A9BF0);
     if (w0) {
@@ -94,25 +94,25 @@ extern "C" void func_002A3BF0(S_002A3BF0* self0)
     if (D_004FFC0C->p30->GetState() == 3)
         t = Loc_LookupText(D_004AB100);
     if (t && w)
-        func_0041BEB0(w, t, 0);
+        GuiTextWidget_SetText(w, t, 0);
     t = Loc_LookupText(D_004AB168);
     w = FIND(D_004AB1C0, D_004A7520);
     if (t && w)
-        func_0041BEB0(w, t, 0);
+        GuiTextWidget_SetText(w, t, 0);
     w = FIND(D_004AB1D0, D_004A7520);
     if (t && w)
-        func_0041BEB0(w, t, 0);
+        GuiTextWidget_SetText(w, t, 0);
     w = FIND(D_004AB1E0, D_004A7520);
     if (t && w)
-        func_0041BEB0(w, t, 0);
+        GuiTextWidget_SetText(w, t, 0);
     w = FIND(D_004AB1F0, D_004A7520);
     if (t && w)
-        func_0041BEB0(w, t, 0);
+        GuiTextWidget_SetText(w, t, 0);
     for (i = 0; i < 4; i++) {
         char buf[16] = "1value_codename";
         buf[0] = '1' + i;
         W_002A3BF0* w2 = FIND(buf, D_004A7520);
-        func_0041BEB0(w2, func_0035CB30(i), 0);
+        GuiTextWidget_SetText(w2, func_0035CB30(i), 0);
     }
     {
     W_002A3BF0* slots[4];
@@ -153,13 +153,13 @@ extern "C" void func_002A3BF0(S_002A3BF0* self0)
     t = Loc_LookupText(D_004AB200);
     w = FIND(D_004AB210, D_004A7520);
     if (t && w) {
-        func_0041BEB0(w, t, 0);
+        GuiTextWidget_SetText(w, t, 0);
         w->flags |= 2;
     }
     t = Loc_LookupText(D_004AB220);
     w = FIND(D_004AB230, D_004A7520);
     if (t && w) {
-        func_0041BEB0(w, t, 0);
+        GuiTextWidget_SetText(w, t, 0);
         w->flags |= 2;
     }
     self->fD0 = FIND(D_004AB240, D_004A7520);

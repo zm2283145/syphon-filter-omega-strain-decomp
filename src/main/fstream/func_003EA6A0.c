@@ -20,7 +20,7 @@ void func_003EA900(RawA6*, RawA6*);
 void func_003EA8F0(RawA6*, LdrA6*);
 void func_003EA8E0(RawA6*, RawA6*);
 void ActiveList_EraseMatching(LdrA6*, PredA6);
-int func_003EBAD0(ReqA6* r, int release);
+int Fstream_StartRequest(ReqA6* r, int release);
 }
 
 static inline SubA6* ReqSubA6(ReqA6* r) { return r->file ? (SubA6*)(r->file + 0x88) : 0; }
@@ -32,7 +32,7 @@ static inline void EndA6(RawA6* p, LdrA6* l) { RawA6 t; func_003EA8F0(&t, l); fu
 static inline PredA6 MakePredA6(ReqA6** p) { CmpA6 c; return PredA6(c, p); }
 static inline void Begin2A6(RawA6* p, LdrA6* l) { BeginA6(p, l); }
 static inline void End2A6(RawA6* p, LdrA6* l) { EndA6(p, l); }
-extern "C" void func_003EA6A0(LdrA6* ldr, int force)
+extern "C" void Fstream_PurgeRequests(LdrA6* ldr, int force)
 {
     ReqA6* r;
     RawA6 end;
@@ -46,7 +46,7 @@ extern "C" void func_003EA6A0(LdrA6* ldr, int force)
         done = false;
         if ((ReqSubA6(r) ? ReqSubA6(r)->n4 : 0) && r->state == 5 && (force || (!force && g_FrameCounter - r->frame > 2))) {
             if (!ldr->cur || (ldr->cur && ReqSubA6(ldr->cur) != ReqSubA6(r)))
-                func_003EBAD0(r, 1);
+                Fstream_StartRequest(r, 1);
             done = true;
         }
         n = n->next;

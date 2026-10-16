@@ -59,10 +59,10 @@ extern int D_0055C0B8;                              /* u16 read from the interfa
 extern char D_004BDEC8[];                           /* "interface.cc" */
 extern void* Mem_Alloc(int, int, char*, int);
 extern InterfaceModel* func_003EF660(void*, unsigned char**, void*, int); /* InterfaceModel ctor from data */
-extern void* func_003EEB30(InterfaceModel*, char*); /* find element by name */
-extern void* func_003EF010(void*);
+extern void* IeNode_FindChild(InterfaceModel*, char*); /* find element by name */
+extern void* IeElement_Create(void*);
 extern float func_003EE740(void*);
-extern void func_003F4510(void*, int, float, float);
+extern void IeElement_PlayRange(void*, int, float, float);
 }
 #pragma opt_propagation off
 /* Constructor: build the model from the interface file src and set up its "preview" element. */
@@ -85,10 +85,10 @@ extern "C" Interface* Interface_Ctor(Interface* o, void* src) {
     if (m) m = func_003EF660(m, &p, src, 0);
     o->model = m;
     o->model->unk60 = 1;
-    s = func_003EEB30(o->model, "preview");
+    s = IeNode_FindChild(o->model, "preview");
     if (s) {
-        o->preview = func_003EF010(s);
-        func_003F4510(o->preview, 1, -20.0f, 20.0f + func_003EE740(s));
+        o->preview = IeElement_Create(s);
+        IeElement_PlayRange(o->preview, 1, -20.0f, 20.0f + func_003EE740(s));
     }
     return o;
 }

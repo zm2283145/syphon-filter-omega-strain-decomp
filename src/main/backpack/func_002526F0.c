@@ -101,9 +101,9 @@ extern int func_00143DE0(Inv_2526F0* inv, int ammo);
 extern int sprintf(char* buf, const char* fmt, ...);
 extern int ItemInv_Count(void* items, int id);
 extern void func_003E7EB0(void* label, Icon_2526F0* icon);
-extern void func_003E7EC0(void* label, char* text);
-extern void func_003F4510(void* label, float lo, float hi, unsigned char fl);
-extern void func_003F44E0(void* label, float v);
+extern void IeElement_SetText(void* label, char* text);
+extern void IeElement_PlayRange(void* label, float lo, float hi, unsigned char fl);
+extern void IeElement_Fade(void* label, float v);
 
 extern int D_0048AF08;
 extern char D_004A79E0[];
@@ -342,15 +342,15 @@ extern "C" int Pickup_BuildPromptText(Self_2526F0* self, Ctx_2526F0* ctx) {
         func_003E7EB0(it->label, it->icon);
         if (it->label2)
             func_003E7EB0(it->label2, it->icon2);
-        func_003E7EC0(it->label, line1);
+        IeElement_SetText(it->label, line1);
         if (it->label2)
-            func_003E7EC0(it->label2, line2);
+            IeElement_SetText(it->label2, line2);
         if (i == self->sel)
-            func_003F4510(it->label, 20.0f + self->x, 35.0f + self->x, 1);
+            IeElement_PlayRange(it->label, 20.0f + self->x, 35.0f + self->x, 1);
         else
-            func_003F44E0(it->label, 10.0f + self->x);
+            IeElement_Fade(it->label, 10.0f + self->x);
         if (it->label2)
-            func_003F44E0(it->label2, 10.0f + self->x);
+            IeElement_Fade(it->label2, 10.0f + self->x);
     }
     return self->count > 0;
 }

@@ -4,7 +4,7 @@ extern Vec40B4B0* GobjScope_GetList(void);
 extern void func_0040B510(void* p);
 #pragma push
 #pragma opt_strength_reduction off
-void func_0040B4B0(void)
+void ActorWorld_FlushRemovals(void)
 {
     Vec40B4B0* v = GobjScope_GetList();
     int i;

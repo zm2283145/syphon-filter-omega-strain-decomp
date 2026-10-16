@@ -4,9 +4,9 @@
 
 extern "C" {
 void* Mem_Alloc(int, int, char*, int);
-int func_003EF010(int);
-void func_003E99B0(void*, int, void*);
-void func_003E7EE0(int, void*);
+int IeElement_Create(int);
+void HudTracker_Construct(void*, int, void*);
+void IeElement_SetColour(int, void*);
 extern char D_004A8F40[];
 extern char D_004A8F50[];
 extern char D_004A8F60[];
@@ -48,17 +48,17 @@ extern "C" void ObjMarker_ConstructIcon(Marker274750* m, signed char big)
     if (!(m->type == 1 || m->type == 2))
         f = 0;
     id = f ? D_004FFD78 : (big ? D_004FFD68 : D_004FFD70);
-    s1 = func_003EF010(id);
+    s1 = IeElement_Create(id);
     {
         AllocGuard g;
         o = Mem_Alloc(0, 0x90, D_004A8F60, 0xE9);
     }
     if (o) {
-        func_003E99B0(o, s1, m);
+        HudTracker_Construct(o, s1, m);
         *(char**)o = D_004E0360;
     }
     m->label = o;
-    func_003E7EE0(s1, big ? D_004A8F50 : D_004A8F40);
+    IeElement_SetColour(s1, big ? D_004A8F50 : D_004A8F40);
     f = 1;
     if (!(m->type == 1 || m->type == 2))
         f = 0;
@@ -68,7 +68,7 @@ extern "C" void ObjMarker_ConstructIcon(Marker274750* m, signed char big)
         o = Mem_Alloc(0, 0x90, D_004A8F60, 0xF3);
     }
     if (o) {
-        func_003E99B0(o, func_003EF010(id), m);
+        HudTracker_Construct(o, IeElement_Create(id), m);
         *(char**)o = D_004DC810;
     }
     m->icon = (Icon274750*)o;

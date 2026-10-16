@@ -7,7 +7,7 @@ int func_00421280(TextListEntryVec* entries);
 TextListEntry* func_00421260(TextListEntryVec* entries, int index);
 TextListEntry* func_00421210(TextListEntry* destination, TextListEntry* source);
 void func_004211C0(TextListEntryVec* entries);
-void func_00424430(TextRenderWidget* self, int first, int second);
+void GuiArrayWidget_Select(TextRenderWidget* self, int first, int second);
 }
 
 static inline void erase_entry(TextListEntryVec* entries, int index)
@@ -24,12 +24,12 @@ static inline void erase_entry(TextListEntryVec* entries, int index)
 }
 
 /* Shift later entries over the removed row, then refresh the list's extent. */
-extern "C" int func_004210C0(TextRenderWidget* self, int index)
+extern "C" int GuiTextListWidget_RemoveItem(TextRenderWidget* self, int index)
 {
     if (index < 0 || index >= self->entries.count)
         return 0;
     erase_entry(&self->entries, index);
     ((TextListLayout*)self)->set_extent(1, self->entries.count);
-    func_00424430(self, 0, 0);
+    GuiArrayWidget_Select(self, 0, 0);
     return 1;
 }

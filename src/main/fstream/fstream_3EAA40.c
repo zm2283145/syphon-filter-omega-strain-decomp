@@ -35,7 +35,7 @@ static inline void merge_flush_func_003EAA40(void) {}
 extern int AsyncLoader_QueueUnload(int a0, int a1, int a2, int a3, int a4);
 
 /* Forward to AsyncLoader_QueueUnload with the two middle arguments zero. */
-int func_003EAA60(int a0, int a1, int a4) {
+int Fstream_ReleaseNoCallback(int a0, int a1, int a4) {
     return AsyncLoader_QueueUnload(a0, a1, 0, 0, a4);
 }
 /* merge_units: generate this block's code under its own pragmas */

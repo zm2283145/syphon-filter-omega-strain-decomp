@@ -40,13 +40,13 @@ extern "C" void func_0022F430();
 extern "C" void func_003EA430();
 extern "C" void Component_GetOwnerId();
 extern void * const D_004DBA20[];
-void* func_003EA5B0(void* self, short deleteFlag);
+void* Component_DestructBase(void* self, short deleteFlag);
 }
 extern "C" VtableObject* cGameGobjController_dtor(VtableObject* self, short deleteFlag)
 {
     if (self) {
         self->vtable = ((char*)D_004DBA20);
-        func_003EA5B0(self, 0);
+        Component_DestructBase(self, 0);
         if (deleteFlag > 0)
             operator_delete(self);
     }

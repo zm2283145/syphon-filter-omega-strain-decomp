@@ -46,7 +46,7 @@ extern unsigned long long Time_GetMilliseconds(void);
 #define Time_GetMilliseconds() ((unsigned long long)Time_GetMilliseconds()) /* merge_units */
 
 extern int Gui_GetScreenStack(void);
-extern void func_0041E0F0(int, int, int, int, int);
+extern void GuiWidget_SendEvent(int, int, int, int, int);
 
 int func_002C7CB0(char* self) {
     float f;
@@ -63,7 +63,7 @@ int func_002C7CB0(char* self) {
     h = D_0051EF88;
     if (h != 0 && D_0051EF90 != 0) {
         f = 0.0f;
-        func_0041E0F0(Gui_GetScreenStack(), h, 9, (int)&f, 0);
+        GuiWidget_SendEvent(Gui_GetScreenStack(), h, 9, (int)&f, 0);
         if (D_0051EF90 == (int)f) {
             return 1;
         }

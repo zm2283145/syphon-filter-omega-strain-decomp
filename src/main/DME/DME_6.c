@@ -95,7 +95,7 @@ int DME_StartThread(void) {
 #pragma mpwc_relax on
 int func_002EBCE0(char *);
 int Gui_GetScreenStack();
-int func_0041E0F0(int, int, int, int, int);
+int GuiWidget_SendEvent(int, int, int, int, int);
 int Net_ConnectGameByName();
 extern signed char D_005721E0;
 extern signed char D_005721F0;
@@ -129,7 +129,7 @@ void Net_RetryConnect(void) {
     }
     if (Gui_GetScreenStack(retries) != 0) {
         screens = Gui_GetScreenStack();
-        func_0041E0F0(screens, Gui_GetScreenStack(), 0x1E, 0, (int)&D_004BF9B8);
+        GuiWidget_SendEvent(screens, Gui_GetScreenStack(), 0x1E, 0, (int)&D_004BF9B8);
     }
     g_DmeConnectRetries = 0;
     g_DmeConnectMaxRetries = 0;

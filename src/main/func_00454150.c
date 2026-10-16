@@ -12,7 +12,7 @@ extern "C" {
 extern void* D_004FFC2C;
 extern char D_004FFB50[];
 M_454150* Gui_GetScreenStack(void);
-void func_00456160(O_454150* o);
+void GuiStartMenu_ReturnToMenu(O_454150* o);
 void Hud_ClosePauseMenu(void* p);
 void Game_SetPaused(void* p, int v);
 int func_00454150(O_454150* o, Ev_454150* ev);
@@ -27,7 +27,7 @@ static inline bool Plain2_454150(Ev_454150* e, int b) { return Btn2_454150(e, b)
 int func_00454150(O_454150* o, Ev_454150* ev)
 {
     if (Plain_454150(ev, 0x10)) {
-        func_00456160(o);
+        GuiStartMenu_ReturnToMenu(o);
         return 1;
     }
     if (Plain2_454150(ev, 0x800)) {

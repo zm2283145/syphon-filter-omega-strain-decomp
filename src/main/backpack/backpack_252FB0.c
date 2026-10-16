@@ -13,7 +13,7 @@
 #define NULL 0
 int __destroy_array(int , int *, int, int);               
 int Backpack_Finish(int);                               
-int func_003E8EB0(int);                               
+int IeElement_Release(int);                               
 int operator_delete(int );                          
 extern int PickupMenuEntry_dtor;
 
@@ -23,18 +23,18 @@ int PickupMenu_Destroy(int arg0, long long arg1) {
 
     if (arg0 != NULL) {
         Backpack_Finish(F_(arg0, 0x0, int));
-        func_003E8EB0(F_(arg0, 0x9C, int));
-        func_003E8EB0(F_(arg0, 0xA0, int));
-        func_003E8EB0(F_(arg0, 0xA4, int));
-        func_003E8EB0(F_(arg0, 0xA8, int));
-        func_003E8EB0(F_(arg0, 0xAC, int));
+        IeElement_Release(F_(arg0, 0x9C, int));
+        IeElement_Release(F_(arg0, 0xA0, int));
+        IeElement_Release(F_(arg0, 0xA4, int));
+        IeElement_Release(F_(arg0, 0xA8, int));
+        IeElement_Release(F_(arg0, 0xAC, int));
         temp_a0 = F_(arg0, 0xB0, int);
         if (temp_a0 != 0) {
-            func_003E8EB0(temp_a0);
+            IeElement_Release(temp_a0);
         }
         temp_a0_2 = F_(arg0, 0xB4, int);
         if (temp_a0_2 != 0) {
-            func_003E8EB0(temp_a0_2);
+            IeElement_Release(temp_a0_2);
         }
         __destroy_array(arg0 + 4, &PickupMenuEntry_dtor, 0x1C, 5);
         if (((long long) (arg1 << 0x30) >> 0x30) > 0) {
@@ -134,14 +134,14 @@ extern Widget_253070* PickupMenu_FindElement(void* root, char* name);
 extern int Backpack_ListItems(Owner_253070* o, int* out, int a, int n);
 extern int func_00255E50(Owner_253070* o);
 extern int func_00255D90(Owner_253070* o);
-extern int func_003EEB30(void* root, char* name);
-extern void func_003F45A0(Widget_253070* w, float v);
-extern void func_003F44E0(Widget_253070* w, float v);
-extern void func_003E7EC0(Widget_253070* w, char* text);
+extern int IeNode_FindChild(void* root, char* name);
+extern void IeElement_EvaluateAt(Widget_253070* w, float v);
+extern void IeElement_Fade(Widget_253070* w, float v);
+extern void IeElement_SetText(Widget_253070* w, char* text);
 extern char* Loc_LookupText(char* key);
 extern int Agent_GetSelected(void* list, int idx);
 extern char* AgentData_GetName(int agent);
-extern void func_003D0810(Lbl_253070* l, void* color);
+extern void TextObj_SetColour(Lbl_253070* l, void* color);
 
 extern int D_0048AEF0;
 extern int D_0048AEF8;
@@ -218,8 +218,8 @@ extern "C" Self_253070* PickupMenu_Build(Self_253070* self, void* root, Owner_25
     n = Backpack_ListItems(self->owner, ids, ctx->unk3524, 5);
     {
         void* r = self->w9C->unk70;
-        D_004F7E90 = func_003EEB30(r, D_004A7AB8);
-        D_004F7E98 = func_003EEB30(r, D_004A7AC0);
+        D_004F7E90 = IeNode_FindChild(r, D_004A7AB8);
+        D_004F7E98 = IeNode_FindChild(r, D_004A7AC0);
     }
     for (i = 0; i < n; i++) {
         PickupMenu_AddEntry(it, 0, ids[i], self->unk98);
@@ -260,33 +260,33 @@ extern "C" Self_253070* PickupMenu_Build(Self_253070* self, void* root, Owner_25
             }
         }
     }
-    func_003F45A0(self->w9C, self->unk98);
-    func_003F44E0(self->w9C, self->unk98 + D_0048AEF8 * (self->count - 1));
-    func_003F45A0(self->wA0, self->unk98);
-    func_003F44E0(self->wA0, self->unk98 + D_0048AEF0);
+    IeElement_EvaluateAt(self->w9C, self->unk98);
+    IeElement_Fade(self->w9C, self->unk98 + D_0048AEF8 * (self->count - 1));
+    IeElement_EvaluateAt(self->wA0, self->unk98);
+    IeElement_Fade(self->wA0, self->unk98 + D_0048AEF0);
     if (optB) {
-        func_003E7EC0(self->wA4, D_004A79E8);
-        func_003E7EC0(self->wB4, Loc_LookupText(D_004A7AC8));
-        func_003E7EC0(self->wB0, Loc_LookupText(D_004A7AD0));
-        func_003E7EC0(self->wA0, D_004A79E8);
-        func_003E7EC0(self->wA8, D_004A79E8);
-        func_003E7EC0(self->wAC, D_004A79E8);
+        IeElement_SetText(self->wA4, D_004A79E8);
+        IeElement_SetText(self->wB4, Loc_LookupText(D_004A7AC8));
+        IeElement_SetText(self->wB0, Loc_LookupText(D_004A7AD0));
+        IeElement_SetText(self->wA0, D_004A79E8);
+        IeElement_SetText(self->wA8, D_004A79E8);
+        IeElement_SetText(self->wAC, D_004A79E8);
     } else {
         Lbl_253070* l;
-        func_003E7EC0(self->wA0, Loc_LookupText(D_004A7AD8));
-        func_003E7EC0(self->wA4, Loc_LookupText(D_004A7AE0));
-        func_003E7EC0(self->wA8, AgentData_GetName(Agent_GetSelected(D_004FFB50, -1)));
+        IeElement_SetText(self->wA0, Loc_LookupText(D_004A7AD8));
+        IeElement_SetText(self->wA4, Loc_LookupText(D_004A7AE0));
+        IeElement_SetText(self->wA8, AgentData_GetName(Agent_GetSelected(D_004FFB50, -1)));
         l = self->wA8->unk74;
         l->unk10 = 2;
-        func_003D0810(l, D_004F7E70);
+        TextObj_SetColour(l, D_004F7E70);
         l->unk5B = 1;
-        func_003E7EC0(self->wAC, Loc_LookupText(D_004A7AE8));
+        IeElement_SetText(self->wAC, Loc_LookupText(D_004A7AE8));
         l = self->wAC->unk74;
         l->unk10 = 2;
-        func_003D0810(l, D_004F7E70);
+        TextObj_SetColour(l, D_004F7E70);
     }
-    func_003F45A0(self->wA4, self->unk98);
-    func_003F44E0(self->wA4, self->unk98 + D_0048AEF0);
+    IeElement_EvaluateAt(self->wA4, self->unk98);
+    IeElement_Fade(self->wA4, self->unk98 + D_0048AEF0);
     return self;
 }
 /* merge_units: generate this block's code under its own pragmas */

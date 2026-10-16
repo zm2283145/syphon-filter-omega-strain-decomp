@@ -14,7 +14,7 @@ extern void func_003CA460(void*, int);
 extern int func_003C8C40(void);
 extern void __register_global_object(void*, void*, void*);
 extern int Script_RegisterType(void*, void*, int, int);
-void func_004D5890(void)
+void StaticInit_RegisterMessageType(void)
 {
     int a;
     int b;

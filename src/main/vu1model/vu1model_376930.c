@@ -61,9 +61,9 @@ static inline void merge_flush_func_00376930(void) {}
 #pragma cplusplus on
 extern "C" {
 void *Mem_Alloc(int, int, char *, int);
-void *func_003D1E90(void *, void *, void *, void *, int);
+void *UvScrollAnim_Construct(void *, void *, void *, void *, int);
 void *Material_Animate(void *, void *, void *, void *, int);
-void func_003D2790(int, void *);
+void MaterialAnim_Register(int, void *);
 extern char D_004BC170;
 
 
@@ -161,17 +161,17 @@ extern "C" void Model_SetupMaterialFx(FxModel *m)
         if (mat->f4 & 2) {
             void *p = FxAlloc(0x1C, 0x256);
             if (p) {
-                p = func_003D1E90(p, mat->f8, s + 0x10, s + 0x90, m->f8[mat->f38[0]]);
+                p = UvScrollAnim_Construct(p, mat->f8, s + 0x10, s + 0x90, m->f8[mat->f38[0]]);
             }
             m->fC[n].f4 = p;
-            func_003D2790(D_0053924C, m->fC[n].f4);
+            MaterialAnim_Register(D_0053924C, m->fC[n].f4);
         } else if (mat->f4 & 4) {
             void *p = FxAlloc(0x34, 0x25C);
             if (p) {
                 p = Material_Animate(p, mat->f8, s + 0x10, s + 0x90, m->f8[mat->f38[0]]);
             }
             m->fC[n].f4 = p;
-            func_003D2790(D_0053924C, m->fC[n].f4);
+            MaterialAnim_Register(D_0053924C, m->fC[n].f4);
         }
         if (mat->f58 == 1) {
             char *t = g->f8->f4;

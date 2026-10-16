@@ -30,7 +30,7 @@ void func_00380280(void* t, int a, int b, char* file, int line);
 void func_003801A0(Obj_37FEA0* o, int v);
 void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
 void* func_003BBC90(void* t);
-int func_003EBA50(void);
+int Fstream_GetLoader(void);
 void AsyncLoader_QueueLoad(int q, int* f, void* cb, void* t, int a, int b, int c);
 void Tex_BuildGsRegisters(void* t, int a, void* data, int flags);
 }
@@ -91,7 +91,7 @@ extern "C" int TexMan_LoadNewTexture(Obj_37FEA0* o, int* file, int arg2)
     o->tex[idx] = t;
     if (*file & 4) {
         data = o->data;
-        AsyncLoader_QueueLoad(func_003EBA50(), file, func_003809E0, o->tex[idx], 0, 1, 1);
+        AsyncLoader_QueueLoad(Fstream_GetLoader(), file, func_003809E0, o->tex[idx], 0, 1, 1);
         flags |= 0x2000;
     }
     Tex_BuildGsRegisters(o->tex[idx], arg2, data, flags);

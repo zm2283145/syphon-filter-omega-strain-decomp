@@ -10,7 +10,7 @@ extern void cDisableMsg_v01();
 extern void cDisableMsg_v02();
 extern void cDisableMsg_v03();
 void * const D_004E0860[8] = { (void*)0x0, (void*)0x0, (void*)cDisableMsg_dtor, (void*)cDisableMsg_v01, (void*)cDisableMsg_v02, (void*)cDisableMsg_v03, (void*)0x0, (void*)0x0 };
-void func_003FF650(Msg_1C5680* msg, int id, int x);
+void NetMsg_Send(Msg_1C5680* msg, int id, int x);
 void Hotbox_Disable(S_1C5680* self)
 {
     if (D_005721C8) {
@@ -19,7 +19,7 @@ void Hotbox_Disable(S_1C5680* self)
         msg.vtable = ((char*)D_004E0860);
         msg.target = -1;
         msg.size = 0x40;
-        func_003FF650(&msg, self->id, -1);
+        NetMsg_Send(&msg, self->id, -1);
         msg.vtable = ((char*)D_004E0860);
         cMessage_dtor(&msg, 0);
     }

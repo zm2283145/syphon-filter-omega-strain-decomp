@@ -36,7 +36,7 @@ void* Gui_GetScreenList(void);
 void* Gui_GetScreenStack(void);
 void* GuiManager_FindOrLoad(void* mgr, char* a, char* b);
 void GuiStack_SwapScreens(void* mgr, void* o, void* w);
-int func_00441CA0(O_340C80* o, Snd_340C80* s, unsigned short msg, int param, int extra);
+int GuiSaveAgentWidget_OnEvent(O_340C80* o, Snd_340C80* s, unsigned short msg, int param, int extra);
 
 int func_00340C80(O_340C80* o, Snd_340C80* snd, unsigned short msg, int param, int extra)
 {
@@ -90,7 +90,7 @@ int func_00340C80(O_340C80* o, Snd_340C80* snd, unsigned short msg, int param, i
         GuiStack_SwapScreens(Gui_GetScreenStack(), o, w);
         return 1;
     }
-    return func_00441CA0(o, snd, msg, param, extra);
+    return GuiSaveAgentWidget_OnEvent(o, snd, msg, param, extra);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00340C80(void) {}

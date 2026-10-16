@@ -10,7 +10,7 @@ extern char D_004E0220[];
 extern char D_004E0800[];
 extern char D_004BDFB0[];
 void ActiveList_EraseMatching(void* list, Pred_8EC0 p);
-char* func_003D1020(void);
+char* TextManager_Get(void);
 void String_Dtor(Str_8EC0*, int);
 void Mem_Free(int, void*, char*, int);
 void operator_delete(void*);
@@ -24,7 +24,7 @@ extern "C" O_8EC0* func_003E8EC0(O_8EC0* self, short del)
         if (self->id) {
             int id = (int)self->id;
             Eq_8EC0 e;
-            char* x = func_003D1020();
+            char* x = TextManager_Get();
             ActiveList_EraseMatching(x + 0x10, MakePred_8EC0(&id));
             {
                 Item_8EC0* p = self->id;

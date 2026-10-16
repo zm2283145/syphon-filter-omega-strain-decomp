@@ -57,7 +57,7 @@ void* Gui_GetScreenList(void);
 void* Gui_GetScreenStack(void);
 Pg_2A01C0* GuiManager_FindOrLoad(void* a, char* b, char* c);
 void GuiStack_SwapScreens(void* ui, void* self, void* pg);
-int func_0041EF10(void* self, W_2A01C0* w, int msg, int sub, char* text);
+int GuiWidget_OnEvent(void* self, W_2A01C0* w, int msg, int sub, char* text);
 }
 
 extern "C" int GuiOnlineOfflineSelect_HandleEvent(void* self, W_2A01C0* w, int msg, int sub, char* text)
@@ -90,7 +90,7 @@ extern "C" int GuiOnlineOfflineSelect_HandleEvent(void* self, W_2A01C0* w, int m
             return 1;
         }
     }
-    return func_0041EF10(self, w, msg, sub, text);
+    return GuiWidget_OnEvent(self, w, msg, sub, text);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_002A01C0 */

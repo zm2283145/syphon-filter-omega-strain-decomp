@@ -49,7 +49,7 @@ extern char D_0048BAA0[][8];
 extern Tbl D_0055DDA0;
 extern char D_004FFB50[];
 extern char D_004DAE10[];
-extern void func_0041E3B0(Self*, float);
+extern void GuiWidget_Update(Self*, float);
 extern Ent* PlayerSlots_Get(int);
 extern void Player_HandleLeftGame(Ent*);
 extern void func_001B2D20(Ent*);
@@ -69,7 +69,7 @@ extern void cMessage_dtor(SoundMsg* msg, int flags);
 #define cMessage_dtor(a0, a1) (cMessage_dtor((void *)(a0), (a1))) /* merge_units */
 
 extern void Game_NetSendPauseState(void*, int, int);
-extern void func_0041BEB0(Hud*, char*, int);
+extern void GuiTextWidget_SetText(Hud*, char*, int);
 extern void DME_SendPlayGameMsg(void);
 }
 /* Per-frame update: polls the four player slots, tracks the slot-0 state-3 countdown and plays each slot's join sound once. */
@@ -79,7 +79,7 @@ extern "C" void func_002C03C0(Self* self, float dt) {
     char buf[0x40];
     Ent* e;
     int i;
-    func_0041E3B0(self, dt);
+    GuiWidget_Update(self, dt);
     if (!D_005721C8) return;
     for (i = 0; i < 4; i++) {
         e = PlayerSlots_Get(i);
@@ -121,7 +121,7 @@ extern "C" void func_002C03C0(Self* self, float dt) {
     if (D_00506508) {
         D_00506510 += dt;
         sprintf(buf, self->fmt, 10 - (int)(D_00506510 / 30.0f));
-        if (self->hud) func_0041BEB0(self->hud, buf, 0);
+        if (self->hud) GuiTextWidget_SetText(self->hud, buf, 0);
         if ((D_005721C8 ? D_005721C0 : 1) && !(D_00506510 <= 300.0f)) DME_SendPlayGameMsg();
     }
 }

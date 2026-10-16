@@ -63,7 +63,7 @@ extern "C" TraversalWidget* GuiWidget_FindChildByName(TraversalWidget* self, con
 }
 
 /* Search the widget and its descendants for the first name containing a pattern. */
-extern "C" TraversalWidget* func_0041DC70(TraversalWidget* self, const char* pattern)
+extern "C" TraversalWidget* GuiWidget_FindChildBySubstring(TraversalWidget* self, const char* pattern)
 {
     ChildIterator end;
     ChildIterator begin;
@@ -77,7 +77,7 @@ extern "C" TraversalWidget* func_0041DC70(TraversalWidget* self, const char* pat
     func_0028C0A0(&rawEnd, &self->children);
     func_0028C090(&end, &rawEnd);
     while (node != end.node) {
-        TraversalWidget* found = func_0041DC70(node->widget, pattern);
+        TraversalWidget* found = GuiWidget_FindChildBySubstring(node->widget, pattern);
         if (found)
             return found;
         node = node->next;

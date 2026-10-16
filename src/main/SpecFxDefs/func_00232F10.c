@@ -206,11 +206,11 @@ void func_00234090(OIt10* out, void* list);
 void func_00234080(OIt10* dst, OIt10* src);
 void func_002340C0(void* list, Entry10** v);
 void ActiveList_EraseMatching(void* list, Pred10 p);
-void func_003A2BA0(Tracer10* t, int n);
+void ParticleInst_Kill(Tracer10* t, int n);
 void Mem_Free(int pool, void* p, char* file, int line);
 void* Mem_Alloc(int pool, int size, char* file, int line);
 Tracer10* Tracer_Create(void* p, int id, M4* m, float scale);
-void func_003A2400(Tracer10* t, float dt, M4* m, int z);
+void ParticleInst_Update(Tracer10* t, float dt, M4* m, int z);
 void func_003A33B0(Tracer10* t, float a, float b, Cam10* cam, float c, int flag);
 void func_003A3340(Tracer10* t, Cam10* cam, Box0* box, bool flag);
 void func_003A3310(Tracer10* t, float s, float f);
@@ -259,7 +259,7 @@ static inline void FreeTracer(Tracer10* t)
 {
     if (t) {
         AllocGuard g2;
-        func_003A2BA0(t, -1);
+        ParticleInst_Kill(t, -1);
         Mem_Free(0, t, D_004A6F38, 0x14F);
     }
 }
@@ -428,7 +428,7 @@ extern "C" void func_00232F10(Self10* self, float dt)
                 SetCP(&m, &b2, V4());
                 func_003A3340(e->t, cam, &b2, self->id != 0x16);
                 func_003A3310(e->t, scale, ((CamF*)*List_Front(D_004FFC14))->f60);
-                func_003A2400(e->t, dt, &m, 0);
+                ParticleInst_Update(e->t, dt, &m, 0);
             }
         }
         self->last = camPos;

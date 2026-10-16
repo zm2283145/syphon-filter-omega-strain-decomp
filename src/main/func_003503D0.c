@@ -15,8 +15,8 @@ struct Widget {
     int entries[11];  /* +0xC4 */
 };
 
-extern "C" void func_00424430(Widget* self, int a, int b);
-extern "C" void func_004248C0(Widget* self, int index, int value);
+extern "C" void GuiArrayWidget_Select(Widget* self, int a, int b);
+extern "C" void GuiArrayWidget_ColumnWidth(Widget* self, int index, int value);
 
 /* Binds a data source (+0xC0), sets the list to 11 entries via virtual +0x5C, resets it and fills entries from the +0xC4 table (walked with a stepping base pointer). */
 extern "C" void func_003503D0(Widget* self, Source* source)
@@ -25,7 +25,7 @@ extern "C" void func_003503D0(Widget* self, Source* source)
     int i;
     self->source = source;
     self->SetCount(11, source ? source->count : 0);
-    func_00424430(self, 0, 0);
+    GuiArrayWidget_Select(self, 0, 0);
     for (i = 0, p = self; i < 11; i++, p = (Widget*)((char*)p + 4))
-        func_004248C0(self, i, p->entries[0]);
+        GuiArrayWidget_ColumnWidth(self, i, p->entries[0]);
 }

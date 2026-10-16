@@ -15,7 +15,7 @@ extern void func_003EB960(void);
 extern void __register_global_object(void*, void*, void*);
 
 /* Returns the lazily constructed singleton at D_0055A870. */
-Singleton* func_003EBA50(void) {
+Singleton* Fstream_GetLoader(void) {
     if (D_0055A850 == 0) {
         ScalarCollection_Init(&D_0055A870);
         D_0055A870.unkC = 0;

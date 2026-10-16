@@ -24,7 +24,7 @@ int WeaponInv_SlotOfItem(int);
 void func_00455840(void*, int);
 void MLTextWidget_Clear(void*);
 void MLTextWidget_AddText(void*, char*);
-void func_0041BEB0(void*, char*, int);
+void GuiTextWidget_SetText(void*, char*, int);
 void func_00455260(O_455260* o, A_455260* a, int id);
 }
 
@@ -98,6 +98,6 @@ void func_00455260(O_455260* o, A_455260* a, int id)
             MLTextWidget_Clear(t);
             MLTextWidget_AddText(t, name ? name : D_004C1A38);
         }
-        func_0041BEB0(o->f50, desc ? desc : D_004C1A38, 0);
+        GuiTextWidget_SetText(o->f50, desc ? desc : D_004C1A38, 0);
     }
 }

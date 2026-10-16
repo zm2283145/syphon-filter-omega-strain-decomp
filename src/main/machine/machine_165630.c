@@ -30,7 +30,7 @@ extern void printf(char* fmt, ...);
 extern int String_CompareNoCase(char* a, char* b);
 extern int String_CompareN(char* a, char* b, int n);
 extern int atoi(char*);
-extern void func_003FE110(int);
+extern void Language_FromSystem(int);
 extern char* Loc_GetLanguageName(unsigned char id);
 extern void Loc_SetLanguage(unsigned char id);
 extern char* Loc_GetCurrentLanguageName(void);
@@ -79,7 +79,7 @@ void Game_LoadIni(Game* g) {
     s = func_003CBA90("BOOT_LANGUAGE");
     if (s && *s) {
         if (String_CompareNoCase(s, "PS2_SETTING") == 0) {
-            func_003FE110(ukEnglish);
+            Language_FromSystem(ukEnglish);
         } else {
             for (i = 0; i < 7; i++) {
                 if (String_CompareNoCase(s, Loc_GetLanguageName(i)) == 0) {
@@ -87,13 +87,13 @@ void Game_LoadIni(Game* g) {
                     break;
                 }
                 if (i == 6) {
-                    func_003FE110(ukEnglish);
+                    Language_FromSystem(ukEnglish);
                     break;
                 }
             }
         }
     } else {
-        func_003FE110(ukEnglish);
+        Language_FromSystem(ukEnglish);
     }
     v = func_003CBA90("BOOT_VALID_LANGUAGES");
     if (v && *v) {
@@ -148,7 +148,7 @@ typedef struct {
 typedef struct { char pad[0x248]; int i248; char p24C[0x280 - 0x24C]; int i280[3]; } O165;
 extern R165* Archive_Open(void*, char*, int, int);
 extern void Font_LoadFnt(int, R165*, int);
-extern int* func_003D1020(void);
+extern int* TextManager_Get(void);
 extern I165 D_0048A060;
 extern char D_0048B2F8[];
 extern char D_0049C360[];
@@ -187,7 +187,7 @@ void Boot_LoadFonts(O165* o) {
         Font_LoadFnt(o->i280[i], r, I165.v[i]);
     }
     x = o->i280[0];
-    *func_003D1020() = x;
+    *TextManager_Get() = x;
     o->i248 = x;
     D_00533868 = x;
     D_0055A278 = o->i280[1];

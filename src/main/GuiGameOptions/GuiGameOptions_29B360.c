@@ -42,7 +42,7 @@ extern char D_004A7520[];
 extern char D_004A9870[];
 extern char D_004AA640[];
 extern char D_004AAA80[];
-void func_0041F150(S_0029B360* self);
+void GuiWidget_Init(S_0029B360* self);
 W_0029B360* GuiWidget_FindChildByName(S_0029B360* self, char* name);
 char* Loc_LookupText(char* key);
 }
@@ -56,7 +56,7 @@ extern "C" void GuiGameOptions_Init(S_0029B360* self)
 {
     char buf[32];
     int i;
-    func_0041F150(self);
+    GuiWidget_Init(self);
     for (i = 0; i < 4; i++) {
         self->tab[i] = GuiWidget_FindChildByName(self, D_00506420[i]);
         if (self->tab[i])
@@ -122,7 +122,7 @@ typedef struct Obj29B920 {
     char padAC[0xB4 - 0xAC];
     int mode;
 } Obj29B920;
-void func_0041E3B0(Obj29B920* o, float dt);
+void GuiWidget_Update(Obj29B920* o, float dt);
 void func_0026BC20(float f);
 unsigned long Time_GetMilliseconds(void);
 void func_002996D0(Obj29B920* o, int a);
@@ -130,7 +130,7 @@ void func_0029AE60(Obj29B920* o);
 int func_0029BDB0(void);
 void GuiGameOptions_Update(Obj29B920* o, float dt)
 {
-    func_0041E3B0(o, dt);
+    GuiWidget_Update(o, dt);
     func_0026BC20(dt / 30.0f);
     if (o->state == 1) {
         if (Time_GetMilliseconds() - o->t > 8000) {
@@ -218,7 +218,7 @@ static inline void merge_flush_func_0029BA10(void) {}
 #pragma cplusplus on
 
 /* Derived destructor: restore vtable, run base destructor, optionally delete. */
-DEFINE_VTABLE_BASE_DTOR(func_0029BB40, D_004E1220, func_0041F370)
+DEFINE_VTABLE_BASE_DTOR(func_0029BB40, D_004E1220, GuiWidget_Destroy)
 #pragma pop /* merge_units */
 /* merge_units: end func_0029BB40 */
 

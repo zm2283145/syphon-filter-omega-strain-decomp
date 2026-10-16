@@ -10,7 +10,7 @@
 typedef struct { char pad[0x98]; void* a98; void* a9C; } S294B20;
 extern void String_Copy(char* dst, char* src);
 extern char* strchr(char* s, int c);
-extern void func_0041BEB0(void* w, char* text, int f);
+extern void GuiTextWidget_SetText(void* w, char* text, int f);
 #pragma bool off
 static inline int IsZero294B20(int c) { return (c != 0) ^ 1; }
 static inline int IsSp294B20(int c) { return (char)c == ' '; }
@@ -25,14 +25,14 @@ void GuiCommandCenter_SplitLevelName(S294B20* s, char* str)
     p = strchr(buf, ':');
     if (p) {
         *p = 0;
-        func_0041BEB0(s->a98, buf, 0);
+        GuiTextWidget_SetText(s->a98, buf, 0);
         p++;
         while (!IsZero294B20(*p) && IsSp294B20(*p))
             p++;
         if (p)
-            func_0041BEB0(s->a9C, p, 0);
+            GuiTextWidget_SetText(s->a9C, p, 0);
     } else {
-        func_0041BEB0(s->a98, str, 0);
+        GuiTextWidget_SetText(s->a98, str, 0);
     }
 }
 #pragma opt_rotateloops reset
@@ -78,9 +78,9 @@ extern char D_004FFC90[];
 extern Mgr_00294C60* D_004FFC04;
 extern char D_004AA200[];
 #if 0 /* merge_units */
-void func_0041BEB0(void* w, char* s, int a);
+void GuiTextWidget_SetText(void* w, char* s, int a);
 #endif /* merge_units */
-#define func_0041BEB0(a0, a1, a2) (func_0041BEB0((a0), (a1), (a2))) /* merge_units */
+#define GuiTextWidget_SetText(a0, a1, a2) (GuiTextWidget_SetText((a0), (a1), (a2))) /* merge_units */
 
 char* strncpy(char* d, const char* s, int n);
 char* Loc_LookupText(char* key);
@@ -106,9 +106,9 @@ extern "C" void GuiCommandCenter_SetTexts(S_00294C60* self)
     int i;
     if (!self->p98 || !self->p9C || !self->pA0)
         return;
-    func_0041BEB0(self->p98, D_004AA288, 0);
-    func_0041BEB0(self->p9C, D_004AA288, 0);
-    func_0041BEB0(self->pA0, D_004AA288, 0);
+    GuiTextWidget_SetText(self->p98, D_004AA288, 0);
+    GuiTextWidget_SetText(self->p9C, D_004AA288, 0);
+    GuiTextWidget_SetText(self->pA0, D_004AA288, 0);
     i = ((S2_00294C60*)self)->f1CC;
     if (i == -1)
         return;
@@ -143,7 +143,7 @@ extern "C" void GuiCommandCenter_SetTexts(S_00294C60* self)
             if (txt)
                 GuiCommandCenter_SplitLevelName(self, txt);
             else
-                func_0041BEB0(self->p98, key, 0);
+                GuiTextWidget_SetText(self->p98, key, 0);
             {
                 Sub_00294C60* sub = &D_004FFC04->sub;
                 String_Copy(sub->name, txt ? txt : key);
@@ -151,23 +151,23 @@ extern "C" void GuiCommandCenter_SetTexts(S_00294C60* self)
             return;
         } else {
             char* t = Loc_LookupText(D_004AA200);
-            func_0041BEB0(self->pA0, t ? t : D_004AA288, 0);
+            GuiTextWidget_SetText(self->pA0, t ? t : D_004AA288, 0);
             return;
         }
     }
     if (self->pA0) {
         int k = ((S2_00294C60*)self)->f1D0;
         if (k == self->fA8)
-            func_0041BEB0(self->pA0, Loc_LookupText("Online"), 0);
+            GuiTextWidget_SetText(self->pA0, Loc_LookupText("Online"), 0);
         else if (k == self->fA4)
-            func_0041BEB0(self->pA0, Loc_LookupText("Personnel"), 0);
+            GuiTextWidget_SetText(self->pA0, Loc_LookupText("Personnel"), 0);
         else if (k == self->fAC)
-            func_0041BEB0(self->pA0, Loc_LookupText("UnlockedMedia"), 0);
+            GuiTextWidget_SetText(self->pA0, Loc_LookupText("UnlockedMedia"), 0);
         else if (k == self->fB0)
             GuiCommandCenter_SplitLevelName(self, Loc_LookupText("Training"));
     }
 }
-#undef func_0041BEB0 /* merge_units */
+#undef GuiTextWidget_SetText /* merge_units */
 #undef GuiCommandCenter_SplitLevelName /* merge_units */
 #undef String_Copy /* merge_units */
 #pragma pop /* merge_units */
@@ -180,7 +180,7 @@ typedef struct { char pad[0x118]; E294F50* items[45]; int cur; } S294F50;
 extern int GuiCommandCenter_GetDefaultSlot(S294F50* s);
 extern void GuiCommandCenter_Select(S294F50* s, int i, int f);
 extern void* Gui_GetScreenStack(void);
-extern void func_0041E0F0(void* a, void* b, int c, int d, int e);
+extern void GuiWidget_SendEvent(void* a, void* b, int c, int d, int e);
 void GuiCommandCenter_MoveSelection(S294F50* s, int dir)
 {
     int cur = s->cur;
@@ -206,7 +206,7 @@ void GuiCommandCenter_MoveSelection(S294F50* s, int dir)
                     i = 23;
                 e = s->items[i];
                 if (e && (e->flags & 4) && (e->flags & 2)) {
-                    func_0041E0F0(s, Gui_GetScreenStack(), 0x10, 9, 0);
+                    GuiWidget_SendEvent(s, Gui_GetScreenStack(), 0x10, 9, 0);
                     GuiCommandCenter_Select(s, i, 1);
                     return;
                 }

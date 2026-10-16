@@ -24,7 +24,7 @@ int func_003EC3C0(...);
 int func_003EC3D0(...);                      
 extern char D_0055C0A8;
 }
-extern "C" void func_003EC3E0(void) {
+extern "C" void EffectService_ReleaseAll(void) {
     int sp3C;
     char * sp38;
     char * sp34;
@@ -68,7 +68,7 @@ extern "C" void func_003EC3E0(void) {
 struct VC003EC4C0 { char vpad[12]; unsigned char dead; char pad[7]; virtual void v0(int); virtual void v1(float); };
 extern "C" {
 }
-extern "C" void func_003EC4C0(float dt) {
+extern "C" void EffectService_UpdateAll(float dt) {
     int sp5C;
     char * sp58;
     char * sp54;

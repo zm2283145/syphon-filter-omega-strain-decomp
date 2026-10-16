@@ -24,7 +24,7 @@ extern void SoundEvent_Ctor(Event* e, void* src, int a2);
 extern void Event_Send(Event* e, const char* name, int enable);
 extern void FileMan_Release(SubObj* s, int flags);
 extern void cMessage_dtor(Event* e, int flags);
-extern void* func_003EBA50(void);
+extern void* Fstream_GetLoader(void);
 extern void func_003EB750(void* p);
 extern void func_0036B250(int a0);
 
@@ -41,7 +41,7 @@ void func_00327CF0(Screen* self)
     FileMan_Release(&e.b, -1);
     FileMan_Release(&e.a, -1);
     cMessage_dtor(&e, 0);
-    func_003EB750(func_003EBA50());
+    func_003EB750(Fstream_GetLoader());
     func_0036B250(1);
     self->state = -1;
 }

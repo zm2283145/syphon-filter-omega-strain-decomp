@@ -53,7 +53,7 @@ loopf:
     func_002CCDE0(out, &it);
 }
 
-extern "C" void func_00418E00(M_418E00* m, W_418E00* w, int del)
+extern "C" void GuiManager_UnloadRoot(M_418E00* m, W_418E00* w, int del)
 {
     char* pos;
     char* end;

@@ -10,12 +10,12 @@ void func_0013D680(void* destination, const void* source);
 void String_Dtor(void* string, int flags);
 void func_00422A50(TextListEntryVec* entries, TextListEntry* position,
                    int count, const TextListEntry* value);
-void func_00424430(TextRenderWidget* self, int first, int second);
+void GuiArrayWidget_Select(TextRenderWidget* self, int first, int second);
 void operator_delete(void* allocation);
 }
 
 /* Append an owned text entry and notify the list of its new row count. */
-extern "C" int func_00421290(TextRenderWidget* self, const char* text,
+extern "C" int GuiTextListWidget_AddItem(TextRenderWidget* self, const char* text,
                             int value, signed char style)
 {
     if (!text)
@@ -30,7 +30,7 @@ extern "C" int func_00421290(TextRenderWidget* self, const char* text,
     entry.unk10 = style;
     func_00422A50(&self->entries, self->entries.data + self->entries.count, 1, &entry);
     ((TextListLayout*)self)->set_extent(1, self->entries.count);
-    func_00424430(self, 0, 0);
+    GuiArrayWidget_Select(self, 0, 0);
     String_Dtor(entry.text, 0);
     return 1;
 }

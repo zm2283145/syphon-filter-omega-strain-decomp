@@ -10,23 +10,23 @@
 #include "types.h"
 struct V456 { virtual int v0(); virtual int v1(); virtual int v2(); virtual int v3(); virtual int v4(); virtual int v5(); virtual int v6(); virtual int v7(); virtual int v8(); virtual int v9(); virtual int v10(); virtual int v11(); virtual int v12(); virtual int v13(); virtual int v14(); virtual int v15(); virtual int v16(); virtual int v17(); virtual int v18(); virtual int v19(); virtual int v20(char*); };
 extern "C" {
-extern void func_0041F150(void*);
+extern void GuiWidget_Init(void*);
 extern V456* GuiWidget_FindChildByName(void*, char*);
 extern char D_004A7520[];
 extern char D_004C1A38[];
 extern char D_004FFB50[];
 extern int Agent_GetSelected(char*, int);
 extern char* AgentData_GetName(int);
-extern void func_0041BEB0(V456*, char*, int);
+extern void GuiTextWidget_SetText(V456*, char*, int);
 }
-extern "C" void func_00456F90(void* w) {
+extern "C" void GuiStartMenuBackdrop_Init(void* w) {
     V456* p;
-    func_0041F150(w);
+    GuiWidget_Init(w);
     p = GuiWidget_FindChildByName(w, "value_agentname");
     p = (p && p->v20(D_004A7520)) ? p : 0;
     if (p) {
         char* s = AgentData_GetName(Agent_GetSelected(D_004FFB50, -1));
-        func_0041BEB0(p, s ? s : D_004C1A38, 0);
+        GuiTextWidget_SetText(p, s ? s : D_004C1A38, 0);
     }
 }
 #pragma pop /* merge_units */

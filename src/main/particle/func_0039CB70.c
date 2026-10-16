@@ -25,8 +25,8 @@ void Mtx_FrameFromAxis(void* m, const V* a);
 void Mtx_SetIdentity(void* m);
 V* Mtx_DotRowsVec3(void* m, void* v);
 void* func_003A3430(void* a, void* b);
-void func_003A26A0(void* a, void* b, void* c, void* m, float t);
-void func_003A1760(void* o, void* a, void* b, void* c, float t);
+void ParticleEmitter_SpawnChildren(void* a, void* b, void* c, void* m, float t);
+void ParticleEmitterBase_Update(void* o, void* a, void* b, void* c, float t);
 void func_00136DA0(void*);
 void func_0012F530(void*, int);
 void* Mem_Alloc(int, int, char*, int);
@@ -219,8 +219,8 @@ static inline Emit9C& Em(Desc9C* d, int e) { return *(Emit9C*)((char*)d + e * 0x
     t->c.AC(ctr); }
 
 static inline void InitK(V* p, float a, float b, float c, float d) { p->x = a; p->y = b; p->z = c; p->w = d; }
-extern "C" void func_0039CB70(Obj9C* o, float dt, Ctx9C* ctx, Ctx9C* a2, void* a3);
-void func_0039CB70(Obj9C* o, float dt, Ctx9C* ctx, Ctx9C* a2, void* a3)
+extern "C" void ShatterEmitter_Update(Obj9C* o, float dt, Ctx9C* ctx, Ctx9C* a2, void* a3);
+void ShatterEmitter_Update(Obj9C* o, float dt, Ctx9C* ctx, Ctx9C* a2, void* a3)
 {
     o->b16C = 1;
     if (!o->b84) {
@@ -422,7 +422,7 @@ void func_0039CB70(Obj9C* o, float dt, Ctx9C* ctx, Ctx9C* a2, void* a3)
                                 m[3].AC(pos);
                                 r = func_003A3430(D_0053B540, EMIT(e).x0);
                                 o->bC = 0;
-                                func_003A26A0(ctx, o, r, m, dt);
+                                ParticleEmitter_SpawnChildren(ctx, o, r, m, dt);
                                 o->bC = 1;
                             }
                             if (!ctx->b68) {
@@ -438,7 +438,7 @@ void func_0039CB70(Obj9C* o, float dt, Ctx9C* ctx, Ctx9C* a2, void* a3)
             }
         }
     }
-    func_003A1760(o, ctx, a2, a3, dt);
+    ParticleEmitterBase_Update(o, ctx, a2, a3, dt);
     if (a3) {
         V m;
         if (!(o->desc->f68 <= 0.01f)) {

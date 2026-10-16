@@ -19,7 +19,7 @@ struct O_415310 {
 #pragma bool off
 static inline int IsZero_415310(void* c) { return ((int)c != 0) ^ 1; }
 #pragma opt_rotateloops off
-extern "C" void func_00415310(O_415310* o, void* arg)
+extern "C" void GuiCanvas_DispatchInput(O_415310* o, void* arg)
 {
     unsigned char r = 0;
     if (o->on) {

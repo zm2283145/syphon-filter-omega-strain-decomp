@@ -1,7 +1,7 @@
 #include "types.h"
 typedef struct { __int128 r[4]; } M_D1B0;
 typedef struct { char pad[0xA74]; int top; char flag; char pad2[7]; M_D1B0 m[8]; } S_D1B0;
-void func_003ED1B0(S_D1B0* s, M_D1B0* b) {
+void IeNode_ApplyMatrix(S_D1B0* s, M_D1B0* b) {
     M_D1B0* t = &s->m[s->top];
     asm {
         lqc2 vf4, 0x0(t)

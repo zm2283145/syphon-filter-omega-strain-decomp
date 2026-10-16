@@ -8,24 +8,24 @@ extern void func_00327960();
 extern void func_00327CF0();
 extern void func_00327D90();
 extern void func_00327FD0();
-extern void func_0041D400();
-extern void func_0041D5C0();
-extern void func_0041D780();
-extern void func_0041D8C0();
+extern void GuiWidget_FocusPrev();
+extern void GuiWidget_FocusNext();
+extern void GuiWidget_FocusLast();
+extern void GuiWidget_FocusFirst();
 extern void func_0041E230();
 extern void func_0041E2B0();
 extern void func_0041E330();
-extern void func_0041E3B0();
-extern void func_0041EF10();
+extern void GuiWidget_Update();
+extern void GuiWidget_OnEvent();
 extern void func_0041F070();
 extern void func_0041F080();
-extern void func_0041F090();
+extern void GuiWidget_Deinit();
 extern void func_0041F210();
 extern void * const D_004DE710[];
 extern void FileMan_Release(void* p, int f);
 extern void String_Dtor(void* p, int f);
 extern void func_0032A2F0(void* p, int f);
-extern void func_0041F370(void* p, int f);
+extern void GuiWidget_Destroy(void* p, int f);
 extern void operator_delete(void* p);
 static inline void M326CC0_dtor(M326CC0* m)
 {
@@ -47,10 +47,10 @@ O326CC0* func_00326CC0(O326CC0* self, short del)
         if (self->m6C)
             String_Dtor(self->m6C, 0);
         A326CC0(self->m48);
-        func_0041F370(self, 0);
+        GuiWidget_Destroy(self, 0);
         if (del > 0)
             operator_delete(self);
     }
     return self;
 }
-void * const D_004DE710[24] = { (void*)0x0, (void*)0x0, (void*)func_00326CC0, (void*)func_00327FD0, (void*)func_0041F090, (void*)func_0041F080, (void*)func_0041F070, (void*)func_00327D90, (void*)func_00327CF0, (void*)func_0041E330, (void*)func_0041E2B0, (void*)func_00327960, (void*)func_00327910, (void*)func_0041E230, (void*)func_0041E3B0, (void*)func_0041EF10, (void*)func_0041F210, (void*)func_0041D8C0, (void*)func_0041D780, (void*)func_0041D5C0, (void*)func_0041D400, (void*)func_00326DA0, (void*)func_00326DB0, (void*)0x0 };
+void * const D_004DE710[24] = { (void*)0x0, (void*)0x0, (void*)func_00326CC0, (void*)func_00327FD0, (void*)GuiWidget_Deinit, (void*)func_0041F080, (void*)func_0041F070, (void*)func_00327D90, (void*)func_00327CF0, (void*)func_0041E330, (void*)func_0041E2B0, (void*)func_00327960, (void*)func_00327910, (void*)func_0041E230, (void*)GuiWidget_Update, (void*)GuiWidget_OnEvent, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)func_00326DA0, (void*)func_00326DB0, (void*)0x0 };

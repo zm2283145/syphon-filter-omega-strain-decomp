@@ -9,28 +9,28 @@ extern void func_002ABD50();
 extern void func_002AC300();
 extern void func_002ACCA0();
 extern void func_002ACCF0();
-extern void func_0041D400();
-extern void func_0041D5C0();
-extern void func_0041D780();
-extern void func_0041D8C0();
+extern void GuiWidget_FocusPrev();
+extern void GuiWidget_FocusNext();
+extern void GuiWidget_FocusLast();
+extern void GuiWidget_FocusFirst();
 extern void func_0041E230();
-extern void func_0041EF10();
+extern void GuiWidget_OnEvent();
 extern void func_0041F070();
 extern void func_0041F080();
-extern void func_0041F090();
+extern void GuiWidget_Deinit();
 extern void func_0041F210();
 extern void func_004235C0();
 extern void func_00423660();
 extern void func_00423670();
-extern void func_00423CC0();
-extern void func_00424750();
-extern void func_004249D0();
-extern void func_00424A10();
+extern void GuiArrayWidget_OnInput();
+extern void GuiArrayWidget_SetDims();
+extern void GuiArrayWidget_OnLoseFocus();
+extern void GuiArrayWidget_OnGainFocus();
 extern void * const D_004DDB80[];
 extern char D_004E0D20[];
 extern void func_002AD780(void* p, int f);
 extern void func_0013B2E0(void* p, int f);
-extern void func_0041F370(void* p, int f);
+extern void GuiWidget_Destroy(void* p, int f);
 extern void operator_delete(void* p);
 static inline void C2AAC60(void* p) { if (p) func_002AD780(p, 0); }
 static inline void B2AAC60(void* p) { if (p) C2AAC60(p); }
@@ -40,7 +40,7 @@ static inline void Base2AAC60(O2AAC60* p)
     if (p) {
         p->vt = D_004E0D20;
         func_0013B2E0(p->m60, -1);
-        func_0041F370(p, 0);
+        GuiWidget_Destroy(p, 0);
     }
 }
 O2AAC60* func_002AAC60(O2AAC60* self, short del)
@@ -54,4 +54,4 @@ O2AAC60* func_002AAC60(O2AAC60* self, short del)
     }
     return self;
 }
-void * const D_004DDB80[30] = { (void*)0x0, (void*)0x0, (void*)func_002AAC60, (void*)func_002ACCF0, (void*)func_0041F090, (void*)func_0041F080, (void*)func_0041F070, (void*)func_002ABD50, (void*)func_002ABC90, (void*)func_00424A10, (void*)func_004249D0, (void*)func_00423CC0, (void*)func_00423670, (void*)func_0041E230, (void*)func_002ACCA0, (void*)func_0041EF10, (void*)func_0041F210, (void*)func_0041D8C0, (void*)func_0041D780, (void*)func_0041D5C0, (void*)func_0041D400, (void*)func_002AAD00, (void*)func_002AAD10, (void*)func_00424750, (void*)func_00423660, (void*)func_002AB2A0, (void*)func_002AAD40, (void*)func_002AC300, (void*)func_004235C0, (void*)0x0 };
+void * const D_004DDB80[30] = { (void*)0x0, (void*)0x0, (void*)func_002AAC60, (void*)func_002ACCF0, (void*)GuiWidget_Deinit, (void*)func_0041F080, (void*)func_0041F070, (void*)func_002ABD50, (void*)func_002ABC90, (void*)GuiArrayWidget_OnGainFocus, (void*)GuiArrayWidget_OnLoseFocus, (void*)GuiArrayWidget_OnInput, (void*)func_00423670, (void*)func_0041E230, (void*)func_002ACCA0, (void*)GuiWidget_OnEvent, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)func_002AAD00, (void*)func_002AAD10, (void*)GuiArrayWidget_SetDims, (void*)func_00423660, (void*)func_002AB2A0, (void*)func_002AAD40, (void*)func_002AC300, (void*)func_004235C0, (void*)0x0 };

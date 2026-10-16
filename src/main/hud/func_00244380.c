@@ -9,11 +9,11 @@
 
 extern "C" {
 char **Mem_Alloc(...);                        
-int func_003E8EB0(...);                            
-int func_003E9770(...);                              
-int func_003E97B0(...);                      
-int func_003E99B0(...);                   
-char * func_003EF010(...);                           
+int IeElement_Release(...);                            
+int HudTracker_Kill(...);                              
+int HudTracker_Attach(...);                      
+int HudTracker_Construct(...);                   
+char * IeElement_Create(...);                           
 extern char D_004A7210;
 extern "C" void Actor_ApplyContactDamage();
 extern "C" void Actor_BasePreLogic();
@@ -58,11 +58,11 @@ extern "C" void HudBlip_Draw();
 extern "C" void func_003CCFF0();
 extern "C" void func_003CD090();
 extern "C" void func_003CD110();
-extern "C" void func_003CD1C0();
+extern "C" void Node_GetComponentMatrix();
 extern "C" void PathObj_GetPosition();
-extern "C" void func_003CD420();
+extern "C" void Node_GetLightRefPoint();
 extern "C" void func_003CD4A0();
-extern "C" void func_003CD520();
+extern "C" void Node_GetWorldMatrix();
 extern "C" void func_003CD7A0();
 extern "C" void func_003CD920();
 extern "C" void func_003CDA60();
@@ -80,9 +80,9 @@ extern "C" void func_003CE9F0();
 extern "C" void func_003CEA00();
 extern "C" void Object_HandleMessage();
 extern "C" void func_003E96F0();
-extern "C" void func_003E9880();
-extern "C" void func_003E9BA0();
-void * const D_004E0480[72] = { (void*)0x0, (void*)0x0, (void*)func_003E9BA0, (void*)Object_HandleMessage, (void*)func_0012ECE0, (void*)Object_GetAttachedOrSelf, (void*)func_0015C090, (void*)func_0012ED00, (void*)func_003CE810, (void*)func_003CE7D0, (void*)func_0012ED30, (void*)func_0012ED40, (void*)func_0012ED50, (void*)cGOBJ_v0B, (void*)cGOBJ_v0C, (void*)func_003CEA00, (void*)func_003CE9F0, (void*)func_003CE9E0, (void*)func_003E9880, (void*)Actor_BasePreLogic, (void*)Actor_BaseWorldUpdate, (void*)Actor_VirtualNop, (void*)HudBlip_Draw, (void*)Object_Activate, (void*)Object_Deactivate, (void*)Node_SetFlag2C, (void*)Node_ClearFlag2C, (void*)Node_GetFlag2C, (void*)func_0015BFB0, (void*)func_0015BFC0, (void*)func_0015BFD0, (void*)func_00148870, (void*)func_0015BFF0, (void*)func_0015BFE0, (void*)func_0013EE60, (void*)func_0015C000, (void*)Object_AttachTransform, (void*)Player_GetActiveWeapon, (void*)func_003CDDC0, (void*)func_003CDD80, (void*)func_003CDD40, (void*)func_003CDC20, (void*)func_003CDBE0, (void*)func_003CDA60, (void*)func_003CD920, (void*)func_003CD7A0, (void*)func_0015C010, (void*)func_00153860, (void*)Object_GetEye, (void*)func_0015C020, (void*)func_00140E90, (void*)func_0015C030, (void*)func_0015C040, (void*)func_0015C050, (void*)func_003CD520, (void*)func_003CD4A0, (void*)func_003CD420, (void*)PathObj_GetPosition, (void*)func_003CD1C0, (void*)func_003CD110, (void*)func_003CD090, (void*)func_003CCFF0, (void*)func_0013E060, (void*)func_0015C080, (void*)Actor_ApplyContactDamage, (void*)func_0015C0A0, (void*)func_00141850, (void*)Controller_DeathNotice, (void*)func_003E96F0, (void*)0x0, (void*)0x0, (void*)0x0 };
+extern "C" void HudTracker_Update();
+extern "C" void HudTracker_Delete();
+void * const D_004E0480[72] = { (void*)0x0, (void*)0x0, (void*)HudTracker_Delete, (void*)Object_HandleMessage, (void*)func_0012ECE0, (void*)Object_GetAttachedOrSelf, (void*)func_0015C090, (void*)func_0012ED00, (void*)func_003CE810, (void*)func_003CE7D0, (void*)func_0012ED30, (void*)func_0012ED40, (void*)func_0012ED50, (void*)cGOBJ_v0B, (void*)cGOBJ_v0C, (void*)func_003CEA00, (void*)func_003CE9F0, (void*)func_003CE9E0, (void*)HudTracker_Update, (void*)Actor_BasePreLogic, (void*)Actor_BaseWorldUpdate, (void*)Actor_VirtualNop, (void*)HudBlip_Draw, (void*)Object_Activate, (void*)Object_Deactivate, (void*)Node_SetFlag2C, (void*)Node_ClearFlag2C, (void*)Node_GetFlag2C, (void*)func_0015BFB0, (void*)func_0015BFC0, (void*)func_0015BFD0, (void*)func_00148870, (void*)func_0015BFF0, (void*)func_0015BFE0, (void*)func_0013EE60, (void*)func_0015C000, (void*)Object_AttachTransform, (void*)Player_GetActiveWeapon, (void*)func_003CDDC0, (void*)func_003CDD80, (void*)func_003CDD40, (void*)func_003CDC20, (void*)func_003CDBE0, (void*)func_003CDA60, (void*)func_003CD920, (void*)func_003CD7A0, (void*)func_0015C010, (void*)func_00153860, (void*)Object_GetEye, (void*)func_0015C020, (void*)func_00140E90, (void*)func_0015C030, (void*)func_0015C040, (void*)func_0015C050, (void*)Node_GetWorldMatrix, (void*)func_003CD4A0, (void*)Node_GetLightRefPoint, (void*)PathObj_GetPosition, (void*)Node_GetComponentMatrix, (void*)func_003CD110, (void*)func_003CD090, (void*)func_003CCFF0, (void*)func_0013E060, (void*)func_0015C080, (void*)Actor_ApplyContactDamage, (void*)func_0015C0A0, (void*)func_00141850, (void*)Controller_DeathNotice, (void*)func_003E96F0, (void*)0x0, (void*)0x0, (void*)0x0 };
 extern unsigned char D_00533880;
 typedef struct { char p0[92]; int f5C; int f60; int f64; int f68; } PS0_00244380;
 }
@@ -100,33 +100,33 @@ extern "C" void Hud_ShowTargetLock(PS0_00244380 *arg0, int arg1, int arg2) {
     }
     temp_v1 = (char *)(arg0->f68);
     if (temp_v1 == NULL) {
-        arg0->f68 = (int)(func_003EF010(var_s0));
+        arg0->f68 = (int)(IeElement_Create(var_s0));
         {
             AllocGuard g;
         temp_s0 = Mem_Alloc(0, 0x90, &D_004A7210, 0x3A1);
         }
         if (temp_s0 != NULL) {
-            func_003E99B0(temp_s0, arg0->f68, arg1);
+            HudTracker_Construct(temp_s0, arg0->f68, arg1);
             *temp_s0 = &(*(char*)D_004E0480);
         }
         arg0->f64 = (int)(temp_s0);
     } else if (F_(temp_v1, 0x70, int) != var_s0) {
         temp_a0 = (char **)(arg0->f64);
         if (temp_a0 != NULL) {
-            func_003E9770(temp_a0);
+            HudTracker_Kill(temp_a0);
         } else {
-            func_003E8EB0(temp_v1);
+            IeElement_Release(temp_v1);
         }
-        arg0->f68 = (int)(func_003EF010(var_s0));
+        arg0->f68 = (int)(IeElement_Create(var_s0));
         {
             AllocGuard g;
         temp_s0_2 = Mem_Alloc(0, 0x90, &D_004A7210, 0x3AD);
         }
         if (temp_s0_2 != NULL) {
-            func_003E99B0(temp_s0_2, arg0->f68, arg1);
+            HudTracker_Construct(temp_s0_2, arg0->f68, arg1);
             *temp_s0_2 = &(*(char*)D_004E0480);
         }
         arg0->f64 = (int)(temp_s0_2);
     }
-    func_003E97B0(arg0->f64, arg1, arg2);
+    HudTracker_Attach(arg0->f64, arg1, arg2);
 }

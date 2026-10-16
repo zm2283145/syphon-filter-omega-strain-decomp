@@ -17,7 +17,7 @@ int func_002731E0(...);
 int func_002731F0(...);                          
 int func_002740F0(...);                            
 int func_00274170(...);                            
-int func_003E9770(...);                               
+int HudTracker_Kill(...);                               
 int operator_delete(...);                             
 extern unsigned char D_0048B308;
 extern char D_004A8F60;
@@ -54,8 +54,8 @@ extern "C" int func_00273F00(char *arg0, long long arg1) {
                     AllocGuard g;
                 if (temp_s1 != NULL) {
                     if (D_0048B308 != 0) {
-                        func_003E9770(F_(temp_s1, 0x8, int));
-                        func_003E9770(F_(temp_s1, 0x4, int));
+                        HudTracker_Kill(F_(temp_s1, 0x8, int));
+                        HudTracker_Kill(F_(temp_s1, 0x4, int));
                     }
                     temp_a0 = temp_s1 + 0x28;
                     if (temp_a0 != NULL) {

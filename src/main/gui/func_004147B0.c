@@ -16,7 +16,7 @@ extern void **D_00571FB0;
 extern void **D_00571FB8;
 extern unsigned char D_00571FC0;
 }
-extern "C" void func_004147B0(void) {
+extern "C" void GuiCanvas_Destroy(void) {
     void **temp_s0;
     void **temp_s0_2;
 

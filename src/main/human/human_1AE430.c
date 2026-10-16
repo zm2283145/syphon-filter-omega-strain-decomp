@@ -53,7 +53,7 @@ extern unsigned char D_005721C8;
 extern int StartingArmor;
 
 void* Mem_Alloc(int, int, char*, int);
-void func_003CCF30(Act*);
+void Node_ReleaseComponent58(Act*);
 void func_003FB9C0(Act*);
 void Actor_AttachComponent(Act*, void*);
 void* PlayerComponent_Construct(void*);
@@ -67,7 +67,7 @@ static inline bool Ready(Act* a)
 static inline void Detach(Act* a)
 {
     if (a->b31FC) {
-        func_003CCF30(a);
+        Node_ReleaseComponent58(a);
         a->b31FC = 0;
     }
 }

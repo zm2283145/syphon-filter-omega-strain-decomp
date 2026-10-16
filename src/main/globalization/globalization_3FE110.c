@@ -21,7 +21,7 @@ int strlen(const char *);
 #pragma push /* merge_units */
 extern unsigned char D_0055D470;
 extern int func_00326130(int);
-void func_003FE110(int arg) {
+void Language_FromSystem(int arg) {
     int r = func_00326130(arg);
     if (r >= 0 && r < 7) {
         switch (r) {

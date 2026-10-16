@@ -6,8 +6,8 @@ void List_Begin(void* out, void* list);
 void func_0027AA80(void* out, void* in);
 void func_0027AC70(void* out, void* in);
 void func_0027AC80(void* out, void* list);
-void func_003F44E0(int h, float a);
-void func_003F4510(int h, int b, float a, float c);
+void IeElement_Fade(int h, float a);
+void IeElement_PlayRange(int h, int b, float a, float c);
 
 #pragma opt_loop_invariants off
 void func_0027B4E0(char* arg0) {
@@ -26,9 +26,9 @@ void func_0027B4E0(char* arg0) {
         arr[1] = F_(arg0, 0x8, int);
         for (i = 0, q = arr; i < 2; i++, q++) {
             if (i == F_(arg0, 0x38, int)) {
-                func_003F4510(*q, 1, 0.0f, 8.0f);
+                IeElement_PlayRange(*q, 1, 0.0f, 8.0f);
             } else {
-                func_003F44E0(*q, 0.0f);
+                IeElement_Fade(*q, 0.0f);
             }
         }
     } else if (F_(arg0, 0x3C, int) == 1) {
@@ -42,9 +42,9 @@ void func_0027B4E0(char* arg0) {
         if ((int)n != sp5C) {
             do {
                 if (j == F_(arg0, 0x38, int)) {
-                    func_003F4510(F_(F_(n, 0x8, int), 0x14, int), 1, 0.0f, 8.0f);
+                    IeElement_PlayRange(F_(F_(n, 0x8, int), 0x14, int), 1, 0.0f, 8.0f);
                 } else {
-                    func_003F44E0(F_(F_(n, 0x8, int), 0x14, int), 0.0f);
+                    IeElement_Fade(F_(F_(n, 0x8, int), 0x14, int), 0.0f);
                 }
                 n = F_(n, 0x4, char*);
                 j++;

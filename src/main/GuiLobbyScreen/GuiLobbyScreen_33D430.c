@@ -24,7 +24,7 @@ extern char D_004E1220[];
 extern int D_00532FD8;
 extern void* D_00532FE0;
 void String_Dtor(void* p, int f);
-void func_0041F370(void* p, int f);
+void GuiWidget_Destroy(void* p, int f);
 void operator_delete(void* p);
 }
 extern "C" O33D430* func_0033D430(O33D430* self, short del)
@@ -46,7 +46,7 @@ extern "C" O33D430* func_0033D430(O33D430* self, short del)
         }
         if (self) {
             self->vt = D_004E1220;
-            func_0041F370(self, 0);
+            GuiWidget_Destroy(self, 0);
         }
         if (del > 0)
             operator_delete(self);

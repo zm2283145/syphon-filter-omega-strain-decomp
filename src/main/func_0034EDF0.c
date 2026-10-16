@@ -21,7 +21,7 @@ extern "C" void func_00299270(LEDF0* l, int flags);
 extern "C" void* Agent_GetSelected(void* list, int idx);
 extern "C" void func_00333260(void* ag, int a, int b, LEDF0* l);
 extern "C" int Loc_LookupText(const char* key);
-extern "C" void func_00421290(void* t, int id, int i, int mode);
+extern "C" void GuiTextListWidget_AddItem(void* t, int id, int i, int mode);
 
 extern "C" void func_0034EDF0(OEDF0* self)
 {
@@ -43,7 +43,7 @@ extern "C" void func_0034EDF0(OEDF0* self)
             id = e->id;
             mode = e->state == 2 ? MODE_0 : MODE_1;
         }
-        func_00421290(self->tbl, id, i, mode);
+        GuiTextListWidget_AddItem(self->tbl, id, i, mode);
     }
     func_00299270(&l, 0);
 }

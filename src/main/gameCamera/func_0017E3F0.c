@@ -105,7 +105,7 @@ void func_00136540(CC70*, int*, int*);
 void func_001364B0(V4c*);
 void Mtx_SetBasis(Mtx_17E3F0* m, V4c* a, V4c* b, V4c* c);
 void Mtx_SetTranslation(Mtx_17E3F0* m, V4c* t);
-void func_003CDF20(Cam_17E3F0*);
+void Node_ClearLocalMatrix(Cam_17E3F0*);
 void Actor_BaseWorldUpdate(Cam_17E3F0*, float);
 }
 
@@ -265,7 +265,7 @@ extern "C" Cam_17E3F0* Camera_ConstructStream(Cam_17E3F0* self, Reader_17E3F0* r
     ReadV_17E3F0(r, &r2, 0.0f);
     Mtx_SetBasis(&m, &r0, &r1, &r2);
     Mtx_SetTranslation(&m, &pos);
-    func_003CDF20(self);
+    Node_ClearLocalMatrix(self);
     Object_AttachTransform(self, &m, 0);
     SetF60_17E3F0(self);
     Actor_BaseWorldUpdate(self, 0.0f);

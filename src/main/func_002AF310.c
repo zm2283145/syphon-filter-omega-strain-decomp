@@ -13,7 +13,7 @@ extern "C" {
     void func_0033D8E0(Screen*,int);
     int func_0033DF00(Screen*,int,int,int,char*);
     int GuiManager_FindOrLoad(int,char*,char*);
-    void func_0041BEB0(int,char*,int);
+    void GuiTextWidget_SetText(int,char*,int);
     int DME_GetLobby();
     char* func_0044A060(int);
     int func_0044A420(int,char*);
@@ -73,7 +73,7 @@ extern "C" int func_002AF310(Screen* arg0, int arg1, int arg2, int arg3, char* a
                         int temp_a0 = temp_s4->unk160;
                         if (temp_a0 != 0) {
                             var_v0 = var_v0 ? var_v0 : D_004ABCD0;
-                            func_0041BEB0(temp_a0, var_v0, 0);
+                            GuiTextWidget_SetText(temp_a0, var_v0, 0);
                         }
                     }
                 } else {

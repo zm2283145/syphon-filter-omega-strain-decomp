@@ -26,8 +26,15 @@ extern void GuiAgentCreate_Sleep();
 extern void GuiAgentCreate_Update();
 extern void GuiAgentCreate_Wake();
 extern void GuiAgentCreate_dtor();
+extern void GuiWidget_FocusFirst();
+extern void GuiWidget_FocusLast();
+extern void GuiWidget_FocusNext();
+extern void GuiWidget_FocusPrev();
 extern void Node_ClearFlag2C();
+extern void Node_GetComponentMatrix();
 extern void Node_GetFlag2C();
+extern void Node_GetLightRefPoint();
+extern void Node_GetWorldMatrix();
 extern void Node_SetFlag2C();
 extern void Object_Activate();
 extern void Object_AttachTransform();
@@ -75,10 +82,7 @@ extern void func_0028B2C0();
 extern void func_003CCFF0();
 extern void func_003CD090();
 extern void func_003CD110();
-extern void func_003CD1C0();
-extern void func_003CD420();
 extern void func_003CD4A0();
-extern void func_003CD520();
 extern void func_003CD7A0();
 extern void func_003CD920();
 extern void func_003CDA60();
@@ -91,10 +95,6 @@ extern void func_003CE7D0();
 extern void func_003CE810();
 extern void func_003CE9D0();
 extern void func_003CEA00();
-extern void func_0041D400();
-extern void func_0041D5C0();
-extern void func_0041D780();
-extern void func_0041D8C0();
 extern void func_0041E230();
 extern void func_0041E2B0();
 extern void func_0041E330();
@@ -112,8 +112,8 @@ void *D_004DD1B0[116] = {
     &GuiAgentCreate_Deinit, &func_0041F080, &func_0041F070, &GuiAgentCreate_Wake,
     &GuiAgentCreate_Sleep, &func_0041E330, &func_0041E2B0, &GuiAgentCreate_HandleInput,
     &GuiAgentCreate_Draw, &func_0041E230, &GuiAgentCreate_Update, &GuiAgentCreate_HandleEvent,
-    &func_0041F210, &func_0041D8C0, &func_0041D780, &func_0041D5C0,
-    &func_0041D400, &GuiAgentCreate_GetClassName, &GuiAgentCreate_IsType, 0,
+    &func_0041F210, &GuiWidget_FocusFirst, &GuiWidget_FocusLast, &GuiWidget_FocusNext,
+    &GuiWidget_FocusPrev, &GuiAgentCreate_GetClassName, &GuiAgentCreate_IsType, 0,
     0, 0, &func_0017ECD0, &func_00180020,
     0, 0, &Curve_Retarget, &Curve_VirtualNop,
     &Curve_SetVelocity, 0, 0, 0,
@@ -133,8 +133,8 @@ void *D_004DD1B0[116] = {
     &func_003CDD40, &func_003CDC20, &func_003CDBE0, &func_003CDA60,
     &func_003CD920, &func_003CD7A0, &func_0015C010, &func_00153860,
     &Object_GetEye, &func_0015C020, &func_00140E90, &func_0015C030,
-    &func_0015C040, &func_0015C050, &func_003CD520, &func_003CD4A0,
-    &func_003CD420, &PathObj_GetPosition, &func_003CD1C0, &func_003CD110,
+    &func_0015C040, &func_0015C050, &Node_GetWorldMatrix, &func_003CD4A0,
+    &Node_GetLightRefPoint, &PathObj_GetPosition, &Node_GetComponentMatrix, &func_003CD110,
     &func_003CD090, &func_003CCFF0, &func_0013E060, &func_0015C080,
     &Actor_ApplyContactDamage, &func_0015C0A0, &func_00141850, &Controller_DeathNotice,
 };

@@ -20,7 +20,7 @@ struct Scr {
     unsigned char have;
 };
 static inline void GQ(void* d, const void* s) { __int128 q; __asm__ volatile("lq %0, 0(%2); sq %0, 0(%1)" : "=&r"(q) : "r"(d), "r"(s) : "memory"); }
-extern "C" int func_0045BF80(Scr* s);
+extern "C" int GuiGameScreen_CloseChooseMenu(Scr* s);
 #pragma opt_propagation off
 #pragma opt_common_subs off
 extern "C" void func_0045BD30(Scr* s, V4* p)
@@ -55,7 +55,7 @@ ss = &r; pv = &d; asm { mtc1 $zero, ret } dd = &d; x = *(__int128*)ss; *(__int12
             }
         }
         if (!(ret <= 3.0f))
-            func_0045BF80(s);
+            GuiGameScreen_CloseChooseMenu(s);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -72,7 +72,7 @@ static inline void merge_flush_func_0045BD30(void) {}
 int Event_Construct();                       
 int Event_Send();                         
 int cMessage_dtor();                           
-int func_0045BF80();                            
+int GuiGameScreen_CloseChooseMenu();                            
 extern char D_004DC330;
 extern char D_004F7E48;
 
@@ -97,7 +97,7 @@ void func_0045BDF0(char * arg0) {
             sl.f40[0] = &D_004DC330;
             cMessage_dtor(sl.f40, 0);
         }
-        func_0045BF80(arg0);
+        GuiGameScreen_CloseChooseMenu(arg0);
     }
 }
 #pragma pop

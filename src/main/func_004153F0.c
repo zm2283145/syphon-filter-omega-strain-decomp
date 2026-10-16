@@ -19,14 +19,14 @@ struct W_4153F0 {
     char pad[0x4E];
     unsigned char b52;
 };
-extern "C" unsigned char func_003D1580(int c, int flags);
-extern "C" unsigned char func_003D1610(Kb_4153F0* k);
-extern "C" int func_003D1660(Kb_4153F0* k, int n);
+extern "C" unsigned char UsbKbd_TranslateKey(int c, int flags);
+extern "C" unsigned char UsbKbd_GetCode(Kb_4153F0* k);
+extern "C" int UsbKbd_Poll(Kb_4153F0* k, int n);
 
-extern "C" void func_004153F0(W_4153F0* w, Kb_4153F0* kb)
+extern "C" void GuiCanvas_KeyboardInput(W_4153F0* w, Kb_4153F0* kb)
 {
-    while (func_003D1660(kb, 1)) {
-        int c = func_003D1610(kb);
+    while (UsbKbd_Poll(kb, 1)) {
+        int c = UsbKbd_GetCode(kb);
         if (c) {
             int f = kb->flags;
             KeyEv_4153F0 ev;
@@ -36,7 +36,7 @@ extern "C" void func_004153F0(W_4153F0* w, Kb_4153F0* kb)
             ev.c = 0;
             ev.key = c;
             ev.flags = f;
-            if (w->b52) ev.ch = func_003D1580(c, f);
+            if (w->b52) ev.ch = UsbKbd_TranslateKey(c, f);
             else ev.ch = c;
             w->Event(&ev);
         }

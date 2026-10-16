@@ -60,12 +60,12 @@ int ObjMan_GetService();
 int ObjMan_GetTotalCount(int s);
 int ObjectiveMgr_GetCompleted(int s, int* buf, int n, int k);
 void Objective_QueueThresholdVoice(int a, int b);
-void func_003F9E60(void* p, float dt);
+void HudTicker_Update(void* p, float dt);
 void Hud_UpdateCallouts(Obj_244FA0* o, float dt);
 int Object_LookupById(void* id);
 void HudTargets_Update(void* h, int t);
 void Hud_UpdateAmmoText(Obj_244FA0* o, int t);
-void func_003E79C0(int h, float dt);
+void IeScreen_Update(int h, float dt);
 void HudMap_Update(int h, float dt);
 bool HudTimer_Update(void* t, float now);
 float func_00245810(Obj_244FA0* o);
@@ -74,7 +74,7 @@ void Event_Send(Msg_244FA0* m, void* target, int flags);
 void cMessage_dtor(Msg_244FA0* m, int flags);
 int Gui_GetScreenList();
 Svc_244FA0* Gui_GetScreenStack();
-void func_00415870(Svc_244FA0* s);
+void GuiCanvas_UpdatePads(Svc_244FA0* s);
 void GuiManager_Update(int h, float dt);
 }
 extern "C" void Hud_Update(Obj_244FA0* o, float dt)
@@ -105,14 +105,14 @@ extern "C" void Hud_Update(Obj_244FA0* o, float dt)
         }
         D_004F7DD8 = cur;
     }
-    func_003F9E60(o->x100, dt);
+    HudTicker_Update(o->x100, dt);
     if (o->i6E8)
         Hud_UpdateCallouts(o, dt);
     int tgt = Object_LookupById(D_004F7DB8);
     o->sub.v0(tgt);
     HudTargets_Update(o->hud, tgt);
     Hud_UpdateAmmoText(o, tgt);
-    func_003E79C0(o->i54, dt);
+    IeScreen_Update(o->i54, dt);
     if (o->i6A0)
         HudMap_Update(o->i6A0, dt);
     if (HudTimer_Update(&o->f6AC, o->f6DC)) {
@@ -146,7 +146,7 @@ extern "C" void Hud_Update(Obj_244FA0* o, float dt)
     if (!D_004FFC29 || D_005721C8) {
         GuiManager_Update(Gui_GetScreenList(), dt);
         if (D_004FFBA0 != 0x13)
-            func_00415870(Gui_GetScreenStack());
+            GuiCanvas_UpdatePads(Gui_GetScreenStack());
         Gui_GetScreenStack()->v22(dt);
     }
 }

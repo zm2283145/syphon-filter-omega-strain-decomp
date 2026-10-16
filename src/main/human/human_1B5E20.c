@@ -250,7 +250,7 @@ int Archive_Open(char*, char*, int, int);
 void Hog_Register(Hog*, char*, int, int);
 int FileMan_FindMember(Hog*);
 int FileMan_GetSize(Hog*);
-void func_00406700(Skl*, Hog*, int);
+void Skeleton_BuildInFrame(Skl*, Hog*, int);
 void WeaponInv_Add(void*, int, int, int, int, int);
 void WeaponInv_EquipFirst(void*);
 void Actor_InitComponents(Act*, unsigned char, int, void*);
@@ -383,7 +383,7 @@ extern "C" bool Npc_Initialize(Act* a, Mtx* mtx, char* name, int health, int max
                     sprintf(err, D_0049E940, name);
                     return 0;
                 }
-                func_00406700(&skl, &hog.h, FileMan_GetSize(&hog.h));
+                Skeleton_BuildInFrame(&skl, &hog.h, FileMan_GetSize(&hog.h));
                 sk = &skl;
             }
         } else {
@@ -396,7 +396,7 @@ extern "C" bool Npc_Initialize(Act* a, Mtx* mtx, char* name, int health, int max
                     sprintf(err, D_0049E940, name);
                     return 0;
                 }
-                func_00406700(&skl, &hog.h, FileMan_GetSize(&hog.h));
+                Skeleton_BuildInFrame(&skl, &hog.h, FileMan_GetSize(&hog.h));
                 sk = &skl;
             }
         }

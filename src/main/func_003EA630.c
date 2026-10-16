@@ -10,7 +10,7 @@ extern char D_0055A840[];
 static inline H3EA630* Id3EA630(H3EA630* p) { return p; }
 #pragma push
 #pragma opt_propagation off
-extern "C" R3EA630* func_003EA630(R3EA630* r) {
+extern "C" R3EA630* Component_ConstructBase(R3EA630* r) {
     Receiver_Construct(r, D_0055A840);
     r->vt = D_004E06C0;
     r->h.id = -2;

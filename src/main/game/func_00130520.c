@@ -19,8 +19,8 @@ extern int Archive_Open(char*, char*, int, int);
 extern void Hog_Register(H130*, void*, int, int);
 extern void func_0036E140(H130*, void*, int, int);
 extern int Loc_GetLanguage(void);
-extern void func_003F7FB0(int);
-extern void func_003F7FA0(int);
+extern void Subtitles_SelectTrack(int);
+extern void Subtitles_SetEnabled(int);
 extern void* Mem_Alloc(int, int, char*, int);
 extern void* func_003F9380(void*, H130*, unsigned char);
 extern void FileMan_Release(H130*, int);
@@ -60,11 +60,11 @@ extern "C" void func_00130520(O130* o, void* name, unsigned char flag) {
         default: sel = 0; break;
         }
         if (l) {
-            func_003F7FB0((unsigned char)lang);
-            func_003F7FA0(1);
+            Subtitles_SelectTrack((unsigned char)lang);
+            Subtitles_SetEnabled(1);
         } else {
-            func_003F7FB0(-1);
-            func_003F7FA0(0);
+            Subtitles_SelectTrack(-1);
+            Subtitles_SetEnabled(0);
         }
         {
             AllocGuard g;

@@ -22,12 +22,12 @@ extern int sprintf(char* buf, const char* fmt, ...);
 extern int func_00404690(void* db, __int128 key);
 extern int func_00401DE0(void* db, __int128 key);
 extern void GuiAgentCreate_UpdateCount(S_28D610* o);
-extern void func_0041BEB0(W_28D610* w, char* text, int flags);
-extern void func_0041E0F0(S_28D610* o, W_28D610* w, int kind, int v, int f);
+extern void GuiTextWidget_SetText(W_28D610* w, char* text, int flags);
+extern void GuiWidget_SendEvent(S_28D610* o, W_28D610* w, int kind, int v, int f);
 
 static inline void Slider_28D610(S_28D610* o, W_28D610* w, int kind, int v, int f)
 {
-    if (w) func_0041E0F0(o, w, kind, v, f);
+    if (w) GuiWidget_SendEvent(o, w, kind, v, f);
 }
 
 void GuiAgentCreate_SelectOption(S_28D610* o, char* name)
@@ -52,16 +52,16 @@ void GuiAgentCreate_SelectOption(S_28D610* o, char* name)
             if (o->w5C) {
                 if (o->count) {
                     sprintf(buf, D_004A9A30, o->pos + 1, o->count);
-                    func_0041BEB0(o->w5C, buf, 0);
+                    GuiTextWidget_SetText(o->w5C, buf, 0);
                 } else {
-                    func_0041BEB0(o->w5C, D_004A9A38, 0);
+                    GuiTextWidget_SetText(o->w5C, D_004A9A38, 0);
                 }
             }
         } else {
             o->count = 0;
             o->pos = 0;
             if (o->w58) o->w58->flags &= ~2;
-            if (o->w5C) func_0041BEB0(o->w5C, D_004A9A40, 0);
+            if (o->w5C) GuiTextWidget_SetText(o->w5C, D_004A9A40, 0);
         }
     }
 }

@@ -23,11 +23,11 @@ int func_002CCE40(...);
 int func_0028C0A0(...);
 int func_0028C090(...);
 void Pad_ResetHeldMask(void* p);
-void func_0041E0F0(void* a, void* b, int kind, int v, int f);
-void func_00414BE0(O_414BE0* o, W_414BE0* w);
+void GuiWidget_SendEvent(void* a, void* b, int kind, int v, int f);
+void GuiCanvas_PopScreen(O_414BE0* o, W_414BE0* w);
 }
 
-void func_00414BE0(O_414BE0* o, W_414BE0* w)
+void GuiCanvas_PopScreen(O_414BE0* o, W_414BE0* w)
 {
     char* r1;
     char* r2;
@@ -98,7 +98,7 @@ loop_2:
         func_0015AF40(&x2, &t2);
         List_Erase(&y2, &o->f28, &x2);
     }
-    func_0041E0F0(o, w, 0x19, 0, 0);
+    GuiWidget_SendEvent(o, w, 0x19, 0, 0);
     if (o->f20 && w->f20 == o->f20) o->f20->f44->v8();
     w->f20 = 0;
     if (o->f28) {

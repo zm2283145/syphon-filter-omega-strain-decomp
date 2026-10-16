@@ -75,8 +75,8 @@ void func_0027A740(Obj_00167630* o, void* pad);
 float SoftFloat_U64ToFloat(unsigned long long t);
 void func_0027A830(Obj_00167630* o, float dt);
 void func_0027A7F0(Obj_00167630* o);
-int func_003D1020(void);
-void func_003D0C10(int a);
+int TextManager_Get(void);
+void TextManager_DrawImmediate(int a);
 void Net_StartSession(int a);
 void Net_RetryConnect(Sess_00167630* s);
 void func_00169390(void* p);
@@ -172,7 +172,7 @@ extern "C" void func_00167630(void* arg)
     }
     func_0027A7F0(D_004EE498);
     D_005392D8 = D_004BC1B0;
-    func_003D0C10(func_003D1020());
+    TextManager_DrawImmediate(TextManager_Get());
     D_00538C68 = 1;
     D_00538C64--;
     {

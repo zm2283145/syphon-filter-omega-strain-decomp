@@ -48,7 +48,7 @@ void* func_003D2780(void* self) {
 }
 
 /* Inserts a value (by copy). */
-void func_003D2790(Tree* t, int value) {
+void MaterialAnim_Register(Tree* t, int value) {
     int loc[1];
 
     loc[0] = value;

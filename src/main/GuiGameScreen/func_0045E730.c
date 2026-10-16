@@ -21,7 +21,7 @@ extern char D_004DCF10[];
 void Event_Construct(Msg_E730* m, void* type);
 void Transport_Send(int to, Msg_E730* m, int a, int b);
 void cMessage_dtor(Msg_E730* m, int flags);
-void func_0045EC60(void);
+void GameScreen_ClearInteractLocal(void);
 }
 static inline int OwnerOf_E730(Ent_E730* e)
 {
@@ -44,15 +44,15 @@ extern "C" void Global_ClearInteract(Ent_E730* e)
         if (!e) {
             m.f20 = 4;
             Transport_Send(0, &m, -1, -1);
-            func_0045EC60();
+            GameScreen_ClearInteractLocal();
         } else {
             int own = OwnerOf_E730(e);
             if (own != NetLocalId()) Transport_Send(0, &m, 0, own);
-            else func_0045EC60();
+            else GameScreen_ClearInteractLocal();
         }
         m.vt = D_004DCF10;
         cMessage_dtor(&m, 0);
     } else {
-        func_0045EC60();
+        GameScreen_ClearInteractLocal();
     }
 }

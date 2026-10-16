@@ -7,7 +7,7 @@ extern "C" {
 char* WeaponDb_Get(int, int);
 void WeaponDb_Preload(int, int, int);
 char* Loc_LookupText(char*);
-void func_0041BEB0(int, char*, int);
+void GuiTextWidget_SetText(int, char*, int);
 extern int D_004FFD30;
 extern char D_004C03B8[];
 }
@@ -36,11 +36,11 @@ extern "C" void func_00441060(char* self, int id) {
         }
         if (F_(self, 0xA0, int) != 0) {
             t = Loc_LookupText(w + 0x80);
-            func_0041BEB0(F_(self, 0xA0, int), t ? t : w + 0x80, 0);
+            GuiTextWidget_SetText(F_(self, 0xA0, int), t ? t : w + 0x80, 0);
         }
     } else {
         int lbl = F_(self, 0xA0, int);
-        if (lbl != 0) func_0041BEB0(lbl, D_004C03B8, 0);
+        if (lbl != 0) GuiTextWidget_SetText(lbl, D_004C03B8, 0);
     }
 }
 

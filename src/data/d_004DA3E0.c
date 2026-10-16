@@ -32,7 +32,10 @@ extern void Curve_ReturnZero();
 extern void Curve_SetVelocity();
 extern void Curve_VirtualNop();
 extern void Node_ClearFlag2C();
+extern void Node_GetComponentMatrix();
 extern void Node_GetFlag2C();
+extern void Node_GetLightRefPoint();
+extern void Node_GetWorldMatrix();
 extern void Node_SetFlag2C();
 extern void Npc_Activate();
 extern void Npc_Deactivate();
@@ -127,10 +130,7 @@ extern void func_001B8790();
 extern void func_003CCFF0();
 extern void func_003CD090();
 extern void func_003CD110();
-extern void func_003CD1C0();
-extern void func_003CD420();
 extern void func_003CD4A0();
-extern void func_003CD520();
 extern void func_003CD7A0();
 extern void func_003CD920();
 extern void func_003CDA60();
@@ -176,8 +176,8 @@ void *D_004DA470[68] = {
     &func_003CDD40, &func_003CDC20, &func_003CDBE0, &func_003CDA60,
     &func_003CD920, &func_003CD7A0, &func_0015C010, &func_00153860,
     &Object_GetEye, &func_0015C020, &func_00140E90, &func_0015C030,
-    &func_0015C040, &func_0015C050, &func_003CD520, &func_003CD4A0,
-    &func_003CD420, &PathObj_GetPosition, &func_003CD1C0, &func_003CD110,
+    &func_0015C040, &func_0015C050, &Node_GetWorldMatrix, &func_003CD4A0,
+    &Node_GetLightRefPoint, &PathObj_GetPosition, &Node_GetComponentMatrix, &func_003CD110,
     &func_003CD090, &func_003CCFF0, &func_0013E060, &func_0015C080,
     &Actor_ApplyContactDamage, &func_0015C0A0, &func_00141850, &Controller_DeathNotice,
 };
@@ -196,8 +196,8 @@ void *D_004DA580[68] = {
     &func_003CDD40, &func_003CDC20, &func_003CDBE0, &func_003CDA60,
     &func_003CD920, &func_003CD7A0, &func_0015C010, &func_00153860,
     &Object_GetEye, &func_0015C020, &func_00140E90, &func_0015C030,
-    &func_0015C040, &func_0015C050, &func_003CD520, &func_003CD4A0,
-    &func_003CD420, &PathObj_GetPosition, &func_003CD1C0, &func_003CD110,
+    &func_0015C040, &func_0015C050, &Node_GetWorldMatrix, &func_003CD4A0,
+    &Node_GetLightRefPoint, &PathObj_GetPosition, &Node_GetComponentMatrix, &func_003CD110,
     &func_003CD090, &func_003CCFF0, &func_0013E060, &func_0015C080,
     &Actor_ApplyContactDamage, &func_0015C0A0, &func_00141850, &Controller_DeathNotice,
 };
@@ -216,7 +216,7 @@ void *D_004DA690[70] = {
     &func_00184630, &func_00184640, &func_00184720, &func_001847F0,
     &func_001848D0, &func_001849B0, &func_0015C010, &func_00184AF0,
     &Actor_GetEyeNode, &func_00184B90, &Actor_GetStance, &Actor_GetTargetSizeFactor,
-    &func_00184BE0, &func_00184BF0, &func_003CD520, &func_003CD4A0,
+    &func_00184BE0, &func_00184BF0, &Node_GetWorldMatrix, &func_003CD4A0,
     &Actor_GetBodyCenter, &Actor_GetPosition, &Actor_GetRootPosition, (void *)0x1b0f30,
     &func_001B0F20, &Actor_GetRootWorldMatrix, &Actor_GetFloorContactPos, &func_001856D0,
     &Actor_HandleCombatEvent, &Bullet_ApplyHit, &Actor_GetLifeState, &Actor_Kill,

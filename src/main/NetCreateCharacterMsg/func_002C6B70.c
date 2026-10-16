@@ -62,7 +62,7 @@ extern Cfg D_0048C0C8;
 extern char D_004AC940[];
 GObj* ObjRegistry_Find(RNode* reg, int* id);
 void func_003FB750(int);
-void func_0040B720(RNode*, GObj*);
+void ActorWorld_RequestRemove(RNode*, GObj*);
 void Object_DeleteLater(float, GObj*);
 float Math_CosThunk(float);
 float Math_SinThunk(float);
@@ -150,7 +150,7 @@ extern "C" void func_002C6B70(Msg* msg, int arg1)
 
     if (Lookup(msg->id.v)) {
         func_003FB750(arg1);
-        func_0040B720(D_004FFD44, Lookup(msg->id.v));
+        ActorWorld_RequestRemove(D_004FFD44, Lookup(msg->id.v));
         Object_DeleteLater(0.1f, Lookup(msg->id.v));
     }
     SetEulerPos(&m, pos.Set(msg->px, msg->py, msg->pz, 1.0f), Ang(msg->rx, msg->ry, msg->rz));

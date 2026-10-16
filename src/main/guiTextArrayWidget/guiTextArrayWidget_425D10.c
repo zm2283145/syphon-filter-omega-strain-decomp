@@ -18,7 +18,7 @@
 #include "guiTextArrayWidget_types.h"
 
 extern void* Gui_GetScreenList(void);
-extern int func_00418420(void* strings, int id);
+extern int GuiFont_Find(void* strings, int id);
 extern TextArrayCell* func_00426590(guiTextArrayWidget* self, int row, int col);
 
 /* Clears flag bit 1 of the addressed cell. */
@@ -35,7 +35,7 @@ void func_00425D50(guiTextArrayWidget* self, int row, int col, int id) {
     TextArrayCell* cell = func_00426590(self, row, col);
 
     if (cell != 0) {
-        cell->text = func_00418420(Gui_GetScreenList(), id);
+        cell->text = GuiFont_Find(Gui_GetScreenList(), id);
         cell->flags |= 2;
     }
 }
@@ -48,7 +48,7 @@ static inline void merge_flush_func_00425D10(void) {}
 #pragma push /* merge_units */
 typedef struct { float x, y, z, w; } Vec4f;
 typedef struct { char pad[0x90]; void* target; char pad2[0xC]; Vec4f color; } Obj;
-extern void func_003D0810(void* target, Vec4f* color);
+extern void TextObj_SetColour(void* target, Vec4f* color);
 
 /* Stores a colour and pushes it to the attached target. */
 void func_00425DB0(Obj* self, Vec4f* color)
@@ -58,7 +58,7 @@ void func_00425DB0(Obj* self, Vec4f* color)
     self->color.z = color->z;
     self->color.w = color->w;
     if (self->target) {
-        func_003D0810(self->target, &self->color);
+        TextObj_SetColour(self->target, &self->color);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */

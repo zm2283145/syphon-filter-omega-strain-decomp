@@ -6,7 +6,7 @@
 
 #include "loose03_types.h"
 
-extern int func_003BB620(TexEntry*);
+extern int Gs_MakeTex1(TexEntry*);
 
 /* Address of the entry's embedded sub-object. */
 void* func_00379700(TexEntry* self) {
@@ -41,7 +41,7 @@ void func_00379780(void) {
 }
 
 int func_00379790(TexRegistry* reg, int index) {
-    return func_003BB620(reg->entries[index]);
+    return Gs_MakeTex1(reg->entries[index]);
 }
 
 void* func_003797B0(TexRegistry* reg, int index) {

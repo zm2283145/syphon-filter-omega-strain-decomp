@@ -33,9 +33,9 @@ char* Loc_LookupText(char*);
 Agent* func_00185C70(int);
 char* AgentData_GetRankText(Agent*);
 char* AgentData_GetName(Agent*);
-void func_0041BEB0(Widget*, char*, int);
-void func_0041F150();
-void func_00421070(Widget*);
+void GuiTextWidget_SetText(Widget*, char*, int);
+void GuiWidget_Init();
+void GuiTextListWidget_Clear(Widget*);
 extern State* D_004FFC04;
 extern int D_00506508;
 extern Screen* D_0051EE10;
@@ -102,7 +102,7 @@ extern "C" void func_002C0790(Screen* arg0) {
     Widget *var_s2_2;
     char *temp_s1;
 
-    func_0041F150();
+    GuiWidget_Init();
     D_0051EE10 = arg0;
     var_s1 = (Widget*)GuiFindAs(arg0, D_004AC4A0, D_004A9BF0);
     if (var_s1 != 0) {
@@ -134,11 +134,11 @@ extern "C" void func_002C0790(Screen* arg0) {
     var_s2 = (Widget*)GuiFindAs(arg0, D_004AC4F8, D_004A7520);
     var_s1_5 = (Widget*)GuiFindAs(arg0, D_004AC508, D_004A7520);
     if (func_00185C70(arg0->unk48)->unkB70 != 0) {
-        func_0041BEB0(var_s2, AgentData_GetName(func_00185C70(arg0->unk48)), 0);
-        func_0041BEB0(var_s1_5, AgentData_GetRankText(func_00185C70(arg0->unk48)), 0);
+        GuiTextWidget_SetText(var_s2, AgentData_GetName(func_00185C70(arg0->unk48)), 0);
+        GuiTextWidget_SetText(var_s1_5, AgentData_GetRankText(func_00185C70(arg0->unk48)), 0);
     } else {
-        func_0041BEB0(var_s2, D_004AC518, 0);
-        func_0041BEB0(var_s1_5, Loc_GetTextById(Loc_FindKeyThunk(D_004AC520) + 1), 0);
+        GuiTextWidget_SetText(var_s2, D_004AC518, 0);
+        GuiTextWidget_SetText(var_s1_5, Loc_GetTextById(Loc_FindKeyThunk(D_004AC520) + 1), 0);
     }
     if (D_004FFC04->unk251 != 0) {
         var_s1_6 = (Widget*)GuiFindAs(arg0, D_004AC340, D_004A9870);
@@ -153,7 +153,7 @@ extern "C" void func_002C0790(Screen* arg0) {
         var_s1_10->unk14 = (unsigned short) (var_s1_10->unk14 & 0xFFFB);
         var_s1_11 = (Widget*)GuiFindAs(arg0, D_004AC330, D_004A9870);
         var_s1_11->unk14 = (unsigned short) (var_s1_11->unk14 & 0xFFFB);
-        func_00421070(arg0->unk94);
+        GuiTextListWidget_Clear(arg0->unk94);
         temp_v1_5 = arg0->unk94;
         temp_v1_5->unk14 = (unsigned short) (temp_v1_5->unk14 & 0xFF7F);
         temp_v1_6 = arg0->unkCC;
@@ -164,12 +164,12 @@ extern "C" void func_002C0790(Screen* arg0) {
     temp_s2 = Loc_LookupText(D_004AC530);
     var_s1_12 = (Widget*)GuiFindAs(arg0, D_004AC540, D_004A7520);
     if ((temp_s2 != 0) && (var_s1_12 != 0)) {
-        func_0041BEB0(var_s1_12, temp_s2, 0);
+        GuiTextWidget_SetText(var_s1_12, temp_s2, 0);
     }
     temp_s1 = Loc_LookupText(D_004AC550);
     var_s2_2 = (Widget*)GuiFindAs(arg0, D_004AC560, D_004A7520);
     if ((temp_s1 != 0) && (var_s2_2 != 0)) {
-        func_0041BEB0(var_s2_2, temp_s1, 0);
+        GuiTextWidget_SetText(var_s2_2, temp_s1, 0);
     }
     var_s1_13 = (Widget*)GuiFindAs(arg0, D_004AC570, D_004A7520);
     arg0->unk958 = var_s1_13;
@@ -190,7 +190,7 @@ extern "C" void func_002C0790(Screen* arg0) {
         } else {
             var_a0 = D_004AC5B0;
         }
-        func_0041BEB0(var_s0, Loc_LookupText(var_a0), 0);
+        GuiTextWidget_SetText(var_s0, Loc_LookupText(var_a0), 0);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -213,7 +213,7 @@ extern int D_00506500;
 void func_00403310(void* p);
 void func_0040F540(void);
 void func_002BDC10(void* p);
-void func_0041F370(void* p, int f);
+void GuiWidget_Destroy(void* p, int f);
 void operator_delete(void* p);
 }
 static inline void Del002C0F00(V002C0F00* o, int line)
@@ -233,7 +233,7 @@ extern "C" O002C0F00* func_002C0F00(O002C0F00* self, short del)
         self->p4C->x2C74 = 0;
         self->p4C->v22(1);
         Del002C0F00(self->p4C, 0x16D);
-        func_0041F370(self, 0);
+        GuiWidget_Destroy(self, 0);
         if (del > 0)
             operator_delete(self);
     }

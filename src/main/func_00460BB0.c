@@ -12,7 +12,7 @@ extern void* D_004FFC04;
 extern char D_004C24E8[];
 extern char D_004C24F8[];
 extern char D_004B88F0[];
-void func_0041F150(S460BB0*);
+void GuiWidget_Init(S460BB0*);
 int func_002C9EE0(void*);
 TraversalWidget* GuiWidget_FindChildByName(void*, const char*);
 void List_Begin(ChildIterator* result, ChildList* list);
@@ -26,7 +26,7 @@ void func_00460BB0(S460BB0* self)
 {
     W460BB0* w;
     ChildNode* node;
-    func_0041F150(self);
+    GuiWidget_Init(self);
     if (func_002C9EE0(D_004FFC04)) {
         TraversalWidget* grp = GuiWidget_FindChildByName(self, D_004C24E8);
         if (grp) {

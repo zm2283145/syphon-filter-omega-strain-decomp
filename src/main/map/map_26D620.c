@@ -29,7 +29,7 @@ struct S_26D620 {
 extern "C" {
 R_26D620* func_00272AC0(int a);
 void func_0026D040(S_26D620* s, float t);
-void func_003E79C0(int h, float t);
+void IeScreen_Update(int h, float t);
 void HudMap_Update(S_26D620* s, float dt);
 }
 void HudMap_Update(S_26D620* s, float dt)
@@ -47,7 +47,7 @@ void HudMap_Update(S_26D620* s, float dt)
         }
     }
     func_0026D040(s, dt);
-    func_003E79C0(s->x8, dt);
+    IeScreen_Update(s->x8, dt);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0026D620(void) {}

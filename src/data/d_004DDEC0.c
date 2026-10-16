@@ -17,9 +17,17 @@ extern void Curve_VirtualNop();
 extern void Event_PackHeader();
 extern void GuiEquipmentModify_Accept();
 extern void GuiEquipmentModify_IsType();
+extern void GuiWidget_Deinit();
+extern void GuiWidget_FocusFirst();
+extern void GuiWidget_FocusLast();
+extern void GuiWidget_FocusNext();
+extern void GuiWidget_FocusPrev();
 extern void Message_GetScriptTypeKey();
 extern void Node_ClearFlag2C();
+extern void Node_GetComponentMatrix();
 extern void Node_GetFlag2C();
+extern void Node_GetLightRefPoint();
+extern void Node_GetWorldMatrix();
 extern void Node_SetFlag2C();
 extern void Object_Activate();
 extern void Object_AttachTransform();
@@ -80,10 +88,7 @@ extern void func_002C53A0();
 extern void func_003CCFF0();
 extern void func_003CD090();
 extern void func_003CD110();
-extern void func_003CD1C0();
-extern void func_003CD420();
 extern void func_003CD4A0();
-extern void func_003CD520();
 extern void func_003CD7A0();
 extern void func_003CD920();
 extern void func_003CDA60();
@@ -96,17 +101,12 @@ extern void func_003CE7D0();
 extern void func_003CE810();
 extern void func_003CE9D0();
 extern void func_003CEA00();
-extern void func_0041D400();
-extern void func_0041D5C0();
-extern void func_0041D780();
-extern void func_0041D8C0();
 extern void func_0041E230();
 extern void func_0041E2B0();
 extern void func_0041E330();
 extern void func_0041EBF0();
 extern void func_0041F070();
 extern void func_0041F080();
-extern void func_0041F090();
 extern void func_0041F210();
 
 void *D_004DDEC0[8] = {
@@ -116,11 +116,11 @@ void *D_004DDEC0[8] = {
 
 void *D_004DDEE0[124] = {
     0, 0, &func_002C0F00, &func_002C0790,
-    &func_0041F090, &func_0041F080, &func_0041F070, &func_002C0780,
+    &GuiWidget_Deinit, &func_0041F080, &func_0041F070, &func_002C0780,
     &func_0041EBF0, &func_0041E330, &func_0041E2B0, &GuiEquipmentModify_Accept,
     &func_002C0380, &func_0041E230, &func_002C03C0, &func_002BD560,
-    &func_0041F210, &func_0041D8C0, &func_0041D780, &func_0041D5C0,
-    &func_0041D400, &func_002BCB10, &GuiEquipmentModify_IsType, 0,
+    &func_0041F210, &GuiWidget_FocusFirst, &GuiWidget_FocusLast, &GuiWidget_FocusNext,
+    &GuiWidget_FocusPrev, &func_002BCB10, &GuiEquipmentModify_IsType, 0,
     0, 0, &func_0017ECD0, &func_00180020,
     0, 0, &Curve_Retarget, &Curve_VirtualNop,
     &Curve_SetVelocity, 0, 0, 0,
@@ -142,8 +142,8 @@ void *D_004DDEE0[124] = {
     &func_003CDD40, &func_003CDC20, &func_003CDBE0, &func_003CDA60,
     &func_003CD920, &func_003CD7A0, &func_0015C010, &func_00153860,
     &Object_GetEye, &func_0015C020, &func_00140E90, &func_0015C030,
-    &func_0015C040, &func_0015C050, &func_003CD520, &func_003CD4A0,
-    &func_003CD420, &PathObj_GetPosition, &func_003CD1C0, &func_003CD110,
+    &func_0015C040, &func_0015C050, &Node_GetWorldMatrix, &func_003CD4A0,
+    &Node_GetLightRefPoint, &PathObj_GetPosition, &Node_GetComponentMatrix, &func_003CD110,
     &func_003CD090, &func_003CCFF0, &func_0013E060, &func_0015C080,
     &Actor_ApplyContactDamage, &func_0015C0A0, &func_00141850, &Controller_DeathNotice,
 };

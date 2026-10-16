@@ -71,7 +71,7 @@ typedef struct GuiWidget43E5D0 {
     List lines;                     /* 0x70 collection header */
 } GuiWidget43E5D0;
 
-/* Widget built by func_0043F910 (vtable D_004E10C0). */
+/* Widget built by GuiSliderWidget_Create (vtable D_004E10C0). */
 typedef struct GuiWidget43F910 {
     GuiWidget base;                 /* 0x00 */
     int unk48;                      /* 0x48 defaults to 1 */
@@ -90,7 +90,7 @@ typedef struct GuiWidget43F910 {
     int unk70;                      /* 0x70 defaults to 10 */
 } GuiWidget43F910;
 
-/* Widget built by func_00456D90 (vtable D_004E1430, base built by GuiObjectives_ctor). */
+/* Widget built by GuiStartMenu_ctor (vtable D_004E1430, base built by GuiObjectives_ctor). */
 typedef struct GuiWidget456D90 {
     void* vtable;                   /* 0x00 */
     char pad04[0x10];

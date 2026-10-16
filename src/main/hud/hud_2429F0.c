@@ -27,7 +27,7 @@ void Game_SetPaused(void* p, int v);
 void func_002427F0(Obj2426* s);
 int Hud_IsGuiFocused(Obj2426* s);
 void Pad_ResetHeldMask(void* p);
-void func_0045CA20(void* p, int v);
+void GuiGameScreen_ToggleWeaponSelect(void* p, int v);
 void func_00437950(int v);
 extern char D_004FFB50[];
 extern char D_0055A300[];
@@ -47,7 +47,7 @@ extern "C" void Hud_OpenPauseMenu(Obj2426* s) {
         void* x = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004A7248, "INGAMENU");
         Gui_GetScreenStack()->s23(x, 0);
     }
-    func_0045CA20(s->snd, 0);
+    GuiGameScreen_ToggleWeaponSelect(s->snd, 0);
     func_00437950(0);
     s->b6A8 = 1;
 }
@@ -93,10 +93,10 @@ void CalloutList_End(It_242B40* out, char* l);
 void func_002426A0(It_242B40* out, It_242B40* in);
 void func_0015AF40(It_242B40* out, It_242B40* in);
 void List_Erase(It_242B40* out, char* l, It_242B40* pos);
-void func_003F45A0(int a, float f);
-void func_003E8DE0(int a, int b);
-void func_003E7EC0(int a, int b);
-void func_003E9770(int a);
+void IeElement_EvaluateAt(int a, float f);
+void IeElement_SetShown(int a, int b);
+void IeElement_SetText(int a, int b);
+void HudTracker_Kill(int a);
 
 static inline void BeginI_(It_242B40* out, char* l) { It_242B40 t; func_00242E30(&t, l); func_002426A0(out, &t); }
 static inline void Begin_(It_242B40* out, char* l) { BeginI_(out, l); }
@@ -132,8 +132,8 @@ int Hud_ClearCallout(char* o, int* key, int id, signed char flag, int send)
         if (it.n->ent->key == *key && id == it.n->ent->id) {
             Ent_242B40* e;
             if (flag) {
-                func_003F45A0(it.n->ent->c, 0.0f);
-                func_003E8DE0(it.n->ent->c, 0);
+                IeElement_EvaluateAt(it.n->ent->c, 0.0f);
+                IeElement_SetShown(it.n->ent->c, 0);
             }
             e = it.n->ent;
             {
@@ -141,9 +141,9 @@ int Hud_ClearCallout(char* o, int* key, int id, signed char flag, int send)
                 D_00533888++;
                 if (e) {
                     if (e->c)
-                        func_003E7EC0(e->c, 0);
+                        IeElement_SetText(e->c, 0);
                     if (e->d)
-                        func_003E9770(e->d);
+                        HudTracker_Kill(e->d);
                 }
                 Mem_Free(0, e, D_004A7210, 0x55F);
                 if (D_00533880) Alloc_Unlock(9);

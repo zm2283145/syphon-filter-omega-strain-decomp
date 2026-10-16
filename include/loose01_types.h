@@ -6,7 +6,7 @@
  * Field names are placeholders (unkXX) unless a function name justifies more.
  */
 
-/* Object whose first word points at a handle; func_003EEBE0(*handle, 0, 1) is used on it. */
+/* Object whose first word points at a handle; IeNode_SetShown(*handle, 0, 1) is used on it. */
 typedef struct HandleHolder {
     int* handle;
 } HandleHolder;

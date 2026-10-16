@@ -90,7 +90,7 @@ List* func_003D1560(List* l) {
 #pragma push /* merge_units */
 static unsigned char D_00493800[] = "abcdefghijklmnopqrstuvwxyz1234567890\nE\b\t -=[]?\\;'?,./";
 static unsigned char D_00493840[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()\nE\b\t _+{}?|:\"?<>?";
-unsigned char func_003D1580(unsigned char c, int flags)
+unsigned char UsbKbd_TranslateKey(unsigned char c, int flags)
 {
     int v = c;
     if (v >= 0x42 || v < 4) return 0;
@@ -103,7 +103,7 @@ unsigned char func_003D1580(unsigned char c, int flags)
 /* merge_units: begin func_003D1610 */
 #pragma push /* merge_units */
 typedef struct { char pad[0x98]; int m98; unsigned short m9C; } T1610;
-unsigned char func_003D1610(T1610* p)
+unsigned char UsbKbd_GetCode(T1610* p)
 {
     unsigned char r = 0;
     if (p->m98) {
@@ -127,7 +127,7 @@ typedef struct { unsigned char m0; unsigned char m1; char pad[0x8E]; char data[8
 extern int sceUsbKbRead(unsigned int no, void* data);
 extern int func_00223360(int mode, int* result);
 extern void func_003D1770(T1660* kb);
-int func_003D1660(T1660* kb, int flag)
+int UsbKbd_Poll(T1660* kb, int flag)
 {
     int v;
     if (kb->m1) {

@@ -9,14 +9,14 @@
 
 /* merge_units: begin func_002535E0 */
 #pragma push /* merge_units */
-extern void* func_003EEB30(void* obj);
-extern int func_003EF010(void* p);
+extern void* IeNode_FindChild(void* obj);
+extern int IeElement_Create(void* p);
 
-/* Resolves obj via func_003EEB30 and forwards to func_003EF010 (0 if none). */
+/* Resolves obj via IeNode_FindChild and forwards to IeElement_Create (0 if none). */
 int PickupMenu_FindElement(void* obj) {
-    void* p = func_003EEB30(obj);
+    void* p = IeNode_FindChild(obj);
     if (p) {
-        return func_003EF010(p);
+        return IeElement_Create(p);
     }
     return 0;
 }

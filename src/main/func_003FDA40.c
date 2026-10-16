@@ -4,7 +4,7 @@ extern void* memset(void* d, int c, unsigned int n);
 extern char* strncpy(char* d, const char* s, unsigned int n);
 extern unsigned int strlen(const char* s);
 extern char String_ToLower(char c);
-__int128 func_003FDA40(const char* s)
+__int128 StringPool_MakeKey(const char* s)
 {
     NA40 r;
     char* p;

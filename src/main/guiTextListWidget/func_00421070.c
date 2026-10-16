@@ -15,12 +15,12 @@ struct Widget {
 };
 
 extern "C" void func_00421F90(int* sub);
-extern "C" void func_00424430(Widget* self, int a, int b);
+extern "C" void GuiArrayWidget_Select(Widget* self, int a, int b);
 
-/* Resets the +0x90 sub-object, calls virtual +0x5C(1, +0x94), then func_00424430(self, 0, 0). */
-extern "C" void func_00421070(Widget* self)
+/* Resets the +0x90 sub-object, calls virtual +0x5C(1, +0x94), then GuiArrayWidget_Select(self, 0, 0). */
+extern "C" void GuiTextListWidget_Clear(Widget* self)
 {
     func_00421F90(&self->sub90);
     self->Method5C(1, self->unk94);
-    func_00424430(self, 0, 0);
+    GuiArrayWidget_Select(self, 0, 0);
 }

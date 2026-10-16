@@ -19,10 +19,10 @@ int func_004651F0(void);
 void func_00437950(int v);
 int func_0042B1A0(int v);
 int func_002CAB70(void* p);
-int func_0045BD00(void* p);
+int GuiGameScreen_IsChooseMenuVisible(void* p);
 void func_00242740(G_464D20* g);
 M_464D20* Gui_GetScreenStack(void);
-void func_00465870(O_464D20* o, float dt);
+void GuiCanvas_CheckControllers(O_464D20* o, float dt);
 
 static inline int IsMine_464D20(void)
 {
@@ -67,7 +67,7 @@ void func_00464D20(O_464D20* o, float dt)
                     func_00437950(0);
                     (*(int*)D_00497BF0) = -1;
                 } else if (!D_004FFC29 && !func_002CAB70(D_004FFC04) && !D_004FFC2C->b6A9 && !D_004FFC2C->b6A8
-                           && !D_004FFC2C->b6AA && !func_0045BD00(D_004FFC2C->f6A4) && !D_004FFC0C->f178) {
+                           && !D_004FFC2C->b6AA && !GuiGameScreen_IsChooseMenuVisible(D_004FFC2C->f6A4) && !D_004FFC0C->f178) {
                     func_00242740(D_004FFC2C);
                 }
             }
@@ -94,5 +94,5 @@ void func_00464D20(O_464D20* o, float dt)
             if (l->n) o->f74 = l->head->obj;
         }
     }
-    func_00465870(o, dt);
+    GuiCanvas_CheckControllers(o, dt);
 }

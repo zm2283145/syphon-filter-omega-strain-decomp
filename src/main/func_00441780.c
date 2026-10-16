@@ -23,7 +23,7 @@ char* Loc_LookupText(char*);
 int FrontEnd_OpenPopup(int, int, char*, char*, void*, int);
 void FrontEnd_ClosePopup(int, int);
 int AgentData_GetSaveSize(int);
-int func_0040D580(Net_441780*, int);
+int MemCard_GetSpaceNeeded(Net_441780*, int);
 int func_0040D690(Net_441780*, char*);
 int func_004422D0(int, char*, char*);
 void GuiSaveAgentWidget_HandleEvent(Obj_441780*);
@@ -47,7 +47,7 @@ extern "C" int func_00441780(Obj_441780* self)
     } else if (!func_004422D0(self->f50, 0, 0)) {
         need = AgentData_GetSaveSize(Agent_GetSelected(D_004FFB50, -1));
     }
-    have = func_0040D580(net, need);
+    have = MemCard_GetSpaceNeeded(net, need);
     lim = net->impl->f5A4;
     if (!net->impl->f59D || !net->impl->f59E) {
         FrontEnd_ClosePopup(D_004FFC04, self->dlg);

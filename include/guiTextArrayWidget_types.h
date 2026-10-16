@@ -47,7 +47,7 @@ typedef struct TextArrayWidgetChild {
     char pad59[7];
 } TextArrayWidgetChild;
 
-/* guiTextArrayWidget (derives from the widget built by func_00424C50). */
+/* guiTextArrayWidget (derives from the widget built by GuiArrayWidget_ctor). */
 typedef struct guiTextArrayWidget {
     void* vtable;                   /* 0x00 */
     char pad04[0x44];

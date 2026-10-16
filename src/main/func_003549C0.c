@@ -5,7 +5,7 @@ extern char* String_CStr(void* str);
 extern void* Gui_GetScreenList(void);
 extern void* Gui_GetScreenStack(void);
 extern int GuiManager_FindOrLoad(void* mgr, char* a, char* b);
-extern void func_0041E0F0(void* self, int a, int b, int c, int d);
+extern void GuiWidget_SendEvent(void* self, int a, int b, int c, int d);
 extern void GuiStack_SwapScreens(void* mgr, void* self, int snd);
 void func_003549C0(S3549C0* o)
 {
@@ -16,7 +16,7 @@ void func_003549C0(S3549C0* o)
         s = GuiManager_FindOrLoad(Gui_GetScreenList(), a, b);
     }
     if (s) {
-        func_0041E0F0(o, s, 0x3000, o->a88, 0);
+        GuiWidget_SendEvent(o, s, 0x3000, o->a88, 0);
         GuiStack_SwapScreens(Gui_GetScreenStack(), o, s);
     }
 }

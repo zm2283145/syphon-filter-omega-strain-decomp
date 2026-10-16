@@ -28,7 +28,7 @@ static inline Word* find45(Word* out, Iter* b, Iter* e, int* v)
     func_0045C9A0(out, e);
     return out;
 }
-void func_0045C760(W45C760* w)
+void GuiGameScreen_GatherWeapons(W45C760* w)
 {
     Slots45* s = D_004FFC0C->g->s;
     int cur;

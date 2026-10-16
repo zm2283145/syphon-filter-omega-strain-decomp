@@ -21,7 +21,7 @@ typedef struct { VT346* vt; char pad[0x88]; W346* w8c; W346* w90; W346* w94; int
 typedef struct { int type; char pad[8]; char name[0x20]; char text[0x20]; } I346;
 typedef struct { int a[4]; } S346;
 extern int DME_GetLobby(void);
-extern void func_0041BEB0(W346*, char*, int);
+extern void GuiTextWidget_SetText(W346*, char*, int);
 extern char* Loc_LookupText(char*);
 extern void String_CtorCStr_13B480(S346*, char*);
 extern void func_003FD740(S346*);
@@ -33,7 +33,7 @@ extern int Gui_GetScreenStack(void);
 extern void GuiScreen_SetFocus(int, int);
 extern char D_004BA338[];
 }
-extern "C" void func_0041E0F0(O346*, W346*, int, int, int);
+extern "C" void GuiWidget_SendEvent(O346*, W346*, int, int, int);
 extern "C" void func_00346FB0(O346* self, I346* info) {
     S346 s;
     char buf[0x80];
@@ -47,15 +47,15 @@ extern "C" void func_00346FB0(O346* self, I346* info) {
     if (info) {
         switch (info->type) {
         case 0: case 1:
-            func_0041BEB0(self->w8c, Loc_LookupText("MB_Decline"), 0);
-            func_0041BEB0(self->w90, Loc_LookupText("MB_Accept"), 0);
+            GuiTextWidget_SetText(self->w8c, Loc_LookupText("MB_Decline"), 0);
+            GuiTextWidget_SetText(self->w90, Loc_LookupText("MB_Accept"), 0);
             mask = ~2;
             self->w8c->flags |= 2;
             self->w90->flags |= 2;
             self->w94->flags &= ~2;
             break;
         default:
-            func_0041BEB0(self->w94, Loc_LookupText("MB_OK"), 0);
+            GuiTextWidget_SetText(self->w94, Loc_LookupText("MB_OK"), 0);
             mask = ~2;
             self->w8c->flags &= ~2;
             self->w90->flags &= ~2;
@@ -64,11 +64,11 @@ extern "C" void func_00346FB0(O346* self, I346* info) {
         }
         if (info->type == 9) {
             sprintf(buf, "[%c%s%c] - %s", 0x11, info->name, 0x10, info->text);
-            func_0041BEB0(self->wa0, buf, 0);
+            GuiTextWidget_SetText(self->wa0, buf, 0);
         } else if (info->type == 10) {
             String_CtorCStr_13B480(&s, info->text);
             func_003FD740(&s);
-            func_0041BEB0(self->wa0, String_CStr(&s), 0);
+            GuiTextWidget_SetText(self->wa0, String_CStr(&s), 0);
             String_Dtor(&s, 0);
         } else {
             int c = -1;
@@ -87,19 +87,19 @@ extern "C" void func_00346FB0(O346* self, I346* info) {
             }
             if (c == -1) t = D_004BA338;
             else t = func_0033CE30(self, (unsigned char)c, info->name, info->text, 0, 0);
-            func_0041BEB0(self->wa0, t, 0);
+            GuiTextWidget_SetText(self->wa0, t, 0);
         }
         self->wa4->flags &= mask;
     } else {
         self->w8c->flags &= ~2;
         self->w90->flags &= ~2;
         self->w94->flags &= ~2;
-        func_0041BEB0(self->wa0, D_004BA338, 0);
+        GuiTextWidget_SetText(self->wa0, D_004BA338, 0);
         self->wa4->flags |= 2;
     }
-    if ((self->w8c->flags & 2) && !b0) func_0041E0F0(self, self->w8c, 6, (int)"onWake", 0);
-    if ((self->w90->flags & 2) && !b1) func_0041E0F0(self, self->w90, 6, (int)"onWake", 0);
-    if ((self->w94->flags & 2) && !b2) func_0041E0F0(self, self->w94, 6, (int)"onWake", 0);
+    if ((self->w8c->flags & 2) && !b0) GuiWidget_SendEvent(self, self->w8c, 6, (int)"onWake", 0);
+    if ((self->w90->flags & 2) && !b1) GuiWidget_SendEvent(self, self->w90, 6, (int)"onWake", 0);
+    if ((self->w94->flags & 2) && !b2) GuiWidget_SendEvent(self, self->w94, 6, (int)"onWake", 0);
     GuiScreen_SetFocus(Gui_GetScreenStack(), 0);
     {
         int r = Gui_GetScreenStack();

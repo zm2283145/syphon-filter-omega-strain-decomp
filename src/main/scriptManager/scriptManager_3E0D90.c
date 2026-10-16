@@ -75,7 +75,7 @@ struct FE:Ft { FE(const Ft& i) { func_003E10B0(this,&i); } };
 static inline FE beginF() { return FE(func_003E10C0(D_00554F20)); }
 static inline FE endF() { return FE(func_003E1090(D_00554F20)); }
 static inline int neqF(const Ft& a,const Ft& b) { return (a.p == b.p)^1; }
-extern "C" Func* func_003E0F50(void* self, char* name, int type) {
+extern "C" Func* Script_FindFunction(void* self, char* name, int type) {
     Ft f=beginF();
     while(neqF(f,endF())) {
         Func* p=*f.p;

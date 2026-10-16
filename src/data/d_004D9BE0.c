@@ -5,8 +5,14 @@ extern void Actor_BasePreLogic();
 extern void Actor_BaseWorldUpdate();
 extern void Actor_VirtualNop();
 extern void Controller_DeathNotice();
+extern void ModelAsset_Draw();
+extern void ModelAsset_Load();
+extern void ModelAsset_SetLocalMatrix();
 extern void Node_ClearFlag2C();
+extern void Node_GetComponentMatrix();
 extern void Node_GetFlag2C();
+extern void Node_GetLightRefPoint();
+extern void Node_GetWorldMatrix();
 extern void Node_SetFlag2C();
 extern void Object_GetAttachedOrSelf();
 extern void Object_GetEye();
@@ -41,20 +47,14 @@ extern void func_0015C090();
 extern void func_0015C0A0();
 extern void func_001747F0();
 extern void func_001748B0();
-extern void func_00394850();
-extern void func_00394AD0();
 extern void func_00394EE0();
 extern void func_00395050();
 extern void func_003951A0();
-extern void func_003951B0();
 extern void func_00395910();
 extern void func_003CCFF0();
 extern void func_003CD090();
 extern void func_003CD110();
-extern void func_003CD1C0();
-extern void func_003CD420();
 extern void func_003CD4A0();
-extern void func_003CD520();
 extern void func_003CD7A0();
 extern void func_003CD920();
 extern void func_003CDA60();
@@ -72,17 +72,17 @@ void *D_004D9BE0[68] = {
     &func_0012ECE0, &Object_GetAttachedOrSelf, &func_0015C090, &func_0012ED00,
     &func_003CE810, &func_003CE7D0, &func_0012ED30, &func_0012ED40,
     &func_0012ED50, &cVUM_GOBJ_v0B, &cVUM_GOBJ_v0C, &func_003CEA00,
-    &func_00395910, &func_003951B0, &func_003951A0, &Actor_BasePreLogic,
-    &Actor_BaseWorldUpdate, &Actor_VirtualNop, &func_00394AD0, &func_00395050,
+    &func_00395910, &ModelAsset_Load, &func_003951A0, &Actor_BasePreLogic,
+    &Actor_BaseWorldUpdate, &Actor_VirtualNop, &ModelAsset_Draw, &func_00395050,
     &func_00394EE0, &Node_SetFlag2C, &Node_ClearFlag2C, &Node_GetFlag2C,
     &func_0015BFB0, &func_0015BFC0, &func_0015BFD0, &func_00148870,
     &func_0015BFF0, &func_0015BFE0, &Terrain_GetBounds, &func_0015C000,
-    &func_00394850, &Player_GetActiveWeapon, &func_003CDDC0, &func_003CDD80,
+    &ModelAsset_SetLocalMatrix, &Player_GetActiveWeapon, &func_003CDDC0, &func_003CDD80,
     &func_003CDD40, &func_003CDC20, &func_003CDBE0, &func_003CDA60,
     &func_003CD920, &func_003CD7A0, &func_001748B0, &func_00153860,
     &Object_GetEye, &func_0015C020, &func_00140E90, &func_0015C030,
-    &func_0015C040, &func_0015C050, &func_003CD520, &func_003CD4A0,
-    &func_003CD420, &PathObj_GetPosition, &func_003CD1C0, &func_003CD110,
+    &func_0015C040, &func_0015C050, &Node_GetWorldMatrix, &func_003CD4A0,
+    &Node_GetLightRefPoint, &PathObj_GetPosition, &Node_GetComponentMatrix, &func_003CD110,
     &func_003CD090, &func_003CCFF0, &func_0013E060, &func_0015C080,
     &Actor_ApplyContactDamage, &func_0015C0A0, &func_00141850, &Controller_DeathNotice,
 };

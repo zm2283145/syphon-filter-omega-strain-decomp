@@ -27,7 +27,7 @@ int Mem_Free();
 extern "C" {
 int String_Dtor(int, int);                            
 int func_0038CC70(int);                               
-int func_0041F090();                                  
+int GuiWidget_Deinit();                                  
 extern unsigned char D_00533880;
 }
 extern "C" void func_0045DE80(char * arg0) {
@@ -36,7 +36,7 @@ extern "C" void func_0045DE80(char * arg0) {
     int temp_s1;
     int temp_s1_2;
 
-    func_0041F090();
+    GuiWidget_Deinit();
     temp_s1 = F_(arg0, 0x48, int);
     {
         AllocGuard g;
@@ -96,29 +96,29 @@ extern char D_004C2268[];
 extern char D_004C2430[]; extern char D_004A7520[]; extern char D_004C1D10[]; extern char D_004AA640[];
 extern char D_004FFB50[];
 extern V4_45DFD0 D_00587CA0; extern V4_45DFD0 D_00587CB0;
-void func_0041F150(O_45DFD0* o);
+void GuiWidget_Init(O_45DFD0* o);
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void* Gui_GetScreenList(void);
-void* func_00418420(void* mgr, char* name);
-T_45DFD0* func_003D0940(void* p, int a, int b, int c, int d, void* e, char* f);
+void* GuiFont_Find(void* mgr, char* name);
+T_45DFD0* TextObj_Construct(void* p, int a, int b, int c, int d, void* e, char* f);
 W_45DFD0* GuiWidget_FindChildByName(void* o, char* name);
 void func_0041C0F0(W_45DFD0* w, int v);
 char* Game_GetPlayerNameSlot(void* p, int id);
-void func_0041BEB0(W_45DFD0* w, char* s, int f);
-void func_0045CC90(O_45DFD0* o);
-void func_0045DFD0(O_45DFD0* o);
+void GuiTextWidget_SetText(W_45DFD0* w, char* s, int f);
+void GuiGameScreen_InitWeaponSelect(O_45DFD0* o);
+void GuiGameScreen_Init(O_45DFD0* o);
 }
 static inline void* Alloc_45DFD0(int n, int line) { AllocGuard g; return Mem_Alloc(0, n, D_004C2290, line); }
 static inline W_45DFD0* Cast_45DFD0(W_45DFD0* w, void* t) { return w && w->IsA(t) ? w : 0; }
 static inline void SetB0_45DFD0(W_45DFD0* w, V4_45DFD0 c) { w->cB0.x = c.x; w->cB0.y = c.y; w->cB0.z = c.z; w->cB0.w = c.w; }
 static inline void SetE0_45DFD0(W_45DFD0* w, V4_45DFD0 c) { w->cE0.x = c.x; w->cE0.y = c.y; w->cE0.z = c.z; w->cE0.w = c.w; }
 
-void func_0045DFD0(O_45DFD0* o)
+void GuiGameScreen_Init(O_45DFD0* o)
 {
     T_45DFD0* t;
-    func_0041F150(o);
+    GuiWidget_Init(o);
     t = (T_45DFD0*)Alloc_45DFD0(0x60, 0x107);
-    if (t) t = func_003D0940(t, 0, 0, 10, 10, func_00418420(Gui_GetScreenList(), "callout"), D_00587D80);
+    if (t) t = TextObj_Construct(t, 0, 0, 10, 10, GuiFont_Find(Gui_GetScreenList(), "callout"), D_00587D80);
     o->f48 = t;
     o->f48->b10 = 2;
     o->f48->b11 = 1;
@@ -139,7 +139,7 @@ void func_0045DFD0(O_45DFD0* o)
     if (o->f114) {
         if (D_005721C8) {
             char* s = Game_GetPlayerNameSlot(D_004FFB50, NetLocalId());
-            func_0041BEB0(o->f114, s ? s : D_004C2268, 0);
+            GuiTextWidget_SetText(o->f114, s ? s : D_004C2268, 0);
             o->f114->flags |= 2;
         } else {
             o->f114->flags &= ~2;
@@ -154,7 +154,7 @@ void func_0045DFD0(O_45DFD0* o)
     o->f6C = GuiWidget_FindChildByName(o, "weaponselect");
     o->fA4 = GuiWidget_FindChildByName(o, "lines_arrows");
     o->fA0 = GuiWidget_FindChildByName(o, "brackets");
-    func_0045CC90(o);
+    GuiGameScreen_InitWeaponSelect(o);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0045DFD0(void) {}

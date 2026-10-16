@@ -22,7 +22,7 @@ extern char D_004A6E38[];
 extern char D_004DBD80[];
 extern char D_004DF860[];
 void cGOBJ_dtor(void* p, int flag);
-void func_003A2BA0(void* p, int flag);
+void ParticleInst_Kill(void* p, int flag);
 void operator_delete(void* p);
 }
 struct E_00236580 { void* a; };
@@ -40,7 +40,7 @@ extern "C" S_00236580* func_00236580(S_00236580* self, short flag)
             E_00236580* e = self->arr[i];
             AllocGuard g;
             if (e) {
-                if (e->a) { void* q = e->a; AllocGuard g2; func_003A2BA0(q, -1); Mem_Free(0, q, "specFxDefs.hh", 0x10A); }
+                if (e->a) { void* q = e->a; AllocGuard g2; ParticleInst_Kill(q, -1); Mem_Free(0, q, "specFxDefs.hh", 0x10A); }
             }
             Mem_Free(0, e, D_004A6E38, 0x1A8);
         }

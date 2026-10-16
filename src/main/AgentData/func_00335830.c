@@ -55,7 +55,7 @@ void awards_SetAwardsAndBonuses(A5830 *agent, int a, int b);
 void func_002888C0(Awd5830 *a);
 void func_002887C0(Awd5830 *a, int f);
 void AgentData_FilterAwards(A5830 *agent, Awd5830 *a);
-void func_00405A60(void *p, Awd5830 *a);
+void Appearance_PatchParts(void *p, Awd5830 *a);
 }
 static inline bool Neq5830(E5830 *a, E5830 *b) { return !(a == b); }
 static inline bool Bit5830(int *bits, int idx)
@@ -135,7 +135,7 @@ extern "C" void AgentData_EndLevel(A5830 *self, unsigned char done)
     func_002888C0(&awd);
     awd.flag = 1;
     AgentData_FilterAwards(self, &awd);
-    func_00405A60(self->p9A4, &awd);
+    Appearance_PatchParts(self->p9A4, &awd);
     func_002887C0(&awd, -1);
 }
 

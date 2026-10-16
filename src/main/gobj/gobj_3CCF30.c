@@ -12,7 +12,7 @@
 extern "C" { void Mem_Free(int pool, void* p, char* file, int line); extern char D_004BD228[]; }
 class C3CCF30 { public: virtual void Destroy(int flags); };
 struct O3CCF30 { char pad[0x58]; C3CCF30* m; };
-extern "C" void func_003CCF30(O3CCF30* self)
+extern "C" void Node_ReleaseComponent58(O3CCF30* self)
 {
     C3CCF30* m = self->m;
     if (m) {
@@ -86,7 +86,7 @@ extern "C" MtxQ4 func_003CD110(OwnerQ4* o, int* flag)
 #pragma push /* merge_units */
 #pragma cplusplus on
 
-extern "C" MtxQ4 func_003CD1C0(OwnerQ4* o)
+extern "C" MtxQ4 Node_GetComponentMatrix(OwnerQ4* o)
 {
     NODE_WORLD_Q4_BODY(o, D_0055C9F0)
 }

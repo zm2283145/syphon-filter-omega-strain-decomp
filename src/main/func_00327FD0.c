@@ -16,14 +16,14 @@ extern char* D_00491550;
 extern char* D_00491558;
 extern char D_004B88F0[];
 extern char D_004A7520[];
-void func_0041F150(S327FD0* self);
+void GuiWidget_Init(S327FD0* self);
 W327FD0* GuiWidget_FindChildByName(S327FD0* a, char* b);
 void func_0041C0F0(W327FD0* w, int a);
 }
 extern "C" void func_00327FD0(S327FD0* self)
 {
     W327FD0* p;
-    func_0041F150(self);
+    GuiWidget_Init(self);
     p = GuiWidget_FindChildByName(self, D_00491548);
     self->w5C = (p && p->IsA(D_004B88F0)) ? p : 0;
     if (self->w5C)

@@ -17,7 +17,7 @@
  */
 
 
-extern int func_00424430(GuiChoiceList* list, int a1, int index);
+extern int GuiArrayWidget_Select(GuiChoiceList* list, int a1, int index);
 
 void func_0045BEB0(GuiGameScreen* self, int value) {
     self->unkEC = value;
@@ -26,7 +26,7 @@ void func_0045BEB0(GuiGameScreen* self, int value) {
 /* Forwards a valid choice index (0 < index < count) to the choice list. */
 void func_0045BEC0(GuiGameScreen* self, int index) {
     if (self->menu != 0 && index > 0 && index < self->choices->count) {
-        func_00424430(self->choices, 0, index);
+        GuiArrayWidget_Select(self->choices, 0, index);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -38,13 +38,13 @@ static inline void merge_flush_func_0045BEB0(void) {}
 #pragma push /* merge_units */
 typedef struct { char pad[0xE0]; int menuActive; void* menu; } cPlayer;
 
-extern void func_0041BEB0(void* menu, const char* title, int flags);
+extern void GuiTextWidget_SetText(void* menu, const char* title, int flags);
 
 /* Sets the title of the player's menu when it is active. */
 void cPlayer_SetMenuTitle(cPlayer* self, const char* title)
 {
     if (self->menuActive)
-        func_0041BEB0(self->menu, title, 0);
+        GuiTextWidget_SetText(self->menu, title, 0);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0045BF10(void) {}

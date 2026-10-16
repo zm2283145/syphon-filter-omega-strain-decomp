@@ -53,8 +53,8 @@ void FrontEnd_DrawGui(struct ObjCC260*);
 void FrontEnd_UpdateGui(struct ObjCC260*);
 void Pad_Reset(void*);
 void* Gui_GetScreenStack(void);
-void func_00415870(void*);
-void func_0041DF00(void*, int, int, int);
+void GuiCanvas_UpdatePads(void*);
+void GuiWidget_BroadcastEvent(void*, int, int, int);
 
 void func_002CC260(int arg0, int arg1)
 {
@@ -71,14 +71,14 @@ void func_002CC260(int arg0, int arg1)
         }
     } else if (arg0 == 1) {
         Pad_Reset(D_0055A300);
-        func_00415870(Gui_GetScreenStack());
+        GuiCanvas_UpdatePads(Gui_GetScreenStack());
         if (D_004FFC04->b310 == 0) {
             FrontEnd_UpdateGui(D_004FFC04);
             FrontEnd_DrawGui(D_004FFC04);
         }
     } else if (arg0 == 2) {
         if (arg1 == 2) {
-            func_0041DF00(Gui_GetScreenStack(), 0x2001, 0, 0);
+            GuiWidget_BroadcastEvent(Gui_GetScreenStack(), 0x2001, 0, 0);
             if (D_004FFC04->b310 == 0) {
                 for (i = 0; i < 3; i++) {
                     FrontEnd_UpdateGui(D_004FFC04);
@@ -87,7 +87,7 @@ void func_002CC260(int arg0, int arg1)
             }
         }
     } else if (arg0 == 3) {
-        func_0041DF00(Gui_GetScreenStack(), 0x2002, arg1, 0);
+        GuiWidget_BroadcastEvent(Gui_GetScreenStack(), 0x2002, arg1, 0);
     }
     D_0051EEB0 = 0;
 }

@@ -57,8 +57,8 @@ void func_00128F58(char* d, char* s);
 void func_0036E5D0(MC_File* f);
 void FileMan_Release(void* f, int del);
 void func_0036E140(MC_File* f, char* name, int a, int b);
-void* func_003EBA50(void);
-void func_003EAA60(void* m, MC_File* f, int a);
+void* Fstream_GetLoader(void);
+void Fstream_ReleaseNoCallback(void* m, MC_File* f, int a);
 void func_003813A0(int lib, int h, int keep);
 void operator_delete(void* p);
 MC_State* func_00404FD0(MC_State* s, short del);
@@ -82,13 +82,13 @@ MC_State* func_00404FD0(MC_State* s, short del)
                 if (h != l[-1].h && h != 0) {
                     name[14] = j + '0';
                     func_0036E140(&fm, name, 0, 0);
-                    func_003EAA60(func_003EBA50(), &fm, 1);
+                    Fstream_ReleaseNoCallback(Fstream_GetLoader(), &fm, 1);
                 }
             }
             if (s->lods[i][0].h) {
                 name[14] = '0';
                 func_0036E140(&fm, name, 0, 0);
-                func_003EAA60(func_003EBA50(), &fm, 1);
+                Fstream_ReleaseNoCallback(Fstream_GetLoader(), &fm, 1);
             }
         }
         ckc_qzero(s->names, 0x300);

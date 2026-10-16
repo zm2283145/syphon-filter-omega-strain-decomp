@@ -74,14 +74,14 @@ extern char D_004D9280[];
 extern char D_004DBE90[];
 extern signed char D_0048AD80;
 extern void SpecFx_Construct(Fx2324A0* self);
-extern FxObj2324A0* func_003EC9F0(int size);
+extern FxObj2324A0* EffectComponent_Alloc(int size);
 extern void EffectService_Schedule(Fx2324A0* self, FxObj2324A0* obj, float x, float y);
 
 Fx2324A0* SpawnerEffect_Ctor(Fx2324A0* self, FxDesc2324A0* d) {
     SpecFx_Construct(self);
     self->vt = D_004DBB00;
     if (d->id >= 0) {
-        FxObj2324A0* o = func_003EC9F0(0x50);
+        FxObj2324A0* o = EffectComponent_Alloc(0x50);
         if (o != 0) {
             Mtx2324A0* src = d->m;
             Mtx2324A0* dst;

@@ -17,13 +17,13 @@ int Mem_Free();
 /* merge_units: begin func_003BC520 */
 #pragma push /* merge_units */
 typedef struct { char pad[0x68]; int count; void* items[1]; } G4_Act;
-extern void func_003BCB90(void* a);
+extern void SkyLayer_Update(void* a);
 extern void Actor_BaseLogicUpdate(G4_Act* a, float dt);
-void func_003BC520(G4_Act* a, float dt)
+void Skybox_Update(G4_Act* a, float dt)
 {
     int i;
     for (i = 0; i < a->count; i++) {
-        func_003BCB90(a->items[i]);
+        SkyLayer_Update(a->items[i]);
     }
     Actor_BaseLogicUpdate(a, dt);
 }

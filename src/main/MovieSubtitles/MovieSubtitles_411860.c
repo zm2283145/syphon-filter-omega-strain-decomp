@@ -85,7 +85,7 @@ extern "C" {
 extern TexMgr_18E0* D_00539248;
 extern char D_004BEF10[];
 extern char D_004BEF20[];
-extern u64_18E0* func_003BB620(TexEnt_18E0* e);
+extern u64_18E0* Gs_MakeTex1(TexEnt_18E0* e);
 extern void func_00411600(Font_18E0* f, const char* s, const char* end, float* w, float* h);
 extern u64_18E0* func_00410E50(Font_18E0* f, u64_18E0* pkt, float x, const char* s, float y, Vec_18E0* color, void* p, const char* end);
 extern float Math_FMod(float a, float b);
@@ -105,7 +105,7 @@ extern "C" void func_004118E0(Sub_18E0* self)
         self->pkt++;
         *self->pkt++ = D_00539248->ents[self->font->tex]->tex0;
         *self->pkt++ = 6;
-        *self->pkt++ = *func_003BB620(D_00539248->ents[self->font->tex]);
+        *self->pkt++ = *Gs_MakeTex1(D_00539248->ents[self->font->tex]);
         *self->pkt++ = 0x14;
         *self->pkt++ = 0x44;
         *self->pkt++ = 0x42;

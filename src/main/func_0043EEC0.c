@@ -7,6 +7,6 @@
 #include "types.h"
 
 
-char* func_0043EEC0(void) {
+char* GuiSliderWidget_ctor(void) {
     return "GuiSliderWidget";
 }

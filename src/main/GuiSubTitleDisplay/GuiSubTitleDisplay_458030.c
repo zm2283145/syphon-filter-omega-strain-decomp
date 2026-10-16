@@ -29,7 +29,7 @@ typedef struct S458030 {
 
 static inline float* End458030(S458030* s) { return s->arr + s->n; }
 
-int func_00458030(S458030* s)
+int GuiSubTitleDisplay_Hide(S458030* s)
 {
     return s->n == 0 || End458030(s)[-1] < s->t;
 }
@@ -48,7 +48,7 @@ void* String_Dtor(void* self, short flags);
 void func_0041EBF0(void* self);
 }
 struct O348AD0 { char pad[0x48]; char* aA0; int aA4; };
-extern "C" void func_00458080(O348AD0* o)
+extern "C" void GuiSubTitleDisplay_OnSleep(O348AD0* o)
 {
     char* p;
     func_0041EBF0(o);
@@ -78,22 +78,22 @@ typedef struct { char pad[0x3C]; float f3c; float f40; char pad2[4]; C458* f48; 
 extern "C" {
 extern void func_0041EFA0(W458*);
 extern int Gui_GetScreenList(void);
-extern int func_00418420(int, char*);
+extern int GuiFont_Find(int, char*);
 extern void* Mem_Alloc(int, int, char*, int);
 extern char D_004C1EB0[];
 extern char D_00587D70[];
-extern C458* func_003D0940(void*, int, int, int, int, int, char*);
+extern C458* TextObj_Construct(void*, int, int, int, int, int, char*);
 extern int Font_GetLineHeight(int);
 }
-extern "C" void func_00458140(W458* w) {
+extern "C" void GuiSubTitleDisplay_OnWake(W458* w) {
     C458* obj;
     func_0041EFA0(w);
-    w->f4c = func_00418420(Gui_GetScreenList(), "callout");
+    w->f4c = GuiFont_Find(Gui_GetScreenList(), "callout");
     {
         AllocGuard g;
         obj = (C458*)Mem_Alloc(0, 0x60, D_004C1EB0, 0x154);
     }
-    if (obj) obj = func_003D0940(obj, 0, 0, (int)w->f3c, (int)w->f40, w->f4c, D_00587D70);
+    if (obj) obj = TextObj_Construct(obj, 0, 0, (int)w->f3c, (int)w->f40, w->f4c, D_00587D70);
     w->f48 = obj;
     w->f48->b10 = 0;
     w->f48->b58 = 1;

@@ -9,7 +9,7 @@ extern char func_003A6240[];
 extern void ScalarCollection_Init(void* p);
 extern void __register_global_object(void* obj, void* dtor, void* link);
 extern int Random_Next(void);
-void func_004D54C0(void)
+void StaticInit_ParticleRandomTable(void)
 {
     int i;
     ScalarCollection_Init(D_0053B544);

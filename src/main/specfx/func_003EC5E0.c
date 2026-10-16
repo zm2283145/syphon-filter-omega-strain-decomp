@@ -16,7 +16,7 @@ void func_003EC6B0(NC5E0** out, int* in);
 void func_003EC6A0(int* out, void* list);
 void func_003EC690(NC5E0** out, int* in);
 }
-extern "C" void func_003EC5E0(void* self)
+extern "C" void Effect_Draw(void* self)
 {
     NC5E0* e;
     NC5E0* it;

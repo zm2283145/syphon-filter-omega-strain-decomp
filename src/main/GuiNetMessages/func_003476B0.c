@@ -18,7 +18,7 @@ W3476B0* GuiWidget_FindChildByName(void* self, char* name);
 void* Agent_GetSelected(void* list, int idx);
 char* AgentData_GetName(void* ag);
 char* AgentData_GetRankText(void* ag);
-void func_0041BEB0(W3476B0* w, char* text, int flags);
+void GuiTextWidget_SetText(W3476B0* w, char* text, int flags);
 void func_003476B0(S3476B0* o);
 }
 static inline W3476B0* cast3476B0(W3476B0* w)
@@ -30,9 +30,9 @@ void func_003476B0(S3476B0* o)
     W3476B0* w;
     if (o->a80) return;
     w = cast3476B0(GuiWidget_FindChildByName(o, (*(char**)dat_00492B88)));
-    if (w) func_0041BEB0(w, AgentData_GetName(Agent_GetSelected(D_004FFB50, -1)), 0);
+    if (w) GuiTextWidget_SetText(w, AgentData_GetName(Agent_GetSelected(D_004FFB50, -1)), 0);
     w = cast3476B0(GuiWidget_FindChildByName(o, (*(char**)dat_00492B90)));
-    if (w) func_0041BEB0(w, AgentData_GetRankText(Agent_GetSelected(D_004FFB50, -1)), 0);
+    if (w) GuiTextWidget_SetText(w, AgentData_GetRankText(Agent_GetSelected(D_004FFB50, -1)), 0);
     o->a78 = 1;
     o->a80 = 1;
 }

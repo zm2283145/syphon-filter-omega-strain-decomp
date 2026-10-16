@@ -7,7 +7,7 @@
 #include "types.h"
 #include "loose04_types.h"
 
-void func_003ED240(Unk3ED240* self) {
+void IeDraw_SetPerspective(Unk3ED240* self) {
     self->unk106 = 1;
     self->unk104 = 0;
 }

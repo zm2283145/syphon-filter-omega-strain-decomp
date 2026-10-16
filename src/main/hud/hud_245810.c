@@ -74,9 +74,9 @@ void ActiveList_EraseMatching(void* list, Pred_2458E0 p);
 void func_00242E30(It_2458E0* out, char* l);
 void CalloutList_End(It_2458E0* out, char* l);
 void func_002426A0(It_2458E0* out, It_2458E0* in);
-void func_003E7EC0(int a, int b);
-void func_003E9770(int a);
-void func_003E8EB0(int a);
+void IeElement_SetText(int a, int b);
+void HudTracker_Kill(int a);
+void IeElement_Release(int a);
 void Interface_Dtor(void* p, int f);
 void FrontEnd_TeardownGui(int a);
 void func_00245D80(void* p, int f);
@@ -94,7 +94,7 @@ static inline void BeginI_(It_2458E0* out, char* l) { It_2458E0 t; func_00242E30
 static inline void EndI_(It_2458E0* out, char* l) { It_2458E0 t; CalloutList_End(&t, l); func_002426A0(out, &t); }
 static inline void Begin_(It_2458E0* out, char* l) { BeginI_(out, l); }
 static inline void End_(It_2458E0* out, char* l) { EndI_(out, l); }
-static inline void DelEnt_(Ent_2458E0* e) { AllocGuard g; if (e) { if (e->c) func_003E7EC0(e->c, 0); if (e->d) func_003E9770(e->d); } Mem_Free(0, e, D_004A7210, 0x1A9); }
+static inline void DelEnt_(Ent_2458E0* e) { AllocGuard g; if (e) { if (e->c) IeElement_SetText(e->c, 0); if (e->d) HudTracker_Kill(e->d); } Mem_Free(0, e, D_004A7210, 0x1A9); }
 static inline void DelV_(V6A0_2458E0* v) { AllocGuard g; v->Destroy(-1); Mem_Free(0, v, D_004A7210, 0x1B7); }
 static inline void Del54_(void* p) { AllocGuard g; Interface_Dtor(p, -1); Mem_Free(0, p, D_004A7210, 0x1B9); }
 extern "C" Self_2458E0* func_002458E0(Self_2458E0* self, short flag)
@@ -114,7 +114,7 @@ extern "C" Self_2458E0* func_002458E0(Self_2458E0* self, short flag)
             DelEnt_(e);
         }
         if (!self->x64 && self->x68)
-            func_003E8EB0(self->x68);
+            IeElement_Release(self->x68);
         if (self->x6A0) {
             DelV_(self->x6A0);
         }

@@ -76,7 +76,7 @@ struct Mgr2400 {
     unsigned char b69;
 };
 
-extern "C" void func_003A2400(Mgr2400* mgr, Pos* p, void* a, float dt)
+extern "C" void ParticleInst_Update(Mgr2400* mgr, Pos* p, void* a, float dt)
 {
     Node2400* n;
     Node2400* nx;

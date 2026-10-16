@@ -62,11 +62,11 @@ extern void func_0021BE60();
 extern void func_003CCFF0();
 extern void func_003CD090();
 extern void func_003CD110();
-extern void func_003CD1C0();
+extern void Node_GetComponentMatrix();
 extern void PathObj_GetPosition();
-extern void func_003CD420();
+extern void Node_GetLightRefPoint();
 extern void func_003CD4A0();
-extern void func_003CD520();
+extern void Node_GetWorldMatrix();
 extern void func_003CD7A0();
 extern void func_003CD920();
 extern void func_003CDA60();
@@ -79,7 +79,7 @@ extern void Player_GetActiveWeapon();
 extern void func_003CE9E0();
 extern void func_003CE9F0();
 extern void func_003CEA00();
-void * const D_004DB3A0[72] = { (void*)0x0, (void*)0x0, (void*)func_0021BE60, (void*)cGameGOBJ_Receive, (void*)func_0012ECE0, (void*)Object_GetAttachedOrSelf, (void*)func_0021BE50, (void*)func_0012ED00, (void*)func_0021AB60, (void*)func_0021AB00, (void*)func_0021BD70, (void*)func_0021BD80, (void*)func_0012ED50, (void*)cGameGOBJ_v0B, (void*)cGameGOBJ_v0C, (void*)func_003CEA00, (void*)func_003CE9F0, (void*)func_003CE9E0, (void*)func_00219EA0, (void*)func_00219E90, (void*)Actor_BaseWorldUpdate, (void*)Actor_VirtualNop, (void*)func_00219E10, (void*)func_0021AC20, (void*)func_0021ABC0, (void*)cGameGOBJ_Enable, (void*)cGameGOBJ_Disable, (void*)Node_GetFlag2C, (void*)func_0015BFB0, (void*)func_0015BFC0, (void*)func_0015BFD0, (void*)func_00148870, (void*)func_0015BFF0, (void*)func_0015BFE0, (void*)cGameGOBJ_GetBounds, (void*)func_0015C000, (void*)Object_AttachTransform, (void*)Player_GetActiveWeapon, (void*)func_003CDDC0, (void*)func_003CDD80, (void*)func_003CDD40, (void*)func_003CDC20, (void*)func_003CDBE0, (void*)func_003CDA60, (void*)func_003CD920, (void*)func_003CD7A0, (void*)cGameGOBJ_GetModelCol, (void*)func_00153860, (void*)Object_GetEye, (void*)func_002152D0, (void*)func_00140E90, (void*)func_0015C030, (void*)func_0015C040, (void*)func_0015C050, (void*)func_003CD520, (void*)func_003CD4A0, (void*)func_003CD420, (void*)PathObj_GetPosition, (void*)func_003CD1C0, (void*)func_003CD110, (void*)func_003CD090, (void*)func_003CCFF0, (void*)func_0013E060, (void*)func_0015C080, (void*)Actor_ApplyContactDamage, (void*)func_0015C0A0, (void*)func_00141850, (void*)Controller_DeathNotice, (void*)func_00216C50, (void*)0x0, (void*)0x0, (void*)0x0 };
+void * const D_004DB3A0[72] = { (void*)0x0, (void*)0x0, (void*)func_0021BE60, (void*)cGameGOBJ_Receive, (void*)func_0012ECE0, (void*)Object_GetAttachedOrSelf, (void*)func_0021BE50, (void*)func_0012ED00, (void*)func_0021AB60, (void*)func_0021AB00, (void*)func_0021BD70, (void*)func_0021BD80, (void*)func_0012ED50, (void*)cGameGOBJ_v0B, (void*)cGameGOBJ_v0C, (void*)func_003CEA00, (void*)func_003CE9F0, (void*)func_003CE9E0, (void*)func_00219EA0, (void*)func_00219E90, (void*)Actor_BaseWorldUpdate, (void*)Actor_VirtualNop, (void*)func_00219E10, (void*)func_0021AC20, (void*)func_0021ABC0, (void*)cGameGOBJ_Enable, (void*)cGameGOBJ_Disable, (void*)Node_GetFlag2C, (void*)func_0015BFB0, (void*)func_0015BFC0, (void*)func_0015BFD0, (void*)func_00148870, (void*)func_0015BFF0, (void*)func_0015BFE0, (void*)cGameGOBJ_GetBounds, (void*)func_0015C000, (void*)Object_AttachTransform, (void*)Player_GetActiveWeapon, (void*)func_003CDDC0, (void*)func_003CDD80, (void*)func_003CDD40, (void*)func_003CDC20, (void*)func_003CDBE0, (void*)func_003CDA60, (void*)func_003CD920, (void*)func_003CD7A0, (void*)cGameGOBJ_GetModelCol, (void*)func_00153860, (void*)Object_GetEye, (void*)func_002152D0, (void*)func_00140E90, (void*)func_0015C030, (void*)func_0015C040, (void*)func_0015C050, (void*)Node_GetWorldMatrix, (void*)func_003CD4A0, (void*)Node_GetLightRefPoint, (void*)PathObj_GetPosition, (void*)Node_GetComponentMatrix, (void*)func_003CD110, (void*)func_003CD090, (void*)func_003CCFF0, (void*)func_0013E060, (void*)func_0015C080, (void*)Actor_ApplyContactDamage, (void*)func_0015C0A0, (void*)func_00141850, (void*)Controller_DeathNotice, (void*)func_00216C50, (void*)0x0, (void*)0x0, (void*)0x0 };
 Obj0021A070* cGameGOBJ_CtorKind6(Obj0021A070* self, void* a1, void* a2)
 {
     cGameGOBJ_ctor(self, a1, a2, 6);

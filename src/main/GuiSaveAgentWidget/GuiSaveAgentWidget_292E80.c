@@ -42,7 +42,7 @@ extern "C" {
     int FrontEnd_OpenPopup(void*,int,const char*,const char*,void*,int);
     void FrontEnd_ClosePopup(void*,int);
     char*Loc_LookupText(const char*);
-    void func_0041BEB0(void*,const char*,int);
+    void GuiTextWidget_SetText(void*,const char*,int);
     void func_00293650();
     extern char D_0055A830[];
     extern void(*D_0055A838)();
@@ -119,7 +119,7 @@ extern "C" void AgentOpen_BuildSlotList(GuiSaveAgentWidget*self) {
         if(w) {
             valid=0;
             if(AO_DATA(slots)[i]&&AgentFile_DecodeName(AO_DATA(slots)[i],label,&unused,16)) {
-                func_0041BEB0(w,label,0);
+                GuiTextWidget_SetText(w,label,0);
                 unsigned short flags=*(volatile unsigned short*)&w->flags;
                 haveSlot=1;
                 valid=haveSlot;
@@ -127,7 +127,7 @@ extern "C" void AgentOpen_BuildSlotList(GuiSaveAgentWidget*self) {
             }
             if(!valid) {
                 if(!self->unk7C&&w==focus)clearFocus=1;
-                func_0041BEB0(w,Loc_LookupText(D_004A9DB8),0);
+                GuiTextWidget_SetText(w,Loc_LookupText(D_004A9DB8),0);
                 if(self->unk7C)w->flags|=4;
                 else w->flags&=0xfffb;
             }
@@ -210,14 +210,14 @@ extern void AgentOpen_BuildSlotList(S293660*);
 #endif /* merge_units */
 #define AgentOpen_BuildSlotList(a0) ((void)AgentOpen_BuildSlotList((GuiSaveAgentWidget *)(a0))) /* merge_units */
 
-extern void func_0041E3B0(S293660*, float);
+extern void GuiWidget_Update(S293660*, float);
 void GuiAgentLoad_Update(S293660* s, float dt) {
     s->t += dt;
     if (!(s->t <= 1.0f)) {
         AgentOpen_BuildSlotList(s);
         s->t -= 1.0f;
     }
-    func_0041E3B0(s, dt);
+    GuiWidget_Update(s, dt);
 }
 #undef AgentOpen_BuildSlotList /* merge_units */
 #pragma pop /* merge_units */

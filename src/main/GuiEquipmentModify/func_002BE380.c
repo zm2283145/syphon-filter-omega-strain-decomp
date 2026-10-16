@@ -26,7 +26,7 @@ void * const D_0048C0A8[2] = { (void*)D_004AC280, (void*)0x0 };
 Wpn_002BE380* WeaponDb_Get(int db, int id);
 void* GuiWidget_FindChildByName(void* self, char* name);
 char* Loc_LookupText(char* key);
-void func_0041BEB0(W_002BE380* w, char* s, int a);
+void GuiTextWidget_SetText(W_002BE380* w, char* s, int a);
 void* func_002C9020(void* p);
 void* func_002C8FD0(void* p);
 void func_002C8EC0(void* p, char* buf, int n);
@@ -43,7 +43,7 @@ static inline void Clear_002BE380(void* self, char* name)
 {
     W_002BE380* w = FindAs_002BE380(self, name, D_004A7520);
     if (w)
-        func_0041BEB0(w, D_004AC388, 0);
+        GuiTextWidget_SetText(w, D_004AC388, 0);
 }
 extern "C" void func_002BE380(S_002BE380* self)
 {
@@ -54,16 +54,16 @@ extern "C" void func_002BE380(S_002BE380* self)
         char* t = Loc_LookupText(wp->name);
         int n;
         if (w && t)
-            func_0041BEB0(w, t, 0);
+            GuiTextWidget_SetText(w, t, 0);
         else if (w)
-            func_0041BEB0(w, wp->name, 0);
+            GuiTextWidget_SetText(w, wp->name, 0);
         w = FindAs_002BE380(self, D_004AC410, D_004A7520);
         if (wp->p60)
             func_002C8EC0(func_002C9020(wp->p60), buf, 0x20);
         else
             String_Copy(buf, (*(char**)D_0048C0A8));
         if (w)
-            func_0041BEB0(w, buf, 0);
+            GuiTextWidget_SetText(w, buf, 0);
         w = FindAs_002BE380(self, D_004AC420, D_004A7520);
         if (wp->bBC == 7 && !wp->p64)
             sprintf(buf, D_004AC468, Loc_LookupText(D_004AC470));
@@ -72,14 +72,14 @@ extern "C" void func_002BE380(S_002BE380* self)
         else
             String_Copy(buf, (*(char**)D_0048C0A8));
         if (w)
-            func_0041BEB0(w, buf, 0);
+            GuiTextWidget_SetText(w, buf, 0);
         w = FindAs_002BE380(self, D_004AC430, D_004A7520);
         if (wp->f70)
             sprintf(buf, D_004AC480, wp->f70);
         else
             String_Copy(buf, (*(char**)D_0048C0A8));
         if (w)
-            func_0041BEB0(w, buf, 0);
+            GuiTextWidget_SetText(w, buf, 0);
         w = FindAs_002BE380(self, D_004AC450, D_004A7520);
         n = wp->f70 * WeaponInv_ClipsForActor(self->p48, wp->f74);
         if (n)
@@ -87,7 +87,7 @@ extern "C" void func_002BE380(S_002BE380* self)
         else
             String_Copy(buf, (*(char**)D_0048C0A8));
         if (w)
-            func_0041BEB0(w, buf, 0);
+            GuiTextWidget_SetText(w, buf, 0);
     } else {
         Clear_002BE380(self, D_004AC3F0);
         Clear_002BE380(self, D_004AC410);

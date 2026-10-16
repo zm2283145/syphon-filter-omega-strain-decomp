@@ -7,7 +7,7 @@
 #include "interface_manager_types.h"
 
 /* unk0C of slot `index`, or 0 when the index is out of range. */
-int func_00413370(IfManager* mgr, int index) {
+int GuiManager_ResolveInterface(IfManager* mgr, int index) {
     int inRange = index < IFMGR_SLOT_COUNT; /* computed before the sign test (matches) */
 
     if (index < 0 || !inRange) {

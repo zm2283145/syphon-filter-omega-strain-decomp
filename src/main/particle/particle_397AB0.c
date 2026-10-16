@@ -25,7 +25,7 @@ public:
     float f60;
     float f64;
 };
-extern "C" bool func_00397AB0(O397AB0* o, float x) {
+extern "C" bool ParticleEmitter_IsDead(O397AB0* o, float x) {
     return !o->get()->f8F4 && (x - o->f64 > o->f60);
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -44,8 +44,8 @@ typedef struct { char pad[0x1C]; unsigned char loaded; } S397B20;
 extern void func_0036E5D0(void*);
 extern void FileMan_Release(void*, int);
 extern void Hog_Register(void*, char*, int, int);
-extern void func_003A58E0(S397B20*, void*);
-extern int func_003A35C0(void*, char*);
+extern void ParticleLib_LoadPar(S397B20*, void*);
+extern int ParticleLib_FindId(void*, char*);
 extern void func_00136DA0(int* g);
 extern void func_0012F530(int* g, int del);
 extern void func_00397EA0(E397B20*, int);
@@ -62,7 +62,7 @@ extern int D_0053B5B0;
 extern int D_0053B5B8;
 extern L397B20* D_0053BB58;
 
-void func_00397B20(S397B20* self, int arg1)
+void ParticleLib_ResolveRequests(S397B20* self, int arg1)
 {
     char buf[0xA0];
     int i;
@@ -72,8 +72,8 @@ void func_00397B20(S397B20* self, int arg1)
         int id;
         int j;
         Hog_Register(buf, e->name, arg1, 0);
-        func_003A58E0(self, buf);
-        id = func_003A35C0(D_0053B540, e->name);
+        ParticleLib_LoadPar(self, buf);
+        id = ParticleLib_FindId(D_0053B540, e->name);
         if (strcmp(e->name, D_004BC5E0) == 0) {
             D_0053B5A0 = id;
         } else if (strcmp(e->name, D_004BC600) == 0) {

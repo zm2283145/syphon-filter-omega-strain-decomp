@@ -51,7 +51,7 @@ extern char *func_0033CE30(O *o, unsigned char a, char *b, char *c, int d, int e
 extern int FrontEnd_OpenPopup(void *ui, int a, char *b, char *c, void *d, int e);
 extern int func_00449770(void *p);
 extern void FrontEnd_ClosePopup(void *ui, int id);
-extern int func_00441CA0(O *o, void *snd, unsigned short msg, int param, int extra);
+extern int GuiSaveAgentWidget_OnEvent(O *o, void *snd, unsigned short msg, int param, int extra);
 
 int GuiScreen_HandleEvent(O *o, void *snd, unsigned short msg, int param, int extra)
 {
@@ -72,7 +72,7 @@ int GuiScreen_HandleEvent(O *o, void *snd, unsigned short msg, int param, int ex
         }
         return 1;
     }
-    return func_00441CA0(o, snd, msg, param, extra);
+    return GuiSaveAgentWidget_OnEvent(o, snd, msg, param, extra);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0033CF90(void) {}

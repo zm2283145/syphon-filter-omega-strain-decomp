@@ -16,17 +16,17 @@ extern void func_0033E5B0();
 extern void func_0033EE40();
 extern void func_0033F050();
 extern void func_0033F110();
-extern void func_0041D400();
-extern void func_0041D5C0();
-extern void func_0041D780();
-extern void func_0041D8C0();
+extern void GuiWidget_FocusPrev();
+extern void GuiWidget_FocusNext();
+extern void GuiWidget_FocusLast();
+extern void GuiWidget_FocusFirst();
 extern void func_0041E230();
 extern void func_0041E2B0();
 extern void func_0041E330();
-extern void func_0041E470();
+extern void GuiWidget_Draw();
 extern void func_0041F070();
 extern void func_0041F080();
-extern void func_0041F090();
+extern void GuiWidget_Deinit();
 extern void func_0041F210();
 extern void * const D_004DDD40[];
 extern char D_004DE8A0[];
@@ -58,4 +58,4 @@ O2AEF40* func_002AEF40(O2AEF40* self, short del)
     }
     return self;
 }
-void * const D_004DDD40[32] = { (void*)0x0, (void*)0x0, (void*)func_002AEF40, (void*)func_002AFDC0, (void*)func_0041F090, (void*)func_0041F080, (void*)func_0041F070, (void*)func_0033F110, (void*)func_0033F050, (void*)func_0041E330, (void*)func_0041E2B0, (void*)func_0033DA00, (void*)func_0041E470, (void*)func_0041E230, (void*)func_002AF2A0, (void*)func_002AF310, (void*)func_0041F210, (void*)func_0041D8C0, (void*)func_0041D780, (void*)func_0041D5C0, (void*)func_0041D400, (void*)func_002AF000, (void*)func_002AF010, (void*)func_00293890, (void*)func_002AF040, (void*)func_002AFA80, (void*)func_002AFA20, (void*)func_0033EE40, (void*)func_0033E410, (void*)func_0033E5B0, (void*)func_002AF190, (void*)0x0 };
+void * const D_004DDD40[32] = { (void*)0x0, (void*)0x0, (void*)func_002AEF40, (void*)func_002AFDC0, (void*)GuiWidget_Deinit, (void*)func_0041F080, (void*)func_0041F070, (void*)func_0033F110, (void*)func_0033F050, (void*)func_0041E330, (void*)func_0041E2B0, (void*)func_0033DA00, (void*)GuiWidget_Draw, (void*)func_0041E230, (void*)func_002AF2A0, (void*)func_002AF310, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)func_002AF000, (void*)func_002AF010, (void*)func_00293890, (void*)func_002AF040, (void*)func_002AFA80, (void*)func_002AFA20, (void*)func_0033EE40, (void*)func_0033E410, (void*)func_0033E5B0, (void*)func_002AF190, (void*)0x0 };

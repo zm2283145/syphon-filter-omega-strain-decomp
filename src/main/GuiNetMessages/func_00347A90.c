@@ -10,7 +10,7 @@ public:
 };
 extern "C" {
 extern void func_00424410(S347A90*, int*, unsigned int*);
-extern void func_00424430(S347A90*, int, unsigned int);
+extern void GuiArrayWidget_Select(S347A90*, int, unsigned int);
 void func_00347A90(S347A90* o);
 }
 void func_00347A90(S347A90* o)
@@ -22,5 +22,5 @@ void func_00347A90(S347A90* o)
     if (b >= o->a4C && o->a4C != 0) b = o->a4C - 1;
     else if (b >= o->a4C) b = 0;
     o->a54 = 100000;
-    func_00424430(o, a, b);
+    GuiArrayWidget_Select(o, a, b);
 }

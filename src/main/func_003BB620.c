@@ -7,7 +7,7 @@ typedef struct {
 
 extern int D_005392D0;
 
-unsigned long* func_003BB620(Obj003BB620* self)
+unsigned long* Gs_MakeTex1(Obj003BB620* self)
 {
     unsigned int enable;
     unsigned int mode;

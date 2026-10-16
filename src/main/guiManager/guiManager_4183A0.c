@@ -43,7 +43,7 @@ extern void func_00418580(MIt_418420* out, MIt_418420* src);
 #pragma bool off
 static inline int Ne_418420(Node_418420* a, Node_418420* b) { return (a == b) ^ 1; }
 
-int func_00418420(O_418420* o, char* name)
+int GuiFont_Find(O_418420* o, char* name)
 {
     if (name == 0 || *name == 0) return o->def;
     {

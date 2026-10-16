@@ -30,7 +30,7 @@ typedef struct {
 extern "C" {
 void* Gui_GetScreenStack(void);
 void GuiScreen_SetFocus(void* a, int b);
-void func_0041E0F0(void* a, void* b, int c, int d, int e);
+void GuiWidget_SendEvent(void* a, void* b, int c, int d, int e);
 #if 0 /* merge_units */
 void GuiGameOptions_UpdateHints(S2998B0* s);
 #endif /* merge_units */
@@ -49,8 +49,8 @@ extern "C" void GuiGameOptions_Enter(S2998B0* s)
     if (s->xAC)
         s->xAC->flags &= ~4;
     if (s->objs[s->idx]) {
-        func_0041E0F0(s, s->objs[s->idx], 10, 10, 0);
-        func_0041E0F0(s->objs[s->idx], Gui_GetScreenStack(), 0x10, 0, 0);
+        GuiWidget_SendEvent(s, s->objs[s->idx], 10, 10, 0);
+        GuiWidget_SendEvent(s->objs[s->idx], Gui_GetScreenStack(), 0x10, 0, 0);
     }
     GuiGameOptions_UpdateHints(s);
 }
@@ -65,7 +65,7 @@ static inline void merge_flush_func_002998B0(void) {}
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 int Loc_LookupText(int *, int );                    
-int func_0041BEB0(int, int, int);                       
+int GuiTextWidget_SetText(int, int, int);                       
 
 #pragma opt_common_subs off
 void GuiGameOptions_UpdateHints(int arg0) {
@@ -96,7 +96,7 @@ void GuiGameOptions_UpdateHints(int arg0) {
             } else {
                 var_a0 = ((int*)"ToSave");
             }
-            func_0041BEB0(F_(arg0, 0x88, int), Loc_LookupText(var_a0, temp_a1_2), 0);
+            GuiTextWidget_SetText(F_(arg0, 0x88, int), Loc_LookupText(var_a0, temp_a1_2), 0);
         }
     }
 }
@@ -122,11 +122,11 @@ typedef struct {
 } S_299AA0;
 extern char D_004AA780[];
 #if 0 /* merge_units */
-int func_0041BEB0(void* w, char* text, int c);
+int GuiTextWidget_SetText(void* w, char* text, int c);
 #endif /* merge_units */
-#define func_0041BEB0(a0, a1, a2) (func_0041BEB0((int)(a0), (int)(a1), (a2))) /* merge_units */
+#define GuiTextWidget_SetText(a0, a1, a2) (GuiTextWidget_SetText((int)(a0), (int)(a1), (a2))) /* merge_units */
 
-void func_00424430(void* w, int a, int b);
+void GuiArrayWidget_Select(void* w, int a, int b);
 #if 0 /* merge_units */
 void GuiGameOptions_UpdateHints(S_299AA0* self);
 #endif /* merge_units */
@@ -141,20 +141,20 @@ void GuiGameOptions_Show(S_299AA0* self, int idx) {
         }
     }
     if (self->xB0 && self->labels[idx]) {
-        func_0041BEB0(self->xB0, self->names[idx] ? self->names[idx] : D_004AA780, 0);
+        GuiTextWidget_SetText(self->xB0, self->names[idx] ? self->names[idx] : D_004AA780, 0);
     }
     self->tabs[idx]->flags |= 2;
     switch (idx) {
     case 3:
         if (self->x430) {
-            func_00424430(self->x430, 0, 0);
+            GuiArrayWidget_Select(self->x430, 0, 0);
         }
         break;
     }
     self->xB4 = idx;
     GuiGameOptions_UpdateHints(self);
 }
-#undef func_0041BEB0 /* merge_units */
+#undef GuiTextWidget_SetText /* merge_units */
 #undef GuiGameOptions_UpdateHints /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00299AA0(void) {}
@@ -212,8 +212,8 @@ void GuiGameOptions_Enter(S_00299B90* self);
 #define GuiGameOptions_Enter(a0) (GuiGameOptions_Enter((S2998B0 *)(a0))) /* merge_units */
 
 void GuiGameOptions_Close(S_00299B90* self, int a);
-void func_00456100(S_00299B90* self);
-void func_0045A3A0(void* p, int n);
+void GuiStartMenu_CloseAll(S_00299B90* self);
+void GameOptions_Apply(void* p, int n);
 void SoundRequest_Ctor(SoundRequest* req, int kind, void* name, int a, int b);
 void SoundEvent_Ctor(SoundEventMsg* msg, void* action, int flags);
 void Event_Send(void* msg, void* target, int flags);
@@ -294,7 +294,7 @@ extern "C" int GuiGameOptions_HandleInput(S_00299B90* self, Ev_00299B90* ev)
                 SoundMsg play;
                 SoundRequest req;
                 self->fC4 = w->x64 / 100.0f;
-                func_0045A3A0(self->xB8, 0x20);
+                GameOptions_Apply(self->xB8, 0x20);
                 SoundRequest_Ctor(&req, 4, D_0048B908, 0, 0);
                 SoundEvent_Ctor(&evm, &req, 0);
                 FileMan_Release(req.partB, -1);
@@ -322,7 +322,7 @@ extern "C" int GuiGameOptions_HandleInput(S_00299B90* self, Ev_00299B90* ev)
     {
         bool b = ev->type == 1 && ev->f2 == 0 && ev->btn == 0x800 && ev->f6 == 0;
         if (b && self->b400) {
-            func_00456100(self);
+            GuiStartMenu_CloseAll(self);
             return 1;
         }
     }

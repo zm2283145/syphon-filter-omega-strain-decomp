@@ -395,11 +395,11 @@ static inline void merge_flush_func_0040C540(void) {}
  */
 
 
-extern void func_0040B4B0(void);
+extern void ActorWorld_FlushRemovals(void);
 
-/* Thunk to func_0040B4B0 (calls func_0040B510 on every scope, newest first). */
-void func_0040C5C0(void) {
-    func_0040B4B0();
+/* Thunk to ActorWorld_FlushRemovals (calls func_0040B510 on every scope, newest first). */
+void ActorWorld_FlushPending(void) {
+    ActorWorld_FlushRemovals();
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0040C5C0(void) {}
@@ -458,7 +458,7 @@ static inline void DeletePool(void* p, int line) { AllocGuardCall g; func_00134E
  */
 extern "C" void IdMgr_Destroy(void)
 {
-    func_0040C5C0();
+    ActorWorld_FlushPending();
     {
         void* root = g_GobjRootScope;
         GobjIter end;

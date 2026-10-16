@@ -57,7 +57,7 @@ void Col_Load(void* c, Res3951B0* h);
 
 static inline void LoadCol(void* c, Res3951B0* h) { if (c) Col_Load(c, h); }
 
-extern "C" void func_003951B0(Obj3951B0* self, Desc3951B0* d)
+extern "C" void ModelAsset_Load(Obj3951B0* self, Desc3951B0* d)
 {
     char buf[0x70];
     if (d->name) self->b1F2 = 1; else self->b1F2 = 0;

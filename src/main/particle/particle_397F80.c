@@ -74,7 +74,7 @@ static inline void EntInit(Ent* e, char* name, int value)
     func_00398300(&e->v, &value);
 }
 
-extern "C" void func_00398070(void* self, const char* name, int value)
+extern "C" void ParticleLib_Request(void* self, const char* name, int value)
 {
     char buf[0x80];
     Ent* t;

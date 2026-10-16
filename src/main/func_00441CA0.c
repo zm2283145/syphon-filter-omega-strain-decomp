@@ -33,20 +33,20 @@ char* Loc_LookupText(char*);
 int FrontEnd_OpenPopup(int, int, char*, char*, void*, int);
 void FrontEnd_ClosePopup(int, int);
 unsigned char AgentData_Create(char*, int, int);
-void func_0040D3C0(Net_441CA0*);
+void MemCard_Refresh(Net_441CA0*);
 int func_0040DB10(Net_441CA0*);
 int func_0040D740(Net_441CA0*);
 int func_004422D0(int, char*, char*);
 void func_00441370(Obj_441CA0*);
-void func_00441960(Obj_441CA0*);
+void GuiSaveAgentWidget_WriteCard(Obj_441CA0*);
 void GuiSaveAgentWidget_HandleEvent(Obj_441CA0*);
-int func_0041EF10(void*, void*, int, int, void*);
+int GuiWidget_OnEvent(void*, void*, int, int, void*);
 }
 
 static inline int Open1(int mgr, int type, char* t, char* key, void* cb, int x) { return FrontEnd_OpenPopup(mgr, type, t, Loc_LookupText(key), cb, x); }
 static inline int Open2(int mgr, int type, char* t, char* key, void* cb, int x) { return FrontEnd_OpenPopup(mgr, type, Loc_LookupText(t), Loc_LookupText(key), cb, x); }
 
-extern "C" int func_00441CA0(Obj_441CA0* self, void* w, int msg, int sub, void* arg)
+extern "C" int GuiSaveAgentWidget_OnEvent(Obj_441CA0* self, void* w, int msg, int sub, void* arg)
 {
     Net_441CA0* net = &D_0055A830;
     char* err = Loc_LookupText(D_004C0468);
@@ -128,7 +128,7 @@ extern "C" int func_00441CA0(Obj_441CA0* self, void* w, int msg, int sub, void* 
         if (sub == 1) {
             NetImpl_441CA0* impl;
             FrontEnd_ClosePopup(D_004FFC04, self->dlg);
-            func_0040D3C0(net);
+            MemCard_Refresh(net);
             impl = net->impl;
             if (!impl->f59D || !impl->f59E || !impl->f59F)
                 GuiSaveAgentWidget_HandleEvent(self);
@@ -153,8 +153,8 @@ extern "C" int func_00441CA0(Obj_441CA0* self, void* w, int msg, int sub, void* 
         }
         if (sub == 5) {
             FrontEnd_ClosePopup(D_004FFC04, self->dlg);
-            func_0040D3C0(net);
-            func_00441960(self);
+            MemCard_Refresh(net);
+            GuiSaveAgentWidget_WriteCard(self);
             return 1;
         }
         if (sub == 9) {
@@ -165,5 +165,5 @@ extern "C" int func_00441CA0(Obj_441CA0* self, void* w, int msg, int sub, void* 
         }
         return 1;
     }
-    return func_0041EF10(self, w, msg, sub, arg);
+    return GuiWidget_OnEvent(self, w, msg, sub, arg);
 }

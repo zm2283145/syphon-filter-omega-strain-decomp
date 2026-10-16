@@ -134,8 +134,8 @@ typedef struct { char pad[0x280]; int fonts[1]; } B8_Res;
 extern char D_004F7960;
 extern B8_Res* App_GetInstance(void);
 extern int Font_GetStringWidth(int font, int text, int flags);
-extern int func_003D1020(void);
-extern void func_003D0EF0(int ctx, int text, int font, float* col, int x, int y);
+extern int TextManager_Get(void);
+extern void TextManager_QueueText(int ctx, int text, int font, float* col, int x, int y);
 void cCheckpoint_v10(B8_Ckpt* p, float dt) {
     float col[4];
     int w;
@@ -151,7 +151,7 @@ void cCheckpoint_v10(B8_Ckpt* p, float dt) {
     idx = D_004F7960;
     font = *(int*)((unsigned char)idx * 4 + (int)App_GetInstance() + 0x280);
     w = Font_GetStringWidth(font, p->text, 0x200);
-    func_003D0EF0(func_003D1020(), p->text, font, col, -(w / 2), 0);
+    TextManager_QueueText(TextManager_Get(), p->text, font, col, -(w / 2), 0);
     p->timer -= dt;
 }
 /* merge_units: generate this block's code under its own pragmas */

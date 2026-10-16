@@ -17,7 +17,7 @@ int GuiGameOptions_Refresh(int, int);
 int FrontEnd_ResumeGui(int);                               
 int FrontEnd_SuspendGui(int, int);                            
 int FrontEnd_ClosePopup(int, int);                          
-int func_0045A3A0(int , int);                         
+int GameOptions_Apply(int , int);                         
 extern float D_004C1FC8;
 extern int D_004FFC04;
 extern int D_005383C0;
@@ -27,7 +27,7 @@ void func_002996D0(int arg0, int arg1) {
     F_(arg0, 0xD8, int) = 0;
     GuiGameOptions_Refresh(arg0, 0x800);
     FrontEnd_SuspendGui(D_004FFC04, 1);
-    func_0045A3A0(arg0 + 0xB8, 0x800);
+    GameOptions_Apply(arg0 + 0xB8, 0x800);
     FrontEnd_ResumeGui(D_004FFC04);
     D_005383C0 = (int) (F_(arg0, 0xD4, float) * D_004C1FC8) & 0xFF;
     if (arg1 != 0) {
@@ -45,13 +45,13 @@ int Gui_GetScreenList();
 int Gui_GetScreenStack();                                
 int GuiStack_SwapScreens(int, int , int);                  
 int GuiManager_FindOrLoad(int, int *, int *);                   
-int func_00456160();                                  
+int GuiStartMenu_ReturnToMenu();                                  
 
 void GuiGameOptions_Leave(int arg0) {
     int temp_s0;
 
     if (F_(arg0, 0x400, unsigned char) != 0) {
-        func_00456160();
+        GuiStartMenu_ReturnToMenu();
         return;
     }
     temp_s0 = GuiManager_FindOrLoad(Gui_GetScreenList(), ((int*)"GuiTitleScreen"), ((int*)"TITLESCR"));

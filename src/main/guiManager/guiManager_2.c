@@ -10,7 +10,7 @@
 #include "guiManager.h"
 #define NULL 0
 #pragma mpwc_relax on
-int func_004133B0(char *, int *, signed char *);   /* open the archive that holds name */
+int GuiResource_Find(char *, int *, signed char *);   /* open the archive that holds name */
 int GuiManager_LoadGuiFromHog(GuiScreenList *, int, signed char *, int);
 extern char D_00571DC0;                             /* interface manager */
 
@@ -22,7 +22,7 @@ int GuiManager_LoadGui(GuiScreenList *self, signed char *name, int existing) {
     if ((name == NULL) || (*name == 0)) {
         return 0;
     }
-    if (func_004133B0(&D_00571DC0, &hog, name) != 0) {
+    if (GuiResource_Find(&D_00571DC0, &hog, name) != 0) {
         root = GuiManager_LoadGuiFromHog(self, hog, name, existing);
     } else {
         root = 0;

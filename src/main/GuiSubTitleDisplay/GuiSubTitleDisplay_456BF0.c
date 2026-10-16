@@ -28,12 +28,12 @@ void func_0028C090(void*, void*);
 void func_0028C0A0(void*, void*);
 void func_0028C0B0(void*, void*);
 void GuiObjectives_Init(void*);
-void func_0041BEB0(void*, char*, int);
+void GuiTextWidget_SetText(void*, char*, int);
 int sprintf(char*, const char*, ...);
-void func_00456BF0(O456* o);
+void GuiStartMenu_Init(O456* o);
 }
 
-void func_00456BF0(O456* o)
+void GuiStartMenu_Init(O456* o)
 {
     LNode* end;
     LNode* it;
@@ -64,8 +64,8 @@ void func_00456BF0(O456* o)
         char* s;
         sprintf(buf, D_004C1C70, 0);
         s = Loc_LookupText(buf);
-        if (s) func_0041BEB0(w, s, 0);
-        else func_0041BEB0(w, D_004C1A38, 0);
+        if (s) GuiTextWidget_SetText(w, s, 0);
+        else GuiTextWidget_SetText(w, D_004C1A38, 0);
     }
 }
 #pragma pop /* merge_units */
@@ -82,31 +82,31 @@ void func_00456BF0(O456* o)
 
 /* vtable */
 extern void GuiObjectives_Update();
-extern void func_0041D400();
-extern void func_0041D5C0();
-extern void func_0041D780();
+extern void GuiWidget_FocusPrev();
+extern void GuiWidget_FocusNext();
+extern void GuiWidget_FocusLast();
 extern void func_0041E230();
 extern void func_0041E2B0();
 extern void func_0041E330();
-extern void func_0041E470();
+extern void GuiWidget_Draw();
 extern void func_0041F070();
 extern void func_0041F080();
-extern void func_0041F090();
+extern void GuiWidget_Deinit();
 extern void func_0041F210();
-extern void func_004566D0();
-extern void func_00456830();
-extern void func_00456A30();
+extern void GuiStartMenu_OnInput();
+extern void GuiStartMenu_OnEvent();
+extern void GuiStartMenu_OnSleep();
 extern void func_00456A60();
-extern void func_00456AB0();
-extern void func_00456BF0();
+extern void GuiStartMenu_OnWake();
+extern void GuiStartMenu_Init();
 extern void func_004573C0();
 extern void func_00457430();
 extern void func_00457440();
-void * const D_004E1430[24] = { (void*)0x0, (void*)0x0, (void*)func_004573C0, (void*)func_00456BF0, (void*)func_0041F090, (void*)func_0041F080, (void*)func_0041F070, (void*)func_00456AB0, (void*)func_00456A30, (void*)func_0041E330, (void*)func_0041E2B0, (void*)func_004566D0, (void*)func_0041E470, (void*)func_0041E230, (void*)GuiObjectives_Update, (void*)func_00456830, (void*)func_0041F210, (void*)func_00456A60, (void*)func_0041D780, (void*)func_0041D5C0, (void*)func_0041D400, (void*)func_00457430, (void*)func_00457440, (void*)0x0 };
+void * const D_004E1430[24] = { (void*)0x0, (void*)0x0, (void*)func_004573C0, (void*)GuiStartMenu_Init, (void*)GuiWidget_Deinit, (void*)func_0041F080, (void*)func_0041F070, (void*)GuiStartMenu_OnWake, (void*)GuiStartMenu_OnSleep, (void*)func_0041E330, (void*)func_0041E2B0, (void*)GuiStartMenu_OnInput, (void*)GuiWidget_Draw, (void*)func_0041E230, (void*)GuiObjectives_Update, (void*)GuiStartMenu_OnEvent, (void*)func_0041F210, (void*)func_00456A60, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)func_00457430, (void*)func_00457440, (void*)0x0 };
 extern int GuiObjectives_ctor(void* self, int a1, int a2);
 
 /* Constructor: base built by GuiObjectives_ctor, fields cleared, flag bit 5 cleared. */
-GuiWidget456D90* func_00456D90(GuiWidget456D90* self) {
+GuiWidget456D90* GuiStartMenu_ctor(GuiWidget456D90* self) {
     GuiObjectives_ctor(self, 1, 1);
     self->vtable = ((char*)D_004E1430);
     self->unk90 = 0;
@@ -128,7 +128,7 @@ GuiWidget456D90* func_00456D90(GuiWidget456D90* self) {
 #include "vtable_base_dtor.h"
 
 /* Derived destructor: restore vtable, run base destructor, optionally delete. */
-DEFINE_VTABLE_BASE_DTOR(func_00456E00, D_004DF5C0, func_0041F370)
+DEFINE_VTABLE_BASE_DTOR(func_00456E00, D_004DF5C0, GuiWidget_Destroy)
 #pragma pop /* merge_units */
 /* merge_units: end func_00456E00 */
 
@@ -137,18 +137,18 @@ DEFINE_VTABLE_BASE_DTOR(func_00456E00, D_004DF5C0, func_0041F370)
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 int Service_Lookup(int *, int *);                       
 int SoundMgr_SetGroupsPaused(int, int);                            
-int func_003F9E30(int, int);                            
+int HudTicker_SetShown(int, int);                            
 int func_0041EBF0(int);                               
 extern int D_004F2CC0;
 extern int D_004FFB50;
 extern int D_004FFC2C;
 extern unsigned char D_005721C8;
 
-void func_00456E60(int arg0) {
+void GuiStartMenuBackdrop_OnSleep(int arg0) {
     if (D_005721C8 == 0) {
         SoundMgr_SetGroupsPaused(Service_Lookup(&D_004FFB50, &D_004F2CC0), 0);
     }
-    func_003F9E30(D_004FFC2C + 0x100, 1);
+    HudTicker_SetShown(D_004FFC2C + 0x100, 1);
     func_0041EBF0(arg0);
 }
 #pragma pop /* merge_units */
@@ -159,11 +159,11 @@ void func_00456E60(int arg0) {
                             
 int func_0041EFA0(int);
 
-void func_00456ED0(int arg0) {
+void GuiStartMenuBackdrop_OnWake(int arg0) {
     if (D_005721C8 == 0) {
         SoundMgr_SetGroupsPaused(Service_Lookup(&D_004FFB50, &D_004F2CC0), 1);
     }
-    func_003F9E30(D_004FFC2C + 0x100, 0);
+    HudTicker_SetShown(D_004FFC2C + 0x100, 0);
     func_0041EFA0(arg0);
 }
 #pragma pop /* merge_units */
@@ -171,14 +171,14 @@ void func_00456ED0(int arg0) {
 
 /* merge_units: begin func_00456F40 */
 #pragma push /* merge_units */
-extern int func_0041EF10(GuiWidget456D90* self, void* sender, int message);
+extern int GuiWidget_OnEvent(GuiWidget456D90* self, void* sender, int message);
 
 /* Consume message 16 for values 2 and 3; defer other messages to the base. */
-int func_00456F40(GuiWidget456D90* self, void* sender, int message, int value) {
+int GuiStartMenuBackdrop_OnEvent(GuiWidget456D90* self, void* sender, int message, int value) {
     if ((message & 0xFFFF) == 16 && (value == 2 || value == 3)) {
         return 1;
     }
-    return func_0041EF10(self, sender, message);
+    return GuiWidget_OnEvent(self, sender, message);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00456F40 */

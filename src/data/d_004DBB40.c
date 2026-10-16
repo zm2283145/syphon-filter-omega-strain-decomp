@@ -16,7 +16,10 @@ extern void NiEvent_Stop();
 extern void NiPositionTrack_Update();
 extern void NiSwitchTrack_Update();
 extern void Node_ClearFlag2C();
+extern void Node_GetComponentMatrix();
 extern void Node_GetFlag2C();
+extern void Node_GetLightRefPoint();
+extern void Node_GetWorldMatrix();
 extern void Node_SetFlag2C();
 extern void Object_AttachTransform();
 extern void Object_GetAttachedOrSelf();
@@ -95,10 +98,7 @@ extern void func_00394740();
 extern void func_003CCFF0();
 extern void func_003CD090();
 extern void func_003CD110();
-extern void func_003CD1C0();
-extern void func_003CD420();
 extern void func_003CD4A0();
-extern void func_003CD520();
 extern void func_003CD7A0();
 extern void func_003CD920();
 extern void func_003CDA60();
@@ -133,8 +133,8 @@ void *D_004DBB60[68] = {
     &func_003CDD40, &func_003CDC20, &func_003CDBE0, &func_003CDA60,
     &func_003CD920, &func_003CD7A0, &func_0015C010, &func_00153860,
     &Object_GetEye, &func_0015C020, &func_00140E90, &func_0015C030,
-    &func_0015C040, &func_0015C050, &func_003CD520, &func_003CD4A0,
-    &func_003CD420, &PathObj_GetPosition, &func_003CD1C0, &func_003CD110,
+    &func_0015C040, &func_0015C050, &Node_GetWorldMatrix, &func_003CD4A0,
+    &Node_GetLightRefPoint, &PathObj_GetPosition, &Node_GetComponentMatrix, &func_003CD110,
     &func_003CD090, &func_003CCFF0, &func_0013E060, &func_0015C080,
     &Actor_ApplyContactDamage, &func_0015C0A0, &func_00141850, &Controller_DeathNotice,
 };
@@ -153,8 +153,8 @@ void *D_004DBC70[68] = {
     &func_003CDD40, &func_003CDC20, &func_003CDBE0, &func_003CDA60,
     &func_003CD920, &func_003CD7A0, &func_0015C010, &func_00153860,
     &Object_GetEye, &func_0015C020, &func_00140E90, &func_0015C030,
-    &func_0015C040, &func_0015C050, &func_003CD520, &func_003CD4A0,
-    &func_003CD420, &PathObj_GetPosition, &func_003CD1C0, &func_003CD110,
+    &func_0015C040, &func_0015C050, &Node_GetWorldMatrix, &func_003CD4A0,
+    &Node_GetLightRefPoint, &PathObj_GetPosition, &Node_GetComponentMatrix, &func_003CD110,
     &func_003CD090, &func_003CCFF0, &func_0013E060, &func_0015C080,
     &Actor_ApplyContactDamage, &func_0015C0A0, &func_00141850, &Controller_DeathNotice,
 };
@@ -173,8 +173,8 @@ void *D_004DBD80[68] = {
     &func_003CDD40, &func_003CDC20, &func_003CDBE0, &func_003CDA60,
     &func_003CD920, &func_003CD7A0, &func_0015C010, &func_00153860,
     &Object_GetEye, &func_0015C020, &func_00140E90, &func_0015C030,
-    &func_0015C040, &func_0015C050, &func_003CD520, &func_003CD4A0,
-    &func_003CD420, &PathObj_GetPosition, &func_003CD1C0, &func_003CD110,
+    &func_0015C040, &func_0015C050, &Node_GetWorldMatrix, &func_003CD4A0,
+    &Node_GetLightRefPoint, &PathObj_GetPosition, &Node_GetComponentMatrix, &func_003CD110,
     &func_003CD090, &func_003CCFF0, &func_0013E060, &func_0015C080,
     &Actor_ApplyContactDamage, &func_0015C0A0, &func_00141850, &Controller_DeathNotice,
 };
@@ -203,8 +203,8 @@ void *D_004DBED0[78] = {
     &func_003CDD40, &func_003CDC20, &func_003CDBE0, &func_003CDA60,
     &func_003CD920, &func_003CD7A0, &func_0015C010, &func_00153860,
     &Object_GetEye, &func_0015C020, &func_00140E90, &func_0015C030,
-    &func_0015C040, &func_0015C050, &func_003CD520, &func_003CD4A0,
-    &func_003CD420, &PathObj_GetPosition, &func_003CD1C0, &func_003CD110,
+    &func_0015C040, &func_0015C050, &Node_GetWorldMatrix, &func_003CD4A0,
+    &Node_GetLightRefPoint, &PathObj_GetPosition, &Node_GetComponentMatrix, &func_003CD110,
     &func_003CD090, &func_003CCFF0, &func_0013E060, &func_0015C080,
     &Actor_ApplyContactDamage, &func_0015C0A0, &func_00141850, &Controller_DeathNotice,
     &cNIEventLight_v42, &NiEvent_Play, &NiEvent_Stop, &NiEvent_Reset,

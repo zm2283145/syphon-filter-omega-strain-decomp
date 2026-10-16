@@ -30,12 +30,12 @@ extern void func_0032B2D0(Self_C390* self, int v);
 extern void func_0032B5F0(Self_C390* self, unsigned int flags);
 extern int GuiKeyboard_GetModifierIndex(Self_C390* self, Item_C390* it);
 extern int GuiKeyboard_IsCharAllowed(Self_C390* self, unsigned char c);
-extern int func_003FD6B0(unsigned short key);
-extern void func_0041A100(Menu_C390* m, int sel);
-extern void func_0041A180(Menu_C390* m, int sel);
-extern void func_0041A2C0(Menu_C390* m, char* s);
-extern void func_0041E040(Self_C390* self, int a, int b, int c);
-extern int func_0041EF10(Self_C390* self, Arg_C390* arg, unsigned short msg, int a3, int param);
+extern int CharMap_Lookup(unsigned short key);
+extern void GuiTextEditWidget_ClampCursor(Menu_C390* m, int sel);
+extern void GuiTextEditWidget_Delete(Menu_C390* m, int sel);
+extern void GuiTextEditWidget_Insert(Menu_C390* m, char* s);
+extern void GuiWidget_SendEventUp(Self_C390* self, int a, int b, int c);
+extern int GuiWidget_OnEvent(Self_C390* self, Arg_C390* arg, unsigned short msg, int a3, int param);
 
 static inline int StrSize(Str_C390* s) { return (s->h.w & 1) ? s->size : (unsigned char)s->h.s.len; }
 
@@ -60,11 +60,11 @@ static inline unsigned char Remap(Self_C390* o, Item_C390* it)
     if (m) {
         int i;
         for (i = 0; i < m->count; i++) {
-            if (key == m->data[i].from) return func_003FD6B0(m->data[i].to);
+            if (key == m->data[i].from) return CharMap_Lookup(m->data[i].to);
         }
         return 0xFF;
     }
-    return func_003FD6B0(key);
+    return CharMap_Lookup(key);
 }
 
 int GuiKeyboard_HandleEvent(Self_C390* self, Arg_C390* arg, unsigned short msg, int a3, int param)
@@ -107,18 +107,18 @@ int GuiKeyboard_HandleEvent(Self_C390* self, Arg_C390* arg, unsigned short msg, 
                 }
                 break;
             case 0x2A:
-                if (self->menu) func_0041A180(self->menu, 0);
+                if (self->menu) GuiTextEditWidget_Delete(self->menu, 0);
                 self->cur = 0;
                 break;
             case 0x28:
                 func_0032B2D0(self, 1);
                 break;
             case 0x4F:
-                func_0041A100(self->menu, self->menu->sel + 1);
+                GuiTextEditWidget_ClampCursor(self->menu, self->menu->sel + 1);
                 self->cur = 0;
                 break;
             case 0x50:
-                if (self->menu->sel != 0) func_0041A100(self->menu, self->menu->sel - 1);
+                if (self->menu->sel != 0) GuiTextEditWidget_ClampCursor(self->menu, self->menu->sel - 1);
                 self->cur = 0;
                 break;
             default:
@@ -145,7 +145,7 @@ int GuiKeyboard_HandleEvent(Self_C390* self, Arg_C390* arg, unsigned short msg, 
                     char buf[2];
                     buf[0] = ch;
                     buf[1] = 0;
-                    func_0041A2C0(self->menu, buf);
+                    GuiTextEditWidget_Insert(self->menu, buf);
                     ok = 1;
                 } else {
                     ok = 0;
@@ -154,13 +154,13 @@ int GuiKeyboard_HandleEvent(Self_C390* self, Arg_C390* arg, unsigned short msg, 
                 self->bE1 = 0;
             }
             if (ok) {
-                func_0041E040(self, 0x10, 1, 0);
+                GuiWidget_SendEventUp(self, 0x10, 1, 0);
             } else {
-                func_0041E040(self, 0x10, 4, 0);
+                GuiWidget_SendEventUp(self, 0x10, 4, 0);
             }
             return 1;
         }
     }
     if (msg == 0x10 && a3 == 1) return 1;
-    return func_0041EF10(self, arg, msg, a3, param);
+    return GuiWidget_OnEvent(self, arg, msg, a3, param);
 }

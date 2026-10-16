@@ -44,7 +44,7 @@ public:
     virtual V4_850 GetPos(int);
 };
 extern "C" {
-Obj_850* func_0040BF10(void);
+Obj_850* Player_GetCached(void);
 Obj_850* PlayerSlots_Get(int);
 }
 static inline void VSub_850(V4_850* a, V4_850* b) {
@@ -73,7 +73,7 @@ static inline float LenSq_850(V4_850* a) {
 }
 extern "C" Obj_850* Object_ClosestPlayerDistSq(Obj_850* self, float* outDist)
 {
-    Obj_850* best = func_0040BF10();
+    Obj_850* best = Player_GetCached();
     float bestD = 1e8f;
     int i = 0;
     goto test;

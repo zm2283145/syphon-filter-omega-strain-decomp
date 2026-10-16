@@ -24,7 +24,7 @@ extern "C" void func_00333260(void* ag, int a, int b, L4B50* l);
 extern "C" void* func_00336060(void* ag, const char* name);
 extern "C" void func_003353F0(void* ag, void* x, L4B50* l);
 extern "C" int Loc_LookupText(const char* key);
-extern "C" void func_00421290(void* t, int id, int i, int mode);
+extern "C" void GuiTextListWidget_AddItem(void* t, int id, int i, int mode);
 
 /* The inline size() keeps the loop-entry test on the stack slot; enum constants keep the 0/1 select as branches. */
 extern "C" void func_00354B50(O4B50* self)
@@ -64,7 +64,7 @@ extern "C" void func_00354B50(O4B50* self)
             id = e->id;
             mode = e->state == 2 ? MODE_0 : MODE_1;
         }
-        func_00421290(self->tbl, id, i, mode);
+        GuiTextListWidget_AddItem(self->tbl, id, i, mode);
     }
     func_00299270(&l, 0);
 }

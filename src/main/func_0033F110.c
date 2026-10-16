@@ -30,7 +30,7 @@ void func_0033D8E0(O* o, unsigned char mode);
 W* GuiWidget_FindChildByName(void* o, char* name);
 void* Agent_GetSelected(void* p, int i);
 char* AgentData_GetName(void* a);
-void func_0041BEB0(W* w, char* s, int f);
+void GuiTextWidget_SetText(W* w, char* s, int f);
 Mgr* Gui_GetScreenStack(void);
 void func_0033F110(O* o);
 }
@@ -56,7 +56,7 @@ void func_0033F110(O* o)
     o->b78 = 1;
     w = Cast(GuiWidget_FindChildByName(o, D_004928E0), D_004A7520);
     if (w)
-        func_0041BEB0(w, AgentData_GetName(Agent_GetSelected(D_004FFB50, -1)), 0);
+        GuiTextWidget_SetText(w, AgentData_GetName(Agent_GetSelected(D_004FFB50, -1)), 0);
     D_00532FF0 = 0;
     D_00532FF8 = 0;
     D_00533000 = 0;

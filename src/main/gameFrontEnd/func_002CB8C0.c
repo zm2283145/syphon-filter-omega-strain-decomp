@@ -9,9 +9,9 @@ extern void func_00413900(char* a, char* b);
 extern void func_00413C70(char* a);
 extern int Gui_GetScreenList(void);
 extern char* Gui_GetScreenStack(void);
-extern void func_00414900(char* s);
+extern void GuiCanvas_Create(char* s);
 extern void func_004158C0(char* p, int x);
-extern void func_004185A0(int a, char* b, int c, int d);
+extern void GuiFont_Register(int a, char* b, int c, int d);
 extern int sprintf(char* buf, const char* fmt, ...);
 extern char D_0048B2F8[];
 extern char D_004AD048[];
@@ -48,18 +48,18 @@ void FrontEnd_CreateCanvas(SelfB8C0* self, int flag)
         return;
     }
     Boot_LoadFonts(App_GetInstance());
-    func_00414900(flag ? D_004AD048 : D_004AD060);
+    GuiCanvas_Create(flag ? D_004AD048 : D_004AD060);
     {
         char* g = App_GetInstance();
-        func_004185A0(Gui_GetScreenList(), D_004AD078, *(int*)(g + 0x280), 0);
+        GuiFont_Register(Gui_GetScreenList(), D_004AD078, *(int*)(g + 0x280), 0);
     }
     {
         char* g = App_GetInstance();
-        func_004185A0(Gui_GetScreenList(), D_004AD080, *(int*)(g + 0x284), 0);
+        GuiFont_Register(Gui_GetScreenList(), D_004AD080, *(int*)(g + 0x284), 0);
     }
     {
         char* g = App_GetInstance();
-        func_004185A0(Gui_GetScreenList(), D_004AD088, *(int*)(g + 0x288), 0);
+        GuiFont_Register(Gui_GetScreenList(), D_004AD088, *(int*)(g + 0x288), 0);
     }
     func_002CCE80(*(int*)(App_GetInstance() + 0x280));
     func_002CCE80(*(int*)(App_GetInstance() + 0x284));

@@ -1,7 +1,7 @@
 #include "types.h"
 
 extern int func_002ACB70(int);
-extern int func_0041E3B0(int, float);
+extern int GuiWidget_Update(int, float);
 
 void func_002ACCA0(int a0) {
     int s0, v0, v1;
@@ -9,7 +9,7 @@ void func_002ACCA0(int a0) {
     int cond;
 
     s0 = a0;
-    v0 = func_0041E3B0(a0, f12);
+    v0 = GuiWidget_Update(a0, f12);
     v1 = *(int*)((char*)s0 + 284);
     cond = v1 == 0;
     if (cond) goto L002ACCD8;

@@ -13,7 +13,7 @@ int Net_ConnectGame(void);
 int Net_CreateGame(void);
 void func_002EBCE0(int* out);
 int Gui_GetScreenStack(void);
-void func_0041E0F0(int a, int b, int c, int d, char* msg);
+void GuiWidget_SendEvent(int a, int b, int c, int d, char* msg);
 
 /* Joins (join != 0) or hosts a game; shows an error screen on failure. */
 void Net_StartSession(int join)
@@ -35,7 +35,7 @@ void Net_StartSession(int join)
         return;
     }
     if (Gui_GetScreenStack()) {
-        func_0041E0F0(Gui_GetScreenStack(), Gui_GetScreenStack(), 0x1E, 0, join ? D_004BF9B8 : D_004BFA30);
+        GuiWidget_SendEvent(Gui_GetScreenStack(), Gui_GetScreenStack(), 0x1E, 0, join ? D_004BF9B8 : D_004BFA30);
     }
     g_DmeConnectRetries = 0;
     g_DmeConnectMaxRetries = 0;

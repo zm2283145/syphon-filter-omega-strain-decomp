@@ -8,7 +8,7 @@ extern char* Loc_LookupText(char*);
 extern void GuiSaveAgentWidget_HandleEvent(O441*);
 extern void func_004415A0(O441*);
 extern int FrontEnd_OpenPopup(int, int, char*, char*, O441*, int);
-void func_00441960(O441* o) {
+void GuiSaveAgentWidget_WriteCard(O441* o) {
     G441* g = D_0055A830;
     if (!g->b59d) {
         GuiSaveAgentWidget_HandleEvent(o);

@@ -10,7 +10,7 @@
 extern void func_003D0A90(void* self, short del);
 extern void func_003D0B10(void* self, short del);
 extern void operator_delete(void* p);
-void* func_003D0B90(void* self, short del)
+void* TextManager_Destroy(void* self, short del)
 {
     if (self) {
         void* a = (char*)self + 0x10;
@@ -55,10 +55,10 @@ extern Word_003D0C10* func_003D0D80(Word_003D0C10* d, Word_003D0C10* s);
 extern void func_003D0D70(Word_003D0C10* w, void* v);
 extern int String_CStr_189540(void* p);
 extern void func_0036A330(int a0, int a1, void* a2, float x, float y, float z, float p, float q, float r);
-extern void func_003CFAB0(int c);
+extern void TextObj_Draw(int c);
 extern void func_003D10B0(Word_003D0C10* out, int* size, Word_003D0C10* first, Word_003D0C10* last);
 static inline int ne3D(Node3D* n, Word_003D0C10* w) { return n != (Node3D*)w->value; }
-void func_003D0C10(Obj3D* o)
+void TextManager_DrawImmediate(Obj3D* o)
 {
     Word_003D0C10 end, end2, b, d, it, e, out, first, last, a, c;
     Word_003D0C10* pe;
@@ -83,7 +83,7 @@ void func_003D0C10(Obj3D* o)
         end2.value = d.value;
         pf = &end2;
         for (; ne3D(m, pf); m = m->next)
-            func_003CFAB0(m->f8);
+            TextObj_Draw(m->f8);
     }
     last.value = (int)&o->prev;
     first.value = (int)o->next;

@@ -5,7 +5,7 @@
 int func_002B1970(int );                            
 int Gui_GetScreenStack();                                
 int GuiScreen_SetFocus(int, int );                       
-int func_0041E0F0(int , int, int, int, int);                 
+int GuiWidget_SendEvent(int , int, int, int, int);                 
 int func_0045DE40(int );                            
 
 #pragma opt_common_subs off
@@ -25,7 +25,7 @@ void func_0045DD90(int arg0, int arg1) {
             temp_v1_2 = F_(arg0, 0x4C, int);
             F_(temp_v1_2, 0x14, unsigned short) = (unsigned short) (F_(temp_v1_2, 0x14, unsigned short) | 0x80);
             GuiScreen_SetFocus(Gui_GetScreenStack(), F_(arg0, 0x4C, int));
-            func_0041E0F0(F_(arg0, 0x4C, int), Gui_GetScreenStack(), 0x10, 2, 0);
+            GuiWidget_SendEvent(F_(arg0, 0x4C, int), Gui_GetScreenStack(), 0x10, 2, 0);
             return;
         }
         func_0045DE40(arg0);

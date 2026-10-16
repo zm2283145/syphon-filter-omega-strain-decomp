@@ -22,8 +22,8 @@ extern "C" {
     int func_0012F5B0(void*,int);
     void func_002426E0(int);
     char* Loc_GetStoredKey(int);
-    void func_0041BEB0(void*,char*,int);
-    void func_0041E0F0(void*,void*,int,int,int=0);
+    void GuiTextWidget_SetText(void*,char*,int);
+    void GuiWidget_SendEvent(void*,void*,int,int,int=0);
     int sprintf(char*,const char*,...);
     extern unsigned char D_0048BD10[];
     extern char D_0048BD14[],D_004ABEB8[],D_004ABEC8[],D_004ABED0[],D_004ABED8[],D_004ABEE8[],D_004ABEF8[],D_004DCF10[],D_004DE630[],D_004FFB50[],D_0052ACD8[],D_00587C90[];
@@ -105,8 +105,8 @@ extern "C" int GuiQuickChat_HandleInput(Screen* arg0, Input* arg1) {
                 temp_a0 = var_s4 * 4;
                 arg0->unk48 = (int) *(int*)(temp_a0 + (D_0048BD14 + temp_v1_2));
                 slot = &((Screen*)(temp_a0 + (int)arg0))->unk4C;
-                func_0041E0F0(arg0, *slot, 6, (int)D_004ABED8);
-                func_0041E0F0(*slot, Gui_GetScreenStack(), 0x10, 0);
+                GuiWidget_SendEvent(arg0, *slot, 6, (int)D_004ABED8);
+                GuiWidget_SendEvent(*slot, Gui_GetScreenStack(), 0x10, 0);
                 var_s2 = 0;
                 var_s1 = arg0;
                 var_s0 = 0;
@@ -118,7 +118,7 @@ extern "C" int GuiQuickChat_HandleInput(Screen* arg0, Input* arg1) {
                         } else {
                             sprintf(sp2D0, D_004ABEF8, *(int*)(temp_v1_3 + var_s0 + 4));
                         }
-                        func_0041BEB0(var_s1->unk4C, Loc_LookupText(sp2D0), 0);
+                        GuiTextWidget_SetText(var_s1->unk4C, Loc_LookupText(sp2D0), 0);
                     }
                     var_s2 += 1;
                     var_s1 = (Screen*)((char*)var_s1+4);
@@ -163,7 +163,7 @@ extern "C" int GuiQuickChat_HandleInput(Screen* arg0, Input* arg1) {
                         cMessage_dtor(&msg, 0);
                     }
                 }
-                func_0041E0F0(((Screen*)((var_s4<<2)+(int)arg0))->unk4C, Gui_GetScreenStack(), 0x10, 1);
+                GuiWidget_SendEvent(((Screen*)((var_s4<<2)+(int)arg0))->unk4C, Gui_GetScreenStack(), 0x10, 1);
                 if (D_004FFC2C != 0) {
                     func_002426E0(D_004FFC2C);
                 } else {
@@ -173,7 +173,7 @@ extern "C" int GuiQuickChat_HandleInput(Screen* arg0, Input* arg1) {
             return 1;
         }
         if (temp_v1 == 0x10) {
-            func_0041E0F0(arg0, Gui_GetScreenStack(), 0x10, 1);
+            GuiWidget_SendEvent(arg0, Gui_GetScreenStack(), 0x10, 1);
             if (D_004FFC2C != 0) {
                 func_002426E0(D_004FFC2C);
             } else {

@@ -25,19 +25,19 @@ typedef struct NotifyMsg {
 
 extern int D_004F7E48;
 extern int D_004DC330;
-extern void func_00421070(int);
+extern void GuiTextListWidget_Clear(int);
 extern void Event_Construct(NotifyMsg*, void*);
 extern void Event_Send(NotifyMsg*, void*, int);
 extern void cMessage_dtor(NotifyMsg*, int);
 extern void func_0045DE40(ObjF0*);
 
 /* Closes the attached widget, notifies the owner (code -255) and detaches. */
-void func_0045BF80(ObjF0* o) {
+void GuiGameScreen_CloseChooseMenu(ObjF0* o) {
     void* owner;
     NotifyMsg msg;
     if (o->widget == 0) return;
     o->widget->flags &= ~2;
-    func_00421070(o->handle);
+    GuiTextListWidget_Clear(o->handle);
     owner = o->owner;
     if (owner != 0) {
         Event_Construct(&msg, &D_004F7E48);

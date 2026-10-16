@@ -32,7 +32,7 @@ typedef struct {
 extern void func_002359F0(ListIt235A00* out, void* list);
 extern void func_002359D0(ListIt235A00* out, void* list);
 extern ListIt235A00* func_002359E0(ListIt235A00* dst, ListIt235A00* src);
-extern void func_003A1AD0(void* obj, int key, Mtx235A00* m);
+extern void ParticleInst_Draw(void* obj, int key, Mtx235A00* m);
 
 #pragma push
 #pragma opt_rotateloops off
@@ -54,7 +54,7 @@ void func_00235A00(Fx235A00* self) {
         if (v->obj != 0) {
             /* unfolded quad copy idiom */
             VCopyF(&m.r[3], &v->pos);
-            func_003A1AD0(v->obj, self->key, &m);
+            ParticleInst_Draw(v->obj, self->key, &m);
         }
         it.node = it.node->next;
     }

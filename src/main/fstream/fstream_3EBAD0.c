@@ -50,7 +50,7 @@ static inline int SubData_EBAD0(Sub_EBAD0* s)
     return s->n8 ? s->n8 : s->n0;
 }
 
-extern "C" int func_003EBAD0(Req_EBAD0* r, int release)
+extern "C" int Fstream_StartRequest(Req_EBAD0* r, int release)
 {
     Sub_EBAD0* s = ReqSub_EBAD0(r);
     if (release) {

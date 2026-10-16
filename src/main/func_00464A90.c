@@ -22,14 +22,14 @@ typedef struct Widget {
 } Widget;
 
 extern "C" void func_0026CA70(void* p);
-extern "C" void func_0041E470(Widget* self);
+extern "C" void GuiWidget_Draw(Widget* self);
 
-/* Sets flag 0x2 on the +0x48 object while notifying its +0x44 child (virtual +0x30), then func_0026CA70(+0x4C) and func_0041E470(self). */
+/* Sets flag 0x2 on the +0x48 object while notifying its +0x44 child (virtual +0x30), then func_0026CA70(+0x4C) and GuiWidget_Draw(self). */
 extern "C" void func_00464A90(Widget* self)
 {
     self->holder->flags |= 2;
     self->holder->child->Method30();
     self->holder->flags &= ~2;
     func_0026CA70(self->unk4C);
-    func_0041E470(self);
+    GuiWidget_Draw(self);
 }

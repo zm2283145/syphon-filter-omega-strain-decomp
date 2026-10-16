@@ -112,6 +112,6 @@ void func_00365180(B7_AnimCh* p, float dt, float speed)
 #pragma cplusplus on
 #include "vtable_base_dtor.h"
 
-DEFINE_VTABLE_BASE_DTOR(func_00365260, D_004DF530, func_0041F370)
+DEFINE_VTABLE_BASE_DTOR(func_00365260, D_004DF530, GuiWidget_Destroy)
 #pragma pop /* merge_units */
 /* merge_units: end func_00365260 */

@@ -46,7 +46,7 @@ GuiSaveAgentWidget* GuiSaveAgentWidget_ctor(GuiSaveAgentWidget* self, unsigned c
 #include "vtable_base_dtor.h"
 
 /* Derived destructor: restore vtable, run base destructor, optionally delete. */
-DEFINE_VTABLE_BASE_DTOR(func_00293770, D_004E1220, func_0041F370)
+DEFINE_VTABLE_BASE_DTOR(func_00293770, D_004E1220, GuiWidget_Destroy)
 #pragma pop /* merge_units */
 /* merge_units: end func_00293770 */
 
@@ -64,22 +64,22 @@ extern "C" void GuiAgentLoad_Update();
 extern "C" void func_00293850();
 extern "C" void func_00293860();
 extern "C" void func_00293890();
-extern "C" void func_0041D400();
-extern "C" void func_0041D5C0();
-extern "C" void func_0041D780();
-extern "C" void func_0041D8C0();
+extern "C" void GuiWidget_FocusPrev();
+extern "C" void GuiWidget_FocusNext();
+extern "C" void GuiWidget_FocusLast();
+extern "C" void GuiWidget_FocusFirst();
 extern "C" void func_0041E230();
 extern "C" void func_0041E2B0();
 extern "C" void func_0041E330();
-extern "C" void func_0041E470();
+extern "C" void GuiWidget_Draw();
 extern "C" void func_0041EBF0();
 extern "C" void func_0041F070();
 extern "C" void func_0041F080();
-extern "C" void func_0041F090();
-extern "C" void func_0041F150();
+extern "C" void GuiWidget_Deinit();
+extern "C" void GuiWidget_Init();
 extern "C" void func_0041F210();
 extern void * const D_004DD400[];
-void* func_0041F370(void* self, short deleteFlag);
+void* GuiWidget_Destroy(void* self, short deleteFlag);
 }
 extern "C" Vtable3Object* func_002937D0(Vtable3Object* self, short deleteFlag)
 {
@@ -89,7 +89,7 @@ extern "C" Vtable3Object* func_002937D0(Vtable3Object* self, short deleteFlag)
             self->vtable = D_004DD460;
             if (self) {
                 self->vtable = D_004E1220;
-                func_0041F370(self, 0);
+                GuiWidget_Destroy(self, 0);
             }
         }
         if (deleteFlag > 0)
@@ -97,6 +97,6 @@ extern "C" Vtable3Object* func_002937D0(Vtable3Object* self, short deleteFlag)
     }
     return self;
 }
-void * const D_004DD400[24] = { (void*)0x0, (void*)0x0, (void*)func_002937D0, (void*)func_0041F150, (void*)func_0041F090, (void*)func_0041F080, (void*)func_0041F070, (void*)GuiAgentLoad_Wake, (void*)func_0041EBF0, (void*)func_0041E330, (void*)func_0041E2B0, (void*)GuiAgentLoad_HandleInput, (void*)func_0041E470, (void*)func_0041E230, (void*)GuiAgentLoad_Update, (void*)GuiAgentLoad_HandleEvent, (void*)func_0041F210, (void*)func_0041D8C0, (void*)func_0041D780, (void*)func_0041D5C0, (void*)func_0041D400, (void*)func_00293850, (void*)func_00293860, (void*)func_00293890 };
+void * const D_004DD400[24] = { (void*)0x0, (void*)0x0, (void*)func_002937D0, (void*)GuiWidget_Init, (void*)GuiWidget_Deinit, (void*)func_0041F080, (void*)func_0041F070, (void*)GuiAgentLoad_Wake, (void*)func_0041EBF0, (void*)func_0041E330, (void*)func_0041E2B0, (void*)GuiAgentLoad_HandleInput, (void*)GuiWidget_Draw, (void*)func_0041E230, (void*)GuiAgentLoad_Update, (void*)GuiAgentLoad_HandleEvent, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)func_00293850, (void*)func_00293860, (void*)func_00293890 };
 #pragma pop /* merge_units */
 /* merge_units: end func_002937D0 */

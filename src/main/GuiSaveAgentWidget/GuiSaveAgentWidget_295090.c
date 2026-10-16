@@ -23,18 +23,18 @@ extern int D_005063D0[];
 extern void GuiCommandCenter_OpenPanel(S295090* s, int a);
 extern void GuiCommandCenter_SetTexts(S295090* s);
 extern void func_00296B70(S295090* s, int a);
-extern void func_0041E0F0(void* a, void* b, int c, int d, int e);
+extern void GuiWidget_SendEvent(void* a, void* b, int c, int d, int e);
 
 void GuiCommandCenter_Select(S295090* s, int i, int f)
 {
     if (s->focus) {
         if (s->b178[s->cur]) {
             if ((s->cur <= 0x10 && s->bF8[s->cur]) || (s->cur == 0x14 && s->b109))
-                func_0041E0F0(s, s->focus, 6, (int)"onStateOn", 0);
+                GuiWidget_SendEvent(s, s->focus, 6, (int)"onStateOn", 0);
             else
-                func_0041E0F0(s, s->focus, 6, (int)"onLoseFocus", 0);
+                GuiWidget_SendEvent(s, s->focus, 6, (int)"onLoseFocus", 0);
         } else {
-            func_0041E0F0(s, s->focus, 6, (int)"onStateOff", 0);
+            GuiWidget_SendEvent(s, s->focus, 6, (int)"onStateOff", 0);
         }
         s->cur = -1;
         s->focus = 0;
@@ -51,9 +51,9 @@ void GuiCommandCenter_Select(S295090* s, int i, int f)
     s->focus = s->items[i];
     s->cur = i;
     if (s->b178[s->cur])
-        func_0041E0F0(s, s->focus, 6, (int)"onGainFocus", 0);
+        GuiWidget_SendEvent(s, s->focus, 6, (int)"onGainFocus", 0);
     else
-        func_0041E0F0(s, s->focus, 6, (int)"onDeactivate", 0);
+        GuiWidget_SendEvent(s, s->focus, 6, (int)"onDeactivate", 0);
     GuiCommandCenter_SetTexts(s);
     if (i > 0x10 || s->b178[s->cur] || D_004FFC04->b30)
         func_00296B70(s, -1);
@@ -78,7 +78,7 @@ extern char D_004FFB50;
 extern char* D_0048C160[];
 int Agent_GetSelected(void*, int);
 int AgentData_IsLevelDone(int, __int128);
-__int128 func_003FDA40(char*);
+__int128 StringPool_MakeKey(char*);
 
 int GuiCommandCenter_GetDefaultSlot(Self_52C0* self) {
     int idx;
@@ -86,7 +86,7 @@ int GuiCommandCenter_GetDefaultSlot(Self_52C0* self) {
     int i;
     idx = -1;
     for (k = 0; k < 0x11; k++) {
-        if (AgentData_IsLevelDone(Agent_GetSelected(&D_004FFB50, -1), func_003FDA40(D_0048C160[k]))) idx = k;
+        if (AgentData_IsLevelDone(Agent_GetSelected(&D_004FFB50, -1), StringPool_MakeKey(D_0048C160[k]))) idx = k;
     }
     if (idx == 0 || self->f1CC == -1) return 0x16;
     if (idx != -1) return idx;

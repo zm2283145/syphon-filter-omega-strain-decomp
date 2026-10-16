@@ -83,9 +83,9 @@ public:
     char pad[0x48]; unsigned int a4C; int pad50; int a54; char pad2[0x4C]; C348A00* aA4;
 };
 extern "C" {
-extern void func_0041E3B0(S348A00*);
+extern void GuiWidget_Update(S348A00*);
 extern void func_00424410(S348A00*, int*, unsigned int*);
-extern void func_00424430(S348A00*, int, unsigned int);
+extern void GuiArrayWidget_Select(S348A00*, int, unsigned int);
 extern void LobbyArray_SetDirty(C348A00*, int);
 void func_00348A00(S348A00* o);
 }
@@ -98,11 +98,11 @@ static inline void inl_348A00(S348A00* o)
     if (b >= o->a4C && o->a4C != 0) b = o->a4C - 1;
     else if (b >= o->a4C) b = 0;
     o->a54 = 100000;
-    func_00424430(o, a, b);
+    GuiArrayWidget_Select(o, a, b);
 }
 void func_00348A00(S348A00* o)
 {
-    func_0041E3B0(o);
+    GuiWidget_Update(o);
     if (o->aA4 && o->aA4->a18) {
         inl_348A00(o);
         LobbyArray_SetDirty(o->aA4, 0);
@@ -160,13 +160,13 @@ public:
     B48B90* f90; char p94[0xC]; C48B90* fa0; L48B90* fa4;
 };
 extern "C" {
-extern void func_00424A90(W48B90*);
+extern void GuiArrayWidget_OnWake(W48B90*);
 extern void* Mem_Alloc(int, int, char*, int);
 extern char D_004BA3D0[];
 extern char D_00587C20[];
 extern int Gui_GetScreenList(void);
-extern int func_00418420(int, char*);
-extern C48B90* func_003D0940(void*, int, int, int, int, int, char*);
+extern int GuiFont_Find(int, char*);
+extern C48B90* TextObj_Construct(void*, int, int, int, int, int, char*);
 extern char* DME_GetLobby(void);
 #if 0 /* merge_units */
 extern void func_00424410(W48B90*, int*, unsigned int*);
@@ -174,15 +174,15 @@ extern void func_00424410(W48B90*, int*, unsigned int*);
 #define func_00424410(a0, a1, a2) (func_00424410((S348A00 *)(a0), (a1), (a2))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_00424430(W48B90*, int, unsigned int);
+extern void GuiArrayWidget_Select(W48B90*, int, unsigned int);
 #endif /* merge_units */
-#define func_00424430(a0, a1, a2) (func_00424430((S348A00 *)(a0), (a1), (a2))) /* merge_units */
+#define GuiArrayWidget_Select(a0, a1, a2) (GuiArrayWidget_Select((S348A00 *)(a0), (a1), (a2))) /* merge_units */
 
 }
 /* List screen init: creates the callout, binds the lobby list and clamps the restored selection. */
 extern "C" void func_00348B90(W48B90* w) {
     C48B90* c;
-    func_00424A90(w);
+    GuiArrayWidget_OnWake(w);
     {
         AllocGuard g;
         c = (C48B90*)Mem_Alloc(0, 0x60, D_004BA3D0, 0x89);
@@ -190,7 +190,7 @@ extern "C" void func_00348B90(W48B90* w) {
     if (c) {
         int x = (int)w->f3c;
         int y = (int)w->f40;
-        c = func_003D0940(c, 0, 0, x, y, func_00418420(Gui_GetScreenList(), "callout"), D_00587C20);
+        c = TextObj_Construct(c, 0, 0, x, y, GuiFont_Find(Gui_GetScreenList(), "callout"), D_00587C20);
     }
     w->fa0 = c;
     w->fa0->b12 = 1;
@@ -205,7 +205,7 @@ unsigned int sel[1];
         if (sel[0] >= w->f4C && w->f4C != 0) sel[0] = w->f4C - 1;
         else if (sel[0] >= w->f4C) sel[0] = 0;
         w->f54 = 100000;
-        func_00424430(w, top[0], sel[0]);
+        GuiArrayWidget_Select(w, top[0], sel[0]);
     }
     if (w->f90 && w->f90->f90) {
         C48B90* x = w->f90->f90;
@@ -214,7 +214,7 @@ unsigned int sel[1];
     }
 }
 #undef func_00424410 /* merge_units */
-#undef func_00424430 /* merge_units */
+#undef GuiArrayWidget_Select /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00348B90(void) {}
 #pragma pop /* merge_units */

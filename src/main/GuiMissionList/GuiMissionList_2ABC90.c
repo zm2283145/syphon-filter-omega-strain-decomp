@@ -55,14 +55,14 @@ typedef struct { char pad[0x90]; C2AB* f90; } B2AB;
 typedef struct { char pad[0x2480]; int f2480; } L2AB;
 typedef struct { char pad[0x3C]; float f3c; float f40; char pad2[0x64]; C2AB* fa8; char p[4]; B2AB* fb0; char p2[8]; unsigned char bbc; char p3[3]; int fc0; int fc4; char p4[4]; int fcc; char p5[0x50]; int f120; } W2AB;
 extern "C" {
-extern void func_00424A90(W2AB*);
+extern void GuiArrayWidget_OnWake(W2AB*);
 extern void* Mem_Alloc(int, int, char*, int);
 extern char D_004AB9B0[];
 extern char D_00587C40[];
 extern int Gui_GetScreenList(void);
-extern int func_00418420(int, char*);
-extern C2AB* func_003D0940(void*, int, int, int, int, int, char*);
-extern void func_003D08B0(C2AB*, char*);
+extern int GuiFont_Find(int, char*);
+extern C2AB* TextObj_Construct(void*, int, int, int, int, int, char*);
+extern void TextObj_SetText(C2AB*, char*);
 extern L2AB* DME_GetLobby(void);
 extern int func_0044FA40(L2AB*);
 }
@@ -70,7 +70,7 @@ extern "C" void func_002ABD50(W2AB* w) {
     char buf[0x50];
     C2AB* c;
     L2AB* l;
-    func_00424A90(w);
+    GuiArrayWidget_OnWake(w);
     {
         AllocGuard g;
         c = (C2AB*)Mem_Alloc(0, 0x60, D_004AB9B0, 0x2C5);
@@ -78,14 +78,14 @@ extern "C" void func_002ABD50(W2AB* w) {
     if (c) {
         int x = (int)w->f3c;
         int y = (int)w->f40;
-        c = func_003D0940(c, 0, 0, x, y, func_00418420(Gui_GetScreenList(), "callout"), D_00587C40);
+        c = TextObj_Construct(c, 0, 0, x, y, GuiFont_Find(Gui_GetScreenList(), "callout"), D_00587C40);
     }
     w->fa8 = c;
     w->fa8->b12 = 1;
     w->fa8->b10 = 2;
     memset(buf, 0x2A, 0x50);
     buf[0x4F] = 0;
-    func_003D08B0(w->fa8, buf);
+    TextObj_SetText(w->fa8, buf);
     w->fcc = -1;
     w->fc4 = -1;
     w->fc0 = -1;

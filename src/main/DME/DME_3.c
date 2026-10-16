@@ -40,7 +40,7 @@ extern int g_DmeConnectRetries;
 extern int g_DmeConnectMaxRetries;
 extern signed char D_005724B0;
 extern int Gui_GetScreenStack(void);
-extern void func_0041E0F0(int a, int b, int c, int d, int e);
+extern void GuiWidget_SendEvent(int a, int b, int c, int d, int e);
 extern void NetGame_InitLocalSlot(int* out, int session);
 extern void func_002EBBA0(int session, int* out);
 static inline int LocalSlot_h5(int session)
@@ -64,7 +64,7 @@ void DME_OnConnectResult(NetConnInfo_h5* info)
     if (info->status == 3) {
         D_005724B0 = DME_STATE_DISCONNECTED;
         if (Gui_GetScreenStack()) {
-            func_0041E0F0(Gui_GetScreenStack(), Gui_GetScreenStack(), 0x1E, 0, (int)"F_TO_CONNECT");
+            GuiWidget_SendEvent(Gui_GetScreenStack(), Gui_GetScreenStack(), 0x1E, 0, (int)"F_TO_CONNECT");
         }
     } else {
         D_005724B0 = DME_STATE_CONNECTED;
@@ -73,7 +73,7 @@ void DME_OnConnectResult(NetConnInfo_h5* info)
         D_00494178 = slot[0];
         func_002EBBA0(info->session, slot);
         if (slot[0] == LocalSlot_h5(D_005721A8) && Gui_GetScreenStack()) {
-            func_0041E0F0(Gui_GetScreenStack(), Gui_GetScreenStack(), 0x1E, 1, 0);
+            GuiWidget_SendEvent(Gui_GetScreenStack(), Gui_GetScreenStack(), 0x1E, 1, 0);
         }
     }
     g_DmeConnectRetries = 0;

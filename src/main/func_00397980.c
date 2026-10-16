@@ -22,6 +22,6 @@ void func_003979B0(WordCursor* out, WordBuf* buf) {
     out->limit = out->begin + buf->capacity;
 }
 
-void func_00397A00(char* self) {
+void MotionGroup_ClearContributions(char* self) {
     *(int*)(self + 4) = 0;
 }

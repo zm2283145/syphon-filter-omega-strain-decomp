@@ -34,7 +34,7 @@ extern G_34D2D0* D_004FFC04;
 char D_004BA818[] = "GuiSlideShow"; void func_0034D770(O_34D2D0* o, int k);
 M_34D2D0* Gui_GetScreenStack(void);
 void* Gui_GetScreenList(void);
-void func_0041E0F0(void* a, void* b, int kind, int v, int f);
+void GuiWidget_SendEvent(void* a, void* b, int kind, int v, int f);
 void* GuiManager_FindOrLoad(void* mgr, char* a, char* b);
 void GuiStack_SwapScreens(void* mgr, void* o, void* w);
 char* String_CStr(void* s);
@@ -66,7 +66,7 @@ int func_0034D2D0(O_34D2D0* o, Ev_34D2D0* ev)
         void* w;
         E_34D2D0** ep = &o->ents;
         if (((E_34D2D0*)((char*)o->ents + idx * 20))->b8) {
-            func_0041E0F0(o, Gui_GetScreenStack(), 0x10, 1, 0);
+            GuiWidget_SendEvent(o, Gui_GetScreenStack(), 0x10, 1, 0);
             w = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004BA818, "ZEUSHELL");
             if (w) {
                 char b0[16];
@@ -83,7 +83,7 @@ int func_0034D2D0(O_34D2D0* o, Ev_34D2D0* ev)
                 GuiStack_SwapScreens(Gui_GetScreenStack(), o, w);
             }
         } else {
-            func_0041E0F0(o, Gui_GetScreenStack(), 0x10, 4, 0);
+            GuiWidget_SendEvent(o, Gui_GetScreenStack(), 0x10, 4, 0);
         }
         return 1;
     }
@@ -105,9 +105,9 @@ extern int Gui_GetScreenStack(void);
 #define Gui_GetScreenStack() ((int)Gui_GetScreenStack()) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_0041E0F0(O34D*, int, int, int, int);
+extern void GuiWidget_SendEvent(O34D*, int, int, int, int);
 #endif /* merge_units */
-#define func_0041E0F0(a0, a1, a2, a3, a4) (func_0041E0F0((void *)(a0), (void *)(a1), (a2), (a3), (a4))) /* merge_units */
+#define GuiWidget_SendEvent(a0, a1, a2, a3, a4) (GuiWidget_SendEvent((void *)(a0), (void *)(a1), (a2), (a3), (a4))) /* merge_units */
 
 extern void func_00356850(O34D*, int, int);
 extern void GuiScreen_SetFocus(int, int);
@@ -115,15 +115,15 @@ extern int func_00356B30(O34D*, W34D*, int, int, int);
 int func_0034D600(O34D* o, W34D* w, int ev, int x, int y) {
     unsigned short e = ev;
     if (e == 0) {
-        func_0041E0F0(o, Gui_GetScreenStack(), 0x10, 0, 0);
+        GuiWidget_SendEvent(o, Gui_GetScreenStack(), 0x10, 0, 0);
         if (w->f10 != -1) {
             func_00356850(o, w->f10, ((E34D*)((char*)o->fd4 + w->f10 * 20))->fc);
-            func_0041E0F0(o, (int)w, 6, (int)"onActivate", 0);
+            GuiWidget_SendEvent(o, (int)w, 6, (int)"onActivate", 0);
             return 1;
         }
     }
     if (e == 1 && w->f10 != -1) {
-        func_0041E0F0(o, (int)w, 6, (int)"onDeactivate", 0);
+        GuiWidget_SendEvent(o, (int)w, 6, (int)"onDeactivate", 0);
         return 1;
     }
     if (e == 0x3000) {
@@ -134,7 +134,7 @@ int func_0034D600(O34D* o, W34D* w, int ev, int x, int y) {
     return func_00356B30(o, w, ev, x, y);
 }
 #undef Gui_GetScreenStack /* merge_units */
-#undef func_0041E0F0 /* merge_units */
+#undef GuiWidget_SendEvent /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0034D600(void) {}
 #pragma pop /* merge_units */

@@ -43,8 +43,8 @@ static inline void merge_flush_func_0038CBF0(void) {}
 #pragma push /* merge_units */
 #include "fileman_entry.h"
 extern void* func_0036E140(void* entry, const char* name, int a, int b);
-extern int func_003EBA50(void);
-extern int func_003EAA60(int mgr, void* entry, int flag);
+extern int Fstream_GetLoader(void);
+extern int Fstream_ReleaseNoCallback(int mgr, void* entry, int flag);
 extern void func_003813A0(int mgr, int handle, int flags);
 extern int D_00539248;
 typedef struct {
@@ -65,7 +65,7 @@ void func_0038CC70(Cc70Obj* self)
         func_0036E5D0(&e);
         sprintf(path, "%s.HOG", self);
         func_0036E140(&e, path, 0, 0);
-        func_003EAA60(func_003EBA50(), &e, 1);
+        Fstream_ReleaseNoCallback(Fstream_GetLoader(), &e, 1);
         self->dirty = 0;
         FileMan_Release(&e, -1);
     }

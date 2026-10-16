@@ -9,7 +9,7 @@ extern int D_004F7E74;
 extern int D_004F7E78;
 extern int D_004F7E7C;
 extern int D_004F7E88;
-void func_004CFCC0(void) {
+void StaticInit_PickupTextColour(void) {
     D_004F7E70 = 1050253722;
     D_004F7E74 = 1057803469;
     D_004F7E78 = 1061158912;

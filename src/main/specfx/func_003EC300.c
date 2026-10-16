@@ -14,7 +14,7 @@ int func_003EC3C0(...);
 int func_003EC3D0(...);                      
 extern char D_0055C0A8;
 }
-extern "C" void func_003EC300(void) {
+extern "C" void EffectService_DrawAll(void) {
     int sp2C;
     char * sp28;
     int sp24;

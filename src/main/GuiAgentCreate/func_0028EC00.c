@@ -12,12 +12,12 @@ extern int func_00403310(void* p);
 extern void func_0040F540(void);
 extern GuiManagerState* Gui_GetScreenStack(void);
 extern int func_0041EBF0(void* self);
-extern int func_0041F090(void* self);
+extern int GuiWidget_Deinit(void* self);
 
 int GuiAgentCreate_Deinit(void* self) {
     func_00403310(D_0055DDA0);
     func_0040F540();
-    return func_0041F090(self);
+    return GuiWidget_Deinit(self);
 }
 
 /* Calls the base handler, then clears bits 2-3 of the gui manager flags. */

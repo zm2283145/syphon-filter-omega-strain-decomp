@@ -39,9 +39,9 @@ static inline void merge_flush_func_001C96D0(void) {}
 #pragma push /* merge_units */
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 typedef struct { char pad[0x90]; void* ptr; unsigned char flag; char pad2[0x1B0 - 0x95]; } E1C9710;
-extern void func_003A7FE0(void);
-extern void func_003A7310(void);
-extern void func_003A7200(void);
+extern void snd_StopAllSounds(void);
+extern void snd_FreeVAGStreamChannels(void);
+extern void snd_CloseVAGStreaming(void);
 extern void snd_UnloadBank(int);
 extern int snd_FlushSoundCommands(void);
 extern void ArchiveList_CloseNamed(void* a, char* name);
@@ -54,9 +54,9 @@ extern char D_0049F590[];
 #pragma opt_propagation off
 void SoundMgr_UnloadLevel(char* arg0) {
     int i;
-    func_003A7FE0();
-    func_003A7310();
-    func_003A7200();
+    snd_StopAllSounds();
+    snd_FreeVAGStreamChannels();
+    snd_CloseVAGStreaming();
     {
         E1C9710* e;
         i = 0;
@@ -119,7 +119,7 @@ extern char* Loc_GetLanguageSuffix(void);
 extern int Hog_FindFileNoCase(Arc1C98D0* a, char* name, int c);
 extern int func_0036D520(Arc1C98D0* a, int idx);
 extern void func_003A7330(int, int, int);
-extern void func_003A7370(int, int, int, int);
+extern void snd_InitVAGStreaming(int, int, int, int);
 extern void func_003A8240(void);
 extern int func_003F9600(void* a, char* name);
 extern int snd_BankLoadByLoc(int loc, int size);
@@ -133,7 +133,7 @@ int SoundMgr_LoadLevel(char* arg0) {
     char* fs = D_004FFB8C;
     Arc1C98D0* arc;
 
-    func_003A7370(4, 0xE000, 1, 1);
+    snd_InitVAGStreaming(4, 0xE000, 1, 1);
     D_0048A330 = 1;
     func_003A7330(1, 0, 1);
     func_003A7330(2, 2, 2);
@@ -180,8 +180,8 @@ static inline void merge_flush_func_001C98D0(void) {}
 #pragma mpwc_relax on
 int Global_SetReverb(int, int, int);                        
 int func_003A6D10(int, int);                              
-int func_003A80F0(int, int);                          
-int func_003A8120(int, int *);                          
+int snd_SetPlaybackMode(int, int);                          
+int snd_SetMasterVolumeDucker(int, int *);                          
 extern char * D_004FFD2C;
 
 void SoundMgr_Init(char * arg0) {
@@ -223,7 +223,7 @@ void SoundMgr_Init(char * arg0) {
     F_(temp_v0, 0x90, int) = 0;
     F_(temp_v0, 0x244, signed char) = 0;
     F_(temp_v0, 0x240, int) = 0;
-    func_003A80F0(F_(D_004FFD2C, 0x14, int), var_a1);
+    snd_SetPlaybackMode(F_(D_004FFD2C, 0x14, int), var_a1);
     func_003A6D10(1, 4);
     Global_SetReverb(1, 0xB21, 0xB21);
     sl.f10 = 2;
@@ -232,7 +232,7 @@ void SoundMgr_Init(char * arg0) {
     sl.f1C = 0x8000;
     sl.f18 = 0x8CCC;
     sl.f20 = 0x10000;
-    func_003A8120(0, &sl.f10);
+    snd_SetMasterVolumeDucker(0, &sl.f10);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001C9BF0(void) {}

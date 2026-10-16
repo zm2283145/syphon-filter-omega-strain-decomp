@@ -39,7 +39,7 @@ void func_00296FA0(L4E40* l);
 void func_00299360(L4E40* l, int flags);
 void func_003334C0(void* ag, unsigned char kind, L4E40* l);
 void func_0041C0F0(W4E40* w, int v);
-void func_0041BEB0(W4E40* w, int text, int f);
+void GuiTextWidget_SetText(W4E40* w, int text, int f);
 int Loc_LookupText(const char* key);
 enum E4E40on { ON0, ON1 };
 void func_00355490(O4E40* o, unsigned char on);
@@ -80,7 +80,7 @@ void func_00354E40(O4E40* self, const char* a, const char* b, unsigned char kind
                 func_0041C0F0(w, 1);
                 E4E40** pd = &l.data;
                 E4E40* e = *pd + arg;
-                func_0041BEB0(w, e->id, 0);
+                GuiTextWidget_SetText(w, e->id, 0);
                 e = *pd + arg;
                 self->on = e->flag != 0;
                 func_00355490(self, self->on ? ON1 : ON0);
@@ -91,7 +91,7 @@ void func_00354E40(O4E40* self, const char* a, const char* b, unsigned char kind
             if (self->arg >= 0 && self->arg < 17)
                 name = D_0048C160[self->arg];
             if (name) {
-                func_0041BEB0(w, Loc_LookupText(name), 0);
+                GuiTextWidget_SetText(w, Loc_LookupText(name), 0);
                 func_0041C0F0(w, 1);
             }
             self->on = false;

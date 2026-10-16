@@ -68,7 +68,7 @@ extern "C" {
 int atoi(...);                             
 int String_CStr(...);                          
 int GuiSaveAgentWidget_HandleEvent(...);                            
-int func_00441CA0(...);                                
+int GuiSaveAgentWidget_OnEvent(...);                                
 extern char D_004A9870;
 }
 extern "C" int func_00292980(char * arg0, void **arg1, int arg2) {
@@ -84,7 +84,7 @@ extern "C" int func_00292980(char * arg0, void **arg1, int arg2) {
         }
         return 1;
     }
-    return func_00441CA0();
+    return GuiSaveAgentWidget_OnEvent();
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00292980 */

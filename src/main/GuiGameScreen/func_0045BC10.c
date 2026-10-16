@@ -4,12 +4,12 @@
 #pragma mpwc_relax on
 int String_Dtor(char * , int);                         
 int func_0013A040(char * , int);                         
-int func_0041F370(char **, int);                           
+int GuiWidget_Destroy(char **, int);                           
 int operator_delete(char **);                            
-extern void func_0041D400();
-extern void func_0041D5C0();
-extern void func_0041D780();
-extern void func_0041D8C0();
+extern void GuiWidget_FocusPrev();
+extern void GuiWidget_FocusNext();
+extern void GuiWidget_FocusLast();
+extern void GuiWidget_FocusFirst();
 extern void func_0041E230();
 extern void func_0041E2B0();
 extern void func_0041E330();
@@ -20,12 +20,12 @@ extern void func_0041F080();
 extern void func_0041F210();
 extern void func_0045BCC0();
 extern void func_0045BCD0();
-extern void func_0045D3D0();
-extern void func_0045D420();
-extern void func_0045D8D0();
-extern void func_0045D960();
+extern void GuiGameScreen_OnEvent();
+extern void GuiGameScreen_OnInput();
+extern void GuiGameScreen_Draw();
+extern void GuiGameScreen_Update();
 extern void func_0045DE80();
-extern void func_0045DFD0();
+extern void GuiGameScreen_Init();
 extern void * const D_004E1620[];
 
 char **func_0045BC10(char **arg0, long long arg1) {
@@ -47,11 +47,11 @@ char **func_0045BC10(char **arg0, long long arg1) {
         if (temp_a0_3 != NULL) {
             String_Dtor(temp_a0_3, 0);
         }
-        func_0041F370(arg0, 0);
+        GuiWidget_Destroy(arg0, 0);
         if (((long long) (arg1 << 0x30) >> 0x30) > 0) {
             operator_delete(arg0);
         }
     }
     return arg0;
 }
-void * const D_004E1620[24] = { (void*)0x0, (void*)0x0, (void*)func_0045BC10, (void*)func_0045DFD0, (void*)func_0045DE80, (void*)func_0041F080, (void*)func_0041F070, (void*)func_0041EFA0, (void*)func_0041EBF0, (void*)func_0041E330, (void*)func_0041E2B0, (void*)func_0045D420, (void*)func_0045D8D0, (void*)func_0041E230, (void*)func_0045D960, (void*)func_0045D3D0, (void*)func_0041F210, (void*)func_0041D8C0, (void*)func_0041D780, (void*)func_0041D5C0, (void*)func_0041D400, (void*)func_0045BCC0, (void*)func_0045BCD0, (void*)0x0 };
+void * const D_004E1620[24] = { (void*)0x0, (void*)0x0, (void*)func_0045BC10, (void*)GuiGameScreen_Init, (void*)func_0045DE80, (void*)func_0041F080, (void*)func_0041F070, (void*)func_0041EFA0, (void*)func_0041EBF0, (void*)func_0041E330, (void*)func_0041E2B0, (void*)GuiGameScreen_OnInput, (void*)GuiGameScreen_Draw, (void*)func_0041E230, (void*)GuiGameScreen_Update, (void*)GuiGameScreen_OnEvent, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)func_0045BCC0, (void*)func_0045BCD0, (void*)0x0 };

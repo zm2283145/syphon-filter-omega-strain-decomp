@@ -23,7 +23,7 @@ void WeaponInv_HolsterCurrent(void*);
 void WeaponInv_RemoveSlot(void*,int,int,int,int=0);
 int WeaponInv_SlotOfItem(short);
 void* GuiManager_FindOrLoad(void*,char*,char*);
-void func_0041E0F0(void*,void*,int,int,int=0);
+void GuiWidget_SendEvent(void*,void*,int,int,int=0);
 extern signed char D_00489D62[];
 extern char D_004A9870[],D_004AC2B0[],D_004AC2C8[],D_004AC2D0[],D_004AC2E0[],D_004AC2F0[],D_004AC300[],D_004AC310[],D_004AC320[],D_004AC330[],D_004AC340[],D_004AC350[],D_004AC360[],D_004FFB50[],D_0055A300[];
 extern void* D_004FFC04;
@@ -187,7 +187,7 @@ extern "C" int GuiEquipmentModify_Accept(Screen* arg0, GuiGridInput* arg1) {
             temp_v1_4->unk14 = (unsigned short) (temp_v1_4->unk14 & 0xFF7F);
             temp_v1_5 = arg0->unk94;
             temp_v1_5->unk14 = (unsigned short) (temp_v1_5->unk14 & 0xFF7F);
-            func_0041E0F0(var_s0_3, Gui_GetScreenStack(), 0x10, 0);
+            GuiWidget_SendEvent(var_s0_3, Gui_GetScreenStack(), 0x10, 0);
             goto block_88;
         }
 block_88:
@@ -229,8 +229,8 @@ block_88:
             temp_v1_8 = arg0->unkCC;
             temp_v1_8->unk14 = (unsigned short) (temp_v1_8->unk14 | 8);
             if (var_s0_4 != 0) {
-                func_0041E0F0(arg0, var_s0_4, 6, (int)D_004AC360);
-                func_0041E0F0(var_s0_4, Gui_GetScreenStack(), 0x10, 0);
+                GuiWidget_SendEvent(arg0, var_s0_4, 6, (int)D_004AC360);
+                GuiWidget_SendEvent(var_s0_4, Gui_GetScreenStack(), 0x10, 0);
             }
             return 1;
         }

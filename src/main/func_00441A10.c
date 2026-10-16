@@ -29,8 +29,8 @@ extern char D_004C0510[]; extern char D_004C0520[];
 int* Agent_GetSelected(void*, int);
 char* Loc_LookupText(char*);
 int FrontEnd_OpenPopup(int, int, char*, char*, void*, int);
-void func_0040D3C0(Net_441A10*);
-void func_00441960(Obj_441A10*);
+void MemCard_Refresh(Net_441A10*);
+void GuiSaveAgentWidget_WriteCard(Obj_441A10*);
 void func_00441C10(void);
 }
 
@@ -42,7 +42,7 @@ extern "C" void GuiSaveAgentWidget_HandleEvent(Obj_441A10* self)
     if (self->mode != 0 && self->mode != 4) self->f50 = Agent_GetSelected(D_004FFB50, -1)[1];
     self->shown = 0;
     net->cb = (void*)func_00441C10;
-    func_0040D3C0(net);
+    MemCard_Refresh(net);
     if (!net->impl->f59D) {
         if (self->mode == 2 && !D_004FFBB8) {
             net->cb = 0;
@@ -64,5 +64,5 @@ extern "C" void GuiSaveAgentWidget_HandleEvent(Obj_441A10* self)
         self->dlg = ShowDlg(D_004FFC04, 5, D_004C0448, D_004C0520, self, 5);
         return;
     }
-    func_00441960(self);
+    GuiSaveAgentWidget_WriteCard(self);
 }

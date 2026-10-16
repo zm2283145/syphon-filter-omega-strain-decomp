@@ -6,7 +6,10 @@ extern void Actor_BaseWorldUpdate();
 extern void Actor_VirtualNop();
 extern void Controller_DeathNotice();
 extern void Node_ClearFlag2C();
+extern void Node_GetComponentMatrix();
 extern void Node_GetFlag2C();
+extern void Node_GetLightRefPoint();
+extern void Node_GetWorldMatrix();
 extern void Node_SetFlag2C();
 extern void Object_Activate();
 extern void Object_AttachTransform();
@@ -16,6 +19,9 @@ extern void Object_GetEye();
 extern void Object_HandleMessage();
 extern void PathObj_GetPosition();
 extern void Player_GetActiveWeapon();
+extern void Skybox_Draw();
+extern void Skybox_LoadLayers();
+extern void Skybox_Update();
 extern void func_0012ECE0();
 extern void func_0012ED00();
 extern void func_0012ED30();
@@ -44,17 +50,11 @@ extern void func_0015C0A0();
 extern void func_001C6140();
 extern void func_003BBD90();
 extern void func_003BBDA0();
-extern void func_003BBDC0();
 extern void func_003BC270();
-extern void func_003BC280();
-extern void func_003BC520();
 extern void func_003CCFF0();
 extern void func_003CD090();
 extern void func_003CD110();
-extern void func_003CD1C0();
-extern void func_003CD420();
 extern void func_003CD4A0();
-extern void func_003CD520();
 extern void func_003CD7A0();
 extern void func_003CD920();
 extern void func_003CDA60();
@@ -72,8 +72,8 @@ void *D_004DAB20[68] = {
     &func_0012ECE0, &Object_GetAttachedOrSelf, &func_0015C090, &func_0012ED00,
     &func_003CE810, &func_003CE7D0, &func_0012ED30, &func_0012ED40,
     &func_0012ED50, &func_003BBD90, &func_003BBDA0, &func_003CEA00,
-    &func_003BC270, &func_003BBDC0, &func_003BC520, &Actor_BasePreLogic,
-    &Actor_BaseWorldUpdate, &Actor_VirtualNop, &func_003BC280, &Object_Activate,
+    &func_003BC270, &Skybox_LoadLayers, &Skybox_Update, &Actor_BasePreLogic,
+    &Actor_BaseWorldUpdate, &Actor_VirtualNop, &Skybox_Draw, &Object_Activate,
     &Object_Deactivate, &Node_SetFlag2C, &Node_ClearFlag2C, &Node_GetFlag2C,
     &func_0015BFB0, &func_0015BFC0, &func_0015BFD0, &func_00148870,
     &func_0015BFF0, &func_0015BFE0, &func_0013EE60, &func_0015C000,
@@ -81,8 +81,8 @@ void *D_004DAB20[68] = {
     &func_003CDD40, &func_003CDC20, &func_003CDBE0, &func_003CDA60,
     &func_003CD920, &func_003CD7A0, &func_0015C010, &func_00153860,
     &Object_GetEye, &func_0015C020, &func_00140E90, &func_0015C030,
-    &func_0015C040, &func_0015C050, &func_003CD520, &func_003CD4A0,
-    &func_003CD420, &PathObj_GetPosition, &func_003CD1C0, &func_003CD110,
+    &func_0015C040, &func_0015C050, &Node_GetWorldMatrix, &func_003CD4A0,
+    &Node_GetLightRefPoint, &PathObj_GetPosition, &Node_GetComponentMatrix, &func_003CD110,
     &func_003CD090, &func_003CCFF0, &func_0013E060, &func_0015C080,
     &Actor_ApplyContactDamage, &func_0015C0A0, &func_00141850, &Controller_DeathNotice,
 };

@@ -7,7 +7,7 @@ int Gui_GetScreenStack();
 int GuiStack_SwapScreens(int, char * , int);                  
 int GuiManager_AddWidget(int, int);                          
 int func_0041EFA0(char * );                            
-int func_0041F960(char *);                             
+int GuiFactory_CreateWidget(char *);                             
 int func_0045F4D0(char * );                            
 int func_0045F860(char * );                            
 int GuiNewParts_BuildBonusList();                                  
@@ -19,7 +19,7 @@ void func_004603A0(char * arg0) {
 
     GuiNewParts_BuildBonusList();
     if (F_(arg0, 0x1B4, int) == 0) {
-        temp_v0 = func_0041F960(&D_004C2460);
+        temp_v0 = GuiFactory_CreateWidget(&D_004C2460);
         if (temp_v0 != 0) {
             GuiManager_AddWidget(Gui_GetScreenList(), temp_v0);
             GuiStack_SwapScreens(Gui_GetScreenStack(), arg0, temp_v0);

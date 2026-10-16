@@ -297,7 +297,7 @@ extern unsigned char D_00533880;
 }
 #pragma push
 #pragma opt_common_subs off
-extern "C" void func_003CDF20(char * arg0) {
+extern "C" void Node_ClearLocalMatrix(char * arg0) {
     void **temp_s1;
 
     temp_s1 = (void **)(F_(arg0, 0x50, int));

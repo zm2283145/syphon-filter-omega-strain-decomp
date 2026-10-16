@@ -26,11 +26,11 @@ struct W_415170 {
     char pad30[0x14];
     C_415170* comp;
 };
-extern "C" void func_0041E040(W_415170* w, int msg, int a, int b);
+extern "C" void GuiWidget_SendEventUp(W_415170* w, int msg, int a, int b);
 
 static inline bool IsPress_415170(Ev_415170* e) { return e->type == 1 && e->dev == 0 && e->action == 0; }
 
-extern "C" int func_00415170(W_415170* o, Ev_415170* ev)
+extern "C" int GuiCanvas_Navigate(W_415170* o, Ev_415170* ev)
 {
     if (IsPress_415170(ev)) {
         unsigned short k = ev->key;
@@ -39,7 +39,7 @@ extern "C" int func_00415170(W_415170* o, Ev_415170* ev)
             if (o->on == 0 || o->focus == 0) return 0;
             if (k == 0x1000) n = o->h->root->Next(o->focus, 1);
             else n = o->h->root->Prev(o->focus, 1);
-            if (n && n != o->focus) func_0041E040(n, 0x10, 0, 0);
+            if (n && n != o->focus) GuiWidget_SendEventUp(n, 0x10, 0, 0);
             if (n != o->focus) {
                 if (o->focus) o->focus->comp->Unfocus();
                 o->focus = n;

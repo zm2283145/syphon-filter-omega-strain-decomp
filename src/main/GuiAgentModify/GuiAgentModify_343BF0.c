@@ -32,7 +32,7 @@ extern int D_00506500;
 void func_00403310(void* p);
 void func_0040F540(void);
 void func_002BDC10(void* p);
-void func_0041F370(void* p, int f);
+void GuiWidget_Destroy(void* p, int f);
 #if 0 /* merge_units */
 void operator_delete(void* p);
 #endif /* merge_units */
@@ -57,7 +57,7 @@ extern "C" O00343BF0* func_00343BF0(O00343BF0* self, short del)
         func_0040F540();
         if (self) {
             self->vt = D_004E1220;
-            func_0041F370(self, 0);
+            GuiWidget_Destroy(self, 0);
         }
         if (del > 0)
             operator_delete(self);

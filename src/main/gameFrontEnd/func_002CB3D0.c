@@ -69,7 +69,7 @@ void FrontEnd_CreateCanvas(Self3D0* self, unsigned char flag);
 Stk3D0* Gui_GetScreenStack(void);
 int Gui_GetScreenList(void);
 void func_004158C0(Stk3D0* s, int x);
-Scr3D0* func_004187C0(int l, char* a, char* b);
+Scr3D0* GuiManager_CreateRoot(int l, char* a, char* b);
 Scr3D0* GuiManager_FindOrLoad(int l, char* a, char* b);
 int DME_GetLobby(void);
 void func_00453A50(int g);
@@ -81,7 +81,7 @@ void* Service_Lookup(void* a, void* b);
 void Event_Construct(void* m, void* type);
 void Event_Send(void* m, void* target, int immediate);
 void cMessage_dtor(void* m, int flags);
-void func_0041E0F0(Stk3D0* a, Stk3D0* b, int c, int d, int e);
+void GuiWidget_SendEvent(Stk3D0* a, Stk3D0* b, int c, int d, int e);
 void FrontEnd_GetCharacterData(Self3D0* self);
 void func_002C9EE0(Self3D0* self);
 void func_00145160(int a);
@@ -107,7 +107,7 @@ extern "C" void FrontEnd_StartGui(Self3D0* self, unsigned char flag)
     func_004158C0(Gui_GetScreenStack(), 1);
     Gui_GetScreenStack()->x68 = 0;
     if (!flag) Gui_GetScreenStack()->x68 |= 0xF000;
-    scr = func_004187C0(Gui_GetScreenList(), D_004ACFE8, D_004ACFF8);
+    scr = GuiManager_CreateRoot(Gui_GetScreenList(), D_004ACFE8, D_004ACFF8);
     scr = (scr && scr->IsA(D_004AD1F8)) ? scr : 0;
     self->p258 = scr;
     if (!flag) {
@@ -167,7 +167,7 @@ extern "C" void FrontEnd_StartGui(Self3D0* self, unsigned char flag)
         strncpy(D_004FFC90, buf.s, 0x80);
         {
             Stk3D0* a = Gui_GetScreenStack();
-            func_0041E0F0(a, Gui_GetScreenStack(), 0x10, 5, 0);
+            GuiWidget_SendEvent(a, Gui_GetScreenStack(), 0x10, 5, 0);
         }
         if (self->b2C) {
             GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AD000, D_004AD010);

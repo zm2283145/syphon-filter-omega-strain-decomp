@@ -20,7 +20,7 @@ extern char D_004FFB50[];
 extern char D_004F2CC0[];
 extern char D_004FFC90[];
 extern char D_004ACF48[];
-void func_004147B0(void);
+void GuiCanvas_Destroy(void);
 void func_004139C0(void* p);
 void func_002C81D0(Self_002CB160* self);
 void Video_BeginFrame(void* p);
@@ -41,7 +41,7 @@ void func_002CDEF0(Node_002CB160** out, int* list, Node_002CB160** first, Node_0
 extern "C" void FrontEnd_TeardownGui(Self_002CB160* self)
 {
     if (self->b28) {
-        func_004147B0();
+        GuiCanvas_Destroy();
         func_004139C0(D_00571DC0);
         if (self->b310)
             func_002C81D0(self);

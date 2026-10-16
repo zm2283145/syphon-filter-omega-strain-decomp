@@ -131,10 +131,10 @@ static inline void merge_flush_func_003339E0(void) {}
 /* merge_units: begin func_00333B10 */
 #pragma push /* merge_units */
 typedef struct { char pad[0x84]; int bits[1]; } T333B10;
-extern __int128 func_003FDA40(int id);
+extern __int128 StringPool_MakeKey(int id);
 extern int Objective_Find(__int128 key);
 int AgentData_IsObjectiveComplete(T333B10* t, int id) {
-    int i = Objective_Find(func_003FDA40(id));
+    int i = Objective_Find(StringPool_MakeKey(id));
     int r;
     if (i > -1) r = ((t->bits[i / 32] >> (i & 31)) & 1) != 0;
     else { r = 0; asm { .set reorder } }
@@ -164,9 +164,9 @@ extern void func_002823E0();
 void * const D_004DE810[8] = { (void*)0x0, (void*)0x0, (void*)cNetAddObjectiveMsg_dtor, (void*)cNetAddObjectiveMsg_v01, (void*)func_002823E0, (void*)Message_GetScriptTypeKey, (void*)cNetAddObjectiveMsg_v04, (void*)cNetAddObjectiveMsg_v05 };
 extern char D_004DCF10[];
 #if 0 /* merge_units */
-extern __int128 func_003FDA40(char*);
+extern __int128 StringPool_MakeKey(char*);
 #endif /* merge_units */
-#define func_003FDA40(a0) (func_003FDA40((int)(a0))) /* merge_units */
+#define StringPool_MakeKey(a0) (StringPool_MakeKey((int)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
 extern int Objective_Find(__int128);
@@ -181,7 +181,7 @@ static inline void Pt2_SetBit(unsigned int* bits, int i) { if (i > -1) bits[i / 
 
 #pragma opt_propagation off
 void AgentData_SetObjectiveBit(Pt2_Agent* ag, char* name, int notify) {
-    int idx = Objective_Find(func_003FDA40(name));
+    int idx = Objective_Find(StringPool_MakeKey(name));
     Pt2_SetBit(ag->done, idx);
     Pt2_SetBit(ag->seen, idx);
     if (notify && D_005721C8 && D_004FFC0C && D_004FFC0C->tgt->magic == 0xBEBAAFDE) {
@@ -197,7 +197,7 @@ void AgentData_SetObjectiveBit(Pt2_Agent* ag, char* name, int notify) {
         cMessage_dtor(mp, 0);
     }
 }
-#undef func_003FDA40 /* merge_units */
+#undef StringPool_MakeKey /* merge_units */
 #undef Objective_Find /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00333B90(void) {}

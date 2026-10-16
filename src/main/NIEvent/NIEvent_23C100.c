@@ -375,7 +375,7 @@ int IdMgr_FindCollision(int region, int id);
 void ZoneMgr_Associate(int found, Self_C610* o, int a, int b);
 void PtrVector_Resize(ChildVec_C610* v, int n, Child_C610* const& value);
 static inline void AssignP_C610(ChildVec_C610* v, int n, Child_C610* const& fill) { Child_C610* z = 0; PtrVector_Resize(v, 0, z); PtrVector_Resize(v, n, fill); }
-void func_003CDF20(Self_C610* o);
+void Node_ClearLocalMatrix(Self_C610* o);
 void func_003CD5C0(Self_C610* o);
 void func_0023B120(Self_C610* o);
 float Vec4_GetX(V4_C610* v);
@@ -562,7 +562,7 @@ extern "C" Self_C610* cNIEventOBJ_ctor(Self_C610* self, int mode, Reader_C610* r
     VCX_C610(pp, &self->keys.data[0].pos);
     self->bDC = Fl_C610(&self->flags)->on;
     self->v60(1, pp);
-    func_003CDF20(self);
+    Node_ClearLocalMatrix(self);
     {
         Mat_C610 m;
         MakeRot_C610(&m, V4_C610(1.0f, 0.0f, 0.0f, 0.0f), D2R_C610(self->t144.cur));

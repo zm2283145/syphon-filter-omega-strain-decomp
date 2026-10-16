@@ -17,7 +17,7 @@ int Event_Construct(char **, char *);
 int Stream_ReadU32(int *);                            
 int cMessage_dtor(char **, int);                           
 int Loc_GetStoredKey(int);                             
-int func_0045ECA0(int, unsigned char);                           
+int GameScreen_DisplayInteractLocal(int, unsigned char);                           
 extern char D_004DCF10;
 extern char D_004E1680;
 extern char D_00586158;
@@ -32,7 +32,7 @@ void func_0045EBC0(void) {
     Stream_ReadU32(sl.f58);
     temp_a0 = sl.f54;
     if (temp_a0 != -1) {
-        func_0045ECA0(Loc_GetStoredKey(temp_a0), sl.f58[0]);
+        GameScreen_DisplayInteractLocal(Loc_GetStoredKey(temp_a0), sl.f58[0]);
     }
     sl.f30[0] = &D_004DCF10;
     cMessage_dtor(sl.f30, 0);
@@ -45,13 +45,13 @@ static inline void merge_flush_func_0045EBC0(void) {}
 /* merge_units: begin func_0045EC60 */
 #pragma push /* merge_units */
 extern GameHudOwner* D_004FFC2C;
-extern void func_0045CFB0(void* hud, int enable);
+extern void GuiGameScreen_HideInteract(void* hud, int enable);
 
 /* Enable the interaction prompt when both the owner and its HUD are present. */
-void func_0045EC60(void)
+void GameScreen_ClearInteractLocal(void)
 {
     if (D_004FFC2C && D_004FFC2C->hud)
-        func_0045CFB0(D_004FFC2C->hud, 1);
+        GuiGameScreen_HideInteract(D_004FFC2C->hud, 1);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0045EC60(void) {}

@@ -33,7 +33,7 @@ char * Mem_Alloc(...);
 int Object_AttachTransform(...);           
 int cGOBJ_ctor(...);              
 char * func_00393FF0(...);                 
-int func_0041F150(...);                                  
+int GuiWidget_Init(...);                                  
 extern char D_004BBA20;
 extern char D_004DA470;
 extern unsigned char D_00533880;
@@ -46,7 +46,7 @@ extern "C" void func_003643A0(char * arg0) {
     char * temp_s1;
     char * var_s1;
 
-    func_0041F150();
+    GuiWidget_Init();
     {
         AllocGuard g;
     temp_s1 = (char *)(Mem_Alloc(0, 0x68, &D_004BBA20, 0x49));

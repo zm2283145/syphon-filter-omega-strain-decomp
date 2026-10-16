@@ -146,14 +146,14 @@ void HudRadar_ctor(void* a, void* b);
 Link_245F00* HudMap_ctor(void* p, int a, int b);
 void FrontEnd_StartGui(void* a, int b);
 void func_003E7EB0(void* a, void* b);
-void func_003E8DE0(int a, int b);
+void IeElement_SetShown(int a, int b);
 void func_003EE830(void* a, int b);
-void* func_003EEB30(void* a, char* name);
-void func_003EEBE0(void* a, int b, int c);
-void* func_003EF010(void* a);
+void* IeNode_FindChild(void* a, char* name);
+void IeNode_SetShown(void* a, int b, int c);
+void* IeElement_Create(void* a);
 void func_003FA1B0(void* a, int b);
-void func_003FA500(void* a, int b, int c);
-void* func_004187C0(void* list, char* a, char* b);
+void HudTicker_Init(void* a, int b, int c);
+void* GuiManager_CreateRoot(void* list, char* a, char* b);
 void GuiManager_FindOrLoad(void* list, char* a, char* b);
 Widget_245F00* GuiWidget_FindChildByName(void* a, char* name);
 }
@@ -172,9 +172,9 @@ extern "C" Hud_245F00* HudObject_ctor(Hud_245F00* h, int a1, int a2, int a3)
     h->bC = 1;
     h->f50 = a1;
     h->f54 = func_00241C70(a2, a1);
-    h->f58 = func_003EEB30(*h->f54, D_004A72B8);
-    h->f5C = func_003EEB30(*h->f54, D_004A72C8);
-    h->f60 = func_003EEB30(*h->f54, D_004A72E0);
+    h->f58 = IeNode_FindChild(*h->f54, D_004A72B8);
+    h->f5C = IeNode_FindChild(*h->f54, D_004A72C8);
+    h->f60 = IeNode_FindChild(*h->f54, D_004A72E0);
     h->f64 = 0;
     h->f68 = 0;
     {
@@ -183,12 +183,12 @@ extern "C" Hud_245F00* HudObject_ctor(Hud_245F00* h, int a1, int a2, int a3)
         s->bC = 1;
     }
     ObjMarkerMgr_ctor(h->m90);
-    HudRadar_ctor(&h->mD0, func_003EEB30(*h->f54, D_004A72F8));
+    HudRadar_ctor(&h->mD0, IeNode_FindChild(*h->f54, D_004A72F8));
     h->fEC = 0;
     {
         signed char c = D_004F7D40;
         int v = *(int*)((unsigned char)c * 4 + (char*)App_GetInstance()->f280);
-        func_003FA500(h->m100, Hud_FindOrCreateElement(*h->f54, D_004A7308), v);
+        HudTicker_Init(h->m100, Hud_FindOrCreateElement(*h->f54, D_004A7308), v);
     }
     WeaponPreview_ctor(h->m634);
     {
@@ -217,18 +217,18 @@ extern "C" Hud_245F00* HudObject_ctor(Hud_245F00* h, int a1, int a2, int a3)
     root = *h->f54;
     func_003EE830(h->f5C, 1);
     func_003EE830(h->f60, 1);
-    grp = func_003EEB30(root, D_004A7310);
-    func_003EEBE0(grp, 1, 1);
+    grp = IeNode_FindChild(root, D_004A7310);
+    IeNode_SetShown(grp, 1, 1);
     h->f6C = Hud_FindOrCreateElement(grp, D_004A7328);
     h->f70 = Hud_FindOrCreateElement(grp, D_004A7338);
     h->f74 = Hud_FindOrCreateElement(root, D_004A7348);
     Hud_SetGoggles(h, 0);
     h->f8C = -1;
     func_003FA1B0(h->m100, 0);
-    grp = func_003EEB30(root, D_004A7360);
-    h->f630 = func_003EF010(grp);
+    grp = IeNode_FindChild(root, D_004A7360);
+    h->f630 = IeElement_Create(grp);
     func_003E7EB0(h->f630, h->m634);
-    h->f69C = (Model_245F00*)func_003EF010(func_003EEB30(grp, D_004A7378));
+    h->f69C = (Model_245F00*)IeElement_Create(IeNode_FindChild(grp, D_004A7378));
     {
         Elem_245F00* e = h->f69C->f74;
         if (e) {
@@ -236,28 +236,28 @@ extern "C" Hud_245F00* HudObject_ctor(Hud_245F00* h, int a1, int a2, int a3)
             e->b10 = 2;
         }
     }
-    D_004F7D90 = (Node_245F00*)func_003EEB30(root, D_004A7388);
+    D_004F7D90 = (Node_245F00*)IeNode_FindChild(root, D_004A7388);
     D_004F7D90->b62 = 1;
-    D_004F7DA0 = (Node_245F00*)func_003EEB30(root, D_004A7398);
-    D_004F7DA4 = (Node_245F00*)func_003EEB30(root, D_004A73B0);
-    D_004F7DA8 = (Node_245F00*)func_003EEB30(root, D_004A73C0);
-    D_004F7DAC = (Node_245F00*)func_003EEB30(root, D_004A73D0);
+    D_004F7DA0 = (Node_245F00*)IeNode_FindChild(root, D_004A7398);
+    D_004F7DA4 = (Node_245F00*)IeNode_FindChild(root, D_004A73B0);
+    D_004F7DA8 = (Node_245F00*)IeNode_FindChild(root, D_004A73C0);
+    D_004F7DAC = (Node_245F00*)IeNode_FindChild(root, D_004A73D0);
     D_004F7DA0->b62 = 1;
     D_004F7DA4->b62 = 1;
     D_004F7DA8->b62 = 1;
     D_004F7DAC->b62 = 1;
     Hud_InitCalloutRects(h);
-    D_004F7DB0 = (Node_245F00*)func_003EEB30(root, D_004A73E8);
+    D_004F7DB0 = (Node_245F00*)IeNode_FindChild(root, D_004A73E8);
     D_004F7DB0->b62 = 1;
-    func_003EEBE0(D_004F7DB0, 0, 1);
+    IeNode_SetShown(D_004F7DB0, 0, 1);
     h->f78 = Hud_FindOrCreateElement(root, D_004A73F8);
-    func_003E8DE0(h->f78, 0);
+    IeElement_SetShown(h->f78, 0);
     Hud_SelectTextColorTable(h, 0);
     h->fF0 = 0;
     h->f6DC = 0;
     h->f6E0 = -1.0f;
     FrontEnd_StartGui(D_004FFC04, 1);
-    h->f6A4 = func_004187C0(Gui_GetScreenList(), D_004A7400, D_004A7410);
+    h->f6A4 = GuiManager_CreateRoot(Gui_GetScreenList(), D_004A7400, D_004A7410);
     Gui_GetScreenStack()->Show(h->f6A4, 0);
     wa = Cast_245F00(GuiWidget_FindChildByName(h->f6A4, D_004A7420), D_004A7520);
     wb = Cast_245F00(GuiWidget_FindChildByName(h->f6A4, D_004A7438), D_004A7520);

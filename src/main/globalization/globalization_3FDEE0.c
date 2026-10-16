@@ -38,7 +38,7 @@ int Alloc_Lock();
 int Alloc_Unlock();                                  
 int Loc_ReadPoolFile();                       
 int Mem_Alloc();                        
-signed char func_0043FBB0();                         
+signed char CharMap_Load();                         
 extern char D_00493A40;
 extern char D_004BE440;
 extern unsigned char D_00533880;
@@ -75,7 +75,7 @@ void Loc_LoadCommonPool(int arg0) {
     D_0055CA80 = D_0055CA74;
     D_0055D468 = D_0055D460;
     sprintf(sp30, "%s\\COMMON\\sfo_char.map", arg0);
-    D_0055D450 = func_0043FBB0(&D_0055CA90, sp30);
+    D_0055D450 = CharMap_Load(&D_0055CA90, sp30);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003FDF40(void) {}

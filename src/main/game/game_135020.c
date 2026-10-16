@@ -166,10 +166,10 @@ void func_00335D50(void* a, int b);
 int FileMan_FindMember(Path_1350E0* p);
 void FileMan_Release(void* p, int f);
 void func_0036E4B0(Path_1350E0* p, char* name, int a, int b);
-void func_003A3910(void* p, int n);
+void ParticleSystem_Construct(void* p, int n);
 void func_003CAC40(World_1350E0* w, void* p);
 void func_003E2140(void* m, int a);
-void func_004089F0(void* a, int b);
+void MaterialProps_ResolveEffects(void* a, int b);
 void GobjScopeBase_Ctor(void* p, int n, void* arr);
 void MotionManager_Init(void);
 void func_004703B0(void);
@@ -242,7 +242,7 @@ extern "C" void World_Setup(World_1350E0* w)
         sprintf(path, D_0049AA90, D_0048B2F8);
     }
     LoadingScreen_Start(App_GetInstance(), 0, path);
-    func_003A3910(D_0053B540, 0x1388);
+    ParticleSystem_Construct(D_0053B540, 0x1388);
     {
         void* p;
         { if (D_00533880) Alloc_Lock(9); D_00533888++; p = Mem_Alloc(0, 0x230, D_0049A890, 0x20C); if (D_00533880) Alloc_Unlock(9); D_00533888--; }
@@ -286,7 +286,7 @@ extern "C" void World_Setup(World_1350E0* w)
     func_001C01D0(w->f88, w->f3C);
     Loader_LoadLevelData(w->f88, w->f3C);
     sprintf(arc, D_0049AAC0, D_0048B2F8);
-    func_004089F0(D_0053BB90, Archive_Open(w->f3C, arc, 0, 0));
+    MaterialProps_ResolveEffects(D_0053BB90, Archive_Open(w->f3C, arc, 0, 0));
     Game_LoadParResources(w->f3C);
     World_SetupView(w);
     Game_CreateHud(w);

@@ -11,12 +11,12 @@
 #pragma push /* merge_units */
 typedef struct { char pad[0x68]; void* obj; } O4960;
 extern void Hud_GetLockColour(void* tmp);
-extern void func_003E7EE0(void* obj, void* tmp);
+extern void IeElement_SetColour(void* obj, void* tmp);
 void func_00244960(O4960* self) {
     if (self->obj) {
         char tmp[16];
         Hud_GetLockColour(tmp);
-        func_003E7EE0(self->obj, tmp);
+        IeElement_SetColour(self->obj, tmp);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -26,7 +26,7 @@ static inline void merge_flush_func_00244960(void) {}
 
 /* merge_units: begin func_002449A0 */
 #pragma push /* merge_units */
-extern void func_003E8DE0(int, int);
+extern void IeElement_SetShown(int, int);
 
 void Hud_HideNoFire(int a0) {
     int a1;
@@ -36,7 +36,7 @@ void Hud_HideNoFire(int a0) {
     cond = a0 == 0;
     a1 = 0;
     if (cond) goto L002449C0;
-    func_003E8DE0(a0, a1);
+    IeElement_SetShown(a0, a1);
 L002449C0:;
     goto ret;
 ret:;
@@ -56,7 +56,7 @@ void Hud_ShowNoFire(int a0) {
     cond = a0 == 0;
     a1 = 0 + 1;
     if (cond) goto L002449F0;
-    func_003E8DE0(a0, a1);
+    IeElement_SetShown(a0, a1);
 L002449F0:;
     goto ret;
 ret:;

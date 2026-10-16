@@ -16,7 +16,7 @@ char D_0049AAF0[] = "%s\\COMMON\\PAR.HOG"; /* format */
 extern char D_0048B2F8[];
 extern char D_0053B540[];
 extern void* Archive_Open(void* self, const char* text, int a2, int a3);
-extern void func_00397B20(void* list, void* item);
+extern void ParticleLib_ResolveRequests(void* list, void* item);
 extern void ArchiveList_CloseNamed(void* self, const char* text);
 extern int* SpecFx_GetEffectDef(int index);
 extern void WoundEffectIds_Set(int slot, int value);
@@ -26,7 +26,7 @@ void Game_LoadParResources(void* self)
 {
     char buf[0x80];
     sprintf(buf, D_0049AAF0, D_0048B2F8);
-    func_00397B20(D_0053B540, Archive_Open(self, buf, 1, 0));
+    ParticleLib_ResolveRequests(D_0053B540, Archive_Open(self, buf, 1, 0));
     ArchiveList_CloseNamed(self, buf);
     WoundEffectIds_Set(1, *SpecFx_GetEffectDef(0));
     WoundEffectIds_Set(0, *SpecFx_GetEffectDef(1));

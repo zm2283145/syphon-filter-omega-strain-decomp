@@ -62,7 +62,7 @@ typedef struct { char pad[0x54]; int* ctx; char pad2[0x24]; char m7C[4]; } Obj24
 extern Mgr245E* D_004FFD30;
 extern int Hud_FindOrCreateElement(int ctx, int id);
 extern void Hud_PushReticleElement(void* set, int* h);
-extern void func_003E8DE0(int h, int v);
+extern void IeElement_SetShown(int h, int v);
 #pragma opt_strength_reduction off
 void Hud_BuildReticleElements(Obj245E* s) {
     int ctx = *s->ctx;
@@ -72,7 +72,7 @@ void Hud_BuildReticleElements(Obj245E* s) {
         int h[1];
         h[0] = Hud_FindOrCreateElement(ctx, list->data[i]);
         Hud_PushReticleElement(s->m7C, h);
-        func_003E8DE0(h[0], 0);
+        IeElement_SetShown(h[0], 0);
     }
 }
 #pragma opt_strength_reduction reset

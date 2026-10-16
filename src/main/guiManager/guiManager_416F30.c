@@ -59,7 +59,7 @@ static inline void RdV_416F70(char** c, V4_416F70* v, float w)
     v->x = x; v->y = y; v->z = z; v->w = w;
 }
 
-int func_00416F70(O_416F70* o, char** cur)
+int GuiInterfaceDecorator_Load(O_416F70* o, char** cur)
 {
     V4_416F70 a;
     V4_416F70 b;

@@ -168,7 +168,7 @@ typedef struct GuiOnlineConnect {
     int unkFC;                      /* 0xFC */
     int unk100;                     /* 0x100 */
     int unk104;                     /* 0x104 */
-    int resource;                   /* 0x108: released through func_00418E00 */
+    int resource;                   /* 0x108: released through GuiManager_UnloadRoot */
     int unk10C;                     /* 0x10C */
     int unk110;                     /* 0x110 */
     int unk114;                     /* 0x114 */
@@ -274,7 +274,7 @@ typedef struct GuiCharacterDisplay {
     void (*onDestroy)(void);        /* 0x48: called by GuiCharacterDisplay_Draw when set */
 } GuiCharacterDisplay;
 
-/* GuiMissionList (table D_004DDB80); derives from the widget built by func_00424C50. */
+/* GuiMissionList (table D_004DDB80); derives from the widget built by GuiArrayWidget_ctor. */
 typedef struct GuiMissionListObj {
     GuiWidget base;                 /* 0x00 */
     char pad48[0x58 - 0x48];

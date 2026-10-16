@@ -27,9 +27,9 @@ extern char D_004A9870[];
 extern G_35AEC0* D_004FFC2C;
 W_35AEC0* GuiWidget_FindChildByName(void* self, char* name);
 char* Loc_LookupText(char* key);
-void func_0041BEB0(W_35AEC0* w, char* text, int flags);
-void func_00456160(S_35AEC0* o);
-void func_00456100(S_35AEC0* o);
+void GuiTextWidget_SetText(W_35AEC0* w, char* text, int flags);
+void GuiStartMenu_ReturnToMenu(S_35AEC0* o);
+void GuiStartMenu_CloseAll(S_35AEC0* o);
 int func_0035AEC0(S_35AEC0* o, Ev_35AEC0* ev);
 }
 static inline W_35AEC0* cast_35AEC0(W_35AEC0* w)
@@ -51,7 +51,7 @@ int func_0035AEC0(S_35AEC0* o, Ev_35AEC0* ev)
         W_35AEC0* b;
         W_35AEC0* c;
         if (o->a224 == 0) {
-            func_00456160(o);
+            GuiStartMenu_ReturnToMenu(o);
             return 1;
         }
         o->a224 = 0;
@@ -62,12 +62,12 @@ int func_0035AEC0(S_35AEC0* o, Ev_35AEC0* ev)
         c = cast_35AEC0(GuiWidget_FindChildByName(o, "button_equip_score"));
         if (c) {
             char* t = Loc_LookupText("ScoresEquipScr0");
-            func_0041BEB0(c, t ? t : D_004BB530, 0);
+            GuiTextWidget_SetText(c, t ? t : D_004BB530, 0);
         }
         return 1;
     }
     if (Plain2_35AEC0(ev, 0x800) && D_004FFC2C->b6A8) {
-        func_00456100(o);
+        GuiStartMenu_CloseAll(o);
         return 1;
     }
     if (Btn2_35AEC0(ev, 2)) {
@@ -108,11 +108,11 @@ void* GuiWidget_FindChildByName(void* self, char* name);
 #define GuiWidget_FindChildByName(a0, a1) ((void *)GuiWidget_FindChildByName((a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-void func_0041BEB0(W_0035B210* w, char* s, int a);
+void GuiTextWidget_SetText(W_0035B210* w, char* s, int a);
 #endif /* merge_units */
-#define func_0041BEB0(a0, a1, a2) (func_0041BEB0((W_35AEC0 *)(a0), (a1), (a2))) /* merge_units */
+#define GuiTextWidget_SetText(a0, a1, a2) (GuiTextWidget_SetText((W_35AEC0 *)(a0), (a1), (a2))) /* merge_units */
 
-int func_0041EF10(void* self, int a, unsigned short b);
+int GuiWidget_OnEvent(void* self, int a, unsigned short b);
 }
 static inline W_0035B210* FindAs_0035B210(void* self, char* name, char* type)
 {
@@ -144,14 +144,14 @@ extern "C" int func_0035B210(S_0035B210* self, int a, unsigned short b)
         w = FindAs_0035B210(self, D_004BB500, D_004A9870);
         if (w) {
             char* t = Loc_LookupText(on == 0 ? D_004BB520 : D_004BB540);
-            func_0041BEB0(w, t ? t : D_004BB530, 0);
+            GuiTextWidget_SetText(w, t ? t : D_004BB530, 0);
         }
         return 1;
     }
-    return func_0041EF10(self, a, b);
+    return GuiWidget_OnEvent(self, a, b);
 }
 #undef GuiWidget_FindChildByName /* merge_units */
-#undef func_0041BEB0 /* merge_units */
+#undef GuiTextWidget_SetText /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0035B210(void) {}
 #pragma pop /* merge_units */

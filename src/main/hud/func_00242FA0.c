@@ -30,16 +30,16 @@ void func_00243480(int h, int v);
 void func_00243490(int h, int v);
 int func_002434A0(int c);
 int func_002434B0(void* self, int c, int* key);
-int func_003E99B0(void* self, int c, int* key);
+int HudTracker_Construct(void* self, int c, int* key);
 void Hud_GetLockColour(Buf_242FA0* out, float t);
-int func_003D04C0(int h);
-void func_003D0810(int a, char* b);
-void func_003E7EC0(int c, int a);
-void func_003E7EE0(int c, void* b);
-void func_003E8DE0(int c, int a);
-void func_003E97B0(int d, Ent_242FA0* e, int id);
-int func_003EF010(int a);
-void func_003F44E0(float f, int c);
+int TextObj_GetLineCount(int h);
+void TextObj_SetColour(int a, char* b);
+void IeElement_SetText(int c, int a);
+void IeElement_SetColour(int c, void* b);
+void IeElement_SetShown(int c, int a);
+void HudTracker_Attach(int d, Ent_242FA0* e, int id);
+int IeElement_Create(int a);
+void IeElement_Fade(float f, int c);
 
 static inline void BeginI_(It_242FA0* out, char* l) { It_242FA0 t; func_00242E30(&t, l); func_002426A0(out, &t); }
 static inline void Begin_(It_242FA0* out, char* l) { BeginI_(out, l); }
@@ -77,7 +77,7 @@ int Hud_ShowCallout(char* o, float scale, float fade, int* key, int a2, int id, 
             if (big) {
                 void* m;
                 int h;
-                e->c = func_003EF010(D_004F7DB0);
+                e->c = IeElement_Create(D_004F7DB0);
                 m = func_0013D5C0(0x90, 0, D_004A7518, 0x8E);
                 if (m) m = (void*)func_002434B0(m, e->c, key);
                 e->d = (int)m;
@@ -90,15 +90,15 @@ int Hud_ShowCallout(char* o, float scale, float fade, int* key, int a2, int id, 
                 int h;
                 if (kind) {
                     void* m;
-                    e->c = func_003EF010(D_004F7DAC);
+                    e->c = IeElement_Create(D_004F7DAC);
                     m = func_0013D5C0(0x90, 0, D_004A7510, 0x9E);
-                    if (m) m = (void*)func_003E99B0(m, e->c, key);
+                    if (m) m = (void*)HudTracker_Construct(m, e->c, key);
                     e->d = (int)m;
                 } else {
                     void* m;
-                    e->c = func_003EF010(D_004F7D90);
+                    e->c = IeElement_Create(D_004F7D90);
                     m = func_0013D5C0(0x90, 0, D_004A7508, 0xA3);
-                    if (m) m = (void*)func_003E99B0(m, e->c, key);
+                    if (m) m = (void*)HudTracker_Construct(m, e->c, key);
                     e->d = (int)m;
                 }
                 h = func_002434A0(e->c);
@@ -108,32 +108,32 @@ int Hud_ShowCallout(char* o, float scale, float fade, int* key, int a2, int id, 
             if (e->c) {
                 float t;
                 int n;
-                func_003E7EC0(e->c, a2);
+                IeElement_SetText(e->c, a2);
                 t = 10.0f;
-                n = func_003D04C0(func_002434A0(e->c));
+                n = TextObj_GetLineCount(func_002434A0(e->c));
                 if (n > 1) t += (float)(n - 1);
-                func_003F44E0(t, e->c);
-                func_003E97B0(e->d, e, e->id);
+                IeElement_Fade(t, e->c);
+                HudTracker_Attach(e->d, e, e->id);
             }
             e->x14 = 0;
         }
         p = e;
-        if (p->c) func_003E8DE0(p->c, 0);
+        if (p->c) IeElement_SetShown(p->c, 0);
         CalloutList_PushBack(o + 0x6E8, &p);
     } else {
         p = it.n->ent;
-        func_003E7EC0(p->c, a2);
+        IeElement_SetText(p->c, a2);
         p->f4 = scale;
     }
     if (fade == 0.0f) {
-        func_003E7EE0(p->c, D_00587D90);
+        IeElement_SetColour(p->c, D_00587D90);
     } else if (fade < 0.0f) {
         ((char*)p->c)[0x19] = 0;
-        func_003D0810(*(int*)((char*)p->c + 0x74), D_00587DB0);
+        TextObj_SetColour(*(int*)((char*)p->c + 0x74), D_00587DB0);
     } else {
         Hud_GetLockColour(&buf, fade);
-        func_003E7EE0(p->c, &buf);
-        func_003D0810(*(int*)((char*)p->c + 0x74), D_00587DA0);
+        IeElement_SetColour(p->c, &buf);
+        TextObj_SetColour(*(int*)((char*)p->c + 0x74), D_00587DA0);
     }
     return 1;
 }

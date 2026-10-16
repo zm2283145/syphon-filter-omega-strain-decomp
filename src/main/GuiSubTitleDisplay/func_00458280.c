@@ -10,31 +10,31 @@ extern "C" {
 /*fc*/
 int Mem_Free(...);                         
 int func_00219730(...);                         
-int func_0041F370(...);                         
+int GuiWidget_Destroy(...);                         
 int func_004583B0(...);                         
 int func_004593A0(...);                            
 int operator_delete(...);                          
 extern char D_004C1EB0;
 extern "C" void GuiSubTitleDisplay_IsType();
 extern "C" void func_00293950();
-extern "C" void func_0041D400();
-extern "C" void func_0041D5C0();
-extern "C" void func_0041D780();
-extern "C" void func_0041D8C0();
+extern "C" void GuiWidget_FocusPrev();
+extern "C" void GuiWidget_FocusNext();
+extern "C" void GuiWidget_FocusLast();
+extern "C" void GuiWidget_FocusFirst();
 extern "C" void func_0041E230();
 extern "C" void func_0041E2B0();
 extern "C" void func_0041E330();
-extern "C" void func_0041EF10();
+extern "C" void GuiWidget_OnEvent();
 extern "C" void func_0041F070();
 extern "C" void func_0041F080();
-extern "C" void func_0041F090();
-extern "C" void func_0041F150();
+extern "C" void GuiWidget_Deinit();
+extern "C" void GuiWidget_Init();
 extern "C" void func_0041F210();
 extern "C" void func_00457AA0();
 extern "C" void func_00457AE0();
-extern "C" void func_00457FE0();
-extern "C" void func_00458080();
-extern "C" void func_00458140();
+extern "C" void GuiSubTitleDisplay_Update();
+extern "C" void GuiSubTitleDisplay_OnSleep();
+extern "C" void GuiSubTitleDisplay_OnWake();
 extern void * const D_004E1560[];
 extern unsigned char D_00533880;
 }
@@ -61,11 +61,11 @@ extern "C" char * func_00458280(char * arg0, long long arg1) {
         if (temp_a0_2 != NULL) {
             func_004583B0(temp_a0_2, -1);
         }
-        func_0041F370(arg0, 0);
+        GuiWidget_Destroy(arg0, 0);
         if (((long long) (arg1 << 0x30) >> 0x30) > 0) {
             operator_delete(arg0);
         }
     }
     return arg0;
 }
-void * const D_004E1560[24] = { (void*)0x0, (void*)0x0, (void*)func_00458280, (void*)func_0041F150, (void*)func_0041F090, (void*)func_0041F080, (void*)func_0041F070, (void*)func_00458140, (void*)func_00458080, (void*)func_0041E330, (void*)func_0041E2B0, (void*)func_00293950, (void*)func_00457AE0, (void*)func_0041E230, (void*)func_00457FE0, (void*)func_0041EF10, (void*)func_0041F210, (void*)func_0041D8C0, (void*)func_0041D780, (void*)func_0041D5C0, (void*)func_0041D400, (void*)func_00457AA0, (void*)GuiSubTitleDisplay_IsType, (void*)0x0 };
+void * const D_004E1560[24] = { (void*)0x0, (void*)0x0, (void*)func_00458280, (void*)GuiWidget_Init, (void*)GuiWidget_Deinit, (void*)func_0041F080, (void*)func_0041F070, (void*)GuiSubTitleDisplay_OnWake, (void*)GuiSubTitleDisplay_OnSleep, (void*)func_0041E330, (void*)func_0041E2B0, (void*)func_00293950, (void*)func_00457AE0, (void*)func_0041E230, (void*)GuiSubTitleDisplay_Update, (void*)GuiWidget_OnEvent, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)func_00457AA0, (void*)GuiSubTitleDisplay_IsType, (void*)0x0 };

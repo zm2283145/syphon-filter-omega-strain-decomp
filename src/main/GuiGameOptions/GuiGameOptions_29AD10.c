@@ -14,19 +14,19 @@ typedef struct { int a; unsigned char b4, b5, b6, b7; float f8, fc, f10; int f14
 typedef struct { char pad[0x4C]; unsigned char b4c; char pad4d[0xB8 - 0x4D]; C_AD10 cfg; char pad3[0x401 - 0xDC]; unsigned char b401; } G_AD10;
 extern C_AD10* D_004FFD2C;
 extern void* D_004FFC04;
-extern int func_0045A600(C_AD10*, C_AD10*);
-extern void func_0045A3A0(C_AD10*, int);
+extern int GameOptions_Diff(C_AD10*, C_AD10*);
+extern void GameOptions_Apply(C_AD10*, int);
 extern void GuiSaveAgentWidget_HandleEvent(G_AD10*);
 extern void FrontEnd_SuspendGui(void*, int);
 extern void FrontEnd_ResumeGui(void*);
 extern void* Gui_GetScreenStack(void);
-extern void func_0041E0F0(G_AD10*, void*, int, int, int);
+extern void GuiWidget_SendEvent(G_AD10*, void*, int, int, int);
 
 void GuiGameOptions_Close(G_AD10* g, int apply) {
     int diff;
     int m;
     C_AD10* c;
-    diff = func_0045A600(&g->cfg, D_004FFD2C);
+    diff = GameOptions_Diff(&g->cfg, D_004FFD2C);
     if (diff != 0 || !g->b401) {
         if (apply) {
             c = D_004FFD2C;
@@ -49,11 +49,11 @@ void GuiGameOptions_Close(G_AD10* g, int apply) {
         } else {
             m = diff & 0x800;
             if (m) FrontEnd_SuspendGui(D_004FFC04, 1);
-            func_0045A3A0(D_004FFD2C, diff);
+            GameOptions_Apply(D_004FFD2C, diff);
             if (m) FrontEnd_ResumeGui(D_004FFC04);
         }
     } else {
-        func_0041E0F0(g, Gui_GetScreenStack(), 0x10, 4, 0);
+        GuiWidget_SendEvent(g, Gui_GetScreenStack(), 0x10, 4, 0);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -82,9 +82,9 @@ Mgr_29AE60* Gui_GetScreenStack(void);
 #define Gui_GetScreenStack() ((Mgr_29AE60 *)Gui_GetScreenStack()) /* merge_units */
 
 void GuiScreen_SetFocus(Mgr_29AE60* m, int x);
-void func_00421070(Menu_29AE60* m);
-void func_00421290(Menu_29AE60* m, char* s, int idx, int x);
-void func_00424430(Menu_29AE60* m, int a, int sel);
+void GuiTextListWidget_Clear(Menu_29AE60* m);
+void GuiTextListWidget_AddItem(Menu_29AE60* m, char* s, int idx, int x);
+void GuiArrayWidget_Select(Menu_29AE60* m, int a, int sel);
 }
 static inline unsigned char IsLocal_29AE60(Plr_29AE60* p) { unsigned char r = 0; if (p->ctl && p->ctl->IsLocal()) r = 1; return r; }
 static inline int LocalId_29AE60(Plr_29AE60* p) { int id; if (D_005721C8) { if (IsLocal_29AE60(p)) id = ((p->flags & 0x7F000000) >> 24) - 1; else id = -1; } else id = 0; return id; }
@@ -104,7 +104,7 @@ extern "C" void func_0029AE60(Self_29AE60* self)
         return;
     }
     sel = self->menu->sel;
-    func_00421070(self->menu);
+    GuiTextListWidget_Clear(self->menu);
     for (i = 0; i < 4; i++) {
         p = PlayerSlots_Get(i);
         if (p != 0 && p->b14 == 0) {
@@ -113,11 +113,11 @@ extern "C" void func_0029AE60(Self_29AE60* self)
                 char buf[0x90];
                 buf[0] = 0;
                 func_002C9270(buf, p, id, 0);
-                func_00421290(self->menu, buf + 1, id, 0);
+                GuiTextListWidget_AddItem(self->menu, buf + 1, id, 0);
             }
         }
     }
-    func_00424430(self->menu, 0, sel < self->menu->count ? sel : 0);
+    GuiArrayWidget_Select(self->menu, 0, sel < self->menu->count ? sel : 0);
     if (self->w434 != 0) {
         unsigned char on = 0;
         Mgr_29AE60* g = Gui_GetScreenStack();
@@ -155,7 +155,7 @@ extern char D_004FFB50[];
 extern char D_004DADF0[];
 void func_0041EBF0(G_B070*);
 void PadRumble_Stop(void);
-int func_003EBA50(void);
+int Fstream_GetLoader(void);
 void func_003EB750(int);
 void func_0036B250(int);
 void SoundRequest_Ctor(SoundRequest* req, int kind, void* name, int a, int b);
@@ -184,7 +184,7 @@ void GuiGameOptions_Sleep(G_B070* self) {
         FileMan_Release(req2.partA, -1);
         evm2.flag = 1;
         Event_Send(&evm2, D_004FFB50, 1);
-        func_003EB750(func_003EBA50());
+        func_003EB750(Fstream_GetLoader());
         func_0036B250(1);
         evm2.vtbl = D_004DADF0;
         FileMan_Release(evm2.partB, -1);

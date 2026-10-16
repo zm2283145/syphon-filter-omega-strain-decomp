@@ -7,7 +7,7 @@ struct O2A7B00 { char p0[0x10]; int sel; char p14[0x34]; int mode; int cur; int 
 extern "C" {
 extern void* D_004FFC04;
 int GuiMessageBox_ValidateTarget(int v);
-void func_0041E0F0(O2A7B00* o, int a, int b, int c, int d);
+void GuiWidget_SendEvent(O2A7B00* o, int a, int b, int c, int d);
 int FrontEnd_ClosePopup(void* g, int sel);
 M2A7B00* Gui_GetScreenStack(void);
 }
@@ -28,7 +28,7 @@ extern "C" int GuiMessageBox_HandleInput(O2A7B00* o, char* ev)
             int old;
             o->cur = GuiMessageBox_ValidateTarget(o->cur);
             old = o->sel;
-            func_0041E0F0(o, o->cur, o->mode == 2 ? 0x1A : 0x1B, o->f50, 0);
+            GuiWidget_SendEvent(o, o->cur, o->mode == 2 ? 0x1A : 0x1B, o->f50, 0);
             if (!FrontEnd_ClosePopup(D_004FFC04, old) && old == o->sel) {
                 o->sel = -1;
                 Gui_GetScreenStack()->Remove(o);

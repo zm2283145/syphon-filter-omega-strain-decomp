@@ -359,7 +359,7 @@ Ag_00296660* Agent_GetSelected(void* a, int b);
 
 int AgentData_GetBonusFlag(Ag_00296660* ag, int a, int b);
 int func_00332950(Ag_00296660* ag, int a, int b, int c);
-void func_0041C070(W_00296660* w, Col_00296660* c);
+void GuiTextWidget_SetColour(W_00296660* w, Col_00296660* c);
 /* abs.s has no C spelling in MW */
 static inline float Fabs_00296660(float x) { float r; asm { abs.s r, x } return r; }
 
@@ -390,33 +390,33 @@ int i;
             for (i = 0; i < 6; i++) {
                 if (self->w198[i]) {
                     if (AgentData_GetBonusFlag(ag, n, i))
-                        func_0041C070(self->w198[i], &col);
+                        GuiTextWidget_SetColour(self->w198[i], &col);
                     else
-                        func_0041C070(self->w198[i], &D_00587B80);
+                        GuiTextWidget_SetColour(self->w198[i], &D_00587B80);
                 }
             }
         } else {
             int j;
             for (j = 0; j < 6; j++) {
                 if (self->w198[j])
-                    func_0041C070(self->w198[j], &D_00587B80);
+                    GuiTextWidget_SetColour(self->w198[j], &D_00587B80);
             }
         }
     }
     if (self->state == 3 && self->p2F0) {
         if (Agent_GetSelected(D_004FFB50, -1)->bB68)
-            func_0041C070(self->p2F0, &col);
+            GuiTextWidget_SetColour(self->p2F0, &col);
         else
-            func_0041C070(self->p2F0, &D_00587B80);
+            GuiTextWidget_SetColour(self->p2F0, &D_00587B80);
     }
     if (self->state == 1 && self->p2EC) {
         if (self->f1CC < 0x11) {
             if (AgentData_GetBonusFlag(ag, self->f1CC + 1, -1))
-                func_0041C070(self->p2EC, &col);
+                GuiTextWidget_SetColour(self->p2EC, &col);
             else
-                func_0041C070(self->p2EC, &D_00587B80);
+                GuiTextWidget_SetColour(self->p2EC, &D_00587B80);
         } else {
-            func_0041C070(self->p2EC, &D_00587B80);
+            GuiTextWidget_SetColour(self->p2EC, &D_00587B80);
         }
     }
     if (self->state == 5) {
@@ -445,9 +445,9 @@ int i;
                     }
                 }
                 if (on)
-                    func_0041C070(self->w2FC[k], &col);
+                    GuiTextWidget_SetColour(self->w2FC[k], &col);
                 else
-                    func_0041C070(self->w2FC[k], &D_00587B80);
+                    GuiTextWidget_SetColour(self->w2FC[k], &D_00587B80);
             }
         }
     }

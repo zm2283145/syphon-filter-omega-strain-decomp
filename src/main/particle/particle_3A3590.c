@@ -25,7 +25,7 @@ extern Name_3A35C0 D_0053BAB0;
 extern char String_ToLower(char c);
 extern void func_003A3430(void* self, char* name);
 
-void func_003A35C0(void* self, const char* s)
+void ParticleLib_FindId(void* self, const char* s)
 {
     Name_3A35C0* name = &D_0053BAB0;
     unsigned int i;

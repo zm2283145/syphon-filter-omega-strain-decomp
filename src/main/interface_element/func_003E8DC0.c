@@ -6,9 +6,9 @@
 #include "types.h"
 #include "interface_element_types.h"
 
-extern int func_003ECD60(int owner, IfElement* elem, int a2);
+extern int IeElement_Draw(int owner, IfElement* elem, int a2);
 
-/* Forward (elem, a1) to func_003ECD60 on the element's owner. */
+/* Forward (elem, a1) to IeElement_Draw on the element's owner. */
 int func_003E8DC0(IfElement* elem, int a1) {
-    return func_003ECD60(elem->owner, elem, a1);
+    return IeElement_Draw(elem->owner, elem, a1);
 }

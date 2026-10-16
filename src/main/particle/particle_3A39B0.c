@@ -217,7 +217,7 @@ struct Mk3A3F80 : V4_3A3F80 {
     Mk3A3F80(float a, float b, float c, float d) { x = a; y = b; z = c; w = d; }
 };
 
-extern "C" void func_003A3F80(Obj3A3F80* self, char* str, float ver)
+extern "C" void ParticleDef_ParseType0(Obj3A3F80* self, char* str, float ver)
 {
     char* s = str;
     self->f990 = SoftFloat_DoubleToFloat(strtod(s, &s));

@@ -1,7 +1,7 @@
 #include "types.h"
 typedef struct { __int128 r[4]; } M_D250;
 typedef struct { char pad[0xA74]; int top; char flag; char pad2[7]; M_D250 m[8]; } S_D250;
-void func_003ED250(S_D250* s, M_D250* src) {
+void IeDraw_LoadViewMatrix(S_D250* s, M_D250* src) {
     M_D250* d; __int128 qa, qb; int one;
     int t = s->top;
     asm { .set reorder; lq qa, 0x0(src) }

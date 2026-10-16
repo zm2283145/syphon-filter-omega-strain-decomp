@@ -50,7 +50,7 @@ void MotionNotify_SendSlot(void* h, int idx, unsigned char clear);
 #endif /* merge_units */
 #define MotionNotify_SendSlot(a0, a1, a2) (MotionNotify_SendSlot((AcHost *)(a0), (a1), (a2))) /* merge_units */
 
-void func_003B86D0(BlockArray* a);
+void MotionArray_Clear(BlockArray* a);
 }
 extern "C" void func_003ABB10(MGraph* g)
 {
@@ -179,7 +179,7 @@ extern "C" void MotionGraph_ClearActive(MGraph* g)
         MotionNotify_SendSlot(p + 0x94, 6, 0);
         ++it;
     }
-    func_003B86D0(&g->arr);
+    MotionArray_Clear(&g->arr);
 }
 #undef MotionMsg_Send /* merge_units */
 #undef MotionNotify_SendSlot /* merge_units */
@@ -190,7 +190,7 @@ static inline void merge_flush_func_003ABE00(void) {}
 
 /* merge_units: begin func_003ABF80 */
 #pragma push /* merge_units */
-/* func_003ABF80: MotionGraph_ClearActive (src/main/ska/MotionGraph_ClearActive.c) for a graph whose active deque
+/* MotionGraph_ClearQueued: MotionGraph_ClearActive (src/main/ska/MotionGraph_ClearActive.c) for a graph whose active deque
  * sits at +0x30: resets both message slots and the notify slot of every 0xF8-byte record, then clears the deque. */
 #pragma cplusplus on
 
@@ -207,7 +207,7 @@ void MotionNotify_SendSlot(void* h, int idx, unsigned char clear);
 #define MotionNotify_SendSlot(a0, a1, a2) (MotionNotify_SendSlot((AcHost *)(a0), (a1), (a2))) /* merge_units */
 
 }
-extern "C" void func_003ABF80(MGraph_003ABF80* g)
+extern "C" void MotionGraph_ClearQueued(MGraph_003ABF80* g)
 {
     DqIt it;
     DqIt b;
@@ -227,7 +227,7 @@ extern "C" void func_003ABF80(MGraph_003ABF80* g)
         MotionNotify_SendSlot(p + 0x94, 6, 0);
         ++it;
     }
-    func_003B86D0(&g->arr);
+    MotionArray_Clear(&g->arr);
 }
 #undef MotionMsg_Send /* merge_units */
 #undef MotionNotify_SendSlot /* merge_units */
@@ -274,7 +274,7 @@ extern UtSlot* func_003AC4A0(UtArr* a, int index);
 extern UtSlot* Array_GetLast(UtArr* a);
 extern UtReq* func_003AC450(UtArr* a);
 extern int func_003AC530(UtSlot* s, UtRange* r);
-extern void func_003AB970(float w, UtCtl* c, UtReq* r, int stop);
+extern void MotionGraph_Install(float w, UtCtl* c, UtReq* r, int stop);
 extern void func_003B87A0(UtArr* a);
 
 static inline void UtMsgSend(UtAnimMsg* m, unsigned char kind, float value)
@@ -362,7 +362,7 @@ void AnimCtl_UpdateTransitions(UtCtl* c, float t)
         r = func_003AC450(&c->queue);
         if (func_003AC530(e, &r->range)) {
             e->done = 1;
-            func_003AB970(0.0f, c, r, 0);
+            MotionGraph_Install(0.0f, c, r, 0);
             func_003B87A0(&c->queue);
         }
     } else if (c->hold) {

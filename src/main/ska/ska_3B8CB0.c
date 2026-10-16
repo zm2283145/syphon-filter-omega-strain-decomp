@@ -194,20 +194,20 @@ typedef struct Array20 {
     int count;
     Elem20* items;
 } Array20;
-Array20* func_003B8F50(Array20* self, Array20* src); /* gsynth: defined below */
+Array20* MotionArray_CopyConstruct(Array20* self, Array20* src); /* gsynth: defined below */
 #if 0 /* merge_units */
-extern SkaFlaggedVec* func_003B8F50(SkaFlaggedVec* dst, SkaFlaggedVec* src);
+extern SkaFlaggedVec* MotionArray_CopyConstruct(SkaFlaggedVec* dst, SkaFlaggedVec* src);
 #endif /* merge_units */
-#define func_003B8F50(a0, a1) ((SkaFlaggedVec *)func_003B8F50((void *)(a0), (void *)(a1))) /* merge_units */
+#define MotionArray_CopyConstruct(a0, a1) ((SkaFlaggedVec *)MotionArray_CopyConstruct((void *)(a0), (void *)(a1))) /* merge_units */
 
 
 /* Copy-construct: copy the array part, then the flag byte. */
 SkaFlaggedVec* NotifyRange_CopyConstruct(SkaFlaggedVec* dst, SkaFlaggedVec* src) {
-    func_003B8F50(dst, src);
+    MotionArray_CopyConstruct(dst, src);
     dst->flag = src->flag;
     return dst;
 }
-#undef func_003B8F50 /* merge_units */
+#undef MotionArray_CopyConstruct /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003B8F10(void) {}
 #pragma pop /* merge_units */
@@ -218,7 +218,7 @@ static inline void merge_flush_func_003B8F10(void) {}
 extern void Array_CopyRange20(Array20* self, Elem20* first, Elem20* last, char alloc);
 
 /* Copy constructor: clears the array, then inserts [src->items, src->items + count). */
-Array20* func_003B8F50(Array20* self, Array20* src) {
+Array20* MotionArray_CopyConstruct(Array20* self, Array20* src) {
     volatile char alloc[4];
     self->unk0 = 0;
     self->count = 0;

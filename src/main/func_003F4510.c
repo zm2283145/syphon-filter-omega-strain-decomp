@@ -1,6 +1,6 @@
 #include "types.h"
 typedef struct { int pad0; float cur; float lo_; float hi_; float vdir; unsigned char fl; } S3F4510;
-void func_003F4510(S3F4510* s, float lo_, float hi_, unsigned char fl)
+void IeElement_PlayRange(S3F4510* s, float lo_, float hi_, unsigned char fl)
 {
     if (hi_ < lo_) {
         float t = lo_;

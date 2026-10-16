@@ -17,7 +17,7 @@ int Mem_Free();
 typedef struct { char pad[0xC]; void* buf; } E4Own;
 extern "C" {
 extern char D_004A6E38[];
-void func_003A2BA0(void* p, int n);
+void ParticleInst_Kill(void* p, int n);
 }
 extern "C" void ParticleEffectComp_Stop(E4Own* o)
 {
@@ -25,7 +25,7 @@ extern "C" void ParticleEffectComp_Stop(E4Own* o)
     if (p) {
         {
             AllocGuard g;
-            func_003A2BA0(p, -1);
+            ParticleInst_Kill(p, -1);
             Mem_Free(0, p, D_004A6E38, 0x12C);
         }
         o->buf = 0;

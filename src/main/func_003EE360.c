@@ -12,7 +12,7 @@ typedef struct Node {
 int func_001F3030(void* obj);
 int func_003EE500(Node* self);
 int func_003EE5E0(Node* self, Vec4* v);
-void func_003EE360(Node* self, Vec4* v)
+void IeNode_PropagateColour(Node* self, Vec4* v)
 {
     int i;
     for (i = 0; i < self->count; i++) {

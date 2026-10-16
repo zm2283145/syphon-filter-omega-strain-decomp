@@ -64,7 +64,7 @@ typedef struct L4OwnedVec {
     char pad0D[3];
 } L4OwnedVec;
 
-/* Widget subclass built by func_00424C50 (>= 0x90 bytes). */
+/* Widget subclass built by GuiArrayWidget_ctor (>= 0x90 bytes). */
 typedef struct GuiWidget424C50 {
     GuiWidget base;                /* 0x00 */
     int unk48;                     /* 0x48 */
@@ -119,7 +119,7 @@ typedef struct L4Entry110 {
     char pad107[9];
 } L4Entry110;
 
-/* Owner of eight L4Entry110 records (used by func_003D3670/Renderer_PushCameraState). */
+/* Owner of eight L4Entry110 records (used by Renderer_GetCurrentCamera/Renderer_PushCameraState). */
 typedef struct Unk3D3670 {
     char pad00[0xF4];
     int unkF4;                     /* 0xF4 */
@@ -190,7 +190,7 @@ typedef union L4ScriptArg {
     signed char c;
 } L4ScriptArg;
 
-/* Record built by func_00409750 (>= 0x35 bytes). */
+/* Record built by MaterialProp_SetDefaults (>= 0x35 bytes). */
 typedef struct Unk409750 {
     int unk00;                     /* 0x00 */
     int unk04;                     /* 0x04 */
@@ -219,15 +219,15 @@ typedef struct Unk423540 {
     int unk84;                     /* 0x84 */
 } Unk423540;
 
-/* Object used by func_003E96F0..func_003E97B0 (>= 0x85 bytes). */
+/* Object used by func_003E96F0..HudTracker_Attach (>= 0x85 bytes). */
 typedef struct Unk3E96F0 {
     char pad00[0x60];
-    int unk60;                     /* 0x60: handle passed to func_003F44E0/func_003F45A0 */
+    int unk60;                     /* 0x60: handle passed to IeElement_Fade/IeElement_EvaluateAt */
     char unk64;                    /* 0x64 */
     char pad65[3];
     int unk68;                     /* 0x68 */
     char pad6C[4];
-    char unk70[0x10];              /* 0x70: sub-object updated by func_003E9A60 */
+    char unk70[0x10];              /* 0x70: sub-object updated by HudTracker_ToCameraSpace */
     int unk80;                     /* 0x80 */
     char unk84;                    /* 0x84 */
 } Unk3E96F0;
@@ -259,7 +259,7 @@ typedef struct Msg3E43D0Src {
     unsigned char unk09;           /* 0x09 */
 } Msg3E43D0Src;
 
-/* Widget-like object built by func_0041ADC0 on top of func_0041C7D0 (>= 0x90 bytes). */
+/* Widget-like object built by func_0041ADC0 on top of GuiTextWidget_ctor (>= 0x90 bytes). */
 typedef struct Unk41ADC0 {
     void* vtable;                  /* 0x00 */
     char pad04[0x10];
@@ -353,7 +353,7 @@ typedef struct L4Elem124Vec {
     int unk0C;                     /* 0x0C */
 } L4Elem124Vec;
 
-/* Object tested by func_00415870: GuiWidget flags at +0x14 and a byte at +0x51. */
+/* Object tested by GuiCanvas_UpdatePads: GuiWidget flags at +0x14 and a byte at +0x51. */
 typedef struct Unk415870 {
     char pad00[0x14];
     unsigned short flags;          /* 0x14 */
@@ -361,13 +361,13 @@ typedef struct Unk415870 {
     unsigned char unk51;           /* 0x51 */
 } Unk415870;
 
-/* Record whose +4 word holds the 0xBEBAAFDE validity tag (func_003CB4F0). */
+/* Record whose +4 word holds the 0xBEBAAFDE validity tag (Node_DeferredDeleteCallback). */
 typedef struct L4Tagged {
     int unk00;                     /* 0x00 */
     unsigned int tag;              /* 0x04: 0xBEBAAFDE when valid */
 } L4Tagged;
 
-/* Owner of an L4Tagged pointer at +0xC (func_003CB4F0). */
+/* Owner of an L4Tagged pointer at +0xC (Node_DeferredDeleteCallback). */
 typedef struct Unk3CB4F0 {
     char pad00[0xC];
     L4Tagged* unk0C;               /* 0x0C */
@@ -455,14 +455,14 @@ typedef struct Unk3D28D0 {
     void* vtable;                  /* 0x10 */
 } Unk3D28D0;
 
-/* Object with a handle at +0x74 and a word at +0x78 (func_003E7EB0 / func_003E7EC0). */
+/* Object with a handle at +0x74 and a word at +0x78 (func_003E7EB0 / IeElement_SetText). */
 typedef struct Unk3E7EB0 {
     char pad00[0x74];
     int unk74;                     /* 0x74 */
     int unk78;                     /* 0x78 */
 } Unk3E7EB0;
 
-/* Object with flag bytes at +0x104 and +0x106 (func_003ED240). */
+/* Object with flag bytes at +0x104 and +0x106 (IeDraw_SetPerspective). */
 typedef struct Unk3ED240 {
     char pad00[0x104];
     char unk104;                   /* 0x104 */

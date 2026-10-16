@@ -23,7 +23,7 @@ extern void Event_Send(EventMsg*, void*, int);
 extern void FileMan_Release(void*, int);
 extern void cMessage_dtor(EventMsg*, int);
 extern void func_0041EBF0(ObjF4*);
-extern void* func_003EBA50(void);
+extern void* Fstream_GetLoader(void);
 extern void func_003EB750(void*);
 extern void func_0036B250(int);
 
@@ -39,6 +39,6 @@ void func_003556F0(ObjF4* o) {
     FileMan_Release(msg.partB, -1);
     FileMan_Release(msg.partA, -1);
     cMessage_dtor(&msg, 0);
-    func_003EB750(func_003EBA50());
+    func_003EB750(Fstream_GetLoader());
     func_0036B250(1);
 }

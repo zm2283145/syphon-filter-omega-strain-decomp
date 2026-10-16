@@ -45,7 +45,7 @@ static inline void merge_flush_func_00396B80(void) {}
 extern "C" {
 char D_004BC4C0[] = "allocator.hh";
 }
-DEFINE_VECTOR_DESTROY_DTOR_FILE(func_00396C10, func_00397A00, D_004BC4C0)
+DEFINE_VECTOR_DESTROY_DTOR_FILE(func_00396C10, MotionGroup_ClearContributions, D_004BC4C0)
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00396C10(void) {}
 #pragma pop /* merge_units */

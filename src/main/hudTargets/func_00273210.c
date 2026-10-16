@@ -27,7 +27,7 @@ int func_002731E0(...);
 int func_002731F0(...);
 int List_Begin(...);
 int func_0013D680(...);
-int func_003E7EE0(...);
+int IeElement_SetColour(...);
 int String_CtorCStr_13B480(...);
 int ObjMarker_ConstructIcon(...);
 char* ObjMarkerRecord_Init(...);
@@ -85,8 +85,8 @@ extern "C" int func_00273210(char* mgr, int* id, char* obj, char* text) {
         ObjMarker_ConstructIcon(rec, 0);
         {
             MRec* r = rec;
-            func_003E7EE0(F_(r->icon1, 0x60, int), &D_004FFDA0);
-            func_003E7EE0(F_(r->icon0, 0x60, int), &D_004FFDA0);
+            IeElement_SetColour(F_(r->icon1, 0x60, int), &D_004FFDA0);
+            IeElement_SetColour(F_(r->icon0, 0x60, int), &D_004FFDA0);
         }
         {
             Str s;

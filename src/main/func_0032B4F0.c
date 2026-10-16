@@ -5,16 +5,16 @@ class Stk { public: VPAD16(a) VPAD4(b) VPAD2(c) VPAD1(d) virtual void Push(void*
 struct Dlg { char p0[0x48]; void* title; void* body; int f50; int f54; int f58; char p5c[0xE0 - 0x5C]; unsigned char fE0; };
 extern "C" {
 extern char D_004B8CF0[];
-void func_0041BEB0(void* w, char* s, int a);
-void func_0041A100(void* w, int a);
+void GuiTextWidget_SetText(void* w, char* s, int a);
+void GuiTextEditWidget_ClampCursor(void* w, int a);
 Stk* Gui_GetScreenStack(void);
 }
 extern "C" void GuiKeyboard_Open(Dlg* d, char* title, char* body, int a, int b, int c, unsigned char e)
 {
-    if (d->title) func_0041BEB0(d->title, title ? title : D_004B8CF0, 0);
+    if (d->title) GuiTextWidget_SetText(d->title, title ? title : D_004B8CF0, 0);
     if (d->body) {
-        func_0041BEB0(d->body, body ? body : D_004B8CF0, 0);
-        func_0041A100(d->body, -1);
+        GuiTextWidget_SetText(d->body, body ? body : D_004B8CF0, 0);
+        GuiTextEditWidget_ClampCursor(d->body, -1);
     }
     d->f54 = a;
     d->f58 = c;

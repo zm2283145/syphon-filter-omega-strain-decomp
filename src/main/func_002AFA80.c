@@ -33,7 +33,7 @@ void String_CtorCStr_13B480(Str_002AFA80* s, const char* c);
 void func_0013D680(Str_002AFA80* d, Str_002AFA80* s);
 void String_Dtor(Str_002AFA80* s, int flags);
 char* func_0044A060(G_002AFA80* g);
-void func_0041BEB0(W_002AFA80* w, char* s, int a);
+void GuiTextWidget_SetText(W_002AFA80* w, char* s, int a);
 unsigned char func_0044A1D0(G_002AFA80* g);
 int func_0033CE30(Self_002AFA80* self, int a, int b, int c, int d, int e);
 void FrontEnd_OpenPopup(void* a, int b, char* c, int d, Self_002AFA80* e, int f);
@@ -83,7 +83,7 @@ extern "C" void func_002AFA80(Self_002AFA80* self)
             if (g2) {
                 char* t = func_0044A060(g2);
                 if (self->p160)
-                    func_0041BEB0(self->p160, t ? t : D_004ABCD0, 0);
+                    GuiTextWidget_SetText(self->p160, t ? t : D_004ABCD0, 0);
             }
             self->b170 = func_0044A1D0(g);
         } else {
@@ -93,13 +93,13 @@ extern "C" void func_002AFA80(Self_002AFA80* self)
     }
     w = FindAs_002AFA80(self, D_0048BCF0, D_004A7520);
     if (w)
-        func_0041BEB0(w, Agent_GetSelected(D_004FFB50, -1)->name, 0);
+        GuiTextWidget_SetText(w, Agent_GetSelected(D_004FFB50, -1)->name, 0);
     SetVis_002AFA80(self, self->p168);
     SetVis_002AFA80(self, self->p16C);
     SetVis_002AFA80(self, self->pA4);
     if (self->p164) {
         char* t = Loc_LookupText(self->b170 ? "DestroyCell" : "ResignCell");
-        func_0041BEB0(self->p164, t ? t : D_004ABCD0, 0);
+        GuiTextWidget_SetText(self->p164, t ? t : D_004ABCD0, 0);
     }
     if (self->p88) {
         self->p88->bB4 = 1;

@@ -10,7 +10,7 @@
 /* merge_units: begin func_003E7EE0 */
 #pragma push /* merge_units */
 typedef struct { char pad[0x1A]; unsigned char r, g, b, a; } O_E7EE0;
-void func_003E7EE0(O_E7EE0* o, float* c)
+void IeElement_SetColour(O_E7EE0* o, float* c)
 {
     unsigned char g = (unsigned int)(255.0f * c[1]);
     unsigned char b = (unsigned int)(255.0f * c[2]);

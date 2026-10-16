@@ -48,9 +48,9 @@ void EffectService_Schedule(void* list, void* owner, float x, float y); /* gsynt
 
 typedef struct { int pad0; void* vt; } LObj_f4;
 extern void func_002371F0();
-extern void func_003EC5E0();
-extern void func_003EC6C0();
-void * const D_004DBB20[8] = { (void*)0x0, (void*)0x0, (void*)func_002371F0, (void*)func_003EC6C0, (void*)func_003EC5E0, (void*)0x0, (void*)0x0, (void*)0x0 };
+extern void Effect_Draw();
+extern void Effect_Update();
+void * const D_004DBB20[8] = { (void*)0x0, (void*)0x0, (void*)func_002371F0, (void*)Effect_Update, (void*)Effect_Draw, (void*)0x0, (void*)0x0, (void*)0x0 };
 extern char D_00535D20[];
 extern char D_004D9200[];
 extern void SpecFx_Construct(LFx_f4*);

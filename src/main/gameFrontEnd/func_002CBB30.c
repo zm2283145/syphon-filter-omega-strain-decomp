@@ -21,7 +21,7 @@ Mgr* Gui_GetScreenStack(void);
 int Gui_GetScreenList(void);
 void func_00415B60(Mgr* m, float dt);
 void GuiManager_Update(int a, float dt);
-void func_00415870(Mgr* m);
+void GuiCanvas_UpdatePads(Mgr* m);
 int Service_Lookup(void* a, void* b);
 void Event_Construct(Msg* m, void* type);
 void Event_Send(Msg* m, int target, int immediate);
@@ -62,7 +62,7 @@ extern "C" void FrontEnd_UpdateGui(ObjCBB30* o)
             func_00415B60(Gui_GetScreenStack(), dt);
         } else {
             GuiManager_Update(Gui_GetScreenList(), dt);
-            func_00415870(Gui_GetScreenStack());
+            GuiCanvas_UpdatePads(Gui_GetScreenStack());
             Gui_GetScreenStack()->Update(dt);
         }
         o->last = now;

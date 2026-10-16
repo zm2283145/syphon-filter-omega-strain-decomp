@@ -16,14 +16,14 @@
 #include "pickup_menu_types.h"
 
 extern char D_004F7E70[]; /* text colour (Vec4f; set by sinit and backpack Global_SetPickupTextColor) */
-extern float func_003D0810(PickupMenu* text, char* color);
+extern float TextObj_SetColour(PickupMenu* text, char* color);
 
 /* Applies the pickup-menu text colour to a model's text object (model +0x74),
  * setting the two flags at +0x10/+0x11 first. */
 float PickupMenuEntry_SetPickupColor(PickupMenu* text) {
     text->unk10 = 1;
     text->unk11 = 1;
-    return func_003D0810(text, D_004F7E70);
+    return TextObj_SetColour(text, D_004F7E70);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00251040 */
@@ -32,7 +32,7 @@ float PickupMenuEntry_SetPickupColor(PickupMenu* text) {
 #pragma push /* merge_units */
 #pragma cplusplus on
 #include "alloc_guard.h"
-/* Interface model instance (0x80 bytes, made by func_003EF010); +0x74 is its text object. */
+/* Interface model instance (0x80 bytes, made by IeElement_Create); +0x74 is its text object. */
 struct PickupMenuModel { char pad[0x74]; int text; };
 /* The pickup menu: one or two interface models (the second is only made when
  * t == 0), each paired with a 0x68-byte game object (WeaponPreview_ctor). */
@@ -52,16 +52,16 @@ extern int D_004F7E98; /* interface model template of the second panel */
 extern int D_0048AEF8;
 extern char D_004A7998[]; /* "pickup_menu.cc" */
 void* Mem_Alloc(int pool, int size, char* file, int line);
-PickupMenuModel* func_003EF010(int tmpl);
-void func_003F45A0(float t, PickupMenuModel* m);
-void func_003F44E0(float t, PickupMenuModel* m);
+PickupMenuModel* IeElement_Create(int tmpl);
+void IeElement_EvaluateAt(float t, PickupMenuModel* m);
+void IeElement_Fade(float t, PickupMenuModel* m);
 #if 0 /* merge_units */
 void PickupMenuEntry_SetPickupColor(int x);
 #endif /* merge_units */
 #define PickupMenuEntry_SetPickupColor(a0) ((void)PickupMenuEntry_SetPickupColor((PickupMenu *)(a0))) /* merge_units */
 
 void* WeaponPreview_ctor(void* obj);
-void func_003EEBE0(int node, int visible, int recurse); /* show/hide a model tree */
+void IeNode_SetShown(int node, int visible, int recurse); /* show/hide a model tree */
 }
 /* Sets up the pickup menu: instantiates the panel model(s) and their game objects. */
 extern "C" void PickupMenu_AddEntry(PickupMenuObj* s, signed char kind, int id, int t)
@@ -70,9 +70,9 @@ extern "C" void PickupMenu_AddEntry(PickupMenuObj* s, signed char kind, int id, 
     s->kind = kind;
     s->id = id;
     s->x8 = 0;
-    s->model1 = func_003EF010(D_004F7E90);
-    func_003F45A0(t, s->model1);
-    func_003F44E0(t + D_0048AEF8, s->model1);
+    s->model1 = IeElement_Create(D_004F7E90);
+    IeElement_EvaluateAt(t, s->model1);
+    IeElement_Fade(t + D_0048AEF8, s->model1);
     PickupMenuEntry_SetPickupColor(s->model1->text);
     {
         AllocGuard g;
@@ -82,13 +82,13 @@ extern "C" void PickupMenu_AddEntry(PickupMenuObj* s, signed char kind, int id, 
         p = WeaponPreview_ctor(p);
     s->obj1 = p;
     if (t) {
-        func_003EEBE0(D_004F7E98, 0, 1);
+        IeNode_SetShown(D_004F7E98, 0, 1);
         return;
     }
-    func_003EEBE0(D_004F7E98, 1, 1);
-    s->model2 = func_003EF010(D_004F7E98);
-    func_003F45A0(t, s->model2);
-    func_003F44E0(t + D_0048AEF8, s->model2);
+    IeNode_SetShown(D_004F7E98, 1, 1);
+    s->model2 = IeElement_Create(D_004F7E98);
+    IeElement_EvaluateAt(t, s->model2);
+    IeElement_Fade(t + D_0048AEF8, s->model2);
     PickupMenuEntry_SetPickupColor(s->model2->text);
     {
         AllocGuard g;

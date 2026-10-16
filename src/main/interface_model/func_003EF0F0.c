@@ -10,7 +10,7 @@
 extern ListPos* List_InsertBefore(ListPos* result, void* list, ListPos* pos, int value);
 
 /* push_back on a list whose sentinel node is at +4. */
-ListPos* func_003EF0F0(void* list, int value) {
+ListPos* IeNode_LinkElement(void* list, int value) {
     ListPos end;
     ListPos result;
 

@@ -9,7 +9,7 @@ struct LSelf { int count; LHead header; int unkC; int unk10; };
 extern "C" {
 void Mem_Free(int, void*, char*, int);
 void ObjectList_EraseRange(int*, void*, LNode**, LNode**);
-void func_003EBAD0(void*, int);
+void Fstream_StartRequest(void*, int);
 void func_003EB950(LNode** it, LSelf* self);
 void func_003EB8F0(LNode** it, int n);
 void** func_003EB8E0(LNode** it);
@@ -38,7 +38,7 @@ extern "C" void func_003EB750(LSelf* self) {
     int i;
     for (i = 0; i < n; i++) {
         void* p;
-        func_003EBAD0(ListAt(self, i), 0);
+        Fstream_StartRequest(ListAt(self, i), 0);
         p = At(self, i);
         {
             AllocGuard g;

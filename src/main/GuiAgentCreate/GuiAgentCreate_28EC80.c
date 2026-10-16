@@ -24,11 +24,11 @@ extern char D_004FFB50[];
 extern char D_004A99B0[];
 extern char D_004A7520[];
 void func_0041EFA0(void);
-void func_0041E0F0(S_28EC80* a, int b, int c, int d, int e);
+void GuiWidget_SendEvent(S_28EC80* a, int b, int c, int d, int e);
 int Agent_GetSelected(void* a, int b);
 W28EC80* GuiWidget_FindChildByName(S_28EC80* a, char* b);
 char* AgentData_GetName(int a);
-void func_0041BEB0(void* w, char* s, int a);
+void GuiTextWidget_SetText(void* w, char* s, int a);
 G_28EC80* Gui_GetScreenStack(void);
 }
 extern "C" void GuiAgentCreate_Wake(S_28EC80* self)
@@ -37,11 +37,11 @@ extern "C" void GuiAgentCreate_Wake(S_28EC80* self)
     D_004FFC04->b2F = 1;
     func_0041EFA0();
     if (self->f58)
-        func_0041E0F0(self, self->f58, 10, 0, 0);
+        GuiWidget_SendEvent(self, self->f58, 10, 0, 0);
     p = GuiWidget_FindChildByName(self, D_004A99B0);
     p = (p && p->IsA(D_004A7520)) ? p : 0;
     if (p)
-        func_0041BEB0(p, AgentData_GetName(Agent_GetSelected(D_004FFB50, -1)), 0);
+        GuiTextWidget_SetText(p, AgentData_GetName(Agent_GetSelected(D_004FFB50, -1)), 0);
     Gui_GetScreenStack()->f68 |= 0xC;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -71,7 +71,7 @@ extern char D_004A9990[];
 extern char D_004A9C40[];
 extern char D_004A9A40[];
 extern char D_0055DDA0[];
-void func_0041F150(Self_0028ED60* self);
+void GuiWidget_Init(Self_0028ED60* self);
 #if 0 /* merge_units */
 void* GuiWidget_FindChildByName(Self_0028ED60* self, char* name);
 #endif /* merge_units */
@@ -79,9 +79,9 @@ void* GuiWidget_FindChildByName(Self_0028ED60* self, char* name);
 
 void func_00290BC0(void);
 #if 0 /* merge_units */
-void func_0041BEB0(W_0028ED60* w, char* s, int a);
+void GuiTextWidget_SetText(W_0028ED60* w, char* s, int a);
 #endif /* merge_units */
-#define func_0041BEB0(a0, a1, a2) (func_0041BEB0((void *)(a0), (a1), (a2))) /* merge_units */
+#define GuiTextWidget_SetText(a0, a1, a2) (GuiTextWidget_SetText((void *)(a0), (a1), (a2))) /* merge_units */
 
 void func_002888C0(Aw_0028ED60* a);
 #if 0 /* merge_units */
@@ -102,7 +102,7 @@ extern "C" void GuiAgentCreate_Init(Self_0028ED60* self)
 {
     W_0028ED60* w;
     Aw_0028ED60 a;
-    func_0041F150(self);
+    GuiWidget_Init(self);
     w = FindAs_0028ED60(self, "playercharacter", D_004A9BF0);
     if (w) {
         D_00506390 = self;
@@ -115,7 +115,7 @@ extern "C" void GuiAgentCreate_Init(Self_0028ED60* self)
     self->f5C = FindAs_0028ED60(self, "value_slot", D_004A7520);
     self->f54 = FindAs_0028ED60(self, "beard", D_004A9870);
     if (self->f5C)
-        func_0041BEB0(self->f5C, D_004A9A40, 0);
+        GuiTextWidget_SetText(self->f5C, D_004A9A40, 0);
     func_002888C0(&a);
     a.bC = 1;
     AgentData_FilterAwards(Agent_GetSelected(D_004FFB50, -1), &a);
@@ -123,7 +123,7 @@ extern "C" void GuiAgentCreate_Init(Self_0028ED60* self)
     func_002887C0(&a, -1);
 }
 #undef GuiWidget_FindChildByName /* merge_units */
-#undef func_0041BEB0 /* merge_units */
+#undef GuiTextWidget_SetText /* merge_units */
 #undef Agent_GetSelected /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0028ED60(void) {}

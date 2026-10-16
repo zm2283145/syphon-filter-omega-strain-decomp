@@ -1459,8 +1459,8 @@ extern char D_004F7580[];
 extern char D_004F75A0[];
 extern FontMgr* App_GetInstance(void);
 extern int Font_GetLineHeight(int font);
-extern void* func_003D1020(void);
-extern void func_003D0EF0(void* ctx, char* text, int font, char* color, int x, int y);
+extern void* TextManager_Get(void);
+extern void TextManager_QueueText(void* ctx, char* text, int font, char* color, int x, int y);
 
 static inline int GetFont(signed char i)
 {
@@ -1534,7 +1534,7 @@ void ObjectiveMgr_DrawFailedSection(ObjMgr_002262F0* self, int* x, int* y, int* 
     step = Font_GetLineHeight(font) + 2;
     none = D_004A5D08;
     c = color ? color : D_004F7580;
-    func_003D0EF0(func_003D1020(), D_004A5D10, titleFont, c, *x, *y);
+    TextManager_QueueText(TextManager_Get(), D_004A5D10, titleFont, c, *x, *y);
     *y -= step;
     *count = 0;
     for (i = 0; i < self->n; i++) {
@@ -1542,7 +1542,7 @@ void ObjectiveMgr_DrawFailedSection(ObjMgr_002262F0* self, int* x, int* y, int* 
         if (e->active && e->state == 2) {
             char* name = e->name;
             c = color ? color : D_004F75B0;
-            func_003D0EF0(func_003D1020(), name, font, c, *x + 15, *y);
+            TextManager_QueueText(TextManager_Get(), name, font, c, *x + 15, *y);
             *y -= step;
             (*count)++;
         }
@@ -1552,14 +1552,14 @@ void ObjectiveMgr_DrawFailedSection(ObjMgr_002262F0* self, int* x, int* y, int* 
         if (e->active && e->state == 2) {
             char* name = e->name;
             c = color ? color : D_004F75B0;
-            func_003D0EF0(func_003D1020(), name, font, c, *x + 15, *y);
+            TextManager_QueueText(TextManager_Get(), name, font, c, *x + 15, *y);
             *y -= step;
             (*count)++;
         }
     }
     if (*count == 0) {
         color = color ? color : D_004F75B0;
-        func_003D0EF0(func_003D1020(), none, font, color, *x + 15, *y);
+        TextManager_QueueText(TextManager_Get(), none, font, color, *x + 15, *y);
         *y -= step;
     }
 }
@@ -1585,7 +1585,7 @@ void ObjectiveMgr_DrawCompletedSection(ObjMgr* self, int* x, int* y, int* count,
     step = Font_GetLineHeight(font) + 2;
     none = D_004A5D08;
     c = color ? color : D_004F7580;
-    func_003D0EF0(func_003D1020(), D_004A5D30, titleFont, c, *x, *y);
+    TextManager_QueueText(TextManager_Get(), D_004A5D30, titleFont, c, *x, *y);
     *y -= step;
     *count = 0;
     for (i = 0; i < self->n; i++) {
@@ -1593,7 +1593,7 @@ void ObjectiveMgr_DrawCompletedSection(ObjMgr* self, int* x, int* y, int* count,
         if (e->active && e->state == 1 && e->kind != 5) {
             char* name = e->name;
             c = color ? color : D_004F75A0;
-            func_003D0EF0(func_003D1020(), name, font, c, *x + 15, *y);
+            TextManager_QueueText(TextManager_Get(), name, font, c, *x + 15, *y);
             *y -= step;
             (*count)++;
         }
@@ -1603,14 +1603,14 @@ void ObjectiveMgr_DrawCompletedSection(ObjMgr* self, int* x, int* y, int* count,
         if (e->active && e->state == 1 && e->kind != 5) {
             char* name = e->name;
             c = color ? color : D_004F75A0;
-            func_003D0EF0(func_003D1020(), name, font, c, *x + 15, *y);
+            TextManager_QueueText(TextManager_Get(), name, font, c, *x + 15, *y);
             *y -= step;
             (*count)++;
         }
     }
     if (*count == 0) {
         color = color ? color : D_004F75A0;
-        func_003D0EF0(func_003D1020(), none, font, color, *x + 15, *y);
+        TextManager_QueueText(TextManager_Get(), none, font, color, *x + 15, *y);
         *y -= step;
     }
 }
@@ -1660,14 +1660,14 @@ extern "C" void ObjectiveMgr_DrawParametersSection(ObjMgr* self, int* x, int* y,
     if (CountKind5(self) == 0)
         return;
     c = color ? color : D_004F7580;
-    func_003D0EF0(func_003D1020(), D_004A5D50, titleFont, c, *x, *y);
+    TextManager_QueueText(TextManager_Get(), D_004A5D50, titleFont, c, *x, *y);
     *y -= step;
     for (i = 0; i < self->n; i++) {
         ObjEnt* e = self->ents[i];
         if (e->active && !Finished(e) && e->kind == 5) {
             char* name = e->name;
             c = color ? color : D_004F7590;
-            func_003D0EF0(func_003D1020(), name, font, c, *x + 15, *y);
+            TextManager_QueueText(TextManager_Get(), name, font, c, *x + 15, *y);
             *y -= step;
             (*count)++;
         }
@@ -1677,14 +1677,14 @@ extern "C" void ObjectiveMgr_DrawParametersSection(ObjMgr* self, int* x, int* y,
         if (e->active && !Finished(e) && e->kind == 5) {
             char* name = e->name;
             c = color ? color : D_004F7590;
-            func_003D0EF0(func_003D1020(), name, font, c, *x + 15, *y);
+            TextManager_QueueText(TextManager_Get(), name, font, c, *x + 15, *y);
             *y -= step;
             (*count)++;
         }
     }
     if (*count == 0) {
         color = color ? color : D_004F7590;
-        func_003D0EF0(func_003D1020(), none, font, color, *x + 15, *y);
+        TextManager_QueueText(TextManager_Get(), none, font, color, *x + 15, *y);
         *y -= step;
     }
 }
@@ -1716,14 +1716,14 @@ extern "C" void ObjectiveMgr_DrawMissionSection(ObjMgr* self, int* x, int* y, in
     step = Font_GetLineHeight(font) + 2;
     none = D_004A5D08;
     c = color ? color : D_004F7580;
-    func_003D0EF0(func_003D1020(), D_004A5D70, titleFont, c, *x, *y);
+    TextManager_QueueText(TextManager_Get(), D_004A5D70, titleFont, c, *x, *y);
     *y -= step;
     for (i = 0; i < self->n; i++) {
         ObjEnt* e = self->ents[i];
         if (e->active && !Finished(e) && e->kind != 5) {
             char* name = e->name;
             c = color ? color : D_004F7590;
-            func_003D0EF0(func_003D1020(), name, font, c, *x + 15, *y);
+            TextManager_QueueText(TextManager_Get(), name, font, c, *x + 15, *y);
             *y -= step;
             (*count)++;
         }
@@ -1733,14 +1733,14 @@ extern "C" void ObjectiveMgr_DrawMissionSection(ObjMgr* self, int* x, int* y, in
         if (e->active && !Finished(e) && e->kind != 5) {
             char* name = e->name;
             c = color ? color : D_004F7590;
-            func_003D0EF0(func_003D1020(), name, font, c, *x + 15, *y);
+            TextManager_QueueText(TextManager_Get(), name, font, c, *x + 15, *y);
             *y -= step;
             (*count)++;
         }
     }
     if (*count == 0) {
         color = color ? color : D_004F7590;
-        func_003D0EF0(func_003D1020(), none, font, color, *x + 15, *y);
+        TextManager_QueueText(TextManager_Get(), none, font, color, *x + 15, *y);
         *y -= step;
     }
 }

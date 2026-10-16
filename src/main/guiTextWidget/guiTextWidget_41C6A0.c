@@ -25,30 +25,30 @@ int Mem_Free();
 extern "C" {
 /*fc*/
 int String_Dtor(...);                         
-int func_0041F370(...);                         
+int GuiWidget_Destroy(...);                         
 int operator_delete(...);                          
 extern char D_004BF2D0;
 extern "C" void GuiTextWidget_IsType();
 extern "C" void func_00293950();
 extern "C" void func_0041BE10();
 extern "C" void func_0041BE50();
-extern "C" void func_0041C150();
+extern "C" void GuiTextWidget_Draw();
 extern "C" void func_0041C310();
-extern "C" void func_0041C3E0();
+extern "C" void GuiTextWidget_OnWake();
 extern "C" void func_0041C560();
-extern "C" void func_0041D400();
-extern "C" void func_0041D5C0();
-extern "C" void func_0041D780();
-extern "C" void func_0041D8C0();
+extern "C" void GuiWidget_FocusPrev();
+extern "C" void GuiWidget_FocusNext();
+extern "C" void GuiWidget_FocusLast();
+extern "C" void GuiWidget_FocusFirst();
 extern "C" void func_0041E230();
 extern "C" void func_0041E2B0();
 extern "C" void func_0041E330();
-extern "C" void func_0041E3B0();
-extern "C" void func_0041EF10();
+extern "C" void GuiWidget_Update();
+extern "C" void GuiWidget_OnEvent();
 extern "C" void func_0041F070();
 extern "C" void func_0041F080();
-extern "C" void func_0041F090();
-extern "C" void func_0041F150();
+extern "C" void GuiWidget_Deinit();
+extern "C" void GuiWidget_Init();
 extern void * const D_004E0AC0[];
 extern unsigned char D_00533880;
 }
@@ -76,14 +76,14 @@ extern "C" char * func_0041C6A0(char * arg0, long long arg1) {
         if (temp_a0_2 != NULL) {
             String_Dtor(temp_a0_2, 0);
         }
-        func_0041F370(arg0, 0);
+        GuiWidget_Destroy(arg0, 0);
         if (((long long) (arg1 << 0x30) >> 0x30) > 0) {
             operator_delete(arg0);
         }
     }
     return arg0;
 }
-void * const D_004E0AC0[24] = { (void*)0x0, (void*)0x0, (void*)func_0041C6A0, (void*)func_0041F150, (void*)func_0041F090, (void*)func_0041F080, (void*)func_0041F070, (void*)func_0041C3E0, (void*)func_0041C310, (void*)func_0041E330, (void*)func_0041E2B0, (void*)func_00293950, (void*)func_0041C150, (void*)func_0041E230, (void*)func_0041E3B0, (void*)func_0041EF10, (void*)func_0041C560, (void*)func_0041D8C0, (void*)func_0041D780, (void*)func_0041D5C0, (void*)func_0041D400, (void*)func_0041BE10, (void*)GuiTextWidget_IsType, (void*)func_0041BE50 };
+void * const D_004E0AC0[24] = { (void*)0x0, (void*)0x0, (void*)func_0041C6A0, (void*)GuiWidget_Init, (void*)GuiWidget_Deinit, (void*)func_0041F080, (void*)func_0041F070, (void*)GuiTextWidget_OnWake, (void*)func_0041C310, (void*)func_0041E330, (void*)func_0041E2B0, (void*)func_00293950, (void*)GuiTextWidget_Draw, (void*)func_0041E230, (void*)GuiWidget_Update, (void*)GuiWidget_OnEvent, (void*)func_0041C560, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)func_0041BE10, (void*)GuiTextWidget_IsType, (void*)func_0041BE50 };
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0041C6A0(void) {}
 #pragma pop /* merge_units */
@@ -99,7 +99,7 @@ extern char D_004E0AC0[];
 #endif /* merge_units */
 #define D_004E0AC0 ((char*)&D_004E0AC0) /* merge_units */
 
-W41C7D0* func_0041C7D0(W41C7D0* w)
+W41C7D0* GuiTextWidget_ctor(W41C7D0* w)
 {
     GuiWidget_ctor(w);
     w->vt = D_004E0AC0;

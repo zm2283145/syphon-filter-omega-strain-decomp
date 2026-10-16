@@ -40,7 +40,7 @@ void String_Dtor(Str4133B0* s, int flags);
 
 #pragma push
 #pragma opt_propagation off
-extern "C" int func_004133B0(Self4133B0* self, int* out, int name)
+extern "C" int GuiResource_Find(Self4133B0* self, int* out, int name)
 {
     if (!self->list) return 0;
     {

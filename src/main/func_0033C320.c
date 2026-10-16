@@ -15,12 +15,12 @@ extern void func_002C81D0(G33*);
 extern void FrontEnd_ClosePopup(G33*, int);
 extern int Gui_GetScreenList(void);
 extern W33* GuiManager_FindOrLoad(int, char*, char*);
-extern void func_00418840(int, W33*);
+extern void GuiManager_ReleaseRoot(int, W33*);
 extern int DME_GetLobby(void);
 extern int func_00442510(int, int);
 extern int func_0044A230(int);
 extern V33* Gui_GetScreenStack(void);
-extern void func_0041E0F0(W33*, V33*, int, int, int);
+extern void GuiWidget_SendEvent(W33*, V33*, int, int, int);
 }
 extern "C" int func_0033C320(O33* self, int type) {
     int c = -1;
@@ -60,7 +60,7 @@ extern "C" int func_0033C320(O33* self, int type) {
             int p = DME_GetLobby();
             if (!p || !func_00442510(p, x)) {
                 if (h != -1) FrontEnd_ClosePopup(D_004FFC04, h);
-                func_00418840(Gui_GetScreenList(), w);
+                GuiManager_ReleaseRoot(Gui_GetScreenList(), w);
                 return 0;
             }
         }
@@ -68,7 +68,7 @@ extern "C" int func_0033C320(O33* self, int type) {
             int p = DME_GetLobby();
             if (!p || !func_0044A230(p)) {
                 if (h != -1) FrontEnd_ClosePopup(D_004FFC04, h);
-                func_00418840(Gui_GetScreenList(), w);
+                GuiManager_ReleaseRoot(Gui_GetScreenList(), w);
                 return 0;
             }
         }
@@ -85,7 +85,7 @@ extern "C" int func_0033C320(O33* self, int type) {
     if (h != -1) FrontEnd_ClosePopup(D_004FFC04, h);
     if (w) {
         w->flags |= 2;
-        func_0041E0F0(w, Gui_GetScreenStack(), 0x10, 2, 0);
+        GuiWidget_SendEvent(w, Gui_GetScreenStack(), 0x10, 2, 0);
     }
     return 1;
 }

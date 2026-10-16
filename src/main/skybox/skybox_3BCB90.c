@@ -57,7 +57,7 @@ struct Sky_BCB90 {
 #pragma opt_propagation off
 #pragma opt_common_subs off
 #pragma opt_dead_assignments off
-extern "C" void func_003BCB90(Sky_BCB90* o) {
+extern "C" void SkyLayer_Update(Sky_BCB90* o) {
     o->ang = o->ang + o->angVel;
     if (!(o->flags & 8)) {
         o->vel += o->acc;
@@ -94,7 +94,7 @@ extern char* strchr(const char*, int);
 extern void func_0036E540(H3BC*, char*, O3BC*, int);
 extern void Model_Load(char*, H3BC*, int);
 extern void FileMan_Release(H3BC*, int);
-O3BC* func_003BCC70(O3BC* o, S3BC* src, int arg) {
+O3BC* SkyLayer_Construct(O3BC* o, S3BC* src, int arg) {
     H3BC h;
     func_0036D630(o);
     o->f16c = 0;

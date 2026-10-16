@@ -13,9 +13,9 @@ int func_003813A0(...);
 int operator_delete(...);                          
 extern char D_004BC5D0;
 extern char D_004DFAD8;
-extern "C" void func_0039B7B0();
-extern "C" void func_0039CB70();
-extern "C" void func_0039EF10();
+extern "C" void ShatterEmitter_Draw();
+extern "C" void ShatterEmitter_Update();
+extern "C" void ShatterEmitter_IsDead();
 extern "C" void func_003A23F0();
 extern "C" void func_003A6090();
 extern void * const D_004DFB10[];
@@ -24,7 +24,7 @@ extern unsigned char D_00533880;
 extern int D_00539248;
 }
 #pragma opt_common_subs off
-extern "C" char * func_0039F740(char * arg0, long long arg1) {
+extern "C" char * ShatterEmitter_Destroy(char * arg0, long long arg1) {
     int temp_a1;
     int temp_s2;
 
@@ -54,4 +54,4 @@ extern "C" char * func_0039F740(char * arg0, long long arg1) {
     }
     return arg0;
 }
-void * const D_004DFB10[8] = { (void*)0x0, (void*)0x0, (void*)func_0039F740, (void*)func_0039B7B0, (void*)func_0039CB70, (void*)func_003A6090, (void*)func_0039EF10, (void*)func_003A23F0 };
+void * const D_004DFB10[8] = { (void*)0x0, (void*)0x0, (void*)ShatterEmitter_Destroy, (void*)ShatterEmitter_Draw, (void*)ShatterEmitter_Update, (void*)func_003A6090, (void*)ShatterEmitter_IsDead, (void*)func_003A23F0 };

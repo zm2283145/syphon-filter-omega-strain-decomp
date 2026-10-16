@@ -148,7 +148,7 @@ extern Mgr_002A05B0* D_004FFC04;
 
 extern unsigned char D_0051EEA0;
 extern G_002A05B0* D_0055A830;
-void func_0041E3B0(Self_002A05B0* self);
+void GuiWidget_Update(Self_002A05B0* self);
 Ctl_002A05B0* GuiWidget_FindChildByName(Self_002A05B0* self, char* name);
 #if 0 /* merge_units */
 Ui_002A05B0* Gui_GetScreenStack(void);
@@ -168,7 +168,7 @@ static inline void SetHidden_002A05B0(Ctl_002A05B0* w, bool h)
 extern "C" void GuiOnlineOfflineSelect_Update(Self_002A05B0* self)
 {
     Ctl_002A05B0* w;
-    func_0041E3B0(self);
+    GuiWidget_Update(self);
     w = GuiWidget_FindChildByName(self, D_0048BA28);
     if (w) {
         bool hide;
@@ -302,9 +302,9 @@ extern G_002A0860* D_0055A830;
 #define D_0055A830 (*(G_002A0860 **)&D_0055A830) /* merge_units */
 
 #if 0 /* merge_units */
-void func_0041E3B0(Self_002A0860* self);
+void GuiWidget_Update(Self_002A0860* self);
 #endif /* merge_units */
-#define func_0041E3B0(a0) (func_0041E3B0((Self_002A05B0 *)(a0))) /* merge_units */
+#define GuiWidget_Update(a0) (GuiWidget_Update((Self_002A05B0 *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
 Ctl_002A0860* GuiWidget_FindChildByName(Self_002A0860* self, char* name);
@@ -350,7 +350,7 @@ extern "C" void GuiOnlineOfflineSelect_UpdateOnline(Self_002A0860* self)
 }
 #undef D_004FFC04 /* merge_units */
 #undef D_0055A830 /* merge_units */
-#undef func_0041E3B0 /* merge_units */
+#undef GuiWidget_Update /* merge_units */
 #undef GuiWidget_FindChildByName /* merge_units */
 #undef Gui_GetScreenStack /* merge_units */
 #undef GuiScreen_SetFocus /* merge_units */
@@ -375,7 +375,7 @@ extern const char* D_0048BA30;
 #endif /* merge_units */
 #define D_0048BA30 (*(const char **)&D_0048BA30) /* merge_units */
 
-void func_0041F150(S2A0970* s);
+void GuiWidget_Init(S2A0970* s);
 #if 0 /* merge_units */
 W2A0970* GuiWidget_FindChildByName(S2A0970* s, const char* name);
 #endif /* merge_units */
@@ -388,7 +388,7 @@ static inline int Nz2A0970(unsigned char v) { return v != 0; }
 extern "C" void GuiOnlineOfflineSelect_Init(S2A0970* s)
 {
     W2A0970* w;
-    func_0041F150(s);
+    GuiWidget_Init(s);
     s->b48 = D_00506488;
     w = GuiWidget_FindChildByName(s, D_0048BA38);
     if (w) {

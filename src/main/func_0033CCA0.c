@@ -14,7 +14,7 @@ extern char* strncpy(char*, const char*, int);
 extern void func_003FD2D0(char*);
 extern void func_002CA640(G33C*, int);
 extern void func_002CA6F0(G33C*);
-extern void func_0041E0F0(O33C*, W33C*, int, int, int);
+extern void GuiWidget_SendEvent(O33C*, W33C*, int, int, int);
 void func_0033CCA0(O33C* o) {
     L33C* l = DME_GetLobby();
     int i;
@@ -42,12 +42,12 @@ void func_0033CCA0(O33C* o) {
     if (!o->f7c) return;
     if (l->f20) {
         if (o->f7c->f10 != 1) {
-            func_0041E0F0(o, o->f7c, 6, (int)"onActivate", 0);
+            GuiWidget_SendEvent(o, o->f7c, 6, (int)"onActivate", 0);
             o->f7c->f10 = 1;
         }
     } else {
         if (o->f7c->f10) {
-            func_0041E0F0(o, o->f7c, 6, (int)"onWake", 0);
+            GuiWidget_SendEvent(o, o->f7c, 6, (int)"onWake", 0);
             o->f7c->f10 = 0;
         }
     }

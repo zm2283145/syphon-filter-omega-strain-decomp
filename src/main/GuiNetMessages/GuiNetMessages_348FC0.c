@@ -20,7 +20,7 @@ typedef struct {
 } S348FC0;
 extern char D_004DEB80[];
 extern char D_004BA338[];
-extern void func_00424C50(S348FC0* self);
+extern void GuiArrayWidget_ctor(S348FC0* self);
 extern char* Loc_LookupText(char* key);
 extern void String_CtorCStr_13B480(Str348FC0* s, char* text);
 extern void func_0013D680(Str348FC0* dst, Str348FC0* src);
@@ -29,7 +29,7 @@ S348FC0* func_00348FC0(S348FC0* self)
 {
     Str348FC0 tmp;
     char* t;
-    func_00424C50(self);
+    GuiArrayWidget_ctor(self);
     self->vtable = D_004DEB80;
     self->sA8.a = 0;
     self->sA8.b = 0;
@@ -56,7 +56,7 @@ static inline void merge_flush_func_00348FC0(void) {}
 #pragma cplusplus on
 
 /* Derived destructor: member, then base, optionally delete. */
-DEFINE_VTABLE_MEMBER_BASE_DTOR(func_00349070, D_004E0D20, 0x60, func_0013A040, func_0041F370)
+DEFINE_VTABLE_MEMBER_BASE_DTOR(func_00349070, D_004E0D20, 0x60, func_0013A040, GuiWidget_Destroy)
 #pragma pop /* merge_units */
 /* merge_units: end func_00349070 */
 
@@ -64,7 +64,7 @@ DEFINE_VTABLE_MEMBER_BASE_DTOR(func_00349070, D_004E0D20, 0x60, func_0013A040, f
 #pragma push /* merge_units */
 #pragma cplusplus on
 
-/* Deleting destructor: string member at +0xA8, middle class with a member at +0x60, base func_0041F370. */
+/* Deleting destructor: string member at +0xA8, middle class with a member at +0x60, base GuiWidget_Destroy. */
 extern "C" {
 extern char D_004E0D20[];
 #if 0 /* merge_units */
@@ -78,7 +78,7 @@ void* String_Dtor(void* self, short deleteFlag);
 #define String_Dtor(a0, a1) (String_Dtor((Str348FC0 *)(a0), (int)(a1))) /* merge_units */
 
 void* func_0013B2E0(void* self, short deleteFlag);
-void* func_0041F370(void* self, short deleteFlag);
+void* GuiWidget_Destroy(void* self, short deleteFlag);
 }
 struct O3490F0 { void* vtable; };
 extern "C" O3490F0* func_003490F0(O3490F0* self, short deleteFlag)
@@ -91,7 +91,7 @@ extern "C" O3490F0* func_003490F0(O3490F0* self, short deleteFlag)
         if (self) {
             self->vtable = D_004E0D20;
             func_0013B2E0((char*)self + 0x60, -1);
-            func_0041F370(self, 0);
+            GuiWidget_Destroy(self, 0);
         }
         if (deleteFlag > 0)
             operator_delete(self);

@@ -1,0 +1,141 @@
+/*
+ * main/SFOLobby_Main: 5 files, 00453F30-00454080
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_00453F30 */
+#pragma push /* merge_units */
+typedef __int128 Q128;
+#include "types.h"
+#define F_(b, o, T) (*(T*)((char*)(b) + (o)))
+#define NULL 0
+#define VC_(p) ((int (*)())(p))
+#pragma mpwc_relax on
+int func_002EC580(int *);                             
+
+int func_00453F30(int arg0) {
+    struct { int size; int st[4]; int pad[3]; } s;
+    if ((arg0 < 0) || (arg0 >= 4)) {
+        return 0;
+    }
+    s.size = 0x18;
+    func_002EC580(&s);
+    return s.st[arg0] == 2;
+}
+#pragma pop /* merge_units */
+/* merge_units: end func_00453F30 */
+
+/* merge_units: begin func_00453F90 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Not inside a known source-file range: after SFOLobby_Main.cc (ends 0x004534A0),
+ * before GuiSubTitleDisplay.cc (starts 0x00457AA0).
+ */
+
+
+void func_00453F90(void) {
+}
+
+void func_00453FA0(void) {
+}
+#pragma pop /* merge_units */
+/* merge_units: end func_00453F90 */
+
+/* merge_units: begin func_00453FB0 */
+#pragma push /* merge_units */
+#include "loose05_types.h"
+
+extern void func_00438A10(void);
+extern void func_00438770(int enabled);
+
+/* Dispatch the lobby notification only while the suppression flag is clear. */
+void func_00453FB0(SFOLobby* lobby)
+{
+    if (!lobby->unk23D5)
+        func_00438A10();
+}
+
+/* Enable the lobby operation only while the suppression flag is clear. */
+void func_00453FE0(SFOLobby* lobby)
+{
+    if (!lobby->unk23D5)
+        func_00438770(1);
+}
+#pragma pop /* merge_units */
+/* merge_units: end func_00453FB0 */
+
+/* merge_units: begin func_00454010 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Address lies after SFOLobby_Main.cc (ends 0x004534A0); probably part of it.
+ */
+
+
+extern int memset(void* dst, int value, int size); /* memset */
+extern void func_0042B420(void* obj);
+extern int func_00438A70(int handle, int arg);
+
+/* Clears an 84-byte record and hands it to func_0042B420. */
+void func_00454010(void* rec) {
+    memset(rec, 0, 84);
+    func_0042B420(rec);
+}
+
+void func_00454050(SFOLobby* self) {
+    if (self->unk23D5 == 0) {
+        func_00438A70(self->connHandle, 0);
+    }
+}
+#pragma pop /* merge_units */
+/* merge_units: end func_00454010 */
+
+/* merge_units: begin func_00454080 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+extern "C" {
+void FileMan_Release(void* member, int flags);
+void GuiWidget_Destroy(void* self, int flags);
+void operator_delete(void* allocation);
+extern "C" void GuiWidget_FocusPrev();
+extern "C" void GuiWidget_FocusNext();
+extern "C" void GuiWidget_FocusLast();
+extern "C" void GuiWidget_FocusFirst();
+extern "C" void func_0041E230();
+extern "C" void func_0041E2B0();
+extern "C" void func_0041E330();
+extern "C" void GuiWidget_Draw();
+extern "C" void func_0041EFA0();
+extern "C" void func_0041F080();
+extern "C" void GuiWidget_Deinit();
+extern "C" void func_0041F210();
+extern "C" void func_00454110();
+extern "C" void func_00454120();
+extern "C" void func_00454150();
+extern "C" void func_00454380();
+extern "C" void func_00454440();
+extern "C" void func_00454880();
+extern "C" void func_00454910();
+extern "C" void func_00454A80();
+extern void * const D_004E1290[];
+}
+struct TM454080 { void* vtable; char base[0x4C]; char payload[0x48]; char memberA[0x9C]; char memberB[4]; };
+extern "C" TM454080* func_00454080(TM454080* self, short deleteFlag)
+{
+    if (self) {
+        self->vtable = ((char*)D_004E1290);
+        if (self->payload) {
+            FileMan_Release(self->memberB, -1);
+            FileMan_Release(self->memberA, -1);
+        }
+        GuiWidget_Destroy(self, 0);
+        if (deleteFlag > 0)
+            operator_delete(self);
+    }
+    return self;
+}
+void * const D_004E1290[24] = { (void*)0x0, (void*)0x0, (void*)func_00454080, (void*)func_00454910, (void*)GuiWidget_Deinit, (void*)func_0041F080, (void*)func_00454880, (void*)func_0041EFA0, (void*)func_00454A80, (void*)func_0041E330, (void*)func_0041E2B0, (void*)func_00454150, (void*)GuiWidget_Draw, (void*)func_0041E230, (void*)func_00454380, (void*)func_00454440, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)func_00454110, (void*)func_00454120, (void*)0x0 };
+#pragma pop /* merge_units */
+/* merge_units: end func_00454080 */

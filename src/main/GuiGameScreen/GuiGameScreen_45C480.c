@@ -21,7 +21,7 @@ int func_00175FF0(char * , int);
 extern char * D_004FFC0C;
 extern int D_004FFD30;
 
-void func_0045C480(char * arg0) {
+void GuiGameScreen_EquipSelected(char * arg0) {
     int temp_a1;
     int temp_s2;
     int temp_a1_2;
@@ -55,8 +55,8 @@ static inline void merge_flush_func_0045C480(void) {}
 typedef struct { char p[0x6C]; void* f6C; char p70[4]; int count; char p78[0x18]; int sel; char p94[8]; unsigned char b9C; } W45C540;
 extern void func_0045C5E0(W45C540* w);
 extern void* Gui_GetScreenStack(void);
-extern void func_0041E0F0(void* w, void* src, int kind, int a, int b);
-void func_0045C540(W45C540* w, int dir)
+extern void GuiWidget_SendEvent(void* w, void* src, int kind, int a, int b);
+void GuiGameScreen_StepWeaponSelect(W45C540* w, int dir)
 {
     int i;
     if (w->count <= 1) return;
@@ -65,7 +65,7 @@ void func_0045C540(W45C540* w, int dir)
     if (i < 0) i = w->count - 1; else if (!(i < w->count)) i = 0;
     w->sel = i;
     func_0045C5E0(w);
-    func_0041E0F0(w->f6C, Gui_GetScreenStack(), 0x10, 0, 0);
+    GuiWidget_SendEvent(w->f6C, Gui_GetScreenStack(), 0x10, 0, 0);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0045C540(void) {}

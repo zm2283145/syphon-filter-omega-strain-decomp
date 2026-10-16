@@ -23,7 +23,7 @@ extern char D_004C1B20[];
 extern char D_004C1B28[];
 extern char D_004C1B38[];
 }
-extern "C" void func_00456160(W4561* g) {
+extern "C" void GuiStartMenu_ReturnToMenu(W4561* g) {
     W4561* w = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004C1AD8, "INGAMENU");
     void* p;
     if (!w) return;
@@ -134,7 +134,7 @@ static inline void ShowButtons(char* a, char* b)
     }
 }
 
-extern "C" void func_004562E0(Self_4562E0* self, int which)
+extern "C" void GuiStartMenu_SelectButton(Self_4562E0* self, int which)
 {
     Pg_4562E0* pg = 0;
     switch (which) {

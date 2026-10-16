@@ -325,7 +325,7 @@ int cMessage_dtor(Msg_220D70* msg, int flags);
 
 extern char g_cDisableMsgClass[];
 extern char D_004E0860[];
-void func_003FF650(Msg_220D70* msg, int id, int x);
+void NetMsg_Send(Msg_220D70* msg, int id, int x);
 #if 0 /* merge_units */
 void func_0043B190(void* t);
 #endif /* merge_units */
@@ -353,7 +353,7 @@ void cGenerator_v18(G_220D70* g, int bit)
         msg.vtable = D_004E0860;
         msg.size = 0x40;
         msg.kind = 4;
-        func_003FF650(&msg, g->id, -1);
+        NetMsg_Send(&msg, g->id, -1);
         msg.vtable = D_004E0860;
         cMessage_dtor(&msg, 0);
     } else {

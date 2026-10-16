@@ -65,7 +65,7 @@ extern void Array_DestroyRange(C6Arr_3B86D0*, C6It_3B86D0*, C6It_3B86D0*);
 extern void func_00396810(void*, int, int, char*, int);
 extern void func_003B92E0(C6Arr_3B86D0*);
 extern char D_004BC4D0[];
-void func_003B86D0(C6Arr_3B86D0* self) {
+void MotionArray_Clear(C6Arr_3B86D0* self) {
     C6It_3B86D0 first;
     C6It_3B86D0 last;
     func_00397840(&last, self, self->live);
@@ -92,9 +92,9 @@ static inline void merge_flush_func_003B86D0(void) {}
 #pragma push /* merge_units */
 typedef struct Deq_3B87A0 { unsigned int count; int unk4; unsigned int first; void** blocks; unsigned int pos; int size; } Deq_3B87A0;
 #if 0 /* merge_units */
-extern void func_003B86D0(Deq_3B87A0*);
+extern void MotionArray_Clear(Deq_3B87A0*);
 #endif /* merge_units */
-#define func_003B86D0(a0) (func_003B86D0((void *)(a0))) /* merge_units */
+#define MotionArray_Clear(a0) (MotionArray_Clear((void *)(a0))) /* merge_units */
 
 extern void* func_003AC450(Deq_3B87A0*);
 extern void func_00397400(void*, int);
@@ -105,7 +105,7 @@ extern void func_003B92E0(Deq_3B87A0*);
 
 void func_003B87A0(Deq_3B87A0* self) {
     if (self->size == 1) {
-        func_003B86D0(self);
+        MotionArray_Clear(self);
     } else {
         func_00397400(func_003AC450(self), -1);
         self->size--;
@@ -118,7 +118,7 @@ void func_003B87A0(Deq_3B87A0* self) {
         }
     }
 }
-#undef func_003B86D0 /* merge_units */
+#undef MotionArray_Clear /* merge_units */
 #undef func_003B92E0 /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003B87A0(void) {}

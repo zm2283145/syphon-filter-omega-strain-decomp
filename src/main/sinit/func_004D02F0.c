@@ -40,7 +40,7 @@ extern char D_0048B030[], D_0048B070[], D_00493880[], D_00493890[];
 extern char Script_setFxMode[], Script_setFxFlair[], Script_setFxLightDist[];
 extern int ScriptEnum_Register(void* a, void* b, int n);
 extern int Script_RegisterNative_2(void* fn, void* name, void* desc, int n, ...);
-void func_004D02F0(void)
+void StaticInit_FlareColours(void)
 {
     D_004A7DE0 = 1.0f;
     D_004A7DE4 = 1.0f;

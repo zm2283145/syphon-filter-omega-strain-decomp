@@ -25,7 +25,7 @@ void Event_Construct(Msg_23BDC0* msg, void* type);
 void cMessage_dtor(Msg_23BDC0* msg, int flags);
 extern char g_cDisableMsgClass[];
 extern char D_004E0860[];
-void func_003FF650(Msg_23BDC0* msg, int id, int x);
+void NetMsg_Send(Msg_23BDC0* msg, int id, int x);
 }
 extern "C" void cNIEventOBJ_v18(Obj_23BDC0* self)
 {
@@ -36,7 +36,7 @@ extern "C" void cNIEventOBJ_v18(Obj_23BDC0* self)
         msg.vtable = D_004E0860;
         msg.target = -1;
         msg.size = 0x40;
-        func_003FF650(&msg, self->id, -1);
+        NetMsg_Send(&msg, self->id, -1);
         msg.vtable = D_004E0860;
         cMessage_dtor(&msg, 0);
     }

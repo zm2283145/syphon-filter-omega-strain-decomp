@@ -4,12 +4,12 @@ typedef struct { char p[0x88]; C454380* c; char p8C[8]; int f94; } S454380;
 typedef struct { char p[0x14]; unsigned short flags; char p16[0x32]; S454380* s; } W454380;
 typedef struct { int p0; int f4; } G454380;
 extern G454380* D_004FFC2C;
-extern void func_0041E3B0(W454380* w);
+extern void GuiWidget_Update(W454380* w);
 extern void func_00454280(W454380* w);
 void func_00454380(W454380* w)
 {
     C454380* c;
-    func_0041E3B0(w);
+    GuiWidget_Update(w);
     {
         G454380* g;
 S454380* s;

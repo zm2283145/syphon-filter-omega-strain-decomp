@@ -36,7 +36,7 @@ void String_CtorCStr_13B480(Str* s, const char* c);
 void func_0013D680(Str* d, Str* s);
 void String_Dtor(Str* s, int f);
 void func_002CE1A0(void* ret, void* list, void** it, void* ent);
-void func_0041E0F0(Mgr* a, Mgr* b, int c, int d, int e);
+void GuiWidget_SendEvent(Mgr* a, Mgr* b, int c, int d, int e);
 extern char D_004ACFE0[];
 }
 
@@ -128,7 +128,7 @@ extern "C" int FrontEnd_OpenPopup(SelfCAE30* self, int a4, const char* n1, const
                 Obj258* o = self->obj;
                 if (!(o->flags & 8)) {
                     Gui_GetScreenStack()->Add(o, 1000);
-                    func_0041E0F0(Gui_GetScreenStack(), Gui_GetScreenStack(), 0x10, 2, 0);
+                    GuiWidget_SendEvent(Gui_GetScreenStack(), Gui_GetScreenStack(), 0x10, 2, 0);
                 }
             }
         }

@@ -50,7 +50,7 @@ static inline void merge_flush_func_00405940(void) {}
 /* merge_units: begin func_00405A60 */
 #pragma push /* merge_units */
 typedef struct { int pad; int count; char** names; } List5E10;
-void func_00405E10(void* self, List5E10* list, __int128* keys, int n); /* gsynth: defined below */
+void Appearance_ClearPartKey(void* self, List5E10* list, __int128* keys, int n); /* gsynth: defined below */
 typedef struct { __int128 name; char pad[0x10]; } Ent5F10;
 typedef struct { char pad[0x50]; Ent5F10 ent[1]; } Obj5F10;
 void func_00405F10(Obj5F10* o, int idx, __int128* keys, int n); /* gsynth: defined below */
@@ -81,9 +81,9 @@ int String_CompareN(const char* a, const char* b, int n);
 #define String_CompareN(a0, a1, a2) (String_CompareN((char *)(a0), (char *)(a1), (a2))) /* merge_units */
 
 #if 0 /* merge_units */
-void func_00405E10(A60Obj* o, void* list, __int128* keys, int n);
+void Appearance_ClearPartKey(A60Obj* o, void* list, __int128* keys, int n);
 #endif /* merge_units */
-#define func_00405E10(a0, a1, a2, a3) (func_00405E10((void *)(a0), (List5E10 *)(a1), (a2), (a3))) /* merge_units */
+#define Appearance_ClearPartKey(a0, a1, a2, a3) (Appearance_ClearPartKey((void *)(a0), (List5E10 *)(a1), (a2), (a3))) /* merge_units */
 
 #if 0 /* merge_units */
 void func_00406040(A60Obj* o, int idx, __int128* keys, int n);
@@ -95,7 +95,7 @@ void func_00405F10(A60Obj* o, int idx, __int128* keys, int n);
 #endif /* merge_units */
 #define func_00405F10(a0, a1, a2, a3) (func_00405F10((Obj5F10 *)(a0), (a1), (a2), (a3))) /* merge_units */
 
-void func_00405A60(A60Obj* o, void* list);
+void Appearance_PatchParts(A60Obj* o, void* list);
 }
 static inline int a60find(A60Obj* o, const char* key) {
     int i = 0;
@@ -112,7 +112,7 @@ static inline int a60find(A60Obj* o, const char* key) {
     return i;
 }
 /* Builds the registry key list from the appearance HOG and applies the three typed variant merges. */
-void func_00405A60(A60Obj* o, void* list)
+void Appearance_PatchParts(A60Obj* o, void* list)
 {
     int n;
     A60Hog* h;
@@ -132,7 +132,7 @@ void func_00405A60(A60Obj* o, void* list)
     }
     for (i = 0; i < n; i++)
         Appearance_RegistryKey((char*)&keys[i], 15, Archive_GetMemberName(h, i));
-    func_00405E10(o, list, keys, n);
+    Appearance_ClearPartKey(o, list, keys, n);
     if (unload)
         Hog_Unload(h);
     k0 = a60find(o, D_004BE930);
@@ -147,7 +147,7 @@ void func_00405A60(A60Obj* o, void* list)
     }
 }
 #undef String_CompareN /* merge_units */
-#undef func_00405E10 /* merge_units */
+#undef Appearance_ClearPartKey /* merge_units */
 #undef func_00406040 /* merge_units */
 #undef func_00405F10 /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
@@ -189,7 +189,7 @@ static inline void k5e10clear(__int128* keys, int n, __int128 key) {
 }
 #pragma push
 #pragma opt_strength_reduction off
-void func_00405E10(void* self, List5E10* list, __int128* keys, int n) {
+void Appearance_ClearPartKey(void* self, List5E10* list, __int128* keys, int n) {
     int i;
     int total = list->count;
     for (i = 0; i < total; i++) {

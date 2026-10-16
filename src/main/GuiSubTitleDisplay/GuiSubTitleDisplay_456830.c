@@ -23,16 +23,16 @@ extern char D_004FFB50[];
 VObj45* GuiWidget_FindChildByName(W456830*, char*);
 int sprintf(char*, const char*, ...);
 char* Loc_LookupText(char*);
-void func_0041BEB0(VObj45*, char*, int);
+void GuiTextWidget_SetText(VObj45*, char*, int);
 Mgr45* Gui_GetScreenStack(void);
-void func_004562E0(W456830*, int);
+void GuiStartMenu_SelectButton(W456830*, int);
 void Hud_ClosePauseMenu(int);
 void Game_EndLevel(void*, int);
 void Game_SetPaused(void*, int);
 int GuiObjectives_HandleEvent(W456830*, Ev45*, int, int, int);
 }
 
-extern "C" int func_00456830(W456830* self, Ev45* ev, int code, int a3, int a4)
+extern "C" int GuiStartMenu_OnEvent(W456830* self, Ev45* ev, int code, int a3, int a4)
 {
     unsigned short c = code;
     if (c == 0) {
@@ -47,8 +47,8 @@ extern "C" int func_00456830(W456830* self, Ev45* ev, int code, int a3, int a4)
                 char* s;
                 sprintf(buf, D_004C1C70, id);
                 s = Loc_LookupText(buf);
-                if (s) func_0041BEB0(o, s, 0);
-                else func_0041BEB0(o, D_004C1A38, 0);
+                if (s) GuiTextWidget_SetText(o, s, 0);
+                else GuiTextWidget_SetText(o, D_004C1A38, 0);
             }
             return 1;
         }
@@ -59,7 +59,7 @@ extern "C" int func_00456830(W456830* self, Ev45* ev, int code, int a3, int a4)
             x = -1;
         }
         if (x != -1) {
-            func_004562E0(self, x);
+            GuiStartMenu_SelectButton(self, x);
             return 1;
         }
     }
@@ -88,7 +88,7 @@ extern "C" int func_00456830(W456830* self, Ev45* ev, int code, int a3, int a4)
 extern int func_0041EBF0(void* self);
 
 /* Shutdown: base shutdown, then clears the handle at +0x10. */
-int func_00456A30(GuiWidget* self) {
+int GuiStartMenu_OnSleep(GuiWidget* self) {
     int ret;
 
     ret = func_0041EBF0(self);
@@ -101,7 +101,7 @@ int func_00456A30(GuiWidget* self) {
 /* merge_units: begin func_00456A60 */
 #pragma push /* merge_units */
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
-int func_0041D8C0(void);
+int GuiWidget_FocusFirst(void);
 typedef struct { char pad[0x10]; int idx; char pad2[0x7C]; int tab[1]; } S456;
 int func_00456A60(S456 *p) {
     int i = p->idx;
@@ -110,7 +110,7 @@ int func_00456A60(S456 *p) {
         p->idx = -1;
         return r;
     }
-    return func_0041D8C0();
+    return GuiWidget_FocusFirst();
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00456A60 */
@@ -130,9 +130,9 @@ VObj_456AB0* GuiWidget_FindChildByName(W_456AB0*, char*);
 #define GuiWidget_FindChildByName(a0, a1) ((VObj_456AB0 *)GuiWidget_FindChildByName((W456830 *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-void func_0041BEB0(VObj_456AB0*, char*, int);
+void GuiTextWidget_SetText(VObj_456AB0*, char*, int);
 #endif /* merge_units */
-#define func_0041BEB0(a0, a1, a2) (func_0041BEB0((VObj45 *)(a0), (a1), (a2))) /* merge_units */
+#define GuiTextWidget_SetText(a0, a1, a2) (GuiTextWidget_SetText((VObj45 *)(a0), (a1), (a2))) /* merge_units */
 
 #if 0 /* merge_units */
 void* Gui_GetScreenStack(void);
@@ -142,7 +142,7 @@ void* Gui_GetScreenStack(void);
 void GuiScreen_SetFocus(void*, void*);
 }
 
-extern "C" void func_00456AB0(W_456AB0* self)
+extern "C" void GuiStartMenu_OnWake(W_456AB0* self)
 {
     VObj_456AB0* o;
     char buf[16];
@@ -154,8 +154,8 @@ extern "C" void func_00456AB0(W_456AB0* self)
         char* s;
         sprintf(buf, D_004C1C70, 0);
         s = Loc_LookupText(buf);
-        if (s) func_0041BEB0(o, s, 0);
-        else func_0041BEB0(o, D_004C1A38, 0);
+        if (s) GuiTextWidget_SetText(o, s, 0);
+        else GuiTextWidget_SetText(o, D_004C1A38, 0);
     }
     if (self->focus != -1)
         GuiScreen_SetFocus(Gui_GetScreenStack(), self->items[self->focus]);
@@ -165,7 +165,7 @@ extern "C" void func_00456AB0(W_456AB0* self)
     }
 }
 #undef GuiWidget_FindChildByName /* merge_units */
-#undef func_0041BEB0 /* merge_units */
+#undef GuiTextWidget_SetText /* merge_units */
 #undef Gui_GetScreenStack /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00456AB0 */

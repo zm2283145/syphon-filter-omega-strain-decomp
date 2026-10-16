@@ -3,8 +3,8 @@
 typedef struct { char p[0x48]; int sel; unsigned char vis[4]; int x0[2]; int x1[2]; unsigned char b60; char p61[3]; int v; int lo; int hi; int f70; } W43F200;
 typedef struct { unsigned short type; unsigned short dev; unsigned short b4; unsigned short action; unsigned short key; } Ev43F200;
 extern "C" {
-void func_0041E040(void* w, int kind, int v, int z);
-void func_0041DF00(W43F200* w, int kind, int pos, int z);
+void GuiWidget_SendEventUp(void* w, int kind, int v, int z);
+void GuiWidget_BroadcastEvent(W43F200* w, int kind, int pos, int z);
 }
 static inline float Mul43F200(float a, float b) { return a * b; }
 static inline int Lerp43F200(int a, int b, float t) { return a + (int)Mul43F200(t, (float)(b - a)); }
@@ -14,8 +14,8 @@ static inline void Set43F200(W43F200* w, int v)
     if (w->vis[w->sel]) {
         int lo = w->lo;
 int x0 = w->x0[w->sel];
-        func_0041DF00(w, 10, Lerp43F200(x0, w->x1[w->sel], (float)(w->v - lo) / (float)(w->hi - lo)), 0);
-        func_0041E040(w, 0x1D, w->v, 0);
+        GuiWidget_BroadcastEvent(w, 10, Lerp43F200(x0, w->x1[w->sel], (float)(w->v - lo) / (float)(w->hi - lo)), 0);
+        GuiWidget_SendEventUp(w, 0x1D, w->v, 0);
     }
 }
 static inline unsigned char IsBtn43F200(Ev43F200* e)
@@ -43,7 +43,7 @@ static inline bool Pressed2_43F200(Ev43F200* e, unsigned short k)
 {
     return e->type == 1 && e->dev == 0 && e->key == k && e->action == 0;
 }
-extern "C" int func_0043F200(W43F200* w, Ev43F200* e)
+extern "C" int GuiSliderWidget_OnInput(W43F200* w, Ev43F200* e)
 {
     if (w->b60 == 1) {
         if (Pressed43F200(e, 0x1000)) {

@@ -128,7 +128,7 @@ extern HHead_263080* func_00262D80(HHead_263080* p);
 extern HNode_263080* func_00262D70(int* list);
 extern void func_00262D60(HIter_263080* it, HNode_263080* n);
 extern void func_00266860(HIter_263080* res, int* list, HIter_263080* pos);
-extern void func_003A2BA0(void* p, int flag);
+extern void ParticleInst_Kill(void* p, int flag);
 extern void Mem_Free(int pool, void* p, char* file, int line);
 extern void World_PopObject(void* w);
 extern int Agent_GetSelected(void* w, int idx);
@@ -179,7 +179,7 @@ static inline HTarget_263080* Handle_Ptr(HeldItem_263080* h) {
 
 static inline void Del_263080(void* p, int line) {
     AllocGuard g;
-    func_003A2BA0(p, -1);
+    ParticleInst_Kill(p, -1);
     Mem_Free(0, p, D_004A81E8, line);
 }
 

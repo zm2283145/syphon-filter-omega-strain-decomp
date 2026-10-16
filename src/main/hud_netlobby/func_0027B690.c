@@ -9,7 +9,7 @@ Raw_B690 List_Begin(void*);
 Raw_B690 func_0027AC80(void*);
 void func_0027AA80(char**, const Raw_B690&);
 void func_0027AC70(char**, const Raw_B690&);
-void func_003E8EB0(void*);
+void IeElement_Release(void*);
 void Interface_Dtor(void*, int);
 void func_0027B880(void*, int);
 void operator_delete(void*);
@@ -28,7 +28,7 @@ extern "C" char* func_0027B690(char* self, short flag) {
                 e = F_(n, 0x8, char*);
                 {
                     AllocGuard g;
-                    if (e) { if (F_(e, 0x14, void*)) func_003E8EB0(F_(e, 0x14, void*)); }
+                    if (e) { if (F_(e, 0x14, void*)) IeElement_Release(F_(e, 0x14, void*)); }
                     Mem_Free(0, e, &D_004A9270, 0x68);
                 }
                 n = F_(n, 0x4, char*);

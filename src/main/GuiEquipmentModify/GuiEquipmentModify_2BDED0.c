@@ -45,7 +45,7 @@ extern char D_004AC370[];
 extern char D_004A7520[];
 extern char D_004AC388[];
 void* GuiWidget_FindChildByName(void* self, char* name);
-void func_0041BEB0(W_002BDF90* w, char* s, int a);
+void GuiTextWidget_SetText(W_002BDF90* w, char* s, int a);
 }
 static inline W_002BDF90* FindAs_002BDF90(void* self, char* name, char* type)
 {
@@ -56,7 +56,7 @@ static inline void Clear_002BDF90(void* self, char* name)
 {
     W_002BDF90* w = FindAs_002BDF90(self, name, D_004A7520);
     if (w)
-        func_0041BEB0(w, D_004AC388, 0);
+        GuiTextWidget_SetText(w, D_004AC388, 0);
 }
 extern "C" void func_002BDF90(void* self)
 {

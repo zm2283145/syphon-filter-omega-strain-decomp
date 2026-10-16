@@ -38,10 +38,10 @@ int ObjectiveMgr_GetFailed(void* mgr, O367D60** out, int max);
 int ObjectiveMgr_GetCompleted(void* mgr, O367D60** out, int max, unsigned char flag);
 int ObjectiveMgr_GetOpenParameters(void* mgr, O367D60** out, int max);
 int ObjectiveMgr_GetOpenObjectives(void* mgr, O367D60** out, int max);
-void func_00421070(void* list);
-void func_00421290(void* list, int a, int b, int c);
-int func_004215E0(void* list, int sel);
-void func_00424430(void* list, int a, int b);
+void GuiTextListWidget_Clear(void* list);
+void GuiTextListWidget_AddItem(void* list, int a, int b, int c);
+int GuiTextListWidget_FindById(void* list, int sel);
+void GuiArrayWidget_Select(void* list, int a, int b);
 void func_0041EBA0(L367D60* w, float x, float y);
 void func_004235B0(L367D60* w, int a, int b);
 int sprintf(char* buf, const char* fmt, ...);
@@ -70,7 +70,7 @@ extern "C" void GuiObjectives_FillList(S367D60* self)
         if (w) {
             int n = ObjectiveMgr_GetCompleted(mgr, tmp, 0x14, 1);
             sprintf(buf, D_004BBC80, n, ObjMan_GetTotalCount(mgr));
-            func_0041BEB0(w, buf, 0);
+            GuiTextWidget_SetText(w, buf, 0);
         }
     }
     sel = self->sel;
@@ -85,16 +85,16 @@ extern "C" void GuiObjectives_FillList(S367D60* self)
             case 3: n = ObjectiveMgr_GetFailed(mgr, objs, 0x20); break;
             default: return;
             }
-            func_00421070(self->lists[i]);
+            GuiTextListWidget_Clear(self->lists[i]);
             for (j = 0; j < n; j++) {
                 if (objs[j]->a60 != 0)
-                    func_00421290(self->lists[i], objs[j]->a60, objs[j]->a20, 0);
+                    GuiTextListWidget_AddItem(self->lists[i], objs[j]->a60, objs[j]->a20, 0);
             }
         }
     }
     if (self->lists[0] != 0 && sel != -1) {
-        int idx = func_004215E0(self->lists[0], sel);
-        if (idx != -1) func_00424430(self->lists[0], 0, idx);
+        int idx = GuiTextListWidget_FindById(self->lists[0], sel);
+        if (idx != -1) GuiArrayWidget_Select(self->lists[0], 0, idx);
     }
     {
         L367D60* l = self->list;

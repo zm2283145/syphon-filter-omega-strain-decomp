@@ -9,9 +9,9 @@
 
 extern char D_00535D20[];
 extern int LightMgr_RebuildTable(void* p);
-extern int func_0041E470(GuiEquipmentSetup* self);
+extern int GuiWidget_Draw(GuiEquipmentSetup* self);
 
 int func_002A2EC0(GuiEquipmentSetup* self) {
     LightMgr_RebuildTable(D_00535D20);
-    return func_0041E470(self);
+    return GuiWidget_Draw(self);
 }

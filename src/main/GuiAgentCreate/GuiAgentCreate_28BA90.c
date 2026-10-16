@@ -134,7 +134,7 @@ void* Agent_GetSelected(void* a, int b);
 
 void AgentData_SetName(void* ag, char* text);
 void* GuiWidget_FindChildByName(Self_0028BBE0* self, char* name);
-void func_0041BEB0(W_0028BBE0* w, char* s, int a);
+void GuiTextWidget_SetText(W_0028BBE0* w, char* s, int a);
 #if 0 /* merge_units */
 void GuiAgentCreate_Save(Self_0028BBE0* self);
 #endif /* merge_units */
@@ -162,7 +162,7 @@ void GuiStack_SwapScreens(void* ui, Self_0028BBE0* self, void* pg);
 #endif /* merge_units */
 #define GuiStack_SwapScreens(a0, a1, a2) (GuiStack_SwapScreens((int)(a0), (Screen *)(a1), (int)(a2))) /* merge_units */
 
-int func_0041EF10(Self_0028BBE0* self, Src_0028BBE0* w, int msg, int sub, char* text);
+int GuiWidget_OnEvent(Self_0028BBE0* self, Src_0028BBE0* w, int msg, int sub, char* text);
 }
 static inline W_0028BBE0* FindAs_0028BBE0(Self_0028BBE0* self, char* name, char* type)
 {
@@ -217,7 +217,7 @@ extern "C" int GuiAgentCreate_HandleEvent(Self_0028BBE0* self, Src_0028BBE0* w, 
                 AgentData_SetName(Agent_GetSelected(D_004FFB50, -1), text);
                 t = FindAs_0028BBE0(self, "value_agent_name", D_004A7520);
                 if (t)
-                    func_0041BEB0(t, text, 0);
+                    GuiTextWidget_SetText(t, text, 0);
             }
             if (sub == 2 && text && *text) {
                 GuiAgentCreate_Save(self);
@@ -239,7 +239,7 @@ extern "C" int GuiAgentCreate_HandleEvent(Self_0028BBE0* self, Src_0028BBE0* w, 
             GuiStack_SwapScreens(Gui_GetScreenStack(), self, pg);
         }
     }
-    return func_0041EF10(self, w, msg, sub, text);
+    return GuiWidget_OnEvent(self, w, msg, sub, text);
 }
 #undef D_004FFC04 /* merge_units */
 #undef Agent_GetSelected /* merge_units */

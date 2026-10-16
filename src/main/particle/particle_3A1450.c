@@ -44,7 +44,7 @@ struct Self {
 extern char D_0053B540[];
 extern "C" {
 int func_003A3430(void*, void*);
-Self* func_003A26A0(float, int, Self*, int, void*);
+Self* ParticleEmitter_SpawnChildren(float, int, Self*, int, void*);
 }
 
 /* Fires each pending timed entry whose next time has been reached, marking linked peers. */
@@ -59,7 +59,7 @@ extern "C" void func_003A1450(Self* self, float t, int arg)
             if (tm >= 0.0f) {
                 while (t >= tm) {
                     int r = func_003A3430(D_0053B540, &self->GetDef()->entries[i]);
-                    Self* o = func_003A26A0(tm + self->f64, arg, self, r, self->GetDef()->entries[i].extra);
+                    Self* o = ParticleEmitter_SpawnChildren(tm + self->f64, arg, self, r, self->GetDef()->entries[i].extra);
                     if (o && self->GetDef() == o->GetDef()) {
                         int j;
                         for (j = 0; j < self->GetDef()->count; j++) {
@@ -150,7 +150,7 @@ static inline int Vec4_Equal_(V4* a, V4* b) {
 }
 static inline bool Neq(V4* a, V4* b) { return !Vec4_Equal_(a, b); }
 
-extern "C" void func_003A1760(Self_003A1760* self, float t, int arg, Src* src)
+extern "C" void ParticleEmitterBase_Update(Self_003A1760* self, float t, int arg, Src* src)
 {
     func_003A1450(self, t - self->f64, arg);
     if (self->GetDef()->w8F0 && !(t - self->f68 <= 0.25f)) {
@@ -217,7 +217,7 @@ typedef struct {
     unsigned char x84;
 } Self3A1990;
 
-Self3A1990* func_003A1990(Self3A1990* self, int a, Info3A1990* info, float f)
+Self3A1990* ParticleEmitterBase_Construct(Self3A1990* self, int a, Info3A1990* info, float f)
 {
     int i;
     self->vt = D_004DFAD8;
@@ -340,7 +340,7 @@ static inline void PushMul(M* m)
     MulBy(&RS->mtx[D_00538C64], m);
     D_00538C68 = 1;
 }
-extern "C" void func_003A1AD0(Obj2* o, int flags, M* mtx)
+extern "C" void ParticleInst_Draw(Obj2* o, int flags, M* mtx)
 {
     Obj* self = (Obj*)o;
     if (flags == 0x80) return;

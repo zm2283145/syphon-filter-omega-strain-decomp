@@ -119,12 +119,12 @@ void func_003A3670(void* p);
 void func_003C2A80(void);
 VDel_134640* func_003CAB50(World_134640* w, void* s);
 void func_003D0FB0(void* p);
-void* func_003D1020(void);
+void* TextManager_Get(void);
 void func_003D5750(void* p);
 void func_003E56F0(void);
 void func_003EB750(void* p);
-void* func_003EBA50(void);
-void func_003EC3E0(void);
+void* Fstream_GetLoader(void);
+void EffectService_ReleaseAll(void);
 void func_003FDBB0(void);
 void func_00404FD0(void* p, int a);
 void func_00407BE0(void);
@@ -220,7 +220,7 @@ extern "C" void World_Teardown(World_134640* w)
     func_00170570();
     func_0022D3C0(g_TargetVisMgr);
     func_00408EA0(D_0053BB90);
-    func_003EC3E0();
+    EffectService_ReleaseAll();
     func_00136CD0(w);
     func_00257150();
     mode = 0;
@@ -251,7 +251,7 @@ extern "C" void World_Teardown(World_134640* w)
         e->c = 0;
     }
     Clear_134640(&w->lC4);
-    func_003D0FB0(func_003D1020());
+    func_003D0FB0(TextManager_Get());
     func_00224140(ActivationMgr_Get());
     func_00130B10(w);
     func_001C3B00(w->f88);
@@ -304,7 +304,7 @@ extern "C" void World_Teardown(World_134640* w)
     func_003D5750(D_00543790);
     func_00404FD0(D_0055DDA0, -1);
     func_00407BE0();
-    func_003EB750(func_003EBA50());
+    func_003EB750(Fstream_GetLoader());
     ObjMan_DeleteAll(Service_Lookup(w, D_004F7578));
     if (had) DME_StopThread();
     D_005721C8 = 0;

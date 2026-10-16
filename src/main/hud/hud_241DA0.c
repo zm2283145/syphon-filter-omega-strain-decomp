@@ -15,7 +15,7 @@
 typedef struct { char flag; char name[16]; char value[16]; } Entry21; /* size 0x21 */
 typedef struct { int unk0; int count; Entry21* data; } EntryVec;
 extern void* Gui_GetScreenStack(void);
-extern void func_0041E0F0(void* a, void* b, int a2, int a3, int a4);
+extern void GuiWidget_SendEvent(void* a, void* b, int a2, int a3, int a4);
 extern void func_002469F0(EntryVec* v, Entry21* pos, int n, Entry21* value);
 
 /* Appends a (name, value) entry to the vector after notifying the UI. */
@@ -27,7 +27,7 @@ void Hud_AddPdaQuip(EntryVec* self, const char* value, const char* name)
     String_Copy(e.name, name);
     e.flag = 0;
     ui = Gui_GetScreenStack();
-    func_0041E0F0(ui, Gui_GetScreenStack(), 0x10, 5, 0);
+    GuiWidget_SendEvent(ui, Gui_GetScreenStack(), 0x10, 5, 0);
     func_002469F0(self, self->data + self->count, 1, &e);
 }
 /* merge_units: generate this block's code under its own pragmas */

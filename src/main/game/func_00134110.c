@@ -49,7 +49,7 @@ float SoftFloat_U64ToFloat(unsigned long long t);
 void Pad_Reset(void* p);
 void GuiManager_Update(void* l, float dt);
 void World_PhysicsTraversal(float dt);
-void func_00415870(Stack_134110* s);
+void GuiCanvas_UpdatePads(Stack_134110* s);
 void* App_GetInstance(void);
 void func_00169390(void* p);
 void* Service_Lookup(void* a, void* b);
@@ -114,7 +114,7 @@ extern "C" void func_00134110(void* svc, unsigned char mode)
         dt = (SoftFloat_U64ToFloat(now) - D_004E9FF8) / 100000.0f;
         GuiManager_Update(Gui_GetScreenList(), dt);
         World_PhysicsTraversal(dt);
-        func_00415870(Gui_GetScreenStack());
+        GuiCanvas_UpdatePads(Gui_GetScreenStack());
         Gui_GetScreenStack()->Update(dt);
         Gui_GetScreenStack()->Draw();
         func_00169390(App_GetInstance());

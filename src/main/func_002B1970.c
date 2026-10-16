@@ -6,7 +6,7 @@ extern char D_004ABEE8[];
 extern char D_004ABEF8[];
 extern int sprintf(char* buf, const char* fmt, ...);
 extern char* Loc_LookupText(char* key);
-extern void func_0041BEB0(void* w, char* text, int flags);
+extern void GuiTextWidget_SetText(void* w, char* text, int flags);
 /* Resets the selection and relabels the four value buttons from the table row. */
 void func_002B1970(S2B1970* s)
 {
@@ -18,7 +18,7 @@ void func_002B1970(S2B1970* s)
             Row2B1970* r = &D_0048BD10[s->sel];
             if (r->flag) sprintf(buf, D_004ABEE8, r->vals[i]);
             else sprintf(buf, D_004ABEF8, r->vals[i]);
-            func_0041BEB0(s->labels[i], Loc_LookupText(buf), 0);
+            GuiTextWidget_SetText(s->labels[i], Loc_LookupText(buf), 0);
         }
     }
 }

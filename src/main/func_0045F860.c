@@ -24,7 +24,7 @@ typedef struct F860 {
 } F860;
 
 extern int D_00497B20[][3];
-extern void func_0041E0F0(F860* self, F860W* w, int a, int b, int c);
+extern void GuiWidget_SendEvent(F860* self, F860W* w, int a, int b, int c);
 extern void func_0041EBA0(float x, float y, F860W* w);
 
 void func_0045F860(F860* self) {
@@ -46,7 +46,7 @@ void func_0045F860(F860* self) {
     for (i = 0; i < 15; i++) {
         if (self->slots[i].w) {
             self->slots[i].w->flags &= ~2;
-            func_0041E0F0(self, self->slots[i].w, 10, 0, 0);
+            GuiWidget_SendEvent(self, self->slots[i].w, 10, 0, 0);
         } else {
             return;
         }

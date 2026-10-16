@@ -27,7 +27,7 @@ extern V455* GuiWidget_FindChildByName(W455*, char*);
 extern char D_004A7520[];
 extern char D_004C1A38[];
 extern char D_004FFC90[];
-extern void func_0041BEB0(V455*, char*, int);
+extern void GuiTextWidget_SetText(V455*, char*, int);
 }
 extern "C" void func_00455CB0(W455* w) {
     V455* p;
@@ -42,7 +42,7 @@ extern "C" void func_00455CB0(W455* w) {
     p = (p && p->v20(D_004A7520)) ? p : 0;
     if (p) {
         char* t = Loc_LookupText(D_004FFC90);
-        func_0041BEB0(p, t ? t : D_004FFC90, 0);
+        GuiTextWidget_SetText(p, t ? t : D_004FFC90, 0);
     }
 }
 #pragma pop /* merge_units */
@@ -53,7 +53,7 @@ extern "C" void func_00455CB0(W455* w) {
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int func_0041E470(char * );                            
+int GuiWidget_Draw(char * );                            
 int MLTextWidget_SetColor(int, char *);                          
 extern char D_00587D20;
 extern char D_00587D30;
@@ -71,7 +71,7 @@ void func_00455DB0(char * arg0) {
         }
         MLTextWidget_SetColor(temp_a0, var_a1);
     }
-    func_0041E470(arg0);
+    GuiWidget_Draw(arg0);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00455DB0 */
@@ -93,7 +93,7 @@ extern char D_004FFB50[];
 void func_0043D820(void* p, int v);
 void func_0043D760(void* p, int v);
 M_455E10* Gui_GetScreenStack(void);
-void func_00456160(O_455E10* o);
+void GuiStartMenu_ReturnToMenu(O_455E10* o);
 void Hud_ClosePauseMenu(void* p);
 void Game_SetPaused(void* p, int v);
 int func_00455E10(O_455E10* o, Ev_455E10* ev);
@@ -116,7 +116,7 @@ int func_00455E10(O_455E10* o, Ev_455E10* ev)
         return 1;
     }
     if (Plain2_455E10(ev, 0x10)) {
-        func_00456160(o);
+        GuiStartMenu_ReturnToMenu(o);
         return 1;
     }
     if (Plain2_455E10(ev, 0x800)) {

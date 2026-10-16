@@ -26,11 +26,11 @@ DEFINE_VTABLE2_BASE_DTOR(cNetKickMsg_dtor, D_004DD5E0, D_004DCF10, cMessage_dtor
 
 struct Wdg_AA50;
 extern "C" {
-void func_0041BEB0(Wdg_AA50* w, char* text, int flags);
-void func_0043F150(Wdg_AA50* w, int a, int b, int c, int d, int e);
+void GuiTextWidget_SetText(Wdg_AA50* w, char* text, int flags);
+void GuiSliderWidget_Set(Wdg_AA50* w, int a, int b, int c, int d, int e);
 }
-static inline void Wdg_SetText(Wdg_AA50* w, char* t) { func_0041BEB0(w, t, 0); }
-static inline void Wdg_SetValue(Wdg_AA50* w, float v, float t) { func_0043F150(w, 0, (int)(100.0f * v), 0, 100, (int)t); }
+static inline void Wdg_SetText(Wdg_AA50* w, char* t) { GuiTextWidget_SetText(w, t, 0); }
+static inline void Wdg_SetValue(Wdg_AA50* w, float v, float t) { GuiSliderWidget_Set(w, 0, (int)(100.0f * v), 0, 100, (int)t); }
 
 struct Hud_AA50 {
     char pad0[0xBC];

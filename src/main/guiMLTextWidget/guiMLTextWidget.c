@@ -194,13 +194,13 @@ void Mem_Free(int pool, void* allocation, char* file, int line);
 #define Mem_Free(a0, a1, a2, a3) (Mem_Free((a0), (a1), (a2), (a3))) /* merge_units */
 
 void* String_Dtor(void* self, short flags);   /* String dtor */
-void func_0041F090(void* self);                 /* GuiWidget vtable slot 4 */
+void GuiWidget_Deinit(void* self);                 /* GuiWidget vtable slot 4 */
 }
 /* vtable slot 4: base teardown, then destroy and free the text box. */
 extern "C" void MLTextWidget_Teardown(MLTextWidget* o)
 {
     GuiTextBox* box;
-    func_0041F090(o);
+    GuiWidget_Deinit(o);
     box = o->textBox;
     {
         AllocGuard guard;
@@ -222,13 +222,13 @@ extern "C" void MLTextWidget_Teardown(MLTextWidget* o)
 #pragma push /* merge_units */
 #pragma cplusplus on
 struct Q0043E1A0 { __int128 q; }; /* colour copied as one quadword */
-extern "C" void func_003D0810(GuiTextBox* box, GuiColor* c); /* text box: set colour */
+extern "C" void TextObj_SetColour(GuiTextBox* box, GuiColor* c); /* text box: set colour */
 static inline void Set0043E1A0(GuiColor* d, const GuiColor& s) { d->r = s.r; d->g = s.g; d->b = s.b; d->a = s.a; }
 extern "C" void MLTextWidget_SetColor(MLTextWidget* w, Q0043E1A0* in)
 {
     Q0043E1A0 t = *in;
     Set0043E1A0(&w->color, *(GuiColor*)&t);
-    if (w->textBox) func_003D0810(w->textBox, &w->color);
+    if (w->textBox) TextObj_SetColour(w->textBox, &w->color);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0043E1A0 */
@@ -237,13 +237,13 @@ extern "C" void MLTextWidget_SetColor(MLTextWidget* w, Q0043E1A0* in)
 #pragma push /* merge_units */
 extern int Font_GetLineHeight(int font);            /* font line height */
 extern int Gui_GetScreenList(void);
-extern int func_00418420(int, int);            /* look up font by name (0 = default) */
+extern int GuiFont_Find(int, int);            /* look up font by name (0 = default) */
 #pragma push
 #pragma opt_common_subs off
 void MLTextWidget_SetFont(MLTextWidget* w, const char* fontName)
 {
     GuiTextBox* box;
-    w->font = (void*)func_00418420(Gui_GetScreenList(), (int)fontName);
+    w->font = (void*)GuiFont_Find(Gui_GetScreenList(), (int)fontName);
     box = w->textBox;
     if (box != 0) box->font = w->font;
     w->maxLines = (int)w->height / Font_GetLineHeight((int)w->font);
@@ -308,7 +308,7 @@ struct W_43E330 {
 };extern "C" {extern char D_004C0100[]; /* default colour */
 extern char D_004AAE00[]; /* scroll bar class type */
 extern int D_004976B8; /* scroll bar child id */
-void func_0041F150(MLTextWidget* o); /* GuiWidget vtable slot 3 */
+void GuiWidget_Init(MLTextWidget* o); /* GuiWidget vtable slot 3 */
 #if 0 /* merge_units */
 void* Gui_GetScreenList(void);
 #endif /* merge_units */
@@ -316,13 +316,13 @@ void* Gui_GetScreenList(void);
 
 
 #if 0 /* merge_units */
-void* func_00418420(void* mgr, int name);
+void* GuiFont_Find(void* mgr, int name);
 #endif /* merge_units */
-#define func_00418420(a0, a1) ((void *)func_00418420((int)(a0), (a1))) /* merge_units */
+#define GuiFont_Find(a0, a1) ((void *)GuiFont_Find((int)(a0), (a1))) /* merge_units */
 
 
-GuiTextBox* func_003D0940(void* p, int x, int y, int w, int h, void* font, char* color); /* text box ctor */
-W_43E330* func_0041DC70(void* o, int id); /* find child by id */
+GuiTextBox* TextObj_Construct(void* p, int x, int y, int w, int h, void* font, char* color); /* text box ctor */
+W_43E330* GuiWidget_FindChildBySubstring(void* o, int id); /* find child by id */
 #if 0 /* merge_units */
 int Font_GetLineHeight(void* p);
 #endif /* merge_units */
@@ -338,19 +338,19 @@ static inline W_43E330* Cast_43E330(W_43E330* w, void* t) { return w && w->IsA(t
 void MLTextWidget_Setup(MLTextWidget* o)
 {
     GuiTextBox* box;
-    func_0041F150(o);
-    o->font = func_00418420(Gui_GetScreenList(), 0);
+    GuiWidget_Init(o);
+    o->font = GuiFont_Find(Gui_GetScreenList(), 0);
     box = (GuiTextBox*)Alloc_43E330(sizeof(GuiTextBox), 0x33);
-    if (box) box = func_003D0940(box, 0, 0, (int)o->width, (int)o->height, o->font, D_004C0100);
+    if (box) box = TextObj_Construct(box, 0, 0, (int)o->width, (int)o->height, o->font, D_004C0100);
     o->textBox = box;
     o->textBox->unk10 = 0;
     o->textBox->unk58 = 1;
     o->maxLines = (int)o->height / Font_GetLineHeight(o->font);
     o->visibleLines = o->maxLines;
-    o->scrollBar = (struct GuiWidget43BEF0*)Cast_43E330(func_0041DC70(o, D_004976B8), D_004AAE00);
+    o->scrollBar = (struct GuiWidget43BEF0*)Cast_43E330(GuiWidget_FindChildBySubstring(o, D_004976B8), D_004AAE00);
 }
 #undef Gui_GetScreenList /* merge_units */
-#undef func_00418420 /* merge_units */
+#undef GuiFont_Find /* merge_units */
 #undef Font_GetLineHeight /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0043E330 */

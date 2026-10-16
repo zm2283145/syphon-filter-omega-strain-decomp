@@ -1,7 +1,7 @@
 extern unsigned char D_0055D450;
 extern unsigned char* D_0055D050[];
 
-unsigned char func_003FD6B0(unsigned short c)
+unsigned char CharMap_Lookup(unsigned short c)
 {
     unsigned char* t;
     unsigned char r;

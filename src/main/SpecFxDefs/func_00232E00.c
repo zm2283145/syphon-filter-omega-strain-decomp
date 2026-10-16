@@ -31,7 +31,7 @@ typedef struct {
 extern void func_00232F00(ListIt232E00* out, void* list);
 extern void func_00232EE0(ListIt232E00* out, void* list);
 extern ListIt232E00* func_00232EF0(ListIt232E00* dst, ListIt232E00* src);
-extern void func_003A1AD0(void* obj, int key, Mtx232E00* m);
+extern void ParticleInst_Draw(void* obj, int key, Mtx232E00* m);
 
 #pragma push
 #pragma opt_rotateloops off
@@ -49,7 +49,7 @@ void func_00232E00(Fx232E00* self) {
     it = first;
     while (func_00232EE0(&tmpEnd, self->list), func_00232EF0(&last, &tmpEnd), it.node != last.node) {
         if (it.node->value->obj != 0 && it.node->value->enabled) {
-            func_003A1AD0(it.node->value->obj, self->key, &m);
+            ParticleInst_Draw(it.node->value->obj, self->key, &m);
         }
         it.node = it.node->next;
     }

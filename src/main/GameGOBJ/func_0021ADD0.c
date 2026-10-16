@@ -75,7 +75,7 @@ unsigned char Game_FindNamedResource(void* m, char* name, int* out);
 VUM_21ADD0* cVUM_GOBJ_ctor2(void* p, int* a);
 void func_00130D10(void* m, VUM_21ADD0* v, char* name, int z);
 void func_0036DEC0(void* e);
-void func_003CDF20(GObj_21ADD0* o);
+void Node_ClearLocalMatrix(GObj_21ADD0* o);
 void Object_AttachTransform(GObj_21ADD0* o, Mat_21ADD0* m, int z);
 void Object_ShareTransform(VUM_21ADD0* v, void* xf);
 void ZoneMgr_Associate(GObj_21ADD0* found, GObj_21ADD0* o, int a, GObj_21ADD0* b);
@@ -240,7 +240,7 @@ self->name18 = NewName_21ADD0();
         self->b60 = 0;
         self->vum = 0;
     }
-    func_003CDF20(self);
+    Node_ClearLocalMatrix(self);
     Object_AttachTransform(self, &m, 0);
     if (self->vum)
         Object_ShareTransform(self->vum, self->xf50);

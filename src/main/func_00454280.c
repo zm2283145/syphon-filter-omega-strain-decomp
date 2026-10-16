@@ -6,9 +6,9 @@ typedef struct Box { char pad[0x94]; unsigned int size; } Box;
 typedef struct Self { char pad[0x48]; Box* box; } Self;
 extern List* D_004FFC2C;
 extern void func_00424410(Box*, int*, unsigned int*);
-extern void func_00421070(Box*);
-extern void func_00421290(Box*, char*, int, int);
-extern void func_00424430(Box*, int, unsigned int);
+extern void GuiTextListWidget_Clear(Box*);
+extern void GuiTextListWidget_AddItem(Box*, char*, int, int);
+extern void GuiArrayWidget_Select(Box*, int, unsigned int);
 extern char* Loc_LookupText(char*);
 void func_00454280(Self* self)
 {
@@ -20,12 +20,12 @@ void func_00454280(Self* self)
     func_00424410(self->box, &a, &b);
     l = D_004FFC2C;
     if (l == 0) return;
-    func_00421070(self->box);
+    GuiTextListWidget_Clear(self->box);
     for (i = 0; i < l->count; i++) {
         char* t = Loc_LookupText(l->items[i].name);
-        func_00421290(self->box, t ? t : l->items[i].name, 0, l->items[i].flag ? ON1 : ON0);
+        GuiTextListWidget_AddItem(self->box, t ? t : l->items[i].name, 0, l->items[i].flag ? ON1 : ON0);
     }
-    if (b < self->box->size) func_00424430(self->box, 0, b);
+    if (b < self->box->size) GuiArrayWidget_Select(self->box, 0, b);
 }
 
 

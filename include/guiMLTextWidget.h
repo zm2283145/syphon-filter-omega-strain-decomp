@@ -30,7 +30,7 @@ typedef struct MLTextLineList {
     MLTextLine* first;             /* 0x08 sentinel.next */
 } MLTextLineList;
 
-/* Text box owned by the widget (0x60 bytes, built by func_003D0940). */
+/* Text box owned by the widget (0x60 bytes, built by TextObj_Construct). */
 typedef struct GuiTextBox {
     char pad00[0x10];
     unsigned char unk10;           /* 0x10 cleared by MLTextWidget_Setup */
@@ -48,7 +48,7 @@ typedef struct MLTextWidget {
     float height;                  /* 0x40 */
     char pad44[4];
     GuiTextBox* textBox;           /* 0x48 */
-    void* font;                    /* 0x4C from func_00418420(Gui_GetScreenList(), name) */
+    void* font;                    /* 0x4C from GuiFont_Find(Gui_GetScreenList(), name) */
     GuiColor color;                /* 0x50 */
     int maxLines;                  /* 0x60 oldest lines are dropped beyond this (0 = no limit) */
     int visibleLines;              /* 0x64 height / line height */

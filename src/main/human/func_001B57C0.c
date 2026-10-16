@@ -73,7 +73,7 @@ extern char D_004FFB50[];
 extern unsigned char D_005721C8;
 void Mem_Free(int, void*, char*, int);
 void WeaponInv_Dtor(void*, int);
-void func_003CCF30(Npc*);
+void Node_ReleaseComponent58(Npc*);
 void Actor_ShockReaction(Npc*, unsigned char, int, float);
 int func_002D2210(Net*);
 void func_002EC2A8(int);
@@ -157,7 +157,7 @@ extern "C" Npc* Npc_Dtor(Npc* a, short flag)
             Mem_Free(0, p, D_0049D8D0, 0x3E9);
         }
         if (a->b31FC) {
-            func_003CCF30(a);
+            Node_ReleaseComponent58(a);
             a->b31FC = 0;
         }
         for (i = 0; i < 3; i++) Actor_ShockReaction(a, i, 0, 1.0f);

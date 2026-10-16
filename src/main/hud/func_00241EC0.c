@@ -14,9 +14,9 @@ void func_00244A10(Hud*);
 void func_00244A00(Hud*);
 void Hud_HideNoFire(Hud*);
 Spr** func_00242180(SprVec*, int);
-void func_003E8DE0(Spr*, int);
-void func_003F45A0(Spr*, float);
-void func_003F44E0(Spr*, float);
+void IeElement_SetShown(Spr*, int);
+void IeElement_EvaluateAt(Spr*, float);
+void IeElement_Fade(Spr*, float);
 }
 static inline void* GetCam() { if (func_00159570(D_004FFC14)) return *List_Front(D_004FFC14); return 0; }
 static inline bool IsNoCross(Ent* e) {
@@ -31,9 +31,9 @@ static inline void Select(Hud* h, int idx) {
         else {
             Spr* s = h->v.data[(unsigned)(idx - 1)];
             if (s) {
-                func_003E8DE0(s, 1);
-                func_003F45A0(s, 1.0f);
-                func_003F44E0(s, 10.0f);
+                IeElement_SetShown(s, 1);
+                IeElement_EvaluateAt(s, 1.0f);
+                IeElement_Fade(s, 10.0f);
             }
             func_00244A00(h);
         }
@@ -44,7 +44,7 @@ static inline void Unselect(Hud* h, int c) {
         if (c == 0) func_00244A00(h);
         else {
             Spr* s = h->v.data[(unsigned)(c - 1)];
-            if (s) func_003F44E0(s, 0.0f);
+            if (s) IeElement_Fade(s, 0.0f);
         }
     }
 }
@@ -75,7 +75,7 @@ extern "C" int Hud_UpdateCrosshair(Hud* h, int on, int a2_, Ent* e, Tgt* t)
     if (e && e->type == 1) Hud_HideNoFire(h);
     for (int i = 0; i < h->v.n; i++) {
         if (i != idx - 1 && h->v.data[i]->f4 == 0.0f)
-            func_003E8DE0(*func_00242180(&h->v, i), 0);
+            IeElement_SetShown(*func_00242180(&h->v, i), 0);
     }
     h->cur = idx;
     return a2;

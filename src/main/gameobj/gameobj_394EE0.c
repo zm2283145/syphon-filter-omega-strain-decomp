@@ -35,7 +35,7 @@ typedef struct Obj394EE0 {
     unsigned char b1F2;
 } Obj394EE0;
 
-extern void* func_003EBA50(void);
+extern void* Fstream_GetLoader(void);
 extern void func_003EAA40(void* mgr, Res394EE0* r);
 extern int FileMan_ReadData(Res394EE0* r);
 extern void func_0036D540(void* ctx, void* data, int size, int z);
@@ -143,7 +143,7 @@ void func_00395050(Obj395050* o, int arg)
     Res395050* r = o->res;
     if (r->flags & 4) {
         if (!Model_IsLoaded_00395050(o->model)) {
-            func_003EAA40(func_003EBA50(), r);
+            func_003EAA40(Fstream_GetLoader(), r);
             r = o->res;
             func_0036D540(o->x74, r->data, FileMan_ReadData(r), 0);
             if (String_CompareNoCase(o->h1E4->name, o->h1E8->name) == 0)

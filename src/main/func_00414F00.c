@@ -39,13 +39,13 @@ void func_0028C090(LIt_414F00* out, LIt_414F00* in);
 void func_00415160(LIt_414F00* out, LIt_414F00* in);
 LIt_414F00* func_0015AF40(LIt_414F00* out, LIt_414F00* in);
 void List_InsertBefore(LIt_414F00* out, List_414F00* list, LIt_414F00* pos, W_414F00** v);
-int func_0041E0F0(W_414F00* a, W_414F00* b, int msg, int c, int d);
+int GuiWidget_SendEvent(W_414F00* a, W_414F00* b, int msg, int c, int d);
 void func_0041EE50(W_414F00* w);
 void Pad_ResetHeldMask(void* p);
 extern char D_0055A300[];
 }
 
-extern "C" void func_00414F00(W_414F00* o, W_414F00* w, int pri)
+extern "C" void GuiCanvas_PushScreen(W_414F00* o, W_414F00* w, int pri)
 {
     LIt_414F00 it;
     LIt_414F00 first;
@@ -69,8 +69,8 @@ extern "C" void func_00414F00(W_414F00* o, W_414F00* w, int pri)
         func_0028C0A0(&endTmp, &o->children);
         func_0028C090(&last, &endTmp);
     }
-    if ((w->flags & 2) && func_0041E0F0(o, w, 0x10, 2, 0) == 0)
-        func_0041E0F0(w, o, 0x10, 2, 0);
+    if ((w->flags & 2) && GuiWidget_SendEvent(o, w, 0x10, 2, 0) == 0)
+        GuiWidget_SendEvent(w, o, 0x10, 2, 0);
     w->parent = o;
     w->pri = pri;
     pos.node = it.node;
@@ -78,7 +78,7 @@ extern "C" void func_00414F00(W_414F00* o, W_414F00* w, int pri)
     List_InsertBefore(&res, &o->children, func_0015AF40(&pos3, &pos2), &w);
     func_0041EE50(w);
     w->comp->Show();
-    func_0041E0F0(o, w, 0x18, 0, 0);
+    GuiWidget_SendEvent(o, w, 0x18, 0, 0);
     if (o->children.size > 0 && o->children.first->value == w) {
         Pad_ResetHeldMask(D_0055A300);
         if (o->focus) o->focus->comp->Unfocus();

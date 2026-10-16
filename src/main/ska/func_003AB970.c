@@ -15,7 +15,7 @@ extern void Event_Construct(F6Msg* m, void* type);
 extern void Event_Send(F6Msg* m, int target, int immediate);
 extern void cMessage_dtor(F6Msg* m, int flags);
 static inline int F6LinkValid(F6Link* l) { return l->target != 0 && ~l->id != 0; }
-void func_003AB970(float w, F6Host* h, void* req, int stop)
+void MotionGraph_Install(float w, F6Host* h, void* req, int stop)
 {
     F6Slot* s;
     BlockArray_Append(h->arr, req);

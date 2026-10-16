@@ -39,7 +39,7 @@ extern void* D_00587B28;
 extern void* D_00587B30;
 extern void* D_00587B40;
 extern void* D_00587B48;
-void func_004D8180(void) {
+void StaticInit_GuiSounds(void) {
     SoundRequest_Ctor(&D_005862D0, 3, "GS_PAGE_OPEN", 0, 0);
     __register_global_object(&D_005862D0, func_00135A60, &D_005862C0);
     SoundRequest_Ctor(&D_00586470, 3, "GS_PAGE_CLOSE", 0, 0);

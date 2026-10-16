@@ -28,8 +28,8 @@ extern unsigned char D_00493990;
 extern char D_004BE010;
 void* Mem_Alloc(int a, int size, char* file, int line);
 int FileMan_PollRead(char* f);
-void func_003EA6A0(Loader_EAE60* l, int a);
-Req_EAE60* func_003EA910(Loader_EAE60* l, char* name, int kind);
+void Fstream_PurgeRequests(Loader_EAE60* l, int a);
+Req_EAE60* Fstream_FindRequest(Loader_EAE60* l, char* name, int kind);
 void List_PushBack_3EB310(Loader_EAE60* l, Req_EAE60** r);
 char* func_0036E5D0(void* p);
 void func_0036DFB0(char* f, char* a, char* b);
@@ -92,15 +92,15 @@ extern "C" int AsyncLoader_QueueLoad(Loader_EAE60* ldr, char* name, void (*cb)(S
             ldr->cur = 0;
             D_00493990 = 0;
         }
-        func_003EA6A0(ldr, 1);
+        Fstream_PurgeRequests(ldr, 1);
     }
     if (!noReuse) {
-        req = func_003EA910(ldr, name, 0);
+        req = Fstream_FindRequest(ldr, name, 0);
         if (req) return 0;
     }
-    req = func_003EA910(ldr, name, 5);
+    req = Fstream_FindRequest(ldr, name, 5);
     if (!req) {
-        req = func_003EA910(ldr, name, 3);
+        req = Fstream_FindRequest(ldr, name, 3);
     } else if (ReqSub_EAE60(req)->bC) {
         force = true;
     }

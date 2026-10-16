@@ -31,7 +31,7 @@ char* Loc_LookupText(char* key);
 void GuiKeyboard_Open(void* pg, char* title, char* text, Self_0028B3C0* self, int a, int b, int c);
 void* Gui_GetScreenStack(void);
 void GuiStack_SwapScreens(void* a, void* b, void* c);
-void func_0041E0F0(void* a, void* b, int kind, int v, int f);
+void GuiWidget_SendEvent(void* a, void* b, int kind, int v, int f);
 void func_0028C0C0(void* p);
 void func_0028BF90(void* p);
 void GuiScreen_SetFocus(void* ui, void* w);
@@ -89,7 +89,7 @@ extern "C" int GuiAgentCreate_HandleInput(Self_0028B3C0* self, Ev_0028B3C0* ev)
     }
     if (Plain_0028B3C0(ev, 0x2000) && self->fD0) {
         if (self->fCC != 0 && self->fCC != 1)
-            func_0041E0F0(self, Gui_GetScreenStack(), 0x10, 0, 0);
+            GuiWidget_SendEvent(self, Gui_GetScreenStack(), 0x10, 0, 0);
         if (self->fCC == 2) {
             func_0028C0C0(self->f4C);
             func_0028BF90(self->f48);
@@ -110,7 +110,7 @@ extern "C" int GuiAgentCreate_HandleInput(Self_0028B3C0* self, Ev_0028B3C0* ev)
         }
     }
     if (Plain_0028B3C0(ev, 0x8000) && !self->fD0) {
-        func_0041E0F0(self, Gui_GetScreenStack(), 0x10, 0, 0);
+        GuiWidget_SendEvent(self, Gui_GetScreenStack(), 0x10, 0, 0);
         func_0028C0C0(self->f48);
         if (self->fCC == 2) {
             func_0028BF90(self->f4C);

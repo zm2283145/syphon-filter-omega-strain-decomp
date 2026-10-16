@@ -46,7 +46,7 @@ extern const char* D_00492B98;
 void GuiScreen_Init(Screen47820* self);
 Obj47820* GuiWidget_FindChildByName(Screen47820* self, const char* name);
 int Gui_GetScreenList(void);
-Sp47820* func_00418420(int mgr, char* name);
+Sp47820* GuiFont_Find(int mgr, char* name);
 }
 
 static inline Obj47820* As47820(Obj47820* obj, const char* type)
@@ -65,6 +65,6 @@ extern "C" void func_00347820(Screen47820* self)
     self->f94 = As47820(GuiWidget_FindChildByName(self, *(const char**)dat_00492B78), D_004A9870);
     self->fA0 = As47820(GuiWidget_FindChildByName(self, *(const char**)dat_00492B80), D_004A7520);
     self->fA4 = GuiWidget_FindChildByName(self, D_00492B98);
-    sp = func_00418420(Gui_GetScreenList(), D_004BA3B0);
+    sp = GuiFont_Find(Gui_GetScreenList(), D_004BA3B0);
     if (sp) { SetA47820(sp, D_00587B50); SetB47820(sp, D_00587B60); }
 }

@@ -10,7 +10,7 @@ typedef struct {
     unsigned char pad1[0x14]; Node_394520* node;
     unsigned char pad2[0x10]; int target;
 } Obj_394520;
-extern "C" void func_003A1AD0(int target, int arg, void* data);
+extern "C" void ParticleInst_Draw(int target, int arg, void* data);
 
 extern "C" void ParticleGob_Draw(Obj_394520* o)
 {
@@ -18,6 +18,6 @@ extern "C" void ParticleGob_Draw(Obj_394520* o)
         Node_394520* n = o->node;
         if (n->dirty)
             ((VSlots67*)n)->slot20();
-        func_003A1AD0(o->target, o->arg, n->data);
+        ParticleInst_Draw(o->target, o->arg, n->data);
     }
 }

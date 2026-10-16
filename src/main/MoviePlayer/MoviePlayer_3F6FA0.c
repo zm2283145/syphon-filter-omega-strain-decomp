@@ -586,7 +586,7 @@ void func_003F7F80(void) {
 
 extern int D_0055C748;
 
-void func_003F7FA0(int value) {
+void Subtitles_SetEnabled(int value) {
     D_0055C748 = value;
 }
 #pragma pop /* merge_units */
@@ -596,7 +596,7 @@ void func_003F7FA0(int value) {
 #pragma push /* merge_units */
 extern int D_0055C750;
 /* Set a global setting if it is in range 1..6. */
-void func_003F7FB0(int value)
+void Subtitles_SelectTrack(int value)
 {
     if (value > 0 && value < 7) {
         D_0055C750 = value;

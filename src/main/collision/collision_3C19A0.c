@@ -94,7 +94,7 @@ extern void Sphere_FromCenter(V4* out, V4* a, V4* b);
 extern void Vec4_Cross(V4* out, V4* a, V4* b);
 extern float Vec4_Length(V4* v);
 extern float Vec4_Dot3(V4* a, V4* b);
-extern char func_00408470(void* tbl, char* name);
+extern char MaterialProps_Find(void* tbl, char* name);
 extern char D_0053BB90[];
 
 /* Col_Relocate: fixes up offsets in a loaded collision blob and converts
@@ -196,7 +196,7 @@ void Col_Relocate(ColHdr* h)
     if (h->version >= 3) {
         for (i = 0; i < h->nSurf; i++) {
             ColSurf* s = &((ColSurf*)h->surf)[i];
-            s->b1 = func_00408470(D_0053BB90, s->name);
+            s->b1 = MaterialProps_Find(D_0053BB90, s->name);
         }
     }
 

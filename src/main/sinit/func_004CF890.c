@@ -19,7 +19,7 @@ extern int D_004F7DD0;
 extern int Script_RegisterNative_2();
 extern int Script_RegisterVariable();
 extern int func_002824D0();
-void func_004CF890(void)
+void StaticInit_RegisterHudTextNatives(void)
 {
     D_004F7D48 = Script_RegisterNative_2(Script_SetInfoBarFont, D_00493880, "SetInfoBarFont", 1, D_004EE538);
     D_004F7D50 = Script_RegisterVariable("NightVisionMaskFrames", (int)D_0048AE48, D_00493888);

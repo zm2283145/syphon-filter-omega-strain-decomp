@@ -9,8 +9,8 @@ This is the working state and the routine for whoever continues this project
 
 | | |
 |---|---|
-| Functions matched | 13,271 of 14,331 |
-| Code matched | 74.99% |
+| Functions matched | 13,350 of 14,331 |
+| Code matched | 75.78% |
 | Data matched | 99.92% |
 | Full build | reproduces the retail executable byte for byte |
 
@@ -24,10 +24,10 @@ What is left (from `progress/report.json`):
 
 | Function size | Unmatched | Bytes |
 |---|---|---|
-| under 100 bytes | 194 | 4 KB |
-| 100–1,200 bytes | 667 | 370 KB |
-| 1,200–3,000 bytes | 168 | 300 KB |
-| over 3,000 bytes | 62 | 332 KB |
+| under 100 bytes | 183 | 4 KB |
+| 100–1,200 bytes | 598 | 345 KB |
+| 1,200–3,000 bytes | 149 | 254 KB |
+| over 3,000 bytes | 51 | 263 KB |
 
 Almost every remaining function under 1,200 bytes has been attempted at least once,
 most of them by several workers. Code percentage is by bytes, so the large functions
@@ -141,6 +141,14 @@ into translation units. Run it occasionally; see [merge_units.md](merge_units.md
 
 ## Near-miss techniques (newest)
 
+- **mw38 scheduling barrier:** an empty `asm { .set noreorder; .set reorder }` (or
+  gcc's `__asm__ __volatile__("")`) emits nothing but stops instructions moving across
+  it. Several committed files already use it.
+- **mw38 register order:** the order function-scope locals are declared (in C and C++
+  mode) changes which registers MW assigns them.
+- **gcc 2.96:** whichever parameter is stored first gets `s0`; copy a parameter into the
+  loop variable after an early `return`, not before; `for(;;)` with `break` and one
+  return after the loop reproduces retail's block order.
 - **mw38 inline helpers:** exposing a helper's locals in the caller and changing their
   declaration order can resolve register allocation without changing control flow.
   This finished `AnimCtl_UpdateTransitions` and `PlayerSlots_Get`.
@@ -235,6 +243,13 @@ K&R in a shared header (for example `include/SFOLobby_helpers.h`).
 - Some functions reference `.lit4` float literals that the current linking cannot place.
 - `0x286570`: both function bodies match, but the unit needs a splat split at `0x286590`.
 - Hand-written assembly functions stay as assembly.
+- `0x2B69A0` (gcc 2.96 -G0, owns the `"/"` string at `0x4AC1C8`) and `0x31D558`
+  (gcc 2.96, six `.lit4` constants) both match in `check_match`, but integrating them
+  together deleted the data units `d_00476B00`–`d_00497CC8` and configure failed. They
+  need their rodata split by hand before they can go in.
+- `0x17D700` is a C++ constructor; a match compiles to
+  `__ct__10Curve_d700FRC2V4RC2V4RC2V4RC2V4f`, so `config/symbol_addrs.txt` needs that
+  mangled name (or the real class name) at that address first.
 
 ## Readability
 

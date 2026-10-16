@@ -1,0 +1,17 @@
+extern short D_0048C414;
+extern int D_0048C418;
+extern char D_004AD288[];
+extern int func_002E9648(void);
+extern int printf(const char *, ...);
+int func_002CF3A8(void)
+{
+    int r = 0;
+    if (D_0048C414 != 1) return -0xC;
+    if (D_0048C418 == 1) r = func_002E9648();
+    if (r == 0) {
+        D_0048C414 = 0;
+        return 0;
+    }
+    printf(D_004AD288, r);
+    return -7;
+}

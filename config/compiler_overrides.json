@@ -4785,5 +4785,15 @@
   "main/func_001E6230": "cwps2-3.0b38",
   "main/GuiAgentCreate/func_0028C390": "cwps2-3.0b38",
   "main/WaterFx/func_002B4050": "cwps2-3.0b38",
-  "main/GuiAgentModify/func_00341F00": "cwps2-3.0b38"
+  "main/GuiAgentModify/func_00341F00": "cwps2-3.0b38",
+  "lib/func_00301840": "ee-gcc2.96",
+  "lib/func_002CF348": "ee-gcc2.96-G0",
+  "lib/func_002CF3A8": "ee-gcc2.96-G0",
+  "lib/usbkb/func_00223478": "ee-gcc2.9-991111",
+  "lib/func_002BC910": "ee-gcc2.9-991111",
+  "lib/func_00357150": "ee-gcc2.9-991111",
+  "main/player/func_00175B00": "cwps2-3.0b38",
+  "main/human/func_001AD710": "cwps2-3.0b38",
+  "main/func_001D7CE0": "cwps2-3.0b38",
+  "main/func_004411F0": "cwps2-3.0b38"
 }

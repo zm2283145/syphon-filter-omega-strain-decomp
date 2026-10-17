@@ -4699,5 +4699,14 @@
   "lib/func_002E6F40": "ee-gcc2.96-G0",
   "main/func_00174310": "cwps2-3.0b38",
   "main/GameGOBJ/func_00219EA0": "cwps2-3.0b38",
-  "main/func_00379FE0": "cwps2-3.0b38"
+  "main/func_00379FE0": "cwps2-3.0b38",
+  "lib/func_002B9F10": "ee-gcc2.96-G0",
+  "lib/LargeInt/func_002F0E60": "ee-gcc2.96-G0",
+  "lib/func_0030E148": "ee-gcc2.96-G0",
+  "lib/usbkb/func_00222B78": "ee-gcc2.9-991111",
+  "main/npc/func_0015AD70": "cwps2-3.0b38",
+  "main/tank/func_00287710": "cwps2-3.0b38",
+  "main/WaterFx/func_002B2B70": "cwps2-3.0b38",
+  "main/GuiEquipmentModify/func_002BDCF0": "cwps2-3.0b38",
+  "main/hoglist/func_003F9850": "cwps2-3.0b38"
 }

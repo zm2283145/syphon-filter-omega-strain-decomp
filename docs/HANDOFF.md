@@ -9,8 +9,8 @@ This is the working state and the routine for whoever continues this project
 
 | | |
 |---|---|
-| Functions matched | 13,350 of 14,331 |
-| Code matched | 75.78% |
+| Functions matched | 13,413 of 14,331 |
+| Code matched | 76.59% |
 | Data matched | 99.92% |
 | Full build | reproduces the retail executable byte for byte |
 
@@ -24,8 +24,8 @@ What is left (from `progress/report.json`):
 
 | Function size | Unmatched | Bytes |
 |---|---|---|
-| under 100 bytes | 183 | 4 KB |
-| 100–1,200 bytes | 598 | 345 KB |
+| under 100 bytes | 182 | 3 KB |
+| 100–1,200 bytes | 536 | 316 KB |
 | 1,200–3,000 bytes | 149 | 254 KB |
 | over 3,000 bytes | 51 | 263 KB |
 
@@ -141,6 +141,22 @@ into translation units. Run it occasionally; see [merge_units.md](merge_units.md
 
 ## Near-miss techniques (newest)
 
+- **gcc 2.96 types:** changing the declared type of a pointer field (`void*` vs struct
+  pointer) or a callee's return type (`int` vs `void`) shifts scheduling and register
+  choice; it finished `003177D0`, `003041B0` and `002E6F40`. Weak `.dtors_drop` stubs for
+  both callees of an `||` condition turned a stray `bnel` into `bnez` (`002F0E60`).
+- **gcc 2.96 shared error exit:** route every later `return N` to one `err:` label placed
+  after the first check (`002FF308`). `memcpy(&dst, p, N)` reproduces retail's unaligned
+  `ldl/ldr` copies where struct assignment does not.
+- **mw38 loop trampoline:** to keep retail's extra jump to the loop test, start the loop
+  with `goto tramp;` and put `tramp: asm { nop } goto test;` after the final `return`
+  (`ShadowMgr_Construct`).
+- **mw38 misc:** `#pragma opt_strength_reduction off` plus a `volatile` read of the count
+  (`0032D0D0`); `#pragma opt_arithtransformation off` with an explicit if/else for a
+  0/1 result (`002D2BD0`); a trivial `T() {}` constructor on a returned struct makes MW
+  build it straight into the local's slot; gcc-style `__asm__` copies stop mw38 from
+  unrolling a copy loop, MW `asm{}` blocks do not. Never write an empty `asm {}` block:
+  it hangs mwcc.
 - **mw38 scheduling barrier:** an empty `asm { .set noreorder; .set reorder }` (or
   gcc's `__asm__ __volatile__("")`) emits nothing but stops instructions moving across
   it. Several committed files already use it.
@@ -246,7 +262,8 @@ K&R in a shared header (for example `include/SFOLobby_helpers.h`).
 - `0x2B69A0` (gcc 2.96 -G0, owns the `"/"` string at `0x4AC1C8`) and `0x31D558`
   (gcc 2.96, six `.lit4` constants) both match in `check_match`, but integrating them
   together deleted the data units `d_00476B00`–`d_00497CC8` and configure failed. They
-  need their rodata split by hand before they can go in.
+  need their rodata split by hand before they can go in. `0x31A630` (gcc 2.96, owns the
+  `.lit4` constant at `0x4E1BB4`) matches too and is held for the same reason.
 - `0x17D700` is a C++ constructor; a match compiles to
   `__ct__10Curve_d700FRC2V4RC2V4RC2V4RC2V4f`, so `config/symbol_addrs.txt` needs that
   mangled name (or the real class name) at that address first.

@@ -4708,5 +4708,9 @@
   "main/tank/func_00287710": "cwps2-3.0b38",
   "main/WaterFx/func_002B2B70": "cwps2-3.0b38",
   "main/GuiEquipmentModify/func_002BDCF0": "cwps2-3.0b38",
-  "main/hoglist/func_003F9850": "cwps2-3.0b38"
+  "main/hoglist/func_003F9850": "cwps2-3.0b38",
+  "main/npc/func_00150150": "cwps2-3.0b38",
+  "main/func_00175030": "cwps2-3.0b38",
+  "main/989snd/func_003A8A90": "cwps2-3.0b38",
+  "main/ska/func_003B0540": "cwps2-3.0b38"
 }

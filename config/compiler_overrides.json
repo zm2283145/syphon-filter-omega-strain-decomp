@@ -4679,5 +4679,19 @@
   "main/func_002C72A0": "cwps2-3.0b38",
   "main/func_003718B0": "cwps2-3.0b38",
   "main/func_003A94E0": "cwps2-3.0b38",
-  "main/skeleton/func_003AA320": "cwps2-3.0b38"
+  "main/skeleton/func_003AA320": "cwps2-3.0b38",
+  "lib/func_002FA0F8": "ee-gcc2.96",
+  "lib/func_00301608": "ee-gcc2.96",
+  "lib/func_00303BB8": "ee-gcc2.96",
+  "lib/func_002ED280": "ee-gcc2.96-G0",
+  "lib/func_002715D0": "ee-gcc2.9-991111",
+  "main/game/func_00133ED0": "cwps2-3.0b38",
+  "main/human/func_00197140": "cwps2-3.0b38",
+  "main/func_001E9710": "cwps2-3.0b38",
+  "main/func_002A7C20": "cwps2-3.0b38",
+  "main/func_002C5F20": "cwps2-3.0b38",
+  "main/func_002D83C0": "cwps2-3.0b38",
+  "main/func_0032D0D0": "cwps2-3.0b38",
+  "main/func_003D2970": "cwps2-3.0b38",
+  "main/func_003D57A0": "cwps2-3.0b38"
 }

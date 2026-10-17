@@ -4672,5 +4672,12 @@
   "main/GuiAgentCreate/func_0028EA40": "cwps2-3.0b38",
   "main/GuiEquipmentModify/func_002BF370": "cwps2-3.0b38",
   "main/func_0033D6A0": "cwps2-3.0b38",
-  "main/func_00440EE0": "cwps2-3.0b38"
+  "main/func_00440EE0": "cwps2-3.0b38",
+  "lib/func_002CF420": "ee-gcc2.96-G0",
+  "main/func_001E1F10": "cwps2-3.0b38",
+  "main/func_001EF6C0": "cwps2-3.0b38",
+  "main/func_002C72A0": "cwps2-3.0b38",
+  "main/func_003718B0": "cwps2-3.0b38",
+  "main/func_003A94E0": "cwps2-3.0b38",
+  "main/skeleton/func_003AA320": "cwps2-3.0b38"
 }

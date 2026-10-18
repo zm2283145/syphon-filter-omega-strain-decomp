@@ -49,6 +49,8 @@ class DataDiagnosticTests(unittest.TestCase):
                 stack.enter_context(patch.object(check_match, "compare", return_value=([], [])))
                 stack.enter_context(patch.object(check_match, "ELFFile"))
                 stack.enter_context(patch.object(check_match, "data_pieces", return_value=[piece]))
+                # The mock object has no literal pool, and the temporary root has no splat.yaml.
+                stack.enter_context(patch.object(check_match, "pooled_literals", return_value=[]))
                 stack.enter_context(contextlib.redirect_stdout(output))
                 check_match.main()
             self.assertFalse(obj.exists())

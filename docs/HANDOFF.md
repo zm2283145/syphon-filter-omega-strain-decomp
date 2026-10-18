@@ -9,8 +9,8 @@ This is the working state and the routine for whoever continues this project
 
 | | |
 |---|---|
-| Functions matched | 13,413 of 14,331 |
-| Code matched | 76.59% |
+| Functions matched | 13,445 of 14,331 |
+| Code matched | 77.58% |
 | Data matched | 99.92% |
 | Full build | reproduces the retail executable byte for byte |
 
@@ -118,6 +118,15 @@ existing ones: what was matched, the OK line, and the new totals.
 into translation units. Run it occasionally; see [merge_units.md](merge_units.md).
 
 ## Pitfalls already hit
+
+- Never give a function a C library or compiler-runtime name (`abort`, `sscanf`, `strncat`,
+  `toupper`, `__moddi3`, `_calloc_r`, `memcpy`, `sqrtf`, ...) in `config/symbol_addrs.txt`.
+  GCC treats such names as builtins: naming 0x00121B60 `abort` made the caller a no-return
+  tail jump and shrank the executable by 16 bytes. Use a prefixed name (`Math_Sqrtf`) or
+  leave it `func_`.
+- After `tools/apply_names.py` renames functions in `include/`, rebuild every C file
+  (`find src -name '*.c' -exec touch {} +`); otherwise stale objects keep the old
+  `func_` references and the link fails.
 
 - `merge_units: begin/end func_<ADDR>` markers must keep their address labels:
   `merge_units.py` and `clone_match.py` parse them. `apply_names.py` leaves them alone.

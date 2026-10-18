@@ -9,8 +9,8 @@ This is the working state and the routine for whoever continues this project
 
 | | |
 |---|---|
-| Functions matched | 13,445 of 14,331 |
-| Code matched | 77.58% |
+| Functions matched | 13,493 of 14,331 |
+| Code matched | 78.70% |
 | Data matched | 99.92% |
 | Full build | reproduces the retail executable byte for byte |
 
@@ -150,6 +150,36 @@ into translation units. Run it occasionally; see [merge_units.md](merge_units.md
 
 ## Near-miss techniques (newest)
 
+- **mw38 asm blocks and scheduling:** any MW `asm {}` block in a function stops MW filling
+  branch delay slots from the fall-through path; write the instruction as gcc-style
+  `__asm__ volatile` instead. A non-volatile MW `asm {}` is not a scheduling barrier;
+  `__asm__ volatile` and MW `asm volatile` are. `else { asm { .set reorder } }` keeps an
+  empty else block.
+- **mw38 address CSE:** fields read through `template<int O, class T> struct At { char pad[O]; T v; };`
+  are not CSE'd into a saved address register. An inline returning `&e->sub` keeps a
+  `+off` base unfolded. `(T*)((char*)base + n*sizeof(T))` with a fresh loop variable stops
+  strength reduction.
+- **mw38 floats:** float registers are assigned in declaration order but loaded in
+  assignment order (declare `ax, ay, az`, assign z, y, x). `cvt.w.s` needs inline asm
+  (a C cast gives a different conversion; objdump spells it `trunc.w.s`). A float passed
+  to varargs gets `SoftFloat_FloatToDouble` automatically; double compares can call
+  `SoftFloat_FloatToDouble` / `SoftFloat_DoubleGreaterEqual` explicitly.
+- **mw38 misc:** a `bool` local gives `daddiu` where `int` gives `addiu`; copies of the
+  parameters as the first locals order the s-registers; an unused `const T* rr = &r;`
+  reproduces a dead address load; a dead address-taken local reserves a scalar slot;
+  `*(volatile int*)&x` (commented) reloads a value every pass; initialize a matrix where
+  it is declared to avoid temporary copies; a value-initialised default argument
+  (`const T& v = T()`) on an inline wrapper gives the zero-fill loop with a null check;
+  `#pragma bool off` with `r = c1; r = r ? c2 : r;` materializes test results;
+  `{ p = Alloc(); if (p) p = ctor(); n = p; }` keeps the switch join block.
+- **Sibling search:** comparing instruction shapes against every matched function finds
+  templates for most large matches (`clone_match.py`, and the ROM-based finders used this
+  round). objdump folds zero words into `...` unless given `-z`, hiding padding nops in
+  diffs; and it prints `move`/`li`, so compare bytes with relocations masked rather than
+  mnemonics (addiu vs daddiu, ori vs addiu).
+
+## Earlier near-miss techniques
+
 - **gcc 2.96 types:** changing the declared type of a pointer field (`void*` vs struct
   pointer) or a callee's return type (`int` vs `void`) shifts scheduling and register
   choice; it finished `003177D0`, `003041B0` and `002E6F40`. Weak `.dtors_drop` stubs for
@@ -265,6 +295,15 @@ K&R in a shared header (for example `include/SFOLobby_helpers.h`).
 
 ## Known blocked work
 
+- `0x1B7B00` unit holds two functions (`Npc_ConstructSpawned` + `Actor_Construct2` at
+  0x1B8130). One C file matching both exists, but `integrate_pending.py` turns only the
+  first into a C unit, so the second is defined twice at link time. The integrator needs
+  multi-function unit support (or a manual split at 0x1B8130).
+- `func_004769A4` (gcc296) is instruction-identical, but its asm unit (0x476998) runs on
+  into the data block at 0x476B00; it needs a split at 0x476ABC near the fragile
+  `d_00476B00` data units.
+- `Mem_Init` (0x36B630) references `D_01FF0000`, `D_0059A980`, `D_0059C980`, which have
+  no symbol entries.
 - Some functions reference `.lit4` float literals that the current linking cannot place.
 - `0x286570`: both function bodies match, but the unit needs a splat split at `0x286590`.
 - Hand-written assembly functions stay as assembly.

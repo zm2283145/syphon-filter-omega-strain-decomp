@@ -1589,7 +1589,7 @@ segments:
       - [0x0B7920, c, main/human/func_001B7920]
       - [0x0B7940, c, main/human/func_001B7940]
       - [0x0B79C0, c, main/human/human_1B79C0]
-      - [0x0B7B00, asm]
+      - [0x0B7B00, c, main/human/func_001B7B00]
       - [0x0B8740, c, main/human/func_001B8740]
       - [0x0B8790, c, main/human/human_1B8790]
       - [0x0B88A0, c, main/human/func_001B88A0]

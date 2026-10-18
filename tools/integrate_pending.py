@@ -92,6 +92,17 @@ def find(segs, off):
     return max(i for i, s in enumerate(segs) if s[0] <= off)
 
 
+def object_text_end(e):
+    """Length of a compiled object's code once linked: its .text sections laid out in
+    order with their alignment (CodeWarrior gives each function its own .text section)."""
+    end = 0
+    for sec in e.iter_sections():
+        if sec.name == ".text" or sec.name.startswith(".text."):
+            al = max(sec["sh_addralign"], 1)
+            end = (end + al - 1) // al * al + sec["sh_size"]
+    return end
+
+
 def main():
     repo, pend = Path(sys.argv[1]).resolve(), Path(sys.argv[2])
     sys.path.insert(0, str(repo / "tools"))
@@ -190,10 +201,20 @@ def main():
             skipped.append((f.name, "compile error: " + err.splitlines()[-1] if err else "compile error")); continue
         try:
             with open(obj, "rb") as fh:
-                pieces = check_match.data_pieces(ELFFile(fh), rom, names)
+                e = ELFFile(fh)
+                pieces = check_match.data_pieces(e, rom, names)
+                text_end = object_text_end(e)
             lits = check_match.pooled_literals(obj, rom, names)
         finally:
             os.unlink(obj)
+        if not existing and text_end > size[a]:
+            # a file that defines several functions (a multi-function retail
+            # unit): the C unit spans all of them, not just the first
+            if A + text_end > nxt_of(k):
+                skipped.append((f.name, f"its functions run past segment {segs[k][:3]}")); continue
+            if not any(b - BASE + n == A + text_end for b, n in size.items() if A < b - BASE < A + text_end):
+                skipped.append((f.name, f"its .text ends at +{text_end:#x}, not at the end of a retail function")); continue
+            E = A + text_end
         bad = [f"{p['section']}: {p['result']}" for p in pieces if p["result"] != "MATCH"]
         bad += [f"{p['section']} literal {p['start'] or 0:08X}: {p['result']}" for p in lits if p["result"] != "MATCH"]
         bad += [f"{p['section']}: not linkable from C yet" for p in pieces if p["section"] not in PIECE_TYPES]
@@ -252,7 +273,7 @@ def main():
                 rest = f"sinit_{stop + BASE:X}" if (old[2] or "").startswith("sinit_") else None
                 new.append([stop, old[1], rest, []])
             segs[j:j + 1] = new
-        added.append((f.name, path, 0 if existing else size[a],
+        added.append((f.name, path, 0 if existing else E - A,
                       " ".join(f"{t}@{s + BASE:08X}+{e - s:#x}" for s, e, t in cuts)))
         if kind in OVR:
             overrides[path] = OVR[kind]

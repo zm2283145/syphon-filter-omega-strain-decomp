@@ -5573,6 +5573,7 @@ segments:
       - [0x29F860, asm]
       - [0x2A0050, c, main/particle/func_003A0050]
       - [0x2A0540, asm]
+      - [0x2A0EA0, c, main/particle/func_003A0EA0]
       - [0x2A1450, c, main/particle/particle_3A1450]
       - [0x2A23F0, c, main/particle/func_003A23F0]
       - [0x2A2400, c, main/particle/func_003A2400]

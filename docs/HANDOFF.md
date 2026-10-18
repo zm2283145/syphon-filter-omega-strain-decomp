@@ -9,8 +9,8 @@ This is the working state and the routine for whoever continues this project
 
 | | |
 |---|---|
-| Functions matched | 13,493 of 14,331 |
-| Code matched | 78.70% |
+| Functions matched | 13,551 of 14,331 |
+| Code matched | 79.74% |
 | Data matched | 99.92% |
 | Full build | reproduces the retail executable byte for byte |
 
@@ -149,6 +149,30 @@ into translation units. Run it occasionally; see [merge_units.md](merge_units.md
   generation. Rebuild after each batch.
 
 ## Near-miss techniques (newest)
+
+- **mw38 stack slots of memory-resident locals:** MW splits a local that must stay in memory
+  into one live range per reassignment; every live range after the first gets its own
+  4-byte slot at the bottom of the frame (below the temporaries, ascending in program order),
+  and the value is re-read every pass. One function-scope `union { LNode* p; }` iterator
+  shared by all list loops (first loop assigns the member, later loops assign the whole
+  union, a block move) reproduces it (`func_00436380`).
+- **mw38 table-walking pointers** come from MW strength-reducing plain int indexes
+  (`tbl[row][col]`); explicit pointer locals put the setup before the loop guard instead.
+- **mw38 float constants through integer registers:** route only one constant through a
+  float local (`float ka = 0.5235988f; c->fov = ka; c->f2E4 = 1.0000001f; ...`) to get
+  retail's load order (`002A2590`, `GuiScoresEquip_UpdateFigures`).
+- **mw38 misc (newest):** `#pragma optimize_for_size on` changes delay-slot filling; a weak
+  destructor on RAII helpers suppresses the out-of-line `__dt__`; byte-offset element
+  addressing fixes `addu` operand order; never name an MW asm operand `s1`/`s2`;
+  `asm volatile { .set noreorder ... }` is a real barrier; `ok = !(s <= zero)` with an
+  unsigned zero local gives `sltu; xori; xori`.
+- **gcc 2.96 (newest):** declare callees `int` rather than `void` early (stores move in and
+  out of call delay slots); `return 0` right after `if (ret) return ret;` lets gcc reuse
+  the known-zero v0, so send it through a single final `return 0`; volatile fields fix
+  store order; `register int x asm("$19")` pins a register; store zeros as `0.0f`.
+- **Multi-function retail units:** write one file with every function of the unit in
+  retail order; `integrate_pending.py` now sizes the new C unit from all of the object's
+  `.text` sections (it used to take the first function's size only).
 
 - **mw38 asm blocks and scheduling:** any MW `asm {}` block in a function stops MW filling
   branch delay slots from the fall-through path; write the instruction as gcc-style
@@ -295,10 +319,6 @@ K&R in a shared header (for example `include/SFOLobby_helpers.h`).
 
 ## Known blocked work
 
-- `0x1B7B00` unit holds two functions (`Npc_ConstructSpawned` + `Actor_Construct2` at
-  0x1B8130). One C file matching both exists, but `integrate_pending.py` turns only the
-  first into a C unit, so the second is defined twice at link time. The integrator needs
-  multi-function unit support (or a manual split at 0x1B8130).
 - `func_004769A4` (gcc296) is instruction-identical, but its asm unit (0x476998) runs on
   into the data block at 0x476B00; it needs a split at 0x476ABC near the fragile
   `d_00476B00` data units.

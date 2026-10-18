@@ -79,7 +79,7 @@ static __inline__ fp_number_type* _fpmul_parts(fp_number_type* a, fp_number_type
     tmp->class = CLASS_NUMBER;
     return tmp;
 }
-DFtype func_0011C268(DFtype arg_a, DFtype arg_b)
+DFtype SoftFloat_DoubleMultiply(DFtype arg_a, DFtype arg_b)
 {
     fp_number_type a;
     fp_number_type b;

@@ -106,7 +106,7 @@ extern int DME_GetLobby(void);
 
 extern void* LobbyArray_ctor(void* p);
 extern int func_00445E80(int a, void* fn, void* b, void* c, void* d);
-extern void func_002CC260(void);
+extern void App_CardWaitPoll(void);
 }
 
 struct ObjCA350 {
@@ -146,7 +146,7 @@ extern "C" int func_002CA350(ObjCA350* self)
         p = LobbyArray_ctor(p);
     self->c = p;
     self->inited = 1;
-    return func_00445E80(DME_GetLobby(), (void*)func_002CC260, self->a, self->b, self->c);
+    return func_00445E80(DME_GetLobby(), (void*)App_CardWaitPoll, self->a, self->b, self->c);
 }
 #undef DME_GetLobby /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */

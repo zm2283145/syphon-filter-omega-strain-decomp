@@ -20,7 +20,7 @@ int Mem_Free();
 /* merge_units: begin func_00421670 */
 #pragma push /* merge_units */
 /* Copy the state byte to the optional child widget. */
-void func_00421670(TextListWidget* self, unsigned char state)
+void GuiTextListWidget_SetA4(TextListWidget* self, unsigned char state)
 {
     self->state = state;
     if (self->child)
@@ -105,7 +105,7 @@ static inline void destroy_widget_base(TextRenderWidget* self)
 }
 
 /* Resolve the named text resource and apply its padded row height when available. */
-extern "C" void func_00421690(TextRenderWidget* self, const char* name)
+extern "C" void GuiTextListWidget_SetFont(TextRenderWidget* self, const char* name)
 {
     self->resource = GuiFont_Find(Gui_GetScreenList(), name);
     if (self->resource)

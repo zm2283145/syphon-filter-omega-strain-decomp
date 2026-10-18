@@ -29,8 +29,8 @@ extern void Sphere_FromCenter(Pt1GlV4* out, Pt1GlV4* a, Pt1GlV4* b);
 extern float Vec4_Length(Pt1GlV4* v);
 extern int LightMgr_CompareOrder(const void* a, const void* b);
 extern void qsort(void* base, int n, int size, int (*cmp)(const void*, const void*));
-extern void func_00372120(Pt1GlMgr* m, unsigned int mask, unsigned int flags);
-extern void func_00371CF0(Pt1GlMgr* m, void* out);
+extern void LightMgr_BuildLightSlots(Pt1GlMgr* m, unsigned int mask, unsigned int flags);
+extern void LightMgr_WriteLightVectors(Pt1GlMgr* m, void* out);
 extern void LightMgr_WriteModelSlots(Pt1GlMgr* m, void* out);
 
 void LightMgr_GatherModelLights(Pt1GlMgr* m, unsigned int mask, unsigned int flags, void* out)
@@ -77,10 +77,10 @@ void LightMgr_GatherModelLights(Pt1GlMgr* m, unsigned int mask, unsigned int fla
         }
         m->dirty = 0;
         m->lastMask = mask;
-        func_00372120(m, mask, flags);
+        LightMgr_BuildLightSlots(m, mask, flags);
     }
     if (flags & 4)
-        func_00371CF0(m, out);
+        LightMgr_WriteLightVectors(m, out);
     if (flags & 2)
         LightMgr_WriteModelSlots(m, out);
 }

@@ -37,19 +37,19 @@ W4E40* GuiWidget_FindChildByName(void* o, char* name);
 void* Agent_GetSelected(void* p, int i);
 void func_00296FA0(L4E40* l);
 void func_00299360(L4E40* l, int flags);
-void func_003334C0(void* ag, unsigned char kind, L4E40* l);
+void AgentData_GetAwardRows(void* ag, unsigned char kind, L4E40* l);
 void func_0041C0F0(W4E40* w, int v);
 void GuiTextWidget_SetText(W4E40* w, int text, int f);
 int Loc_LookupText(const char* key);
 enum E4E40on { ON0, ON1 };
-void func_00355490(O4E40* o, unsigned char on);
-void func_00354E40(O4E40* self, const char* a, const char* b, unsigned char kind, int arg, int c, int d);
+void GuiPersonnelMenu_ToggleDetail(O4E40* o, unsigned char on);
+void GuiPersonnelMenu_Setup(O4E40* self, const char* a, const char* b, unsigned char kind, int arg, int c, int d);
 }
 
 /* The &l.data local and the re-derived element pointer reproduce retail register allocation; the enum ternary keeps the movz/andi argument. */
 static inline W4E40* Cast(W4E40* w, void* t) { return w && w->IsA(t) ? w : 0; }
 
-void func_00354E40(O4E40* self, const char* a, const char* b, unsigned char kind, int arg, int c, int d)
+void GuiPersonnelMenu_Setup(O4E40* self, const char* a, const char* b, unsigned char kind, int arg, int c, int d)
 {
     W4E40* w;
     {
@@ -75,7 +75,7 @@ void func_00354E40(O4E40* self, const char* a, const char* b, unsigned char kind
             L4E40 l;
             func_00296FA0(&l);
             l.aC = 1;
-            func_003334C0(ag, kind, &l);
+            AgentData_GetAwardRows(ag, kind, &l);
             if (arg < l.size()) {
                 func_0041C0F0(w, 1);
                 E4E40** pd = &l.data;
@@ -83,7 +83,7 @@ void func_00354E40(O4E40* self, const char* a, const char* b, unsigned char kind
                 GuiTextWidget_SetText(w, e->id, 0);
                 e = *pd + arg;
                 self->on = e->flag != 0;
-                func_00355490(self, self->on ? ON1 : ON0);
+                GuiPersonnelMenu_ToggleDetail(self, self->on ? ON1 : ON0);
             }
             func_00299360(&l, 0);
         } else {
@@ -95,7 +95,7 @@ void func_00354E40(O4E40* self, const char* a, const char* b, unsigned char kind
                 func_0041C0F0(w, 1);
             }
             self->on = false;
-            func_00355490(self, ON0);
+            GuiPersonnelMenu_ToggleDetail(self, ON0);
         }
     }
     if (self->fA4) {

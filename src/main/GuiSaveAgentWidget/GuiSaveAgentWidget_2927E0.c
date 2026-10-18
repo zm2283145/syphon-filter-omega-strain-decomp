@@ -17,7 +17,7 @@
 char D_004A9E30[] = "GuiAgentSave";   /* "GuiAgentSave" */
 
 /* Class name getter: "GuiAgentSave". */
-char* func_002927E0(void) {
+char* GuiAgentSave_GetClassName(void) {
     return D_004A9E30;
 }
 #pragma pop /* merge_units */

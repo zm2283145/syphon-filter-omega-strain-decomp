@@ -15,7 +15,7 @@ extern void func_001D7DE0(V_7B20* v);
 extern T_7B20* func_001D7D20(T_7B20* d, V4_7B20* s, V4_7B20* q);
 extern void func_001D7CE0(void* d, T_7B20* s);
 extern void func_001D7C90(T_7B20* t, int f);
-void func_001D7B20(V_7B20* v)
+void UpperBody_BuildChainTable(V_7B20* v)
 {
     func_001D7DE0(v);
     if (!D_004F47B0) {

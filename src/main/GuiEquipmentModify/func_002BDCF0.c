@@ -7,7 +7,7 @@ struct Self2BD { char pad[0x4C]; Mgr2BD* mgr; char pad50[0x920 - 0x50]; int coun
 extern "C" void* D_004FFD30;
 extern "C" void WeaponDb_Unload(void*, int, int);
 extern "C" void WeaponDb_Preload(void*, int, int);
-extern "C" void func_002BDCF0(Self2BD* self, int id)
+extern "C" void GuiEquipmentModify_RingTouch(Self2BD* self, int id)
 {
     int i;
     for (i = 0; i < self->count; i++) {

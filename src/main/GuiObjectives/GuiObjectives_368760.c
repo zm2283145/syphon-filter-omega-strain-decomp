@@ -14,8 +14,8 @@ extern float Hud_GetMissionTime(int id);
 extern void GuiObjectives_FillList(S368620* self);
 extern void GuiTextWidget_SetText(void* text, char* str, int flag);
 extern void GuiTextWidget_SetColour(void* text, void* color);
-extern void func_0041EFA0(S368620* self);
-extern void func_00367B20(S368620* self, int a, int b);
+extern void GuiWidget_BaseWake(S368620* self);
+extern void GuiObjectives_SetTab(S368620* self, int a, int b);
 extern int sprintf(char* buf, const char* fmt, ...);
 extern char D_004BBC48[];
 extern char D_004FFB50[];
@@ -27,7 +27,7 @@ void GuiObjectives_Wake(S368620* self) {
     char buf[32];
     float f;
 
-    func_0041EFA0(self);
+    GuiWidget_BaseWake(self);
     if (self->text != 0) {
         if (self->useTimer) {
             f = Hud_GetMissionTime(D_004FFC2C);
@@ -48,7 +48,7 @@ void GuiObjectives_Wake(S368620* self) {
         GuiTextWidget_SetText(self->text, buf, 0);
     }
     GuiObjectives_FillList(self);
-    func_00367B20(self, 0, !self->a64);
+    GuiObjectives_SetTab(self, 0, !self->a64);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00368760 */
@@ -92,9 +92,9 @@ extern V4_3688C0 D_00587CE0; extern V4_3688C0 D_00587CC0;
 void GuiWidget_Init(O_3688C0* o);
 W_3688C0* GuiWidget_FindChildByName(void* o, char* name);
 int sprintf(char* buf, const char* fmt, ...);
-void func_00421690(W_3688C0* w, char* s);
+void GuiTextListWidget_SetFont(W_3688C0* w, char* s);
 void GuiArrayWidget_RowHeight(W_3688C0* w, int v);
-int func_00330C30(void* p, unsigned char f);
+int Awards_GetParTime(void* p, unsigned char f);
 void String_Copy(void* d, char* s);
 #if 0 /* merge_units */
 void GuiTextWidget_SetText(W_3688C0* w, char* s, int f);
@@ -130,7 +130,7 @@ void GuiObjectives_Init(O_3688C0* o)
         sprintf(name, D_004BBD00, i);
         o->slots[i] = Cast_3688C0(GuiWidget_FindChildByName(o, name), D_004AA640);
         if (o->slots[i]) {
-            func_00421690(o->slots[i], D_004BBD18);
+            GuiTextListWidget_SetFont(o->slots[i], D_004BBD18);
             if (i == 0) {
                 W_3688C0* w = GuiWidget_FindChildByName(o, D_004BBD20);
                 if (w) w->flags &= ~2;
@@ -153,7 +153,7 @@ void GuiObjectives_Init(O_3688C0* o)
     t = Cast_3688C0(GuiWidget_FindChildByName(o, D_004BBD58), D_004A7520);
     if (t) {
         char buf[32];
-        int r = func_00330C30(D_004FFC90, D_005721C8);
+        int r = Awards_GetParTime(D_004FFC90, D_005721C8);
         if (r < 0) String_Copy(buf, D_004BBD68);
         else {
             int m = r / 60;

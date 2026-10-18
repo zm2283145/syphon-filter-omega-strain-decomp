@@ -66,7 +66,7 @@ void cMessage_dtor(void* m, int flags);
 void SoundEvent_CtorFromPreset(Snd_00186BF0* e, void* preset, void* owner);
 void FileMan_Release(Str_00186BF0* s, int flag);
 void Actor_SetHealth(Npc_00186BF0* self, int a, int b);
-void func_0038CBF0(void* p);
+void ActorModel_Deactivate(void* p);
 void WeaponInv_ReleaseHeldObject(int a);
 int Actor_ClassifyHitDirection(Npc_00186BF0* self, V4_00186BF0* dir, int n);
 void Controller_DeathNotice(Npc_00186BF0* self, int a1, Att_00186BF0* att, int a3, int type, V4_00186BF0* pos);
@@ -95,7 +95,7 @@ extern "C" void Actor_Kill(Npc_00186BF0* self, int a1, Att_00186BF0* att, int a3
 {
     if (self->b33A4) {
         Actor_SetHealth(self, self->f3398, 0);
-        func_0038CBF0(self->f60);
+        ActorModel_Deactivate(self->f60);
     } else if (self->b14) {
         int anim;
         char* snd;

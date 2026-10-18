@@ -11,7 +11,7 @@ Mgr2427* Gui_GetScreenStack(void);
 void* GuiManager_FindByName(void* a, void* b);
 void* GuiManager_FindOrLoad(void* a, void* b, void* c);
 extern char D_004A7230[];
-}extern "C" void func_00242870(Obj2426* s) {
+}extern "C" void Hud_OpenMapScreen(Obj2426* s) {
     if (s->b6A9 || s->b6A8) return;
     {
         void* x = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004A7230, "MAPSCRN");

@@ -1,12 +1,12 @@
 #pragma cplusplus on
 #include "types.h"
 extern "C" {
-extern "C" void func_00294210();
+extern "C" void GuiCommandCenter_GetClassName();
 extern "C" void func_00294220();
-extern "C" void func_00294250();
+extern "C" void GuiCommandCenter_First();
 extern "C" void GuiCommandCenter_Leave();
 extern "C" void GuiCommandCenter_HandleInput();
-extern "C" void func_002958B0();
+extern "C" void GuiCommandCenter_HandleEvent();
 extern "C" void GuiCommandCenter_Update();
 extern "C" void GuiCommandCenter_Deactivate();
 extern "C" void GuiCommandCenter_Activate();
@@ -17,12 +17,12 @@ extern "C" void GuiScreen_Sleep();
 extern "C" void GuiWidget_FocusPrev();
 extern "C" void GuiWidget_FocusNext();
 extern "C" void GuiWidget_FocusLast();
-extern "C" void func_0041E230();
-extern "C" void func_0041E2B0();
-extern "C" void func_0041E330();
+extern "C" void GuiWidget_BubbleActivate();
+extern "C" void GuiWidget_BubbleType1();
+extern "C" void GuiWidget_BubbleType0();
 extern "C" void GuiWidget_Draw();
-extern "C" void func_0041F070();
-extern "C" void func_0041F080();
+extern "C" void GuiWidget_ClearFlag4();
+extern "C" void GuiWidget_SetFlag4();
 extern "C" void GuiWidget_Deinit();
 extern "C" void func_0041F210();
 extern void * const D_004DD4F0[];
@@ -42,4 +42,4 @@ extern "C" O294190* GuiCommandCenter_dtor(O294190* self, short deleteFlag)
     }
     return self;
 }
-void * const D_004DD4F0[28] = { (void*)0x0, (void*)0x0, (void*)GuiCommandCenter_dtor, (void*)GuiCommandCenter_Init, (void*)GuiWidget_Deinit, (void*)func_0041F080, (void*)func_0041F070, (void*)GuiCommandCenter_Wake, (void*)GuiScreen_Sleep, (void*)func_0041E330, (void*)func_0041E2B0, (void*)GuiCommandCenter_HandleInput, (void*)GuiWidget_Draw, (void*)func_0041E230, (void*)GuiCommandCenter_Update, (void*)func_002958B0, (void*)func_0041F210, (void*)func_00294250, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)func_00294210, (void*)func_00294220, (void*)GuiCommandCenter_Leave, (void*)func_0033CCA0, (void*)GuiCommandCenter_Activate, (void*)GuiCommandCenter_Deactivate, (void*)0x0 };
+void * const D_004DD4F0[28] = { (void*)0x0, (void*)0x0, (void*)GuiCommandCenter_dtor, (void*)GuiCommandCenter_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiCommandCenter_Wake, (void*)GuiScreen_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiCommandCenter_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiCommandCenter_Update, (void*)GuiCommandCenter_HandleEvent, (void*)func_0041F210, (void*)GuiCommandCenter_First, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiCommandCenter_GetClassName, (void*)func_00294220, (void*)GuiCommandCenter_Leave, (void*)func_0033CCA0, (void*)GuiCommandCenter_Activate, (void*)GuiCommandCenter_Deactivate, (void*)0x0 };

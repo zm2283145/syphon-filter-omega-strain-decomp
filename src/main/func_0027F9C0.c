@@ -47,7 +47,7 @@ static inline V4* SubEq(V4* a, const V4* b)
 }
 #pragma peephole off
 #pragma opt_common_subs off
-V4* func_0027F9C0(V4* a, const V4* b)
+V4* Vec4_RejectFromNormal(V4* a, const V4* b)
 {
     float w = a->w;
     float d = Dot3(a, b);

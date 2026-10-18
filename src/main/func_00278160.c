@@ -37,7 +37,7 @@ extern void FileMan_Release(void* part, int flags);
 extern void cMessage_dtor(SoundMsg* msg, int flags);
 
 /* On a flagged hit, spawns a water splash and broadcasts the impact sound. */
-void func_00278160(void* self, Hit08* hit, HitFlags* info) {
+void Bullet_OnWaterCrossing(void* self, Hit08* hit, HitFlags* info) {
     SoundMsg msg;
     SoundRequest req;
     if (info->flags & 0x80) {

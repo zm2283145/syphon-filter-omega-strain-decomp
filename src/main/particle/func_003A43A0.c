@@ -12,7 +12,7 @@ long strtoul(char*, char**, int);
 long strtol(char*, char**, int);
 float SoftFloat_U64ToFloat(unsigned long long);
 float SoftFloat_S64ToFloat(long long);
-long long func_0011C268(long long, long long);
+long long SoftFloat_DoubleMultiply(long long, long long);
 int SoftFloat_DoubleNotEqual(long long, long long);
 char* strncpy(char*, const char*, int);
 void String_Copy(char*, const char*);
@@ -125,13 +125,13 @@ extern "C" bool ParticleDef_ParseCommon(PD_43A0* self, char* str, char* name, fl
     self->i0C = strtoul(s, &s, 10);
     self->f10 = SoftFloat_U64ToFloat(strtoul(s, &s, 10));
     NL();
-    self->f14 = SoftFloat_DoubleToFloat(func_0011C268(HALF, strtod(s, &s)));
+    self->f14 = SoftFloat_DoubleToFloat(SoftFloat_DoubleMultiply(HALF, strtod(s, &s)));
     self->f18 = RD();
     NL();
-    self->f1C = SoftFloat_DoubleToFloat(func_0011C268(HALF, strtod(s, &s)));
+    self->f1C = SoftFloat_DoubleToFloat(SoftFloat_DoubleMultiply(HALF, strtod(s, &s)));
     self->f20 = 1.0f / FMax_43A0(1e-7f, RD());
     NL();
-    self->f24 = SoftFloat_DoubleToFloat(func_0011C268(HALF, strtod(s, &s)));
+    self->f24 = SoftFloat_DoubleToFloat(SoftFloat_DoubleMultiply(HALF, strtod(s, &s)));
     self->f28 = 1.0f / FMax_43A0(1e-7f, RD());
     NL();
     self->f50 = RD();
@@ -156,7 +156,7 @@ extern "C" bool ParticleDef_ParseCommon(PD_43A0* self, char* str, char* name, fl
     NL();
     self->i3C = strtoul(s, &s, 10);
     self->f40 = RD();
-    self->f44 = SoftFloat_DoubleToFloat(func_0011C268((long long)0x40600000 << 32, strtod(s, &s)));
+    self->f44 = SoftFloat_DoubleToFloat(SoftFloat_DoubleMultiply((long long)0x40600000 << 32, strtod(s, &s)));
     self->f48 = RD();
     NL();
     if (ver >= 1.9f) {

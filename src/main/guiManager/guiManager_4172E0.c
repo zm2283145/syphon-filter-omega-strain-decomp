@@ -79,7 +79,7 @@ void IeElement_UpdateAnimation(Inst_4173B0* i, float t);
 void IeElement_EvaluateAt(Inst_4173B0* i, float t);
 void IeElement_Fade(Inst_4173B0* i, float t);
 void IeElement_PlayRange(Inst_4173B0* i, float a, float b, int f);
-void func_003E8040(Inst_4173B0* i, V4_4173B0* v);
+void IeElement_SetMatrix(Inst_4173B0* i, V4_4173B0* v);
 }
 
 /* GCC-style volatile asm quad copies (lq/sq only): MW does not CSE across them, so the
@@ -159,7 +159,7 @@ extern "C" bool GuiInterfaceDecorator_OnEvent(Self_4173B0* self, int a1, unsigne
         v.x = (float)p1 + self->base->W() / 2.0f;
         v.z = (float)p2 - self->base->H() / 2.0f;
         GC1(&self->v60, &v);
-        if (self->inst) func_003E8040(self->inst, &self->v30);
+        if (self->inst) IeElement_SetMatrix(self->inst, &self->v30);
         return 1;
     }
     }

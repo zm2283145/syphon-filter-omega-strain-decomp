@@ -82,7 +82,7 @@ extern "C" {
 char* WeaponDb_Get(void* db, int id);
 void* Service_Lookup(void* a, void* b);
 int LosMgr_TraceBullet(void* mgr, Hit* a, Query* b, V* c, const V& d, void* e1, void* e2, int g, unsigned char h, unsigned char i, int j, unsigned char k);
-int func_001B8740(Actor* a);
+int Actor_IsInvulnerable(Actor* a);
 void* Agent_GetSelected(void* a, int b);
 void Stats_Add(void* a, int b, int c);
 void Global_ShockToDeath(Actor* a, int b, int c, float d, float e);
@@ -112,7 +112,7 @@ extern "C" void Melee_ApplyHit(Self* self, Actor* target, int heavy)
         if (Downed(target)) return;
         if (target->w4C != Team()) return;
         if (((unsigned char*)target)[0x346A]) return;
-        if (CtrlBusy(self->actor) && ((unsigned char*)self->actor)[0x14] && !func_001B8740(target))
+        if (CtrlBusy(self->actor) && ((unsigned char*)self->actor)[0x14] && !Actor_IsInvulnerable(target))
             Stats_Add(Agent_GetSelected(D_004FFB50, -1), 6, 1);
         Global_ShockToDeath(target, 0, 1, 0.5f, 10000.0f);
         return;

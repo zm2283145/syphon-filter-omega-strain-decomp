@@ -19,7 +19,7 @@ struct Obj_236BE0 {
     M4b m;
 };
 extern "C" V4b* ParticleInst_ComputeBounds(void* node);
-extern "C" int func_00379B20(void* obj, V4b* a, V4b* b);
+extern "C" int Renderer_TestVisibility(void* obj, V4b* a, V4b* b);
 extern "C" void ParticleInst_Draw(void* node, int arg, M4b* m);
 extern "C" char D_005381F0[];
 static inline void My_236BE0(V4b* a, M4b* b) {
@@ -50,7 +50,7 @@ void ParticleEffectComp_Draw(Obj_236BE0* self) {
         V4b* v = ParticleInst_ComputeBounds(n);
         V4b p0 = Xf_236BE0(self, v[0]);
         V4b p1 = Xf_236BE0(self, v[1]);
-        ParticleInst_Draw(self->node, func_00379B20(D_005381F0, &p0, &p1), &self->m);
+        ParticleInst_Draw(self->node, Renderer_TestVisibility(D_005381F0, &p0, &p1), &self->m);
     }
 }
 

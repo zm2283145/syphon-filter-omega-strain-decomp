@@ -65,7 +65,7 @@ void String_CtorCStr_13B480(void* s);
 void String_Dtor(void* s, int z);
 void func_0013D680(void* d, void* s);
 int Font_GetStringWidth(int font, const char* s, int n);
-void func_003E8040(O45D070* o, M4* m);
+void IeElement_SetMatrix(O45D070* o, M4* m);
 void IeNode_GetRect(V4* out, float f, int x);
 int IeNode_FindNode(int a, void* b);
 #if 0 /* merge_units */
@@ -153,9 +153,9 @@ extern "C" void GuiGameScreen_ShowInteract(W45D070* w, const char* text, unsigne
             { V4* sp3 = &m.r[3]; V4* tp = &t; V4Copy(tp, sp3); }
             { float hw = (width - D_00586228); t.x += hw / 2.0f; }
             V4Copy(&m.r[3], &t);
-            func_003E8040(obj, &m);
+            IeElement_SetMatrix(obj, &m);
         } else {
-            func_003E8040(obj, &D_005861D0);
+            IeElement_SetMatrix(obj, &D_005861D0);
         }
     }
 }

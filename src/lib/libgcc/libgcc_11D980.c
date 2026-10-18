@@ -240,8 +240,8 @@ bp[] = {1.0, 1.5,},
 dp_h[] = { 0.0, 5.84960938e-01,},
 dp_l[] = { 0.0, 1.56322085e-06,};
 extern const float D_004995FC;
-extern float func_0011ED00(float x);
-extern float func_00121760(float x);
+extern float Math_Sqrtf(float x);
+extern float Math_Fabsf(float x);
 extern float scalbnf(float x, int n);
 float Math_PowfKernel(float x, float y)
 {
@@ -299,10 +299,10 @@ float Math_PowfKernel(float x, float y)
 	if(hy==0x40000000) return x*x;
 	if(hy==0x3f000000) {
 	    if(hx>=0)
-	    return func_0011ED00(x);
+	    return Math_Sqrtf(x);
 	}
 
-	ax   = func_00121760(x);
+	ax   = Math_Fabsf(x);
 	if(ix < 0x00800000L||ix==0x3f800000){
 	    z = ax;
 	    if(hy<0) z = one/z;

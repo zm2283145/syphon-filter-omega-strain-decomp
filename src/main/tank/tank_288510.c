@@ -22,7 +22,7 @@ char** func_002888B0(Vec_288510* v, int i);
 char* strchr(const char* s, int c);
 int AgentFile_DecodeName(const unsigned char* in, char* out, int* digit, int max);
 }
-extern "C" unsigned char func_00288510(void)
+extern "C" unsigned char GuiTitleScreen_SavedAgentExists(void)
 {
     Wrap_288510* w = &D_0055A830;
     unsigned char ok = (w->p->a && w->p->b) && w->p->c;

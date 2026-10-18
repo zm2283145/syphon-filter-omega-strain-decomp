@@ -7,6 +7,6 @@
 #include "types.h"
 
 
-char* func_00464880(void) {
+char* GuiMapScreen_GetClassName(void) {
     return "GuiMapScreen";
 }

@@ -75,7 +75,7 @@ static inline void merge_flush_func_002558A0(void) {}
 typedef struct { unsigned char type; char pad[0xCF]; unsigned char flag; char pad2[3]; } Slot2559;
 typedef struct { char pad[0x64]; Slot2559 slots[3]; } Pack2559;
 #pragma opt_rotateloops off
-unsigned char func_002559D0(Pack2559* s, int key) {
+unsigned char Backpack_GetItemSlotFlag(Pack2559* s, int key) {
     Slot2559* p; int i;
     int t;
     t = WeaponInv_SlotOfItem(key); p = s->slots;

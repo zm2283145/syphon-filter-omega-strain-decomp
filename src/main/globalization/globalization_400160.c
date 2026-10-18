@@ -128,7 +128,7 @@ static inline int flagok(__int128 k, int flag) {
     else ok = 0;
     return ok;
 }
-int func_004002B0(KState* s, int step, __int128 key, __int128 cmp, unsigned int start, int idx, int mode, int flag, KOut* out, short* sh)
+int AgentPacking_StepTexture(KState* s, int step, __int128 key, __int128 cmp, unsigned int start, int idx, int mode, int flag, KOut* out, short* sh)
 {
     __int128 K = kpair(0x4C, 0x4C410000LL << 32);
     __int128 m50;

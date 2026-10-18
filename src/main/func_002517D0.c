@@ -29,7 +29,7 @@ extern "C" {
 extern char D_004FFB50[];
 extern char D_004DAE30[];
 extern char D_004A79A8[];
-void func_0036E5D0(void* m);
+void Resource_Construct(void* m);
 void FileMan_Release(void* part, int flags);
 void cMessage_dtor(void* msg, int flags);
 void Event_Send(void* msg, void* target, int flags);
@@ -50,9 +50,9 @@ extern "C" void PickupMenu_CursorNext(Self_2517D0* s)
         act.h24.v = -2;
         act.w20 = 0;
         pa = act.memberA;
-        func_0036E5D0(pa);
+        Resource_Construct(pa);
         pb = act.memberB;
-        func_0036E5D0(pb);
+        Resource_Construct(pb);
         p->id = -1;
         p->mask = -1;
         p->w20 = 0;

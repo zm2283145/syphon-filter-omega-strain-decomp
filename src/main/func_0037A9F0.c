@@ -45,14 +45,14 @@ typedef struct GsCtx37A9F0 {
     Rt37A9F0 rt[6];       /* 0x1068 */
 } GsCtx37A9F0;
 
-extern void func_0037A750(GsCtx37A9F0*);
+extern void Video_FrameFlag8(GsCtx37A9F0*);
 extern void RenderTarget_Release(Rt37A9F0*);
 extern void Renderer_ClearRect(GsCtx37A9F0*, int, int, int*, int, int);
 extern void Display_SetPmode(GsCtx37A9F0*);
 extern void func_00382060(int);
 extern void Vif1Packet_Flip(void*);
 extern void Video_FreeDeferredBuffers(GsCtx37A9F0*, int);
-extern void func_0037B000(GsCtx37A9F0*);
+extern void Video_RollFrameStats(GsCtx37A9F0*);
 extern void Video_BuildFrameClearPacket(GsCtx37A9F0*);
 extern void ListenerList_Update(void*, float);
 extern void func_003820C0(int);
@@ -87,7 +87,7 @@ void Video_BeginFrame(GsCtx37A9F0* c)
     int i;
     unsigned int t;
     if (c->flags & 8) {
-        func_0037A750(c);
+        Video_FrameFlag8(c);
         return;
     }
     for (i = 0; i < 6; i++) {
@@ -148,7 +148,7 @@ void Video_BeginFrame(GsCtx37A9F0* c)
     func_00382060(c->dev);
     Vif1Packet_Flip(D_00537F80);
     Video_FreeDeferredBuffers(c, 0);
-    func_0037B000(c);
+    Video_RollFrameStats(c);
     c->buf ^= 1;
     c->frames++;
     GsCtx_SetBufferRegs(c, c->w, c->h, c->psm, c->fbp[c->buf], c->fbmsk, c->zpsm, c->zbp, c->zmsk, c->field);

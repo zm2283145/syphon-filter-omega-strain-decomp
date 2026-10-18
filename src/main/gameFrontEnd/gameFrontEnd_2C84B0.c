@@ -23,7 +23,7 @@ extern unsigned char D_005723C8;
 extern void SleepThread(void);
 extern void func_0010D0D0(int);
 extern void SuspendThread(int);
-extern void func_002CC260(int, int);
+extern void App_CardWaitPoll(int, int);
 extern O2C84B0* DME_GetLobby(void);
 extern void func_004536B0(O2C84B0* o);
 }
@@ -115,7 +115,7 @@ extern "C" void FrontEnd_SplashThreadMain(int arg)
             if (DivTime() - last >= 10 && !D_00533888) {
                 func_0010D0D0(D_0048C348);
                 SpSave(buf);
-                fp = func_002CC260;
+                fp = App_CardWaitPoll;
                 D_0051EE90 = D_00587B38 = 1;
                 fp(0, 0x3039);
                 unsigned char b;
@@ -208,12 +208,12 @@ void Vec4_Copy(V4_002C8840* d, V4_002C8840* s);
 void GuiBatch_AddVertexColor(V4_002C8840* d, V4_002C8840* s);
 float GuiBatch_AddVertexUV(void);
 V4_002C8840* func_00132000(V4_002C8840* o, float x, float y, float z, float w);
-void func_00370550(void* s);
+void Renderer_FlushPrimitives(void* s);
 void Video_BeginFrame(void* s);
 void func_0036E4B0(void* s, char* name, int a, int b);
 void FileMan_Release(void* s, int a);
 int TexMan_FindOrLoad(void* m, void* s);
-void func_003813A0(void* m, int idx, int a, int b);
+void Tex_Release(void* m, int idx, int a, int b);
 }
 #define D_00539224 (D_00539210.f24)
 #define D_00539228 (D_00539210.f28)
@@ -314,7 +314,7 @@ extern "C" void func_002C8840(char* name)
         D_00539224 = 0;
         Emit_002C8840(V4c_002C8840(-hw, hh, 0.5f, 1.0f), V4c_002C8840(1.0f, 1.0f, 1.0f, 1.0f), V4c_002C8840(0.0f, 0.0f, 1.0f, 0.0f));
         Emit_002C8840(V4c_002C8840(hw, -hh, 0.5f, 1.0f), V4c_002C8840(1.0f, 1.0f, 1.0f, 1.0f), V4c_002C8840(umax, vmax, 1.0f, 0.0f));
-        func_00370550(D_005381F0);
+        Renderer_FlushPrimitives(D_005381F0);
         Video_BeginFrame(D_005381F0);
     }
     D_00538C64--;
@@ -325,7 +325,7 @@ extern "C" void func_002C8840(char* name)
         s->f2F4 = 0;
     }
     D_005392D0 = saved;
-    func_003813A0(D_00539248, idx, 0, 1);
+    Tex_Release(D_00539248, idx, 0, 1);
     FileMan_Release(&str, -1);
 }
 /* merge_units: generate this block's code under its own pragmas */

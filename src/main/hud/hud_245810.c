@@ -18,10 +18,10 @@ int Mem_Free();
 #pragma push /* merge_units */
 typedef struct { char pad[0x6DC]; float a; float b; } B5bObj;
 extern unsigned char D_005721C8;
-extern int func_0042B1A0(int);float func_00245810(B5bObj* o) {
+extern int Net_GetClock(int);float Hud_GetNetworkTime(B5bObj* o) {
     float t;
     if (D_005721C8) {
-        t = (float)func_0042B1A0(0) / 1000.0f;
+        t = (float)Net_GetClock(0) / 1000.0f;
         if (o->b < 0.0f) {
             o->b = t;
             return t;
@@ -39,11 +39,11 @@ static inline void merge_flush_func_00245810(void) {}
 /* merge_units: begin func_00245890 */
 #pragma push /* merge_units */
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
-float func_00245810();
+float Hud_GetNetworkTime();
 
 float Hud_GetMissionTime(int arg0) {
     if (D_005721C8 != 0) {
-        return func_00245810() - F_(arg0, 0x6E0, float);
+        return Hud_GetNetworkTime() - F_(arg0, 0x6E0, float);
     }
     return F_(arg0, 0x6DC, float);
 }

@@ -34,7 +34,7 @@ extern TextPairEntry* D_00587FF8; /* 44-byte entries */
 extern int Loc_GetTextById(int id);
 
 /* Localized text for the second id of entry `index`. */
-int func_00470240(int index) {
+int ItemTable_GetDesc(int index) {
     TextPairEntry* entry;
 
     entry = D_00587FF8 + index;
@@ -42,7 +42,7 @@ int func_00470240(int index) {
 }
 
 /* Localized text for the first id of entry `index`. */
-int func_00470270(int index) {
+int ItemTable_GetName(int index) {
     TextPairEntry* table;
     int id;
 

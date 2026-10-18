@@ -9,7 +9,7 @@
    `.set nomove` reproduces that. The EE soft-float libcalls are aliased to their retail functions. */
 __asm__(".set nomove\n"
         "litodp = func_0011C7A0\n"
-        "dpmul = func_0011C268\n"
+        "dpmul = SoftFloat_DoubleMultiply\n"
         "dpadd = SoftFloat_DoubleAdd\n"
         "dptofp = SoftFloat_DoubleToFloat");
 
@@ -55,7 +55,7 @@ SFtype SoftFloat_S64ToFloat(DItype u)
    `.set nomove` reproduces that. The EE soft-float libcalls are aliased to their retail functions. */
 __asm__(".set nomove\n"
         "dpcmp = SoftFloat_UnpackAndCompare\n"
-        "dpmul = func_0011C268\n"
+        "dpmul = SoftFloat_DoubleMultiply\n"
         "dptoul = func_0011C980\n"
         "__floatdidf = func_0011B7E0\n"
         "dpadd = SoftFloat_DoubleAdd\n"

@@ -2,7 +2,7 @@
 
 typedef struct { char pad[0x40]; char timer[0x2380]; unsigned short ticks; } Obj390;
 
-extern void func_00390940(Obj390* self);
+extern void ActorModel_SwitchBodyPacking(Obj390* self);
 extern void Appearance_RemoveBlankPairs(void* timer);
 extern unsigned short Appearance_GetPairCount(void* timer);
 extern void Appearance_ReorderParts(Obj390* self);
@@ -10,9 +10,9 @@ extern void func_0038E030(Obj390* self);
 extern void ActorModel_Setup(Obj390* self, int flag);
 
 /* Resets the object, restarts its timer and caches the tick count. */
-void func_00390FC0(Obj390* self)
+void ActorModel_SwitchBodies(Obj390* self)
 {
-    func_00390940(self);
+    ActorModel_SwitchBodyPacking(self);
     Appearance_RemoveBlankPairs(self->timer);
     self->ticks = Appearance_GetPairCount(self->timer);
     Appearance_ReorderParts(self);

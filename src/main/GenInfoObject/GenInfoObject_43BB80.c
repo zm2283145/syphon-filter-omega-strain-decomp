@@ -7,6 +7,6 @@
 #include "types.h"
 
 
-char* func_0043BB80(void) {
+char* GuiScrollBarWidget_GetClassName(void) {
     return "GuiScrollBarWidget";
 }

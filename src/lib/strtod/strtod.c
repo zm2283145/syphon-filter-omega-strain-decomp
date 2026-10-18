@@ -1,5 +1,5 @@
 /* newlib 1.9.0 stdlib/strtod.c: _strtod_r, strtod and strtodf. Compiler: EE-GCC 2.96 -O2 -G0. Retail newlib was built with -g. */
-__asm__(".set nomove\n dpadd = SoftFloat_DoubleAdd\n dpsub = func_0011C200\n dpmul = func_0011C268\n dpdiv = func_0011C4F0\n litodp = func_0011C7A0\n dptoli = func_0011C858\n dpcmp = SoftFloat_UnpackAndCompare\n __floatdidf = func_0011B7E0\n __fixdfdi = func_0011BA88\n dptofp = SoftFloat_DoubleToFloat\n");
+__asm__(".set nomove\n dpadd = SoftFloat_DoubleAdd\n dpsub = func_0011C200\n dpmul = SoftFloat_DoubleMultiply\n dpdiv = func_0011C4F0\n litodp = func_0011C7A0\n dptoli = func_0011C858\n dpcmp = SoftFloat_UnpackAndCompare\n __floatdidf = func_0011B7E0\n __fixdfdi = func_0011BA88\n dptofp = SoftFloat_DoubleToFloat\n");
 typedef unsigned int size_t;
 typedef unsigned int __uint32_t;
 typedef int __int32_t;

@@ -12,7 +12,7 @@
 #pragma opt_strength_reduction off
 typedef struct { char pad[0x68]; int type; char pad2[0x64]; int* p; char pad3[0x8]; unsigned char flag; } LObj_c7;
 typedef struct { char pad[0xEC]; int count; LObj_c7** objs; char pad2[0x34]; int* index; } Lift_c7;
-unsigned char func_002141A0(Lift_c7* self) {
+unsigned char cElevatorGOBJ_FloorExtrasClosed(Lift_c7* self) {
     int idx = *self->index;
     unsigned char r = 1;
     int i;
@@ -53,7 +53,7 @@ typedef struct {
 extern F214Ent* func_00172990(void*, int);
 extern int D_004F5468;
 #pragma opt_strength_reduction off
-unsigned char func_00214240(F214Mgr* m)
+unsigned char cElevatorGOBJ_LinksClosed(F214Mgr* m)
 {
     unsigned char result = 1;
     int i;
@@ -97,7 +97,7 @@ static inline int ObjId214310(Obj214310* o) { return o ? o->id : 0; }
 #pragma opt_rotateloops off
 #pragma opt_strength_reduction off
 
-extern "C" unsigned char func_00214310(Lift214310* l)
+extern "C" unsigned char cElevatorGOBJ_TriggerFloorExtras(Lift214310* l)
 {
     unsigned char found = 0;
     int base = l->state->cur * 2;
@@ -157,7 +157,7 @@ static inline int ObjId214470(Obj214470* o) { return o ? o->id : 0; }
 #pragma opt_rotateloops off
 #pragma opt_strength_reduction off
 
-extern "C" unsigned char func_00214470(Lift214470* l)
+extern "C" unsigned char cElevatorGOBJ_TriggerLinks(Lift214470* l)
 {
     unsigned char found = 0;
     int i;

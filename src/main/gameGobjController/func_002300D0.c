@@ -10,7 +10,7 @@ void* Mem_Alloc(int, int, char*, int);
 }
 struct CaBase { char p[0x4C]; int type; };
 struct CaOwner : CaBase { char p50[0x3214]; void* link; };
-extern "C" void func_003D9D30(CaNode* n, void* link);
+extern "C" void Script_LookupResource(CaNode* n, void* link);
 struct CaComp { char p[0x18]; CaNode* node; char p1c[0x14]; CaBase* owner; };
 extern "C" void Component_AttachOwner(CaComp* c, CaBase* o)
 {
@@ -28,7 +28,7 @@ extern "C" void Component_AttachOwner(CaComp* c, CaBase* o)
                     if (n) { n->a = 0; n->b = 0; n->c = -1; }
                     c->node = n;
                 }
-                func_003D9D30(c->node, p->link);
+                Script_LookupResource(c->node, p->link);
             }
         }
     }

@@ -60,7 +60,7 @@ void* Mem_Alloc(int, int, char*, int);
 void FileHal_Dtor(void*,int);
 void func_0036DEC0(void*);
 void FileMan_Release(void*,int);
-void func_0036E5D0(void*);
+void Resource_Construct(void*);
 void FileMan_Open(void*,char*,int);
 void* FileMan_ReadData(void*);
 int FileMan_GetSize(void*);
@@ -73,7 +73,7 @@ void PtrVec_PushBack_330280(void*, char**);
 }
 struct Stream {
  void* file; int size; char hog[0x9C]; void* owned; char* a8; char* ac; int b0; int b4; unsigned char ready; char pad[3];
- Stream() { func_0036E5D0(hog); file=0;size=0; }
+ Stream() { Resource_Construct(hog); file=0;size=0; }
  __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~Stream() {
   func_0036DEC0(hog);
   { void* p=file; if(p) { { AllocGuard g; FileHal_Dtor(p,-1); Mem_Free(0,p,D_004BDC28,0x45); } file=0; } }

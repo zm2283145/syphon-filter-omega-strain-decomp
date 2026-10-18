@@ -10,13 +10,13 @@ typedef struct {
     E4Slot slots[16];
 } E4Obj;
 extern unsigned char D_00535D62;
-extern void func_003767E0(void* a, int b, int c);
+extern void Model_SetPatchBit(void* a, int b, int c);
 void PntLight_Enable(E4Obj* o)
 {
     int i;
     if (!o->b58 && o->n5C) {
         for (i = 0; i < 16; i++) {
-            E4Slot* p = &o->slots[i]; if (p->a) func_003767E0(p->a, p->b, 1);
+            E4Slot* p = &o->slots[i]; if (p->a) Model_SetPatchBit(p->a, p->b, 1);
         }
         o->b58 = 1;
     }

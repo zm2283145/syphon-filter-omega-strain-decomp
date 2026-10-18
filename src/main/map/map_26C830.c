@@ -13,19 +13,19 @@
 typedef struct { char pad[0x24]; int state; } Sub26C8;
 typedef struct { Sub26C8* sub; } Self26C8;
 typedef struct { char pad[0x10]; int kind; } Obj26C8;
-extern Obj26C8* func_00272AC0(Sub26C8* s);
-extern void func_00272AD0(Sub26C8* s, int v);
-extern void func_0026C570(Self26C8* s);
-extern void func_0026C3B0(Self26C8* s);
+extern Obj26C8* HudMarkers_GetHighlight(Sub26C8* s);
+extern void HudMarkers_SetHighlight(Sub26C8* s, int v);
+extern void HudMap_Commit(Self26C8* s);
+extern void HudMap_NextMarker(Self26C8* s);
 void func_0026C830(Self26C8* s, Obj26C8* o) {
     unsigned char ok = 1;
     if (!(o->kind == 1 || o->kind == 2)) ok = 0;
-    if (ok && o == func_00272AC0(s->sub)) {
+    if (ok && o == HudMarkers_GetHighlight(s->sub)) {
         if (s->sub->state == 1) {
-            func_00272AD0(s->sub, 0);
-            func_0026C570(s);
+            HudMarkers_SetHighlight(s->sub, 0);
+            HudMap_Commit(s);
         } else {
-            func_0026C3B0(s);
+            HudMap_NextMarker(s);
         }
     }
 }
@@ -48,21 +48,21 @@ extern unsigned char D_005721C8;
 extern int D_004FFC2C;
 Hum_26C8D0* Object_LookupById(M_26C8D0* id);
 #if 0 /* merge_units */
-int func_00272AC0(int a);
+int HudMarkers_GetHighlight(int a);
 #endif /* merge_units */
-#define func_00272AC0(a0) ((int)func_00272AC0((Sub26C8 *)(a0))) /* merge_units */
+#define HudMarkers_GetHighlight(a0) ((int)HudMarkers_GetHighlight((Sub26C8 *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-void func_00272AD0(int a, M_26C8D0* m);
+void HudMarkers_SetHighlight(int a, M_26C8D0* m);
 #endif /* merge_units */
-#define func_00272AD0(a0, a1) (func_00272AD0((Sub26C8 *)(a0), (int)(a1))) /* merge_units */
+#define HudMarkers_SetHighlight(a0, a1) (HudMarkers_SetHighlight((Sub26C8 *)(a0), (int)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
-void func_0026C570(S_26C8D0* s);
+void HudMap_Commit(S_26C8D0* s);
 #endif /* merge_units */
-#define func_0026C570(a0) (func_0026C570((Self26C8 *)(a0))) /* merge_units */
+#define HudMap_Commit(a0) (HudMap_Commit((Self26C8 *)(a0))) /* merge_units */
 
-void func_002C9170(Buf_26C8D0* b, int key, int c);
+void Hud_FormatPlayerCalloutName(Buf_26C8D0* b, int key, int c);
 void Hud_ShowCallout(int a, M_26C8D0* m, char* text, int n, int b, int c, float f0, float f1);
 void func_0026C8D0(S_26C8D0* s, M_26C8D0* m);
 }
@@ -73,9 +73,9 @@ void func_0026C8D0(S_26C8D0* s, M_26C8D0* m)
 {
     bool b = m->f10 == 1 || m->f10 == 2;
     if (b) {
-        if (!func_00272AC0(s->f0)) {
-            func_00272AD0(s->f0, m);
-            func_0026C570(s);
+        if (!HudMarkers_GetHighlight(s->f0)) {
+            HudMarkers_SetHighlight(s->f0, m);
+            HudMap_Commit(s);
         }
     } else if (m->f10 == 0 && (*s->f8)->b60) {
         Hum_26C8D0* h = Object_LookupById(m);
@@ -84,15 +84,15 @@ void func_0026C8D0(S_26C8D0* s, M_26C8D0* m)
             if (id >= 0 && id < 4) {
                 Buf_26C8D0 buf;
                 buf.b0 = 0;
-                func_002C9170(&buf, id, 1);
+                Hud_FormatPlayerCalloutName(&buf, id, 1);
                 Hud_ShowCallout(D_004FFC2C, m, buf.text, 4, 1, 0, -1.0f, -1.0f);
             }
         }
     }
 }
-#undef func_00272AC0 /* merge_units */
-#undef func_00272AD0 /* merge_units */
-#undef func_0026C570 /* merge_units */
+#undef HudMarkers_GetHighlight /* merge_units */
+#undef HudMarkers_SetHighlight /* merge_units */
+#undef HudMap_Commit /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0026C8D0(void) {}
 #pragma pop /* merge_units */

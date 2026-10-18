@@ -30,8 +30,8 @@ SoundEv_ECB0* SoundEvent_Ctor(SoundEv_ECB0* ev, Act_ECB0* act, unsigned char fla
     p = &ev->req;
     p->voiceId = -2;
     p->voice = 0;
-    func_0036E5D0(&p->a);
-    func_0036E5D0(&p->b);
+    Resource_Construct(&p->a);
+    Resource_Construct(&p->b);
     Req_Init(p, -1, -1, 0, 0);
     p->x186 = 0;
     ev->evflags = flags;

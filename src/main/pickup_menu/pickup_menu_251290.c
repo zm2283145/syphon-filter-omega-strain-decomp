@@ -83,12 +83,12 @@ extern "C" {
 extern char D_004FFB50[];
 extern char D_004DAE30[];
 extern char D_004A79A8[];
-void func_0036E5D0(void* m);
+void Resource_Construct(void* m);
 void FileMan_Release(void* part, int flags);
 void cMessage_dtor(void* msg, int flags);
 void Event_Send(void* msg, void* target, int flags);
 void SoundAction_CtorVoice(void* action, int kind, char* name, int a, int b);
-int func_00254CA0(int a, int b, int c);
+int Backpack_CycleItem(int a, int b, int c);
 void EffectMsg_WrapRequest(Msg_251370* msg, void* action);
 }
 #pragma push
@@ -99,7 +99,7 @@ extern "C" void PickupMenu_OnLeft(Self_251370* s)
     int v;
     char* pb;
     char* pa;
-    v = func_00254CA0(s->e[0].a0, s->e[s->cur].v, 1);
+    v = Backpack_CycleItem(s->e[0].a0, s->e[s->cur].v, 1);
     if (v != s->e[s->cur].v) {
         Act_251370 act;
         Msg_251370 m;
@@ -107,9 +107,9 @@ extern "C" void PickupMenu_OnLeft(Self_251370* s)
         act.h24.v = -2;
         act.w20 = 0;
         pa = act.memberA;
-        func_0036E5D0(pa);
+        Resource_Construct(pa);
         pb = act.memberB;
-        func_0036E5D0(pb);
+        Resource_Construct(pb);
         p->id = -1;
         p->mask = -1;
         p->w20 = 0;
@@ -177,7 +177,7 @@ void EffectMsg_WrapRequest(Msg_251500* msg, void* action);
 #pragma opt_propagation off
 extern "C" void PickupMenu_OnRight(Self_251500* s)
 {
-    int v = func_00254CA0(s->e[0].a0, s->e[s->cur].v, 0);
+    int v = Backpack_CycleItem(s->e[0].a0, s->e[s->cur].v, 0);
     if (v != s->e[s->cur].v) {
         Act_251500 act;
         Msg_251500 m;
@@ -188,9 +188,9 @@ extern "C" void PickupMenu_OnRight(Self_251500* s)
         act.h24.v = -2;
         act.w20 = 0;
         pa = act.memberA;
-        func_0036E5D0(pa);
+        Resource_Construct(pa);
         pb = act.memberB;
-        func_0036E5D0(pb);
+        Resource_Construct(pb);
         p->id = -1;
         p->mask = -1;
         p->w20 = 0;
@@ -268,9 +268,9 @@ extern "C" void PickupMenu_CursorPrev(Self_251690* s)
         act.h24.v = -2;
         act.w20 = 0;
         pa = act.memberA;
-        func_0036E5D0(pa);
+        Resource_Construct(pa);
         pb = act.memberB;
-        func_0036E5D0(pb);
+        Resource_Construct(pb);
         p->id = -1;
         p->mask = -1;
         p->w20 = 0;

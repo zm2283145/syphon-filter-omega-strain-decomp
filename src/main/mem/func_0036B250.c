@@ -9,9 +9,9 @@ extern "C" {
 extern Heap36B250 D_00533CB0[];
 extern char D_004BBE50[];
 void Mem_HeapFree(Heap36B250* heap, void* p, char* file, int line);
-void func_0036B250(int h);
+void Heap_ReleaseSlot(int h);
 }
-void func_0036B250(int h)
+void Heap_ReleaseSlot(int h)
 {
     if (D_00533CB0[h].id != -1) {
         char* p = D_00533CB0[h].blk;

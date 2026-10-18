@@ -15,7 +15,7 @@ int NetGame_InitLocalSlot(int *, int);
 int func_002EC460(int);
 int func_002EC878(int, int);
 int lgAudStopRecording(int);
-int func_0042B1A0(int);
+int Net_GetClock(int);
 int func_0042BF90();
 int func_0042C1D0();
 int lgAudClose(int);
@@ -55,14 +55,14 @@ void func_00437BF0(void) {
             if (lgAudStopRecording(D_00497548) == 0x80000006) {
                 D_00582B88 = 0;
             }
-            D_00582D08 = func_0042B1A0(1) + 0x7D0;
+            D_00582D08 = Net_GetClock(1) + 0x7D0;
         }
         D_00583860 = 0;
         if (D_00582B88 != 0) {
             if (lgAudStopRecording(D_00497548) == 0x80000006) {
                 D_00582B88 = 0;
             }
-            D_00582D08 = func_0042B1A0(1) + 0x7D0;
+            D_00582D08 = Net_GetClock(1) + 0x7D0;
         }
         lgAudStopPlayback(D_00497548);
         D_00582B88 = 0;
@@ -196,9 +196,9 @@ void func_002EB650(P_437F90** out, void* s);
 #define func_002EB650(a0, a1) ((void)func_002EB650((void * *)(a0), (int)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
-int func_0042B1A0(int v);
+int Net_GetClock(int v);
 #endif /* merge_units */
-#define func_0042B1A0(a0) (func_0042B1A0((a0))) /* merge_units */
+#define Net_GetClock(a0) (Net_GetClock((a0))) /* merge_units */
 
 int lgAudRead(int h, int mode, void* buf, int* len);
 int func_0042BFD0(char* in, char* out, char* flag);
@@ -263,7 +263,7 @@ void func_00437F90(Pkt_437F90* pkt)
 {
     char flag;
     int len;
-    int t0 = func_0042B1A0(1);
+    int t0 = Net_GetClock(1);
     if (pkt && D_00582B88 && D_00497540) {
         char* dst;
         unsigned char t;
@@ -296,7 +296,7 @@ void func_00437F90(Pkt_437F90* pkt)
                 D_00582D48 = D_00582D48 + (int)len;
             }
             if (D_00582D48 < 0x140) {
-                D_00582D38 = func_0042B1A0(1) - t0;
+                D_00582D38 = Net_GetClock(1) - t0;
                 return;
             }
             {
@@ -309,11 +309,11 @@ void func_00437F90(Pkt_437F90* pkt)
         pkt->len = D_00582D40;
         D_00582D40 = 0;
     }
-    D_00582D38 = func_0042B1A0(1) - t0;
+    D_00582D38 = Net_GetClock(1) - t0;
 }
 #undef D_00583870 /* merge_units */
 #undef D_00583860 /* merge_units */
 #undef func_002EB650 /* merge_units */
-#undef func_0042B1A0 /* merge_units */
+#undef Net_GetClock /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00437F90 */

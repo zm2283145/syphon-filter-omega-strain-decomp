@@ -36,7 +36,7 @@ int* func_001ADFE0(int* self, int value) {
 }
 
 /* Store a Vec4 at +0x08 and set the "valid" byte at +0x05. */
-char* func_001ADFF0(char* self, Vec4* v) {
+char* Actor_SetMotionOverride(char* self, Vec4* v) {
     Vec4* dst = (Vec4*)(self + 8);
 
     dst->x = v->x;

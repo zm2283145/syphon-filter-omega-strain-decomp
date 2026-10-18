@@ -88,7 +88,7 @@ static inline void merge_flush_func_001856D0(void) {}
 #pragma cplusplus on
 extern "C" {
 int func_003FA780(int* a, unsigned char* flag, void** p);
-void func_002C6B70(void* p, int a);
+void Coop_CreatePartnerActor(void* p, int a);
 void func_002C6690(void* p, int a);
 }
 extern "C" void func_00185840(void)
@@ -97,7 +97,7 @@ extern "C" void func_00185840(void)
     void* p;
     int a;
     while (func_003FA780(&a, &flag, &p)) {
-        if (flag) func_002C6B70(p, a);
+        if (flag) Coop_CreatePartnerActor(p, a);
         else func_002C6690(p, a);
         {
             void* q = p;

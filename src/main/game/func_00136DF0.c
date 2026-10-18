@@ -46,7 +46,7 @@ void func_001C3B00(void* p);
 void func_00136DA0(Guard_36DF0* g);
 void func_001378C0(void* p, int f);
 void func_0012F530(Guard_36DF0* g, int f);
-void func_00272920(void* p, int f);
+void TremorList_Free(void* p, int f);
 void func_00147390(void* p, int f);
 void func_00336460(void* p, int f);
 void func_00136CD0(World_36DF0* w);
@@ -112,7 +112,7 @@ extern "C" World_36DF0* World_Destruct(World_36DF0* self, short del)
             Mem_Free(0, q, D_0049A890, 0xDB);
             func_0012F530(&g, -1);
         }
-        DELETE_36DF0(self->p8C, func_00272920, 0xDE)
+        DELETE_36DF0(self->p8C, TremorList_Free, 0xDE)
         {
             void* q = self->p1E0;
             AllocGuard g;

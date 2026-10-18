@@ -11,7 +11,7 @@ typedef struct HandleHolder {
     int* handle;
 } HandleHolder;
 
-/* Owner of a handle plus 14 slots released with func_00272280 (>= 0x3C bytes). */
+/* Owner of a handle plus 14 slots released with IeScreen_RemoveElementIfSet (>= 0x3C bytes). */
 typedef struct SlotTable14 {
     int* handle;     /* 0x00 */
     int slots[14];   /* 0x04 */
@@ -199,7 +199,7 @@ typedef struct IdFlag {
     char flag;             /* 0x04 */
 } IdFlag;
 
-/* Object cleared by func_00260970: two flag bytes, an int and a float rectangle (0x18 bytes). */
+/* Object cleared by VisionFxTimer_Reset: two flag bytes, an int and a float rectangle (0x18 bytes). */
 typedef struct Unk260940 {
     unsigned char unk00;   /* 0x00 */
     unsigned char unk01;   /* 0x01 */
@@ -249,7 +249,7 @@ typedef struct Unk489738 {
     int unk0C;             /* 0x0C */
 } Unk489738;
 
-/* Object with fields cleared by func_0026C130. */
+/* Object with fields cleared by HudMap_Reset. */
 typedef struct Unk26C130 {
     char pad00[0x60];
     int unk60;             /* 0x60 */
@@ -265,7 +265,7 @@ typedef struct MotionSelNode {
     int pair;              /* 0x04: copied by MotionGroup_CopyPair (size unknown) */
 } MotionSelNode;
 
-/* Object whose word at +0x3C is returned by func_00272AC0. */
+/* Object whose word at +0x3C is returned by HudMarkers_GetHighlight. */
 typedef struct Unk272AC0 {
     char pad00[0x3C];
     int unk3C;             /* 0x3C */

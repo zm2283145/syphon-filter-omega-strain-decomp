@@ -40,15 +40,15 @@ extern __int128 StringPool_MakeKey(void* p);
 extern int AgentData_IsLevelDone(void* agent, __int128 v);
 extern void* Gui_GetScreenStack(void);
 extern void GuiWidget_SendEvent(void* self, void* mgr, int a, int b, int c);
-extern void func_003569F0(void* self, char* s, int a, int idx, int b, int c);
-void func_0034F940(void* self, int idx)
+extern void GuiPersonnelScreen_OpenMenu(void* self, char* s, int a, int idx, int b, int c);
+void GuiMissionStatistics_Select(void* self, int idx)
 {
     void* p = idx <= 16 ? D_0048C160[idx] : 0;
     if (p) {
         void* ag = Agent_GetSelected(D_004FFB50, -1);
         if (AgentData_IsLevelDone(ag, StringPool_MakeKey(p))) {
             GuiWidget_SendEvent(self, Gui_GetScreenStack(), 0x10, 1, 0);
-            func_003569F0(self, "CSUBMENU", 6, idx, 0, 0);
+            GuiPersonnelScreen_OpenMenu(self, "CSUBMENU", 6, idx, 0, 0);
             return;
         }
     }
@@ -65,15 +65,15 @@ void func_0034F940(void* self, int idx)
  */
 
 
-extern int func_00356B30(GuiMissionStatistics* self, int a1, int msg, int value);
+extern int GuiPersonnelScreen_HandleEvent(GuiMissionStatistics* self, int a1, int msg, int value);
 
-/* GuiMissionStatistics message handler (vtable slot 13): 0x3000 stores `value`, everything else goes to func_00356B30. */
-int func_0034FA40(GuiMissionStatistics* self, int a1, int msg, int value) {
+/* GuiMissionStatistics message handler (vtable slot 13): 0x3000 stores `value`, everything else goes to GuiPersonnelScreen_HandleEvent. */
+int GuiMissionStatistics_HandleEvent(GuiMissionStatistics* self, int a1, int msg, int value) {
     if ((msg & 0xFFFF) == 0x3000) {
         self->unk80 = value;
         return 1;
     }
-    return func_00356B30(self, a1, msg, value);
+    return GuiPersonnelScreen_HandleEvent(self, a1, msg, value);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0034FA40 */
@@ -87,10 +87,10 @@ void* Gui_GetScreenList(void);
 void* Gui_GetScreenStack(void);
 int GuiManager_FindOrLoad(void* mgr, char* a, char* b);
 void GuiStack_SwapScreens(void* mgr, void* self, int snd);
-bool func_00356BE0(void* self, E34FA80* e);
-bool func_0034FA80(void* self, E34FA80* e);
+bool GuiPersonnelScreen_HandleInput(void* self, E34FA80* e);
+bool GuiMissionStatistics_HandleInput(void* self, E34FA80* e);
 }
-bool func_0034FA80(void* self, E34FA80* e)
+bool GuiMissionStatistics_HandleInput(void* self, E34FA80* e)
 {
     bool b = e->a0 == 1 && e->a2 == 0 && e->a8 == 0x10 && e->a6 == 0;
     if (b) {
@@ -98,7 +98,7 @@ bool func_0034FA80(void* self, E34FA80* e)
         GuiStack_SwapScreens(Gui_GetScreenStack(), self, s);
         return 1;
     }
-    return func_00356BE0(self, e);
+    return GuiPersonnelScreen_HandleInput(self, e);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0034FA80 */
@@ -111,10 +111,10 @@ bool func_0034FA80(void* self, E34FA80* e)
  */
 
 
-extern int func_0041EBF0(GuiMissionStatistics*);   /* GuiWidget implementation */
+extern int GuiWidget_BaseSleep(GuiMissionStatistics*);   /* GuiWidget implementation */
 
 int func_0034FB40(GuiMissionStatistics* self) {
-    return func_0041EBF0(self);
+    return GuiWidget_BaseSleep(self);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0034FB40 */
@@ -122,13 +122,13 @@ int func_0034FB40(GuiMissionStatistics* self) {
 /* merge_units: begin func_0034FB50 */
 #pragma push /* merge_units */
 typedef struct { char pad[0x6C]; void* a6C; char pad70[0x10]; int a80; } S34FB50;
-extern void func_0034F3B0(S34FB50* o);
-extern void func_00356C70(S34FB50* o);
+extern void GuiMissionStatistics_Refresh(S34FB50* o);
+extern void GuiPersonnelScreen_Wake(S34FB50* o);
 extern void GuiArrayWidget_Select(void* p, int a, int b);
-void func_0034FB50(S34FB50* o)
+void GuiMissionStatistics_Wake(S34FB50* o)
 {
-    func_0034F3B0(o);
-    func_00356C70(o);
+    GuiMissionStatistics_Refresh(o);
+    GuiPersonnelScreen_Wake(o);
     if (o->a6C) GuiArrayWidget_Select(o->a6C, 0, o->a80);
 }
 #pragma pop /* merge_units */

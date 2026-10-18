@@ -16,7 +16,7 @@ int Mem_Free();
 
 extern "C" {
 void* Mem_Alloc(int, int, char*, int);
-void* func_00234BB0(void* self, int n);
+void* ParticleDefs_SlotForId(void* self, int n);
 extern char D_0053B544[];
 extern char D_004BC5D0[];
 }
@@ -88,7 +88,7 @@ extern "C" Node3A26A0* ParticleEmitter_SpawnChildren(Mgr3A26A0* mgr, Node3A26A0*
     bool after;
     bool seen;
 
-    d = *(Desc3A26A0**)func_00234BB0(D_0053B544, name);
+    d = *(Desc3A26A0**)ParticleDefs_SlotForId(D_0053B544, name);
     after = 0;
     if (d->b4 == 1) {
         t = New3A26A0(ins, d, a3, f);
@@ -449,7 +449,7 @@ extern "C" TracerTC* Tracer_Create(TracerTC* self, int name, int a3, float f)
     self->tail.next = (NodeTC*)tl;
     self->tail.prev = (NodeTC*)hd;
     self->count = 0;
-    self->desc = *(DescTC**)func_00234BB0(D_0053B544, name);
+    self->desc = *(DescTC**)ParticleDefs_SlotForId(D_0053B544, name);
     if (self->desc->b4 == 1) {
         t = New1TC(self, a3);
     } else if (name == D_0053B5A0) {

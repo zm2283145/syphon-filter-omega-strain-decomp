@@ -44,6 +44,6 @@ void* func_0043D620(SsoString* str, const char* first, const char* last)
 
 /* Factory: allocate and construct. */
 extern "C" { char D_004C00A0[] = "guiWidget.hh"; }
-DEFINE_GUARDED_NEW_CTOR(func_0043D670, 0x80, D_004C00A0, func_0043CB20)
+DEFINE_GUARDED_NEW_CTOR(func_0043D670, 0x80, D_004C00A0, GuiBitmapWidget_ctor)
 #pragma pop /* merge_units */
 /* merge_units: end func_0043D670 */

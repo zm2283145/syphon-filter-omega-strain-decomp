@@ -97,7 +97,7 @@ struct V2C9C80 { virtual void v0(int f); virtual int v1(); virtual int v2(); vir
 struct S2C9C80 { char pad[0x260]; V2C9C80* p260; };
 extern "C" {
 extern char D_004ACF10[];
-void func_0040F540(void);
+void World_ClearPendingIfLoaded(void);
 }
 static inline void Del2C9C80(V2C9C80* o, int line)
 {
@@ -113,7 +113,7 @@ extern "C" void func_002C9C80(S2C9C80* s, int flag)
             Del2C9C80(p, 0x653);
             s->p260 = 0;
         } else {
-            func_0040F540();
+            World_ClearPendingIfLoaded();
         }
     }
 }

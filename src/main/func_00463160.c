@@ -17,7 +17,7 @@ Ui_463160* Gui_GetScreenStack(void);
 void* Gui_GetScreenList(void);
 void* GuiManager_FindOrLoad(void* a, char* b, char* c);
 void GuiStack_SwapScreens(void* ui, S_463160* self, void* pg);
-int func_0035AEC0(S_463160* self, Ev_463160* ev);
+int GuiScoresEquip_HandleInput(S_463160* self, Ev_463160* ev);
 }
 static inline unsigned char Down_463160(Ev_463160* e)
 {
@@ -40,7 +40,7 @@ static inline unsigned char Press_463160(Ev_463160* e, unsigned int b)
         r = 1;
     return r;
 }
-extern "C" int func_00463160(S_463160* self, Ev_463160* ev)
+extern "C" int GuiEndGameStatistics_HandleInput(S_463160* self, Ev_463160* ev)
 {
     if (Press_463160(ev, 0x800))
         return 1;
@@ -59,5 +59,5 @@ extern "C" int func_00463160(S_463160* self, Ev_463160* ev)
             return 1;
         }
     }
-    return func_0035AEC0(self, ev);
+    return GuiScoresEquip_HandleInput(self, ev);
 }

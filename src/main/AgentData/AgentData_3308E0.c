@@ -70,7 +70,7 @@ void func_0032E3E0(E309C0** out, void* t, int* raw);
 
 }
 static inline bool Neq309C0(E309C0* a, E309C0* b) { return !(a == b); }
-extern "C" int func_003309C0(__int128 key)
+extern "C" int Awards_FindLevelRow(__int128 key)
 {
     E309C0* b;
     E309C0* e;
@@ -218,7 +218,7 @@ extern Pair30C30* D_00532B98;
 static inline Lookup30C30* Entry30C30(int i) { return &D_00532AF8[i]; }
 
 /* Finds the table entry whose name matches and returns one of its two paired values. */
-int func_00330C30(void* name, int second)
+int Awards_GetParTime(void* name, int second)
 {
     int count = D_00532AF4;
     int i;
@@ -344,7 +344,7 @@ extern void AgentData_Reset(void);
 extern int func_00334780(void);
 extern void func_00281E90(char* s, int n);
 extern void awards_SetAwardsAndBonuses(void* p, int a, int b);
-extern void func_00335D50(void* p, int a);
+extern void AgentData_StartLevel(void* p, int a);
 static inline short R16_003314F0(void) { unsigned char lo = *D_005061D0++; unsigned char hi = *D_005061D0++; return lo + (hi << 8); }
 static inline int R32_003314F0(void) { unsigned short lo = R16_003314F0(); return lo + ((unsigned short)R16_003314F0() << 16); }
 static inline float RF_003314F0(void) { int i = R32_003314F0(); return *(float*)&i; }
@@ -374,7 +374,7 @@ void func_003314F0(S_003314F0* p, int awards) {
         p->flag = c != 0;
     }
     if (awards) awards_SetAwardsAndBonuses(p, 0, 0);
-    else func_00335D50(p, 0);
+    else AgentData_StartLevel(p, 0);
     p->done = 1;
 }
 #pragma pop

@@ -65,8 +65,8 @@ typedef struct {
 } Self_C390;
 typedef struct { char p0[0x10]; int id; } Arg_C390;
 
-extern void func_0032B2D0(Self_C390* self, int v);
-extern void func_0032B5F0(Self_C390* self, unsigned int flags);
+extern void GuiKeyboard_Close(Self_C390* self, int v);
+extern void GuiKeyboard_Relabel(Self_C390* self, unsigned int flags);
 #if 0 /* merge_units */
 extern int GuiKeyboard_GetModifierIndex(Self_C390* self, Item_C390* it);
 #endif /* merge_units */
@@ -113,7 +113,7 @@ static inline unsigned char Remap(Self_C390* o, Item_C390* it)
 int GuiKeyboard_HandleEvent(Self_C390* self, Arg_C390* arg, unsigned short msg, int a3, int param)
 {
     if (msg == 0x2000) {
-        func_0032B2D0(self, 0);
+        GuiKeyboard_Close(self, 0);
         return 1;
     }
     if (msg == 2) {
@@ -131,21 +131,21 @@ int GuiKeyboard_HandleEvent(Self_C390* self, Arg_C390* arg, unsigned short msg, 
             case 0x3EC:
             case 0x428:
                 if (self->b9C) {
-                    func_0032B5F0(self, (self->flags & 4) ? self->flags & ~4 : self->flags | 4);
+                    GuiKeyboard_Relabel(self, (self->flags & 4) ? self->flags & ~4 : self->flags | 4);
                 } else {
                     ok = 0;
                 }
                 break;
             case 0x39:
-                func_0032B5F0(self, (self->flags & 2) ? self->flags & ~2 : self->flags | 2);
+                GuiKeyboard_Relabel(self, (self->flags & 2) ? self->flags & ~2 : self->flags | 2);
                 break;
             case 0x3EA:
             case 0x408:
                 if (self->flags & 1) {
-                    func_0032B5F0(self, self->flags & ~1);
+                    GuiKeyboard_Relabel(self, self->flags & ~1);
                     self->bE1 = 0;
                 } else {
-                    func_0032B5F0(self, self->flags | 1);
+                    GuiKeyboard_Relabel(self, self->flags | 1);
                     self->bE1 = 1;
                 }
                 break;
@@ -154,7 +154,7 @@ int GuiKeyboard_HandleEvent(Self_C390* self, Arg_C390* arg, unsigned short msg, 
                 self->cur = 0;
                 break;
             case 0x28:
-                func_0032B2D0(self, 1);
+                GuiKeyboard_Close(self, 1);
                 break;
             case 0x4F:
                 GuiTextEditWidget_ClampCursor(self->menu, self->menu->sel + 1);
@@ -182,7 +182,7 @@ int GuiKeyboard_HandleEvent(Self_C390* self, Arg_C390* arg, unsigned short msg, 
                 }
                 break;
             }
-            if (prev != self->cur) func_0032B5F0(self, self->flags);
+            if (prev != self->cur) GuiKeyboard_Relabel(self, self->flags);
             if (self->menu && found && ch != 0xFF) {
                 if ((unsigned char)GuiKeyboard_IsCharAllowed(self, ch) && StrSize(&self->menu->name) < self->max) {
                     char buf[2];
@@ -193,7 +193,7 @@ int GuiKeyboard_HandleEvent(Self_C390* self, Arg_C390* arg, unsigned short msg, 
                 } else {
                     ok = 0;
                 }
-                if (self->bE1) func_0032B5F0(self, (self->flags & 1) ? self->flags & ~1 : self->flags | 1);
+                if (self->bE1) GuiKeyboard_Relabel(self, (self->flags & 1) ? self->flags & ~1 : self->flags | 1);
                 self->bE1 = 0;
             }
             if (ok) {
@@ -227,9 +227,9 @@ extern unsigned char D_0055A701;
 extern Kb_32C860 D_0055A700;
 extern void GuiWidget_Update(Self_32C860* self);
 #if 0 /* merge_units */
-extern void func_0032B5F0(Self_32C860* self, unsigned int flags);
+extern void GuiKeyboard_Relabel(Self_32C860* self, unsigned int flags);
 #endif /* merge_units */
-#define func_0032B5F0(a0, a1) (func_0032B5F0((Self_C390 *)(a0), (a1))) /* merge_units */
+#define GuiKeyboard_Relabel(a0, a1) (GuiKeyboard_Relabel((Self_C390 *)(a0), (a1))) /* merge_units */
 
 extern void GuiKeyboard_RefreshSpecialKeys(Self_32C860* self);
 
@@ -262,25 +262,25 @@ void GuiKeyboard_Update(Self_32C860* self)
             }
         }
         self->mods = f;
-        if (changed) func_0032B5F0(self, self->flags);
+        if (changed) GuiKeyboard_Relabel(self, self->flags);
     }
     GuiKeyboard_RefreshSpecialKeys(self);
 }
-#undef func_0032B5F0 /* merge_units */
+#undef GuiKeyboard_Relabel /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0032C860 */
 
 /* merge_units: begin func_0032C9A0 */
 #pragma push /* merge_units */
 typedef struct { char pad[0x68]; unsigned int flags; } Mgr;
-extern void func_0041EBF0(void* self);
+extern void GuiWidget_BaseSleep(void* self);
 extern Mgr* Gui_GetScreenStack(void);
 extern void GuiWidget_SendEvent(void* self, Mgr* mgr, int a, int b, int c);
 
 /* Runs base setup, clears manager flag 0x40, then registers self with the manager. */
-void func_0032C9A0(void* self)
+void GuiKeyboard_Sleep(void* self)
 {
-    func_0041EBF0(self);
+    GuiWidget_BaseSleep(self);
     Gui_GetScreenStack()->flags &= ~0x40;
     GuiWidget_SendEvent(self, Gui_GetScreenStack(), 0x10, 3, 0);
 }

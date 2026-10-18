@@ -8,7 +8,7 @@
 
 /* SoundMgr vtable */
 extern void SoundMgr_OnMessage();
-extern void func_0012ECE0();
+extern void GObj_GetID();
 extern void func_0012ECF0();
 extern void func_0012ED00();
 extern void func_0012ED10();
@@ -20,7 +20,7 @@ extern void func_001383D0();
 extern void func_001CA750();
 extern void Receiver_GetScriptTypeKey();
 extern void Receiver_ScriptDispatch();
-void * const D_004DACB0[16] = { (void*)0x0, (void*)0x0, (void*)func_001CA750, (void*)SoundMgr_OnMessage, (void*)func_0012ECE0, (void*)func_0012ECF0, (void*)func_001383D0, (void*)func_0012ED00, (void*)func_0012ED10, (void*)func_0012ED20, (void*)func_0012ED30, (void*)func_0012ED40, (void*)func_0012ED50, (void*)Receiver_GetScriptTypeKey, (void*)Receiver_ScriptDispatch, (void*)0x0 };
+void * const D_004DACB0[16] = { (void*)0x0, (void*)0x0, (void*)func_001CA750, (void*)SoundMgr_OnMessage, (void*)GObj_GetID, (void*)func_0012ECF0, (void*)func_001383D0, (void*)func_0012ED00, (void*)func_0012ED10, (void*)func_0012ED20, (void*)func_0012ED30, (void*)func_0012ED40, (void*)func_0012ED50, (void*)Receiver_GetScriptTypeKey, (void*)Receiver_ScriptDispatch, (void*)0x0 };
 /* receiver registration data */
 extern char D_004F2CC0[];
 extern void* Receiver_Construct(void* self, void* info);

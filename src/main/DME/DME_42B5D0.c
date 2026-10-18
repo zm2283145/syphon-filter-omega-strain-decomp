@@ -2,7 +2,7 @@
 extern "C" {
 long long SoftFloat_FloatToDouble(float f);
 int func_0011C200(int a, long long b);
-long long func_0011C268(long long a, long long b);
+long long SoftFloat_DoubleMultiply(long long a, long long b);
 int func_0011C7A0(int v);
 unsigned int func_0011C858(int v);
 void func_002EBEC8(int* out, int a);
@@ -31,7 +31,7 @@ static inline unsigned int Now_42B5D0(void)
 {
     int v = D_00572538;
     int n = func_0011C7A0(v);
-    return func_0011C858(func_0011C200(n, func_0011C268((long long)0x3FB00000 << 0x20, SoftFloat_FloatToDouble((float)v))));
+    return func_0011C858(func_0011C200(n, SoftFloat_DoubleMultiply((long long)0x3FB00000 << 0x20, SoftFloat_FloatToDouble((float)v))));
 }
 
 static inline bool HasRoom_42B5D0(void)

@@ -9,7 +9,7 @@
 extern "C" {
 /*fc*/
 int Mem_Free(...);                         
-int func_003813A0(...);                       
+int Tex_Release(...);                       
 int operator_delete(...);                          
 extern char D_004BC5D0;
 extern char D_004DFAD8;
@@ -32,7 +32,7 @@ extern "C" char * ShatterEmitter_Destroy(char * arg0, long long arg1) {
         F_(arg0, 0x0, int) = (int)(&(*(char*)D_004DFB10));
         temp_a1 = F_(arg0, 0x170, int);
         if (temp_a1 >= 0) {
-            func_003813A0(D_00539248, temp_a1, 1);
+            Tex_Release(D_00539248, temp_a1, 1);
         }
         temp_s2 = F_(arg0, 0x124, int);
         if (temp_s2 != 0) {

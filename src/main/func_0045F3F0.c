@@ -7,10 +7,10 @@ int Gui_GetScreenStack();
 int GuiStack_SwapScreens(int, int, int);                     
 int GuiManager_AddWidget(int, int);                          
 int GuiFactory_CreateWidget(char *);                             
-int func_0045F4D0(int);                             
+int GuiEndGameAwards_Next(int);                             
 extern char D_004C2460;
 
-int func_0045F3F0(int arg0, char * arg1) {
+int GuiEndGameAwards_HandleInput(int arg0, char * arg1) {
     int temp_v0;
     int var_v0;
 
@@ -23,7 +23,7 @@ int func_0045F3F0(int arg0, char * arg1) {
         var_v0 = F_(arg1, 0x6, unsigned short) == 0;
     }
     if (var_v0 != 0) {
-        if (func_0045F4D0(arg0) == 0) {
+        if (GuiEndGameAwards_Next(arg0) == 0) {
             temp_v0 = GuiFactory_CreateWidget(&D_004C2460);
             if (temp_v0 != 0) {
                 GuiManager_AddWidget(Gui_GetScreenList(), temp_v0);

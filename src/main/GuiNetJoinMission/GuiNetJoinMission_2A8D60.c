@@ -106,7 +106,7 @@ extern char* D_004FFC04;
 #endif /* merge_units */
 #define D_004FFC04 (*(char **)&D_004FFC04) /* merge_units */
 
-void func_002CC260();
+void App_CardWaitPoll();
 #if 0 /* merge_units */
 Lobby2A* DME_GetLobby(void);
 #endif /* merge_units */
@@ -149,7 +149,7 @@ extern "C" void func_002A9030(W2A9030* self)
         char* s;
         if (l) {
             if (l->state == 4) func_004426B0(l);
-            if (!func_004518F0(l, func_002CC260, self->mAC, self->mC8, self->mE4)) {
+            if (!func_004518F0(l, App_CardWaitPoll, self->mAC, self->mC8, self->mE4)) {
                 char* g = D_004FFC04;
                 FrontEnd_OpenPopup(g, 2, D_004AB6B8, func_0033CE30(self, 0x5A, 0, 0, 0, 0), self, 0xB);
             }

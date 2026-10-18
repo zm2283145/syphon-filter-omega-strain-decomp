@@ -37,24 +37,24 @@ extern "C" void GuiPersonnelMenu_GetClassName();
 extern "C" void GuiPersonnelMenu_IsType();
 extern "C" void func_00349ED0();
 extern "C" void func_0034D2C0();
-extern "C" void func_003549C0();
-extern "C" void func_00354A70();
-extern "C" void func_00354B50();
-extern "C" void func_003556F0();
-extern "C" void func_00355790();
-extern "C" void func_003557D0();
-extern "C" void func_00356B30();
+extern "C" void GuiPersonnelMenu_Back();
+extern "C" void GuiPersonnelMenu_HandleInput();
+extern "C" void GuiPersonnelMenu_Fill();
+extern "C" void GuiPersonnelMenu_Sleep();
+extern "C" void GuiPersonnelMenu_Wake();
+extern "C" void GuiPersonnelMenu_Init();
+extern "C" void GuiPersonnelScreen_HandleEvent();
 extern "C" void GuiWidget_FocusPrev();
 extern "C" void GuiWidget_FocusNext();
 extern "C" void GuiWidget_FocusLast();
 extern "C" void GuiWidget_FocusFirst();
-extern "C" void func_0041E230();
-extern "C" void func_0041E2B0();
-extern "C" void func_0041E330();
+extern "C" void GuiWidget_BubbleActivate();
+extern "C" void GuiWidget_BubbleType1();
+extern "C" void GuiWidget_BubbleType0();
 extern "C" void GuiWidget_Update();
 extern "C" void GuiWidget_Draw();
-extern "C" void func_0041F070();
-extern "C" void func_0041F080();
+extern "C" void GuiWidget_ClearFlag4();
+extern "C" void GuiWidget_SetFlag4();
 extern "C" void GuiWidget_Deinit();
 extern "C" void func_0041F210();
 extern void * const D_004DF020[];
@@ -89,6 +89,6 @@ extern "C" O3548B0* func_003548B0(O3548B0* self, short deleteFlag)
     }
     return self;
 }
-void * const D_004DF020[28] = { (void*)0x0, (void*)0x0, (void*)func_003548B0, (void*)func_003557D0, (void*)GuiWidget_Deinit, (void*)func_0041F080, (void*)func_0041F070, (void*)func_00355790, (void*)func_003556F0, (void*)func_0041E330, (void*)func_0041E2B0, (void*)func_00354A70, (void*)GuiWidget_Draw, (void*)func_0041E230, (void*)GuiWidget_Update, (void*)func_00356B30, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiPersonnelMenu_GetClassName, (void*)GuiPersonnelMenu_IsType, (void*)func_00354B50, (void*)func_00349ED0, (void*)func_0034D2C0, (void*)func_003549C0, (void*)0x0 };
+void * const D_004DF020[28] = { (void*)0x0, (void*)0x0, (void*)func_003548B0, (void*)GuiPersonnelMenu_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiPersonnelMenu_Wake, (void*)GuiPersonnelMenu_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiPersonnelMenu_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiPersonnelScreen_HandleEvent, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiPersonnelMenu_GetClassName, (void*)GuiPersonnelMenu_IsType, (void*)GuiPersonnelMenu_Fill, (void*)func_00349ED0, (void*)func_0034D2C0, (void*)GuiPersonnelMenu_Back, (void*)0x0 };
 #pragma pop /* merge_units */
 /* merge_units: end func_003548B0 */

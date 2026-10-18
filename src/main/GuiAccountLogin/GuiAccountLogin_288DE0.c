@@ -140,7 +140,7 @@ void GuiTextWidget_SetText(void* w, char* s, int a);
 #define GuiTextWidget_SetText(a0, a1, a2) ((void)GuiTextWidget_SetText((a0), (a1), (a2))) /* merge_units */
 
 void func_002CA160(void* ui);
-void func_002CC260(void);
+void App_CardWaitPoll(void);
 int func_00442750(void* g, void* cb);
 #if 0 /* merge_units */
 char* func_0033CE30(S_002891D0* self, int a, int b, int c, int d, int e);
@@ -190,7 +190,7 @@ extern "C" void func_002891D0(S_002891D0* self)
         return;
     ok = 1;
     func_002CA160(D_004FFC04);
-    if (!func_00442750(g, (void*)func_002CC260)) {
+    if (!func_00442750(g, (void*)App_CardWaitPoll)) {
         Str_002891D0 a;
         Str_002891D0 b;
         String_CtorCStr_13B480(&a, func_0033CE30(self, 0x1F, 0, 0, 0, 0));

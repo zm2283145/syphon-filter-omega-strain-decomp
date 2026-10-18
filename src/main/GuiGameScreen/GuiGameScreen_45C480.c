@@ -17,7 +17,7 @@ int WeaponDb_Get(int, int);
 int WeaponInv_GetHeldItem(int);
 int WeaponInv_HolsterCurrent(int, int);
 int WeaponInv_SlotOfItem(int, int);
-int func_00175FF0(char * , int);
+int Player_EquipItem(char * , int);
 extern char * D_004FFC0C;
 extern int D_004FFD30;
 
@@ -37,7 +37,7 @@ void GuiGameScreen_EquipSelected(char * arg0) {
             if ((WeaponInv_SlotOfItem(temp_s2, temp_a1_2) & 0xFF) < 6) {
                 temp_v0 = WeaponDb_Get(D_004FFD30, temp_s2);
                 if ((temp_v0 != 0) && (temp_v0 != WeaponInv_GetHeldItem(F_(temp_s1, 0x3524, int)))) {
-                    func_00175FF0(D_004FFC0C, temp_s2);
+                    Player_EquipItem(D_004FFC0C, temp_s2);
                 }
             }
         } else {
@@ -53,7 +53,7 @@ static inline void merge_flush_func_0045C480(void) {}
 /* merge_units: begin func_0045C540 */
 #pragma push /* merge_units */
 typedef struct { char p[0x6C]; void* f6C; char p70[4]; int count; char p78[0x18]; int sel; char p94[8]; unsigned char b9C; } W45C540;
-extern void func_0045C5E0(W45C540* w);
+extern void GuiGameScreen_FillWeaponPanels(W45C540* w);
 extern void* Gui_GetScreenStack(void);
 extern void GuiWidget_SendEvent(void* w, void* src, int kind, int a, int b);
 void GuiGameScreen_StepWeaponSelect(W45C540* w, int dir)
@@ -64,7 +64,7 @@ void GuiGameScreen_StepWeaponSelect(W45C540* w, int dir)
     i = w->sel + (dir ? 1 : -1);
     if (i < 0) i = w->count - 1; else if (!(i < w->count)) i = 0;
     w->sel = i;
-    func_0045C5E0(w);
+    GuiGameScreen_FillWeaponPanels(w);
     GuiWidget_SendEvent(w->f6C, Gui_GetScreenStack(), 0x10, 0, 0);
 }
 /* merge_units: generate this block's code under its own pragmas */

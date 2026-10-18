@@ -26,7 +26,7 @@ int cAI_dtor(char *, int);
 int func_00161680(int, int);
 int NpcRoute_Release(int, V158 *);
 int func_0016DFD0(int, int);
-int func_0042DF20(char *);
+int NetObjectMgr_Erase(char *);
 int operator_delete(char *);
 extern char D_0049B670;
 extern "C" void Component_AttachOwner();
@@ -179,7 +179,7 @@ extern "C" char *cNPC_dtor(PS0_00158550 *arg0, long long arg1) {
             NpcRoute_Release(Service_Lookup(&D_004FFB50, &g_NpcRouteMgr), arg0->f30);
         }
         if (arg0->f30->v29() != 0) {
-            func_0042DF20((char *)arg0->f30 + 0xC);
+            NetObjectMgr_Erase((char *)arg0->f30 + 0xC);
         }
         temp_s2 = arg0->f1B0;
         if (temp_s2 != 0) {

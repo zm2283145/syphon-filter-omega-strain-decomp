@@ -9,6 +9,6 @@
 char D_004B8910[] = "GuiSlideShow";   /* "GuiSlideShow" */
 
 /* Class name getter: "GuiSlideShow". */
-char* func_00326DA0(void) {
+char* GuiSlideShow_GetClassName(void) {
     return D_004B8910;
 }

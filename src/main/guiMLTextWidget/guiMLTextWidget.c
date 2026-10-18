@@ -22,7 +22,7 @@ LineIter List_Begin(MLTextLineList*);                 /* begin() */
 LineIter func_0043DB60(MLTextLineList*);                 /* end() */
 void func_0043DB70(MLTextLine**, const LineIter&);       /* iterator copy */
 void func_0043DB50(MLTextLine**, const LineIter&);       /* iterator copy */
-void func_0043BC70(void*, int, int, int, int);           /* scroll bar: set position/range */
+void GuiScrollBarWidget_SetRange(void*, int, int, int, int);           /* scroll bar: set position/range */
 }
 /* Free every line's text, erase all nodes, scroll to the top. */
 extern "C" void MLTextWidget_Clear(MLTextWidget* self) {
@@ -52,7 +52,7 @@ extern "C" void MLTextWidget_Clear(MLTextWidget* self) {
         }
     }
     self->scrollPos = 0;
-    if (self->scrollBar) func_0043BC70(self->scrollBar, 0, self->scrollPos, 0, self->lines.count - self->visibleLines);
+    if (self->scrollBar) GuiScrollBarWidget_SetRange(self->scrollBar, 0, self->scrollPos, 0, self->lines.count - self->visibleLines);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0043DB80 */
@@ -153,7 +153,7 @@ extern "C" void MLTextWidget_AddText(MLTextWidget* self, char* text)
             }
         }
     }
-    if (self->scrollBar) func_0043BC70(self->scrollBar, 0, self->scrollPos, 0, self->lines.count - self->visibleLines);
+    if (self->scrollBar) GuiScrollBarWidget_SetRange(self->scrollBar, 0, self->scrollPos, 0, self->lines.count - self->visibleLines);
 }
 #undef Mem_Free /* merge_units */
 #pragma pop /* merge_units */
@@ -259,39 +259,39 @@ void MLTextWidget_SetFont(MLTextWidget* w, const char* fontName)
 
 /* scroll bar: set position and range */
 #if 0 /* merge_units */
-extern void func_0043BC70(GuiWidget43BEF0* self, unsigned char mode, int value,
+extern void GuiScrollBarWidget_SetRange(GuiWidget43BEF0* self, unsigned char mode, int value,
                          int lower, int upper);
 #endif /* merge_units */
-#define func_0043BC70(a0, a1, a2, a3, a4) (func_0043BC70((void *)(a0), (int)(a1), (a2), (a3), (a4))) /* merge_units */
+#define GuiScrollBarWidget_SetRange(a0, a1, a2, a3, a4) (GuiScrollBarWidget_SetRange((void *)(a0), (int)(a1), (a2), (a3), (a4))) /* merge_units */
 
 
 /* Synchronize the optional scroll bar with the scroll position and line count. */
 void MLTextWidget_UpdateScrollBar(MLTextWidget* self) {
     if (self->scrollBar != 0) {
-        func_0043BC70(self->scrollBar, 0, self->scrollPos, 0,
+        GuiScrollBarWidget_SetRange(self->scrollBar, 0, self->scrollPos, 0,
                      self->lines.count - self->visibleLines);
     }
 }
-#undef func_0043BC70 /* merge_units */
+#undef GuiScrollBarWidget_SetRange /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0043E290 */
 
 /* merge_units: begin func_0043E2E0 */
 #pragma push /* merge_units */
-extern void func_0041EFA0(MLTextWidget* s, float x); /* GuiWidget vtable slot 7 */
+extern void GuiWidget_BaseWake(MLTextWidget* s, float x); /* GuiWidget vtable slot 7 */
 #if 0 /* merge_units */
-extern void func_0043BC70(void* t, int a, int pos, int b, int len);
+extern void GuiScrollBarWidget_SetRange(void* t, int a, int pos, int b, int len);
 #endif /* merge_units */
-#define func_0043BC70(a0, a1, a2, a3, a4) (func_0043BC70((a0), (a1), (a2), (a3), (a4))) /* merge_units */
+#define GuiScrollBarWidget_SetRange(a0, a1, a2, a3, a4) (GuiScrollBarWidget_SetRange((a0), (a1), (a2), (a3), (a4))) /* merge_units */
 
 
 /* vtable slot 7: base behaviour (sets flag 0x8 and forwards to children), then refresh the scroll bar. */
 void MLTextWidget_Vt07(MLTextWidget* s, float x) {
-    func_0041EFA0(s, x);
+    GuiWidget_BaseWake(s, x);
     if (s->scrollBar)
-        func_0043BC70(s->scrollBar, 0, s->scrollPos, 0, s->lines.count - s->visibleLines);
+        GuiScrollBarWidget_SetRange(s->scrollBar, 0, s->scrollPos, 0, s->lines.count - s->visibleLines);
 }
-#undef func_0043BC70 /* merge_units */
+#undef GuiScrollBarWidget_SetRange /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0043E2E0 */
 

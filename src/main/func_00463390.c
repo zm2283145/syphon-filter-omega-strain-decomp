@@ -44,7 +44,7 @@ extern void func_001C10A0(IntVec_463390* v);
 extern void PtrVec_PushBack_1C1080(IntVec_463390* v, int* value);
 extern int func_00460B50(IntVec_463390* v);
 extern int* func_00460B40(IntVec_463390* v, int i);
-extern void func_00460AC0(void* vec, char* name, float seconds);
+extern void VoiceQueue_Push(void* vec, char* name, float seconds);
 extern void func_0013A040(IntVec_463390* v, int flags);
 
 static inline int Pct_463390(Agent_463390* ag, int total, int part)
@@ -56,7 +56,7 @@ static inline int Pct_463390(Agent_463390* ag, int total, int part)
     return r;
 }
 
-void func_00463390(Self_463390* self)
+void GuiEndGameStatistics_QueueVoices(Self_463390* self)
 {
     char buf[32];
     IntVec_463390 list;
@@ -122,13 +122,13 @@ void func_00463390(Self_463390* self)
             int j;
             for (j = 0; j < func_00460B50(&list); j++) {
                 sprintf(name, D_004C2610, *func_00460B40(&list, j) + 1);
-                func_00460AC0(self->lines, name, 0.0f);
+                VoiceQueue_Push(self->lines, name, 0.0f);
             }
             sprintf(name, D_004C2608, 5);
-            func_00460AC0(self->lines, name, 1.0f);
+            VoiceQueue_Push(self->lines, name, 1.0f);
         } else {
             sprintf(name, D_004C25F8, 5, *func_00460B40(&list, 0) + 1);
-            func_00460AC0(self->lines, name, 1.0f);
+            VoiceQueue_Push(self->lines, name, 1.0f);
         }
     }
     func_0013A040(&list, -1);

@@ -96,7 +96,7 @@ void func_0017F8B0(void*);
 float func_0017F860(float);
 void func_00132800(V4c* d, const V4c* s);
 void CameraCurve_MakeQuaternion(CurveA* c, const V4c* q, const V4c* z);
-void func_0017F520(CurveB* c, const V4c* o, const V4c* z);
+void VecCurve_InitState(CurveB* c, const V4c* o, const V4c* z);
 void PhysicalBase_Construct(void*, char*, char*);
 void func_0017F330(void*);
 void func_0017F2E0(void*);
@@ -139,7 +139,7 @@ static inline void CurveA_Init(CurveA* c, unsigned char f)
 }
 static inline void CurveB_Init(CurveB* c)
 {
-    func_0017F520(c, &Vec4_SetOrigin(), Vec4_GetZero());
+    VecCurve_InitState(c, &Vec4_SetOrigin(), Vec4_GetZero());
     c->vtbl = D_004DA410;
 }
 static inline void Bounds_Init(V4c* lo, V4c* hi)

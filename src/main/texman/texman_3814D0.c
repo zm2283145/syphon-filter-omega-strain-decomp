@@ -47,7 +47,7 @@ typedef struct { char pad[0x148]; struct { int pad0; int count; }* list; } F3814
 typedef struct { char pad[0x98]; F3814D0* f; } A3814D0;
 typedef struct { char pad[8]; char** names; int pad0C; int count; } S3814D0;
 typedef struct { int pad0; char path[0x9C]; } B3814D0;
-extern void func_0036E5D0(void*);
+extern void Resource_Construct(void*);
 extern void FileMan_Release(void*, int);
 extern int Archive_GetMemberName(void*, int);
 extern void func_0036DFB0(void*, int, void*);
@@ -67,7 +67,7 @@ void func_003814D0(S3814D0* self, A3814D0* arg1)
     F3814D0* f = arg1->f;
     int n;
     int i;
-    func_0036E5D0(&buf);
+    Resource_Construct(&buf);
     n = f->list->count;
     for (i = 0; i < n; i++) {
         char* path = buf.path;
@@ -196,7 +196,7 @@ void Tdx_Unrelocate(void* fr, char* base, int n1, int n2, int x, int y);
 
 void Tdx_RelocateFrames(void* fr, char* base, int n1, int n2, int x, int y);
 int func_00380360(void* t);
-void func_00380280(void* t, int a, int b, char* file, int line);
+void Tex_DestroyRecord(void* t, int a, int b, char* file, int line);
 void func_003801A0(Obj_381870* o, int v);
 void func_00380170(void* list, int* value);
 void func_003BB6B0(Tex_381870* t, TdxHdr_381870* h);
@@ -243,7 +243,7 @@ static inline void Copy_381870(void* d0, void* s0, int n0)
 static inline void Release_381870(Obj_381870* o, int idx)
 {
     if (o->tex[idx] && func_00380360(o->tex[idx]) <= 0) {
-        func_00380280(o->tex[idx], 0, 1, D_004BC300, 0x39E);
+        Tex_DestroyRecord(o->tex[idx], 0, 1, D_004BC300, 0x39E);
         o->tex[idx] = 0;
         func_003801A0(o, idx);
         func_00380170(o->freeA, &idx);
@@ -345,7 +345,7 @@ static inline int qeq(__int128 a, __int128 b) {
     return r == -1;
 }
 
-int func_00381F30(TdxMgr_00381F30* m, __int128 key)
+int Tex_FindInList(TdxMgr_00381F30* m, __int128 key)
 {
     int i;
     int idx = -1;

@@ -7,13 +7,13 @@
 extern "C" {
 void Mem_Free(int pool, void* allocation, char* file, int line);
 void* String_Dtor(void* self, short flags);
-void func_0041EBF0(void* self);
+void GuiWidget_BaseSleep(void* self);
 }
 struct O34DB10 { char pad[0x10]; int a10; char pad14[0xC8]; char* aDC; };
-extern "C" void func_0034DB10(O34DB10* o)
+extern "C" void GuiRatings_Sleep(O34DB10* o)
 {
     char* p;
-    func_0041EBF0(o);
+    GuiWidget_BaseSleep(o);
     p = o->aDC;
     if (p) {
         {

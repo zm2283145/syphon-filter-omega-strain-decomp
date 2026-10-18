@@ -56,7 +56,7 @@ void Root_SetWorldPlacement(Root_L* r, Plc4* p);
 float Math_Atan2f(float y, float x);
 float* History_At(char* h, int i);
 void ActorHeading_RetargetLast(char* h, float f);
-void func_0018A910(void* p);
+void MotionTokens_Init(void* p);
 void func_0018A8C0(void* p);
 void func_0018A890(void* p);
 void func_0018A710(void* d, void* s);
@@ -206,7 +206,7 @@ static inline float GetY(V4* v) { return v->y; }
 static inline float GetZ(V4* v) { return v->z; }
 static inline float H180(V4* v) { return Math_Atan2f(GetY(v), GetX(v)); }
 static inline float H170(float* v) { return Math_Atan2f(-v[0], v[1]); }
-static inline X_L* XInit_L(X_L* x) { X_L* px = x; px->kind = 0; func_0018A910(px->pairs); func_0018A8C0(px->tail); return px; }
+static inline X_L* XInit_L(X_L* x) { X_L* px = x; px->kind = 0; MotionTokens_Init(px->pairs); func_0018A8C0(px->tail); return px; }
 static inline void XDtor_L(X_L* x) { func_001BE5A0(x->tail, 0); __destroy_array(x->pairs, (void*)func_0018A210, 8, 7); }
 static inline void XDtorN_L(X_L* p) {
     void* t = p->tail;

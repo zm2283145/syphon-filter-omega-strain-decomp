@@ -13,7 +13,7 @@ extern char D_004DCF10[];
 extern void Event_Construct(Msg* v, void* arg);
 extern void Event_Send(Msg* v, Obj* target, int a2);
 extern void cMessage_dtor(Msg* v, int flags);
-extern void func_00231F00(M44* m, float a, float b);
+extern void Game_SpawnLight(M44* m, float a, float b);
 }
 struct Msg { void* vtable; char pad4[0x1C]; unsigned char b20; char pad21[3]; Obj* target; float a; float b;
     Msg(Obj* o, float a0, float b0) { Msg* s = this; Event_Construct(s, D_004F7C00); s->vtable = D_004DCF10; s->vtable = D_004DBAC0; s->target = o; s->a = a0; s->b = b0; s->b20 = 4; }
@@ -28,7 +28,7 @@ extern "C" void Global_SpawnLight(Obj* o, int notify, float a, float b)
     M44 m;
     UnitMtx(&m);
     CpC(&m.r[3], &o->GetPos());
-    func_00231F00(&m, a, b);
+    Game_SpawnLight(&m, a, b);
     if (notify) {
         Msg(o, a, b).Send(o);
     }

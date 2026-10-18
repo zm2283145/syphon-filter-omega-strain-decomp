@@ -20,14 +20,14 @@ extern "C" const char* D_0048C160[];
 extern "C" void func_00296F20(L4B50* l);
 extern "C" void func_00299270(L4B50* l, int flags);
 extern "C" void* Agent_GetSelected(void* list, int idx);
-extern "C" void func_00333260(void* ag, int a, int b, L4B50* l);
-extern "C" void* func_00336060(void* ag, const char* name);
-extern "C" void func_003353F0(void* ag, void* x, L4B50* l);
+extern "C" void AgentData_GetAwardItems(void* ag, int a, int b, L4B50* l);
+extern "C" void* AgentData_GetLevelShortName(void* ag, const char* name);
+extern "C" void AgentData_GetLevelObjectives(void* ag, void* x, L4B50* l);
 extern "C" int Loc_LookupText(const char* key);
 extern "C" void GuiTextListWidget_AddItem(void* t, int id, int i, int mode);
 
 /* The inline size() keeps the loop-entry test on the stack slot; enum constants keep the 0/1 select as branches. */
-extern "C" void func_00354B50(O4B50* self)
+extern "C" void GuiPersonnelMenu_Fill(O4B50* self)
 {
     void* ag = Agent_GetSelected(D_004FFB50, -1);
     L4B50 l;
@@ -44,14 +44,14 @@ extern "C" void func_00354B50(O4B50* self)
             func_00299270(&l, 0);
             return;
         }
-        x = func_00336060(ag, name);
+        x = AgentData_GetLevelShortName(ag, name);
         if (!x) {
             func_00299270(&l, 0);
             return;
         }
-        func_003353F0(ag, x, &l);
+        AgentData_GetLevelObjectives(ag, x, &l);
     } else {
-        func_00333260(ag, self->kind, self->arg, &l);
+        AgentData_GetAwardItems(ag, self->kind, self->arg, &l);
     }
     text = Loc_LookupText("Classified");
     for (i = 0; i < l.size(); i++) {

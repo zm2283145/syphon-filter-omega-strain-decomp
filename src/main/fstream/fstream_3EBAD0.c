@@ -97,7 +97,7 @@ struct Sub_EBDD0 {
     int n8;
     unsigned char bC;
 };
-extern "C" int func_003EBDD0(Sub_EBDD0* s, int size); /* gsynth: defined below */
+extern "C" int FStream_AllocBlock(Sub_EBDD0* s, int size); /* gsynth: defined below */
 #pragma pop
 #pragma inline_depth(16)
 #pragma cplusplus on
@@ -122,9 +122,9 @@ extern "C" {
 void FileMan_FindMember(char* f);
 int FileMan_GetSize(char* f);
 #if 0 /* merge_units */
-int func_003EBDD0(Sub_EBC90* s, int size);
+int FStream_AllocBlock(Sub_EBC90* s, int size);
 #endif /* merge_units */
-#define func_003EBDD0(a0, a1) (func_003EBDD0((Sub_EBDD0 *)(a0), (a1))) /* merge_units */
+#define FStream_AllocBlock(a0, a1) (FStream_AllocBlock((Sub_EBDD0 *)(a0), (a1))) /* merge_units */
 
 void FileMan_ReadMember(char* f, int* data, int size);
 }
@@ -139,13 +139,13 @@ static inline int SubData_EBC90(Sub_EBC90* s)
     return s->n8 ? s->n8 : s->n0;
 }
 
-extern "C" int func_003EBC90(Req_EBC90* r)
+extern "C" int FStream_StartRequest(Req_EBC90* r)
 {
     Sub_EBC90* s = ReqSub_EBC90(r);
     FileMan_FindMember(r->file);
     int data = 0;
     int size = FileMan_GetSize(r->file);
-    if (!func_003EBDD0(s, size))
+    if (!FStream_AllocBlock(s, size))
         return 0;
     r->state = 1;
     if (!s->bC) {
@@ -164,7 +164,7 @@ extern "C" int func_003EBC90(Req_EBC90* r)
     }
     return 1;
 }
-#undef func_003EBDD0 /* merge_units */
+#undef FStream_AllocBlock /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003EBC90(void) {}
 #pragma pop /* merge_units */
@@ -188,7 +188,7 @@ static inline void* Alloc_EBDD0(unsigned int n)
     return Mem_Alloc(1, n, &D_004BE010, 0x37);
 }
 
-extern "C" int func_003EBDD0(Sub_EBDD0* s, int size)
+extern "C" int FStream_AllocBlock(Sub_EBDD0* s, int size)
 {
     int n = size + 0x7F;
     if (s->n0) {

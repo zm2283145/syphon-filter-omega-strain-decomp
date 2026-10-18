@@ -34,7 +34,7 @@ extern void MotionSlider_Dtor(void*, int);
 extern void func_001F3E10(void*, int);
 extern void func_001F3DC0(void*, int);
 extern void func_001F3C70(void*, int);
-extern void* func_0017DE50(void*, float, float, float);
+extern void* Camera_ShakeMatrix(void*, float, float, float);
 extern void func_003B41E0(void*, void*, void*, int, int, void*, int, int, int, float, float);
 extern void* func_0018A700(void*, int);
 extern void MotionSelNode_Ctor(void*, void*, void*, void*);
@@ -441,7 +441,7 @@ void func_002020E0(void* p0)
     func_001F3E10(&s1ED0.m1ED8, -1);
     func_001F3DC0(&s1ED0.m1EE8, -1);
     func_001F3C70(&v1EF0, -1);
-    func_003B41E0(&v960, CanonicalKey_Construct(&v9C0, "climb_ladder_fast_loop"), p0, 0, 0, func_0017DE50(&v9B0, 0.0f, 0.0f, 0.0f), 3, 3, 0, 0.0f, 0.9f);
+    func_003B41E0(&v960, CanonicalKey_Construct(&v9C0, "climb_ladder_fast_loop"), p0, 0, 0, Camera_ShakeMatrix(&v9B0, 0.0f, 0.0f, 0.0f), 3, 3, 0, 0.0f, 0.9f);
     MotionSlider_RegisterNode(&v2064, p0, CanonicalKey_Construct(&v9F0, "animLadderClimbUp_LeftHand"), &v960);
     func_003B28F0(&v960, -1);
     func_003B3CC0(&v8B0, CanonicalKey_Construct(&v900, "animLadderClimbUp_LeftHand"), p0, 1);
@@ -529,7 +529,7 @@ void func_002020E0(void* p0)
     MotionSelNode_Ctor(&v1D60, CanonicalKey_Construct(&v290, "sliderLadderClimbDown_RightHand"), p0, func_0018A700(&s1D70.m1D70, 3));
     MotionRegistry_Register(p0, MotionRegistry_MakeKey(&v2C0, "blendLadderClimbDown_RightHand"), &v1D60);
     MotionNodeWrapper_Dtor(&v1D60, -1);
-    func_003B41E0(&v1D0, CanonicalKey_Construct(&v230, "slide_down_ladder"), p0, 0, 0, func_0017DE50(&v220, 0.0f, 0.0f, 0.0f), -1, 3, 0, 0.0f, 1e+03f);
+    func_003B41E0(&v1D0, CanonicalKey_Construct(&v230, "slide_down_ladder"), p0, 0, 0, Camera_ShakeMatrix(&v220, 0.0f, 0.0f, 0.0f), -1, 3, 0, 0.0f, 1e+03f);
     MotionSlider_RegisterNode(&v2044, p0, CanonicalKey_Construct(&v260, "animLadderSlideSlow"), &v1D0);
     func_003B28F0(&v1D0, -1);
     func_003B43C0(&v120, CanonicalKey_Construct(&v170, "slide_down_ladder"), p0, -1, 3);

@@ -12,7 +12,7 @@
 typedef struct { int id; int a[4]; int b[4]; int pad; } G3En_00256FD0;
 typedef struct { G3En_00256FD0 e[5]; int pad2; int cc; unsigned char d0; } G3El_00256FD0;
 typedef struct { int pad; G3El_00256FD0 el[3]; int x280[4]; } G3S_00256FD0;
-void func_00256FD0(G3S_00256FD0* s) {
+void CrateSnapshot_Init(G3S_00256FD0* s) {
     int j, i, k;
     for (i = 0; i < 4; i++) s->x280[i] = 0;
     for (j = 0; j < 3; j++) {
@@ -67,9 +67,9 @@ extern BackpackRegistry*D_004F7F30;
 #endif /* merge_units */
 #define D_004F7F30 (*(BackpackRegistry **)&D_004F7F30) /* merge_units */
 
-void Backpack_Destroy(BackpackEntry*);void func_00256D90(void);void func_00170570(void);
+void Backpack_Destroy(BackpackEntry*);void Backpack_RestoreCrateSnapshots(void);void func_00170570(void);
 static inline int Identity(int n){return n;}
-void func_002570C0(void){BackpackRegistry*list=D_004F7F30;int i;for(i=0;i<list->count;i++){int offset=i<<2;int base=(int)list->items;BackpackEntry*p=*(BackpackEntry**)(base+offset);if(!p->active){i--;Backpack_Destroy(p);}}func_00256D90();func_00170570();}
+void Backpack_RemoveAll(void){BackpackRegistry*list=D_004F7F30;int i;for(i=0;i<list->count;i++){int offset=i<<2;int base=(int)list->items;BackpackEntry*p=*(BackpackEntry**)(base+offset);if(!p->active){i--;Backpack_Destroy(p);}}Backpack_RestoreCrateSnapshots();func_00170570();}
 #undef D_004F7F30 /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002570C0(void) {}

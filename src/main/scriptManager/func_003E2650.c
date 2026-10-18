@@ -14,7 +14,7 @@ void Mem_Free(int,void*,char*,int);
 void FileHal_Dtor(void*,int);
 void func_0036DEC0(void*);
 void FileMan_Release(void*,int);
-void func_0036E5D0(void*);
+void Resource_Construct(void*);
 void Script_PrintWarning(char*,...);
 void func_003D7E30();
 void FileMan_Open(void*,char*,int);
@@ -26,7 +26,7 @@ extern "C" Registry* D_00554F28;
 struct Self { char pad[0x4E88]; int contextA,contextB; };
 struct Stream {
  void* file; int size; char hog[0x9C]; void* owned; int a8,ac,b0,b4; unsigned char ready; char pad[3];
- Stream() { func_0036E5D0(hog); file=0;size=0; }
+ Stream() { Resource_Construct(hog); file=0;size=0; }
  __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~Stream() {
   func_0036DEC0(hog);
   { void* p=file; if(p) { { AllocGuard g; FileHal_Dtor(p,-1); Mem_Free(0,p,D_004BDC28,0x45); } file=0; } }

@@ -45,7 +45,7 @@ void* WeaponPreview_GetBounds(Self_92F0* self)
 #define NULL 0
 #define VC_(p) ((int (*)())(p))
 #pragma mpwc_relax on
-int func_003836B0(int, int, char *, int);
+int ActorModel_DrawLod(int, int, char *, int);
 extern char D_0055C9F0;
 
 void WeaponPreview_Draw(char * arg0) {
@@ -60,7 +60,7 @@ void WeaponPreview_Draw(char * arg0) {
         }
     }
     if (var_a0 != 0) {
-        func_003836B0(var_a0, F_(arg0, 0x38, int), &D_0055C9F0, 1);
+        ActorModel_DrawLod(var_a0, F_(arg0, 0x38, int), &D_0055C9F0, 1);
     }
 }
 #pragma pop /* merge_units */

@@ -12,7 +12,7 @@
 #define VC_(p) ((int (*)())(p))
 #pragma mpwc_relax on
 int GuiWidget_BroadcastEvent(char * , int, int, int);                 
-int func_0041E2B0();                                  
+int GuiWidget_BubbleType1();                                  
 
 void GuiSliderWidget_OnLoseFocus(char * arg0) {
     char * temp_v0;
@@ -21,7 +21,7 @@ void GuiSliderWidget_OnLoseFocus(char * arg0) {
     int temp_t0;
     float r;
 
-    func_0041E2B0();
+    GuiWidget_BubbleType1();
     F_(arg0, 0x48, int) = 1;
     temp_a0 = F_(arg0, 0x48, int);
     if (F_((char *)temp_a0 + (int)arg0, 0x4C, unsigned char) != 0) {
@@ -39,7 +39,7 @@ void GuiSliderWidget_OnLoseFocus(char * arg0) {
 #pragma push /* merge_units */
 #pragma mpwc_relax on
                  
-int func_0041E330();                                  
+int GuiWidget_BubbleType0();                                  
 
 void GuiSliderWidget_OnGainFocus(char * arg0) {
     float r_;
@@ -48,7 +48,7 @@ void GuiSliderWidget_OnGainFocus(char * arg0) {
     int temp_t1;
     int temp_t0;
 
-    func_0041E330();
+    GuiWidget_BubbleType0();
     F_(arg0, 0x48, int) = 0;
     temp_a0 = F_(arg0, 0x48, int);
     if (F_((char *)temp_a0 + (int)arg0, 0x4C, unsigned char) != 0) {

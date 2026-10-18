@@ -14,7 +14,7 @@ int Service_Lookup(char *, char *);
 int SoundMgr_UnloadLevel(int);                               
 int func_002B4E50();                                  
 int func_002B4FA8(int);                               
-int func_0037E320(char *);                               
+int Renderer_Teardown(char *);                               
 extern char D_004F2CC0;
 extern char D_004FFB50;
 extern char D_005381F0;
@@ -25,7 +25,7 @@ void func_0029EC50(void) {
     int temp_v0;
     int var_a0;
 
-    func_0037E320(&D_005381F0);
+    Renderer_Teardown(&D_005381F0);
     temp_v0 = Service_Lookup(&D_004FFB50, &D_004F2CC0);
     if (temp_v0 != 0) {
         SoundMgr_UnloadLevel(temp_v0);
@@ -210,8 +210,8 @@ extern char D_004AAE20[];
 extern char D_004AAE00[];
 void GuiScreen_Init(Self_0029EF90* self);
 void* GuiWidget_FindChildByName(Self_0029EF90* self, char* name);
-void func_004235B0(W_0029EF90* w, int a, int b);
-void func_00421650(W_0029EF90* w, int a);
+void GuiArrayWidget_SetTable(W_0029EF90* w, int a, int b);
+void GuiTextListWidget_SetF1(W_0029EF90* w, int a);
 void MLTextWidget_SetFont(W_0029EF90* w, char* s);
 void* Gui_GetScreenList(void);
 Page_0029EF90* GuiManager_FindOrLoad(void* a, char* b, char* c);
@@ -229,9 +229,9 @@ extern "C" void func_0029EF90(Self_0029EF90* self)
     self->f114 = GuiWidget_FindChildByName(self, D_0048B968);
     self->fEC = FindAs_0029EF90(self, D_0048B928, D_004AA640);
     if (self->fEC) {
-        func_004235B0(self->fEC, 1, 10);
+        GuiArrayWidget_SetTable(self->fEC, 1, 10);
         self->fEC->f88 = GuiWidget_FindChildByName(self, D_0048B930);
-        func_00421650(self->fEC, 1);
+        GuiTextListWidget_SetF1(self->fEC, 1);
     }
     self->fF0 = FindAs_0029EF90(self, D_0048B940, D_004A7520);
     self->fF4 = FindAs_0029EF90(self, D_0048B948, D_004AAE20);

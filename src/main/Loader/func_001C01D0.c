@@ -28,7 +28,7 @@ void func_001C07C0(void*);
 void func_001C0720(void*);
 void func_001C05E0(void*);
 void func_001C0540(void*);
-int func_0036D4E0(Arc_1C01D0* a, int i);
+int Hog_GetMemberInPlace(Arc_1C01D0* a, int i);
 int Hog_GetEntrySize(Arc_1C01D0* a, int i);
 char* Archive_GetMemberName(Arc_1C01D0* a, int i);
 void func_003B6270(Ska_1C01D0* p, int a, int b, Arc_1C01D0* c);
@@ -39,13 +39,13 @@ int func_001BFE90(It_1C01D0* a, It_1C01D0* b);
 char* func_001BFED0(It_1C01D0* a);
 void func_001BFEB0(It_1C01D0* a);
 int String_AssignCStr_1C43A0(Str_1C01D0* a, char* b);
-void func_001EFB60(Ska_1C01D0* p);
+void MotionGraph_RunBuilders(Ska_1C01D0* p);
 void func_0013BCB0(Str_1C01D0* d, Str_1C01D0* s);
 void func_001C0500(Pair_1C01D0* out, Str_1C01D0* k, Ska_1C01D0* v);
 void func_001C4770(Ins_1C01D0* out, void* t, Pair_1C01D0* k);
 void String_Dtor(void* s, int f);
 }
-extern "C" void func_001C01D0(void* self, void* fs)
+extern "C" void Level_LoadSkas(void* self, void* fs)
 {
     char buf[0x80];
     Arc_1C01D0* tex;
@@ -74,7 +74,7 @@ extern "C" void func_001C01D0(void* self, void* fs)
             p->f58 = 0;
         }
         {
-            int x = func_0036D4E0(a, i);
+            int x = Hog_GetMemberInPlace(a, i);
             func_003B6270(p, x, Hog_GetEntrySize(a, i), tex);
         }
         {
@@ -89,7 +89,7 @@ extern "C" void func_001C01D0(void* self, void* fs)
                 func_001BFEB0(&it);
             }
             if (!String_AssignCStr_1C43A0(&s, "FEMALE.SKAS") || !String_AssignCStr_1C43A0(&s, "MALE.SKAS"))
-                func_001EFB60(p);
+                MotionGraph_RunBuilders(p);
             {
                 Ins_1C01D0 r;
                 Str_1C01D0 t;

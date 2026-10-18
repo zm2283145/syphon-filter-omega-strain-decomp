@@ -5,7 +5,7 @@ extern char D_004FFB50[];
 extern int sprintf(char* buf, const char* fmt, ...);
 extern void String_Copy(char* dst, const char* src);
 extern void* Agent_GetSelected(char* name, int index);
-extern int func_003329B0(void* agent, int a, int b, int i);
+extern int AgentData_HasZeus(void* agent, int a, int b, int i);
 void func_002C9420(Menu9420* m)
 {
     char num[8];
@@ -18,7 +18,7 @@ void func_002C9420(Menu9420* m)
     String_Copy(m->names[0], buf);
     agent = Agent_GetSelected(D_004FFB50, -1);
     for (i = 0; i < 10 && n < 8; i++) {
-        if (func_003329B0(agent, 0, 0x63, i)) {
+        if (AgentData_HasZeus(agent, 0, 0x63, i)) {
             sprintf(num, "%d_%d", 0x11, i + 1);
             String_Copy(m->names[n++], num);
         }

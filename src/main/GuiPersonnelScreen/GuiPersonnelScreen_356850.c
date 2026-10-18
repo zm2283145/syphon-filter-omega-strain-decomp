@@ -13,11 +13,11 @@ extern Cfg356850 *D_004FFC04;
 char D_004BB2E8[] = "0_%d_%d.tdx";
 char D_004BB2F8[] = "AB_SPECIAL_%d";
 extern int sprintf(char *buf, const char *fmt, ...);
-extern void func_0043C890(W356850 *w, char *s, int v);
+extern void GuiBitmapWidget_SetImage(W356850 *w, char *s, int v);
 extern char *Loc_LookupText(char *key);
 extern void GuiTextWidget_SetText(W356850 *w, char *s, int v);
-extern void func_00441060(W356850 *w, int n);
-void func_00356850(S356850 *self, int a, int n)
+extern void GuiWeaponDisplay_Set(W356850 *w, int n);
+void GuiPersonnelScreen_ShowItem(S356850 *self, int a, int n)
 {
     char buf[0x40];
     char buf2[0x40];
@@ -26,7 +26,7 @@ void func_00356850(S356850 *self, int a, int n)
         if (self->w54) {
             self->w54->flags |= 2;
             sprintf(buf, D_004BB2E8, 7, n - 9999);
-            func_0043C890(self->w54, buf, D_004FFC04->f25C);
+            GuiBitmapWidget_SetImage(self->w54, buf, D_004FFC04->f25C);
             if (self->w58) {
                 char *t;
                 self->w58->flags |= 2;
@@ -38,14 +38,14 @@ void func_00356850(S356850 *self, int a, int n)
     } else {
         if (self->w5C) {
             self->w5C->flags |= 2;
-            func_00441060(self->w5C, n);
+            GuiWeaponDisplay_Set(self->w5C, n);
         }
         if (self->w54) self->w54->flags &= ~2;
         if (self->w58) self->w58->flags &= ~2;
     }
     if (self->w50) {
         sprintf(buf2, "0_%d_%ds.tdx", self->x64, a + self->x68);
-        func_0043C890(self->w50, buf2, D_004FFC04->f25C);
+        GuiBitmapWidget_SetImage(self->w50, buf2, D_004FFC04->f25C);
     }
 }
 #pragma pop /* merge_units */
@@ -67,16 +67,16 @@ void* Gui_GetScreenList(void);
 void* Gui_GetScreenStack(void);
 int GuiManager_FindOrLoad(void* mgr, char* a, char* b);
 char* String_CStr(void* str);
-void func_00354E40(int snd, int a, char* s, int b, int c, int d, int e);
+void GuiPersonnelMenu_Setup(int snd, int a, char* s, int b, int c, int d, int e);
 void GuiStack_SwapScreens(void* mgr, void* self, int snd);
-void func_003569F0(S3569F0* self, char* name, int b, int c, int d, int e);
+void GuiPersonnelScreen_OpenMenu(S3569F0* self, char* name, int b, int c, int d, int e);
 }
-void func_003569F0(S3569F0* self, char* name, int b, int c, int d, int e)
+void GuiPersonnelScreen_OpenMenu(S3569F0* self, char* name, int b, int c, int d, int e)
 {
     int s = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiPersonnelMenu", name);
     if (s) {
         char* str = String_CStr(self->s4);
-        func_00354E40(s, self->f54(), str, b, c, d, e);
+        GuiPersonnelMenu_Setup(s, self->f54(), str, b, c, d, e);
         GuiStack_SwapScreens(Gui_GetScreenStack(), self, s);
     }
 }
@@ -99,7 +99,7 @@ extern void GuiStack_SwapScreens(void* target, void* self, void* handle);
 
 
 /* Creates a handle from the two name strings and registers it for self. */
-void func_00356AD0(void* self)
+void GuiPersonnelScreen_Back(void* self)
 {
     void* handle = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiCommandCenter", "cmdcentr");
     GuiStack_SwapScreens(Gui_GetScreenStack(), self, handle);
@@ -142,7 +142,7 @@ public:
     int x60;
 };
 extern "C" int GuiWidget_OnEvent(Obj356B30 *self, int a1, unsigned short msg, int a3, int param);
-extern "C" int func_00356B30(Obj356B30 *self, int a1, unsigned short msg, int a3, int param)
+extern "C" int GuiPersonnelScreen_HandleEvent(Obj356B30 *self, int a1, unsigned short msg, int a3, int param)
 {
     if (msg == 0x14) {
         self->f60(param);
@@ -172,8 +172,8 @@ public:
     VPAD16(a) VPAD8(b)
     virtual void f68();
 };
-extern "C" int func_00356BE0(S356BE0* self, E356BE0* e);
-int func_00356BE0(S356BE0* self, E356BE0* e)
+extern "C" int GuiPersonnelScreen_HandleInput(S356BE0* self, E356BE0* e);
+int GuiPersonnelScreen_HandleInput(S356BE0* self, E356BE0* e)
 {
     bool b = e->a0 == 1 && e->a2 == 0 && e->a8 == 0x10 && e->a6 == 0;
     if (b) {
@@ -202,14 +202,14 @@ struct Widget {
     int index; /* +0x60 */
 };
 
-extern "C" void func_0041EFA0(Widget* self);
+extern "C" void GuiWidget_BaseWake(Widget* self);
 extern "C" void GuiTextListWidget_Clear(void* list);
 extern "C" void GuiArrayWidget_Select(void* list, int a, unsigned int index);
 
-/* func_0041EFA0(self); if +0x48 is set: GuiTextListWidget_Clear, virtual +0x5C, then GuiArrayWidget_Select(+0x48, 0, +0x60). */
-extern "C" void func_00356C70(Widget* self)
+/* GuiWidget_BaseWake(self); if +0x48 is set: GuiTextListWidget_Clear, virtual +0x5C, then GuiArrayWidget_Select(+0x48, 0, +0x60). */
+extern "C" void GuiPersonnelScreen_Wake(Widget* self)
 {
-    func_0041EFA0(self);
+    GuiWidget_BaseWake(self);
     if (self->list) {
     GuiTextListWidget_Clear(self->list);
     self->Method5C();
@@ -258,14 +258,14 @@ void GuiTextWidget_SetText(W_356CD0* w, char* text, int flags);
 
 int Agent_GetSelected(void* a, int i);
 char* AgentData_GetName(int agent);
-void func_00356CD0(S_356CD0* o);
+void GuiPersonnelScreen_Init(S_356CD0* o);
 }
 static inline W_356CD0* cast_356CD0(W_356CD0* w, char* type)
 {
     return (w && w->IsA(type)) ? w : 0;
 }
 static inline void Put_356CD0(Col_356CD0* d, QCol_356CD0 c) { d->r = c.r; d->g = c.g; d->b = c.b; d->a = c.a; }
-void func_00356CD0(S_356CD0* o)
+void GuiPersonnelScreen_Init(S_356CD0* o)
 {
     W_356CD0* w;
     GuiWidget_Init(o);

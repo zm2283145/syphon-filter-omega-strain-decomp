@@ -66,7 +66,7 @@ extern "C" void func_0042D790(cGOBJ* object)
 }
 
 /* Release a registered object reference and erase its map entry. */
-extern "C" void func_0042D910(cGOBJ* object)
+extern "C" void NetObjectMgr_Remove(cGOBJ* object)
 {
     GobjId key;
     TransferReferenceIterator end;

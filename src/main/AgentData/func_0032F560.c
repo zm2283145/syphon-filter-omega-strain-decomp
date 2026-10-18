@@ -13,7 +13,7 @@ extern unsigned char Global_IsObjectiveComplete(AgentGObj* gobj, int key);
 extern unsigned char cAgentData_HasBonusLevel(cAgentData* agent, int level);
 extern void cAgentData_UnlockLevel(cAgentData* agent, int level);
 extern void cAgentData_UnlockWeapon(cAgentData* agent, int weapon);
-extern cAgentData* func_00185C70(AgentGObj* gobj);
+extern cAgentData* Player_GetAgentData(AgentGObj* gobj);
 
 int Script_cAgentData_UnlockWeapon(AgentScriptArg* args) {
     int weapon[1];
@@ -39,7 +39,7 @@ int Script_IsObjectiveComplete(AgentScriptArg* args) {
 /* Queries the agent data of an object of the agent class; other objects report false. */
 unsigned char Global_IsObjectiveComplete(AgentGObj* gobj, int key) {
     if (gobj->classKey == D_0049D010) {
-        return AgentData_IsObjectiveComplete(func_00185C70(gobj), key);
+        return AgentData_IsObjectiveComplete(Player_GetAgentData(gobj), key);
     }
     return 0;
 }

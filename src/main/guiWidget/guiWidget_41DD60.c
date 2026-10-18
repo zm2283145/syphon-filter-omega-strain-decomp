@@ -202,19 +202,19 @@ extern "C" void func_0041E130(TraversalWidget* self, int enabled)
 }
 
 /* Notify ancestors with message 2, stopping when a handler accepts it. */
-extern "C" void func_0041E230(TraversalWidget* self)
+extern "C" void GuiWidget_BubbleActivate(TraversalWidget* self)
 {
     bubble_message(self, 2);
 }
 
 /* Notify ancestors with message 1, stopping when a handler accepts it. */
-extern "C" void func_0041E2B0(TraversalWidget* self)
+extern "C" void GuiWidget_BubbleType1(TraversalWidget* self)
 {
     bubble_message(self, 1);
 }
 
 /* Notify ancestors with message 0, stopping when a handler accepts it. */
-extern "C" void func_0041E330(TraversalWidget* self)
+extern "C" void GuiWidget_BubbleType0(TraversalWidget* self)
 {
     bubble_message(self, 0);
 }

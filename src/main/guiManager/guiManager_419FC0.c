@@ -21,7 +21,7 @@ DEFINE_STRING_INT_PAIR_COPY_CTOR(func_00419FC0)
 #include "vtable_base_dtor.h"
 
 extern "C" {
-extern "C" void func_0041A0C0();
+extern "C" void GuiTextEditWidget_GetClassName();
 extern "C" void func_0041A0D0();
 extern "C" void GuiTextEditWidget_Draw();
 extern "C" void GuiTextEditWidget_Update();
@@ -29,17 +29,17 @@ extern "C" void func_0041AA10();
 extern "C" void GuiTextEditWidget_OnInput();
 extern "C" void GuiTextEditWidget_Load();
 extern "C" void GuiTextEditWidget_OnWake();
-extern "C" void func_0041C310();
+extern "C" void GuiTextWidget_OnSleep();
 extern "C" void GuiWidget_FocusPrev();
 extern "C" void GuiWidget_FocusNext();
 extern "C" void GuiWidget_FocusLast();
 extern "C" void GuiWidget_FocusFirst();
-extern "C" void func_0041E230();
-extern "C" void func_0041E2B0();
-extern "C" void func_0041E330();
+extern "C" void GuiWidget_BubbleActivate();
+extern "C" void GuiWidget_BubbleType1();
+extern "C" void GuiWidget_BubbleType0();
 extern "C" void GuiWidget_OnEvent();
-extern "C" void func_0041F070();
-extern "C" void func_0041F080();
+extern "C" void GuiWidget_ClearFlag4();
+extern "C" void GuiWidget_SetFlag4();
 extern "C" void GuiWidget_Deinit();
 extern "C" void GuiWidget_Init();
 extern void * const D_004E0A40[];
@@ -55,6 +55,6 @@ extern "C" VtableObject* func_0041A060(VtableObject* self, short deleteFlag)
     }
     return self;
 }
-void * const D_004E0A40[24] = { (void*)0x0, (void*)0x0, (void*)func_0041A060, (void*)GuiWidget_Init, (void*)GuiWidget_Deinit, (void*)func_0041F080, (void*)func_0041F070, (void*)GuiTextEditWidget_OnWake, (void*)func_0041C310, (void*)func_0041E330, (void*)func_0041E2B0, (void*)GuiTextEditWidget_OnInput, (void*)GuiTextEditWidget_Draw, (void*)func_0041E230, (void*)GuiTextEditWidget_Update, (void*)GuiWidget_OnEvent, (void*)GuiTextEditWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)func_0041A0C0, (void*)func_0041A0D0, (void*)func_0041AA10 };
+void * const D_004E0A40[24] = { (void*)0x0, (void*)0x0, (void*)func_0041A060, (void*)GuiWidget_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiTextEditWidget_OnWake, (void*)GuiTextWidget_OnSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiTextEditWidget_OnInput, (void*)GuiTextEditWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiTextEditWidget_Update, (void*)GuiWidget_OnEvent, (void*)GuiTextEditWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiTextEditWidget_GetClassName, (void*)func_0041A0D0, (void*)func_0041AA10 };
 #pragma pop /* merge_units */
 /* merge_units: end func_0041A060 */

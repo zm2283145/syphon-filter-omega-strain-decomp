@@ -40,7 +40,7 @@
     void* vtable;            /* +0x00 D_004DFD80 for the base */            \
     void* type;              /* +0x04 type descriptor (Event_GetType) */    \
     unsigned int magic;      /* +0x08 CMSG_MAGIC once queued */             \
-    unsigned int time;       /* +0x0C func_0042B1A0(0) timestamp */         \
+    unsigned int time;       /* +0x0C Net_GetClock(0) timestamp */         \
     int unk10;               /* +0x10 */                                    \
     void* target;            /* +0x14 */                                    \
     unsigned int stampKind;  /* +0x18 0..3, packed by Event_PackHeader */   \

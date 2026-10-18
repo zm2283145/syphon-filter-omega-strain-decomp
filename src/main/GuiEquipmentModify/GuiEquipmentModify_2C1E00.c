@@ -109,7 +109,7 @@ DEFINE_BUF_HOLDER_DTOR(func_002C20B0)
 extern void* D_004FFD30;                    /* weapon definition table */
 extern GuiEquipmentModifyObj* D_0051EE10;   /* GuiEquipmentModify instance */
 extern WeaponDefL2* WeaponDb_Get(void* table, int id);
-extern int func_002BF4B0(GuiEquipmentModifyObj* screen, WeaponLinkL2* link, int arg);
+extern int GuiEquipmentModify_WeaponBoxMatrix(GuiEquipmentModifyObj* screen, WeaponLinkL2* link, int arg);
 
 Rel* func_002C21A0(Rel* r) {
     r->a = 0;
@@ -119,7 +119,7 @@ Rel* func_002C21A0(Rel* r) {
 }
 
 /* Applies the attachment of the currently selected weapon (or its linked record). */
-void func_002C21C0(void) {
+void GuiEquipmentModify_DrawWeaponBox2(void) {
     GuiEquipmentModifyObj* screen;
     WeaponLinkL2* link;
     WeaponDefL2* def;
@@ -138,7 +138,7 @@ void func_002C21C0(void) {
                 link = def->link;
             }
             if (link != 0) {
-                func_002BF4B0(D_0051EE10, link, D_0051EE10->unkD4);
+                GuiEquipmentModify_WeaponBoxMatrix(D_0051EE10, link, D_0051EE10->unkD4);
             }
         }
     }
@@ -163,12 +163,12 @@ extern W2C2290* WeaponDb_Get(void* db, int id);
 #define WeaponDb_Get(a0, a1) ((W2C2290 *)WeaponDb_Get((a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_002BF4B0(G2C2290* g, O2C2290* o, int v);
+extern void GuiEquipmentModify_WeaponBoxMatrix(G2C2290* g, O2C2290* o, int v);
 #endif /* merge_units */
-#define func_002BF4B0(a0, a1, a2) ((void)func_002BF4B0((GuiEquipmentModifyObj *)(a0), (WeaponLinkL2 *)(a1), (a2))) /* merge_units */
+#define GuiEquipmentModify_WeaponBoxMatrix(a0, a1, a2) ((void)GuiEquipmentModify_WeaponBoxMatrix((GuiEquipmentModifyObj *)(a0), (WeaponLinkL2 *)(a1), (a2))) /* merge_units */
 
 /* Applies the current (or alternate-mode) weapon of the active slot. */
-void func_002C2290(void)
+void GuiEquipmentModify_DrawWeaponBox1(void)
 {
     G2C2290* g = D_0051EE10;
     if (g->f84) {
@@ -178,22 +178,22 @@ void func_002C2290(void)
         if (o && g->fD0) {
             W2C2290* w = WeaponDb_Get(D_004FFD30, o->h40A);
             if (w->kind == 7) o = w->alt;
-            if (o) func_002BF4B0(D_0051EE10, o, D_0051EE10->fD0);
+            if (o) GuiEquipmentModify_WeaponBoxMatrix(D_0051EE10, o, D_0051EE10->fD0);
         }
     }
 }
 #undef D_0051EE10 /* merge_units */
 #undef WeaponDb_Get /* merge_units */
-#undef func_002BF4B0 /* merge_units */
+#undef GuiEquipmentModify_WeaponBoxMatrix /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_002C2290 */
 
 /* merge_units: begin func_002C2340 */
 #pragma push /* merge_units */
-extern int func_002BFA90(GuiEquipmentModifyObj* screen);
+extern int GuiEquipmentModify_UpdateFigure(GuiEquipmentModifyObj* screen);
 
-int func_002C2340(void) {
-    return func_002BFA90(D_0051EE10);
+int GuiEquipmentModify_DrawFigure(void) {
+    return GuiEquipmentModify_UpdateFigure(D_0051EE10);
 }
 
 void func_002C2350(void) {

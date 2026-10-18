@@ -30,7 +30,7 @@ float MotionCtrl_GetSelectorMetric(C5Motion* m, void* arg); /* gsynth: defined b
 #pragma opt_strength_reduction off
 #pragma opt_rotateloops off
 extern "C" {
-void func_0036E5D0(void* s);
+void Resource_Construct(void* s);
 void FileMan_Release(void* s, int flag);
 #if 0 /* merge_units */
 void* func_00198760(void* d, const void* s);
@@ -74,8 +74,8 @@ struct SReq {
         SReq* p = this;
         p->f20.b.v = -2;
         p->f20.a = (HObj*)0;
-        func_0036E5D0(&p->s48);
-        func_0036E5D0(&p->sE4);
+        Resource_Construct(&p->s48);
+        Resource_Construct(&p->sE4);
         HObj* o = 0;
         int none = -1;
         p->id = none;

@@ -22,11 +22,11 @@ int sprintf(void *, const void *, ...);
 extern "C" {
 float World_GetElapsedTime(void);
 int MoviePlayer_Update(void*, float);
-void func_003F9300(void*, int);
-void func_0036B250(int);
+void MoviePlayer_Destroy(void*, int);
+void Heap_ReleaseSlot(int);
 void* Service_Lookup(void*, void*);
 void SoundMgr_SetChannelVolume(void*, int, int);
-void func_00130520(void*, void*, int);
+void GameFlow_StartMovie(void*, void*, int);
 extern char D_0049A890;
 extern char D_004F2CC0[];
 extern int D_004EA048;
@@ -61,11 +61,11 @@ extern "C" void Game_UpdateMovieQueue(S_12FD60* self)
             void* p = self->b0;
             {
                 AllocGuard g;
-                func_003F9300(p, -1);
+                MoviePlayer_Destroy(p, -1);
                 Mem_Free(0, p, &D_0049A890, 0xAE2);
             }
             self->b0 = 0;
-            func_0036B250(1);
+            Heap_ReleaseSlot(1);
             SoundMgr_SetChannelVolume(Service_Lookup(self, D_004F2CC0), 2, D_004EA048);
         }
     }
@@ -73,7 +73,7 @@ extern "C" void Game_UpdateMovieQueue(S_12FD60* self)
         Q_12FD60* q = self->q;
         if (q) {
             if (!q->AtEnd()) {
-                func_00130520(self, q->Next(), 1);
+                GameFlow_StartMovie(self, q->Next(), 1);
             } else {
                 {
                     AllocGuard g;
@@ -154,14 +154,14 @@ extern int Game_PickAttractMovie(Obj12FF80 *, char *);
 #define Game_PickAttractMovie(a0, a1) (Game_PickAttractMovie((void *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_00130520(Obj12FF80 *, char *, int);
+extern void GameFlow_StartMovie(Obj12FF80 *, char *, int);
 #endif /* merge_units */
-#define func_00130520(a0, a1, a2) (func_00130520((void *)(a0), (void *)(a1), (a2))) /* merge_units */
+#define GameFlow_StartMovie(a0, a1, a2) (GameFlow_StartMovie((void *)(a0), (void *)(a1), (a2))) /* merge_units */
 
-extern void func_001303F0(Obj12FF80 *, char *);
+extern void GameFlow_QueueMovie(Obj12FF80 *, char *);
 extern void func_002C9420(void *);
 extern void AgentData_AddLevelProgress(void *, int, int, int);
-extern void func_003328D0(void *, int, int, int, int);
+extern void AgentData_SetLevelFlag(void *, int, int, int, int);
 extern void *D_004FFC04;
 extern signed char D_004FFBA0;
 extern signed char D_004FFBA1;
@@ -204,7 +204,7 @@ void Game_RequestEolMovie(Obj12FF80 *o)
             sub = &in->sub;
             if (id != -1 && id != 0x11) {
                 AgentData_AddLevelProgress(Agent_GetSelected(o, -1), id + 1, 6, 2);
-                func_003328D0(Agent_GetSelected(o, -1), sub->id + 1, 5, 1, 1);
+                AgentData_SetLevelFlag(Agent_GetSelected(o, -1), sub->id + 1, 5, 1, 1);
             }
             if (String_CompareNoCase(a, "UKRAINE") == 0) {
                 func_002C9420(o->info);
@@ -223,16 +223,16 @@ void Game_RequestEolMovie(Obj12FF80 *o)
             return;
         }
         sprintf(out, "%s%s.PSS", a, b);
-        func_00130520(o, out, 1);
+        GameFlow_StartMovie(o, out, 1);
     } else {
         for (i = 0; i < o->info->count; i++) {
             sprintf(buf, "%s.PSS", o->info->ents[i].name);
-            func_001303F0(o, buf);
+            GameFlow_QueueMovie(o, buf);
         }
     }
 }
 #undef Game_PickAttractMovie /* merge_units */
-#undef func_00130520 /* merge_units */
+#undef GameFlow_StartMovie /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0012FF80(void) {}
 #pragma pop /* merge_units */

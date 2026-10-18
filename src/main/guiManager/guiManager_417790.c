@@ -139,7 +139,7 @@ int* GuiManager_ResolveInterface(void* db, int id);
 void* IeNode_FindNode(int scene, char* name);
 void* IeElement_Create(void* n);
 void IeElement_SetShown(void* i, int a);
-void func_003E8040(void* i, void* p);
+void IeElement_SetMatrix(void* i, void* p);
 extern char D_004BF070[];
 }
 static inline bool Empty_4178E0(Str_4178E0* s) { return String_Length(s) == 0; }
@@ -174,7 +174,7 @@ extern "C" void GuiInterfaceDecorator_Init(O_4178E0* o)
         if (n) {
             o->inst = IeElement_Create(n);
             IeElement_SetShown(o->inst, 0);
-            func_003E8040(o->inst, o->f30);
+            IeElement_SetMatrix(o->inst, o->f30);
         }
     }
 }

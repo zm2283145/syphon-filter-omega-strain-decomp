@@ -80,7 +80,7 @@ static inline char* Text_134110(void)
     return D_005721F0[0] ? D_005721F0 : Loc_LookupText(D_005721E0);
 }
 
-extern "C" void func_00134110(void* svc, unsigned char mode)
+extern "C" void LevelEnd_RunDebrief(void* svc, unsigned char mode)
 {
     MsgQueue_ClearPending();
     while (Gui_GetScreenStack()->count) {

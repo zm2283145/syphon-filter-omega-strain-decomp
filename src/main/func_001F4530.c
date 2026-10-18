@@ -6,15 +6,15 @@ typedef struct { char d[0x30]; } B30;
 typedef struct { char d[0x38]; } B38;
 typedef struct { char d[0x50]; } B50;
 extern void* CanonicalKey_Construct(void*, void*);
-extern float func_0017DD00(float);
+extern float VecCurve_Retime(float);
 extern void* func_001F1300(void*, float, float);
-extern void* func_0017DE50(void*, float, float, float);
+extern void* Camera_ShakeMatrix(void*, float, float, float);
 extern void func_003B3E40(void*, void*, void*, int, int, void*, void*, int, float, int, int);
 extern void MotionSlider_RegisterNode(void*, void*, void*, void*);
 extern void func_003B28F0(void*, int);
 /* Builds and registers one block of motion-graph nodes. */
 #pragma optimization_level 1
-void func_001F4530(void* p0)
+void MotionGraph_InstallBuddyClimb(void* p0)
 {
     B4 v52C;
     B4 v528;
@@ -55,25 +55,25 @@ void func_001F4530(void* p0)
     float f0;
     float f1;
     void* t1;
-    func_003B3E40(&v420, CanonicalKey_Construct(&v480, "buddyclimb_secondguyup"), p0, 0, 0, func_001F1300(&v510, func_0017DD00(0.5f), 3.4028235e+38f), func_0017DE50(&v470, 0.0f, 0.0f, 0.0f), -1, 1.0f, 0, 0);
+    func_003B3E40(&v420, CanonicalKey_Construct(&v480, "buddyclimb_secondguyup"), p0, 0, 0, func_001F1300(&v510, VecCurve_Retime(0.5f), 3.4028235e+38f), Camera_ShakeMatrix(&v470, 0.0f, 0.0f, 0.0f), -1, 1.0f, 0, 0);
     MotionSlider_RegisterNode(&v52C, p0, CanonicalKey_Construct(&v4B0, "animBuddyClimbFollower_NoRunningStart"), &v420);
     func_003B28F0(&v420, -1);
-    func_003B3E40(&v360, CanonicalKey_Construct(&v3C0, "buddyclimb_firstguyup"), p0, 0, 0, func_001F1300(&v508, func_0017DD00(0.5f), 3.4028235e+38f), func_0017DE50(&v3B0, 0.0f, 0.0f, 0.0f), -1, 1.0f, 0, 0);
+    func_003B3E40(&v360, CanonicalKey_Construct(&v3C0, "buddyclimb_firstguyup"), p0, 0, 0, func_001F1300(&v508, VecCurve_Retime(0.5f), 3.4028235e+38f), Camera_ShakeMatrix(&v3B0, 0.0f, 0.0f, 0.0f), -1, 1.0f, 0, 0);
     MotionSlider_RegisterNode(&v528, p0, CanonicalKey_Construct(&v3F0, "animBuddyClimbLeader_NoRunningStart"), &v360);
     func_003B28F0(&v360, -1);
     t1 = CanonicalKey_Construct(&v300, "buddyclimb_secondguyup");
-    f0 = func_0017DD00(0.0f);
-    func_003B3E40(&v2A0, t1, p0, 0, 0, func_001F1300(&v500, f0, func_0017DD00(0.0f)), func_0017DE50(&v2F0, 0.0f, 0.0f, 0.0f), -1, 1.0f, 0, 1);
+    f0 = VecCurve_Retime(0.0f);
+    func_003B3E40(&v2A0, t1, p0, 0, 0, func_001F1300(&v500, f0, VecCurve_Retime(0.0f)), Camera_ShakeMatrix(&v2F0, 0.0f, 0.0f, 0.0f), -1, 1.0f, 0, 1);
     MotionSlider_RegisterNode(&v524, p0, CanonicalKey_Construct(&v330, "animBuddyClimbIdle"), &v2A0);
     func_003B28F0(&v2A0, -1);
-    f1 = func_0017DD00(6.5f);
-    func_003B3E40(&v1E0, CanonicalKey_Construct(&v240, "buddyclimb_firstguyup"), p0, 0, 0, func_001F1300(&v4F8, f1, f1), func_0017DE50(&v230, 0.0f, 0.0f, 0.0f), -1, 1.0f, 0, 1);
+    f1 = VecCurve_Retime(6.5f);
+    func_003B3E40(&v1E0, CanonicalKey_Construct(&v240, "buddyclimb_firstguyup"), p0, 0, 0, func_001F1300(&v4F8, f1, f1), Camera_ShakeMatrix(&v230, 0.0f, 0.0f, 0.0f), -1, 1.0f, 0, 1);
     MotionSlider_RegisterNode(&v520, p0, CanonicalKey_Construct(&v270, "animBuddyClimbIdle_SecondHalf"), &v1E0);
     func_003B28F0(&v1E0, -1);
-    func_003B3E40(&v120, CanonicalKey_Construct(&v180, "buddyclimb_secondguyup"), p0, 0, 0, func_001F1300(&v4F0, f1, 3.4028235e+38f), func_0017DE50(&v170, 0.0f, 0.0f, 0.0f), -1, 1.0f, 0, 0);
+    func_003B3E40(&v120, CanonicalKey_Construct(&v180, "buddyclimb_secondguyup"), p0, 0, 0, func_001F1300(&v4F0, f1, 3.4028235e+38f), Camera_ShakeMatrix(&v170, 0.0f, 0.0f, 0.0f), -1, 1.0f, 0, 0);
     MotionSlider_RegisterNode(&v51C, p0, CanonicalKey_Construct(&v1B0, "animBuddyClimbFollower_SecondHalf"), &v120);
     func_003B28F0(&v120, -1);
-    func_003B3E40(&v60, CanonicalKey_Construct(&vC0, "buddyclimb_firstguyup"), p0, 0, 0, func_001F1300(&v4E8, f1, 3.4028235e+38f), func_0017DE50(&vB0, 0.0f, 0.0f, 0.0f), -1, 1.0f, 0, 0);
+    func_003B3E40(&v60, CanonicalKey_Construct(&vC0, "buddyclimb_firstguyup"), p0, 0, 0, func_001F1300(&v4E8, f1, 3.4028235e+38f), Camera_ShakeMatrix(&vB0, 0.0f, 0.0f, 0.0f), -1, 1.0f, 0, 0);
     MotionSlider_RegisterNode(&v518, p0, CanonicalKey_Construct(&vF0, "animBuddyClimbLeader_SecondHalf"), &v60);
     func_003B28F0(&v60, -1);
 }

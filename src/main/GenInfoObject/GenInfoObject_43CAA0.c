@@ -15,28 +15,28 @@
 
 extern char D_004E0FC0[]; /* vtable */
 extern int D_00539248;    /* resource registry */
-extern int func_003813A0(int registry, int handle, int arg);
-extern int func_0041EBF0(void* self);
-extern int func_0041EFA0(void* self);
+extern int Tex_Release(int registry, int handle, int arg);
+extern int GuiWidget_BaseSleep(void* self);
+extern int GuiWidget_BaseWake(void* self);
 extern void GuiWidget_ctor(void* self);
-extern int func_0043C730(GuiWidget43CB20* self);
+extern int GuiBitmapWidget_Load(GuiWidget43CB20* self);
 
 /* Shutdown: base shutdown, then releases the held registry handle. */
-void func_0043CAA0(GuiWidget43CB20* self) {
-    func_0041EBF0(self);
+void GuiBitmapWidget_Sleep(GuiWidget43CB20* self) {
+    GuiWidget_BaseSleep(self);
     if (self->handle != -1) {
-        func_003813A0(D_00539248, self->handle, 0);
+        Tex_Release(D_00539248, self->handle, 0);
         self->handle = -1;
     }
 }
 
-int func_0043CAF0(GuiWidget43CB20* self) {
-    func_0041EFA0(self);
-    return func_0043C730(self);
+int GuiBitmapWidget_Wake(GuiWidget43CB20* self) {
+    GuiWidget_BaseWake(self);
+    return GuiBitmapWidget_Load(self);
 }
 
 /* Constructor: no handle, white color. */
-GuiWidget43CB20* func_0043CB20(GuiWidget43CB20* self) {
+GuiWidget43CB20* GuiBitmapWidget_ctor(GuiWidget43CB20* self) {
     GuiWidget_ctor(self);
     self->base.vtable = D_004E0FC0;
     self->unk50 = 0;

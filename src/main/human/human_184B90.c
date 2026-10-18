@@ -29,7 +29,7 @@ struct Obj {
 };
 
 /* Returns 0 while the virtual +0x108 state is 2 or 3, else 2. */
-extern "C" int func_00184B90(Obj* self)
+extern "C" int Actor_GetTargetCategory(Obj* self)
 {
     unsigned char state = self->GetState();
     bool busy = true;
@@ -50,7 +50,7 @@ static inline void merge_flush_func_00184B90(void) {}
  */
 
 
-int func_00184BE0(void) {
+int Actor_GetSubtargetCount(void) {
     return 1;
 }
 /* merge_units: generate this block's code under its own pragmas */

@@ -89,7 +89,7 @@ extern void func_0036D630(O3BC*);
 extern void func_00377C30(char*);
 extern void FileMan_FindMember(S3BC*);
 extern void FileMan_LoadMemberSync(S3BC*, int*, int);
-extern void func_0036D540(O3BC*, char*, int, int);
+extern void Hog_OpenInMemory(O3BC*, char*, int, int);
 extern char* strchr(const char*, int);
 extern void func_0036E540(H3BC*, char*, O3BC*, int);
 extern void Model_Load(char*, H3BC*, int);
@@ -109,7 +109,7 @@ O3BC* SkyLayer_Construct(O3BC* o, S3BC* src, int arg) {
     FileMan_LoadMemberSync(src, &o->f16c, 0);
     if (src->f98->b14c == 2) o->b170 = 1;
     else o->b170 = 0;
-    func_0036D540(o, src->name, o->f16c, 0);
+    Hog_OpenInMemory(o, src->name, o->f16c, 0);
     {
         char* name = src->name;
         strncpy(strchr(name, '.'), ".VUM", 4);

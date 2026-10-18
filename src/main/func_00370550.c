@@ -13,7 +13,7 @@ extern void func_003701A0(void*);
 extern void Vu1_UploadMicrocode(void*, int);
 extern void func_00370110(void*, int);
 extern int func_00375B40(void*, unsigned char, int);
-extern void func_00375AC0(void*, unsigned char, void*);
+extern void DmaPacket_Close(void*, unsigned char, void*);
 extern long long func_003700F0(int a, int b, int c);
 extern int func_003700D0(void* table, int index);
 
@@ -69,7 +69,7 @@ static inline QW* Emit(QW* p, int num, int addr, int src)
             p++;                                                                      \
         }                                                                             \
     }                                                                                 \
-    func_00375AC0(D_00537F80, 1, p);
+    DmaPacket_Close(D_00537F80, 1, p);
 
 static inline void Draw3_0550(S* o, E* e)
 {
@@ -111,7 +111,7 @@ static inline void Draw2_0550(S* o, E* e)
     EMIT_BODY(0x20034000, 0x41, 1, 4)
 }
 
-void func_00370550(S* o)
+void Renderer_FlushPrimitives(S* o)
 {
     E* e;
 

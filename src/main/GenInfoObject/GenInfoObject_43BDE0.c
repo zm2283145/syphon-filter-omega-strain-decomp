@@ -12,14 +12,14 @@
 #define VC_(p) ((int (*)())(p))
 #pragma mpwc_relax on
 int GuiWidget_BroadcastEvent(char * , int, int, int);                 
-int func_0041EFA0();                                  
+int GuiWidget_BaseWake();                                  
 
-void func_0043BDE0(char * arg0) {
+void GuiScrollBarWidget_Wake(char * arg0) {
     float r;
     int temp_t1;
     int temp_t0;
 
-    func_0041EFA0();
+    GuiWidget_BaseWake();
     if (F_(arg0, 0x48, unsigned char) != 0) {
         temp_t1 = F_(arg0, 0x5C, int);
         temp_t0 = F_(arg0, 0x4C, int);
@@ -38,7 +38,7 @@ extern void GuiWidget_Init(W43BE70* w);
 extern int GuiWidget_SendEvent(W43BE70* w, W43BE70* src, int kind, int a, int out);
 extern char D_004BFFA8[];
 static int D_004976A0 = (int)D_004BFFA8;
-void func_0043BE70(W43BE70* w)
+void GuiScrollBarWidget_Init(W43BE70* w)
 {
     D43BE70* d[1];
     GuiWidget_Init(w);
@@ -65,7 +65,7 @@ extern char D_004E0F40[]; /* vtable */
 extern void GuiWidget_ctor(void* self);
 
 /* Constructor: base widget plus zeroed fields. */
-GuiWidget43BEF0* func_0043BEF0(GuiWidget43BEF0* self) {
+GuiWidget43BEF0* GuiScrollBarWidget_ctor(GuiWidget43BEF0* self) {
     GuiWidget_ctor(self);
     self->base.vtable = D_004E0F40;
     self->unk54 = 0;

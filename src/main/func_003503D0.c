@@ -19,7 +19,7 @@ extern "C" void GuiArrayWidget_Select(Widget* self, int a, int b);
 extern "C" void GuiArrayWidget_ColumnWidth(Widget* self, int index, int value);
 
 /* Binds a data source (+0xC0), sets the list to 11 entries via virtual +0x5C, resets it and fills entries from the +0xC4 table (walked with a stepping base pointer). */
-extern "C" void func_003503D0(Widget* self, Source* source)
+extern "C" void GuiMissionStatList_Attach(Widget* self, Source* source)
 {
     Widget* p;
     int i;

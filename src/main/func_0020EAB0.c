@@ -19,8 +19,8 @@ static inline void Req_Init(SoundRequest* p, int type, __int128 name, Voice_F190
 static inline void Req_Default(SoundRequest* p) {
     p->voiceId = -2;
     p->voice = 0;
-    func_0036E5D0(&p->a);
-    func_0036E5D0(&p->b);
+    Resource_Construct(&p->a);
+    Resource_Construct(&p->b);
     Req_Init(p, -1, -1, 0, 0);
     p->x186 = 0;
 }
@@ -32,8 +32,8 @@ SoundEvent* func_0020EAB0(SoundEvent* ev, Src_EAB0* src) {
     p = &ev->req;
     p->voiceId = -2;
     p->voice = 0;
-    func_0036E5D0(&p->a);
-    func_0036E5D0(&p->b);
+    Resource_Construct(&p->a);
+    Resource_Construct(&p->b);
     Req_Init(p, -1, -1, 0, 0);
     p->x186 = 0;
     ev->pad1C0[0] = src->x24;

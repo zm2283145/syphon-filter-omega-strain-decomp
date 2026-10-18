@@ -106,7 +106,7 @@ extern void Actor_ShiftPriorityHistory(void* a, void* b);
 extern void func_0019F7E0(void* a);
 extern void Actor_ShiftBitsHistory(void* a, void* b);
 extern void Actor_ReactToActionChanges(C3Ag19F* p);
-extern void func_00189590(C3Ag19F* p, int idx);
+extern void Actor_ClearAction(C3Ag19F* p, int idx);
 extern void Actor_UpdateJumpApex(C3Ag19F* p, float dt);
 static const unsigned int dat_0049D5E0[2] = { 0x15111005, 0x1F };
 static inline int C3PTest19F(C3PSet19F* s, int n)
@@ -127,7 +127,7 @@ void Actor_UpdateAirState(C3Ag19F* p, float dt)
     for (i = 0; i < 5; i++) {
         int idx = ((signed char*)dat_0049D5E0)[i];
         if (idx != cur && C3PTest19F(&p->set, idx)) {
-            func_00189590(p, idx);
+            Actor_ClearAction(p, idx);
         }
     }
     Actor_UpdateJumpApex(p, dt);

@@ -46,21 +46,21 @@ extern "C" void GuiWidget_FocusPrev();
 extern "C" void GuiWidget_FocusNext();
 extern "C" void GuiWidget_FocusLast();
 extern "C" void GuiWidget_FocusFirst();
-extern "C" void func_0041E230();
-extern "C" void func_0041E2B0();
-extern "C" void func_0041E330();
+extern "C" void GuiWidget_BubbleActivate();
+extern "C" void GuiWidget_BubbleType1();
+extern "C" void GuiWidget_BubbleType0();
 extern "C" void GuiWidget_Update();
 extern "C" void GuiWidget_Draw();
-extern "C" void func_0041EBF0();
+extern "C" void GuiWidget_BaseSleep();
 extern "C" void GuiWidget_OnEvent();
-extern "C" void func_0041F070();
-extern "C" void func_0041F080();
+extern "C" void GuiWidget_ClearFlag4();
+extern "C" void GuiWidget_SetFlag4();
 extern "C" void GuiWidget_Deinit();
 extern "C" void func_0041F210();
-extern "C" void func_0043BB80();
+extern "C" void GuiScrollBarWidget_GetClassName();
 extern "C" void func_0043BB90();
-extern "C" void func_0043BDE0();
-extern "C" void func_0043BE70();
+extern "C" void GuiScrollBarWidget_Wake();
+extern "C" void GuiScrollBarWidget_Init();
 extern void * const D_004E0F40[];
 void* GuiWidget_Destroy(void* self, short deleteFlag);
 }
@@ -74,6 +74,6 @@ extern "C" VtableObject* func_0043BB20(VtableObject* self, short deleteFlag)
     }
     return self;
 }
-void * const D_004E0F40[24] = { (void*)0x0, (void*)0x0, (void*)func_0043BB20, (void*)func_0043BE70, (void*)GuiWidget_Deinit, (void*)func_0041F080, (void*)func_0041F070, (void*)func_0043BDE0, (void*)func_0041EBF0, (void*)func_0041E330, (void*)func_0041E2B0, (void*)func_00293950, (void*)GuiWidget_Draw, (void*)func_0041E230, (void*)GuiWidget_Update, (void*)GuiWidget_OnEvent, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)func_0043BB80, (void*)func_0043BB90, (void*)0x0 };
+void * const D_004E0F40[24] = { (void*)0x0, (void*)0x0, (void*)func_0043BB20, (void*)GuiScrollBarWidget_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiScrollBarWidget_Wake, (void*)GuiWidget_BaseSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)func_00293950, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiWidget_OnEvent, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiScrollBarWidget_GetClassName, (void*)func_0043BB90, (void*)0x0 };
 #pragma pop /* merge_units */
 /* merge_units: end func_0043BB20 */

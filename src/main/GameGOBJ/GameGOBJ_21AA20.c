@@ -81,7 +81,7 @@ static inline void merge_flush_func_0021AA20(void) {}
 #pragma cplusplus on
 
 /* GOBJ virtual 7: notify attached object, update, register. */
-DEFINE_GOBJ_V07_REGISTER(func_0021AB00)
+DEFINE_GOBJ_V07_REGISTER(cGameGOBJ_DeactivateWithPart)
 #pragma pop /* merge_units */
 /* merge_units: end func_0021AB00 */
 
@@ -90,6 +90,6 @@ DEFINE_GOBJ_V07_REGISTER(func_0021AB00)
 #pragma cplusplus on
 
 /* GOBJ virtual 6: notify attached object, update, call slot 47. */
-DEFINE_GOBJ_V06_UPDATE(func_0021AB60)
+DEFINE_GOBJ_V06_UPDATE(cGameGOBJ_ActivateWithPart)
 #pragma pop /* merge_units */
 /* merge_units: end func_0021AB60 */

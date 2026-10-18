@@ -40,7 +40,7 @@ static inline void Tag4Copy(char* d, const char* s) {
     }
 }
 
-void func_004CC5E0(void) {
+void StaticInit_PhysicsTuning(void) {
     D_004A0318 = D_004A0500;
     D_004A0320 = 1.74f;
     D_004A0328 = 0.0025000002f;

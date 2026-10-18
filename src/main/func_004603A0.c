@@ -6,15 +6,15 @@ int Gui_GetScreenList();
 int Gui_GetScreenStack();                                
 int GuiStack_SwapScreens(int, char * , int);                  
 int GuiManager_AddWidget(int, int);                          
-int func_0041EFA0(char * );                            
+int GuiWidget_BaseWake(char * );                            
 int GuiFactory_CreateWidget(char *);                             
-int func_0045F4D0(char * );                            
-int func_0045F860(char * );                            
+int GuiEndGameAwards_Next(char * );                            
+int GuiEndGameAwards_Layout(char * );                            
 int GuiNewParts_BuildBonusList();                                  
-int func_00460450(char * );                            
+int GuiEndGameAwards_QueueVoices(char * );                            
 extern char D_004C2460;
 
-void func_004603A0(char * arg0) {
+void GuiEndGameAwards_Wake(char * arg0) {
     int temp_v0;
 
     GuiNewParts_BuildBonusList();
@@ -25,10 +25,10 @@ void func_004603A0(char * arg0) {
             GuiStack_SwapScreens(Gui_GetScreenStack(), arg0, temp_v0);
         }
     } else {
-        func_0041EFA0(arg0);
-        func_00460450(arg0);
+        GuiWidget_BaseWake(arg0);
+        GuiEndGameAwards_QueueVoices(arg0);
         F_(arg0, 0x204, signed char) = 0;
-        func_0045F860(arg0);
-        func_0045F4D0(arg0);
+        GuiEndGameAwards_Layout(arg0);
+        GuiEndGameAwards_Next(arg0);
     }
 }

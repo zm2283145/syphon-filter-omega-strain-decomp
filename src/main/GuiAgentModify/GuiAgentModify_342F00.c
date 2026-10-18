@@ -16,16 +16,16 @@ typedef struct { char pad[0x68]; unsigned int a68; } M342F00;
 typedef struct { char pad[0xB68]; unsigned char aB68; char padB69[9]; unsigned char aB72; } A342F00;
 extern G342F00* D_004FFC04;
 extern char D_004FFB50[];
-extern void func_0041EFA0(S342F00* o);
+extern void GuiWidget_BaseWake(S342F00* o);
 extern void GuiWidget_SendEvent(void* self, void* w, int a, int b, int c);
 extern M342F00* Gui_GetScreenStack(void);
 extern A342F00* Agent_GetSelected(void* list, int idx);
-void func_00342F00(S342F00* o)
+void GuiAgentModify_Wake(S342F00* o)
 {
     M342F00* m;
     A342F00* ag;
     D_004FFC04->a2F = 1;
-    func_0041EFA0(o);
+    GuiWidget_BaseWake(o);
     if (o->a78) GuiWidget_SendEvent(o, o->a78, 10, 0, 0);
     if (o->a78) o->a78->a14 &= ~2;
     m = Gui_GetScreenStack();
@@ -54,7 +54,7 @@ typedef struct {
 } Sub;
 typedef struct { char pad[0x60]; Sub sub; } P;
 typedef struct { char pad[0x8C]; P *p; } O;
-void func_00343680(O* o, int idx); /* gsynth: defined below */
+void GuiAgentModify_AdvancePatchB(O* o, int idx); /* gsynth: defined below */
 #pragma cplusplus on
 struct W_342FA0 {
     virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
@@ -81,14 +81,14 @@ extern char D_004A9870[]; extern char D_004A9C40[]; extern char D_004A7520[]; ex
 extern O_342FA0* D_005331D0;
 void GuiWidget_Init(O_342FA0* o);
 int Appearance_FindPairByType(void* p, char* name);
-void func_003437C0(O_342FA0* o, int v);
+void GuiAgentModify_AdvancePatchA(O_342FA0* o, int v);
 #if 0 /* merge_units */
-void func_00343680(O_342FA0* o, int v);
+void GuiAgentModify_AdvancePatchB(O_342FA0* o, int v);
 #endif /* merge_units */
-#define func_00343680(a0, a1) (func_00343680((O *)(a0), (a1))) /* merge_units */
+#define GuiAgentModify_AdvancePatchB(a0, a1) (GuiAgentModify_AdvancePatchB((O *)(a0), (a1))) /* merge_units */
 
 W_342FA0* GuiWidget_FindChildByName(void* o, char* name);
-void func_00341170(O_342FA0* o, W_342FA0* w);
+void GuiAgentModify_GroupHide(O_342FA0* o, W_342FA0* w);
 void func_00345020(void);
 #if 0 /* merge_units */
 A_342FA0* Agent_GetSelected(void* p, int i);
@@ -100,12 +100,12 @@ char* AgentData_GetRankText(A_342FA0* a);
 void GuiTextWidget_SetText(W_342FA0* w, char* s, int f);
 int Loc_FindKeyThunk(char* k);
 char* Loc_GetTextById(int id);
-void func_00340850(O_342FA0* o);
-void func_00342FA0(O_342FA0* o);
+void GuiAgentModify_UpdateAvailability(O_342FA0* o);
+void GuiAgentModify_Init(O_342FA0* o);
 }
 static inline W_342FA0* Cast_342FA0(W_342FA0* w, void* t) { return w && w->IsA(t) ? w : 0; }
 
-void func_00342FA0(O_342FA0* o)
+void GuiAgentModify_Init(O_342FA0* o)
 {
     W_342FA0* p;
     W_342FA0* a;
@@ -117,9 +117,9 @@ void func_00342FA0(O_342FA0* o)
     o->f120 = Appearance_FindPairByType(o->f8C->fA0, "PATC1");
     o->f124 = Appearance_FindPairByType(o->f8C->fA0, "PATC2");
     o->f128 = Appearance_FindPairByType(o->f8C->fA0, "PATC3");
-    func_003437C0(o, o->f120);
-    func_003437C0(o, o->f124);
-    func_00343680(o, o->f128);
+    GuiAgentModify_AdvancePatchA(o, o->f120);
+    GuiAgentModify_AdvancePatchA(o, o->f124);
+    GuiAgentModify_AdvancePatchB(o, o->f128);
     o->f12C = Cast_342FA0(GuiWidget_FindChildByName(o, "leftarm"), D_004A9870);
     o->f130 = Cast_342FA0(GuiWidget_FindChildByName(o, "rightarm"), D_004A9870);
     o->f134 = Cast_342FA0(GuiWidget_FindChildByName(o, "back"), D_004A9870);
@@ -136,10 +136,10 @@ void func_00342FA0(O_342FA0* o)
     o->f88 = Cast_342FA0(GuiWidget_FindChildByName(o, "beard"), D_004A9870);
     o->f80 = Cast_342FA0(GuiWidget_FindChildByName(o, "bitmap_preview"), D_004B88F0);
     o->f84 = Cast_342FA0(GuiWidget_FindChildByName(o, "value_name"), D_004A7520);
-    func_00341170(o, o->f144);
-    func_00341170(o, o->f148);
-    func_00341170(o, o->f14C);
-    func_00341170(o, o->f150);
+    GuiAgentModify_GroupHide(o, o->f144);
+    GuiAgentModify_GroupHide(o, o->f148);
+    GuiAgentModify_GroupHide(o, o->f14C);
+    GuiAgentModify_GroupHide(o, o->f150);
     p = Cast_342FA0(GuiWidget_FindChildByName(o, "playercharacter"), D_004A9BF0);
     if (p) {
         D_005331D0 = o;
@@ -155,9 +155,9 @@ void func_00342FA0(O_342FA0* o)
         GuiTextWidget_SetText(b, Loc_GetTextById(Loc_FindKeyThunk("Rank_00") + 1), 0);
     }
     if (o->f7C) GuiTextWidget_SetText(o->f7C, D_004B9F20, 0);
-    func_00340850(o);
+    GuiAgentModify_UpdateAvailability(o);
 }
-#undef func_00343680 /* merge_units */
+#undef GuiAgentModify_AdvancePatchB /* merge_units */
 #undef Agent_GetSelected /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00342FA0(void) {}
@@ -176,7 +176,7 @@ extern char D_0055DDA0[];
 extern int func_004027E0(void *t, __int128 key);
 extern void func_004022E0(void *t, __int128 key, E *e, short *a, short *b, unsigned char u, signed char s);
 
-void func_00343680(O *o, int idx)
+void GuiAgentModify_AdvancePatchB(O *o, int idx)
 {
     Key k;
     char *lo, *hi, *b;

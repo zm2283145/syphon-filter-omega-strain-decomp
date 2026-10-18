@@ -36,10 +36,10 @@ int sprintf(char* buf, const char* fmt, ...);
 Line_4624E0* func_00462650(Line_4624E0* line, char* voice, int duration);
 void func_00462620(void* vec, Line_4624E0* line);
 W_4624E0* GuiWidget_FindChildByName(void* self, char* name);
-int func_00330C30(void* p, unsigned char f);
-void func_004624E0(Self_4624E0* self);
+int Awards_GetParTime(void* p, unsigned char f);
+void GuiEndGameObjectives_Wake(Self_4624E0* self);
 
-void func_004624E0(Self_4624E0* self)
+void GuiEndGameObjectives_Wake(Self_4624E0* self)
 {
     Agent_4624E0* agent;
     int n;
@@ -59,7 +59,7 @@ void func_004624E0(Self_4624E0* self)
     if (agent->bB71) {
         int r;
         if (w) w->flags &= ~2;
-        r = func_00330C30(D_004FFC90, D_005721C8);
+        r = Awards_GetParTime(D_004FFC90, D_005721C8);
         if ((int)agent->fD4 <= r) {
             Line_4624E0 line;
             func_00462650(&line, D_004C26C8, 0x1E);

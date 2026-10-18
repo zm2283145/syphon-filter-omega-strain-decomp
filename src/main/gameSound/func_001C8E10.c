@@ -61,7 +61,7 @@ int strlen(const char*);
 int String_CompareNoCase(const char*, const char*);
 void String_Copy(char*, const char*);
 int Hog_FindFileNoCase(Arc_8E10*, char*, int);
-int func_0036D520(Arc_8E10*, int);
+int Hog_GetMemberOffset(Arc_8E10*, int);
 void SoundMgr_GetVolumePan(Self_8E10*, Req_8E10*, int*, int*);
 void snd_StopVAGStreamsInGroup(int);
 int snd_GetMasterVolume(int);
@@ -75,7 +75,7 @@ int snd_PlayVAGStream(int, int, int, int, int, int, int, int, int, long long, vo
 int snd_RestartVAGStream(int, int, int, int, int, int, void (*)(void), unsigned long long);
 }
 
-static inline int Off(Arc_8E10* a, int idx) { return *(int*)(a->f148 + 0x10) + func_0036D520(a, idx); }
+static inline int Off(Arc_8E10* a, int idx) { return *(int*)(a->f148 + 0x10) + Hog_GetMemberOffset(a, idx); }
 static inline bool IsIdle(Req_8E10* r) { return r->state == 0; }
 static inline bool IsDone(Req_8E10* r) { return r->state == 1 || r->state == 3; }
 static inline bool IsActive(Req_8E10* r) { return !IsIdle(r) && !IsDone(r); }

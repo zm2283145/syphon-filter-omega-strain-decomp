@@ -18,7 +18,7 @@ char* Str_Duplicate(char* s);
 void String_Copy(char* d, void* s);
 int String_CompareNoCase(char* a, char* b);
 void* memcpy(void* d, const void* s, unsigned int n);
-void func_0036E5D0(void* h);
+void Resource_Construct(void* h);
 void func_0036DEC0(void* h);
 void FileMan_Release(void* h, int f);
 void FileHal_Dtor(void* p, int f);
@@ -93,7 +93,7 @@ struct ScriptFile {
     int len;
     u8 ok;
 
-    ScriptFile(char* name, int sz) { func_0036E5D0(hog); file = 0; size = sz; Open(name, 0); }
+    ScriptFile(char* name, int sz) { Resource_Construct(hog); file = 0; size = sz; Open(name, 0); }
     void Open(char* name, int mode);
     __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~ScriptFile() {
         func_0036DEC0(hog);

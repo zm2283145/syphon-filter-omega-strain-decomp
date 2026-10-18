@@ -17,10 +17,10 @@
 
 
 extern void* D_00533760;
-extern int func_0035B390(void* p);
+extern int GuiScoresEquip_UpdateFigures(void* p);
 
-int func_0035DF30(void) {
-    return func_0035B390(D_00533760);
+int GuiScoresEquip_FigureCallback(void) {
+    return GuiScoresEquip_UpdateFigures(D_00533760);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0035DF30(void) {}

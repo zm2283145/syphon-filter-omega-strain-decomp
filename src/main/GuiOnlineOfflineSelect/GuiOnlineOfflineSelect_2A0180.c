@@ -17,7 +17,7 @@
 char D_004AAF50[] = "GuiOnlineOfflineSelect";   /* "GuiOnlineOfflineSelect" */
 
 /* Class name getter: "GuiOnlineOfflineSelect". */
-char* func_002A0180(void) {
+char* GuiOnlineOfflineSelect_GetClassName(void) {
     return D_004AAF50;
 }
 #pragma pop /* merge_units */

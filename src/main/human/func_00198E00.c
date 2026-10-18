@@ -7,7 +7,7 @@ static inline void Make_198E00(H_198E00* h, N_198E00* o)
     h->p = (o->id == -1) ? o : 0;
     h->id = o->id;
 }
-void func_00198E00(H_198E00* out, R_198E00* r)
+void Footstep_GroupMatches(H_198E00* out, R_198E00* r)
 {
     H_198E00 a;
     H_198E00 b;

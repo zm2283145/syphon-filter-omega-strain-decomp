@@ -89,17 +89,17 @@ typedef struct GuiWidget424C50 {
 } GuiWidget424C50;
 
 /*
- * Object built by func_003F9380 (>= 0x237 bytes). Two sub-objects at 0x6C and
- * 0x190 are initialized by func_0036E5D0; the one at 0x190 is then filled from
+ * Object built by MoviePlayer_ctor (>= 0x237 bytes). Two sub-objects at 0x6C and
+ * 0x190 are initialized by Resource_Construct; the one at 0x190 is then filled from
  * the constructor's source record by func_0036DFB0.
  */
 typedef struct Unk3F9380 {
     int unk00[20];                 /* 0x00 */
     char pad50[0x1C];
-    char unk6C[0x11C];             /* 0x6C: func_0036E5D0 object */
+    char unk6C[0x11C];             /* 0x6C: Resource_Construct object */
     int unk188;                    /* 0x188 */
     int unk18C;                    /* 0x18C */
-    char unk190[0x9C];             /* 0x190: func_0036E5D0 object */
+    char unk190[0x9C];             /* 0x190: Resource_Construct object */
     int unk22C;                    /* 0x22C */
     char unk230;                   /* 0x230 */
     char unk231;                   /* 0x231 */
@@ -208,7 +208,7 @@ typedef struct Unk409750 {
     char unk34;                    /* 0x34 */
 } Unk409750;
 
-/* Object with the getters/setters at func_00423540..func_004235B0. */
+/* Object with the getters/setters at func_00423540..GuiArrayWidget_SetTable. */
 typedef struct Unk423540 {
     char pad00[0x70];
     int unk70;                     /* 0x70 */
@@ -219,7 +219,7 @@ typedef struct Unk423540 {
     int unk84;                     /* 0x84 */
 } Unk423540;
 
-/* Object used by func_003E96F0..HudTracker_Attach (>= 0x85 bytes). */
+/* Object used by HudLockTracker_Draw..HudTracker_Attach (>= 0x85 bytes). */
 typedef struct Unk3E96F0 {
     char pad00[0x60];
     int unk60;                     /* 0x60: handle passed to IeElement_Fade/IeElement_EvaluateAt */
@@ -391,7 +391,7 @@ typedef struct L4Elem18Vec {
     L4Elem18* data;                /* 0x08 */
 } L4Elem18Vec;
 
-/* Object with a container at +0x20 (func_003CAC40). */
+/* Object with a container at +0x20 (Script_AddChild). */
 typedef struct Unk3CAC40 {
     char pad00[0x20];
     char unk20[0xC];               /* 0x20: list with its sentinel at +4 */
@@ -455,7 +455,7 @@ typedef struct Unk3D28D0 {
     void* vtable;                  /* 0x10 */
 } Unk3D28D0;
 
-/* Object with a handle at +0x74 and a word at +0x78 (func_003E7EB0 / IeElement_SetText). */
+/* Object with a handle at +0x74 and a word at +0x78 (IeElement_SetData / IeElement_SetText). */
 typedef struct Unk3E7EB0 {
     char pad00[0x74];
     int unk74;                     /* 0x74 */

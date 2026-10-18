@@ -8,7 +8,7 @@ typedef struct {
     char p1044[0xC]; int max1050; int max1054; char p1058[8]; int f1060;
 } R37B000;
 /* Frame flip: keeps the peaks, swaps buffers, snapshots the current quad and clears the counters. */
-void func_0037B000(R37B000* r)
+void Video_RollFrameStats(R37B000* r)
 {
     int i;
     r->max1050 = r->max1050 > r->f102C ? r->max1050 : r->f102C;

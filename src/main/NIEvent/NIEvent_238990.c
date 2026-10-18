@@ -206,7 +206,7 @@ void* Mem_Alloc(int pool, int size, char* file, int line);
 
 int Pop_FindTag(PopReader_2390A0* r, int tag);
 }
-extern "C" void func_002390A0(PopReader_2390A0* r)
+extern "C" void NiEvent_ReadSoundNames(PopReader_2390A0* r)
 {
     int mis;
     D_004F7C80 = 0;

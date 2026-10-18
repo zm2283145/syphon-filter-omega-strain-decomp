@@ -8,10 +8,10 @@ public:
     char pad[0x78];
     Sub3D3A0* sub;
 };
-extern "C" void func_0041EFA0(C3D3A0* self);
+extern "C" void GuiWidget_BaseWake(C3D3A0* self);
 extern "C" void GuiScreen_Wake(C3D3A0* self)
 {
-    func_0041EFA0(self);
+    GuiWidget_BaseWake(self);
     self->Slot23();
     if (self->sub)
         self->sub->state = -1;

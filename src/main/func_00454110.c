@@ -7,6 +7,6 @@
 #include "types.h"
 
 
-char* func_00454110(void) {
+char* GuiRadioLog_GetClassName(void) {
     return "GuiRadioLog";
 }

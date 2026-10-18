@@ -2512,7 +2512,7 @@ extern int cObjectiveMan_v0B();
 #define cObjectiveMan_v0B() (cObjectiveMan_v0B()) /* merge_units */
 
 extern int cObjectiveMan_v0C();
-extern void func_0012ECE0();
+extern void GObj_GetID();
 extern void func_0012ECF0();
 extern void func_0012ED00();
 extern void func_0012ED10();
@@ -2700,7 +2700,7 @@ static inline void merge_flush_func_00228050(void) {}
 
 extern "C" {
 Tracked* Handle_Resolve(WeakRef* self);
-int func_00273210(void*, int*, void*, char*);
+int HudMarkers_SetMapObject(void*, int*, void*, char*);
 #if 0 /* merge_units */
 int Event_Construct(void*, char*);
 #endif /* merge_units */
@@ -2724,7 +2724,7 @@ extern char D_0051F0B0;
 }
 
 struct ObjMap228_00228190 {
-    void Add(int* key, void* o, char* n) { func_00273210(this, key, o, n); }
+    void Add(int* key, void* o, char* n) { HudMarkers_SetMapObject(this, key, o, n); }
 };
 struct Mgr228_00228190 { char pad[0x90]; ObjMap228_00228190 map; };
 #if 0 /* merge_units */

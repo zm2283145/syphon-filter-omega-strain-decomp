@@ -13,7 +13,7 @@ extern void func_003B41E0(void*, void*, void*, int, int, void*, int, int, float,
 extern void MotionSlider_RegisterNode(void*, void*, void*, void*);
 extern void func_003B28F0(void*, int);
 extern float Math_DegToRad(float);
-extern void* func_0017DE50(void*, float, float, float);
+extern void* Camera_ShakeMatrix(void*, float, float, float);
 extern void func_003B3B20(void*, void*, void*, int, void*, int);
 extern void func_001F4470(void*);
 extern void func_001F4460(void*, float, float);
@@ -57,10 +57,10 @@ void func_002064D0(void* p0)
     B30 v40;
     void* t1;
     void* t2;
-    func_003B41E0(&v230, CanonicalKey_Construct(&v290, D_004A3A20), p0, 0, 1, func_0017DE50(&v280, 0.0f, 0.0f, 0.0f), 2, 1, 0.0f, 1.0f, 0);
+    func_003B41E0(&v230, CanonicalKey_Construct(&v290, D_004A3A20), p0, 0, 1, Camera_ShakeMatrix(&v280, 0.0f, 0.0f, 0.0f), 2, 1, 0.0f, 1.0f, 0);
     MotionSlider_RegisterNode(&v34C, p0, CanonicalKey_Construct(&v2C0, "animRunRollBackRght_Rght"), &v230);
     func_003B28F0(&v230, -1);
-    func_003B3B20(&v170, CanonicalKey_Construct(&v1D0, "animRunRollBackRght_Rght"), p0, 4, func_0017DE50(&v1C0, 0.0f, 0.0f, Math_DegToRad(-90.0f)), 2);
+    func_003B3B20(&v170, CanonicalKey_Construct(&v1D0, "animRunRollBackRght_Rght"), p0, 4, Camera_ShakeMatrix(&v1C0, 0.0f, 0.0f, Math_DegToRad(-90.0f)), 2);
     MotionSlider_RegisterNode(&v348, p0, CanonicalKey_Construct(&v200, "animRunRollBackRght_Back"), &v170);
     func_003B28F0(&v170, -1);
     func_001F4470(&v338);

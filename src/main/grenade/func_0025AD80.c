@@ -253,7 +253,7 @@ float Math_CosThunk(float);
 float Math_SinThunk(float);
 void Mtx44_SetRotation(M* m, float a, float b, float c, float d, float e, float f, float g, float h, float i);
 void Blast_Prepare(Obj* obj, int dmg, float fdmg, float r0, float r1, unsigned char flag, V* at, unsigned char skipHumans, int quiet);
-void func_00231F00(M* m, float a, float b);
+void Game_SpawnLight(M* m, float a, float b);
 int* SpecFx_GetEffectDef(int id);
 void DecalMgr_AddBloodDecal(void* r, V* p, int id, int z, float f);
 void* Mem_Alloc(int pool, int size, char* file, int line);
@@ -530,7 +530,7 @@ extern "C" void Projectile_Update(Projectile* s, float dt)
             if (s->rec->kind == 4) { r8 /= 2; r4 /= 2; }
             V b = ident.r3;
             Blast_Prepare(HGet(&s->owner), s->rec->d64, D_0048AF20, (float)r4, (float)r8, 1, &b, 0, 1);
-            func_00231F00(&ident, 10.0f, 0.5f);
+            Game_SpawnLight(&ident, 10.0f, 0.5f);
             int id = *SpecFx_GetEffectDef(0x25);
             if (id > -1) {
                 int z = 0;

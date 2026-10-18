@@ -67,7 +67,7 @@ extern unsigned char D_005721C8;
 extern char D_004DAF10[];
 static inline unsigned char IsLocal_1880(void) { unsigned char v; if (D_005721C8) v = D_005721C0; else v = 1; return v; }
 /* send a trigger event (type 7) to the linked target when networked */
-int func_00171880(Obj_1880* self, int arg)
+int Hotbox_Type12BuddyClimb(Obj_1880* self, int arg)
 {
     if (D_005721C8) {
         Msg_1880 m;

@@ -68,7 +68,7 @@ extern void ScriptMgr_InitClient(char*);
 extern void PartsTable_Load(int);
 extern void ArchiveList_CloseNamed(char*, char*);
 extern void ManUtils_LoadSKL(char*);
-extern void func_0036B3B0(int, int, int);
+extern void Heap_AllocSlot(int, int, int);
 extern void func_0042C1E0(void);
 #pragma opt_propagation off
 void App_BindIopRpc(O169* o) {
@@ -89,7 +89,7 @@ void App_BindIopRpc(O169* o) {
         ArchiveList_CloseNamed(arc, buf);
     }
     ManUtils_LoadSKL(D_0055DDA0);
-    func_0036B3B0(2, 0xC1C00, 16);
+    Heap_AllocSlot(2, 0xC1C00, 16);
     func_0042C1E0();
     o->b278 = 1;
 }

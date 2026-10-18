@@ -31,7 +31,7 @@ extern void func_003A3590(It3430* out, void* list);
 extern void func_003A3550(It3430* out, void* list);
 extern It3430* func_003A3580(It3430* dst, It3430* src);
 
-int func_003A3430(Mgr3430* m, Key3430* key)
+int ParticleDefs_FindByName(Mgr3430* m, Key3430* key)
 {
     It3430 it;
     It3430 cb;

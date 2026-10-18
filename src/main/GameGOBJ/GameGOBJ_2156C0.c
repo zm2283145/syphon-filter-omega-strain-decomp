@@ -96,7 +96,7 @@ void func_00215F30(void* v);
 void func_00146020(void* v);
 void func_001C10A0(void* v);
 void func_00173910(void* v);
-void func_0036E5D0(void* m);
+void Resource_Construct(void* m);
 void func_00211980(Lift_215700* self);
 int func_00211DA0(void);
 void func_002EC2A8(int a);
@@ -116,8 +116,8 @@ static inline void ActInit_215700(Act_215700* p)
 {
     p->h24.v = -2;
     p->w20 = 0;
-    func_0036E5D0(p->memberA);
-    func_0036E5D0(p->memberB);
+    Resource_Construct(p->memberA);
+    Resource_Construct(p->memberB);
     p->id = -1; p->mask = -1; p->w20 = 0; p->h24 = *(H_215700*)&HT_215700();
     p->w30 = 0; p->w34 = 0; p->w38 = 0; p->h184 = -1; p->w180 = 0; p->b186 = 0;
 }
@@ -138,8 +138,8 @@ extern "C" Lift_215700* Lift_Ctor(Lift_215700* self, int a, Reader_215700* r)
         Act_215700* p = &self->snd[0];
         self->snd[0].h24.v = -2;
         self->snd[0].w20 = 0;
-        func_0036E5D0(p->memberA);
-        func_0036E5D0(p->memberB);
+        Resource_Construct(p->memberA);
+        Resource_Construct(p->memberB);
         p->id = -1; p->mask = -1; p->w20 = 0; p->h24 = *(H_215700*)&HT_215700();
         p->w30 = 0; p->w34 = 0; p->w38 = 0; p->h184 = -1; p->w180 = 0; p->b186 = 0;
     }
@@ -147,8 +147,8 @@ extern "C" Lift_215700* Lift_Ctor(Lift_215700* self, int a, Reader_215700* r)
         Act_215700* p = &self->snd[1];
         self->snd[1].h24.v = -2;
         self->snd[1].w20 = 0;
-        func_0036E5D0(p->memberA);
-        func_0036E5D0(p->memberB);
+        Resource_Construct(p->memberA);
+        Resource_Construct(p->memberB);
         p->id = -1; p->mask = -1; p->w20 = 0; p->h24 = *(H_215700*)&HT_215700();
         p->w30 = 0; p->w34 = 0; p->w38 = 0; p->h184 = -1; p->w180 = 0; p->b186 = 0;
     }
@@ -156,8 +156,8 @@ extern "C" Lift_215700* Lift_Ctor(Lift_215700* self, int a, Reader_215700* r)
         Act_215700* p = &self->snd[2];
         self->snd[2].h24.v = -2;
         self->snd[2].w20 = 0;
-        func_0036E5D0(p->memberA);
-        func_0036E5D0(p->memberB);
+        Resource_Construct(p->memberA);
+        Resource_Construct(p->memberB);
         p->id = -1; p->mask = -1; p->w20 = 0; p->h24 = *(H_215700*)&HT_215700();
         p->w30 = 0; p->w34 = 0; p->w38 = 0; p->h184 = -1; p->w180 = 0; p->b186 = 0;
     }
@@ -165,8 +165,8 @@ extern "C" Lift_215700* Lift_Ctor(Lift_215700* self, int a, Reader_215700* r)
         Act_215700* p = &self->snd[3];
         self->snd[3].h24.v = -2;
         self->snd[3].w20 = 0;
-        func_0036E5D0(p->memberA);
-        func_0036E5D0(p->memberB);
+        Resource_Construct(p->memberA);
+        Resource_Construct(p->memberB);
         p->id = -1; p->mask = -1; p->w20 = 0; p->h24 = *(H_215700*)&HT_215700();
         p->w30 = 0; p->w34 = 0; p->w38 = 0; p->h184 = -1; p->w180 = 0; p->b186 = 0;
     }

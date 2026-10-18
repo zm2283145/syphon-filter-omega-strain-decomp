@@ -16,7 +16,7 @@
  */
 
 
-float func_0017DD00(float f12) {
+float VecCurve_Retime(float f12) {
     return f12;
 }
 /* merge_units: generate this block's code under its own pragmas */

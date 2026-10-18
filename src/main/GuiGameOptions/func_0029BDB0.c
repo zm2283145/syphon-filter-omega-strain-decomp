@@ -5,7 +5,7 @@
 int PlayerSlots_Get(int);                             
 extern unsigned char D_005721C8;
 
-int func_0029BDB0(void) {
+int GuiGameOptions_GetPlayers(void) {
     int var_s1;
     int var_s0;
 

@@ -130,7 +130,7 @@ extern int WeaponInv_SlotOfItem(int key);
 
 #pragma opt_rotateloops off
 
-int func_00254CA0(Pack_4CA0* s, int id, int back)
+int Backpack_CycleItem(Pack_4CA0* s, int id, int back)
 {
     Slot_4CA0* p; int i;
     int t;

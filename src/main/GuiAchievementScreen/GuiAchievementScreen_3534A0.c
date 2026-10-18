@@ -13,7 +13,7 @@ extern O3534A0 *GuiManager_FindOrLoad(void *mgr, char *type, char *name);
 extern void String_CtorCStr_13B480(Str3534A0 *s, char *c);
 extern void func_0013D680(void *dst, Str3534A0 *s);
 extern void String_Dtor(Str3534A0 *s, int flags);
-O3534A0 *func_003534A0(unsigned char kind)
+O3534A0 *GuiPersonnel_OpenAchievement(unsigned char kind)
 {
     char *name;
     char *text;
@@ -67,15 +67,15 @@ extern int GuiTextListWidget_GetItemId(int list);
 extern char* String_CStr(void* str);
 extern void* Gui_GetScreenStack(void);
 extern void GuiWidget_SendEvent(void* self, void* mgr, int a, int b, int c);
-extern void func_003569F0(void* self, char* s, int a, int b, int c, int d);
-void func_003535D0(S3535D0* o, int arg)
+extern void GuiPersonnelScreen_OpenMenu(void* self, char* s, int a, int b, int c, int d);
+void GuiAchievementScreen_Select(S3535D0* o, int arg)
 {
     int i = GuiTextListWidget_GetItemId(o->a48);
     if (i == -1 || i >= o->a70) {
         GuiWidget_SendEvent(o, Gui_GetScreenStack(), 0x10, 4, 0);
         return;
     }
-    func_003569F0(o, String_CStr(o->s80), o->a7C, arg, o->a64, i + o->a68);
+    GuiPersonnelScreen_OpenMenu(o, String_CStr(o->s80), o->a7C, arg, o->a64, i + o->a68);
     GuiWidget_SendEvent(o, Gui_GetScreenStack(), 0x10, 0, 0);
 }
 #pragma pop /* merge_units */
@@ -85,11 +85,11 @@ void func_003535D0(S3535D0* o, int arg)
 #pragma push /* merge_units */
 typedef struct { int pad[3]; int aC; int pad10; } E3536A0;
 typedef struct { char pad[0x48]; int a48; char pad4C[0x28]; E3536A0* a74; } S3536A0;
-extern void func_00356850(S3536A0* o, int i, int v);
-void func_003536A0(S3536A0* o)
+extern void GuiPersonnelScreen_ShowItem(S3536A0* o, int i, int v);
+void GuiAchievementScreen_Show(S3536A0* o)
 {
     int i = GuiTextListWidget_GetItemId(o->a48);
-    if (i != -1) func_00356850(o, i, ((E3536A0*)((char*)o->a74 + i * 20))->aC);
+    if (i != -1) GuiPersonnelScreen_ShowItem(o, i, ((E3536A0*)((char*)o->a74 + i * 20))->aC);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003536A0 */
@@ -118,7 +118,7 @@ typedef struct {
 extern "C" void GuiTextListWidget_AddItem(void* t, int id, int i, Mode3700 m);
 
 /* MW folds `c ? 0 : 1` on ints into sltiu; enum constants keep the movz select. */
-extern "C" void func_00353700(O3700* self)
+extern "C" void GuiAchievementScreen_Fill(O3700* self)
 {
     int i;
     for (i = 0; i < self->count; i++) {
@@ -178,14 +178,14 @@ void func_00353790(Obj353* o, char kind, const char* name, int a, int b)
 extern int Agent_GetSelected(void* agents, int index);
 extern char D_004FFB50[];       /* agent list */
 extern void func_00299510(void*);
-extern int func_003334C0(int agent, int a1, void* a2);
-extern void func_00356C70(GuiAchievementScreen*);  /* GuiPersonnelScreen slot 5 */
+extern int AgentData_GetAwardRows(int agent, int a1, void* a2);
+extern void GuiPersonnelScreen_Wake(GuiAchievementScreen*);  /* GuiPersonnelScreen slot 5 */
 
-/* GuiAchievementScreen vtable slot 5: refresh unk6C, pass it with unk7C to the selected agent, then call func_00356C70. */
-void func_00353800(GuiAchievementScreen* self) {
+/* GuiAchievementScreen vtable slot 5: refresh unk6C, pass it with unk7C to the selected agent, then call GuiPersonnelScreen_Wake. */
+void GuiAchievementScreen_Wake(GuiAchievementScreen* self) {
     func_00299510(self->unk6C);
-    func_003334C0(Agent_GetSelected(D_004FFB50, -1), self->unk7C, self->unk6C);
-    func_00356C70(self);
+    AgentData_GetAwardRows(Agent_GetSelected(D_004FFB50, -1), self->unk7C, self->unk6C);
+    GuiPersonnelScreen_Wake(self);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00353800 */
@@ -195,7 +195,7 @@ void func_00353800(GuiAchievementScreen* self) {
 typedef struct { int words[3]; } String_00353850; /* 12-byte short-string-optimized string */
 typedef struct { char pad[0x64]; int unk64; int unk68; char pad6C[0x7C - 0x6C]; unsigned char unk7C; char pad7D[3]; String_00353850 name; } Obj80;
 static const unsigned int dat_004BAF98[2] = { 0x0, 0x0 };
-extern void func_00356CD0(Obj80* self);
+extern void GuiPersonnelScreen_Init(Obj80* self);
 #if 0 /* merge_units */
 extern void String_CtorCStr_13B480(String_00353850* s, const char* text);   /* String(const char*) */
 #endif /* merge_units */
@@ -213,10 +213,10 @@ extern void String_Dtor(String_00353850* s, int flags);           /* ~String */
 
 
 /* Resets the object: base reset, clears the flag, sets the name to ((char*)dat_004BAF98) and zeroes +0x64/+0x68. */
-void func_00353850(Obj80* self)
+void GuiAchievementScreen_Init(Obj80* self)
 {
     String_00353850 tmp;
-    func_00356CD0(self);
+    GuiPersonnelScreen_Init(self);
     self->unk7C = 0;
     String_CtorCStr_13B480(&tmp, ((char*)dat_004BAF98));
     func_0013D680(&self->name, &tmp);

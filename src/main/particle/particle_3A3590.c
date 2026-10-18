@@ -23,7 +23,7 @@ DEFINE_ITER_BEGIN(func_003A3590)
 typedef struct { __int128 q; } Name_3A35C0;
 extern Name_3A35C0 D_0053BAB0;
 extern char String_ToLower(char c);
-extern void func_003A3430(void* self, char* name);
+extern void ParticleDefs_FindByName(void* self, char* name);
 
 void ParticleLib_FindId(void* self, const char* s)
 {
@@ -34,7 +34,7 @@ void ParticleLib_FindId(void* self, const char* s)
     name->q = 0;
     for (i = 0, o = (char*)name; i < 16 && (c = s[i]) != 0 && c != '.'; i++)
         *o++ = String_ToLower(c);
-    func_003A3430(self, (char*)name);
+    ParticleDefs_FindByName(self, (char*)name);
 }
 #pragma opt_propagation reset
 /* merge_units: generate this block's code under its own pragmas */

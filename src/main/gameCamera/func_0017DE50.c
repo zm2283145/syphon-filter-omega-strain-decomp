@@ -12,7 +12,7 @@ typedef struct Float3 {
 
 extern int Random_Next(void);
 
-Float3* func_0017DE50(Float3* v, float x, float y, float z) {
+Float3* Camera_ShakeMatrix(Float3* v, float x, float y, float z) {
     v->x = x;
     v->y = y;
     v->z = z;

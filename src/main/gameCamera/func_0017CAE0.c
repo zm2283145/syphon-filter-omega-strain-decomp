@@ -18,7 +18,7 @@ public:
 extern "C" void func_0017CC60(void*, int);
 extern "C" void* func_00139BC0(int, void*);
 extern "C" void Curve_SetTangents(void*, V4c*, V4c*, V4c*, V4c*, float);
-extern "C" void func_0017CAE0(CamCAE0* c, V4c* a, V4c* b)
+extern "C" void VecCurve_RebaseCurrent(CamCAE0* c, V4c* a, V4c* b)
 {
     V4c t;
     void* n;

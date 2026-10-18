@@ -123,15 +123,15 @@ typedef struct Obj29B920 {
     int mode;
 } Obj29B920;
 void GuiWidget_Update(Obj29B920* o, float dt);
-void func_0026BC20(float f);
+void Tremor_UpdateVibration(float f);
 unsigned long Time_GetMilliseconds(void);
 void func_002996D0(Obj29B920* o, int a);
 void func_0029AE60(Obj29B920* o);
-int func_0029BDB0(void);
+int GuiGameOptions_GetPlayers(void);
 void GuiGameOptions_Update(Obj29B920* o, float dt)
 {
     GuiWidget_Update(o, dt);
-    func_0026BC20(dt / 30.0f);
+    Tremor_UpdateVibration(dt / 30.0f);
     if (o->state == 1) {
         if (Time_GetMilliseconds() - o->t > 8000) {
             func_002996D0(o, 1);
@@ -140,7 +140,7 @@ void GuiGameOptions_Update(Obj29B920* o, float dt)
     if (o->mode == 3) {
         func_0029AE60(o);
     } else if (o->sub != 0 && (o->sub->flags & 4)) {
-        if (func_0029BDB0() < 2) {
+        if (GuiGameOptions_GetPlayers() < 2) {
             o->sub->flags &= ~4;
         }
     }
@@ -170,7 +170,7 @@ typedef struct {
 extern char D_004E1220[];
 extern char D_004DD580[];
 void GuiWidget_ctor(void*);
-void func_0045A7A0(void*);
+void Options_SetDefaults(void*);
 static inline void Req_Init(SoundRequest* p, int type, __int128 name, Voice_BA10* voice, int x180) {
     int tmp; int* r;
     p->type = type;
@@ -188,19 +188,19 @@ G_BA10* GuiGameOptions_Create(G_BA10* self) {
     self->vtbl = D_004E1220;
     self->x48 = -2;
     self->vtbl = D_004DD580;
-    func_0045A7A0(self->cfg);
+    Options_SetDefaults(self->cfg);
     p = &self->r1;
     p->voiceId = -2;
     p->voice = 0;
-    func_0036E5D0(&p->a);
-    func_0036E5D0(&p->b);
+    Resource_Construct(&p->a);
+    Resource_Construct(&p->b);
     Req_Init(p, -1, -1, 0, 0);
     p->x186 = 0;
     p = &self->r2;
     p->voiceId = -2;
     p->voice = 0;
-    func_0036E5D0(&p->a);
-    func_0036E5D0(&p->b);
+    Resource_Construct(&p->a);
+    Resource_Construct(&p->b);
     Req_Init(p, -1, -1, 0, 0);
     p->x186 = 0;
     self->xB4 = 0;
@@ -258,7 +258,7 @@ void GameOptions_QueueDialog(int, char*, char*);
 #define GameOptions_QueueDialog(a0, a1, a2) (GameOptions_QueueDialog((signed char)(a0), (a1), (a2))) /* merge_units */
 
 void func_0012F2D0(Name_BBA0*);
-void func_002C9170(Name_BBA0*, int, int);
+void Hud_FormatPlayerCalloutName(Name_BBA0*, int, int);
 char* func_0012F2A0(Name_BBA0*);
 extern char D_00506440[];
 extern char D_004DD5E0[];
@@ -284,7 +284,7 @@ void func_0029BBA0(void) {
             GameOptions_QueueDialog(1, D_004AA970, 0);
         } else {
             func_0012F2D0(&nm);
-            func_002C9170(&nm, m.id, 0);
+            Hud_FormatPlayerCalloutName(&nm, m.id, 0);
             sprintf(buf, fmt, func_0012F2A0(&nm));
             Game_EndLevel(D_004FFB50, 2);
             GameOptions_QueueDialog(1, D_004AA970, buf);

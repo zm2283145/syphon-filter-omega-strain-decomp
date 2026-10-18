@@ -26,7 +26,7 @@ int Mem_Free();
 
 extern "C" {
 int String_Dtor(int, int);                            
-int func_0038CC70(int);                               
+int ActorModel_Release(int);                               
 int GuiWidget_Deinit();                                  
 extern unsigned char D_00533880;
 }
@@ -50,7 +50,7 @@ extern "C" void func_0045DE80(char * arg0) {
     }
     temp_a0_2 = F_(arg0, 0xD8, int);
     if (temp_a0_2 != 0) {
-        func_0038CC70(temp_a0_2);
+        ActorModel_Release(temp_a0_2);
         temp_s1_2 = F_(arg0, 0xD8, int);
         {
             AllocGuard g;

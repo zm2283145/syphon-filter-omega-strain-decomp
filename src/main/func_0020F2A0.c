@@ -51,8 +51,8 @@ extern "C" SoundEventP* SoundMsg_WrapAction(SoundEventP* ev, Src_F2A0* src) {
     p = &ev->req;
     p->voiceId = -2;
     p->voice = 0;
-    func_0036E5D0(&p->a);
-    func_0036E5D0(&p->b);
+    Resource_Construct(&p->a);
+    Resource_Construct(&p->b);
     Req_Init(p, -1, -1, 0, 0);
     p->x186 = 0;
     if (HGet(src))

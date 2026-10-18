@@ -43,7 +43,7 @@ extern char** D_004F7C70;
 extern int D_004F7C78;
 extern int D_004F7C80;
 extern int D_0048AE28;
-void func_0036E5D0(void* m);
+void Resource_Construct(void* m);
 void SoundAction_CtorVoice(void* action, int kind, char* name, Owner_239610* owner, int x);
 }
 static inline float RdF(Reader_239610* r){ float t = *(float*)r->cur; r->cur += 4; return t; }
@@ -61,8 +61,8 @@ extern "C" Track_239610* NiEventType4_CtorFromStream(Track_239610* self, Reader_
     *(int*)((char*)self + 0x34) = -2;
     *(int*)((char*)self + 0x30) = 0;
     p = &self->snd;
-    func_0036E5D0(p->memberA);
-    func_0036E5D0(p->memberB);
+    Resource_Construct(p->memberA);
+    Resource_Construct(p->memberB);
     p->id = -1;
     p->mask = -1;
     p->w20 = 0;

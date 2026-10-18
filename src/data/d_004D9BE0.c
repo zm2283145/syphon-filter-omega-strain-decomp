@@ -5,6 +5,9 @@ extern void Actor_BasePreLogic();
 extern void Actor_BaseWorldUpdate();
 extern void Actor_VirtualNop();
 extern void Controller_DeathNotice();
+extern void GObj_GetID();
+extern void GObj_GetLifeState();
+extern void GObj_GetWorldMatrix();
 extern void ModelAsset_Draw();
 extern void ModelAsset_Load();
 extern void ModelAsset_SetLocalMatrix();
@@ -22,14 +25,12 @@ extern void Player_GetActiveWeapon();
 extern void Terrain_GetBounds();
 extern void cVUM_GOBJ_v0B();
 extern void cVUM_GOBJ_v0C();
-extern void func_0012ECE0();
 extern void func_0012ED00();
 extern void func_0012ED30();
 extern void func_0012ED40();
 extern void func_0012ED50();
 extern void func_0013E060();
 extern void func_00140E90();
-extern void func_00141850();
 extern void func_00148870();
 extern void func_00153860();
 extern void func_0015BFB0();
@@ -51,7 +52,6 @@ extern void func_00394EE0();
 extern void func_00395050();
 extern void func_003951A0();
 extern void func_00395910();
-extern void func_003CCFF0();
 extern void func_003CD090();
 extern void func_003CD110();
 extern void func_003CD4A0();
@@ -69,7 +69,7 @@ extern void func_003CEA00();
 
 void *D_004D9BE0[68] = {
     0, 0, &func_001747F0, &Object_HandleMessage,
-    &func_0012ECE0, &Object_GetAttachedOrSelf, &func_0015C090, &func_0012ED00,
+    &GObj_GetID, &Object_GetAttachedOrSelf, &func_0015C090, &func_0012ED00,
     &func_003CE810, &func_003CE7D0, &func_0012ED30, &func_0012ED40,
     &func_0012ED50, &cVUM_GOBJ_v0B, &cVUM_GOBJ_v0C, &func_003CEA00,
     &func_00395910, &ModelAsset_Load, &func_003951A0, &Actor_BasePreLogic,
@@ -83,6 +83,6 @@ void *D_004D9BE0[68] = {
     &Object_GetEye, &func_0015C020, &func_00140E90, &func_0015C030,
     &func_0015C040, &func_0015C050, &Node_GetWorldMatrix, &func_003CD4A0,
     &Node_GetLightRefPoint, &PathObj_GetPosition, &Node_GetComponentMatrix, &func_003CD110,
-    &func_003CD090, &func_003CCFF0, &func_0013E060, &func_0015C080,
-    &Actor_ApplyContactDamage, &func_0015C0A0, &func_00141850, &Controller_DeathNotice,
+    &func_003CD090, &GObj_GetWorldMatrix, &func_0013E060, &func_0015C080,
+    &Actor_ApplyContactDamage, &func_0015C0A0, &GObj_GetLifeState, &Controller_DeathNotice,
 };

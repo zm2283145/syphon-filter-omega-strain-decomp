@@ -16,7 +16,7 @@ extern void func_0013D680(String*, String*);
 extern void String_Dtor(String*, int);
 
 /* Sets two string fields and an int. */
-void func_00327C70(Obj84* o, const char* name, const char* desc, int value) {
+void GuiSlideShow_SetReturn(Obj84* o, const char* name, const char* desc, int value) {
     String tmp2;
     String tmp1;
     String_CtorCStr_13B480(&tmp1, name);

@@ -12,7 +12,7 @@ typedef union ScriptArg { int i; float f; void* p; } ScriptArg;
 typedef struct { char data[0x30]; } Rank;
 extern char D_00532B50[];
 extern int Loc_FindKeyThunk(const char* s);           /* string hash */
-extern int func_003337A0(int hash);
+extern int Awards_ResolveUnlock(int hash);
 extern int func_0032EB80(void* registry);
 extern void* Awards_FormatRankTitle(Rank* r, int a, int b, int req, int index, int d);
 extern void func_0032EAD0(void* registry, void* item);
@@ -38,7 +38,7 @@ int Script_cAgentData__RegisterRank_3(ScriptArg* args)
     a1 = *(int*)p1;
     p0[0] = args[0].i;
     a0 = *(int*)p0;
-    req = func_003337A0(Loc_FindKeyThunk((const char*)a2));
+    req = Awards_ResolveUnlock(Loc_FindKeyThunk((const char*)a2));
     func_0032EAD0(D_00532B50, Awards_FormatRankTitle(&r, a0, a1, req, func_0032EB80(D_00532B50), a3));
     return 0;
 }
@@ -63,9 +63,9 @@ extern int Loc_FindKeyThunk(int handle);
 #define Loc_FindKeyThunk(a0) (Loc_FindKeyThunk((const char *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int func_003337A0(int id);
+extern int Awards_ResolveUnlock(int id);
 #endif /* merge_units */
-#define func_003337A0(a0) (func_003337A0((a0))) /* merge_units */
+#define Awards_ResolveUnlock(a0) (Awards_ResolveUnlock((a0))) /* merge_units */
 
 #if 0 /* merge_units */
 extern int Awards_FormatRankTitle(RankRec* rec, int a0, int a1, int id, int index, int flags);
@@ -89,12 +89,12 @@ int Script_cAgentData__RegisterRank_2(RankArgs* args) {
     v1 = w1;
     w0 = args->a0;
     v0 = w0;
-    id = func_003337A0(Loc_FindKeyThunk(v2));
+    id = Awards_ResolveUnlock(Loc_FindKeyThunk(v2));
     func_0032EAD0(D_00532B50, Awards_FormatRankTitle(&rec, v0, v1, id, func_0032EB80(D_00532B50), 0));
     return 0;
 }
 #undef Loc_FindKeyThunk /* merge_units */
-#undef func_003337A0 /* merge_units */
+#undef Awards_ResolveUnlock /* merge_units */
 #undef Awards_FormatRankTitle /* merge_units */
 #undef func_0032EAD0 /* merge_units */
 #pragma pop /* merge_units */
@@ -109,9 +109,9 @@ extern void* Loc_FindKeyThunk(int);
 #define Loc_FindKeyThunk(a0) ((void *)Loc_FindKeyThunk((const char *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int func_003337A0(void*);
+extern int Awards_ResolveUnlock(void*);
 #endif /* merge_units */
-#define func_003337A0(a0) (func_003337A0((int)(a0))) /* merge_units */
+#define Awards_ResolveUnlock(a0) (Awards_ResolveUnlock((int)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
 extern int func_0032EB80(void*);
@@ -141,12 +141,12 @@ int Script_cAgentData__RegisterRank(ScriptArg* args)
     s = *(volatile int*)score;
     name[0] = args[0].i;
     n = *(volatile int*)name;
-    agent = func_003337A0(Loc_FindKeyThunk(0));
+    agent = Awards_ResolveUnlock(Loc_FindKeyThunk(0));
     func_0032EAD0(D_00532B50, Awards_FormatRankTitle(&rank, n, s, agent, func_0032EB80(D_00532B50), 0));
     return 0;
 }
 #undef Loc_FindKeyThunk /* merge_units */
-#undef func_003337A0 /* merge_units */
+#undef Awards_ResolveUnlock /* merge_units */
 #undef func_0032EB80 /* merge_units */
 #undef Awards_FormatRankTitle /* merge_units */
 #undef func_0032EAD0 /* merge_units */

@@ -24,7 +24,7 @@ void func_001C5660(UnkGobj001C5950* self) {
     self->base.unk2C = 0;
 }
 
-void func_001C5670(UnkGobj001C5950* self, float value) {
+void ParticleGob_ScaleBBox(UnkGobj001C5950* self, float value) {
     self->unk70 = value;
 }
 #pragma pop /* merge_units */
@@ -40,7 +40,7 @@ void cMessage_dtor(Msg_1C5680* msg, int flags);
 extern char g_cDisableMsgClass[];
 extern char D_004E0860[];
 void NetMsg_Send(Msg_1C5680* msg, int id, int x);
-void func_001C5680(S_1C5680* self)
+void ParticleGob_Disable(S_1C5680* self)
 {
     if (D_005721C8) {
         Msg_1C5680 msg;

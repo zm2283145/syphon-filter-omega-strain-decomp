@@ -48,7 +48,7 @@ extern char D_004D9DE0[]; extern char D_004DA970[];
 extern char D_0049D8D0[];
 extern unsigned char D_005721C8;
 extern float D_004A03E0;
-void func_0018A910(void* p);
+void MotionTokens_Init(void* p);
 void func_0018A8C0(void* p);
 void func_0018A890(void* p);
 void func_0018A710(void* d, void* s);
@@ -75,7 +75,7 @@ void AnimPriority_Helper0(void* p, int index, unsigned char on);
 void Actor_EnterDeadState(Act_898F0* a);
 void ActionPriority_Reset(void* p, int v);
 void ActionFlags_Clear(void* p);
-void func_0038CBF0(void* p);
+void ActorModel_Deactivate(void* p);
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void EventQueue_Admit(void* p);
 void* Object_GetRootNode(void* p);
@@ -90,7 +90,7 @@ static inline void D3_898F0(void* p) { if (p) func_001BE5A0(p, 0); }
 static inline void D2_898F0(void* p) { if (p) D3_898F0(p); }
 static inline void D1_898F0(void* p) { if (p) D2_898F0(p); }
 static inline void PD_898F0(void* p) { if (p) __destroy_array(p, (void*)func_0018A210, 8, 7); }
-static inline void XInit_898F0(X_898F0* x) { x->kind = 0; func_0018A910(x->pairs); func_0018A8C0(x->tail); }
+static inline void XInit_898F0(X_898F0* x) { x->kind = 0; MotionTokens_Init(x->pairs); func_0018A8C0(x->tail); }
 static inline void XDtor_898F0(X_898F0* p) {
     if (p) {
         void* t = p->tail;
@@ -173,7 +173,7 @@ extern "C" void Actor_Revive(Act_898F0* self)
     ActionPriority_Reset(self->prio, 0);
     ActionFlags_Clear(self->f3248);
     if (self->s3310) self->s3310->f374 = D_004A03E0;
-    func_0038CBF0(self->f60);
+    ActorModel_Deactivate(self->f60);
     {
         unsigned char r = 0;
         Ctl_898F0* c = self->ctl;

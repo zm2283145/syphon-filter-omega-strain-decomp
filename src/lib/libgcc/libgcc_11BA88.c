@@ -37,7 +37,7 @@ DItype func_0011BA88(DFtype a)
 __asm__(".set nomove\n"
         "fptodp = SoftFloat_FloatToDouble\n"
         "dpcmp = SoftFloat_UnpackAndCompare\n"
-        "dpmul = func_0011C268\n"
+        "dpmul = SoftFloat_DoubleMultiply\n"
         "dptoul = func_0011C980\n"
         "__floatdidf = func_0011B7E0\n"
         "dpadd = SoftFloat_DoubleAdd\n"

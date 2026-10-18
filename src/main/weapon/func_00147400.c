@@ -32,7 +32,7 @@ typedef struct {
 
 extern int sprintf(char* buf, const char* fmt, ...);
 extern unsigned char FileMan_LoadFile(WeaponDb_147400* db, void* entry);
-extern Obj_147400* func_00330110(Obj_147400* self, int a, int b);
+extern Obj_147400* Awards_RegisterName(Obj_147400* self, int a, int b);
 extern int func_00147600(void* v, Obj_147400* value);
 extern char D_0049B310[];
 extern char D_0048B2F8[];
@@ -57,7 +57,7 @@ unsigned char WeaponDb_Load(WeaponDb_147400* db)
     }
     if (db->loaded) {
         for (i = 0; i < db->hdr->count; i++) {
-            func_00147600(D_00532B10, func_00330110(&tmp, i, D_004926E0++));
+            func_00147600(D_00532B10, Awards_RegisterName(&tmp, i, D_004926E0++));
             db->recs[i].x138 = 0;
             db->recs[i].x130 = -1;
             db->recs[i].x134 = -1;

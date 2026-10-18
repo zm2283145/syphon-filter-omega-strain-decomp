@@ -36,7 +36,7 @@ typedef struct LNode_001647B0 { int unk0; struct LNode_001647B0* next; struct LN
 typedef struct { char pad[8]; LNode_001647B0* node; char pad2[0x10]; int count; } LOwner_001647B0;
 
 /* Unlinks the owner's current node from its doubly linked list and decrements the count. */
-LNode_001647B0* func_001647B0(LOwner_001647B0* o)
+LNode_001647B0* NpcNodeSearch_PopFront(LOwner_001647B0* o)
 {
     LNode_001647B0* node = o->node;
     LNode_001647B0* prev;

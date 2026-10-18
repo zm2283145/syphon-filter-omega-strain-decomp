@@ -13,15 +13,15 @@
 
 #include "loose03_types.h"
 
-extern void func_00356C70(GuiPersonnelScreen*);   /* GuiPersonnelScreen slot 5 */
-extern int func_0036B250(int);                      /* mem.cc */
-extern int func_0036B3B0(int, int, int);            /* mem.cc */
+extern void GuiPersonnelScreen_Wake(GuiPersonnelScreen*);   /* GuiPersonnelScreen slot 5 */
+extern int Heap_ReleaseSlot(int);                      /* mem.cc */
+extern int Heap_AllocSlot(int, int, int);            /* mem.cc */
 
 /* Calls the base implementation, then two mem.cc functions. */
-int func_00355790(GuiPersonnelScreen* self) {
-    func_00356C70(self);
-    func_0036B250(1);
-    return func_0036B3B0(1, 0x100000, 2048);
+int GuiPersonnelMenu_Wake(GuiPersonnelScreen* self) {
+    GuiPersonnelScreen_Wake(self);
+    Heap_ReleaseSlot(1);
+    return Heap_AllocSlot(1, 0x100000, 2048);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00355790 */
@@ -41,8 +41,8 @@ extern "C" {
 int String_CtorCStr_13B480(...);                 
 int String_Dtor(...);                            
 int func_0013D680(...);                          
-int func_00355490(...);                         
-int func_00356CD0(...);                                  
+int GuiPersonnelMenu_ToggleDetail(...);                         
+int GuiPersonnelScreen_Init(...);                                  
 void **GuiWidget_FindChildByName(...);                  
 int GuiArrayWidget_RowHeight(...);                       
 extern "C" char D_004BB098[];
@@ -56,14 +56,14 @@ static void * const dat_00492C68[2] = { (void*)D_004BB0C8, (void*)0x0 };
 extern char D_004B88F0;
 extern char D_004BB0F8;
 }
-extern "C" void func_003557D0(char * arg0) {
+extern "C" void GuiPersonnelMenu_Init(char * arg0) {
     int sp40[4];
     int sp30[4];
     void **temp_v1;
     void **var_s0;
     char * temp_a0;
 
-    func_00356CD0();
+    GuiPersonnelScreen_Init();
     String_CtorCStr_13B480(sp40, &D_004BB0F8);
     func_0013D680(arg0 + 0x6C, sp40);
     String_Dtor(sp40, 0);
@@ -86,7 +86,7 @@ extern "C" void func_003557D0(char * arg0) {
     F_(arg0, 0xF4, signed char) = 0;
     temp_a0 = (char *)(F_(arg0, 0x48, int));
     GuiArrayWidget_RowHeight(temp_a0, F_(temp_a0, 0x5C, int) - 2);
-    func_00355490(arg0, 0);
+    GuiPersonnelMenu_ToggleDetail(arg0, 0);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003557D0 */

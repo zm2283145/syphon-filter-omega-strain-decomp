@@ -13,8 +13,8 @@ void func_003F5F70(MovieBufs*);
 int func_003F72D0(char*, char*, int, int, int);
 void func_003F7FD0(int, int);
 void func_003F7FF0(void);
-void func_004117A0(char*, int, int, int, int);
-void func_004118E0(char*);
+void MovieSubtitles_SetBuffers(char*, int, int, int, int);
+void MovieSubtitles_SetupPackets(char*);
 void MovieSubtitles_Start(char*);
 }
 extern char D_004BE1C0[];
@@ -46,10 +46,10 @@ extern "C" int Movie_DecodeThread(MovieCtx* self)
             }
             func_003F7FD0(a, b);
             D_0055C5A8 = 0;
-            func_004117A0(D_00571CF0, f[0].y, f[0].uv, f[1].y, f[1].uv);
+            MovieSubtitles_SetBuffers(D_00571CF0, f[0].y, f[0].uv, f[1].y, f[1].uv);
             MovieSubtitles_Start(D_00571CF0);
         }
-        func_004118E0(D_00571CF0);
+        MovieSubtitles_SetupPackets(D_00571CF0);
         func_003F5F70(&D_0055C460);
         func_003F7FF0();
     }

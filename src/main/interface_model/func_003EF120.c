@@ -14,7 +14,7 @@ void Mem_Free(int pool, void* p, char* file, int line);
 It_3EF120 func_003ED850(void* l);
 void func_003ED860(It_3EF120* out, It_3EF120* in);
 It_3EF120 func_003ED870(void* l);
-void func_003813A0(int a, int b, int c);
+void Tex_Release(int a, int b, int c);
 void func_003EF5E0(void* p, int f);
 void String_Dtor(void* p, int f);
 void operator_delete(void* p);
@@ -45,7 +45,7 @@ extern "C" Self_3EF120* func_003EF120(Self_3EF120* self, short f)
         }
         { int i; for (i = 0; i < self->n6E; i++) FreeS_3EF120(self->a84[i], 0x1EB); }
         { int j; for (j = 0; j < self->n6C; j++) FreeV_3EF120(self->a80[j], 0x1EE); }
-        if (self->h18 >= 0) func_003813A0(D_00539248, self->h18, 1);
+        if (self->h18 >= 0) Tex_Release(D_00539248, self->h18, 1);
         if (self->pD0) FreeP_3EF120(self->pD0, 0x1F7);
         if (self->pD4) FreeP_3EF120(self->pD4, 0x1FB);
         if (self->p88) FreeP_3EF120(self->p88, 0x1FE);

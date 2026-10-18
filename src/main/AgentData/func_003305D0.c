@@ -43,7 +43,7 @@ extern ObjectiveRow** func_00330850(ObjectiveRow** it);
 extern int AgentData_TestObjectiveBit(unsigned int* bits, int index);
 extern ObjectiveRow** func_00330820(ObjectiveRowVec* v);
 extern void func_00296FA0(TpList* l);
-extern void func_003334C0(TpAgent* self, unsigned char kind, TpList* l);
+extern void AgentData_GetAwardRows(TpAgent* self, unsigned char kind, TpList* l);
 extern void* func_00299360(TpList* l, short deleteFlag);
 
 static inline int TpNeq(ObjectiveRow* a, ObjectiveRow* b) { return !(a == b); }
@@ -80,7 +80,7 @@ int AgentData_TotalPoints(TpAgent* self) {
         int j;
         func_00296FA0(&l);
         l.flag = 1;
-        func_003334C0(self, i, &l);
+        AgentData_GetAwardRows(self, i, &l);
         for (j = 0; j < l.count; j++) {
             if (l.data[(unsigned)j].flag)
                 total += t->data[(unsigned)j].points;

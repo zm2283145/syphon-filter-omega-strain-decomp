@@ -11,7 +11,7 @@
 #define NULL 0
 #pragma mpwc_relax on
 char *Loc_LookupText(char *);                             
-int func_00426510(int, int, int, char *);                  
+int GuiTextArrayWidget_SetCellText(int, int, int, char *);                  
 int sprintf(char *, char *, int);                             
 extern char D_004C1A38;
 extern char D_004C1A40;
@@ -23,13 +23,13 @@ void func_00455A20(int arg0, int arg1) {
 
     var_s0 = 0;
     do {
-        func_00426510(arg0, 0, var_s0, &D_004C1A38);
-        func_00426510(arg0, 1, var_s0, &D_004C1A38);
+        GuiTextArrayWidget_SetCellText(arg0, 0, var_s0, &D_004C1A38);
+        GuiTextArrayWidget_SetCellText(arg0, 1, var_s0, &D_004C1A38);
         var_s0 += 1;
     } while (var_s0 < 3);
-    func_00426510(arg0, 0, 2, Loc_LookupText(&D_004C1A40));
+    GuiTextArrayWidget_SetCellText(arg0, 0, 2, Loc_LookupText(&D_004C1A40));
     sprintf(sp40, &D_004C1A50, arg1);
-    func_00426510(arg0, 1, 2, sp40);
+    GuiTextArrayWidget_SetCellText(arg0, 1, 2, sp40);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00455A20 */
@@ -39,12 +39,12 @@ void func_00455A20(int arg0, int arg1) {
 extern char D_00587D50[];
 extern char D_00587D60[];
 extern void func_00425DB0(void* self, const char* name);
-extern void func_00425EA0(void* self, void* data, int a, int b);
+extern void GuiTextArrayWidget_DrawCell(void* self, void* data, int a, int b);
 /* Sets the name (depending on whether data is given), then initialises with data. */
-void func_00455AE0(void* self, void* data, int a, int b)
+void GuiWeaponStats_CellColour(void* self, void* data, int a, int b)
 {
     func_00425DB0(self, data == 0 ? D_00587D50 : D_00587D60);
-    func_00425EA0(self, data, a, b);
+    GuiTextArrayWidget_DrawCell(self, data, a, b);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00455AE0 */
@@ -63,22 +63,22 @@ struct Menu {
     virtual void Method5C(int a, int b); /* +0x5C */
 };
 
-extern "C" void func_004262D0(Menu* self);
+extern "C" void GuiTextArrayWidget_Init(Menu* self);
 extern "C" void GuiArrayWidget_ColumnWidth(Menu* self, int column, int width);
-extern "C" void func_00425E20(Menu* self, const char* name);
-extern "C" void func_00425E00(Menu* self, int value);
-extern "C" void func_00455840(Menu* self, int index);
+extern "C" void GuiTextArrayWidget_SetFont(Menu* self, const char* name);
+extern "C" void GuiTextArrayWidget_SetHAlign(Menu* self, int value);
+extern "C" void GuiWeaponStats_Fill(Menu* self, int index);
 
-/* Menu setup: base init, virtual +0x5C(2, 4), two column widths, the "callout" name, then func_00455840(-1). */
-extern "C" void func_00455B60(Menu* self)
+/* Menu setup: base init, virtual +0x5C(2, 4), two column widths, the "callout" name, then GuiWeaponStats_Fill(-1). */
+extern "C" void GuiWeaponStats_Init(Menu* self)
 {
-    func_004262D0(self);
+    GuiTextArrayWidget_Init(self);
     self->Method5C(2, 4);
     GuiArrayWidget_ColumnWidth(self, 0, 0x73);
     GuiArrayWidget_ColumnWidth(self, 1, 10);
-    func_00425E20(self, "callout");
-    func_00425E00(self, 0);
-    func_00455840(self, -1);
+    GuiTextArrayWidget_SetFont(self, "callout");
+    GuiTextArrayWidget_SetHAlign(self, 0);
+    GuiWeaponStats_Fill(self, -1);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00455B60 */

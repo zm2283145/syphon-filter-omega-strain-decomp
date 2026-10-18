@@ -38,7 +38,7 @@ extern "C" char D_004AAE00[];
 extern "C" void GuiWidget_Init(Screen_456020* self);
 extern "C" Widget_456020* GuiWidget_FindChildByName(Screen_456020* self, int id);
 
-extern "C" void func_00456020(Screen_456020* self)
+extern "C" void GuiBriefingPane_Init(Screen_456020* self)
 {
     Widget_456020* child;
     GuiWidget_Init(self);

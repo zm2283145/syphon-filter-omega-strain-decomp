@@ -9,14 +9,14 @@ typedef struct {
     int count;
     E2Slot slots[16];
 } E2Group;
-extern void func_003767E0(void*, int, int);
+extern void Model_SetPatchBit(void*, int, int);
 extern unsigned char D_00535D62;
 void PntLight_Disable(E2Group* g) {
     int i;
     if (g->active && g->count) {
         for (i = 0; i < 16; i++) {
             E2Slot* s = &g->slots[i];
-            if (s->obj) func_003767E0(s->obj, s->arg, 0);
+            if (s->obj) Model_SetPatchBit(s->obj, s->arg, 0);
         }
         g->active = 0;
     }

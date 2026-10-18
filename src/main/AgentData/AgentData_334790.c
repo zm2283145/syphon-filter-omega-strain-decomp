@@ -212,7 +212,7 @@ void AgentData_UnlockById(A352C0* self, int id); /* gsynth: defined below */
 typedef struct { char p0[4]; int count; unsigned char* data; } B335350;
 typedef struct { unsigned char state; char p1[3]; B335350 b; } P335350;
 typedef struct { char p0[0x10]; int arg; } Q335350;
-void func_00335350(void* self, P335350* p, Q335350* q, int force); /* gsynth: defined below */
+void AgentData_StepAwardElement(void* self, P335350* p, Q335350* q, int force); /* gsynth: defined below */
 #pragma opt_strength_reduction off
 
 typedef struct RangeDef070 {
@@ -266,9 +266,9 @@ typedef struct Agent070 {
 extern RangeTable070 D_00532A70[5];
 extern DosDefVec070 D_00532B50;
 #if 0 /* merge_units */
-extern void func_00335350(Agent070* self, RangeRec070* rec, RangeDef070* def, int x);
+extern void AgentData_StepAwardElement(Agent070* self, RangeRec070* rec, RangeDef070* def, int x);
 #endif /* merge_units */
-#define func_00335350(a0, a1, a2, a3) (func_00335350((void *)(a0), (void *)(a1), (void *)(a2), (a3))) /* merge_units */
+#define AgentData_StepAwardElement(a0, a1, a2, a3) (AgentData_StepAwardElement((void *)(a0), (void *)(a1), (void *)(a2), (a3))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void AgentData_ApplyReachedRatings(Agent070* self, int x);
@@ -297,7 +297,7 @@ void AgentData_AwardPass(Agent070* self, int x)
     for (t = 0; t < 5; t++, p = (Agent070*)((char*)p + 16), tb++) {
         rv = &p->recs[0];
         for (j = 0; j < rv->count; j++) {
-            func_00335350(self, &rv->data[j], &tb->data[j], x);
+            AgentData_StepAwardElement(self, &rv->data[j], &tb->data[j], x);
         }
     }
     AgentData_ApplyReachedRatings(self, x);
@@ -310,7 +310,7 @@ void AgentData_AwardPass(Agent070* self, int x)
         }
     }
 }
-#undef func_00335350 /* merge_units */
+#undef AgentData_StepAwardElement /* merge_units */
 #undef AgentData_ApplyReachedRatings /* merge_units */
 #undef AgentData_UnlockById /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
@@ -391,7 +391,7 @@ extern void AgentData_UnlockById(void* self, int arg);
 
 #pragma opt_strength_reduction off
 /* Marks the part complete when every sub-step is done, then notifies. */
-void func_00335350(void* self, P335350* p, Q335350* q, int force)
+void AgentData_StepAwardElement(void* self, P335350* p, Q335350* q, int force)
 {
     B335350* b;
 unsigned char all;
@@ -436,11 +436,11 @@ unsigned char AgentData_IsObjectiveComplete(void *agent, void *name);
 void func_00299500(IV *v);
 char *Loc_LookupText(void *name);
 int Loc_FindKeyThunk(int k);
-int func_003337A0(int k);
+int Awards_ResolveUnlock(int k);
 void func_00337F90(IV *v, Item *pos, int n, Item *val);
 }
 static inline bool Neq(E *a, E *b) { return !(a == b); }
-extern "C" void func_003353F0(void *agent, char *s, IV *out)
+extern "C" void AgentData_GetLevelObjectives(void *agent, char *s, IV *out)
 {
     int i;
     int len;
@@ -475,7 +475,7 @@ extern "C" void func_003353F0(void *agent, char *s, IV *out)
             item.name = name;
             item.state = st;
             void* k = 0;
-            item.agent = k ? func_003337A0(Loc_FindKeyThunk(0)) : -1;
+            item.agent = k ? Awards_ResolveUnlock(Loc_FindKeyThunk(0)) : -1;
             item.a = 0;
             item.b = 0;
             item.c = 0;

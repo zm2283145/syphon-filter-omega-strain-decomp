@@ -31,9 +31,9 @@ int Math_Powf(float f12, float f13) {
 /* merge_units: end func_00121B30 */
 
 /* merge_units: begin func_00121B48 */
-extern int func_0011ED00(float);
+extern int Math_Sqrtf(float);
 
 int func_00121B48(float f12) {
-    return func_0011ED00(f12);
+    return Math_Sqrtf(f12);
 }
 /* merge_units: end func_00121B48 */

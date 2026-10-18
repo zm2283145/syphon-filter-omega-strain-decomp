@@ -5,7 +5,7 @@ typedef struct { int a; int count; Ent *data; } EntVec;
 typedef struct { int d[0x2A]; } FEnt;
 extern EntVec D_00532B30;
 extern char D_004B9280[];
-extern void *func_0036E5D0(void *);
+extern void *Resource_Construct(void *);
 extern void *FileMan_Release(void *, int);
 extern void Hog_Register(void *, const char *, int, int);
 extern int FileMan_FindMember(void *);
@@ -35,7 +35,7 @@ void PartsTable_Load(int arg)
     int j;
     char *s;
     char *q;
-    func_0036E5D0(&f);
+    Resource_Construct(&f);
     Hog_Register(&f, D_004B9280, arg, 0);
     if (!(FileMan_FindMember(&f) & 0xFF)) {
         p = FileMan_ReadData(&f);

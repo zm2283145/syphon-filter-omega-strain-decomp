@@ -55,9 +55,9 @@ extern int D_004FFC04;
 extern Holder D_0055A830;
 extern char D_0055DDA0[];
 void Appearance_RemoveBlankPairs(Look* l);
-void func_00403310(void* p);
+void AgentPartCache_Unlock(void* p);
 Agent* Agent_GetSelected(void* p, int i);
-void func_00334000(Agent* a, Look* l);
+void AgentData_StoreAppearance(Agent* a, Look* l);
 int Gui_GetScreenList(void);
 int Gui_GetScreenStack(void);
 int GuiManager_FindOrLoad(int list, char* a, char* b);
@@ -72,7 +72,7 @@ extern "C" void GuiAgentCreate_Save(Screen* self)
     Look look;
     QMoveP(&look, &self->data->prof, 0x44);
     Appearance_RemoveBlankPairs(&look);
-    func_00403310(D_0055DDA0);
+    AgentPartCache_Unlock(D_0055DDA0);
     {
         Agent* a = Agent_GetSelected(D_004FFB50, -1);
         a->b8DC = 0;
@@ -81,7 +81,7 @@ extern "C" void GuiAgentCreate_Save(Screen* self)
         a->b95C = 0;
         a->i9A0 = -1;
     }
-    func_00334000(Agent_GetSelected(D_004FFB50, -1), &look);
+    AgentData_StoreAppearance(Agent_GetSelected(D_004FFB50, -1), &look);
     Holder* h = &D_0055A830;
     if (h->cfg->b59D) {
         int n = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004A9930, D_004A9940);

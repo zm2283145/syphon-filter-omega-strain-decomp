@@ -9,7 +9,7 @@
 
 /* merge_units: begin func_003A39B0 */
 #pragma push /* merge_units */
-/* func_003A39B0 (particle, mw38): copy two V4s and a {xyz,(float)count} V4 into a particle emitter.
+/* ParticleDef_FinalizeType1 (particle, mw38): copy two V4s and a {xyz,(float)count} V4 into a particle emitter.
    GCC-style volatile lq/sq copy + dead address locals give retail's duplicate addius (LESSONS c57da). */
 typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
 typedef struct { float x, y, z; } V3;
@@ -18,7 +18,7 @@ static inline void GQ(void* d, const void* s) { __int128 q; __asm__ volatile("lq
 static inline V4* VA(V4* d, const V4* s) { GQ(d, s); return d; }
 static inline void MK(V4* t, float x, float y, float z, float w) { t->x = x; t->y = y; t->z = z; t->w = w; }
 #pragma peephole off
-void func_003A39B0(P39* p, const V4* a, const V4* b, const V3* c)
+void ParticleDef_FinalizeType1(P39* p, const V4* a, const V4* b, const V3* c)
 {
     V4 t;
     void* xx;
@@ -92,7 +92,7 @@ struct Mk3A3A40 : V4_3A3A40 {
 #define RD() SoftFloat_DoubleToFloat(strtod(s, &s))
 #define NL() s = strchr(s, '\n') + 1
 
-extern "C" void func_003A3A40(Obj3A3A40* self, char* str)
+extern "C" void ParticleDefType1_Parse(Obj3A3A40* self, char* str)
 {
     char* s = str;
     self->fA20 = RD();
@@ -159,7 +159,7 @@ static inline void merge_flush_func_003A3A40(void) {}
 typedef struct P3E { char pad0[0x60]; unsigned int n60; char pad64[0x8FC]; V4 m960; V4 m970; V4 m980; } P3E;
 static inline void G1(void* d, const void* s) { __int128 q; __asm__ volatile("lq %1, 0(%2); sq %1, 0(%0)" : "+r"(d), "=&r"(q) : "r"(s) : "memory"); }
 #pragma peephole off
-void func_003A3EF0(P3E* p, const V4* a, const V4* b, const V3* c)
+void ParticleDef_FinalizeType0(P3E* p, const V4* a, const V4* b, const V3* c)
 {
     V4 t;
     void* xx;

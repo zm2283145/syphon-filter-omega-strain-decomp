@@ -15,7 +15,7 @@ extern signed char D_0048B7A0;
 extern int D_0048B7A4;
 
 #pragma opt_common_subs off
-void func_00298360(int arg0) {
+void GuiCommandCenter_RestoreSelection(int arg0) {
     int var_s2;
     signed char *var_s1;
     int var_s0;

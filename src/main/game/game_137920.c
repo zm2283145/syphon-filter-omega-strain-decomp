@@ -24,7 +24,7 @@ DEFINE_OBJ_LIST_DTOR(func_00137920)
 #pragma cplusplus on
 struct O_001379A0 { void* vt; char pad[0x24]; char m[4]; };
 extern "C" {
-extern "C" void func_0012ECE0();
+extern "C" void GObj_GetID();
 extern "C" void func_0012ECF0();
 extern "C" void func_0012ED00();
 extern "C" void func_0012ED10();
@@ -55,7 +55,7 @@ extern "C" O_001379A0* func_001379A0(O_001379A0* self, short del)
     }
     return self;
 }
-void * const D_004D9960[16] = { (void*)0x0, (void*)0x0, (void*)func_001379A0, (void*)HotboxTracker_HandleMessage, (void*)func_0012ECE0, (void*)func_0012ECF0, (void*)func_001383D0, (void*)func_0012ED00, (void*)func_0012ED10, (void*)func_0012ED20, (void*)func_0012ED30, (void*)func_0012ED40, (void*)func_0012ED50, (void*)Receiver_GetScriptTypeKey, (void*)Receiver_ScriptDispatch, (void*)0x0 };
+void * const D_004D9960[16] = { (void*)0x0, (void*)0x0, (void*)func_001379A0, (void*)HotboxTracker_HandleMessage, (void*)GObj_GetID, (void*)func_0012ECF0, (void*)func_001383D0, (void*)func_0012ED00, (void*)func_0012ED10, (void*)func_0012ED20, (void*)func_0012ED30, (void*)func_0012ED40, (void*)func_0012ED50, (void*)Receiver_GetScriptTypeKey, (void*)Receiver_ScriptDispatch, (void*)0x0 };
 #undef operator_delete /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001379A0(void) {}

@@ -18,7 +18,7 @@ void VisionFade_Start(Unk260940* self, float a, float b, float c, float d) {
     self->unk14 = d;
 }
 
-void func_00260970(Unk260940* self) {
+void VisionFxTimer_Reset(Unk260940* self) {
     self->unk04 = 0;
     self->unk14 = 0.0f;
     self->unk10 = 0.0f;

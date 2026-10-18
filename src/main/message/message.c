@@ -501,7 +501,7 @@ typedef struct { int r; char *n; int ret[2]; } SL3C;
 static inline int ite0(SL3C *s) { func_003C9B20(&s->r, func_003C9B30(&D_005435C0)); return s->r; }
 static inline void er1(char *n);
 static inline void er0(SL3C *s, char *n) { s->n = n; func_003C9FE0(s->ret, &D_005435C0, &s->n); }
-extern "C" int func_003C99B0(int *arg0) {
+extern "C" int MsgQueue_EraseFirstPending(int *arg0) {
     char *var_s0;
     char *temp_a0;
     void **temp_s1;

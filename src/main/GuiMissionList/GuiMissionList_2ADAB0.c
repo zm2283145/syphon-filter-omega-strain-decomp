@@ -108,7 +108,7 @@ extern G2ADE60* DME_GetLobby(void);
 #define DME_GetLobby() ((G2ADE60 *)DME_GetLobby()) /* merge_units */
 
 extern void func_004426B0(G2ADE60* g);
-extern void func_002CC260(void);
+extern void App_CardWaitPoll(void);
 extern void SFOLobby_EnterContactsState(G2ADE60* g, void* cb, void* a, void* b);
 void func_002ADE60(S2ADE60* s)
 {
@@ -117,7 +117,7 @@ void func_002ADE60(S2ADE60* s)
         if (g) {
             if (g->mode == 4)
                 func_004426B0(g);
-            SFOLobby_EnterContactsState(g, func_002CC260, s->mAC, s->mC8);
+            SFOLobby_EnterContactsState(g, App_CardWaitPoll, s->mAC, s->mC8);
         }
         if (s->p88) {
             s->p88->bB4 = 1;

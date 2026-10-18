@@ -24,7 +24,7 @@ static inline void merge_flush_func_001AE2A0(void) {}
 
 /* merge_units: begin func_001AE320 */
 #pragma push /* merge_units */
-void func_001AE320(int a0, int a1) {
+void LosProvider_SeedRegion(int a0, int a1) {
     int loc[1];
     int v1;
     int cond;

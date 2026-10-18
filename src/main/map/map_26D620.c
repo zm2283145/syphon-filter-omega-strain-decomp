@@ -27,8 +27,8 @@ struct S_26D620 {
     float x94;
 };
 extern "C" {
-R_26D620* func_00272AC0(int a);
-void func_0026D040(S_26D620* s, float t);
+R_26D620* HudMarkers_GetHighlight(int a);
+void HudMap_UpdateCamera(S_26D620* s, float t);
 void IeScreen_Update(int h, float t);
 void HudMap_Update(S_26D620* s, float dt);
 }
@@ -37,7 +37,7 @@ void HudMap_Update(S_26D620* s, float dt)
     if (s->x94 > 0.0f) {
         s->x94 -= dt;
         if (s->x94 <= 0.0f) {
-            R_26D620* r = func_00272AC0(s->x0);
+            R_26D620* r = HudMarkers_GetHighlight(s->x0);
             if (r && r->x8) {
                 s->x60 = r->x8->x68;
                 s->x80 = s->x70;
@@ -46,7 +46,7 @@ void HudMap_Update(S_26D620* s, float dt)
             s->x94 = 0.0f;
         }
     }
-    func_0026D040(s, dt);
+    HudMap_UpdateCamera(s, dt);
     IeScreen_Update(s->x8, dt);
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -64,7 +64,7 @@ static inline int* ref_D6D0(C_D6D0* c) { return &c->c; }
 #pragma push
 #pragma peephole off
 #pragma opt_propagation off
-void func_0026D6D0(A_D6D0* a) {
+void HudMap_Release(A_D6D0* a) {
     __int128* s; __int128* d;
     a->x94 = 0;
     d = &a->q80; s = &a->q70;

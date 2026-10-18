@@ -22,7 +22,7 @@ void func_0038C820(Self92260* self);
 void operator_delete(void* p);
 }
 
-/* 16-byte block copy loop (lq/sq), as in func_00391210. */
+/* 16-byte block copy loop (lq/sq), as in ActorModel_RestoreBodyPacking. */
 static inline void QMove_392260(void* d0, void* s, int n0) {
     int n = n0; __int128 t; void* d = d0;
     asm {

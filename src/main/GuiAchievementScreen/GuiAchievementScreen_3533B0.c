@@ -6,26 +6,26 @@
 extern "C" {
 extern "C" void GuiAchievementScreen_GetClassName();
 extern "C" void func_00353470();
-extern "C" void func_003535D0();
-extern "C" void func_003536A0();
-extern "C" void func_00353700();
-extern "C" void func_00353800();
-extern "C" void func_00353850();
-extern "C" void func_00356AD0();
-extern "C" void func_00356B30();
-extern "C" void func_00356BE0();
+extern "C" void GuiAchievementScreen_Select();
+extern "C" void GuiAchievementScreen_Show();
+extern "C" void GuiAchievementScreen_Fill();
+extern "C" void GuiAchievementScreen_Wake();
+extern "C" void GuiAchievementScreen_Init();
+extern "C" void GuiPersonnelScreen_Back();
+extern "C" void GuiPersonnelScreen_HandleEvent();
+extern "C" void GuiPersonnelScreen_HandleInput();
 extern "C" void GuiWidget_FocusPrev();
 extern "C" void GuiWidget_FocusNext();
 extern "C" void GuiWidget_FocusLast();
 extern "C" void GuiWidget_FocusFirst();
-extern "C" void func_0041E230();
-extern "C" void func_0041E2B0();
-extern "C" void func_0041E330();
+extern "C" void GuiWidget_BubbleActivate();
+extern "C" void GuiWidget_BubbleType1();
+extern "C" void GuiWidget_BubbleType0();
 extern "C" void GuiWidget_Update();
 extern "C" void GuiWidget_Draw();
-extern "C" void func_0041EBF0();
-extern "C" void func_0041F070();
-extern "C" void func_0041F080();
+extern "C" void GuiWidget_BaseSleep();
+extern "C" void GuiWidget_ClearFlag4();
+extern "C" void GuiWidget_SetFlag4();
 extern "C" void GuiWidget_Deinit();
 extern "C" void func_0041F210();
 extern void * const D_004DEF90[];
@@ -59,4 +59,4 @@ extern "C" O3533B0* func_003533B0(O3533B0* self, short deleteFlag)
     }
     return self;
 }
-void * const D_004DEF90[28] = { (void*)0x0, (void*)0x0, (void*)func_003533B0, (void*)func_00353850, (void*)GuiWidget_Deinit, (void*)func_0041F080, (void*)func_0041F070, (void*)func_00353800, (void*)func_0041EBF0, (void*)func_0041E330, (void*)func_0041E2B0, (void*)func_00356BE0, (void*)GuiWidget_Draw, (void*)func_0041E230, (void*)GuiWidget_Update, (void*)func_00356B30, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiAchievementScreen_GetClassName, (void*)func_00353470, (void*)func_00353700, (void*)func_003536A0, (void*)func_003535D0, (void*)func_00356AD0, (void*)0x0 };
+void * const D_004DEF90[28] = { (void*)0x0, (void*)0x0, (void*)func_003533B0, (void*)GuiAchievementScreen_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiAchievementScreen_Wake, (void*)GuiWidget_BaseSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiPersonnelScreen_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiPersonnelScreen_HandleEvent, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiAchievementScreen_GetClassName, (void*)func_00353470, (void*)GuiAchievementScreen_Fill, (void*)GuiAchievementScreen_Show, (void*)GuiAchievementScreen_Select, (void*)GuiPersonnelScreen_Back, (void*)0x0 };

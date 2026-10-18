@@ -35,16 +35,16 @@ extern EntryTable* func_0034E760(void);
 #endif /* merge_units */
 #define func_0034E760() ((EntryTable *)func_0034E760()) /* merge_units */
 
-extern void func_00356850(Obj48* o, int idx, int value);
+extern void GuiPersonnelScreen_ShowItem(Obj48* o, int idx, int value);
 /* Looks up the entry index for the key and applies its value. */
-void func_0034E770(Obj48* o)
+void GuiRanks_Show(Obj48* o)
 {
     int idx = GuiTextListWidget_GetItemId(o->key);
     if (idx != -1) {
         Entry36* e;
         Agent_GetSelected(D_004FFB50, -1);
         e = &func_0034E760()->entries[idx];
-        func_00356850(o, idx, e->value);
+        GuiPersonnelScreen_ShowItem(o, idx, e->value);
     }
 }
 #undef func_0034E760 /* merge_units */

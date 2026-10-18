@@ -18,12 +18,12 @@ typedef struct {
     short ids[10];
 } Self_2BF370;
 
-extern void func_0041EBA0(void*, float, float);
-extern void func_002BEEE0(Self_2BF370*);
-extern void func_002BE910(Self_2BF370*);
-extern void func_002BE380(Self_2BF370*);
+extern void GuiWidget_SetPos(void*, float, float);
+extern void GuiEquipmentModify_BuildList(Self_2BF370*);
+extern void GuiEquipmentModify_BuildCurrentColumn(Self_2BF370*);
+extern void GuiEquipmentModify_BuildSelectionColumn(Self_2BF370*);
 
-void func_002BF370(Self_2BF370* self)
+void GuiEquipmentModify_BuildEquipList(Self_2BF370* self)
 {
     int i;
     int span;
@@ -49,8 +49,8 @@ void func_002BF370(Self_2BF370* self)
     off = span - q * self->step - 1;
     if (first < 0)
         first = 0;
-    func_0041EBA0(self->list, (float)self->x, (float)(self->total - off - first * self->step));
-    func_002BEEE0(self);
-    func_002BE910(self);
-    func_002BE380(self);
+    GuiWidget_SetPos(self->list, (float)self->x, (float)(self->total - off - first * self->step));
+    GuiEquipmentModify_BuildList(self);
+    GuiEquipmentModify_BuildCurrentColumn(self);
+    GuiEquipmentModify_BuildSelectionColumn(self);
 }

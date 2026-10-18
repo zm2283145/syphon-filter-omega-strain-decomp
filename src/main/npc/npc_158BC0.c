@@ -18,7 +18,7 @@
 #pragma cplusplus on
 extern "C" {
 void* Mem_Alloc(int pool, int size, char* file, int line);
-void func_003D9D30(void* p, int v);
+void Script_LookupResource(void* p, int v);
 void* NpcPerception_Construct(void* p, void* owner);
 void* NpcPath_Construct(void* p, void* owner, int n, int v);
 int Random_Next(void);
@@ -140,7 +140,7 @@ extern "C" void NpcAi_Construct(Npc_8BC0* self, Own_8BC0* own)
         if (!*(Trk_8BC0**)(t + 0x18)) {
             *(Trk_8BC0**)(t + 0x18) = new (0x49) Trk_8BC0;
         }
-        func_003D9D30(*(Trk_8BC0**)(t + 0x18), own->x3264);
+        Script_LookupResource(*(Trk_8BC0**)(t + 0x18), own->x3264);
     }
     if (!*(void**)(t + 0x1AC)) {
         void* p = NpcNew_8BC0(0x60, 0x741);

@@ -228,7 +228,7 @@ static inline int DivTime(long n)
     return q;
 }
 
-extern "C" void func_00415510(W_415510* w, Pad_415510* pads)
+extern "C" void GuiCanvas_PadClock(W_415510* w, Pad_415510* pads)
 {
     int now;
     int p;

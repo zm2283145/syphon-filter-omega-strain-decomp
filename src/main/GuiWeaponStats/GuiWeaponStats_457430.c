@@ -7,6 +7,6 @@
 #include "types.h"
 
 
-char* func_00457430(void) {
+char* GuiStartMenu_GetClassName(void) {
     return "GuiStartMenu";
 }

@@ -5,7 +5,7 @@ typedef struct { char pad[0xC]; void* target; void* enabled; int color; } Label4
 
 extern void* String_CStr(Label412* label);
 extern int sprintf(char* buf, const char* fmt, ...);
-extern void func_0036E5D0(TextObj* obj);
+extern void Resource_Construct(TextObj* obj);
 extern void Hog_Register(TextObj* obj, char* text, int color, int flags);
 extern void func_003E7AD0(void* target, TextObj* obj);
 extern void FileMan_Release(TextObj* obj, int flags);
@@ -22,7 +22,7 @@ void func_00412ED0(Label412* self)
             TextObj obj;
             char buf[0x20];
             sprintf(buf, "%s.IE", String_CStr(p));
-            func_0036E5D0(&obj);
+            Resource_Construct(&obj);
             Hog_Register(&obj, buf, p->color, 0);
             func_003E7AD0(p->target, &obj);
             FileMan_Release(&obj, -1);

@@ -273,9 +273,9 @@ struct SoundGOBJ {
 extern "C" {
 extern char D_004F54B8[], D_004DAF30[], D_0049C088[];
 void cGOBJ_ctor(SoundGOBJ*, int*, int, void*);
-void func_0036E5D0(void* m);
+void Resource_Construct(void* m);
 void* Mem_Alloc(int, int, char*, int);
-void func_003D9D30(Node_212EE0* n, char* name);
+void Script_LookupResource(Node_212EE0* n, char* name);
 void Mtx_SetBasis(Mtx* m, V4* a, V4* b, V4* c);
 void Mtx_SetTranslation(Mtx* m, V4* t);
 void SoundAction_CtorVoice(void* action, int kind, char* name, void* a, int b);
@@ -318,8 +318,8 @@ extern "C" SoundGOBJ* cSoundGOBJ_ctor(SoundGOBJ* obj, Reader* r, unsigned char t
     p = &obj->snd;
     obj->snd.h24.v = -2;
     obj->snd.w20 = 0;
-    func_0036E5D0(p->memberA);
-    func_0036E5D0(p->memberB);
+    Resource_Construct(p->memberA);
+    Resource_Construct(p->memberB);
     p->id = -1;
     p->mask = -1;
     p->w20 = 0;
@@ -347,7 +347,7 @@ extern "C" SoundGOBJ* cSoundGOBJ_ctor(SoundGOBJ* obj, Reader* r, unsigned char t
             if (nd) { nd->a = 0; nd->b = 0; nd->c = -1; }
             obj->node = nd;
         }
-        func_003D9D30(obj->node, tag);
+        Script_LookupResource(obj->node, tag);
     }
     Align(r);
     ReadV(r, &pos, 1.0f);
@@ -451,7 +451,7 @@ extern char D_004DAE30[];
 #endif /* merge_units */
 #define D_004DAE30 ((char*)&D_004DAE30) /* merge_units */
 
-int func_0042B1A0(int a);
+int Net_GetClock(int a);
 int func_002EAF28(int* h, int a, int b, int c, int d, int e, int f, void* buf, char* name, int size);
 int func_002EB650(LuSeg** o, int h);
 void printf(char* s, int h, int n);
@@ -461,8 +461,8 @@ LuVec* func_001339A0(void* arr);
 void PtrVec_End(LuIt* out, LuVec* v);
 void func_00133980(LuIt* out, LuIt* in);
 void PathObj_Update(Lift* l, float dt);
-int func_00213FA0(Lift* l);
-int func_00214160(Lift* l);
+int cElevatorGOBJ_DoorsOpen(Lift* l);
+int cElevatorGOBJ_DoorsClosed(Lift* l);
 void Lift_CloseDoors(Lift* l);
 void Lift_OpenDoors(Lift* l);
 void Lift_FinishArrival(Lift* l);
@@ -505,14 +505,14 @@ extern "C" void Lift_Update(Lift* l, float dt)
 {
     LuIt it;
     if (D_005721C8 && LuIsHost()) {
-        if (!l->shm && D_004F54A0 < func_0042B1A0(1)) {
+        if (!l->shm && D_004F54A0 < Net_GetClock(1)) {
             l->shm = LuCreate();
             if (l->shm) {
                 int id = l->fC;
                 l->shm->f0 = id;
                 func_002EC460(l->shm->f4);
             }
-            D_004F54A0 = func_0042B1A0(1) + 500;
+            D_004F54A0 = Net_GetClock(1) + 500;
         }
     }
     LuGetEnd(&it, func_001339A0(World_GetActorArray()));
@@ -529,11 +529,11 @@ extern "C" void Lift_Update(Lift* l, float dt)
     case 1:
         if (!l->fDC) break;
         if (c->f20 != c->f0) {
-            if (l->f70 > 0 && func_00213FA0(l)) {
+            if (l->f70 > 0 && cElevatorGOBJ_DoorsOpen(l)) {
                 Lift_CloseDoors(l);
                 break;
             }
-            if (!func_00214160(l) && l->f70 > 0) break;
+            if (!cElevatorGOBJ_DoorsClosed(l) && l->f70 > 0) break;
             {
                 LuSnd ev1;
                 LuSnd ev2;
@@ -557,7 +557,7 @@ extern "C" void Lift_Update(Lift* l, float dt)
             break;
         }
         if (l->f70 <= 0) Lift_FinishArrival(l);
-        if (l->f70 > 0 && func_00214160(l)) {
+        if (l->f70 > 0 && cElevatorGOBJ_DoorsClosed(l)) {
             if (!D_005721C8 || LuIsHost()) {
                 LuMsg msg;
                 LuMsg* m = &msg;
@@ -572,7 +572,7 @@ extern "C" void Lift_Update(Lift* l, float dt)
             Lift_OpenDoors(l);
             break;
         }
-        if (!func_00213FA0(l) && l->f70 > 0) break;
+        if (!cElevatorGOBJ_DoorsOpen(l) && l->f70 > 0) break;
         l->ctl->f28 = 0;
         Lift_ActivateRecipients(l);
         {

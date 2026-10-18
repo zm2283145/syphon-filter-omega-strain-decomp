@@ -23,7 +23,7 @@ extern char D_004BEF30[];
 extern void* D_00539248;
 void Interface_Dtor(void* p, int flags);
 void Mem_Free(int pool, void* allocation, char* file, int line);
-void func_0036E5D0(Hog412CF0* h);
+void Resource_Construct(Hog412CF0* h);
 void FileMan_Release(Hog412CF0* h, int flags);
 char* Archive_GetMemberName(Arc412CF0* a, int i);
 void Hog_Register(Hog412CF0* h, char* name, Arc412CF0* a, int z);
@@ -70,7 +70,7 @@ extern "C" void func_00412CF0(Self412CF0* self, int idx)
     arc = *pa;
     {
         Hog412CF0 h;
-        func_0036E5D0(&h);
+        Resource_Construct(&h);
         n = arc->info->count;
         for (i = 0; i < n; i++) {
             Hog_Register(&h, Archive_GetMemberName(arc, i), arc, 0);

@@ -32,7 +32,7 @@ extern "C" void Node_ReleaseComponent58(O3CCF30* self)
 #pragma cplusplus on
 #include "node_world_q4.h"
 extern "C" MtxQ4 D_0055C9F0;
-extern "C" MtxQ4 func_003CCFF0(OwnerQ4* o)
+extern "C" MtxQ4 GObj_GetWorldMatrix(OwnerQ4* o)
 {
     NODE_WORLD_Q4_BODY(o, D_0055C9F0)
 }

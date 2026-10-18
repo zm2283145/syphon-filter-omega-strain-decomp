@@ -14,7 +14,7 @@ extern char D_00543764[];
 extern char D_00543770[];
 extern char D_00543748[];
 extern char TextManager_Destroy[];
-extern void func_003D1560(void* p);
+extern void List_InitEmpty(void* p);
 extern void ScalarCollection_Init(void* p);
 extern void __register_global_object(void* o, void* d, void* l);
 #pragma push
@@ -24,7 +24,7 @@ M3D1020* TextManager_Get(void)
     if (!D_00543740) {
         M3D1020* m = &D_00543760;
         D_00543760.f0 = 0;
-        func_003D1560(D_00543764);
+        List_InitEmpty(D_00543764);
         ScalarCollection_Init(D_00543770);
         m->b1C = 1;
         __register_global_object(m, TextManager_Destroy, D_00543748);

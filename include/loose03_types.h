@@ -131,7 +131,7 @@ typedef struct Member34FE40 {
 /*
  * GuiMissionStatistics (vtable D_004DEE70, class-name getter GuiMissionStatistics_GetClassName), ctor
  * GuiMissionStatistics_ctor; derives from GuiPersonnelScreen.
- * Vtable slot 13 (message handler) is func_0034FA40, overriding func_00356B30.
+ * Vtable slot 13 (message handler) is GuiMissionStatistics_HandleEvent, overriding GuiPersonnelScreen_HandleEvent.
  */
 typedef struct GuiMissionStatistics {
     GuiPersonnelScreen base;              /* 0x00 */
@@ -265,7 +265,7 @@ typedef struct Obj36D630 {
     char pad14D[0xB];
     int unk158;                     /* 0x158 */
     int unk15C;                     /* 0x15C */
-    int* unk160;                    /* 0x160 word table (func_0036D520) */
+    int* unk160;                    /* 0x160 word table (Hog_GetMemberOffset) */
     int unk164;                     /* 0x164 */
     unsigned char unk168;           /* 0x168 */
 } Obj36D630;
@@ -315,7 +315,7 @@ typedef struct SkelNodes {
     unsigned char unk14;            /* 0x14 */
 } SkelNodes;
 
-/* Object used by func_0037A1C0 (forwards fields 0x1C/0x20). */
+/* Object used by Video_DrawFullScreenQuad (forwards fields 0x1C/0x20). */
 typedef struct Obj37A1C0 {
     char pad00[0x1C];
     int unk1C;                      /* 0x1C */

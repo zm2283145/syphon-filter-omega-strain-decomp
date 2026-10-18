@@ -109,7 +109,7 @@ float Math_CosThunk(float);
 float Math_SinThunk(float);
 void Mtx44_SetRotation(Mtx* m, float a, float b, float c, float d, float e, float f, float g, float h, float i);
 void Projectile_QueryCandidates(Query* q);
-int func_001B8740(Tgt* t);
+int Actor_IsInvulnerable(Tgt* t);
 void Hud_ShowCallout(float a, float b, int c, void* pos, void* name, int d, int e, int f);
 void func_00266BA0(void* a, Mtx* m, int n, Seg* s);
 void ParticleInst_Update(float dt, int a, Mtx* m, int b);
@@ -252,7 +252,7 @@ extern "C" void HeldItem_UpdateFlight(HeldItem* self, float dt) {
             VObj58* o = t->x58;
             bool blocked = false;
             if (o && o->Check(held, mine)) blocked = true;
-            if (blocked || t->x320C == 2 || t->x320C == 0x1A || func_001B8740(t) || t->b346A || func_00265910(self)) {
+            if (blocked || t->x320C == 2 || t->x320C == 0x1A || Actor_IsInvulnerable(t) || t->b346A || func_00265910(self)) {
                 HeldItem_Release(self);
             } else if ((m2 || q.hit == 3) && t->x33A0) {
                 Hud_ShowCallout(5.0f, 0.0f, D_004FFC2C, (char*)t + 0xC, D_004A8210, -1, 0, 0);

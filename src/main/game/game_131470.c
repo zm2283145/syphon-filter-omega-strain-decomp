@@ -15,17 +15,17 @@ typedef struct { char pad[0xC]; unsigned char flag; } G_1470;
 extern unsigned char D_005721C8;
 extern G_1470* D_004FFC38;
 void PadRumble_Stop(void);
-void func_0026BE70(unsigned char v);
+void Pad_EnableVibration(unsigned char v);
 void Game_SetPaused(S_1470* self, unsigned char on)
 {
     if (!D_005721C8)
         self->on = on;
     if (self->on) {
         PadRumble_Stop();
-        func_0026BE70(0);
+        Pad_EnableVibration(0);
         D_004FFC38->flag = 1;
     } else {
-        func_0026BE70(self->cfg->v);
+        Pad_EnableVibration(self->cfg->v);
         D_004FFC38->flag = 0;
     }
 }

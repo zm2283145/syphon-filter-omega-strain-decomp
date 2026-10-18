@@ -8,7 +8,7 @@
 
 #include "types.h"
 
-/* One cell/entry of the text array (returned by func_00426590). */
+/* One cell/entry of the text array (returned by GuiTextArrayWidget_GetCell). */
 typedef struct TextArrayCell {
     char string[0xC];
     unsigned int flags;             /* 0x0C attribute/resource/color overrides */

@@ -19,7 +19,7 @@ extern unsigned char D_004FFBB5;
 extern unsigned char* D_004FFC04;
 int Agent_GetSelected(void*, int);
 void func_00296FA0(List_7020*);
-void func_003334C0(int, int, List_7020*);
+void AgentData_GetAwardRows(int, int, List_7020*);
 int AgentData_IsLevelDone(int, __int128);
 __int128 StringPool_MakeKey(char*);
 char* Loc_GetStoredKey(int);
@@ -44,7 +44,7 @@ void GuiCommandCenter_IsLevelOpen(char* self) {
     sel = Agent_GetSelected(&D_004FFB50, -1);
     func_00296FA0(&list);
     list.flag = 1;
-    if (D_0048B868) func_003334C0(sel, 3, &list);
+    if (D_0048B868) AgentData_GetAwardRows(sel, 3, &list);
     for (i = 0, pn = D_0048C160, pe = D_004ACD30, pi = D_005063D0, pc = D_004ACC70; i <= 0x11; i++, pi++, pc++, pn++, pe++) {
         name = *pn;
         ok = 0;
@@ -94,7 +94,7 @@ void GuiCommandCenter_IsLevelOpen(char* self) {
 int Agent_GetSelected();                      
 signed char AgentData_GetBonusFlag();
 
-void func_002972E0(int arg0) {
+void GuiCommandCenter_BonusFlags(int arg0) {
     int temp_s1;
     int var_s0;
     signed char temp_v0;
@@ -160,16 +160,16 @@ extern "C" {
 GuiManager*Gui_GetScreenStack();
 #endif /* merge_units */
 #define Gui_GetScreenStack() (Gui_GetScreenStack()) /* merge_units */
-CcNetwork*DME_GetLobby();int func_00442750(void*,void(*)());void func_002CC260();
-void GuiTextWidget_SetText(void*,const char*,int);void GuiWidget_SendEvent(void*,void*,int,int,int);char*Loc_LookupText(const char*);int sprintf(char*,const char*,...);const char*AgentData_GetName(int);const char*AgentData_GetRankText(int);int AgentData_TotalPoints(int);int func_00336060(int,const char*);int AgentData_IsObjectiveComplete(int,const char*);
+CcNetwork*DME_GetLobby();int func_00442750(void*,void(*)());void App_CardWaitPoll();
+void GuiTextWidget_SetText(void*,const char*,int);void GuiWidget_SendEvent(void*,void*,int,int,int);char*Loc_LookupText(const char*);int sprintf(char*,const char*,...);const char*AgentData_GetName(int);const char*AgentData_GetRankText(int);int AgentData_TotalPoints(int);int AgentData_GetLevelShortName(int,const char*);int AgentData_IsObjectiveComplete(int,const char*);
 #if 0 /* merge_units */
 void GuiCommandCenter_IsLevelOpen(void*);
 #endif /* merge_units */
 #define GuiCommandCenter_IsLevelOpen(a0) (GuiCommandCenter_IsLevelOpen((char *)(a0))) /* merge_units */
 #if 0 /* merge_units */
-void func_002972E0(void*);
+void GuiCommandCenter_BonusFlags(void*);
 #endif /* merge_units */
-#define func_002972E0(a0) (func_002972E0((int)(a0))) /* merge_units */
+#define GuiCommandCenter_BonusFlags(a0) (GuiCommandCenter_BonusFlags((int)(a0))) /* merge_units */
 void func_002C9AF0(void*,int);void GuiCommandCenter_RestoreState(void*);const char*func_0033CE30(void*,int,int,int,int,int);int FrontEnd_OpenPopup(void*,int,const char*,const char*,void*,int);
 #if 0 /* merge_units */
 extern CcGameState*D_004FFC04;
@@ -190,7 +190,7 @@ extern "C" void GuiCommandCenter_Activate(CcBindings*self){
   unsigned char popup=0;
   int online=D_004FFC04->online,mode=D_004FFC04->mode;
   CcNetwork*net=DME_GetLobby();
-  if(net){if(net->state!=4&&!func_00442750(net,func_002CC260))popup=1;self->screen.unk78=1;}else self->screen.unk78=0;
+  if(net){if(net->state!=4&&!func_00442750(net,App_CardWaitPoll))popup=1;self->screen.unk78=1;}else self->screen.unk78=0;
   GuiWidget*w=(GuiWidget*)GuiFindAs(self,D_0048B6F8,D_004A9870);
   if(w){char*s=Loc_LookupText(online?D_004AA4A8:D_004AA4B8);GuiTextWidget_SetText(w,s?s:D_004AA288,0);}
   GuiWidget*w2=(GuiWidget*)GuiWidget_FindChildByName(self,D_0048B708);if(w2){if(online)w2->flags|=2;else w2->flags&=0xfffd;}
@@ -204,8 +204,8 @@ extern "C" void GuiCommandCenter_Activate(CcBindings*self){
   else{GuiWidget*a=(GuiWidget*)GuiFindAs(self,D_0048B698,D_004A7520);if(a){GuiTextWidget_SetText(a,(char*)(Agent_GetSelected(D_004FFB50,-1)+0x95c),0);a->flags|=2;}GuiWidget*b=(GuiWidget*)GuiWidget_FindChildByName(self,D_0048B6A0);if(b)b->flags|=2;}
   GuiCommandCenter_IsLevelOpen(self);self->unlocked[17]=0;self->unlocked[18]=0;self->unlocked[19]=0;self->unlocked[21]=D_004FFC04->online;self->unlocked[20]=0;
   const char*current=D_0048C1A0;
-  if(current){int record=func_00336060(Agent_GetSelected(D_004FFB50,-1),current);if(record){sprintf(key,D_004AA270,record);if(AgentData_IsObjectiveComplete(Agent_GetSelected(D_004FFB50,-1),key))self->unlocked[20]=1;}}
-  func_002972E0(self);
+  if(current){int record=AgentData_GetLevelShortName(Agent_GetSelected(D_004FFB50,-1),current);if(record){sprintf(key,D_004AA270,record);if(AgentData_IsObjectiveComplete(Agent_GetSelected(D_004FFB50,-1),key))self->unlocked[20]=1;}}
+  GuiCommandCenter_BonusFlags(self);
   {int i;CcBindings*walk;i=0;walk=self;for(;i<24;i++,walk=(CcBindings*)((char*)walk+4)){if(walk->buttons[0]){if(!self->unlocked[i])GuiWidget_SendEvent(self,walk->buttons[0],6,(int)D_004AA2E8,0);else if((i<17&&self->states[i])||(i==20&&self->states[17]))GuiWidget_SendEvent(self,walk->buttons[0],6,(int)D_004AA2C8,0);}}
   }func_002C9AF0(D_004FFC04,0);GuiCommandCenter_RestoreState(self);
   if(popup){String_CtorCStr_13B480(&title,func_0033CE30(self,20,0,0,0,0));String_CtorCStr_13B480(&message,func_0033CE30(self,134,0,0,0,0));char*msg=String_CStr(&message);self->popupId=FrontEnd_OpenPopup(D_004FFC04,2,String_CStr(&title),msg,self,25);String_Dtor(&message,0);String_Dtor(&title,0);}
@@ -214,7 +214,7 @@ extern "C" void GuiCommandCenter_Activate(CcBindings*self){
 }
 #undef Gui_GetScreenStack /* merge_units */
 #undef GuiCommandCenter_IsLevelOpen /* merge_units */
-#undef func_002972E0 /* merge_units */
+#undef GuiCommandCenter_BonusFlags /* merge_units */
 #undef D_004FFC04 /* merge_units */
 #undef D_004FFB50 /* merge_units */
 #pragma pop /* merge_units */
@@ -226,13 +226,13 @@ typedef struct V4 { float x, y, z, w; } __attribute__((aligned(16))) V4;
 typedef struct Panel { char pad[0xB0]; V4 c0; V4 c1; V4 c2; } Panel;
 typedef struct Self { char pad[0x10]; int state; char pad2[0x194 - 0x14]; Panel* panel; } Self;
 extern V4 D_00587BA0, D_00587BB0, D_00587BC0;
-extern void func_002982C0(Self*);
+extern void GuiCommandCenter_ClearState(Self*);
 extern void GuiScreen_Wake(Self*);
 static inline void SetV4(V4* d, V4 s) { d->x = s.x; d->y = s.y; d->z = s.z; d->w = s.w; }
 void GuiCommandCenter_Wake(Self* self)
 {
     if (self->state == 1) {
-        func_002982C0(self);
+        GuiCommandCenter_ClearState(self);
         self->state = -1;
     }
     if (self->panel) {
@@ -257,7 +257,7 @@ struct CcBindings_00297C10 {
 };
 extern "C" {
 extern char* D_0048B650;extern char* D_0048B668;extern char* D_0048B670;extern char* D_0048B678;extern char* D_0048B6A8;extern char* D_0048B6B0;extern char* D_0048B6B8;extern char* D_0048B6C0;extern char* D_0048B6C8;extern char* D_0048B6D0;extern char* D_0048B6D8;extern char* D_0048B6E0[];extern char* D_0048B700;extern char* D_0048B728;extern char* D_0048B770[];extern char* D_0048B788;extern char* D_0048B790;
-extern char D_004A7520[],D_004A9870[],D_004AA4D0[],D_004AA4D8[],D_004AA4E0[],D_004AA4E8[],D_004AA4F8[],D_004AA640[];void GuiScreen_Init(void*);void func_00421670(void*,int);void func_00421690(void*,const char*);
+extern char D_004A7520[],D_004A9870[],D_004AA4D0[],D_004AA4D8[],D_004AA4E0[],D_004AA4E8[],D_004AA4F8[],D_004AA640[];void GuiScreen_Init(void*);void GuiTextListWidget_SetA4(void*,int);void GuiTextListWidget_SetFont(void*,const char*);
 }
 extern "C" void GuiCommandCenter_Init(CcBindings_00297C10*self){
  char a[32],b[32],c[32];int i;CcBindings_00297C10*walk;
@@ -286,7 +286,7 @@ extern "C" void GuiCommandCenter_Init(CcBindings_00297C10*self){
  GuiWidget*w=(GuiWidget*)GuiWidget_FindChildByName(self,D_004AA4E8);if(w)w->flags&=0xfffd;
  GuiScreen_Init(self);
  self->child190=(GuiWidget*)GuiWidget_FindChildByName(self,D_0048B788);if(self->child190)self->child190->flags&=0xfffd;
- self->child194=(GuiWidget*)GuiFindAs(self,D_0048B790,D_004AA640);if(self->child194){func_00421670(self->child194,2);func_00421690(self->child194,D_004AA4F8);self->child194->flags&=0xff7f;}
+ self->child194=(GuiWidget*)GuiFindAs(self,D_0048B790,D_004AA640);if(self->child194){GuiTextListWidget_SetA4(self->child194,2);GuiTextListWidget_SetFont(self->child194,D_004AA4F8);self->child194->flags&=0xff7f;}
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00297C10 */

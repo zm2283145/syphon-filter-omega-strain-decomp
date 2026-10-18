@@ -13,7 +13,7 @@ typedef struct {
 } Ctx;
 typedef struct { char pad[0xA70]; int cur; } CtxCur;
 extern char D_00537F80[];
-extern u64_t* func_00375C30(void* q, int a, int b, int c, int d, int e);
+extern u64_t* DmaPacket_Reserve(void* q, int a, int b, int c, int d, int e);
 extern void Renderer_RefreshCamera(Ent* e);
 
 typedef struct { u64_t lo, hi; } GsQ_98A0;
@@ -21,7 +21,7 @@ typedef struct { u64_t lo, hi; } GsQ_98A0;
    for the current buffer entry; the A+D pairs straddle quadwords. */
 void Renderer_RestoreRenderState(Ctx* c)
 {
-    GsQ_98A0* q = (GsQ_98A0*)func_00375C30(D_00537F80, 1, 1, 0x10, 0, 1);
+    GsQ_98A0* q = (GsQ_98A0*)DmaPacket_Reserve(D_00537F80, 1, 1, 0x10, 0, 1);
     Ent* e;
     q->lo = 0x11000000;
     q->hi = 0x0300002EULL | ((u64_t)0x020001E9 << 32);

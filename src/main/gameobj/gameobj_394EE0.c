@@ -38,7 +38,7 @@ typedef struct Obj394EE0 {
 extern void* Fstream_GetLoader(void);
 extern void func_003EAA40(void* mgr, Res394EE0* r);
 extern int FileMan_ReadData(Res394EE0* r);
-extern void func_0036D540(void* ctx, void* data, int size, int z);
+extern void Hog_OpenInMemory(void* ctx, void* data, int size, int z);
 extern int String_CompareNoCase(char* a, char* b);
 extern void Hog_Register(Hog394EE0* h, void* data, void* ctx, int z);
 extern void Model_Load(Model394EE0* m, Hog394EE0* a, Hog394EE0* b);
@@ -64,7 +64,7 @@ void func_00394EE0(Obj394EE0* o, int arg)
             o->b2E = 1;
             if (o->b1F2 && o->x64 == 0) {
                 Res394EE0* r2 = o->res;
-                func_0036D540(o->x74, r2->data, FileMan_ReadData(r2), 0);
+                Hog_OpenInMemory(o->x74, r2->data, FileMan_ReadData(r2), 0);
                 Hog_Register(o->h1E4, o->h1E4->data, o->x74, 0);
                 func_003814D0(D_00539248, o->h1E4);
             }
@@ -145,7 +145,7 @@ void func_00395050(Obj395050* o, int arg)
         if (!Model_IsLoaded_00395050(o->model)) {
             func_003EAA40(Fstream_GetLoader(), r);
             r = o->res;
-            func_0036D540(o->x74, r->data, FileMan_ReadData(r), 0);
+            Hog_OpenInMemory(o->x74, r->data, FileMan_ReadData(r), 0);
             if (String_CompareNoCase(o->h1E4->name, o->h1E8->name) == 0)
                 Hog_Register(o->h1E4, o->h1E4->data, o->x74, 0);
             Hog_Register(o->h1E8, o->h1E8->data, o->x74, 0);

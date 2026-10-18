@@ -29,9 +29,9 @@ extern char D_0055DDA0[];
 extern char D_004DD7C0[];
 extern char D_004E1220[];
 extern int D_00506500;
-void func_00403310(void* p);
-void func_0040F540(void);
-void func_002BDC10(void* p);
+void AgentPartCache_Unlock(void* p);
+void World_ClearPendingIfLoaded(void);
+void GuiEquipmentModify_RingRelease(void* p);
 void GuiWidget_Destroy(void* p, int f);
 #if 0 /* merge_units */
 void operator_delete(void* p);

@@ -151,7 +151,7 @@ extern "C" float func_003EE740(O3EE740* o) {
 
 /* merge_units: begin func_003EE830 */
 #pragma push /* merge_units */
-void func_003EE830(char* self, char value) {
+void IeNode_SetFlag61(char* self, char value) {
     self[97] = value;
 }
 #pragma pop /* merge_units */

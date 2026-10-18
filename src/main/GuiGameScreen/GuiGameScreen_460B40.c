@@ -28,7 +28,7 @@ int func_00460B60(PtrVec* v, int value) {
     return PtrVec_Insert(v, data + count, 1, value);
 }
 
-int func_00460B80(void* self) {
+int GuiEndGameAwards_Deinit(void* self) {
     GuiWidget_Deinit(self);
     return func_002C9E20(D_004FFC04);
 }

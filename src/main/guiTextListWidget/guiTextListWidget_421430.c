@@ -44,7 +44,7 @@ int GuiTextListWidget_GetItemId(TextListWidget* self, int index)
 }
 
 /* Change the signed byte only for an existing list entry. */
-void func_004214C0(TextListWidget* self, int index, signed char value)
+void GuiTextListWidget_SetStyle(TextListWidget* self, int index, signed char value)
 {
     if (index < 0 || index >= self->entries.count)
         return;
@@ -52,7 +52,7 @@ void func_004214C0(TextListWidget* self, int index, signed char value)
 }
 
 /* Preserve the distinct 255 sentinel for invalid indices. */
-int func_00421500(TextListWidget* self, int index)
+int GuiTextListWidget_GetStyle(TextListWidget* self, int index)
 {
     if (index < 0 || index >= self->entries.count)
         return 255;

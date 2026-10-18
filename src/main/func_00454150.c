@@ -15,7 +15,7 @@ M_454150* Gui_GetScreenStack(void);
 void GuiStartMenu_ReturnToMenu(O_454150* o);
 void Hud_ClosePauseMenu(void* p);
 void Game_SetPaused(void* p, int v);
-int func_00454150(O_454150* o, Ev_454150* ev);
+int GuiRadioLog_HandleInput(O_454150* o, Ev_454150* ev);
 }
 static inline unsigned char Down_454150(Ev_454150* e) { unsigned char r = 0; if (e->type == 1 && e->b2 == 0) r = 1; return r; }
 static inline unsigned char Btn_454150(Ev_454150* e, int b) { unsigned char r = 0; if (Down_454150(e) && e->btn == b) r = 1; return r; }
@@ -24,7 +24,7 @@ static inline bool Down2_454150(Ev_454150* e) { return e->type == 1 && e->b2 == 
 static inline bool Btn2_454150(Ev_454150* e, int b) { return Down2_454150(e) && e->btn == b; }
 static inline bool Plain2_454150(Ev_454150* e, int b) { return Btn2_454150(e, b) && e->b6 == 0; }
 
-int func_00454150(O_454150* o, Ev_454150* ev)
+int GuiRadioLog_HandleInput(O_454150* o, Ev_454150* ev)
 {
     if (Plain_454150(ev, 0x10)) {
         GuiStartMenu_ReturnToMenu(o);

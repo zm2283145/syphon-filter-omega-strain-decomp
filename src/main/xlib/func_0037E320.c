@@ -7,7 +7,7 @@ extern char D_00537F80[];
 void Mem_Free(int heap, void* p, char* file, int line);
 void func_00375CD0(void* p);
 void Video_FreeDeferredBuffers(void* p, int a);
-void func_003813A0(void* p, int id, int a);
+void Tex_Release(void* p, int id, int a);
 void func_00383020(void* p, int flag);
 }
 struct VO_0037E320 { int pad[4]; virtual void Destroy(int flag); };
@@ -21,7 +21,7 @@ struct S_0037E320 {
 static inline void Free_0037E320(void* p, int line) { AllocGuard g; Mem_Free(0, p, D_004BC200, line); }
 static inline void DelA_0037E320(void* p, int line) { AllocGuard g; func_00383020(p, -1); Mem_Free(0, p, D_004BC200, line); }
 static inline void DelV_0037E320(VO_0037E320* p, int line) { AllocGuard g; p->Destroy(-1); Mem_Free(0, p, D_004BC200, line); }
-extern "C" void func_0037E320(S_0037E320* self)
+extern "C" void Renderer_Teardown(S_0037E320* self)
 {
     int i;
     if (self->flags == -1) return;
@@ -29,8 +29,8 @@ extern "C" void func_0037E320(S_0037E320* self)
     if (!(self->flags & 8)) {
         for (i = 0; i < 6; i++) {
             E1_0037E320* e = &self->e1[i];
-            func_003813A0(self->p1058, e->id, 0);
-            if (e->flag) func_003813A0(self->p1058, e->id + 1, 0);
+            Tex_Release(self->p1058, e->id, 0);
+            if (e->flag) Tex_Release(self->p1058, e->id + 1, 0);
         }
     }
     { int j; for (j = 0; j < 2; j++) {

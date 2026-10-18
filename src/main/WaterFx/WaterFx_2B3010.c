@@ -93,7 +93,7 @@ extern long long D_004BC1B0[];
 void Renderer_BindTexture(void* m, int idx);
 void func_0025CD10(void* s);
 void func_0025CA40(void* s);
-void func_00371200(void* s);
+void Renderer_FlushBatch(void* s);
 void Vec4_Copy(V* d, const V* s);
 void GuiBatch_AddVertexColor(V* d, const V* s);
 float GuiBatch_AddVertexUV(void);
@@ -227,7 +227,7 @@ extern "C" void WaterFx_RenderRipples(Water* w)
         Emit(c1, V4c(1.0f, 1.0f, 1.0f, a), V4c(0.0f, 0.0f, 1.0f, 0.0f));
         Emit(c2, V4c(1.0f, 1.0f, 1.0f, s), V4c(1.0f, 1.0f, 1.0f, 0.0f));
         Emit(c3, V4c(1.0f, 1.0f, 1.0f, a), V4c(1.0f, 0.0f, 1.0f, 0.0f));
-        func_00371200(D_005381F0);
+        Renderer_FlushBatch(D_005381F0);
     }
     D_005392D8 = D_004BC1B0[0];
 }

@@ -6,7 +6,7 @@ void* Mem_Alloc(int, int, char*, int);
 int func_0036DFB0();
 int func_0036E140();
 int FileMan_Release();
-int func_0036E5D0();
+int Resource_Construct();
 short TexMan_FindOrLoad(int, void*);
 int sprintf();
 int strlen(const char*);
@@ -55,7 +55,7 @@ void Model_BindTextures(Mdl* self, int arg1) {
     self->ids = ids;
     s = self->desc->names;
     for (i = 0; i < self->desc->count; i++) {
-        func_0036E5D0(name);
+        Resource_Construct(name);
         sprintf(buf, &D_004BC180, s);
         func_0036DFB0(name, buf, arg1);
         self->ids[i] = TexMan_FindOrLoad(D_00539248, name);

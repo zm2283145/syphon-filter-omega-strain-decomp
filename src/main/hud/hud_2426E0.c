@@ -39,12 +39,12 @@ static inline void merge_flush_func_00242740(void) {}
 /* merge_units: begin func_002427A0 */
 #pragma push /* merge_units */
 extern int D_0055A6C0;
-extern void func_002427F0(Obj2426* s);
-extern void func_00242870(Obj2426* s);
+extern void Hud_CloseMapScreen(Obj2426* s);
+extern void Hud_OpenMapScreen(Obj2426* s);
 void Hud_ToggleMap(Obj2426* s) {
     D_0055A6C0 = -0x41;
-    if (s->b6A9) func_002427F0(s);
-    else func_00242870(s);
+    if (s->b6A9) Hud_CloseMapScreen(s);
+    else Hud_OpenMapScreen(s);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002427A0(void) {}

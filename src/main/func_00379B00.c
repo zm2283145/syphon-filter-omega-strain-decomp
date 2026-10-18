@@ -7,6 +7,6 @@
 #include "loose03_types.h"
 
 /* Address of the currently selected 272-byte item. */
-char* func_00379B00(Manager37F9D0* self) {
+char* Video_GetCurrentCameraRecord(Manager37F9D0* self) {
     return self->items[self->current];
 }

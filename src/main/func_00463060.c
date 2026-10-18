@@ -6,26 +6,26 @@ int func_0035D1F0(char **, int);
 int FileMan_Release(char * , int);                         
 int func_00461DC0(char * , int);                         
 int operator_delete(char **);                            
-extern void func_0035BF70();
-extern void func_0035CD00();
+extern void GuiScoresEquip_Draw();
+extern void GuiScoresEquip_Init();
 extern void GuiWidget_FocusPrev();
 extern void GuiWidget_FocusNext();
 extern void GuiWidget_FocusLast();
-extern void func_0041E230();
-extern void func_0041E2B0();
-extern void func_0041E330();
-extern void func_0041EBF0();
-extern void func_0041F070();
-extern void func_0041F080();
+extern void GuiWidget_BubbleActivate();
+extern void GuiWidget_BubbleType1();
+extern void GuiWidget_BubbleType0();
+extern void GuiWidget_BaseSleep();
+extern void GuiWidget_ClearFlag4();
+extern void GuiWidget_SetFlag4();
 extern void GuiWidget_Deinit();
 extern void func_0041F210();
-extern void func_00463120();
+extern void GuiEndGameStatistics_GetClassName();
 extern void func_00463130();
-extern void func_00463160();
-extern void func_004637D0();
-extern void func_00463940();
-extern void func_00463980();
-extern void func_00463A20();
+extern void GuiEndGameStatistics_HandleInput();
+extern void GuiEndGameStatistics_Update();
+extern void GuiEndGameStatistics_First();
+extern void GuiEndGameStatistics_HandleEvent();
+extern void GuiEndGameStatistics_Wake();
 extern void * const D_004E1840[];
 
 #pragma push
@@ -54,4 +54,4 @@ char **func_00463060(char **arg0, long long arg1) {
 }
 
 #pragma pop
-void * const D_004E1840[24] = { (void*)0x0, (void*)0x0, (void*)func_00463060, (void*)func_0035CD00, (void*)GuiWidget_Deinit, (void*)func_0041F080, (void*)func_0041F070, (void*)func_00463A20, (void*)func_0041EBF0, (void*)func_0041E330, (void*)func_0041E2B0, (void*)func_00463160, (void*)func_0035BF70, (void*)func_0041E230, (void*)func_004637D0, (void*)func_00463980, (void*)func_0041F210, (void*)func_00463940, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)func_00463120, (void*)func_00463130, (void*)0x0 };
+void * const D_004E1840[24] = { (void*)0x0, (void*)0x0, (void*)func_00463060, (void*)GuiScoresEquip_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiEndGameStatistics_Wake, (void*)GuiWidget_BaseSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiEndGameStatistics_HandleInput, (void*)GuiScoresEquip_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiEndGameStatistics_Update, (void*)GuiEndGameStatistics_HandleEvent, (void*)func_0041F210, (void*)GuiEndGameStatistics_First, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiEndGameStatistics_GetClassName, (void*)func_00463130, (void*)0x0 };

@@ -39,7 +39,7 @@ extern "C" G00466890* func_00466890(void)
 extern "C" {
 extern char D_004C2B38[];extern char D_004E19B0[];
 }
-struct G00466960 { void* vtable; };extern "C" G00466960* func_00466960(void)
+struct G00466960 { void* vtable; };extern "C" G00466960* GuiFrontendCanvas_ctor(void)
 {
     G00466960* p;
     {

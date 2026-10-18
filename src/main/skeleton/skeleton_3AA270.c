@@ -35,7 +35,7 @@ typedef struct LoadStream {
     char data[0xA0];
 } LoadStream;
 
-extern void func_0036E5D0(LoadStream* s);
+extern void Resource_Construct(LoadStream* s);
 extern void Hog_Register(LoadStream* s, int name, int flags, int mode);
 extern void Skel_ReadFile(int skel, int arg, int name, LoadStream* s);
 extern void FileMan_Release(LoadStream* s, int flags);
@@ -43,7 +43,7 @@ extern void FileMan_Release(LoadStream* s, int flags);
 /* Loads a skeleton through a temporary stream opened on `name`; returns 0. */
 int Skel_Load(int skel, int arg, int name, int flags) {
     LoadStream stream;
-    func_0036E5D0(&stream);
+    Resource_Construct(&stream);
     Hog_Register(&stream, name, flags, 0);
     Skel_ReadFile(skel, arg, name, &stream);
     FileMan_Release(&stream, -1);

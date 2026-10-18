@@ -9,7 +9,7 @@
 
 extern float TextObj_SetText(int, int);
 
-void func_003E7EB0(Unk3E7EB0* self, int value) {
+void IeElement_SetData(Unk3E7EB0* self, int value) {
     self->unk78 = value;
 }
 

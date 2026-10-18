@@ -94,7 +94,7 @@ void func_00472050(ThrLIt* r, const ThrLIt& s);
 #endif /* merge_units */
 
 ThrLIt List_Erase(ThrList* l, const ThrLIt& pos);
-int func_0042B1A0(int);
+int Net_GetClock(int);
 void printf(char* fmt, ...);
 void Event_Send(ThrMsg* msg, void* target, int flags);
 void Tree_Successor(void* it);
@@ -129,7 +129,7 @@ extern "C" void NetMsgThrottle_SendMsg(void)
 
     func_00472070(&begin, D_00588020);
     it.node = begin.node;
-    now = func_0042B1A0(1);
+    now = Net_GetClock(1);
     while (MapNe(&it, &end)) {
         ThrList* l = &it.node->list;
         float f = (float)l->count * l->rate;

@@ -25,7 +25,7 @@ extern void func_003314F0(char*, int);
 extern char* PlayerSlots_Get(int);
 extern int func_0012F2E0(char*);
 extern char* func_0012F2D0(char*);
-extern void func_002C9270(char*, char*, int, int);
+extern void Hud_AppendCalloutName(char*, char*, int, int);
 extern int func_0012F2C0(void*);
 extern char* func_0012F2B0(char*);
 extern char* func_0012F2A0(char*);
@@ -52,7 +52,7 @@ void func_0012F0D0(void)
             char* p = PlayerSlots_Get(i);
             if (p && m.id == func_0012F2E0(p)) {
                 func_0012F2D0(buf);
-                func_002C9270(buf, p, m.id, 1);
+                Hud_AppendCalloutName(buf, p, m.id, 1);
                 Hud_ShowCallout(func_0012F2C0(D_004FFB50), func_0012F2B0(p), func_0012F2A0(buf), 0, 0, 0, -1.0f, 0.0f);
                 break;
             }

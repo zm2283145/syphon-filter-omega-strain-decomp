@@ -22,7 +22,7 @@ typedef struct {
     short x2d96;
 } F38CBF0;
 extern void func_0036CA70(void*);
-void func_0038CBF0(F38CBF0* p)
+void ActorModel_Deactivate(F38CBF0* p)
 {
     int i;
     p->x2c08 = 0;
@@ -45,7 +45,7 @@ static inline void merge_flush_func_0038CBF0(void) {}
 extern void* func_0036E140(void* entry, const char* name, int a, int b);
 extern int Fstream_GetLoader(void);
 extern int Fstream_ReleaseNoCallback(int mgr, void* entry, int flag);
-extern void func_003813A0(int mgr, int handle, int flags);
+extern void Tex_Release(int mgr, int handle, int flags);
 extern int D_00539248;
 typedef struct {
     char name[0x3C0];
@@ -57,12 +57,12 @@ typedef struct {
     signed char state;
     unsigned char dirty;
 } Cc70Obj;
-void func_0038CC70(Cc70Obj* self)
+void ActorModel_Release(Cc70Obj* self)
 {
     if (self->dirty) {
         FileManEntry e;
         char path[0x100];
-        func_0036E5D0(&e);
+        Resource_Construct(&e);
         sprintf(path, "%s.HOG", self);
         func_0036E140(&e, path, 0, 0);
         Fstream_ReleaseNoCallback(Fstream_GetLoader(), &e, 1);
@@ -75,8 +75,8 @@ void func_0038CC70(Cc70Obj* self)
         int mgr = D_00539248;
         int i;
         for (i = 0; i < self->count; i++) {
-            if (self->cur[i] != self->prev[i]) func_003813A0(mgr, self->prev[i], 0);
-            func_003813A0(mgr, self->cur[i], 0);
+            if (self->cur[i] != self->prev[i]) Tex_Release(mgr, self->prev[i], 0);
+            Tex_Release(mgr, self->cur[i], 0);
         }
         self->state = -3;
     }

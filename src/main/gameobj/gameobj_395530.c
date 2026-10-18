@@ -35,7 +35,7 @@ extern char D_004BC430[];
 extern char D_004BC530[];
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void* func_00377C30(void* p);
-void* func_0036E5D0(void* p);
+void* Resource_Construct(void* p);
 }
 inline void* operator new(unsigned int, void* p) { return p; }
 static inline const V4_395530& IdentR_395530(void) { V4_395530 l0; V4_395530* q1 = &l0; asm { sqc2 vf0, 0x0(q1) } return l0; }
@@ -69,7 +69,7 @@ static inline void* NewA_395530(int line)
         AllocGuard g;
         p = Mem_Alloc(0, 0x9C, D_004BC430, line);
     }
-    if (p) p = func_0036E5D0(p);
+    if (p) p = Resource_Construct(p);
     return p;
 }
 extern "C" void func_00395530(S_395530* self_, S_395530* other_)

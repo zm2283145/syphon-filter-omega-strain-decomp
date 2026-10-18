@@ -27,7 +27,7 @@ extern Mtx4 D_005390F0;
 extern Mtx4 D_005390B0;
 extern void Renderer_UpdateCameraMatrices(void* r);
 extern void Renderer_RefreshCamera(Cam* c);
-extern void* func_00375C30(void* q, int a, int b, int n, int c, int d);
+extern void* DmaPacket_Reserve(void* q, int a, int b, int n, int c, int d);
 }
 typedef struct { char pad[0x150]; __int128 q150; } Obj7C70;
 static inline Cam* CurCam() { return (Cam*)(D_005381F0 + D_00538C60 * 0x110 + 0x1F0); }
@@ -36,7 +36,7 @@ static inline float* CamMtx(Cam* c) { Renderer_RefreshCamera(c); if (c->useA) re
 
 /* Refreshes camera matrices and uploads view/projection matrices, camera vectors, the object's
    vector at +0x150 and the viewport scale as a 14-qword VU packet. */
-extern "C" void func_00377C70(Obj7C70* o) {
+extern "C" void Renderer_ComputeSpriteScale(Obj7C70* o) {
     Renderer_UpdateCameraMatrices(D_005381F0);
     Mtx4* view = &D_005390F0;
     Renderer_UpdateCameraMatrices(D_005381F0);
@@ -51,7 +51,7 @@ extern "C" void func_00377C70(Obj7C70* o) {
     float sy = 1.0f / D_00538268[D_00538278];
     float* m = CamMtx(CurCam());
     V4f v(m[0] * sx, m[5] * sy, m[10], m[15]);
-    __int128* pkt = (__int128*)func_00375C30(D_00537F80, 1, 1, 14, 0, 1);
+    __int128* pkt = (__int128*)DmaPacket_Reserve(D_00537F80, 1, 1, 14, 0, 1);
     *(unsigned long*)pkt = 0x6C0E000111000000;
     __int128* p = (__int128*)((char*)pkt + 8);
     p[0] = view->r[0]; p[1] = view->r[1]; p += 2;

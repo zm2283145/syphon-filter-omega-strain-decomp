@@ -47,7 +47,7 @@ typedef struct SsoString {
 } SsoString;
 typedef struct { char pad[0x48]; SsoString text; char pad2[0x24]; void* view; char pad3[4]; unsigned char active; char pad4[0xB]; int mode; } TextBox;
 extern void func_0041BE50(TextBox* t);
-extern void func_0041AE90(void* view, int len);
+extern void GuiTextEditWidget_MaskText(void* view, int len);
 extern void GuiTextEditWidget_ClampCursor(TextBox* t, int mode);
 /* Refreshes the text box, updating the view with the text length when active. */
 void func_0041AA10(TextBox* t)
@@ -59,7 +59,7 @@ void func_0041AA10(TextBox* t)
             len = (unsigned char)t->text.h.s.shortLen;
         else
             len = t->text.longLen;
-        func_0041AE90(t->view, len);
+        GuiTextEditWidget_MaskText(t->view, len);
     }
     GuiTextEditWidget_ClampCursor(t, t->mode);
 }
@@ -163,14 +163,14 @@ typedef struct { union { unsigned int word; ShortHdr s; } hdr; int longLen; char
 typedef struct { char pad[0x48]; SsoString_0041AD60 text; char pad2[0x24]; void* label; char pad3[4]; unsigned char showLength; } Widget41A;
 
 extern void GuiTextWidget_OnWake(Widget41A* self);
-extern void func_0041AE90(void* label, int length);
+extern void GuiTextEditWidget_MaskText(void* label, int length);
 
 /* Refreshes the widget and, if enabled, passes its text length to the label. */
 void GuiTextEditWidget_OnWake(Widget41A* self)
 {
     GuiTextWidget_OnWake(self);
     if (self->showLength)
-        func_0041AE90(self->label, (self->text.hdr.word & 1) ? self->text.longLen : (unsigned char)self->text.hdr.s.len);
+        GuiTextEditWidget_MaskText(self->label, (self->text.hdr.word & 1) ? self->text.longLen : (unsigned char)self->text.hdr.s.len);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0041AD60 */

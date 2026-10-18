@@ -7,6 +7,6 @@
 #include "types.h"
 
 
-int func_0041A0C0(void) {
+int GuiTextEditWidget_GetClassName(void) {
     return (int)"GuiTextEditWidget";
 }

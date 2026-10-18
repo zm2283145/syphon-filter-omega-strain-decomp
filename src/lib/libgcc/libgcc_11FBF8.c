@@ -8,7 +8,7 @@
 __asm__(".set nomove\n"
         "dpadd = SoftFloat_DoubleAdd\n"
         "dpsub = func_0011C200\n"
-        "dpmul = func_0011C268\n"
+        "dpmul = SoftFloat_DoubleMultiply\n"
         "dptoli = func_0011C858\n");
 typedef union { double value; struct { unsigned int lsw; unsigned int msw; } parts; } ieee_double_shape_type;
 #define GET_HIGH_WORD(i,d) do { ieee_double_shape_type gh_u; gh_u.value = (d); (i) = gh_u.parts.msw; } while (0)
@@ -271,7 +271,7 @@ static const float T[] = {
 	-1.8558636e-5f,
 	2.5907306e-5f,
 };
-extern float func_00121760(float x);
+extern float Math_Fabsf(float x);
 float Math_TanKernel(float x, float y, int iy)
 {
 	const float
@@ -284,7 +284,7 @@ float Math_TanKernel(float x, float y, int iy)
 	ix = hx&0x7fffffff;
 	if(ix<0x31800000)
 	    {if((int)x==0) {
-		if((ix|(iy+1))==0) return one/func_00121760(x);
+		if((ix|(iy+1))==0) return one/Math_Fabsf(x);
 		else return (iy==1)? x: -one/x;
 	    }
 	    }

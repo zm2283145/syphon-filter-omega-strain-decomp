@@ -13,17 +13,17 @@ void func_001391E0(void* p);
 void Map_Ctor(void* p, void* a, void* b);
 void ScalarCollection_Init(void* p);
 void String_Copy(void* s, char* src);
-void* func_00260B90(void* p);
+void* cVisionFxMan_ctor(void* p);
 void* WaterFx_Construct(void* p);
 void* NpcRouteMgr_Construct(void* p);
 void* SoundMgr_Construct(void* p);
 void* func_0016B340(void* p);
 void* ObjMan_Ctor(void* p);
 void* HotboxTracker_Construct(void* p, int a);
-void* func_0045A7A0(void* p);
+void* Options_SetDefaults(void* p);
 void* func_002CC5A0(void* p);
 void* func_00147910(void* p);
-void func_003CAC40(void* w, void* p);
+void Script_AddChild(void* w, void* p);
 void PtrVec_Reserve(void* p, int n);
 }
 
@@ -143,7 +143,7 @@ extern "C" World_WC* World_Construct(World_WC* w)
     {
         void* p;
         WC_ALLOC(p, void*, 0x200, 0x93);
-        if (p) p = func_00260B90(p);
+        if (p) p = cVisionFxMan_ctor(p);
         w->fE0 = p;
     }
     {
@@ -167,25 +167,25 @@ extern "C" World_WC* World_Construct(World_WC* w)
         void* p;
         WC_ALLOC(p, void*, 0x7C, 0x97);
         if (p) p = NpcRouteMgr_Construct(p);
-        func_003CAC40(w, p);
+        Script_AddChild(w, p);
     }
     {
         void* p;
         WC_ALLOC(p, void*, 0x54C0, 0x98);
         if (p) p = SoundMgr_Construct(p);
-        func_003CAC40(w, p);
+        Script_AddChild(w, p);
     }
     {
         void* p;
         WC_ALLOC(p, void*, 0x20, 0x99);
         if (p) p = func_0016B340(p);
-        func_003CAC40(w, p);
+        Script_AddChild(w, p);
     }
     {
         void* p;
         WC_ALLOC(p, void*, 0x11B4, 0x9A);
         if (p) p = ObjMan_Ctor(p);
-        func_003CAC40(w, p);
+        Script_AddChild(w, p);
     }
     {
         void* p;
@@ -213,7 +213,7 @@ extern "C" World_WC* World_Construct(World_WC* w)
     {
         void* p;
         WC_ALLOC(p, void*, 0x24, 0xA0);
-        if (p) p = func_0045A7A0(p);
+        if (p) p = Options_SetDefaults(p);
         w->f1DC = p;
     }
     {
@@ -222,7 +222,7 @@ extern "C" World_WC* World_Construct(World_WC* w)
         if (p) p = func_002CC5A0(p);
         w->fB4 = p;
     }
-    func_003CAC40(w, w->fB4);
+    Script_AddChild(w, w->fB4);
     PtrVec_Reserve(&w->m2C, 0x100);
     w->f98 = 0;
     w->f90 = 0;

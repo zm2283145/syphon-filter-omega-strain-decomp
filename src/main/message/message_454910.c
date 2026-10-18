@@ -66,7 +66,7 @@ static inline void SetColor(Panel* panel, Color color)
 }
 
 /* Screen init: binds the panel (with its icon, label and default colour) and the list child widgets. */
-extern "C" void func_00454910(Screen* self)
+extern "C" void GuiRadioLog_Init(Screen* self)
 {
     GuiWidget_Init(self);
     self->panel = (Panel*)AsPanel(GuiWidget_FindChildByName(self, "radio_log_list"));

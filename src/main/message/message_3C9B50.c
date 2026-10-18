@@ -17,7 +17,7 @@ char * func_003C9B40();
 extern char D_005435C0;
 extern char D_005435C4;
 
-int func_003C9B50(int *arg0) {
+int MsgQueue_CountPending(int *arg0) {
     int sp4C;
     int var_s1;
     char * temp_v0;
@@ -88,7 +88,7 @@ typedef struct HdrBitsEP { unsigned int type : 2; unsigned int time : 30; } HdrB
 typedef union HdrEP { HdrBitsEP b; unsigned int raw; } HdrEP;
 typedef struct PacketEP { unsigned int hdr; int data; } PacketEP;
 typedef struct EventEP { char pad[0x18]; int type; } EventEP;
-extern unsigned int func_0042B1A0(int a);
+extern unsigned int Net_GetClock(int a);
 int Event_PackHeader(EventEP* e, int data, int a2, int a3, int a4, unsigned int size, void* buf)
 {
     HdrEP h;
@@ -99,7 +99,7 @@ int Event_PackHeader(EventEP* e, int data, int a2, int a3, int a4, unsigned int 
         } else {
             h.b.type = 3;
         }
-        h.b.time = func_0042B1A0(0);
+        h.b.time = Net_GetClock(0);
         out->hdr = h.raw;
         out->data = data;
     }
@@ -159,7 +159,7 @@ cMessage* cMessage_ctor5(cMessage* self, int sender, MsgInfo* info)
     *(int*)&stamp = *(int*)&info->stamp;
     self->time = stamp.time;
     self->kind = stamp.kind;
-    DME_AddLatencySample(func_0042B1A0(0) - self->time);
+    DME_AddLatencySample(Net_GetClock(0) - self->time);
     return self;
 }
 #undef D_004DFD80 /* merge_units */
@@ -176,9 +176,9 @@ extern char D_004DFD80[];
 extern char D_005721C8[];
 extern char D_005721D0[];
 #if 0 /* merge_units */
-extern int func_0042B1A0(int);
+extern int Net_GetClock(int);
 #endif /* merge_units */
-#define func_0042B1A0(a0) ((int)func_0042B1A0((a0))) /* merge_units */
+#define Net_GetClock(a0) ((int)Net_GetClock((a0))) /* merge_units */
 
 
 int Event_Construct(int a0, int a1) {
@@ -200,7 +200,7 @@ int Event_Construct(int a0, int a1) {
     cond = v0 == 0;
     a0 = 0;
     if (cond) goto L003C9E88;
-    v0 = func_0042B1A0(a0);
+    v0 = Net_GetClock(a0);
     *(int*)((char*)s0 + 12) = v0;
 L003C9E88:;
     v0 = s0;
@@ -209,7 +209,7 @@ ret:
     return v0;
 }
 #undef D_004DFD80 /* merge_units */
-#undef func_0042B1A0 /* merge_units */
+#undef Net_GetClock /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003C9E30 */
 

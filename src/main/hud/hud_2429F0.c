@@ -24,7 +24,7 @@ void* Gui_GetScreenList(void);
 Mgr2427* Gui_GetScreenStack(void);
 void* GuiManager_FindOrLoad(void* a, void* b, void* c);
 void Game_SetPaused(void* p, int v);
-void func_002427F0(Obj2426* s);
+void Hud_CloseMapScreen(Obj2426* s);
 int Hud_IsGuiFocused(Obj2426* s);
 void Pad_ResetHeldMask(void* p);
 void GuiGameScreen_ToggleWeaponSelect(void* p, int v);
@@ -37,7 +37,7 @@ extern char D_004A7248[];
 extern "C" void Hud_OpenPauseMenu(Obj2426* s) {
     if (s->b6A8) return;
     Game_SetPaused(D_004FFB50, 1);
-    if (s->b6A9) func_002427F0(s);
+    if (s->b6A9) Hud_CloseMapScreen(s);
     if (!Hud_IsGuiFocused(s)) Pad_ResetHeldMask(D_0055A300);
     {
         void* x = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004A7260, "GAMEBACK");

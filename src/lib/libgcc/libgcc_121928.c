@@ -42,10 +42,10 @@ int Math_Acos(float f12) {
 /* merge_units: end func_00121A88 */
 
 /* merge_units: begin func_00121AA0 */
-extern int func_0011D400(float);
+extern int Math_AsinfImpl(float);
 
-int func_00121AA0(float f12) {
-    return func_0011D400(f12);
+int Math_Asinf(float f12) {
+    return Math_AsinfImpl(f12);
 }
 /* merge_units: end func_00121AA0 */
 

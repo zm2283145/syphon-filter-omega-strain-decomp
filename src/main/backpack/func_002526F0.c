@@ -89,10 +89,10 @@ extern char* Loc_LookupText(char* key);
 extern int Agent_GetSelected(void* list, int idx);
 extern int AgentData_HasUnlock(int agent, int what);
 extern int WeaponInv_SlotOfItem(int id);
-extern void func_00254CA0(Owner_2526F0* o, int id, int which);
+extern void Backpack_CycleItem(Owner_2526F0* o, int id, int which);
 extern bool Backpack_TakeItem(Owner_2526F0* o, int id, int which);
 extern int WeaponInv_HasAmmoText(Inv_2526F0* inv, int id);
-extern bool func_002559D0(Owner_2526F0* o, int id);
+extern bool Backpack_GetItemSlotFlag(Owner_2526F0* o, int id);
 extern void Backpack_QueryAmmo(Owner_2526F0* o, int id, int* a, int* b, int* c);
 extern WeaponDef_2526F0* WeaponDb_Get(int db, int id);
 extern int WeaponInv_GetSpare(Inv_2526F0* inv, int slot);
@@ -100,7 +100,7 @@ extern int WeaponInv_GetClip(Inv_2526F0* inv, int slot);
 extern int func_00143DE0(Inv_2526F0* inv, int ammo);
 extern int sprintf(char* buf, const char* fmt, ...);
 extern int ItemInv_Count(void* items, int id);
-extern void func_003E7EB0(void* label, Icon_2526F0* icon);
+extern void IeElement_SetData(void* label, Icon_2526F0* icon);
 extern void IeElement_SetText(void* label, char* text);
 extern void IeElement_PlayRange(void* label, float lo, float hi, unsigned char fl);
 extern void IeElement_Fade(void* label, float v);
@@ -221,12 +221,12 @@ extern "C" int Pickup_BuildPromptText(Self_2526F0* self, Ctx_2526F0* ctx) {
             cond = isSlot0 && !dual && same;
             if (cond && AgentData_HasUnlock(Agent_GetSelected(D_004FFB50, -1), 1))
                 unlocked = true;
-            func_00254CA0(self->owner, it->id, 0);
-            func_00254CA0(self->owner, it->id, 1);
+            Backpack_CycleItem(self->owner, it->id, 0);
+            Backpack_CycleItem(self->owner, it->id, 1);
             show = Backpack_TakeItem(self->owner, it->id, 1);
             isSlot4 = uslot == 4;
             noAmmo = !WeaponInv_HasAmmoText(inv, it->id);
-            cur = func_002559D0(self->owner, it->id);
+            cur = Backpack_GetItemSlotFlag(self->owner, it->id);
             Backpack_QueryAmmo(self->owner, it->id, &ammo, &clips, &reserve);
             if (wid > -1) {
                 int spare;
@@ -339,9 +339,9 @@ extern "C" int Pickup_BuildPromptText(Self_2526F0* self, Ctx_2526F0* ctx) {
                 Icon_SetIM(it->icon, 0, 7);
             }
         }
-        func_003E7EB0(it->label, it->icon);
+        IeElement_SetData(it->label, it->icon);
         if (it->label2)
-            func_003E7EB0(it->label2, it->icon2);
+            IeElement_SetData(it->label2, it->icon2);
         IeElement_SetText(it->label, line1);
         if (it->label2)
             IeElement_SetText(it->label2, line2);

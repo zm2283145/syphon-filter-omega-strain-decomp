@@ -16,7 +16,7 @@ extern unsigned char D_00533880;
 typedef struct { char p0[172]; int fAC; } PS0_001303F0;
 #pragma push
 #pragma opt_common_subs off
-extern "C" void func_001303F0(PS0_001303F0 *arg0, int arg1) {
+extern "C" void GameFlow_QueueMovie(PS0_001303F0 *arg0, int arg1) {
     char * temp_a0;
     char * temp_s0;
     int var_a1;

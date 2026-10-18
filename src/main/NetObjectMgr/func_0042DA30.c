@@ -34,7 +34,7 @@ int Transport_Send(unsigned int id, const void* notice, int flags, int peer);
 void NetObjectMgr_AddTransferTimer(const GobjId* id);
 void func_0042D360(const GobjId* id, int peer);
 void func_00429200(TransferReleaseNotice* notice, unsigned int id, int peer);
-void func_0042D910(cGOBJ* object);
+void NetObjectMgr_Remove(cGOBJ* object);
 void operator_delete(void* allocation);
 }
 
@@ -116,7 +116,7 @@ extern "C" void func_0042DA30(cGOBJ* object, int previousPeer, int nextPeer)
                     else
                         ((TransferOwnerControllerMethods*)object->attached)->release_transfer();
                 }
-                func_0042D910(object);
+                NetObjectMgr_Remove(object);
             }
         } else if (owner < 0) {
             if (previousOwner >= 0 && PlayerSlots_Get(previousOwner)) {

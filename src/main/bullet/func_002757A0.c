@@ -121,7 +121,7 @@ void Vec4_Copy(V4* d, const V4* s);
 void GuiBatch_AddVertexColor(V4* d, const V4* s);
 float GuiBatch_AddVertexUV(void);
 V4* func_00132000(V4* o, float x, float y, float z, float w);
-void func_00371200(void* s);
+void Renderer_FlushBatch(void* s);
 }
 #define D_00539220 (D_00539210.f20)
 #define D_00539224 (D_00539210.f24)
@@ -223,7 +223,7 @@ extern "C" void func_002757A0(Bullet_002757A0* b)
         Emit_002757A0(p5, c1, D_004A90A0[b->uv + 1]);
         Emit_002757A0(p6, c2, D_004A90A0[b->uv + 2]);
         Emit_002757A0(p7, c2, D_004A90A0[b->uv + 3]);
-        func_00371200(D_005381F0);
+        Renderer_FlushBatch(D_005381F0);
         D_005392D0 = saved;
     }
 }

@@ -12,22 +12,22 @@ typedef struct { char pad[0x30]; A_455550* f30; } G_455550;
 typedef struct { char pad[0x48]; void* f48; } O_455550;
 extern G_455550* D_004FFC0C;
 extern int D_0049D010;
-extern void func_0041EFA0(O_455550*);
-extern int func_00176110(G_455550*);
-extern void func_00454F80(O_455550*, int);
-extern void func_00455260(O_455550*, A_455550*, int);
+extern void GuiWidget_BaseWake(O_455550*);
+extern int Player_GetHeldItem(G_455550*);
+extern void GuiEquipmentPane_Cycle(O_455550*, int);
+extern void GuiEquipmentPane_SetItem(O_455550*, A_455550*, int);
 
-void func_00455550(O_455550* o)
+void GuiEquipmentPane_Wake(O_455550* o)
 {
     G_455550* g;
-    func_0041EFA0(o);
+    GuiWidget_BaseWake(o);
     if (o->f48 && (g = D_004FFC0C)) {
-        if (func_00176110(g) == -1) {
-            func_00454F80(o, 1);
+        if (Player_GetHeldItem(g) == -1) {
+            GuiEquipmentPane_Cycle(o, 1);
         } else {
             A_455550* a = g->f30;
             a = (a && a->type == D_0049D010) ? a : 0;
-            func_00455260(o, a, func_00176110(g));
+            GuiEquipmentPane_SetItem(o, a, Player_GetHeldItem(g));
         }
     }
 }
@@ -53,7 +53,7 @@ extern char D_004AAE20[];
 extern char D_004AAE00[];
 void GuiWidget_Init(S_455610* s);
 }
-extern "C" void func_00455610(S_455610* s)
+extern "C" void GuiEquipmentPane_Init(S_455610* s)
 {
     GuiWidget_Init(s);
     s->f48 = GuiFindAs(s, D_00497998, D_004BB3D0);
@@ -74,7 +74,7 @@ extern "C" void func_00455610(S_455610* s)
 typedef struct { unsigned short a0; unsigned short a2; short pad4; unsigned short a6; unsigned short a8; } E4557C0;
 extern int GuiStartMenu_ReturnToMenu(void* self, E4557C0* e);
 extern int GuiArrayWidget_OnInput(void* self, E4557C0* e);
-int func_004557C0(void* self, E4557C0* e)
+int GuiWeaponStats_HandleInput(void* self, E4557C0* e)
 {
     int b = e->a0 == 1 && e->a2 == 0 && e->a8 == 0x10 && e->a6 == 0;
     if (b) {
@@ -102,14 +102,14 @@ extern char D_004C1A88[];
 extern char D_004C1A98[];
 int sprintf(char* d, const char* f, ...);
 char* Loc_LookupText(char* key);
-void func_00426510(void* list, int col, int row, char* text);
+void GuiTextArrayWidget_SetCellText(void* list, int col, int row, char* text);
 Wpn_00455840* WeaponDb_Get(int db, int id);
 void String_Copy(char* d, char* s);
-int func_002C9020(int a);
-int func_002C8FD0(int a);
-void func_002C8EC0(int a, char* buf, int n);
+int WeaponStats_RatingA(int a);
+int WeaponStats_RatingB(int a);
+void Format_RomanNumeral(int a, char* buf, int n);
 int WeaponInv_ClipsForActor(int actor, int a);
-void func_00455840(void* list, int id)
+void GuiWeaponStats_Fill(void* list, int id)
 {
     char key[0x10];
     char buf[0x20];
@@ -119,7 +119,7 @@ void func_00455840(void* list, int id)
         char* t;
         sprintf(key, D_004C1A88, i);
         t = Loc_LookupText(key);
-        func_00426510(list, 0, i, t ? t : D_004C1A38);
+        GuiTextArrayWidget_SetCellText(list, 0, i, t ? t : D_004C1A38);
     }
     w = WeaponDb_Get(D_004FFD30, id);
     if (w) {
@@ -129,11 +129,11 @@ void func_00455840(void* list, int id)
             switch (i) {
             case 0:
                 if (w->f60)
-                    func_002C8EC0(func_002C9020(w->f60), buf, 0x20);
+                    Format_RomanNumeral(WeaponStats_RatingA(w->f60), buf, 0x20);
                 break;
             case 1:
                 if (w->f64)
-                    func_002C8EC0(func_002C8FD0(w->f64), buf, 0x20);
+                    Format_RomanNumeral(WeaponStats_RatingB(w->f64), buf, 0x20);
                 break;
             case 2:
                 if (w->f70)
@@ -146,7 +146,7 @@ void func_00455840(void* list, int id)
                 break;
             }
             }
-            func_00426510(list, 1, i, buf);
+            GuiTextArrayWidget_SetCellText(list, 1, i, buf);
         }
     }
 }

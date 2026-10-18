@@ -6,6 +6,6 @@
 
 #include "loose03_types.h"
 
-int func_0036D520(Obj36D630* self, int index) {
+int Hog_GetMemberOffset(Obj36D630* self, int index) {
     return self->unk160[index];
 }

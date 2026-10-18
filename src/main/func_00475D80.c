@@ -21,7 +21,7 @@ extern float D_004A0410;
 extern "C" V Ladder_RungTarget(Ladder* l, int i);
 extern "C" void* Root_GetWorldPlacement(void*);
 extern "C" V* Placement_GetPosition(void*);
-extern "C" void func_001E1F10(void*, V*);
+extern "C" void Root_SetBasePosition(void*, V*);
 extern "C" void Ladder_BlendToTarget(Ladder* l, float t);
 static inline bool Rung_Valid(Rung* r) { return r->f990 > -3.4028235e38f && r->f998 < 3.4028235e38f; }
 void Ladder_BlendToTarget(Ladder* l, float t)
@@ -49,5 +49,5 @@ void Ladder_BlendToTarget(Ladder* l, float t)
         asm { max.s v, y, lo; min.s v, v, hi }
         p.z = v;
     }
-    func_001E1F10(root, &p);
+    Root_SetBasePosition(root, &p);
 }

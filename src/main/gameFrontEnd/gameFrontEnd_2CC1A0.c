@@ -56,7 +56,7 @@ void* Gui_GetScreenStack(void);
 void GuiCanvas_UpdatePads(void*);
 void GuiWidget_BroadcastEvent(void*, int, int, int);
 
-void func_002CC260(int arg0, int arg1)
+void App_CardWaitPoll(int arg0, int arg1)
 {
     int i;
 
@@ -105,7 +105,7 @@ static unsigned int dat_0048C248[2] = { 0x1, 0x0 };
 extern void* D_004FFD2C;
 extern char D_004ACFA8[];
 extern int D_005383D4;
-extern void func_0045A150(void* p);
+extern void Options_Load(void* p);
 extern void func_002CC980(void);
 extern char* func_003CBA90(char* key);
 extern void FrontEnd_StartGui(ObjC3E0* o, int a);
@@ -114,7 +114,7 @@ void FrontEnd_FirstEntry(ObjC3E0* o)
 {
     if ((*(unsigned char*)dat_0048C248)) {
         char* s;
-        func_0045A150(D_004FFD2C);
+        Options_Load(D_004FFD2C);
         o->b2C = 0;
         func_002CC980();
         s = func_003CBA90(D_004ACFA8);

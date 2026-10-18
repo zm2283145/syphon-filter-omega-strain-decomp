@@ -70,7 +70,7 @@ static inline void PlayVoice_4610F0(Self_4610F0* self, char* voice)
     cMessage_dtor(&play, 0);
 }
 
-extern "C" void func_004610F0(Self_4610F0* self)
+extern "C" void VoiceQueue_Fire(Self_4610F0* self)
 {
     if (self->cur < self->count) {
         Line_4610F0* line = &self->lines[self->cur++];
@@ -105,7 +105,7 @@ char* func_00461250(void) {
     return D_004F2CC0;
 }
 
-char* func_00461260(void) {
+char* GuiEndGameAwards_GetClassName(void) {
     return "GuiEndGameAwards";
 }
 #pragma pop /* merge_units */

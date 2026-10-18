@@ -31,9 +31,9 @@ void List_Begin_16E880(void* out, void* list);
 void func_0026C390(void* out, void* raw);
 void func_0026C320(void* out, void* list);
 void func_0026C350(void* out, void* in);
-void func_00272AD0(void* a, I3680A0* item);
-void func_0026C570(int a);
-char* func_002749B0(I3680A0* item, char* buf);
+void HudMarkers_SetHighlight(void* a, I3680A0* item);
+void HudMap_Commit(int a);
+char* HudMarker_GetTickerText(I3680A0* item, char* buf);
 void Notify_Insert(void* list, char* text, void* color, int a, int b);
 int GuiTextListWidget_GetItemId(void* list, int a);
 int GuiWidget_OnEvent(void* self, void* sender, unsigned short msg, int a3, int a4);
@@ -68,9 +68,9 @@ extern "C" int GuiObjectives_HandleEvent(S3680A0* self, void* sender, unsigned s
                         item = n->item;
                         if (item->h.Get() != 0 && item->h.Get() == obj) {
                             char* name;
-                            func_00272AD0(base, item);
-                            func_0026C570(D_004FFC2C->a6A0);
-                            name = func_002749B0(item, buf);
+                            HudMarkers_SetHighlight(base, item);
+                            HudMap_Commit(D_004FFC2C->a6A0);
+                            name = HudMarker_GetTickerText(item, buf);
                             if (name)
                                 Notify_Insert((char*)D_004FFC2C + 0x100, name, D_00587C90, 2, 1);
                         }
@@ -98,7 +98,7 @@ extern G_368300* D_004FFC2C;
 #endif /* merge_units */
 #define D_004FFC2C (*(G_368300 **)&D_004FFC2C) /* merge_units */
 
-void func_00367B20(S_368300* o, int page, int f);
+void GuiObjectives_SetTab(S_368300* o, int page, int f);
 M_368300* Gui_GetScreenStack(void);
 void GuiWidget_SendEvent(void* w, void* m, int kind, int v, int f);
 void GuiStartMenu_ReturnToMenu(S_368300* o);
@@ -116,14 +116,14 @@ int GuiObjectives_HandleInput(S_368300* o, Ev_368300* ev)
 {
     if (Plain_368300(ev, 0x2000)) {
         if (o->page == 0 && o->w64) {
-            func_00367B20(o, 1, 0);
+            GuiObjectives_SetTab(o, 1, 0);
             GuiWidget_SendEvent(o->w6C, Gui_GetScreenStack(), 0x10, 0, 0);
         }
         return 1;
     }
     if (Plain2_368300(ev, 0x8000)) {
         if (o->page == 1 && o->w60) {
-            func_00367B20(o, 0, 0);
+            GuiObjectives_SetTab(o, 0, 0);
             GuiWidget_SendEvent(o->w68, Gui_GetScreenStack(), 0x10, 0, 0);
         }
         return 1;

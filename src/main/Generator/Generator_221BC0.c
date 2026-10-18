@@ -53,12 +53,12 @@ extern "C" void cGenerator_v16();
 extern "C" void cGenerator_v17();
 extern "C" void cGenerator_v18();
 extern "C" void cGenerator_v3D();
-extern "C" void func_0012ECE0();
+extern "C" void GObj_GetID();
 extern "C" void func_0012ED50();
 extern "C" void func_0013E060();
 extern "C" void func_0013EE60();
 extern "C" void func_00140E90();
-extern "C" void func_00141850();
+extern "C" void GObj_GetLifeState();
 extern "C" void func_00148870();
 extern "C" void Object_GetEye();
 extern "C" void func_00153860();
@@ -74,7 +74,7 @@ extern "C" void func_0015C030();
 extern "C" void func_0015C040();
 extern "C" void func_0015C050();
 extern "C" void func_0015C0A0();
-extern "C" void func_003CCFF0();
+extern "C" void GObj_GetWorldMatrix();
 extern "C" void func_003CD090();
 extern "C" void func_003CD110();
 extern "C" void Node_GetComponentMatrix();
@@ -125,7 +125,7 @@ extern "C" char *cGenerator_dtor(char *arg0, long long arg1) {
     return arg0;
 }
 #pragma pop
-void * const D_004DB680[68] = { (void*)0x0, (void*)0x0, (void*)cGenerator_dtor, (void*)cGenerator_v01, (void*)func_0012ECE0, (void*)Object_GetAttachedOrSelf, (void*)cGenerator_v04, (void*)cGenerator_v05, (void*)cGenerator_v06, (void*)cGenerator_v07, (void*)cGenerator_v08, (void*)cGenerator_v09, (void*)func_0012ED50, (void*)cGenerator_v0B, (void*)cGenerator_v0C, (void*)func_003CEA00, (void*)cGenerator_v0E, (void*)cGenerator_v0F, (void*)cGenerator_v10, (void*)cGenerator_v11, (void*)Actor_BaseWorldUpdate, (void*)Actor_VirtualNop, (void*)func_003CE9D0, (void*)cGenerator_v15, (void*)cGenerator_v16, (void*)cGenerator_v17, (void*)cGenerator_v18, (void*)Node_GetFlag2C, (void*)func_0015BFB0, (void*)func_0015BFC0, (void*)func_0015BFD0, (void*)func_00148870, (void*)func_0015BFF0, (void*)func_0015BFE0, (void*)func_0013EE60, (void*)func_0015C000, (void*)Object_AttachTransform, (void*)Player_GetActiveWeapon, (void*)func_003CDDC0, (void*)func_003CDD80, (void*)func_003CDD40, (void*)func_003CDC20, (void*)func_003CDBE0, (void*)func_003CDA60, (void*)func_003CD920, (void*)func_003CD7A0, (void*)func_0015C010, (void*)func_00153860, (void*)Object_GetEye, (void*)func_0015C020, (void*)func_00140E90, (void*)func_0015C030, (void*)func_0015C040, (void*)func_0015C050, (void*)Node_GetWorldMatrix, (void*)func_003CD4A0, (void*)Node_GetLightRefPoint, (void*)PathObj_GetPosition, (void*)Node_GetComponentMatrix, (void*)func_003CD110, (void*)func_003CD090, (void*)func_003CCFF0, (void*)func_0013E060, (void*)cGenerator_v3D, (void*)Actor_ApplyContactDamage, (void*)func_0015C0A0, (void*)func_00141850, (void*)Controller_DeathNotice };
+void * const D_004DB680[68] = { (void*)0x0, (void*)0x0, (void*)cGenerator_dtor, (void*)cGenerator_v01, (void*)GObj_GetID, (void*)Object_GetAttachedOrSelf, (void*)cGenerator_v04, (void*)cGenerator_v05, (void*)cGenerator_v06, (void*)cGenerator_v07, (void*)cGenerator_v08, (void*)cGenerator_v09, (void*)func_0012ED50, (void*)cGenerator_v0B, (void*)cGenerator_v0C, (void*)func_003CEA00, (void*)cGenerator_v0E, (void*)cGenerator_v0F, (void*)cGenerator_v10, (void*)cGenerator_v11, (void*)Actor_BaseWorldUpdate, (void*)Actor_VirtualNop, (void*)func_003CE9D0, (void*)cGenerator_v15, (void*)cGenerator_v16, (void*)cGenerator_v17, (void*)cGenerator_v18, (void*)Node_GetFlag2C, (void*)func_0015BFB0, (void*)func_0015BFC0, (void*)func_0015BFD0, (void*)func_00148870, (void*)func_0015BFF0, (void*)func_0015BFE0, (void*)func_0013EE60, (void*)func_0015C000, (void*)Object_AttachTransform, (void*)Player_GetActiveWeapon, (void*)func_003CDDC0, (void*)func_003CDD80, (void*)func_003CDD40, (void*)func_003CDC20, (void*)func_003CDBE0, (void*)func_003CDA60, (void*)func_003CD920, (void*)func_003CD7A0, (void*)func_0015C010, (void*)func_00153860, (void*)Object_GetEye, (void*)func_0015C020, (void*)func_00140E90, (void*)func_0015C030, (void*)func_0015C040, (void*)func_0015C050, (void*)Node_GetWorldMatrix, (void*)func_003CD4A0, (void*)Node_GetLightRefPoint, (void*)PathObj_GetPosition, (void*)Node_GetComponentMatrix, (void*)func_003CD110, (void*)func_003CD090, (void*)GObj_GetWorldMatrix, (void*)func_0013E060, (void*)cGenerator_v3D, (void*)Actor_ApplyContactDamage, (void*)func_0015C0A0, (void*)GObj_GetLifeState, (void*)Controller_DeathNotice };
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00221BC0(void) {}
 #pragma pop /* merge_units */
@@ -215,7 +215,7 @@ void func_002EBBA0(int s, int* out);
 void NetMap_BindReceiver(int id, int owner, Gen_221D20* o);
 void func_0043B190(void* ctx);
 void func_004398E0(void* ctx, int* id, int n);
-int func_0042B1A0(int a);
+int Net_GetClock(int a);
 }
 static inline int Read_221D20(Reader_221D20* r) { int v = *(int*)r->cur; r->cur += 4; return v; }
 static inline void ReadInt_221D20(Reader_221D20* r, int* out) { *out = *(int*)r->cur; r->cur += 4; }
@@ -356,7 +356,7 @@ extern "C" Gen_221D20* cGenerator_ctor(Gen_221D20* self, Reader_221D20* r)
             func_0043B190(&ctx);
             func_004398E0(&ctx, &id, -1);
         }
-        D_004F56B8 = func_0042B1A0(1) + 0xFA;
+        D_004F56B8 = Net_GetClock(1) + 0xFA;
     }
     return self;
 }

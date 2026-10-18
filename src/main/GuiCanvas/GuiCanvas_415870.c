@@ -18,12 +18,12 @@
 extern char D_0055A300[];
 extern char D_0055A700[];
 extern int GuiCanvas_KeyboardInput(Unk415870*, void*);
-extern int func_00415510(Unk415870*, void*);
+extern int GuiCanvas_PadClock(Unk415870*, void*);
 
-/* If flag bit 2 is set, calls func_00415510 and, when byte +0x51 is set, GuiCanvas_KeyboardInput. */
+/* If flag bit 2 is set, calls GuiCanvas_PadClock and, when byte +0x51 is set, GuiCanvas_KeyboardInput. */
 void GuiCanvas_UpdatePads(Unk415870* self) {
     if ((self->flags & 4) != 0) {
-        func_00415510(self, D_0055A300);
+        GuiCanvas_PadClock(self, D_0055A300);
         if (self->unk51 != 0) {
             GuiCanvas_KeyboardInput(self, D_0055A700);
         }

@@ -98,9 +98,9 @@ extern char D_004DF140[];
 extern char D_004E1220[];
 extern int D_00506500;
 void Mem_Free(int pool, void* p, char* file, int line);
-void func_00403310(void* p);
-void func_0040F540(void);
-void func_002BDC10(void* p);
+void AgentPartCache_Unlock(void* p);
+void World_ClearPendingIfLoaded(void);
+void GuiEquipmentModify_RingRelease(void* p);
 void GuiWidget_Destroy(void* p, int f);
 void operator_delete(void* p);
 }
@@ -122,7 +122,7 @@ extern "C" O0035D1F0* func_0035D1F0(O0035D1F0* self, short del)
             self->items[i]->v22(1);
             Del0035D1F0(self->items[i], 0xBF);
         }
-        func_0040F540();
+        World_ClearPendingIfLoaded();
         GuiWidget_Destroy(self, 0);
         if (del > 0)
             operator_delete(self);

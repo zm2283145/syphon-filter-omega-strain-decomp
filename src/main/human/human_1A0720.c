@@ -43,7 +43,7 @@ extern E_1A07F0** func_001A08C0(int* v);
 extern E_1A07F0** func_001A0890(int* v);
 extern void func_001A08B0(It_1A07F0* out, int* v, E_1A07F0*** p);
 static inline int Eq_1A07F0(E_1A07F0** a, E_1A07F0** b) { return a == b; }
-void func_001A07F0(O_1A07F0* self)
+void ActorRelation_Clear(O_1A07F0* self)
 {
     It_1A07F0 b;
     It_1A07F0 e;

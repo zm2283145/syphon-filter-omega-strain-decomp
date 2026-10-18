@@ -23,7 +23,7 @@ float Vec4_GetX(V4_9550* v);
 float Vec4_GetY(V4_9550* v);
 float Vec4_GetZ(V4_9550* v);
 void Mtx_MakeAxisRotation(M4_9550* m, float x, float y, float z, float a);
-void func_003E8040(int t, M4_9550* m);
+void IeElement_SetMatrix(int t, M4_9550* m);
 extern float D_00493980;
 }
 static inline void Mul_9550(M4_9550* t, M4_9550* b) {
@@ -60,7 +60,7 @@ static inline void Mul_9550(M4_9550* t, M4_9550* b) {
 }
 #pragma opt_common_subs off
 #pragma opt_propagation off
-extern "C" void func_003E9550(S_9550* self)
+extern "C" void HudMapSprite_Place(S_9550* self)
 {
     Obj_9550* o = Object_LookupById(&self->id);
     if (o != 0) {
@@ -84,7 +84,7 @@ extern "C" void func_003E9550(S_9550* self)
         m.r[2].x *= k;
         m.r[2].y *= k;
         m.r[2].z *= k;
-        func_003E8040(self->target, &m);
+        IeElement_SetMatrix(self->target, &m);
     }
 }
 #pragma pop /* merge_units */
@@ -105,12 +105,12 @@ extern void HudTracker_ToCameraSpace(void*);
 extern float IeElement_Fade(int, float);
 extern void IeElement_EvaluateAt(int, float);
 
-void func_003E96F0(Unk3E96F0* self) {
+void HudLockTracker_Draw(Unk3E96F0* self) {
     HudTracker_ToCameraSpace(self->unk70);
     IeElement_SetPosition(self->unk60, self->unk70);
 }
 
-void func_003E9730(Unk3E96F0* self) {
+void HudLockTracker_Changed(Unk3E96F0* self) {
     IeElement_EvaluateAt(self->unk60, 0.0f);
     self->unk84 = 1;
 }
@@ -237,7 +237,7 @@ extern char D_004E05A0[];
 extern void IeElement_Release(void* p);
 extern void cGOBJ_dtor(void* self, short del);
 extern void operator_delete(void* p);
-G9940* func_003E9940(G9940* self, short del)
+G9940* HudLockTracker_Delete(G9940* self, short del)
 {
     if (self) {
         self->vt = D_004E05A0;

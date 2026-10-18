@@ -39,7 +39,7 @@ extern void FileMan_Release(void* part, int flags);
 extern void cMessage_dtor(void* msg, int flags);
 extern void SoundAction_CtorVoice(void* action, int kind, char* voice, int a, int b);
 extern void SoundMsg_WrapAction(SoundMsg_355490* msg, void* action);
-extern void func_0043C890(Widget_355490* w, char* s, int v);
+extern void GuiBitmapWidget_SetImage(Widget_355490* w, char* s, int v);
 extern void func_0043C810(Widget_355490* w);
 extern int sprintf(char* buf, const char* fmt, ...);
 

@@ -19,7 +19,7 @@ float SoftFloat_U64ToFloat(unsigned long long);
 void func_0040E320(void* p);
 Mgr* Gui_GetScreenStack(void);
 int Gui_GetScreenList(void);
-void func_00415B60(Mgr* m, float dt);
+void GuiCanvas_NestedUpdate(Mgr* m, float dt);
 void GuiManager_Update(int a, float dt);
 void GuiCanvas_UpdatePads(Mgr* m);
 int Service_Lookup(void* a, void* b);
@@ -59,7 +59,7 @@ extern "C" void FrontEnd_UpdateGui(ObjCBB30* o)
         if (o->b2A && o->b28)
             func_0040E320(D_0055A830);
         if (D_0051EEB0) {
-            func_00415B60(Gui_GetScreenStack(), dt);
+            GuiCanvas_NestedUpdate(Gui_GetScreenStack(), dt);
         } else {
             GuiManager_Update(Gui_GetScreenList(), dt);
             GuiCanvas_UpdatePads(Gui_GetScreenStack());

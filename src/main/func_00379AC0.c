@@ -4,7 +4,7 @@ typedef struct { char pad[0x10]; char blockA[0x40]; char blockB[0xB4]; unsigned 
 extern void Renderer_RefreshCamera(Obj104* o);
 
 /* Updates the object, then returns block +0x10 when the flag at +0x104 is set, else block +0x50. */
-void* func_00379AC0(Obj104* o)
+void* Renderer_GetProjection(Obj104* o)
 {
     Renderer_RefreshCamera(o);
     if (o->useA)

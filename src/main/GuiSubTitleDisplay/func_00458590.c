@@ -27,7 +27,7 @@ extern void func_004588E0(Sub10*);
 extern void func_00219DB0(Sub10*);
 
 /* Constructor: base init, vtable, two sub-objects, cleared fields and flag bit 7. */
-Obj7C* func_00458590(Obj7C* o) {
+Obj7C* GuiSubTitleDisplay_ctor(Obj7C* o) {
     Sub10* b;
     Sub10* a;
     GuiWidget_ctor(o);

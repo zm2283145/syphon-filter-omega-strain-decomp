@@ -23,7 +23,7 @@ static inline void QCopy_28C(void* d0, void* s0) { int n = 0x2DF; void* s = s0; 
         .set reorder
     }
 }
-void func_0028CD70(void* unused, S28C* s, S28C* src)
+void AgentCreateModel_Copy(void* unused, S28C* s, S28C* src)
 {
     __int128 q = s->save70;
     int k = s->keep;

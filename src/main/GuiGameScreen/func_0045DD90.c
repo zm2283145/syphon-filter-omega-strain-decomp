@@ -6,7 +6,7 @@ int func_002B1970(int );
 int Gui_GetScreenStack();                                
 int GuiScreen_SetFocus(int, int );                       
 int GuiWidget_SendEvent(int , int, int, int, int);                 
-int func_0045DE40(int );                            
+int GuiGameScreen_Refocus(int );                            
 
 #pragma opt_common_subs off
 void func_0045DD90(int arg0, int arg1) {
@@ -28,6 +28,6 @@ void func_0045DD90(int arg0, int arg1) {
             GuiWidget_SendEvent(F_(arg0, 0x4C, int), Gui_GetScreenStack(), 0x10, 2, 0);
             return;
         }
-        func_0045DE40(arg0);
+        GuiGameScreen_Refocus(arg0);
     }
 }

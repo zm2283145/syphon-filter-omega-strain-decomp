@@ -9,6 +9,6 @@
 
 extern void Hud_ClearTargetLock(void* self);
 
-void func_00244A00(void* self) {
+void Hud_CrosshairRelease(void* self) {
     Hud_ClearTargetLock(self);
 }

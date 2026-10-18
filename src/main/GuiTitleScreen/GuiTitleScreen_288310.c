@@ -30,7 +30,7 @@ extern char D_004A9618[];
 extern char D_004A9628[];
 
 extern void MemCard_Refresh(Mgr288310* m);
-extern int func_00288510(void);
+extern int GuiTitleScreen_SavedAgentExists(void);
 extern char* Loc_LookupText(const char* key);
 extern int FrontEnd_OpenPopup(void* ui, int kind, const char* a, const char* b, Self288310* owner, int flag);
 extern int Agent_GetSelected(void* list, int idx);
@@ -53,7 +53,7 @@ void GuiTitleScreen_CheckMemCard(Self288310* self, int force)
     D_00506330 = 1;
     m = &D_0055A830;
     MemCard_Refresh(m);
-    if (!func_00288510()) {
+    if (!GuiTitleScreen_SavedAgentExists()) {
         if (!m->cfg->x59D) {
             void* ui = D_004FFC04;
             char* a = Loc_LookupText(D_004A95F0);

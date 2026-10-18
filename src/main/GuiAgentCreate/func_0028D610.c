@@ -19,8 +19,8 @@ extern char D_004A9A38[];
 extern char D_004A9A40[];
 extern int strcmp(const char* a, const char* b);
 extern int sprintf(char* buf, const char* fmt, ...);
-extern int func_00404690(void* db, __int128 key);
-extern int func_00401DE0(void* db, __int128 key);
+extern int AgentPartCache_FindMesh(void* db, __int128 key);
+extern int AgentPartCache_FindTexture(void* db, __int128 key);
 extern void GuiAgentCreate_UpdateCount(S_28D610* o);
 extern void GuiTextWidget_SetText(W_28D610* w, char* text, int flags);
 extern void GuiWidget_SendEvent(S_28D610* o, W_28D610* w, int kind, int v, int f);
@@ -44,8 +44,8 @@ void GuiAgentCreate_SelectOption(S_28D610* o, char* name)
         if (i < 11) {
             o->slot = D_0048B501[o->row][o->cur * 4];
             o->mode = D_0048B500[o->row][o->cur].mode;
-            o->vE0 = func_00404690(D_0055DDA0, o->items->e[o->slot].a);
-            o->vE4 = func_00401DE0(D_0055DDA0, o->items->e[o->slot].b);
+            o->vE0 = AgentPartCache_FindMesh(D_0055DDA0, o->items->e[o->slot].a);
+            o->vE4 = AgentPartCache_FindTexture(D_0055DDA0, o->items->e[o->slot].b);
             GuiAgentCreate_UpdateCount(o);
             if (o->w58) o->w58->flags |= 2;
             Slider_28D610(o, o->w58, 10, (int)((100.0f / (float)(o->count - 1)) * (float)o->pos), 0);

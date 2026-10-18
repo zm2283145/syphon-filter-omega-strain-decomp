@@ -3,7 +3,7 @@
 #include "alloc_guard.h"
 #include "frontend.h"
 extern "C" {
-extern "C" void func_0012ECE0();
+extern "C" void GObj_GetID();
 extern "C" void func_0012ECF0();
 extern "C" void func_0012ED00();
 extern "C" void func_0012ED10();
@@ -49,4 +49,4 @@ extern "C" FrontEndScene* FrontEndScene_dtor(FrontEndScene* self, short deleteFl
     }
     return self;
 }
-void * const FrontEndScene_vtable[16] = { (void*)0x0, (void*)0x0, (void*)FrontEndScene_dtor, (void*)Object_BroadcastToChildren, (void*)func_0012ECE0, (void*)func_0012ECF0, (void*)func_001383D0, (void*)func_0012ED00, (void*)func_0012ED10, (void*)func_0012ED20, (void*)func_0012ED30, (void*)func_0012ED40, (void*)func_0012ED50, (void*)Receiver_GetScriptTypeKey, (void*)Receiver_ScriptDispatch, (void*)0x0 };
+void * const FrontEndScene_vtable[16] = { (void*)0x0, (void*)0x0, (void*)FrontEndScene_dtor, (void*)Object_BroadcastToChildren, (void*)GObj_GetID, (void*)func_0012ECF0, (void*)func_001383D0, (void*)func_0012ED00, (void*)func_0012ED10, (void*)func_0012ED20, (void*)func_0012ED30, (void*)func_0012ED40, (void*)func_0012ED50, (void*)Receiver_GetScriptTypeKey, (void*)Receiver_ScriptDispatch, (void*)0x0 };

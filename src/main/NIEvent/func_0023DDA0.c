@@ -12,7 +12,7 @@ public:
     unsigned char flag;
 };
 extern "C" void NiEvent_ComputeWorld(Info0023DDA0* out, Obj0023DDA0* self);
-extern "C" void func_0023DDA0(Obj0023DDA0* self)
+extern "C" void NiEvent_UpdateNode(Obj0023DDA0* self)
 {
     if (self->flag) {
         Info0023DDA0 a;

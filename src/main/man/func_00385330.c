@@ -9,7 +9,7 @@ typedef struct Result385 {
 extern void Weapon_AddMuzzleOffset(void* src, Result385* out);
 
 /* Computes a result block from src and copies its quadword at +0x30 to out. */
-void func_00385330(Q* out, void* src) {
+void ActorModel_GetAttachPointWorld(Q* out, void* src) {
     Result385 result;
     Weapon_AddMuzzleOffset(src, &result);
     *out = result.value;

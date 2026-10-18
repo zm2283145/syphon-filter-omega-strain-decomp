@@ -89,7 +89,7 @@ typedef struct {
     float* b;
     unsigned char done;
 } ClipCursor_00190C70;
-extern unsigned int func_00190E50(float);
+extern unsigned int Math_TruncFloatSat(float);
 extern float* func_00190E60(void*);
 extern int func_00190EA0(void*);
 extern int func_00190EB0(void*);
@@ -118,7 +118,7 @@ void func_00190C70(ClipCursor_00190C70* c) {
     stride = func_00190EA0(func_00190F10(c));
     c->i10 = 0;
     base = func_00190E60(func_00190F10(c));
-    idx = func_00190E50(c->t);
+    idx = Math_TruncFloatSat(c->t);
     i0 = idx * func_00190EA0(func_00190F10(c));
     if (func_00190EB0(func_00190F10(c))) {
         i1 = (idx < frames - 1) ? i0 + stride : 0;

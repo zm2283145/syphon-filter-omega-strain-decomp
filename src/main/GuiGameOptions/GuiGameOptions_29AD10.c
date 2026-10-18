@@ -74,8 +74,8 @@ extern "C" {
 extern unsigned char D_005721C8;
 Plr_29AE60* PlayerSlots_Get(int i);
 void GuiGameOptions_ShowMenu(Self_29AE60* self);
-int func_0029BDB0(void);
-void func_002C9270(char* buf, Plr_29AE60* p, int idx, int x);
+int GuiGameOptions_GetPlayers(void);
+void Hud_AppendCalloutName(char* buf, Plr_29AE60* p, int idx, int x);
 #if 0 /* merge_units */
 Mgr_29AE60* Gui_GetScreenStack(void);
 #endif /* merge_units */
@@ -95,7 +95,7 @@ extern "C" void func_0029AE60(Self_29AE60* self)
     Plr_29AE60* p;
     int sel;
     if (self->menu == 0) return;
-    if (func_0029BDB0() < 2) {
+    if (GuiGameOptions_GetPlayers() < 2) {
         GuiGameOptions_ShowMenu(self);
         if (self->fA8 != 0) {
             self->fA8->flags &= ~4;
@@ -112,7 +112,7 @@ extern "C" void func_0029AE60(Self_29AE60* self)
             if (id >= 0 && id < 4) {
                 char buf[0x90];
                 buf[0] = 0;
-                func_002C9270(buf, p, id, 0);
+                Hud_AppendCalloutName(buf, p, id, 0);
                 GuiTextListWidget_AddItem(self->menu, buf + 1, id, 0);
             }
         }
@@ -153,11 +153,11 @@ extern char* D_0048B908;
 extern char D_004AA780[];
 extern char D_004FFB50[];
 extern char D_004DADF0[];
-void func_0041EBF0(G_B070*);
+void GuiWidget_BaseSleep(G_B070*);
 void PadRumble_Stop(void);
 int Fstream_GetLoader(void);
-void func_003EB750(int);
-void func_0036B250(int);
+void FStream_CancelRequests(int);
+void Heap_ReleaseSlot(int);
 void SoundRequest_Ctor(SoundRequest* req, int kind, void* name, int a, int b);
 void SoundEvent_Ctor(SoundEventMsg* msg, void* action, int flags);
 void Event_Send(void* msg, void* target, int flags);
@@ -169,7 +169,7 @@ void GuiGameOptions_Sleep(G_B070* self) {
     SoundEventMsg evm2;
     SoundRequest req;
     SoundRequest req2;
-    func_0041EBF0(self);
+    GuiWidget_BaseSleep(self);
     PadRumble_Stop();
     SoundRequest_Ctor(&req, 4, D_0048B908, 0, 0);
     SoundEvent_Ctor(&evm, &req, 0);
@@ -184,8 +184,8 @@ void GuiGameOptions_Sleep(G_B070* self) {
         FileMan_Release(req2.partA, -1);
         evm2.flag = 1;
         Event_Send(&evm2, D_004FFB50, 1);
-        func_003EB750(Fstream_GetLoader());
-        func_0036B250(1);
+        FStream_CancelRequests(Fstream_GetLoader());
+        Heap_ReleaseSlot(1);
         evm2.vtbl = D_004DADF0;
         FileMan_Release(evm2.partB, -1);
         FileMan_Release(evm2.partA, -1);
@@ -209,7 +209,7 @@ typedef struct { int a; unsigned char b4, b5, b6, b7; float f8, fc, f10; int f14
 typedef struct { char pad[0x14]; unsigned short flags; } W29B;
 typedef struct { char pad[0xA8]; W29B* fa8; char pad2[0xC]; C29B cfg; char pad3[0x324]; unsigned char b400; char pad4[0x2B]; W29B* f42c; } G29B;
 extern "C" {
-extern void func_0041EFA0(G29B*);
+extern void GuiWidget_BaseWake(G29B*);
 #if 0 /* merge_units */
 extern C29B* D_004FFD2C;
 #endif /* merge_units */
@@ -223,14 +223,14 @@ extern V29B* Gui_GetScreenStack(void);
 
 extern int String_CompareNoCase(char*, char*);
 extern unsigned char D_005721C0;
-extern int func_0029BDB0(void);
-extern void func_0036B250(int);
-extern void func_0036B3B0(int, int, int);
+extern int GuiGameOptions_GetPlayers(void);
+extern void Heap_ReleaseSlot(int);
+extern void Heap_AllocSlot(int, int, int);
 }
 static inline int ok29B(void) { return D_005721C8 ? D_005721C0 : 1; }
 extern "C" void GuiGameOptions_Wake(G29B* g) {
     C29B* c;
-    func_0041EFA0(g);
+    GuiWidget_BaseWake(g);
     c = D_004FFD2C;
     g->cfg.a = c->a;
     g->cfg.b4 = c->b4;
@@ -249,12 +249,12 @@ extern "C" void GuiGameOptions_Wake(G29B* g) {
     g->b400 = String_CompareNoCase(Gui_GetScreenStack()->v19(), "GuiGameCanvas") == 0;
     if (g->b400) {
         if (g->f42c) g->f42c->flags &= ~4;
-        if (!D_005721C8 || !ok29B() || func_0029BDB0() < 2) {
+        if (!D_005721C8 || !ok29B() || GuiGameOptions_GetPlayers() < 2) {
             if (g->fa8) g->fa8->flags &= ~4;
         }
     } else {
-        func_0036B250(1);
-        func_0036B3B0(1, 0x100000, 0x800);
+        Heap_ReleaseSlot(1);
+        Heap_AllocSlot(1, 0x100000, 0x800);
     }
 }
 #undef D_004FFD2C /* merge_units */

@@ -1,4 +1,4 @@
-/* func_0025E750: draws one two-vertex untextured strip at the top of the current viewport slot; sibling of func_0025EC20 (same render-state push/pop, GCC-style quad copy / identity matrix asm). */
+/* VisionFx_DrawScanBand: draws one two-vertex untextured strip at the top of the current viewport slot; sibling of VisionFx_DrawNoiseTiles (same render-state push/pop, GCC-style quad copy / identity matrix asm). */
 #pragma cplusplus on
 #pragma opt_loop_invariants off
 #pragma opt_strength_reduction off
@@ -55,7 +55,7 @@ void Vec4_Copy(V4_0025E750* d, V4_0025E750* s);
 void GuiBatch_AddVertexColor(V4_0025E750* d, V4_0025E750* s);
 float GuiBatch_AddVertexUV(void);
 V4_0025E750* func_00132000(V4_0025E750* o, float x, float y, float z, float w);
-void func_00370550(void* s);
+void Renderer_FlushPrimitives(void* s);
 }
 #define D_00539224 (D_00539210.f24)
 #define D_00539228 (D_00539210.f28)
@@ -115,7 +115,7 @@ static inline void Setup_0025E750(const V4_0025E750* vp)
     D_00538C68 = 1;
 }
 
-extern "C" void func_0025E750(float* y)
+extern "C" void VisionFx_DrawScanBand(float* y)
 {
     int saved;
     float hw;
@@ -139,7 +139,7 @@ extern "C" void func_0025E750(float* y)
     D_00539224 = 0;
     Emit_0025E750(V4c_0025E750(-hw, *y, 1e-8f, 1.0f), V4c_0025E750(0.0f, 0.0f, 0.0f, 0.14f));
     Emit_0025E750(V4c_0025E750(hw, 4.0f + *y, 1e-8f, 1.0f), V4c_0025E750(0.0f, 0.0f, 0.0f, 0.14f));
-    func_00370550(D_005381F0);
+    Renderer_FlushPrimitives(D_005381F0);
     D_00538C68 = 1;
     D_00538C64--;
     D_00538C60--;

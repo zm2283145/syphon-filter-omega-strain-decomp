@@ -30,8 +30,8 @@ int func_004637B0(PtrVec* v, int value) {
 /* merge_units: begin func_004637D0 */
 #pragma push /* merge_units */
 #include "fam5_timed_retry.h"
-extern void func_0035BFB0(char*, float);
-DEFINE_TIMED_RETRY(func_004637D0, 0x410, 0x260, func_0035BFB0)
+extern void GuiScoresEquip_Update(char*, float);
+DEFINE_TIMED_RETRY(GuiEndGameStatistics_Update, 0x410, 0x260, GuiScoresEquip_Update)
 #pragma pop /* merge_units */
 /* merge_units: end func_004637D0 */
 
@@ -67,7 +67,7 @@ int Agent_GetStatPercent(int agent, int part, int total) {
 extern GuiWidget* GuiWidget_FocusFirst(GuiWidget* self);
 
 /* Hides the widget returned by GuiWidget_FocusFirst unless it is this widget. */
-GuiWidget* func_00463940(GuiWidget* self) {
+GuiWidget* GuiEndGameStatistics_First(GuiWidget* self) {
     GuiWidget* other;
 
     other = GuiWidget_FocusFirst(self);

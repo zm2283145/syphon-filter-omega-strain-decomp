@@ -138,7 +138,7 @@ int FrontEnd_OpenPopup(void* ui, int a, char* b, int c, S_0029E440* d, int e);
 #define FrontEnd_OpenPopup(a0, a1, a2, a3, a4, a5) (FrontEnd_OpenPopup((a0), (a1), (a2), (char *)(a3), (S_0029E1A0 *)(a4), (a5))) /* merge_units */
 
 void func_0029D390(S_0029E440* self);
-void func_0037E320(void* p);
+void Renderer_Teardown(void* p);
 void* Service_Lookup(void* a, void* b);
 void SoundMgr_UnloadLevel(void* svc);
 void func_002B4FA8(int id);
@@ -210,7 +210,7 @@ extern "C" int func_0029E440(S_0029E440* self, void* w, int msg, int sub, char* 
             if (m == 0x1A) {
                 void* svc;
                 int id;
-                func_0037E320(D_005381F0);
+                Renderer_Teardown(D_005381F0);
                 svc = Service_Lookup(D_004FFB50, D_004F2CC0);
                 if (svc)
                     SoundMgr_UnloadLevel(svc);
@@ -303,8 +303,8 @@ void String_Dtor(Str_0029E8C0* s, int flags);
 #endif /* merge_units */
 #define String_Dtor(a0, a1) (String_Dtor((Str_0029E1A0 *)(a0), (a1))) /* merge_units */
 
-void func_0043D820(void* p, int a);
-void func_0043D760(void* p, int a);
+void GuiMultiLineText_ScrollUp(void* p, int a);
+void GuiMultiLineText_ScrollDown(void* p, int a);
 int GuiScreen_HandleInput(S_0029E8C0* self, Ev_0029E8C0* ev);
 }
 static inline unsigned char Down_0029E8C0(Ev_0029E8C0* e)
@@ -359,17 +359,17 @@ extern "C" int func_0029E8C0(S_0029E8C0* self, Ev_0029E8C0* ev)
             bool d = ev->type == 1 && ev->f2 == 0 && ev->btn == 8 && ev->f6 == 0;
             if (d) {
                 if (self->p110 && (self->p110->flags & 2))
-                    func_0043D820(self->pF4, 0);
+                    GuiMultiLineText_ScrollUp(self->pF4, 0);
                 else if (self->p114 && (self->p114->flags & 2))
-                    func_0043D820(self->p100, 0);
+                    GuiMultiLineText_ScrollUp(self->p100, 0);
                 return 1;
             } else {
                 bool e = ev->type == 1 && ev->f2 == 0 && ev->btn == 4 && ev->f6 == 0;
                 if (e) {
                     if (self->p110 && (self->p110->flags & 2))
-                        func_0043D760(self->pF4, 0);
+                        GuiMultiLineText_ScrollDown(self->pF4, 0);
                     else if (self->p114 && (self->p114->flags & 2))
-                        func_0043D760(self->p100, 0);
+                        GuiMultiLineText_ScrollDown(self->p100, 0);
                     return 1;
                 }
             }

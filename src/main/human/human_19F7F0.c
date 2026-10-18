@@ -132,7 +132,7 @@ struct ActMsg : CMsg {
 
 extern "C" {
 void* func_001A02B0(void* root, void* key);
-void func_001A02C0(Actor9F* a);
+void Actor_UnlinkAll(Actor9F* a);
 void Root_ClearChildren(void* r);
 void WeaponInv_RestoreHiddenItem(int item);
 }
@@ -156,7 +156,7 @@ extern "C" void Actor_ReactToActionChanges(Actor9F* a)
         Root_ClearChildren(func_001A02B0(a->root2EC0, D_0049D040));
         Root_ClearChildren(func_001A02B0(a->root2EC0, D_0049D048));
         WeaponInv_RestoreHiddenItem(a->item3524);
-        func_001A02C0(a);
+        Actor_UnlinkAll(a);
     }
     if (ActTriggered(a, 17) || ActTriggered(a, 18)) {
         if (!ActBit(a->prev3224, 19) && a->link3474 != 0) {

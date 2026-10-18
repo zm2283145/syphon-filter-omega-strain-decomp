@@ -18,13 +18,13 @@ void Vec4_NormalizeXYZ_132060(V* d, const V* s);
 void Vec4_Cross(V* d, const V* a, const V* b);
 int Vec4_IsZeroXYZ(const V* v);
 V Sphere_FromCenter(const V& c, const V& r);
-void func_0039EEF0(V* d, const V* a, const V* b);
+void Vec4_CrossW0(V* d, const V* a, const V* b);
 void* func_00132000(void*, float, float, float, float);
 void Mtx_FromRowsAndTranslation(void* m, const V* a, const V* b, const V* c, void* t);
 void Mtx_FrameFromAxis(void* m, const V* a);
 void Mtx_SetIdentity(void* m);
 V* Mtx_DotRowsVec3(void* m, void* v);
-void* func_003A3430(void* a, void* b);
+void* ParticleDefs_FindByName(void* a, void* b);
 void ParticleEmitter_SpawnChildren(void* a, void* b, void* c, void* m, float t);
 void ParticleEmitterBase_Update(void* o, void* a, void* b, void* c, float t);
 void func_00136DA0(void*);
@@ -97,7 +97,7 @@ inline void* operator new(unsigned int, void* p) { return p; }
 static inline void Fin(U* d, const U& u_, const W& w_, const V& f) { const_cast<W&>(w_).FromN(N(f)); const_cast<U&>(u_).SetW(w_); *d = u_; }
 static inline void Fin2(U* d, const U& u_, const W& w_, const V& f) { W* w = (W*)&w_; U* u = (U*)&u_; *w = N(f); *u = U(w->x, w->y, w->z, 0.0f); *d = *u; }
 static inline void ToUTo3(U* d, const V& f) { W w = N(f); *d = U(w.x, w.y, w.z, 0.0f); }
-static inline V F3EEF0(const V& a, const V& b) { V r; Ptr_Identity(&r); func_0039EEF0(&r, &a, &b); return r; }
+static inline V F3EEF0(const V& a, const V& b) { V r; Ptr_Identity(&r); Vec4_CrossW0(&r, &a, &b); return r; }
 static inline V Normalized_(const V& a) { const V* p = &a; V v; return *Vec4_NormalizeXYZInPlace(Vec4_Assign(&v, p)); }
 static inline V NormalizedLen_(const V& a, float* len) { V v; return *Vec4_NormalizeXYZ_1D10C0(Vec4_Assign(&v, &a), len); }
 static inline float Sqrt(float x) { float r = 0.0f; asm { sqrt.s r, x } return r; }
@@ -420,7 +420,7 @@ void ShatterEmitter_Update(Obj9C* o, float dt, Ctx9C* ctx, Ctx9C* a2, void* a3)
                             {
                                 void* r;
                                 m[3].AC(pos);
-                                r = func_003A3430(D_0053B540, EMIT(e).x0);
+                                r = ParticleDefs_FindByName(D_0053B540, EMIT(e).x0);
                                 o->bC = 0;
                                 ParticleEmitter_SpawnChildren(ctx, o, r, m, dt);
                                 o->bC = 1;

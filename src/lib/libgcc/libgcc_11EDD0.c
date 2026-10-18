@@ -8,7 +8,7 @@
 __asm__(".set nomove\n"
         "dpadd = SoftFloat_DoubleAdd\n"
         "dpsub = func_0011C200\n"
-        "dpmul = func_0011C268\n"
+        "dpmul = SoftFloat_DoubleMultiply\n"
         "dptoli = func_0011C858\n");
 typedef union { double value; struct { unsigned int lsw; unsigned int msw; } parts; } ieee_double_shape_type;
 #define GET_HIGH_WORD(i,d) do { ieee_double_shape_type gh_u; gh_u.value = (d); (i) = gh_u.parts.msw; } while (0)
@@ -53,7 +53,7 @@ double func_0011EDD0(double x, double y)
 __asm__(".set nomove\n"
         "dpadd = SoftFloat_DoubleAdd\n"
         "dpsub = func_0011C200\n"
-        "dpmul = func_0011C268\n"
+        "dpmul = SoftFloat_DoubleMultiply\n"
         "litodp = func_0011C7A0\n"
         "dptoli = func_0011C858\n"
         "dpcmp = SoftFloat_UnpackAndCompare\n");

@@ -63,7 +63,7 @@ extern void func_00299510(OutVec4C0* v);
 extern int Loc_GetTextById(int id);
 extern int func_00339270(OutVec4C0* v, Out4C0* pos, int n, Out4C0* value);
 
-void func_003334C0(Agent4C0* self, unsigned char type, OutVec4C0* out)
+void AgentData_GetAwardRows(Agent4C0* self, unsigned char type, OutVec4C0* out)
 {
     RangeRecVec4C0* recs = &self->recs[type];
     int i;
@@ -142,7 +142,7 @@ extern int func_00339270(OutVec600* v, Out600* pos, int n, Out600* value);
 #define func_00339270(a0, a1, a2, a3) (func_00339270((void *)(a0), (void *)(a1), (a2), (void *)(a3))) /* merge_units */
 
 
-void func_00333600(Agent600* self, OutVec600* out)
+void AgentData_GetRatings(Agent600* self, OutVec600* out)
 {
     int i;
     func_00299510(out);

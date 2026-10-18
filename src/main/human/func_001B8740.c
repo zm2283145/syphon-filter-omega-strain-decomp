@@ -9,7 +9,7 @@
 
 extern unsigned char D_005721C8;
 
-unsigned char func_001B8740(Actor* actor) {
+unsigned char Actor_IsInvulnerable(Actor* actor) {
     return actor->unk33A4;
 }
 

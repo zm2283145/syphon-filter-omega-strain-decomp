@@ -10,7 +10,7 @@
 #include "event_toggle_send.h"
 
 /* Post the "on" event and set the state flag. */
-DEFINE_EVENT_TOGGLE_SEND(func_001C5710, g_cEnableMsgClass, D_004E0880, func_003FF930, 1)
+DEFINE_EVENT_TOGGLE_SEND(ParticleGob_Enable, g_cEnableMsgClass, D_004E0880, func_003FF930, 1)
 #pragma pop /* merge_units */
 /* merge_units: end func_001C5710 */
 

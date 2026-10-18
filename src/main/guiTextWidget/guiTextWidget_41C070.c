@@ -66,7 +66,7 @@ static inline void merge_flush_func_0041C0F0(void) {}
 #pragma push /* merge_units */
 typedef struct { char pad[0x11]; unsigned char b11; unsigned char b12; } PC110;
 typedef struct { char pad[0x74]; unsigned char mode; char pad2[3]; PC110* p; } TC110;
-void func_0041C110(TC110* t, unsigned char mode) {
+void GuiTextWidget_SetB74(TC110* t, unsigned char mode) {
     t->mode = mode;
     if (t->p) {
         t->p->b12 = t->mode == 0;
@@ -157,13 +157,13 @@ static inline void merge_flush_func_0041C150(void) {}
 /* Release the owned record at +0xDC (string member at +0x14) under the allocator guard, reset +0x10. */
 extern "C" {
 void* String_Dtor(void* self, short flags);
-void func_0041EBF0(void* self);
+void GuiWidget_BaseSleep(void* self);
 }
 struct O34DB10 { char pad[0x10]; int a10; char pad14[0x64]; char* aDC; };
-extern "C" void func_0041C310(O34DB10* o)
+extern "C" void GuiTextWidget_OnSleep(O34DB10* o)
 {
     char* p;
-    func_0041EBF0(o);
+    GuiWidget_BaseSleep(o);
     p = o->aDC;
     if (p) {
         {
@@ -220,7 +220,7 @@ struct GuiText {
 
 extern "C" {
 extern char D_004BF2D0[];
-void func_0041EFA0(GuiText* self);
+void GuiWidget_BaseWake(GuiText* self);
 void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
 GuiTextChild* TextObj_Construct(void* p, int x, int y, int w, int h, int resource, float* color);
 char* String_CStr(void* s);
@@ -249,7 +249,7 @@ static inline void Set76(GuiText* self, unsigned char v)
 
 extern "C" void GuiTextWidget_OnWake(GuiText* self)
 {
-    func_0041EFA0(self);
+    GuiWidget_BaseWake(self);
     if (!self->child) {
         void* p = Alloc_C3E0(0x60);
         if (p)

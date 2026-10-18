@@ -23,7 +23,7 @@ extern char D_004ACC08[];
 extern char D_004ACC18[];
 static void * const dat_0048C1B0[20] = { (void*)0x0, (void*)0x0, (void*)0x0, (void*)D_004ACBE8, (void*)0x0, (void*)0x0, (void*)D_004ACBF8, (void*)0x0, (void*)0x0, (void*)0x0, (void*)D_004ACC08, (void*)0x0, (void*)0x0, (void*)0x0, (void*)0x0, (void*)D_004ACC18, (void*)0x0, (void*)0x0, (void*)0x0, (void*)0x0 };
 extern char* Loc_LookupText(char* key);
-char* func_002C90F0(Obj9070* o)
+char* App_GetAgentNameGate(Obj9070* o)
 {
     int i;
     char* key;
@@ -44,7 +44,7 @@ static inline void merge_flush_func_002C90F0(void) {}
 
 /* merge_units: begin func_002C9170 */
 #pragma push /* merge_units */
-void func_002C9270(char* buf, int id, int nameId, int newline); /* gsynth: defined below */
+void Hud_AppendCalloutName(char* buf, int id, int nameId, int newline); /* gsynth: defined below */
 #pragma cplusplus on
 class Ctl9170 {
 public:
@@ -55,12 +55,12 @@ struct Obj9170 { char pad[0xC]; unsigned int flags; char pad2[0x48]; Ctl9170* ct
 extern "C" {
 Obj9170* PlayerSlots_Get(int i);
 #if 0 /* merge_units */
-void func_002C9270(int a, Obj9170* o, int key, int c);
+void Hud_AppendCalloutName(int a, Obj9170* o, int key, int c);
 #endif /* merge_units */
-#define func_002C9270(a0, a1, a2, a3) (func_002C9270((char *)(a0), (int)(a1), (a2), (a3))) /* merge_units */
+#define Hud_AppendCalloutName(a0, a1, a2, a3) (Hud_AppendCalloutName((char *)(a0), (int)(a1), (a2), (a3))) /* merge_units */
 
 }
-extern "C" void func_002C9170(int a, int key, int c)
+extern "C" void Hud_FormatPlayerCalloutName(int a, int key, int c)
 {
     int i;
     for (i = 0; i < 4; i++) {
@@ -80,12 +80,12 @@ extern "C" void func_002C9170(int a, int key, int c)
             k = 0;
         }
         if (key == k) {
-            func_002C9270(a, o, key, c);
+            Hud_AppendCalloutName(a, o, key, c);
             return;
         }
     }
 }
-#undef func_002C9270 /* merge_units */
+#undef Hud_AppendCalloutName /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002C9170(void) {}
 #pragma pop /* merge_units */
@@ -94,7 +94,7 @@ static inline void merge_flush_func_002C9170(void) {}
 /* merge_units: begin func_002C9270 */
 #pragma push /* merge_units */
 #pragma opt_propagation off
-extern void* func_00185C70(int id);
+extern void* Player_GetAgentData(int id);
 extern char* AgentData_GetName(void* p);
 extern char* Game_GetPlayerNameSlot(void* tbl, int id);
 extern char D_004FFB50[];
@@ -127,12 +127,12 @@ static inline void Append(char* buf, const char* s)
 }
 
 
-void func_002C9270(char* buf, int id, int nameId, int newline)
+void Hud_AppendCalloutName(char* buf, int id, int nameId, int newline)
 {
     char tmp[0x70];
     char c;
-    if (func_00185C70(id) && ((Ent9270*)func_00185C70(id))->active) {
-        Append(buf, AgentData_GetName(func_00185C70(id)));
+    if (Player_GetAgentData(id) && ((Ent9270*)Player_GetAgentData(id))->active) {
+        Append(buf, AgentData_GetName(Player_GetAgentData(id)));
     }
     c = newline ? '\n' : ' ';
     sprintf(tmp, D_004ACF28, (char)c, 0x11, Game_GetPlayerNameSlot(D_004FFB50, nameId), 0x10);

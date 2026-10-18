@@ -8,14 +8,14 @@
 #pragma push /* merge_units */
 #include "types.h"
 
-extern void func_0041EBF0(void* self);
+extern void GuiWidget_BaseSleep(void* self);
 extern int Gui_GetScreenStack(void);
 extern void GuiWidget_SendEvent(void* self, int a, int b, int c, int d);
 
 /* Runs the base setup, then calls GuiWidget_SendEvent with Gui_GetScreenStack's result and constants 0x10, 3, 0. */
 void GuiMessageBox_Sleep(void* self)
 {
-    func_0041EBF0(self);
+    GuiWidget_BaseSleep(self);
     GuiWidget_SendEvent(self, Gui_GetScreenStack(), 0x10, 3, 0);
 }
 #pragma pop /* merge_units */
@@ -39,11 +39,11 @@ typedef struct Selector {
     Entry20 entries[1];
 } Selector;
 
-extern void func_0041EFA0(Selector* self);
+extern void GuiWidget_BaseWake(Selector* self);
 
 /* Updates the base, then in state 5 copies the selected entry's value to current. */
 void GuiMessageBox_Wake(Selector* self) {
-    func_0041EFA0(self);
+    GuiWidget_BaseWake(self);
     if (self->state == 5) {
         self->current = self->entries[self->index].value;
     }

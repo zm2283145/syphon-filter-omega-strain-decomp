@@ -5,7 +5,7 @@ extern void func_00458A10(void *v, float *value);
 
 static inline char *At(char *self, int i) { return (*(char ***)(self + 0x60))[i]; }
 #pragma opt_strength_reduction off
-void func_00458900(char *self)
+void GuiSubTitleDisplay_ComputeTimings(char *self)
 {
     float sum;
     int end;

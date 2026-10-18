@@ -16,7 +16,7 @@ LNode* func_0021E000(void* l);
 LNode** func_0021DFE0(LNode** it, LNode* n);
 void func_0043B190(void* ctx);
 int func_0043AA40(void* ctx, void* key);
-int func_0042B1A0(int);
+int Net_GetClock(int);
 int NpcAi_CountThinking(void);
 unsigned char Generator_SpawnTest(Gen* g, Gen* s);
 void Generator_Spawn(Gen* g, Gen* s, int i);
@@ -56,7 +56,7 @@ void cGenerator_v10(Gen* self, float dt)
     if (self->bD1) return;
     if (D_005721C8) {
         if (!func_0043AA40(ctx, self->key)) return;
-        if (!(D_004F56B8 < func_0042B1A0(1))) return;
+        if (!(D_004F56B8 < Net_GetClock(1))) return;
     }
     if (!(D_004EA350 > NpcAi_CountThinking())) return;
     if (!self->CanSpawn()) return;
@@ -78,7 +78,7 @@ void cGenerator_v10(Gen* self, float dt)
     unsigned char r = Generator_SpawnTest(self, s);
     if (r == 1) {
         Generator_Spawn(self, s, self->n78 ? self->nC4 : -1);
-        D_004F56B8 = func_0042B1A0(1) + 250;
+        D_004F56B8 = Net_GetClock(1) + 250;
     } else if (r == 0) {
         if (self->nC8 == self->nC4) self->fBC = self->f84 - 1.0f;
     }

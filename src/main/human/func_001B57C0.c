@@ -91,7 +91,7 @@ void SoundStopMsg_Ctor(Msg*, char*, Npc*);
 void Event_Send(Msg*, char*, int);
 void FileMan_Release(void*, int);
 void cMessage_dtor(Msg*, int);
-void func_001A02C0(Npc*);
+void Actor_UnlinkAll(Npc*);
 void cCheckpoint_dtor(void*, int);
 void func_00136300(void*, int);
 void func_00136350(void*, int);
@@ -211,7 +211,7 @@ extern "C" Npc* Npc_Dtor(Npc* a, short flag)
             Mem_Free(0, p, D_0049D8D0, 0x412);
         }
         if (!(a->f33BC < 0.0f)) SendDeath(a);
-        func_001A02C0(a);
+        Actor_UnlinkAll(a);
         cCheckpoint_dtor(a->m33F0, -1);
         if (&a->vt32A0) {
             a->vt32A0 = D_004DA2F0;

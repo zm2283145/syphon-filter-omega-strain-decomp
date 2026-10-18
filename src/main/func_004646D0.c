@@ -4,8 +4,8 @@
 extern "C" {
 extern char D_004E1840[];
 void* Mem_Alloc(int pool, int size, char* file, int line);
-void func_0035D430(void* self);
-void func_00462FA0(void* p);
+void GuiScoresEquip_BuildActor(void* self);
+void VoiceQueue_Construct(void* p);
 }
 struct G004646D0 { void* vtable; };
 #define GW(off) (*(int*)((char*)p + (off)))
@@ -19,8 +19,8 @@ extern "C" G004646D0* func_004646D0(void)
         p = (G004646D0*)Mem_Alloc(0, 0x420, "guiWidget.hh", 0x2A);
     }
     if (p) {
-        func_0035D430(p);
-        p->vtable = D_004E1840; func_00462FA0((char*)p + 0x260); GB(0x60) = 0;
+        GuiScoresEquip_BuildActor(p);
+        p->vtable = D_004E1840; VoiceQueue_Construct((char*)p + 0x260); GB(0x60) = 0;
     }
     return p;
 }

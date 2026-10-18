@@ -20,7 +20,7 @@ void GuiWidget_Init(S327FD0* self);
 W327FD0* GuiWidget_FindChildByName(S327FD0* a, char* b);
 void func_0041C0F0(W327FD0* w, int a);
 }
-extern "C" void func_00327FD0(S327FD0* self)
+extern "C" void GuiSlideShow_Init(S327FD0* self)
 {
     W327FD0* p;
     GuiWidget_Init(self);

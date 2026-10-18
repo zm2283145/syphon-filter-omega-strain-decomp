@@ -100,7 +100,7 @@ static inline unsigned char Has_185C70(O_185C70* o)
     if (o->ctl && o->ctl->IsLocal()) r = 1;
     return r;
 }
-extern "C" void* func_00185C70(O_185C70* o)
+extern "C" void* Player_GetAgentData(O_185C70* o)
 {
     int idx;
     if (D_005721C8) {

@@ -62,7 +62,7 @@ extern char D_00537F80[];
 extern DmaBuf* D_00537F88;
 extern int D_00539330;
 extern int D_00539340[][1024];
-long* func_00375C30(void* q, int i, int id, int qwc, int addr, int flag);
+long* DmaPacket_Reserve(void* q, int i, int id, int qwc, int addr, int flag);
 void func_003BB360(TexEntry* e, unsigned int lo, unsigned int hi);
 }
 
@@ -118,12 +118,12 @@ extern "C" void func_00382190(TexCache* self)
                 func_003BB360(e, self->size, self->size + (e->info->hE + e->info->h1A) - 4);
             }
         }
-        p = func_00375C30(D_00537F80, 2, 7, 2, 0, 0);
+        p = DmaPacket_Reserve(D_00537F80, 2, 7, 2, 0, 0);
         *p++ = 0x1000000000008001;
         *p++ = 0xE;
         *p++ = 0;
         *p++ = 0x3F;
-        p = func_00375C30(D_00537F80, 1, 1, 1, 0, 1);
+        p = DmaPacket_Reserve(D_00537F80, 1, 1, 1, 0, 1);
         p[0] = 0;
         if (self->u488 || !self->u480) {
             p[1] = 0x93000000;
@@ -202,12 +202,12 @@ extern "C" void TexMan_UploadSlots(TexCache* self)
                 self->u48C += e->info->hE + e->info->h1A;
             }
         }
-        p = func_00375C30(D_00537F80, 2, 7, 2, 0, 0);
+        p = DmaPacket_Reserve(D_00537F80, 2, 7, 2, 0, 0);
         *p++ = 0x1000000000008001;
         *p++ = 0xE;
         *p++ = 0;
         *p++ = 0x3F;
-        p = func_00375C30(D_00537F80, 1, 1, 1, 0, 1);
+        p = DmaPacket_Reserve(D_00537F80, 1, 1, 1, 0, 1);
         p[0] = 0;
         if (self->u488 || !self->u480) {
             p[1] = 0x93000000;

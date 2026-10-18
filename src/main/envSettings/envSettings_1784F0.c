@@ -30,7 +30,7 @@ extern "C" void cEnvSettings_v0B();
 extern "C" void cEnvSettings_v0C();
 extern "C" void cEnvSettings_v0E();
 extern "C" void cEnvSettings_v0F();
-extern "C" void func_0012ECE0();
+extern "C" void GObj_GetID();
 extern "C" void func_0012ED00();
 extern "C" void func_0012ED30();
 extern "C" void func_0012ED40();
@@ -38,7 +38,7 @@ extern "C" void func_0012ED50();
 extern "C" void func_0013E060();
 extern "C" void func_0013EE60();
 extern "C" void func_00140E90();
-extern "C" void func_00141850();
+extern "C" void GObj_GetLifeState();
 extern "C" void func_00148870();
 extern "C" void Object_GetEye();
 extern "C" void func_00153860();
@@ -56,7 +56,7 @@ extern "C" void func_0015C050();
 extern "C" void func_0015C080();
 extern "C" void func_0015C090();
 extern "C" void func_0015C0A0();
-extern "C" void func_003CCFF0();
+extern "C" void GObj_GetWorldMatrix();
 extern "C" void func_003CD090();
 extern "C" void func_003CD110();
 extern "C" void Node_GetComponentMatrix();
@@ -93,7 +93,7 @@ extern "C" S_84F0* cEnvSettings_dtor(S_84F0* self, short flag)
     }
     return self;
 }
-void * const D_004D9E00[68] = { (void*)0x0, (void*)0x0, (void*)cEnvSettings_dtor, (void*)Object_HandleMessage, (void*)func_0012ECE0, (void*)Object_GetAttachedOrSelf, (void*)func_0015C090, (void*)func_0012ED00, (void*)func_003CE810, (void*)func_003CE7D0, (void*)func_0012ED30, (void*)func_0012ED40, (void*)func_0012ED50, (void*)cEnvSettings_v0B, (void*)cEnvSettings_v0C, (void*)func_003CEA00, (void*)cEnvSettings_v0E, (void*)cEnvSettings_v0F, (void*)Actor_BaseLogicUpdate, (void*)Actor_BasePreLogic, (void*)Actor_BaseWorldUpdate, (void*)Actor_VirtualNop, (void*)func_003CE9D0, (void*)Object_Activate, (void*)Object_Deactivate, (void*)Node_SetFlag2C, (void*)Node_ClearFlag2C, (void*)Node_GetFlag2C, (void*)func_0015BFB0, (void*)func_0015BFC0, (void*)func_0015BFD0, (void*)func_00148870, (void*)func_0015BFF0, (void*)func_0015BFE0, (void*)func_0013EE60, (void*)func_0015C000, (void*)Object_AttachTransform, (void*)Player_GetActiveWeapon, (void*)func_003CDDC0, (void*)func_003CDD80, (void*)func_003CDD40, (void*)func_003CDC20, (void*)func_003CDBE0, (void*)func_003CDA60, (void*)func_003CD920, (void*)func_003CD7A0, (void*)func_0015C010, (void*)func_00153860, (void*)Object_GetEye, (void*)func_0015C020, (void*)func_00140E90, (void*)func_0015C030, (void*)func_0015C040, (void*)func_0015C050, (void*)Node_GetWorldMatrix, (void*)func_003CD4A0, (void*)Node_GetLightRefPoint, (void*)PathObj_GetPosition, (void*)Node_GetComponentMatrix, (void*)func_003CD110, (void*)func_003CD090, (void*)func_003CCFF0, (void*)func_0013E060, (void*)func_0015C080, (void*)Actor_ApplyContactDamage, (void*)func_0015C0A0, (void*)func_00141850, (void*)Controller_DeathNotice };
+void * const D_004D9E00[68] = { (void*)0x0, (void*)0x0, (void*)cEnvSettings_dtor, (void*)Object_HandleMessage, (void*)GObj_GetID, (void*)Object_GetAttachedOrSelf, (void*)func_0015C090, (void*)func_0012ED00, (void*)func_003CE810, (void*)func_003CE7D0, (void*)func_0012ED30, (void*)func_0012ED40, (void*)func_0012ED50, (void*)cEnvSettings_v0B, (void*)cEnvSettings_v0C, (void*)func_003CEA00, (void*)cEnvSettings_v0E, (void*)cEnvSettings_v0F, (void*)Actor_BaseLogicUpdate, (void*)Actor_BasePreLogic, (void*)Actor_BaseWorldUpdate, (void*)Actor_VirtualNop, (void*)func_003CE9D0, (void*)Object_Activate, (void*)Object_Deactivate, (void*)Node_SetFlag2C, (void*)Node_ClearFlag2C, (void*)Node_GetFlag2C, (void*)func_0015BFB0, (void*)func_0015BFC0, (void*)func_0015BFD0, (void*)func_00148870, (void*)func_0015BFF0, (void*)func_0015BFE0, (void*)func_0013EE60, (void*)func_0015C000, (void*)Object_AttachTransform, (void*)Player_GetActiveWeapon, (void*)func_003CDDC0, (void*)func_003CDD80, (void*)func_003CDD40, (void*)func_003CDC20, (void*)func_003CDBE0, (void*)func_003CDA60, (void*)func_003CD920, (void*)func_003CD7A0, (void*)func_0015C010, (void*)func_00153860, (void*)Object_GetEye, (void*)func_0015C020, (void*)func_00140E90, (void*)func_0015C030, (void*)func_0015C040, (void*)func_0015C050, (void*)Node_GetWorldMatrix, (void*)func_003CD4A0, (void*)Node_GetLightRefPoint, (void*)PathObj_GetPosition, (void*)Node_GetComponentMatrix, (void*)func_003CD110, (void*)func_003CD090, (void*)GObj_GetWorldMatrix, (void*)func_0013E060, (void*)func_0015C080, (void*)Actor_ApplyContactDamage, (void*)func_0015C0A0, (void*)GObj_GetLifeState, (void*)Controller_DeathNotice };
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001784F0(void) {}
 #pragma pop /* merge_units */

@@ -7,6 +7,6 @@
 #include "types.h"
 
 
-char* func_00463120(void) {
+char* GuiEndGameStatistics_GetClassName(void) {
     return "GuiEndGameStatistics";
 }

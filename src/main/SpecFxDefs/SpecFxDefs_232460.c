@@ -27,7 +27,7 @@ extern int SpawnerEffect_Ctor(int, int);
 #endif /* merge_units */
 #define SpawnerEffect_Ctor(a0, a1) ((int)SpawnerEffect_Ctor((void *)(a0), (void *)(a1))) /* merge_units */
 
-extern int func_003EBFB0(int);
+extern int EffectService_Create(int);
 
 void Effect_CreateInstance(int a0, int a1) {
     int loc[2];
@@ -37,7 +37,7 @@ void Effect_CreateInstance(int a0, int a1) {
     *(int*)(char*)loc = a0;
     *(int*)((char*)loc + 4) = a1;
     a0 = 0 + 24;
-    v0 = func_003EBFB0(a0);
+    v0 = EffectService_Create(a0);
     a0 = v0;
     cond = a0 == 0;
     a1 = (int)loc;

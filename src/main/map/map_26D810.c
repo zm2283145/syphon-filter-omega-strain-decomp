@@ -26,12 +26,12 @@ void func_0026C390(Node_26D810** out, int b);
 void func_0026C320(int* out, int* list);
 void func_0026C350(Node_26D810** out, int* e);
 void Hud_ClearCallout(int a, M_26D810* m, int n, int b, int c);
-void func_0026D810(Self_26D810* self);
+void HudMap_ClearCallouts(Self_26D810* self);
 }
 static inline Node_26D810* Begin_26D810(int* list) { Node_26D810* n; int b; List_Begin_16E880(&b, list); func_0026C390(&n, b); return n; }
 static inline void End_26D810(Node_26D810** out, int* list) { int e; func_0026C320(&e, list); func_0026C350(out, &e); }
 
-void func_0026D810(Self_26D810* self)
+void HudMap_ClearCallouts(Self_26D810* self)
 {
     int* list = self->x0 + 3;
     unsigned char r;
@@ -90,16 +90,16 @@ void func_0026C350(Node_26D940** out, int* e);
 #endif /* merge_units */
 #define func_0026C350(a0, a1) (func_0026C350((Node_26D810 * *)(a0), (a1))) /* merge_units */
 
-void func_002C9170(Buf_26D940* b, int key, int c);
+void Hud_FormatPlayerCalloutName(Buf_26D940* b, int key, int c);
 void Hud_ShowCallout(int a, M_26D940* m, char* text, int n, int b, int c, float f0, float f1);
-void func_0026D940(Self_26D940* self);
+void HudMap_AddPlayerCallouts(Self_26D940* self);
 }
 static inline unsigned char IsPlayer_26D940(Hum_26D940* h) { unsigned char r = 0; if (h->ctl && h->ctl->IsPlayer()) r = 1; return r; }
 static inline int LocalId_26D940(Hum_26D940* h) { int id; if (D_005721C8) { if (IsPlayer_26D940(h)) id = ((h->flags & 0x7F000000) >> 24) - 1; else id = -1; } else id = 0; return id; }
 static inline Node_26D940* Begin_26D940(int* list) { Node_26D940* n; int b; List_Begin_16E880(&b, list); func_0026C390(&n, b); return n; }
 static inline void End_26D940(Node_26D940** out, int* list) { int e; func_0026C320(&e, list); func_0026C350(out, &e); }
 
-void func_0026D940(Self_26D940* self)
+void HudMap_AddPlayerCallouts(Self_26D940* self)
 {
     int* list = self->x0 + 3;
     Hum_26D940* h;
@@ -111,7 +111,7 @@ void func_0026D940(Self_26D940* self)
             if (id >= 0 && id < 4) {
                 Buf_26D940 buf;
                 buf.b0 = 0;
-                func_002C9170(&buf, id, 1);
+                Hud_FormatPlayerCalloutName(&buf, id, 1);
                 Hud_ShowCallout(D_004FFC2C, it->id, buf.text, 4, 1, 0, -1.0f, -1.0f);
             }
         }
@@ -124,7 +124,7 @@ void func_0026D940(Self_26D940* self)
             if (id >= 0 && id < 4) {
                 Buf_26D940 buf;
                 buf.b0 = 0;
-                func_002C9170(&buf, id, 1);
+                Hud_FormatPlayerCalloutName(&buf, id, 1);
                 Hud_ShowCallout(D_004FFC2C, (M_26D940*)&hd->x30->flags, buf.text, 4, 1, 0, -1.0f, -1.0f);
             }
         }

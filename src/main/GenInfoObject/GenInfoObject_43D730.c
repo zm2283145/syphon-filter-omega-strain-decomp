@@ -21,8 +21,8 @@ int func_0043D730(void* self, const char* name)
 /* merge_units: begin func_0043D760 */
 #pragma push /* merge_units */
 typedef struct { char p[0x64]; int page; int pos; int f6C; int total; char p74[8]; void* sb; } L43D760;
-extern void func_0043BC70(void* sb, unsigned char b, int v, int lo, int hi);
-void func_0043D760(L43D760* l, int big)
+extern void GuiScrollBarWidget_SetRange(void* sb, unsigned char b, int v, int lo, int hi);
+void GuiMultiLineText_ScrollDown(L43D760* l, int big)
 {
     int step = l->page;
     if (l->pos < l->total - step) {
@@ -32,7 +32,7 @@ void func_0043D760(L43D760* l, int big)
             l->pos = l->total - l->page;
             if (l->pos < 0) l->pos = 0;
         }
-        if (l->sb) func_0043BC70(l->sb, 0, l->pos, 0, l->total - l->page);
+        if (l->sb) GuiScrollBarWidget_SetRange(l->sb, 0, l->pos, 0, l->total - l->page);
     }
 }
 #pragma pop /* merge_units */
@@ -41,14 +41,14 @@ void func_0043D760(L43D760* l, int big)
 /* merge_units: begin func_0043D820 */
 #pragma push /* merge_units */
 typedef struct { char p[0x64]; int page; int pos; int f6C; int total; char p74[8]; void* sb; } L43D820;
-void func_0043D820(L43D820* l, int big)
+void GuiMultiLineText_ScrollUp(L43D820* l, int big)
 {
     if (l->pos) {
         int step;
         if (big) step = l->page; else step = 1;
         l->pos -= step;
         if (l->pos < 0) l->pos = 0;
-        if (l->sb) func_0043BC70(l->sb, 0, l->pos, 0, l->total - l->page);
+        if (l->sb) GuiScrollBarWidget_SetRange(l->sb, 0, l->pos, 0, l->total - l->page);
     }
 }
 #pragma pop /* merge_units */
@@ -110,7 +110,7 @@ static inline void UM(void* p) { int t; __asm__ volatile("sqc2 $vf0, 0x30(%1); q
 static inline V4 GetColor(Font* f) { return V4(f->r, f->g, f->b, f->a); }
 static inline void SetColor(Font* f, V4 c) { f->r = c.x; f->g = c.y; f->b = c.z; f->a = c.w; }
 
-extern "C" void func_0043D8B0(Self* self)
+extern "C" void GuiMultiLineText_Draw(Self* self)
 {
     GuiWidget_Draw(self);
     if (self->textBox == 0 || self->font == 0) return;

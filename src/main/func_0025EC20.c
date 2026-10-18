@@ -1,4 +1,4 @@
-/* func_0025EC20: tiled quad draw. D_00539210..D8 are one struct global, so stores to one field make MW reload D_005392D0 for each ternary as retail does. The quad copy and identity matrix are GCC-style __asm__ volatile (no CSE across them). inline_depth(10) is needed so the nested inlines expand. */
+/* VisionFx_DrawNoiseTiles: tiled quad draw. D_00539210..D8 are one struct global, so stores to one field make MW reload D_005392D0 for each ternary as retail does. The quad copy and identity matrix are GCC-style __asm__ volatile (no CSE across them). inline_depth(10) is needed so the nested inlines expand. */
 #pragma cplusplus on
 #pragma opt_loop_invariants off
 #pragma opt_strength_reduction off
@@ -55,7 +55,7 @@ void Vec4_Copy(V4_0025EC20* d, V4_0025EC20* s);
 void GuiBatch_AddVertexColor(V4_0025EC20* d, V4_0025EC20* s);
 float GuiBatch_AddVertexUV(void);
 V4_0025EC20* func_00132000(V4_0025EC20* o, float x, float y, float z, float w);
-void func_00370550(void* s);
+void Renderer_FlushPrimitives(void* s);
 }
 #define D_00539224 (D_00539210.f24)
 #define D_00539228 (D_00539210.f28)
@@ -120,7 +120,7 @@ static inline void Setup_0025EC20(Arg_0025EC20* a, const V4_0025EC20* vp)
     D_00538C68 = 1;
 }
 
-extern "C" void func_0025EC20(Arg_0025EC20* a)
+extern "C" void VisionFx_DrawNoiseTiles(Arg_0025EC20* a)
 {
     int vp = (int)&D_00539170;
     int saved;
@@ -148,7 +148,7 @@ extern "C" void func_0025EC20(Arg_0025EC20* a)
             Emit_0025EC20(V4c_0025EC20(x + a->dx, y - a->dy, 1e-8f, 1.0f), V4c_0025EC20(1.0f, 1.0f, 1.0f, a->alpha), V4c_0025EC20(1.0f, 1.0f, 1.0f, 0.0f));
         }
     }
-    func_00370550(D_005381F0);
+    Renderer_FlushPrimitives(D_005381F0);
     D_00538C68 = 1;
     D_00538C64--;
     D_00538C60--;

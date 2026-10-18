@@ -21,17 +21,17 @@ extern "C" void GuiWidget_FocusPrev();
 extern "C" void GuiWidget_FocusNext();
 extern "C" void GuiWidget_FocusLast();
 extern "C" void GuiWidget_FocusFirst();
-extern "C" void func_0041E230();
-extern "C" void func_0041E2B0();
-extern "C" void func_0041E330();
+extern "C" void GuiWidget_BubbleActivate();
+extern "C" void GuiWidget_BubbleType1();
+extern "C" void GuiWidget_BubbleType0();
 extern "C" void GuiWidget_OnEvent();
-extern "C" void func_0041F070();
-extern "C" void func_0041F080();
+extern "C" void GuiWidget_ClearFlag4();
+extern "C" void GuiWidget_SetFlag4();
 extern "C" void GuiWidget_Deinit();
 extern "C" void GuiWidget_Init();
 extern "C" void func_0041F210();
-extern "C" void func_00457AA0();
-extern "C" void func_00457AE0();
+extern "C" void GuiSubTitleDisplay_GetClassName();
+extern "C" void GuiSubTitleDisplay_Draw();
 extern "C" void GuiSubTitleDisplay_Update();
 extern "C" void GuiSubTitleDisplay_OnSleep();
 extern "C" void GuiSubTitleDisplay_OnWake();
@@ -68,4 +68,4 @@ extern "C" char * func_00458280(char * arg0, long long arg1) {
     }
     return arg0;
 }
-void * const D_004E1560[24] = { (void*)0x0, (void*)0x0, (void*)func_00458280, (void*)GuiWidget_Init, (void*)GuiWidget_Deinit, (void*)func_0041F080, (void*)func_0041F070, (void*)GuiSubTitleDisplay_OnWake, (void*)GuiSubTitleDisplay_OnSleep, (void*)func_0041E330, (void*)func_0041E2B0, (void*)func_00293950, (void*)func_00457AE0, (void*)func_0041E230, (void*)GuiSubTitleDisplay_Update, (void*)GuiWidget_OnEvent, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)func_00457AA0, (void*)GuiSubTitleDisplay_IsType, (void*)0x0 };
+void * const D_004E1560[24] = { (void*)0x0, (void*)0x0, (void*)func_00458280, (void*)GuiWidget_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiSubTitleDisplay_OnWake, (void*)GuiSubTitleDisplay_OnSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)func_00293950, (void*)GuiSubTitleDisplay_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiSubTitleDisplay_Update, (void*)GuiWidget_OnEvent, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiSubTitleDisplay_GetClassName, (void*)GuiSubTitleDisplay_IsType, (void*)0x0 };

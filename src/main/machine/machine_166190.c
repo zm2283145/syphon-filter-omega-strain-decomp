@@ -28,7 +28,7 @@ int LoadingScreen_dtor(int, int);
 int Archive_GetMemberName(char *, int);
 int FileMan_FindMember(char *);
 int FileMan_Release(char *, int);
-int func_0036E5D0(char *);
+int Resource_Construct(char *);
 int func_003816F0(int, char *);
 int ArchiveList_CloseNamed(char *, char *);
 extern int D_0048A030;
@@ -94,7 +94,7 @@ void App_Teardown(PS0_00166190 *arg0) {
             arg0->f274 = 0;
         }
         if (arg0->f270->f14C != 0) {
-            func_0036E5D0((char *)sp50);
+            Resource_Construct((char *)sp50);
             n = arg0->f270->f148[1];
             for (i = 0; i < n; i++) {
                 M270_00166190 *m = arg0->f270;

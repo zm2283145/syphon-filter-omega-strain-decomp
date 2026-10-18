@@ -41,7 +41,7 @@ static inline bool Press_462380(Ev_462380* e, unsigned int b)
         r = 1;
     return r;
 }
-extern "C" int func_00462380(void* self, Ev_462380* ev)
+extern "C" int GuiEndGameObjectives_HandleInput(void* self, Ev_462380* ev)
 {
     if (Press_462380(ev, 0x40)) {
         char* name;

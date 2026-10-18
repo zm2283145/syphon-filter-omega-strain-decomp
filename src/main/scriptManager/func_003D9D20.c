@@ -18,7 +18,7 @@ int* func_003D9D20(int** table, int i) {
 }
 
 /* Looks up obj's script binding in the script manager (D_00555070) and hands it to ScriptSlot_ResizeBuffer. */
-void func_003D9D30(ScriptBound* self, void* obj) {
+void Script_LookupResource(ScriptBound* self, void* obj) {
     int binding;
 
     if (obj != 0 && strlen(obj) != 0) {

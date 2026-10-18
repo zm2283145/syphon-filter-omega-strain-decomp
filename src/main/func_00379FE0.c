@@ -18,7 +18,7 @@ static inline void Kick_79FE0(void* tag, int qwc)
     while (*(volatile int*)0x1000A000 & 0x100) {
     }
 }
-void func_00379FE0(R_79FE0* self, unsigned char r, unsigned char g, unsigned char b, unsigned char a)
+void Video_KickPacket(R_79FE0* self, unsigned char r, unsigned char g, unsigned char b, unsigned char a)
 {
     unsigned long* p = (unsigned long*)0x70000000;
     *p++ = 0x8009 | ((unsigned long)0x10000000 << 32);

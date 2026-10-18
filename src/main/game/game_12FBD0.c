@@ -26,14 +26,14 @@ extern "C" {
 void EventQueue_ClearAll(void);
 void FrontEnd_TeardownGui(void* p);
 void MsgQueue_ClearPending(void);
-void func_003F9470(void* p);
+void Archive_ReleaseAll(void* p);
 }
 extern "C" void func_0012FC30(Obj_0012FC30* o)
 {
     EventQueue_ClearAll();
     if (o->b62) FrontEnd_TeardownGui(o->pB4);
     MsgQueue_ClearPending();
-    func_003F9470(o->x3C);
+    Archive_ReleaseAll(o->x3C);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0012FC30(void) {}

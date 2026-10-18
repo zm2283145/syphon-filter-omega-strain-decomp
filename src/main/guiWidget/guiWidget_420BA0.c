@@ -7,6 +7,6 @@
 #include "types.h"
 
 
-int func_00420BA0(void) {
+int GuiButtonWidget_GetClassName(void) {
     return (int)"GuiButtonWidget";
 }

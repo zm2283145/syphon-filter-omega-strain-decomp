@@ -12,7 +12,7 @@ typedef struct {
     int unk20;
 } Settings0045A7A0;
 /* Initialise settings with defaults. */
-Settings0045A7A0* func_0045A7A0(Settings0045A7A0* s)
+Settings0045A7A0* Options_SetDefaults(Settings0045A7A0* s)
 {
     s->unk0 = 1;
     s->b4 = 0;

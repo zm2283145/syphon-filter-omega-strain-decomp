@@ -7,6 +7,6 @@
 #include "types.h"
 #include "map_types.h"
 
-void func_0026D710(MapView* self) {
+void HudMap_Hold(MapView* self) {
     self->unk94 = 0.25f;
 }

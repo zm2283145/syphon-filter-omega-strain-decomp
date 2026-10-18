@@ -47,14 +47,14 @@ static inline void MemClearA210(void* d0, int n0) { int n = n0; void* dst = d0;
     done:
     }
 }
-extern void func_0036E5D0(void* p);
+extern void Resource_Construct(void* p);
 SoundActionA210* SoundRequest_Ctor(SoundActionA210* p, int type, const char* name, VoiceA210* voice, int x180) {
     int tmp;
     int* r;
     p->voiceId = -2;
     p->voice = 0;
-    func_0036E5D0((char*)p + 0x48);
-    func_0036E5D0((char*)p + 0xE4);
+    Resource_Construct((char*)p + 0x48);
+    Resource_Construct((char*)p + 0xE4);
     p->type = type;
     p->voice = voice;
     if (voice) {

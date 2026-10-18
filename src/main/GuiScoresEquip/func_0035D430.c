@@ -114,7 +114,7 @@ void GuiWidget_ctor(Self_D430* self);
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void cGOBJ_ctor(void* p, int* a, int b, int* c);
 void Object_AttachTransform(void* p, void* t, int a);
-Model_D430* func_00393FF0(void* p, int* idx);
+Model_D430* DisplayActor_Construct(void* p, int* idx);
 float Math_SinThunk(float a);
 float Math_CosThunk(float a);
 void Mtx44_SetRotation(M4_D430* m, float a, float b, float c, float d, float e, float f, float g, float h, float i);
@@ -127,7 +127,7 @@ int func_001AF130(It_D430* a, It_D430* b);
 void** func_001AF120(It_D430* it);
 void Model_Attach(void* a, void* b);
 void AnimModel_InitAnim(void* a);
-void func_0018A910(Arr7_D430* a);
+void MotionTokens_Init(Arr7_D430* a);
 void func_0018A8C0(Y_D430* y);
 void MotionRequest_Construct(void* mr, Str_D430* s);
 void func_0018A710(Sel_D430* d, Sel_D430* s);
@@ -150,7 +150,7 @@ void Model_HardMeshAttachPoints(Man_D430* m);
 void func_0038E030(Man_D430* m);
 void ActorModel_Setup(Man_D430* m, int flag);
 void Skel_ApplyScalePreset(Man_D430* m, int a);
-Self_D430* func_0035D430(Self_D430* self);
+Self_D430* GuiScoresEquip_BuildActor(Self_D430* self);
 }
 
 static inline void QCopy_D430(void* d0, void* s0, int n0) { int n = n0; void* d = d0; void* s = s0;
@@ -174,7 +174,7 @@ static inline void Q3_D430(void* a0, const void* b0, void* c0, float z) { void* 
 static inline void Q3B_D430(void* a0, const void* b0, void* c0, const void* e0) { void* d1 = a0; const void* s1 = b0; void* d2 = c0; __int128 q = 0; q = *(const __int128*)s1; *(__int128*)d1 = q; { const void* s2 = e0; q = *(const __int128*)s2; *(__int128*)d2 = q; } }
 static inline void Q3C_D430(void* a0, const void* b0, void* c0, V4C_D430* e0, float z) { void* d1 = a0; const void* s1 = b0; void* d2 = c0; __int128 q = 0; q = *(const __int128*)s1; *(__int128*)d1 = q; { V4C_D430* rr = e0; rr->x = 0.0f; rr->y = 0.0f; rr->z = z; { const void* s2 = rr; q = *(const __int128*)s2; *(__int128*)d2 = q; } } } static inline void Q3D_D430(void* a0, const void* b0, void* c0, V4C_D430& rr, float z) { void* d1 = a0; const void* s1 = b0; void* d2 = c0; __int128 q = 0; q = *(const __int128*)s1; *(__int128*)d1 = q; { rr.x = 0.0f; rr.y = 0.0f; rr.z = z; { const void* s2 = &rr; q = *(const __int128*)s2; *(__int128*)d2 = q; } } } static inline void* Alloc_D430(int n, int line) { AllocGuard g; return Mem_Alloc(0, n, D_004BB600, line); }
 
-static inline void SelInit_D430(Sel_D430* s0) { Sel_D430* s = s0; s->b0 = 0; func_0018A910(&s->arr); func_0018A8C0(&s->y); }
+static inline void SelInit_D430(Sel_D430* s0) { Sel_D430* s = s0; s->b0 = 0; MotionTokens_Init(&s->arr); func_0018A8C0(&s->y); }
 static inline void ReqInit2_D430(Req_D430* r0, Str_D430* str0, Sel_D430* sel) { Str_D430* str = str0; Req_D430* r = r0; r->b0 = 0; MotionRequest_Construct(r->mr, str); r->b48 = 3; func_0018A710(&r->sel, sel); r->f98 = -1.0f; FLD(r, int, 0x9C) = 0; }
 static inline void Install_D430(Anim_D430* an, int* selp, Req_D430* rq, Word_D430* wp)
 {
@@ -285,7 +285,7 @@ static inline void Tail_D430(Self_D430* self, int i)
             }
             { Man_D430* mm = MAN(self->models[i]); FLD(mm, unsigned char, 0x2DA0) = 1; }
 }
-extern "C" Self_D430* func_0035D430(Self_D430* p0)
+extern "C" Self_D430* GuiScoresEquip_BuildActor(Self_D430* p0)
 {
     Self_D430* self = p0;
     int kind;
@@ -343,7 +343,7 @@ extern "C" Self_D430* func_0035D430(Self_D430* p0)
                 p = (Model_D430*)Alloc_D430(0x3030, 0x6C);
                 if (p) {
                     x = i;
-                    p = func_00393FF0(p, &x);
+                    p = DisplayActor_Construct(p, &x);
                 }
                 self->models[i] = p;
             }

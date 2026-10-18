@@ -77,7 +77,7 @@ void** func_00195DD0(void* p, int i);
 void* func_00195DC0(void* p, int i);
 unsigned char* func_00195DB0(void* p, int i);
 void Transform_SetOrientation(void* t, Plc_L* p);
-void func_0018A910(void* p);
+void MotionTokens_Init(void* p);
 void func_0018A8C0(void* p);
 void func_0018A890(void* p);
 void func_0018A710(void* d, void* s);
@@ -145,7 +145,7 @@ static inline void NameAssignT_L(Name_L* dst, Name_L* tmp, char* src) {
 static inline void NameAssign_L(Name_L* dst, char* src) { Name_L tmp; NAME_COPY(tmp.c, src) if (dst->c[0] || tmp.c[0]) QCopyA_L(dst, &tmp); }
 
 static inline float Recip_L(float v) { return v != 0.0f ? 1.0f / v : 3.4028235e38f; }
-static inline X_L* XInit_L(X_L* x) { X_L* px = x; px->kind = 0; func_0018A910(px->pairs); func_0018A8C0(px->tail); return px; }
+static inline X_L* XInit_L(X_L* x) { X_L* px = x; px->kind = 0; MotionTokens_Init(px->pairs); func_0018A8C0(px->tail); return px; }
 static inline X_L* XSetR_L(X_L* x, int i, int id, void* a, unsigned char k) { Pair_L* p = &x->pairs[i]; p->id = id; p->a = a; x->kind = k; return x; }
 static inline void XDtor_L(X_L* x) { func_001BE5A0(x->tail, 0); __destroy_array(x->pairs, (void*)func_0018A210, 8, 7); }
 static inline void XDtorN_L(X_L* p) {

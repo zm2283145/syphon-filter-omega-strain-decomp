@@ -199,8 +199,8 @@ void String_Copy(char* dst, char* src);
 int cAgentData_GetStat(Agent_09F0* a, int id);
 void func_00296FA0(Rel_09F0* r);
 void func_00299360(Rel_09F0* r, short f);
-void func_00333600(Agent_09F0* a, Rel_09F0* r);
-void func_003334C0(Agent_09F0* a, int k, Rel_09F0* r);
+void AgentData_GetRatings(Agent_09F0* a, Rel_09F0* r);
+void AgentData_GetAwardRows(Agent_09F0* a, int k, Rel_09F0* r);
 #if 0 /* merge_units */
 void func_00360510(void* p);
 #endif /* merge_units */
@@ -248,7 +248,7 @@ extern "C" void func_003609F0(Panel_09F0* p)
     p->sB4 = cAgentData_GetStat(a, 0);
     func_00296FA0(&r1);
     r1.own = 1;
-    func_00333600(Agent_GetSelected(&D_004FFB50, -1), &r1);
+    AgentData_GetRatings(Agent_GetSelected(&D_004FFB50, -1), &r1);
     int k = 0; for (int i = 0; i < 6; i++) {
         int j;
         for (j = 0; j < 4; j++) {
@@ -257,7 +257,7 @@ extern "C" void func_003609F0(Panel_09F0* p)
     }
     func_00296FA0(&r2);
     r2.own = 1;
-    func_003334C0(a, 0, &r2);
+    AgentData_GetAwardRows(a, 0, &r2);
     for (int i = 0; i < 8; i++) {
         if (i < r2.Size()) {
             p->slots[i] = r2[i].on != 0;

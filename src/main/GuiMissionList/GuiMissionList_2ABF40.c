@@ -30,7 +30,7 @@ static const T_002ABF40 D_0048BC60[5] = { { 3, { 3, 4, 5 } }, { 3, { 0, 1, 2 } }
 extern "C" {
 extern char D_004AB9D0[];
 void GuiArrayWidget_ColumnWidth(void* w, int i, char* s);
-void func_00426510(void* w, int i, int a, char* s);
+void GuiTextArrayWidget_SetCellText(void* w, int i, int a, char* s);
 }
 extern "C" void func_002ABF40(S_002ABF40* self, unsigned char idx)
 {
@@ -45,7 +45,7 @@ extern "C" void func_002ABF40(S_002ABF40* self, unsigned char idx)
         int id = t->ids[i];
         GuiArrayWidget_ColumnWidth(self, i, D_0048BC40[id]);
         GuiArrayWidget_ColumnWidth(self->pB0, i, D_0048BC40[id]);
-        func_00426510(self->pB0, i, 0, self->f90[id] ? self->f90[id] : D_004AB9D0);
+        GuiTextArrayWidget_SetCellText(self->pB0, i, 0, self->f90[id] ? self->f90[id] : D_004AB9D0);
     }
     self->bAC = idx;
 }

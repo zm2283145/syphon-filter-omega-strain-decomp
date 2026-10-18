@@ -163,7 +163,7 @@ static inline void merge_flush_func_00390570(void) {}
 
 /* merge_units: begin func_00390940 */
 #pragma push /* merge_units */
-/* func_00390940 (main/man): merge a new appearance into the man's current one
+/* ActorModel_SwitchBodyPacking (main/man): merge a new appearance into the man's current one
  * (release attached meshes, back up the old appearance, swap body-kind tags,
  * fix up the head/hair pairs, reload changed meshes, append new pairs).
  * Compiler: mwcc 3.0b38 (also matches b50). The odd lvalue forms
@@ -230,7 +230,7 @@ int String_CompareN(char* a, char* b, int n);
 int MeshCache_FindSlot(char* cache, __int128 name);
 void MeshCache_Load(char* cache, __int128 name, char* ctx, char* arg);
 void func_00401290(char* cache, App390940* app, char* x, __int128 a, __int128 b, int kind, int tone);
-void func_00390940(Self390940* self, App390940* src);
+void ActorModel_SwitchBodyPacking(Self390940* self, App390940* src);
 }
 
 static inline void QMove_390940(void* d0, void* s, int n0) {
@@ -311,7 +311,7 @@ static inline void MeshP390940(Self390940* self, __int128* name) {
     }
 }
 
-extern "C" void func_00390940(Self390940* self, App390940* src)
+extern "C" void ActorModel_SwitchBodyPacking(Self390940* self, App390940* src)
 {
     int i = 0;
     int s5;

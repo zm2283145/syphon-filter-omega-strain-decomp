@@ -22,7 +22,7 @@ extern char D_004FFB50[];
 extern char D_004AABF0[];
 extern char D_004AABF8[];
 extern char D_004AAC08[];
-int func_002CC260(void);
+int App_CardWaitPoll(void);
 int DME_GetLobby(void);
 void FrontEnd_ClosePopup(Fe_D390* fe, int id);
 int FrontEnd_OpenPopup(Fe_D390* fe, int kind, char* title, char* text, O_D390* owner, int flags);
@@ -121,7 +121,7 @@ extern "C" void func_0029D390(O_D390* o)
     D_004FFC04->b2A = 1;
     LobbyArray_ctor(&lst);
     fail = 0;
-    if (func_00442F40(n, func_002CC260, &lst)) {
+    if (func_00442F40(n, App_CardWaitPoll, &lst)) {
         char* cur;
         int found;
         int i;

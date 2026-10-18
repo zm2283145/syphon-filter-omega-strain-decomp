@@ -226,7 +226,7 @@ static inline char* ReadStr_23C3C0(Pop_23C3C0* r)
 }
 extern "C" {
 extern char D_004FFB50[];
-void func_0036E5D0(Obj_23C3C0* o);
+void Resource_Construct(Obj_23C3C0* o);
 void FileMan_Release(Obj_23C3C0* o, int f);
 void Hog_Register(Obj_23C3C0* o, char* path, int a, int b);
 int FileMan_FindMember(Obj_23C3C0* o);
@@ -244,7 +244,7 @@ extern "C" void NiEvent_LoadModelAsset(Self_23C3C0* self, int mode, Pop_23C3C0* 
     Obj_23C3C0 obj;
     char buf[0x40];
     char* name;
-    func_0036E5D0(&obj);
+    Resource_Construct(&obj);
     name = ReadStr_23C3C0(r);
     sprintf(buf, "%s.HOG", id);
     Hog_Register(&obj, buf, mode, 1);

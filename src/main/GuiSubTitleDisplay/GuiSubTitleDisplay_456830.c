@@ -85,13 +85,13 @@ extern "C" int GuiStartMenu_OnEvent(W456830* self, Ev45* ev, int code, int a3, i
 
 #include "loose05_types.h"
 
-extern int func_0041EBF0(void* self);
+extern int GuiWidget_BaseSleep(void* self);
 
 /* Shutdown: base shutdown, then clears the handle at +0x10. */
 int GuiStartMenu_OnSleep(GuiWidget* self) {
     int ret;
 
-    ret = func_0041EBF0(self);
+    ret = GuiWidget_BaseSleep(self);
     self->unk10 = -1;
     return ret;
 }
@@ -103,7 +103,7 @@ int GuiStartMenu_OnSleep(GuiWidget* self) {
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 int GuiWidget_FocusFirst(void);
 typedef struct { char pad[0x10]; int idx; char pad2[0x7C]; int tab[1]; } S456;
-int func_00456A60(S456 *p) {
+int GuiStartMenu_First(S456 *p) {
     int i = p->idx;
     if (i != -1) {
         int r = p->tab[i];

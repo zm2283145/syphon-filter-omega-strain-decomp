@@ -11,7 +11,7 @@ extern void func_003F8390(void* self);
 extern void MoviePlayer_FreeBuffers(void* self);
 extern void FileMan_Release(void* p, int del);
 extern void operator_delete(void* p);
-void* func_003F9300(void* self, short del)
+void* MoviePlayer_Destroy(void* self, short del)
 {
     if (self) {
         void* m;
@@ -40,12 +40,12 @@ void* func_003F9300(void* self, short del)
 #include "loose04_types.h"
 
 extern int func_0036DFB0(void*, void*, int*);
-extern int func_0036E5D0(void*);
-extern int func_003F8450(Unk3F9380*);
+extern int Resource_Construct(void*);
+extern int MoviePlayer_Start(Unk3F9380*);
 extern int MoviePlayer_AllocBuffers(Unk3F9380*);
 
 /* Constructor: clears the object, copies *src into the second sub-object, then runs two setup passes. */
-Unk3F9380* func_003F9380(Unk3F9380* self, int* src, int arg) {
+Unk3F9380* MoviePlayer_ctor(Unk3F9380* self, int* src, int arg) {
     self->unk00[0] = 0;
     self->unk00[1] = 0;
     self->unk00[2] = 0;
@@ -66,10 +66,10 @@ Unk3F9380* func_003F9380(Unk3F9380* self, int* src, int arg) {
     self->unk00[17] = 0;
     self->unk00[18] = 0;
     self->unk00[19] = 0;
-    func_0036E5D0(self->unk6C);
+    Resource_Construct(self->unk6C);
     self->unk188 = 0;
     self->unk18C = 0;
-    func_0036E5D0(self->unk190);
+    Resource_Construct(self->unk190);
     self->unk22C = arg;
     self->unk230 = 0;
     self->unk231 = 0;
@@ -80,7 +80,7 @@ Unk3F9380* func_003F9380(Unk3F9380* self, int* src, int arg) {
     self->unk236 = 1;
     func_0036DFB0(self->unk190, src + 1, src);
     MoviePlayer_AllocBuffers(self);
-    func_003F8450(self);
+    MoviePlayer_Start(self);
     return self;
 }
 #pragma pop /* merge_units */
@@ -94,7 +94,7 @@ typedef struct { int m0; int list; } T9470;
 extern N9470* func_003F9520(void* list);
 extern void Hog_Unload(O9470* o);
 extern void func_003F9A30(N9470** out, T9470* self, N9470** pos);
-void func_003F9470(T9470* self)
+void Archive_ReleaseAll(T9470* self)
 {
     N9470* end;
     N9470* n = func_003F9520(&self->list)->next;

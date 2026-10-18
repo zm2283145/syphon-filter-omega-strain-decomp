@@ -27,7 +27,7 @@ extern float func_003752D0(char*);
 extern float func_00375300(char*);
 extern float func_00375330(char*);
 extern float func_00375360(char*);
-extern int func_00190E50(float);
+extern int Math_TruncFloatSat(float);
 
 void Renderer_RefreshCamera(Vp374* self) {
     float sx, sy, ox, oy, w, h;
@@ -67,10 +67,10 @@ void Renderer_RefreshCamera(Vp374* self) {
     t = oy + self->y * sy;
     r = ox + (l + self->w * sx);
     bt = oy + (t + self->h * sy);
-    x0 = func_00190E50(l);
-    x1 = func_00190E50(r) - 1;
-    y0 = func_00190E50(t);
-    y1 = func_00190E50(bt) - 1;
+    x0 = Math_TruncFloatSat(l);
+    x1 = Math_TruncFloatSat(r) - 1;
+    y0 = Math_TruncFloatSat(t);
+    y1 = Math_TruncFloatSat(bt) - 1;
     self->scissor = ((long)y1 << 48) | (((long)y0 << 32) | ((long)x0 | ((long)x1 << 16)));
     self->dirty = 0;
 }

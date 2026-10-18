@@ -49,7 +49,7 @@ char* strchr(const char* s, int c);
 void func_0036DFB0(Res3951B0* h, char* path, Res3951B0* r);
 int String_CompareNoCase(char* a, char* b);
 int FileMan_ReadData(Res3951B0* r);
-void func_0036D540(void* ctx, void* data, int size, int z);
+void Hog_OpenInMemory(void* ctx, void* data, int size, int z);
 void Hog_Register(Res3951B0* h, void* data, void* ctx, int z);
 void Model_Load(Model3951B0* m, Res3951B0* a, Res3951B0* b);
 void Col_Load(void* c, Res3951B0* h);
@@ -92,7 +92,7 @@ extern "C" void ModelAsset_Load(Obj3951B0* self, Desc3951B0* d)
     }
     Res3951B0* r = self->res;
     if (!(r->flags & 4)) {
-        func_0036D540(self->x74, r->path, FileMan_ReadData(r), 0);
+        Hog_OpenInMemory(self->x74, r->path, FileMan_ReadData(r), 0);
         if (String_CompareNoCase(self->h1E4->name, self->h1E8->name) == 0)
             Hog_Register(self->h1E4, self->h1E4->path, self->x74, 0);
         Hog_Register(self->h1E8, self->h1E8->path, self->x74, 0);

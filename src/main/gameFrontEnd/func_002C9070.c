@@ -9,7 +9,7 @@ extern char D_004ACC48[];
 extern char D_004ACC58[];
 static void * const dat_0048C200[18] = { (void*)0x0, (void*)0x0, (void*)0x0, (void*)D_004ACC28, (void*)0x0, (void*)0x0, (void*)D_004ACC38, (void*)0x0, (void*)0x0, (void*)0x0, (void*)D_004ACC48, (void*)0x0, (void*)0x0, (void*)0x0, (void*)0x0, (void*)D_004ACC58, (void*)0x0, (void*)0x0 };
 extern char* Loc_LookupText(char* key);
-char* func_002C9070(Obj9070* o)
+char* App_GetAgentRankGate(Obj9070* o)
 {
     int i;
     char* key;

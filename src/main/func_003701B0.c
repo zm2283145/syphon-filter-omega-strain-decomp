@@ -13,7 +13,7 @@ extern void func_003701A0(void*);
 extern void Vu1_UploadMicrocode(void*, int);
 extern void func_00370110(void*, int);
 extern int func_00375B40(void*, unsigned char, int);
-extern void func_00375AC0(void*, unsigned char, void*);
+extern void DmaPacket_Close(void*, unsigned char, void*);
 extern long long func_003700F0(int a, int b, int c);
 extern int func_003700D0(void* table, int index);
 
@@ -88,7 +88,7 @@ void func_003701B0(S* o)
                 p++;
             }
         }
-        func_00375AC0(D_00537F80, 1, p);
+        DmaPacket_Close(D_00537F80, 1, p);
         }
     }
 }

@@ -140,9 +140,9 @@ static inline float Fabs(float x) { float r; asm { abs.s r, x } return r; }
 extern "C" {
 extern Obj* Object_LookupById(int* id);
 extern int ObjectAction_SendKind7(Obj* obj, int action, cInteractGOBJ* target, int arg, float time);
-void func_00216230(cInteractGOBJ* self, Notice* msg);
+void cInteractGOBJ_BuddyClimbPairing(cInteractGOBJ* self, Notice* msg);
 }
-void func_00216230(cInteractGOBJ* self, Notice* msg)
+void cInteractGOBJ_BuddyClimbPairing(cInteractGOBJ* self, Notice* msg)
 {
     int id;
     Obj* o;
@@ -269,9 +269,9 @@ int ObjectAction_SendKind7(Obj_216580* obj, int action, cInteractGOBJ_216580* ta
 #define ObjectAction_SendKind7(a0, a1, a2, a3, a4) (ObjectAction_SendKind7((Obj *)(a0), (a1), (cInteractGOBJ *)(a2), (a3), (a4))) /* merge_units */
 
 #if 0 /* merge_units */
-void func_00216230(cInteractGOBJ_216580* self, In_216580* msg);
+void cInteractGOBJ_BuddyClimbPairing(cInteractGOBJ_216580* self, In_216580* msg);
 #endif /* merge_units */
-#define func_00216230(a0, a1) (func_00216230((cInteractGOBJ *)(a0), (Notice *)(a1))) /* merge_units */
+#define cInteractGOBJ_BuddyClimbPairing(a0, a1) (cInteractGOBJ_BuddyClimbPairing((cInteractGOBJ *)(a0), (Notice *)(a1))) /* merge_units */
 
 void func_003E6690(Obj_216580* o, int f);
 int Object_HandleMessage(cInteractGOBJ_216580* self, void* ev);
@@ -296,7 +296,7 @@ extern "C" int cInteractGOBJ_v01(cInteractGOBJ_216580* self, In_216580* m)
             if (o) {
                 switch (k) {
                 case 7:
-                    func_00216230(self, m);
+                    cInteractGOBJ_BuddyClimbPairing(self, m);
                     break;
                 case 3:
                 case 2:
@@ -398,7 +398,7 @@ extern "C" int cInteractGOBJ_v01(cInteractGOBJ_216580* self, In_216580* m)
 }
 #undef Object_LookupById /* merge_units */
 #undef ObjectAction_SendKind7 /* merge_units */
-#undef func_00216230 /* merge_units */
+#undef cInteractGOBJ_BuddyClimbPairing /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00216580(void) {}
 #pragma pop /* merge_units */

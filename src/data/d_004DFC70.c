@@ -6,6 +6,9 @@ extern void Actor_BaseWorldUpdate();
 extern void Actor_VirtualNop();
 extern void Controller_DeathNotice();
 extern void Event_PackHeader();
+extern void GObj_GetID();
+extern void GObj_GetLifeState();
+extern void GObj_GetWorldMatrix();
 extern void ListReceiver_Dtor();
 extern void Message_GetScriptTypeKey();
 extern void Node_ClearFlag2C();
@@ -32,7 +35,6 @@ extern void Skybox_LoadLayers();
 extern void Skybox_Update();
 extern void cMessage_dtor();
 extern void cSKYBOX_GOBJ_dtor();
-extern void func_0012ECE0();
 extern void func_0012ECF0();
 extern void func_0012ED00();
 extern void func_0012ED10();
@@ -44,7 +46,6 @@ extern void func_001383D0();
 extern void func_0013E060();
 extern void func_0013EE60();
 extern void func_00140E90();
-extern void func_00141850();
 extern void func_00148870();
 extern void func_00153860();
 extern void func_0015BFB0();
@@ -64,7 +65,6 @@ extern void func_0015C0A0();
 extern void func_003BBD90();
 extern void func_003BBDA0();
 extern void func_003BC270();
-extern void func_003CCFF0();
 extern void func_003CD090();
 extern void func_003CD110();
 extern void func_003CD4A0();
@@ -82,7 +82,7 @@ extern void func_003CEA00();
 
 void *D_004DFC70[68] = {
     0, 0, &cSKYBOX_GOBJ_dtor, &Object_HandleMessage,
-    &func_0012ECE0, &Object_GetAttachedOrSelf, &func_0015C090, &func_0012ED00,
+    &GObj_GetID, &Object_GetAttachedOrSelf, &func_0015C090, &func_0012ED00,
     &func_003CE810, &func_003CE7D0, &func_0012ED30, &func_0012ED40,
     &func_0012ED50, &func_003BBD90, &func_003BBDA0, &func_003CEA00,
     &func_003BC270, &Skybox_LoadLayers, &Skybox_Update, &Actor_BasePreLogic,
@@ -96,8 +96,8 @@ void *D_004DFC70[68] = {
     &Object_GetEye, &func_0015C020, &func_00140E90, &func_0015C030,
     &func_0015C040, &func_0015C050, &Node_GetWorldMatrix, &func_003CD4A0,
     &Node_GetLightRefPoint, &PathObj_GetPosition, &Node_GetComponentMatrix, &func_003CD110,
-    &func_003CD090, &func_003CCFF0, &func_0013E060, &func_0015C080,
-    &Actor_ApplyContactDamage, &func_0015C0A0, &func_00141850, &Controller_DeathNotice,
+    &func_003CD090, &GObj_GetWorldMatrix, &func_0013E060, &func_0015C080,
+    &Actor_ApplyContactDamage, &func_0015C0A0, &GObj_GetLifeState, &Controller_DeathNotice,
 };
 
 void *D_004DFD80[8] = {
@@ -107,14 +107,14 @@ void *D_004DFD80[8] = {
 
 void *D_004DFDA0[16] = {
     0, 0, &ListReceiver_Dtor, &Object_BroadcastToChildren,
-    &func_0012ECE0, &func_0012ECF0, &func_001383D0, &func_0012ED00,
+    &GObj_GetID, &func_0012ECF0, &func_001383D0, &func_0012ED00,
     &func_0012ED10, &func_0012ED20, &func_0012ED30, &func_0012ED40,
     &func_0012ED50, &Receiver_GetScriptTypeKey, &Receiver_ScriptDispatch, 0,
 };
 
 void *D_004DFDE0[16] = {
     0, 0, &Receiver_Destruct, &Receiver_HandleEventBase,
-    &func_0012ECE0, &func_0012ECF0, &func_001383D0, &func_0012ED00,
+    &GObj_GetID, &func_0012ECF0, &func_001383D0, &func_0012ED00,
     &func_0012ED10, &func_0012ED20, &func_0012ED30, &func_0012ED40,
     &func_0012ED50, &Receiver_GetScriptTypeKey, &Receiver_ScriptDispatch, 0,
 };

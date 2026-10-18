@@ -28,13 +28,13 @@ typedef struct {
     char pad58[0x8C - 0x58];
     void* x8C;
 } S;
-extern void func_0043BC70(void* a, int b, int c, int d, int e);
+extern void GuiScrollBarWidget_SetRange(void* a, int b, int c, int d, int e);
 
 void func_00423500(S* s)
 {
     if (s->x8C != 0) {
         S* t = s;
-        func_0043BC70(t->x8C, 0, t->x54, 0, t->x4C - 1);
+        GuiScrollBarWidget_SetRange(t->x8C, 0, t->x54, 0, t->x4C - 1);
     }
 }
 #pragma pop /* merge_units */
@@ -56,7 +56,7 @@ void func_00423540(Unk423540* self, int* out) {
     *out = self->unk84;
 }
 
-void func_00423550(Unk423540* self, int value) {
+void GuiArrayWidget_SetA84(Unk423540* self, int value) {
     self->unk84 = value;
 }
 
@@ -65,7 +65,7 @@ void func_00423560(Unk423540* self, int* outA, int* outB) {
     *outB = self->unk7C;
 }
 
-void func_00423580(Unk423540* self, int a, int b) {
+void GuiArrayWidget_SetMargin(Unk423540* self, int a, int b) {
     self->unk78 = a;
     self->unk7C = b;
 }
@@ -75,7 +75,7 @@ void func_00423590(Unk423540* self, int* outA, int* outB) {
     *outB = self->unk74;
 }
 
-void func_004235B0(Unk423540* self, int a, int b) {
+void GuiArrayWidget_SetTable(Unk423540* self, int a, int b) {
     self->unk70 = a;
     self->unk74 = b;
 }

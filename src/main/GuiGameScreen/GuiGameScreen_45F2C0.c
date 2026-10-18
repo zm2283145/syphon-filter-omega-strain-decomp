@@ -7,6 +7,6 @@
 #include "types.h"
 
 
-char* func_0045F2C0(void) {
+char* GuiAutoSaver_GetClassName(void) {
     return "GuiAutoSaver";
 }

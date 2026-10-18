@@ -34,7 +34,7 @@ extern char D_004BE830[];
 extern char D_004BE858[];
 int Hog_GetEntrySize(Npc_404AA0* npc, int i);
 char* Archive_GetMemberName(Npc_404AA0* npc, int i);
-void* func_0036D4E0(Npc_404AA0* npc, int i);
+void* Hog_GetMemberInPlace(Npc_404AA0* npc, int i);
 void Appearance_RegistryKey(char* dst, int n, char* src);
 char* strrchr(char* s, int c);
 int strcmp(char* a, char* b);
@@ -93,7 +93,7 @@ void MeshCache_RegisterNpcSkm(Cache_404AA0* c, Npc_404AA0* npc)
             lod = *(k2.s + 14) - '0';
             if (lod >= 2 || lod < 0) lod = 0;
             slot = TexCache_FindOrAddSlot(c, key.q, lod);
-            Skm_LoadPacket(&c->recs[slot][lod], func_0036D4E0(npc, i), a, slot, lod, 0);
+            Skm_LoadPacket(&c->recs[slot][lod], Hog_GetMemberInPlace(npc, i), a, slot, lod, 0);
             c->h210[slot] = 0;
             m = c->mask;
             o = c->m10;
@@ -102,7 +102,7 @@ void MeshCache_RegisterNpcSkm(Cache_404AA0* c, Npc_404AA0* npc)
                 c->recs[slot][lod].b7 = 0;
             }
         } else if (strcmp(ext, D_004BE858) == 0 && a) {
-            D_00571300.vals[D_00571300.n] = func_0036D4E0(npc, i);
+            D_00571300.vals[D_00571300.n] = Hog_GetMemberInPlace(npc, i);
             Appearance_RegistryKey(D_00571300.keys[D_00571300.n], 15, name);
             D_00571300.n++;
         }

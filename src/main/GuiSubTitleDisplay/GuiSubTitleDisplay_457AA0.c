@@ -20,7 +20,7 @@ int strcmp(const void *, const void *);
 
 
 
-int func_00457AA0(void) {
+int GuiSubTitleDisplay_GetClassName(void) {
     return (int)"GuiSubTitleDisplay";
 }
 /* merge_units: generate this block's code under its own pragmas */

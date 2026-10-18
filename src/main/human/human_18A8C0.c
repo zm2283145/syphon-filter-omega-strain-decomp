@@ -50,7 +50,7 @@ Rel* func_0018A8F0(Rel* r) {
 }
 
 /* Construct an array of seven 8-byte pairs. */
-void* func_0018A910(void* array) {
+void* MotionTokens_Init(void* array) {
     __construct_array(array, func_0018A870, func_0018A210, 8, 7);
     return array;
 }

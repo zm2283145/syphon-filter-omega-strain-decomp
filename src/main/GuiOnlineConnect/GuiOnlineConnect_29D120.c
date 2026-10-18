@@ -11,7 +11,7 @@ extern "C" {
 extern void* D_004FFC04;
 extern char D_004AABF0[];
 void* DME_GetLobby(void);
-void func_002CC260(void);
+void App_CardWaitPoll(void);
 int SFOLobby_EnterNetworkState(void* g, void* cb, void* a, void* b, void* c);
 void GuiTextListWidget_Clear(L_0029D120* l);
 E_0029D120* LobbyArray_At(void* v, int i);
@@ -32,7 +32,7 @@ extern "C" void func_0029D120(S_0029D120* self)
     void* g = DME_GetLobby();
     if (!g)
         return;
-    if (SFOLobby_EnterNetworkState(g, (void*)func_002CC260, self->f98, self->fB4, self->fD0)) {
+    if (SFOLobby_EnterNetworkState(g, (void*)App_CardWaitPoll, self->f98, self->fB4, self->fD0)) {
         int sel;
         int i;
         self->b94 = 1;

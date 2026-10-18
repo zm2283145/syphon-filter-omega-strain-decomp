@@ -72,7 +72,7 @@ extern void func_00103B60(unsigned long draw, short cx, short cy, short half);
 extern void* func_00103D40(int);
 extern void func_00104070(void* d, void* tag);
 extern int* func_003F5EA0(T5EA0* q);
-extern void func_00411860(void* db, int i, int j);
+extern void MovieSubtitles_PatchVblank(void* db, int i, int j);
 extern void func_001036B0(void* p, int);
 
 /* sync + ei (enable interrupts) have no C equivalent */
@@ -114,13 +114,13 @@ int MoviePlayer_PresentVblank(void)
             q = &D_0055C460;
             { int h = q->head; idx = (q->size + (h - q->count)) % q->size; }
             if (field == 0 && *buf == 2) {
-                func_00411860(D_00571CF0, idx, 0);
+                MovieSubtitles_PatchVblank(D_00571CF0, idx, 0);
                 func_001036B0(D_0055C230, 0);
                 sceGsSyncPath(0, 0);
                 func_00104070(d, (char*)buf + 0x40);
                 *buf = 1;
             } else if (field == 1 && *buf == 1) {
-                func_00411860(D_00571CF0, idx, 1);
+                MovieSubtitles_PatchVblank(D_00571CF0, idx, 1);
                 func_001036B0(D_0055C230, 1);
                 sceGsSyncPath(0, 0);
                 func_00104070(d, (char*)buf + 0x26740);
@@ -789,7 +789,7 @@ extern void func_0010D010(int n);
 extern void func_003F6F90(void);
 extern void func_003F6CD0(void* p);
 extern void func_003F8390(Sys3F82* s);
-extern void func_003F8450(Sys3F82* s);
+extern void MoviePlayer_Start(Sys3F82* s);
 bool MoviePlayer_Update(Sys3F82* s);
 }
 
@@ -819,7 +819,7 @@ bool MoviePlayer_Update(Sys3F82* s)
         }
         if (s->f234) {
             func_003F8390(s);
-            func_003F8450(s);
+            MoviePlayer_Start(s);
             s->f234 = 0;
             s->done = 0;
         }

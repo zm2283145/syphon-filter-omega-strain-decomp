@@ -7,7 +7,7 @@
 #include "particle_types.h"
 
 /* Address of the slot for a byte index. */
-int* func_00398AE0(ParticleSlotTable* t, int index) {
+int* ParticleRandom_QwordAt(ParticleSlotTable* t, int index) {
     return &t->slots[index & 255];
 }
 

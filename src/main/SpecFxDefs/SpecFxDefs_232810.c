@@ -17,7 +17,7 @@ extern unsigned char D_005721C0;
 extern Net00232730* D_004FFC0C;
 extern char D_004DCF10[];
 extern void Global_Wind(void* a, float b, float c, float d, float e, float f);
-extern void func_00232BF0(int a, int b, float c, float d, float e, float f);
+extern void World_StartAtmosphereEffect_Thunk(int a, int b, float c, float d, float e, float f);
 extern void cAtmosphericEffectMsg_ctor(Msg00232730* ev, int kind);
 extern void Event_Send(Msg00232730* ev, void* target, int flags);
 extern void cMessage_dtor(Msg00232730* ev, int flags);
@@ -25,7 +25,7 @@ extern void cMessage_dtor(Msg00232730* ev, int flags);
 void Global_RainLorelei(void)
 {
     Global_Wind(D_0053B5C0, 0.0f, 0.0f, 20.0f, 40.0f, 1.0f);
-    func_00232BF0(0x18, 0x1F4, 0.0f, 25.0f, 45.0f, 1.0f);
+    World_StartAtmosphereEffect_Thunk(0x18, 0x1F4, 0.0f, 25.0f, 45.0f, 1.0f);
     if (D_005721C8 && (D_005721C8 ? D_005721C0 : 1)) {
         Msg00232730 ev;
         Net00232730* net = D_004FFC0C;
@@ -47,7 +47,7 @@ static inline void merge_flush_func_00232810(void) {}
 void Global_RainTokyo(void)
 {
     Global_Wind(D_0053B5C0, 0.0f, 0.0f, 10.0f, 20.0f, 0.5f);
-    func_00232BF0(0x17, 0x12C, 0.0f, 25.0f, 45.0f, 1.0f);
+    World_StartAtmosphereEffect_Thunk(0x17, 0x12C, 0.0f, 25.0f, 45.0f, 1.0f);
     if (D_005721C8 && (D_005721C8 ? D_005721C0 : 1)) {
         Msg00232730 ev;
         Net00232730* net = D_004FFC0C;
@@ -68,7 +68,7 @@ static inline void merge_flush_func_002328F0(void) {}
 /* Script global: Toronto smoke effect. */
 void Global_SmokeToronto3(void)
 {
-    func_00232BF0(0x15, -1, 20.0f, 0.0f, 40.0f, 0.4f);
+    World_StartAtmosphereEffect_Thunk(0x15, -1, 20.0f, 0.0f, 40.0f, 0.4f);
     if (D_005721C8 && (D_005721C8 ? D_005721C0 : 1)) {
         Msg00232730 ev;
         Net00232730* net = D_004FFC0C;
@@ -89,7 +89,7 @@ static inline void merge_flush_func_002329D0(void) {}
 /* Script global: Myanmar fog effect. */
 void Global_FogMyanmar(void)
 {
-    func_00232BF0(0x14, -1, 20.0f, 0.0f, 40.0f, 0.4f);
+    World_StartAtmosphereEffect_Thunk(0x14, -1, 20.0f, 0.0f, 40.0f, 0.4f);
     if (D_005721C8 && (D_005721C8 ? D_005721C0 : 1)) {
         Msg00232730 ev;
         Net00232730* net = D_004FFC0C;

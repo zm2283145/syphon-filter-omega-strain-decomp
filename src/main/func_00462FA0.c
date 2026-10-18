@@ -2,11 +2,11 @@
 typedef struct { int f0; char p4[0xC]; __int128 q10; int f20; int f24; char p28[8]; int f30; int f34; int f38; char p3C[0xC]; char m48[0x9C]; char mE4[0x9C]; int f180; short h184; unsigned char b186; } S462FA0;
 typedef struct { char p[0xC]; unsigned char bC; char pD[3]; int f10; char p14[0xC]; S462FA0 s; int f1B0; } T462FA0;
 extern void func_00463040(T462FA0* t);
-extern void func_0036E5D0(void* s);
+extern void Resource_Construct(void* s);
 static inline void SetH462FA0(int* d, int* p) { int none; *d = *(p ? p : (none = -1, &none)); }
 #pragma push
 
-T462FA0* func_00462FA0(T462FA0* t)
+T462FA0* VoiceQueue_Construct(T462FA0* t)
 {
     S462FA0* s;
     func_00463040(t);
@@ -14,8 +14,8 @@ T462FA0* func_00462FA0(T462FA0* t)
     s = &t->s;
     *(int*)((char*)t + 0x44) = -2;
     *(int*)((char*)t + 0x40) = 0;
-    func_0036E5D0(s->m48);
-    func_0036E5D0(s->mE4);
+    Resource_Construct(s->m48);
+    Resource_Construct(s->mE4);
     s->f0 = -1;
     s->q10 = -1;
     s->f20 = 0;

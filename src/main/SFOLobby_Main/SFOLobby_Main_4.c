@@ -183,7 +183,7 @@ extern void func_00447200(void);
 extern int D_00572538;
 extern double func_0011C7A0(int);
 extern double SoftFloat_FloatToDouble(float);
-extern double func_0011C268(double, double);
+extern double SoftFloat_DoubleMultiply(double, double);
 extern double func_0011C200(double, double);
 extern int func_0011C858(double);
 
@@ -212,7 +212,7 @@ int func_00452CD0(Net* s)
     req.f4 = func_00476998();
     req.f8 = s->b23D6 ? 0 : &buf;
     x = D_00572538;
-    srand(func_0011C858(func_0011C200(func_0011C7A0(x), func_0011C268(0.0625, SoftFloat_FloatToDouble((float)x)))));
+    srand(func_0011C858(func_0011C200(func_0011C7A0(x), SoftFloat_DoubleMultiply(0.0625, SoftFloat_FloatToDouble((float)x)))));
     req.fC = Random_Next() % 1000 + 6000;
     req.f14 = func_00445F90;
     req.f10 = 1;

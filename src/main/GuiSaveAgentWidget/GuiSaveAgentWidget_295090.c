@@ -22,7 +22,7 @@ extern Ui295090* D_004FFC04;
 extern int D_005063D0[];
 extern void GuiCommandCenter_OpenPanel(S295090* s, int a);
 extern void GuiCommandCenter_SetTexts(S295090* s);
-extern void func_00296B70(S295090* s, int a);
+extern void GuiCommandCenter_ShowBonus(S295090* s, int a);
 extern void GuiWidget_SendEvent(void* a, void* b, int c, int d, int e);
 
 void GuiCommandCenter_Select(S295090* s, int i, int f)
@@ -56,9 +56,9 @@ void GuiCommandCenter_Select(S295090* s, int i, int f)
         GuiWidget_SendEvent(s, s->focus, 6, (int)"onDeactivate", 0);
     GuiCommandCenter_SetTexts(s);
     if (i > 0x10 || s->b178[s->cur] || D_004FFC04->b30)
-        func_00296B70(s, -1);
+        GuiCommandCenter_ShowBonus(s, -1);
     else
-        func_00296B70(s, D_005063D0[i]);
+        GuiCommandCenter_ShowBonus(s, D_005063D0[i]);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00295090 */
@@ -124,7 +124,7 @@ extern void func_002CA640(G295*, int);
 extern void FrontEnd_ClosePopup(G295*, int);
 extern int Gui_GetScreenStack(void);
 extern void GuiStack_SwapScreens(int, O295*, void*);
-extern void func_002982C0(O295*);
+extern void GuiCommandCenter_ClearState(O295*);
 void GuiCommandCenter_Leave(O295* o) {
     void* w;
     G295* g;
@@ -146,7 +146,7 @@ void GuiCommandCenter_Leave(O295* o) {
     }
     if (w) {
         GuiStack_SwapScreens(Gui_GetScreenStack(), o, w);
-        func_002982C0(o);
+        GuiCommandCenter_ClearState(o);
     }
     o->b2f4 = 0;
 }

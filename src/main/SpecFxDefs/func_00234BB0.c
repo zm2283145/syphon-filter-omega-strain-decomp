@@ -4,7 +4,7 @@ typedef struct { int pad; LNode00234BB0* head; } LHdr00234BB0;
 typedef struct { LNode00234BB0* node; } LIt00234BB0;
 extern LHdr00234BB0* func_001F2690(void* self);
 extern void func_001F26A0(LIt00234BB0* it, LNode00234BB0* n);
-void* func_00234BB0(void* self, int n)
+void* ParticleDefs_SlotForId(void* self, int n)
 {
     LIt00234BB0 it;
     LNode00234BB0* p;

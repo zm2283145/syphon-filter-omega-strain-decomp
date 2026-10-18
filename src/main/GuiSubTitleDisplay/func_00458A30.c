@@ -39,7 +39,7 @@ void func_00136DA0(int *);
 void func_0012F530(int *, int);
 int Font_GetLineHeight(int);
 int Font_GetStringWidth(int, char *, int);
-void func_00458900(SubDisp *);
+void GuiSubTitleDisplay_ComputeTimings(SubDisp *);
 void func_00459320(SubList *, int);
 int func_00459380(int *, SubList **);
 void func_004593A0(SubDisp *);
@@ -52,7 +52,7 @@ extern float D_00587D70;
 extern float D_00587D74;
 extern float D_00587D78;
 extern float D_00587D7C;
-int func_00458A30(SubDisp *self);
+int GuiSubTitleDisplay_Parse(SubDisp *self);
 }
 
 static inline void Push(SubList *l, SubVal *v)
@@ -71,7 +71,7 @@ static inline void FreeList(SubList *l)
     func_0012F530(&guard, -1);
 }
 
-int func_00458A30(SubDisp *self)
+int GuiSubTitleDisplay_Parse(SubDisp *self)
 {
     SubList *list;
     float pf;
@@ -249,6 +249,6 @@ int func_00458A30(SubDisp *self)
     } else {
         FreeList(list);
     }
-    func_00458900(self);
+    GuiSubTitleDisplay_ComputeTimings(self);
     return 1;
 }

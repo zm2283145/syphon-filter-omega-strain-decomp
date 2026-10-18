@@ -37,7 +37,7 @@ int NpcRoute_IsHeadPending(void* svc, GObj* id);
 void NpcRoute_RequestToNode(int r, int node);
 int NpcRoute_StartRegion(int r);
 unsigned char NpcRoute_NodeSearch(float d, void* svc, GObj* obj, void* e0, V4* pos, V4* tgt, int reg, int n, int k, long m);
-void func_0015E0F0(float a, float b, void* out, int k);
+void NpcNodeSearch_SetQuery(float a, float b, void* out, int k);
 void NpcAi_LosCheckFromDestination(Self_S* s);
 }
 
@@ -67,7 +67,7 @@ extern "C" unsigned char NpcAi_CoverSearch(Self_S* self) {
         if (!NpcRoute_IsHeadPending(svc, self->obj)) {
         float dist;
         GObj* o;
-        func_0015E0F0(self->f70, self->f74, e0, 1);
+        NpcNodeSearch_SetQuery(self->f70, self->f74, e0, 1);
         { Mat m = self->obj->GetMatrix(); V4* d = &pos; Mat* pm = &m; V4* s = &pm->r[3]; __int128 x; asm { .set reorder; lq x, 0(s) } *(__int128*)d = x; } { V4* d = &tgt; V4* s = self->target; __int128 x; asm { lq x, 0(s) } *(__int128*)d = x; }
         {
             V4 d;

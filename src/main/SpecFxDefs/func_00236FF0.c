@@ -9,7 +9,7 @@ extern EffSlot D_004F7A50[];
 extern char D_0053B540[];
 extern void* D_00539248;
 extern int sprintf(char*, const char*, ...);
-extern void* func_0036E5D0(void*);
+extern void* Resource_Construct(void*);
 extern void* FileMan_Release(void*, int);
 extern int Hog_Register(void*, const char*, int, int);
 extern int Archive_Open(int, char*, int, int);
@@ -25,7 +25,7 @@ void EffectTable_Load(int a0, int arc)
     int j;
 
     sprintf(buf, D_004A6E60, a0);
-    func_0036E5D0(&e);
+    Resource_Construct(&e);
     for (i = 0; i < 26; i++) {
         ParticleLib_Request(D_0053B540, D_0048ACD0[i], &D_004F7A50[i]);
         D_004F7A50[i].loaded = 1;

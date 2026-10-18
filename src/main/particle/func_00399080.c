@@ -197,13 +197,13 @@ void Renderer_BindTexture(void* m, int idx);
 void func_0025CD10(void* s);
 void func_0025CA40(void* s);
 void func_00371170(void* s);
-void func_00371200(void* s);
+void Renderer_FlushBatch(void* s);
 void Vec4_Copy(V4* d, const V4* s);
 void GuiBatch_AddVertexColor(V4* d, const V4* s);
 float GuiBatch_AddVertexUV(void);
 V4* func_00132000(V4* o, float x, float y, float z, float w);
-int func_003A3430(void* mgr, void* key);
-void* func_00234BB0(void* self, int n);
+int ParticleDefs_FindByName(void* mgr, void* key);
+void* ParticleDefs_SlotForId(void* self, int n);
 }
 #define D_00539220 (D_00539210.f20)
 #define D_00539224 (D_00539210.f24)
@@ -319,7 +319,7 @@ extern "C" void func_00399080(Self* self)
         int k;
         found = 0;
         for (k = 0; k < self->info->f180; k++) {
-            found = *(Found**)func_00234BB0(D_0053B544, func_003A3430(D_0053B540, &self->info->sub[k]));
+            found = *(Found**)ParticleDefs_SlotForId(D_0053B544, ParticleDefs_FindByName(D_0053B540, &self->info->sub[k]));
             if (found->fC == 0) break;
             found = 0;
         }
@@ -400,7 +400,7 @@ extern "C" void func_00399080(Self* self)
                 }
             }
         }
-        if (n > 0) func_00371200(D_005381F0);
+        if (n > 0) Renderer_FlushBatch(D_005381F0);
     }
 }
 

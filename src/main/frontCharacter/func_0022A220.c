@@ -7,13 +7,13 @@ char * Archive_Open();
 int Expression_Init();                                
 int Skf_Register(char *, char * );                        
 int func_00391B30(char * , char *);                       
-int func_004037F0(char *, char *);                          
+int AgentPartCache_LoadRules(char *, char *);                          
 int TexCache_RegisterNpcTex(char *, char * );                       
 int MeshCache_RegisterNpcSkm(char *, char * );                       
 extern char D_0055DDA0;
 
 typedef struct { char p0[4]; int f4; int f8; int fC; int f10; int f14; } PS0_0022A220;
-void func_0022A220(PS0_0022A220 *arg0, int arg1) {
+void FrontCharacter_Setup(PS0_0022A220 *arg0, int arg1) {
     char * temp_a0;
     char * temp_a1;
     char * temp_a1_2;
@@ -24,7 +24,7 @@ void func_0022A220(PS0_0022A220 *arg0, int arg1) {
     arg0->fC = NULL;
     arg0->f10 = 0;
     arg0->f14 = NULL;
-    func_004037F0(&D_0055DDA0, "GAMEDATA\\FRONTEND\\SWAPIT.TBL");
+    AgentPartCache_LoadRules(&D_0055DDA0, "GAMEDATA\\FRONTEND\\SWAPIT.TBL");
     arg0->f14 = (int)(Archive_Open(arg1, "GAMEDATA\\FRONTEND\\MANTEX.HOG", 0, 0));
     temp_a1 = (char *)(arg0->f14);
     if (F_(temp_a1, 0x14C, unsigned char) != 0) {

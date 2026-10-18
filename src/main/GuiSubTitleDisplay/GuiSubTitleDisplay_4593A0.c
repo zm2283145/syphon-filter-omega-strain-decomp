@@ -60,7 +60,7 @@ extern char D_004C1EB0;
 }
 typedef struct { char pad[0x50]; int buf; int n; } S_459450;
 #pragma opt_common_subs off
-extern "C" void func_00459450(S_459450* s)
+extern "C" void GuiSubTitleDisplay_Clear(S_459450* s)
 {
     int p = s->buf;
     if (p != 0) {
@@ -90,7 +90,7 @@ extern char D_004C1EB0;
 
 }
 typedef struct { char pad[0x50]; int buf; int n; } S_459500;
-extern "C" int func_00458A30(S_459500*);
+extern "C" int GuiSubTitleDisplay_Parse(S_459500*);
 
 static inline void Clear_459500(S_459500* s)
 {
@@ -105,7 +105,7 @@ static inline void Clear_459500(S_459500* s)
     s->n = 0;
 }
 
-extern "C" int func_00459500(S_459500* s, char* text)
+extern "C" int GuiSubTitleDisplay_SetText(S_459500* s, char* text)
 {
     int len;
     int p;
@@ -120,7 +120,7 @@ extern "C" int func_00459500(S_459500* s, char* text)
     s->buf = p;
     String_Copy((char*)s->buf, text);
     s->n = 0;
-    if (!func_00458A30(s))
+    if (!GuiSubTitleDisplay_Parse(s))
         return 0;
     return 1;
 }

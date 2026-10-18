@@ -29,7 +29,7 @@ typedef struct DblBuf {
     unsigned long long* tags[4]; /* 0x24 */
 } DblBuf;
 
-extern "C" void func_00411860(DblBuf* db, int i, int j) {
+extern "C" void MovieSubtitles_PatchVblank(DblBuf* db, int i, int j) {
     unsigned long long* p = db->tags[j + i * 2];
     bool other;
     *p &= 0x8FFFFFFF;
@@ -96,7 +96,7 @@ extern void func_001161F8(void);
 
 #pragma opt_dead_assignments off
 static inline bool CanDraw(Sub_18E0* s) { return s->font != 0 && s->active != 0; }
-extern "C" void func_004118E0(Sub_18E0* self)
+extern "C" void MovieSubtitles_SetupPackets(Sub_18E0* self)
 {
     if (self->ready) {
         self->pkt++;

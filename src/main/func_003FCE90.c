@@ -20,7 +20,7 @@ struct Holder {
     PtrVec items;
 };
 
-extern "C" void func_003FCE90(Holder* self, float t)
+extern "C" void IeTrack_EvaluateGroup(Holder* self, float t)
 {
     Word end;
     Word it;

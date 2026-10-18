@@ -8,7 +8,7 @@
 #pragma push /* merge_units */
 #include "types.h"
 typedef struct { char pad[8]; char* data; unsigned int len; unsigned int pos; } Buf_8240;
-int func_0042B1A0(int);
+int Net_GetClock(int);
 int func_0042BA00(int, char*);
 int NetGame_InitLocalSlot(int*, int);
 extern int D_00494178;
@@ -19,7 +19,7 @@ extern unsigned char D_00582B88;
 extern int D_00582D30;
 void func_00438240(Buf_8240* b)
 {
-    int t0 = func_0042B1A0(1);
+    int t0 = Net_GetClock(1);
     if (D_00582B88 && b && b->len) {
         unsigned int n;
         char* p = b->data;
@@ -36,7 +36,7 @@ void func_00438240(Buf_8240* b)
         }
         b->pos = n;
     }
-    D_00582D30 = func_0042B1A0(1) - t0;
+    D_00582D30 = Net_GetClock(1) - t0;
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00438240 */
@@ -127,9 +127,9 @@ void func_002EB650(P_4384C0** out, void* s);
 void func_002EC460(void* s);
 int lgAudStopRecording(int h);
 #if 0 /* merge_units */
-int func_0042B1A0(int v);
+int Net_GetClock(int v);
 #endif /* merge_units */
-#define func_0042B1A0(a0) (func_0042B1A0((a0))) /* merge_units */
+#define Net_GetClock(a0) (Net_GetClock((a0))) /* merge_units */
 
 int lgAudEnumerate(int a, char* b);
 int lgAudOpen(int a, Cfg_4384C0* c, int* h);
@@ -153,7 +153,7 @@ static inline void Stop_4384C0(void)
 {
     if (D_00582B88) {
         if (lgAudStopRecording(D_00497548) == 0x80000006) D_00582B88 = 0;
-        D_00582D08 = func_0042B1A0(1) + 2000;
+        D_00582D08 = Net_GetClock(1) + 2000;
     }
 }
 static inline void Free_4384C0(int a, int b) { func_002EC878(a, b); }
@@ -211,7 +211,7 @@ unsigned char func_004384C0(void)
 }
 #undef D_00583870 /* merge_units */
 #undef func_002EB650 /* merge_units */
-#undef func_0042B1A0 /* merge_units */
+#undef Net_GetClock /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_004384C0 */
 
@@ -223,7 +223,7 @@ extern int func_00438340(void);
 #define func_00438340() ((int)func_00438340()) /* merge_units */
 
 extern int func_002EC7D0(int, int);
-extern int func_0042B1A0(int);
+extern int Net_GetClock(int);
 extern int func_0042BB50(void*);
 extern void func_00437DB0(void*, int);
 extern unsigned char D_00582D20;
@@ -247,7 +247,7 @@ void func_00438770(int force)
         D_00497550 = D_005721A8;
     }
     if (!D_00582D00) return;
-    now = func_0042B1A0(1);
+    now = Net_GetClock(1);
     acc = D_00582D18 + (now - D_00582D10);
     if (acc < 20) return;
     D_00582D18 = acc % 20;

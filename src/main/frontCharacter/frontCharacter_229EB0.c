@@ -88,7 +88,7 @@ static inline void merge_flush_func_00229EB0(void) {}
 /* merge_units: begin func_0022A040 */
 #pragma push /* merge_units */
 #include "fileman_entry.h"
-void func_0022A140(void); /* gsynth: defined below */
+void FrontEnd_LoadIdleClip(void); /* gsynth: defined below */
 #pragma cplusplus on
 #pragma mpwc_relax on
 
@@ -101,11 +101,11 @@ int func_001C0720(char * );
 int func_001C07C0(char * );                            
 int func_001C0810(char * );                            
 #if 0 /* merge_units */
-int func_0022A140();
+int FrontEnd_LoadIdleClip();
 #endif /* merge_units */
-#define func_0022A140() (func_0022A140()) /* merge_units */
+#define FrontEnd_LoadIdleClip() (FrontEnd_LoadIdleClip()) /* merge_units */
                                   
-int func_0022A220(int, int);                            
+int FrontCharacter_Setup(int, int);                            
 extern char D_004A6320;
 #if 0 /* merge_units */
 extern char * D_004F77A0;
@@ -131,10 +131,10 @@ extern "C" void func_0022A040(int arg0, int arg1) {
         F_(temp_s2, 0x58, int) = 0;
     }
     D_004F77A0 = temp_s2;
-    func_0022A140();
-    func_0022A220(arg0, arg1);
+    FrontEnd_LoadIdleClip();
+    FrontCharacter_Setup(arg0, arg1);
 }
-#undef func_0022A140 /* merge_units */
+#undef FrontEnd_LoadIdleClip /* merge_units */
 #undef D_004F77A0 /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0022A040(void) {}
@@ -156,7 +156,7 @@ extern char* D_004F77A0;
 
 
 /* Loads the front-end idle animation and pushes an empty 4-char tag onto the character list. */
-void func_0022A140(void)
+void FrontEnd_LoadIdleClip(void)
 {
     char tag[4];
     FileManEntry e;
@@ -164,7 +164,7 @@ void func_0022A140(void)
     unsigned int i;
     const char* s;
     Human_InitStatics();
-    func_0036E5D0(&e);
+    Resource_Construct(&e);
     func_0036E140(&e, D_004A6340, 0, 0);
     func_003B5310(D_004F77A0, &e);
     done = 0;

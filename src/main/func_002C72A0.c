@@ -18,7 +18,7 @@ extern unsigned char D_0055C780[];
 extern char D_004DE148[];
 extern int D_0051EE70;
 extern void Mtx_ToEuler(V4* out, M4* m);
-extern void* func_004073C0(void* data, int* len);
+extern void* AgentPacking_Compact(void* data, int* len);
 extern bool NetObj_SendMessage(int a, int b, void* c, int target, int type);
 bool func_002C72A0(int idx, int a1, int a2, M4* m, void* data, short* sh, int s1);
 }
@@ -93,7 +93,7 @@ bool func_002C72A0(int idx, int a1, int a2, M4* m, void* data, short* sh, int s1
         msg.pos.z = p.z;
         msg.s1 = s1;
         for (i = 0; i != 6; i++) msg.arr[i] = sh[i];
-        void* d = func_004073C0(data, &len);
+        void* d = AgentPacking_Compact(data, &len);
         QCopy(msg.buf, d, len);
         Msg72A0* pm = &msg; if (NetObj_SendMessage(D_0051EE70, 0x430, pm, idx, 0x40)) ret = true;
     }

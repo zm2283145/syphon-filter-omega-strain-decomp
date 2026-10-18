@@ -25,7 +25,7 @@ extern char D_0049D8D0;
 extern char g_TargetVisMgr;
 void Alloc_Lock(int);
 void Alloc_Unlock(int);
-void func_0038CBF0(void*);
+void ActorModel_Deactivate(void*);
 void TargetVis_Unregister(void*, void*);
 void func_003928A0(void*);
 void func_00436C00(int*);
@@ -38,7 +38,7 @@ extern "C" void func_001B4970(Act* a)
 {
     int loc;
     VObj* o;
-    func_0038CBF0(a->a60);
+    ActorModel_Deactivate(a->a60);
     TargetVis_Unregister(&g_TargetVisMgr, a);
     func_003928A0(a);
     func_00436C00(&loc);

@@ -95,13 +95,13 @@ DEFINE_MESSAGE_TWO_MEMBER_DTOR(func_00327220, D_004DAE10)
 #pragma cplusplus on
 typedef struct { char pad[0x10]; int n; char pad14[8]; int sel; } G_3272B0;
 typedef struct { char pad[0x4C]; int count; G_3272B0* groups; int pad54; int cur; } S_3272B0;
-extern "C" void func_00327890(S_3272B0* o, int dir);
+extern "C" void GuiSlideShow_Refresh(S_3272B0* o, int dir);
 
 static inline G_3272B0* At_3272B0(G_3272B0** gp, int i) { return &(*gp)[i]; }
 #pragma push
 #pragma opt_rotateloops off
 #pragma opt_strength_reduction off
-extern "C" bool func_003272B0(S_3272B0* o, int dir)
+extern "C" bool GuiSlideShow_Step(S_3272B0* o, int dir)
 {
     unsigned char any = 0;
     int i;
@@ -144,7 +144,7 @@ extern "C" bool func_003272B0(S_3272B0* o, int dir)
             At_3272B0(gp, o->cur)->sel = At_3272B0(gp, o->cur)->n - 1;
         }
     }
-    func_00327890(o, dir);
+    GuiSlideShow_Refresh(o, dir);
     {
         bool r = 1;
         if (oldCur == o->cur && oldSel == At_3272B0(gp, o->cur)->sel) r = 0;
@@ -189,12 +189,12 @@ extern void SoundMsg_WrapAction(SoundMsg_327530* msg, void* action);
 
 extern char* String_CStr(void* s);
 extern int String_Length(void* s);
-extern void func_0043C890(int w, char* s, int v);
+extern void GuiBitmapWidget_SetImage(int w, char* s, int v);
 extern void GuiTextWidget_SetText(int w, char* s, int v);
 extern int sprintf(char* buf, const char* fmt, ...);
 extern int Agent_GetSelected(void* a, int i);
-extern int func_00332950(int agent, int a, int b, int c);
-extern void func_003328D0(int agent, int a, int b, int c, int d);
+extern int AgentData_IsZeusViewed(int agent, int a, int b, int c);
+extern void AgentData_SetLevelFlag(int agent, int a, int b, int c, int d);
 
 static inline void PlayVoice_327530(Self_327530* self, char* voice)
 {
@@ -219,7 +219,7 @@ static inline void PlayVoice_327530(Self_327530* self, char* voice)
     cMessage_dtor(&play, 0);
 }
 
-void func_00327530(Self_327530* self, int sel, int sub)
+void GuiSlideShow_Show(Self_327530* self, int sel, int sub)
 {
     char buf[0x20];
     Group_327530* g;
@@ -235,7 +235,7 @@ void func_00327530(Self_327530* self, int sel, int sub)
         Item_327530* item;
         g->sel = sub;
         item = &g->items[sub];
-        if (self->w5C) func_0043C890(self->w5C, String_CStr(item), item->fC);
+        if (self->w5C) GuiBitmapWidget_SetImage(self->w5C, String_CStr(item), item->fC);
         if (String_Length(item->sound)) PlayVoice_327530(self, String_CStr(item->sound));
         if (self->w60) GuiTextWidget_SetText(self->w60, String_CStr(g), 0);
         if (self->w64) {
@@ -244,13 +244,13 @@ void func_00327530(Self_327530* self, int sel, int sub)
         }
         if (item->b1C) {
             int a = Agent_GetSelected(D_004FFB50, -1);
-            if (!func_00332950(a, item->f20, item->f24, item->f28)) {
+            if (!AgentData_IsZeusViewed(a, item->f20, item->f24, item->f28)) {
                 if (self->w68) self->w68->flags |= 2;
-                func_003328D0(a, item->f20, item->f24, item->f28, 1);
+                AgentData_SetLevelFlag(a, item->f20, item->f24, item->f28, 1);
             }
         }
     } else {
-        if (self->w5C) func_0043C890(self->w5C, D_004B8790, 0);
+        if (self->w5C) GuiBitmapWidget_SetImage(self->w5C, D_004B8790, 0);
         if (self->w60) GuiTextWidget_SetText(self->w60, D_004B8790, 0);
         if (self->w64) GuiTextWidget_SetText(self->w64, D_004B8790, 0);
         if (self->w68) self->w68->flags &= ~2;

@@ -37,7 +37,7 @@ extern char g_TargetVisMgr;
 extern unsigned char D_005721C8;
 void Alloc_Lock(int);
 void Alloc_Unlock(int);
-void func_0038CBF0(void*);
+void ActorModel_Deactivate(void*);
 void TargetVis_Unregister(void*, void*);
 void Actor_ShockReaction(Act*, unsigned char, int, float);
 void func_003928D0(Act*, int);
@@ -53,7 +53,7 @@ extern "C" void Npc_Deactivate(Act* a, int arg)
     int loc;
     VObj* o;
     int i;
-    func_0038CBF0(a->a60);
+    ActorModel_Deactivate(a->a60);
     TargetVis_Unregister(&g_TargetVisMgr, a);
     for (i = 0; i < 3; i++) Actor_ShockReaction(a, i, 0, 1.0f);
     func_003928D0(a, arg);

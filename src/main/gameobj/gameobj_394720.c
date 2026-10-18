@@ -49,7 +49,7 @@ struct Object {
 };
 
 /* Calls virtual +0x90(arg+0x10, 0), passes arg to the +0x50 object (virtual +0x14) and clears +0x64/+0x6C. */
-extern "C" void func_00394740(Object* self, char* arg)
+extern "C" void ParticleGob_ResetTime(Object* self, char* arg)
 {
     self->Method90(arg + 0x10, 0);
     self->sub->Method14(arg);

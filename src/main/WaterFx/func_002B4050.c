@@ -46,7 +46,7 @@ void Vec4_Copy(V4* d, const V4* s);
 void GuiBatch_AddVertexColor(V4* d, const V4* s);
 float GuiBatch_AddVertexUV(void);
 V4* func_00132000(V4* o, float x, float y, float z, float w);
-void func_00371200(void* s);
+void Renderer_FlushBatch(void* s);
 }
 #define D_00539224 (D_00539210.f24)
 #define D_00539228 (D_00539210.f28)
@@ -175,7 +175,7 @@ extern "C" void WaterFx_RenderSplash(Splash* s)
     Emit(c1, V4c(1.0f, 1.0f, 1.0f, a), V4c(0.0f, 0.0f, 1.0f, 0.0f));
     Emit(c2, V4c(1.0f, 1.0f, 1.0f, a), V4c(1.0f, 1.0f, 1.0f, 0.0f));
     Emit(c3, V4c(1.0f, 1.0f, 1.0f, a), V4c(1.0f, 0.0f, 1.0f, 0.0f));
-    func_00371200(D_005381F0);
+    Renderer_FlushBatch(D_005381F0);
 }
 
 

@@ -30,7 +30,7 @@ typedef struct {
     char fBE1[1];
 } ObjAB80;
 extern int D_00539248;
-extern void func_0036E5D0(FileMan* f);
+extern void Resource_Construct(FileMan* f);
 extern void Hog_Register(FileMan* f, char* name, int a, int b);
 extern void FileMan_FindMember(FileMan* f);
 extern int FileMan_GetSize(FileMan* f);
@@ -40,7 +40,7 @@ extern void FileMan_Release(FileMan* f, int flag);
 extern int TexMan_FindOrLoad(int mgr, FileMan* f);
 extern void* memcpy(void* d, const void* s, unsigned int n);
 extern long long SoftFloat_FloatToDouble(float f);
-extern long long func_0011C268(long long a, long long b);
+extern long long SoftFloat_DoubleMultiply(long long a, long long b);
 extern float SoftFloat_DoubleToFloat(long long a);
 
 static inline void Copy(PStr* buf, char* t, const char* s)
@@ -76,7 +76,7 @@ void Font_LoadFnt(ObjAB80* obj, int arg1, char* name)
     int i;
     char* t;
 
-    func_0036E5D0(&fm);
+    Resource_Construct(&fm);
     t = s.text;
     s.len = 0;
     Copy(&s, t, name);
@@ -113,7 +113,7 @@ void Font_LoadFnt(ObjAB80* obj, int arg1, char* name)
     if ((ver == 2 && flags >= 4) || ver > 2) {
         obj->f94 = *(signed char*)p++;
     } else {
-        obj->f94 = SoftFloat_DoubleToFloat(func_0011C268((long long)0x3FE00000 << 0x20, SoftFloat_FloatToDouble(obj->f98 / 2.0f * obj->f90)));
+        obj->f94 = SoftFloat_DoubleToFloat(SoftFloat_DoubleMultiply((long long)0x3FE00000 << 0x20, SoftFloat_FloatToDouble(obj->f98 / 2.0f * obj->f90)));
     }
     if ((ver == 2 && flags != 0) || ver > 2) {
         obj->fBE0 = *(signed char*)p != 0;
@@ -123,7 +123,7 @@ void Font_LoadFnt(ObjAB80* obj, int arg1, char* name)
     } else {
         obj->fBE0 = 0;
     }
-    func_0036E5D0(&fm2);
+    Resource_Construct(&fm2);
     Hog_Register(&fm2, (char*)&s + 1, arg1, 0);
     obj->f0 = TexMan_FindOrLoad(D_00539248, &fm2);
     FileMan_Release(&fm2, -1);
@@ -140,14 +140,14 @@ void Font_LoadFnt(ObjAB80* obj, int arg1, char* name)
 extern "C" {
 extern void * const D_004DF630[];
 void operator_delete(void* allocation);
-void func_003813A0(int mgr, int handle, int flags);
+void Tex_Release(int mgr, int handle, int flags);
 }
 struct O36AF40 { int handle; char pad[0x8A70]; void* vtable; };
 extern "C" O36AF40* func_0036AF40(O36AF40* self, short deleteFlag)
 {
     if (self) {
         self->vtable = ((char*)D_004DF630);
-        func_003813A0(D_00539248, self->handle, 0);
+        Tex_Release(D_00539248, self->handle, 0);
         if (deleteFlag > 0)
             operator_delete(self);
     }

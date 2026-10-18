@@ -29,7 +29,7 @@ extern int D_005721A8;
 extern unsigned char D_005721C8;
 extern int D_00494178;
 
-extern unsigned int func_0042B1A0(int clock);
+extern unsigned int Net_GetClock(int clock);
 extern int func_002EC3C8(void* key);
 extern int func_002EB650(NetSessionEntry** entry, void* key);
 extern int NetGame_InitLocalSlot(int* id, int session);
@@ -39,10 +39,10 @@ static inline void service_slot(unsigned int* deadline, unsigned char* pending,
                                 void** key, unsigned int interval)
 {
     unsigned int previous = *deadline;
-    if (previous < func_0042B1A0(1)) {
+    if (previous < Net_GetClock(1)) {
         if (*pending && !func_002EC3C8(*key))
             *pending = 0;
-        *deadline = func_0042B1A0(1) + interval;
+        *deadline = Net_GetClock(1) + interval;
     }
 }
 

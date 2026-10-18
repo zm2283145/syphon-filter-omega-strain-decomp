@@ -85,24 +85,24 @@ extern void GuiObjectives_Update();
 extern void GuiWidget_FocusPrev();
 extern void GuiWidget_FocusNext();
 extern void GuiWidget_FocusLast();
-extern void func_0041E230();
-extern void func_0041E2B0();
-extern void func_0041E330();
+extern void GuiWidget_BubbleActivate();
+extern void GuiWidget_BubbleType1();
+extern void GuiWidget_BubbleType0();
 extern void GuiWidget_Draw();
-extern void func_0041F070();
-extern void func_0041F080();
+extern void GuiWidget_ClearFlag4();
+extern void GuiWidget_SetFlag4();
 extern void GuiWidget_Deinit();
 extern void func_0041F210();
 extern void GuiStartMenu_OnInput();
 extern void GuiStartMenu_OnEvent();
 extern void GuiStartMenu_OnSleep();
-extern void func_00456A60();
+extern void GuiStartMenu_First();
 extern void GuiStartMenu_OnWake();
 extern void GuiStartMenu_Init();
 extern void func_004573C0();
-extern void func_00457430();
+extern void GuiStartMenu_GetClassName();
 extern void func_00457440();
-void * const D_004E1430[24] = { (void*)0x0, (void*)0x0, (void*)func_004573C0, (void*)GuiStartMenu_Init, (void*)GuiWidget_Deinit, (void*)func_0041F080, (void*)func_0041F070, (void*)GuiStartMenu_OnWake, (void*)GuiStartMenu_OnSleep, (void*)func_0041E330, (void*)func_0041E2B0, (void*)GuiStartMenu_OnInput, (void*)GuiWidget_Draw, (void*)func_0041E230, (void*)GuiObjectives_Update, (void*)GuiStartMenu_OnEvent, (void*)func_0041F210, (void*)func_00456A60, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)func_00457430, (void*)func_00457440, (void*)0x0 };
+void * const D_004E1430[24] = { (void*)0x0, (void*)0x0, (void*)func_004573C0, (void*)GuiStartMenu_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiStartMenu_OnWake, (void*)GuiStartMenu_OnSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiStartMenu_OnInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiObjectives_Update, (void*)GuiStartMenu_OnEvent, (void*)func_0041F210, (void*)GuiStartMenu_First, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiStartMenu_GetClassName, (void*)func_00457440, (void*)0x0 };
 extern int GuiObjectives_ctor(void* self, int a1, int a2);
 
 /* Constructor: base built by GuiObjectives_ctor, fields cleared, flag bit 5 cleared. */
@@ -138,7 +138,7 @@ DEFINE_VTABLE_BASE_DTOR(func_00456E00, D_004DF5C0, GuiWidget_Destroy)
 int Service_Lookup(int *, int *);                       
 int SoundMgr_SetGroupsPaused(int, int);                            
 int HudTicker_SetShown(int, int);                            
-int func_0041EBF0(int);                               
+int GuiWidget_BaseSleep(int);                               
 extern int D_004F2CC0;
 extern int D_004FFB50;
 extern int D_004FFC2C;
@@ -149,7 +149,7 @@ void GuiStartMenuBackdrop_OnSleep(int arg0) {
         SoundMgr_SetGroupsPaused(Service_Lookup(&D_004FFB50, &D_004F2CC0), 0);
     }
     HudTicker_SetShown(D_004FFC2C + 0x100, 1);
-    func_0041EBF0(arg0);
+    GuiWidget_BaseSleep(arg0);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00456E60 */
@@ -157,14 +157,14 @@ void GuiStartMenuBackdrop_OnSleep(int arg0) {
 /* merge_units: begin func_00456ED0 */
 #pragma push /* merge_units */
                             
-int func_0041EFA0(int);
+int GuiWidget_BaseWake(int);
 
 void GuiStartMenuBackdrop_OnWake(int arg0) {
     if (D_005721C8 == 0) {
         SoundMgr_SetGroupsPaused(Service_Lookup(&D_004FFB50, &D_004F2CC0), 1);
     }
     HudTicker_SetShown(D_004FFC2C + 0x100, 0);
-    func_0041EFA0(arg0);
+    GuiWidget_BaseWake(arg0);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00456ED0 */

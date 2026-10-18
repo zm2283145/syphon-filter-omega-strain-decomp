@@ -42,7 +42,7 @@ extern TMgr* D_00539248;
 int MeshCache_FindSlot(MCache* c, __int128 key);
 void Model_HardMeshAttachPoints(SkMdl* m);
 }
-extern "C" signed char func_00389A50(SkMdl* m)
+extern "C" signed char ActorModel_StreamWait(SkMdl* m)
 {
     unsigned long n = m->count;
     int lod;

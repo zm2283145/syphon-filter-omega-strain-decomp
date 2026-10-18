@@ -20,7 +20,7 @@ int strcmp(const void *, const void *);
 
 
 
-int func_0041BE10(void) {
+int GuiTextWidget_GetClassName(void) {
     return (int)"GuiTextWidget";
 }
 /* merge_units: generate this block's code under its own pragmas */

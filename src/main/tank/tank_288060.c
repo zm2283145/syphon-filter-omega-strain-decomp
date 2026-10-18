@@ -78,7 +78,7 @@ extern "C" signed char D_004FFBA0;
 extern "C" signed char D_004FFBA1;
 
 extern "C" Ent288060* GuiWidget_FindChildByName(Self288060* self, int id);
-extern "C" unsigned char func_00288510(void);
+extern "C" unsigned char GuiTitleScreen_SavedAgentExists(void);
 extern "C" Game288060* Gui_GetScreenStack(void);
 extern "C" void GuiScreen_SetFocus(Game288060* g, int v);
 extern "C" int Time_GetMilliseconds(void);
@@ -91,7 +91,7 @@ extern "C" void GuiTitleScreen_Update(Self288060* self, float dt)
     Ent288060* e = GuiWidget_FindChildByName(self, D_0048B3F0);
     unsigned char flag = D_0055A830->x59D != 0;
     if (e) {
-        unsigned char s = func_00288510();
+        unsigned char s = GuiTitleScreen_SavedAgentExists();
         if (!s && Gui_GetScreenStack()->x20 == e) {
             GuiScreen_SetFocus(Gui_GetScreenStack(), e->x24->v17(e, 1));
         }
@@ -163,10 +163,10 @@ extern int D_004FFC04;
 extern int GuiTitleScreen_CheckMemCard(Unk288A80*, int);
 extern int func_002C9AF0(int, int);
 extern int AgentData_ResetProfileNames(int);
-extern int func_0041EFA0(Unk288A80*);
+extern int GuiWidget_BaseWake(Unk288A80*);
 
 int GuiTitleScreen_Wake(Unk288A80* self) {
-    func_0041EFA0(self);
+    GuiWidget_BaseWake(self);
     AgentData_ResetProfileNames(Agent_GetSelected(&D_004FFB50, -1));
     func_002C9AF0(D_004FFC04, 0);
     return GuiTitleScreen_CheckMemCard(self, 0);

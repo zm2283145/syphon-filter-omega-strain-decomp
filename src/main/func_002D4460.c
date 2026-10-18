@@ -57,7 +57,7 @@ void Event_Send(void* msg, void* target, int immediate);
 void cMessage_dtor(void* msg, int flags);
 void func_00436C00(int* t);
 int func_00434440(int* t, void* id);
-void func_0042D910(Actor_4460* a);
+void NetObjectMgr_Remove(Actor_4460* a);
 void func_00436BA0(int* t, int f);
 }
 
@@ -91,7 +91,7 @@ extern "C" void func_002D4460(cNPC_4460* self)
         } else if (self->IsLocal()) {
             func_00436C00(&t);
             func_00434440(&t, (char*)self->actor + 0xC);
-            if (self->net) func_0042D910(self->actor);
+            if (self->net) NetObjectMgr_Remove(self->actor);
             func_00436BA0(&t, -1);
         }
         self->done = 1;

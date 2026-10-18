@@ -83,7 +83,7 @@ static inline void merge_flush_func_00380D20(void) {}
 extern void func_0036DFB0(void* obj, char* name, void* obj2);
 extern void TexMan_LoadNewTexture(void* self, void* obj, __int128* name);
 /* Formats a 16-byte name into a buffer, applies it to obj, then forwards to TexMan_LoadNewTexture. */
-void func_00380D40(void* self, __int128 name, void* obj)
+void Tex_FindByName(void* self, __int128 name, void* obj)
 {
     char buf[80];
     sprintf(buf, "%s.TDX", &name);

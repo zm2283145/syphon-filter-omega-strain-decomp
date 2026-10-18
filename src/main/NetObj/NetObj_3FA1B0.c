@@ -9,7 +9,7 @@
 #include "types.h"
 typedef struct { char p[0x10]; unsigned char b10; } H3FA1B0;
 typedef struct { char p[0x50C]; H3FA1B0* h; } M3FA1B0;
-void func_003FA1B0(M3FA1B0* m, int on)
+void HudTicker_SetStyle(M3FA1B0* m, int on)
 {
     if (m->h) m->h->b10 = on ? 3 : 2;
 }
@@ -46,7 +46,7 @@ void func_003FA1E0(M3FA1E0* m)
 #pragma push /* merge_units */
 typedef struct { char p[0x90]; unsigned char b90; unsigned char b91; char p92[0xE]; } Sl3FA280;
 typedef struct { Sl3FA280 s[8]; Sl3FA280* cur; char p504[8]; void* h; unsigned char b510, b511, b512; char p513[9]; float f51C; } M3FA280;
-void func_003FA280(M3FA280* m, unsigned char type, int flag)
+void HudTicker_Clear(M3FA280* m, unsigned char type, int flag)
 {
     Sl3FA280* s = m->s;
     int i;
@@ -78,7 +78,7 @@ void func_003FA280(M3FA280* m, unsigned char type, int flag)
 #pragma push /* merge_units */
 typedef struct { char p[0x90]; unsigned char lvl; } L3FA380;
 typedef struct { char p[0x500]; L3FA380* l; unsigned char b504; char p505[7]; void* h; unsigned char b510, b511, b512; char p513[0x9]; float f51C; } S3FA380;
-void func_003FA380(S3FA380* s, unsigned char v)
+void HudTicker_GetLevel(S3FA380* s, unsigned char v)
 {
     if (s->l && s->l->lvl < v) {
         s->b511 = 0;
@@ -95,14 +95,14 @@ s->b512 = 1;
 #pragma push /* merge_units */
 typedef struct { char name[0x80]; float v[4]; unsigned char kind; unsigned char used; short pad; int a94; int a98; int pad2; } C4Note3FA;
 #if 0 /* merge_units */
-extern void func_003FA280(C4Note3FA* n, unsigned char kind, int z);
+extern void HudTicker_Clear(C4Note3FA* n, unsigned char kind, int z);
 #endif /* merge_units */
-#define func_003FA280(a0, a1, a2) (func_003FA280((M3FA280 *)(a0), (a1), (a2))) /* merge_units */
+#define HudTicker_Clear(a0, a1, a2) (HudTicker_Clear((M3FA280 *)(a0), (a1), (a2))) /* merge_units */
 
 extern void String_Copy(char* d, const char* s);
 void Notify_Insert(C4Note3FA* n, const char* name, float* v, unsigned char kind, int flush) {
     int i;
-    if (flush) func_003FA280(n, kind, 0);
+    if (flush) HudTicker_Clear(n, kind, 0);
     for (i = 0; i < 8; i++, n++) {
         if (!n->used) {
             String_Copy(n->name, name);
@@ -118,7 +118,7 @@ void Notify_Insert(C4Note3FA* n, const char* name, float* v, unsigned char kind,
         }
     }
 }
-#undef func_003FA280 /* merge_units */
+#undef HudTicker_Clear /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003FA3F0 */
 

@@ -7,19 +7,19 @@ typedef struct { char pad[0x94]; L2BE* f94; char p98[0x10]; int fa8; char pad2[0
 typedef struct { char pad[0x80]; char name[4]; } WD2BE;
 extern "C" {
 extern void GuiTextListWidget_Clear(L2BE*);
-extern void func_004235B0(L2BE*, int, int);
+extern void GuiArrayWidget_SetTable(L2BE*, int, int);
 extern void GuiArrayWidget_Select(L2BE*, int, int);
 extern int D_004FFD30;
 extern WD2BE* WeaponDb_Get(int, int);
 extern char* Loc_LookupText(char*);
 extern void GuiTextListWidget_AddItem(L2BE*, char*, int, int);
 }
-extern "C" void func_002BEEE0(O2BE* o) {
+extern "C" void GuiEquipmentModify_BuildList(O2BE* o) {
     int i;
     GuiTextListWidget_Clear(o->f94);
     ((V2BE*)o->f94)->v21(1, o->f104 + 1);
-    if (o->f104 >= o->fa8) func_004235B0(o->f94, 1, o->fa8);
-    else func_004235B0(o->f94, 1, o->f104 + 1);
+    if (o->f104 >= o->fa8) GuiArrayWidget_SetTable(o->f94, 1, o->fa8);
+    else GuiArrayWidget_SetTable(o->f94, 1, o->f104 + 1);
     GuiArrayWidget_Select(o->f94, 0, (int)(void*)o->f108);
     o->f94->b81 = 1;
     o->f94->f88 = o->fcc;

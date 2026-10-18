@@ -45,7 +45,7 @@ void func_003FF930(int a, int b)
 
 /* merge_units: begin func_003FF970 */
 #pragma push /* merge_units */
-float func_003FF970(float target, float cur, float* maxStep) {
+float Math_StepAngleEighth(float target, float cur, float* maxStep) {
     float d = target - cur;
     float step;
     if (d > 3.1415927f) cur += 6.2831855f;
@@ -61,7 +61,7 @@ float func_003FF970(float target, float cur, float* maxStep) {
 
 /* merge_units: begin func_003FFA20 */
 #pragma push /* merge_units */
-float func_003FFA20(float* p, float a, float b) {
+float Math_StepEighth(float* p, float a, float b) {
     float d = (a - b) / 8.0f;
     float r = b + d;
     if (d < 0.0f) {
@@ -219,7 +219,7 @@ static inline int b090eq(__int128 a, __int128 b) {
     return r == -1;
 }
 /* Initialises a block reader over buf, skipping zero padding at its end. */
-void func_00400090(B090* b, char* buf, int size) {
+void Skm_ParseRecord(B090* b, char* buf, int size) {
     __int128 z = b090zero();
     int pad = 0;
     char* p = buf + size;

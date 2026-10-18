@@ -45,7 +45,7 @@ extern "C" {
 extern unsigned char D_005721D0;
 void* Object_LookupById(int*);
 void func_0042D790(void*);
-void func_0042D910(void*);
+void NetObjectMgr_Remove(void*);
 }
 #pragma push
 #pragma opt_propagation off
@@ -57,7 +57,7 @@ extern "C" int func_00431D60(int a0, int a1, int a2, Pk431D60* arg) {
         void* o = Object_LookupById(&id);
         if (o) {
             if (p->fA == 0) func_0042D790(o);
-            else func_0042D910(o);
+            else NetObjectMgr_Remove(o);
         }
     }
     return 0xC;

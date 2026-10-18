@@ -36,7 +36,7 @@ void DME_StopThread(void);
 void Boot_LoadFonts(W_002C9510* w);
 void func_002C9EE0(Self_002C9510* self);
 void func_00145160(int a);
-void func_002CCA40(int a, int b, int c);
+void App_Broadcast(int a, int b, int c);
 void Video_BeginFrame(void* p);
 void FrontEnd_ResumeGui(Self_002C9510* self)
 {
@@ -104,7 +104,7 @@ void FrontEnd_ResumeGui(Self_002C9510* self)
         }
         func_002C9EE0(self);
         func_00145160(D_004FFD30);
-        func_002CCA40(0x2003, 0, 0);
+        App_Broadcast(0x2003, 0, 0);
         self->b37 = 0;
         self->b28 = 1;
         Video_BeginFrame(D_005381F0);

@@ -58,13 +58,13 @@ extern GFAB0 *D_004FFC04;
 int sprintf(char *buf, const char *fmt, ...);
 void String_Copy(char *d, const char *s);
 void func_00128F58(char *d, const char *s);
-void func_0043C890(void *obj, char *name, int x);
+void GuiBitmapWidget_SetImage(void *obj, char *name, int x);
 AgentFAB0 *Agent_GetSelected(void *a, int i);
 int Loc_LookupText(void *key);
 int AgentData_HasUnlock(AgentFAB0 *a, unsigned char i);
 int AgentData_HasShownUnlock(AgentFAB0 *a, unsigned char i);
-void func_003334C0(AgentFAB0 *a, unsigned char type, ListFAB0 *out);
-void func_00333600(AgentFAB0 *a, ListFAB0 *out);
+void AgentData_GetAwardRows(AgentFAB0 *a, unsigned char type, ListFAB0 *out);
+void AgentData_GetRatings(AgentFAB0 *a, ListFAB0 *out);
 void func_00296FA0(ListFAB0 *l);
 void func_00299360(ListFAB0 *l, short f);
 void GuiNewParts_BuildBonusList(ObjFAB0 *o);
@@ -82,7 +82,7 @@ static inline void AddEntry(ObjFAB0 *o, int x, int type, int sub, int val)
             func_00128F58(buf, D_004C24B8);
         func_00128F58(buf, D_004C24C0);
         if (e->obj)
-            func_0043C890(e->obj, buf, x);
+            GuiBitmapWidget_SetImage(e->obj, buf, x);
         e->val = val;
         o->n++;
     }
@@ -121,7 +121,7 @@ void GuiNewParts_BuildBonusList(ObjFAB0 *o)
             }
         }
         }
-        func_003334C0(agent, 2, &list);
+        AgentData_GetAwardRows(agent, 2, &list);
         {
         int i;
         for (i = 0; i < list.Count(); i++) {
@@ -129,7 +129,7 @@ void GuiNewParts_BuildBonusList(ObjFAB0 *o)
                 AddEntry(o, x, 2, i + 1, list.items[i].text);
         }
         }
-        func_003334C0(agent, 1, &list);
+        AgentData_GetAwardRows(agent, 1, &list);
         {
         int i;
         for (i = 0; i < list.Count(); i++) {
@@ -137,7 +137,7 @@ void GuiNewParts_BuildBonusList(ObjFAB0 *o)
                 AddEntry(o, x, 4, i + 1, list.items[i].text);
         }
         }
-        func_00333600(agent, &list);
+        AgentData_GetRatings(agent, &list);
         {
         int i;
         for (i = 0; i < list.Count(); i++) {
@@ -145,7 +145,7 @@ void GuiNewParts_BuildBonusList(ObjFAB0 *o)
                 AddEntry(o, x, 3, i + 1, list.items[i].text);
         }
         }
-        func_003334C0(agent, 0, &list);
+        AgentData_GetAwardRows(agent, 0, &list);
         {
         int i;
         for (i = 0; i < list.Count(); i++) {

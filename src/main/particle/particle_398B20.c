@@ -83,7 +83,7 @@ void func_00398D90(M* d, M* s);
 #define func_00398D90(a0, a1) (func_00398D90((PPMtx *)(a0), (PPMtx *)(a1))) /* merge_units */
 
 V* Mtx_TransformByTranspose(V* v, M* m);
-void* func_003A3430(void* mgr, void* key);
+void* ParticleDefs_FindByName(void* mgr, void* key);
 Obj* ParticleEmitter_SpawnChildren(Mgr* mgr, Obj* ins, void* name, M* m, float f);
 extern char D_0053B540[];
 }
@@ -114,7 +114,7 @@ extern "C" void PhysEmitter_Update(Obj* self, Mgr* mgr, M* m, V* v, float f)
         if (self->x124 > 0) {
             void* xx = &id;
             UnitMtx(&id);
-            Obj* n = ParticleEmitter_SpawnChildren(mgr, 0, func_003A3430(D_0053B540, self->info->x170), &id, f);
+            Obj* n = ParticleEmitter_SpawnChildren(mgr, 0, ParticleDefs_FindByName(D_0053B540, self->info->x170), &id, f);
             if (!self->info->x9CC) {
                 self->x124--;
             }

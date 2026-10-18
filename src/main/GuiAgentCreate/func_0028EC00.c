@@ -8,15 +8,15 @@
 #include "GuiAgentCreate_types.h"
 
 extern char D_0055DDA0[];
-extern int func_00403310(void* p);
-extern void func_0040F540(void);
+extern int AgentPartCache_Unlock(void* p);
+extern void World_ClearPendingIfLoaded(void);
 extern GuiManagerState* Gui_GetScreenStack(void);
-extern int func_0041EBF0(void* self);
+extern int GuiWidget_BaseSleep(void* self);
 extern int GuiWidget_Deinit(void* self);
 
 int GuiAgentCreate_Deinit(void* self) {
-    func_00403310(D_0055DDA0);
-    func_0040F540();
+    AgentPartCache_Unlock(D_0055DDA0);
+    World_ClearPendingIfLoaded();
     return GuiWidget_Deinit(self);
 }
 
@@ -24,7 +24,7 @@ int GuiAgentCreate_Deinit(void* self) {
 GuiManagerState* GuiAgentCreate_Sleep(void* self) {
     GuiManagerState* gui;
 
-    func_0041EBF0(self);
+    GuiWidget_BaseSleep(self);
     gui = Gui_GetScreenStack();
     gui->flags &= ~12;
     return gui;

@@ -2,7 +2,7 @@
 typedef struct { unsigned int word; unsigned int length; char* data; } Str_50A0;
 typedef struct { char* p; } It_50A0;
 typedef struct { char pad[0x148]; struct { int a; int n; }* p148; } Obj_50A0;
-extern int func_0036D4E0(Obj_50A0* o, int i);
+extern int Hog_GetMemberInPlace(Obj_50A0* o, int i);
 extern char* Archive_GetMemberName(Obj_50A0* o, int i);
 extern void String_CtorCStr_13B480(Str_50A0* s, char* c);
 extern void String_Dtor(Str_50A0* s, int f);
@@ -30,7 +30,7 @@ void func_003B50A0(void* self, Obj_50A0* o)
     int n = o->p148->n;
     int i;
     for (i = 0; i < n; i++) {
-        int clip = func_0036D4E0(o, i);
+        int clip = Hog_GetMemberInPlace(o, i);
         if (clip) {
             int idx;
             String_CtorCStr_13B480(&s, Archive_GetMemberName(o, i));

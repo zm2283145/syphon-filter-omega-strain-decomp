@@ -10,7 +10,7 @@ int String_Dtor(char *, int);
 int String_CStr(char *);                             
 int TextObj_SetText(int, int);                          
 
-void func_0041AE90(int arg0, int arg1) {
+void GuiTextEditWidget_MaskText(int arg0, int arg1) {
     Q128 sp40[1];
     int var_s0;
 

@@ -15,7 +15,7 @@ It_C8D0 func_0016BB90(const E_C8D0& e);
 R_C8D0 func_0015AF40(const It_C8D0& it);
 void List_Erase(void* out, void* map, const R_C8D0& r);
 }
-extern "C" void func_0016C8D0(S_C8D0* self, int key)
+extern "C" void NpcPerception_RemoveAwareness(S_C8D0* self, int key)
 {
     It_C8D0 it = NpcPerception_FindRecord(self->map, key);
     It_C8D0 end = func_0016BB90(func_0016BB80(self->map));

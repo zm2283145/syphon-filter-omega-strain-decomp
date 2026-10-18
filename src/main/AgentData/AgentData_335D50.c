@@ -41,9 +41,9 @@ int awards_SetAwardsAndBonuses(char * , int, int);
 #endif /* merge_units */
 #define awards_SetAwardsAndBonuses(a0, a1, a2) (awards_SetAwardsAndBonuses((void *)(a0), (a1), (a2))) /* merge_units */
          
-int func_00335D40();                                
+int AgentData_CopyShownUnlocks();                                
 
-void func_00335D50(char * arg0, int arg1) {
+void AgentData_StartLevel(char * arg0, int arg1) {
     int var_a0;
     int var_s2;
     char * var_s1;
@@ -72,7 +72,7 @@ void func_00335D50(char * arg0, int arg1) {
     F_(arg0, 0xB8, int) = 0;
     F_(arg0, 0xBC, int) = 0;
     F_(arg0, 0xC0, int) = 0;
-    for (var_s2 = 0; var_s2 < func_00335D40(); var_s2++) F_(arg0 + var_s2 * 4, 0xB2C, int) = F_(arg0 + var_s2 * 4, 0xB08, int);
+    for (var_s2 = 0; var_s2 < AgentData_CopyShownUnlocks(); var_s2++) F_(arg0 + var_s2 * 4, 0xB2C, int) = F_(arg0 + var_s2 * 4, 0xB08, int);
     F_(arg0, 0xB70, signed char) = 1;
     F_(arg0, 0xB71, signed char) = 0;
     F_(arg0, 0xB54, int) = F_(arg0, 0xB50, int);
@@ -143,7 +143,7 @@ extern char D_00532990[];
 extern char D_00532991[];
 extern char D_00532992[];
 extern char D_00499C71[];
-char *func_00336060(int unused, char *s)
+char *AgentData_GetLevelShortName(int unused, char *s)
 {
     int i = 0;
     int len = strlen(s) - 1;
@@ -168,12 +168,12 @@ static inline void merge_flush_func_00336060(void) {}
 #pragma push /* merge_units */
 typedef struct { char pad[0xB50]; int* p; } T36110;
 extern void* D_004FFC04;
-extern char* func_002C9070(void* p);
+extern char* App_GetAgentRankGate(void* p);
 extern char* Loc_LookupText(char* key);
 char* AgentData_GetRankText(T36110* self)
 {
     char buf[16];
-    char* r = func_002C9070(D_004FFC04);
+    char* r = App_GetAgentRankGate(D_004FFC04);
     if (r)
         return r;
     sprintf(buf, "S_%s", *self->p);

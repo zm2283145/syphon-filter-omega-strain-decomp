@@ -16,20 +16,20 @@ extern G_454B10* D_004FFC0C;
 extern void* D_004FFD30;
 extern void* D_004FFC2C;
 extern char D_004FFB50[];
-void func_0043D820(void* p, int v);
-void func_0043D760(void* p, int v);
+void GuiMultiLineText_ScrollUp(void* p, int v);
+void GuiMultiLineText_ScrollDown(void* p, int v);
 int WeaponInv_SlotOfItem(int id);
 void* WeaponDb_Get(void* db, int id);
 void* WeaponInv_GetHeldItem(void* p);
-void func_00175FF0(G_454B10* g, int id);
+void Player_EquipItem(G_454B10* g, int id);
 void Goggles_Toggle(A_454B10* a);
 M_454B10* Gui_GetScreenStack(void);
 void GuiWidget_SendEvent(void* a, void* b, int kind, int v, int f);
-void func_00454F80(O_454B10* o, bool f);
+void GuiEquipmentPane_Cycle(O_454B10* o, bool f);
 void GuiStartMenu_ReturnToMenu(O_454B10* o);
 void Hud_ClosePauseMenu(void* p);
 void Game_SetPaused(void* p, int v);
-int func_00454B10(O_454B10* o, Ev_454B10* ev);
+int GuiEquipmentPane_HandleInput(O_454B10* o, Ev_454B10* ev);
 }
 static inline unsigned char Down_454B10(Ev_454B10* e) { unsigned char r = 0; if (e->type == 1 && e->b2 == 0) r = 1; return r; }
 static inline unsigned char Btn_454B10(Ev_454B10* e, int b) { unsigned char r = 0; if (Down_454B10(e) && e->btn == b) r = 1; return r; }
@@ -38,14 +38,14 @@ static inline bool Down2_454B10(Ev_454B10* e) { return e->type == 1 && e->b2 == 
 static inline bool Btn2_454B10(Ev_454B10* e, int b) { return Down2_454B10(e) && e->btn == b; }
 static inline bool Plain2_454B10(Ev_454B10* e, int b) { return Btn2_454B10(e, b) && e->b6 == 0; }
 
-int func_00454B10(O_454B10* o, Ev_454B10* ev)
+int GuiEquipmentPane_HandleInput(O_454B10* o, Ev_454B10* ev)
 {
     if (Plain_454B10(ev, 0x1000) && o->f4C) {
-        func_0043D820(o->f4C, 0);
+        GuiMultiLineText_ScrollUp(o->f4C, 0);
         return 1;
     }
     if (Plain2_454B10(ev, 0x4000) && o->f4C) {
-        func_0043D760(o->f4C, 0);
+        GuiMultiLineText_ScrollDown(o->f4C, 0);
         return 1;
     }
     if (Plain2_454B10(ev, 0x40)) {
@@ -59,7 +59,7 @@ int func_00454B10(O_454B10* o, Ev_454B10* ev)
                 void* wd = WeaponDb_Get(D_004FFD30, wid);
                 if (wd && wd != WeaponInv_GetHeldItem(a->f3524)) {
                     sent = 1;
-                    func_00175FF0(D_004FFC0C, wid);
+                    Player_EquipItem(D_004FFC0C, wid);
                 }
             } else if (kind == 6 && !a->b33E7) {
                 sent = 1;
@@ -72,7 +72,7 @@ int func_00454B10(O_454B10* o, Ev_454B10* ev)
         }
     }
     if (Plain_454B10(ev, 1) || Plain2_454B10(ev, 2)) {
-        func_00454F80(o, Btn2_454B10(ev, 2));
+        GuiEquipmentPane_Cycle(o, Btn2_454B10(ev, 2));
         return 1;
     }
     if (Plain2_454B10(ev, 0x10)) {

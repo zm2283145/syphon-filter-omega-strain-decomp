@@ -11,9 +11,9 @@ extern char D_0049A950[];
 extern char D_0049A890[];
 extern int func_001C94D0(int, int);
 extern void SoundMgr_SetChannelVolume(int, int, int);
-extern void func_0036B250(int);
-extern void func_0036B3B0(int, int, int);
-extern void func_0036E5D0(H130*);
+extern void Heap_ReleaseSlot(int);
+extern void Heap_AllocSlot(int, int, int);
+extern void Resource_Construct(H130*);
 extern int sprintf(char*, const char*, ...);
 extern int Archive_Open(char*, char*, int, int);
 extern void Hog_Register(H130*, void*, int, int);
@@ -22,10 +22,10 @@ extern int Loc_GetLanguage(void);
 extern void Subtitles_SelectTrack(int);
 extern void Subtitles_SetEnabled(int);
 extern void* Mem_Alloc(int, int, char*, int);
-extern void* func_003F9380(void*, H130*, unsigned char);
+extern void* MoviePlayer_ctor(void*, H130*, unsigned char);
 extern void FileMan_Release(H130*, int);
 }
-extern "C" void func_00130520(O130* o, void* name, unsigned char flag) {
+extern "C" void GameFlow_StartMovie(O130* o, void* name, unsigned char flag) {
     int svc;
     if (!o->b61) return;
     svc = Service_Lookup(o, D_004F2CC0);
@@ -37,9 +37,9 @@ extern "C" void func_00130520(O130* o, void* name, unsigned char flag) {
         unsigned char l;
         int sel;
         void* p;
-        func_0036B250(1);
-        func_0036B3B0(1, 0x700000, 0x800);
-        func_0036E5D0(&hog);
+        Heap_ReleaseSlot(1);
+        Heap_AllocSlot(1, 0x700000, 0x800);
+        Resource_Construct(&hog);
         if (flag == 1) {
             char buf[0x80];
             sprintf(buf, D_0049A950);
@@ -70,7 +70,7 @@ extern "C" void func_00130520(O130* o, void* name, unsigned char flag) {
             AllocGuard g;
             p = Mem_Alloc(0, 0x238, D_0049A890, 0x9F3);
         }
-        if (p) p = func_003F9380(p, &hog, sel);
+        if (p) p = MoviePlayer_ctor(p, &hog, sel);
         o->fb0 = p;
         FileMan_Release(&hog, -1);
     }

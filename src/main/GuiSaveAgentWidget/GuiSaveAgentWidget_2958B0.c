@@ -70,7 +70,7 @@ void func_002C81D0(Ui_2958B0* ui);
 void FrontEnd_StartSplashThread(Ui_2958B0* ui);
 void GuiCommandCenter_Exit(S_2958B0* self);
 void GuiCommandCenter_OpenPanel(S_2958B0* self, int a);
-void func_002972E0(S_2958B0* self);
+void GuiCommandCenter_BonusFlags(S_2958B0* self);
 void FrontEnd_ClosePopup(Ui_2958B0* ui, int id);
 int FrontEnd_OpenPopup(Ui_2958B0* ui, int kind, char* title, char* text, S_2958B0* owner, int cb);
 void* Gui_GetScreenList(void);
@@ -91,16 +91,16 @@ int String_AssignCStr_1C43A0(Str_2958B0* s, char* c);
 void LevelSelect_SetLevel(Lvl_2958B0* l, int lvl);
 char* strncpy(char* d, const char* s, unsigned int n);
 int Agent_GetSelected(void* a, int b);
-void func_003328D0(int agent, int a, int b, int c, int d);
-void* func_003534A0(int a);
-void func_00327C70(void* scr, int id, char* s, int a);
-void func_00326DE0(void* scr, int a, int b, int c, int d);
+void AgentData_SetLevelFlag(int agent, int a, int b, int c, int d);
+void* GuiPersonnel_OpenAchievement(int a);
+void GuiSlideShow_SetReturn(void* scr, int id, char* s, int a);
+void GuiSlideShow_Load(void* scr, int a, int b, int c, int d);
 int sprintf(char* d, const char* f, ...);
 char* Loc_LookupText(char* s);
 int GuiScreen_HandleEvent(S_2958B0* self, Msg_2958B0* msg, unsigned short type, int sub, char* str);
 }
 
-extern "C" int func_002958B0(S_2958B0* self, Msg_2958B0* msg, unsigned short type, int sub, char* str)
+extern "C" int GuiCommandCenter_HandleEvent(S_2958B0* self, Msg_2958B0* msg, unsigned short type, int sub, char* str)
 {
     Str_2958B0 title;
     Str_2958B0 text;
@@ -200,7 +200,7 @@ extern "C" int func_002958B0(S_2958B0* self, Msg_2958B0* msg, unsigned short typ
                     D_004FFC04->b34 = self->f1CC == 0x17;
                     D_004FFBA1 = D_004FFBA0;
                     D_004FFBA0 = 3;
-                    func_003328D0(Agent_GetSelected(D_004FFB50, -1), self->f1CC + 1, 5, 0, 1);
+                    AgentData_SetLevelFlag(Agent_GetSelected(D_004FFB50, -1), self->f1CC + 1, 5, 0, 1);
                     return 1;
                 }
             } else if (!String_AssignCStr_1C43A0(&msg->name, D_0048B708)) {
@@ -240,11 +240,11 @@ extern "C" int func_002958B0(S_2958B0* self, Msg_2958B0* msg, unsigned short typ
             } else if (!String_AssignCStr_1C43A0(&msg->name, D_0048B748)) {
                 scr = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AA430, D_004AA448);
             } else if (!String_AssignCStr_1C43A0(&msg->name, D_0048B750)) {
-                scr = func_003534A0(0);
+                scr = GuiPersonnel_OpenAchievement(0);
             } else if (!String_AssignCStr_1C43A0(&msg->name, D_0048B758)) {
-                scr = func_003534A0(1);
+                scr = GuiPersonnel_OpenAchievement(1);
             } else if (!String_AssignCStr_1C43A0(&msg->name, D_0048B760)) {
-                scr = func_003534A0(2);
+                scr = GuiPersonnel_OpenAchievement(2);
             } else if (!String_AssignCStr_1C43A0(&msg->name, D_0048B768)) {
                 scr = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AA450, D_004AA460);
             }
@@ -280,11 +280,11 @@ extern "C" int func_002958B0(S_2958B0* self, Msg_2958B0* msg, unsigned short typ
                 scr = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AA468, D_004AA478);
                 if (scr) {
                     char* s = String_CStr(&self->name);
-                    func_00327C70(scr, self->GetId(), s, 0);
+                    GuiSlideShow_SetReturn(scr, self->GetId(), s, 0);
                     if (self->f1CC == 0x14)
-                        func_00326DE0(scr, 0x12, v, -1, 1);
+                        GuiSlideShow_Load(scr, 0x12, v, -1, 1);
                     else
-                        func_00326DE0(scr, self->f1CC + 1, v, -1, 0);
+                        GuiSlideShow_Load(scr, self->f1CC + 1, v, -1, 0);
                     GuiStack_SwapScreens(Gui_GetScreenStack(), self, scr);
                     return 1;
                 }
@@ -294,32 +294,32 @@ extern "C" int func_002958B0(S_2958B0* self, Msg_2958B0* msg, unsigned short typ
             switch (v) {
             case 2:
                 sprintf(buf, D_004AA248, D_004FFC90);
-                func_003328D0(Agent_GetSelected(D_004FFB50, -1), self->f1CC + 1, 5, 0, 1);
+                AgentData_SetLevelFlag(Agent_GetSelected(D_004FFB50, -1), self->f1CC + 1, 5, 0, 1);
                 break;
             case 3:
                 sprintf(buf, D_004AA488, self->f324);
-                func_003328D0(Agent_GetSelected(D_004FFB50, -1), self->f1CC + 1, 5, 2, 1);
+                AgentData_SetLevelFlag(Agent_GetSelected(D_004FFB50, -1), self->f1CC + 1, 5, 2, 1);
                 break;
             case 4:
                 sprintf(buf, D_004AA268, D_004FFC90);
-                func_003328D0(Agent_GetSelected(D_004FFB50, -1), self->f1CC + 1, 5, 1, 1);
+                AgentData_SetLevelFlag(Agent_GetSelected(D_004FFB50, -1), self->f1CC + 1, 5, 1, 1);
                 break;
             case 0:
                 String_Copy(buf, D_004AA490);
                 break;
             case 1:
                 String_Copy(buf, D_004AA498);
-                func_003328D0(Agent_GetSelected(D_004FFB50, -1), 0x11, 5, 1, 1);
+                AgentData_SetLevelFlag(Agent_GetSelected(D_004FFB50, -1), 0x11, 5, 1, 1);
                 break;
             default:
                 if (v >= 10000) {
                     sprintf(buf, D_004AA4A0, 0x11, v - 9999);
-                    func_003328D0(Agent_GetSelected(D_004FFB50, -1), 0x12, 5, v - 10000, 1);
+                    AgentData_SetLevelFlag(Agent_GetSelected(D_004FFB50, -1), 0x12, 5, v - 10000, 1);
                 } else
                     return 1;
                 break;
             }
-            func_002972E0(self);
+            GuiCommandCenter_BonusFlags(self);
             D_004FFC04->f13C = 1;
             String_Copy(D_004FFC04->text, buf);
             D_004FFBA1 = D_004FFBA0;
@@ -358,7 +358,7 @@ Ag_00296660* Agent_GetSelected(void* a, int b);
 #define Agent_GetSelected(a0, a1) ((Ag_00296660 *)Agent_GetSelected((a0), (a1))) /* merge_units */
 
 int AgentData_GetBonusFlag(Ag_00296660* ag, int a, int b);
-int func_00332950(Ag_00296660* ag, int a, int b, int c);
+int AgentData_IsZeusViewed(Ag_00296660* ag, int a, int b, int c);
 void GuiTextWidget_SetColour(W_00296660* w, Col_00296660* c);
 /* abs.s has no C spelling in MW */
 static inline float Fabs_00296660(float x) { float r; asm { abs.s r, x } return r; }
@@ -428,18 +428,18 @@ int i;
                 on = 0;
                 if (w->flags & 4) {
                     if (self->f1CC == 0x14) {
-                        on = !func_00332950(ag, 0x12, 5, k);
+                        on = !AgentData_IsZeusViewed(ag, 0x12, 5, k);
                     } else {
                         switch (w->kind) {
                         case 2:
-                            on = !func_00332950(ag, self->f1CC + 1, 5, 0);
+                            on = !AgentData_IsZeusViewed(ag, self->f1CC + 1, 5, 0);
                             break;
                         case 3:
-                            on = !func_00332950(ag, self->f1CC + 1, 5, 2);
+                            on = !AgentData_IsZeusViewed(ag, self->f1CC + 1, 5, 2);
                             break;
                         case 4:
                         case 1:
-                            on = !func_00332950(ag, self->f1CC + 1, 5, 1);
+                            on = !AgentData_IsZeusViewed(ag, self->f1CC + 1, 5, 1);
                             break;
                         }
                     }

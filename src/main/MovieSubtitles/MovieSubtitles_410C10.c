@@ -93,7 +93,7 @@ static inline void Free_410C20(void* p)
 }
 
 #pragma opt_propagation off
-extern "C" void func_00410C20(Subs410C20* self, void* file, int lang)
+extern "C" void MovieSubtitles_ParseFeed(Subs410C20* self, void* file, int lang)
 {
     int size;
     char* volatile buf;

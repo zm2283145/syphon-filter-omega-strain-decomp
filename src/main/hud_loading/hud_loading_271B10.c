@@ -36,7 +36,7 @@ extern int D_00538C60;
 extern int IeScreen_Draw(int*);
 extern int IeScreen_Update(int*, float);
 
-int func_00271BA0(HandleHolder* self, float f) {
+int HudLoading_Update(HandleHolder* self, float f) {
     return IeScreen_Update(self->handle, f);
 }
 
@@ -104,25 +104,25 @@ ret:;
 
 /* merge_units: begin func_00271CD0 */
 #pragma push /* merge_units */
-extern void func_00272280(int);
+extern void IeScreen_RemoveElementIfSet(int);
 extern int IeNode_SetShown(int, int, int);
 
 /* Releases all 14 slots, then calls IeNode_SetShown on the owner's handle. */
 int LoadingScreen_Release(SlotTable14* self) {
-    func_00272280(self->slots[0]);
-    func_00272280(self->slots[1]);
-    func_00272280(self->slots[2]);
-    func_00272280(self->slots[3]);
-    func_00272280(self->slots[4]);
-    func_00272280(self->slots[5]);
-    func_00272280(self->slots[6]);
-    func_00272280(self->slots[7]);
-    func_00272280(self->slots[8]);
-    func_00272280(self->slots[9]);
-    func_00272280(self->slots[10]);
-    func_00272280(self->slots[11]);
-    func_00272280(self->slots[12]);
-    func_00272280(self->slots[13]);
+    IeScreen_RemoveElementIfSet(self->slots[0]);
+    IeScreen_RemoveElementIfSet(self->slots[1]);
+    IeScreen_RemoveElementIfSet(self->slots[2]);
+    IeScreen_RemoveElementIfSet(self->slots[3]);
+    IeScreen_RemoveElementIfSet(self->slots[4]);
+    IeScreen_RemoveElementIfSet(self->slots[5]);
+    IeScreen_RemoveElementIfSet(self->slots[6]);
+    IeScreen_RemoveElementIfSet(self->slots[7]);
+    IeScreen_RemoveElementIfSet(self->slots[8]);
+    IeScreen_RemoveElementIfSet(self->slots[9]);
+    IeScreen_RemoveElementIfSet(self->slots[10]);
+    IeScreen_RemoveElementIfSet(self->slots[11]);
+    IeScreen_RemoveElementIfSet(self->slots[12]);
+    IeScreen_RemoveElementIfSet(self->slots[13]);
     return IeNode_SetShown(*self->handle, 0, 1);
 }
 #pragma pop /* merge_units */

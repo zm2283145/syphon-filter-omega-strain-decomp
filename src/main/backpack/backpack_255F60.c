@@ -65,7 +65,7 @@ extern void Hotbox_RemoveObjectBox(void* mgr, int effect);
 extern void Object_Unregister(int effect);
 extern void Object_DeleteLater(int effect, float time);
 /* Stop and release the attached effect. */
-void func_00256120(Obj002579E0* obj)
+void Backpack_Hide(Obj002579E0* obj)
 {
     if (obj->effect) {
         Hotbox_RemoveObjectBox(D_004FFBD0, obj->effect);

@@ -148,7 +148,7 @@ void* func_0021E000(List_221610* l);
 It_221610* func_0021DFE0(It_221610* it, void* n);
 void func_00222880(It_221610* ret, List_221610* l, It_221610* pos);
 void ActorWorld_RequestRemove(int a, Tgt_221610* o);
-void func_003D9F40(void* a, Tgt_221610* o);
+void Script_DropFromGroups(void* a, Tgt_221610* o);
 void Object_DeleteLater(Tgt_221610* o, float f);
 }
 static inline bool IsType_221610(void* m, int* cls) { int t = *Event_GetType(m); return t == *cls; }
@@ -240,7 +240,7 @@ extern "C" bool cGenerator_v01(Gen_221610* self, void* msg)
                 }
             }
             ActorWorld_RequestRemove(D_004FFD44, o);
-            func_003D9F40(D_00555070, o);
+            Script_DropFromGroups(D_00555070, o);
             if (o->magic == (int)0xBEBAAFDE)
                 Object_DeleteLater(o, 1.0f);
         }

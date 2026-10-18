@@ -116,9 +116,9 @@ void Event_Construct(void* m, void* type);
 void Event_Send(void* m, void* target, int immediate);
 void cMessage_dtor(void* m, int flags);
 void Targeting_LockTimer(Input* s, float dt);
-void func_00244960(char* hud, float f);
+void Hud_SetLockMeter(char* hud, float f);
 unsigned char WeaponInv_GetHeldClass(char* inv);
-void func_002497C0(void* aim, void* cam, Obj* actor);
+void Player_AimViewThrownPoint(void* aim, void* cam, Obj* actor);
 Obj* PlayerInput_AimViewLock(Input* s, void* cam, Obj* actor);
 void PlayerInput_AimViewPointAction(Input* s, void* cam, Obj* actor);
 void PlayerInput_LookAtLockAction(Input* s, Obj* o, Obj* actor);
@@ -137,7 +137,7 @@ Obj** List_Front(void* p);
 void Hud_OnTargetChanged(char* hud);
 void Hud_ShowTargetLock(char* hud, int* id, int sub);
 void Hud_ClearTargetLock(char* hud);
-void func_002442E0(char* hud, float f);
+void Hud_SetLockProgress(char* hud, float f);
 }
 
 extern "C" { extern signed char D_004E1D88; extern int D_004E1D90; extern int D_004E1D94; extern int D_004E1D98; extern int D_004E1D9C; }
@@ -203,10 +203,10 @@ extern "C" void Player_RunTargeting(Input* self, void* cam, Obj* actor, bool r1,
         Targeting_LockTimer(self, dt);
         if (HeldId(actor->inv) < 0) {
             HSet(&self->lock, 0);
-            func_00244960(hud, 0.0f);
+            Hud_SetLockMeter(hud, 0.0f);
         } else {
             if (WeaponInv_GetHeldClass(actor->inv) == 1) {
-                func_002497C0(self->aim, cam, actor);
+                Player_AimViewThrownPoint(self->aim, cam, actor);
                 HSet(&self->lock, 0);
             } else {
                 HSet(&self->lock, PlayerInput_AimViewLock(self, cam, actor));
@@ -300,7 +300,7 @@ tail:
             H* h = (autoLock || r1) ? &self->lock : NullH(&tmp);
             ctl->SetTarget(HGet(h), HeldId(actor->inv), self->sub);
         }
-        if (!autoLock && HGet(&self->lock) && self->mode != 8) { float b = ctl->f24; float a = ctl->f20; func_002442E0(hud, a * b); }
+        if (!autoLock && HGet(&self->lock) && self->mode != 8) { float b = ctl->f24; float a = ctl->f20; Hud_SetLockProgress(hud, a * b); }
         if (self->noTarget) {
             if (self->mode == 5) self->raise = D_004A7590;
             else { self->raise -= dt; self->raise = FMax(0.0f, self->raise); }

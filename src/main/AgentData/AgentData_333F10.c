@@ -60,7 +60,7 @@ static inline void merge_flush_func_00333F60(void) {}
 #pragma push /* merge_units */
 typedef struct { int d[0x110]; } __attribute__((aligned(16))) Big;
 typedef struct { char pad[0x9A4]; Big* buf; unsigned char arr[0x100]; } Obj;
-extern void* func_004073C0(Big* b, int* len);
+extern void* AgentPacking_Compact(Big* b, int* len);
 static inline void QMove(void* d, void* s) {
     int n = 0x44; __int128 t;
     asm {
@@ -77,13 +77,13 @@ static inline void QMove(void* d, void* s) {
 }
 static inline int Mn(int a, int b) { int r; if (a < b) { r = a; asm { .set reorder } } else r = b; return r; }
 
-void func_00334000(Obj* o, Big* src)
+void AgentData_StoreAppearance(Obj* o, Big* src)
 {
     int len;
     void* data;
     QMove(o->buf, src);
     len = 0;
-    data = func_004073C0(o->buf, &len);
+    data = AgentPacking_Compact(o->buf, &len);
     len = Mn(len, 0x100);
     memset(o->arr, 0, 0x100);
     memcpy(o->arr, data, len);

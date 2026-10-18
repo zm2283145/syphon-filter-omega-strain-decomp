@@ -51,7 +51,7 @@ extern int D_005838D8;
 extern int D_00583900;
 extern unsigned char D_005838A0[4];
 
-extern unsigned int func_0042B1A0(int synchronized);
+extern unsigned int Net_GetClock(int synchronized);
 extern int func_002EC3C8(void* key);
 extern void func_00439390(int peer, void* key, int event);
 
@@ -69,7 +69,7 @@ static inline int current_peer(void)
 /* Poll pending session changes at 500-tick intervals. */
 void func_0043A8B0(void)
 {
-    if (D_00583910 < func_0042B1A0(1)) {
+    if (D_00583910 < Net_GetClock(1)) {
         if (D_005838B8 || D_005838D8 || D_00583900 ||
             D_005838A0[0] || D_005838A0[1] ||
             D_005838A0[2] || D_005838A0[3]) {
@@ -84,7 +84,7 @@ void func_0043A8B0(void)
                 func_00439390(peer, D_00497578, -2);
             }
         }
-        D_00583910 = func_0042B1A0(1) + 500;
+        D_00583910 = Net_GetClock(1) + 500;
     }
 }
 /* merge_units: generate this block's code under its own pragmas */

@@ -7,14 +7,14 @@ extern "C" void GuiWidget_FocusPrev();
 extern "C" void GuiWidget_FocusNext();
 extern "C" void GuiWidget_FocusLast();
 extern "C" void GuiWidget_FocusFirst();
-extern "C" void func_0041E230();
+extern "C" void GuiWidget_BubbleActivate();
 extern "C" void GuiWidget_Update();
 extern "C" void GuiWidget_Draw();
-extern "C" void func_0041EBF0();
+extern "C" void GuiWidget_BaseSleep();
 extern "C" void GuiWidget_OnEvent();
-extern "C" void func_0041EFA0();
-extern "C" void func_0041F070();
-extern "C" void func_0041F080();
+extern "C" void GuiWidget_BaseWake();
+extern "C" void GuiWidget_ClearFlag4();
+extern "C" void GuiWidget_SetFlag4();
 extern "C" void GuiWidget_Deinit();
 extern "C" void func_0041F210();
 extern "C" void GuiSliderWidget_ctor();
@@ -35,4 +35,4 @@ extern "C" VtableObject* func_0043EE60(VtableObject* self, short deleteFlag)
     }
     return self;
 }
-void * const D_004E10C0[24] = { (void*)0x0, (void*)0x0, (void*)func_0043EE60, (void*)GuiSliderWidget_Init, (void*)GuiWidget_Deinit, (void*)func_0041F080, (void*)func_0041F070, (void*)func_0041EFA0, (void*)func_0041EBF0, (void*)GuiSliderWidget_OnGainFocus, (void*)GuiSliderWidget_OnLoseFocus, (void*)GuiSliderWidget_OnInput, (void*)GuiWidget_Draw, (void*)func_0041E230, (void*)GuiWidget_Update, (void*)GuiWidget_OnEvent, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiSliderWidget_ctor, (void*)GuiSliderWidget_IsType, (void*)0x0 };
+void * const D_004E10C0[24] = { (void*)0x0, (void*)0x0, (void*)func_0043EE60, (void*)GuiSliderWidget_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiWidget_BaseWake, (void*)GuiWidget_BaseSleep, (void*)GuiSliderWidget_OnGainFocus, (void*)GuiSliderWidget_OnLoseFocus, (void*)GuiSliderWidget_OnInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiWidget_OnEvent, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiSliderWidget_ctor, (void*)GuiSliderWidget_IsType, (void*)0x0 };

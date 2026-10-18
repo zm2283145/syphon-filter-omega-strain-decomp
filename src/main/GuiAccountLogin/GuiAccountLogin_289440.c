@@ -32,7 +32,7 @@ int func_00445A40(void* g, char* a, char* b);
 int strcmp(const char* a, const char* b);
 void String_Copy(char* d, const char* s);
 char* AgentData_GetName(Ag_00289440* ag);
-void func_00441C20(S_00289440* self, char* n);
+void SaveAgentWidget_Rename(S_00289440* self, char* n);
 void GuiSaveAgentWidget_HandleEvent(S_00289440* self);
 void String_CtorCStr_13B480(Str_00289440* s, const char* c);
 void func_0013D680(Str_00289440* d, Str_00289440* s);
@@ -75,7 +75,7 @@ extern "C" void func_00289440(S_00289440* self)
         }
         n = String_CStr(self->p8C->s48);
         if (strcmp(n, AgentData_GetName(self->p9C))) {
-            func_00441C20(self, String_CStr(self->p8C->s48));
+            SaveAgentWidget_Rename(self, String_CStr(self->p8C->s48));
         } else {
             if (D_004FFC04->b265)
                 changed = 1;
@@ -305,9 +305,9 @@ char* AgentData_GetName(Ag_00289C80* ag);
 #define AgentData_GetName(a0) (AgentData_GetName((Ag_00289440 *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-void func_00441C20(S_00289C80* self, char* n);
+void SaveAgentWidget_Rename(S_00289C80* self, char* n);
 #endif /* merge_units */
-#define func_00441C20(a0, a1) (func_00441C20((S_00289440 *)(a0), (a1))) /* merge_units */
+#define SaveAgentWidget_Rename(a0, a1) (SaveAgentWidget_Rename((S_00289440 *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
 void GuiSaveAgentWidget_HandleEvent(S_00289C80* self);
@@ -379,7 +379,7 @@ extern "C" int func_00289C80(S_00289C80* self, void* w, int msg, int sub, char* 
                 }
                 n = String_CStr(self->p8C->s48);
                 if (strcmp(n, AgentData_GetName(self->p9C))) {
-                    func_00441C20(self, String_CStr(self->p8C->s48));
+                    SaveAgentWidget_Rename(self, String_CStr(self->p8C->s48));
                 } else {
                     unsigned char* f = &D_004FFC04->b265;
                     if (*f)
@@ -441,7 +441,7 @@ extern "C" int func_00289C80(S_00289C80* self, void* w, int msg, int sub, char* 
 #undef func_00288E90 /* merge_units */
 #undef Gui_GetScreenStack /* merge_units */
 #undef AgentData_GetName /* merge_units */
-#undef func_00441C20 /* merge_units */
+#undef SaveAgentWidget_Rename /* merge_units */
 #undef GuiSaveAgentWidget_HandleEvent /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00289C80 */

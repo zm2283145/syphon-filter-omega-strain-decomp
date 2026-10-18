@@ -39,7 +39,7 @@ char* Loc_LookupText(char*);
 int FrontEnd_OpenPopup(int, int, char*, char*, void*, int);
 void MemCard_Refresh(Net_441A10*);
 void GuiSaveAgentWidget_WriteCard(Obj_441A10*);
-void func_00441C10(void);
+void App_CardWaitPollThunk(void);
 }
 
 static inline int ShowDlg(int mgr, int type, char* t, char* m, void* cb, int x) { return FrontEnd_OpenPopup(mgr, type, Loc_LookupText(t), Loc_LookupText(m), cb, x); }
@@ -49,7 +49,7 @@ extern "C" void GuiSaveAgentWidget_HandleEvent(Obj_441A10* self)
     Net_441A10* net = &D_0055A830;
     if (self->mode != 0 && self->mode != 4) self->f50 = Agent_GetSelected(D_004FFB50, -1)[1];
     self->shown = 0;
-    net->cb = (void*)func_00441C10;
+    net->cb = (void*)App_CardWaitPollThunk;
     MemCard_Refresh(net);
     if (!net->impl->f59D) {
         if (self->mode == 2 && !D_004FFBB8) {
@@ -86,10 +86,10 @@ extern "C" void GuiSaveAgentWidget_HandleEvent(Obj_441A10* self)
  */
 
 
-extern void func_002CC260(int, int);
+extern void App_CardWaitPoll(int, int);
 
-void func_00441C10(void) {
-    func_002CC260(0, 0);
+void App_CardWaitPollThunk(void) {
+    App_CardWaitPoll(0, 0);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00441C10 */

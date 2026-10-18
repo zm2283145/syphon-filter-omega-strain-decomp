@@ -39,7 +39,7 @@ struct Obj {
     char saveA[0xBC10 - 0x2C10];
     char saveB[0x10];
 };
-extern "C" void func_00403310(Obj* o)
+extern "C" void AgentPartCache_Unlock(Obj* o)
 {
     void* s = o->bufA;
     if (s) {
@@ -192,7 +192,7 @@ extern void FileMan_Release(FileMan* f, int a);
 #endif /* merge_units */
 #define FileMan_Release(a0, a1) ((void)FileMan_Release((void *)(a0), (a1))) /* merge_units */
 
-void func_004037F0(Obj37F0* s, char* name);
+void AgentPartCache_LoadRules(Obj37F0* s, char* name);
 }
 static inline long long iszero(__int128 a) {
     __int128 t;
@@ -203,7 +203,7 @@ static inline long long iszero(__int128 a) {
     }
     return r;
 }
-void func_004037F0(Obj37F0* s, char* name)
+void AgentPartCache_LoadRules(Obj37F0* s, char* name)
 {
     FileMan fm;
     int size;
@@ -258,15 +258,15 @@ typedef struct {
 } S_403940;
 extern int D_00539248;
 extern __int128 D_005716E0;
-extern void func_003813A0(int a, int b, int c);
+extern void Tex_Release(int a, int b, int c);
 void func_00403940(S_403940* s, unsigned int i)
 {
     if (s->t[i] != 0) {
         s->t[i]--;
         if (s->t[i] <= 0 && i >= s->count) {
             if (s->p[i].a != s->p[i].b)
-                func_003813A0(D_00539248, s->p[i].b, 0);
-            func_003813A0(D_00539248, s->p[i].a, 0);
+                Tex_Release(D_00539248, s->p[i].b, 0);
+            Tex_Release(D_00539248, s->p[i].a, 0);
             s->p[i].a = 0;
             s->p[i].b = 0;
             s->k[i] = D_005716E0;
@@ -389,9 +389,9 @@ typedef struct {
 typedef struct { char pad[0x148]; int* dir; } H2Hog;
 typedef struct { __int128 x[10]; } H2Reg;
 #if 0 /* merge_units */
-extern void func_0036E5D0(H2Reg* r);
+extern void Resource_Construct(H2Reg* r);
 #endif /* merge_units */
-#define func_0036E5D0(a0) ((void)func_0036E5D0((void *)(a0))) /* merge_units */
+#define Resource_Construct(a0) ((void)Resource_Construct((void *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void FileMan_Release(H2Reg* r, int del);
@@ -401,7 +401,7 @@ extern void FileMan_Release(H2Reg* r, int del);
 extern char* Archive_GetMemberName(H2Hog* h, int i);
 extern int Hog_Register(H2Reg* r, char* name, H2Hog* h, int opt);
 extern void Appearance_RegistryKey(char* dst, int n, char* src);
-extern short func_00380D40(int lib, __int128 name, H2Reg* r);
+extern short Tex_FindByName(int lib, __int128 name, H2Reg* r);
 static inline int h2eq(__int128 a, __int128 b) {
     long long r;
     asm {
@@ -423,7 +423,7 @@ void TexCache_RegisterNpcTex(H2State* st, H2Hog* hog) {
     H2Reg reg;
     int k;
     int total;
-    func_0036E5D0(&reg);
+    Resource_Construct(&reg);
     Hog_Register(&reg, Archive_GetMemberName(hog, 0), hog, 0);
     total = hog->dir[1];
     for (k = 0; k < total; k++) {
@@ -443,7 +443,7 @@ void TexCache_RegisterNpcTex(H2State* st, H2Hog* hog) {
             st->count++;
         }
         if (lod == 0) {
-            st->tex[i].a = func_00380D40(D_00539248, st->names[i].q, &reg);
+            st->tex[i].a = Tex_FindByName(D_00539248, st->names[i].q, &reg);
             if (st->tex[i].a == -1)
                 st->tex[i].a = TexCache_LoadErrorTexture(D_00539248);
             if (st->tex[i].b == -1)
@@ -457,7 +457,7 @@ void TexCache_RegisterNpcTex(H2State* st, H2Hog* hog) {
             sb = (H2State*)((char*)st + i * 4);
             nm->f.lod = '1';
             pb = &sb->tex[0].b;
-            *pb = func_00380D40(D_00539248, st->names[i].q, &reg);
+            *pb = Tex_FindByName(D_00539248, st->names[i].q, &reg);
             if (*pb == -1)
                 *pb = TexCache_LoadErrorTexture(D_00539248);
             pa = &sb->tex[0].a;
@@ -469,7 +469,7 @@ void TexCache_RegisterNpcTex(H2State* st, H2Hog* hog) {
     st->loaded = st->count;
     FileMan_Release(&reg, -1);
 }
-#undef func_0036E5D0 /* merge_units */
+#undef Resource_Construct /* merge_units */
 #undef FileMan_Release /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00403D20(void) {}

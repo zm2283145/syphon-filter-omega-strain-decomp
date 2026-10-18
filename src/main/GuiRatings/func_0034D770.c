@@ -4,7 +4,7 @@ typedef struct Self { char pad[0x6C]; void *items[24]; } Self;
 extern Ui *Gui_GetScreenStack(void);
 extern void GuiScreen_SetFocus(Ui *ui, void *w);
 
-void func_0034D770(Self *self, int dir)
+void GuiRatings_MoveGrid(Self *self, int dir)
 {
     Item *f;
     int idx;

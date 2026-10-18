@@ -2,7 +2,7 @@
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-void func_00369EE0(char * arg0, int arg1) {
+void Pad_ClearMaskedButtons(char * arg0, int arg1) {
     int var_a2;
     char * var_a0;
     int temp_a1;

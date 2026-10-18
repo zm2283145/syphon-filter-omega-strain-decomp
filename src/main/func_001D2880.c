@@ -8,7 +8,7 @@ struct M3 { V r[3]; };
 struct Slot { char pad[0x80]; M3 saved; char pad2[0x20]; M3 out; };
 extern "C" Slot D_004F32B0[];
 #pragma opt_propagation off
-extern "C" void func_001D2880(void* self, int idx)
+extern "C" void UpperBody_IkReset(void* self, int idx)
 {
     Slot* s = &D_004F32B0[idx]; const M3* o = &s->saved; M3* d = &s->out; *d = *o;
 }

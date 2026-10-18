@@ -13,14 +13,14 @@ extern char D_004B8778[];
 int Agent_GetSelected(void*, int);
 int Loc_LookupText(char*);
 void String_Copy(char*, char*);
-int func_00328140(Menu6DE0*, int, char*, int, char*);
-void func_00328310(Menu6DE0*, int);
+int GuiSlideShow_AddSlide(Menu6DE0*, int, char*, int, char*);
+void GuiSlideShow_AddCategory(Menu6DE0*, int);
 void func_0032A280(void*);
-int func_003329B0(int, int, int, int);
+int AgentData_HasZeus(int, int, int, int);
 int Hog_FindFileNoCase(int, char*, int);
 int sprintf(char*, const char*, ...);
 static inline Grp6DE0* G(Menu6DE0* m, int i) { return &m->groups[i]; }
-void func_00326DE0(Menu6DE0* self, int cat, int selIdx, int selVal, int flag)
+void GuiSlideShow_Load(Menu6DE0* self, int cat, int selIdx, int selVal, int flag)
 {
     int i;
     int j;
@@ -38,19 +38,19 @@ void func_00326DE0(Menu6DE0* self, int cat, int selIdx, int selVal, int flag)
     agent = Agent_GetSelected(D_004FFB50, -1);
     for (i = 0; i < 5; i++) {
         sprintf(buf, D_004B8748, i);
-        func_00328310(self, Loc_LookupText(buf));
+        GuiSlideShow_AddCategory(self, Loc_LookupText(buf));
         for (j = 1; ; j++) {
             sprintf(buf, D_004B8758, cat, i + 1, j);
             if (Hog_FindFileNoCase(db, buf, 1) == -1) break;
             ok = 1;
-            if (!func_003329B0(agent, cat, i, j - 1)) {
+            if (!AgentData_HasZeus(agent, cat, i, j - 1)) {
                 if (flag) continue;
                 String_Copy(buf, D_004B8768);
                 ok = 0;
             }
             if (ok) {
                 sprintf(buf2, D_004B8778, cat, i + 1, j);
-                r = func_00328140(self, i, buf, db, buf2);
+                r = GuiSlideShow_AddSlide(self, i, buf, db, buf2);
                 if (r != -1) {
                     Item6DE0* it = &G(self, i)->items[r];
                     it->used = 1;
@@ -59,7 +59,7 @@ void func_00326DE0(Menu6DE0* self, int cat, int selIdx, int selVal, int flag)
                     it->sub = j - 1;
                 }
             } else {
-                func_00328140(self, i, buf, db, 0);
+                GuiSlideShow_AddSlide(self, i, buf, db, 0);
             }
         }
     }

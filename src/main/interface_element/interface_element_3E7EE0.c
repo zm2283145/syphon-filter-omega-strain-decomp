@@ -30,7 +30,7 @@ static inline void merge_flush_func_003E7EE0(void) {}
 typedef struct { __int128 a, b, c, d; } M_8040;
 typedef struct { char pad[0x30]; M_8040 m; } S_8040;
 #pragma peephole off
-void func_003E8040(S_8040* s, M_8040* m)
+void IeElement_SetMatrix(S_8040* s, M_8040* m)
 {
     M_8040* d = &s->m;
     __int128 t0, t1;

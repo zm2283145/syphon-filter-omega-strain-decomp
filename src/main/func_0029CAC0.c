@@ -18,12 +18,12 @@ extern "C" void GuiWidget_FocusPrev();
 extern "C" void GuiWidget_FocusNext();
 extern "C" void GuiWidget_FocusLast();
 extern "C" void GuiWidget_FocusFirst();
-extern "C" void func_0041E230();
-extern "C" void func_0041E2B0();
-extern "C" void func_0041E330();
+extern "C" void GuiWidget_BubbleActivate();
+extern "C" void GuiWidget_BubbleType1();
+extern "C" void GuiWidget_BubbleType0();
 extern "C" void GuiWidget_Draw();
-extern "C" void func_0041F070();
-extern "C" void func_0041F080();
+extern "C" void GuiWidget_ClearFlag4();
+extern "C" void GuiWidget_SetFlag4();
 extern "C" void func_0041F210();
 extern void * const D_004DD620[];
 void* func_0044F970(void* self, short deleteFlag);
@@ -44,4 +44,4 @@ extern "C" O0029CAC0* func_0029CAC0(O0029CAC0* self, short deleteFlag)
     }
     return self;
 }
-void * const D_004DD620[28] = { (void*)0x0, (void*)0x0, (void*)func_0029CAC0, (void*)func_0029EF90, (void*)func_0029EF30, (void*)func_0041F080, (void*)func_0041F070, (void*)func_0029ED40, (void*)func_0029ECD0, (void*)func_0041E330, (void*)func_0041E2B0, (void*)func_0029E8C0, (void*)GuiWidget_Draw, (void*)func_0041E230, (void*)func_0029E1A0, (void*)func_0029E440, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiOnlineConnect_GetClassName, (void*)func_0029CB60, (void*)func_00293890, (void*)func_0033CCA0, (void*)func_0029CB90, (void*)func_0029CBA0, (void*)0x0 };
+void * const D_004DD620[28] = { (void*)0x0, (void*)0x0, (void*)func_0029CAC0, (void*)func_0029EF90, (void*)func_0029EF30, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)func_0029ED40, (void*)func_0029ECD0, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)func_0029E8C0, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)func_0029E1A0, (void*)func_0029E440, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiOnlineConnect_GetClassName, (void*)func_0029CB60, (void*)func_00293890, (void*)func_0033CCA0, (void*)func_0029CB90, (void*)func_0029CBA0, (void*)0x0 };

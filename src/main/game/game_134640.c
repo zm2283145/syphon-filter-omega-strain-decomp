@@ -86,7 +86,7 @@ void func_00130950(World_134640* w);
 void func_001309A0(World_134640* w);
 void func_00130B10(World_134640* w);
 void func_00132A40(World_134640* w);
-void func_00134110(World_134640* w, int mode);
+void LevelEnd_RunDebrief(World_134640* w, int mode);
 void func_00135020(void);
 void func_00136BD0(World_134640* w);
 void func_00136CD0(World_134640* w);
@@ -107,12 +107,12 @@ void func_00238F20(void);
 void func_002458E0(void* p, int f);
 void func_002569C0(void);
 void func_00257150(void);
-void func_0025FBB0(void* p);
+void VisionFx_Prepare(void* p);
 void VisionMgr_SetPendingMode(void* p, int a, int b);
 void func_002683F0(void);
 void PadRumble_Stop(void);
-void func_0026BE70(int a);
-void func_00272920(void* p, int f);
+void Pad_EnableVibration(int a);
+void TremorList_Free(void* p, int f);
 void func_00275550(void);
 void func_00279D80(void* p, int f);
 void func_003A3670(void* p);
@@ -122,7 +122,7 @@ void func_003D0FB0(void* p);
 void* TextManager_Get(void);
 void func_003D5750(void* p);
 void func_003E56F0(void);
-void func_003EB750(void* p);
+void FStream_CancelRequests(void* p);
 void* Fstream_GetLoader(void);
 void EffectService_ReleaseAll(void);
 void func_003FDBB0(void);
@@ -138,7 +138,7 @@ void func_0042B1F0(void);
 void func_0042B2D0(void);
 void func_0042E6D0(void);
 void func_0044E340(void* p);
-void func_004702A0(void);
+void ItemTable_GetModel(void);
 }
 
 static inline void Clear_134640(List_134640* l)
@@ -193,17 +193,17 @@ extern "C" void World_Teardown(World_134640* w)
     }
     w->fEC = 0;
     PadRumble_Stop();
-    func_0026BE70(0);
+    Pad_EnableVibration(0);
     {
         void* p = w->f8C;
         AllocGuard g;
-        func_00272920(p, -1);
+        TremorList_Free(p, -1);
         Mem_Free(0, p, D_0049A890, 0x2D3);
     }
     w->f8C = 0;
     VisionMgr_SetPendingMode(w->fE0, 0, 1);
     ScreenFx_Start(w->fE0, 0, 0.0f, 0.0f, 0.0f, 0.0f);
-    func_0025FBB0(w->fE0);
+    VisionFx_Prepare(w->fE0);
     WaterFx_Clear(w->fE4);
     D_0053B350 = 0;
     D_0053B358 = 0;
@@ -237,7 +237,7 @@ extern "C" void World_Teardown(World_134640* w)
             func_0042B1F0();
         }
     }
-    if (!w->b1C5) func_00134110(w, mode);
+    if (!w->b1C5) LevelEnd_RunDebrief(w, mode);
     NetSession_Cleanup();
     had = false;
     if (DME_GetLobby()) {
@@ -257,7 +257,7 @@ extern "C" void World_Teardown(World_134640* w)
     func_001C3B00(w->f88);
     func_00132A40(w);
     WeaponDb_LoadResources(w->f1E0);
-    func_004702A0();
+    ItemTable_GetModel();
     if (svc) SoundMgr_UnloadLevel(svc);
     func_0013E070(w->fD0);
     EventQueue_ClearAll();
@@ -304,7 +304,7 @@ extern "C" void World_Teardown(World_134640* w)
     func_003D5750(D_00543790);
     func_00404FD0(D_0055DDA0, -1);
     func_00407BE0();
-    func_003EB750(Fstream_GetLoader());
+    FStream_CancelRequests(Fstream_GetLoader());
     ObjMan_DeleteAll(Service_Lookup(w, D_004F7578));
     if (had) DME_StopThread();
     D_005721C8 = 0;

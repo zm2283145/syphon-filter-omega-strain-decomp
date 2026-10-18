@@ -5,16 +5,16 @@ typedef struct LIt { LNode* node; } LIt;
 typedef struct LList { int count; LNode* last; LNode* first; } LList;
 typedef struct Obj { char pad[0x24]; LList list; } Obj;
 
-extern int func_00272AC0(Obj* o);
-extern void func_00272AD0(Obj* o, int v);
+extern int HudMarkers_GetHighlight(Obj* o);
+extern void HudMarkers_SetHighlight(Obj* o, int v);
 extern void List_Begin_16E880(LIt* out, LList* l);
 extern LIt* func_0026C390(LIt* out, LNode* n);
 extern void func_0026C320(LIt* out, LList* l);
 extern LIt* func_0026C350(LIt* dst, LIt* src);
 extern void func_0026C360(LIt* out, LList* l);
-extern void func_0026C570(Obj** self);
+extern void HudMap_Commit(Obj** self);
 
-int func_0026C180(Obj** self) {
+int HudMap_PrevMarker(Obj** self) {
     LIt bc;
     LIt ec;
     LIt r;
@@ -26,23 +26,23 @@ int func_0026C180(Obj** self) {
     LList* l = &(*self)->list;
     LNode* n;
     if ((*self)->list.count == 0) return 0;
-    if (!func_00272AC0(*self)) {
+    if (!HudMarkers_GetHighlight(*self)) {
         a.node = l->first;
         b = a;
-        func_00272AD0(*self, b.node->data);
+        HudMarkers_SetHighlight(*self, b.node->data);
     } else {
         if (l->count > 1) {
         List_Begin_16E880(&t, l);
         func_0026C390(&r, t.node);
         n = r.node;
         while (func_0026C320(&es, l), func_0026C350(&ec, &es), n != ec.node) {
-            if (n->data == func_00272AC0(*self)) {
+            if (n->data == HudMarkers_GetHighlight(*self)) {
                 func_0026C360(&bs, l);
                 func_0026C350(&bc, &bs);
                 if (n == bc.node) {
-                    func_00272AD0(*self, l->last->data);
+                    HudMarkers_SetHighlight(*self, l->last->data);
                 } else {
-                    func_00272AD0(*self, n->prev->data);
+                    HudMarkers_SetHighlight(*self, n->prev->data);
                 }
                 break;
             }
@@ -52,6 +52,6 @@ int func_0026C180(Obj** self) {
             return 0;
         }
     }
-    func_0026C570(self);
+    HudMap_Commit(self);
     return 1;
 }

@@ -9,7 +9,7 @@ extern char D_004BC170[];
 extern char D_00535D20[];
 extern void* D_00539248;
 void LightMgr_Unregister(void* mgr, void* light, void* owner);
-void func_003813A0(void* mgr, int id, int f);
+void Tex_Release(void* mgr, int id, int f);
 void func_00376930(M377780* m);
 void Mem_Free(int pool, void* p, char* file, int line);
 }
@@ -33,7 +33,7 @@ extern "C" void Model_Unload(M377780* m)
     {
         int j;
         for (j = 0; j < m->h->nIds; j++)
-            func_003813A0(D_00539248, m->ids[j], 1);
+            Tex_Release(D_00539248, m->ids[j], 1);
     }
     if (m->ids) {
         Rel377780(m->ids, 0x122);

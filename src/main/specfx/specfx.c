@@ -24,7 +24,7 @@ extern "C" void func_003EBF10(void* node)
 #pragma push /* merge_units */
 #pragma cplusplus on
 extern "C" { extern char D_004BE020[]; void* Mem_Alloc(int pool, int size, char* file, int line); }
-extern "C" void* func_003EBFB0(int size)
+extern "C" void* EffectService_Create(int size)
 {
     AllocGuard guard;
     return Mem_Alloc(0, size, D_004BE020, 0xE3);

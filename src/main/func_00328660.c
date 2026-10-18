@@ -33,7 +33,7 @@ static inline void Req_Init_328660(SoundRequest* p, int type, __int128 name, Voi
     p->x184 = -1;
     p->x180 = x180;
 }
-Obj_328660* func_00328660(Obj_328660* o)
+Obj_328660* GuiSlideShow_ctor(Obj_328660* o)
 {
     SoundRequest* p;
     char* pa;
@@ -51,8 +51,8 @@ Obj_328660* func_00328660(Obj_328660* o)
     p = &o->req;
     p->voiceId = -2;
     p->voice = 0;
-    func_0036E5D0(&p->a);
-    func_0036E5D0(&p->b);
+    Resource_Construct(&p->a);
+    Resource_Construct(&p->b);
     Req_Init_328660(p, -1, -1, 0, 0);
     p->x186 = 0;
     func_0032A280(pa);

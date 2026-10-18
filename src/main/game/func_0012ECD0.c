@@ -10,7 +10,7 @@ int func_0012ECD0(void) {
     return 1;
 }
 
-void* func_0012ECE0(char* self) {
+void* GObj_GetID(char* self) {
     return self + 12;
 }
 

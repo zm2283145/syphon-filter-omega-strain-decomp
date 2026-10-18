@@ -12,7 +12,7 @@ static inline int d690find(PD690* p, void* key) {
     return -1;
 }
 /* True when some entry's item matches key. */
-int func_0040D690(OD690* o, void* key) {
+int MemCardWrap_Exists(OD690* o, void* key) {
     return d690find(o->p, key) >= 0;
 }
 

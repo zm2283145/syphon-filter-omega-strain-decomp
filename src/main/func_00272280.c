@@ -2,7 +2,7 @@
 
 extern void IeElement_Release(int);
 
-void func_00272280(int a0) {
+void IeScreen_RemoveElementIfSet(int a0) {
     int cond;
 
     cond = a0 == 0;

@@ -24,16 +24,16 @@ struct P356730 {
     short h184;
     unsigned char b186;
 };
-extern "C" void func_0036E5D0(void* m);
+extern "C" void Resource_Construct(void* m);
 /* constructor: reset two members, ids, mask, handle (copied through a stack temp) */
 #pragma push
 #pragma opt_propagation off
-extern "C" P356730* func_00356730(P356730* p)
+extern "C" P356730* GuiPersonnelMenu_ctor(P356730* p)
 {
     *(int*)((char*)p + 0x24) = -2;
     *(int*)((char*)p + 0x20) = 0;
-    func_0036E5D0(p->memberA);
-    func_0036E5D0(p->memberB);
+    Resource_Construct(p->memberA);
+    Resource_Construct(p->memberB);
     p->id = -1;
     p->mask = -1;
     p->w20 = 0;

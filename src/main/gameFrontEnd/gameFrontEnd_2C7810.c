@@ -17,7 +17,7 @@ extern char D_004DE148[];
 extern char D_004DE168[];
 extern unsigned char D_005721D0;
 extern unsigned char D_005723C8;
-extern void func_002C6B70(void* msg, int target);
+extern void Coop_CreatePartnerActor(void* msg, int target);
 extern void func_003FA8C0(int target, int id, void* msg, int flag);
 }
 
@@ -51,7 +51,7 @@ extern "C" int func_002C7810(void* self, int unused, int target, Msg7810* src)
     }
     Msg7810* s = src;
     if (D_005721D0) {
-        func_002C6B70(s, target);
+        Coop_CreatePartnerActor(s, target);
     } else {
         Msg7810* p = new Msg7810(*s);
         func_003FA8C0(target, s->id, p, 1);

@@ -113,7 +113,7 @@ static inline float Intensity(Light* l, Ctx* c, V* d)
     k = Math_MinF(k, 1.0f);
     return k;
 }
-extern "C" void func_00372120(Ctx* c, unsigned int mask, unsigned int flags)
+extern "C" void LightMgr_BuildLightSlots(Ctx* c, unsigned int mask, unsigned int flags)
 {
     if (flags & 2) c->n48 = 0;
     if (flags & 4) c->n2130 = 0;

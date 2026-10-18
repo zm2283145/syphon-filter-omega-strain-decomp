@@ -339,7 +339,7 @@ typedef struct GuiEquipmentModifyObj {
     short weaponIds[1];             /* 0x10C */
 } GuiEquipmentModifyObj;
 
-/* Weapon definition fields read by func_002C21C0 (see weapon_types.h WeaponDef). */
+/* Weapon definition fields read by GuiEquipmentModify_DrawWeaponBox2 (see weapon_types.h WeaponDef). */
 typedef struct WeaponDefL2 {
     char pad000[0xF0];
     unsigned char kind;             /* 0x0F0: 7 = uses the linked record at +0x11C */
@@ -491,7 +491,7 @@ typedef struct FloatSettings {
     float unk2C;                    /* 0x2C */
 } FloatSettings;
 
-/* Object with an embedded record at +0x48 and an index at +0x58 (func_00328630). */
+/* Object with an embedded record at +0x48 and an index at +0x58 (GuiSlideShow_Clear). */
 typedef struct Obj328630 {
     char pad00[0x48];
     char unk48[0x10];               /* 0x48: reset by func_0032A280 */

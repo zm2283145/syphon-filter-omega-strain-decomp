@@ -154,7 +154,7 @@ int* GuiBatch_AddVertexColor(void* out, V4* in);
 void func_003701B0(char* r);
 void GuiTextWidget_Draw(Self* self);
 Scr* Gui_GetScreenStack(void);
-int func_003CF3A0(int a, float* x, float* y, int d);
+int IeText_GetCursorPos(int a, float* x, float* y, int d);
 int Font_GetLineHeight(int a);
 extern V4 D_005720E0;
 }
@@ -183,7 +183,7 @@ extern "C" void GuiTextEditWidget_Draw(Self* self)
     if (self->f88 == 0 && Gui_GetScreenStack()->top != self) return;
     float x = 0;
     float y = 0;
-    if (!func_003CF3A0(self->f78, &x, &y, self->f8C)) return;
+    if (!IeText_GetCursorPos(self->f78, &x, &y, self->f8C)) return;
     float h = Font_GetLineHeight(self->f54);
     int save = D_005392D0;
     { int i = D_00538C64; GQR(MtxAt(i + 1), MtxAt(i)); }

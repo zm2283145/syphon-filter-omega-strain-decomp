@@ -22,7 +22,7 @@ extern void func_001161A0(void);
 extern void func_001161F8(void);
 
 /* Initializes a double-buffered DMA packet chain when all four parameters are set. */
-void func_004117A0(DblBuf* db, int a, int b, int c, int d) {
+void MovieSubtitles_SetBuffers(DblBuf* db, int a, int b, int c, int d) {
     if (a && b && c && d) {
         db->a = a;
         db->b = b;

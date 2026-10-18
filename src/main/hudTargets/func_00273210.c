@@ -50,7 +50,7 @@ static inline bool ne(It* a, It* b) { return a->p != b->p; }
 static inline void adv(It* a) { a->p = F_(a->p, 4, char*); }
 static inline MRec* deref(It* a) { return F_(a->p, 8, MRec*); }
 
-extern "C" int func_00273210(char* mgr, int* id, char* obj, char* text) {
+extern "C" int HudMarkers_SetMapObject(char* mgr, int* id, char* obj, char* text) {
     It it;
     MRec* rec;
     It b;

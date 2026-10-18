@@ -4,7 +4,7 @@ typedef struct { char pad[0xB4]; Cfg_F630* cfg; } O_F630;
 void func_003CBA90(char* buf);
 int sprintf(char*, const char*, ...);
 void printf(char*, int);
-void func_0036B3B0(int, int, int);
+void Heap_AllocSlot(int, int, int);
 extern float D_004ACC90[];
 /* size a memory pool from the configured level (MB table), log it and create it */
 void func_0012F630(O_F630* o)
@@ -18,5 +18,5 @@ void func_0012F630(O_F630* o)
     if (!size) size = 0x800000;
     sprintf(buf, "streamBufSize: 0x%x", size);
     printf("streamBufSize: 0x%x\n\n", size);
-    func_0036B3B0(1, size, 16);
+    Heap_AllocSlot(1, size, 16);
 }

@@ -7,6 +7,6 @@
 #include "types.h"
 
 
-int func_00299690(void) {
+int GuiGameOptions_GetClassName(void) {
     return (int)"GuiGameOptions";
 }

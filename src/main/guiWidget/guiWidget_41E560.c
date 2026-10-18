@@ -148,7 +148,7 @@ Quad* func_0041EB70(Quad* d, Quad* s) {
 struct W41EBA0;
 struct H41EBA0 { VPAD8(a) VPAD4(b) VPAD1(c) virtual void OnEvent(W41EBA0* w, int kind, int x, int y); };
 struct W41EBA0 { char pad[0x34]; float x; float y; char p3C[8]; H41EBA0* handler; };
-extern "C" void func_0041EBA0(W41EBA0* w, float x, float y)
+extern "C" void GuiWidget_SetPos(W41EBA0* w, float x, float y)
 {
     w->x = x;
     w->y = y;
@@ -180,7 +180,7 @@ static inline unsigned char notify(TraversalWidget* receiver, TraversalWidget* s
 }
 
 /* Propagate the requested state to children, then check for completion. */
-extern "C" void func_0041EBF0(TraversalWidget* self)
+extern "C" void GuiWidget_BaseSleep(TraversalWidget* self)
 {
     ChildIterator end;
     ChildIterator begin;
@@ -257,7 +257,7 @@ void GuiManager_ReleaseRoot(void* manager, TraversalWidget* widget);
 }
 
 /* Clear pending and requested state throughout the live child hierarchy. */
-extern "C" void func_0041EE50(TraversalWidget* self)
+extern "C" void GuiWidget_ClearAwake(TraversalWidget* self)
 {
     ChildIterator end;
     ChildIterator begin;
@@ -271,7 +271,7 @@ extern "C" void func_0041EE50(TraversalWidget* self)
     func_0028C0A0(&rawEnd, &self->children);
     func_0028C090(&end, &rawEnd);
     while (node != end.node) {
-        func_0041EE50(node->widget);
+        GuiWidget_ClearAwake(node->widget);
         node = node->next;
         func_0028C0A0(&rawEnd, &self->children);
         func_0028C090(&end, &rawEnd);
@@ -296,7 +296,7 @@ extern "C" int GuiWidget_OnEvent(TraversalWidget* self, TraversalWidget* sender,
 }
 
 /* Request state on every child only when the parent was not already requested. */
-extern "C" void func_0041EFA0(TraversalWidget* self)
+extern "C" void GuiWidget_BaseWake(TraversalWidget* self)
 {
     ChildIterator end;
     ChildIterator begin;
@@ -325,7 +325,7 @@ extern "C" void func_0041EFA0(TraversalWidget* self)
 #include "loose04_types.h"
 
 /* Clears GuiWidget flag bit 2. */
-void func_0041F070(GuiWidget* self) {
+void GuiWidget_ClearFlag4(GuiWidget* self) {
     unsigned int flags;
 
     flags = self->flags; /* zero-extended load keeps the match */
@@ -333,7 +333,7 @@ void func_0041F070(GuiWidget* self) {
 }
 
 /* Sets GuiWidget flag bit 2. */
-void func_0041F080(GuiWidget* self) {
+void GuiWidget_SetFlag4(GuiWidget* self) {
     unsigned int flags;
 
     flags = self->flags;

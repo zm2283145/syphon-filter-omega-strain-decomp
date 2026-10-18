@@ -40,7 +40,7 @@ void func_00415160(LIt_414F00* out, LIt_414F00* in);
 LIt_414F00* func_0015AF40(LIt_414F00* out, LIt_414F00* in);
 void List_InsertBefore(LIt_414F00* out, List_414F00* list, LIt_414F00* pos, W_414F00** v);
 int GuiWidget_SendEvent(W_414F00* a, W_414F00* b, int msg, int c, int d);
-void func_0041EE50(W_414F00* w);
+void GuiWidget_ClearAwake(W_414F00* w);
 void Pad_ResetHeldMask(void* p);
 extern char D_0055A300[];
 }
@@ -76,7 +76,7 @@ extern "C" void GuiCanvas_PushScreen(W_414F00* o, W_414F00* w, int pri)
     pos.node = it.node;
     func_00415160(&pos2, &pos);
     List_InsertBefore(&res, &o->children, func_0015AF40(&pos3, &pos2), &w);
-    func_0041EE50(w);
+    GuiWidget_ClearAwake(w);
     w->comp->Show();
     GuiWidget_SendEvent(o, w, 0x18, 0, 0);
     if (o->children.size > 0 && o->children.first->value == w) {

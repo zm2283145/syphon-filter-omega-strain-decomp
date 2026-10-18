@@ -42,8 +42,8 @@ void GuiTextListWidget_Clear(void* list);
 void GuiTextListWidget_AddItem(void* list, int a, int b, int c);
 int GuiTextListWidget_FindById(void* list, int sel);
 void GuiArrayWidget_Select(void* list, int a, int b);
-void func_0041EBA0(L367D60* w, float x, float y);
-void func_004235B0(L367D60* w, int a, int b);
+void GuiWidget_SetPos(L367D60* w, float x, float y);
+void GuiArrayWidget_SetTable(L367D60* w, int a, int b);
 int sprintf(char* buf, const char* fmt, ...);
 }
 
@@ -112,12 +112,12 @@ extern "C" void GuiObjectives_FillList(S367D60* self)
                     total = self->minH;
                     y = self->top;
                 }
-                func_0041EBA0(l, l->x, (float)y);
+                GuiWidget_SetPos(l, l->x, (float)y);
                 SetSize(self->list, self->list->w, (float)total);
                 if (self->w80 != 0)
-                    func_0041EBA0(self->w80, self->w80->x, (float)(y + self->a84));
+                    GuiWidget_SetPos(self->w80, self->w80->x, (float)(y + self->a84));
             }
-            func_004235B0(self->list, 1, self->list->count);
+            GuiArrayWidget_SetTable(self->list, 1, self->list->count);
         }
     }
 }

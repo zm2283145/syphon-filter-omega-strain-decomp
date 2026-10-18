@@ -36,9 +36,9 @@ extern int D_004926C0;
 extern char D_004B8CF0[];
 extern void PtrVector_Resize(void *v, int n, int *fill);
 extern void GuiTextWidget_SetText(void *w, char *s, int a, int b);
-extern void func_0032B5F0(KbSelf *self, unsigned int flags);
+extern void GuiKeyboard_Relabel(KbSelf *self, unsigned int flags);
 
-void func_0032D0D0(KbSelf *self, unsigned char mode)
+void GuiKeyboard_ApplyLayout(KbSelf *self, unsigned char mode)
 {
     int i;
     int j;
@@ -90,7 +90,7 @@ void func_0032D0D0(KbSelf *self, unsigned char mode)
                 }
             }
         }
-        func_0032B5F0(self, 0);
+        GuiKeyboard_Relabel(self, 0);
     }
 }
 

@@ -70,7 +70,7 @@ void* Mtx44_SetRotation(M4u* m, float a, float b, float c, float d, float e, flo
                         float g, float h, float i);
 void func_00406EC0(Blk*, char*);
 void* Mem_Alloc(int pool, int size, char* file, int line);
-Actor* func_001B8130(void* p, M4u* m, int a, int b, int health, Cfg* cfg, int c, int team,
+Actor* Actor_Construct2(void* p, M4u* m, int a, int b, int health, Cfg* cfg, int c, int team,
                      NetId* id, int d, int e, Blk* blk);
 void WeaponInv_Add(void* w, int id, int a, int b, int c, int d);
 void WeaponInv_EquipItem(void* w, int id);
@@ -78,12 +78,12 @@ void ObjRegistry_AppendRecursive(RNode* reg, Actor* a);
 void Actor_SetHealth(Actor* a, int h, int f);
 Comp* func_002D85D0(void* p, int a, Actor* o);
 void Actor_InitComponents(Actor* a, int n, int b, Comp* c);
-unsigned char func_001B8740(Game*);
+unsigned char Actor_IsInvulnerable(Game*);
 void Actor_SetInvulnerable(Actor* a, int f);
 int NetMap_BindReceiver(int id, int b, Actor* a);
 void func_00185940(Actor* a, int id);
 void func_00185970(Actor* a, int r);
-void func_002C9270(char*, Actor*, int, int);
+void Hud_AppendCalloutName(char*, Actor*, int, int);
 void Hud_ShowCallout(int, char*, char*, int, int, int, float, float);
 }
 
@@ -134,7 +134,7 @@ static inline void SetEulerPos(M4u* m, const Fv& p, const Ang& r)
                       -cx * sy, sx, cx * cy);
 
 }
-extern "C" void func_002C6B70(Msg* msg, int arg1)
+extern "C" void Coop_CreatePartnerActor(Msg* msg, int arg1)
 {
     NetId id;
     Cfg cfg;
@@ -167,7 +167,7 @@ extern "C" void func_002C6B70(Msg* msg, int arg1)
         void* p = NewMem(0x35A0, 0x1AF);
         if (p) {
             M4u mc; { M4u* dd; __int128 a; __int128 b; const M4u* ss = &m; dd = &mc; __asm__ volatile("lq %0, 0x0(%3); lq %1, 0x10(%3); sq %0, 0x0(%2); lq %0, 0x20(%3); sq %1, 0x10(%2); lq %1, 0x30(%3); sq %0, 0x20(%2); sq %1, 0x30(%2)" : "=&r"(a), "=&r"(b), "+r"(dd) : "r"(ss) : "memory"); }
-            p = func_001B8130(p, &mc, -1, 0, msg->health, &cfg, 3, team, &id, 0, -1, &blk);
+            p = Actor_Construct2(p, &mc, -1, 0, msg->health, &cfg, 3, team, &id, 0, -1, &blk);
         }
         a = (Actor*)p;
     }
@@ -194,12 +194,12 @@ extern "C" void func_002C6B70(Msg* msg, int arg1)
         c = (Comp*)p;
     }
     Actor_InitComponents(a, 3, 0, c);
-    Actor_SetInvulnerable(a, func_001B8740(D_004FFC0C->game));
+    Actor_SetInvulnerable(a, Actor_IsInvulnerable(D_004FFC0C->game));
     a->Activate();
     rid = NetMap_BindReceiver(msg->id.v, arg1, a);
     func_00185940(a, msg->id.v);
     func_00185970(a, rid);
     buf[0] = 0;
-    func_002C9270(buf, a, arg1, 1);
+    Hud_AppendCalloutName(buf, a, arg1, 1);
     Hud_ShowCallout(D_004FFC2C, a->nameC, buf + 1, 0, 0, 0, -1.0f, 0.0f);
 }

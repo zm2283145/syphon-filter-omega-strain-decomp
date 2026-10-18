@@ -6,8 +6,8 @@ extern int D_004FF020;
 extern unsigned char D_004FF028;
 extern E26BC20 D_004FEED0[2][6];
 extern C26BC20 D_0055A300[2];
-extern "C" void func_00369920(void* p, int f, int n);
-extern "C" void func_0026BC20(float dt) {
+extern "C" void Pad_SetVibration(void* p, int f, int n);
+extern "C" void Tremor_UpdateVibration(float dt) {
     int k;
     D_004FF020++;
     for (k = 0; k < 2; k++) {
@@ -29,6 +29,6 @@ extern "C" void func_0026BC20(float dt) {
                 }
             }
         }
-        func_00369920((char*)&D_0055A300[k] + 0x40, flag, sum);
+        Pad_SetVibration((char*)&D_0055A300[k] + 0x40, flag, sum);
     }
 }

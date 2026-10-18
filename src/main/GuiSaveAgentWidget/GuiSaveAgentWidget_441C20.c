@@ -6,7 +6,7 @@ extern void String_Copy(char* dst, const char* src);
 extern void AgentData_SetName(void* agent, int value);
 extern void GuiSaveAgentWidget_HandleEvent(Obj00441C20* obj);
 /* Enter state 3 with the selected agent's name. */
-void func_00441C20(Obj00441C20* obj, int value)
+void SaveAgentWidget_Rename(Obj00441C20* obj, int value)
 {
     obj->state = 3;
     String_Copy(obj->name, Agent_GetSelected(D_004FFB50, -1) + 0x8AC);

@@ -4,6 +4,9 @@ extern void Actor_ApplyContactDamage();
 extern void Actor_BaseWorldUpdate();
 extern void Actor_VirtualNop();
 extern void Controller_DeathNotice();
+extern void GObj_GetID();
+extern void GObj_GetLifeState();
+extern void GObj_GetWorldMatrix();
 extern void NiEventBlast_Fire();
 extern void NiEvent_Play();
 extern void NiEvent_PreLogic();
@@ -39,12 +42,10 @@ extern void cNIEventOBJ_v46();
 extern void cNIEventOBJ_v47();
 extern void cNIEventOBJ_v48();
 extern void cNIEventOBJ_v4B();
-extern void func_0012ECE0();
 extern void func_0012ED00();
 extern void func_0012ED50();
 extern void func_0013E060();
 extern void func_00140E90();
-extern void func_00141850();
 extern void func_00148870();
 extern void func_00153860();
 extern void func_0015BFB0();
@@ -61,7 +62,6 @@ extern void func_002399A0();
 extern void func_0023FCD0();
 extern void func_0023FCE0();
 extern void func_0023FCF0();
-extern void func_003CCFF0();
 extern void func_003CD090();
 extern void func_003CD110();
 extern void func_003CD4A0();
@@ -90,7 +90,7 @@ void *D_004DC038[6] __attribute__((aligned(8))) = {
 
 void *D_004DC050[80] = {
     0, 0, &cNIEventOBJ_dtor, &cNIEventOBJ_v01,
-    &func_0012ECE0, &Object_GetAttachedOrSelf, &func_0023FCF0, &func_0012ED00,
+    &GObj_GetID, &Object_GetAttachedOrSelf, &func_0023FCF0, &func_0012ED00,
     &func_003CE810, &func_003CE7D0, &cNIEventOBJ_v08, &cNIEventOBJ_v09,
     &func_0012ED50, &cNIEventOBJ_v0B, &cNIEventOBJ_v0C, &func_003CEA00,
     &func_003CE9F0, &func_003CE9E0, &cNIEventOBJ_v10, &NiEvent_PreLogic,
@@ -104,8 +104,8 @@ void *D_004DC050[80] = {
     &Object_GetEye, &func_0015C020, &func_00140E90, &func_0015C030,
     &func_0015C040, &func_0015C050, &Node_GetWorldMatrix, &func_003CD4A0,
     &Node_GetLightRefPoint, &PathObj_GetPosition, &Node_GetComponentMatrix, &func_003CD110,
-    &func_003CD090, &func_003CCFF0, &func_0013E060, &func_0015C080,
-    &Actor_ApplyContactDamage, &func_0015C0A0, &func_00141850, &Controller_DeathNotice,
+    &func_003CD090, &GObj_GetWorldMatrix, &func_0013E060, &func_0015C080,
+    &Actor_ApplyContactDamage, &func_0015C0A0, &GObj_GetLifeState, &Controller_DeathNotice,
     &cNIEventOBJ_v42, &NiEvent_Play, &NiEvent_Stop, &NiEvent_Reset,
     &cNIEventOBJ_v46, &cNIEventOBJ_v47, &cNIEventOBJ_v48, &NiPositionTrack_Update,
     &NiSwitchTrack_Update, &cNIEventOBJ_v4B, 0, 0,

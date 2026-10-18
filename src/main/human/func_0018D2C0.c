@@ -120,7 +120,7 @@ void Motion_GetStartPlacement(Plc_L* out, void* node, int k);
 void VecPair_Copy(Plc_L* d, Plc_L* s);
 void Root_BaseConstruct(Plc_L* p);
 void World_PushObjectFromAction(void* w, void* p);
-void func_0018A910(void* p);
+void MotionTokens_Init(void* p);
 void func_0018A8C0(void* p);
 void func_0018A890(void* p);
 void func_0018A710(void* d, void* s);
@@ -205,7 +205,7 @@ static inline float Recip_L(float v) { return v != 0.0f ? 1.0f / v : 3.4028235e3
 static inline float ClampY_L(float x, float z, float o) { float lo = z; float hi = o; float r; asm { max.s r, x, lo; min.s r, r, hi } return r; }
 static inline void RangeInitY_L(Range_L* r, float t, float z, float o) { float v; v = 0.0f; r->flag = 0; v = ClampY_L(t, z, o); r->hi = v; r->lo = v; }
 
-static inline X_L* XInit_L(X_L* x) { X_L* px = x; px->kind = 0; func_0018A910(px->pairs); func_0018A8C0(px->tail); return px; }
+static inline X_L* XInit_L(X_L* x) { X_L* px = x; px->kind = 0; MotionTokens_Init(px->pairs); func_0018A8C0(px->tail); return px; }
 static inline void XSet_L(X_L* x, int i, int id, void* a) { Pair_L* p = &x->pairs[i]; p->id = id; p->a = a; x->kind = 1; }
 static inline X_L* XSetR_L(X_L* x, int i, int id, void* a, unsigned char k) { Pair_L* p = &x->pairs[i]; p->id = id; p->a = a; x->kind = k; return x; }
 static inline void XDtor_L(X_L* x) { func_001BE5A0(x->tail, 0); __destroy_array(x->pairs, (void*)func_0018A210, 8, 7); }

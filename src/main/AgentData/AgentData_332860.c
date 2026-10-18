@@ -26,7 +26,7 @@ int AgentData_GetBonusFlag(H332* h, int a, int b)
 #pragma push /* merge_units */
 typedef struct { signed char a, b, c, d; } E3328;
 typedef struct { char pad[0xD8]; int count; E3328 ent[(0xB72 - 0xDC) / 4]; char pad2[2]; unsigned char dirty; } H3328;
-void func_003328D0(H3328* h, int a, int b, int c, int v)
+void AgentData_SetLevelFlag(H3328* h, int a, int b, int c, int v)
 {
     int i;
     for (i = 0; i < h->count; i++) {
@@ -47,7 +47,7 @@ void func_003328D0(H3328* h, int a, int b, int c, int v)
 #pragma push /* merge_units */
 typedef struct { signed char a, b, c, v; } E32950;
 typedef struct { char pad[0xD8]; int count; E32950 e[1]; } T32950;
-int func_00332950(T32950* self, int a, int b, int c)
+int AgentData_IsZeusViewed(T32950* self, int a, int b, int c)
 {
     int i;
     for (i = 0; i < self->count; i++) {
@@ -64,7 +64,7 @@ int func_00332950(T32950* self, int a, int b, int c)
 #pragma push /* merge_units */
 typedef struct { signed char a, b, c, v; } E329B0;
 typedef struct { char pad[0xD8]; int count; E329B0 e[1]; } T329B0;
-int func_003329B0(T329B0* self, int a, int b, int c)
+int AgentData_HasZeus(T329B0* self, int a, int b, int c)
 {
     int i;
     for (i = 0; i < self->count; i++) {
@@ -118,7 +118,7 @@ void PtrVec_PushBack_1C1080(void* vec, int* v);
 }
 static inline bool Neq332AC0(E332AC0* a, E332AC0* b) { return !(a == b); }
 /* Collects the values of every table entry whose bit is set in the agent's flag array. */
-extern "C" void func_00332AC0(A332AC0* a, void* out)
+extern "C" void AgentData_GetUnlockedWeapons(A332AC0* a, void* out)
 {
     E332AC0* it = *func_003305C0(&D_00532B10);
     E332AC0* end = *func_003305C0(&D_00532B10) + D_00532B10.count;
@@ -140,7 +140,7 @@ typedef struct { int a, b, need; int pad[6]; } E32BB0;
 extern int D_00532B74;
 extern E32BB0* D_00532B78;
 extern int AgentData_TotalPoints(void* self);
-int func_00332BB0(void* self, int i)
+int AgentData_IsDossierOpen(void* self, int i)
 {
     if (i >= 0 && i < D_00532B74) {
         E32BB0* e = D_00532B78 + i;
@@ -244,11 +244,11 @@ int AgentData_HasUnlock(Pt2_Flags* p, unsigned char bit) {
 
 /* merge_units: begin func_00332FE0 */
 #pragma push /* merge_units */
-extern int func_003309C0(__int128 key);
+extern int Awards_FindLevelRow(__int128 key);
 typedef struct { char pad[0xB08]; int bits[1]; } AgentD2FE0;
 int AgentData_IsLevelDone(AgentD2FE0* self, __int128 key)
 {
-    int i = func_003309C0(key);
+    int i = Awards_FindLevelRow(key);
     if (i > -1)
         return ((self->bits[i / 32] >> (i & 31)) & 1) != 0;
     asm { .set reorder } /* barrier: keeps retail block layout */ return 0;
@@ -275,7 +275,7 @@ void cAgentData_UnlockWeapon(AgentD3050* self, const char* name)
 typedef struct { char pad[0xB08]; unsigned int bits[1]; } AgentD30C0;
 void cAgentData_UnlockLevel(AgentD30C0* self, const char* name)
 {
-    int i = func_003309C0(StringPool_MakeKey(name));
+    int i = Awards_FindLevelRow(StringPool_MakeKey(name));
     if (i > -1)
         self->bits[i / 32] |= 1 << (i & 31);
 }

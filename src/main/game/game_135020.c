@@ -155,24 +155,24 @@ void LoadingScreen_Start(void* a, int b, char* c);
 Snd_1350E0* App_GetInstance(void);
 void func_0016F510(void);
 void Human_InitStatics(void);
-void func_001C01D0(int a, void* b);
+void Level_LoadSkas(int a, void* b);
 void SoundMgr_LoadLevel(void* p);
 void SoundMgr_Init(void* p);
 void func_00257380(void);
-void func_0026BE70(unsigned char b);
+void Pad_EnableVibration(unsigned char b);
 void* DecalMgr_ctor(void* p, int a, int b);
 void LevelSelect_FindByName(void* a, void* b);
-void func_00335D50(void* a, int b);
+void AgentData_StartLevel(void* a, int b);
 int FileMan_FindMember(Path_1350E0* p);
 void FileMan_Release(void* p, int f);
 void func_0036E4B0(Path_1350E0* p, char* name, int a, int b);
 void ParticleSystem_Construct(void* p, int n);
-void func_003CAC40(World_1350E0* w, void* p);
+void Script_AddChild(World_1350E0* w, void* p);
 void func_003E2140(void* m, int a);
 void MaterialProps_ResolveEffects(void* a, int b);
 void GobjScopeBase_Ctor(void* p, int n, void* arr);
 void MotionManager_Init(void);
-void func_004703B0(void);
+void ItemTable_LoadModels(void);
 }
 
 extern "C" void World_Setup(World_1350E0* w)
@@ -200,7 +200,7 @@ extern "C" void World_Setup(World_1350E0* w)
             NameSlot_SetName(w, i, Loc_LookupText(name));
         }
     }
-    func_00335D50(Agent_GetSelected(w, -1), 1);
+    AgentData_StartLevel(Agent_GetSelected(w, -1), 1);
     Skel_LoadCommonModels(w->f88, w->f3C);
     IdMgr_Init();
     {
@@ -264,7 +264,7 @@ extern "C" void World_Setup(World_1350E0* w)
     Human_InitStatics();
     ColScratch_Init(0, 0, 0, 0);
     func_001360D0(0x320);
-    func_0026BE70(w->f1DC->b5);
+    Pad_EnableVibration(w->f1DC->b5);
     {
         Los_1350E0* p;
         { if (D_00533880) Alloc_Lock(9); D_00533888++; p = (Los_1350E0*)Mem_Alloc(0, 0x4C, D_0049A890, 0x22E); if (D_00533880) Alloc_Unlock(9); D_00533888--; }
@@ -272,7 +272,7 @@ extern "C" void World_Setup(World_1350E0* w)
             LosReceiver_Construct(p, 0x1E);
             p->vtbl = D_004D9100;
         }
-        func_003CAC40(w, p);
+        Script_AddChild(w, p);
     }
     svc = Service_Lookup(w, D_004F2CC0);
     if (D_00489BA8) SoundMgr_Init(svc);
@@ -283,7 +283,7 @@ extern "C" void World_Setup(World_1350E0* w)
     FileMan_Release(req.partA, -1);
     m.flag = 1;
     Event_Send(&m, D_004FFB50, 0);
-    func_001C01D0(w->f88, w->f3C);
+    Level_LoadSkas(w->f88, w->f3C);
     Loader_LoadLevelData(w->f88, w->f3C);
     sprintf(arc, D_0049AAC0, D_0048B2F8);
     MaterialProps_ResolveEffects(D_0053BB90, Archive_Open(w->f3C, arc, 0, 0));
@@ -301,7 +301,7 @@ extern "C" void World_Setup(World_1350E0* w)
     w->f80->f20 = w->fBC->f30;
     SkaLevel_OpenArchive(w->f88, w->f3C);
     Script_StartLevel(D_00555070);
-    func_004703B0();
+    ItemTable_LoadModels();
     SkaLevel_CloseArchive(w->f88, w->f3C);
     ShadowMgr_Construct(D_00543790);
     D_0053924C->bC = 1;

@@ -29,9 +29,9 @@ extern char D_0055DDA0[];
 extern char D_004DE920[];
 extern char D_004E1220[];
 extern int D_00506500;
-void func_00403310(void* p);
-void func_0040F540(void);
-void func_002BDC10(void* p);
+void AgentPartCache_Unlock(void* p);
+void World_ClearPendingIfLoaded(void);
+void GuiEquipmentModify_RingRelease(void* p);
 void GuiWidget_Destroy(void* p, int f);
 #if 0 /* merge_units */
 void operator_delete(void* p);
@@ -53,8 +53,8 @@ extern "C" O00343BF0* func_00343BF0(O00343BF0* self, short del)
         Del00343BF0(self->p90, 0x176);
         self->p8C->v22(1);
         Del00343BF0(self->p8C, 0x178);
-        func_00403310(D_0055DDA0);
-        func_0040F540();
+        AgentPartCache_Unlock(D_0055DDA0);
+        World_ClearPendingIfLoaded();
         if (self) {
             self->vt = D_004E1220;
             GuiWidget_Destroy(self, 0);

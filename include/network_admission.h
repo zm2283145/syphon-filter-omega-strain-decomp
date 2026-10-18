@@ -16,7 +16,7 @@ extern int D_005721A8;
 extern int D_00494180;
 SoftwareDoubleBits func_0011C7A0(int value);
 SoftwareDoubleBits SoftFloat_FloatToDouble(float value);
-SoftwareDoubleBits func_0011C268(SoftwareDoubleBits first, SoftwareDoubleBits second);
+SoftwareDoubleBits SoftFloat_DoubleMultiply(SoftwareDoubleBits first, SoftwareDoubleBits second);
 SoftwareDoubleBits func_0011C200(SoftwareDoubleBits first, SoftwareDoubleBits second);
 unsigned int func_0011C858(SoftwareDoubleBits value);
 void func_002EBEC8(int* count, int game);
@@ -27,7 +27,7 @@ static inline unsigned int retry_threshold(void)
     int timer = D_00572538;
     SoftwareDoubleBits base = func_0011C7A0(timer);
     SoftwareDoubleBits converted = SoftFloat_FloatToDouble((float)timer);
-    SoftwareDoubleBits scaled = func_0011C268(0x3FB0000000000000ULL, converted);
+    SoftwareDoubleBits scaled = SoftFloat_DoubleMultiply(0x3FB0000000000000ULL, converted);
     return func_0011C858(func_0011C200(base, scaled));
 }
 

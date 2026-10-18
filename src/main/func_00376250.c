@@ -70,7 +70,7 @@ extern void func_00382910(TexMgr6250*);
 extern void func_00375A30(void*, int, int, int);
 extern unsigned int Renderer_SetDrawState(void*, Mtx6250*, unsigned int, unsigned int);
 extern Q6250* func_00375B40(void*, int, int);
-extern void func_00375AC0(void*, int, Q6250*);
+extern void DmaPacket_Close(void*, int, Q6250*);
 extern void Shadow_RenderBatch(void*);
 extern void Shadow_NextReceiverBatch(void*);
 
@@ -203,7 +203,7 @@ void Model_Draw(Model6250* m, unsigned int flags, Mtx6250* xf)
         } else {
             QCopy6250(m->data->packet, m->qwc, p);
         }
-        func_00375AC0(D_00537F80, 1, p + m->qwc);
+        DmaPacket_Close(D_00537F80, 1, p + m->qwc);
     }
     while (D_00554EFC) {
         Q6250* p;
@@ -214,7 +214,7 @@ void Model_Draw(Model6250* m, unsigned int flags, Mtx6250* xf)
         Renderer_SetDrawState(D_005381F0, xf, flags, m->extra);
         p = func_00375B40(D_00537F80, 1, m->qwc);
         QCopy6250(m->data->packet, m->qwc, p);
-        func_00375AC0(D_00537F80, 1, p + m->qwc);
+        DmaPacket_Close(D_00537F80, 1, p + m->qwc);
         Shadow_NextReceiverBatch(D_00543790);
     }
     if (xf) {

@@ -16,7 +16,7 @@ extern char* WeaponDb_Get(void* p);
 extern void* Loc_FindKeyThunk(char* p);
 
 /* Constructor: allocates the buffer and initializes the fields; returns self. */
-Obj330* func_00330110(Obj330* self, int a, int b)
+Obj330* Awards_RegisterName(Obj330* self, int a, int b)
 {
     self->buffer = Loc_FindKeyThunk(WeaponDb_Get(D_004FFD30) + 0x80);
     self->unk14 = a;

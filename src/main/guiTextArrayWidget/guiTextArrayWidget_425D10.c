@@ -19,11 +19,11 @@
 
 extern void* Gui_GetScreenList(void);
 extern int GuiFont_Find(void* strings, int id);
-extern TextArrayCell* func_00426590(guiTextArrayWidget* self, int row, int col);
+extern TextArrayCell* GuiTextArrayWidget_GetCell(guiTextArrayWidget* self, int row, int col);
 
 /* Clears flag bit 1 of the addressed cell. */
 void func_00425D10(guiTextArrayWidget* self, int row, int col) {
-    TextArrayCell* cell = func_00426590(self, row, col);
+    TextArrayCell* cell = GuiTextArrayWidget_GetCell(self, row, col);
 
     if (cell != 0) {
         cell->flags &= ~2;
@@ -32,7 +32,7 @@ void func_00425D10(guiTextArrayWidget* self, int row, int col) {
 
 /* Sets the text of the addressed cell from string id and marks it as having text. */
 void func_00425D50(guiTextArrayWidget* self, int row, int col, int id) {
-    TextArrayCell* cell = func_00426590(self, row, col);
+    TextArrayCell* cell = GuiTextArrayWidget_GetCell(self, row, col);
 
     if (cell != 0) {
         cell->text = GuiFont_Find(Gui_GetScreenList(), id);

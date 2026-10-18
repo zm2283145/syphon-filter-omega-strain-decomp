@@ -109,7 +109,7 @@ extern "C" void Pop_LoadNPC(void* unused, PopReader* r, void* arc)
     char thermal[128];
     char name[128];
     FileManEntry e;
-    func_0036E5D0(&e);
+    Resource_Construct(&e);
     func_00165E60(App_GetInstance(), D_0049F050, 0);
     sprintf(thermal, D_0049F070, D_0048B2F8);
     sprintf(name, D_0049F090, D_0048B2F8);

@@ -25,7 +25,7 @@ extern "C" {
 extern V_AC5 D_00535D40;
 extern unsigned char D_00535D60;
 extern unsigned char D_00535D61;
-void func_003836B0(void* a, int b, void* c, int d);
+void ActorModel_DrawLod(void* a, int b, void* c, int d);
 void ThrownProjectile_Draw(O_AC5* o);
 }
 static inline unsigned char eq4_(V_AC5* a, V_AC5* b) {
@@ -67,7 +67,7 @@ void ThrownProjectile_Draw(O_AC5* o)
         if (m) {
             r = o->x50;
             if (r->x50) r->Update();
-            func_003836B0(m, o->x38, (void*)((int)r + 0x10), 0);
+            ActorModel_DrawLod(m, o->x38, (void*)((int)r + 0x10), 0);
         }
     }
 }

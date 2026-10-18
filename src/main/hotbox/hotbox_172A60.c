@@ -31,11 +31,11 @@ extern "C" void Object_AttachTransform();
 extern "C" void Object_GetAttachedOrSelf();
 extern "C" void cHotbox_v01();
 extern "C" void cHotbox_v43();
-extern "C" void func_0012ECE0();
+extern "C" void GObj_GetID();
 extern "C" void func_0012ED00();
 extern "C" void func_0013E060();
 extern "C" void func_00140E90();
-extern "C" void func_00141850();
+extern "C" void GObj_GetLifeState();
 extern "C" void func_00148870();
 extern "C" void Object_GetEye();
 extern "C" void func_00153860();
@@ -66,7 +66,7 @@ extern "C" void func_00173680();
 extern "C" void func_00173690();
 extern "C" void func_001736A0();
 extern "C" void func_001736B0();
-extern "C" void func_003CCFF0();
+extern "C" void GObj_GetWorldMatrix();
 extern "C" void func_003CD090();
 extern "C" void func_003CD110();
 extern "C" void Node_GetComponentMatrix();
@@ -103,7 +103,7 @@ extern "C" VtableMemberObject* cHotbox_dtor(VtableMemberObject* self,
     }
     return self;
 }
-void * const D_004D9AC0[72] = { (void*)0x0, (void*)0x0, (void*)cHotbox_dtor, (void*)cHotbox_v01, (void*)func_0012ECE0, (void*)Object_GetAttachedOrSelf, (void*)func_001736B0, (void*)func_0012ED00, (void*)func_00173690, (void*)func_001736A0, (void*)Hotbox_Enable_173670, (void*)func_00173680, (void*)func_001729B0, (void*)func_0016FE50, (void*)Hotbox_ScriptFilter, (void*)func_003CEA00, (void*)func_00173640, (void*)func_00173650, (void*)Actor_BaseLogicUpdate, (void*)Actor_BasePreLogic, (void*)Actor_BaseWorldUpdate, (void*)Actor_VirtualNop, (void*)func_001729A0, (void*)Object_Activate, (void*)Object_Deactivate, (void*)Hotbox_Enable, (void*)Hotbox_Disable, (void*)Node_GetFlag2C, (void*)func_0015BFB0, (void*)func_0015BFC0, (void*)func_0015BFD0, (void*)func_00148870, (void*)func_0015BFF0, (void*)func_0015BFE0, (void*)Hotbox_GetBounds, (void*)func_0015C000, (void*)Object_AttachTransform, (void*)Player_GetActiveWeapon, (void*)func_003CDDC0, (void*)func_003CDD80, (void*)func_003CDD40, (void*)func_003CDC20, (void*)func_003CDBE0, (void*)func_003CDA60, (void*)func_003CD920, (void*)func_003CD7A0, (void*)func_0015C010, (void*)func_00153860, (void*)Object_GetEye, (void*)func_0015C020, (void*)func_00140E90, (void*)func_0015C030, (void*)func_0015C040, (void*)func_0015C050, (void*)Node_GetWorldMatrix, (void*)func_003CD4A0, (void*)Node_GetLightRefPoint, (void*)PathObj_GetPosition, (void*)Node_GetComponentMatrix, (void*)func_003CD110, (void*)func_003CD090, (void*)func_003CCFF0, (void*)func_0013E060, (void*)func_0015C080, (void*)Actor_ApplyContactDamage, (void*)func_0015C0A0, (void*)func_00141850, (void*)Controller_DeathNotice, (void*)Hotbox_Contains, (void*)cHotbox_v43, (void*)0x0, (void*)0x0 };
+void * const D_004D9AC0[72] = { (void*)0x0, (void*)0x0, (void*)cHotbox_dtor, (void*)cHotbox_v01, (void*)GObj_GetID, (void*)Object_GetAttachedOrSelf, (void*)func_001736B0, (void*)func_0012ED00, (void*)func_00173690, (void*)func_001736A0, (void*)Hotbox_Enable_173670, (void*)func_00173680, (void*)func_001729B0, (void*)func_0016FE50, (void*)Hotbox_ScriptFilter, (void*)func_003CEA00, (void*)func_00173640, (void*)func_00173650, (void*)Actor_BaseLogicUpdate, (void*)Actor_BasePreLogic, (void*)Actor_BaseWorldUpdate, (void*)Actor_VirtualNop, (void*)func_001729A0, (void*)Object_Activate, (void*)Object_Deactivate, (void*)Hotbox_Enable, (void*)Hotbox_Disable, (void*)Node_GetFlag2C, (void*)func_0015BFB0, (void*)func_0015BFC0, (void*)func_0015BFD0, (void*)func_00148870, (void*)func_0015BFF0, (void*)func_0015BFE0, (void*)Hotbox_GetBounds, (void*)func_0015C000, (void*)Object_AttachTransform, (void*)Player_GetActiveWeapon, (void*)func_003CDDC0, (void*)func_003CDD80, (void*)func_003CDD40, (void*)func_003CDC20, (void*)func_003CDBE0, (void*)func_003CDA60, (void*)func_003CD920, (void*)func_003CD7A0, (void*)func_0015C010, (void*)func_00153860, (void*)Object_GetEye, (void*)func_0015C020, (void*)func_00140E90, (void*)func_0015C030, (void*)func_0015C040, (void*)func_0015C050, (void*)Node_GetWorldMatrix, (void*)func_003CD4A0, (void*)Node_GetLightRefPoint, (void*)PathObj_GetPosition, (void*)Node_GetComponentMatrix, (void*)func_003CD110, (void*)func_003CD090, (void*)GObj_GetWorldMatrix, (void*)func_0013E060, (void*)func_0015C080, (void*)Actor_ApplyContactDamage, (void*)func_0015C0A0, (void*)GObj_GetLifeState, (void*)Controller_DeathNotice, (void*)Hotbox_Contains, (void*)cHotbox_v43, (void*)0x0, (void*)0x0 };
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00172A60(void) {}
 #pragma pop /* merge_units */

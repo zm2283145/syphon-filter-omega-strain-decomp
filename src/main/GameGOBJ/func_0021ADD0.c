@@ -65,7 +65,7 @@ char* strchr(const char* s, int c);
 void String_Copy(char* d, const char* s);
 int Hog_Register(void* h, const char* name, int arg, int opt);
 void* Mem_Alloc(int heap, int size, char* file, int line);
-void func_003D9D30(Name_21ADD0* n, char* s);
+void Script_LookupResource(Name_21ADD0* n, char* s);
 void Mtx_SetBasis(Mat_21ADD0* m, V4_21ADD0* a, V4_21ADD0* b, V4_21ADD0* c);
 void Mtx_SetTranslation(Mat_21ADD0* m, V4_21ADD0* t);
 void PtrVec_Reserve(RelFlag_21ADD0* r, int n);
@@ -163,7 +163,7 @@ extern "C" GObj_21ADD0* cGameGOBJ_ctor(GObj_21ADD0* self, int arg, Reader_21ADD0
         func_0021B770(&rf->rel);
         rf->flag = 1;
     }
-    func_0036E5D0(&e);
+    Resource_Construct(&e);
     self->kind = kind;
     ReadInt_21ADD0(r, &hi);
     ReadInt_21ADD0(r, &lo);
@@ -183,7 +183,7 @@ extern "C" GObj_21ADD0* cGameGOBJ_ctor(GObj_21ADD0* self, int arg, Reader_21ADD0
         if (!self->name18) {
 self->name18 = NewName_21ADD0();
         }
-        func_003D9D30(self->name18, s2);
+        Script_LookupResource(self->name18, s2);
     }
     Align_21ADD0(r);
     ReadV_21ADD0(r, &t, 1.0f);

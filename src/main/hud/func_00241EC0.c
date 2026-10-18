@@ -10,8 +10,8 @@ extern char D_004FFC14[];
 extern void* D_004FFC10;
 int func_00159570(void*);
 void** List_Front(void*);
-void func_00244A10(Hud*);
-void func_00244A00(Hud*);
+void Hud_CrosshairDefault(Hud*);
+void Hud_CrosshairRelease(Hud*);
 void Hud_HideNoFire(Hud*);
 Spr** func_00242180(SprVec*, int);
 void IeElement_SetShown(Spr*, int);
@@ -27,7 +27,7 @@ static inline bool IsNoCross(Ent* e) {
 }
 static inline void Select(Hud* h, int idx) {
     if (idx >= 0) {
-        if (idx == 0) func_00244A10(h);
+        if (idx == 0) Hud_CrosshairDefault(h);
         else {
             Spr* s = h->v.data[(unsigned)(idx - 1)];
             if (s) {
@@ -35,13 +35,13 @@ static inline void Select(Hud* h, int idx) {
                 IeElement_EvaluateAt(s, 1.0f);
                 IeElement_Fade(s, 10.0f);
             }
-            func_00244A00(h);
+            Hud_CrosshairRelease(h);
         }
     }
 }
 static inline void Unselect(Hud* h, int c) {
     if (c >= 0) {
-        if (c == 0) func_00244A00(h);
+        if (c == 0) Hud_CrosshairRelease(h);
         else {
             Spr* s = h->v.data[(unsigned)(c - 1)];
             if (s) IeElement_Fade(s, 0.0f);

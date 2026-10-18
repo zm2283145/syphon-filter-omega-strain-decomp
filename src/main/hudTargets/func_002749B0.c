@@ -3,10 +3,10 @@
 #define NULL 0
 int Loc_LookupText(signed char *);                           
 signed char *String_CStr(int);                             
-int func_00274A60();                                
+int HudMarker_GetLabel();                                
 int sprintf(int, int *, int, int);                      
 
-int func_002749B0(int arg0, int arg1) {
+int HudMarker_GetTickerText(int arg0, int arg1) {
     int temp_v0;
     int var_a3;
     signed char *temp_v0_2;
@@ -14,7 +14,7 @@ int func_002749B0(int arg0, int arg1) {
     if (arg1 == 0) {
         return 0;
     }
-    temp_v0 = func_00274A60();
+    temp_v0 = HudMarker_GetLabel();
     if (temp_v0 == 0) {
         return 0;
     }

@@ -23,7 +23,7 @@ extern int D_00497ACC[];
 extern int D_00497AEC[];
 void GuiGameScreen_GatherWeapons(S_45CA20* o);
 long long Time_GetMilliseconds(void);
-void func_0045C5E0(S_45CA20* o);
+void GuiGameScreen_FillWeaponPanels(S_45CA20* o);
 void GuiWidget_SendEvent(void* a, void* b, int kind, int v, int f);
 void* Gui_GetScreenStack(void);
 void GuiScreen_SetFocus(void* mgr, void* w);
@@ -46,7 +46,7 @@ void GuiGameScreen_ToggleWeaponSelect(S_45CA20* o, int on)
         o->f94 = o->f90;
         o->f98 = Time_GetMilliseconds();
         o->f9C = 0;
-        func_0045C5E0(o);
+        GuiGameScreen_FillWeaponPanels(o);
         if (o->fD4 == 0 && o->fD0 == 0) GuiWidget_SendEvent(o, o->fA4, 0xA, D_00497ACC[o->fDC], 0);
         o->fD4 = 1;
         o->fD0 = 2;
@@ -109,7 +109,7 @@ extern void* D_004FFD30;
 extern void* D_00497AC0;
 extern W_45CC90* GuiFactory_CreateWidget(char*);
 extern W_45CC90* GuiWidget_FindChildByName(W_45CC90*, char*);
-extern void func_0041EBA0(W_45CC90*, float, float);
+extern void GuiWidget_SetPos(W_45CC90*, float, float);
 extern void GuiWidget_AddChild(W_45CC90*, W_45CC90*);
 extern void WeaponDb_LoadModel(void* m, void* a, void* b, int c, int d, int e, int f);
 
@@ -143,7 +143,7 @@ void GuiGameScreen_InitWeaponSelect(S_45CC90* self)
         sprintf(buf, D_004C2228, i + 1);
         ref = GuiWidget_FindChildByName(self->root, buf);
         p = ref->pos;
-        func_0041EBA0(self->items[i], p.x, p.y);
+        GuiWidget_SetPos(self->items[i], p.x, p.y);
         s = ref->size;
         SetSize(self->items[i], s.x, s.y);
         GuiWidget_AddChild(self->root, self->items[i]);

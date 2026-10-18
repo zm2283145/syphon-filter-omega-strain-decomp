@@ -10,7 +10,7 @@
  *
  * Known fields: flags +0, name[128] +4 (strncpy'd), sub-object +0x88,
  * halFile/handle +0x98.
- *   func_0036E5D0(&e);                      default ctor (flags = 0)
+ *   Resource_Construct(&e);                      default ctor (flags = 0)
  *   func_0036E4B0(&e, name, handle, extra); ctor, flags |= 1 (|4 if extra)
  *   func_0036E540(&e, name, handle, extra); ctor, flags |= 2 (|4 if extra)
  *   FileMan_Release(&e, -1);         dtor: frees halFile when flags & 0x10,
@@ -29,7 +29,7 @@ LAYOUT_SIZE(FileManEntry, 0x9C);
 #ifdef __cplusplus
 extern "C" {
 #endif
-void* func_0036E5D0(void* entry);
+void* Resource_Construct(void* entry);
 void* func_0036E4B0(void* entry, const char* name, void* handle, int extra);
 void* func_0036E540(void* entry, const char* name, void* handle, int extra);
 void* FileMan_Release(void* entry, int flags); /* flags really short */

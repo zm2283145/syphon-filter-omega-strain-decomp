@@ -13,7 +13,7 @@ typedef struct Obj05A0 {
 } Obj05A0;
 extern int D_00539248;
 extern char D_004BE048[];
-extern void func_0036E5D0(FileMan05A0* f);
+extern void Resource_Construct(FileMan05A0* f);
 extern void func_0036DFB0(FileMan05A0* f, char* name, int a);
 extern void FileMan_Release(FileMan05A0* f, int flag);
 extern int TexMan_FindOrLoad(int mgr, FileMan05A0* f);
@@ -69,7 +69,7 @@ void func_003F05A0(Obj05A0* o, int arg1)
     if (Len05A0(&o->name) > 0) {
         Copy(&s, s.text, String_CStr(&o->name));
         Append((char*)&s, D_004BE048);
-        func_0036E5D0(&fm);
+        Resource_Construct(&fm);
         func_0036DFB0(&fm, (char*)&s + 1, arg1);
         o->f18 = TexMan_FindOrLoad(D_00539248, &fm);
         FileMan_Release(&fm, -1);

@@ -7,7 +7,7 @@ int Alloc_Unlock(int);
 int Hog_Register(char *, char *, int, int);                     
 int Mem_Alloc(int, int, char *, int);                        
 int FileMan_Release(char *, int);                            
-int func_0036E5D0(char *);                               
+int Resource_Construct(char *);                               
 int Interface_Ctor(int, char *);                        
 int sprintf(char *, char *, int);                           
 extern unsigned char D_00533880;
@@ -18,7 +18,7 @@ int LoadingScreen_BuildIeScreen(int arg0, int arg1) {
     int sp30[40];
     int var_s0;
 
-    func_0036E5D0(sp30);
+    Resource_Construct(sp30);
     sprintf(spD0, "%s.IE", arg0);
     Hog_Register(sp30, spD0, arg1, 0);
     if (D_00533880 != 0) {

@@ -36,7 +36,7 @@ L4Iter* func_00415B30(void* list, int value) {
 #pragma push /* merge_units */
 typedef struct { char pad[0x14]; unsigned short flags; } Ent415B60;
 extern void GuiWidget_BroadcastEvent(Ent415B60* e, int kind, int v, int z);
-void func_00415B60(Ent415B60* e, float v)
+void GuiCanvas_NestedUpdate(Ent415B60* e, float v)
 {
     if (e->flags & 4) {
         v = v * 30.0f;

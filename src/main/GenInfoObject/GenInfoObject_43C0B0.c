@@ -7,6 +7,6 @@
 #include "types.h"
 
 
-char* func_0043C0B0(void) {
+char* GuiBitmapWidget_GetClassName(void) {
     return "GuiBitmapWidget";
 }

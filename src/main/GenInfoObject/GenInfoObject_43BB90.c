@@ -20,7 +20,7 @@ extern void GuiWidget_BroadcastEvent(W43BBC0* w, int kind, int pos, int z);
 #pragma push
 static inline float Mul43BBC0(float a, float b) { return a * b; }
 static inline int Lerp43BBC0(int a, int b, float t) { return a + (int)Mul43BBC0(t, (float)(b - a)); }
-void func_0043BBC0(W43BBC0* w, int v)
+void GuiScrollBarWidget_SetValue(W43BBC0* w, int v)
 {
     w->v = v < w->lo ? w->lo : (w->hi < v ? w->hi : v);
     if (w->vis) {
@@ -44,7 +44,7 @@ extern void GuiWidget_BroadcastEvent(W43BC70* w, int kind, int pos, int z);
 #pragma push
 static inline float Mul43BC70(float a, float b) { return a * b; }
 static inline int Lerp43BC70(int a, int b, float t) { return a + (int)Mul43BC70(t, (float)(b - a)); }
-void func_0043BC70(W43BC70* w, unsigned char b, int v, int lo, int hi)
+void GuiScrollBarWidget_SetRange(W43BC70* w, unsigned char b, int v, int lo, int hi)
 {
     w->b54 = b;
     w->lo = hi < lo ? hi : lo;

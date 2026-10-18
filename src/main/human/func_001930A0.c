@@ -58,7 +58,7 @@ void** func_00195DD0(void* p, int i);
 void* func_00195DC0(void* p, int i);
 unsigned char* func_00195DB0(void* p, int i);
 void Transform_SetOrientation(void* t, Plc_L* p);
-void func_0018A910(void* p);
+void MotionTokens_Init(void* p);
 void func_0018A8C0(void* p);
 void func_0018A890(void* p);
 void func_0018A710(void* d, void* s);
@@ -162,7 +162,7 @@ static inline void QZeroW_L(void* d) { QZero_L(d); }
 static inline float Min_L(float a, float b) { float r; asm { min.s r, a, b } return r; }
 static inline float Recip_L(float v) { return v != 0.0f ? 1.0f / v : 3.4028235e38f; }
 
-static inline void XInit_L(X_L* x) { x->kind = 0; func_0018A910(x->pairs); func_0018A8C0(x->tail); }
+static inline void XInit_L(X_L* x) { x->kind = 0; MotionTokens_Init(x->pairs); func_0018A8C0(x->tail); }
 static inline X_L* XSetR_L(X_L* x, int i, int id, void* a, unsigned char k) { Pair_L* p = &x->pairs[i]; p->id = id; p->a = a; x->kind = k; return x; }
 static inline void XDtor_L(X_L* x) { func_001BE5A0(x->tail, 0); __destroy_array(x->pairs, (void*)func_0018A210, 8, 7); }
 static inline X_L* Set5_L(X_L* x, int a, int b, int c, int d, int e, void* act)

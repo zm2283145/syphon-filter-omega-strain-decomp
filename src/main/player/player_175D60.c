@@ -11,7 +11,7 @@
 #pragma push /* merge_units */
 extern char D_004FFC2C[];
 extern int Script_ValueToObj(int);
-extern void func_0045BEB0(int, int);
+extern void GuiGameScreen_SetMenuReceiver(int, int);
 
 int Script_cPlayer_SetMenuReceiver(int a0) {
     int a1, v0, v1;
@@ -24,7 +24,7 @@ int Script_cPlayer_SetMenuReceiver(int a0) {
     cond = a0 == 0;
     a1 = v0;
     if (cond) goto L00175D90;
-    func_0045BEB0(a0, a1);
+    GuiGameScreen_SetMenuReceiver(a0, a1);
 L00175D90:;
     v0 = 0;
     goto ret;

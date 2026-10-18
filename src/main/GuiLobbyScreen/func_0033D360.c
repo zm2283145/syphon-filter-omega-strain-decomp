@@ -10,11 +10,11 @@ struct Object {
     virtual void Method68(); /* +0x68 */
 };
 
-extern "C" void func_0041EBF0(Object* self);
+extern "C" void GuiWidget_BaseSleep(Object* self);
 
-/* Calls func_0041EBF0 then virtual slot +0x68. */
+/* Calls GuiWidget_BaseSleep then virtual slot +0x68. */
 extern "C" void GuiScreen_Sleep(Object* self)
 {
-    func_0041EBF0(self);
+    GuiWidget_BaseSleep(self);
     self->Method68();
 }

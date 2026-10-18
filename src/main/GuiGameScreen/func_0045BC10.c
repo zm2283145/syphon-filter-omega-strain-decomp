@@ -10,13 +10,13 @@ extern void GuiWidget_FocusPrev();
 extern void GuiWidget_FocusNext();
 extern void GuiWidget_FocusLast();
 extern void GuiWidget_FocusFirst();
-extern void func_0041E230();
-extern void func_0041E2B0();
-extern void func_0041E330();
-extern void func_0041EBF0();
-extern void func_0041EFA0();
-extern void func_0041F070();
-extern void func_0041F080();
+extern void GuiWidget_BubbleActivate();
+extern void GuiWidget_BubbleType1();
+extern void GuiWidget_BubbleType0();
+extern void GuiWidget_BaseSleep();
+extern void GuiWidget_BaseWake();
+extern void GuiWidget_ClearFlag4();
+extern void GuiWidget_SetFlag4();
 extern void func_0041F210();
 extern void func_0045BCC0();
 extern void func_0045BCD0();
@@ -54,4 +54,4 @@ char **func_0045BC10(char **arg0, long long arg1) {
     }
     return arg0;
 }
-void * const D_004E1620[24] = { (void*)0x0, (void*)0x0, (void*)func_0045BC10, (void*)GuiGameScreen_Init, (void*)func_0045DE80, (void*)func_0041F080, (void*)func_0041F070, (void*)func_0041EFA0, (void*)func_0041EBF0, (void*)func_0041E330, (void*)func_0041E2B0, (void*)GuiGameScreen_OnInput, (void*)GuiGameScreen_Draw, (void*)func_0041E230, (void*)GuiGameScreen_Update, (void*)GuiGameScreen_OnEvent, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)func_0045BCC0, (void*)func_0045BCD0, (void*)0x0 };
+void * const D_004E1620[24] = { (void*)0x0, (void*)0x0, (void*)func_0045BC10, (void*)GuiGameScreen_Init, (void*)func_0045DE80, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiWidget_BaseWake, (void*)GuiWidget_BaseSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiGameScreen_OnInput, (void*)GuiGameScreen_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiGameScreen_Update, (void*)GuiGameScreen_OnEvent, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)func_0045BCC0, (void*)func_0045BCD0, (void*)0x0 };

@@ -132,7 +132,7 @@ int Double_IsNaN(double x)
 /* merge_units: begin func_00120FC0 */
 __asm__(".set nomove\n"
         "dpadd = SoftFloat_DoubleAdd\n"
-        "dpmul = func_0011C268\n");extern const double D_00499BD8;
+        "dpmul = SoftFloat_DoubleMultiply\n");extern const double D_00499BD8;
 extern const double D_00499BE0;
 #define tiny D_00499BD8
 #undef huge /* merge_units */
@@ -223,7 +223,7 @@ static const float aT[] = {
  -3.6531571299e-02,
   1.6285819933e-02,
 };
-extern float func_00121760(float x);
+extern float Math_Fabsf(float x);
 float Math_Atan(float x)
 {
 	const float one   = 1.0, huge   = 1.0e30;
@@ -241,7 +241,7 @@ float Math_Atan(float x)
 	    }
 	    id = -1;
 	} else {
-	x = func_00121760(x);
+	x = Math_Fabsf(x);
 	if (ix < 0x3f980000) {
 	    if (ix < 0x3f300000) {
 		id = 0; x = ((float)2.0*x-one)/((float)2.0+x);

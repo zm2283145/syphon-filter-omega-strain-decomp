@@ -30,7 +30,7 @@ extern void Global_ResetStats(void);
 extern int Script_ClearSchedules_3DFB20(void);
 extern void func_0013A290(GameTimerService*);
 extern int PlayerInput_ClosePickupMenu(int);
-extern int func_002570C0(void);
+extern int Backpack_RemoveAll(void);
 extern int func_0025A120(void);
 extern void func_002795A0(int);
 extern int func_003FA1E0(int);
@@ -46,7 +46,7 @@ int Global_ResetLevel(void) {
     int agent;
 
     PlayerInput_ClosePickupMenu((int)(D_004FFC0C + 0x50));
-    func_002570C0();
+    Backpack_RemoveAll();
     func_0025A120();
     agent = Agent_GetSelected((int)D_004FFB50, -1);
     AgentData_ResetMission(agent);
@@ -148,11 +148,11 @@ static inline void merge_flush_func_0012F860(void) {}
  */
 
 
-extern int func_00245560(GameTimerService*, int, float);
+extern int Hud_StartGlobalTimer(GameTimerService*, int, float);
 
 /* Starts the global timer: forwards to the timer service. */
 int Global_StartGlobalTimer(int id, float value) {
-    return func_00245560(D_004FFC2C, id, value);
+    return Hud_StartGlobalTimer(D_004FFC2C, id, value);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0012F890(void) {}

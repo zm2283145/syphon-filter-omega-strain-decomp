@@ -84,7 +84,7 @@ extern "C" char * func_004575D0(void) {
 
 /* Factory: allocate, run the base constructor, set the vtable. */
 extern "C" { char D_004C1CB0[] = "guiWidget.hh"; }
-DEFINE_GUARDED_NEW_VT(func_004576C0, 0x4C, D_004C1CB0, GuiWidget_ctor, D_004E13D0)
+DEFINE_GUARDED_NEW_VT(GuiBriefingPane_Create, 0x4C, D_004C1CB0, GuiWidget_ctor, D_004E13D0)
 #pragma pop /* merge_units */
 /* merge_units: end func_004576C0 */
 
@@ -120,7 +120,7 @@ void GuiWidget_ctor(void*);
 #endif /* merge_units */
 #define GuiWidget_ctor(a0) (GuiWidget_ctor((a0))) /* merge_units */
 
-void func_0036E5D0(void*);
+void Resource_Construct(void*);
 int* func_0012F2B0(void*);
 int* func_0015AC90(int*, int);
 extern char D_004C1CE0[];
@@ -152,8 +152,8 @@ static inline void SndReq_Ctor(SndReq* p, void* voice) {
     int tmp;
     p->voiceId = -2;
     p->voice = 0;
-    func_0036E5D0(p->a);
-    func_0036E5D0(p->b);
+    Resource_Construct(p->a);
+    Resource_Construct(p->b);
     p->type = -1;
     p->name = -1;
     p->voice = voice;

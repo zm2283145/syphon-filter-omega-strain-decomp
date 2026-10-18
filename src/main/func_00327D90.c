@@ -8,11 +8,11 @@ typedef struct {
 extern void* D_004FFC04;
 extern char* D_00491560;
 extern char* D_00491568;
-extern void func_0041EFA0(S327D90* self);
-extern void func_0036B250(int a0);
-extern void func_0036B3B0(int a0, int a1, int a2);
+extern void GuiWidget_BaseWake(S327D90* self);
+extern void Heap_ReleaseSlot(int a0);
+extern void Heap_AllocSlot(int a0, int a1, int a2);
 extern void func_002C9AF0(void* a0, int a1);
-extern void func_00327890(S327D90* self);
+extern void GuiSlideShow_Refresh(S327D90* self);
 extern W327D90* GuiWidget_FindChildByName(S327D90* self, char* name);
 #pragma opt_strength_reduction off
 #pragma opt_unroll_loops off
@@ -36,16 +36,16 @@ static inline int Count327D90(S327D90* l)
     }
     return total;
 }
-void func_00327D90(S327D90* self)
+void GuiSlideShow_Wake(S327D90* self)
 {
     int n;
     W327D90* w;
-    func_0041EFA0(self);
-    func_0036B250(1);
-    func_0036B3B0(1, 0x100000, 0x800);
+    GuiWidget_BaseWake(self);
+    Heap_ReleaseSlot(1);
+    Heap_AllocSlot(1, 0x100000, 0x800);
     func_002C9AF0(D_004FFC04, 2);
     self->active = 0;
-    func_00327890(self);
+    GuiSlideShow_Refresh(self);
     n = Count327D90(self);
     w = self->w64;
     if (w) {

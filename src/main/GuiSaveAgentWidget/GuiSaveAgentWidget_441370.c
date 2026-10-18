@@ -33,18 +33,18 @@ void FrontEnd_ClosePopup(int, int);
 unsigned char AgentData_Create(int, int, int);
 unsigned char AgentData_Save(int);
 unsigned char GameOptions_WriteConfigFile(int);
-void func_0040DC80(Net_441370*, char*);
-int func_004422D0(int, char*, char*);
-int func_00441780(Obj_441370*);
+void MemCardWrap_Remove(Net_441370*, char*);
+int SaveAgentWidget_FindSlotFile(int, char*, char*);
+int SaveAgentWidget_SpaceCheck(Obj_441370*);
 }
 
 static inline int ShowDlg(int mgr, int type, char* t, char* m, void* cb, int x) { return FrontEnd_OpenPopup(mgr, type, Loc_LookupText(t), Loc_LookupText(m), cb, x); }
 
-extern "C" void func_00441370(Obj_441370* self)
+extern "C" void SaveAgentWidget_Save(Obj_441370* self)
 {
     Net_441370* net = &D_0055A830;
     int agent = Agent_GetSelected(D_004FFB50, -1);
-    if (func_00441780(self)) {
+    if (SaveAgentWidget_SpaceCheck(self)) {
         unsigned char ok;
         int old;
         if (!self->shown) {
@@ -55,8 +55,8 @@ extern "C" void func_00441370(Obj_441370* self)
             ok = GameOptions_WriteConfigFile(D_004FFD2C);
         } else {
             char addr[0x20];
-            if (func_004422D0(self->f50, (char*)Agent_GetSelected(D_004FFB50, -1) + 0x8AC, addr))
-                func_0040DC80(net, addr);
+            if (SaveAgentWidget_FindSlotFile(self->f50, (char*)Agent_GetSelected(D_004FFB50, -1) + 0x8AC, addr))
+                MemCardWrap_Remove(net, addr);
             if (self->mode == 0) ok = AgentData_Create(agent, self->f50, 0);
             else ok = AgentData_Save(agent);
         }

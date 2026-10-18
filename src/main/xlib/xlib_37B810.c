@@ -30,7 +30,7 @@ typedef struct {
 } RB810;
 extern char D_00537F80[];
 extern u64_t D_004BC1B0[];
-extern GsQ *func_00375C30(void *q, int a, int b, int c, int d, int e);
+extern GsQ *DmaPacket_Reserve(void *q, int a, int b, int c, int d, int e);
 extern void func_00379780(void *q, int a);
 extern u64_t *func_00379790(void *p, int i);
 extern u64_t *func_003797B0(void *p, int i);
@@ -39,7 +39,7 @@ extern u64_t Renderer_SetTestReg(RB810 *o);
 extern u64_t Renderer_SetPrmodeReg(RB810 *o);
 extern void Renderer_RestoreRenderState(RB810 *o);
 
-void func_0037B810(RB810 *o, int *rgba, int fbp, unsigned int fbw, int tv, int psm, int ai)
+void Video_DrawScreenFxBuf(RB810 *o, int *rgba, int fbp, unsigned int fbw, int tv, int psm, int ai)
 {
     unsigned int x1;
     int y1;
@@ -64,7 +64,7 @@ void func_0037B810(RB810 *o, int *rgba, int fbp, unsigned int fbw, int tv, int p
     if (o->f1060 != -1) {
         n += 2;
     }
-    q = func_00375C30(D_00537F80, 1, 1, n + 2, 0, 1);
+    q = DmaPacket_Reserve(D_00537F80, 1, 1, n + 2, 0, 1);
     q->lo = 0x11000000;
     q->hi = 0x300002EULL | ((u64_t)0x20001E9 << 32);
     q++;
@@ -92,7 +92,7 @@ void func_0037B810(RB810 *o, int *rgba, int fbp, unsigned int fbw, int tv, int p
         o->f1060 = -1;
     }
     func_00379780(D_00537F80, 1);
-    q = func_00375C30(D_00537F80, 1, 1, 0xE, 0, 1);
+    q = DmaPacket_Reserve(D_00537F80, 1, 1, 0xE, 0, 1);
     q->lo = 0x11000000ULL | ((u64_t)0x5000000E << 32);
     q->hi = 0x800DULL | ((u64_t)0x10000000 << 32);
     q++;
@@ -174,7 +174,7 @@ extern void func_003BB060(Sub10CC *s);
 
 static inline u64_t Tex(unsigned int a, int b, int c) { u64_t t = (u64_t)a | ((long long)b << 16); return t | ((u64_t)(unsigned int)c << 24); }
 
-void func_0037BD40(RB810_0037BD40 *o, int ai)
+void Video_CopyToScreenFxBuf(RB810_0037BD40 *o, int ai)
 {
     GsQ *r;
     Sub10CC *sub;
@@ -207,7 +207,7 @@ void func_0037BD40(RB810_0037BD40 *o, int ai)
     if (o->f1060 != -1) {
         n += 2;
     }
-    q = func_00375C30(D_00537F80, 1, 1, n + 2, 0, 1);
+    q = DmaPacket_Reserve(D_00537F80, 1, 1, n + 2, 0, 1);
     q->lo = 0x11000000;
     q->hi = 0x300002EULL | ((u64_t)0x20001E9 << 32);
     q++;
@@ -235,7 +235,7 @@ void func_0037BD40(RB810_0037BD40 *o, int ai)
         o->f1060 = -1;
     }
     func_00379780(D_00537F80, 1);
-    r = func_00375C30(D_00537F80, 1, 1, 0x11, 0, 1);
+    r = DmaPacket_Reserve(D_00537F80, 1, 1, 0x11, 0, 1);
     r->lo = 0x11000000ULL | ((u64_t)0x50000011 << 32);
     r->hi = 0x8010ULL | ((u64_t)0x10000000 << 32);
     r++;

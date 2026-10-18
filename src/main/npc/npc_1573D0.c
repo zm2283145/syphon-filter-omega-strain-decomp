@@ -83,7 +83,7 @@ extern char D_004E0E80[];
 extern char D_004E0F00[];
 void NpcAi_GetPlayerRecord(void* self, int a, int b);
 void NetGame_InitLocalSlot(int* p, int v);
-void func_0042D910(void* o);
+void NetObjectMgr_Remove(void* o);
 void func_00429200(void* m, int a, int b);
 void Event_Construct(void* m, void* type);
 void Transport_Send(int a, void* m, int b, int c);
@@ -123,7 +123,7 @@ extern "C" void NpcAi_DeactivateAnon(Npc_7510* self)
     b = self->body;
     if (CanActivate_7510(b))
         b->SetActive(1);
-    func_0042D910(self->body);
+    NetObjectMgr_Remove(self->body);
     if (!self->body->IsLocal()) {
         for (i = 0, p = D_0055C780; i < 4; i++, p++) {
             if (*p == 2) {

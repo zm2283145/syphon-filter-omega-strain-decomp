@@ -10,16 +10,16 @@ extern int Gui_GetScreenList(void);
 extern int Gui_GetScreenStack(void);
 extern void GuiStack_SwapScreens(int mgr, void* owner, int res);
 extern int GuiManager_AddWidget(int a0, int res);
-extern int func_0041EFA0(void* self);
+extern int GuiWidget_BaseWake(void* self);
 extern int GuiFactory_CreateWidget(char* name);
 extern int GuiSaveAgentWidget_HandleEvent(void* self);
 
-void func_0045F300(void* self) {
+void GuiAutoSaver_SaveDone(void* self) {
     GuiStack_SwapScreens(Gui_GetScreenStack(), self, 0);
 }
 
-int func_0045F340(GuiWidget45F340* self) {
-    func_0041EFA0(self);
+int GuiAutoSaver_Wake(GuiWidget45F340* self) {
+    GuiWidget_BaseWake(self);
     self->unk4C = 2;
     return GuiSaveAgentWidget_HandleEvent(self);
 }

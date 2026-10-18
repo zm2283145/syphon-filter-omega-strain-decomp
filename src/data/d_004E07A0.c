@@ -2,6 +2,7 @@
 
 extern void IeDiffuseTrack_Construct();
 extern void IeScalarTrack_Construct();
+extern void IeTrack_EvaluateGroup();
 extern void Message_GetScriptTypeKey();
 extern void func_00140D40();
 extern void func_003E9390();
@@ -13,7 +14,6 @@ extern void func_003F3FF0();
 extern void func_003F4190();
 extern void func_003F4360();
 extern void func_003F43C0();
-extern void func_003FCE90();
 extern void func_003FCFB0();
 extern void func_003FD0F0();
 extern void func_003FF030();
@@ -41,7 +41,7 @@ void *D_004E0800[8] = {
 
 void *D_004E0820[8] = {
     0, 0, &func_003FD0F0, &func_003FCFB0,
-    &func_003FCE90, 0, 0, 0,
+    &IeTrack_EvaluateGroup, 0, 0, 0,
 };
 
 void *D_004E0840[8] = {

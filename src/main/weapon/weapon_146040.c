@@ -47,9 +47,9 @@ typedef struct { char p0[4]; int f4; } Tbl46;
 typedef struct { char p0[0x148]; Tbl46 *f148; } Src46;
 typedef struct { char p0[0xB8]; Obj46 *slot[7]; } Slot46;
 extern "C" char *Archive_GetMemberName(Src46 *, int);
-extern "C" int func_0036D4E0(Src46 *, int);
+extern "C" int Hog_GetMemberInPlace(Src46 *, int);
 extern "C" void ManModel_ctor(Obj46 *, char *, int, int, int, int, int, int);
-extern "C" void func_0038CD90(Obj46 *, int);
+extern "C" void ActorModel_LoadFromHog(Obj46 *, int);
 extern "C" void WeaponDb_CloneModel(void *, Obj46 *, Obj46 *);
 
 static inline int NameCmp_46(const char *a, const char *b)
@@ -79,20 +79,20 @@ extern "C" void WeaponDb_LoadShellsArchive(Slot46 *self, Src46 *src)
     for (i = 0; i < n; i++) {
         int found = 0;
         char *name = Archive_GetMemberName(src, i);
-        int x = func_0036D4E0(src, i);
+        int x = Hog_GetMemberInPlace(src, i);
         int k;
         for (k = 0; k < 7; k++) {
             if (NameCmp_46(D_00489CC0[k], name) == 0) {
                 self->slot[k] = new (0x293) Obj46;
                 ManModel_ctor(self->slot[k], D_00489CC0[k], k, 0, 0, 0, 0, 0);
-                func_0038CD90(self->slot[k], x);
+                ActorModel_LoadFromHog(self->slot[k], x);
                 found = 1;
             }
         }
         if (!found) {
             Obj46 *t = new (0x2B4) Obj46;
             ManModel_ctor(t, name, 0, 0, 0, 0, 0, 0);
-            func_0038CD90(t, x);
+            ActorModel_LoadFromHog(t, x);
             WeaponDb_CloneModel(self, t, t);
             if (D_00533880) Alloc_Lock(9);
             D_00533888++;
@@ -117,7 +117,7 @@ typedef struct { char p0[0x418]; unsigned char f418; char p419[3]; int f41C; } B
 typedef struct { char name[0x11C]; Blk64 *f11C; char name2[0x1C]; Blk64 *f13C; } Ent64;
 typedef struct { char p0[4]; int f4; } Cnt64;
 typedef struct { char p0[4]; Cnt64 *f4; char p8[0xC]; Ent64 *f14; } Wpn64;
-extern "C" void func_0038CC70(Blk64 *);
+extern "C" void ActorModel_Release(Blk64 *);
 
 static inline int NameCmp_64(const char *a, const char *b)
 {
@@ -145,12 +145,12 @@ static inline void FreeAll(Wpn64 *w, char *name, int n, int& cnt)
     for (; i < n; i++) {
         Ent64 *e = &w->f14[i];
         if (!NameCmp_64(name, e->name)) {
-            if (!cnt) func_0038CC70(e->f13C);
+            if (!cnt) ActorModel_Release(e->f13C);
             { Blk64 *p = e->f13C; cnt++; FREE64(p, 0x270); }
             e->f13C = 0;
         }
         if (!NameCmp_64(name, e->name2)) {
-            if (!cnt) func_0038CC70(e->f11C);
+            if (!cnt) ActorModel_Release(e->f11C);
             { Blk64 *p = e->f11C; cnt++; FREE64(p, 0x279); }
             e->f11C = 0;
         }

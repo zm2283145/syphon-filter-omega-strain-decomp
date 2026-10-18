@@ -25,10 +25,10 @@ extern char D_004F5448[];
 extern char D_004DAED0[];
 extern char D_004FFB50[];
 extern char D_004DAE30[];
-extern int func_00214240(Lift_f3* l);
-extern int func_00214470(Lift_f3* l);
-extern int func_002141A0(Lift_f3* l);
-extern void func_00214310(Lift_f3* l);
+extern int cElevatorGOBJ_LinksClosed(Lift_f3* l);
+extern int cElevatorGOBJ_TriggerLinks(Lift_f3* l);
+extern int cElevatorGOBJ_FloorExtrasClosed(Lift_f3* l);
+extern void cElevatorGOBJ_TriggerFloorExtras(Lift_f3* l);
 extern void Event_Construct(LdMsg_f3* m, void* type);
 extern void Event_Send(void* m, void* target, int immediate);
 extern void cMessage_dtor(void* m, int flags);
@@ -39,8 +39,8 @@ unsigned char Lift_OpenDoors(Lift_f3* l)
     LdSnd_f3 ev;
     LdMsg_f3 msg;
     unsigned char r;
-    if (func_00214240(l)) {
-        r = func_00214470(l);
+    if (cElevatorGOBJ_LinksClosed(l)) {
+        r = cElevatorGOBJ_TriggerLinks(l);
         if (r) {
             Event_Construct(&msg, D_004F5448);
             msg.vtable = D_004DAED0;
@@ -60,8 +60,8 @@ unsigned char Lift_OpenDoors(Lift_f3* l)
     } else {
         r = 1;
     }
-    if (func_002141A0(l)) {
-        func_00214310(l);
+    if (cElevatorGOBJ_FloorExtrasClosed(l)) {
+        cElevatorGOBJ_TriggerFloorExtras(l);
     }
     return r;
 }
@@ -79,17 +79,17 @@ typedef struct MsgLC {
     int f28;
     char pad[4];
 } MsgLC;
-extern int func_00214080(void* lift);
+extern int cElevatorGOBJ_LinksOpen(void* lift);
 #if 0 /* merge_units */
-extern unsigned char func_00214470(void* lift);
+extern unsigned char cElevatorGOBJ_TriggerLinks(void* lift);
 #endif /* merge_units */
-#define func_00214470(a0) ((unsigned char)func_00214470((void *)(a0))) /* merge_units */
+#define cElevatorGOBJ_TriggerLinks(a0) ((unsigned char)cElevatorGOBJ_TriggerLinks((void *)(a0))) /* merge_units */
 
-extern int func_00213FE0(void* lift);
+extern int cElevatorGOBJ_FloorExtrasOpen(void* lift);
 #if 0 /* merge_units */
-extern void func_00214310(void* lift);
+extern void cElevatorGOBJ_TriggerFloorExtras(void* lift);
 #endif /* merge_units */
-#define func_00214310(a0) (func_00214310((void *)(a0))) /* merge_units */
+#define cElevatorGOBJ_TriggerFloorExtras(a0) (cElevatorGOBJ_TriggerFloorExtras((void *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void Event_Construct(MsgLC* msg, void* name);
@@ -109,8 +109,8 @@ extern void cMessage_dtor(MsgLC* msg, int flags);
 unsigned char Lift_CloseDoors(void* lift)
 {
     unsigned char r = 1;
-    if (func_00214080(lift)) {
-        r = func_00214470(lift);
+    if (cElevatorGOBJ_LinksOpen(lift)) {
+        r = cElevatorGOBJ_TriggerLinks(lift);
         if (r) {
             MsgLC msg;
             Event_Construct(&msg, D_004F5448);
@@ -122,13 +122,13 @@ unsigned char Lift_CloseDoors(void* lift)
             cMessage_dtor(&msg, 0);
         }
     }
-    if (func_00213FE0(lift)) {
-        func_00214310(lift);
+    if (cElevatorGOBJ_FloorExtrasOpen(lift)) {
+        cElevatorGOBJ_TriggerFloorExtras(lift);
     }
     return r;
 }
-#undef func_00214470 /* merge_units */
-#undef func_00214310 /* merge_units */
+#undef cElevatorGOBJ_TriggerLinks /* merge_units */
+#undef cElevatorGOBJ_TriggerFloorExtras /* merge_units */
 #undef Event_Construct /* merge_units */
 #undef Event_Send /* merge_units */
 #undef cMessage_dtor /* merge_units */

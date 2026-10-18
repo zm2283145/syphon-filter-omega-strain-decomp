@@ -20,7 +20,7 @@ extern int D_00532B14;
 E337A0** func_003305C0(void* v);
 }
 static inline bool Neq337A0(E337A0* a, E337A0* b) { return !(a == b); }
-extern "C" int func_003337A0(int id)
+extern "C" int Awards_ResolveUnlock(int id)
 {
     if (id > -1) {
         E337A0* first = *func_003305C0(D_00532B10);

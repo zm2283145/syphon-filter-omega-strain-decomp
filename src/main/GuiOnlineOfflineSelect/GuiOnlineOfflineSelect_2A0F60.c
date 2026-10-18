@@ -20,7 +20,7 @@ unsigned char func_0044E960(void* g, int a, int b, int c);
 unsigned char func_00452FF0(void* g, int a);
 void func_002A0E80(void* self, int builtin);
 void FrontEnd_ClosePopup(void* ui, int id);
-void func_002CC260(int a, int b);
+void App_CardWaitPoll(int a, int b);
 void func_004536B0(void* g);
 void func_002A0DC0(void* self);
 }
@@ -48,7 +48,7 @@ extern "C" void func_002A0F60(S_002A0F60* self)
                 return;
             }
             while (Nz_002A0F60(D_005064A8) ^ 1) {
-                func_002CC260(0, 0);
+                App_CardWaitPoll(0, 0);
                 func_004536B0(g);
             }
             {

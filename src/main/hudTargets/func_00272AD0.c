@@ -20,7 +20,7 @@ struct S_2AD0 { char pad[0x3C]; T_2AD0* cur; };
 
 #pragma push
 #pragma opt_propagation off
-extern "C" void func_00272AD0(S_2AD0* s, T_2AD0* t)
+extern "C" void HudMarkers_SetHighlight(S_2AD0* s, T_2AD0* t)
 {
     void* o;
     if (s->cur != t) {

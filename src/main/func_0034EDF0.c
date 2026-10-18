@@ -19,11 +19,11 @@ extern "C" char D_004FFB50[];
 extern "C" void func_00296F20(LEDF0* l);
 extern "C" void func_00299270(LEDF0* l, int flags);
 extern "C" void* Agent_GetSelected(void* list, int idx);
-extern "C" void func_00333260(void* ag, int a, int b, LEDF0* l);
+extern "C" void AgentData_GetAwardItems(void* ag, int a, int b, LEDF0* l);
 extern "C" int Loc_LookupText(const char* key);
 extern "C" void GuiTextListWidget_AddItem(void* t, int id, int i, int mode);
 
-extern "C" void func_0034EDF0(OEDF0* self)
+extern "C" void GuiOmegaStrain_Fill(OEDF0* self)
 {
     void* ag = Agent_GetSelected(D_004FFB50, -1);
     LEDF0 l;
@@ -31,7 +31,7 @@ extern "C" void func_0034EDF0(OEDF0* self)
     int i;
     func_00296F20(&l);
     l.aC = 1;
-    func_00333260(ag, 4, 0, &l);
+    AgentData_GetAwardItems(ag, 4, 0, &l);
     text = Loc_LookupText("Classified");
     for (i = 0; i < l.size(); i++) {
         EEDF0* e = (EEDF0*)((int)l.data + i * sizeof(EEDF0));

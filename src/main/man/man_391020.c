@@ -44,7 +44,7 @@ extern char D_0055DDA0[];
 extern char D_005711B0[];
 extern char D_004BC310[];
 
-void func_00390940(Self391020* self);
+void ActorModel_SwitchBodyPacking(Self391020* self);
 void Appearance_RemoveBlankPairs(App391020* app);
 int Appearance_GetPairCount(App391020* app);
 void Appearance_RequestHardMesh(App391020* app, int hard, char* out);
@@ -63,7 +63,7 @@ extern "C" void func_00391020(Self391020* self)
     int j;
     int n;
 
-    func_00390940(self);
+    ActorModel_SwitchBodyPacking(self);
     Appearance_RemoveBlankPairs(&self->app);
     self->x23C0 = Appearance_GetPairCount(&self->app);
     Appearance_RequestHardMesh(&self->app, 1, self->x20);
@@ -138,7 +138,7 @@ static inline void QMove_391210(void* d0, void* s, int n0) {
     }
 }
 
-extern "C" void func_00391210(Self391210* self)
+extern "C" void ActorModel_RestoreBodyPacking(Self391210* self)
 {
     App391210* s = self->x2C14;
     if (s) {

@@ -17,7 +17,7 @@ static inline float fmin_(float a, float b)
     return r;
 }
 
-void func_00261540(S_1540* s, int sel, float scale)
+void HudRadar_SetMeter(S_1540* s, int sel, float scale)
 {
     M_1540* m;
     float f;

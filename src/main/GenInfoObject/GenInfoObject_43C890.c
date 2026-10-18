@@ -18,17 +18,17 @@ extern void func_001BFEE0(It_43C890* out, Str_43C890* s);
 extern int func_001BFE90(It_43C890* a, It_43C890* b);
 extern char* func_001BFED0(It_43C890* a);
 extern void func_001BFEB0(It_43C890* a);
-extern void func_003813A0(int a, int b, int c);
-extern int func_0043C730(O_43C890* o);
+extern void Tex_Release(int a, int b, int c);
+extern int GuiBitmapWidget_Load(O_43C890* o);
 extern int D_00539248;
 extern char D_004C0018[];
 
-int func_0043C890(O_43C890* o, char* name, int arg)
+int GuiBitmapWidget_SetImage(O_43C890* o, char* name, int arg)
 {
     Str_43C890 t2;
     Str_43C890 t;
     if (o->h48 != -1) {
-        func_003813A0(D_00539248, o->h48, 0);
+        Tex_Release(D_00539248, o->h48, 0);
         o->h48 = -1;
     }
     o->f4C = 0;
@@ -52,7 +52,7 @@ int func_0043C890(O_43C890* o, char* name, int arg)
             func_001BFEB0(&it);
         }
     }
-    if (o->flags & 8) return func_0043C730(o);
+    if (o->flags & 8) return GuiBitmapWidget_Load(o);
     return 1;
 }
 #pragma pop /* merge_units */
@@ -69,9 +69,9 @@ extern void* D_00539248;
 
 extern void GuiWidget_Deinit(Obj* self);
 #if 0 /* merge_units */
-extern void func_003813A0(void* mgr, int handle, int a2);
+extern void Tex_Release(void* mgr, int handle, int a2);
 #endif /* merge_units */
-#define func_003813A0(a0, a1, a2) (func_003813A0((int)(a0), (a1), (a2))) /* merge_units */
+#define Tex_Release(a0, a1, a2) (Tex_Release((int)(a0), (a1), (a2))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void String_CtorCStr_13B480(String* s, const char* text);
@@ -90,12 +90,12 @@ extern void String_Dtor(String* s, int flags);
 
 
 /* Resets: base reset, releases the handle, clears fields and the name. */
-void func_0043CA20(Obj* self)
+void GuiBitmapWidget_Deinit(Obj* self)
 {
     String tmp;
     GuiWidget_Deinit(self);
     if (self->handle != -1) {
-        func_003813A0(D_00539248, self->handle, 0);
+        Tex_Release(D_00539248, self->handle, 0);
         self->handle = -1;
     }
     self->unk4C = 0;
@@ -104,7 +104,7 @@ void func_0043CA20(Obj* self)
     String_Dtor(&tmp, 0);
 }
 #undef D_00539248 /* merge_units */
-#undef func_003813A0 /* merge_units */
+#undef Tex_Release /* merge_units */
 #undef String_CtorCStr_13B480 /* merge_units */
 #undef func_0013D680 /* merge_units */
 #undef String_Dtor /* merge_units */

@@ -12,7 +12,7 @@
 
 /* Factory: allocate and construct. */
 extern "C" { char D_004C1F28[] = "guiWidget.hh"; }
-DEFINE_GUARDED_NEW_CTOR(func_0045A0A0, 0x7C, D_004C1F28, func_00458590)
+DEFINE_GUARDED_NEW_CTOR(func_0045A0A0, 0x7C, D_004C1F28, GuiSubTitleDisplay_ctor)
 #pragma pop /* merge_units */
 /* merge_units: end func_0045A0A0 */
 
@@ -34,21 +34,21 @@ struct Net { Obj* obj; unsigned char busy; };
 extern "C" {
 extern Net D_0055A830;
 extern int D_004979A0;
-extern Msg* func_0045A7A0(Msg*);
-extern int func_0040DBB0(Net*, int);
+extern Msg* Options_SetDefaults(Msg*);
+extern int MemCardWrap_GetSize(Net*, int);
 extern int MemCardWrap_Read(Net*, int, void*, int);
 extern int GameOptions_Diff(Msg*, Msg*);
 extern void GameOptions_Apply(Msg*, int);
-int func_0045A150(Msg* s);
+int Options_Load(Msg* s);
 }
 
-int func_0045A150(Msg* s)
+int Options_Load(Msg* s)
 {
     Net* n = &D_0055A830;
     Msg m;
-    func_0045A7A0(&m);
+    Options_SetDefaults(&m);
     if (((n->busy != 0) ^ 1) && n->obj->ready) {
-        if (func_0040DBB0(n, D_004979A0) != sizeof(Msg)) {
+        if (MemCardWrap_GetSize(n, D_004979A0) != sizeof(Msg)) {
             return 0;
         }
         if (MemCardWrap_Read(n, D_004979A0, &m, sizeof(Msg))) {

@@ -9,7 +9,7 @@
 extern int Net_SendLocked(char type, int session, int target, int flags, int a, int b, void *c);
 extern void printf(const char *fmt, ...);
 extern int DME_Update(void);
-extern int func_0042B1A0(int);
+extern int Net_GetClock(int);
 extern char *strncpy(char *d, const char *s, unsigned int n);
 
 extern unsigned char D_005721D0;
@@ -40,8 +40,8 @@ unsigned char NetObj_SendMessage(int a, int b, void *c, int target, int type)
 
     ok = 0;
     if (D_005721D0) {
-        if (D_0055C9E0 || D_0055C9D8 + 1000 < func_0042B1A0(1)) {
-            D_0055C9D8 = func_0042B1A0(1);
+        if (D_0055C9E0 || D_0055C9D8 + 1000 < Net_GetClock(1)) {
+            D_0055C9D8 = Net_GetClock(1);
             D_0055C9A0 = 0;
             D_0055C9A4[0] = 0;
             D_0055C9A8 = 0;
@@ -117,7 +117,7 @@ extern int D_0055C7B8;
 extern int D_0055D480;
 extern unsigned char D_005721C0;
 extern unsigned char D_005721C8;
-int func_0042B1A0(int);
+int Net_GetClock(int);
 int* Event_GetType(Event3FB020*);
 unsigned char NetObj_SendMessage(int a, int b, void* c, int target, int type);
 void func_002EBBA0(int, int*);
@@ -131,7 +131,7 @@ extern "C" int Transport_Send(int target, Event3FB020* e, int a2, int a3)
     int r;
     unsigned char send;
 
-    r = e->Serialize(target, &handle, func_0042B1A0(0), D_0055C7B8, 0x400, buf);
+    r = e->Serialize(target, &handle, Net_GetClock(0), D_0055C7B8, 0x400, buf);
     if (D_005721D0 && target > -1 && r > -1) {
         send = 1;
         int* ty = Event_GetType(e);
@@ -202,7 +202,7 @@ extern int func_004402E0(void);
 
 /*
  * Runs the per-class registration functions of the message/event types (each
- * callee registers one class), then stores func_0042B1A0(0) in D_0055C7B8.
+ * callee registers one class), then stores Net_GetClock(0) in D_0055C7B8.
  */
 void NetMsgTypes_RegisterAll(void) {
     func_003FF210();
@@ -230,7 +230,7 @@ void NetMsgTypes_RegisterAll(void) {
     func_004335F0();
     func_00438AE0();
     func_004402E0();
-    D_0055C7B8 = func_0042B1A0(0);
+    D_0055C7B8 = Net_GetClock(0);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003FB250 */

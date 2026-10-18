@@ -43,8 +43,8 @@ extern char D_00587BA0[];
 extern char D_00587BB0[];
 extern char D_00587BC0[];
 extern void func_00425DB0(S34FEC0*, char*);
-extern void func_00425EA0(S34FEC0*, unsigned int, unsigned int, int);
-void func_0034FEC0(S34FEC0* self, unsigned int kind, unsigned int idx, int arg) {
+extern void GuiTextArrayWidget_DrawCell(S34FEC0*, unsigned int, unsigned int, int);
+void GuiMissionStatList_Draw(S34FEC0* self, unsigned int kind, unsigned int idx, int arg) {
     T34FEC0* t = self->tab;
     E34FEC0* e;
     char* s;
@@ -74,7 +74,7 @@ void func_0034FEC0(S34FEC0* self, unsigned int kind, unsigned int idx, int arg) 
         break;
     }
     func_00425DB0(self, s);
-    func_00425EA0(self, kind, idx, arg);
+    GuiTextArrayWidget_DrawCell(self, kind, idx, arg);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0034FEC0 */

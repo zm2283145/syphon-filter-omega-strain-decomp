@@ -26,14 +26,14 @@ float GuiBatch_AddVertexUV(void)
 
 #include "loose01_types.h"
 
-extern int func_0025F270(int*, int, int);
+extern int VisionFx_DrawGobGlow(int*, int, int);
 
-/* Calls func_0025F270(self, a1, 1) when the state is 1 or 2. */
-void func_0025F230(int* self, int a1) {
+/* Calls VisionFx_DrawGobGlow(self, a1, 1) when the state is 1 or 2. */
+void VisionFx_DrawVisionGlow(int* self, int a1) {
     int state = *self;
 
     if (state == 1 || state == 2) {
-        func_0025F270(self, a1, 1);
+        VisionFx_DrawGobGlow(self, a1, 1);
     }
 }
 #pragma pop /* merge_units */

@@ -7,7 +7,7 @@ typedef struct { int raw; } RIt_198D00;
 extern void List_Begin_16E880(RIt_198D00* out, void* self);
 extern void List_End_13D890(RIt_198D00* out, void* self);
 extern void func_00198E70(It_198D00* out, int raw);
-extern void func_00198E00(H_198D00* out, void* item);
+extern void Footstep_GroupMatches(H_198D00* out, void* item);
 extern int func_00198DD0(void* key, H_198D00* h);
 void* func_00198D00(void* self, void* key)
 {
@@ -26,7 +26,7 @@ void* func_00198D00(void* self, void* key)
     func_00198E70(&d, c.raw);
     end = d.n;
     for (; it != end; it = it->next) {
-        func_00198E00(&h, it->item);
+        Footstep_GroupMatches(&h, it->item);
         if (func_00198DD0(key, &h)) {
             r = it->item;
             break;

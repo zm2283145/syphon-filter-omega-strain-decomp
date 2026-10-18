@@ -20,7 +20,7 @@
 #pragma cplusplus on
 
 /* Push the value to the linked target and refresh it. */
-DEFINE_LINKED_TARGET_REFRESH(func_0021A840)
+DEFINE_LINKED_TARGET_REFRESH(cGameGOBJ_Draw)
 #pragma pop /* merge_units */
 /* merge_units: end func_0021A840 */
 

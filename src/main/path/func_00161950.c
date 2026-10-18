@@ -44,7 +44,7 @@ extern "C" void Event_Construct(void* msg, void* name);
 extern "C" void Event_Send(void* msg, void* target, int immediate);
 extern "C" void cMessage_dtor(void* msg, int flags);
 extern "C" void NpcRoute_CollectCandidates(Pt1SnSelf* self, int mode);
-extern "C" Pt1SnNode* func_001647B0(void* list);
+extern "C" Pt1SnNode* NpcNodeSearch_PopFront(void* list);
 extern "C" void NpcRoute_RequestLosChecks(Pt1SnSelf* self, int id, int mask);
 
 static inline Pt1SnObj* Pt1Sn_Owner(Pt1SnSelf* self)
@@ -78,7 +78,7 @@ extern "C" unsigned char NpcRoute_ScoreNodes(Pt1SnSelf* self)
         self->status = 0;
         if (self->count) {
             if (!self->mode) {
-                Pt1SnNode* n = func_001647B0(self->list);
+                Pt1SnNode* n = NpcNodeSearch_PopFront(self->list);
                 self->target = n->a;
                 self->target2 = n->b;
             } else {

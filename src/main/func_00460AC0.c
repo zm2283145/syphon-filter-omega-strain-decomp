@@ -16,7 +16,7 @@ extern void strncpy(void* dst, const void* src, int size); /* strncpy-style copy
 extern void func_00461770(Vec12* vec, Entry12* pos, int count, Entry12* value);
 
 /* Appends an entry: 8-byte name copied from `name`, ticks = seconds * 30. */
-void func_00460AC0(Vec12* vec, const char* name, float seconds) {
+void VoiceQueue_Push(Vec12* vec, const char* name, float seconds) {
     Entry12 entry;
     strncpy(&entry, name, 8);
     entry.ticks = (int)(30.0f * seconds);

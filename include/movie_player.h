@@ -4,7 +4,7 @@
 /*
  * main/MoviePlayer (MoviePlayer.cc): the movie player keeps ten work buffers
  * at the start of its object (Unk3F9380 in loose04_types.h, built by
- * func_003F9380 and destroyed by func_003F9300). MoviePlayer_AllocBuffers
+ * MoviePlayer_ctor and destroyed by MoviePlayer_Destroy). MoviePlayer_AllocBuffers
  * allocates them from heap 1; each entry keeps the raw allocation for
  * Mem_Free and a 64-byte aligned pointer into it for the decoder (the last
  * buffer is used unaligned). MoviePlayer_FreeBuffers releases them.

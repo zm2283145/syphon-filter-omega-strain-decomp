@@ -25,7 +25,7 @@ LtrWidget* GuiWidget_FindChildByName(void* self, char* name);
 char* Loc_LookupText(char* key);
 void GuiTextWidget_SetText(LtrWidget* w, char* text, int flags);
 void AgentOpen_BuildSlotList(void* self);
-void func_0041EFA0(void* self);
+void GuiWidget_BaseWake(void* self);
 }
 
 static inline LtrWidget* Ltr_Cast(LtrWidget* w)
@@ -43,7 +43,7 @@ static inline LtrWidget* Ltr_Cast(LtrWidget* w)
         if (w)                                                                \
             GuiTextWidget_SetText(w, Loc_LookupText(textKey), 0);                     \
         AgentOpen_BuildSlotList(self);                                                  \
-        func_0041EFA0(self);                                                  \
+        GuiWidget_BaseWake(self);                                                  \
     }
 
 #endif /* LABEL_TEXT_REFRESH_H */

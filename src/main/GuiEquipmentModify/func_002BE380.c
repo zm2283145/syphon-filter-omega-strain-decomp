@@ -27,9 +27,9 @@ Wpn_002BE380* WeaponDb_Get(int db, int id);
 void* GuiWidget_FindChildByName(void* self, char* name);
 char* Loc_LookupText(char* key);
 void GuiTextWidget_SetText(W_002BE380* w, char* s, int a);
-void* func_002C9020(void* p);
-void* func_002C8FD0(void* p);
-void func_002C8EC0(void* p, char* buf, int n);
+void* WeaponStats_RatingA(void* p);
+void* WeaponStats_RatingB(void* p);
+void Format_RomanNumeral(void* p, char* buf, int n);
 void String_Copy(char* d, const char* s);
 int sprintf(char* buf, const char* fmt, ...);
 int WeaponInv_ClipsForActor(void* p, int a);
@@ -45,7 +45,7 @@ static inline void Clear_002BE380(void* self, char* name)
     if (w)
         GuiTextWidget_SetText(w, D_004AC388, 0);
 }
-extern "C" void func_002BE380(S_002BE380* self)
+extern "C" void GuiEquipmentModify_BuildSelectionColumn(S_002BE380* self)
 {
     char buf[0x20];
     if (self->f108 < self->f104 && self->p8C) {
@@ -59,7 +59,7 @@ extern "C" void func_002BE380(S_002BE380* self)
             GuiTextWidget_SetText(w, wp->name, 0);
         w = FindAs_002BE380(self, D_004AC410, D_004A7520);
         if (wp->p60)
-            func_002C8EC0(func_002C9020(wp->p60), buf, 0x20);
+            Format_RomanNumeral(WeaponStats_RatingA(wp->p60), buf, 0x20);
         else
             String_Copy(buf, (*(char**)D_0048C0A8));
         if (w)
@@ -68,7 +68,7 @@ extern "C" void func_002BE380(S_002BE380* self)
         if (wp->bBC == 7 && !wp->p64)
             sprintf(buf, D_004AC468, Loc_LookupText(D_004AC470));
         else if (wp->p64)
-            func_002C8EC0(func_002C8FD0(wp->p64), buf, 0x20);
+            Format_RomanNumeral(WeaponStats_RatingB(wp->p64), buf, 0x20);
         else
             String_Copy(buf, (*(char**)D_0048C0A8));
         if (w)

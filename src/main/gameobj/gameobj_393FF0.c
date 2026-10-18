@@ -99,7 +99,7 @@ static inline void Anim_ctor(Anim* a, void* owner)
     AnimModel_InitAnim(a);
 }
 
-Actor* func_00393FF0(Actor* me, int* name)
+Actor* DisplayActor_Construct(Actor* me, int* name)
 {
     int z = 0;
     Sub2E50* s;

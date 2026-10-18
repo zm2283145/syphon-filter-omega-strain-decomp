@@ -26,7 +26,7 @@ int func_0036D880(int* f);
 void* Tdx_Read(Obj_37FEA0* o, int* f, int* flags);
 void func_00383560(It_37FEA0* result, void* list, It_37FEA0* pos);
 int func_00380360(void* t);
-void func_00380280(void* t, int a, int b, char* file, int line);
+void Tex_DestroyRecord(void* t, int a, int b, char* file, int line);
 void func_003801A0(Obj_37FEA0* o, int v);
 void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
 void* func_003BBC90(void* t);
@@ -77,7 +77,7 @@ extern "C" int TexMan_LoadNewTexture(Obj_37FEA0* o, int* file, int arg2)
         idx = o->next++;
     }
     if (o->tex[idx] && func_00380360(o->tex[idx]) <= 0) {
-        func_00380280(o->tex[idx], 0, 1, D_004BC300, 0x39E);
+        Tex_DestroyRecord(o->tex[idx], 0, 1, D_004BC300, 0x39E);
         o->tex[idx] = 0;
         func_003801A0(o, idx);
     }

@@ -6,8 +6,8 @@ M_33DA00* Gui_GetScreenStack(void);
 void GuiScreen_SetFocus(void* mgr, void* w);
 void GuiWidget_SendEvent(void* a, void* b, int kind, int v, int f);
 void func_0033C320(O_33DA00* o, int v);
-void func_0043D820(void* p, int v);
-void func_0043D760(void* p, int v);
+void GuiMultiLineText_ScrollUp(void* p, int v);
+void GuiMultiLineText_ScrollDown(void* p, int v);
 void func_002AEC60(void* p);
 int func_0033E2A0(O_33DA00* o, void* w, int v);
 int GuiScreen_HandleInput(O_33DA00* o, Ev_33DA00* ev);
@@ -40,11 +40,11 @@ int func_0033DA00(O_33DA00* o, Ev_33DA00* ev)
         }
     }
     if (Plain_33DA00(ev, 2)) {
-        func_0043D820(o->f8C, 0);
+        GuiMultiLineText_ScrollUp(o->f8C, 0);
         return 1;
     }
     if (Plain2_33DA00(ev, 1)) {
-        func_0043D760(o->f8C, 0);
+        GuiMultiLineText_ScrollDown(o->f8C, 0);
         return 1;
     }
     if (Plain2_33DA00(ev, 0x100)) {

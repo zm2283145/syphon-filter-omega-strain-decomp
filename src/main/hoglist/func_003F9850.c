@@ -20,7 +20,7 @@ int FileMan_FindMember(void*);
 int FileMan_GetSize(void*);
 void* Mem_Alloc(int pool, int size, char* file, int line);
 int FileMan_LoadMemberSync(void*, char**, int);
-void func_0036D540(void*, char*, char*, int);
+void Hog_OpenInMemory(void*, char*, char*, int);
 void* FileMan_Release(void*, int);
 }
 static inline Node3F98* EndN(List3F98* l) { Node3F98* r; func_003F95E0(&r, func_003F95F0(l)); return r; }
@@ -57,7 +57,7 @@ extern "C" Elem3F98* func_003F9850(List3F98* self, char* name, Pool3F98* pool)
         buf = p;
     }
     FileMan_LoadMemberSync(&e, &buf, 0);
-    func_0036D540(el, name, buf, pool->heap);
+    Hog_OpenInMemory(el, name, buf, pool->heap);
     el->busy = 0;
     FileMan_Release(&e, -1);
     return el;

@@ -24,22 +24,22 @@ extern "C" char D_004BAA90[];
 static void * const dat_00492BD0[2] = { (void*)D_004BAA78, (void*)0x0 };
 static void * const dat_00492BD8[2] = { (void*)D_004BAA90, (void*)0x0 };
 extern char D_004BAD80[];
-void func_00356CD0(S34FBA0* o);
-void func_0034F670(S34FBA0* o);
+void GuiPersonnelScreen_Init(S34FBA0* o);
+void GuiMissionStatistics_BuildRows(S34FBA0* o);
 W34FBA0* GuiWidget_FindChildByName(void* self, char* name);
 void GuiArrayWidget_Select(void* w, int a, int b);
 void GuiArrayWidget_ColumnWidth(void* w, int i, int v);
-void func_0034FBA0(S34FBA0* o);
+void GuiMissionStatistics_Init(S34FBA0* o);
 }
 static inline W34FBA0* cast34FBA0(W34FBA0* w)
 {
     return (w && w->IsA(D_004BAD80)) ? w : 0;
 }
-void func_0034FBA0(S34FBA0* o)
+void GuiMissionStatistics_Init(S34FBA0* o)
 {
-    func_00356CD0(o);
+    GuiPersonnelScreen_Init(o);
     o->a80 = 0;
-    func_0034F670(o);
+    GuiMissionStatistics_BuildRows(o);
     o->a6C = cast34FBA0(GuiWidget_FindChildByName(o, (*(char**)dat_00492BD0)));
     if (o->a6C) {
         W34FBA0* w;

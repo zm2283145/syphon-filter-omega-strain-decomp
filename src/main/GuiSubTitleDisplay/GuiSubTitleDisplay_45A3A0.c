@@ -31,7 +31,7 @@ extern LightState_h5* D_004FFC0C;
 extern char D_004FFB50[];
 extern char D_004F2CC0[];
 extern int D_005383C0;
-extern void func_0026BE70(int v);
+extern void Pad_EnableVibration(int v);
 extern void* Service_Lookup(char* a, char* b);
 extern void SoundMgr_SetChannelVolume(void* svc, int ch, int v);
 extern void SoundMgr_SetOutputMode(void* svc, int v);
@@ -48,7 +48,7 @@ void GameOptions_Apply(LightCfg_h5* cfg, unsigned int mask)
         }
     }
     if (mask & 2) {
-        func_0026BE70(cfg->b5);
+        Pad_EnableVibration(cfg->b5);
     }
     if (mask & 4) {
         if (D_004FFC0C) {
@@ -155,12 +155,12 @@ typedef struct {
     float unk1C;
     int unk20;
 } Settings0045A700;
-extern Settings0045A700* func_0045A7A0(Settings0045A700* s);
+extern Settings0045A700* Options_SetDefaults(Settings0045A700* s);
 /* Initialise with defaults, then override three fields. */
 void func_0045A700(Settings0045A700* s)
 {
     Settings0045A700 def;
-    func_0045A7A0(&def);
+    Options_SetDefaults(&def);
     s->unk0 = def.unk0;
     s->b4 = def.b4;
     s->b5 = def.b5;

@@ -47,7 +47,7 @@ extern void func_001A7530(VP_1AD9C0* p);
 extern VP_1AD9C0* Root_GetParentInverse(R_1AD9C0* self, VP_1AD9C0* tmp);
 extern void Placement_Compose(VP_1AD9C0* d, VP_1AD9C0* s);
 extern void Root_PropagateChildren(R_1AD9C0* self);
-void func_001AD9C0(R_1AD9C0* self, VP_1AD9C0* o)
+void RootAttachments_Attach(R_1AD9C0* self, VP_1AD9C0* o)
 {
     Transform_SetOrientation(&Root_IdentityAccessor(self)->orient, o);
     if (func_001A0280(self)) {

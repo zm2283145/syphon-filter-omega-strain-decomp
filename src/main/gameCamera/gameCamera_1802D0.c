@@ -109,7 +109,7 @@ void* func_00139BC0(int size, void* p);
 void func_0017D700(void* p, V* a, V* b, V* c, V* d, float t);
 }
 
-extern "C" void func_00180310(Cam310* c)
+extern "C" void QuatCurve_PreUpdate(Cam310* c)
 {
     Ref* r = c->ref; bool go = 0; float f = r->f40; bool eq = c->fB4 == f; if (eq && !(c->sp.t <= 0.0f)) go = 1;
     if (go) {
@@ -144,7 +144,7 @@ static inline void merge_flush_func_00180310(void) {}
 
 /* merge_units: begin func_00180550 */
 #pragma push /* merge_units */
-void func_00180550(V4* a) {
+void QuatCurve_Normalize4(V4* a) {
     char* pv1 = (char*)a + 0x20;
     asm {
         lqc2 vf1, 0x0(pv1)

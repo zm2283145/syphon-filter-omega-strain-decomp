@@ -46,7 +46,7 @@ extern "C" Obj_8980* GuiManager_FindByName(char* self, char* name) {
 
 
 
-int func_00418A70(void) {
+int GuiWidget_GetClassName(void) {
     return (int)"GuiWidget";
 }
 #pragma pop /* merge_units */

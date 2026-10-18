@@ -96,7 +96,7 @@ extern char* D_004FFC04;
 extern char D_005064A8;
 extern int D_005064B0;
 extern int D_005064B8;
-void func_002CC260(void);
+void App_CardWaitPoll(void);
 Obj_002A1780* GuiWidget_FindChildByName(Self_002A1780* self, char* name);
 #if 0 /* merge_units */
 void GuiTextWidget_SetText(void* w, char* s, int a);
@@ -152,7 +152,7 @@ extern "C" void func_002A1780(Self_002A1780* self)
         } else {
             asm { .set reorder }
             if (g->state != 5) {
-                self->bF8 = func_004518F0(g, (void*)func_002CC260, self->s88, self->sA4, self->sC0);
+                self->bF8 = func_004518F0(g, (void*)App_CardWaitPoll, self->s88, self->sA4, self->sC0);
                 if (!self->bF8) {
                     asm { .set reorder }
                     char* ui = D_004FFC04;

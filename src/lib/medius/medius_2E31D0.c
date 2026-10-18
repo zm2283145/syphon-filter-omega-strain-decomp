@@ -191,7 +191,7 @@ int func_002E3718(unsigned int id, void *data, int len)
 /* merge_units: begin func_002E3830 */
 /* EE soft-float double libcalls are aliased to their retail functions. */
 __asm__("dpcmp = SoftFloat_UnpackAndCompare\n"
-        "dpmul = func_0011C268\n"
+        "dpmul = SoftFloat_DoubleMultiply\n"
         "dpadd = SoftFloat_DoubleAdd\n"
         "dpsub = func_0011C200\n"
         "fptodp = SoftFloat_FloatToDouble");

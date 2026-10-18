@@ -30,7 +30,7 @@ extern "C" {
 int Loc_FindKeyThunk(char*);
 char* Loc_GetTextById(int);
 char* Loc_LookupText(char*);
-Agent* func_00185C70(int);
+Agent* Player_GetAgentData(int);
 char* AgentData_GetRankText(Agent*);
 char* AgentData_GetName(Agent*);
 void GuiTextWidget_SetText(Widget*, char*, int);
@@ -40,9 +40,9 @@ extern State* D_004FFC04;
 extern int D_00506508;
 extern Screen* D_0051EE10;
 extern unsigned char D_005721C8;
-void func_002C21C0();
-void func_002C2290();
-void func_002C2340();
+void GuiEquipmentModify_DrawWeaponBox2();
+void GuiEquipmentModify_DrawWeaponBox1();
+void GuiEquipmentModify_DrawFigure();
 extern char D_0048BA80[];
 extern char D_004A7520[];
 extern char D_004A9870[];
@@ -73,7 +73,7 @@ extern char D_004AC590[];
 extern char D_004AC5A0[];
 extern char D_004AC5B0[];
 }
-extern "C" void func_002C0790(Screen* arg0) {
+extern "C" void GuiEquipmentModify_Init(Screen* arg0) {
     Widget *var_s2;
     char *temp_s2;
     char *var_a0;
@@ -106,19 +106,19 @@ extern "C" void func_002C0790(Screen* arg0) {
     D_0051EE10 = arg0;
     var_s1 = (Widget*)GuiFindAs(arg0, D_004AC4A0, D_004A9BF0);
     if (var_s1 != 0) {
-        var_s1->unk48 = (void*)&func_002C2340;
+        var_s1->unk48 = (void*)&GuiEquipmentModify_DrawFigure;
     }
     var_s1_2 = (Widget*)GuiFindAs(arg0, D_004AC4B0, D_004A9BF0);
     arg0->unkD0 = var_s1_2;
     temp_v1 = arg0->unkD0;
     if (temp_v1 != 0) {
-        temp_v1->unk48 = (void*)&func_002C2290;
+        temp_v1->unk48 = (void*)&GuiEquipmentModify_DrawWeaponBox1;
     }
     var_s1_3 = (Widget*)GuiFindAs(arg0, D_004AC4C0, D_004A9BF0);
     arg0->unkD4 = var_s1_3;
     temp_v1_2 = arg0->unkD4;
     if (temp_v1_2 != 0) {
-        temp_v1_2->unk48 = (void*)&func_002C21C0;
+        temp_v1_2->unk48 = (void*)&GuiEquipmentModify_DrawWeaponBox2;
     }
     var_s1_4 = (Widget*)GuiFindAs(arg0, D_004AC4D0, D_004AA640);
     arg0->unk94 = var_s1_4;
@@ -133,9 +133,9 @@ extern "C" void func_002C0790(Screen* arg0) {
     temp_v1_4->unk14 = (unsigned short) (temp_v1_4->unk14 & 0xFF7F);
     var_s2 = (Widget*)GuiFindAs(arg0, D_004AC4F8, D_004A7520);
     var_s1_5 = (Widget*)GuiFindAs(arg0, D_004AC508, D_004A7520);
-    if (func_00185C70(arg0->unk48)->unkB70 != 0) {
-        GuiTextWidget_SetText(var_s2, AgentData_GetName(func_00185C70(arg0->unk48)), 0);
-        GuiTextWidget_SetText(var_s1_5, AgentData_GetRankText(func_00185C70(arg0->unk48)), 0);
+    if (Player_GetAgentData(arg0->unk48)->unkB70 != 0) {
+        GuiTextWidget_SetText(var_s2, AgentData_GetName(Player_GetAgentData(arg0->unk48)), 0);
+        GuiTextWidget_SetText(var_s1_5, AgentData_GetRankText(Player_GetAgentData(arg0->unk48)), 0);
     } else {
         GuiTextWidget_SetText(var_s2, D_004AC518, 0);
         GuiTextWidget_SetText(var_s1_5, Loc_GetTextById(Loc_FindKeyThunk(D_004AC520) + 1), 0);
@@ -210,9 +210,9 @@ extern char D_0055DDA0[];
 extern char D_004DDEE0[];
 extern char D_004E1220[];
 extern int D_00506500;
-void func_00403310(void* p);
-void func_0040F540(void);
-void func_002BDC10(void* p);
+void AgentPartCache_Unlock(void* p);
+void World_ClearPendingIfLoaded(void);
+void GuiEquipmentModify_RingRelease(void* p);
 void GuiWidget_Destroy(void* p, int f);
 void operator_delete(void* p);
 }
@@ -222,12 +222,12 @@ static inline void Del002C0F00(V002C0F00* o, int line)
     o->v0(-1);
     Mem_Free(0, o, "GuiEquipmentModify.cc", line);
 }
-extern "C" O002C0F00* func_002C0F00(O002C0F00* self, short del)
+extern "C" O002C0F00* GuiEquipmentModify_dtor(O002C0F00* self, short del)
 {
     if (self) {
         int i;
         self->vt = D_004DDEE0;
-        func_002BDC10(self);
+        GuiEquipmentModify_RingRelease(self);
         Del002C0F00(self->p50, 0x169);
         self->p4C->h2420 = 0;
         self->p4C->x2C74 = 0;
@@ -414,7 +414,7 @@ void GuiWidget_ctor(Self_1100* self);
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void cGOBJ_ctor(void* p, int* a, int b, int* c);
 void Object_AttachTransform(void* p, void* t, int a);
-Model_1100* func_00393FF0(void* p, int* idx);
+Model_1100* DisplayActor_Construct(void* p, int* idx);
 float Math_SinThunk(float a);
 float Math_CosThunk(float a);
 void Mtx44_SetRotation(M4_1100* m, float a, float b, float c, float d, float e, float f, float g, float h, float i);
@@ -440,7 +440,7 @@ int func_001AF130(It_1100* a, It_1100* b);
 void** func_001AF120(It_1100* it);
 void Model_Attach(void* a, void* b);
 void AnimModel_InitAnim(void* a);
-void func_0018A910(Arr7_1100* a);
+void MotionTokens_Init(Arr7_1100* a);
 void func_0018A8C0(Y_1100* y);
 void MotionRequest_Construct(void* mr, Str_1100* s);
 void func_0018A710(Sel_1100* d, Sel_1100* s);
@@ -466,7 +466,7 @@ void Model_HardMeshAttachPoints(Man_1100* m);
 void func_0038E030(Man_1100* m);
 void ActorModel_Setup(Man_1100* m, int flag);
 void Skel_ApplyScalePreset(Man_1100* m, int a);
-Self_1100* func_002C1100(Self_1100* self);
+Self_1100* GuiEquipmentModify_ctor(Self_1100* self);
 }
 
 static inline void QCopy_1100(void* d0, void* s0, int n0) { int n = n0; void* d = d0; void* s = s0;
@@ -483,7 +483,7 @@ static inline void QCopy_1100(void* d0, void* s0, int n0) { int n = n0; void* d 
     }
 }
 static inline void G_1100(void* p, int a, int n, int b) { int* pa = &a; cGOBJ_ctor(p, pa, n, &b); }
-static inline Model_1100* M_1100(void* p, int x) { return func_00393FF0(p, &x); }
+static inline Model_1100* M_1100(void* p, int x) { return DisplayActor_Construct(p, &x); }
 struct V4C_1100 { float x, y, z, w; V4C_1100(float a, float b, float c, float d) { x = a; y = b; z = c; w = d; } V4C_1100(float a, float b, float c) { x = a; y = b; z = c; } } __attribute__((aligned(16)));
 static inline void MKd_1100(V4_1100* t, float x, float y, float z, float w) { t->x = x; t->y = y; t->z = z; t->w = w; }
 static inline void MKd3_1100(V4_1100* t, float x, float y, float z) { t->x = x; t->y = y; t->z = z; }
@@ -493,7 +493,7 @@ static inline Wpn_1100* GetW_1100(Man_1100* m, int o) { return *(Wpn_1100**)((ch
 struct V4R_1100 { float x, y, z, w; V4R_1100(const float& a, const float& b, const float& c, const float& d) { x = a; y = b; z = c; w = d; } V4R_1100(const float& a, const float& b, const float& c) { x = a; y = b; z = c; } } __attribute__((aligned(16)));
 static inline void* Alloc_1100(int n, int line) { AllocGuard g; return Mem_Alloc(0, n, D_004AC5C0, line); }
 
-static inline void SelInit_1100(Sel_1100* s0) { Sel_1100* s = s0; s->b0 = 0; func_0018A910(&s->arr); func_0018A8C0(&s->y); }
+static inline void SelInit_1100(Sel_1100* s0) { Sel_1100* s = s0; s->b0 = 0; MotionTokens_Init(&s->arr); func_0018A8C0(&s->y); }
 static inline void ReqInit2_1100(Req_1100* r0, Str_1100* str0, Sel_1100* sel) { Str_1100* str = str0; Req_1100* r = r0; r->b0 = 0; MotionRequest_Construct(r->mr, str); r->b48 = 3; func_0018A710(&r->sel, sel); r->f98 = -1.0f; r->f9C = 0; }
 static inline void Spheres_1100(Model_1100* md)
 {
@@ -691,7 +691,7 @@ static inline void F_1100(Self_1100* self, M4_1100* mtx, Req_1100* req)
 static inline void SetI_1100(Model_1100* md, int v) { FLD(md, int, 0x2C30) = v; }
 static inline void SetS_1100(Model_1100* md, short v) { FLD(md, short, 0x2DF4) = v; }
 static inline void SetB_1100(Model_1100* md, unsigned char v) { FLD(md, unsigned char, 0x2C71) = v; }
-extern "C" Self_1100* func_002C1100(Self_1100* p0)
+extern "C" Self_1100* GuiEquipmentModify_ctor(Self_1100* p0)
 {
     Self_1100* self = p0;
     int i;
@@ -737,7 +737,7 @@ extern "C" Self_1100* func_002C1100(Self_1100* p0)
             p = (Model_1100*)Alloc_1100(0x3030, 0xCD);
             if (p) {
                 x = 0;
-                p = func_00393FF0(p, &x);
+                p = DisplayActor_Construct(p, &x);
             }
             self->model = p;
         }

@@ -35,7 +35,7 @@ DEFINE_OBJ_LIST_DTOR(func_00245D80)
 
 /* merge_units: begin func_00245E00 */
 #pragma push /* merge_units */
-extern int func_0045CE10(int, int, int, int);
+extern int GuiGameScreen_ShowSubtitle(int, int, int, int);
 
 void HudObject_Subtitle(int a0) {
     int a1, a2, a3, v0;
@@ -44,7 +44,7 @@ void HudObject_Subtitle(int a0) {
     a0 = *(int*)((char*)a0 + 1700);
     cond = a0 == 0;
     if (cond) goto L00245E20;
-    v0 = func_0045CE10(a0, a1, a2, a3);
+    v0 = GuiGameScreen_ShowSubtitle(a0, a1, a2, a3);
 L00245E20:;
     goto ret;
 ret:;

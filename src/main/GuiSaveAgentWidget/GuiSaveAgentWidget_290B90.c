@@ -16,7 +16,7 @@
 #include "loose01_types.h"
 
 extern int D_00506390;
-extern int func_0028D870(int);
+extern int GuiAgentCreate_DrawModelCallback(int);
 
 Rel* func_00290B90(Rel* r) {
     r->a = 0;
@@ -31,7 +31,7 @@ Word* func_00290BB0(Word* self, int value) {
 }
 
 int func_00290BC0(void) {
-    return func_0028D870(D_00506390);
+    return GuiAgentCreate_DrawModelCallback(D_00506390);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00290B90 */

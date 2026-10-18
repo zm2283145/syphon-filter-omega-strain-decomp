@@ -241,7 +241,7 @@ void Alloc_Unlock(int);
 void* Mem_Alloc(int, int, char*, int);
 void ItemList_Init(void*);
 void* Flashlight_Construct(void*, Act*);
-void func_0036E5D0(Hog*);
+void Resource_Construct(Hog*);
 void FileMan_Release(Hog*, int);
 void Actor_SetHealth(Act*, int, int);
 void NetGame_InitLocalSlot(int*, int);
@@ -263,7 +263,7 @@ int AgentData_HasUnlock(int, int);
 }
 struct HogH {
     Hog h;
-    HogH() { func_0036E5D0(&h); }
+    HogH() { Resource_Construct(&h); }
     __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~HogH() { FileMan_Release(&h, -1); }
 };
 static inline void* Alloc(int size, int line)

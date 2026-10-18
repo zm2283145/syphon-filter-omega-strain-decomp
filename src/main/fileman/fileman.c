@@ -123,7 +123,7 @@ int func_0036CAC0(void* f, int idx, void* buf, int off);
 #define func_0036CAC0(a0, a1, a2, a3) (func_0036CAC0((a0), (a1), (int)(a2), (a3))) /* merge_units */
 
 int Hog_GetEntrySize(void* f, int idx);
-char* func_0036D4E0(void* f, int idx);
+char* Hog_GetMemberInPlace(void* f, int idx);
 }
 static inline char* Get(H36D990* h) { return h->p8 ? h->p8 : h->p0; }
 static inline int GetSize(S36D990* o)
@@ -160,7 +160,7 @@ extern "C" int FileMan_LoadMemberSync(S36D990* o, char** out, int size)
                 if (func_0036CAC0(o->a98, o->idx, *out, 0)) err = 4;
             }
         } else {
-            *out = func_0036D4E0(d, o->idx);
+            *out = Hog_GetMemberInPlace(d, o->idx);
         }
     } else if (f & 1) {
         if (!*out) *out = (char*)Alloc36D990(sz, 0x18F);
@@ -183,9 +183,9 @@ int FileHal_ReadAll(void*, void*);
 char* func_0036CAB0(void*);
 void Hog_ReadEntry(void*, int, int);
 #if 0 /* merge_units */
-char* func_0036D4E0(void*, int);
+char* Hog_GetMemberInPlace(void*, int);
 #endif /* merge_units */
-#define func_0036D4E0(a0, a1) (func_0036D4E0((a0), (a1))) /* merge_units */
+#define Hog_GetMemberInPlace(a0, a1) (Hog_GetMemberInPlace((a0), (a1))) /* merge_units */
 
 static inline char* Get_0036DC60(H36DC60* h) { return h->p8 ? h->p8 : h->p0; }
 char* FileMan_ReadData(S36DC60* o)
@@ -200,12 +200,12 @@ char* FileMan_ReadData(S36DC60* o)
             Hog_ReadEntry(d, o->idx, 0);
             return func_0036CAB0(o->a98);
         }
-        return func_0036D4E0(d, o->idx);
+        return Hog_GetMemberInPlace(d, o->idx);
     }
     if (f & 1) return FileHal_ReadAll(o->a98, h) ? *(char**)(o->a98 + 0xC4) : 0;
     return 0;
 }
-#undef func_0036D4E0 /* merge_units */
+#undef Hog_GetMemberInPlace /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0036DC60 */
 
@@ -229,9 +229,9 @@ struct Hdr_36DDC0 { char pad[0x10]; int f10; };
 struct Arc_36DDC0 { char pad0[4]; int f4; char pad8[0x7C]; int f84; char pad88[0xC0]; Hdr_36DDC0* f148; };
 struct FME_36DDC0 { int flags; char name[128]; short h84; int a88; int a8C; int a90; unsigned char b94; Arc_36DDC0* a98; };
 
-extern "C" int func_0036D520(Arc_36DDC0*, int);
+extern "C" int Hog_GetMemberOffset(Arc_36DDC0*, int);
 
-static inline int Off(Arc_36DDC0* a, int idx) { return a->f148->f10 + func_0036D520(a, idx); }
+static inline int Off(Arc_36DDC0* a, int idx) { return a->f148->f10 + Hog_GetMemberOffset(a, idx); }
 
 extern "C" int func_0036DDC0(FME_36DDC0* f)
 {

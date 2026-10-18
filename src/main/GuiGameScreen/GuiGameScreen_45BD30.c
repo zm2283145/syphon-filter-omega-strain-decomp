@@ -23,7 +23,7 @@ static inline void GQ(void* d, const void* s) { __int128 q; __asm__ volatile("lq
 extern "C" int GuiGameScreen_CloseChooseMenu(Scr* s);
 #pragma opt_propagation off
 #pragma opt_common_subs off
-extern "C" void func_0045BD30(Scr* s, V4* p)
+extern "C" void GuiGameScreen_SetChooseMenuTrack(Scr* s, V4* p)
 {
     if (!s->have) {
         GQ(&s->last, p);
@@ -78,7 +78,7 @@ extern char D_004F7E48;
 
 #pragma push
 #pragma opt_common_subs off
-void func_0045BDF0(char * arg0) {
+void GuiGameScreen_ChooseConfirm(char * arg0) {
     struct { char * f40[9]; int f64; unsigned int f68[2]; } sl;
     int temp_s2;
     unsigned int temp_s0;

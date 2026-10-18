@@ -6,7 +6,7 @@
 #include "types.h"
 #include "path_types.h"
 
-PathPoint* func_0015E0F0(PathPoint* self, int tag, float x, float y) {
+PathPoint* NpcNodeSearch_SetQuery(PathPoint* self, int tag, float x, float y) {
     self->x = x;
     self->y = y;
     self->tag = tag;

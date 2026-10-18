@@ -49,7 +49,7 @@ extern A34E4D0* Agent_GetSelected(void* list, int idx);
 extern char* Loc_LookupText(char* key);
 extern void GuiTextListWidget_AddItem(int list, char* name, int idx, int state);
 #pragma opt_strength_reduction off
-void func_0034E4D0(S34E4D0* o)
+void GuiRanks_Fill(S34E4D0* o)
 {
     A34E4D0* ag = Agent_GetSelected(D_004FFB50, -1);
     T34E4D0* t = &D_00532B50;

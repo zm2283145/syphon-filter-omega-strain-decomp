@@ -10,7 +10,7 @@ extern void func_0034F810(Sub34F670* s);
 extern void func_00350FD0(void* v, int n, T34F670* value);
 extern void func_00351070(Sub34F670* s, int flags);
 extern void String_Dtor(T34F670* t, int flags);
-void func_0034F670(S34F670* o)
+void GuiMissionStatistics_BuildRows(S34F670* o)
 {
     T34F670 t;
     T34F670* tp;

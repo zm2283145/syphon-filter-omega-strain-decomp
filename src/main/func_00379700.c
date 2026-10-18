@@ -25,7 +25,7 @@ int func_00379730(TexEntry* self) {
     return self->info->unk04;
 }
 
-TexEntry* func_00379740(TexRegistry* reg, int index) {
+TexEntry* Tex_GetRecord(TexRegistry* reg, int index) {
     return reg->entries[index];
 }
 

@@ -28,25 +28,25 @@ struct Obj {
     char pad5C[0x3584 - 0x5C];
     Pt* pt;
 };
-extern "C" void func_001A32A0(M4u* out, Obj* o); /* gsynth: defined below */
+extern "C" void Actor_GetBackpackDropMatrix(M4u* out, Obj* o); /* gsynth: defined below */
 #pragma pop
 typedef struct { int w[16]; } Buf_1A3200;
 typedef struct { char pad[0x3464]; int h; } O_1A3200;
 #if 0 /* merge_units */
-extern void func_001A32A0(Buf_1A3200* b, O_1A3200* o);
+extern void Actor_GetBackpackDropMatrix(Buf_1A3200* b, O_1A3200* o);
 #endif /* merge_units */
-#define func_001A32A0(a0, a1) (func_001A32A0((void *)(a0), (void *)(a1))) /* merge_units */
+#define Actor_GetBackpackDropMatrix(a0, a1) (Actor_GetBackpackDropMatrix((void *)(a0), (void *)(a1))) /* merge_units */
 
-extern void func_002561D0(int h, Buf_1A3200* b, int f);
+extern void Backpack_Place(int h, Buf_1A3200* b, int f);
 void func_001A3200(O_1A3200* o)
 {
     Buf_1A3200 b;
     if (o->h) {
-        func_001A32A0(&b, o);
-        func_002561D0(o->h, &b, 0);
+        Actor_GetBackpackDropMatrix(&b, o);
+        Backpack_Place(o->h, &b, 0);
     }
 }
-#undef func_001A32A0 /* merge_units */
+#undef Actor_GetBackpackDropMatrix /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001A3200(void) {}
 #pragma pop /* merge_units */
@@ -57,27 +57,27 @@ static inline void merge_flush_func_001A3200(void) {}
 typedef struct { int w[16]; } Buf_1A3250;
 typedef struct { char pad[0x3464]; int h; } O_1A3250;
 #if 0 /* merge_units */
-extern void func_001A32A0(Buf_1A3250* b, O_1A3250* o);
+extern void Actor_GetBackpackDropMatrix(Buf_1A3250* b, O_1A3250* o);
 #endif /* merge_units */
-#define func_001A32A0(a0, a1) (func_001A32A0((void *)(a0), (void *)(a1))) /* merge_units */
+#define Actor_GetBackpackDropMatrix(a0, a1) (Actor_GetBackpackDropMatrix((void *)(a0), (void *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_002561D0(int h, Buf_1A3250* b, int f);
+extern void Backpack_Place(int h, Buf_1A3250* b, int f);
 #endif /* merge_units */
-#define func_002561D0(a0, a1, a2) (func_002561D0((a0), (void *)(a1), (a2))) /* merge_units */
+#define Backpack_Place(a0, a1, a2) (Backpack_Place((a0), (void *)(a1), (a2))) /* merge_units */
 
-extern void func_00256180(int h);
-void func_001A3250(O_1A3250* o)
+extern void Backpack_TurnOn(int h);
+void Actor_TurnOnWeaponPickup(O_1A3250* o)
 {
     Buf_1A3250 b;
     if (o->h) {
-        func_001A32A0(&b, o);
-        func_002561D0(o->h, &b, 1);
-        func_00256180(o->h);
+        Actor_GetBackpackDropMatrix(&b, o);
+        Backpack_Place(o->h, &b, 1);
+        Backpack_TurnOn(o->h);
     }
 }
-#undef func_001A32A0 /* merge_units */
-#undef func_002561D0 /* merge_units */
+#undef Actor_GetBackpackDropMatrix /* merge_units */
+#undef Backpack_Place /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001A3250(void) {}
 #pragma pop /* merge_units */
@@ -108,7 +108,7 @@ static inline bool Not(unsigned char v) { return !(v != 0); }
 /* plain asm sq: lets the delay-slot filler move later code past it */
 static inline void StR(void* d, __int128 t) { asm { sq t, 0(d) } }
 #pragma opt_propagation off
-extern "C" void func_001A32A0(M4u* out, Obj* o)
+extern "C" void Actor_GetBackpackDropMatrix(M4u* out, Obj* o)
 {
     if (!D_004EED90) {
         D_004EEDA0.y = 0.0f;

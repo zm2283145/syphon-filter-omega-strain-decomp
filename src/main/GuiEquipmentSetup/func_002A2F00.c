@@ -99,7 +99,7 @@ void FileMan_Release(void* part, int flags);
 void cMessage_dtor(void* msg, int flags);
 void Game_NetSendPauseState(void* a, int b, int c);
 void Skel_Rebind(Skel_2A2F00* s, void* src);
-Bk_2A2F00* func_00185C70(Pl_2A2F00* p);
+Bk_2A2F00* Player_GetAgentData(Pl_2A2F00* p);
 char* AgentData_GetName(Bk_2A2F00* b);
 char* AgentData_GetRankText(Bk_2A2F00* b);
 void GuiTextWidget_SetText(void* w, char* s, int a);
@@ -191,11 +191,11 @@ extern "C" void func_002A2F00(S_2A2F00* self, float dt)
             }
             Skel_Rebind(self->skel[k], p->skel);
             self->skel[k]->b2C71 = 1;
-            if (func_00185C70(p) && func_00185C70(p)->bB70) {
+            if (Player_GetAgentData(p) && Player_GetAgentData(p)->bB70) {
                 long long* c = &D_00506520[k];
                 if (*c > 10) {
-                    GuiTextWidget_SetText(wName, AgentData_GetName(func_00185C70(p)), 0);
-                    GuiTextWidget_SetText(wRank, AgentData_GetRankText(func_00185C70(p)), 0);
+                    GuiTextWidget_SetText(wName, AgentData_GetName(Player_GetAgentData(p)), 0);
+                    GuiTextWidget_SetText(wRank, AgentData_GetRankText(Player_GetAgentData(p)), 0);
                 } else {
                     GuiTextWidget_SetText(wName, D_004AB160, 0);
                     GuiTextWidget_SetText(wRank, D_004AB160, 0);

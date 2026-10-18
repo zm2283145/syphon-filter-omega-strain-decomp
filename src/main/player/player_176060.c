@@ -54,7 +54,7 @@ typedef struct { char pad[0x6A4]; Plr_P* player; } Game_P;
 extern Game_P* D_004FFC2C;
 static inline Plr_P* AsPlayer(GObj_P* o) { Plr_P* p = o->ctl; if (p && p->kind == D_0049D010) return p; return 0; }
 static inline int ActiveId(Inv_P* inv) { unsigned char c = inv->cur; if (c != 6) return inv->s[c].id; return -1; }
-int func_00176110(GObj_P* o)
+int Player_GetHeldItem(GObj_P* o)
 {
     int r = -1;
     Plr_P* p = o->ctl;
@@ -74,7 +74,7 @@ extern char D_004FFC2C[];
 #endif /* merge_units */
 #define D_004FFC2C ((char*)&D_004FFC2C) /* merge_units */
 
-extern void func_0045BEB0(int, int);
+extern void GuiGameScreen_SetMenuReceiver(int, int);
 
 void func_00176160(void) {
     int a0, a1, v1;
@@ -84,7 +84,7 @@ void func_00176160(void) {
     a0 = *(int*)((char*)v1 + 1700);
     cond = a0 == 0;
     if (cond) goto L00176188;
-    func_0045BEB0(a0, a1);
+    GuiGameScreen_SetMenuReceiver(a0, a1);
 L00176188:;
     goto ret;
 ret:;
@@ -123,7 +123,7 @@ extern char D_004FFC2C[];
 #endif /* merge_units */
 #define D_004FFC2C ((char*)&D_004FFC2C) /* merge_units */
 
-extern void func_0045BEC0(int, int);
+extern void GuiGameScreen_SelectMenuRow(int, int);
 
 void func_001761E0(void) {
     int a0, a1, v1;
@@ -133,7 +133,7 @@ void func_001761E0(void) {
     a0 = *(int*)((char*)v1 + 1700);
     cond = a0 == 0;
     if (cond) goto L00176208;
-    func_0045BEC0(a0, a1);
+    GuiGameScreen_SelectMenuRow(a0, a1);
 L00176208:;
     goto ret;
 ret:;

@@ -54,7 +54,7 @@ extern void func_003D0D90(Word_003D0C10* w, void* v);
 extern Word_003D0C10* func_003D0D80(Word_003D0C10* d, Word_003D0C10* s);
 extern void func_003D0D70(Word_003D0C10* w, void* v);
 extern int String_CStr_189540(void* p);
-extern void func_0036A330(int a0, int a1, void* a2, float x, float y, float z, float p, float q, float r);
+extern void Font_DrawString(int a0, int a1, void* a2, float x, float y, float z, float p, float q, float r);
 extern void TextObj_Draw(int c);
 extern void func_003D10B0(Word_003D0C10* out, int* size, Word_003D0C10* first, Word_003D0C10* last);
 static inline int ne3D(Node3D* n, Word_003D0C10* w) { return n != (Node3D*)w->value; }
@@ -73,7 +73,7 @@ void TextManager_DrawImmediate(Obj3D* o)
         pe = &end;
         for (; ne3D(n, pe); n = n->next) {
             int* s = (int*)((char*)n + 0x10);
-            func_0036A330(s[3], String_CStr_189540(s), s + 4, *(float*)(s + 8), *(float*)(s + 9), 0.001f, 0.0f, 0.0f, 0.0f);
+            Font_DrawString(s[3], String_CStr_189540(s), s + 4, *(float*)(s + 8), *(float*)(s + 9), 0.001f, 0.0f, 0.0f, 0.0f);
         }
         func_003D0D90(&a, o->vec);
         func_003D0D80(&b, &a);

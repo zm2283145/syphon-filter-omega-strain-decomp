@@ -24,8 +24,8 @@ int FrontEnd_OpenPopup(int, int, char*, char*, void*, int);
 void FrontEnd_ClosePopup(int, int);
 int AgentData_GetSaveSize(int);
 int MemCard_GetSpaceNeeded(Net_441780*, int);
-int func_0040D690(Net_441780*, char*);
-int func_004422D0(int, char*, char*);
+int MemCardWrap_Exists(Net_441780*, char*);
+int SaveAgentWidget_FindSlotFile(int, char*, char*);
 void GuiSaveAgentWidget_HandleEvent(Obj_441780*);
 int sprintf(char*, const char*, ...);
 char* strncpy(char*, const char*, int);
@@ -36,15 +36,15 @@ void String_Copy(char*, const char*);
 
 static inline int ShowMsg(int mgr, int type, char* t, char* msg, void* cb, int x) { return FrontEnd_OpenPopup(mgr, type, Loc_LookupText(t), msg, cb, x); }
 
-extern "C" int func_00441780(Obj_441780* self)
+extern "C" int SaveAgentWidget_SpaceCheck(Obj_441780* self)
 {
     Net_441780* net = &D_0055A830;
     int need = 0;
     int have;
     int lim;
     if (self->mode == 4) {
-        if (!func_0040D690(net, D_004C04B8)) need = 1000;
-    } else if (!func_004422D0(self->f50, 0, 0)) {
+        if (!MemCardWrap_Exists(net, D_004C04B8)) need = 1000;
+    } else if (!SaveAgentWidget_FindSlotFile(self->f50, 0, 0)) {
         need = AgentData_GetSaveSize(Agent_GetSelected(D_004FFB50, -1));
     }
     have = MemCard_GetSpaceNeeded(net, need);

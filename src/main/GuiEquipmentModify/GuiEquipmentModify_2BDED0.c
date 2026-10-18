@@ -10,8 +10,8 @@
 /* merge_units: begin func_002BDED0 */
 #pragma push /* merge_units */
 typedef struct { char pad[0x104]; int count; int cur; short ids[1]; } S2BDED0;
-extern void func_002BDCF0(S2BDED0* s, short id);
-void func_002BDED0(S2BDED0* s, int n)
+extern void GuiEquipmentModify_RingTouch(S2BDED0* s, short id);
+void GuiEquipmentModify_PreloadWindow(S2BDED0* s, int n)
 {
     int base = s->cur - (n >> 1);
     int i;
@@ -22,7 +22,7 @@ void func_002BDED0(S2BDED0* s, int n)
         if (k > s->count)
             k -= s->count;
         if (k >= 0 && k < s->count)
-            func_002BDCF0(s, s->ids[k]);
+            GuiEquipmentModify_RingTouch(s, s->ids[k]);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -58,7 +58,7 @@ static inline void Clear_002BDF90(void* self, char* name)
     if (w)
         GuiTextWidget_SetText(w, D_004AC388, 0);
 }
-extern "C" void func_002BDF90(void* self)
+extern "C" void GuiEquipmentModify_Clear(void* self)
 {
     Clear_002BDF90(self, D_004AC370);
     Clear_002BDF90(self, "value_firerate1");

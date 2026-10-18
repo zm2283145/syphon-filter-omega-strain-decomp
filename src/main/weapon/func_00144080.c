@@ -141,7 +141,7 @@ void cGOBJ_ctor(void* p, int* id, int a, int* b);
 void Object_Register(void* p);
 void Object_Unregister(void* p);
 void Object_DeleteLater(float t, void* p);
-void func_00385330(WiV4* out, WiV4* src, int a);
+void ActorModel_GetAttachPointWorld(WiV4* out, WiV4* src, int a);
 int Random_Next();
 void ParticleEmitter_SetRate(float r, void* e);
 }
@@ -279,7 +279,7 @@ extern "C" void WeaponInv_Update(WiInv* self, float dt)
         }
         {
             WiV4 pos;
-            func_00385330(&pos, &self->actor->pos, 0);
+            ActorModel_GetAttachPointWorld(&pos, &self->actor->pos, 0);
             if (self->light) {
                 WiLight* l = self->light;
                 float s = D_00489C70 + self->fE0 * (D_00489C78 - D_00489C70);

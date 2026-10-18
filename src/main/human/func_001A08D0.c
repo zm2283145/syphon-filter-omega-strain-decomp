@@ -16,7 +16,7 @@ extern void* func_001A0AD0(void* p);
 extern void func_001A0A30(void* p);
 extern void func_001A0A10(SIt_1A08D0* a);
 static inline int Eq_1A08D0(E_1A08D0*** a, E_1A08D0*** b) { return a == b; }
-void func_001A08D0(O_1A08D0* self)
+void MotionCtrl_DetachRoots(O_1A08D0* self)
 {
     It_1A08D0 b;
     It_1A08D0 e;

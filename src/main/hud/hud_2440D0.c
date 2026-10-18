@@ -73,7 +73,7 @@ extern void Hud_ClearTargetLock(int);
 #endif /* merge_units */
 #define Hud_ClearTargetLock(a0) (Hud_ClearTargetLock((a0))) /* merge_units */
 
-extern void func_003E9730(int);
+extern void HudLockTracker_Changed(int);
 
 void Hud_OnTargetChanged(int a0) {
     int s0;
@@ -83,7 +83,7 @@ void Hud_OnTargetChanged(int a0) {
     a0 = *(int*)((char*)a0 + 100);
     cond = a0 == 0;
     if (cond) goto L00244268;
-    func_003E9730(a0);
+    HudLockTracker_Changed(a0);
 L00244268:;
     a0 = s0;
     Hud_ClearTargetLock(a0);
@@ -133,7 +133,7 @@ extern void Hud_GetLockColour(Buf_42E0* out, float t);
 extern void IeElement_SetColour(void* p, Buf_42E0* b);
 extern void IeElement_EvaluateAt(void* p, float f);
 
-void func_002442E0(Obj_42E0* o, float t) {
+void Hud_SetLockProgress(Obj_42E0* o, float t) {
     Buf_42E0 b;
     if (o->p68) {
         Hud_GetLockColour(&b, 1.0f - t);

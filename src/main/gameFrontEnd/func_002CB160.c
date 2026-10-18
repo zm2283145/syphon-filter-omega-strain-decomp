@@ -35,7 +35,7 @@ char* strncpy(char* d, const char* s, int n);
 void SoundMgr_UnloadLevel(void* svc);
 void* DME_GetLobby(void);
 void func_004538D0(void* g);
-void func_0037E320(void* p);
+void Renderer_Teardown(void* p);
 void func_002CDEF0(Node_002CB160** out, int* list, Node_002CB160** first, Node_002CB160** last);
 }
 extern "C" void FrontEnd_TeardownGui(Self_002CB160* self)
@@ -86,7 +86,7 @@ extern "C" void FrontEnd_TeardownGui(Self_002CB160* self)
             }
             if (DME_GetLobby())
                 func_004538D0(DME_GetLobby());
-            func_0037E320(D_005381F0);
+            Renderer_Teardown(D_005381F0);
         }
         self->b29 = 0;
         self->b28 = 0;

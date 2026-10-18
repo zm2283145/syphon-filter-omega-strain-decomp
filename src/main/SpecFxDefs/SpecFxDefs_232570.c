@@ -43,7 +43,7 @@ typedef union ScriptArg_002325D0 {
     signed char c;
 } ScriptArg_002325D0;
 
-extern void func_00232BF0(signed char, int, float, float, float, float);
+extern void World_StartAtmosphereEffect_Thunk(signed char, int, float, float, float, float);
 
 /* Script: AtmosphericEffect(type, a, b, c, d, e); arguments are staged through the stack. */
 int Script_AtmosphericEffect_2(ScriptArg_002325D0* args) {
@@ -57,7 +57,7 @@ int Script_AtmosphericEffect_2(ScriptArg_002325D0* args) {
     c[0] = args[3].i;
     b[0] = args[2].i;
     a[0] = args[1].i;
-    func_00232BF0(args[0].c, *(int*)e, *(float*)a, *(float*)b, *(float*)c, *(float*)d);
+    World_StartAtmosphereEffect_Thunk(args[0].c, *(int*)e, *(float*)a, *(float*)b, *(float*)c, *(float*)d);
     return 0;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -74,9 +74,9 @@ typedef struct AtmosArgs {
 } AtmosArgs;
 
 #if 0 /* merge_units */
-extern void func_00232BF0(int type, int id, float p1, float p2, float p3, float p4);
+extern void World_StartAtmosphereEffect_Thunk(int type, int id, float p1, float p2, float p3, float p4);
 #endif /* merge_units */
-#define func_00232BF0(a0, a1, a2, a3, a4, a5) (func_00232BF0((signed char)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
+#define World_StartAtmosphereEffect_Thunk(a0, a1, a2, a3, a4, a5) (World_StartAtmosphereEffect_Thunk((signed char)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
 
 
 /* Script native: AtmosphericEffect(type, p1, p2, p3, p4). */
@@ -91,10 +91,10 @@ int Script_AtmosphericEffect(AtmosArgs* args) {
     p2 = *(float*)&w2;
     w1 = args->p1;
     p1 = *(float*)&w1;
-    func_00232BF0(args->type, -1, p1, p2, p3, p4);
+    World_StartAtmosphereEffect_Thunk(args->type, -1, p1, p2, p3, p4);
     return 0;
 }
-#undef func_00232BF0 /* merge_units */
+#undef World_StartAtmosphereEffect_Thunk /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00232630(void) {}
 #pragma pop /* merge_units */

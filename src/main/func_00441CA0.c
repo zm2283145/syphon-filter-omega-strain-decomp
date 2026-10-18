@@ -34,10 +34,10 @@ int FrontEnd_OpenPopup(int, int, char*, char*, void*, int);
 void FrontEnd_ClosePopup(int, int);
 unsigned char AgentData_Create(char*, int, int);
 void MemCard_Refresh(Net_441CA0*);
-int func_0040DB10(Net_441CA0*);
-int func_0040D740(Net_441CA0*);
-int func_004422D0(int, char*, char*);
-void func_00441370(Obj_441CA0*);
+int MemCardWrap_Format(Net_441CA0*);
+int MemCardWrap_MakeDirectory(Net_441CA0*);
+int SaveAgentWidget_FindSlotFile(int, char*, char*);
+void SaveAgentWidget_Save(Obj_441CA0*);
 void GuiSaveAgentWidget_WriteCard(Obj_441CA0*);
 void GuiSaveAgentWidget_HandleEvent(Obj_441CA0*);
 int GuiWidget_OnEvent(void*, void*, int, int, void*);
@@ -94,7 +94,7 @@ extern "C" int GuiSaveAgentWidget_OnEvent(Obj_441CA0* self, void* w, int msg, in
             } else {
                 int ok;
                 self->dlg = Open1(D_004FFC04, 0, title, D_004C0550, self, 0);
-                ok = func_0040DB10(net);
+                ok = MemCardWrap_Format(net);
                 FrontEnd_ClosePopup(D_004FFC04, self->dlg);
                 if (!ok) {
                     self->dlg = Open1(D_004FFC04, 2, err, D_004C0560, self, 2);
@@ -103,7 +103,7 @@ extern "C" int GuiSaveAgentWidget_OnEvent(Obj_441CA0* self, void* w, int msg, in
                         self->shown = 1;
                         self->dlg = Open2(D_004FFC04, 0, D_004C0448, D_004C0458, self, 0);
                     }
-                    if (!func_0040D740(net)) {
+                    if (!MemCardWrap_MakeDirectory(net)) {
                         FrontEnd_ClosePopup(D_004FFC04, self->dlg);
                         self->dlg = Open1(D_004FFC04, 2, err, D_004C04A8, self, 2);
                     } else {
@@ -113,12 +113,12 @@ extern "C" int GuiSaveAgentWidget_OnEvent(Obj_441CA0* self, void* w, int msg, in
                             char* name = 0;
                             if (self->mode && !changed)
                                 name = (self->mode == 3) ? self->name : agent + 0x8AC;
-                            if (func_004422D0(self->f50, name, 0)) {
+                            if (SaveAgentWidget_FindSlotFile(self->f50, name, 0)) {
                                 self->dlg = Open2(D_004FFC04, 5, D_004C0448, D_004C0498, self, 1);
                                 goto done;
                             }
                         }
-                        func_00441370(self);
+                        SaveAgentWidget_Save(self);
                     }
                 }
             }
@@ -133,7 +133,7 @@ extern "C" int GuiSaveAgentWidget_OnEvent(Obj_441CA0* self, void* w, int msg, in
             if (!impl->f59D || !impl->f59E || !impl->f59F)
                 GuiSaveAgentWidget_HandleEvent(self);
             else
-                func_00441370(self);
+                SaveAgentWidget_Save(self);
             return 1;
         }
         if (sub == 2) {

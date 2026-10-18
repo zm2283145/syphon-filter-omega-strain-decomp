@@ -71,7 +71,7 @@ void Vec4_Copy(void* d, const void* s);
 void GuiBatch_AddVertexColor(void* out, const void* in);
 float GuiBatch_AddVertexUV(void);
 V4* func_00132000(V4* o, float x, float y, float z, float w);
-void func_00370550(char* r);
+void Renderer_FlushPrimitives(char* r);
 }
 
 #define SlotAt(i) ((Slot*)(D_005381F0 + 0x1F0 + (i) * 0x110))
@@ -96,7 +96,7 @@ static inline void Emit(const V4& pos, const V4& col, const V4c& uv)
     D_005381F8 = 6LL << 32;
 }
 
-extern "C" void func_0043C0F0(Self* self)
+extern "C" void GuiBitmapWidget_Draw(Self* self)
 {
     GuiWidget_Draw(self);
     if (self->tex == -1) return;
@@ -146,7 +146,7 @@ extern "C" void func_0043C0F0(Self* self)
     }
     Emit(p0, self->color, V4c(0.0f, 0.0f, 1.0f, 0.0f));
     Emit(p1, self->color, V4c(us, vs, 1.0f, 0.0f));
-    func_00370550(D_005381F0);
+    Renderer_FlushPrimitives(D_005381F0);
     D_005392D0 = save;
     D_00538C68 = 1;
     D_00538C64--;
@@ -186,7 +186,7 @@ Quad* func_0043C6B0(Quad* d, Quad* s) {
 /* merge_units: begin func_0043C6E0 */
 #pragma push /* merge_units */
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
-int func_003813A0(int, int, int);                       
+int Tex_Release(int, int, int);                       
 #if 0 /* merge_units */
 extern int D_00539248;
 #endif /* merge_units */
@@ -199,7 +199,7 @@ void func_0043C6E0(int arg0) {
 
     temp_a1 = F_(arg0, 0x48, int);
     if (temp_a1 != -1) {
-        func_003813A0(D_00539248, temp_a1, 0);
+        Tex_Release(D_00539248, temp_a1, 0);
         F_(arg0, 0x48, int) = -1;
     }
 }
@@ -217,7 +217,7 @@ int String_CStr();
 int String_Length();                             
 int FileMan_Release();                            
 int func_0036E4B0();                    
-int func_0036E5D0();                               
+int Resource_Construct();                               
 int TexMan_FindOrLoad();                        
 #if 0 /* merge_units */
 extern int D_00539248;
@@ -227,14 +227,14 @@ extern int D_00539248;
 
 #pragma push
 #pragma opt_common_subs off
-int func_0043C730(char * arg0) {
+int GuiBitmapWidget_Load(char * arg0) {
     struct { int f20[40]; int fC0[40]; } sl;
 
     if (String_Length(arg0 + 0x50) == 0) {
         return 0;
     }
     if (F_(arg0, 0x4C, int) != 0) {
-        func_0036E5D0(sl.fC0);
+        Resource_Construct(sl.fC0);
         Hog_Register(sl.fC0, String_CStr(arg0 + 0x50), F_(arg0, 0x4C, int), 0);
         F_(arg0, 0x48, int) = TexMan_FindOrLoad(D_00539248, sl.fC0);
         FileMan_Release(sl.fC0, -1);

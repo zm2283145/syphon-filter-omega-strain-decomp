@@ -20,7 +20,7 @@ void operator_delete(void* allocation);
 }
 
 /* Return an existing cell only when both row and column are in range. */
-extern "C" TextArrayCell* func_00426590(guiTextArrayWidget* self,
+extern "C" TextArrayCell* GuiTextArrayWidget_GetCell(guiTextArrayWidget* self,
                                      unsigned int column, unsigned int row)
 {
     if (row >= (unsigned int)self->store.unk04)
@@ -46,7 +46,7 @@ static inline TextArrayRow* create_row(void)
 }
 
 /* Rebuild the requested rows with default cells and independently owned storage. */
-extern "C" void func_00426600(guiTextArrayWidget* self, unsigned int columns, unsigned int rows)
+extern "C" void TextArrayCell_InitDefaults(guiTextArrayWidget* self, unsigned int columns, unsigned int rows)
 {
     func_004263C0(self);
     if (!columns || !rows)

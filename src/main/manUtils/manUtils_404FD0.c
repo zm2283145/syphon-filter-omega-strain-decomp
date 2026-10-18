@@ -54,12 +54,12 @@ extern char D_004BE830[];
 extern int D_00539248;
 extern int D_00571300;
 void func_00128F58(char* d, char* s);
-void func_0036E5D0(MC_File* f);
+void Resource_Construct(MC_File* f);
 void FileMan_Release(void* f, int del);
 void func_0036E140(MC_File* f, char* name, int a, int b);
 void* Fstream_GetLoader(void);
 void Fstream_ReleaseNoCallback(void* m, MC_File* f, int a);
-void func_003813A0(int lib, int h, int keep);
+void Tex_Release(int lib, int h, int keep);
 void operator_delete(void* p);
 MC_State* func_00404FD0(MC_State* s, short del);
 }
@@ -72,7 +72,7 @@ MC_State* func_00404FD0(MC_State* s, short del)
     int j;
     void* p;
     if (s) {
-        func_0036E5D0(&fm);
+        Resource_Construct(&fm);
         for (i = s->meshLoaded; i < s->meshCount; i++) {
             String_Copy(name, s->names[i]);
             func_00128F58(name, D_004BE830);
@@ -101,12 +101,12 @@ MC_State* func_00404FD0(MC_State* s, short del)
                 MC_Tex* t = (MC_Tex*)((char*)s->tex + i * 4);
                 int b = t->b;
                 if (b != t->a)
-                    func_003813A0(D_00539248, b, 0);
+                    Tex_Release(D_00539248, b, 0);
             }
             {
                 /* loading the library first orders lui before the index add */
                 int lib = D_00539248;
-                func_003813A0(lib, s->tex[i].a, 0);
+                Tex_Release(lib, s->tex[i].a, 0);
             }
         }
         s->texCount = 0;
@@ -173,9 +173,9 @@ struct File {
 };
 extern "C" {
 #if 0 /* merge_units */
-void func_0036E5D0(File* f);
+void Resource_Construct(File* f);
 #endif /* merge_units */
-#define func_0036E5D0(a0) (func_0036E5D0((MC_File *)(a0))) /* merge_units */
+#define Resource_Construct(a0) (Resource_Construct((MC_File *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
 void func_0036E140(File* f, const char* path, int a, int b);
@@ -198,7 +198,7 @@ struct Man {
 };
 extern "C" {
 void Appearance_LoadPartSortTable(Man*, const char*);
-void func_004029B0(Man*, const char*, void*, M*);
+void FrontEndLights_Load(Man*, const char*, void*, M*);
 void Mtx_Multiply(M*, M*);
 M* Mtx_Copy(M* d, const M* s);
 M* Matrix_TransposeInPlace(M* m);
@@ -228,7 +228,7 @@ extern "C" void ManUtils_LoadSKL(Man* self)
     M b;
     int i, j;
     Appearance_LoadPartSortTable(self, D_004BE860);
-    func_004029B0(self, D_004BE880, (char*)self + 0x120, &a);
+    FrontEndLights_Load(self, D_004BE880, (char*)self + 0x120, &a);
     axis.x = 0.0f;
     axis.y = 0.0f;
     axis.z = 1.0f;
@@ -241,7 +241,7 @@ extern "C" void ManUtils_LoadSKL(Man* self)
         M* s = &a;
         asm volatile("lq %0,0(%2)\n\tlq %1,16(%2)\n\tsq %0,0(%3)\n\tlq %0,32(%2)\n\tsq %1,16(%3)\n\tlq %1,48(%2)\n\tsq %0,32(%3)\n\tsq %1,48(%3)" : "=&r"(t0), "=&r"(t1) : "r"(s), "r"(d) : "memory");
     }
-    func_004029B0(self, D_004BE8A0, (char*)self + 0x1A0, &a);
+    FrontEndLights_Load(self, D_004BE8A0, (char*)self + 0x1A0, &a);
     TransCopy(&b, &a);
     a = b;
     for (i = 0; i < 3; i++) {
@@ -252,7 +252,7 @@ extern "C" void ManUtils_LoadSKL(Man* self)
     D_00493A60 = 0;
     {
         File f;
-        func_0036E5D0(&f);
+        Resource_Construct(&f);
         func_0036E140(&f, D_004BE8C0, 0, 0);
         if ((unsigned char)FileMan_FindMember(&f)) {
             char buf[0x80];
@@ -268,7 +268,7 @@ extern "C" void ManUtils_LoadSKL(Man* self)
 next1:;
     {
         File f;
-        func_0036E5D0(&f);
+        Resource_Construct(&f);
         func_0036E140(&f, D_004BE8E0, 0, 0);
         if ((unsigned char)FileMan_FindMember(&f)) {
             char buf[0x80];
@@ -283,7 +283,7 @@ next1:;
     }
 }
 #pragma pop
-#undef func_0036E5D0 /* merge_units */
+#undef Resource_Construct /* merge_units */
 #undef func_0036E140 /* merge_units */
 #undef FileMan_Release /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */

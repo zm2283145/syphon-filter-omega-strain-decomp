@@ -118,7 +118,7 @@ G_002A9BA0* DME_GetLobby(void);
 #define DME_GetLobby() ((G_002A9BA0 *)DME_GetLobby()) /* merge_units */
 
 void func_004426B0(G_002A9BA0* g);
-void func_002CC260(void);
+void App_CardWaitPoll(void);
 int func_00442F40(G_002A9BA0* g, void* cb, void* a);
 #if 0 /* merge_units */
 int func_0033CE30(S_002A9BA0* self, int a, int b, int c, int d, int e);
@@ -185,7 +185,7 @@ extern "C" void func_002A9BA0(S_002A9BA0* self)
     if (g) {
         if (g->f255C == 4)
             func_004426B0(g);
-        if (!func_00442F40(g, (void*)func_002CC260, self->fA0)) {
+        if (!func_00442F40(g, (void*)App_CardWaitPoll, self->fA0)) {
             void* ui = D_004FFC04;
             FrontEnd_OpenPopup(ui, 2, D_004AB808, func_0033CE30(self, 0x72, 0, 0, 0, 0), self, 0x1E);
             return;

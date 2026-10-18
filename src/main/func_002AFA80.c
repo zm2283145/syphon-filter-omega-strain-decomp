@@ -25,7 +25,7 @@ extern char D_004A7520[];
 extern void* D_004FFC04;
 G_002AFA80* DME_GetLobby(void);
 void func_004426B0(G_002AFA80* g);
-void func_002CC260(void);
+void App_CardWaitPoll(void);
 int func_0044B420(G_002AFA80* g, void* cb, void* a, void* b);
 Ag_002AFA80* Agent_GetSelected(void* a, int b);
 void String_Copy(char* d, const char* s);
@@ -64,7 +64,7 @@ extern "C" void func_002AFA80(Self_002AFA80* self)
     if (g) {
         if (g->f255C == 4)
             func_004426B0(g);
-        if (func_0044B420(g, (void*)func_002CC260, self->fC8, self->fAC)) {
+        if (func_0044B420(g, (void*)App_CardWaitPoll, self->fC8, self->fAC)) {
             char* n = g->name;
             G_002AFA80* g2;
             if (n) {

@@ -47,7 +47,7 @@ extern void App_GetInstance(void);
 extern void App_InitSystemsOnce(void);
 extern void LevelSelect_SetLevel(void*, int);
 extern unsigned long long Time_GetMilliseconds(void);
-extern void func_002CC260(int, int);
+extern void App_CardWaitPoll(int, int);
 extern char* Loc_LookupText(char*);
 extern void func_0042B1F0(void);
 }
@@ -172,7 +172,7 @@ extern "C" void func_0033E5B0(O5B0* o, Info5B0* info, int arg2) {
             bool timeout;
             int deadline = (int)Time_GetMilliseconds() + 60000;
             while (!D_00532FF0 && deadline > Time_GetMilliseconds()) {
-                func_002CC260(0, 0);
+                App_CardWaitPoll(0, 0);
                 func_004536B0(lobby);
                 DME_Update();
             }

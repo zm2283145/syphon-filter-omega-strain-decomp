@@ -223,7 +223,7 @@ void func_0018A700(void* p, int v);
 void func_0018A710(void* d, void* s);
 void func_0018A890(void* p);
 void func_0018A8C0(void* p);
-void func_0018A910(void* p);
+void MotionTokens_Init(void* p);
 void func_0018C620(void* y, int m);
 void* func_0018C6A0(void* s);
 void* func_00190F90(void* x, void* r, int a, char* b);
@@ -240,10 +240,10 @@ int func_001A9210(char* a);
 void func_001AD710(void* d, char* s);
 void func_001AD750(void* d, float f, float g);
 char* func_001AD8B0(char* p);
-void func_001AD8C0(char* a, char* b);
-void func_001AD9C0(char* r, void* p);
+void ActorRelation_AddChild(char* a, char* b);
+void RootAttachments_Attach(char* r, void* p);
 void func_001ADA90(void* d, void* s);
-void func_001ADAB0(char* a, char* b);
+void Actor_LinkBody(char* a, char* b);
 void func_001ADB90(void* p, int f);
 void func_001ADBE0(void* p, int f);
 void* func_001ADC50(void* p);
@@ -256,7 +256,7 @@ int func_001ADD60(void* p);
 void* func_001ADD70(void* p);
 int func_001ADD80(void* p);
 void func_001ADFE0(void* p, int v);
-void* func_001ADFF0(void* d, void* s);
+void* Actor_SetMotionOverride(void* d, void* s);
 void* func_001AE020(void* d, int k, float f);
 void* func_001AE050(void* x, int i, int id, char* a);
 int func_001AE0B0(char* p, int v);
@@ -267,12 +267,12 @@ int func_001AE190(void* k);
 void* func_001AE260(int v);
 int func_001AE270(int v);
 void func_001AE280(void* k, int n);
-void func_001AE320(int s, int v);
+void LosProvider_SeedRegion(int s, int v);
 int func_001AE360(char* s);
 void func_001AE370(void* e);
 void func_001AE3B0(char* p, char* v, float x, float y);
-void func_00256120(char* p);
-int func_0042B1A0(int v);
+void Backpack_Hide(char* p);
+int Net_GetClock(int v);
 }
 
 static inline unsigned char IsLoc(char* a)
@@ -297,7 +297,7 @@ static inline void QCp(void* d, const void* s) { const void* ss = s; void* dd = 
         (dst)[ckc_i] = 0; \
     }
 typedef struct { unsigned char kind; char pad[3]; char pairs[0x38]; char tail[0x10]; } XS;
-static inline void XInit(XS* x) { x->kind = 0; func_0018A910(x->pairs); func_0018A8C0(x->tail); }
+static inline void XInit(XS* x) { x->kind = 0; MotionTokens_Init(x->pairs); func_0018A8C0(x->tail); }
 static inline void XDtor(XS* x) { func_00189FD0(x->tail, -1); func_0018A040(x->pairs, -1); }
 #define FwdMsg(a, m, f) { \
     Ev30 c; \
@@ -423,7 +423,7 @@ struct FailEv {
     PP(&e, 0) = D_004DA950; \
     cMessage_dtor(p, 0); \
 }
-struct CtlS { void Sel(Buf_A0* selp, V4* rtp); void Sel2(Buf_A0* rsel, Buf_A0* selp, V4* rtp); void Lnk(CtlS* o) { char* oc = (char*)o; char* ctl = (char*)this; func_001AD8C0(oc + 0x100, ctl + 0x100); } float Cur(int ch) { char* ctl = (char*)this; return AnimChannel_GetCurrent(ctl + 0x10, ch); } };
+struct CtlS { void Sel(Buf_A0* selp, V4* rtp); void Sel2(Buf_A0* rsel, Buf_A0* selp, V4* rtp); void Lnk(CtlS* o) { char* oc = (char*)o; char* ctl = (char*)this; ActorRelation_AddChild(oc + 0x100, ctl + 0x100); } float Cur(int ch) { char* ctl = (char*)this; return AnimChannel_GetCurrent(ctl + 0x10, ch); } };
 #define LATCH(i) Physical_LatchEdgeRequest(Physical_GetLatchSlot(AP(0x3310) + 0x3E0, (i)), 0)
 #define KEYFILL(k, s) \
     { Key30 kf; CanonicalKey_Construct(&kf, (s)); if (!func_001AE190(&(k)) || !func_001AE190(&kf)) func_001AE170(&(k), &kf, 3); }
@@ -462,7 +462,7 @@ inline void CtlS::Sel(Buf_A0* selp, V4* rtp)
     int out;
     Y2 y;
     char* q = ctl + 0x34;
-    s = (unsigned char*)func_001ADFF0(q, AnimRate_Init(rtp, D_0049D038));
+    s = (unsigned char*)Actor_SetMotionOverride(q, AnimRate_Init(rtp, D_0049D038));
     func_0018A700(&y, -1);
     Actor_ResolveMotionSelection(selp, &out, &y, *(void**)s);
     if (out) {
@@ -491,7 +491,7 @@ inline void CtlS::Sel2(Buf_A0* rsel, Buf_A0* selp, V4* rtp)
     int out;
     Y2 y;
     char* q = ctl + 0x34;
-    s = (unsigned char*)func_001ADFF0(q, AnimRate_Init(rtp, D_0049D038));
+    s = (unsigned char*)Actor_SetMotionOverride(q, AnimRate_Init(rtp, D_0049D038));
     func_0018A700(&y, -1);
     Actor_ResolveMotionSelection(rsel, &out, &y, *(void**)s);
     if (out) {
@@ -671,7 +671,7 @@ static inline void SetLook(char* a, int slot, void* src)
 
 struct XT {
     unsigned char kind; char pad[3]; char pairs[0x38]; char tail[0x10];
-    XT() { XT* q = this; q->kind = 0; func_0018A910(q->pairs); func_0018A8C0(q->tail); }
+    XT() { XT* q = this; q->kind = 0; MotionTokens_Init(q->pairs); func_0018A8C0(q->tail); }
     __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~XT() { func_00189FD0(tail, -1); func_0018A040(pairs, -1); }
     XT* p() { return this; }
 };
@@ -860,7 +860,7 @@ inline void CtlT::SelX(const RTU& rtr, const ST& sr)
     int out;
     Y2 y;
     char* q = ctl + 0x34;
-    s = (unsigned char*)func_001ADFF0(q, AnimRate_Init(rtp, D_0049D038));
+    s = (unsigned char*)Actor_SetMotionOverride(q, AnimRate_Init(rtp, D_0049D038));
     func_0018A700(&y, -1);
     Actor_ResolveMotionSelection(selp, &out, &y, *(void**)s);
     if (out) {
@@ -892,7 +892,7 @@ inline void CtlT::SelX2(const RTU& rtr, const ST& sr)
     int out;
     Y2 y;
     char* q = ctl + 0x34;
-    s = (unsigned char*)func_001ADFF0(q, AnimRate_Init(rtp, D_0049D038));
+    s = (unsigned char*)Actor_SetMotionOverride(q, AnimRate_Init(rtp, D_0049D038));
     func_0018A700(&y, -1);
     Actor_ResolveMotionSelection(rsel, &out, &y, *(void**)s);
     if (out) {
@@ -968,9 +968,9 @@ static inline void DirTailP(char* a, char* m, V4* d, char* dp)
 #define NETFP(bit, src) \
     { unsigned char* op = (unsigned char*)(src); if (D_005721C8) { unsigned char* np = (unsigned char*)AP(0x3584); if (np && AB(0x14)) { if (*op) np[0x50] |= (bit); else np[0x50] &= ~(bit); } } }
 static inline void SetA0(char* w, unsigned char v) { w[0xA0] = v; }
-static inline void LnkF(char* x, char* y) { char* xc = x; char* yc = y; func_001AD8C0(xc + 0x100, yc + 0x100); }
+static inline void LnkF(char* x, char* y) { char* xc = x; char* yc = y; ActorRelation_AddChild(xc + 0x100, yc + 0x100); }
 static inline void QCp2(void* d, const void* s) { __int128 q; __asm__ volatile("lq %0, 0x0(%0)" : "=r"(q) : "0"(s) : "memory"); void* dd = d; __asm__ volatile("sq %0, 0x0(%1)" : : "r"(q), "r"(dd) : "memory"); }
-static inline void LnkH(char* y, char* x) { char* xc; char* yc; yc = y; xc = x; func_001AD8C0(xc + 0x100, yc + 0x100); }
+static inline void LnkH(char* y, char* x) { char* xc; char* yc; yc = y; xc = x; ActorRelation_AddChild(xc + 0x100, yc + 0x100); }
 static inline bool IsCls2(char* p) { int d = D_0049D010; int k = PI(p, 0x4C); return k == d; }
 static inline bool NotB(unsigned char v) { return !v; }
 static inline VC FlPos(char* a) { return *(const VC*)Root_GetWorldBasePlacement(Actor_GetFloorRoot2(a)); }
@@ -997,7 +997,7 @@ extern "C" unsigned char Actor_HandleActionMessage(char* a, char* m)
                     if (MU(0xC) < AU(0x3594)) {
                         printf(D_0049E4A0, MU(0xC), AU(0x3594));
                     } else {
-                        int t = func_0042B1A0(0);
+                        int t = Net_GetClock(0);
                         if (t - AI(0x3580) >= 150 && func_001A9210(a) && IsLoc(a)) {
                             if (!AtFlY(m, FlPos(a))) {
                                 V4 p1, p2, f1, f2, d1, d2;
@@ -1051,7 +1051,7 @@ extern "C" unsigned char Actor_HandleActionMessage(char* a, char* m)
                                 }
                                 svc = Service_Lookup(D_004FFB50, D_004EA0B0);
                                 v = func_0014D410(func_0014D450(func_0014D460(a)));
-                                if (v) func_001AE320(func_001AE360(svc), v);
+                                if (v) LosProvider_SeedRegion(func_001AE360(svc), v);
                                 VO_(svc)->f01(&ev1);
                                 VO_(svc)->f01(&ev2);
                                 if ((*(unsigned char*)h1.c || *(unsigned char*)h2.c) && IsLoc(a)) {
@@ -1478,7 +1478,7 @@ extern "C" unsigned char Actor_HandleActionMessage(char* a, char* m)
                 V4 ax, pos, v, q;
                 char* s3;
                 char* pa;
-                func_001ADAB0(a + 0x3478, o);
+                Actor_LinkBody(a + 0x3478, o);
                 unsigned char g = 0;
                 unsigned char h = 0;
                 if (PB(o, 0x2D) && PB(o, 0x2C)) h = 1;
@@ -1488,7 +1488,7 @@ extern "C" unsigned char Actor_HandleActionMessage(char* a, char* m)
                     else VO_(o)->f06();
                 }
                 WeaponInv_HolsterCurrent(AP(0x3524));
-                if (PP(o, 0x3464)) func_00256120(PP(o, 0x3464));
+                if (PP(o, 0x3464)) Backpack_Hide(PP(o, 0x3464));
                 ax.x = 0.0f;
                 ax.y = 0.0f;
                 ax.z = 1.0f;
@@ -1502,7 +1502,7 @@ extern "C" unsigned char Actor_HandleActionMessage(char* a, char* m)
                     QAA(&q, AA(&ax, ang - 1.5707964f));
                 }
                 pa = AP(0x3294);
-                func_001AD9C0(pa, PlId(&q, &pos));
+                RootAttachments_Attach(pa, PlId(&q, &pos));
                 LnkH(o + 0x2EC0, a + 0x2EC0);
                 AttachAll(a);
                 {

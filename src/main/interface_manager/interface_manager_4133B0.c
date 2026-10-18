@@ -84,7 +84,7 @@ char* String_CStr(Str4134B0* s);
 #endif /* merge_units */
 #define String_CStr(a0) (String_CStr((Str4133B0 *)(a0))) /* merge_units */
 
-void func_0036E5D0(Hog4134B0* h);
+void Resource_Construct(Hog4134B0* h);
 void FileMan_Release(Hog4134B0* h, int flags);
 void func_0036E140(Hog4134B0* h, char* name, int a, int b);
 void Hog_Register(Hog4134B0* h, char* name, int arc, int z);
@@ -113,7 +113,7 @@ extern "C" bool func_004134B0(Self4134B0* self, Str4134B0* out, const char* name
         return false;
     for (i = self->list->count - 1; i >= 0; i--) {
         char* p;
-        func_0036E5D0(&h);
+        Resource_Construct(&h);
         sprintf(buf, "%s\\%s.HOG", String_CStr(&self->list->data[i]), name);
         for (p = buf; *p; p++) {
             char c = *p;
@@ -136,7 +136,7 @@ extern "C" bool func_004134B0(Self4134B0* self, Str4134B0* out, const char* name
         return true;
     }
     if (self->arc) {
-        func_0036E5D0(&h2);
+        Resource_Construct(&h2);
         sprintf(buf2, "%s.HOG", name);
         Hog_Register(&h2, buf2, self->arc, 0);
         if ((unsigned char)FileMan_FindMember(&h2)) {

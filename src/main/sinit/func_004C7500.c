@@ -104,8 +104,8 @@ extern int Script_RegisterNative_2();
     p = (SoundRequest*)obj; \
     ((SoundRequest*)obj)->voice = 0; \
     ((SoundRequest*)obj)->voiceId = -2; \
-    func_0036E5D0(&((SoundRequest*)obj)->a); \
-    func_0036E5D0(&((SoundRequest*)obj)->b); \
+    Resource_Construct(&((SoundRequest*)obj)->a); \
+    Resource_Construct(&((SoundRequest*)obj)->b); \
     p->type = t; \
     *(__int128*)p->name = Q; \
     p->voice = 0; \

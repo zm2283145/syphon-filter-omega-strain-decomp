@@ -94,7 +94,7 @@ void func_0025CA40(char* r);
 void Vec4_Copy(void* d, V4* s);
 int* GuiBatch_AddVertexColor(void* out, V4* in);
 void func_003701B0(char* r);
-void func_00371200(char* r);
+void Renderer_FlushBatch(char* r);
 }
 
 #define SlotAt(i) ((Slot*)(D_005381F0 + 0x1F0 + (i) * 0x110))
@@ -167,7 +167,7 @@ extern "C" void func_00424F60(Rect* rect, V4* colorp, int alt)
         Vertex(&p[2], colorp);
         Vertex(&p[3], colorp);
         Vertex(&p[0], colorp);
-        if (alt) func_00371200(D_005381F0);
+        if (alt) Renderer_FlushBatch(D_005381F0);
         else func_003701B0(D_005381F0);
     }
     D_005392D0 = save;

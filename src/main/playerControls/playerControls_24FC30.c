@@ -52,7 +52,7 @@ static inline void merge_flush_func_0024FC60(void) {}
 
 /* merge_units: begin func_0024FC90 */
 #pragma push /* merge_units */
-void func_0024FC90(int a0, int a1) {
+void WeakHandle_Assign(int a0, int a1) {
     int loc[1];
     int v1;
     int cond;

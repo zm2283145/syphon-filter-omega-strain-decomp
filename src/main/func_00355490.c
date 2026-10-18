@@ -19,7 +19,7 @@ extern void FileMan_Release(void* part, int flags);
 extern void cMessage_dtor(void* msg, int flags);
 extern void SoundAction_CtorVoice(void* action, int kind, char* voice, int a, int b);
 extern void SoundMsg_WrapAction(SoundMsg_355490* msg, void* action);
-extern void func_0043C890(Widget_355490* w, char* s, int v);
+extern void GuiBitmapWidget_SetImage(Widget_355490* w, char* s, int v);
 extern void func_0043C810(Widget_355490* w);
 extern int sprintf(char* buf, const char* fmt, ...);
 
@@ -51,7 +51,7 @@ static inline void PlayVoice_355490(Self_355490* self, char* voice)
     cMessage_dtor(&play, 0);
 }
 
-void func_00355490(Self_355490* self, int on)
+void GuiPersonnelMenu_ToggleDetail(Self_355490* self, int on)
 {
     char buf[0x20];
     if (on == 1) {
@@ -59,7 +59,7 @@ void func_00355490(Self_355490* self, int on)
         if (self->w9C) self->w9C->flags &= ~2;
         if (self->w98) {
             sprintf(buf, "0_%d_%d.tdx", self->f8C, self->f90);
-            func_0043C890(self->w98, buf, D_004FFC04->f25C);
+            GuiBitmapWidget_SetImage(self->w98, buf, D_004FFC04->f25C);
             self->w98->flags |= 2;
             sprintf(buf, "0_%d_%d", self->f8C, self->f90);
             PlayVoice_355490(self, buf);

@@ -78,7 +78,7 @@ static inline int ks0038DE20meq(__int128 m, __int128 a, __int128 b) {
     }
     return r == -1;
 }
-int func_0038DE20(int idx)
+int ActorModel_GetMorphCount(int idx)
 {
     __int128 mask = ks0038DE20from(0xFFFFFFFFFFFFLL);
     __int128 key;

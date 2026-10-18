@@ -6,6 +6,9 @@ extern void Actor_BaseWorldUpdate();
 extern void Actor_VirtualNop();
 extern void Controller_DeathNotice();
 extern void DirLight_Destruct();
+extern void GObj_GetID();
+extern void GObj_GetLifeState();
+extern void GObj_GetWorldMatrix();
 extern void Light_Disable();
 extern void Light_Enable();
 extern void Light_GetCoronaFlag();
@@ -37,7 +40,6 @@ extern void cGameLight_v0B();
 extern void cGameLight_v0C();
 extern void cGameSceneLight_Activate();
 extern void cGameSceneLight_Deactivate();
-extern void func_0012ECE0();
 extern void func_0012ED00();
 extern void func_0012ED30();
 extern void func_0012ED40();
@@ -46,7 +48,6 @@ extern void func_00134E00();
 extern void func_0013E060();
 extern void func_0013EE60();
 extern void func_00140E90();
-extern void func_00141850();
 extern void func_001479A0();
 extern void func_00147A00();
 extern void func_00147A10();
@@ -71,7 +72,6 @@ extern void func_00179B00();
 extern void func_00179BF0();
 extern void func_00179C00();
 extern void func_00179C10();
-extern void func_003CCFF0();
 extern void func_003CD090();
 extern void func_003CD110();
 extern void func_003CD4A0();
@@ -97,7 +97,7 @@ void *D_004DA070[16] = {
 
 void *D_004DA0B0[72] = {
     0, 0, &cGameDirectionalLight_dtor, &Object_HandleMessage,
-    &func_0012ECE0, &Object_GetAttachedOrSelf, &func_0015C090, &func_0012ED00,
+    &GObj_GetID, &Object_GetAttachedOrSelf, &func_0015C090, &func_0012ED00,
     &func_003CE810, &func_003CE7D0, &func_0012ED30, &func_0012ED40,
     &func_0012ED50, &cGameDirectionalLight_v0B, &cGameDirectionalLight_v0C, &func_003CEA00,
     &func_00179C10, &func_00179C00, &func_00179BF0, &Actor_BasePreLogic,
@@ -111,14 +111,14 @@ void *D_004DA0B0[72] = {
     &Object_GetEye, &func_0015C020, &func_00140E90, &func_0015C030,
     &func_0015C040, &func_0015C050, &Node_GetWorldMatrix, &func_003CD4A0,
     &Node_GetLightRefPoint, &PathObj_GetPosition, &Node_GetComponentMatrix, &func_003CD110,
-    &func_003CD090, &func_003CCFF0, &func_0013E060, &func_0015C080,
-    &Actor_ApplyContactDamage, &func_0015C0A0, &func_00141850, &Controller_DeathNotice,
+    &func_003CD090, &GObj_GetWorldMatrix, &func_0013E060, &func_0015C080,
+    &Actor_ApplyContactDamage, &func_0015C0A0, &GObj_GetLifeState, &Controller_DeathNotice,
     &func_00179B00, &func_00179A90, 0, 0,
 };
 
 void *D_004DA1D0[72] = {
     0, 0, &cGameLight_dtor, &Object_HandleMessage,
-    &func_0012ECE0, &Object_GetAttachedOrSelf, &func_0015C090, &func_0012ED00,
+    &GObj_GetID, &Object_GetAttachedOrSelf, &func_0015C090, &func_0012ED00,
     &func_003CE810, &func_003CE7D0, &func_0012ED30, &func_0012ED40,
     &func_0012ED50, &cGameLight_v0B, &cGameLight_v0C, &func_003CEA00,
     &func_00179C10, &func_00179C00, &func_00179BF0, &Actor_BasePreLogic,
@@ -132,8 +132,8 @@ void *D_004DA1D0[72] = {
     &Object_GetEye, &func_0015C020, &func_00140E90, &func_0015C030,
     &func_0015C040, &func_0015C050, &Node_GetWorldMatrix, &func_003CD4A0,
     &Node_GetLightRefPoint, &PathObj_GetPosition, &Node_GetComponentMatrix, &func_003CD110,
-    &func_003CD090, &func_003CCFF0, &func_0013E060, &func_0015C080,
-    &Actor_ApplyContactDamage, &func_0015C0A0, &func_00141850, &Controller_DeathNotice,
+    &func_003CD090, &GObj_GetWorldMatrix, &func_0013E060, &func_0015C080,
+    &Actor_ApplyContactDamage, &func_0015C0A0, &GObj_GetLifeState, &Controller_DeathNotice,
     &func_00179B00, &func_00179A90, 0, 0,
 };
 

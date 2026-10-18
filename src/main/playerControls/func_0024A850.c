@@ -4,7 +4,7 @@ PB_DEFINE(PS_24A850, 1)
 typedef struct { char pad[0x30]; int x30; int x34; int x38; int x3C; PS_24A850 ps; } O_24A850;
 typedef struct { char pad[0x2E00]; unsigned char state; } X_24A850;
 extern int Camera_IsBoomActive(void* y);
-extern void func_00249460(O_24A850* o, X_24A850* x);
+extern void Player_MpAimViewExit(O_24A850* o, X_24A850* x);
 extern unsigned char D_005721C8;
 #pragma opt_rotateloops off
 void PlayerInput_EnterAimView(O_24A850* o, X_24A850* x, void* y, float val)
@@ -22,7 +22,7 @@ void PlayerInput_EnterAimView(O_24A850* o, X_24A850* x, void* y, float val)
         int c = o->x30 == 8 && !(o->x38 == 8);
         if (c) {
             x->state = 0;
-            if (D_005721C8) func_00249460(o, x);
+            if (D_005721C8) Player_MpAimViewExit(o, x);
         }
     }
 }

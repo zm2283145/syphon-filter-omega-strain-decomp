@@ -16,7 +16,7 @@ void GuiWidget_Draw(GuiGridWidget* self);
 }
 
 /* Draw visible column backgrounds, row backgrounds and cells before drawing children. */
-extern "C" void func_00423670(GuiGridWidget* self)
+extern "C" void GuiArrayWidget_Draw(GuiGridWidget* self)
 {
     GuiGridRect columnRect;
     GuiGridRect rowRect;
@@ -250,8 +250,8 @@ void func_00424410(GuiWidget424C50* self, int* outA, int* outB) {
 
 extern "C" {
 void GuiArrayWidget_Scroll(GuiGridWidget* self, unsigned int column, unsigned int row);
-void func_0041EBA0(GuiGridWidget* widget, float x, float y);
-void func_0043BC70(void* scrollbar, int first, unsigned int value, int minimum,
+void GuiWidget_SetPos(GuiGridWidget* widget, float x, float y);
+void GuiScrollBarWidget_SetRange(void* scrollbar, int first, unsigned int value, int minimum,
                    unsigned int maximum);
 }
 
@@ -275,10 +275,10 @@ extern "C" void GuiArrayWidget_Select(GuiGridWidget* self, unsigned int column, 
             y -= (float)((row - self->firstRow) * self->rowHeight);
             float excess = self->marker->height;
             excess -= (float)self->rowHeight;
-            func_0041EBA0(self->marker, self->x, y + excess / 2.0f);
+            GuiWidget_SetPos(self->marker, self->x, y + excess / 2.0f);
         }
         if (self->scrollbar)
-            func_0043BC70(self->scrollbar, 0, self->selectedRow, 0, self->rows - 1);
+            GuiScrollBarWidget_SetRange(self->scrollbar, 0, self->selectedRow, 0, self->rows - 1);
     }
 }
 
@@ -331,9 +331,9 @@ void func_00424730(GuiWidget424C50* self, int* outA, int* outB) {
 typedef struct { char pad[0x48]; unsigned int n48; int f4c; int f50; int f54; char pad2[8]; char vec[4]; int f64; char pad3[8]; int f70; char pad4[0x18]; void* f8c; } O424;
 extern void PtrVec_PushBack_1C1080(void*, char*);
 #if 0 /* merge_units */
-extern void func_0043BC70(void*, int, int, int, int);
+extern void GuiScrollBarWidget_SetRange(void*, int, int, int, int);
 #endif /* merge_units */
-#define func_0043BC70(a0, a1, a2, a3, a4) (func_0043BC70((a0), (a1), (unsigned int)(a2), (a3), (unsigned int)(a4))) /* merge_units */
+#define GuiScrollBarWidget_SetRange(a0, a1, a2, a3, a4) (GuiScrollBarWidget_SetRange((a0), (a1), (unsigned int)(a2), (a3), (unsigned int)(a4))) /* merge_units */
 
 void GuiArrayWidget_SetDims(O424* o, int a, int b) {
     o->n48 = a;
@@ -344,9 +344,9 @@ void GuiArrayWidget_SetDims(O424* o, int a, int b) {
         o->f64 = 0;
         for (i = 0; i < o->n48; i++) PtrVec_PushBack_1C1080(o->vec, "<");
     }
-    if (o->f8c) func_0043BC70(o->f8c, 0, o->f54, 0, o->f4c - 1);
+    if (o->f8c) GuiScrollBarWidget_SetRange(o->f8c, 0, o->f54, 0, o->f4c - 1);
 }
-#undef func_0043BC70 /* merge_units */
+#undef GuiScrollBarWidget_SetRange /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00424750 */
 
@@ -414,12 +414,12 @@ struct Widget {
     int unk54; /* +0x54 */
 };
 
-extern "C" void func_0041E2B0(Widget* self);
+extern "C" void GuiWidget_BubbleType1(Widget* self);
 
-/* func_0041E2B0 then virtual slot +0x70 with fields +0x50/+0x54. */
+/* GuiWidget_BubbleType1 then virtual slot +0x70 with fields +0x50/+0x54. */
 extern "C" void GuiArrayWidget_OnLoseFocus(Widget* self)
 {
-    func_0041E2B0(self);
+    GuiWidget_BubbleType1(self);
     self->Method70(self->unk50, self->unk54);
 }
 #pragma pop /* merge_units */
@@ -443,12 +443,12 @@ struct Widget_00424A10 {
     int unk54; /* +0x54 */
 };
 
-extern "C" void func_0041E330(Widget_00424A10* self);
+extern "C" void GuiWidget_BubbleType0(Widget_00424A10* self);
 
-/* Runs func_0041E330, then the virtual at vtable+0x6C with the two words at +0x50/+0x54. */
+/* Runs GuiWidget_BubbleType0, then the virtual at vtable+0x6C with the two words at +0x50/+0x54. */
 extern "C" void GuiArrayWidget_OnGainFocus(Widget_00424A10* self)
 {
-    func_0041E330(self);
+    GuiWidget_BubbleType0(self);
     self->Method6C(self->unk50, self->unk54);
 }
 #pragma pop /* merge_units */
@@ -460,12 +460,12 @@ extern "C" void GuiArrayWidget_OnGainFocus(Widget_00424A10* self)
 #pragma cplusplus on
 
 
-extern "C" void func_0041EBF0(Widget* self);
+extern "C" void GuiWidget_BaseSleep(Widget* self);
 
-/* Runs func_0041EBF0, then virtual +0x70 with the words at +0x50/+0x54. */
+/* Runs GuiWidget_BaseSleep, then virtual +0x70 with the words at +0x50/+0x54. */
 extern "C" void func_00424A50(Widget* self)
 {
-    func_0041EBF0(self);
+    GuiWidget_BaseSleep(self);
     self->Method70(self->unk50, self->unk54);
 }
 #pragma pop /* merge_units */
@@ -476,7 +476,7 @@ extern "C" void func_00424A50(Widget* self)
 #pragma cplusplus on
 
 extern "C" {
-void func_0041EFA0(GuiGridWidget* self);
+void GuiWidget_BaseWake(GuiGridWidget* self);
 #if 0 /* merge_units */
 void GuiArrayWidget_ColumnWidth(GuiGridWidget* self, unsigned int column, unsigned int width);
 #endif /* merge_units */
@@ -487,7 +487,7 @@ void GuiArrayWidget_ColumnWidth(GuiGridWidget* self, unsigned int column, unsign
 /* Reset selection, refresh visible dimensions and notify the initial selected cell. */
 extern "C" void GuiArrayWidget_OnWake(GuiGridWidget* self)
 {
-    func_0041EFA0(self);
+    GuiWidget_BaseWake(self);
     self->selectedColumn = 0;
     self->selectedRow = 0;
     self->visibleRows = (unsigned int)(self->height / (float)self->rowHeight);

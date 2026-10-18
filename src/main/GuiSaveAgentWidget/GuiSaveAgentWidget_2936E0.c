@@ -18,13 +18,13 @@
 extern char D_004DD460[];   /* GuiSaveAgentWidget vtable */
 extern char D_004E1220[];   /* GuiItem vtable */
 extern int AgentOpen_BuildSlotList(GuiSaveAgentWidget* self);
-extern int func_0041EFA0(GuiWidget* self);
+extern int GuiWidget_BaseWake(GuiWidget* self);
 extern void GuiWidget_ctor(GuiWidget* self);
 
 /* GuiSaveAgentWidget vtable slot 5: own update, then the base widget's. */
 int func_002936E0(GuiSaveAgentWidget* self) {
     AgentOpen_BuildSlotList(self);
-    return func_0041EFA0(&self->base.base);
+    return GuiWidget_BaseWake(&self->base.base);
 }
 
 /* GuiSaveAgentWidget constructor (GuiItem constructor inlined). */
@@ -61,20 +61,20 @@ extern "C" void GuiAgentLoad_HandleInput();
 extern "C" void GuiAgentLoad_HandleEvent();
 extern "C" void GuiAgentLoad_Wake();
 extern "C" void GuiAgentLoad_Update();
-extern "C" void func_00293850();
+extern "C" void GuiAgentLoad_GetClassName();
 extern "C" void func_00293860();
 extern "C" void func_00293890();
 extern "C" void GuiWidget_FocusPrev();
 extern "C" void GuiWidget_FocusNext();
 extern "C" void GuiWidget_FocusLast();
 extern "C" void GuiWidget_FocusFirst();
-extern "C" void func_0041E230();
-extern "C" void func_0041E2B0();
-extern "C" void func_0041E330();
+extern "C" void GuiWidget_BubbleActivate();
+extern "C" void GuiWidget_BubbleType1();
+extern "C" void GuiWidget_BubbleType0();
 extern "C" void GuiWidget_Draw();
-extern "C" void func_0041EBF0();
-extern "C" void func_0041F070();
-extern "C" void func_0041F080();
+extern "C" void GuiWidget_BaseSleep();
+extern "C" void GuiWidget_ClearFlag4();
+extern "C" void GuiWidget_SetFlag4();
 extern "C" void GuiWidget_Deinit();
 extern "C" void GuiWidget_Init();
 extern "C" void func_0041F210();
@@ -97,6 +97,6 @@ extern "C" Vtable3Object* func_002937D0(Vtable3Object* self, short deleteFlag)
     }
     return self;
 }
-void * const D_004DD400[24] = { (void*)0x0, (void*)0x0, (void*)func_002937D0, (void*)GuiWidget_Init, (void*)GuiWidget_Deinit, (void*)func_0041F080, (void*)func_0041F070, (void*)GuiAgentLoad_Wake, (void*)func_0041EBF0, (void*)func_0041E330, (void*)func_0041E2B0, (void*)GuiAgentLoad_HandleInput, (void*)GuiWidget_Draw, (void*)func_0041E230, (void*)GuiAgentLoad_Update, (void*)GuiAgentLoad_HandleEvent, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)func_00293850, (void*)func_00293860, (void*)func_00293890 };
+void * const D_004DD400[24] = { (void*)0x0, (void*)0x0, (void*)func_002937D0, (void*)GuiWidget_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiAgentLoad_Wake, (void*)GuiWidget_BaseSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiAgentLoad_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiAgentLoad_Update, (void*)GuiAgentLoad_HandleEvent, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiAgentLoad_GetClassName, (void*)func_00293860, (void*)func_00293890 };
 #pragma pop /* merge_units */
 /* merge_units: end func_002937D0 */

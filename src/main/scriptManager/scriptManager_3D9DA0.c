@@ -89,7 +89,7 @@ typedef struct { char pad[0x4E50]; int count; void** groups; } T9F40;
 extern int Group_FindByObject(void* g, void* o);
 extern void Group_RemoveObject(void* g, void* o);
 #pragma opt_strength_reduction off
-void func_003D9F40(T9F40* self, O9F40* o)
+void Script_DropFromGroups(T9F40* self, O9F40* o)
 {
     void* sub = o->m58;
     int i;

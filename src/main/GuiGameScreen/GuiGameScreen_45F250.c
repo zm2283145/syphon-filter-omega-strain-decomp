@@ -10,22 +10,22 @@ extern "C" void GuiWidget_FocusPrev();
 extern "C" void GuiWidget_FocusNext();
 extern "C" void GuiWidget_FocusLast();
 extern "C" void GuiWidget_FocusFirst();
-extern "C" void func_0041E230();
-extern "C" void func_0041E2B0();
-extern "C" void func_0041E330();
+extern "C" void GuiWidget_BubbleActivate();
+extern "C" void GuiWidget_BubbleType1();
+extern "C" void GuiWidget_BubbleType0();
 extern "C" void GuiWidget_Update();
 extern "C" void GuiWidget_Draw();
-extern "C" void func_0041EBF0();
-extern "C" void func_0041F070();
-extern "C" void func_0041F080();
+extern "C" void GuiWidget_BaseSleep();
+extern "C" void GuiWidget_ClearFlag4();
+extern "C" void GuiWidget_SetFlag4();
 extern "C" void GuiWidget_Deinit();
 extern "C" void GuiWidget_Init();
 extern "C" void func_0041F210();
 extern "C" void GuiSaveAgentWidget_OnEvent();
-extern "C" void func_0045F2C0();
+extern "C" void GuiAutoSaver_GetClassName();
 extern "C" void func_0045F2D0();
-extern "C" void func_0045F300();
-extern "C" void func_0045F340();
+extern "C" void GuiAutoSaver_SaveDone();
+extern "C" void GuiAutoSaver_Wake();
 extern void * const D_004E16D0[];
 extern char D_004E1220[];
 void* GuiWidget_Destroy(void* self, short deleteFlag);
@@ -43,4 +43,4 @@ extern "C" Vtable2Object* func_0045F250(Vtable2Object* self, short deleteFlag)
     }
     return self;
 }
-void * const D_004E16D0[24] = { (void*)0x0, (void*)0x0, (void*)func_0045F250, (void*)GuiWidget_Init, (void*)GuiWidget_Deinit, (void*)func_0041F080, (void*)func_0041F070, (void*)func_0045F340, (void*)func_0041EBF0, (void*)func_0041E330, (void*)func_0041E2B0, (void*)func_00293950, (void*)GuiWidget_Draw, (void*)func_0041E230, (void*)GuiWidget_Update, (void*)GuiSaveAgentWidget_OnEvent, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)func_0045F2C0, (void*)func_0045F2D0, (void*)func_0045F300 };
+void * const D_004E16D0[24] = { (void*)0x0, (void*)0x0, (void*)func_0045F250, (void*)GuiWidget_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiAutoSaver_Wake, (void*)GuiWidget_BaseSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)func_00293950, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiSaveAgentWidget_OnEvent, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiAutoSaver_GetClassName, (void*)func_0045F2D0, (void*)GuiAutoSaver_SaveDone };

@@ -7,7 +7,7 @@
 #include "interface_element_types.h"
 
 extern int List_InsertBefore(int** out, StdList* list, int** pos, int value);
-extern int func_003EEE70(int owner, IfElement* elem);
+extern int IeScreen_RemoveElement(int owner, IfElement* elem);
 
 /* list.push_back(value): insert before the sentinel. */
 int TextManager_AddText(StdList* list, int value) {
@@ -17,7 +17,7 @@ int TextManager_AddText(StdList* list, int value) {
     return List_InsertBefore(&it.result, list, &it.pos, value);
 }
 
-/* Forward the element to func_003EEE70 on its owner. */
+/* Forward the element to IeScreen_RemoveElement on its owner. */
 int IeElement_Release(IfElement* elem) {
-    return func_003EEE70(elem->owner, elem);
+    return IeScreen_RemoveElement(elem->owner, elem);
 }

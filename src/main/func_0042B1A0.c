@@ -5,7 +5,7 @@
 int func_002EBC48(int *);                           
 int func_002EBCE0(int *);                           
 
-int func_0042B1A0(int arg0) {
+int Net_GetClock(int arg0) {
     int sp1C;
     int var_v0;
 

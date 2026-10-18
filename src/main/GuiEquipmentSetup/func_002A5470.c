@@ -18,8 +18,8 @@ extern "C" void List_Begin(ListIter* out, NodeList* list);
 extern "C" void func_0028C0B0(ListIter* out, ListIter* in);
 extern "C" void func_0028C0A0(ListIter* out, NodeList* list);
 extern "C" void func_0028C090(ListIter* out, ListIter* in);
-extern "C" void func_0041EBA0(Widget* w, float x, float y);
-static inline void SetPos(Widget* w, Vec2 v) { func_0041EBA0(w, v.x, v.y); }
+extern "C" void GuiWidget_SetPos(Widget* w, float x, float y);
+static inline void SetPos(Widget* w, Vec2 v) { GuiWidget_SetPos(w, v.x, v.y); }
 extern "C" void func_002A5470(Widget* w, Vec2 off)
 {
     ListIter last;

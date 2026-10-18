@@ -78,7 +78,7 @@ extern "C" SF6_3D1490* func_003D1490(SF6_3D1490* self, const SF6_3D1490* src)
 
 /* merge_units: begin func_003D1560 */
 #pragma push /* merge_units */
-List* func_003D1560(List* l) {
+List* List_InitEmpty(List* l) {
     l->count = 0;
     l->first = l->last = &l->first;
     return l;

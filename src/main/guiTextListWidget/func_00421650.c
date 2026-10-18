@@ -13,7 +13,7 @@ typedef struct Parent421650 {
 } Parent421650;
 
 /* Sets the state byte and mirrors it into the child, if any. */
-void func_00421650(Parent421650* obj, unsigned char state) {
+void GuiTextListWidget_SetF1(Parent421650* obj, unsigned char state) {
     obj->state = state;
     if (obj->child) {
         obj->child->state = obj->state;

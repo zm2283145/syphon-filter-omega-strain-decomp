@@ -7,6 +7,6 @@
 #include "types.h"
 #include "loose01_types.h"
 
-int func_00272AC0(Unk272AC0* self) {
+int HudMarkers_GetHighlight(Unk272AC0* self) {
     return self->unk3C;
 }

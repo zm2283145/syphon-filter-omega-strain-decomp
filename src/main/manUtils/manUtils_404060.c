@@ -56,7 +56,7 @@ extern unsigned char D_00571500[2][2];
 extern unsigned char D_00571510[2][2][24];
 int Hog_GetEntrySize(Npc_S* npc, int i);
 char* Archive_GetMemberName(Npc_S* npc, int i);
-__int128* func_0036D4E0(Npc_S* npc, int i);
+__int128* Hog_GetMemberInPlace(Npc_S* npc, int i);
 void Appearance_RegistryKey(char* dst, int n, char* src);
 char* strrchr(char* s, int c);
 unsigned int TexCache_FindOrAddSlot(Cache_S* c, __int128 key, int k);
@@ -100,7 +100,7 @@ void Skf_Register(Cache_S* c, Npc_S* npc)
         a = Hog_GetEntrySize(npc, i);
         if (!a) continue;
         name = Archive_GetMemberName(npc, i);
-        pkt = func_0036D4E0(npc, i);
+        pkt = Hog_GetMemberInPlace(npc, i);
         Appearance_RegistryKey(ks, 15, name);
         ext = strrchr(name, '.');
         if (!ext) ext = name;
@@ -215,7 +215,7 @@ static inline int k690eq(__int128 a, __int128 b) {
     }
     return r == -1;
 }
-unsigned int func_00404690(K690* s, __int128 key) {
+unsigned int AgentPartCache_FindMesh(K690* s, __int128 key) {
     unsigned int i;
     for (i = 0; i < s->count; i++) {
         if (k690eq(key, s->keys[i]))

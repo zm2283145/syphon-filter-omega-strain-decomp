@@ -5,7 +5,7 @@
  * cAgentData_Has* lookups: find the localised key in a global definition
  * table (count/table globals, 24-byte entries), refresh the matching
  * 20-byte record of the agent (record array pointer at recsOffset) with
- * func_00335350(self, rec, def, 0), and return the record's done flag.
+ * AgentData_StepAwardElement(self, rec, def, 0), and return the record's done flag.
  * Wrap the macro in #pragma opt_strength_reduction off / reset.
  * C++ only (#pragma cplusplus on before including).
  */
@@ -14,7 +14,7 @@ struct AgentRecord { unsigned char done; char pad[19]; };
 
 extern "C" {
 int Loc_FindKeyThunk(const char* key);
-void func_00335350(void* self, AgentRecord* r, AgentRecordDef* e, int f);
+void AgentData_StepAwardElement(void* self, AgentRecord* r, AgentRecordDef* e, int f);
 }
 
 #define DEFINE_AGENT_RECORD_HAS(name, countSym, tableSym, recsOffset)          \
@@ -27,7 +27,7 @@ void func_00335350(void* self, AgentRecord* r, AgentRecordDef* e, int f);
             AgentRecordDef* e = &tableSym[i];                                 \
             if (e->id == k) {                                                 \
                 AgentRecord* r = &(*(AgentRecord**)(self + (recsOffset)))[i]; \
-                func_00335350(self, r, e, 0);                                 \
+                AgentData_StepAwardElement(self, r, e, 0);                                 \
                 return r;                                                     \
             }                                                                 \
         }                                                                     \

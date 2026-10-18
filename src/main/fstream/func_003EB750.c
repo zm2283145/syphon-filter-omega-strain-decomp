@@ -33,7 +33,7 @@ static inline void* At(LSelf* s, int i) {
     return *func_003EB8E0(&it);
 }
 
-extern "C" void func_003EB750(LSelf* self) {
+extern "C" void FStream_CancelRequests(LSelf* self) {
     int n = self->count;
     int i;
     for (i = 0; i < n; i++) {

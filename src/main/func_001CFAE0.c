@@ -19,9 +19,9 @@ struct Mtx { V4 r0, r1, r2, r3; };
 struct Elem { VPAD16(a) VPAD4(b) virtual void Sync(); char pad04[0xC]; Mtx m; unsigned char b50; };
 extern "C" {
 void Quat_Assign(V4*, V4*);
-void func_0017D540(void*, float);
+void QuatCurve_Timer(void*, float);
 int func_0017D510(void*);
-void func_0017D340(V4*, void*);
+void QuatCurve_Sample(V4*, void*);
 void func_0017D0A0(void*, float);
 int func_0017D070(void*);
 void func_0017CEA0(V4*, void*);
@@ -39,10 +39,10 @@ struct QCtl {
     void Update(float t, float u) {
         Quat_Assign(&prev, &cur);
         Begin();
-        func_0017D540(filt, t);
+        QuatCurve_Timer(filt, t);
         if (func_0017D510(this)) {
             V4 tmp;
-            func_0017D340(&tmp, filt);
+            QuatCurve_Sample(&tmp, filt);
             Quat_Assign(&cur, &tmp);
             End();
         } else {
@@ -89,7 +89,7 @@ Elem* func_001CFF30(void* arr, int index);
 void func_00132840(V*);
 void Quat_Multiply(V*, V*, V*);
 void func_00132800(V*, V*);
-void func_001CFAE0(S* s, void* arr, float t, float u);
+void UpperBodyLayer_Update(S* s, void* arr, float t, float u);
 }
 static inline Elem* GetElem(void* arr, const signed char& i) { return func_001CFF30(arr, i); }static inline Plc4* MtxToPlc(Mtx* m, Plc4* out) {
     Plc4* o = out;
@@ -244,7 +244,7 @@ static inline void VAdd3(V* s, V* d) {
     }
 }
 
-void func_001CFAE0(S* s, void* arr, float t, float u)
+void UpperBodyLayer_Update(S* s, void* arr, float t, float u)
 {
     Plc4* src;
     if (s->idx != -1) {

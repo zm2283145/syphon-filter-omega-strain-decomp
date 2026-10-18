@@ -1,24 +1,24 @@
 #include "types.h"
 typedef struct { char pad[0x48]; char m48[0x9C]; char mE4[4]; } M326CC0;
 typedef struct { void* vt; char pad[0x44]; char m48[0x24]; char m6C[0xC]; char m78[0x18]; M326CC0 m90; } O326CC0;
-extern void func_00326DA0();
+extern void GuiSlideShow_GetClassName();
 extern void func_00326DB0();
-extern void func_00327910();
-extern void func_00327960();
-extern void func_00327CF0();
-extern void func_00327D90();
-extern void func_00327FD0();
+extern void GuiSlideShow_Draw();
+extern void GuiSlideShow_HandleInput();
+extern void GuiSlideShow_Sleep();
+extern void GuiSlideShow_Wake();
+extern void GuiSlideShow_Init();
 extern void GuiWidget_FocusPrev();
 extern void GuiWidget_FocusNext();
 extern void GuiWidget_FocusLast();
 extern void GuiWidget_FocusFirst();
-extern void func_0041E230();
-extern void func_0041E2B0();
-extern void func_0041E330();
+extern void GuiWidget_BubbleActivate();
+extern void GuiWidget_BubbleType1();
+extern void GuiWidget_BubbleType0();
 extern void GuiWidget_Update();
 extern void GuiWidget_OnEvent();
-extern void func_0041F070();
-extern void func_0041F080();
+extern void GuiWidget_ClearFlag4();
+extern void GuiWidget_SetFlag4();
 extern void GuiWidget_Deinit();
 extern void func_0041F210();
 extern void * const D_004DE710[];
@@ -53,4 +53,4 @@ O326CC0* func_00326CC0(O326CC0* self, short del)
     }
     return self;
 }
-void * const D_004DE710[24] = { (void*)0x0, (void*)0x0, (void*)func_00326CC0, (void*)func_00327FD0, (void*)GuiWidget_Deinit, (void*)func_0041F080, (void*)func_0041F070, (void*)func_00327D90, (void*)func_00327CF0, (void*)func_0041E330, (void*)func_0041E2B0, (void*)func_00327960, (void*)func_00327910, (void*)func_0041E230, (void*)GuiWidget_Update, (void*)GuiWidget_OnEvent, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)func_00326DA0, (void*)func_00326DB0, (void*)0x0 };
+void * const D_004DE710[24] = { (void*)0x0, (void*)0x0, (void*)func_00326CC0, (void*)GuiSlideShow_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiSlideShow_Wake, (void*)GuiSlideShow_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiSlideShow_HandleInput, (void*)GuiSlideShow_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiWidget_OnEvent, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiSlideShow_GetClassName, (void*)func_00326DB0, (void*)0x0 };

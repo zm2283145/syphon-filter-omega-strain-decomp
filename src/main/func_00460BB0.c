@@ -19,10 +19,10 @@ void List_Begin(ChildIterator* result, ChildList* list);
 void func_0028C0B0(ChildIterator* result, const ChildIterator* source);
 void func_0028C0A0(ChildIterator* result, ChildList* list);
 void func_0028C090(ChildIterator* result, const ChildIterator* source);
-void func_00460BB0(S460BB0* self);
+void GuiEndGameAwards_Init(S460BB0* self);
 }
 
-void func_00460BB0(S460BB0* self)
+void GuiEndGameAwards_Init(S460BB0* self)
 {
     W460BB0* w;
     ChildNode* node;

@@ -38,7 +38,7 @@ static inline void merge_flush_func_002A6F40(void) {}
 extern "C" {
 char D_004AB358[] = "guiWidget.hh";
 }
-DEFINE_GUARDED_NEW_CTOR(func_002A6FC0, 0xE0, D_004AB358, func_002A47E0)
+DEFINE_GUARDED_NEW_CTOR(func_002A6FC0, 0xE0, D_004AB358, GuiEquipmentSetup_Create)
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002A6FC0(void) {}
 #pragma pop /* merge_units */

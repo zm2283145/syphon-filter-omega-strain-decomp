@@ -11,7 +11,7 @@ extern void* cNodeList_ctor(void* obj);
 extern int func_002697E0(void* obj);
 extern void* Group_FromHandle(void* obj);
 
-void func_002693F0(void) {
+void Debug_PrintStub(void) {
 }
 
 /* Script native: CreateNodeList(args[0]). */

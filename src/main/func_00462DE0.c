@@ -5,10 +5,10 @@ extern "C" {
 extern char D_004E17C0[];
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void GuiObjectives_ctor(void* self, int a, int b);
-void func_00462FA0(void* p);
+void VoiceQueue_Construct(void* p);
 }
 struct O462DE0 { void* vtable; char pad4[0x8C]; char p90[0x1C0]; };
-extern "C" O462DE0* func_00462DE0(void)
+extern "C" O462DE0* GuiEndGameObjectives_Create(void)
 {
     O462DE0* p;
     {
@@ -18,7 +18,7 @@ extern "C" O462DE0* func_00462DE0(void)
     if (p) {
         GuiObjectives_ctor(p, 1, 0);
         p->vtable = D_004E17C0;
-        func_00462FA0(p->p90);
+        VoiceQueue_Construct(p->p90);
     }
     return p;
 }

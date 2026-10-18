@@ -130,7 +130,7 @@ static inline void merge_flush_func_00146B80(void) {}
 typedef struct { char pad[0x40A]; short f40A; char p40C[0xB]; signed char f417; char p418; unsigned char f419; } BlkV;
 typedef struct { char p0[0x11C]; BlkV *f11C; char p120[0x18]; unsigned char f138; char p139[3]; BlkV *f13C; } Ent;
 typedef struct { char p0[0x14]; Ent *f14; } Wpn;
-extern void func_0038CD90(BlkV* b, int x);
+extern void ActorModel_LoadFromHog(BlkV* b, int x);
 extern void WeaponDb_PropagateModel(Wpn* w, BlkV* name, BlkV* src);
 extern void WeaponDb_FreeModel(Wpn* w, BlkV* b);
 void WeaponDb_OnModelLoaded(Wpn* w, BlkV* b, int x)
@@ -139,7 +139,7 @@ void WeaponDb_OnModelLoaded(Wpn* w, BlkV* b, int x)
     unsigned char kind = b->f419;
     if (idx == -1) {
         if (b->f417 == -1) {
-            func_0038CD90(b, x);
+            ActorModel_LoadFromHog(b, x);
             WeaponDb_PropagateModel(w, b, b);
         } else {
             WeaponDb_FreeModel(w, b);
@@ -151,7 +151,7 @@ void WeaponDb_OnModelLoaded(Wpn* w, BlkV* b, int x)
         if (!kind) {
             if (e->f13C) {
                 if (e->f13C->f417 == -1) {
-                    func_0038CD90(e->f13C, x);
+                    ActorModel_LoadFromHog(e->f13C, x);
                     WeaponDb_PropagateModel(w, b, b);
                 } else {
                     WeaponDb_FreeModel(w, e->f13C);
@@ -161,7 +161,7 @@ void WeaponDb_OnModelLoaded(Wpn* w, BlkV* b, int x)
         } else {
             if (e->f11C && e->f138) {
                 if (e->f11C->f417 == -1) {
-                    func_0038CD90(e->f11C, x);
+                    ActorModel_LoadFromHog(e->f11C, x);
                     WeaponDb_PropagateModel(w, b, b);
                 } else {
                     WeaponDb_FreeModel(w, e->f11C);

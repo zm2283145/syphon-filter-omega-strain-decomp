@@ -6,7 +6,7 @@
 int Alloc_Lock(int);                                    
 int Alloc_Unlock(int);                                  
 int Mem_Alloc();                        
-int func_003E9000(int, int );                     
+int IeElement_Construct(int, int );                     
 int IeNode_SetShown(int, int, int);                              
 int IeNode_LinkElement(int , int *);                     
 extern int D_004BE030;
@@ -28,7 +28,7 @@ int IeElement_Create(int arg0) {
     }
     D_00533888 -= 1;
     if (var_s1 != 0) {
-        var_s1 = func_003E9000(var_s1, arg0);
+        var_s1 = IeElement_Construct(var_s1, arg0);
     }
     sp3C = var_s1;
     IeNode_LinkElement(arg0 + 0x8C, &sp3C);

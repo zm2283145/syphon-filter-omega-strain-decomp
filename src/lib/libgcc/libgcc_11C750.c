@@ -133,7 +133,7 @@ unsigned int func_0011C980(DFtype arg_a)
 __asm__(".set nomove\n"
         "dpadd = SoftFloat_DoubleAdd\n"
         "dpsub = func_0011C200\n"
-        "dpmul = func_0011C268\n"
+        "dpmul = SoftFloat_DoubleMultiply\n"
         "litodp = func_0011C7A0\n"
         "dptoli = func_0011C858\n"
         "dpcmp = SoftFloat_UnpackAndCompare\n");
@@ -281,7 +281,7 @@ __int32_t func_0011CA20(double x, double *y)
 typedef union { float value; unsigned int word; } ieee_float_shape_type;
 #define GET_FLOAT_WORD(i,d) do { ieee_float_shape_type gf_u; gf_u.value = (d); (i) = gf_u.word; } while (0)
 #define SET_FLOAT_WORD(d,i) do { ieee_float_shape_type sf_u; sf_u.word = (i); (d) = sf_u.value; } while (0)
-extern float func_0011ED00(float x);
+extern float Math_Sqrtf(float x);
 float Math_AcosKernel(float x)
 {
 	const float
@@ -320,14 +320,14 @@ float Math_AcosKernel(float x)
 	    z = (one+x)*(float)0.5;
 	    p = z*(pS0+z*(pS1+z*(pS2+z*(pS3+z*(pS4+z*pS5)))));
 	    q = one+z*(qS1+z*(qS2+z*(qS3+z*qS4)));
-	    s = func_0011ED00(z);
+	    s = Math_Sqrtf(z);
 	    r = p/q;
 	    w = r*s-pio2_lo;
 	    return pi - (float)2.0*(s+w);
 	} else {
 	    int idf;
 	    z = (one-x)*(float)0.5;
-	    s = func_0011ED00(z);
+	    s = Math_Sqrtf(z);
 	    df = s;
 	    GET_FLOAT_WORD(idf,df);
 	    SET_FLOAT_WORD(df,idf&0xfffff000);
@@ -342,8 +342,8 @@ float Math_AcosKernel(float x)
 /* merge_units: end func_0011CFD8 */
 
 /* merge_units: begin func_0011D400 */
-extern float func_00121760(float x);
-float func_0011D400(float x)
+extern float Math_Fabsf(float x);
+float Math_AsinfImpl(float x)
 {
 	const float
 	one =  1.0000000000e+00,
@@ -380,11 +380,11 @@ float func_0011D400(float x)
 		return x+x*w;
 	    }
 	}
-	w = one-func_00121760(x);
+	w = one-Math_Fabsf(x);
 	t = w*(float)0.5;
 	p = t*(pS0+t*(pS1+t*(pS2+t*(pS3+t*(pS4+t*pS5)))));
 	q = one+t*(qS1+t*(qS2+t*(qS3+t*qS4)));
-	s = func_0011ED00(t);
+	s = Math_Sqrtf(t);
 	if(ix>=0x3F79999A) {
 	    w = p/q;
 	    t = pio2_hi-((float)2.0*(s+s*w)-pio2_lo);
@@ -435,7 +435,7 @@ float Math_Atan2Kernel(float y, float x)
 	k = (iy-ix)>>23;
 	if(k > 60) z=pi_o_2+(float)0.5*pi_lo;
 	else if(hx<0&&k<-60) z=0.0;
-	else z=Math_Atan(func_00121760(y/x));
+	else z=Math_Atan(Math_Fabsf(y/x));
 	switch (m) {
 	    case 0: return       z  ;
 	    case 1: {

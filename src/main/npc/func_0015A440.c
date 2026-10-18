@@ -161,7 +161,7 @@ void Event_Send(Msg_A440*, NpcObj_A440*, int);
 void cMessage_dtor(Msg_A440*, int);
 void printf(char*, ...);
 int PlayerSlots_Get(int);
-int func_0042B1A0(int);
+int Net_GetClock(int);
 void func_0042D310(int*, int);
 void func_0042DA30(NpcObj_A440*, int, int);
 void NetGame_InitLocalSlot(int*, int);
@@ -319,7 +319,7 @@ extern "C" void cNPC_CriticalNextFrame(Npc_A440* self, float dt)
                                         break;
                                 }
                             }
-                            if (who == 0 || D_004EA380 < func_0042B1A0(1)) {
+                            if (who == 0 || D_004EA380 < Net_GetClock(1)) {
                                 self->b169 = 0;
                                 rec->t = 0.0f;
                                 if (who > 0) {
@@ -327,7 +327,7 @@ extern "C" void cNPC_CriticalNextFrame(Npc_A440* self, float dt)
                                     func_0042D310(pid, self->V90());
                                     func_0042DA30(self->obj, 0, who);
                                     printf(D_0049B730);
-                                    D_004EA380 = func_0042B1A0(1) + 0xFA;
+                                    D_004EA380 = Net_GetClock(1) + 0xFA;
                                 }
                             }
                         }

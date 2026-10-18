@@ -29,7 +29,7 @@ extern int D_004F7A30;
 extern int D_004F7A38;
 extern int D_004F7A40;
 extern int D_004F7A48;
-void func_004CEF60(void) {
+void StaticInit_ToHitSettings(void) {
     D_004F79E0 = Script_RegisterType("ToHitSettings", ScriptType_ToHitSettings_Init, 0, 0);
     D_004F79E8 = D_004F79E0;
     D_004F79F0 = Script_RegisterVariable("ToHit", (int)&D_0048ACB8, &D_004F79E0);

@@ -29,7 +29,7 @@ void func_00243460(float f, int h);
 void func_00243480(int h, int v);
 void func_00243490(int h, int v);
 int func_002434A0(int c);
-int func_002434B0(void* self, int c, int* key);
+int HudCalloutTracker_Construct(void* self, int c, int* key);
 int HudTracker_Construct(void* self, int c, int* key);
 void Hud_GetLockColour(Buf_242FA0* out, float t);
 int TextObj_GetLineCount(int h);
@@ -79,7 +79,7 @@ int Hud_ShowCallout(char* o, float scale, float fade, int* key, int a2, int id, 
                 int h;
                 e->c = IeElement_Create(D_004F7DB0);
                 m = func_0013D5C0(0x90, 0, D_004A7518, 0x8E);
-                if (m) m = (void*)func_002434B0(m, e->c, key);
+                if (m) m = (void*)HudCalloutTracker_Construct(m, e->c, key);
                 e->d = (int)m;
                 h = func_002434A0(e->c);
                 if (h) {

@@ -41,7 +41,7 @@ static inline int df00eqm(__int128 m, __int128 a, __int128 b) {
     }
     return x == -1;
 }
-unsigned int func_0038DF00(Df00Obj* self, int step, unsigned int idx, int type)
+unsigned int ActorModel_StepMorph(Df00Obj* self, int step, unsigned int idx, int type)
 {
     __int128 mask = df00mask(0xFFFFFFFFFFFFLL);
     __int128* tbl;
@@ -91,7 +91,7 @@ typedef struct Obj8E030 {
 } Obj8E030;
 
 extern int D_00539248;
-extern short func_00381F30(int lib, __int128 name);
+extern short Tex_FindInList(int lib, __int128 name);
 extern short TexCache_LoadErrorTexture(int lib);
 
 void func_0038E030(Obj8E030* o)
@@ -101,11 +101,11 @@ void func_0038E030(Obj8E030* o)
     for (i = 0; (long)o->parts[i].name.q != 0; i++) {
         Name8E030 n;
         n.q = o->parts[i].name.q;
-        o->texA[i] = func_00381F30(lib, n.q);
+        o->texA[i] = Tex_FindInList(lib, n.q);
         if (o->texA[i] == -1)
             o->texA[i] = TexCache_LoadErrorTexture(lib);
         n.c[14] = '1';
-        o->texB[i] = func_00381F30(lib, n.q);
+        o->texB[i] = Tex_FindInList(lib, n.q);
         if (o->texB[i] == -1)
             o->texB[i] = o->texA[i];
     }

@@ -138,7 +138,7 @@ DEFINE_BUF_HOLDER_DTOR(func_00344F10)
 /* merge_units: begin func_00345000 */
 #pragma push /* merge_units */
 extern int D_005331D0;
-extern int func_00341F00(int);
+extern int GuiAgentModify_DrawModelCallback(int);
 
 Rel* func_00345000(Rel* r) {
     r->a = 0;
@@ -148,7 +148,7 @@ Rel* func_00345000(Rel* r) {
 }
 
 int func_00345020(void) {
-    return func_00341F00(D_005331D0);
+    return GuiAgentModify_DrawModelCallback(D_005331D0);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00345000 */

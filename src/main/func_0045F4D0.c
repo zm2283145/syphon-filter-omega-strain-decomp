@@ -71,7 +71,7 @@ static inline void PlayVoice_45F4D0(Self_45F4D0* self, char* voice)
     cMessage_dtor(&play, 0);
 }
 
-extern "C" int func_0045F4D0(Self_45F4D0* self)
+extern "C" int GuiEndGameAwards_Next(Self_45F4D0* self)
 {
     Entry_45F4D0* e;
     Obj_45F4D0* obj;

@@ -17,7 +17,7 @@ void operator_delete(void*);
 }
 static inline Pred_8EC0 MakePred_8EC0(int* p) { Eq_8EC0 c; return Pred_8EC0(c, p); }
 struct O_8EC0 { void* vt; char pad[0x70]; Item_8EC0* id; };
-extern "C" O_8EC0* func_003E8EC0(O_8EC0* self, short del)
+extern "C" O_8EC0* IeElement_Destroy(O_8EC0* self, short del)
 {
     if (self) {
         self->vt = D_004E0220;

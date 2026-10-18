@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-extern int func_0041EFA0(void* self);
+extern int GuiWidget_BaseWake(void* self);
 
 int func_002C0780(void* self) {
-    return func_0041EFA0(self);
+    return GuiWidget_BaseWake(self);
 }

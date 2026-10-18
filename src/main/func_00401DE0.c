@@ -9,7 +9,7 @@ static inline int ks00401DE0eq(__int128 a, __int128 b) {
     }
     return r == -1;
 }
-unsigned int func_00401DE0(KS00401DE0* s, __int128 key) {
+unsigned int AgentPartCache_FindTexture(KS00401DE0* s, __int128 key) {
     unsigned int i;
     for (i = 0; i < s->count; i++) {
         if (ks00401DE0eq(key, s->keys[i]))

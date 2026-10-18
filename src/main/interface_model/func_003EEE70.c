@@ -13,7 +13,7 @@ void func_003EF000(char**, const Raw_EE70&);
 void func_003ED860(char**, const Raw_EE70&);
 void func_0015AF40(int*, char**);
 }
-extern "C" void func_003EEE70(char* self, VC_EE70* obj) {
+extern "C" void IeScreen_RemoveElement(char* self, VC_EE70* obj) {
     char* end;
     {
         VC_EE70* e;

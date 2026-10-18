@@ -6,6 +6,6 @@
 #include "types.h"
 #include "man_types.h"
 
-int func_00385230(ManEquipOwner* self) {
+int ActorModel_FindAttachedModel(ManEquipOwner* self) {
     return (unsigned int)self->slots[0] > 0u;
 }

@@ -46,7 +46,7 @@ NamedEntry36E4B0* func_0036E540(NamedEntry36E4B0* self, const char* name, int a2
 }
 
 /* Default constructor. */
-NamedEntry36E4B0* func_0036E5D0(NamedEntry36E4B0* self) {
+NamedEntry36E4B0* Resource_Construct(NamedEntry36E4B0* self) {
     func_003EBEF0(self->unk88);
     self->flags = 0;
     return self;

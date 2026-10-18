@@ -16,7 +16,7 @@ typedef struct { char pad0[0x540]; int mode; char pad1[0x59E - 0x544]; unsigned 
 typedef struct { PDB10* p; unsigned char busy; char pad[3]; void (*cb)(void); unsigned char state; } CDB10;
 extern int func_0040E5D0(PDB10* p);
 /* Runs the session state machine until it settles; returns its result flag. */
-int func_0040DB10(CDB10* c) {
+int MemCardWrap_Format(CDB10* c) {
     PDB10* p = c->p;
     p->mode = 1;
     p->done = 0;
@@ -50,7 +50,7 @@ static inline int dbb0find(PDBB0* p, void* key) {
     return -1;
 }
 /* Returns the value of the entry whose item matches key, or 0. */
-int func_0040DBB0(ODBB0* o, void* key) {
+int MemCardWrap_GetSize(ODBB0* o, void* key) {
     int i = dbb0find(o->p, key);
     if (i < 0)
         return 0;
@@ -80,7 +80,7 @@ static inline int dc80find(PDC80* p, void* key) {
     return -1;
 }
 /* Selects the entry matching key and runs the state machine until it settles. */
-int func_0040DC80(CDC80* c, void* key) {
+int MemCardWrap_Remove(CDC80* c, void* key) {
     PDC80* p;
     int i = dc80find(c->p, key);
     if (i < 0)

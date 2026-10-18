@@ -34,12 +34,12 @@ static inline void merge_flush_func_00269380(void) {}
 /* merge_units: begin func_002693C0 */
 #pragma push /* merge_units */
 typedef union { int i; void* p; float f; } ScriptArg;
-extern void func_002693F0(int s);
+extern void Debug_PrintStub(int s);
 /* Script native: prints its argument. */
 int Script_Print(ScriptArg* args)
 {
     volatile int s = args[0].i;
-    func_002693F0(s);
+    Debug_PrintStub(s);
     return 0;
 }
 /* merge_units: generate this block's code under its own pragmas */

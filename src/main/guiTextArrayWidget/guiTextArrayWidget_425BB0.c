@@ -46,11 +46,11 @@ static inline void merge_flush_func_00425BC0(void) {}
 #pragma push /* merge_units */
 #include "guiTextArrayWidget_types.h"
 
-extern TextArrayCell* func_00426590(guiTextArrayWidget* self, int row, int col);
+extern TextArrayCell* GuiTextArrayWidget_GetCell(guiTextArrayWidget* self, int row, int col);
 
 /* Clears flag bit 2 of the addressed cell. */
 void func_00425BF0(guiTextArrayWidget* self, int row, int col) {
-    TextArrayCell* cell = func_00426590(self, row, col);
+    TextArrayCell* cell = GuiTextArrayWidget_GetCell(self, row, col);
 
     if (cell != 0) {
         cell->flags &= ~4;
@@ -71,14 +71,14 @@ typedef struct Node425 {
 } Node425;
 
 #if 0 /* merge_units */
-extern Node425* func_00426590(int a, int b, int c);
+extern Node425* GuiTextArrayWidget_GetCell(int a, int b, int c);
 #endif /* merge_units */
-#define func_00426590(a0, a1, a2) ((Node425 *)func_00426590((void *)(a0), (a1), (a2))) /* merge_units */
+#define GuiTextArrayWidget_GetCell(a0, a1, a2) ((Node425 *)GuiTextArrayWidget_GetCell((void *)(a0), (a1), (a2))) /* merge_units */
 
 
 /* Looks up a node and, if found, sets its 4-float value and flag bit 2. */
 void func_00425C30(int a, int b, int c, float* value) {
-    Node425* node = func_00426590(a, b, c);
+    Node425* node = GuiTextArrayWidget_GetCell(a, b, c);
     if (node) {
         node->value[0] = value[0];
         node->value[1] = value[1];
@@ -87,7 +87,7 @@ void func_00425C30(int a, int b, int c, float* value) {
         node->flags |= 4;
     }
 }
-#undef func_00426590 /* merge_units */
+#undef GuiTextArrayWidget_GetCell /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00425C30(void) {}
 #pragma pop /* merge_units */
@@ -97,7 +97,7 @@ static inline void merge_flush_func_00425C30(void) {}
 #pragma push /* merge_units */
 /* Clears flag bit 0 of the addressed cell. */
 void func_00425C90(guiTextArrayWidget* self, int row, int col) {
-    TextArrayCell* cell = func_00426590(self, row, col);
+    TextArrayCell* cell = GuiTextArrayWidget_GetCell(self, row, col);
 
     if (cell != 0) {
         cell->flags &= ~1;

@@ -31,19 +31,19 @@ typedef struct { char pad[0x20]; Sel_34D2D0* f20; } M_34D2D0;
 typedef struct { char pad[0x25C]; int f25C; } G_34D2D0;
 extern "C" {
 extern G_34D2D0* D_004FFC04;
-char D_004BA818[] = "GuiSlideShow"; void func_0034D770(O_34D2D0* o, int k);
+char D_004BA818[] = "GuiSlideShow"; void GuiRatings_MoveGrid(O_34D2D0* o, int k);
 M_34D2D0* Gui_GetScreenStack(void);
 void* Gui_GetScreenList(void);
 void GuiWidget_SendEvent(void* a, void* b, int kind, int v, int f);
 void* GuiManager_FindOrLoad(void* mgr, char* a, char* b);
 void GuiStack_SwapScreens(void* mgr, void* o, void* w);
 char* String_CStr(void* s);
-void func_00327C70(void* w, int a, char* s, int b);
-void func_00328630(void* w);
-int func_00328310(void* w, int v);
-void func_00328140(void* w, int r, char* s, int v, char* t);
-int func_00356BE0(O_34D2D0* o, Ev_34D2D0* ev);
-int func_0034D2D0(O_34D2D0* o, Ev_34D2D0* ev);
+void GuiSlideShow_SetReturn(void* w, int a, char* s, int b);
+void GuiSlideShow_Clear(void* w);
+int GuiSlideShow_AddCategory(void* w, int v);
+void GuiSlideShow_AddSlide(void* w, int r, char* s, int v, char* t);
+int GuiPersonnelScreen_HandleInput(O_34D2D0* o, Ev_34D2D0* ev);
+int GuiRatings_HandleInput(O_34D2D0* o, Ev_34D2D0* ev);
 }
 static inline unsigned char Down_34D2D0(Ev_34D2D0* e) { unsigned char r = 0; if (e->type == 1 && e->b2 == 0) r = 1; return r; }
 static inline unsigned char Plain_34D2D0(Ev_34D2D0* e) { unsigned char r = 0; if (Down_34D2D0(e) && e->b6 == 0) r = 1; return r; }
@@ -51,14 +51,14 @@ static inline bool Down2_34D2D0(Ev_34D2D0* e) { return e->type == 1 && e->b2 == 
 static inline bool Btn2_34D2D0(Ev_34D2D0* e, int b) { return Down2_34D2D0(e) && e->btn == b; }
 static inline bool Plain2_34D2D0(Ev_34D2D0* e, int b) { return Btn2_34D2D0(e, b) && e->b6 == 0; }
 
-int func_0034D2D0(O_34D2D0* o, Ev_34D2D0* ev)
+int GuiRatings_HandleInput(O_34D2D0* o, Ev_34D2D0* ev)
 {
     if (Plain_34D2D0(ev)) {
         switch ((unsigned int)ev->btn) {
-        case 0x8000: func_0034D770(o, 0); return 1;
-        case 0x2000: func_0034D770(o, 1); return 1;
-        case 0x1000: func_0034D770(o, 2); return 1;
-        case 0x4000: func_0034D770(o, 3); return 1;
+        case 0x8000: GuiRatings_MoveGrid(o, 0); return 1;
+        case 0x2000: GuiRatings_MoveGrid(o, 1); return 1;
+        case 0x1000: GuiRatings_MoveGrid(o, 2); return 1;
+        case 0x4000: GuiRatings_MoveGrid(o, 3); return 1;
         }
     }
     if (Plain2_34D2D0(ev, 0x40) && Gui_GetScreenStack()->f20->f10 != -1) {
@@ -73,13 +73,13 @@ int func_0034D2D0(O_34D2D0* o, Ev_34D2D0* ev)
                 char b1[16];
                 char* s = String_CStr(o->s4);
                 int r;
-                func_00327C70(w, o->v19(), s, idx);
-                func_00328630(w);
-                r = func_00328310(w, (*ep)[idx].f0);
+                GuiSlideShow_SetReturn(w, o->v19(), s, idx);
+                GuiSlideShow_Clear(w);
+                r = GuiSlideShow_AddCategory(w, (*ep)[idx].f0);
                 sprintf(b0, "0_%d_%d.tdx", o->f64, idx + 1);
                 if (idx % 4 == 2) idx--;
                 sprintf(b1, "0_%d_%d", o->f64, idx + 1);
-                func_00328140(w, r, b0, D_004FFC04->f25C, b1);
+                GuiSlideShow_AddSlide(w, r, b0, D_004FFC04->f25C, b1);
                 GuiStack_SwapScreens(Gui_GetScreenStack(), o, w);
             }
         } else {
@@ -87,7 +87,7 @@ int func_0034D2D0(O_34D2D0* o, Ev_34D2D0* ev)
         }
         return 1;
     }
-    return func_00356BE0(o, ev);
+    return GuiPersonnelScreen_HandleInput(o, ev);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0034D2D0(void) {}
@@ -109,15 +109,15 @@ extern void GuiWidget_SendEvent(O34D*, int, int, int, int);
 #endif /* merge_units */
 #define GuiWidget_SendEvent(a0, a1, a2, a3, a4) (GuiWidget_SendEvent((void *)(a0), (void *)(a1), (a2), (a3), (a4))) /* merge_units */
 
-extern void func_00356850(O34D*, int, int);
+extern void GuiPersonnelScreen_ShowItem(O34D*, int, int);
 extern void GuiScreen_SetFocus(int, int);
-extern int func_00356B30(O34D*, W34D*, int, int, int);
-int func_0034D600(O34D* o, W34D* w, int ev, int x, int y) {
+extern int GuiPersonnelScreen_HandleEvent(O34D*, W34D*, int, int, int);
+int GuiRatings_HandleEvent(O34D* o, W34D* w, int ev, int x, int y) {
     unsigned short e = ev;
     if (e == 0) {
         GuiWidget_SendEvent(o, Gui_GetScreenStack(), 0x10, 0, 0);
         if (w->f10 != -1) {
-            func_00356850(o, w->f10, ((E34D*)((char*)o->fd4 + w->f10 * 20))->fc);
+            GuiPersonnelScreen_ShowItem(o, w->f10, ((E34D*)((char*)o->fd4 + w->f10 * 20))->fc);
             GuiWidget_SendEvent(o, (int)w, 6, (int)"onActivate", 0);
             return 1;
         }
@@ -131,7 +131,7 @@ int func_0034D600(O34D* o, W34D* w, int ev, int x, int y) {
         o->f10 = x;
         return 1;
     }
-    return func_00356B30(o, w, ev, x, y);
+    return GuiPersonnelScreen_HandleEvent(o, w, ev, x, y);
 }
 #undef Gui_GetScreenStack /* merge_units */
 #undef GuiWidget_SendEvent /* merge_units */

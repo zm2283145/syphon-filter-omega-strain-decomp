@@ -24,7 +24,7 @@ V4 Quat_SetIdentity(void);
 void func_00132800(void*, V4*);
 V4 func_0017F820(void);
 void CameraCurve_MakeQuaternion(void*, V4*, V4*);
-void func_0017F520(void*, V4*, V4*);
+void VecCurve_InitState(void*, V4*, V4*);
 void PhysicalBase_Construct(void*, float*, float*);
 void Placement_GetIdentity(VP*, V4*, V4*);
 void VecPair_Copy(VP*, VP*);
@@ -116,7 +116,7 @@ static inline void VCurve_Init(char* m0)
     char* m = m0;
     V4 t;
     t = Vec4_SetOrigin();
-    func_0017F520(m, &t, Vec4_GetZero());
+    VecCurve_InitState(m, &t, Vec4_GetZero());
     F(void*, m, 0) = D_004DA410;
 }
 

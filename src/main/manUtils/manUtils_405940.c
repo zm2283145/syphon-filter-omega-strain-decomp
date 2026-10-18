@@ -53,10 +53,10 @@ typedef struct { int pad; int count; char** names; } List5E10;
 void Appearance_ClearPartKey(void* self, List5E10* list, __int128* keys, int n); /* gsynth: defined below */
 typedef struct { __int128 name; char pad[0x10]; } Ent5F10;
 typedef struct { char pad[0x50]; Ent5F10 ent[1]; } Obj5F10;
-void func_00405F10(Obj5F10* o, int idx, __int128* keys, int n); /* gsynth: defined below */
+void AgentPacking_StepPatch3Texture(Obj5F10* o, int idx, __int128* keys, int n); /* gsynth: defined below */
 typedef struct { __int128 name; char pad[0x10]; } Ent6040;
 typedef struct { char pad[0x50]; Ent6040 ent[1]; } Obj6040;
-void func_00406040(Obj6040* o, int idx, __int128* keys, int n); /* gsynth: defined below */
+void AgentPacking_StepPatchTexture(Obj6040* o, int idx, __int128* keys, int n); /* gsynth: defined below */
 #pragma cplusplus on
 #include "alloc_guard.h"
 typedef union { __int128 q; struct { char tag; char name[15]; } s; } A60Name;
@@ -86,14 +86,14 @@ void Appearance_ClearPartKey(A60Obj* o, void* list, __int128* keys, int n);
 #define Appearance_ClearPartKey(a0, a1, a2, a3) (Appearance_ClearPartKey((void *)(a0), (List5E10 *)(a1), (a2), (a3))) /* merge_units */
 
 #if 0 /* merge_units */
-void func_00406040(A60Obj* o, int idx, __int128* keys, int n);
+void AgentPacking_StepPatchTexture(A60Obj* o, int idx, __int128* keys, int n);
 #endif /* merge_units */
-#define func_00406040(a0, a1, a2, a3) (func_00406040((Obj6040 *)(a0), (a1), (a2), (a3))) /* merge_units */
+#define AgentPacking_StepPatchTexture(a0, a1, a2, a3) (AgentPacking_StepPatchTexture((Obj6040 *)(a0), (a1), (a2), (a3))) /* merge_units */
 
 #if 0 /* merge_units */
-void func_00405F10(A60Obj* o, int idx, __int128* keys, int n);
+void AgentPacking_StepPatch3Texture(A60Obj* o, int idx, __int128* keys, int n);
 #endif /* merge_units */
-#define func_00405F10(a0, a1, a2, a3) (func_00405F10((Obj5F10 *)(a0), (a1), (a2), (a3))) /* merge_units */
+#define AgentPacking_StepPatch3Texture(a0, a1, a2, a3) (AgentPacking_StepPatch3Texture((Obj5F10 *)(a0), (a1), (a2), (a3))) /* merge_units */
 
 void Appearance_PatchParts(A60Obj* o, void* list);
 }
@@ -138,9 +138,9 @@ void Appearance_PatchParts(A60Obj* o, void* list)
     k0 = a60find(o, D_004BE930);
     k1 = a60find(o, D_004BE938);
     k2 = a60find(o, D_004BE940);
-    if (k0 != -1) func_00406040(o, k0, keys, n);
-    if (k1 != -1) func_00406040(o, k1, keys, n);
-    if (k2 != -1) func_00405F10(o, k2, keys, n);
+    if (k0 != -1) AgentPacking_StepPatchTexture(o, k0, keys, n);
+    if (k1 != -1) AgentPacking_StepPatchTexture(o, k1, keys, n);
+    if (k2 != -1) AgentPacking_StepPatch3Texture(o, k2, keys, n);
     {
         AllocGuard g;
         Mem_Free(0, keys, D_004BE7F0, 0x41F);
@@ -148,8 +148,8 @@ void Appearance_PatchParts(A60Obj* o, void* list)
 }
 #undef String_CompareN /* merge_units */
 #undef Appearance_ClearPartKey /* merge_units */
-#undef func_00406040 /* merge_units */
-#undef func_00405F10 /* merge_units */
+#undef AgentPacking_StepPatchTexture /* merge_units */
+#undef AgentPacking_StepPatch3Texture /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00405A60(void) {}
 #pragma pop /* merge_units */
@@ -232,7 +232,7 @@ static inline int k5f10find(__int128* keys, int n, __int128 key) {
     }
     return -1;
 }
-void func_00405F10(Obj5F10* o, int idx, __int128* keys, int n) {
+void AgentPacking_StepPatch3Texture(Obj5F10* o, int idx, __int128* keys, int n) {
     __int128 key;
     char* s;
     char* lo;
@@ -288,7 +288,7 @@ static inline int k6040find(__int128* keys, int n, __int128 key) {
     }
     return -1;
 }
-void func_00406040(Obj6040* o, int idx, __int128* keys, int n) {
+void AgentPacking_StepPatchTexture(Obj6040* o, int idx, __int128* keys, int n) {
     __int128 key;
     char* s;
     char* lo;

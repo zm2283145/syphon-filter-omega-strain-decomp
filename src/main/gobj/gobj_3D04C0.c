@@ -173,7 +173,7 @@ extern char D_00543770[];
 extern char D_00543748[];
 extern char TextManager_Destroy[];
 extern int D_004937F0;
-extern void func_003D1560(void* p);
+extern void List_InitEmpty(void* p);
 extern void ScalarCollection_Init(void* p);
 extern void __register_global_object(void* o, void* d, void* l);
 #pragma push
@@ -183,7 +183,7 @@ static inline M3D1020* Def_3D0940(void)
     if (!D_00543740) {
         M3D1020* m = &D_00543760;
         D_00543760.f0 = 0;
-        func_003D1560(D_00543764);
+        List_InitEmpty(D_00543764);
         ScalarCollection_Init(D_00543770);
         m->b1C = 1;
         __register_global_object(m, TextManager_Destroy, D_00543748);

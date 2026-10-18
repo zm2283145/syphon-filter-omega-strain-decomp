@@ -87,7 +87,7 @@ int cPlayer_v0C(int a0, int a1) {
  * For an NPC-class actor: calls WeaponInv_EquipItem on its inventory (a1 is passed
  * through) and, when the D_005721C8 flag is set, func_002493C0 on the input state.
  */
-void func_00175FF0(PlayerComponent* self, int a1) {
+void Player_EquipItem(PlayerComponent* self, int a1) {
     PlayerActor* actor = self->actor;
 
     if (actor != 0 && actor->classToken == D_0049D010) {

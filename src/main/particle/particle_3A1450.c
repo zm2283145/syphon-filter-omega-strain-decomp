@@ -43,12 +43,12 @@ struct Self {
 
 extern char D_0053B540[];
 extern "C" {
-int func_003A3430(void*, void*);
+int ParticleDefs_FindByName(void*, void*);
 Self* ParticleEmitter_SpawnChildren(float, int, Self*, int, void*);
 }
 
 /* Fires each pending timed entry whose next time has been reached, marking linked peers. */
-extern "C" void func_003A1450(Self* self, float t, int arg)
+extern "C" void ParticleEmitter_SpawnChild(Self* self, float t, int arg)
 {
     int k = 0;
     int i;
@@ -58,7 +58,7 @@ extern "C" void func_003A1450(Self* self, float t, int arg)
             float tm = self->GetDef()->entries[i].times[self->idx[i]];
             if (tm >= 0.0f) {
                 while (t >= tm) {
-                    int r = func_003A3430(D_0053B540, &self->GetDef()->entries[i]);
+                    int r = ParticleDefs_FindByName(D_0053B540, &self->GetDef()->entries[i]);
                     Self* o = ParticleEmitter_SpawnChildren(tm + self->f64, arg, self, r, self->GetDef()->entries[i].extra);
                     if (o && self->GetDef() == o->GetDef()) {
                         int j;
@@ -119,9 +119,9 @@ extern "C" unsigned char D_00535D61;
 extern "C" char D_00535D20[];
 extern "C" V4 D_00537D80;
 #if 0 /* merge_units */
-extern "C" void func_003A1450(Self_003A1760* self, float t, int arg);
+extern "C" void ParticleEmitter_SpawnChild(Self_003A1760* self, float t, int arg);
 #endif /* merge_units */
-#define func_003A1450(a0, a1, a2) (func_003A1450((Self *)(a0), (a1), (a2))) /* merge_units */
+#define ParticleEmitter_SpawnChild(a0, a1, a2) (ParticleEmitter_SpawnChild((Self *)(a0), (a1), (a2))) /* merge_units */
 
 extern "C" void LightMgr_GatherModelLights(void* m, unsigned int mask, unsigned int flags, void* out);
 
@@ -152,7 +152,7 @@ static inline bool Neq(V4* a, V4* b) { return !Vec4_Equal_(a, b); }
 
 extern "C" void ParticleEmitterBase_Update(Self_003A1760* self, float t, int arg, Src* src)
 {
-    func_003A1450(self, t - self->f64, arg);
+    ParticleEmitter_SpawnChild(self, t - self->f64, arg);
     if (self->GetDef()->w8F0 && !(t - self->f68 <= 0.25f)) {
         V4* p = &src->pos;
         if (Neq(&D_00535D40, p)) {
@@ -171,7 +171,7 @@ extern "C" void ParticleEmitterBase_Update(Self_003A1760* self, float t, int arg
     }
     self->b84 = 1;
 }
-#undef func_003A1450 /* merge_units */
+#undef ParticleEmitter_SpawnChild /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003A1760(void) {}
 #pragma pop /* merge_units */

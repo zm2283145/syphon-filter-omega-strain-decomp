@@ -28,14 +28,14 @@ extern char D_00538080[];
 extern char D_0053B6A0[];
 extern unsigned char D_0053B540;
 extern unsigned int* D_005381C8;
-unsigned int* func_00375BA0(void* q, int a, int b, int c, int d);
-void func_00375AC0(void* q, int a, void* end);
+unsigned int* DmaPacket_Open(void* q, int a, int b, int c, int d);
+void DmaPacket_Close(void* q, int a, void* end);
 int func_003797D0(void* r);
 void* func_00398B00(int reg, int tex);
 u64_t* Gs_MakeTex1(void* t);
 u64_t* func_00379700(void* t);
 void func_001AE170(void* d, void* s, int n);
-Q_0050* func_00398AE0(void* tbl, int i);
+Q_0050* ParticleRandom_QwordAt(void* tbl, int i);
 unsigned int func_003700D0(void* q, int n);
 }
 
@@ -136,7 +136,7 @@ extern "C" void ParticleEmitter_Draw(char* e, float t, float a, float b, float c
         int lim;
         u64_t* p;
         *(V4_0050*)(e + 0xC0) = V4_0050(x, y, z, w);
-        D_005381C8 = func_00375BA0(D_00537F80, 1, 1, 0, 0);
+        D_005381C8 = DmaPacket_Open(D_00537F80, 1, 1, 0, 0);
         Vif_PutV(0x11000000);
         Vif_Put(0);
         Vif_PadTo(0xC);
@@ -151,7 +151,7 @@ extern "C" void ParticleEmitter_Draw(char* e, float t, float a, float b, float c
         }
         D_005381C8 += 0x2C;
         Vif_PadTo(0);
-        func_00375AC0(D_00537F80, 1, D_005381C8);
+        DmaPacket_Close(D_00537F80, 1, D_005381C8);
         s3 = F_(e, 0x100, char*);
         s7 = F_(e, 0x70, char*);
         left = F_(e, 0x6C, int);
@@ -168,7 +168,7 @@ extern "C" void ParticleEmitter_Draw(char* e, float t, float a, float b, float c
             F_(s3, 0xD0, u64_t) = 1 | ((u64_t)0x612F4000 << 32);
             F_(s3, 0xD8, u64_t) = 1 | ((u64_t)0x602F4000 << 32);
         }
-        p = (u64_t*)func_00375BA0(D_00537F80, 1, 1, 0, 1);
+        p = (u64_t*)DmaPacket_Open(D_00537F80, 1, 1, 0, 1);
         *p = 0;
         p++;
         while (left > 0) {
@@ -180,7 +180,7 @@ extern "C" void ParticleEmitter_Draw(char* e, float t, float a, float b, float c
             p++;
             func_001AE170(p, s3 + 0x80, 0xC);
             p += 0x18;
-            *(Q_0050*)p = *func_00398AE0(D_0053B6A0, (int)(s7 + left));
+            *(Q_0050*)p = *ParticleRandom_QwordAt(D_0053B6A0, (int)(s7 + left));
             p += 2;
             *p = func_003700D0(D_00538080, 0x18);
             p++;
@@ -188,6 +188,6 @@ extern "C" void ParticleEmitter_Draw(char* e, float t, float a, float b, float c
             p++;
             left -= n;
         }
-        func_00375AC0(D_00537F80, 1, p);
+        DmaPacket_Close(D_00537F80, 1, p);
     }
 }

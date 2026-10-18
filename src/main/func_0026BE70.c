@@ -8,6 +8,6 @@
 
 extern char D_004FF028;
 
-void func_0026BE70(int value) {
+void Pad_EnableVibration(int value) {
     D_004FF028 = value;
 }

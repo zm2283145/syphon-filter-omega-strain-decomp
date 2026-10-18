@@ -7,11 +7,11 @@ int Event_Send();
 int SoundEvent_Ctor();                    
 int cMessage_dtor();                           
 int FileMan_Release();                            
-int func_00459450();                               
+int GuiSubTitleDisplay_Clear();                               
 extern char D_004DADF0;
 extern char D_004FFB50;
 
-void func_00454630(char * arg0) {
+void GuiRadioLog_Stop(char * arg0) {
     struct { char * f20[8]; signed char f40[88]; int f98[39]; int f134[47]; } sl;
     int temp_a0;
 
@@ -20,7 +20,7 @@ void func_00454630(char * arg0) {
     Event_Send(sl.f20, &D_004FFB50, 1);
     temp_a0 = F_(arg0, 0x4C, int);
     if (temp_a0 != 0) {
-        func_00459450(temp_a0);
+        GuiSubTitleDisplay_Clear(temp_a0);
     }
     sl.f20[0] = &D_004DADF0;
     FileMan_Release(sl.f134, -1);

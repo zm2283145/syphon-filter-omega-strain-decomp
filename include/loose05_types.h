@@ -31,7 +31,7 @@ typedef struct GuiWidget {
     void* self;                     /* 0x44 points back to the widget */
 } GuiWidget;
 
-/* Widget built by func_0043BEF0 (vtable D_004E0F40). */
+/* Widget built by GuiScrollBarWidget_ctor (vtable D_004E0F40). */
 typedef struct GuiWidget43BEF0 {
     GuiWidget base;                 /* 0x00 */
     char unk48;                     /* 0x48 */
@@ -45,7 +45,7 @@ typedef struct GuiWidget43BEF0 {
     int unk60;                      /* 0x60 default 10 */
 } GuiWidget43BEF0;
 
-/* Widget built by func_0043CB20 (vtable D_004E0FC0); owns a registry handle. */
+/* Widget built by GuiBitmapWidget_ctor (vtable D_004E0FC0); owns a registry handle. */
 typedef struct GuiWidget43CB20 {
     GuiWidget base;                 /* 0x00 */
     int handle;                     /* 0x48 -1 = none, released through D_00539248 */
@@ -105,7 +105,7 @@ typedef struct GuiWidget456D90 {
     int unkA8;                      /* 0xA8 */
 } GuiWidget456D90;
 
-/* Game screen sub-widget used by func_00464B30/func_00464B70. */
+/* Game screen sub-widget used by GuiMapScreen_Wake/GuiMapScreen_Init. */
 typedef struct GuiWidget464B30 {
     GuiWidget base;                 /* 0x00 */
     int child;                      /* 0x48 child found by GuiWidget_FindChildByName */
@@ -118,7 +118,7 @@ typedef struct Global4FFC2C {
     int unk6A0;                     /* 0x6A0 */
 } Global4FFC2C;
 
-/* Widget with a mode byte at +0x4C (func_0045F340). */
+/* Widget with a mode byte at +0x4C (GuiAutoSaver_Wake). */
 typedef struct GuiWidget45F340 {
     GuiWidget base;                 /* 0x00 */
     char pad48[0x4];

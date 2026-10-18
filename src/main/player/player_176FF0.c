@@ -46,7 +46,7 @@ void Object_Unregister(Obj_7060* o);
 void Object_DeleteLater(float t, Obj_7060* o);
 void Object_Register(Obj_7060* o);
 }
-extern "C" void func_00177060(S_7060* self, Obj_7060* o)
+extern "C" void World_SetAtmosphereEffect(S_7060* self, Obj_7060* o)
 {
     if (self->obj) {
         self->obj->Detach(1);

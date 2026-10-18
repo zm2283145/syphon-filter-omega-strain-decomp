@@ -23,7 +23,7 @@ extern Mgr_28EC80* D_004FFC04;
 extern char D_004FFB50[];
 extern char D_004A99B0[];
 extern char D_004A7520[];
-void func_0041EFA0(void);
+void GuiWidget_BaseWake(void);
 void GuiWidget_SendEvent(S_28EC80* a, int b, int c, int d, int e);
 int Agent_GetSelected(void* a, int b);
 W28EC80* GuiWidget_FindChildByName(S_28EC80* a, char* b);
@@ -35,7 +35,7 @@ extern "C" void GuiAgentCreate_Wake(S_28EC80* self)
 {
     W28EC80* p;
     D_004FFC04->b2F = 1;
-    func_0041EFA0();
+    GuiWidget_BaseWake();
     if (self->f58)
         GuiWidget_SendEvent(self, self->f58, 10, 0, 0);
     p = GuiWidget_FindChildByName(self, D_004A99B0);
@@ -90,7 +90,7 @@ void* Agent_GetSelected(void* a, int b);
 #define Agent_GetSelected(a0, a1) ((void *)Agent_GetSelected((a0), (a1))) /* merge_units */
 
 void AgentData_FilterAwards(void* ag, Aw_0028ED60* a);
-void func_00403040(void* p, Aw_0028ED60* a);
+void AgentPartCache_Lock(void* p, Aw_0028ED60* a);
 void func_002887C0(Aw_0028ED60* a, int flags);
 }
 static inline W_0028ED60* FindAs_0028ED60(Self_0028ED60* self, char* name, char* type)
@@ -119,7 +119,7 @@ extern "C" void GuiAgentCreate_Init(Self_0028ED60* self)
     func_002888C0(&a);
     a.bC = 1;
     AgentData_FilterAwards(Agent_GetSelected(D_004FFB50, -1), &a);
-    func_00403040(D_0055DDA0, &a);
+    AgentPartCache_Lock(D_0055DDA0, &a);
     func_002887C0(&a, -1);
 }
 #undef GuiWidget_FindChildByName /* merge_units */

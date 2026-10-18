@@ -10,7 +10,7 @@ extern void* CanonicalKey_Construct(void*, void*);
 extern void func_003B43C0(void*, void*, void*, int, int);
 extern void MotionSlider_RegisterNode(void*, void*, void*, void*);
 extern void func_003B28F0(void*, int);
-extern void* func_0017DE50(void*, float, float, float);
+extern void* Camera_ShakeMatrix(void*, float, float, float);
 extern void func_003B41E0(void*, void*, void*, int, int, void*, int, int, float, float, int);
 extern void func_001F4470(void*);
 extern void func_001F4460(void*, float, float);
@@ -51,7 +51,7 @@ void func_00204C90(void* p0)
     func_003B43C0(&v210, CanonicalKey_Construct(&v260, "hang_from_edge_strafe"), p0, 5, 0);
     MotionSlider_RegisterNode(&v31C, p0, CanonicalKey_Construct(&v290, "animHangMoveRght"), &v210);
     func_003B28F0(&v210, -1);
-    func_003B41E0(&v150, CanonicalKey_Construct(&v1B0, "hang_from_edge_strafe"), p0, 0, 1, func_0017DE50(&v1A0, 0.0f, 0.0f, 0.0f), 5, 0, 0.0f, 1.0f, 0);
+    func_003B41E0(&v150, CanonicalKey_Construct(&v1B0, "hang_from_edge_strafe"), p0, 0, 1, Camera_ShakeMatrix(&v1A0, 0.0f, 0.0f, 0.0f), 5, 0, 0.0f, 1.0f, 0);
     MotionSlider_RegisterNode(&v318, p0, CanonicalKey_Construct(&v1E0, "animHangMoveLeft"), &v150);
     func_003B28F0(&v150, -1);
     func_001F4470(&v308);

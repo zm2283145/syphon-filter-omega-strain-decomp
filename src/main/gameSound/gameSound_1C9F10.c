@@ -53,7 +53,7 @@ struct P1C9F80 {
     short h184;
     unsigned char b186;
 };
-extern "C" void func_0036E5D0(void* m);
+extern "C" void Resource_Construct(void* m);
 /* constructor: reset two members, ids, mask, handle (copied through a stack temp) */
 #pragma push
 #pragma opt_propagation off
@@ -63,8 +63,8 @@ extern "C" char* SoundSlot_Ctor(char* self)
     *(int*)(self + 0x44) = -2;
     *(int*)(self + 0x40) = 0;
     p = (P1C9F80*)(self + 0x20);
-    func_0036E5D0(p->memberA);
-    func_0036E5D0(p->memberB);
+    Resource_Construct(p->memberA);
+    Resource_Construct(p->memberB);
     p->id = -1;
     p->mask = -1;
     p->w20 = 0;

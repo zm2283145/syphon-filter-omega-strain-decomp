@@ -53,7 +53,7 @@ static inline void erase_reference(TransferReferenceNode* node)
 }
 
 /* Remove the owned entry, then release its separately registered reference. */
-extern "C" void func_0042DF20(const GobjId* id)
+extern "C" void NetObjectMgr_Erase(const GobjId* id)
 {
     GobjId key;
     TransferObjectIterator end;

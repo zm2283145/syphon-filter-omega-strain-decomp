@@ -55,7 +55,7 @@ extern long long D_004BC1B0[];
 void Renderer_BindTexture(void* m, int idx);
 void func_0025CD10(void* s);
 void func_0025CA40(void* s);
-void func_00371200(void* s);
+void Renderer_FlushBatch(void* s);
 void Vec4_Copy(V* d, const V* s);
 void GuiBatch_AddVertexColor(V* d, const V* s);
 float GuiBatch_AddVertexUV(void);
@@ -176,7 +176,7 @@ extern "C" void DecalMgr_Draw(Arg* a)
             if (!c1 && b == blend) c2 = 0;
             if (!c2 && it->obj == obj) c3 = 0;
             if (c3 != false) {
-                func_00371200(D_005381F0);
+                Renderer_FlushBatch(D_005381F0);
                 Begin();
                 if (tex != it->tex) {
                     tex = it->tex;
@@ -218,7 +218,7 @@ extern "C" void DecalMgr_Draw(Arg* a)
         }
         first = !EndStrip();
     }
-    func_00371200(D_005381F0);
+    Renderer_FlushBatch(D_005381F0);
     if (obj) {
         D_00538C64--;
         D_00538C68 = 1;

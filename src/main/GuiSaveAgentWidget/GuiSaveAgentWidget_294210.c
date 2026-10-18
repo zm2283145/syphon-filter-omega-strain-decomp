@@ -17,7 +17,7 @@
 char D_004AA600[] = "GuiCommandCenter";   /* "GuiCommandCenter" */
 
 /* Class name getter: "GuiCommandCenter". */
-char* func_00294210(void) {
+char* GuiCommandCenter_GetClassName(void) {
     return D_004AA600;
 }
 #pragma pop /* merge_units */
@@ -49,7 +49,7 @@ typedef struct {
 } S294250;
 extern G294250* Gui_GetScreenStack(void);
 extern T294250* GuiWidget_FocusFirst(S294250* s);
-T294250* func_00294250(S294250* s)
+T294250* GuiCommandCenter_First(S294250* s)
 {
     int id;
     T294250* o = s->objs[s->idx];
@@ -84,7 +84,7 @@ void*Gui_GetScreenStack();
 #endif /* merge_units */
 #define Gui_GetScreenStack() ((void *)Gui_GetScreenStack()) /* merge_units */
 void GuiScreen_SetFocus(void*,void*);void GuiWidget_SendEvent(void*,void*,int,int,int);void GuiTextWidget_SetText(void*,const char*,int);
-int Agent_GetSelected(void*,int);int AgentData_IsObjectiveComplete(int,const char*);int func_003329B0(int,int,int,int);int func_00336060(int,const char*);
+int Agent_GetSelected(void*,int);int AgentData_IsObjectiveComplete(int,const char*);int AgentData_HasZeus(int,int,int,int);int AgentData_GetLevelShortName(int,const char*);
 int String_CompareNoCase(const char*,const char*);void String_Copy(char*,const char*);int atoi(const char*);char*Loc_LookupText(const char*);int sprintf(char*,const char*,...);
 extern char D_004AA200[],D_004AA210[],D_004AA228[],D_004AA238[],D_004AA248[],D_004AA250[],D_004AA260[],D_004AA268[],D_004AA270[],D_004AA280[],D_004FFB50[],D_004FFC90[];
 }
@@ -103,14 +103,14 @@ extern "C" void GuiCommandCenter_OpenPanel(CcBindings*self,unsigned char request
   if(self->selection==20){
    for(int i=0;i<10;i++){
     self->tail[i]->flags|=2;bool missing=1;
-    if(func_003329B0(agent,18,5,i)){sprintf(label,D_004AA210,i);char*s=Loc_LookupText(label);if(s){self->tail[i]->flags|=4;self->tail[i]->unk10=i+10000;GuiTextWidget_SetText(self->tail[i],s,0);missing=0;}}
+    if(AgentData_HasZeus(agent,18,5,i)){sprintf(label,D_004AA210,i);char*s=Loc_LookupText(label);if(s){self->tail[i]->flags|=4;self->tail[i]->unk10=i+10000;GuiTextWidget_SetText(self->tail[i],s,0);missing=0;}}
     if(missing)GuiTextWidget_SetText(self->tail[i],locked,0);
    }
   }else{
    char*name=D_004FFC90;int i=0;
    if(!String_CompareNoCase(name,D_004AA228)){self->tail[0]->flags|=2;self->tail[0]->flags|=4;self->tail[0]->unk10=0;GuiTextWidget_SetText(self->tail[i++],Loc_LookupText(D_004AA238),0);}
    self->tail[i]->flags|=2;
-   if(func_003329B0(agent,self->selection+1,5,0)){self->tail[i]->flags|=4;self->tail[i]->unk10=2;sprintf(text,D_004AA248,name);GuiTextWidget_SetText(self->tail[i++],Loc_LookupText(text),0);}
+   if(AgentData_HasZeus(agent,self->selection+1,5,0)){self->tail[i]->flags|=4;self->tail[i]->unk10=2;sprintf(text,D_004AA248,name);GuiTextWidget_SetText(self->tail[i++],Loc_LookupText(text),0);}
    else{GuiTextWidget_SetText(self->tail[i++],locked,0);}
    sprintf(text,D_004AA250,D_004FFC90);char*title=Loc_LookupText(text);
    sprintf(text,D_004AA260,D_004FFC90);char*requirement=Loc_LookupText(text);
@@ -121,7 +121,7 @@ extern "C" void GuiCommandCenter_OpenPanel(CcBindings*self,unsigned char request
    }
    self->tail[i]->flags|=2;bool enabled=0;
    sprintf(text,D_004AA268,name);char*title2=Loc_LookupText(text);
-   int record=func_00336060(Agent_GetSelected(D_004FFB50,-1),name);
+   int record=AgentData_GetLevelShortName(Agent_GetSelected(D_004FFB50,-1),name);
    if(title2&&record){sprintf(text,D_004AA270,record);if(AgentData_IsObjectiveComplete(Agent_GetSelected(D_004FFB50,-1),text)){enabled=1;if(!String_CompareNoCase(name,D_004AA280))self->tail[i]->unk10=1;else self->tail[i]->unk10=4;}}
    if(enabled){GuiTextWidget_SetText(self->tail[i],title2,0);self->tail[i]->flags|=4;}else GuiTextWidget_SetText(self->tail[i],Loc_LookupText(D_004AA200),0);
   }

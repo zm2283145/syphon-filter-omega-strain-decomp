@@ -2123,11 +2123,11 @@ static inline void merge_flush_func_0014A340(void) {}
 
 /* merge_units: begin func_0014A380 */
 #pragma push /* merge_units */
-extern int func_0016C590(NpcAi* ai, int player);
+extern int NpcPerception_ResendAwareness(NpcAi* ai, int player);
 
 /* vtable slot 0x3B: ResendNewAwarenessMessage. */
 int cNPC_ResendNewAwarenessMessage(cNPC* self, int player) {
-    return func_0016C590(self->ai, player);
+    return NpcPerception_ResendAwareness(self->ai, player);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0014A380(void) {}
@@ -2202,11 +2202,11 @@ static inline void merge_flush_func_0014A3C0(void) {}
 
 /* merge_units: begin func_0014A400 */
 #pragma push /* merge_units */
-extern int func_0016C8D0(NpcAi* ai, int gobj);
+extern int NpcPerception_RemoveAwareness(NpcAi* ai, int gobj);
 
 /* vtable slot 0x38: RemoveAwareness. */
 int cNPC_RemoveAwareness(cNPC* self, int gobj) {
-    return func_0016C8D0(self->ai, gobj);
+    return NpcPerception_RemoveAwareness(self->ai, gobj);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0014A400(void) {}

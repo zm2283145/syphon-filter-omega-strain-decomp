@@ -151,7 +151,7 @@ struct Obj_260B90 {
     char p1B8[8];
     float f1C0[4];
 };
-extern "C" Obj_260B90* func_00260B90(Obj_260B90* o) {
+extern "C" Obj_260B90* cVisionFxMan_ctor(Obj_260B90* o) {
     Elem_260B90* p;
     o->f0 = 0;
     o->f4 = 0;

@@ -39,7 +39,7 @@ struct Sys {
 static inline void Inverse2(M* out, const M* m) { Inverse(out, m); }
 static inline V XP2(const M* m, const V& p) { M inv; Inverse2(&inv, m); return MulV(inv, p); }
 static inline void CopyTo(const V* s, V* d) { void* xx = d; __int128 q; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=r"(q) : "r"(d), "r"(s) : "memory"); }
-extern "C" void func_00371CF0(Sys* s, const M* m)
+extern "C" void LightMgr_WriteLightVectors(Sys* s, const M* m)
 {
     int i;
     for (i = 0; i < s->count; i++) {

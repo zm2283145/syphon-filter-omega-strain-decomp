@@ -14,7 +14,7 @@ extern char D_00555070[];
 extern int ScriptFilter_Dispatch(void* filter, int a0, int a1);
 extern int cBackpack_StealPlayerWeapons(cBackpack* backpack, int a1, int a2, int a3);
 extern int func_00253C80(void);
-extern int func_002570C0(void);
+extern int Backpack_RemoveAll(void);
 extern int* cGOBJ_GetScriptTypeKeyPtr(void);
 extern int ScriptType_AddAccepted(int type, int msgType);
 extern void ScriptType_SetParent(int type, int baseType);
@@ -25,7 +25,7 @@ int Script_RemoveAllBackpacks(void) {
 }
 
 int func_00253C80(void) {
-    return func_002570C0();
+    return Backpack_RemoveAll();
 }
 
 /* Overloads with 3, 2 and 1 explicit arguments; missing ones default to 8. */

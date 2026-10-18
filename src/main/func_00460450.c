@@ -49,12 +49,12 @@ void func_0013A040(VecI0450 *v, int f);
 void func_001C10A0(VecI0450 *v);
 void func_00296FA0(List0450 *l);
 void func_00299360(List0450 *l, short f);
-void func_003334C0(Agent0450 *a, unsigned char type, List0450 *out);
-void func_00333600(Agent0450 *a, List0450 *out);
-void func_00460AC0(void *vec, char *name, float seconds);
+void AgentData_GetAwardRows(Agent0450 *a, unsigned char type, List0450 *out);
+void AgentData_GetRatings(Agent0450 *a, List0450 *out);
+void VoiceQueue_Push(void *vec, char *name, float seconds);
 int *func_00460B40(VecI0450 *v, int i);
 int func_00460B50(VecI0450 *v);
-void func_00460450(Obj0450 *o);
+void GuiEndGameAwards_QueueVoices(Obj0450 *o);
 }
 
 static inline bool HasCur(Agent0450 *a)
@@ -74,18 +74,18 @@ static inline void Report(Obj0450 *o, VecI0450 *v, int kind)
             int i;
             for (i = 0; i < func_00460B50(v); i++) {
                 sprintf(buf, D_004C2610, *func_00460B40(v, i) + 1);
-                func_00460AC0(&o->vec350, buf, 0.0f);
+                VoiceQueue_Push(&o->vec350, buf, 0.0f);
             }
             sprintf(buf, D_004C2608, kind);
-            func_00460AC0(&o->vec350, buf, 1.0f);
+            VoiceQueue_Push(&o->vec350, buf, 1.0f);
         } else {
             sprintf(buf, D_004C25F8, kind, *func_00460B40(v, 0) + 1);
-            func_00460AC0(&o->vec350, buf, 1.0f);
+            VoiceQueue_Push(&o->vec350, buf, 1.0f);
         }
     }
 }
 
-void func_00460450(Obj0450 *o)
+void GuiEndGameAwards_QueueVoices(Obj0450 *o)
 {
     VecI0450 v6;
     VecI0450 v9;
@@ -111,12 +111,12 @@ void func_00460450(Obj0450 *o)
         if (agent->b70) {
             if (HasCur(agent))
                 PtrVec_PushBack_1C1080(&v6, &idx);
-            func_00333600(agent, &list);
+            AgentData_GetRatings(agent, &list);
                         { int j = 0; Item0450** pit = &list.items;
             if (j < list.count) do { if ((*pit)[j].type == 1) { PtrVec_PushBack_1C1080(&v7, &idx); break; } } while (++j < list.count); }
 
 
-            func_003334C0(agent, 1, &list);
+            AgentData_GetAwardRows(agent, 1, &list);
             {
                 int j = 0;
                 if (j < list.count) do {
@@ -126,7 +126,7 @@ void func_00460450(Obj0450 *o)
                     }
                 } while (++j < list.count);
             }
-            func_003334C0(agent, 2, &list);
+            AgentData_GetAwardRows(agent, 2, &list);
             {
                 int j = 0;
                 if (j < list.count) do {

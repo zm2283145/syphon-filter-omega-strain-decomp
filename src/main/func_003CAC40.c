@@ -11,7 +11,7 @@ extern L4Iter* List_InsertBefore(L4Iter* out, void* list, L4Iter* pos, int* valu
 L4Iter* func_003CAC70(void* list, int* value);
 
 /* Appends value to the list at +0x20; always returns 1. */
-int func_003CAC40(Unk3CAC40* self, int value) {
+int Script_AddChild(Unk3CAC40* self, int value) {
     int loc[1];
 
     loc[0] = value;

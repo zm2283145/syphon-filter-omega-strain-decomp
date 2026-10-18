@@ -55,7 +55,7 @@ extern char D_004DBA00[];
 extern char D_004DCF10[];
 extern Tgt_244FA0* D_004FFC0C;
 float Hud_GetMissionTime();
-int func_00330C30(void* p, unsigned char b);
+int Awards_GetParTime(void* p, unsigned char b);
 int ObjMan_GetService();
 int ObjMan_GetTotalCount(int s);
 int ObjectiveMgr_GetCompleted(int s, int* buf, int n, int k);
@@ -68,7 +68,7 @@ void Hud_UpdateAmmoText(Obj_244FA0* o, int t);
 void IeScreen_Update(int h, float dt);
 void HudMap_Update(int h, float dt);
 bool HudTimer_Update(void* t, float now);
-float func_00245810(Obj_244FA0* o);
+float Hud_GetNetworkTime(Obj_244FA0* o);
 void Event_Construct(Msg_244FA0* m, void* p);
 void Event_Send(Msg_244FA0* m, void* target, int flags);
 void cMessage_dtor(Msg_244FA0* m, int flags);
@@ -83,7 +83,7 @@ extern "C" void Hud_Update(Obj_244FA0* o, float dt)
         o->f6DC += dt;
         unsigned char flag = D_005721C8;
         float cur = Hud_GetMissionTime();
-        float max = (float)func_00330C30(D_004FFC90, flag);
+        float max = (float)Awards_GetParTime(D_004FFC90, flag);
         float q = max / 4.0f;
         float h = max / 2.0f;
         float t = 0.75f * max;
@@ -131,7 +131,7 @@ extern "C" void Hud_Update(Obj_244FA0* o, float dt)
         if (o->f6B4 <= o->f6AC)
             busy = 0;
     }
-    if (!busy && HudTimer_Update(o->t6C4, func_00245810(o))) {
+    if (!busy && HudTimer_Update(o->t6C4, Hud_GetNetworkTime(o))) {
         if (!D_005721C8 || (D_005721C8 ? D_005721C0 : 1)) {
             Msg_244FA0 m;
             Event_Construct(&m, D_004F7A08);
@@ -186,7 +186,7 @@ extern "C" {
 extern char D_004FFB50[];
 extern char D_004DAE10[];
 extern char D_004A72A8[];
-void func_0036E5D0(void* m);
+void Resource_Construct(void* m);
 void FileMan_Release(void* part, int flags);
 #if 0 /* merge_units */
 void cMessage_dtor(void* msg, int flags);
@@ -216,9 +216,9 @@ extern "C" void Objective_QueueThresholdVoice(int a, int b)
     act.h24.v = -2;
     act.w20 = 0;
     pa = act.memberA;
-    func_0036E5D0(pa);
+    Resource_Construct(pa);
     pb = act.memberB;
-    func_0036E5D0(pb);
+    Resource_Construct(pb);
     p->id = -1;
     p->mask = -1;
     p->w20 = 0;
@@ -277,9 +277,9 @@ extern char* D_004FFC0C;
 #define D_004FFC0C (*(char **)&D_004FFC0C) /* merge_units */
 
 #if 0 /* merge_units */
-extern float func_00245810(char* o);
+extern float Hud_GetNetworkTime(char* o);
 #endif /* merge_units */
-#define func_00245810(a0) (func_00245810((void *)(a0))) /* merge_units */
+#define Hud_GetNetworkTime(a0) (Hud_GetNetworkTime((void *)(a0))) /* merge_units */
 
 extern int Loc_LookupText(char* key);
 extern void HudTimer_Start(void* t, int text, float time);
@@ -305,10 +305,10 @@ extern void cMessage_dtor(void* m, int f);
 #define cMessage_dtor(a0, a1) (cMessage_dtor((void *)(a0), (a1))) /* merge_units */
 
 
-void func_00245560(char* o, char* key, float f)
+void Hud_StartGlobalTimer(char* o, char* key, float f)
 {
     EMsg_245560 em;
-    float t = f + func_00245810(o);
+    float t = f + Hud_GetNetworkTime(o);
     HudTimer_Start(o + 0x6C4, key ? Loc_LookupText(key) : 0, t);
     EffectMsg_WrapRequest(&em, D_004F0F90);
     em.b20 = 1;
@@ -336,7 +336,7 @@ void func_00245560(char* o, char* key, float f)
     cMessage_dtor(&em, 0);
 }
 #undef D_004FFC0C /* merge_units */
-#undef func_00245810 /* merge_units */
+#undef Hud_GetNetworkTime /* merge_units */
 #undef Event_Send /* merge_units */
 #undef FileMan_Release /* merge_units */
 #undef Event_Construct /* merge_units */

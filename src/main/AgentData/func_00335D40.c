@@ -5,6 +5,6 @@
 
 #include "types.h"
 
-int func_00335D40(void) {
+int AgentData_CopyShownUnlocks(void) {
     return 9;
 }

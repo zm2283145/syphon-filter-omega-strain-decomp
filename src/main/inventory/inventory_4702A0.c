@@ -22,7 +22,7 @@ extern "C" {
 extern int D_00587FF4;
 extern Pt2_ItemDef* D_00587FF8;
 extern char D_00587FF0[];
-void func_0038CC70(void*);
+void ActorModel_Release(void*);
 void func_004719A0(void*);
 }
 
@@ -32,10 +32,10 @@ static inline void Pt2_Free(void* p) {
     Mem_Free(0, p, "inventory.cc", 0xD8);
 }
 #pragma opt_strength_reduction off
-extern "C" void func_004702A0(void) {
+extern "C" void ItemTable_GetModel(void) {
     int i;
     for (i = 0; i < D_00587FF4; i++) {
-        func_0038CC70(D_00587FF8[i].model);
+        ActorModel_Release(D_00587FF8[i].model);
         Pt2_Free(D_00587FF8[i].model);
     }
     func_004719A0(D_00587FF0);
@@ -57,7 +57,7 @@ extern E4703B0* D_00587FF8;
 extern void WeaponDb_LoadModel(void* m, void* a, void* b, int c, int d, int e, int f);
 #pragma push
 #pragma opt_strength_reduction off
-void func_004703B0(void)
+void ItemTable_LoadModels(void)
 {
     void* m = D_004FFD30;
     int i;

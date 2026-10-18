@@ -13,14 +13,14 @@ int Mem_Free();
 /* merge_units: begin func_00381000 */
 #pragma push /* merge_units */
 typedef struct { char pad[0x10]; int count; } E2List;
-extern void func_0036E5D0(void*);
+extern void Resource_Construct(void*);
 extern void func_0036E140(void*, void*, int, int);
 extern int TexMan_FindOrLoad(E2List*, void*);
 extern void FileMan_Release(void*, int);
 int TexCache_LoadErrorTexture(E2List* s) {
     char buf[0xA0];
     int r;
-    func_0036E5D0(buf);
+    Resource_Construct(buf);
     func_0036E140(buf, "GAMEDATA\\COMMON\\ERROR.TDX", 0, 0);
     r = TexMan_FindOrLoad(s, buf);
     if (r == -1) r = s->count - 1;
@@ -153,7 +153,7 @@ static inline void merge_flush_func_00381260(void) {}
 extern "C" {
 extern char D_004BC300[];
 int func_00380360(void* t);
-void func_00380280(void* t, int a, int b, char* file, int line);
+void Tex_DestroyRecord(void* t, int a, int b, char* file, int line);
 void func_003801A0(Obj_3812D0* o, int v);
 void func_00380170(void* list, int* value);
 }
@@ -164,7 +164,7 @@ extern "C" void func_003812D0(Obj_3812D0* o)
         int v = o->head->value;
         int idx = v;
         if (o->tex[v] && func_00380360(o->tex[idx]) <= 0) {
-            func_00380280(o->tex[idx], 0, 1, D_004BC300, 0x39E);
+            Tex_DestroyRecord(o->tex[idx], 0, 1, D_004BC300, 0x39E);
             o->tex[idx] = 0;
             func_003801A0(o, idx);
             func_00380170(o->freeA, &idx);
@@ -197,7 +197,7 @@ void func_003801A0(Obj_3813A0* o, int v);
 
 }
 
-extern "C" void func_003813A0(Obj_3813A0* o, int idx, int keep)
+extern "C" void Tex_Release(Obj_3813A0* o, int idx, int keep)
 {
     int i = idx;
     if (o->tex[idx]) {
@@ -209,7 +209,7 @@ extern "C" void func_003813A0(Obj_3813A0* o, int idx, int keep)
     if (keep == 0) {
         int j = idx;
         if (o->tex[idx] && func_00380360(o->tex[idx]) <= 0) {
-            func_00380280(o->tex[j], 0, 1, D_004BC300, 0x39E);
+            Tex_DestroyRecord(o->tex[j], 0, 1, D_004BC300, 0x39E);
             o->tex[j] = 0;
             func_003801A0(o, j);
             func_00380170(o->freeA, &j);

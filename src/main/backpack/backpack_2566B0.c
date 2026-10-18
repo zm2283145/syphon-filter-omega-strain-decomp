@@ -65,7 +65,7 @@ static inline unsigned char CanB(S_66B0* s)
     return r;
 }
 
-extern "C" void func_002566B0(S_66B0* s, T_66B0* t)
+extern "C" void Backpack_SetOwner(S_66B0* s, T_66B0* t)
 {
     s->tgt = t;
     {

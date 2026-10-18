@@ -70,7 +70,7 @@ T1F00* func_003D1F00(T1F00* self, short del)
 #define NULL 0
 #define VC_(p) ((int (*)())(p))
 #pragma mpwc_relax on
-int func_00379740(int, int);                        
+int Tex_GetRecord(int, int);                        
 int func_003797D0(char *);                             
 int func_003D20F0(char *, int);                        
 int func_003D2110(char *, int);                          
@@ -104,7 +104,7 @@ void Global_SetTexture(int arg0, int arg1, unsigned int arg2) {
 loop_2:
         temp_s3 = *func_003D2160(&sp7C);
         temp_s2 = func_003797D0(&D_005381F0);
-        if (strcmp(func_003D2140(func_00379740(temp_s2, func_003D2150(temp_s3))), arg1) == 0) {
+        if (strcmp(func_003D2140(Tex_GetRecord(temp_s2, func_003D2150(temp_s3))), arg1) == 0) {
             var_s0 = temp_s3;
         } else {
             func_003D2120(&sp7C);

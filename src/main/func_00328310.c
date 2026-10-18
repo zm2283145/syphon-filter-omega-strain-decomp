@@ -16,7 +16,7 @@ void String_Dtor(void* s, int f);
 void func_00329A70(void* v, E_328310* pos, int n, E_328310* e);
 void func_0032A110(void* s, int f);
 
-int func_00328310(O_328310* o, char* s)
+int GuiSlideShow_AddCategory(O_328310* o, char* s)
 {
     E_328310 e;
     Str_328310 t;

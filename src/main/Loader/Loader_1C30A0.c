@@ -66,11 +66,11 @@ int Pop_FindTag(PopReader_1C3210* r, int tag);
 #define Pop_FindTag(a0, a1) (Pop_FindTag((PopReader_1C30A0 *)(a0), (a1))) /* merge_units */
 
 void* cNIEventOBJ_ctor(void* p, void* x, PopReader_1C3210* r);
-void func_002390A0(PopReader_1C3210* r);
+void NiEvent_ReadSoundNames(PopReader_1C3210* r);
 }
 extern "C" void Loader_InitNIEventObjects(void* a0, PopReader_1C3210* r, void* x)
 {
-    func_002390A0(r);
+    NiEvent_ReadSoundNames(r);
     if ((unsigned char)Pop_FindTag(r, 0x3A45494E)) {
         int n;
         n = *(int*)r->cur;

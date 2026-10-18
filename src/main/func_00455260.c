@@ -10,22 +10,22 @@ extern void* D_004FFD30;
 extern char D_004C1A38[];
 extern char D_004C1A40[];
 extern char D_004C1A50[];
-int func_00470270(int);
-char* func_00470240(int);
+int ItemTable_GetName(int);
+char* ItemTable_GetDesc(int);
 int ItemInv_Count(void*, int);
-void func_00441000(void*, int, int, int);
-void func_00441060(void*, int);
-void func_00426510(void*, int, int, char*);
+void GuiWeaponDisplay_SetItem(void*, int, int, int);
+void GuiWeaponDisplay_Set(void*, int);
+void GuiTextArrayWidget_SetCellText(void*, int, int, char*);
 char* Loc_LookupText(char*);
 int sprintf(char*, char*, ...);
 char* WeaponDb_Get(void*, int);
 char* strncpy(char*, char*, int);
 int WeaponInv_SlotOfItem(int);
-void func_00455840(void*, int);
+void GuiWeaponStats_Fill(void*, int);
 void MLTextWidget_Clear(void*);
 void MLTextWidget_AddText(void*, char*);
 void GuiTextWidget_SetText(void*, char*, int);
-void func_00455260(O_455260* o, A_455260* a, int id);
+void GuiEquipmentPane_SetItem(O_455260* o, A_455260* a, int id);
 }
 
 static inline void Zero(char* q, int n)
@@ -42,16 +42,16 @@ static inline void Fill(L_455260* p, int cnt)
     char buf[16];
     int i = 0;
     do {
-        func_00426510(p, 0, i, D_004C1A38);
-        func_00426510(p, 1, i, D_004C1A38);
+        GuiTextArrayWidget_SetCellText(p, 0, i, D_004C1A38);
+        GuiTextArrayWidget_SetCellText(p, 1, i, D_004C1A38);
         i++;
     } while (i < 3);
-    func_00426510(p, 0, 2, Loc_LookupText(D_004C1A40));
+    GuiTextArrayWidget_SetCellText(p, 0, 2, Loc_LookupText(D_004C1A40));
     sprintf(buf, D_004C1A50, cnt);
-    func_00426510(p, 1, 2, buf);
+    GuiTextArrayWidget_SetCellText(p, 1, 2, buf);
 }
 
-void func_00455260(O_455260* o, A_455260* a, int id)
+void GuiEquipmentPane_SetItem(O_455260* o, A_455260* a, int id)
 {
     void* inv = a->f3528;
     int item;
@@ -59,9 +59,9 @@ void func_00455260(O_455260* o, A_455260* a, int id)
     if (o->f48) {
         if (item > -1) {
             Itm_455260* t = &D_00587FF8[item]; int x = t->f28;
-            func_00441000(o->f48, id, x, func_00470270(item));
+            GuiWeaponDisplay_SetItem(o->f48, id, x, ItemTable_GetName(item));
         } else {
-            func_00441060(o->f48, id);
+            GuiWeaponDisplay_Set(o->f48, id);
         }
     }
     if (o->f50 && o->f4C && o->f54) {
@@ -69,8 +69,8 @@ void func_00455260(O_455260* o, A_455260* a, int id)
         char* desc = 0;
         bool flag = 0;
         if (item > -1) {
-            name = func_00470240(item);
-            desc = (char*)func_00470270(item);
+            name = ItemTable_GetDesc(item);
+            desc = (char*)ItemTable_GetName(item);
             Fill(o->f54, ItemInv_Count(inv, item));
             flag = 1;
         } else if (id > -1) {
@@ -84,7 +84,7 @@ void func_00455260(O_455260* o, A_455260* a, int id)
             desc = Loc_LookupText(w + 0x80);
             if (!desc) desc = w + 0x80;
             if ((unsigned char)WeaponInv_SlotOfItem(id) < 6) {
-                func_00455840(o->f54, id);
+                GuiWeaponStats_Fill(o->f54, id);
                 flag = 1;
             }
         }

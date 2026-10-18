@@ -15,11 +15,20 @@ extern void Curve_Retarget();
 extern void Curve_SetVelocity();
 extern void Curve_VirtualNop();
 extern void Event_PackHeader();
+extern void GObj_GetID();
+extern void GObj_GetLifeState();
+extern void GObj_GetWorldMatrix();
+extern void GuiWidget_BaseSleep();
+extern void GuiWidget_BubbleActivate();
+extern void GuiWidget_BubbleType0();
+extern void GuiWidget_BubbleType1();
+extern void GuiWidget_ClearFlag4();
 extern void GuiWidget_Deinit();
 extern void GuiWidget_FocusFirst();
 extern void GuiWidget_FocusLast();
 extern void GuiWidget_FocusNext();
 extern void GuiWidget_FocusPrev();
+extern void GuiWidget_SetFlag4();
 extern void Message_GetScriptTypeKey();
 extern void Node_ClearFlag2C();
 extern void Node_GetComponentMatrix();
@@ -37,7 +46,6 @@ extern void PathObj_GetPosition();
 extern void Player_GetActiveWeapon();
 extern void cGOBJ_v0B();
 extern void cGOBJ_v0C();
-extern void func_0012ECE0();
 extern void func_0012ED00();
 extern void func_0012ED30();
 extern void func_0012ED40();
@@ -45,7 +53,6 @@ extern void func_0012ED50();
 extern void func_0013E060();
 extern void func_0013EE60();
 extern void func_00140E90();
-extern void func_00141850();
 extern void func_00148870();
 extern void func_00153860();
 extern void func_0015BFB0();
@@ -82,7 +89,6 @@ extern void func_002A3BB0();
 extern void func_002A3BF0();
 extern void func_002A45A0();
 extern void func_002A6FC0();
-extern void func_003CCFF0();
 extern void func_003CD090();
 extern void func_003CD110();
 extern void func_003CD4A0();
@@ -98,12 +104,6 @@ extern void func_003CE7D0();
 extern void func_003CE810();
 extern void func_003CE9D0();
 extern void func_003CEA00();
-extern void func_0041E230();
-extern void func_0041E2B0();
-extern void func_0041E330();
-extern void func_0041EBF0();
-extern void func_0041F070();
-extern void func_0041F080();
 extern void func_0041F210();
 
 void *D_004DD7A0[8] = {
@@ -113,9 +113,9 @@ void *D_004DD7A0[8] = {
 
 void *D_004DD7C0[124] = {
     0, 0, &func_002A45A0, &func_002A3BF0,
-    &GuiWidget_Deinit, &func_0041F080, &func_0041F070, &func_002A3BB0,
-    &func_0041EBF0, &func_0041E330, &func_0041E2B0, &func_002A1D20,
-    &func_002A2EC0, &func_0041E230, &func_002A2F00, &func_002A2170,
+    &GuiWidget_Deinit, &GuiWidget_SetFlag4, &GuiWidget_ClearFlag4, &func_002A3BB0,
+    &GuiWidget_BaseSleep, &GuiWidget_BubbleType0, &GuiWidget_BubbleType1, &func_002A1D20,
+    &func_002A2EC0, &GuiWidget_BubbleActivate, &func_002A2F00, &func_002A2170,
     &func_0041F210, &GuiWidget_FocusFirst, &GuiWidget_FocusLast, &GuiWidget_FocusNext,
     &GuiWidget_FocusPrev, &func_002A1CE0, &func_002A1CF0, 0,
     0, 0, &func_0017ECD0, &func_00180020,
@@ -127,7 +127,7 @@ void *D_004DD7C0[124] = {
     0, 0, &func_0018A260, &func_001B9EA0,
     &Event_PackHeader, &Message_GetScriptTypeKey, 0, 0,
     0, 0, &func_0017F080, &Object_HandleMessage,
-    &func_0012ECE0, &Object_GetAttachedOrSelf, &func_0015C090, &func_0012ED00,
+    &GObj_GetID, &Object_GetAttachedOrSelf, &func_0015C090, &func_0012ED00,
     &func_003CE810, &func_003CE7D0, &func_0012ED30, &func_0012ED40,
     &func_0012ED50, &cGOBJ_v0B, &cGOBJ_v0C, &func_003CEA00,
     &func_00180780, &func_00180790, &func_001807A0, &Actor_BasePreLogic,
@@ -141,8 +141,8 @@ void *D_004DD7C0[124] = {
     &Object_GetEye, &func_0015C020, &func_00140E90, &func_0015C030,
     &func_0015C040, &func_0015C050, &Node_GetWorldMatrix, &func_003CD4A0,
     &Node_GetLightRefPoint, &PathObj_GetPosition, &Node_GetComponentMatrix, &func_003CD110,
-    &func_003CD090, &func_003CCFF0, &func_0013E060, &func_0015C080,
-    &Actor_ApplyContactDamage, &func_0015C0A0, &func_00141850, &Controller_DeathNotice,
+    &func_003CD090, &GObj_GetWorldMatrix, &func_0013E060, &func_0015C080,
+    &Actor_ApplyContactDamage, &func_0015C0A0, &GObj_GetLifeState, &Controller_DeathNotice,
 };
 
 void *D_004DD9B0[8] = {

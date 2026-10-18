@@ -19,20 +19,20 @@ typedef struct {
 } Screen;
 extern char D_004FFB50[];
 extern char D_004DADF0[];
-extern void func_0041EBF0(Screen* self);
+extern void GuiWidget_BaseSleep(Screen* self);
 extern void SoundEvent_Ctor(Event* e, void* src, int a2);
 extern void Event_Send(Event* e, const char* name, int enable);
 extern void FileMan_Release(SubObj* s, int flags);
 extern void cMessage_dtor(Event* e, int flags);
 extern void* Fstream_GetLoader(void);
-extern void func_003EB750(void* p);
-extern void func_0036B250(int a0);
+extern void FStream_CancelRequests(void* p);
+extern void Heap_ReleaseSlot(int a0);
 
 /* Closes the screen: base handler, dispatches a close event, then resets global state. */
-void func_00327CF0(Screen* self)
+void GuiSlideShow_Sleep(Screen* self)
 {
     Event e;
-    func_0041EBF0(self);
+    GuiWidget_BaseSleep(self);
     self->active = 0;
     SoundEvent_Ctor(&e, self->ev, 0);
     e.flag = 1;
@@ -41,7 +41,7 @@ void func_00327CF0(Screen* self)
     FileMan_Release(&e.b, -1);
     FileMan_Release(&e.a, -1);
     cMessage_dtor(&e, 0);
-    func_003EB750(Fstream_GetLoader());
-    func_0036B250(1);
+    FStream_CancelRequests(Fstream_GetLoader());
+    Heap_ReleaseSlot(1);
     self->state = -1;
 }

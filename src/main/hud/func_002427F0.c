@@ -11,7 +11,7 @@ Mgr2427* Gui_GetScreenStack(void);
 void* GuiManager_FindByName(void* a, void* b);
 void* GuiManager_FindOrLoad(void* a, void* b, void* c);
 extern char D_004A7240[];
-}extern "C" void func_002427F0(Obj2426* s) {
+}extern "C" void Hud_CloseMapScreen(Obj2426* s) {
     if (s->b6A9) {
         void* x = GuiManager_FindByName(Gui_GetScreenList(), "GuiMapScreen");
         if (x) Gui_GetScreenStack()->s24(x);

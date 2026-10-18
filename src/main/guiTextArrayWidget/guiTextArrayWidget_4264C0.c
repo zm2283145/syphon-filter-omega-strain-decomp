@@ -26,11 +26,11 @@ static inline void merge_flush_func_004264C0(void) {}
 
 /* merge_units: begin func_004264D0 */
 #pragma push /* merge_units */
-extern void* func_00426590(void);
+extern void* GuiTextArrayWidget_GetCell(void);
 extern void* String_CStr(void*);
 const unsigned int D_004BF7B0[4] = { 0x0, 0x0, 0x0, 0x0 };
 /* Looks up an entry and converts it, else returns the default object. */
-void* func_004264D0(void) { void* p = func_00426590(); if (p) return String_CStr(p); return ((char*)D_004BF7B0); }
+void* func_004264D0(void) { void* p = GuiTextArrayWidget_GetCell(); if (p) return String_CStr(p); return ((char*)D_004BF7B0); }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_004264D0(void) {}
 #pragma pop /* merge_units */

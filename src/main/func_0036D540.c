@@ -23,7 +23,7 @@ typedef struct ChunkReader {
 extern void String_Copy(char* dst, const char* src);
 
 /* Binds a loaded chunk buffer to the reader; returns 0. */
-int func_0036D540(ChunkReader* r, const char* name, char* buffer, int user) {
+int Hog_OpenInMemory(ChunkReader* r, const char* name, char* buffer, int user) {
     String_Copy(r->name, name);
     r->loaded = 1;
     r->base = buffer;

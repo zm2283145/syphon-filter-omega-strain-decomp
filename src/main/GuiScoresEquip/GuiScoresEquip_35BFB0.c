@@ -81,7 +81,7 @@ void Skel_Rebind(Skel_35BFB0* s, void* p);
 WDef_35BFB0* WeaponDb_Get(void* table, int id);
 int cAgentData_GetStat(Agent_35BFB0* a, int stat);
 char func_0012B290(char c);
-Agent_35BFB0* func_00185C70(Player_35BFB0* p, unsigned char* flag);
+Agent_35BFB0* Player_GetAgentData(Player_35BFB0* p, unsigned char* flag);
 char* AgentData_GetName(Agent_35BFB0* a);
 void GuiTextWidget_SetText(W_35BFB0* w, char* text, int flags);
 void GuiWidget_SendEvent(Screen_35BFB0* s, W_35BFB0* w, int a, int b, int c);
@@ -124,7 +124,7 @@ static inline void ShowItem_35BFB0(W_35BFB0* w, Item_35BFB0* it)
     }
 
 static const float kPi_35BFB0 = 3.1415927f;
-extern "C" void func_0035BFB0(Screen_35BFB0* s, float dt)
+extern "C" void GuiScoresEquip_Update(Screen_35BFB0* s, float dt)
 {
     int i;
     for (i = 0; i < 4; i++) {
@@ -146,7 +146,7 @@ extern "C" void func_0035BFB0(Screen_35BFB0* s, float dt)
             Skel_Rebind(s->skel[slot], p->m60);
             s->skel[slot]->b2C71 = 1;
             if (!s->f220[slot]) s->f220[slot] = 1;
-            a = func_00185C70(p, &s->f220[slot]);
+            a = Player_GetAgentData(p, &s->f220[slot]);
             if (a->bB70) {
                 char buf[0x10];
                 char key[0x20];
@@ -308,25 +308,25 @@ extern char D_004BB4E8[];
 extern char D_004BB500[];
 extern char D_004BB520[];
 extern char D_004A9870[];
-void func_0041EFA0(S35CBF0* o);
+void GuiWidget_BaseWake(S35CBF0* o);
 W35CBF0* GuiWidget_FindChildByName(void* self, char* name);
 #if 0 /* merge_units */
 void GuiTextWidget_SetText(W35CBF0* w, char* text, int flags);
 #endif /* merge_units */
 #define GuiTextWidget_SetText(a0, a1, a2) (GuiTextWidget_SetText((W_35BFB0 *)(a0), (a1), (a2))) /* merge_units */
 
-void func_0035CBF0(S35CBF0* o);
+void GuiScoresEquip_Wake(S35CBF0* o);
 }
 static inline W35CBF0* cast35CBF0(W35CBF0* w)
 {
     return (w && w->IsA(D_004A9870)) ? w : 0;
 }
-void func_0035CBF0(S35CBF0* o)
+void GuiScoresEquip_Wake(S35CBF0* o)
 {
     W35CBF0* a;
     W35CBF0* b;
     W35CBF0* c;
-    func_0041EFA0(o);
+    GuiWidget_BaseWake(o);
     o->a224 = 0;
     a = GuiWidget_FindChildByName(o, D_004BB4D8);
     b = GuiWidget_FindChildByName(o, D_004BB4E8);

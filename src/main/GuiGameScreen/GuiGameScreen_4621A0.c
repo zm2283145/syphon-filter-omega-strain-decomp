@@ -9,19 +9,19 @@ extern "C" void GuiWidget_FocusPrev();
 extern "C" void GuiWidget_FocusNext();
 extern "C" void GuiWidget_FocusLast();
 extern "C" void GuiWidget_FocusFirst();
-extern "C" void func_0041E230();
-extern "C" void func_0041E2B0();
-extern "C" void func_0041E330();
+extern "C" void GuiWidget_BubbleActivate();
+extern "C" void GuiWidget_BubbleType1();
+extern "C" void GuiWidget_BubbleType0();
 extern "C" void GuiWidget_Draw();
-extern "C" void func_0041EBF0();
-extern "C" void func_0041F070();
-extern "C" void func_0041F080();
+extern "C" void GuiWidget_BaseSleep();
+extern "C" void GuiWidget_ClearFlag4();
+extern "C" void GuiWidget_SetFlag4();
 extern "C" void GuiWidget_Deinit();
 extern "C" void func_0041F210();
-extern "C" void func_00462270();
-extern "C" void func_00462340();
-extern "C" void func_00462380();
-extern "C" void func_004624E0();
+extern "C" void GuiEndGameObjectives_Update();
+extern "C" void GuiEndGameObjectives_GetClassName();
+extern "C" void GuiEndGameObjectives_HandleInput();
+extern "C" void GuiEndGameObjectives_Wake();
 extern void * const D_004E17C0[];
 extern char D_004DF5C0[];
 void operator_delete(void* allocation);
@@ -62,4 +62,4 @@ extern "C" O4621A0* func_004621A0(O4621A0* self, short deleteFlag)
     }
     return self;
 }
-void * const D_004E17C0[24] = { (void*)0x0, (void*)0x0, (void*)func_004621A0, (void*)GuiObjectives_Init, (void*)GuiWidget_Deinit, (void*)func_0041F080, (void*)func_0041F070, (void*)func_004624E0, (void*)func_0041EBF0, (void*)func_0041E330, (void*)func_0041E2B0, (void*)func_00462380, (void*)GuiWidget_Draw, (void*)func_0041E230, (void*)func_00462270, (void*)GuiObjectives_HandleEvent, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)func_00462340, (void*)GuiEndGameObjectives_IsType, (void*)0x0 };
+void * const D_004E17C0[24] = { (void*)0x0, (void*)0x0, (void*)func_004621A0, (void*)GuiObjectives_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiEndGameObjectives_Wake, (void*)GuiWidget_BaseSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiEndGameObjectives_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiEndGameObjectives_Update, (void*)GuiObjectives_HandleEvent, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiEndGameObjectives_GetClassName, (void*)GuiEndGameObjectives_IsType, (void*)0x0 };

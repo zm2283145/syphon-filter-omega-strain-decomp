@@ -41,7 +41,7 @@ int PlayerCamera_UpdateR1Pick(int, void*, int);            /* extern */
 s32 PlayerCamera_LookAtLock(int, void*, int, int, int, int);        /* extern */
 int func_00280390(int, int, s8, int);          /* extern */
 int func_00280470(int, int, int, int);    /* extern */
-int func_00281220(int, int);                        /* extern */
+int Mtx_ToEulerXYZ(int, int);                        /* extern */
 extern int D_00497F00;
 extern s32 D_0049D010;
 extern s8 D_0049D024;
@@ -585,11 +585,11 @@ static inline f32* TE2(void* a, void* b_) { void* b = b_; return Mtx_ToEuler(a, 
 static inline f32* TE3(void* a_, void* b) { void* a = a_; return Mtx_ToEuler(a, b); }
 static inline f32* TE4(void* a_, void* b_) { void* b = b_; void* a = a_; return Mtx_ToEuler(a, b); }
 static inline f32* TE5(void* a_, void* b_) { void* a = a_; void* b = b_; return Mtx_ToEuler(a, b); }
-static inline void FE1(int a, int b) { func_00281220(a, b); }
-static inline void FE2(int a, int b_) { int b = b_; func_00281220(a, b); }
-static inline void FE3(int a_, int b) { int a = a_; func_00281220(a, b); }
-static inline void FE4(int a_, int b_) { int b = b_; int a = a_; func_00281220(a, b); }
-static inline void FE5(int a_, int b_) { int a = a_; int b = b_; func_00281220(a, b); }
+static inline void FE1(int a, int b) { Mtx_ToEulerXYZ(a, b); }
+static inline void FE2(int a, int b_) { int b = b_; Mtx_ToEulerXYZ(a, b); }
+static inline void FE3(int a_, int b) { int a = a_; Mtx_ToEulerXYZ(a, b); }
+static inline void FE4(int a_, int b_) { int b = b_; int a = a_; Mtx_ToEulerXYZ(a, b); }
+static inline void FE5(int a_, int b_) { int a = a_; int b = b_; Mtx_ToEulerXYZ(a, b); }
 static inline void PutD70(int a, f32 v) { f32* p = (f32*)((char*)a + 0xD70); *p = v; }
 static inline void PutD70b(void* a, f32 v) { f32* p = (f32*)((char*)a + 0xD70); *p = v; }
 static inline f32 GetD70(int a) { f32* p = (f32*)((char*)a + 0xD70); return *p; }

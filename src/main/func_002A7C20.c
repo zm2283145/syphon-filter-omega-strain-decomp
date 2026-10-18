@@ -14,7 +14,7 @@ int GuiWidget_OnEvent(O2A7C20* o, void* sender, unsigned short msg);
 M2A7C20* Gui_GetScreenStack(void);
 }
 
-extern "C" int func_002A7C20(O2A7C20* o, void* sender, unsigned short msg)
+extern "C" int GuiMessageBox_HandleEvent(O2A7C20* o, void* sender, unsigned short msg)
 {
     if (msg == 2) {
         E2A7C20* e; int old; old = o->sel; e = &o->entries[o->idx];

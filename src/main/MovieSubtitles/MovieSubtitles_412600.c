@@ -78,7 +78,7 @@ void Font_ctor(VBig*);
 void Font_LoadFnt(VBig*, int*, const char*);
 void func_00382910(IdList*);
 void Video_BeginFrame(void*);
-void func_00410C20(Subs* self, void* file, int lang);
+void MovieSubtitles_ParseFeed(Subs* self, void* file, int lang);
 }
 /* retail's hand-written memclear (addi + sq zero), inlined from a shared helper */
 static inline void MemClear(void* dst, int n) {
@@ -147,7 +147,7 @@ static inline Mtx* MtxAt(int i) { return &((Render*)D_005381F0)->mtx[i]; }
 static inline void GQR(void* d, void* s) { __int128 qa, qb; __asm__ volatile("lq %0, 0x0(%3); lq %1, 0x10(%3); sq %0, 0x0(%2); lq %0, 0x20(%3); sq %1, 0x10(%2); lq %1, 0x30(%3); sq %0, 0x20(%2); sq %1, 0x30(%2)" : "=&r"(qa), "=&r"(qb) : "r"(d), "r"(s) : "memory"); }
 static inline void UM(void* p) { int t; __asm__ volatile("sqc2 $vf0, 0x30(%1); qmfc2.ni %0, $vf0; pcpyud %0, %0, $zero; sq %0, 0x10(%1); pexcw %0, %0; sq %0, 0x20(%1); pcpyud %0, %0, $zero; sq %0, 0x0(%1)" : "=&r"(t) : "r"(p) : "memory"); }
 
-extern "C" void func_00412600(Self* self, void* file, int lang)
+extern "C" void MovieSubtitles_Load(Self* self, void* file, int lang)
 {
     int i;
     for (i = 0; i < 3; i++) {
@@ -176,7 +176,7 @@ extern "C" void func_00412600(Self* self, void* file, int lang)
     self->fB4 = 0;
     self->fB0 = 0;
     self->p50 = NewSubs();
-    func_00410C20(self->p50, file, lang);
+    MovieSubtitles_ParseFeed(self->p50, file, lang);
     {
         const char* name = self->p50->text;
         if (*name != 0) asm { .set reorder } /* empty scheduling barrier: keeps the retail b/nop branch shape */ else name = 0;

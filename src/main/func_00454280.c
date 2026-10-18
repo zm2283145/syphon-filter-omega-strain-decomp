@@ -10,7 +10,7 @@ extern void GuiTextListWidget_Clear(Box*);
 extern void GuiTextListWidget_AddItem(Box*, char*, int, int);
 extern void GuiArrayWidget_Select(Box*, int, unsigned int);
 extern char* Loc_LookupText(char*);
-void func_00454280(Self* self)
+void GuiRadioLog_Refill(Self* self)
 {
     int a;
     unsigned int b;

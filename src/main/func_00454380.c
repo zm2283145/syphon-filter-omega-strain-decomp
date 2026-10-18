@@ -5,15 +5,15 @@ typedef struct { char p[0x14]; unsigned short flags; char p16[0x32]; S454380* s;
 typedef struct { int p0; int f4; } G454380;
 extern G454380* D_004FFC2C;
 extern void GuiWidget_Update(W454380* w);
-extern void func_00454280(W454380* w);
-void func_00454380(W454380* w)
+extern void GuiRadioLog_Refill(W454380* w);
+void GuiRadioLog_Update(W454380* w)
 {
     C454380* c;
     GuiWidget_Update(w);
     {
         G454380* g;
 S454380* s;
-        if ((g = D_004FFC2C) && (s = w->s) && g->f4 != s->f94) func_00454280(w);
+        if ((g = D_004FFC2C) && (s = w->s) && g->f4 != s->f94) GuiRadioLog_Refill(w);
     }
     if (w->s && (c = w->s->c)) {
         int on = w->s->f94 != 0 && (w->flags & 4) != 0; if (on) c->flags |= 2; else c->flags &= ~2;

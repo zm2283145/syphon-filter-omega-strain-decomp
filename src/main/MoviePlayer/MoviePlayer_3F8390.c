@@ -123,7 +123,7 @@ extern char* strncpy(char* d, const char* s, int n);
 extern void String_Copy(char* d, const char* s);
 extern void func_0036E310(Obj8450* o, char* path, void* p);
 extern void FileMan_Release(Obj8450* o, int f);
-extern void func_00412600(void* a, Obj8450* o, int b);
+extern void MovieSubtitles_Load(void* a, Obj8450* o, int b);
 extern void Alloc_Lock(int id);
 extern int func_0010D050(void);
 extern void ChangeThreadPriority(int tid, int prio);
@@ -151,7 +151,7 @@ extern void func_003F7F80(void);
 extern void func_003F5A10(void);
 extern void MoviePlayer_PresentVblank(void);
 extern void func_003F7010(void);
-void func_003F8450(Sys8450* s)
+void MoviePlayer_Start(Sys8450* s)
 {
     char path[0x80];
     Obj8450 obj;
@@ -167,7 +167,7 @@ void func_003F8450(Sys8450* s)
     strncpy(path, name, len);
     String_Copy(path + len - 3, D_004BE1D8);
     func_0036E310(&obj, path, s->part190);
-    func_00412600(D_00571CF0, &obj, s->f22C);
+    MovieSubtitles_Load(D_00571CF0, &obj, s->f22C);
     *(volatile int*)0x10003010 = 0;
     Alloc_Lock(5);
     ChangeThreadPriority(func_0010D050(), 5);

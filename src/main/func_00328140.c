@@ -28,7 +28,7 @@ static inline G_328140* At_328140(O_328140* self, int i)
     return &self->data[i];
 }
 
-int func_00328140(O_328140* o, int idx, char* name, int val, char* desc)
+int GuiSlideShow_AddSlide(O_328140* o, int idx, char* name, int val, char* desc)
 {
     G_328140* g = At_328140(o, idx);
     if (g == 0) return -1;

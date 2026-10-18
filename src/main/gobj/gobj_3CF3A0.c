@@ -18,7 +18,7 @@ extern int Font_GetStringWidth(void*,const char*,int);
 extern int strlen(const char*);
 extern int TextObj_GetLineCount(TextLayout*);
 extern char D_004BD310[];
-s32 func_003CF3A0(TextLayout *arg0, f32 *arg1, f32 *arg2, s32 arg3) {
+s32 IeText_GetCursorPos(TextLayout *arg0, f32 *arg1, f32 *arg2, s32 arg3) {
     char spE0[256];
     f32 *spDC;
     f32 *spD8;
@@ -222,7 +222,7 @@ block_75:
 #pragma push /* merge_units */
 extern char *strchr(const char*,int); extern char *strncpy(char*,const char*,unsigned int);
 extern int D_00533870; extern long long D_00533878;
-extern void func_0036A330(void*,const char*,float,float,float,float*,float,float,float);
+extern void Font_DrawString(void*,const char*,float,float,float,float*,float,float,float);
 static inline int DivTicks(long long n,int divisor){
  int bit=0x40000000;int result=0;
  long long d=divisor;int i=0;d<<=30;
@@ -335,7 +335,7 @@ void TextObj_Draw(TextLayout *arg0) {
 
             }
             var_f23-=arg0->scroll;
-            func_0036A330(arg0->font,var_s4,var_f23,temp_f22,0.001f,arg0->color,(float)arg0->x,temp_f21,(float)(arg0->w/4));
+            Font_DrawString(arg0->font,var_s4,var_f23,temp_f22,0.001f,arg0->color,(float)arg0->x,temp_f21,(float)(arg0->w/4));
             return;
         }
         rgba[0] = arg0->color[0];
@@ -464,7 +464,7 @@ block_102:
             }else if(temp_v1_5==2){
                 var_f23=(float)(temp_a0_2+(arg0->w-temp_f0_3)/2);
             }
-            func_0036A330(arg0->font,spC0,var_f23,temp_f22,0.001f,rgba,0.0f,0.0f,0.0f);
+            Font_DrawString(arg0->font,spC0,var_f23,temp_f22,0.001f,rgba,0.0f,0.0f,0.0f);
             var_f23 = (f32) arg0->x;
             temp_s0 = (arg0->flip != 0) ? -1 : 1;
             temp_f22-=(float)(temp_s0*Font_GetLineHeight(arg0->font));

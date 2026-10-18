@@ -41,7 +41,7 @@ static inline void merge_flush_func_00397AB0(void) {}
 typedef struct { char* name; int pad4; int count; int** refs; } E397B20;
 typedef struct { int pad0; int count; E397B20** items; } L397B20;
 typedef struct { char pad[0x1C]; unsigned char loaded; } S397B20;
-extern void func_0036E5D0(void*);
+extern void Resource_Construct(void*);
 extern void FileMan_Release(void*, int);
 extern void Hog_Register(void*, char*, int, int);
 extern void ParticleLib_LoadPar(S397B20*, void*);
@@ -66,7 +66,7 @@ void ParticleLib_ResolveRequests(S397B20* self, int arg1)
 {
     char buf[0xA0];
     int i;
-    func_0036E5D0(buf);
+    Resource_Construct(buf);
     for (i = 0; i < D_0053BB58->count; i++) {
         E397B20* e = D_0053BB58->items[i];
         int id;

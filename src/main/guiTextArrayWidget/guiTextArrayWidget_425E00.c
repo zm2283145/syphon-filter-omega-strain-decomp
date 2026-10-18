@@ -21,7 +21,7 @@ int Mem_Free();
 /* merge_units: begin func_00425E00 */
 #pragma push /* merge_units */
 /* Copy the state byte to the optional child widget. */
-void func_00425E00(guiTextArrayWidget* self, unsigned char state)
+void GuiTextArrayWidget_SetHAlign(guiTextArrayWidget* self, unsigned char state)
 {
     self->unk98 = state;
     if (self->unk90)
@@ -40,7 +40,7 @@ extern void* Gui_GetScreenList(void);
 extern void* GuiFont_Find(void* a, int b);
 extern char* Font_GetLineHeight(void* i);
 extern void GuiArrayWidget_RowHeight(T425E20* t, void* p);
-void func_00425E20(T425E20* t, int a) {
+void GuiTextArrayWidget_SetFont(T425E20* t, int a) {
     t->inst = GuiFont_Find(Gui_GetScreenList(), a);
     if (t->inst) {
         { char* p = Font_GetLineHeight(t->inst) + 4; GuiArrayWidget_RowHeight(t, p); }
@@ -71,7 +71,7 @@ extern char D_005381F0[];
 extern int D_00538C64;
 extern char D_00538C68;
 void func_00423600(Self* self, int a, int b, float* r);
-Item* func_00426590(Self* self, int a, int b);
+Item* GuiTextArrayWidget_GetCell(Self* self, int a, int b);
 void TextObj_SetColour(Child* c, void* p);
 char* String_CStr(void* s);
 void TextObj_SetText(Child* c, char* text);
@@ -86,12 +86,12 @@ static inline Mtx* MtxAt(int i) { return &((Render*)D_005381F0)->mtx[i]; }
 static inline void GQR(void* d, void* s) { __int128 qa, qb; __asm__ volatile("lq %0, 0x0(%3); lq %1, 0x10(%3); sq %0, 0x0(%2); lq %0, 0x20(%3); sq %1, 0x10(%2); lq %1, 0x30(%3); sq %0, 0x20(%2); sq %1, 0x30(%2)" : "=&r"(qa), "=&r"(qb) : "r"(d), "r"(s) : "memory"); }
 static inline void UM(void* p) { int t; __asm__ volatile("sqc2 $vf0, 0x30(%1); qmfc2.ni %0, $vf0; pcpyud %0, %0, $zero; sq %0, 0x10(%1); pexcw %0, %0; sq %0, 0x20(%1); pcpyud %0, %0, $zero; sq %0, 0x0(%1)" : "=&r"(t) : "r"(p) : "memory"); }
 
-extern "C" void func_00425EA0(Self* self, int a, int b, float* r)
+extern "C" void GuiTextArrayWidget_DrawCell(Self* self, int a, int b, float* r)
 {
     Item* it;
     func_00423600(self, a, b, r);
     if (self->child == 0) return;
-    it = func_00426590(self, a, b);
+    it = GuiTextArrayWidget_GetCell(self, a, b);
     if (it == 0) return;
     if (it->flags & 1) SetF10(self->child, it->f10);
     if (it->flags & 2) SetF20(self->child, it->f14);
@@ -159,7 +159,7 @@ static inline void destroy_child(TextArrayWidgetChild* child)
 }
 
 /* Deactivate the grid base and release the optional text-rendering child. */
-extern "C" void func_00426100(guiTextArrayWidget* self)
+extern "C" void GuiTextArrayWidget_Sleep(guiTextArrayWidget* self)
 {
     func_00424A50(self);
     TextArrayWidgetChild* child = self->unk90;
@@ -174,7 +174,7 @@ extern "C" void func_00426100(guiTextArrayWidget* self)
 }
 
 /* Create a text child for the current resource and copy the array's display state. */
-extern "C" void func_004261D0(guiTextArrayWidget* self)
+extern "C" void GuiTextArrayWidget_Wake(guiTextArrayWidget* self)
 {
     GuiArrayWidget_OnWake(self);
     if (self->count) {
@@ -194,7 +194,7 @@ extern "C" void func_004261D0(guiTextArrayWidget* self)
 }
 
 /* Resolve the default resource, refresh row height and update an existing child. */
-extern "C" void func_004262D0(guiTextArrayWidget* self)
+extern "C" void GuiTextArrayWidget_Init(guiTextArrayWidget* self)
 {
     GuiArrayWidget_Init(self);
     self->count = GuiFont_Find(Gui_GetScreenList(), "callout");
@@ -215,14 +215,14 @@ static inline void merge_flush_func_00426100(void) {}
 /* merge_units: begin func_00426350 */
 #pragma push /* merge_units */
 extern void GuiArrayWidget_SetDims(guiTextArrayWidget* self, unsigned int columns, unsigned int rows);
-extern void func_00426600(guiTextArrayWidget* self, unsigned int columns, unsigned int rows);
+extern void TextArrayCell_InitDefaults(guiTextArrayWidget* self, unsigned int columns, unsigned int rows);
 
 /* Update the base dimensions and rebuild the cells only when the shape changes. */
-void func_00426350(guiTextArrayWidget* self, unsigned int columns, unsigned int rows)
+void GuiTextArrayWidget_SetDims(guiTextArrayWidget* self, unsigned int columns, unsigned int rows)
 {
     if (columns != self->columns || rows != self->rows) {
         GuiArrayWidget_SetDims(self, columns, rows);
-        func_00426600(self, columns, rows);
+        TextArrayCell_InitDefaults(self, columns, rows);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */

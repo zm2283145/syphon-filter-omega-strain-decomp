@@ -26,7 +26,7 @@ extern int D_005721A8;
 extern unsigned char D_005721C0;
 extern unsigned char D_005721C8;
 void cGOBJ_ctor(Part_59D0*, int*, int, void*);
-void* func_0036E5D0(void* entry);
+void* Resource_Construct(void* entry);
 void* FileMan_Release(void* entry, int flags);
 void Mtx_FromRowsAndTranslation(Mtx* m, const V4& a, const V4& b, const V4& c, const V4& t);
 void Mtx_SetBasis(Mtx* m, V4* a, V4* b, V4* c);
@@ -82,7 +82,7 @@ extern "C" Part_59D0* Loader_ReadParticleRecord(Part_59D0* self, Reader* r)
     self->f70 = 1.0f;
     self->b2F = 1;
     *(void**)self = D_004DAA10;
-    func_0036E5D0(&fe);
+    Resource_Construct(&fe);
     {
         V4 zz;
         Mtx m;

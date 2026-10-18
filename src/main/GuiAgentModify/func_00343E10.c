@@ -136,12 +136,12 @@ void FrontEnd_GetCharacterData(int a);
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void cGOBJ_ctor(void* p, int* a, int b, int* c);
 void Object_AttachTransform(void* p, void* t, int a);
-Model_E10* func_00393FF0(void* p, int* idx);
+Model_E10* DisplayActor_Construct(void* p, int* idx);
 float Math_SinThunk(float a);
 float Math_CosThunk(float a);
 void Mtx44_SetRotation(M4_E10* m, float a, float b, float c, float d, float e, float f, float g, float h, float i);
 unsigned short Appearance_GetPairCount(void* app);
-unsigned short func_004061B0(void* app, unsigned short n);
+unsigned short AgentPacking_AddBlankPairs(void* app, unsigned short n);
 void Appearance_ReorderParts(Man_E10* m);
 int Appearance_GetBodyKind(void* app);
 int Appearance_GetToneDigit(void* app);
@@ -161,15 +161,15 @@ void Model_HardMeshAttachPoints(Man_E10* m);
 void func_0038E030(Man_E10* m);
 void ActorModel_Setup(Man_E10* m, int flag);
 void Skel_ApplyScalePreset(Man_E10* m, int a);
-int func_00404690(void* db, __int128 key);
-int func_00401DE0(void* db, __int128 key);
-void func_00343940(Self_E10* self);
+int AgentPartCache_FindMesh(void* db, __int128 key);
+int AgentPartCache_FindTexture(void* db, __int128 key);
+void GuiAgentModify_Refresh(Self_E10* self);
 void func_002888C0(Aw_E10* a);
 void* Agent_GetSelected(void* p, int n);
 void AgentData_FilterAwards(void* ag, Aw_E10* a);
-void func_00403040(void* db, Aw_E10* a);
+void AgentPartCache_Lock(void* db, Aw_E10* a);
 void func_002887C0(Aw_E10* a, int flags);
-Self_E10* func_00343E10(Self_E10* self);
+Self_E10* GuiAgentModify_ctor(Self_E10* self);
 }
 
 static inline void QCopy_E10(void* d0, void* s0, int n0) { int n = n0; void* d = d0; void* s = s0;
@@ -297,7 +297,7 @@ static inline void Tail_E10(Self_E10* self, V4_E10& v)
                 SetB_E10(self->model, 1);
             }
 }
-extern "C" Self_E10* func_00343E10(Self_E10* p0)
+extern "C" Self_E10* GuiAgentModify_ctor(Self_E10* p0)
 {
     Self_E10* self = p0;
     M4_E10 mtx;
@@ -329,7 +329,7 @@ extern "C" Self_E10* func_00343E10(Self_E10* p0)
         p = (Model_E10*)Alloc_E10(0x3030, 0x11D);
         if (p) {
             int x[1]; x[0] = 0;
-            p = func_00393FF0(p, x);
+            p = DisplayActor_Construct(p, x);
         }
         self->model = p;
     }
@@ -374,7 +374,7 @@ extern "C" Self_E10* func_00343E10(Self_E10* p0)
         }
         {
             Man_E10* m = &self->model->man;
-            m->cnt = func_004061B0(m->app, m->cnt);
+            m->cnt = AgentPacking_AddBlankPairs(m->app, m->cnt);
         }
         Appearance_ReorderParts(&self->model->man);
         self->fF8 = Appearance_GetBodyKind(APP_E10(&self->model->man));
@@ -426,9 +426,9 @@ extern "C" Self_E10* func_00343E10(Self_E10* p0)
     }
     self->f10D = D_00492A01[self->f10F].slot;
     self->f10E = D_00492A00[self->f10F].mode;
-    self->f100 = func_00404690(D_0055DDA0, MANP_E10(self->model)->e[self->f10D].a);
-    self->f104 = func_00401DE0(D_0055DDA0, MANP_E10(self->model)->e[self->f10D].b);
-    func_00343940(self);
+    self->f100 = AgentPartCache_FindMesh(D_0055DDA0, MANP_E10(self->model)->e[self->f10D].a);
+    self->f104 = AgentPartCache_FindTexture(D_0055DDA0, MANP_E10(self->model)->e[self->f10D].b);
+    GuiAgentModify_Refresh(self);
     self->fE0 = 0;
     self->name = D_0056F9B0.name;
     self->fB0 = D_0056F9B0.i;
@@ -444,7 +444,7 @@ extern "C" Self_E10* func_00343E10(Self_E10* p0)
         func_002888C0(pa);
         pa->bC = 1;
         AgentData_FilterAwards(Agent_GetSelected(D_004FFB50, -1), pa);
-        func_00403040(D_0055DDA0, pa);
+        AgentPartCache_Lock(D_0055DDA0, pa);
         func_002887C0(pa, -1);
     }
     return self;

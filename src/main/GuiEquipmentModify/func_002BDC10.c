@@ -6,7 +6,7 @@ struct Mgr2BD { char pad[0x60]; Sub2BD sub; Sub2BD* S() { return &sub; } };
 struct Self2BD { char pad[0x4C]; Mgr2BD* mgr; char pad50[0x920 - 0x50]; int count; int ids[1]; };
 extern "C" void* D_004FFD30;
 extern "C" void WeaponDb_Unload(void*, int, int);
-extern "C" void func_002BDC10(Self2BD* self)
+extern "C" void GuiEquipmentModify_RingRelease(Self2BD* self)
 {
     int i;
     for (i = 0; i < self->count; i++) {

@@ -21,8 +21,8 @@ struct Self_32CA00 {
 };
 
 extern "C" {
-void func_0041EFA0(Self_32CA00* self);
-void func_0032B5F0(Self_32CA00* self, unsigned int flags);
+void GuiWidget_BaseWake(Self_32CA00* self);
+void GuiKeyboard_Relabel(Self_32CA00* self, unsigned int flags);
 Stack_32CA00* Gui_GetScreenStack(void);
 W_32CA00*** func_00171EC0(Vec_32CA00* v);
 VC_32CA00* func_0032C110(W_32CA00* w);
@@ -47,11 +47,11 @@ static inline void Focus(Self_32CA00* self, W_32CA00* w)
 
 extern "C" void GuiKeyboard_Wake(Self_32CA00* self)
 {
-    func_0041EFA0(self);
+    GuiWidget_BaseWake(self);
     self->sel = 0;
     self->bE1 = 0;
     self->mods = 0;
-    func_0032B5F0(self, 0);
+    GuiKeyboard_Relabel(self, 0);
     Gui_GetScreenStack();
     Focus(self, At(&self->vec, self->sel));
     self->focus = self->vec.data[self->sel];

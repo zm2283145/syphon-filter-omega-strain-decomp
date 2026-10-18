@@ -45,13 +45,13 @@ static inline void merge_flush_func_00458030(void) {}
 /* Release the owned record at +0xA0 (string member at +0x14) under the allocator guard, clear +0xA0/+0xA4. */
 extern "C" {
 void* String_Dtor(void* self, short flags);
-void func_0041EBF0(void* self);
+void GuiWidget_BaseSleep(void* self);
 }
 struct O348AD0 { char pad[0x48]; char* aA0; int aA4; };
 extern "C" void GuiSubTitleDisplay_OnSleep(O348AD0* o)
 {
     char* p;
-    func_0041EBF0(o);
+    GuiWidget_BaseSleep(o);
     p = o->aA0;
     {
         AllocGuard guard;
@@ -76,7 +76,7 @@ static inline void merge_flush_func_00458080(void) {}
 typedef struct { char pad[0x10]; unsigned char b10; char pad2[0x47]; unsigned char b58; } C458;
 typedef struct { char pad[0x3C]; float f3c; float f40; char pad2[4]; C458* f48; int f4c; char pad3[0x28]; int f78; } W458;
 extern "C" {
-extern void func_0041EFA0(W458*);
+extern void GuiWidget_BaseWake(W458*);
 extern int Gui_GetScreenList(void);
 extern int GuiFont_Find(int, char*);
 extern void* Mem_Alloc(int, int, char*, int);
@@ -87,7 +87,7 @@ extern int Font_GetLineHeight(int);
 }
 extern "C" void GuiSubTitleDisplay_OnWake(W458* w) {
     C458* obj;
-    func_0041EFA0(w);
+    GuiWidget_BaseWake(w);
     w->f4c = GuiFont_Find(Gui_GetScreenList(), "callout");
     {
         AllocGuard g;

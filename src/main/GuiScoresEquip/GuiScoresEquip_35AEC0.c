@@ -30,7 +30,7 @@ char* Loc_LookupText(char* key);
 void GuiTextWidget_SetText(W_35AEC0* w, char* text, int flags);
 void GuiStartMenu_ReturnToMenu(S_35AEC0* o);
 void GuiStartMenu_CloseAll(S_35AEC0* o);
-int func_0035AEC0(S_35AEC0* o, Ev_35AEC0* ev);
+int GuiScoresEquip_HandleInput(S_35AEC0* o, Ev_35AEC0* ev);
 }
 static inline W_35AEC0* cast_35AEC0(W_35AEC0* w)
 {
@@ -44,7 +44,7 @@ static inline bool Down2_35AEC0(Ev_35AEC0* e) { return e->type == 1 && e->b2 == 
 static inline bool Btn2_35AEC0(Ev_35AEC0* e, int b) { return Down2_35AEC0(e) && e->btn == b; }
 static inline bool Plain2_35AEC0(Ev_35AEC0* e, int b) { return Btn2_35AEC0(e, b) && e->b6 == 0; }
 static inline bool NoMod2_35AEC0(Ev_35AEC0* e) { return Down2_35AEC0(e) && e->b6 == 0; }
-int func_0035AEC0(S_35AEC0* o, Ev_35AEC0* ev)
+int GuiScoresEquip_HandleInput(S_35AEC0* o, Ev_35AEC0* ev)
 {
     if (Plain_35AEC0(ev, 0x10)) {
         W_35AEC0* a;
@@ -119,7 +119,7 @@ static inline W_0035B210* FindAs_0035B210(void* self, char* name, char* type)
     W_0035B210* w = (W_0035B210*)GuiWidget_FindChildByName(self, name);
     return (w && w->IsA(type)) ? w : 0;
 }
-extern "C" int func_0035B210(S_0035B210* self, int a, unsigned short b)
+extern "C" int GuiScoresEquip_HandleEvent(S_0035B210* self, int a, unsigned short b)
 {
     if (b == 2) {
         int on = self->f224 == 0;

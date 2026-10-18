@@ -25,24 +25,24 @@ int Agent_GetSelected(void*, int);
 char* Loc_LookupText(char*);
 int FrontEnd_OpenPopup(int, int, char*, char*, void*, int);
 void FrontEnd_ClosePopup(int, int);
-int func_0040D740(Net_4415A0*);
-int func_004422D0(int, char*, char*);
-int func_00441780();
-void func_00441370(Obj_4415A0*);
+int MemCardWrap_MakeDirectory(Net_4415A0*);
+int SaveAgentWidget_FindSlotFile(int, char*, char*);
+int SaveAgentWidget_SpaceCheck();
+void SaveAgentWidget_Save(Obj_4415A0*);
 }
 
 static inline int ShowDlg(int mgr, int type, char* t, char* m, void* cb, int x) { return FrontEnd_OpenPopup(mgr, type, Loc_LookupText(t), Loc_LookupText(m), cb, x); }
 
-extern "C" void func_004415A0(Obj_4415A0* self)
+extern "C" void SaveAgentWidget_Prepare(Obj_4415A0* self)
 {
     Net_4415A0* net = &D_0055A830;
     if (!D_0055A830.impl->f59F) {
-        if (!func_00441780()) return;
+        if (!SaveAgentWidget_SpaceCheck()) return;
         if (!self->shown) {
             self->shown = 1;
             self->dlg = ShowDlg(D_004FFC04, 0, D_004C0448, D_004C0458, self, 0);
         }
-        if (!func_0040D740(net)) {
+        if (!MemCardWrap_MakeDirectory(net)) {
             int old = self->dlg;
             self->dlg = ShowDlg(D_004FFC04, 2, D_004C0468, D_004C04A8, self, 2);
             FrontEnd_ClosePopup(D_004FFC04, old);
@@ -55,12 +55,12 @@ extern "C" void func_004415A0(Obj_4415A0* self)
         if (self->mode != 4) {
             char* name = 0;
             if (self->mode != 0 && !other) name = (self->mode == 3) ? self->name : agent + 0x8AC;
-            if (func_004422D0(self->f50, name, 0)) {
+            if (SaveAgentWidget_FindSlotFile(self->f50, name, 0)) {
                 self->dlg = ShowDlg(D_004FFC04, 5, D_004C0448, D_004C0498, self, 1);
                 return;
             }
         }
-        func_00441370(self);
+        SaveAgentWidget_Save(self);
     }
 }
 

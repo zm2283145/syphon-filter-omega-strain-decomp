@@ -85,7 +85,7 @@ void Root_SetWorldPlacement(Root* r, Place* p);
 Scr* Gui_GetScreenStack(void);
 void ActorRender_Update(void* p, float t);
 void World_PhysicsTraversal(float t);
-void func_00341F00(Self* self); void func_003428D0(Self* self); void Fog_ComputeTerms(char* r);
+void GuiAgentModify_DrawModelCallback(Self* self); void GuiAgentModify_CameraApproach(Self* self); void Fog_ComputeTerms(char* r);
 }
 
 #define SLOT(i) ((Slot*)(D_005381F0 + (i) * 0x110))
@@ -269,7 +269,7 @@ static inline void SetCol(Fog* g, float r, float gg, float b)
     g->ci[3] = 0x80;
 }
 
-extern "C" void func_00341F00(Self* self)
+extern "C" void GuiAgentModify_DrawModelCallback(Self* self)
 {
     M view;
     M r2;
@@ -278,7 +278,7 @@ extern "C" void func_00341F00(Self* self)
     M mm;
     int saved;
     func_0037A1E0(D_005381F0);
-    func_003428D0(self);
+    GuiAgentModify_CameraApproach(self);
     saved = D_005392D0;
     D_005392D0 = 0x95;
     { long long t = D_004BC1B0;

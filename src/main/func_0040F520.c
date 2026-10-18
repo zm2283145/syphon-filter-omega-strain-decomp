@@ -19,7 +19,7 @@ void Tree_Begin(Iter* out, Tree* t) {
 }
 
 /* Clears the global tree g_MotionManager if it exists. */
-void func_0040F540(void) {
+void World_ClearPendingIfLoaded(void) {
     Tree* t = g_MotionManager;
 
     if (t != 0) {

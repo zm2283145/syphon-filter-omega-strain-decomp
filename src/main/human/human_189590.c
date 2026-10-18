@@ -47,7 +47,7 @@ static inline void Prio_(char* p, signed char k) {
     AnimPriority_Helper1(q);
     AnimPriority_Helper0(q, k, on);
 }
-void func_00189590(Act* a, signed char k) {
+void Actor_ClearAction(Act* a, signed char k) {
     switch (k) {
     case 0:
     case 1:

@@ -14,7 +14,7 @@
 /* Play a sound on a matching event. */
 extern "C" { char D_004A9C80[] = "GuiAgentCreate"; }
 extern "C" { char D_004A9C90[] = "AGENTNEW"; }
-DEFINE_EVENT_SOUND_CHECK(func_00292820, D_004A9C80, D_004A9C90)
+DEFINE_EVENT_SOUND_CHECK(GuiAgentSave_HandleInput, D_004A9C80, D_004A9C90)
 #pragma pop /* merge_units */
 /* merge_units: end func_00292820 */
 
@@ -40,7 +40,7 @@ extern void GuiStack_SwapScreens(void* mgr, int arg, void* res);
 
 
 /* Looks up the mode-dependent resource and hands it to the manager. */
-void func_002928E0(int arg) {
+void GuiAgentSave_SaveDone(int arg) {
     void* res;
     if (D_004FFC04->altMode) {
         res = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiCommandCenter", "CMDCENTR");
@@ -71,7 +71,7 @@ int GuiSaveAgentWidget_HandleEvent(...);
 int GuiSaveAgentWidget_OnEvent(...);                                
 extern char D_004A9870;
 }
-extern "C" int func_00292980(char * arg0, void **arg1, int arg2) {
+extern "C" int GuiAgentSave_HandleEvent(char * arg0, void **arg1, int arg2) {
     void **var_s0;
 
     var_s0 = arg1;

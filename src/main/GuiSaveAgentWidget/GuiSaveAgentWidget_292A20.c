@@ -13,7 +13,7 @@
 
 /* Refresh a screen label text. */
 extern "C" { char D_004A9D08[] = "MC_SAVETITLE"; }
-DEFINE_LABEL_TEXT_REFRESH(func_00292A20, D_004A9D08)
+DEFINE_LABEL_TEXT_REFRESH(GuiAgentSave_Wake, D_004A9D08)
 #pragma pop /* merge_units */
 /* merge_units: end func_00292A20 */
 

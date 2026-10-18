@@ -37,7 +37,7 @@ int GuiCharacterDisplay_IsType(void* a0, const char* s) { return strcmp("GuiChar
 
 extern char D_004DE670[];   /* GuiCharacterDisplay vtable */
 extern int GuiWidget_Draw(GuiWidget* self);
-extern int func_0041EFA0(GuiWidget* self);
+extern int GuiWidget_BaseWake(GuiWidget* self);
 extern void GuiWidget_ctor(GuiWidget* self);
 
 /* GuiCharacterDisplay vtable slot 10: base call, then the optional callback. */
@@ -50,7 +50,7 @@ void GuiCharacterDisplay_Draw(GuiCharacterDisplay* self) {
 
 /* GuiCharacterDisplay vtable slot 5: forwards to the base widget. */
 int func_00326850(GuiWidget* self) {
-    return func_0041EFA0(self);
+    return GuiWidget_BaseWake(self);
 }
 
 /* GuiCharacterDisplay constructor. */

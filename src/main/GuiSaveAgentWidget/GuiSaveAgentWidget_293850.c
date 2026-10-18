@@ -17,7 +17,7 @@
 char D_004A9E50[] = "GuiAgentLoad";   /* "GuiAgentLoad" */
 
 /* Class name getter: "GuiAgentLoad". */
-char* func_00293850(void) {
+char* GuiAgentLoad_GetClassName(void) {
     return D_004A9E50;
 }
 #pragma pop /* merge_units */

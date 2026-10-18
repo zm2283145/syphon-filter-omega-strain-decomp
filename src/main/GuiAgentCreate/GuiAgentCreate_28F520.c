@@ -28,8 +28,8 @@ struct O28F520 { void* vt; char pad[0x5C]; V28F520* items[4]; char pad70[4]; V28
 extern "C" {
 extern char D_004DD1B0[];
 extern char D_0055DDA0[];
-void func_00403310(void* p);
-void func_0040F540(void);
+void AgentPartCache_Unlock(void* p);
+void World_ClearPendingIfLoaded(void);
 void GuiWidget_Destroy(void* p, int f);
 #if 0 /* merge_units */
 void operator_delete(void* p);
@@ -53,8 +53,8 @@ extern "C" O28F520* GuiAgentCreate_dtor(O28F520* self, short del)
             self->items[i]->v22(1);
             Del28F520(self->items[i], 0x16D);
         }
-        func_00403310(D_0055DDA0);
-        func_0040F540();
+        AgentPartCache_Unlock(D_0055DDA0);
+        World_ClearPendingIfLoaded();
         GuiWidget_Destroy(self, 0);
         if (del > 0)
             operator_delete(self);
@@ -199,12 +199,12 @@ void Skl_Load(void* a, char* b, char* c);
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void cGOBJ_ctor(void* p, int* a, int b, int* c);
 void Object_AttachTransform(void* p, void* t, int a);
-Model_F760* func_00393FF0(void* p, int* idx);
+Model_F760* DisplayActor_Construct(void* p, int* idx);
 float Math_SinThunk(float a);
 float Math_CosThunk(float a);
 void Mtx44_SetRotation(M4_F760* m, float a, float b, float c, float d, float e, float f, float g, float h, float i);
 unsigned short Appearance_GetPairCount(void* app);
-unsigned short func_004061B0(void* app, unsigned short n);
+unsigned short AgentPacking_AddBlankPairs(void* app, unsigned short n);
 void Appearance_ReorderParts(Man_F760* m);
 int Appearance_GetBodyKind(void* app);
 int Appearance_GetToneDigit(void* app);
@@ -224,8 +224,8 @@ void Model_HardMeshAttachPoints(Man_F760* m);
 void func_0038E030(Man_F760* m);
 void ActorModel_Setup(Man_F760* m, int flag);
 void Skel_ApplyScalePreset(Man_F760* m, int a);
-int func_00404690(void* db, __int128 key);
-int func_00401DE0(void* db, __int128 key);
+int AgentPartCache_FindMesh(void* db, __int128 key);
+int AgentPartCache_FindTexture(void* db, __int128 key);
 void GuiAgentCreate_UpdateCount(Self_F760* self);
 Self_F760* GuiAgentCreate_ctor(Self_F760* self);
 }
@@ -422,7 +422,7 @@ extern "C" Self_F760* GuiAgentCreate_ctor(Self_F760* p0)
             p = (Model_F760*)Alloc_F760(0x3030, 0x10A);
             if (p) {
                 int x[1]; x[0] = i;
-                p = func_00393FF0(p, x);
+                p = DisplayActor_Construct(p, x);
             }
             {
                 Model_F760* m;
@@ -447,7 +447,7 @@ extern "C" Self_F760* GuiAgentCreate_ctor(Self_F760* p0)
             }
             {
                 Man_F760* m = &self->models[i]->man;
-                m->cnt = func_004061B0(m->app, m->cnt);
+                m->cnt = AgentPacking_AddBlankPairs(m->app, m->cnt);
             }
             Appearance_ReorderParts(&self->models[i]->man);
             self->fD8 = Appearance_GetBodyKind(APP_F760(&self->models[i]->man));
@@ -514,8 +514,8 @@ extern "C" Self_F760* GuiAgentCreate_ctor(Self_F760* p0)
     }
     self->fED = D_0048B500[self->fD8][self->fEF].slot;
     self->fEE = D_0048B500[self->fD8][self->fEF].mode;
-    self->fE0 = func_00404690(D_0055DDA0, MANP_F760(self->f70)->e[(signed char)self->fED].a);
-    self->fE4 = func_00401DE0(D_0055DDA0, MANP_F760(self->f70)->e[(signed char)self->fED].b);
+    self->fE0 = AgentPartCache_FindMesh(D_0055DDA0, MANP_F760(self->f70)->e[(signed char)self->fED].a);
+    self->fE4 = AgentPartCache_FindTexture(D_0055DDA0, MANP_F760(self->f70)->e[(signed char)self->fED].b);
     GuiAgentCreate_UpdateCount(self);
     self->fC0 = 0;
     self->name = D_0056F9B0.name;

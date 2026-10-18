@@ -12,7 +12,7 @@
 typedef struct { char pad[0x68]; void* obj; } O4960;
 extern void Hud_GetLockColour(void* tmp);
 extern void IeElement_SetColour(void* obj, void* tmp);
-void func_00244960(O4960* self) {
+void Hud_SetLockMeter(O4960* self) {
     if (self->obj) {
         char tmp[16];
         Hud_GetLockColour(tmp);

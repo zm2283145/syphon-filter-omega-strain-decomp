@@ -92,7 +92,7 @@ void func_001912E0(Nd* n);
 void func_001912C0(It* it);
 }
 #pragma opt_propagation off
-extern "C" void func_001E1F10(Nd* self, V4* pos)
+extern "C" void Root_SetBasePosition(Nd* self, V4* pos)
 {
     { Plc* d = &self->p; V4* dd = &d->pos; QC(dd, pos); }
     if (self->bB0) {

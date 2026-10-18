@@ -20,12 +20,12 @@ extern void GuiWidget_FocusPrev();
 extern void GuiWidget_FocusNext();
 extern void GuiWidget_FocusLast();
 extern void GuiWidget_FocusFirst();
-extern void func_0041E230();
-extern void func_0041E2B0();
-extern void func_0041E330();
+extern void GuiWidget_BubbleActivate();
+extern void GuiWidget_BubbleType1();
+extern void GuiWidget_BubbleType0();
 extern void GuiWidget_Draw();
-extern void func_0041F070();
-extern void func_0041F080();
+extern void GuiWidget_ClearFlag4();
+extern void GuiWidget_SetFlag4();
 extern void GuiWidget_Deinit();
 extern void func_0041F210();
 extern void * const D_004DDC20[];
@@ -56,4 +56,4 @@ O2AD920* func_002AD920(O2AD920* self, short del)
     }
     return self;
 }
-void * const D_004DDC20[32] = { (void*)0x0, (void*)0x0, (void*)func_002AD920, (void*)func_002ADF00, (void*)GuiWidget_Deinit, (void*)func_0041F080, (void*)func_0041F070, (void*)func_0033F110, (void*)func_0033F050, (void*)func_0041E330, (void*)func_0041E2B0, (void*)func_0033DA00, (void*)GuiWidget_Draw, (void*)func_0041E230, (void*)func_0033DE00, (void*)func_002ADAB0, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)func_002AD9D0, (void*)func_002AD9E0, (void*)func_00293890, (void*)func_0033CCA0, (void*)func_002ADE60, (void*)func_002ADE00, (void*)func_0033EE40, (void*)func_0033E410, (void*)func_0033E5B0, (void*)func_002ADA10, (void*)0x0 };
+void * const D_004DDC20[32] = { (void*)0x0, (void*)0x0, (void*)func_002AD920, (void*)func_002ADF00, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)func_0033F110, (void*)func_0033F050, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)func_0033DA00, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)func_0033DE00, (void*)func_002ADAB0, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)func_002AD9D0, (void*)func_002AD9E0, (void*)func_00293890, (void*)func_0033CCA0, (void*)func_002ADE60, (void*)func_002ADE00, (void*)func_0033EE40, (void*)func_0033E410, (void*)func_0033E5B0, (void*)func_002ADA10, (void*)0x0 };

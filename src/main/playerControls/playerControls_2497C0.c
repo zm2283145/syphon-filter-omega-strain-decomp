@@ -54,15 +54,15 @@ extern char D_004D9180[];
 Svc* Service_Lookup(void* a, void* b);
 void Event_Construct(void* m, void* type);
 void cMessage_dtor(void* m, int flags);
-void func_00244960(char* h, float f);
+void Hud_SetLockMeter(char* h, float f);
 void Hud_ShowThrowMarker(char* h, V* a, V* b);
 Item* WeaponInv_GetHeldItem(int inv);
 }
-extern "C" unsigned char func_002497C0(V* out, Obj* obj, Plr* p)
+extern "C" unsigned char Player_AimViewThrownPoint(V* out, Obj* obj, Plr* p)
 {
     M m = SubMtx(obj->sub);
     char* hud = D_004FFC2C;
-    func_00244960(hud, 0.0f);
+    Hud_SetLockMeter(hud, 0.0f);
     V a;
     unsigned char r = 0;
     a.y = 1.5f; a.w = 1.0f; a.x = 0.0f; a.z = 0.0f;
@@ -163,9 +163,9 @@ extern "C" Hit_249B10* PlayerInput_AimViewLock(int a0, int a1, Pl_249B10* p)
     show = pr.kind == 2 && !IsKind23(pr.hit);
     h = D_004FFC2C;
     if (pr.kind == 0)
-        func_00244960(h, 1.0f);
+        Hud_SetLockMeter(h, 1.0f);
     else
-        func_00244960(h, 0.0f);
+        Hud_SetLockMeter(h, 0.0f);
     if (show) {
         int* idp = &((HitData_249B10*)pr.hit)->id;
         Hud_ShowCallout(h, idp, 0.1f, 1.0f, Loc_LookupText(D_004A75B8), 0, 0, 0);

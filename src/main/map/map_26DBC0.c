@@ -69,13 +69,13 @@ int IeElement_Create(int h);
 void IeElement_SetColour(int h, char* name);
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void HudTracker_Construct(Obj26DBC0* o, int h, char* p);
-void func_0026D040(float t, Self26DBC0* self);
-void func_0026D940(Self26DBC0* self);
-void func_003FA380(char* p, int n);
-void func_0026C570(Self26DBC0* self);
+void HudMap_UpdateCamera(float t, Self26DBC0* self);
+void HudMap_AddPlayerCallouts(Self26DBC0* self);
+void HudTicker_GetLevel(char* p, int n);
+void HudMap_Commit(Self26DBC0* self);
 }
 
-extern "C" void func_0026DBC0(Self26DBC0* self)
+extern "C" void HudMap_Open(Self26DBC0* self)
 {
     int h;
     Holder26DBC0* hd;
@@ -99,8 +99,8 @@ extern "C" void func_0026DBC0(Self26DBC0* self)
         }
         self->xC = o;
     }
-    func_0026D040(0.0f, self);
-    func_0026D940(self);
+    HudMap_UpdateCamera(0.0f, self);
+    HudMap_AddPlayerCallouts(self);
     c = D_004FFC2C;
     D_004FF030 = c->x620;
     D_004FF038 = c->x624;
@@ -116,8 +116,8 @@ extern "C" void func_0026DBC0(Self26DBC0* self)
         t.z = 0.25f;
         *(V3_26DBC0*)&c->x614 = t;
     }
-    func_003FA380(c->x100, 2);
-    func_0026C570(self);
+    HudTicker_GetLevel(c->x100, 2);
+    HudMap_Commit(self);
     self->x64 = 0;
     self->x60 = self->x64;
     self->x94 = 0;

@@ -61,7 +61,7 @@ typedef struct { char p0[0x22]; unsigned short frames; } Anim3D2190;
 typedef struct { char p0[0x44]; Anim3D2190* anim; char p48[4]; int frame; char p50[0x10]; signed char f60; signed char f61; } Tex3D2190;
 typedef struct { int idx; char p4[0x10]; unsigned int count; char p18[0x10]; int cur; } Ent3D2190;
 typedef struct { char p0[8]; Tex3D2190** list; } Mgr3D2190;
-extern int func_00379740(int, int);
+extern int Tex_GetRecord(int, int);
 extern int func_003797D0(char*);
 #if 0 /* merge_units */
 extern int func_003D20F0(int*, int);
@@ -127,7 +127,7 @@ int db;
     while (func_003D20F0(it, func_003D2170(e, a)) != 0) {
         ent = *func_003D2160(it);
         db = func_003797D0(D_005381F0);
-        if (strcmp(func_003D2140(func_00379740(db, func_003D2150(ent))), name) == 0) {
+        if (strcmp(func_003D2140(Tex_GetRecord(db, func_003D2150(ent))), name) == 0) {
             found = ent;
             break;
         }
@@ -231,7 +231,7 @@ int db;
     while (func_003D20F0(it, func_003D2170(e, a)) != 0) {
         ent = *func_003D2160(it);
         db = func_003797D0(D_005381F0);
-        if (strcmp(func_003D2140(func_00379740(db, func_003D2150(ent))), name) == 0) {
+        if (strcmp(func_003D2140(Tex_GetRecord(db, func_003D2150(ent))), name) == 0) {
             found = ent;
             break;
         }

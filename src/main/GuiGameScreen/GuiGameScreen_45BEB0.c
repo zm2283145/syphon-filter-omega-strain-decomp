@@ -19,12 +19,12 @@
 
 extern int GuiArrayWidget_Select(GuiChoiceList* list, int a1, int index);
 
-void func_0045BEB0(GuiGameScreen* self, int value) {
+void GuiGameScreen_SetMenuReceiver(GuiGameScreen* self, int value) {
     self->unkEC = value;
 }
 
 /* Forwards a valid choice index (0 < index < count) to the choice list. */
-void func_0045BEC0(GuiGameScreen* self, int index) {
+void GuiGameScreen_SelectMenuRow(GuiGameScreen* self, int index) {
     if (self->menu != 0 && index > 0 && index < self->choices->count) {
         GuiArrayWidget_Select(self->choices, 0, index);
     }

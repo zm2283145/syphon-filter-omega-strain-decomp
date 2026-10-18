@@ -18,7 +18,7 @@ static inline void SetIcon(char* self, char* w) {
     else F_(self, 0x4C, int) = F_(w, 0x13C, int);
 }
 
-extern "C" void func_00441060(char* self, int id) {
+extern "C" void GuiWeaponDisplay_Set(char* self, int id) {
     char* w;
     char* t;
     int cur;

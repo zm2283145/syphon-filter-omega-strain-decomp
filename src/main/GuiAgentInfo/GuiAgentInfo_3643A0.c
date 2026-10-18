@@ -32,7 +32,7 @@ extern "C" {
 char * Mem_Alloc(...);                      
 int Object_AttachTransform(...);           
 int cGOBJ_ctor(...);              
-char * func_00393FF0(...);                 
+char * DisplayActor_Construct(...);                 
 int GuiWidget_Init(...);                                  
 extern char D_004BBA20;
 extern char D_004DA470;
@@ -68,7 +68,7 @@ extern "C" void func_003643A0(char * arg0) {
     }
     if (var_s1 != NULL) {
         x4C[0] = 0;
-        var_s1 = (char *)(func_00393FF0(var_s1, x4C));
+        var_s1 = (char *)(DisplayActor_Construct(var_s1, x4C));
     }
     F_(arg0, 0x48, int) = (int)(var_s1);
     memset(arg0 + 0xA0, 0, 0x440);

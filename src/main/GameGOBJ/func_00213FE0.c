@@ -3,7 +3,7 @@ typedef struct { char pad0[0x68]; int x68; char pad6C[0x98 - 0x6C]; int x98; cha
 typedef struct { char pad0[0xEC]; int nDoors; Door_00213FE0** doors; char padF4[0x128 - 0xF4]; St_00213FE0* st; } Lift_00213FE0;
 #pragma opt_strength_reduction off
 #pragma opt_unroll_loops off
-unsigned char func_00213FE0(Lift_00213FE0* l)
+unsigned char cElevatorGOBJ_FloorExtrasOpen(Lift_00213FE0* l)
 {
     int i;
     int floor = l->st->floor;

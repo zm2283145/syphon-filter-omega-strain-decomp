@@ -43,7 +43,7 @@ extern "C" {
     void FrontEnd_ClosePopup(void*,int);
     char*Loc_LookupText(const char*);
     void GuiTextWidget_SetText(void*,const char*,int);
-    void func_00293650();
+    void GuiAgentSave_CardWaitPoll();
     extern char D_0055A830[];
     extern void(*D_0055A838)();
     extern void*D_004FFC04;
@@ -89,7 +89,7 @@ extern "C" void AgentOpen_BuildSlotList(GuiSaveAgentWidget*self) {
                 do {
                     if(!data[j]) {
                         if(!popup) {
-                            D_0055A838=func_00293650;
+                            D_0055A838=GuiAgentSave_CardWaitPoll;
                             popup=1;
                             popupId=FrontEnd_OpenPopup(D_004FFC04,0,D_004A9D80,D_004A9D90,self,0);
                         }
@@ -183,7 +183,7 @@ DEFINE_BUF_HOLDER_DTOR(func_00293530)
  */
 
 
-extern void func_002CC260(int, int);
+extern void App_CardWaitPoll(int, int);
 
 int* func_00293620(PtrVec* v, int i) {
     return v->data + i;
@@ -196,8 +196,8 @@ Rel* func_00293630(Rel* r) {
     return r;
 }
 
-void func_00293650(void) {
-    func_002CC260(0, 0);
+void GuiAgentSave_CardWaitPoll(void) {
+    App_CardWaitPoll(0, 0);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00293620 */

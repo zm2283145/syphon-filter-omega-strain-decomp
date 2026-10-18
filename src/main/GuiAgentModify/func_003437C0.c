@@ -16,7 +16,7 @@ extern char D_0055DDA0[];
 extern int func_004027E0(void *t, __int128 key);
 extern void func_004022E0(void *t, __int128 key, E *e, short *a, short *b, unsigned char u, signed char s);
 
-void func_003437C0(O *o, int idx)
+void GuiAgentModify_AdvancePatchA(O *o, int idx)
 {
     Key k;
     char *lo, *hi, *b;

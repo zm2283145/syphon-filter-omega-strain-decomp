@@ -37,7 +37,7 @@ extern void ParticleInst_Draw(void* obj, int key, Mtx235A00* m);
 #pragma push
 #pragma opt_rotateloops off
 #pragma opt_loop_invariants off
-void func_00235A00(Fx235A00* self) {
+void SmokeField_Draw(Fx235A00* self) {
     ListIt235A00 it;
     ListIt235A00 first;
     ListIt235A00 last;

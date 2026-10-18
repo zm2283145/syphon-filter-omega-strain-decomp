@@ -524,7 +524,7 @@ func_0011B278 (UDWtype u, UDWtype v)
    `.set nomove` reproduces that. The EE soft-float libcalls are aliased to their retail functions. */
 __asm__(".set nomove\n"
         "litodp = func_0011C7A0\n"
-        "dpmul = func_0011C268\n"
+        "dpmul = SoftFloat_DoubleMultiply\n"
         "dpadd = SoftFloat_DoubleAdd");
 typedef float SFtype;
 typedef double DFtype;

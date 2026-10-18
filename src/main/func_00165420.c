@@ -6,7 +6,7 @@ extern Cfg_16* D_004FFD2C;
 const float D_004C1FC8[2] = { 191.25f, 0.0f };
 extern int D_005383D4;
 extern int D_005383C0;
-extern void func_0037E320(void* p);
+extern void Renderer_Teardown(void* p);
 extern void Renderer_Init(void* p, int w, int h, int a, int b, int mode, int c, int d);
 /* Selects display resolution and refresh settings for a video mode. */
 void Options_SetVideoMode(Disp_16* d, unsigned char mode)
@@ -29,7 +29,7 @@ void Options_SetVideoMode(Disp_16* d, unsigned char mode)
         break;
     }
     d->mode = mode;
-    func_0037E320(D_005381F0);
+    Renderer_Teardown(D_005381F0);
     Renderer_Init(D_005381F0, d->width, d->height, 0x20, 0x10, d->mode, 0xFA0, 0x1F4);
     D_005383D4 = d->rate;
     D_005383C0 = (unsigned char)(int)((*(float*)D_004C1FC8) * D_004FFD2C->scale);

@@ -6,18 +6,18 @@ extern "C" void GuiWidget_FocusPrev();
 extern "C" void GuiWidget_FocusNext();
 extern "C" void GuiWidget_FocusLast();
 extern "C" void GuiWidget_FocusFirst();
-extern "C" void func_0041E230();
-extern "C" void func_0041E2B0();
-extern "C" void func_0041E330();
+extern "C" void GuiWidget_BubbleActivate();
+extern "C" void GuiWidget_BubbleType1();
+extern "C" void GuiWidget_BubbleType0();
 extern "C" void GuiWidget_Update();
-extern "C" void func_0041EBF0();
+extern "C" void GuiWidget_BaseSleep();
 extern "C" void GuiWidget_OnEvent();
-extern "C" void func_0041F070();
-extern "C" void func_0041F080();
+extern "C" void GuiWidget_ClearFlag4();
+extern "C" void GuiWidget_SetFlag4();
 extern "C" void func_0041F210();
 extern "C" void func_0043D720();
 extern "C" void func_0043D730();
-extern "C" void func_0043D8B0();
+extern "C" void GuiMultiLineText_Draw();
 extern "C" void MLTextWidget_Teardown();
 extern "C" void MLTextWidget_Vt07();
 extern "C" void MLTextWidget_Setup();
@@ -45,4 +45,4 @@ extern "C" S_E4C0* MLTextWidget_dtor(S_E4C0* self, short flag)
     }
     return self;
 }
-void * const D_004E1040[24] = { (void*)0x0, (void*)0x0, (void*)MLTextWidget_dtor, (void*)MLTextWidget_Setup, (void*)MLTextWidget_Teardown, (void*)func_0041F080, (void*)func_0041F070, (void*)MLTextWidget_Vt07, (void*)func_0041EBF0, (void*)func_0041E330, (void*)func_0041E2B0, (void*)func_00293950, (void*)func_0043D8B0, (void*)func_0041E230, (void*)GuiWidget_Update, (void*)GuiWidget_OnEvent, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)func_0043D720, (void*)func_0043D730, (void*)0x0 };
+void * const D_004E1040[24] = { (void*)0x0, (void*)0x0, (void*)MLTextWidget_dtor, (void*)MLTextWidget_Setup, (void*)MLTextWidget_Teardown, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)MLTextWidget_Vt07, (void*)GuiWidget_BaseSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)func_00293950, (void*)GuiMultiLineText_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiWidget_OnEvent, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)func_0043D720, (void*)func_0043D730, (void*)0x0 };

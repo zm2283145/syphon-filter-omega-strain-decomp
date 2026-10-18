@@ -21,7 +21,7 @@ extern char D_004A9870[];
 int sprintf(char* buf, const char* fmt, ...);
 void* GuiWidget_FindChildBySubstring(Self_002A8410* self, char* name);
 void* GuiWidget_FindChildByName(Self_002A8410* self, char* name);
-void func_0041C110(W_002A8410* w, int a);
+void GuiTextWidget_SetB74(W_002A8410* w, int a);
 void GuiWidget_Init(Self_002A8410* self);
 }
 static inline W_002A8410* FindAs_002A8410(Self_002A8410* self, char* name, char* type)
@@ -46,7 +46,7 @@ extern "C" void GuiMessageBox_Init(Self_002A8410* self)
             self->rows[i].b = FindAs_002A8410(self, buf, D_004A7520);
         }
         if (i == 1 && self->rows[i].b)
-            func_0041C110(self->rows[i].b, 0);
+            GuiTextWidget_SetB74(self->rows[i].b, 0);
         sprintf(buf, "%s%d", D_0048BB70, i);
         self->rows[i].c = FindAs_002A8410(self, buf, D_004A9870);
         sprintf(buf, "%s%d", D_0048BB78, i);

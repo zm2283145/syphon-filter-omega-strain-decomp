@@ -4856,5 +4856,22 @@
   "main/GuiRatings/func_0034D8C0": "cwps2-3.0b38",
   "main/func_00373590": "cwps2-3.0b38",
   "main/ska/func_003B7470": "cwps2-3.0b38",
-  "main/ska/func_003BA5F0": "cwps2-3.0b38"
+  "main/ska/func_003BA5F0": "cwps2-3.0b38",
+  "lib/func_002FFE80": "ee-gcc2.96",
+  "lib/func_00304A98": "ee-gcc2.96",
+  "lib/func_003136D0": "ee-gcc2.96",
+  "lib/func_0031CDC0": "ee-gcc2.96",
+  "lib/func_002B6518": "ee-gcc2.96-G0",
+  "lib/func_00300330": "ee-gcc2.96-G0",
+  "lib/func_00315FC8": "ee-gcc2.96-G0",
+  "lib/func_00318720": "ee-gcc2.96-G0",
+  "main/npc/func_00151790": "cwps2-3.0b38",
+  "main/path/func_00161BC0": "cwps2-3.0b38",
+  "main/gameCamera/func_0017A1E0": "cwps2-3.0b38",
+  "main/Loader/func_001C3C50": "cwps2-3.0b38",
+  "main/func_001EEBD0": "cwps2-3.0b38",
+  "main/backpack/func_002561D0": "cwps2-3.0b38",
+  "main/taser/func_00265910": "cwps2-3.0b38",
+  "main/func_0027A370": "cwps2-3.0b38",
+  "main/GuiScoresEquip/func_0035B390": "cwps2-3.0b38"
 }

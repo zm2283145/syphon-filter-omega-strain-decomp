@@ -9,8 +9,8 @@ This is the working state and the routine for whoever continues this project
 
 | | |
 |---|---|
-| Functions matched | 13,595 of 14,331 |
-| Code matched | 80.56% |
+| Functions matched | 13,597 of 14,331 |
+| Code matched | 80.58% |
 | Data matched | 99.92% |
 | Full build | reproduces the retail executable byte for byte |
 

@@ -17,7 +17,7 @@ extern char D_004A97A8[];
 void* Gui_GetScreenList(void);
 void* GuiManager_FindOrLoad(void* a, char* b, char* c);
 char* String_CStr(Str_0028A180* s);
-char* func_0033CE30(S_0028A180* self, int a, int b, int c, int d, int e);
+char* GuiScreen_GetLobbyString(S_0028A180* self, int a, int b, int c, int d, int e);
 void GuiKeyboard_Open(void* kb, char* title, char* text, S_0028A180* self, int a, int b, int c);
 }
 extern "C" void func_0028A180(S_0028A180* self)
@@ -25,7 +25,7 @@ extern "C" void func_0028A180(S_0028A180* self)
     void* kb = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004A9798, D_004A97A8);
     if (kb) {
         char* text = String_CStr(&self->p94->name);
-        GuiKeyboard_Open(kb, func_0033CE30(self, 0x28, 0, 0, 0, 0), text, self, 0xF, 0x22, 1);
+        GuiKeyboard_Open(kb, GuiScreen_GetLobbyString(self, 0x28, 0, 0, 0, 0), text, self, 0xF, 0x22, 1);
     }
 }
 #pragma pop /* merge_units */
@@ -45,9 +45,9 @@ char* String_CStr(Str_0028A230* s);
 #define String_CStr(a0) (String_CStr((Str_0028A180 *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-char* func_0033CE30(S_0028A230* self, int a, int b, int c, int d, int e);
+char* GuiScreen_GetLobbyString(S_0028A230* self, int a, int b, int c, int d, int e);
 #endif /* merge_units */
-#define func_0033CE30(a0, a1, a2, a3, a4, a5) (func_0033CE30((S_0028A180 *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
+#define GuiScreen_GetLobbyString(a0, a1, a2, a3, a4, a5) (GuiScreen_GetLobbyString((S_0028A180 *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
 
 #if 0 /* merge_units */
 void GuiKeyboard_Open(void* kb, char* title, char* text, S_0028A230* self, int a, int b, int c);
@@ -64,13 +64,13 @@ extern "C" void func_0028A230(S_0028A230* self)
         void* kb = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004A9798, D_004A97A8);
         if (kb) {
             char* text = String_CStr(&self->p8C->name);
-            GuiKeyboard_Open(kb, func_0033CE30(self, 0x27, 0, 0, 0, 0), text, self, 0xF, 0x21, 1);
+            GuiKeyboard_Open(kb, GuiScreen_GetLobbyString(self, 0x27, 0, 0, 0, 0), text, self, 0xF, 0x21, 1);
         }
     } else {
         Str_0028A230 a;
         Str_0028A230 b;
-        String_CtorCStr_13B480(&a, func_0033CE30(self, 0x29, 0, 0, 0, 0));
-        String_CtorCStr_13B480(&b, func_0033CE30(self, 0x2A, 0, 0, 0, 0));
+        String_CtorCStr_13B480(&a, GuiScreen_GetLobbyString(self, 0x29, 0, 0, 0, 0));
+        String_CtorCStr_13B480(&b, GuiScreen_GetLobbyString(self, 0x2A, 0, 0, 0, 0));
         {
             char* tb = String_CStr(&b);
             FrontEnd_OpenPopup(D_004FFC04, 2, String_CStr(&a), tb, self, 0x25);
@@ -80,7 +80,7 @@ extern "C" void func_0028A230(S_0028A230* self)
     }
 }
 #undef String_CStr /* merge_units */
-#undef func_0033CE30 /* merge_units */
+#undef GuiScreen_GetLobbyString /* merge_units */
 #undef GuiKeyboard_Open /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0028A230 */
@@ -154,12 +154,12 @@ extern int D_004FFC04;
 #endif /* merge_units */
 #define D_004FFC04 (*(int*)&D_004FFC04) /* merge_units */
 
-extern int func_002CA160(int);
+extern int FrontEnd_FreePolicyLists(int);
 
-/* If the pending flag is set, call func_002CA160 on the global at D_004FFC04 and clear it. */
+/* If the pending flag is set, call FrontEnd_FreePolicyLists on the global at D_004FFC04 and clear it. */
 void func_0028A430(Unk28A430* self) {
     if (self->pending != 0) {
-        func_002CA160(D_004FFC04);
+        FrontEnd_FreePolicyLists(D_004FFC04);
         self->pending = 0;
     }
 }
@@ -170,7 +170,7 @@ void func_0028A430(Unk28A430* self) {
 /* merge_units: begin func_0028A470 */
 #pragma push /* merge_units */
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
-int func_002CA350(int);                               
+int FrontEnd_DownloadPolicies(int);                               
 #if 0 /* merge_units */
 extern int D_004FFC04;
 #endif /* merge_units */
@@ -180,7 +180,7 @@ extern int D_004FFC04;
 #pragma opt_common_subs off
 void func_0028A470(int arg0) {
     if (F_(arg0, 0x80, unsigned char) == 0) {
-        func_002CA350(D_004FFC04);
+        FrontEnd_DownloadPolicies(D_004FFC04);
         F_(arg0, 0x80, unsigned char) = 1U;
     }
 }

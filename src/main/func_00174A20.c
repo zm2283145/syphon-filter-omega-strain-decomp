@@ -13,7 +13,7 @@ extern "C" void func_00174A20(V_00174A20* v, unsigned int n, const int* val)
     if (n) {
         if (n > 0x1800000) {
             func_00123BE8(D_00489738->stream, D_0049CA60);
-            func_00121B60();
+            Libc_Abort();
         }
         int** pdata = &v->data;
         *pdata = (int*)TStr_Alloc(n * sizeof(int), D_0049CAD8, 0x5C);

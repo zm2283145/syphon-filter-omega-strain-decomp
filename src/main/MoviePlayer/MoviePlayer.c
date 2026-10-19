@@ -33,7 +33,7 @@ extern void func_003F5D00(void* obj);
 extern void func_003F6EB0(void* obj);
 extern void func_003F78F0(void* part);
 extern void func_003A6C60(void);
-extern void func_00412320(void* obj);
+extern void SubtitleTrack_Destroy(void* obj);
 
 /* Shuts the subsystem down: stops the device, releases semaphores and handlers, clears the DMA flag. */
 void func_003F8390(Sys3F83* sys) {
@@ -51,7 +51,7 @@ void func_003F8390(Sys3F83* sys) {
     func_003F78F0(sys->part58);
     *(volatile unsigned int*)0x1000E000 &= ~2;
     func_003A6C60();
-    func_00412320(D_00571CF0);
+    SubtitleTrack_Destroy(D_00571CF0);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003F8390 */

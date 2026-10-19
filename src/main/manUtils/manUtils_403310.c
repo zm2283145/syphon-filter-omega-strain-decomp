@@ -80,7 +80,7 @@ int FileMan_FindMember(void*);
 int FileMan_GetSize(void*);
 int FileMan_LoadMemberSync(void*, char**, int);
 void func_0036DEC0(void*);
-int func_00128C68(char*, char*, ...);
+int Libc_Sscanf(char*, char*, ...);
 }
 inline int AtEnd(char* a, char* b) { return a >= b; }
 struct SortEnt { char name[16]; int a, b, c, d, e, f, g, h; };
@@ -122,7 +122,7 @@ extern "C" void Appearance_LoadPartSortTable(App* self, char* path) {
   if (c == '\r') {
    dst[-1] = 0;
    src++;
-   int r = func_00128C68(base, D_004BE800, self->ents[count].name, &self->ents[count].a, &self->ents[count].b, &self->ents[count].c, &self->ents[count].d, &self->ents[count].e, &self->ents[count].f, &self->ents[count].g, &self->ents[count].h);
+   int r = Libc_Sscanf(base, D_004BE800, self->ents[count].name, &self->ents[count].a, &self->ents[count].b, &self->ents[count].c, &self->ents[count].d, &self->ents[count].e, &self->ents[count].f, &self->ents[count].g, &self->ents[count].h);
    if (r == 9) { count++; }
    else if (r != -1) { *(__int128*)self->ents[count].name = 0; }
    dst = base;

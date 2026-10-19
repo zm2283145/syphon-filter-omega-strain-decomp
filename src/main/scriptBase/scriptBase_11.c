@@ -35,7 +35,7 @@ extern char D_00554F60[];
 extern char D_004BD3D8[];
 extern char* strrchr(const char* s, int c);
 extern char* strncpy(char* d, const char* s, unsigned int n);
-extern char* func_00128F58(char* d, const char* s);
+extern char* Libc_Strcat(char* d, const char* s);
 char* func_003D9280(char* path)
 {
     char* name;
@@ -50,13 +50,13 @@ char* func_003D9280(char* path)
         len = name - s;
         strncpy(D_00554F60, s, len - 2);
         D_00554F60[len - 2] = 0;
-        func_00128F58(D_00554F60, D_004BD3D8);
+        Libc_Strcat(D_00554F60, D_004BD3D8);
     } else {
         name = path;
         D_00554F60[0] = 0;
     }
     if (*name == 'e' && (D_00499C71[name[1]] & 1)) name++;
-    func_00128F58(D_00554F60, name);
+    Libc_Strcat(D_00554F60, name);
     return D_00554F60;
 }
 #pragma pop /* merge_units */

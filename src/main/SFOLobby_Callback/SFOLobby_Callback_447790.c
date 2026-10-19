@@ -12,7 +12,7 @@
 #pragma cplusplus on
 extern "C" {
 int String_Copy(char *, char *);
-int func_00128C68(char *, char *, ...);
+int Libc_Sscanf(char *, char *, ...);
 void LobbyArray_SetRefreshing(char *, int);
 void LobbyArray_Copy(int, char *);
 int LobbyArray_Append(char *, void *);
@@ -73,7 +73,7 @@ extern "C" void func_00447790(int d0, int d1, int d2, char *arg3)
                     i++;
                 }
                 ok = true;
-                if (func_00128C68(buf, D_004C0CF0, name, &n1, &n2, &n3, &n4) != 5)
+                if (Libc_Sscanf(buf, D_004C0CF0, name, &n1, &n2, &n3, &n4) != 5)
                     ok = false;
                 if (name[0] != 0) {
                     p = name;

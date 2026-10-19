@@ -305,7 +305,7 @@ int func_00452FD0(LobbyMain* self) {
     return self->state == 5;
 }
 
-int func_00452FE0(LobbyMain* self) {
+int SFOLobby_GetDnasResult(LobbyMain* self) {
     return self->unk2570;
 }
 #pragma pop /* merge_units */

@@ -34,7 +34,7 @@ const unsigned int D_004A9730[4] = { 0x0, 0x0, 0x0, 0x0 };
 void* DME_GetLobby(void);
 char* String_CStr(void* s);
 int strlen(const char* s);
-char* func_0033CE30(S_00288E90* self, unsigned char a, char* b, int c, int d, int e);
+char* GuiScreen_GetLobbyString(S_00288E90* self, unsigned char a, char* b, int c, int d, int e);
 void String_CtorCStr_13B480(Str_00288E90* s, const char* c);
 int FrontEnd_OpenPopup(void* ui, int a, char* b, char* c, S_00288E90* d, int e);
 void String_Dtor(Str_00288E90* s, int flags);
@@ -50,8 +50,8 @@ extern "C" void func_00288E90(S_00288E90* self)
     if (!String_CStr(self->p94->s48) || !strlen(String_CStr(self->p94->s48))) {
         Str_00288E90 a;
         Str_00288E90 b;
-        String_CtorCStr_13B480(&a, func_0033CE30(self, 0x20, 0, 0, 0, 0));
-        String_CtorCStr_13B480(&b, func_0033CE30(self, 0x8C, 0, 0, 0, 0));
+        String_CtorCStr_13B480(&a, GuiScreen_GetLobbyString(self, 0x20, 0, 0, 0, 0));
+        String_CtorCStr_13B480(&b, GuiScreen_GetLobbyString(self, 0x8C, 0, 0, 0, 0));
         {
             char* tb = String_CStr(&b);
             FrontEnd_OpenPopup(D_004FFC04, 2, String_CStr(&a), tb, 0, 0);
@@ -62,12 +62,12 @@ extern "C" void func_00288E90(S_00288E90* self)
     }
     {
         void* ui = D_004FFC04;
-        self->fA8 = FrontEnd_OpenPopup(ui, 0, ((char*)D_004A9730), func_0033CE30(self, 0x26, 0, 0, 0, 0), 0, 0);
+        self->fA8 = FrontEnd_OpenPopup(ui, 0, ((char*)D_004A9730), GuiScreen_GetLobbyString(self, 0x26, 0, 0, 0, 0), 0, 0);
     }
     pw = String_CStr(self->p94->s48);
     if ((unsigned char)func_00445B90(g, String_CStr(self->p8C->s48), pw)) {
         void* ui = D_004FFC04;
-        FrontEnd_OpenPopup(ui, 2, ((char*)D_004A9730), func_0033CE30(self, 0x25, 0, 0, 0, 0), self, 0x23);
+        FrontEnd_OpenPopup(ui, 2, ((char*)D_004A9730), GuiScreen_GetLobbyString(self, 0x25, 0, 0, 0, 0), self, 0x23);
     } else {
         int cb;
         int code;
@@ -90,8 +90,8 @@ extern "C" void func_00288E90(S_00288E90* self)
             Str_00288E90 c;
             Str_00288E90 d;
             S_00288E90* tgt;
-            String_CtorCStr_13B480(&c, func_0033CE30(self, 0x20, 0, 0, 0, 0));
-            String_CtorCStr_13B480(&d, func_0033CE30(self, code, String_CStr(self->p8C->s48), 0, 0, 0));
+            String_CtorCStr_13B480(&c, GuiScreen_GetLobbyString(self, 0x20, 0, 0, 0, 0));
+            String_CtorCStr_13B480(&d, GuiScreen_GetLobbyString(self, code, String_CStr(self->p8C->s48), 0, 0, 0));
             tgt = cb == -1 ? 0 : self;
             {
                 pw = String_CStr(&d);
@@ -139,13 +139,13 @@ void GuiTextWidget_SetText(void* w, char* s, int a);
 #endif /* merge_units */
 #define GuiTextWidget_SetText(a0, a1, a2) ((void)GuiTextWidget_SetText((a0), (a1), (a2))) /* merge_units */
 
-void func_002CA160(void* ui);
+void FrontEnd_FreePolicyLists(void* ui);
 void App_CardWaitPoll(void);
 int func_00442750(void* g, void* cb);
 #if 0 /* merge_units */
-char* func_0033CE30(S_002891D0* self, int a, int b, int c, int d, int e);
+char* GuiScreen_GetLobbyString(S_002891D0* self, int a, int b, int c, int d, int e);
 #endif /* merge_units */
-#define func_0033CE30(a0, a1, a2, a3, a4, a5) (func_0033CE30((S_00288E90 *)(a0), (unsigned char)(a1), (char *)(a2), (a3), (a4), (a5))) /* merge_units */
+#define GuiScreen_GetLobbyString(a0, a1, a2, a3, a4, a5) (GuiScreen_GetLobbyString((S_00288E90 *)(a0), (unsigned char)(a1), (char *)(a2), (a3), (a4), (a5))) /* merge_units */
 
 #if 0 /* merge_units */
 void String_CtorCStr_13B480(Str_002891D0* s, const char* c);
@@ -189,12 +189,12 @@ extern "C" void func_002891D0(S_002891D0* self)
     if (!g)
         return;
     ok = 1;
-    func_002CA160(D_004FFC04);
+    FrontEnd_FreePolicyLists(D_004FFC04);
     if (!func_00442750(g, (void*)App_CardWaitPoll)) {
         Str_002891D0 a;
         Str_002891D0 b;
-        String_CtorCStr_13B480(&a, func_0033CE30(self, 0x1F, 0, 0, 0, 0));
-        String_CtorCStr_13B480(&b, func_0033CE30(self, 0x88, 0, 0, 0, 0));
+        String_CtorCStr_13B480(&a, GuiScreen_GetLobbyString(self, 0x1F, 0, 0, 0, 0));
+        String_CtorCStr_13B480(&b, GuiScreen_GetLobbyString(self, 0x88, 0, 0, 0, 0));
         {
             char* tb = String_CStr(&b);
             FrontEnd_OpenPopup(D_004FFC04, 2, String_CStr(&a), tb, self, 0x1E);
@@ -226,7 +226,7 @@ extern "C" void func_002891D0(S_002891D0* self)
 #undef D_004FFC04 /* merge_units */
 #undef Loc_LookupText /* merge_units */
 #undef GuiTextWidget_SetText /* merge_units */
-#undef func_0033CE30 /* merge_units */
+#undef GuiScreen_GetLobbyString /* merge_units */
 #undef String_CtorCStr_13B480 /* merge_units */
 #undef String_CStr /* merge_units */
 #undef FrontEnd_OpenPopup /* merge_units */

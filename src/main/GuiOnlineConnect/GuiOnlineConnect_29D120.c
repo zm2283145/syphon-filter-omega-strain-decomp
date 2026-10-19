@@ -17,17 +17,17 @@ void GuiTextListWidget_Clear(L_0029D120* l);
 E_0029D120* LobbyArray_At(void* v, int i);
 void GuiTextListWidget_AddItem(L_0029D120* l, char* s, int i, int a);
 void GuiArrayWidget_Select(L_0029D120* l, int a, int b);
-void func_0029CBB0(S_0029D120* self, int a);
+void GuiOnlineConnect_ShowGroup(S_0029D120* self, int a);
 void SFOLobby_LeaveNetworkState(void* g);
 unsigned char func_00452FF0(void* g, int a);
-void func_002CA640(void* ui, int a);
-char* func_0033CE30(S_0029D120* self, int a, int b, int c, int d, int e);
+void FrontEnd_LeaveOnline(void* ui, int a);
+char* GuiScreen_GetLobbyString(S_0029D120* self, int a, int b, int c, int d, int e);
 void String_CtorCStr_13B480(Str_0029D120* s, const char* c);
 char* String_CStr(Str_0029D120* s);
 int FrontEnd_OpenPopup(void* ui, int a, char* b, char* c, S_0029D120* d, int e);
 void String_Dtor(Str_0029D120* s, int flags);
 }
-extern "C" void func_0029D120(S_0029D120* self)
+extern "C" void GuiOnlineConnect_ListConfigs(S_0029D120* self)
 {
     void* g = DME_GetLobby();
     if (!g)
@@ -47,7 +47,7 @@ extern "C" void func_0029D120(S_0029D120* self)
         }
         if (sel != -1)
             GuiArrayWidget_Select(self->pEC, 0, sel);
-        func_0029CBB0(self, 0);
+        GuiOnlineConnect_ShowGroup(self, 0);
     } else {
         unsigned char r;
         SFOLobby_LeaveNetworkState(g);
@@ -57,9 +57,9 @@ extern "C" void func_0029D120(S_0029D120* self)
             Str_0029D120 a;
             Str_0029D120 b;
             self->f88 = 3;
-            func_002CA640(D_004FFC04, 1);
-            String_CtorCStr_13B480(&a, func_0033CE30(self, 6, 0, 0, 0, 0));
-            String_CtorCStr_13B480(&b, func_0033CE30(self, r == 0x2F ? 8 : 0x83, 0, 0, 0, 0));
+            FrontEnd_LeaveOnline(D_004FFC04, 1);
+            String_CtorCStr_13B480(&a, GuiScreen_GetLobbyString(self, 6, 0, 0, 0, 0));
+            String_CtorCStr_13B480(&b, GuiScreen_GetLobbyString(self, r == 0x2F ? 8 : 0x83, 0, 0, 0, 0));
             {
                 char* tb = String_CStr(&b);
                 FrontEnd_OpenPopup(D_004FFC04, 5, String_CStr(&a), tb, self, 0);
@@ -70,7 +70,7 @@ extern "C" void func_0029D120(S_0029D120* self)
             void* ui;
             self->f88 = 4;
             ui = D_004FFC04;
-            FrontEnd_OpenPopup(ui, 2, D_004AABF0, func_0033CE30(self, 5, 0, 0, 0, 0), self, 0);
+            FrontEnd_OpenPopup(ui, 2, D_004AABF0, GuiScreen_GetLobbyString(self, 5, 0, 0, 0, 0), self, 0);
         }
     }
 }

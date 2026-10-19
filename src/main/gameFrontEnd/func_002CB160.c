@@ -22,7 +22,7 @@ extern char D_004FFC90[];
 extern char D_004ACF48[];
 void GuiCanvas_Destroy(void);
 void func_004139C0(void* p);
-void func_002C81D0(Self_002CB160* self);
+void FrontEnd_StopSplashThread(Self_002CB160* self);
 void Video_BeginFrame(void* p);
 void Mem_Free(int heap, void* p, char* file, int line);
 W_002CB160* App_GetInstance(void);
@@ -44,7 +44,7 @@ extern "C" void FrontEnd_TeardownGui(Self_002CB160* self)
         GuiCanvas_Destroy();
         func_004139C0(D_00571DC0);
         if (self->b310)
-            func_002C81D0(self);
+            FrontEnd_StopSplashThread(self);
         if (!self->b36) {
             int i;
             Obj_002CB160* p;

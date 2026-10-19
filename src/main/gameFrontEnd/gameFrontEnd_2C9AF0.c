@@ -54,7 +54,7 @@ extern void cMessage_dtor(EffectMsg* msg, int flags);
 #define cMessage_dtor(a0, a1) (cMessage_dtor((void *)(a0), (a1))) /* merge_units */
 
 
-void func_002C9AF0(char* self, unsigned char kind) {
+void FrontEnd_SetMusic(char* self, unsigned char kind) {
     EffectMsg msg;
     SoundRequest req;
     int target;
@@ -228,13 +228,13 @@ static inline void merge_flush_func_002C9EE0(void) {}
 extern "C" {
 extern signed char D_0051EF60;
 extern bool D_0051EF58;
-char* func_003CBA90(char* s);
+char* GameIni_GetString(char* s);
 int String_CompareNoCase(char* a, char* b);
 }
 extern "C" bool func_002CA070(void)
 {
     if (!D_0051EF60) {
-        bool eq = String_CompareNoCase(func_003CBA90("LOBBY_DISABLE_REGISTER"), "1") == 0;
+        bool eq = String_CompareNoCase(GameIni_GetString("LOBBY_DISABLE_REGISTER"), "1") == 0;
         D_0051EF60 = 1;
         D_0051EF58 = !eq;
     }

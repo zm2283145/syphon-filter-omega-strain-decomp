@@ -28,12 +28,12 @@ extern int Game_IsMultiplayer(void);
 extern int Global_ResetLevel(void);
 extern void Global_ResetStats(void);
 extern int Script_ClearSchedules_3DFB20(void);
-extern void func_0013A290(GameTimerService*);
+extern void Hud_ClearPda(GameTimerService*);
 extern int PlayerInput_ClosePickupMenu(int);
 extern int Backpack_RemoveAll(void);
-extern int func_0025A120(void);
-extern void func_002795A0(int);
-extern int func_003FA1E0(int);
+extern int AreaEffect_FinishAll(void);
+extern void DecalMgr_KillAll(int);
+extern int HudTicker_Reset(int);
 
 int Script_ResetLevel(void) {
     Global_ResetLevel();
@@ -47,15 +47,15 @@ int Global_ResetLevel(void) {
 
     PlayerInput_ClosePickupMenu((int)(D_004FFC0C + 0x50));
     Backpack_RemoveAll();
-    func_0025A120();
+    AreaEffect_FinishAll();
     agent = Agent_GetSelected((int)D_004FFB50, -1);
     AgentData_ResetMission(agent);
     svc = D_004FFC2C;
     svc->unk6DC = 0;
     svc->unk6E0 = 0xbf800000; /* -1.0f */
-    func_0013A290(D_004FFC2C);
-    func_003FA1E0((int)((char*)D_004FFC2C + 0x100));
-    func_002795A0(D_004FFC3C);
+    Hud_ClearPda(D_004FFC2C);
+    HudTicker_Reset((int)((char*)D_004FFC2C + 0x100));
+    DecalMgr_KillAll(D_004FFC3C);
     return Script_ClearSchedules_3DFB20();
 }
 

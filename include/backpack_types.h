@@ -52,7 +52,7 @@ typedef struct BackpackWorld {
     char* unkB8;                     /* 0xB8 */
 } BackpackWorld;
 
-/* Two-word element vector (8-byte entries) used by func_002564A0. */
+/* Two-word element vector (8-byte entries) used by HandleVec_PushBack. */
 typedef struct Pair {
     int a, b;
 } Pair;

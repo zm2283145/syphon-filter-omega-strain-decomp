@@ -9,9 +9,9 @@ extern char D_00506260[];
 extern char D_004DCF50[];
 extern char D_004DCF10[];
 void func_00282160(int* p);
-void func_00285590(void* t, int w);
-void func_0023E3D0(float f, void* o);
-void func_00286690(void* x);
+void cTank_SetEnemy(void* t, int w);
+void cNIEventOBJ_SetSpeedRecursive(float f, void* o);
+void cTank_Fire(void* x);
 void Event_Construct(M_00283910* m, void* type);
 void Event_Send(M_00283910* m, void* target, int flags);
 void cMessage_dtor(M_00283910* m, int flags);
@@ -41,12 +41,12 @@ extern "C" void func_00283910(M_00283910* p, T_00283910* t) {
     if (t) {
         switch (p->type) {
         case 0:
-            func_00285590(t, p->w);
+            cTank_SetEnemy(t, p->w);
             break;
         case 1: {
             float f = p->f;
             A_00283910* a = t->a;
-            func_0023E3D0(f, a);
+            cNIEventOBJ_SetSpeedRecursive(f, a);
             a->v67();
             if (t->x) t->x->obj->v68(1);
             if (D_005721C8 && Ok_00283910()) Send_00283910(t, 1, 0, f);
@@ -60,7 +60,7 @@ extern "C" void func_00283910(M_00283910* p, T_00283910* t) {
         case 3:
             if (t->x) {
                 t->x->b54 = 0;
-                func_00286690(t->x);
+                cTank_Fire(t->x);
             }
             break;
         case 4:

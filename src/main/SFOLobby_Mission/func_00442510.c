@@ -10,7 +10,7 @@ extern int func_004526D0(L442*, char*);
 extern int func_00452B40(L442*, char*);
 extern void func_0044E1A0(L442*, int);
 extern void SFOLobby_SetError(L442*, int, char*, int);
-int func_00442510(L442* l, int idx) {
+int SFOLobby_CheckMissionLobby(L442* l, int idx) {
     char buf[0x100];
     if (idx < 0 || !(idx < l->n58)) return 0;
     if (l->f26a8 != 2 || l->f1eb0 != idx || l->f1f38 != D_004976D0) {

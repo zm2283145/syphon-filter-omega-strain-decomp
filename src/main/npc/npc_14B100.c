@@ -25,7 +25,7 @@ typedef struct { float m[3][4]; } R_B160;
 typedef struct { __int128 q; } V_B160;
 typedef struct { float m[3][4]; V_B160 p; } M_B160;
 #pragma peephole off
-M_B160* func_0014B160(M_B160* self, R_B160* r, V_B160* p)
+M_B160* Mtx_SetRotationTranslation(M_B160* self, R_B160* r, V_B160* p)
 {
     self->m[0][0] = r->m[0][0];
     self->m[0][1] = r->m[0][1];

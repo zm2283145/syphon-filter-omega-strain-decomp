@@ -28,7 +28,7 @@ static inline int NonZero44E060(int v) { return v != 0; }
 #pragma bool off
 /* Sends request func_0046A0E8 for `arg` and waits for its reply (callback
  * func_00446B40 -> reply1D08); returns the reply, or 0 on failure. */
-char* func_0044E060(SFOLobby* s, int arg)
+char* SFOLobby_GetGameInfo(SFOLobby* s, int arg)
 {
     struct { char messageId[0x15]; char sessionKey[0x13]; int arg; } req;
     int t0;
@@ -210,9 +210,9 @@ void func_0044E340(SFOLobby * arg0) {
 extern int Net_ParseIPv4(char*);
 extern void Net_StartSessionSingleTry(void*);
 #if 0 /* merge_units */
-extern char* func_0044E060(SFOLobby*, int);
+extern char* SFOLobby_GetGameInfo(SFOLobby*, int);
 #endif /* merge_units */
-#define func_0044E060(a0, a1) (func_0044E060((a0), (a1))) /* merge_units */
+#define SFOLobby_GetGameInfo(a0, a1) (SFOLobby_GetGameInfo((a0), (a1))) /* merge_units */
 
 extern int func_00452F30(SFOLobby*, int, char*);
 extern int func_004505E0(SFOLobby*, char*);
@@ -267,11 +267,11 @@ static inline LobbyGame* FindGame(SFOLobby* s, int id) {
     }
 }
 
-/* Joins game id: refreshes it (func_0044E060), checks its status and the
+/* Joins game id: refreshes it (SFOLobby_GetGameInfo), checks its status and the
  * host's account state, publishes our player info, sends the join request
  * (reply callback func_0044E280) and waits for gotReply210, then starts the
  * session from the reply and enters state 10. Returns 1 on success. */
-int func_0044E430(SFOLobby* s, int id) {
+int SFOLobby_JoinGame(SFOLobby* s, int id) {
     JoinReq req;
     int wid;
     int type;
@@ -284,7 +284,7 @@ int func_0044E430(SFOLobby* s, int id) {
         SFOLobby_SetError(s, 0x33, D_004C0F00, 0x198);
         return 0;
     }
-    func_0044E060(s, id);
+    SFOLobby_GetGameInfo(s, id);
     g = FindGame(s, id);
     if (g == NULL) {
         SFOLobby_SetError(s, 0x33, D_004C0F00, 0x1A1);
@@ -377,7 +377,7 @@ int func_0044E430(SFOLobby* s, int id) {
     return 1;
 }
 #undef func_0044E280 /* merge_units */
-#undef func_0044E060 /* merge_units */
+#undef SFOLobby_GetGameInfo /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0044E430 */
 
@@ -432,7 +432,7 @@ extern char D_00585F89;
 
 
 #pragma opt_common_subs off
-int func_0044E960(char* self, int a1, int a2, int a3)
+int SFOLobby_CreateGame(char* self, int a1, int a2, int a3)
 {
     char buf[0x48];
     char id[8];

@@ -80,13 +80,13 @@ public:
 struct TgtAB0 { char pad[0x14]; float x; float y; };
 struct EntAB0 { TgtAB0* p; float x; float y; };
 struct SelfAB0 { ObjAB0* obj; void* own; EntAB0 e[2]; int n; float last; unsigned char on; };
-extern "C" int func_00376FF0(int* o, void** out, int max);
+extern "C" int Model_GetUvScrollRecords(int* o, void** out, int max);
 static inline float SignAB0(float v) {
     if (v < -0.1f) return -1.0f;
     else if (v > 0.1f) return 1.0f;
     else return 0.0f;
 }
-extern "C" unsigned char func_00287AB0(SelfAB0* s)
+extern "C" unsigned char cTankTread_Init(SelfAB0* s)
 {
     int* list = s->obj->GetModel()->list;
     int has = *list != 0;
@@ -94,7 +94,7 @@ extern "C" unsigned char func_00287AB0(SelfAB0* s)
         if (!s->on) {
             void* buf[2];
             int i;
-            s->n = func_00376FF0(list, buf, 2);
+            s->n = Model_GetUvScrollRecords(list, buf, 2);
             s->on = 1;
             for (i = 0; i < s->n; i++) {
                 EntAB0* e;

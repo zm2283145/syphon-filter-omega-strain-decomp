@@ -22,7 +22,7 @@ extern int D_00497788;
 static inline void SetA0(Cell* o, int v) { if (v != o->fA0) o->fA0 = v; }
 static inline void RelH(int* h) { int t = *h; if (t != 0) LobbyArray_Free(t); *h = 0; }
 
-int func_004518F0(Cell* self, int a1, int a2, int a3, int t0)
+int SFOLobby_JoinRoom(Cell* self, int a1, int a2, int a3, int t0)
 {
     char* b = (char*)self;
     if (self->state != 9) return 0;

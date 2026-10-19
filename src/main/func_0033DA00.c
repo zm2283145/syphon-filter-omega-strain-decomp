@@ -5,7 +5,7 @@ typedef struct { char pad[0x88]; void* f88; void* f8C; int f90; char pad94[4]; v
 M_33DA00* Gui_GetScreenStack(void);
 void GuiScreen_SetFocus(void* mgr, void* w);
 void GuiWidget_SendEvent(void* a, void* b, int kind, int v, int f);
-void func_0033C320(O_33DA00* o, int v);
+void GuiScreen_Navigate(O_33DA00* o, int v);
 void GuiMultiLineText_ScrollUp(void* p, int v);
 void GuiMultiLineText_ScrollDown(void* p, int v);
 void func_002AEC60(void* p);
@@ -35,7 +35,7 @@ int func_0033DA00(O_33DA00* o, Ev_33DA00* ev)
                 return 1;
             }
         } else if (!Plain2_33DA00(ev, 0x8000)) {
-            func_0033C320(o, 1);
+            GuiScreen_Navigate(o, 1);
             return 1;
         }
     }

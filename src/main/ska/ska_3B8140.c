@@ -84,7 +84,7 @@ extern "C" void func_003B8230(V003B8230* v, unsigned int n)
     if (v->cap < n) {
         if (n > 0x40000) {
             func_00123BE8(D_00489738->stream, D_004BCE80);
-            func_00121B60();
+            Libc_Abort();
         }
         V003B8230 tmp;
         tmp.cap = 0;

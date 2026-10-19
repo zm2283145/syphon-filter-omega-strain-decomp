@@ -222,7 +222,7 @@ static inline void merge_flush_func_00376AD0(void) {}
 #pragma push /* merge_units */
 typedef struct { int pad0; int value; int pad8; int padC; } E376FF0;
 typedef struct { char pad[0xC]; E376FF0* ents; int count; } S376FF0;
-int func_00376FF0(S376FF0* o, int* out, int max)
+int Model_GetUvScrollRecords(S376FF0* o, int* out, int max)
 {
     int n = 0;
     int i;

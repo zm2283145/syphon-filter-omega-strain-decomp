@@ -1,4 +1,4 @@
-/* func_00361E70: figure-preview draw callback (GuiWidget_Draw, camera fov from self, model placement, appearance refresh); sibling of GuiAgentModify_DrawModelCallback. */
+/* GuiAgentDisplay_Draw: figure-preview draw callback (GuiWidget_Draw, camera fov from self, model placement, appearance refresh); sibling of GuiAgentModify_DrawModelCallback. */
 #pragma cplusplus on
 #pragma inline_depth(8)
 #include "types.h"
@@ -86,7 +86,7 @@ void Root_SetWorldPlacement(Root* r, Place* p);
 Scr* Gui_GetScreenStack(void);
 void ActorRender_Update(void* p, float t);
 void World_PhysicsTraversal(float t);
-void GuiWidget_Draw(Self* self); unsigned char Appearance_GetToneDigit(void* a); int Appearance_GetBodyKind(void* a); void func_00361E70(Self* self);
+void GuiWidget_Draw(Self* self); unsigned char Appearance_GetToneDigit(void* a); int Appearance_GetBodyKind(void* a); void GuiAgentDisplay_Draw(Self* self);
 }
 
 #define SLOT(i) ((Slot*)(D_005381F0 + (i) * 0x110))
@@ -254,7 +254,7 @@ static inline void Rot(M* m, const V& ax, float a) { Rot2(m, ax, a); }
 static inline void SetPl(Root* r, const Place& pl) { Root_SetWorldPlacement(r, (Place*)&pl); }
 
 
-extern "C" void func_00361E70(Self* self)
+extern "C" void GuiAgentDisplay_Draw(Self* self)
 {
     int saved;
     GuiWidget_Draw(self);

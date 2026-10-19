@@ -23,7 +23,7 @@ typedef struct { Sl3FA1E0 s[8]; Sl3FA1E0* cur; char p504[8]; void* h; unsigned c
 extern void TextObj_SetText(void* h, void* c);
 extern void TextObj_StartFade(void* h, float a, float b);
 extern char D_004BE220[];
-void func_003FA1E0(M3FA1E0* m)
+void HudTicker_Reset(M3FA1E0* m)
 {
     Sl3FA1E0* s = m->s;
     int i;

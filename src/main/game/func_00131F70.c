@@ -40,7 +40,7 @@ Mtx34* Mtx_SetRow0(Mtx34* m, Float4* v) {
     return m;
 }
 
-Vec4* func_00132000(Vec4* v, float x, float y, float z, float w) {
+Vec4* Vec4_Set(Vec4* v, float x, float y, float z, float w) {
     v->x = x;
     v->y = y;
     v->z = z;

@@ -59,7 +59,7 @@ void Renderer_FlushBatch(void* s);
 void Vec4_Copy(V* d, const V* s);
 void GuiBatch_AddVertexColor(V* d, const V* s);
 float GuiBatch_AddVertexUV(void);
-V* func_00132000(V* o, float x, float y, float z, float w);
+V* Vec4_Set(V* o, float x, float y, float z, float w);
 }
 #define D_00539220 (D_00539210.f20)
 #define D_00539224 (D_00539210.f24)
@@ -108,7 +108,7 @@ static inline void Emit(const V& pos, const V& col, const V& uv)
     Vec4_Copy(&e->pos[D_00539224 - 1], &pos);
     GuiBatch_AddVertexColor(&e->c30[D_00539224 - 1], &col);
     u = uv.x + GuiBatch_AddVertexUV();
-    Vec4_Copy(&e->c34[D_00539224 - 1], func_00132000(&tmp, u, uv.y + GuiBatch_AddVertexUV(), uv.z, uv.w));
+    Vec4_Copy(&e->c34[D_00539224 - 1], Vec4_Set(&tmp, u, uv.y + GuiBatch_AddVertexUV(), uv.z, uv.w));
     D_005381F8 = 6LL << 32;
 }
 static inline bool EndStrip(void)

@@ -13,7 +13,7 @@ extern int ScriptSlot_ResizeBuffer(ScriptBound* self, int binding);
 extern int ScriptMgr_LookupResource(ScriptManager* manager, void* obj, int* key, int* out);
 
 /* Address of slot i in a word table. */
-int* func_003D9D20(int** table, int i) {
+int* ScriptHolder_GetEntityStorage(int** table, int i) {
     return *table + i;
 }
 

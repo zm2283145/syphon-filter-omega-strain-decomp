@@ -87,7 +87,7 @@ int func_001909B0(ClipData* d, int i);
 int RootClip_TranslationEnabled(ClipData* d);
 int func_00190920(ClipData* d, int i);
 int RootClip_IsEnabled(ClipData* d);
-V* func_00132000(V* v, float x, float y, float z, float w);
+V* Vec4_Set(V* v, float x, float y, float z, float w);
 V* func_00190990(Sample* s);
 V* func_00190940(Sample* s);
 V* func_00190900(Sample* s);
@@ -132,16 +132,16 @@ static inline Sample SampleNext(Cursor& cur)
         if (func_001909B0(func_00190F10(&cur), cur.i)) {
             if (cur.i == 0 && RootClip_TranslationEnabled(func_00190F10(&cur))) {
                 V a0, a1, b0, b1;
-                func_00132000(&a0, cur.a[0], cur.a[1], 0.0f, 0.0f);
-                func_00132000(&a1, 0.0f, 0.0f, cur.a[2], 0.0f);
-                func_00132000(&b0, cur.b[0], cur.b[1], 0.0f, 0.0f);
-                func_00132000(&b1, 0.0f, 0.0f, cur.b[2], 0.0f);
+                Vec4_Set(&a0, cur.a[0], cur.a[1], 0.0f, 0.0f);
+                Vec4_Set(&a1, 0.0f, 0.0f, cur.a[2], 0.0f);
+                Vec4_Set(&b0, cur.b[0], cur.b[1], 0.0f, 0.0f);
+                Vec4_Set(&b1, 0.0f, 0.0f, cur.b[2], 0.0f);
                 Vec4_Copy(func_00190990(&s), Vec3_LerpKeepW_190950(&a0, &b0, cur.frac));
                 Vec4_Copy(func_00190940(&s), Vec3_LerpKeepW_190950(&a1, &b1, cur.frac));
             } else {
                 V a, b;
-                func_00132000(&a, cur.a[0], cur.a[1], cur.a[2], 0.0f);
-                func_00132000(&b, cur.b[0], cur.b[1], cur.b[2], 0.0f);
+                Vec4_Set(&a, cur.a[0], cur.a[1], cur.a[2], 0.0f);
+                Vec4_Set(&b, cur.b[0], cur.b[1], cur.b[2], 0.0f);
                 Vec4_Copy(func_00190940(&s), Vec3_LerpKeepW_190950(&a, &b, cur.frac));
             }
             cur.a += 4;

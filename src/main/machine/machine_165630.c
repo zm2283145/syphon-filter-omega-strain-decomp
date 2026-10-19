@@ -25,7 +25,7 @@ typedef struct Game {
 
 extern void func_003CBE90(char* name);
 extern void func_0045A700(int);
-extern char* func_003CBA90(char* key);
+extern char* GameIni_GetString(char* key);
 extern void printf(char* fmt, ...);
 extern int String_CompareNoCase(char* a, char* b);
 extern int String_CompareN(char* a, char* b, int n);
@@ -50,13 +50,13 @@ void Game_LoadIni(Game* g) {
 
     func_003CBE90("SFO_GAME.INI");
     func_0045A700(D_004FFD2C);
-    { char* mode = func_003CBA90("BOOT_VIDEOMODE"); printf("videomode: %s\n", mode); }
-    { int pal = String_CompareNoCase(func_003CBA90("BOOT_VIDEOMODE"), "PAL") == 0; if (pal) {
+    { char* mode = GameIni_GetString("BOOT_VIDEOMODE"); printf("videomode: %s\n", mode); }
+    { int pal = String_CompareNoCase(GameIni_GetString("BOOT_VIDEOMODE"), "PAL") == 0; if (pal) {
         g->videoMode = 2;
         g->width = 0x280;
         g->height = 0x200;
         g->fps = 0x32;
-    } else { int pro = String_CompareNoCase(func_003CBA90("BOOT_VIDEOMODE"), "PROSCAN") == 0; if (pro) {
+    } else { int pro = String_CompareNoCase(GameIni_GetString("BOOT_VIDEOMODE"), "PROSCAN") == 0; if (pro) {
         g->videoMode = 4;
         g->width = 0x280;
         g->height = 0x1E0;
@@ -70,13 +70,13 @@ void Game_LoadIni(Game* g) {
     D_004FFBB5 = 1;
     D_004FFBB1 = 1;
     g->invFps = 1.0f / g->fps;
-    { char* net = func_003CBA90("NET_BUFFER_SIZE");
+    { char* net = GameIni_GetString("NET_BUFFER_SIZE");
     if (strlen(net) != 0) {
         D_00494188 = atoi(net);
     } }
     /* retail "1" is an 8-byte, 8-aligned literal: a 4-byte wide string */
-    ukEnglish = String_CompareNoCase(func_003CBA90("BOOT_USE_UK_ENGLISH"), (char*)L"1") == 0;
-    s = func_003CBA90("BOOT_LANGUAGE");
+    ukEnglish = String_CompareNoCase(GameIni_GetString("BOOT_USE_UK_ENGLISH"), (char*)L"1") == 0;
+    s = GameIni_GetString("BOOT_LANGUAGE");
     if (s && *s) {
         if (String_CompareNoCase(s, "PS2_SETTING") == 0) {
             Language_FromSystem(ukEnglish);
@@ -95,7 +95,7 @@ void Game_LoadIni(Game* g) {
     } else {
         Language_FromSystem(ukEnglish);
     }
-    v = func_003CBA90("BOOT_VALID_LANGUAGES");
+    v = GameIni_GetString("BOOT_VALID_LANGUAGES");
     if (v && *v) {
         if (strstr(v, Loc_GetCurrentLanguageName()) == 0) {
             for (j = 0; j < 7; j++) {
@@ -269,7 +269,7 @@ int func_00316550();
 int func_00316860();                                  
 int func_00316BB0();                                  
 int func_003240C0();                                  
-int func_003A6710(int);                                 
+int Iop_LoadNetModules(int);                                 
 int func_0042AF00();                                  
 extern unsigned char D_004EE530;
 extern signed char D_0051EEA0;
@@ -279,7 +279,7 @@ extern unsigned char D_005723D0;
 void App_InitSystemsOnce(void) {
     if (D_004EE530 == 0) {
         D_004EE530 = 1;
-        func_003A6710(1);
+        Iop_LoadNetModules(1);
         if (D_0051EEA8 == 0) {
             D_0051EEA0 = 1;
             func_0042AF00();

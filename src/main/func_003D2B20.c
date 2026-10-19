@@ -11,7 +11,7 @@ extern signed char D_004E1DA0;
 extern signed char D_004E1DA8;
 extern V2B20 D_00497F20;
 extern V2B20 D_00497F30;
-V2B20* func_00132000(V2B20* v, float x, float y, float z, float w);
+V2B20* Vec4_Set(V2B20* v, float x, float y, float z, float w);
 float Vec4_GetZ(V2B20* v);
 float Math_Fabs(float f);
 void Vec4_NormalizeXYZ_132060(V2B20* out, V2B20* v);
@@ -29,7 +29,7 @@ void Mtx_SetTranslation(M2B20* m, V2B20* v);
 static inline V2B20& XAxis()
 {
     if (!D_004E1DA0) {
-        func_00132000(&D_00497F20, 1.0f, 0.0f, 0.0f, 0.0f);
+        Vec4_Set(&D_00497F20, 1.0f, 0.0f, 0.0f, 0.0f);
         D_004E1DA0 = 1;
     }
     return D_00497F20;
@@ -37,7 +37,7 @@ static inline V2B20& XAxis()
 static inline V2B20& ZAxis()
 {
     if (!D_004E1DA8) {
-        func_00132000(&D_00497F30, 0.0f, 0.0f, 1.0f, 0.0f);
+        Vec4_Set(&D_00497F30, 0.0f, 0.0f, 1.0f, 0.0f);
         D_004E1DA8 = 1;
     }
     return D_00497F30;
@@ -57,7 +57,7 @@ extern "C" void Shadow_LookAt(V2B20* pos, V2B20* dir, M2B20* m)
     Vec4_Cross(&c, dir, up);
     Vec4_Assign(&r, Vec4_NormalizeXYZInPlace(&c));
     Vec4_Cross(&u, &r, &f);
-    Mtx_FromRowsAndTranslation(m, &r, &f, &u, func_00132000(&w, 0.0f, 0.0f, 0.0f, 1.0f));
+    Mtx_FromRowsAndTranslation(m, &r, &f, &u, Vec4_Set(&w, 0.0f, 0.0f, 0.0f, 1.0f));
     {
         void* xx = &m->t; /* dead on purpose: retail keeps this addiu */
         __int128 q;

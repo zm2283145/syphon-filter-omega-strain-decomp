@@ -33,7 +33,7 @@ extern "C" void BlockArray_Append(BlockArray* self, const void* src)
         }
         if (self->count == D_004BCDF0) {
             func_00123BE8(D_00489738->stream, "deque::push_back length error");
-            func_00121B60();
+            Libc_Abort();
         }
         if (self->blocks.size == (self->blocks.cap == 0 ? 0 : self->blocks.cap - 1)) {
             char* nb = TStr_Alloc(0x7C0, D_004BCFA8, 0x5C);

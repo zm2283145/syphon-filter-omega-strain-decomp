@@ -37,7 +37,7 @@ extern "C" void* memset(void* d, int c, unsigned int n);
             return;                                                           \
         if (n > (maxN) || v->count > (maxN) - n) {                            \
             func_00123BE8(D_00489738->stream, errSym);                        \
-            func_00121B60();                                                  \
+            Libc_Abort();                                                  \
         }                                                                     \
         unsigned int need = v->count + n;                                     \
         if (need <= name##_Cap2(v)) {                                         \

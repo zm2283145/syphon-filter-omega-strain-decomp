@@ -15,7 +15,7 @@ extern char D_004C33E0[];
 extern char D_004C33F0[];
 void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
 void Mem_Free(int pool, void* p, char* file, int line);
-void func_00121B60(void);
+void Libc_Abort(void);
 void func_00123BE8(void* s, char* msg);
 void func_00471960(Vec_471C20* a, Vec_471C20* b);
 }
@@ -31,7 +31,7 @@ extern "C" void func_00471C20(Vec_471C20* v0, unsigned int n0)
     if (v0->cap < n) {
         if (n > 0x22E8BA) {
             func_00123BE8(D_00489738->stream, "vector::reserve length error\n");
-            func_00121B60();
+            Libc_Abort();
         }
         {
             E_471C20* d; E_471C20* s; E_471C20* e; Vec_471C20 tmp;

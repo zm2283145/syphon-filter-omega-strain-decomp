@@ -41,7 +41,7 @@ extern char D_0055C9F0;
 }
 #pragma push
 #pragma opt_common_subs off
-extern "C" void func_003643A0(char * arg0) {
+extern "C" void GuiAgentDisplay_Init(char * arg0) {
         int x4C[1];
     char * temp_s1;
     char * var_s1;
@@ -95,7 +95,7 @@ struct V3 { float x, y, z; V3() {} V3(float a, float b, float c) { x = a; y = b;
 struct S364590 { void* vtable; char pad4[0x44]; int unk48; char pad4C[0x34]; V3 v80; char pad90[0x4E0 - 0x90]; float f4E0; };
 extern "C" char D_004DF530[];
 extern "C" void GuiWidget_ctor(S364590* self);
-extern "C" S364590* func_00364590(S364590* self) {
+extern "C" S364590* GuiAgentDisplay_ctor(S364590* self) {
     V3 t;
     float z;
     GuiWidget_ctor(self);

@@ -14,7 +14,7 @@ extern int sprintf(char* buf, const char* fmt, ...);
 extern char* Loc_LookupText(const char* key);
 extern void GuiTextWidget_SetText(void* label, const char* text, int flags);
 /* Fills the panel's name (localised, with fallback) and value labels. */
-void func_002A1670(Panel* p)
+void GuiMissionSetup_UpdateTexts(Panel* p)
 {
     char buf[0x20];
     char* text;
@@ -41,15 +41,15 @@ typedef struct {
     unsigned char hasFx;
 } S2A1700;
 extern void* DME_GetLobby(void);
-extern void func_00451610(void* p);
+extern void SFOLobby_LeaveRoom(void* p);
 extern void LobbyArray_Free(M2A1700* m);
-void func_002A1700(S2A1700* s)
+void GuiMissionSetup_Deactivate(S2A1700* s)
 {
     if (s->active) {
         if (s->hasFx) {
             void* p = DME_GetLobby();
             if (p)
-                func_00451610(p);
+                SFOLobby_LeaveRoom(p);
             s->hasFx = 0;
         }
         LobbyArray_Free(&s->m88);
@@ -104,9 +104,9 @@ void GuiTextWidget_SetText(void* w, char* s, int a);
 #define GuiTextWidget_SetText(a0, a1, a2) (GuiTextWidget_SetText((a0), (const char *)(a1), (a2))) /* merge_units */
 
 #if 0 /* merge_units */
-void func_002A1670(Self_002A1780* self);
+void GuiMissionSetup_UpdateTexts(Self_002A1780* self);
 #endif /* merge_units */
-#define func_002A1670(a0) (func_002A1670((Panel *)(a0))) /* merge_units */
+#define GuiMissionSetup_UpdateTexts(a0) (GuiMissionSetup_UpdateTexts((Panel *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
 Game_002A1780* DME_GetLobby(void);
@@ -114,14 +114,14 @@ Game_002A1780* DME_GetLobby(void);
 #define DME_GetLobby() ((Game_002A1780 *)DME_GetLobby()) /* merge_units */
 
 void func_004426B0(Game_002A1780* g);
-unsigned char func_004518F0(Game_002A1780* g, void* cb, void* a, void* b, void* c);
-char* func_0033CE30(Self_002A1780* self, int a, int b, int c, int d, int e);
+unsigned char SFOLobby_JoinRoom(Game_002A1780* g, void* cb, void* a, void* b, void* c);
+char* GuiScreen_GetLobbyString(Self_002A1780* self, int a, int b, int c, int d, int e);
 int FrontEnd_OpenPopup(void* ui, int a, char* b, char* c, Self_002A1780* d, int e);
 }
 
 static inline Obj_002A1780* AsA(Obj_002A1780* obj) { return (obj && obj->IsA(D_004A7520)) ? obj : 0; }
 #define CAST(p) p = AsA(p)
-extern "C" void func_002A1780(Self_002A1780* self)
+extern "C" void GuiMissionSetup_Activate(Self_002A1780* self)
 {
     Obj_002A1780* p;
     Game_002A1780* g;
@@ -142,7 +142,7 @@ extern "C" void func_002A1780(Self_002A1780* self)
         asm { .set reorder }
         GuiTextWidget_SetText(p, D_004FFC04 + 0x1C8, 0);
     }
-    func_002A1670(self);
+    GuiMissionSetup_UpdateTexts(self);
     self->bF8 = 0;
     g = DME_GetLobby();
     if (g) {
@@ -152,11 +152,11 @@ extern "C" void func_002A1780(Self_002A1780* self)
         } else {
             asm { .set reorder }
             if (g->state != 5) {
-                self->bF8 = func_004518F0(g, (void*)App_CardWaitPoll, self->s88, self->sA4, self->sC0);
+                self->bF8 = SFOLobby_JoinRoom(g, (void*)App_CardWaitPoll, self->s88, self->sA4, self->sC0);
                 if (!self->bF8) {
                     asm { .set reorder }
                     char* ui = D_004FFC04;
-                    FrontEnd_OpenPopup(ui, 2, D_004AAFF0, func_0033CE30(self, 0x5A, 0, 0, 0, 0), self, 0xB);
+                    FrontEnd_OpenPopup(ui, 2, D_004AAFF0, GuiScreen_GetLobbyString(self, 0x5A, 0, 0, 0, 0), self, 0xB);
                 }
             }
         }
@@ -167,7 +167,7 @@ extern "C" void func_002A1780(Self_002A1780* self)
     self->b80 = 1;
 }
 #undef GuiTextWidget_SetText /* merge_units */
-#undef func_002A1670 /* merge_units */
+#undef GuiMissionSetup_UpdateTexts /* merge_units */
 #undef DME_GetLobby /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_002A1780 */

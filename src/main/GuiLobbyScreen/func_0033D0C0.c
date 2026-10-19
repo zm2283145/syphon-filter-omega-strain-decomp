@@ -27,7 +27,7 @@ void* Gui_GetScreenList(void);
 int FrontEnd_ClosePopup(void* ui, int id);
 int FrontEnd_OpenPopup(void* ui, int a, char* b, char* c, void* d, int e);
 void* GuiManager_FindOrLoad(void* a, char* b, char* c);
-char* func_0033CE30(void* self, int id, int a, int b, int c, int d);
+char* GuiScreen_GetLobbyString(void* self, int id, int a, int b, int c, int d);
 void String_CtorCStr_13B480(void* s, char* t);
 void func_0013D680(void* d, const void* s);
 void String_Dtor(void* s, int f);
@@ -54,13 +54,13 @@ void func_0033D0C0(void* self)
             Gui_GetScreenStack()->Hide(s->top->w);
         }
         {
-            Str_3D0C0 title(func_0033CE30(self, 0x14, 0, 0, 0, 0));
+            Str_3D0C0 title(GuiScreen_GetLobbyString(self, 0x14, 0, 0, 0, 0));
             Str_3D0C0 text;
             if (D_00532DC8) {
                 if (D_00532DD0[0]) text = Str_3D0C0(D_00532DD0);
-                else text = Str_3D0C0(func_0033CE30(self, 0x85, 0, 0, 0, 0));
+                else text = Str_3D0C0(GuiScreen_GetLobbyString(self, 0x85, 0, 0, 0, 0));
             } else {
-                text = Str_3D0C0(func_0033CE30(self, 0x86, 0, 0, 0, 0));
+                text = Str_3D0C0(GuiScreen_GetLobbyString(self, 0x86, 0, 0, 0, 0));
             }
             D_00532DC8 = 0;
             {

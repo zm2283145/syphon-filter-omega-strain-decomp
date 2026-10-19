@@ -57,7 +57,7 @@ Int3E3 *func_003E3480(Int3E3Vector *v, Int3E3 *first, Int3E3 *last)
             return;                                                             \
         if (n > (maxN) || v->count > (maxN) - n) {                          \
             func_00123BE8(D_00489738->stream, errSym);                          \
-            func_00121B60();                                                    \
+            Libc_Abort();                                                    \
         }                                                                       \
         if (v->count + n <= v->cap) {                                           \
             T* end = v->data + v->count;                                   \

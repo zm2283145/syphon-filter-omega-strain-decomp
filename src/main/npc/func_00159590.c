@@ -172,7 +172,7 @@ Sensed* NpcPerception_SensedRecord(Perc* p, Obj* o);
 int NpcPerception_SightTest(Perc* p, Perc* q, int a, int b);
 void* NpcPath_GetNode(int id);
 void NpcPath_RelocateStuck(Path* p, int id);
-V* func_00132000(V* v, float x, float y, float z, float w);
+V* Vec4_Set(V* v, float x, float y, float z, float w);
 void Vec4_NormalizeXYZ_132060(V* out, V* v);
 void Vec4_Cross(V* out, V* a, V* b);
 int Vec4_IsZeroXYZ(V* v);
@@ -187,7 +187,7 @@ int TeleportMsg_IsMode3(void* m);
 V* func_00133EC0(M* m);
 void func_0015A400(V* out, V* v);
 void Vec4_CopyAsPoint(V* out, V* v);
-void func_0014B160(void* data, M* obj, V* v);
+void Mtx_SetRotationTranslation(void* data, M* obj, V* v);
 void Event_Send(const MBase& m, void* target, int immediate);
 void NpcAttack_SelectLookAt(Npc* self, float dt);
 void NpcAttack_WeaponPosture(Npc* self);
@@ -263,7 +263,7 @@ static inline void LookFrame(M* m, V* dir, const V& up)
         Vec4_NormalizeXYZ_132060(&f, dir);
         Vec4_Assign(&r, Vec4_NormalizeXYZInPlace(&c));
         Vec4_Cross(&u, &r, &f);
-        Mtx_FromRowsAndTranslation(m, &r, &f, &u, func_00132000(&w, 0.0f, 0.0f, 0.0f, 1.0f));
+        Mtx_FromRowsAndTranslation(m, &r, &f, &u, Vec4_Set(&w, 0.0f, 0.0f, 0.0f, 1.0f));
     } else if (!Vec4_IsZeroXYZ(dir)) {
         Mtx_FrameFromAxis(m, dir);
     } else {
@@ -282,7 +282,7 @@ static inline void TeleInit(Msg* m, M* mtx)
         Vec4_CopyAsPoint(&b2, func_00133EC0(mtx));
         v = &b2;
     }
-    func_0014B160(m->data, mtx, v);
+    Mtx_SetRotationTranslation(m->data, mtx, v);
 }
 
 inline MsgB::MsgB(int a, F1B4* s, Obj* c) { MsgB* p = this; int b = s->f90; Event_Construct(p, D_004EE698); p->vtable = D_004D9940; p->f24 = a; p->f28 = b; p->f30 = c; p->f2C = 0; }

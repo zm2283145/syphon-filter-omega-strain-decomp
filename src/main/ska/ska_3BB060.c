@@ -78,7 +78,7 @@ extern void* D_00539248;
 #define D_00539248 (*(void **)&D_00539248) /* merge_units */
 
 extern void String_Copy(char* dst, char* src);
-extern void func_00128F58(char* dst, char* src);
+extern void Libc_Strcat(char* dst, char* src);
 extern int func_00380DB0(void* mgr, char* name, int w, int h, int fmt);
 void RenderTarget_Create(F1RT3BB* rt, char* name, int w, int h, int fmt, int depth)
 {
@@ -86,7 +86,7 @@ void RenderTarget_Create(F1RT3BB* rt, char* name, int w, int h, int fmt, int dep
     char dname[0x40];
     String_Copy(cname, name);
     String_Copy(dname, name);
-    func_00128F58(dname, "_zbuf");
+    Libc_Strcat(dname, "_zbuf");
     rt->colorFmt = fmt == 16 ? 2 : fmt == 24;
     rt->depthFmt = depth == 16 ? 0x3A : depth == 24 ? 0x31 : 0x30;
     rt->hasDepth = depth > 0;

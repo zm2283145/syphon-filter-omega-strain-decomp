@@ -41,7 +41,7 @@ extern Err_3B7270* D_00489738;
 extern char D_0049F388[];
 extern char D_004A6460[];
 void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
-void func_00121B60(void);
+void Libc_Abort(void);
 void func_00123BE8(void* s, char* msg);
 void func_0022A770(Vec_3B7270* a, Vec_3B7270* b);
 void func_001C4F10(Vec_3B7270* a);
@@ -58,7 +58,7 @@ extern "C" void AnchorKeys_Reserve(Vec_3B7270* v0, unsigned int n0)
     if (v0->cap < n) {
         if (n > 0x1800000) {
             func_00123BE8(D_00489738->stream, "vector::reserve length error\n");
-            func_00121B60();
+            Libc_Abort();
         }
         {
             E_3B7270* d; E_3B7270* s; E_3B7270* e; Vec_3B7270 tmp;

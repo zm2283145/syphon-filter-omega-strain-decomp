@@ -15,7 +15,7 @@ extern "C" void KeyVector_Reserve(KV* v, unsigned int n)
     if (v->cap < n) {
         if (n > 0x1800000) {
             func_00123BE8(D_00489738->stream, D_0049CAA0);
-            func_00121B60();
+            Libc_Abort();
         }
         KV tmp;
         tmp.cap = 0;

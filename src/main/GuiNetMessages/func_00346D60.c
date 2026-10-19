@@ -9,10 +9,10 @@ extern int Gui_GetScreenList(void);
 extern int Gui_GetScreenStack(void);
 extern void* GuiManager_FindOrLoad(int, char*, char*);
 extern void* DME_GetLobby(void);
-extern int func_0033CE30(S_46D60*, int, int, int, int, int);
+extern int GuiScreen_GetLobbyString(S_46D60*, int, int, int, int, int);
 extern int FrontEnd_OpenPopup(void* ui, int a, char* b, int c, void* d, int e);
 extern void FrontEnd_ClosePopup(void* ui, int p);
-extern void func_002CA640(void* ui, int a);
+extern void FrontEnd_LeaveOnline(void* ui, int a);
 extern void GuiStack_SwapScreens(int, S_46D60*, void*);
 extern int func_00451010(void* l, int id);
 extern void func_00346FB0(S_46D60* s, int x);
@@ -25,8 +25,8 @@ int func_00346D60(S_46D60* self, void* from, unsigned short ev, int kind, int da
         void* scr = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004BA310, D_004BA328);
         if (DME_GetLobby()) {
             void* ui = D_004FFC04;
-            int p = FrontEnd_OpenPopup(ui, 0, D_004BA338, func_0033CE30(self, 0x77, 0, 0, 0, 0), 0, 0);
-            func_002CA640(D_004FFC04, 1);
+            int p = FrontEnd_OpenPopup(ui, 0, D_004BA338, GuiScreen_GetLobbyString(self, 0x77, 0, 0, 0, 0), 0, 0);
+            FrontEnd_LeaveOnline(D_004FFC04, 1);
             FrontEnd_ClosePopup(D_004FFC04, p);
         }
         FrontEnd_ClosePopup(D_004FFC04, self->x9C);

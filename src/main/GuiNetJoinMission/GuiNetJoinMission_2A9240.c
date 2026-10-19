@@ -45,7 +45,7 @@ static inline Obj* AsLabel(Obj* obj)
 }
 
 /* Screen init: base init, then looks up the three named child widgets (kept only if D_004A9870-type). */
-extern "C" void func_002A9240(Screen* self)
+extern "C" void GuiNetJoinMission_Init(Screen* self)
 {
     func_0033F250(self);
     self->item0 = AsLabel(GuiWidget_FindChildByName(self, (*(const char**)dat_0048BBB0)));

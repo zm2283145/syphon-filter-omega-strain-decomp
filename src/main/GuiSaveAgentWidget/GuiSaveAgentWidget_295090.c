@@ -118,9 +118,9 @@ extern G295* D_004FFC04;
 extern char D_004AA288[];
 extern int Gui_GetScreenList(void);
 extern void* GuiManager_FindOrLoad(int, char*, char*);
-extern char* func_0033CE30(O295*, int, int, int, int, int);
+extern char* GuiScreen_GetLobbyString(O295*, int, int, int, int, int);
 extern int FrontEnd_OpenPopup(G295*, int, char*, char*, int, int);
-extern void func_002CA640(G295*, int);
+extern void FrontEnd_LeaveOnline(G295*, int);
 extern void FrontEnd_ClosePopup(G295*, int);
 extern int Gui_GetScreenStack(void);
 extern void GuiStack_SwapScreens(int, O295*, void*);
@@ -135,9 +135,9 @@ void GuiCommandCenter_Leave(O295* o) {
         w = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiOnlineOfflineSelect", "ONOFFSEL");
         {
             G295* m = D_004FFC04;
-            h = FrontEnd_OpenPopup(m, 0, D_004AA288, func_0033CE30(o, 0x77, 0, 0, 0, 0), 0, 0);
+            h = FrontEnd_OpenPopup(m, 0, D_004AA288, GuiScreen_GetLobbyString(o, 0x77, 0, 0, 0, 0), 0, 0);
         }
-        func_002CA640(D_004FFC04, 1);
+        FrontEnd_LeaveOnline(D_004FFC04, 1);
         FrontEnd_ClosePopup(D_004FFC04, h);
     } else if (g->b2e) {
         w = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiTitleScreen", "TITLESCR");

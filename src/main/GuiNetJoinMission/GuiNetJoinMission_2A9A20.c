@@ -22,7 +22,7 @@ extern void* D_004FFC04;
 extern char D_004AB808[];
 extern char D_004FFB50[];
 G_002A9A20* DME_GetLobby(void);
-int func_0033CE30(S_002A9A20* self, int a, int b, int c, int d, int e);
+int GuiScreen_GetLobbyString(S_002A9A20* self, int a, int b, int c, int d, int e);
 int FrontEnd_OpenPopup(void* ui, int a, char* b, int c, S_002A9A20* d, int e);
 Ag_002A9A20* Agent_GetSelected(void* a, int b);
 char* String_CStr(void* s);
@@ -51,7 +51,7 @@ extern "C" void func_002A9A20(S_002A9A20* self)
                 String_Dtor(&s, 0);
             } else {
                 void* ui = D_004FFC04;
-                FrontEnd_OpenPopup(ui, 2, D_004AB808, func_0033CE30(self, 0x70, 0, 0, 0, 0), 0, 0);
+                FrontEnd_OpenPopup(ui, 2, D_004AB808, GuiScreen_GetLobbyString(self, 0x70, 0, 0, 0, 0), 0, 0);
                 return;
             }
         }
@@ -121,9 +121,9 @@ void func_004426B0(G_002A9BA0* g);
 void App_CardWaitPoll(void);
 int func_00442F40(G_002A9BA0* g, void* cb, void* a);
 #if 0 /* merge_units */
-int func_0033CE30(S_002A9BA0* self, int a, int b, int c, int d, int e);
+int GuiScreen_GetLobbyString(S_002A9BA0* self, int a, int b, int c, int d, int e);
 #endif /* merge_units */
-#define func_0033CE30(a0, a1, a2, a3, a4, a5) (func_0033CE30((S_002A9A20 *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
+#define GuiScreen_GetLobbyString(a0, a1, a2, a3, a4, a5) (GuiScreen_GetLobbyString((S_002A9A20 *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
 
 #if 0 /* merge_units */
 int FrontEnd_OpenPopup(void* ui, int a, char* b, int c, S_002A9BA0* d, int e);
@@ -187,7 +187,7 @@ extern "C" void func_002A9BA0(S_002A9BA0* self)
             func_004426B0(g);
         if (!func_00442F40(g, (void*)App_CardWaitPoll, self->fA0)) {
             void* ui = D_004FFC04;
-            FrontEnd_OpenPopup(ui, 2, D_004AB808, func_0033CE30(self, 0x72, 0, 0, 0, 0), self, 0x1E);
+            FrontEnd_OpenPopup(ui, 2, D_004AB808, GuiScreen_GetLobbyString(self, 0x72, 0, 0, 0, 0), self, 0x1E);
             return;
         }
     }
@@ -228,13 +228,13 @@ extern "C" void func_002A9BA0(S_002A9BA0* self)
         }
         if (!ok || !self->p90->f94) {
             void* ui = D_004FFC04;
-            FrontEnd_OpenPopup(ui, 2, D_004AB808, func_0033CE30(self, 0x72, 0, 0, 0, 0), self, 0x1E);
+            FrontEnd_OpenPopup(ui, 2, D_004AB808, GuiScreen_GetLobbyString(self, 0x72, 0, 0, 0, 0), self, 0x1E);
             return;
         }
     }
     if (self->f98 == -1) {
         void* ui = D_004FFC04;
-        FrontEnd_OpenPopup(ui, 2, D_004AB808, func_0033CE30(self, 0x6F, 0, 0, 0, 0), 0, 0);
+        FrontEnd_OpenPopup(ui, 2, D_004AB808, GuiScreen_GetLobbyString(self, 0x6F, 0, 0, 0, 0), 0, 0);
         if (self->p8C)
             GuiTextWidget_SetText(self->p8C, Loc_LookupText("NotSet"), 0);
         pr->fC4 = -1;
@@ -248,7 +248,7 @@ extern "C" void func_002A9BA0(S_002A9BA0* self)
     self->f9C = self->f98;
 }
 #undef DME_GetLobby /* merge_units */
-#undef func_0033CE30 /* merge_units */
+#undef GuiScreen_GetLobbyString /* merge_units */
 #undef FrontEnd_OpenPopup /* merge_units */
 #undef Agent_GetSelected /* merge_units */
 #undef LobbyArray_At /* merge_units */

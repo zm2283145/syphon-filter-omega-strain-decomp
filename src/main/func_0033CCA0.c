@@ -12,10 +12,10 @@ extern char D_00532DD0[];
 extern G33C* D_004FFC04;
 extern char* strncpy(char*, const char*, int);
 extern void func_003FD2D0(char*);
-extern void func_002CA640(G33C*, int);
+extern void FrontEnd_LeaveOnline(G33C*, int);
 extern void func_002CA6F0(G33C*);
 extern void GuiWidget_SendEvent(O33C*, W33C*, int, int, int);
-void func_0033CCA0(O33C* o) {
+void GuiScreen_PollLobby(O33C* o) {
     L33C* l = DME_GetLobby();
     int i;
     E33C* e;
@@ -34,7 +34,7 @@ void func_0033CCA0(O33C* o) {
                 D_00532DD0[0] = 0;
             }
             D_004FFC04->b31 = 1;
-            func_002CA640(D_004FFC04, 1);
+            FrontEnd_LeaveOnline(D_004FFC04, 1);
             func_002CA6F0(D_004FFC04);
             return;
         }

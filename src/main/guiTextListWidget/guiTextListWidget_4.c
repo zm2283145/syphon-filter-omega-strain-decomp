@@ -118,7 +118,7 @@ extern "C" void func_00422A50(Vec22* v, T* pos, unsigned int n, const T* value)
         return;
     if (n > 0x4CCCCC || v->count > 0x4CCCCC - n) {
         func_00123BE8(D_00489738->stream, D_004BF5C0);
-        func_00121B60();
+        Libc_Abort();
     }
     if (v->count + n <= v->cap) {
         T* p; T* q; T* src; T* dst; T* end;

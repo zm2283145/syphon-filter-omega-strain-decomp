@@ -5,7 +5,7 @@ int Object_DeleteLater(O_A120 *, float);
 int Object_Unregister(O_A120 *);
 extern char D_004F8040;
 extern int D_004F8044;
-void func_0025A120(void) {
+void AreaEffect_FinishAll(void) {
     int i;
     for (i = 0; i < D_004F8044; i++) {
         O_A120* o = *func_0025A1C0(&D_004F8040, i);

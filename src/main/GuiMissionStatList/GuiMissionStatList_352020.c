@@ -42,7 +42,7 @@ extern "C" void func_003521A0(V3521A0* v, const VRElem20* first, const VRElem20*
     unsigned int n = last - first;
     if (v->count > 0x4CCCCC) {
         func_00123BE8(D_00489738->stream, D_004BABF0);
-        func_00121B60();
+        Libc_Abort();
     }
     if (n) {
         VRElem20** pdata = &v->data;

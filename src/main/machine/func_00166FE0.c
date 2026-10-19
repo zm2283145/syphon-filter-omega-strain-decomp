@@ -1,4 +1,4 @@
-/* func_00166FE0 (machine): loading-screen progress tick (sibling of func_00167630). The quad copy and
+/* func_00166FE0 (machine): loading-screen progress tick (sibling of GameFlow_EnterMpLobby). The quad copy and
    identity-matrix store are GCC-style __asm__ volatile: MW does no CSE across them, so the base address
    and constant are rematerialised as in retail. */
 #pragma opt_rotateloops off

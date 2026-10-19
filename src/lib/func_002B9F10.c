@@ -4,7 +4,7 @@ typedef struct { int busy; char pad[0x894]; } MCPortTail;
 extern MCPortTail D_00513518[];
 extern const char D_004AC220[];
 extern void String_Copy(char *, char *);
-extern char *func_00128F58(char *, const char *);
+extern char *Libc_Strcat(char *, const char *);
 extern int func_002B8188(int,char*,char*);
 extern int func_002B84E0(int,char*,MCEnt*,int*,int*);
 extern int func_002BA220(int,char*,int,int,int,int*);
@@ -29,7 +29,7 @@ int func_002B9F10(int dev, char *path)
     if (!(st.mode & 2)) return 0x8101000D;
     if (st.mode & 0x20) {
         String_Copy(tmp, full);
-        func_00128F58(tmp, D_004AC220);
+        Libc_Strcat(tmp, D_004AC220);
         err = func_002BA220(dev, tmp, 0, -1, 0, &cnt);
         if (err) return err;
         if (cnt > 0) return 0x8101005A;

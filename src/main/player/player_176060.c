@@ -17,7 +17,7 @@ int WeaponInv_SlotOfItem(int);
 extern int D_0049D010;
 extern int D_004FFD30;
 
-void func_00176060(char * arg0, int arg1) {
+void Player_RemoveWeapon(char * arg0, int arg1) {
     int temp_a2;
     int temp_v0;
     int var_a1;

@@ -93,7 +93,7 @@ extern "C" void func_00352460(V2460* v, const E2460* first, const E2460* last)
     } else {
         if (n > 0x4CCCCC) {
             func_00123BE8(D_00489738->stream, D_004BAC10);
-            func_00121B60();
+            Libc_Abort();
         }
         func_00351F40(v);
         if (v->data) {

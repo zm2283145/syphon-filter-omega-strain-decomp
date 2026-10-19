@@ -13,7 +13,7 @@ extern char D_004BE520[];
 extern char D_004BE530[];
 void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
 void Mem_Free(int pool, void* p, char* file, int line);
-void func_00121B60(void);
+void Libc_Abort(void);
 void func_00123BE8(void* s, char* msg);
 void func_003FEC90(Vec_3FECD0* a, Vec_3FECD0* b);
 void func_003F4390(Vec_3FECD0* a);
@@ -30,7 +30,7 @@ extern "C" void func_003FECD0(Vec_3FECD0* v0, unsigned int n0)
     if (v0->cap < n) {
         if (n > 0x600000) {
             func_00123BE8(D_00489738->stream, "vector::reserve length error\n");
-            func_00121B60();
+            Libc_Abort();
         }
         {
             E_3FECD0* d; E_3FECD0* s; E_3FECD0* e; Vec_3FECD0 tmp;

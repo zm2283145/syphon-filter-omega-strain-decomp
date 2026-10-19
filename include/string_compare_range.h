@@ -15,7 +15,7 @@ struct SCRErr { int pad[3]; int stream; };
 extern "C" {
 extern SCRErr* D_00489738;
 void func_00123BE8(int stream, const char* msg);
-void func_00121B60(void);
+void Libc_Abort(void);
 int Name_Compare48(const char* a, const char* b, unsigned int n);
 }
 
@@ -42,7 +42,7 @@ static inline const unsigned int& SCR_Min(const unsigned int& a, const unsigned 
         }                                                                     \
         if (sz < pos) {                                                       \
             func_00123BE8(D_00489738->stream, msgSym);                        \
-            func_00121B60();                                                  \
+            Libc_Abort();                                                  \
         }                                                                     \
         rem = sz - pos;                                                       \
         rlen = SCR_Min(rem, n);                                               \

@@ -218,7 +218,7 @@ extern G_002A06C0* D_0055A830;
 #define D_0055A830 (*(G_002A06C0 **)&D_0055A830) /* merge_units */
 
 void GuiWidget_BaseWake(Self_002A06C0* self);
-void func_002C9AF0(Mgr_002A06C0* m, int a);
+void FrontEnd_SetMusic(Mgr_002A06C0* m, int a);
 #if 0 /* merge_units */
 Ctl_002A06C0* GuiWidget_FindChildByName(Self_002A06C0* self, char* name);
 #endif /* merge_units */
@@ -248,7 +248,7 @@ extern "C" void GuiOnlineOfflineSelect_Wake(Self_002A06C0* self)
 {
     Ctl_002A06C0* w;
     GuiWidget_BaseWake(self);
-    func_002C9AF0(D_004FFC04, 0);
+    FrontEnd_SetMusic(D_004FFC04, 0);
     self->p20 = GuiWidget_FindChildByName(self, self->b48 ? D_0048BA28 : D_0048BA30);
     w = GuiWidget_FindChildByName(self, D_0048BA38);
     if (w)

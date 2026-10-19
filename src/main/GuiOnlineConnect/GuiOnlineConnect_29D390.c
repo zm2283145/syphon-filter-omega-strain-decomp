@@ -27,20 +27,20 @@ int DME_GetLobby(void);
 void FrontEnd_ClosePopup(Fe_D390* fe, int id);
 int FrontEnd_OpenPopup(Fe_D390* fe, int kind, char* title, char* text, O_D390* owner, int flags);
 Stack_D390* Gui_GetScreenStack(void);
-char* func_0033CE30(O_D390* o, int id, int a, int b, int c, int d);
-void func_0029DE70(O_D390* o, int a);
-void func_0029DFC0(O_D390* o);
-void func_0033C320(O_D390* o, int a);
+char* GuiScreen_GetLobbyString(O_D390* o, int id, int a, int b, int c, int d);
+void GuiOnlineConnect_Back(O_D390* o, int a);
+void GuiOnlineConnect_Advance(O_D390* o);
+void GuiScreen_Navigate(O_D390* o, int a);
 void SFOLobby_LeaveNetworkState(int n);
 void LobbyArray_ctor(List_D390* l);
 void func_0044F970(List_D390* l, int flags);
 void* LobbyArray_At(List_D390* l, int i);
 int func_00442F40(int n, int (*cb)(void), List_D390* l);
-char* func_003CBA90(char* key);
+char* GameIni_GetString(char* key);
 int String_CompareNoCase(char* a, char* b);
 char* func_002CA0E0(Fe_D390* fe);
 void func_002CA100(Fe_D390* fe, char* s);
-void func_002CA350(Fe_D390* fe);
+void FrontEnd_DownloadPolicies(Fe_D390* fe);
 int SFOLobby_ConnectUniverse(int n, int i);
 void func_00442E90(int n);
 int SFOLobby_JoinLobby(int n, int i);
@@ -61,14 +61,14 @@ static inline bool Start_D390(O_D390* o)
     int old;
     n = DME_GetLobby();
     if (!n) {
-        func_0029DE70(o, 1);
+        GuiOnlineConnect_Back(o, 1);
         return false;
     }
     fe = D_004FFC04;
-    p = FrontEnd_OpenPopup(fe, 0, D_004AABF0, func_0033CE30(o, 0xD, 0, 0, 0, 0), 0, 0);
+    p = FrontEnd_OpenPopup(fe, 0, D_004AABF0, GuiScreen_GetLobbyString(o, 0xD, 0, 0, 0, 0), 0, 0);
     old = o->x120;
     if (old != -1) FrontEnd_ClosePopup(D_004FFC04, old);
-    func_002CA350(D_004FFC04);
+    FrontEnd_DownloadPolicies(D_004FFC04);
     func_00445570(n);
     if (func_004456D0(n)) func_004456C0(n);
     FrontEnd_ClosePopup(D_004FFC04, p);
@@ -94,7 +94,7 @@ static inline unsigned char Find_D390(int n, List_D390* l, bool any)
     }
     return ok;
 }
-extern "C" void func_0029D390(O_D390* o)
+extern "C" void GuiOnlineConnect_DnasRetry(O_D390* o)
 {
     Str_D390 s2;
     Str_D390 t2;
@@ -108,13 +108,13 @@ extern "C" void func_0029D390(O_D390* o)
     n = DME_GetLobby();
     if (!n) {
         FrontEnd_ClosePopup(D_004FFC04, o->x11C);
-        func_0029DE70(o, 1);
+        GuiOnlineConnect_Back(o, 1);
         return;
     }
     w = o->x108;
     if (w) Gui_GetScreenStack()->Hide(w);
     fe = D_004FFC04;
-    o->x120 = FrontEnd_OpenPopup(fe, 0, D_004AABF0, func_0033CE30(o, 0xF, 0, 0, 0, 0), 0, 0);
+    o->x120 = FrontEnd_OpenPopup(fe, 0, D_004AABF0, GuiScreen_GetLobbyString(o, 0xF, 0, 0, 0, 0), 0, 0);
     FrontEnd_ClosePopup(D_004FFC04, o->x11C);
     SFOLobby_LeaveNetworkState(n);
     o->b94 = 0;
@@ -128,7 +128,7 @@ extern "C" void func_0029D390(O_D390* o)
         char* e;
         bool any;
         int ok;
-        any = String_CompareNoCase(func_003CBA90(D_004AABF8), D_004AAC08) == 0;
+        any = String_CompareNoCase(GameIni_GetString(D_004AABF8), D_004AAC08) == 0;
         cur = func_002CA0E0(D_004FFC04);
         found = -1;
         for (i = 0; i < o->lst.count; i++) {
@@ -142,8 +142,8 @@ extern "C" void func_0029D390(O_D390* o)
         if (found == -1) {
             char* txt;
             o->x88 = 4;
-            String_CtorCStr_13B480(&s2, func_0033CE30(o, 2, 0, 0, 0, 0));
-            String_CtorCStr_13B480(&t2, func_0033CE30(o, 0x84, 0, 0, 0, 0));
+            String_CtorCStr_13B480(&s2, GuiScreen_GetLobbyString(o, 2, 0, 0, 0, 0));
+            String_CtorCStr_13B480(&t2, GuiScreen_GetLobbyString(o, 0x84, 0, 0, 0, 0));
             txt = String_CStr(&t2);
             FrontEnd_OpenPopup(D_004FFC04, 2, String_CStr(&s2), txt, o, 0);
             FrontEnd_ClosePopup(D_004FFC04, o->x120);
@@ -155,8 +155,8 @@ extern "C" void func_0029D390(O_D390* o)
         if (!SFOLobby_ConnectUniverse(n, found)) {
             char* txt;
             o->x88 = 4;
-            String_CtorCStr_13B480(&s1, func_0033CE30(o, 3, 0, 0, 0, 0));
-            String_CtorCStr_13B480(&t1, func_0033CE30(o, 0x84, 0, 0, 0, 0));
+            String_CtorCStr_13B480(&s1, GuiScreen_GetLobbyString(o, 3, 0, 0, 0, 0));
+            String_CtorCStr_13B480(&t1, GuiScreen_GetLobbyString(o, 0x84, 0, 0, 0, 0));
             txt = String_CStr(&t1);
             FrontEnd_OpenPopup(D_004FFC04, 2, String_CStr(&s1), txt, o, 0);
             FrontEnd_ClosePopup(D_004FFC04, o->x120);
@@ -171,17 +171,17 @@ extern "C" void func_0029D390(O_D390* o)
         func_00442E90(n);
     } else {
         FrontEnd_ClosePopup(D_004FFC04, o->x120);
-        func_0029DE70(o, 1);
+        GuiOnlineConnect_Back(o, 1);
         func_0044F970(&lst, -1);
         return;
     }
     if (D_004FFC04->b265 || fail) {
         o->x88 = 6;
         D_004FFC04->x268 = 0;
-        func_0033C320(o, 5);
+        GuiScreen_Navigate(o, 5);
     } else {
         o->x88 = 7;
-        if (Start_D390(o)) func_0029DFC0(o);
+        if (Start_D390(o)) GuiOnlineConnect_Advance(o);
     }
     FrontEnd_ClosePopup(D_004FFC04, o->x120);
     func_0044F970(&lst, -1);
@@ -199,7 +199,7 @@ extern int D_004FFC04;
 #define D_004FFC04 (*(int*)&D_004FFC04) /* merge_units */
 
 extern char D_004AAC10[];
-extern void func_0029F340(void*, char*, char*, char*);
+extern void GuiOnlineConnect_GetDnasText(void*, char*, char*, char*);
 #if 0 /* merge_units */
 extern void String_CtorCStr_13B480(Str_D980*, char*);
 #endif /* merge_units */
@@ -238,7 +238,7 @@ static inline void Zero(char* q, int n)
 
 #pragma opt_propagation off
 #pragma optimize_for_size on
-void func_0029D980(O_D980* o, void* src) {
+void GuiOnlineConnect_ShowDnasPopup(O_D980* o, void* src) {
     Str_D980 s;
     Str_D980 t;
     Str_D980 u;
@@ -249,7 +249,7 @@ void func_0029D980(O_D980* o, void* src) {
     Zero(title, 0x80);
     Zero(body, 0x100);
     Zero(extra, 0x80);
-    func_0029F340(src, title, body, extra);
+    GuiOnlineConnect_GetDnasText(src, title, body, extra);
     String_CtorCStr_13B480(&s, body);
     if (extra[0]) {
         String_CtorCStr_13B480(&t, D_004AAC10);
@@ -295,11 +295,11 @@ void* DME_GetLobby(void);
 #endif /* merge_units */
 #define DME_GetLobby() ((void *)DME_GetLobby()) /* merge_units */
 
-void func_0029CBB0(O_DAF0*, int);
+void GuiOnlineConnect_ShowGroup(O_DAF0*, int);
 #if 0 /* merge_units */
-char* func_0033CE30(O_DAF0*, int, int, int, int, int);
+char* GuiScreen_GetLobbyString(O_DAF0*, int, int, int, int, int);
 #endif /* merge_units */
-#define func_0033CE30(a0, a1, a2, a3, a4, a5) (func_0033CE30((O_D390 *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
+#define GuiScreen_GetLobbyString(a0, a1, a2, a3, a4, a5) (GuiScreen_GetLobbyString((O_D390 *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
 
 #if 0 /* merge_units */
 int FrontEnd_OpenPopup(int, int, char*, char*, O_DAF0*, int);
@@ -317,20 +317,20 @@ Stack_DAF0* Gui_GetScreenStack(void);
 #define Gui_GetScreenStack() ((Stack_DAF0 *)Gui_GetScreenStack()) /* merge_units */
 
 W_DAF0* GuiWidget_FindChildByName(void*, char*);
-void func_002C9AA0(int);
-void func_002C9AF0(int, int);
+void FrontEnd_StopMusic(int);
+void FrontEnd_SetMusic(int, int);
 int SFOLobby_StartNetwork(void*, void*, int);
-void* func_00452FE0(void*);
+void* SFOLobby_GetDnasResult(void*);
 int func_00452FF0(void*, char*);
 #if 0 /* merge_units */
-void func_0029D980(O_DAF0*, void*);
+void GuiOnlineConnect_ShowDnasPopup(O_DAF0*, void*);
 #endif /* merge_units */
-#define func_0029D980(a0, a1) (func_0029D980((O_D980 *)(a0), (a1))) /* merge_units */
+#define GuiOnlineConnect_ShowDnasPopup(a0, a1) (GuiOnlineConnect_ShowDnasPopup((O_D980 *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-void func_0029D390(O_DAF0*);
+void GuiOnlineConnect_DnasRetry(O_DAF0*);
 #endif /* merge_units */
-#define func_0029D390(a0) ((void)func_0029D390((O_D390 *)(a0))) /* merge_units */
+#define GuiOnlineConnect_DnasRetry(a0) ((void)GuiOnlineConnect_DnasRetry((O_D390 *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
 void String_CtorCStr_13B480(Str_DAF0*, char*);
@@ -353,7 +353,7 @@ char* String_CStr(Str_DAF0*);
 
 static inline void StrInit(Str_DAF0* s) { int i; int* p = &s->a; for (i = 0; i < 3; i++) *p++ = 0; }
 
-extern "C" void func_0029DAF0(O_DAF0* o, void* arg) {
+extern "C" void GuiOnlineConnect_Connect(O_DAF0* o, void* arg) {
     Str_DAF0 msg;
     Str_DAF0 title;
     Str_DAF0 t1;
@@ -366,9 +366,9 @@ extern "C" void func_0029DAF0(O_DAF0* o, void* arg) {
     int fe;
     net = DME_GetLobby();
     if (!net) return;
-    func_0029CBB0(o, 4);
+    GuiOnlineConnect_ShowGroup(o, 4);
     fe = D_004FFC04;
-    o->x11C = FrontEnd_OpenPopup(fe, 0, D_004AABF0, func_0033CE30(o, 9, 0, 0, 0, 0), 0, 0);
+    o->x11C = FrontEnd_OpenPopup(fe, 0, D_004AABF0, GuiScreen_GetLobbyString(o, 9, 0, 0, 0, 0), 0, 0);
     o->b95 = 0;
     w = o->x108;
     if (w) {
@@ -380,18 +380,18 @@ extern "C" void func_0029DAF0(O_DAF0* o, void* arg) {
         if (p) p->flags &= ~2;
     }
     D_00587B38 = 1;
-    func_002C9AA0(D_004FFC04);
+    FrontEnd_StopMusic(D_004FFC04);
     ok = SFOLobby_StartNetwork(net, arg, 1);
     D_00587B38 = 0;
-    func_002C9AF0(D_004FFC04, 0);
+    FrontEnd_SetMusic(D_004FFC04, 0);
     w = o->x108;
     if (w) Gui_GetScreenStack()->Hide(w);
     if (ok) {
         if (o->b95) {
-            func_0029D980(o, func_00452FE0(net));
+            GuiOnlineConnect_ShowDnasPopup(o, SFOLobby_GetDnasResult(net));
             return;
         }
-        func_0029D390(o);
+        GuiOnlineConnect_DnasRetry(o);
         return;
     }
     o->x88 = 4;
@@ -399,18 +399,18 @@ extern "C" void func_0029DAF0(O_DAF0* o, void* arg) {
     StrInit(&title);
     switch ((unsigned char)func_00452FF0(net, buf)) {
     case 6:
-        func_0029D980(o, func_00452FE0(net));
+        GuiOnlineConnect_ShowDnasPopup(o, SFOLobby_GetDnasResult(net));
         break;
     case 0x3E:
-        String_CtorCStr_13B480(&t1, func_0033CE30(o, 0xC, 0, 0, 0, 0));
+        String_CtorCStr_13B480(&t1, GuiScreen_GetLobbyString(o, 0xC, 0, 0, 0, 0));
         func_0013D680(&msg, &t1);
         String_Dtor(&t1, 0);
         break;
     default:
-        String_CtorCStr_13B480(&t2, func_0033CE30(o, 0xB, 0, 0, 0, 0));
+        String_CtorCStr_13B480(&t2, GuiScreen_GetLobbyString(o, 0xB, 0, 0, 0, 0));
         func_0013D680(&title, &t2);
         String_Dtor(&t2, 0);
-        String_CtorCStr_13B480(&t3, func_0033CE30(o, 0x84, 0, 0, 0, 0));
+        String_CtorCStr_13B480(&t3, GuiScreen_GetLobbyString(o, 0x84, 0, 0, 0, 0));
         func_0013D680(&msg, &t3);
         String_Dtor(&t3, 0);
         break;
@@ -425,12 +425,12 @@ extern "C" void func_0029DAF0(O_DAF0* o, void* arg) {
 }
 #undef D_004FFC04 /* merge_units */
 #undef DME_GetLobby /* merge_units */
-#undef func_0033CE30 /* merge_units */
+#undef GuiScreen_GetLobbyString /* merge_units */
 #undef FrontEnd_OpenPopup /* merge_units */
 #undef FrontEnd_ClosePopup /* merge_units */
 #undef Gui_GetScreenStack /* merge_units */
-#undef func_0029D980 /* merge_units */
-#undef func_0029D390 /* merge_units */
+#undef GuiOnlineConnect_ShowDnasPopup /* merge_units */
+#undef GuiOnlineConnect_DnasRetry /* merge_units */
 #undef String_CtorCStr_13B480 /* merge_units */
 #undef String_Dtor /* merge_units */
 #undef String_CStr /* merge_units */

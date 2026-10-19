@@ -42,7 +42,7 @@ extern int func_004121F0(void* src);
 extern int func_004121D0(void* src);
 extern char* func_00412190(void* src, int col);
 extern SubVec4* func_00412180(void* src);
-extern SubVec4* func_00412150(SubVec4* dst, SubVec4* src);
+extern SubVec4* SubtitleTrack_LoadCue(SubVec4* dst, SubVec4* src);
 extern float func_00412130(void* src);
 extern float func_00412110(void* src);
 extern int func_004120F0(void* src);
@@ -60,7 +60,7 @@ void MovieSubtitles_Start(Sub412220* self) {
             self->lens[i] = strlen(self->lines[i]);
             self->pos[i] = 0;
         }
-        func_00412150(&self->color, func_00412180(self->src));
+        SubtitleTrack_LoadCue(&self->color, func_00412180(self->src));
         self->f9C = func_00412130(self->src);
         self->fA0 = func_00412110(self->src);
         self->iA8 = func_004120F0(self->src);
@@ -99,7 +99,7 @@ void sceGsSyncPath(int a, int b, int c, int d);
 static inline void Free_412320(void* p, int line) { AllocGuard g; Mem_Free(0, p, D_004BEE90, line); }
 static inline void SubDtor_412320(Sub_412320* s) { if (s) { if (s->p60) Free_412320(s->p60, 0x29A); } }
 
-extern "C" void func_00412320(Self_412320* self)
+extern "C" void SubtitleTrack_Destroy(Self_412320* self)
 {
     int i;
     D_00538C68 = 1;

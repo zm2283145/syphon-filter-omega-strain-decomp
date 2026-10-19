@@ -28,7 +28,7 @@ char* GuiOnlineConnect_GetClassName(void) {
 extern int strcmp(const char* a, const char* b); /* strcmp */
 
 /* Returns 1 if name equals the string "GuiOnlineConnect". */
-int func_0029CB60(void* self, const char* name)
+int GuiOnlineConnect_IsType(void* self, const char* name)
 {
     return strcmp("GuiOnlineConnect", name) == 0;
 }

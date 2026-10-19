@@ -53,7 +53,7 @@ extern char D_004BE7F0[];
 extern char D_004BE830[];
 extern int D_00539248;
 extern int D_00571300;
-void func_00128F58(char* d, char* s);
+void Libc_Strcat(char* d, char* s);
 void Resource_Construct(MC_File* f);
 void FileMan_Release(void* f, int del);
 void func_0036E140(MC_File* f, char* name, int a, int b);
@@ -75,7 +75,7 @@ MC_State* func_00404FD0(MC_State* s, short del)
         Resource_Construct(&fm);
         for (i = s->meshLoaded; i < s->meshCount; i++) {
             String_Copy(name, s->names[i]);
-            func_00128F58(name, D_004BE830);
+            Libc_Strcat(name, D_004BE830);
             for (j = 1; j > 0; j--) {
                 MC_Lod* l = (MC_Lod*)((char*)s->lods + i * 32 + j * 16);
                 int h = l->h;

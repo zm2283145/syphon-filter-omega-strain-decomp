@@ -15,7 +15,7 @@ extern int D_00494178;
 extern int D_005721A8;
 extern unsigned char D_005721C8;
 
-void func_0012EE30(int arg0)
+void Game_ClearOtherAgentsB70(int arg0)
 {
     int i;
     i = 0;

@@ -1,6 +1,6 @@
 extern int strcmp(const char *, const char *);
 extern void String_Copy(char *, char *);
-extern char *func_00128F58(char *, const char *);
+extern char *Libc_Strcat(char *, const char *);
 extern const char D_004AC1C8[];
 typedef struct { char cwd[0x898]; } MC2Port;
 extern MC2Port D_00513490[];
@@ -22,7 +22,7 @@ int func_002BA110(int idx, char *path, char *out)
     if (r != 0x81010011) return r;
     if (!(st[0] & 0x20)) return 0x81010014;
     String_Copy(D_00513490[idx].cwd, name);
-    func_00128F58(D_00513490[idx].cwd, D_004AC1C8);
+    Libc_Strcat(D_00513490[idx].cwd, D_004AC1C8);
     if (out) String_Copy(out, name);
     return 0;
 }

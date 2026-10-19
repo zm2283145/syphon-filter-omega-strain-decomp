@@ -50,7 +50,7 @@ int TeleportMsg_IsMode3(Msg* m);
 void* func_00133EC0(void* obj);
 void func_0015A400(V4* out, void* v);
 void Vec4_CopyAsPoint(V4* out, void* v);
-void func_0014B160(void* data, void* obj, V4* v);
+void Mtx_SetRotationTranslation(void* data, void* obj, V4* v);
 void NpcPath_HoldAtRouteNode(Path*, int);
 void NpcAi_ModeFollow(Self*, FMsg*);
 M4* Mtx_GetIdentity();
@@ -125,8 +125,8 @@ static inline bool NodeActive(PNode* n) { Obj* o = n->obj; bool r = 0; if (o) { 
 
 
 
-static inline void SetMtx(Msg* m, M4* mtx) { V4 a2; V4 b2; V4* v; if (TeleportMsg_IsMode3(m)) { func_0015A400(&a2, func_00133EC0(mtx)); v = &a2; } else { Vec4_CopyAsPoint(&b2, func_00133EC0(mtx)); v = &b2; } func_0014B160(m->data, mtx, v); }
-static inline void SetPt(Msg* m, M4* id, V4* p) { V4 pt; Vec4_CopyAsPoint(&pt, p); func_0014B160(m->data, id, &pt); }
+static inline void SetMtx(Msg* m, M4* mtx) { V4 a2; V4 b2; V4* v; if (TeleportMsg_IsMode3(m)) { func_0015A400(&a2, func_00133EC0(mtx)); v = &a2; } else { Vec4_CopyAsPoint(&b2, func_00133EC0(mtx)); v = &b2; } Mtx_SetRotationTranslation(m->data, mtx, v); }
+static inline void SetPt(Msg* m, M4* id, V4* p) { V4 pt; Vec4_CopyAsPoint(&pt, p); Mtx_SetRotationTranslation(m->data, id, &pt); }
 static inline void MakeRot(M4* m, const V4& ax, float a) { Mtx_MakeAxisRotation(m, Vec4_GetX((V4*)&ax), Vec4_GetY((V4*)&ax), Vec4_GetZ((V4*)&ax), a); }
 extern "C" void func_002D5160(Self* self, float dt)
 {

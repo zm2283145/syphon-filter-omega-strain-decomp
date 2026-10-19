@@ -76,7 +76,7 @@ extern "C" void FileMan_Release(Pt1FsStr* s, int flag);
 extern "C" void WeaponInv_SetSlotModelState(void* weapons, int item, int state);
 extern "C" Pt1FsLight* LightMgr_AllocPoint(void* pool, int kind);
 extern "C" Pt1FsV4* func_00426890(Pt1FsV4* out, float r, float g, float b, float a);
-extern "C" Pt1FsV4* func_00132000(Pt1FsV4* out, float x, float y, float z, float w);
+extern "C" Pt1FsV4* Vec4_Set(Pt1FsV4* out, float x, float y, float z, float w);
 extern "C" void LevelLight_InitPoint(Pt1FsLight* l, int flags, Pt1FsV4* color, Pt1FsV4* pos, int range);
 extern "C" void TargetVis_Register(void* reg, int id);
 extern "C" void TargetVis_Unregister(void* reg, int id);
@@ -126,7 +126,7 @@ extern "C" void Flashlight_SetState(Pt1FsSelf* self, int on)
         if (l) {
             Pt1FsV4 color;
             Pt1FsV4 pos;
-            LevelLight_InitPoint(l, 0x40, func_00426890(&color, 1.0f, 1.0f, 1.0f, 1.0f), func_00132000(&pos, 0.0f, 0.0f, 0.0f, 0.0f), 0x10);
+            LevelLight_InitPoint(l, 0x40, func_00426890(&color, 1.0f, 1.0f, 1.0f, 1.0f), Vec4_Set(&pos, 0.0f, 0.0f, 0.0f, 0.0f), 0x10);
             *(void**)((char*)l + 4) = ((char*)D_004E15E0);
             l->extra = 0;
         }

@@ -427,7 +427,7 @@ void Appearance_ReorderParts(Man_1100* m);
 void cVUM_GOBJ_InitModel(Model_1100* m, char* name);
 void func_00290BB0(Word_1100* w, int n);
 void func_00290A50(SVec_1100* v, Word_1100* w, unsigned char f);
-V4_1100* func_00132000(V4_1100* v, float x, float y, float z, float w);
+V4_1100* Vec4_Set(V4_1100* v, float x, float y, float z, float w);
 void func_002909C0(Sph_1100* s, int bone, float r, V4_1100* off);
 void func_002909A0(SVec_1100* v, Sph_1100** p);
 void func_001B06F0(Sph_1100* s, int f);
@@ -452,7 +452,7 @@ void Actor_ResolveMotionSelection(Req_1100* r, int* sel, Word_1100* w, void* m);
 float Model_GetFirstFloat(void* m);
 V4_1100* AnimRate_Init(Rate_1100* r, float f);
 }
-static inline V4_1100* Splat_1100(V4_1100* t, float) { float z = 0.0f; return func_00132000(t, z, z, z, z); }
+static inline V4_1100* Splat_1100(V4_1100* t, float) { float z = 0.0f; return Vec4_Set(t, z, z, z, z); }
 extern "C" {
 void Vec4_Copy_18A350(Rate_1100* d, V4_1100* s);
 void AnimEvent_Construct(Ev_1100* e);

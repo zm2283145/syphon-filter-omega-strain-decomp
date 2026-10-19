@@ -18,7 +18,7 @@ extern char D_004BD0D0[];
 extern char D_0049AE20[];
 extern char D_0049AE40[];
 void func_00123BE8(int stream, const char* msg);
-void func_00121B60(void);
+void Libc_Abort(void);
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void Mem_Free(int pool, void* p, char* file, int line);
 void Vec4_Copy(Q8180* d, Q8180* s);
@@ -77,7 +77,7 @@ extern "C" void ColQuery_CopyCandidates(CandVec8180* v, Cand8180* first, Cand818
     } else {
         if (n > 0xDB6DB) {
             func_00123BE8(D_00489738->stream, D_004BD0D0);
-            func_00121B60();
+            Libc_Abort();
         }
         v->count = 0;
         if (v->data) {

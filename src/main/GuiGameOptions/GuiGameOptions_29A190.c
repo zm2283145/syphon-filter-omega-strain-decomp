@@ -92,7 +92,7 @@ char* String_CStr(Str_A190* s);
 void String_Dtor(Str_A190* s, int flags);
 void GuiGameOptions_Show(Hud_A190* self, int idx);
 void GuiGameOptions_Enter(Hud_A190* self);
-void func_002996D0(Hud_A190* self, int a);
+void GuiGameOptions_VideoRevert(Hud_A190* self, int a);
 void GuiGameOptions_Refresh(Hud_A190* self, int mask);
 void GameOptions_Apply(void* p, int mask);
 void PadRumble_Start(float f, int a, int b, int c, int d);
@@ -219,7 +219,7 @@ extern "C" int GuiGameOptions_HandleEvent(Hud_A190* self, Wdg_A190* w, unsigned 
             if (msg == 0x1A) {
                 self->x78 = 0;
             } else {
-                func_002996D0(self, 0);
+                GuiGameOptions_VideoRevert(self, 0);
             }
             return 1;
         }

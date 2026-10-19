@@ -21,7 +21,7 @@ void* func_0016B340(void* p);
 void* ObjMan_Ctor(void* p);
 void* HotboxTracker_Construct(void* p, int a);
 void* Options_SetDefaults(void* p);
-void* func_002CC5A0(void* p);
+void* FrontEnd_ctor(void* p);
 void* func_00147910(void* p);
 void Script_AddChild(void* w, void* p);
 void PtrVec_Reserve(void* p, int n);
@@ -219,7 +219,7 @@ extern "C" World_WC* World_Construct(World_WC* w)
     {
         void* p;
         WC_ALLOC(p, void*, 0x318, 0xA3);
-        if (p) p = func_002CC5A0(p);
+        if (p) p = FrontEnd_ctor(p);
         w->fB4 = p;
     }
     Script_AddChild(w, w->fB4);

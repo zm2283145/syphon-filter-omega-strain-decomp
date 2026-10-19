@@ -32,7 +32,7 @@ void func_002EBC48(int*);
 void func_002EBCE0(int*);
 int func_002EBEC8(int*, int);
 int func_003A6BC0(void);
-void func_004536B0(Mgr6E0*);
+void SFOLobby_Update(Mgr6E0*);
 int func_00453F30(int);
 void func_0046A998(Msg46A9*);
 void func_0046AA18(char*);
@@ -95,7 +95,7 @@ int func_004446E0(int update)
     ret = MGCLUpdate();
     if (ret == 0) {
         if (!update) {
-            func_004536B0(D_00585E60);
+            SFOLobby_Update(D_00585E60);
         }
     } else if (func_00453F30(2) == 0) {
         D_005723B8 = 1;

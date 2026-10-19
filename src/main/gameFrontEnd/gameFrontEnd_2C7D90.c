@@ -20,7 +20,7 @@ int Mem_Free();
 #pragma push
 #pragma cplusplus on
 struct Obj81D0 { char pad[0x310]; unsigned char active; };
-extern "C" void func_002C81D0(Obj81D0* o); /* gsynth: defined below */
+extern "C" void FrontEnd_StopSplashThread(Obj81D0* o); /* gsynth: defined below */
 #pragma pop
 #pragma cplusplus on
 class VObj {
@@ -71,9 +71,9 @@ typedef struct {
 extern "C" {
 extern void func_002C7C40(char* s, int n);
 #if 0 /* merge_units */
-extern void func_002C81D0(Self7D90* self);
+extern void FrontEnd_StopSplashThread(Self7D90* self);
 #endif /* merge_units */
-#define func_002C81D0(a0) (func_002C81D0((Obj81D0 *)(a0))) /* merge_units */
+#define FrontEnd_StopSplashThread(a0) (FrontEnd_StopSplashThread((Obj81D0 *)(a0))) /* merge_units */
 
 extern void FrontEnd_StartSplashThread(Self7D90* self);
 extern long long Time_GetMilliseconds(unsigned char on);
@@ -141,7 +141,7 @@ extern "C" void FrontEnd_SetLoadingScreen(Self7D90* self, int on, char* a, char*
         }
         FrontEnd_StartSplashThread(self);
     } else {
-        func_002C81D0(self);
+        FrontEnd_StopSplashThread(self);
         {
             VObj* o = Gui_GetScreenStack();
             o->f68(D_0051EF80);
@@ -153,7 +153,7 @@ extern "C" void FrontEnd_SetLoadingScreen(Self7D90* self, int on, char* a, char*
         self->f2D = 0;
     }
 }
-#undef func_002C81D0 /* merge_units */
+#undef FrontEnd_StopSplashThread /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002C7D90(void) {}
 #pragma pop /* merge_units */
@@ -250,7 +250,7 @@ void TerminateThread(int thread);
 void DeleteThread(int thread);
 }
 
-extern "C" void func_002C81D0(Obj81D0* o)
+extern "C" void FrontEnd_StopSplashThread(Obj81D0* o)
 {
     if (o->active) {
         Alloc_Lock(2);

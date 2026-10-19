@@ -26,7 +26,7 @@ extern "C" {
 extern Unk489738* D_00489738;
 extern char D_004BFB10[];
 void func_00123BE8(int channel, const char* message);
-void func_00121B60(void);
+void Libc_Abort(void);
 void func_0013CD40(void* node, void* root);
 void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
 void Mem_Free(int pool, void* allocation, char* file, int line);
@@ -48,7 +48,7 @@ struct TransferTreeAllocator {
         /* This form retains the retail unsigned relational comparison. */
         if ((unsigned int)tree->count > max_size() - 1) {
             func_00123BE8(D_00489738->unk0C, D_004BFB10);
-            func_00121B60();
+            Libc_Abort();
         }
         Node* node;
         {

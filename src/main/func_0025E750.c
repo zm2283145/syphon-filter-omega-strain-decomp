@@ -54,7 +54,7 @@ void func_0025CA40(void* s);
 void Vec4_Copy(V4_0025E750* d, V4_0025E750* s);
 void GuiBatch_AddVertexColor(V4_0025E750* d, V4_0025E750* s);
 float GuiBatch_AddVertexUV(void);
-V4_0025E750* func_00132000(V4_0025E750* o, float x, float y, float z, float w);
+V4_0025E750* Vec4_Set(V4_0025E750* o, float x, float y, float z, float w);
 void Renderer_FlushPrimitives(void* s);
 }
 #define D_00539224 (D_00539210.f24)

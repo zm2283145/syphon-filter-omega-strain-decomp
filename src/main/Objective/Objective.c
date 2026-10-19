@@ -188,9 +188,9 @@ static inline void merge_flush_func_00224F30(void) {}
 #pragma push
 #pragma cplusplus on
 #if 0 /* merge_units */
-extern "C" int func_00228B20(int d0, int arg1); /* gsynth: defined below */
+extern "C" int Objective_DupString(int d0, int arg1); /* gsynth: defined below */
 #endif /* merge_units */
-#define func_00228B20(a0, a1) (func_00228B20((void *)(a0), (void *)(a1))) /* merge_units */
+#define Objective_DupString(a0, a1) (Objective_DupString((void *)(a0), (void *)(a1))) /* merge_units */
 
 #pragma pop
 
@@ -205,9 +205,9 @@ extern ObjectiveP* Objective_ResolveReceiver(void* obj);
 #define Objective_ResolveReceiver(a0) ((ObjectiveP *)Objective_ResolveReceiver((a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int func_00228B20(ObjectiveP* obj, int text);
+extern int Objective_DupString(ObjectiveP* obj, int text);
 #endif /* merge_units */
-#define func_00228B20(a0, a1) (func_00228B20((void *)(a0), (void *)(a1))) /* merge_units */
+#define Objective_DupString(a0, a1) (Objective_DupString((void *)(a0), (void *)(a1))) /* merge_units */
 
 
 /* Script native: cObjective.SetPluralString(text). */
@@ -215,12 +215,12 @@ int Script_cObjective_SetPluralString(ScriptArg* args) {
     volatile int textSlot = args[1].i;
     int text = textSlot;
     ObjectiveP* obj = Objective_ResolveReceiver(args[0].p);
-    obj->pluralString = func_00228B20(obj, text);
+    obj->pluralString = Objective_DupString(obj, text);
     return 0;
 }
-#undef func_00228B20 /* merge_units */
+#undef Objective_DupString /* merge_units */
 #undef Objective_ResolveReceiver /* merge_units */
-#undef func_00228B20 /* merge_units */
+#undef Objective_DupString /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00225380(void) {}
 #pragma pop /* merge_units */
@@ -237,9 +237,9 @@ extern Objective* Objective_ResolveReceiver(void* p);
 #define Objective_ResolveReceiver(a0) ((Objective *)Objective_ResolveReceiver((a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int func_00228B20(Objective* obj, int str);
+extern int Objective_DupString(Objective* obj, int str);
 #endif /* merge_units */
-#define func_00228B20(a0, a1) (func_00228B20((void *)(a0), (void *)(a1))) /* merge_units */
+#define Objective_DupString(a0, a1) (Objective_DupString((void *)(a0), (void *)(a1))) /* merge_units */
 
 
 /* Script native: sets the objective's single string. */
@@ -251,11 +251,11 @@ int Script_cObjective_SetSingleString(ScriptArg_002253D0* args)
     strArg[0] = args[1].i;
     str = *(int*)strArg;
     obj = Objective_ResolveReceiver(args[0].p);
-    obj->string = func_00228B20(obj, str);
+    obj->string = Objective_DupString(obj, str);
     return 0;
 }
 #undef Objective_ResolveReceiver /* merge_units */
-#undef func_00228B20 /* merge_units */
+#undef Objective_DupString /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002253D0(void) {}
 #pragma pop /* merge_units */
@@ -271,9 +271,9 @@ extern Objective_00225420* Objective_ResolveReceiver(void* object);
 #define Objective_ResolveReceiver(a0) ((Objective_00225420 *)Objective_ResolveReceiver((a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int func_00228B20(Objective_00225420* objective, int text);
+extern int Objective_DupString(Objective_00225420* objective, int text);
 #endif /* merge_units */
-#define func_00228B20(a0, a1) (func_00228B20((void *)(a0), (void *)(a1))) /* merge_units */
+#define Objective_DupString(a0, a1) (Objective_DupString((void *)(a0), (void *)(a1))) /* merge_units */
 
 
 /* Script native: sets the objective's fail string from args[1]; returns 0. */
@@ -282,11 +282,11 @@ int Script_cObjective_SetFailString(ScriptArg_00225420* args)
     volatile int text = args[1].i;
     int value = text;
     Objective_00225420* objective = Objective_ResolveReceiver(args[0].p);
-    objective->failString = func_00228B20(objective, value);
+    objective->failString = Objective_DupString(objective, value);
     return 0;
 }
 #undef Objective_ResolveReceiver /* merge_units */
-#undef func_00228B20 /* merge_units */
+#undef Objective_DupString /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00225420(void) {}
 #pragma pop /* merge_units */
@@ -311,9 +311,9 @@ extern Objective_00225470* Objective_ResolveReceiver(void*);
 #define Objective_ResolveReceiver(a0) ((Objective_00225470 *)Objective_ResolveReceiver((a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int func_00228B20(Objective_00225470*, int);
+extern int Objective_DupString(Objective_00225470*, int);
 #endif /* merge_units */
-#define func_00228B20(a0, a1) (func_00228B20((void *)(a0), (void *)(a1))) /* merge_units */
+#define Objective_DupString(a0, a1) (Objective_DupString((void *)(a0), (void *)(a1))) /* merge_units */
 
 
 /* Script: cObjective.SetCompleteString(string). */
@@ -321,11 +321,11 @@ int Script_cObjective_SetCompleteString(ScriptArg_00225470* args) {
     volatile int str = args[1].i;
     int s = str;
     Objective_00225470* obj = Objective_ResolveReceiver(args[0].p);
-    obj->completeString = func_00228B20(obj, s);
+    obj->completeString = Objective_DupString(obj, s);
     return 0;
 }
 #undef Objective_ResolveReceiver /* merge_units */
-#undef func_00228B20 /* merge_units */
+#undef Objective_DupString /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00225470(void) {}
 #pragma pop /* merge_units */
@@ -341,9 +341,9 @@ extern Objective_002254C0* Objective_ResolveReceiver(void* object);
 #define Objective_ResolveReceiver(a0) ((Objective_002254C0 *)Objective_ResolveReceiver((a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int func_00228B20(Objective_002254C0* objective, int text);
+extern int Objective_DupString(Objective_002254C0* objective, int text);
 #endif /* merge_units */
-#define func_00228B20(a0, a1) (func_00228B20((void *)(a0), (void *)(a1))) /* merge_units */
+#define Objective_DupString(a0, a1) (Objective_DupString((void *)(a0), (void *)(a1))) /* merge_units */
 
 
 /* Script native: sets the objective's "add" string from args[1]; returns 0. */
@@ -352,11 +352,11 @@ int Script_cObjective_SetAddString(ScriptArg_002254C0* args)
     volatile int text = args[1].i;
     int value = text;
     Objective_002254C0* objective = Objective_ResolveReceiver(args[0].p);
-    objective->addString = func_00228B20(objective, value);
+    objective->addString = Objective_DupString(objective, value);
     return 0;
 }
 #undef Objective_ResolveReceiver /* merge_units */
-#undef func_00228B20 /* merge_units */
+#undef Objective_DupString /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002254C0(void) {}
 #pragma pop /* merge_units */
@@ -380,9 +380,9 @@ extern ObjectiveMap* Objective_ResolveReceiver(int handle);
 #define Objective_ResolveReceiver(a0) ((ObjectiveMap *)Objective_ResolveReceiver((void *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int func_00228B20(ObjectiveMap* obj, int str);
+extern int Objective_DupString(ObjectiveMap* obj, int str);
 #endif /* merge_units */
-#define func_00228B20(a0, a1) (func_00228B20((void *)(a0), (void *)(a1))) /* merge_units */
+#define Objective_DupString(a0, a1) (Objective_DupString((void *)(a0), (void *)(a1))) /* merge_units */
 
 
 /* Script native: cObjective.SetMapString(string). */
@@ -390,11 +390,11 @@ int Script_cObjective_SetMapString(ScriptArgs2* args) {
     volatile int arg = args->arg1;
     int str = arg;
     ObjectiveMap* obj = Objective_ResolveReceiver(args->obj);
-    obj->mapString = func_00228B20(obj, str);
+    obj->mapString = Objective_DupString(obj, str);
     return 0;
 }
 #undef Objective_ResolveReceiver /* merge_units */
-#undef func_00228B20 /* merge_units */
+#undef Objective_DupString /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00225510(void) {}
 #pragma pop /* merge_units */
@@ -419,9 +419,9 @@ extern Objective_00225560* Objective_ResolveReceiver(void*);
 #define Objective_ResolveReceiver(a0) ((Objective_00225560 *)Objective_ResolveReceiver((a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int func_00228B20(Objective_00225560*, int);
+extern int Objective_DupString(Objective_00225560*, int);
 #endif /* merge_units */
-#define func_00228B20(a0, a1) (func_00228B20((void *)(a0), (void *)(a1))) /* merge_units */
+#define Objective_DupString(a0, a1) (Objective_DupString((void *)(a0), (void *)(a1))) /* merge_units */
 
 
 /* Script: cObjective.SetMenuString(string). */
@@ -429,11 +429,11 @@ int Script_cObjective_SetMenuString(ScriptArg_00225560* args) {
     volatile int str = args[1].i;
     int s = str;
     Objective_00225560* obj = Objective_ResolveReceiver(args[0].p);
-    obj->menuString = func_00228B20(obj, s);
+    obj->menuString = Objective_DupString(obj, s);
     return 0;
 }
 #undef Objective_ResolveReceiver /* merge_units */
-#undef func_00228B20 /* merge_units */
+#undef Objective_DupString /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00225560(void) {}
 #pragma pop /* merge_units */
@@ -448,9 +448,9 @@ extern Objective002255B0* Objective_ResolveReceiver(int handle);
 #define Objective_ResolveReceiver(a0) ((Objective002255B0 *)Objective_ResolveReceiver((void *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int func_00228B20(Objective002255B0* obj, int name);
+extern int Objective_DupString(Objective002255B0* obj, int name);
 #endif /* merge_units */
-#define func_00228B20(a0, a1) (func_00228B20((void *)(a0), (void *)(a1))) /* merge_units */
+#define Objective_DupString(a0, a1) (Objective_DupString((void *)(a0), (void *)(a1))) /* merge_units */
 
 /* Script: cObjective.SetName(name). */
 int Script_cObjective_SetName(int* args)
@@ -459,11 +459,11 @@ int Script_cObjective_SetName(int* args)
     Objective002255B0* obj;
     int n = name;
     obj = Objective_ResolveReceiver(args[0]);
-    obj->name = func_00228B20(obj, n);
+    obj->name = Objective_DupString(obj, n);
     return 0;
 }
 #undef Objective_ResolveReceiver /* merge_units */
-#undef func_00228B20 /* merge_units */
+#undef Objective_DupString /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002255B0(void) {}
 #pragma pop /* merge_units */
@@ -2858,7 +2858,7 @@ extern char D_004A5D88;
 
 extern unsigned char D_00533880;
 }
-extern "C" int func_00228B20(ObjLabelObjective* d0, void* arg1) {
+extern "C" int Objective_DupString(ObjLabelObjective* d0, void* arg1) {
     int temp_s0;
     int temp_s0_2;
 

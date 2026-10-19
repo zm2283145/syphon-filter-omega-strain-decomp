@@ -47,7 +47,7 @@ extern "C" void func_003B9E70(DqBuf* self, unsigned int n)
         int* nd;
         if (MaxSize() < n) {
             func_00123BE8(D_00489738->stream, "cdeque::reserve length error");
-            func_00121B60();
+            Libc_Abort();
         }
         nd = (int*)TStr_Alloc((n + 1) * 4, D_0049AE50, 0x5C);
         if (self->data) {

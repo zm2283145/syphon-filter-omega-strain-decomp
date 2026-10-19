@@ -6,7 +6,7 @@ extern int D_00489738;
 extern unsigned int strlen(const char*);
 extern int func_00128C60();
 extern int __svfscanf(FILE_X* fp, const char* fmt, va_list ap);
-int func_00128C68(const char *str, const char *fmt, ...)
+int Libc_Sscanf(const char *str, const char *fmt, ...)
 {
   int ret;
   va_list ap;

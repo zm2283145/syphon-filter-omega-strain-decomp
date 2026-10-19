@@ -39,7 +39,7 @@ extern char D_004BC5D0[];
 extern char D_004BC640[];
 extern char D_004BC650[];
 int strstr(char* s, char* t);
-void func_00128F58(char* s, char* t);
+void Libc_Strcat(char* s, char* t);
 void* func_00398320(unsigned int size, int pool, char* file, int line);
 Rel* func_00398450(Rel* r);
 void* func_003983E0(void* self);
@@ -82,7 +82,7 @@ extern "C" void ParticleLib_Request(void* self, const char* name, int value)
     int i;
     String_Copy(buf, name);
     if (!strstr(buf, D_004BC640))
-        func_00128F58(buf, D_004BC640);
+        Libc_Strcat(buf, D_004BC640);
     if (!D_0053BB58) {
         Tbl* t = (Tbl*)New398(0x10, 0x11AE);
         if (t) {

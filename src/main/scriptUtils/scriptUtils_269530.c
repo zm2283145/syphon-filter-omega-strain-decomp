@@ -63,7 +63,7 @@ typedef struct NodeList {
     void* group;
 } NodeList;
 
-extern int func_0015C120(int);
+extern int ScriptNode_Identity(int);
 #if 0 /* merge_units */
 extern NodeList* func_00269810(void*);
 #endif /* merge_units */
@@ -73,7 +73,7 @@ extern int Group_FindByObject(void*, int);
 
 /* Script: cNodeList.Contains(node). */
 int Script_cNodeList_Contains(ScriptArg* args) {
-    int node = func_0015C120(args[1].i);
+    int node = ScriptNode_Identity(args[1].i);
     return Group_FindByObject(func_00269810(args[0].p)->group, node) != -1;
 }
 #undef func_00269810 /* merge_units */
@@ -86,9 +86,9 @@ static inline void merge_flush_func_002695E0(void) {}
 #pragma push /* merge_units */
 typedef struct { char pad[0x60]; void* list; } Obj00269630;
 #if 0 /* merge_units */
-extern int func_0015C120(int handle);
+extern int ScriptNode_Identity(int handle);
 #endif /* merge_units */
-#define func_0015C120(a0) (func_0015C120((a0))) /* merge_units */
+#define ScriptNode_Identity(a0) (ScriptNode_Identity((a0))) /* merge_units */
 
 #if 0 /* merge_units */
 extern Obj00269630* func_00269810(int handle);
@@ -103,11 +103,11 @@ extern int Group_FindByObject(void* list, int key);
 /* Script: cNodeList.Find(key). */
 int Script_cNodeList_Find(int* args)
 {
-    int key = func_0015C120(args[1]);
+    int key = ScriptNode_Identity(args[1]);
     volatile int result = Group_FindByObject(func_00269810(args[0])->list, key);
     return result;
 }
-#undef func_0015C120 /* merge_units */
+#undef ScriptNode_Identity /* merge_units */
 #undef func_00269810 /* merge_units */
 #undef Group_FindByObject /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
@@ -121,9 +121,9 @@ extern int D_004F8400;  /* cNodeList script type id (>= 100) */
 extern void Group_AddObject(ScriptGroup* group, void* obj);
 extern int Group_RemoveObject(ScriptGroup* group, void* obj);
 #if 0 /* merge_units */
-extern void* func_0015C120(int handle);
+extern void* ScriptNode_Identity(int handle);
 #endif /* merge_units */
-#define func_0015C120(a0) ((void *)func_0015C120((a0))) /* merge_units */
+#define ScriptNode_Identity(a0) ((void *)ScriptNode_Identity((a0))) /* merge_units */
 
 extern int func_002697E0(int value);
 #if 0 /* merge_units */
@@ -144,21 +144,21 @@ int Script_cNodeList_Randomize(ScriptArg* args) {
 
 /* Script native: cNodeList.Remove(obj handle = args[1]). */
 int Script_cNodeList_Remove(ScriptArg* args) {
-    void* obj = func_0015C120(args[1].i);
+    void* obj = ScriptNode_Identity(args[1].i);
     Group_RemoveObject(func_00269810(args[0].p)->group, obj);
     return 0;
 }
 
 /* Script native: cNodeList.AddDup(obj handle = args[1]). */
 int Script_cNodeList_AddDup(ScriptArg* args) {
-    void* obj = func_0015C120(args[1].i);
+    void* obj = ScriptNode_Identity(args[1].i);
     Group_AddObjectDup(func_00269810(args[0].p)->group, obj);
     return 0;
 }
 
 /* Script native: cNodeList.Add(obj handle = args[1]). */
 int Script_cNodeList_Add(ScriptArg* args) {
-    void* obj = func_0015C120(args[1].i);
+    void* obj = ScriptNode_Identity(args[1].i);
     Group_AddObject(func_00269810(args[0].p)->group, obj);
     return 0;
 }
@@ -182,7 +182,7 @@ int func_002697E0(int value) {
 cNodeList* func_00269800(void* obj) {
     return func_00269810(obj);
 }
-#undef func_0015C120 /* merge_units */
+#undef ScriptNode_Identity /* merge_units */
 #undef func_00269810 /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00269680(void) {}

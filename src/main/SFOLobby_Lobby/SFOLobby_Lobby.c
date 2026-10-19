@@ -19,7 +19,7 @@ char *strncpy(void *, const void *, int);
 void SFOLobby_CacheAccount(SFOLobby* s, int id, char* name, int ip, unsigned char* data); /* gsynth: defined below */
 #pragma cplusplus on
 extern "C" {
-int func_00128C68(char *, char *, ...);
+int Libc_Sscanf(char *, char *, ...);
 void LobbyArray_Copy(LobbyArray *, LobbyArray *);
 int LobbyArray_Append(LobbyArray *, void *);
 #define LobbyArray_At(a0, a1) ((char *)LobbyArray_At((a0), (a1))) /* merge_units */
@@ -78,7 +78,7 @@ extern "C" void func_0044FA70(int d0, int d1, int d2, char *arg3)
     if (D_00585E60 != 0) {
         list = &D_00585E60->listA8;
         if (list != 0) {
-            if (func_00128C68(arg3, D_004C0F38, &idx, &key, &third) != 3)
+            if (Libc_Sscanf(arg3, D_004C0F38, &idx, &key, &third) != 3)
                 return;
             idx--;
             if (idx >= D_00585E60->array00.count)
@@ -110,7 +110,7 @@ extern "C" void func_0044FA70(int d0, int d1, int d2, char *arg3)
                     p++;
                     i++;
                 }
-                if (func_00128C68(buf, D_004C0F50, name, &n1, &n2, &n3, &n4) != 5)
+                if (Libc_Sscanf(buf, D_004C0F50, name, &n1, &n2, &n3, &n4) != 5)
                     ok = false;
                 if (name[0] != 0) {
                     p = name;
@@ -1050,7 +1050,7 @@ static inline void merge_flush_func_004515F0(void) {}
 extern void LobbyArray_Free(LobbyArray* p);
 /* Shuts the lobby down from states 0, 5 and 10 (state becomes 9 unless it was 10)
  * and frees the caller lists and the lobby arrays. */
-void func_00451610(SFOLobby* self)
+void SFOLobby_LeaveRoom(SFOLobby* self)
 {
     if (self->state == SFOLOBBY_STATE_IDLE) return;
     if (self->state == 5 || self->state == 0 || self->state == 10) {

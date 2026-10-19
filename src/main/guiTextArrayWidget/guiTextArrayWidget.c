@@ -72,7 +72,7 @@ extern Node425* GuiTextArrayWidget_GetCell(int a, int b, int c);
 
 
 /* Looks up a node and, if found, sets its 4-float value and flag bit 2. */
-void func_00425C30(int a, int b, int c, float* value) {
+void GuiTextArrayWidget_SetCellRgba(int a, int b, int c, float* value) {
     Node425* node = GuiTextArrayWidget_GetCell(a, b, c);
     if (node) {
         node->value[0] = value[0];
@@ -112,7 +112,7 @@ extern TextArrayCell* GuiTextArrayWidget_GetCell(guiTextArrayWidget* widget, int
 
 
 /* Set a cell's byte attribute and mark that attribute as present. */
-void func_00425CD0(guiTextArrayWidget* widget, int row, int column, int attribute)
+void GuiTextArrayWidget_SetCellHAlign(guiTextArrayWidget* widget, int row, int column, int attribute)
 {
     TextArrayCell* cell = GuiTextArrayWidget_GetCell(widget, row, column);
     if (cell) {

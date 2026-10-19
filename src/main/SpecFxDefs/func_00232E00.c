@@ -35,7 +35,7 @@ extern void ParticleInst_Draw(void* obj, int key, Mtx232E00* m);
 
 #pragma push
 #pragma opt_rotateloops off
-void func_00232E00(Fx232E00* self) {
+void SnowField_Draw(Fx232E00* self) {
     ListIt232E00 it;
     ListIt232E00 first;
     ListIt232E00 last;

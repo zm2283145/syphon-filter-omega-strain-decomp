@@ -16,7 +16,7 @@ extern void* D_004FFC04;
 extern char D_004ABB08[];
 void* Gui_GetScreenList(void);
 void* GuiManager_FindOrLoad(void* a, char* b, char* c);
-int func_0033CE30(S_002ADAB0* self, int a, char* b, int c, int d, int e);
+int GuiScreen_GetLobbyString(S_002ADAB0* self, int a, char* b, int c, int d, int e);
 void GuiKeyboard_Open(void* pg, int a, char* b, S_002ADAB0* c, int d, int e, int f);
 void* DME_GetLobby(void);
 char* String_CStr(void* s);
@@ -35,7 +35,7 @@ extern "C" int func_002ADAB0(S_002ADAB0* self, void* w, int msg, int sub, char* 
     if (m == 2 && w == self->p160) {
         void* pg = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiKeyboard", "KEYBOARD");
         if (pg)
-            GuiKeyboard_Open(pg, func_0033CE30(self, 0x40, 0, 0, 0, 0), D_004ABB08, self, 0xF, 0xC, 0);
+            GuiKeyboard_Open(pg, GuiScreen_GetLobbyString(self, 0x40, 0, 0, 0, 0), D_004ABB08, self, 0xF, 0xC, 0);
         return 1;
     }
     if (m == 0x1A) {
@@ -45,15 +45,15 @@ extern "C" int func_002ADAB0(S_002ADAB0* self, void* w, int msg, int sub, char* 
                 int h;
                 char* nm = String_CStr(self->s104);
                 void* ui = D_004FFC04;
-                h = FrontEnd_OpenPopup(ui, 0, D_004ABB08, func_0033CE30(self, 0x36, nm, 0, 0, 0), 0, 0);
+                h = FrontEnd_OpenPopup(ui, 0, D_004ABB08, GuiScreen_GetLobbyString(self, 0x36, nm, 0, 0, 0), 0, 0);
                 if (func_0044D9C0(g, self->f100)) {
                     char* nm2 = String_CStr(self->s104);
                     void* ui2 = D_004FFC04;
-                    FrontEnd_OpenPopup(ui2, 2, D_004ABB08, func_0033CE30(self, 0x37, nm2, 0, 0, 0), 0, 0);
+                    FrontEnd_OpenPopup(ui2, 2, D_004ABB08, GuiScreen_GetLobbyString(self, 0x37, nm2, 0, 0, 0), 0, 0);
                 } else {
                     char* nm3 = String_CStr(self->s104);
                     void* ui3 = D_004FFC04;
-                    FrontEnd_OpenPopup(ui3, 2, D_004ABB08, func_0033CE30(self, 0x38, nm3, 0, 0, 0), 0, 0);
+                    FrontEnd_OpenPopup(ui3, 2, D_004ABB08, GuiScreen_GetLobbyString(self, 0x38, nm3, 0, 0, 0), 0, 0);
                 }
                 FrontEnd_ClosePopup(D_004FFC04, h);
             }
@@ -66,7 +66,7 @@ extern "C" int func_002ADAB0(S_002ADAB0* self, void* w, int msg, int sub, char* 
                     int r = SFOLobby_LookupAccountId(g, text);
                     if ((unsigned char)func_00452FF0(g, 0)) {
                         void* ui = D_004FFC04;
-                        FrontEnd_OpenPopup(ui, 2, D_004ABB08, func_0033CE30(self, 0x17, text, 0, 0, 0), 0, 0);
+                        FrontEnd_OpenPopup(ui, 2, D_004ABB08, GuiScreen_GetLobbyString(self, 0x17, text, 0, 0, 0), 0, 0);
                     } else {
                         func_0033C7C0(self, r, text);
                     }

@@ -46,7 +46,7 @@ struct TStrErr {
 extern "C" {
 extern TStrErr* D_00489738;
 void func_00123BE8(int stream, const char* msg);
-void func_00121B60(void);
+void Libc_Abort(void);
 void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
 void Mem_Free(int pool, void* p, char* file, int line);
 void* memcpy(void* d, const void* s, unsigned int n);

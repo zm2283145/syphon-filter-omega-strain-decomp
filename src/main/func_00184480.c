@@ -14,7 +14,7 @@ extern int func_00184470(PosMsg* msg);
 extern Vec4* func_00133EC0(void* xform);
 extern void func_0015A400(Vec4* out, Vec4* v);
 extern void Vec4_CopyAsPoint(Vec4* out, Vec4* v);
-extern void func_0014B160(void* dst, void* basis, Vec4* pos);
+extern void Mtx_SetRotationTranslation(void* dst, void* basis, Vec4* pos);
 extern void Event_Send(PosMsg* msg, void* target, int flags);
 extern void cMessage_dtor(PosMsg* msg, int flags);
 
@@ -36,7 +36,7 @@ void func_00184480(void* target, void* xform)
         Vec4_CopyAsPoint(&point, func_00133EC0(xform));
         pos = &point;
     }
-    func_0014B160(m->xform, xform, pos);
+    Mtx_SetRotationTranslation(m->xform, xform, pos);
     Event_Send(&msg, target, 1);
     msg.vtable = D_004D9DA0;
     cMessage_dtor(&msg, 0);

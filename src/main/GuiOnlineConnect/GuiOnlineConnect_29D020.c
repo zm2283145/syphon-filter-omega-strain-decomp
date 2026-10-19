@@ -2,27 +2,27 @@ typedef struct Self { char pad[0x120]; int handle; } Self;
 extern void* D_004FFC04;
 extern char D_004AABF0[];
 extern void* DME_GetLobby(Self*);
-extern void func_0029DE70(Self*, int);
-extern int func_0033CE30(Self*, int, int, int, int, int);
+extern void GuiOnlineConnect_Back(Self*, int);
+extern int GuiScreen_GetLobbyString(Self*, int, int, int, int, int);
 extern int FrontEnd_OpenPopup(void*, int, char*, int, int, int);
 extern void FrontEnd_ClosePopup(void*, int);
-extern void func_002CA350(void*);
+extern void FrontEnd_DownloadPolicies(void*);
 extern void func_00445570(void*);
 extern int func_004456D0(void*);
 extern void func_004456C0(void*);
-int func_0029D020(Self* self)
+int GuiOnlineConnect_Retry(Self* self)
 {
     void* r = DME_GetLobby(self);
     void* g;
     int h;
     if (r == 0) {
-        func_0029DE70(self, 1);
+        GuiOnlineConnect_Back(self, 1);
         return 0;
     }
     g = D_004FFC04;
-    h = FrontEnd_OpenPopup(g, 0, D_004AABF0, func_0033CE30(self, 0xD, 0, 0, 0, 0), 0, 0);
+    h = FrontEnd_OpenPopup(g, 0, D_004AABF0, GuiScreen_GetLobbyString(self, 0xD, 0, 0, 0, 0), 0, 0);
     if (self->handle != -1) FrontEnd_ClosePopup(D_004FFC04, self->handle);
-    func_002CA350(D_004FFC04);
+    FrontEnd_DownloadPolicies(D_004FFC04);
     func_00445570(r);
     if (func_004456D0(r)) func_004456C0(r);
     FrontEnd_ClosePopup(D_004FFC04, h);

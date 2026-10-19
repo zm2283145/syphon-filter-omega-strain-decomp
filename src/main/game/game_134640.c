@@ -134,7 +134,7 @@ void MotionManager_Shutdown(void);
 void* DME_GetLobby(void);
 void DME_StopThread(void);
 void DME_StartThread(void);
-void func_0042B1F0(void);
+void Net_CleanupGame(void);
 void func_0042B2D0(void);
 void func_0042E6D0(void);
 void func_0044E340(void* p);
@@ -234,7 +234,7 @@ extern "C" void World_Teardown(World_134640* w)
         func_0042B2D0();
         if (!w->b1C7) {
             if (DME_GetLobby()) func_0044E340(DME_GetLobby());
-            func_0042B1F0();
+            Net_CleanupGame();
         }
     }
     if (!w->b1C5) LevelEnd_RunDebrief(w, mode);

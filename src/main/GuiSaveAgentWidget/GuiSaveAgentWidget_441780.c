@@ -30,7 +30,7 @@ void GuiSaveAgentWidget_HandleEvent(Obj_441780*);
 int sprintf(char*, const char*, ...);
 char* strncpy(char*, const char*, int);
 char* strstr(const char*, const char*);
-char* func_00128F58(char*, const char*);
+char* Libc_Strcat(char*, const char*);
 void String_Copy(char*, const char*);
 }
 
@@ -67,8 +67,8 @@ extern "C" int SaveAgentWidget_SpaceCheck(Obj_441780* self)
         if (p) {
             strncpy(msg, fmt, n);
             msg[n] = 0;
-            func_00128F58(msg, num);
-            func_00128F58(msg, p + 4);
+            Libc_Strcat(msg, num);
+            Libc_Strcat(msg, p + 4);
         } else {
             String_Copy(msg, fmt);
         }

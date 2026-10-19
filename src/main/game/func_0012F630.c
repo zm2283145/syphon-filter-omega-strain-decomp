@@ -1,7 +1,7 @@
 #include "types.h"
 typedef struct { char pad[0x24C]; int level; } Cfg_F630;
 typedef struct { char pad[0xB4]; Cfg_F630* cfg; } O_F630;
-void func_003CBA90(char* buf);
+void GameIni_GetString(char* buf);
 int sprintf(char*, const char*, ...);
 void printf(char*, int);
 void Heap_AllocSlot(int, int, int);
@@ -13,7 +13,7 @@ void func_0012F630(O_F630* o)
     int size;
     int lvl = o->cfg->level;
     if (lvl < 0) lvl = 0;
-    func_003CBA90(buf);
+    GameIni_GetString(buf);
     size = (int)(1024.0f * (1024.0f * D_004ACC90[lvl]));
     if (!size) size = 0x800000;
     sprintf(buf, "streamBufSize: 0x%x", size);

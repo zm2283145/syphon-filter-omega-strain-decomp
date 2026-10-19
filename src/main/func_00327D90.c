@@ -11,7 +11,7 @@ extern char* D_00491568;
 extern void GuiWidget_BaseWake(S327D90* self);
 extern void Heap_ReleaseSlot(int a0);
 extern void Heap_AllocSlot(int a0, int a1, int a2);
-extern void func_002C9AF0(void* a0, int a1);
+extern void FrontEnd_SetMusic(void* a0, int a1);
 extern void GuiSlideShow_Refresh(S327D90* self);
 extern W327D90* GuiWidget_FindChildByName(S327D90* self, char* name);
 #pragma opt_strength_reduction off
@@ -43,7 +43,7 @@ void GuiSlideShow_Wake(S327D90* self)
     GuiWidget_BaseWake(self);
     Heap_ReleaseSlot(1);
     Heap_AllocSlot(1, 0x100000, 0x800);
-    func_002C9AF0(D_004FFC04, 2);
+    FrontEnd_SetMusic(D_004FFC04, 2);
     self->active = 0;
     GuiSlideShow_Refresh(self);
     n = Count327D90(self);

@@ -38,7 +38,7 @@ extern char D_004ACF10[];
 extern char D_004E9B70[];
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void FrontEnd_SplashThreadMain(void);
-int func_002C8460(void);
+int FrontEnd_SplashVblankHandler(void);
 int func_0010D050(void);
 void ChangeThreadPriority(int thread, int prio);
 int CreateThread(Thp82F0* p);
@@ -69,7 +69,7 @@ extern "C" void FrontEnd_StartSplashThread(Obj82F0* o)
         ChangeThreadPriority(D_0048C348, 10);
         D_0048C350 = CreateThread(&tp);
         StartThread(D_0048C350, o);
-        D_0048C358 = AddIntcHandler(2, (void*)func_002C8460, 0);
+        D_0048C358 = AddIntcHandler(2, (void*)FrontEnd_SplashVblankHandler, 0);
         Alloc_Unlock(2);
         o->active = 1;
     }
@@ -87,7 +87,7 @@ extern void iWakeupThread(int id);
 #pragma optimization_level 2
 #pragma peephole on
 #pragma optimization_level 3
-int func_002C8460(void) {
+int FrontEnd_SplashVblankHandler(void) {
     if (D_0048C350 != -1 && !D_0051EE90) iWakeupThread(D_0048C350);
     asm {
         sync

@@ -31,7 +31,7 @@ void* Service_Lookup(void* a, void* b);
 void Event_Construct(void* m, void* type);
 void Event_Send(void* m, void* target, int immediate);
 void cMessage_dtor(void* m, int flags);
-void func_002C9AF0(Self_002C9510* self, int v);
+void FrontEnd_SetMusic(Self_002C9510* self, int v);
 void DME_StopThread(void);
 void Boot_LoadFonts(W_002C9510* w);
 void func_002C9EE0(Self_002C9510* self);
@@ -92,7 +92,7 @@ void FrontEnd_ResumeGui(Self_002C9510* self)
             {
                 unsigned char o = *(unsigned char*)&self->f30C;
                 self->f30C = 0xFF;
-                func_002C9AF0(self, o);
+                FrontEnd_SetMusic(self, o);
             }
             if (had)
                 DME_StopThread();

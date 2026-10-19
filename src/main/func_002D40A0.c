@@ -31,7 +31,7 @@ extern int TeleportMsg_IsMode3(Msg* m);
 extern void* func_00133EC0(void* obj);
 extern void func_0015A400(V4* out, void* v);
 extern void Vec4_CopyAsPoint(V4* out, void* v);
-extern void func_0014B160(void* data, void* obj, V4* v);
+extern void Mtx_SetRotationTranslation(void* data, void* obj, V4* v);
 extern void Event_Send(Msg* m, void* target, int immediate);
 extern void cMessage_dtor(Msg* m, int flags);
 extern int WeaponInv_IsFullAuto(void*);
@@ -93,7 +93,7 @@ extern "C" void func_002D40A0(Self* self)
                     Vec4_CopyAsPoint(&b2, func_00133EC0(&mtx));
                     v = &b2;
                 }
-                func_0014B160(m->data, &mtx, v);
+                Mtx_SetRotationTranslation(m->data, &mtx, v);
                 msg.kind = 1;
                 Event_Send(&msg, self->obj, 1);
                 self->b1EE = 0;

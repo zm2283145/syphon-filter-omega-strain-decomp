@@ -12,7 +12,7 @@ extern int String_CStr(void* p);
 extern void func_0033C9E0(S361730* o, int a, int b);
 extern void func_0033C7C0(S361730* o, int a, int b);
 extern int GuiScreen_HandleEvent(S361730* o);
-int func_00361730(S361730* o, int id, unsigned short type)
+int GuiAgentInfo_HandleEvent(S361730* o, int id, unsigned short type)
 {
     if (type == 2) {
         if (id == o->a118) {
@@ -56,7 +56,7 @@ void func_002A88C0(It_3617C0* out, void* list, W_3617C0** val);
 void func_002A88B0(It_3617C0* out, void* list);
 int func_002A8890(It_3617C0* a, It_3617C0* b);
 int GuiScreen_HandleInput(S_3617C0* o);
-int func_003617C0(S_3617C0* o, Ev_3617C0* ev);
+int GuiAgentInfo_HandleInput(S_3617C0* o, Ev_3617C0* ev);
 }
 static inline unsigned char Down_3617C0(Ev_3617C0* e) { unsigned char r = 0; if (e->type == 1 && e->b2 == 0) r = 1; return r; }
 static inline unsigned char Btn_3617C0(Ev_3617C0* e, int b) { unsigned char r = 0; if (Down_3617C0(e) && e->btn == b) r = 1; return r; }
@@ -65,7 +65,7 @@ static inline bool Down2_3617C0(Ev_3617C0* e) { return e->type == 1 && e->b2 == 
 static inline bool Btn2_3617C0(Ev_3617C0* e, int b) { return Down2_3617C0(e) && e->btn == b; }
 static inline bool NoMod2_3617C0(Ev_3617C0* e) { return Down2_3617C0(e) && e->b6 == 0; }
 
-int func_003617C0(S_3617C0* o, Ev_3617C0* ev)
+int GuiAgentInfo_HandleInput(S_3617C0* o, Ev_3617C0* ev)
 {
     if (Plain_3617C0(ev, 0x10)) {
         if (o->fFC == 0) {
@@ -113,7 +113,7 @@ extern int D_004FFC04;
 extern int func_002C9C80(int, int);
 extern int GuiWidget_Deinit(GuiAgentInfo*);
 
-int func_00361A70(GuiAgentInfo* self) {
+int GuiAgentInfo_Deinit(GuiAgentInfo* self) {
     GuiWidget_Deinit(self);
     return func_002C9C80(D_004FFC04, 0);
 }

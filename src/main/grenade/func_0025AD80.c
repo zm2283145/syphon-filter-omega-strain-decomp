@@ -241,7 +241,7 @@ void Vec4_Cross(V* o, V* a, const V& b);
 int Vec4_IsZeroXYZ(V* v);
 void Vec4_NormalizeXYZ_132060(V* o, V* i);
 V* Vec4_NormalizeXYZInPlace(V* v);
-V* func_00132000(V* v, float x, float y, float z, float w);
+V* Vec4_Set(V* v, float x, float y, float z, float w);
 void Mtx_FromRowsAndTranslation(M* m, V* a, V* b, V* c, const V& t);
 inline M::M(V* a, V* b, V* c, const V& d) { M* t = this; V* pb = b; V* pc = c; Mtx_FromRowsAndTranslation(t, a, pb, pc, d); }
 void Mtx_FrameFromAxis(M* m, V* a);
@@ -349,7 +349,7 @@ static inline void BuildFrame3(M* m, V* d, const V& z)
         Vec4_NormalizeXYZ_132060(&fwd, d);
         Vec4_Assign(&a, Vec4_NormalizeXYZInPlace(&side));
         Vec4_Cross(&up, &a, fwd);
-        Mtx_FromRowsAndTranslation(m, &a, &fwd, &up, *func_00132000(&t, 0.0f, 0.0f, 0.0f, 1.0f));
+        Mtx_FromRowsAndTranslation(m, &a, &fwd, &up, *Vec4_Set(&t, 0.0f, 0.0f, 0.0f, 1.0f));
     } else if (!Vec4_IsZeroXYZ(d)) {
         Mtx_FrameFromAxis(m, d);
     } else {

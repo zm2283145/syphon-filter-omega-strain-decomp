@@ -10,7 +10,7 @@
 extern int LosRegion_FindLocal(void* position, int cachedRegion);
 
 /* Find the region containing position, starting from the cached region (+0x08). */
-int func_0013E1A0(RegionCache* self, void* position) {
+int World_GetPlayerZone(RegionCache* self, void* position) {
     int cached;
 
     cached = self->region;

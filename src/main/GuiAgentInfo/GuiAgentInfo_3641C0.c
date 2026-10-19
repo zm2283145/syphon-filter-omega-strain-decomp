@@ -34,7 +34,7 @@ static inline void Del3641C0(V3641C0* o, int line)
     o->v0(-1);
     Mem_Free(0, o, "GuiAgentInfo.cc", line);
 }
-extern "C" void func_003641C0(O3641C0* s)
+extern "C" void GuiAgentDisplay_Deinit(O3641C0* s)
 {
     GuiWidget_Deinit(s);
     func_002C9C80(D_004FFC04, 0);

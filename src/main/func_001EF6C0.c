@@ -41,7 +41,7 @@ extern "C" void func_001EF6C0(V1EF6C0* v, unsigned int n)
         unsigned int mx = 0x100000;
         if (n > mx) {
             func_00123BE8(D_00489738->stream, D_004A04E0);
-            func_00121B60();
+            Libc_Abort();
         }
         V1EF6C0 tmp;
         tmp.cap = 0;

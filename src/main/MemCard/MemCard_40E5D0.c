@@ -17,7 +17,7 @@ extern char* D_00494010;
 extern char D_00571C50[];
 extern int sprintf(char*, const char*, ...);
 extern int func_002B5F48(int*, int*);
-extern void func_0040EFA0(S40E5D0*);
+extern void MemCard_InfoCycle(S40E5D0*);
 extern void func_0040EED0(S40E5D0*);
 extern void func_0040EC80(S40E5D0*);
 extern void func_0040E980(S40E5D0*);
@@ -33,7 +33,7 @@ int func_0040E5D0(S40E5D0* s) {
     }
     switch (s->state) {
     case 0:
-        func_0040EFA0(s);
+        MemCard_InfoCycle(s);
         break;
     case 1:
         switch (s->sub) {

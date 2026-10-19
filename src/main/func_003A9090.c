@@ -32,7 +32,7 @@ void Ptr_Identity(V* v);
 V* Vec4_Copy(V* d, const V* s);
 void Mtx_Multiply4(V* v, M* m);
 V* func_00133EC0(M* m);
-void func_00132000(V* d, float x, float y, float z, float w);
+void Vec4_Set(V* d, float x, float y, float z, float w);
 void Sphere_FromCenter(V* d, const V* c, const V* r);
 void Box_ExtendXYZ(Box* b, const V* v);
 void Vec4_Add(V* d, const V* a, const V* b);

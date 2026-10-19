@@ -73,7 +73,7 @@ static inline void Del2CA160(void* p, int line)
     func_0044F970(p, -1);
     Mem_Free(0, p, D_004ACF10, line);
 }
-extern "C" int func_002CA160(S2CA160* s)
+extern "C" int FrontEnd_FreePolicyLists(S2CA160* s)
 {
     if (!s->b2EC)
         return 0;
@@ -118,7 +118,7 @@ struct ObjCA350 {
     void* c;
 };
 
-extern "C" int func_002CA350(ObjCA350* self)
+extern "C" int FrontEnd_DownloadPolicies(ObjCA350* self)
 {
     void* p;
 
@@ -157,7 +157,7 @@ static inline void merge_flush_func_002CA350(void) {}
 /* merge_units: begin func_002CA580 */
 #pragma push /* merge_units */
 typedef struct { char pad[0x264]; unsigned char b264; } S2CA640;
-int func_002CA640(S2CA640* s, int a); /* gsynth: defined below */
+int FrontEnd_LeaveOnline(S2CA640* s, int a); /* gsynth: defined below */
 typedef struct { char p0[0x255C]; int state; } L2CA580;
 extern unsigned char D_0051EEB0;
 extern unsigned char D_005723B8;
@@ -166,15 +166,15 @@ extern L2CA580* DME_GetLobby(void);
 #endif /* merge_units */
 #define DME_GetLobby() ((L2CA580 *)DME_GetLobby()) /* merge_units */
 
-extern void func_004536B0(L2CA580* l);
+extern void SFOLobby_Update(L2CA580* l);
 extern int func_00452FD0(L2CA580* l);
 extern int Gui_GetScreenList(void);
 extern void GuiManager_Update(int mgr, float t);
 extern void func_002CA6F0(void* s);
 #if 0 /* merge_units */
-extern int func_002CA640(void* s, int v);
+extern int FrontEnd_LeaveOnline(void* s, int v);
 #endif /* merge_units */
-#define func_002CA640(a0, a1) (func_002CA640((void *)(a0), (a1))) /* merge_units */
+#define FrontEnd_LeaveOnline(a0, a1) (FrontEnd_LeaveOnline((void *)(a0), (a1))) /* merge_units */
 
 extern void func_00453B00(L2CA580* l, int v);
 /* Lobby tick: when the session is ready either flags the pending state or starts the game screen. */
@@ -184,7 +184,7 @@ void func_002CA580(void* s)
     if (D_0051EEB0) return;
     l = DME_GetLobby();
     if (!l) return;
-    func_004536B0(l);
+    SFOLobby_Update(l);
     if (!func_00452FD0(l)) return;
     if (l->state == 10) {
         D_005723B8 = 1;
@@ -192,11 +192,11 @@ void func_002CA580(void* s)
     }
     GuiManager_Update(Gui_GetScreenList(), 0.0f);
     func_002CA6F0(s);
-    func_002CA640(s, 1);
+    FrontEnd_LeaveOnline(s, 1);
     func_00453B00(l, 1);
 }
 #undef DME_GetLobby /* merge_units */
-#undef func_002CA640 /* merge_units */
+#undef FrontEnd_LeaveOnline /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002CA580(void) {}
 #pragma pop /* merge_units */
@@ -207,9 +207,9 @@ static inline void merge_flush_func_002CA580(void) {}
 typedef struct { char pad[0x255C]; int mode; } G2CA640;
 
 #if 0 /* merge_units */
-extern int func_002CA160(S2CA640* s);
+extern int FrontEnd_FreePolicyLists(S2CA640* s);
 #endif /* merge_units */
-#define func_002CA160(a0) (func_002CA160((void *)(a0))) /* merge_units */
+#define FrontEnd_FreePolicyLists(a0) (FrontEnd_FreePolicyLists((void *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
 extern G2CA640* DME_GetLobby(void);
@@ -224,9 +224,9 @@ extern void func_00453B00(G2CA640* g, int a);
 #define func_00453B00(a0, a1) (func_00453B00((void *)(a0), (a1))) /* merge_units */
 
 extern void DME_SetLobbyActive(int a);
-int func_002CA640(S2CA640* s, int a)
+int FrontEnd_LeaveOnline(S2CA640* s, int a)
 {
-    func_002CA160(s);
+    FrontEnd_FreePolicyLists(s);
     if (DME_GetLobby()) {
         if (s->b264 && DME_GetLobby()->mode != 10)
             func_00445850(DME_GetLobby());
@@ -238,7 +238,7 @@ int func_002CA640(S2CA640* s, int a)
     }
     return 0;
 }
-#undef func_002CA160 /* merge_units */
+#undef FrontEnd_FreePolicyLists /* merge_units */
 #undef DME_GetLobby /* merge_units */
 #undef func_00453B00 /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */

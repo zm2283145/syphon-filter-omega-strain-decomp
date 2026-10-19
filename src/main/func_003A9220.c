@@ -31,7 +31,7 @@ void Ptr_Identity(V* v);
 V* Vec4_Copy(V* d, const V* s);
 void Mtx_Multiply4(V* v, M* m);
 V* func_00133EC0(M* m);
-void func_00132000(V* d, float x, float y, float z, float w);
+void Vec4_Set(V* d, float x, float y, float z, float w);
 void Sphere_FromCenter(V* d, const V* c, const V* r);
 void Box_ExtendXYZ(Box* b, const V* v);
 void Vec4_Add(V* d, const V* a, const V* b);
@@ -67,7 +67,7 @@ void ModelCtx_ComputeBounds(Ctx* c)
             else Vec4_Copy(&p, func_00133EC0(m));
             float r = s->r;
             if (r > 0.0f) {
-                V rv; func_00132000(&rv, r, r, r, 0.0f);
+                V rv; Vec4_Set(&rv, r, r, r, 0.0f);
                 V a; Sphere_FromCenter(&a, &p, &rv);
                 Box_ExtendXYZ(&c->box, &a);
                 V b; Vec4_Add(&b, &p, &rv);

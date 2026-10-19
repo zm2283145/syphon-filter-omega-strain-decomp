@@ -16,25 +16,25 @@ extern void GuiStack_SwapScreens(int, O29D*, void*);
 extern int DME_GetLobby(void);
 extern void SFOLobby_LeaveNetworkState(int);
 extern int D_004FFC04;
-extern void func_002CA640(int, int);
-extern char* func_0033CE30(O29D*, int, int, int, int, int);
+extern void FrontEnd_LeaveOnline(int, int);
+extern char* GuiScreen_GetLobbyString(O29D*, int, int, int, int, int);
 extern void String_CtorCStr_13B480(S29D*, char*);
 extern char* String_CStr(S29D*);
 extern void FrontEnd_OpenPopup(int, int, char*, char*, int, int);
 extern void String_Dtor(S29D*, int);
-void func_0029DE70(O29D* o, int show) {
+void GuiOnlineConnect_Back(O29D* o, int show) {
     void* w = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiOnlineOfflineSelect", "ONOFFSEL");
     GuiStack_SwapScreens(Gui_GetScreenStack(), o, w);
     if (o->b94) {
         if (DME_GetLobby()) SFOLobby_LeaveNetworkState(DME_GetLobby());
         o->b94 = 0;
     }
-    func_002CA640(D_004FFC04, 1);
+    FrontEnd_LeaveOnline(D_004FFC04, 1);
     if (show) {
         S29D a;
         S29D b;
-        String_CtorCStr_13B480(&a, func_0033CE30(o, 0xB, 0, 0, 0, 0));
-        String_CtorCStr_13B480(&b, func_0033CE30(o, 0x84, 0, 0, 0, 0));
+        String_CtorCStr_13B480(&a, GuiScreen_GetLobbyString(o, 0xB, 0, 0, 0, 0));
+        String_CtorCStr_13B480(&b, GuiScreen_GetLobbyString(o, 0x84, 0, 0, 0, 0));
         {
             char* tb = String_CStr(&b);
             FrontEnd_OpenPopup(D_004FFC04, 2, String_CStr(&a), tb, 0, 0);
@@ -64,7 +64,7 @@ extern Ui_0029DFC0* D_004FFC04;
 extern char D_004FFB50[];
 extern char D_004AAC70[];
 extern char D_004AAC80[];
-void func_0029CBB0(S_0029DFC0* self, unsigned char sel);
+void GuiOnlineConnect_ShowGroup(S_0029DFC0* self, unsigned char sel);
 #if 0 /* merge_units */
 void* Gui_GetScreenList(void);
 #endif /* merge_units */
@@ -92,22 +92,22 @@ int strlen(const char* s);
 }
 static inline bool HasText_DFC0(const char* s) { return strlen(s) != 0; }
 static inline int IsEmpty_DFC0(const char* s) { return HasText_DFC0(s) ^ 1; }
-extern "C" void func_0029DFC0(S_0029DFC0* self)
+extern "C" void GuiOnlineConnect_Advance(S_0029DFC0* self)
 {
     unsigned char go = 0;
     int st = self->f118;
     if (st == 4 || st == 0) {
         self->f88 = 8;
-        func_0029CBB0(self, 1);
+        GuiOnlineConnect_ShowGroup(self, 1);
         if (!self->pF4->f70)
-            func_0029DFC0(self);
+            GuiOnlineConnect_Advance(self);
     } else if (st == 1 && self->f88 == 8) {
         self->f88 = 9;
-        func_0029CBB0(self, 1);
+        GuiOnlineConnect_ShowGroup(self, 1);
         if (!self->pF4->f70)
-            func_0029DFC0(self);
+            GuiOnlineConnect_Advance(self);
     } else if (st == 1 || st == 2) {
-        func_0029CBB0(self, 2);
+        GuiOnlineConnect_ShowGroup(self, 2);
         if (!self->p100->f70)
             go = 1;
         else
@@ -115,7 +115,7 @@ extern "C" void func_0029DFC0(S_0029DFC0* self)
     }
     if (go) {
         void* pg;
-        func_0029CBB0(self, 4);
+        GuiOnlineConnect_ShowGroup(self, 4);
         pg = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AAC70, D_004AAC80);
         if (pg) {
             unsigned char ok = 1;

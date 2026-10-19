@@ -25,7 +25,7 @@ extern "C" {
 extern Mgr_00289440* D_004FFC04;
 extern char D_004A9730[];
 void* DME_GetLobby(void);
-char* func_0033CE30(S_00289440* self, int a, int b, int c, int d, int e);
+char* GuiScreen_GetLobbyString(S_00289440* self, int a, int b, int c, int d, int e);
 int FrontEnd_OpenPopup(void* ui, int a, char* b, char* c, S_00289440* d, int e);
 char* String_CStr(void* s);
 int func_00445A40(void* g, char* a, char* b);
@@ -45,7 +45,7 @@ static inline int StrNe_00289440(const char* a, const char* b) { return strcmp(a
 static inline void Assign_00289440(S_00289440* self, Str_00289440* d, int id)
 {
     Str_00289440 t;
-    String_CtorCStr_13B480(&t, func_0033CE30(self, id, 0, 0, 0, 0));
+    String_CtorCStr_13B480(&t, GuiScreen_GetLobbyString(self, id, 0, 0, 0, 0));
     func_0013D680(d, &t);
     String_Dtor(&t, 0);
 }
@@ -58,7 +58,7 @@ extern "C" void func_00289440(S_00289440* self)
         return;
     {
         void* ui = D_004FFC04;
-        self->fA8 = FrontEnd_OpenPopup(ui, 0, D_004A9730, func_0033CE30(self, 0x1B, 0, 0, 0, 0), 0, 0);
+        self->fA8 = FrontEnd_OpenPopup(ui, 0, D_004A9730, GuiScreen_GetLobbyString(self, 0x1B, 0, 0, 0, 0), 0, 0);
         pw = String_CStr(self->p94->s48);
         ok = func_00445A40(g, String_CStr(self->p8C->s48), pw);
     }
@@ -155,9 +155,9 @@ extern char D_00506340[];
 extern char D_00506350[];
 extern unsigned char D_00506360;
 #if 0 /* merge_units */
-int func_0033CE30(S_00289990* self, int a, int b, int c, int d, int e);
+int GuiScreen_GetLobbyString(S_00289990* self, int a, int b, int c, int d, int e);
 #endif /* merge_units */
-#define func_0033CE30(a0, a1, a2, a3, a4, a5) ((int)func_0033CE30((S_00289440 *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
+#define GuiScreen_GetLobbyString(a0, a1, a2, a3, a4, a5) ((int)GuiScreen_GetLobbyString((S_00289440 *)(a0), (a1), (a2), (a3), (a4), (a5))) /* merge_units */
 
 #if 0 /* merge_units */
 int FrontEnd_OpenPopup(void* ui, int a, char* b, int c, S_00289990* d, int e);
@@ -174,7 +174,7 @@ Ui_00289990* Gui_GetScreenStack(void);
 void func_0028A230(S_00289990* self);
 void func_0028A180(S_00289990* self);
 char* strncpy(char* d, const char* s, int n);
-void func_0033C320(S_00289990* self, int a);
+void GuiScreen_Navigate(S_00289990* self, int a);
 int GuiScreen_HandleInput(S_00289990* self, Ev_00289990* ev);
 }
 static inline unsigned char Down_00289990(Ev_00289990* e)
@@ -202,7 +202,7 @@ extern "C" int func_00289990(S_00289990* self, Ev_00289990* ev)
 {
     if (Press_00289990(ev, 0x10)) {
         void* ui = D_004FFC04;
-        FrontEnd_OpenPopup(ui, 5, D_004A9730, func_0033CE30(self, 0xE, 0, 0, 0, 0), self, 0x1E);
+        FrontEnd_OpenPopup(ui, 5, D_004A9730, GuiScreen_GetLobbyString(self, 0xE, 0, 0, 0, 0), self, 0x1E);
         return 1;
     } else {
         bool b = ev->type == 1 && ev->f2 == 0 && ev->btn == 0x80 && ev->f6 == 0;
@@ -237,14 +237,14 @@ extern "C" int func_00289990(S_00289990* self, Ev_00289990* ev)
                 strncpy(D_00506350, String_CStr(self->p8C->s48), 0xF);
             }
             D_004FFC04->f268 = 7;
-            func_0033C320(self, 5);
+            GuiScreen_Navigate(self, 5);
             return 1;
         }
     }
     return GuiScreen_HandleInput(self, ev);
 }
 #undef D_004FFC04 /* merge_units */
-#undef func_0033CE30 /* merge_units */
+#undef GuiScreen_GetLobbyString /* merge_units */
 #undef FrontEnd_OpenPopup /* merge_units */
 #undef func_00289440 /* merge_units */
 #pragma pop /* merge_units */
@@ -316,7 +316,7 @@ void GuiSaveAgentWidget_HandleEvent(S_00289C80* self);
 
 char* Loc_LookupText(char* key);
 void GuiTextWidget_SetText(void* w, char* s, int a);
-void func_002CA640(void* ui, int a);
+void FrontEnd_LeaveOnline(void* ui, int a);
 void* Gui_GetScreenList(void);
 void* GuiManager_FindOrLoad(void* a, char* b, char* c);
 void GuiStack_SwapScreens(void* ui, S_00289C80* self, void* pg);
@@ -408,7 +408,7 @@ extern "C" int func_00289C80(S_00289C80* self, void* w, int msg, int sub, char* 
             }
             if (sub == 0x1E) {
                 void* pg;
-                func_002CA640(D_004FFC04, 1);
+                FrontEnd_LeaveOnline(D_004FFC04, 1);
                 pg = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiOnlineOfflineSelect", "ONOFFSEL");
                 GuiStack_SwapScreens(Gui_GetScreenStack(), self, pg);
                 return 1;

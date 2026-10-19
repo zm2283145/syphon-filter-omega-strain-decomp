@@ -27,7 +27,7 @@ extern "C" void func_003B6F80(V3B6F80* v, const VRElem20* first, const VRElem20*
     unsigned int n = last - first;
     if (v->count > 0x4CCCCC) {
         func_00123BE8(D_00489738->stream, "vector length error\n");
-        func_00121B60();
+        Libc_Abort();
     }
     if (n) {
         VRElem20** pdata = &v->data;

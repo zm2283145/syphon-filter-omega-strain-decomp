@@ -95,11 +95,11 @@ struct EntA20 { TgtA20* p; float x; float y; };
 struct OwnA20 { char pad[0x144]; float t; };
 struct SelfA20 { void* obj; OwnA20* own; EntA20 e[2]; int n; float last; unsigned char on; };
 extern float D_0048B3D0;
-extern "C" unsigned char func_00287AB0(SelfA20*);
-extern "C" void func_00287A20(SelfA20* s)
+extern "C" unsigned char cTankTread_Init(SelfA20*);
+extern "C" void cTankTread_Update(SelfA20* s)
 {
     int i;
-    if (func_00287AB0(s)) {
+    if (cTankTread_Init(s)) {
         float d;
         float t;
         t = s->own->t;

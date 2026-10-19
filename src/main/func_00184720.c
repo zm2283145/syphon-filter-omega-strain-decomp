@@ -7,7 +7,7 @@ extern int func_00184470(Msg* m);
 extern void* Mtx_GetIdentity(void);
 extern void func_0015A400(Vec4* out, void* v);
 extern void Vec4_CopyAsPoint(Vec4* out, void* v);
-extern void func_0014B160(void* data, void* obj, Vec4* v);
+extern void Mtx_SetRotationTranslation(void* data, void* obj, Vec4* v);
 extern void Event_Send(Msg* m, void* target, int immediate);
 extern void cMessage_dtor(Msg* m, int flags);
 /* Sends a kind-3 message with a position to target. */
@@ -28,7 +28,7 @@ void func_00184720(void* target, void* pos)
         Vec4_CopyAsPoint(&b, pos);
         v = &b;
     }
-    func_0014B160(m->data, Mtx_GetIdentity(), v);
+    Mtx_SetRotationTranslation(m->data, Mtx_GetIdentity(), v);
     Event_Send(&msg, target, 1);
     msg.vtable = D_004D9DA0;
     cMessage_dtor(&msg, 0);

@@ -125,7 +125,7 @@ typedef struct Obj29B920 {
 void GuiWidget_Update(Obj29B920* o, float dt);
 void Tremor_UpdateVibration(float f);
 unsigned long Time_GetMilliseconds(void);
-void func_002996D0(Obj29B920* o, int a);
+void GuiGameOptions_VideoRevert(Obj29B920* o, int a);
 void func_0029AE60(Obj29B920* o);
 int GuiGameOptions_GetPlayers(void);
 void GuiGameOptions_Update(Obj29B920* o, float dt)
@@ -134,7 +134,7 @@ void GuiGameOptions_Update(Obj29B920* o, float dt)
     Tremor_UpdateVibration(dt / 30.0f);
     if (o->state == 1) {
         if (Time_GetMilliseconds() - o->t > 8000) {
-            func_002996D0(o, 1);
+            GuiGameOptions_VideoRevert(o, 1);
         }
     }
     if (o->mode == 3) {

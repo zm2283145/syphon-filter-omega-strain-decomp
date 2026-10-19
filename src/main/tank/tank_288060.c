@@ -161,14 +161,14 @@ extern int D_004FFC04;
 #define D_004FFC04 (*(int*)&D_004FFC04) /* merge_units */
 
 extern int GuiTitleScreen_CheckMemCard(Unk288A80*, int);
-extern int func_002C9AF0(int, int);
+extern int FrontEnd_SetMusic(int, int);
 extern int AgentData_ResetProfileNames(int);
 extern int GuiWidget_BaseWake(Unk288A80*);
 
 int GuiTitleScreen_Wake(Unk288A80* self) {
     GuiWidget_BaseWake(self);
     AgentData_ResetProfileNames(Agent_GetSelected(&D_004FFB50, -1));
-    func_002C9AF0(D_004FFC04, 0);
+    FrontEnd_SetMusic(D_004FFC04, 0);
     return GuiTitleScreen_CheckMemCard(self, 0);
 }
 #undef D_004FFC04 /* merge_units */

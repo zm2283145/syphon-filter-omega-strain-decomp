@@ -179,7 +179,7 @@ void func_0025CA40(void* s);
 void Vec4_Copy(V4* d, const V4* s);
 void GuiBatch_AddVertexColor(V4* d, const V4* s);
 float GuiBatch_AddVertexUV(void);
-V4* func_00132000(V4* o, float x, float y, float z, float w);
+V4* Vec4_Set(V4* o, float x, float y, float z, float w);
 void Renderer_FlushBatch(void* s);
 }
 #define D_00539220 (D_00539210.f20)
@@ -203,7 +203,7 @@ static inline V4* UV_002757A0(const V4& uv)
 {
     V4 tmp;
     float u = uv.x + GuiBatch_AddVertexUV();
-    return func_00132000(&tmp, u, uv.y + GuiBatch_AddVertexUV(), uv.z, uv.w);
+    return Vec4_Set(&tmp, u, uv.y + GuiBatch_AddVertexUV(), uv.z, uv.w);
 }
 static inline void Emit_002757A0(const V4& pos, const V4c_002757A0& col, const V4& uv)
 {
@@ -471,9 +471,9 @@ void Event_Send(void* msg, void* target, int flags);
 void FileMan_Release(void* part, int flags);
 void cMessage_dtor(void* msg, int flags);
 #if 0 /* merge_units */
-V* func_00132000(V* v, float x, float y, float z, float w);
+V* Vec4_Set(V* v, float x, float y, float z, float w);
 #endif /* merge_units */
-#define func_00132000(a0, a1, a2, a3, a4) ((V *)func_00132000((V4 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
+#define Vec4_Set(a0, a1, a2, a3, a4) ((V *)Vec4_Set((V4 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
 
 float Vec4_GetZ(V* v);
 float Math_Fabs(float f);
@@ -526,7 +526,7 @@ struct AreaEffect {
     }
 };
 
-static inline void BuildFrame(M* m, V* n, V* ref) { V up; V right; V fwd; V c1; V t0; Vec4_NormalizeXYZ_132060(&up, n); Vec4_Cross(&c1, n, ref); Vec4_Assign(&right, Vec4_NormalizeXYZInPlace(&c1)); Vec4_Cross(&fwd, &right, &up); Mtx_FromRowsAndTranslation(m, &right, &up, &fwd, func_00132000(&t0, 0.0f, 0.0f, 0.0f, 1.0f)); }
+static inline void BuildFrame(M* m, V* n, V* ref) { V up; V right; V fwd; V c1; V t0; Vec4_NormalizeXYZ_132060(&up, n); Vec4_Cross(&c1, n, ref); Vec4_Assign(&right, Vec4_NormalizeXYZInPlace(&c1)); Vec4_Cross(&fwd, &right, &up); Mtx_FromRowsAndTranslation(m, &right, &up, &fwd, Vec4_Set(&t0, 0.0f, 0.0f, 0.0f, 1.0f)); }
 static inline void BF2(M* m, V* n, V* ref) { BuildFrame(m, n, ref); }
 static inline void BF3(M* m, V* n, V* ref) { BF2(m, n, ref); }
 static inline void BF4(M* m, V* n, V* ref) { BF3(m, n, ref); }
@@ -638,8 +638,8 @@ extern "C" void BulletPool_UpdateAll(Bullet* s, float dt)
             {
                 V n = s->normal;
                 if (Dot3(&n, &delta) > 0.0f) Neg(&n);
-                if (D_004E1DA0 == 0) { func_00132000(&D_00497F20, 1.0f, 0.0f, 0.0f, 0.0f); D_004E1DA0 = 1; }
-                if (D_004E1DA8 == 0) { func_00132000(&D_00497F30, 0.0f, 0.0f, 1.0f, 0.0f); D_004E1DA8 = 1; }
+                if (D_004E1DA0 == 0) { Vec4_Set(&D_00497F20, 1.0f, 0.0f, 0.0f, 0.0f); D_004E1DA0 = 1; }
+                if (D_004E1DA8 == 0) { Vec4_Set(&D_00497F30, 0.0f, 0.0f, 1.0f, 0.0f); D_004E1DA8 = 1; }
                 V* ref;
                 if (Math_Fabs(Vec4_GetZ(&n)) < 0.707f) ref = &D_00497F30;
                 else ref = &D_00497F20;
@@ -750,7 +750,7 @@ extern "C" void BulletPool_UpdateAll(Bullet* s, float dt)
         }
     }
 }
-#undef func_00132000 /* merge_units */
+#undef Vec4_Set /* merge_units */
 #undef Bullet_LeavePartnerLists /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00276460 */

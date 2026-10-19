@@ -8,21 +8,21 @@ typedef struct { char pad[0x84]; int f84; } O33;
 extern "C" {
 extern G33* D_004FFC04;
 extern char D_004B99D8[];
-extern char* func_0033CE30(O33*, int, char*, char*, int, int);
+extern char* GuiScreen_GetLobbyString(O33*, int, char*, char*, int, int);
 extern int FrontEnd_OpenPopup(G33*, int, char*, char*, int, int);
 extern void FrontEnd_StartSplashThread(G33*);
-extern void func_002C81D0(G33*);
+extern void FrontEnd_StopSplashThread(G33*);
 extern void FrontEnd_ClosePopup(G33*, int);
 extern int Gui_GetScreenList(void);
 extern W33* GuiManager_FindOrLoad(int, char*, char*);
 extern void GuiManager_ReleaseRoot(int, W33*);
 extern int DME_GetLobby(void);
-extern int func_00442510(int, int);
-extern int func_0044A230(int);
+extern int SFOLobby_CheckMissionLobby(int, int);
+extern int SFOLobby_CheckAgencyCell(int);
 extern V33* Gui_GetScreenStack(void);
 extern void GuiWidget_SendEvent(W33*, V33*, int, int, int);
 }
-extern "C" int func_0033C320(O33* self, int type) {
+extern "C" int GuiScreen_Navigate(O33* self, int type) {
     int c = -1;
     int h;
     W33* w;
@@ -38,7 +38,7 @@ extern "C" int func_0033C320(O33* self, int type) {
     h = -1;
     if (c != -1) {
         G33* g = D_004FFC04;
-        h = FrontEnd_OpenPopup(g, 0, D_004B99D8, func_0033CE30(self, (unsigned char)c, 0, 0, 0, 0), 0, 0);
+        h = FrontEnd_OpenPopup(g, 0, D_004B99D8, GuiScreen_GetLobbyString(self, (unsigned char)c, 0, 0, 0, 0), 0, 0);
         FrontEnd_StartSplashThread(D_004FFC04);
     }
     w = 0;
@@ -53,12 +53,12 @@ extern "C" int func_0033C320(O33* self, int type) {
     case 9: w = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiNetMessages", "NETMESS"); break;
     case 7: w = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiAccountLogin", "ACNTLOGN"); break;
     }
-    if (c != -1) func_002C81D0(D_004FFC04);
+    if (c != -1) FrontEnd_StopSplashThread(D_004FFC04);
     if (w) {
         if (type == 6 || type == 2) {
             int x = D_004FFC04->f248;
             int p = DME_GetLobby();
-            if (!p || !func_00442510(p, x)) {
+            if (!p || !SFOLobby_CheckMissionLobby(p, x)) {
                 if (h != -1) FrontEnd_ClosePopup(D_004FFC04, h);
                 GuiManager_ReleaseRoot(Gui_GetScreenList(), w);
                 return 0;
@@ -66,7 +66,7 @@ extern "C" int func_0033C320(O33* self, int type) {
         }
         if (type == 3) {
             int p = DME_GetLobby();
-            if (!p || !func_0044A230(p)) {
+            if (!p || !SFOLobby_CheckAgencyCell(p)) {
                 if (h != -1) FrontEnd_ClosePopup(D_004FFC04, h);
                 GuiManager_ReleaseRoot(Gui_GetScreenList(), w);
                 return 0;

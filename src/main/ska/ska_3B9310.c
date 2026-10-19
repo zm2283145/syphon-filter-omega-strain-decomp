@@ -22,7 +22,7 @@ typedef struct Alloc { char unused; } Alloc;
 extern "C" {
 Str* String_Replace(Str* s, unsigned int pos, unsigned int n, const char* first, const char* last, Alloc a);
 void func_00123BE8(int, const char*);
-void func_00121B60(void);
+void Libc_Abort(void);
 extern char* D_00489738;
 }
 
@@ -43,7 +43,7 @@ extern "C" Str* func_003B9310(Str* self, unsigned int pos, unsigned int n1, cons
     }
     if (len < pos2) {
         func_00123BE8(*(int*)(D_00489738 + 0xC), "basic_string: out_of_range");
-        func_00121B60();
+        Libc_Abort();
     }
     data += pos2;
     rem = len - pos2; n2 = Min(n2, rem);

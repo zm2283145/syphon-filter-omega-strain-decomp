@@ -4,7 +4,7 @@ extern int strcmp(const char *, const char *);
 extern char *strcpy(char *, const char *);
 extern void String_Copy(char *, char *);
 extern char *func_002B66A0(char *, char *);
-extern char *func_00128F58(char *, char *);
+extern char *Libc_Strcat(char *, char *);
 extern char D_004AC1B0[];
 extern char D_004AC1B8[];
 typedef struct { char cwd[0x898]; } MC2Port;
@@ -31,8 +31,8 @@ int func_002B6808(int idx, char *path, char *out)
             p[1] = 0;
             tok = func_002B66A0(0, "/");
         } else {
-            func_00128F58(out, tok);
-            func_00128F58(out, "/");
+            Libc_Strcat(out, tok);
+            Libc_Strcat(out, "/");
             tok = func_002B66A0(0, "/");
         }
     }

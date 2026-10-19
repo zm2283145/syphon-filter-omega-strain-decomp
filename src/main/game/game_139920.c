@@ -16,7 +16,7 @@ extern "C" void func_00139920(V00139920* v, unsigned int n)
     if (v->cap < n) {
         if (n > 0xDB6DB) {
             func_00123BE8(D_00489738->stream, D_0049AB90);
-            func_00121B60();
+            Libc_Abort();
         }
         V00139920 tmp;
         tmp.cap = 0;

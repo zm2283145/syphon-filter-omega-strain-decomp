@@ -28,7 +28,7 @@ extern "C" void func_001C50F0(PRVec_1C50F0* v, int* first, int* last)
     if (v->cap < n) {
         if (n > 0x1800000) {
             func_00123BE8(D_00489738->stream, D_0049F300);
-            func_00121B60();
+            Libc_Abort();
         }
         v->count = 0;
         int* old = v->data;

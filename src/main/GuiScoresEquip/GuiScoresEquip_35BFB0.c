@@ -80,7 +80,7 @@ Player_35BFB0* PlayerSlots_Get(int i);
 void Skel_Rebind(Skel_35BFB0* s, void* p);
 WDef_35BFB0* WeaponDb_Get(void* table, int id);
 int cAgentData_GetStat(Agent_35BFB0* a, int stat);
-char func_0012B290(char c);
+char Libc_Toupper(char c);
 Agent_35BFB0* Player_GetAgentData(Player_35BFB0* p, unsigned char* flag);
 char* AgentData_GetName(Agent_35BFB0* a);
 void GuiTextWidget_SetText(W_35BFB0* w, char* text, int flags);
@@ -157,7 +157,7 @@ extern "C" void GuiScoresEquip_Update(Screen_35BFB0* s, float dt)
                 sprintf(key, D_004BB558, slot);
                 sprintf(D_00533790, D_004BB568, 0x11, Loc_LookupText(key), 0x10);
                 for (k = 0; k < strlen(D_00533790); k++)
-                    D_00533790[k] = func_0012B290(D_00533790[k]);
+                    D_00533790[k] = Libc_Toupper(D_00533790[k]);
                 GuiTextWidget_SetText(s->rows[slot][1], D_00533790, 0);
                 GuiTextWidget_SetText(s->rows[slot][14], D_00533790, 0);
                 sprintf(buf, D_004BB578, cAgentData_GetStat(a, 0x1B));
@@ -272,9 +272,9 @@ static inline void merge_flush_func_0035BFB0(void) {}
 extern char* Loc_LookupText(char* key);
 #define strlen(a0) ((unsigned int)strlen((a0))) /* merge_units */
 #if 0 /* merge_units */
-extern char func_0012B290(int c);
+extern char Libc_Toupper(int c);
 #endif /* merge_units */
-#define func_0012B290(a0) (func_0012B290((char)(a0))) /* merge_units */
+#define Libc_Toupper(a0) (Libc_Toupper((char)(a0))) /* merge_units */
 
 char* func_0035CB30(int n)
 {
@@ -282,11 +282,11 @@ char* func_0035CB30(int n)
     unsigned int i;
     sprintf(buf, D_004BB558, n);
     sprintf(D_00533790, D_004BB568, 0x11, Loc_LookupText(buf), 0x10);
-    for (i = 0; i < strlen(D_00533790); i++) D_00533790[i] = func_0012B290(D_00533790[i]);
+    for (i = 0; i < strlen(D_00533790); i++) D_00533790[i] = Libc_Toupper(D_00533790[i]);
     return D_00533790;
 }
 #undef strlen /* merge_units */
-#undef func_0012B290 /* merge_units */
+#undef Libc_Toupper /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0035CB30(void) {}
 #pragma pop /* merge_units */

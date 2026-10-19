@@ -14,7 +14,7 @@ extern "C" {
 extern Mgr_002A8D60* D_004FFC04;
 extern char* D_0048BBD8;
 extern char* D_0048BBE0;
-void func_0033C320(S_002A8D60* self, int a);
+void GuiScreen_Navigate(S_002A8D60* self, int a);
 int func_0033D8C0(S_002A8D60* self);
 void func_0033D8E0(S_002A8D60* self, int a);
 void* DME_GetLobby(void);
@@ -28,13 +28,13 @@ extern "C" int func_002A8D60(S_002A8D60* self, void* w, int msg, int sub, char* 
 {
     unsigned short m = msg;
     if (m == 0x1A && sub == 0xB) {
-        func_0033C320(self, 1);
+        GuiScreen_Navigate(self, 1);
         return 1;
     }
     if (m == 2) {
         if (w == self->p164) {
             D_004FFC04->f268 = 2;
-            func_0033C320(self, 5);
+            GuiScreen_Navigate(self, 5);
             return 1;
         }
         if (w == self->p160) {
@@ -84,7 +84,7 @@ extern "C" int func_002A8D60(S_002A8D60* self, void* w, int msg, int sub, char* 
 #include "active_flag_release.h"
 
 /* Stop and release when active. */
-DEFINE_ACTIVE_FLAG_RELEASE(func_002A8FD0, func_00451610)
+DEFINE_ACTIVE_FLAG_RELEASE(func_002A8FD0, SFOLobby_LeaveRoom)
 #pragma pop /* merge_units */
 /* merge_units: end func_002A8FD0 */
 
@@ -113,8 +113,8 @@ Lobby2A* DME_GetLobby(void);
 #define DME_GetLobby() ((Lobby2A *)DME_GetLobby()) /* merge_units */
 
 void func_004426B0(Lobby2A*);
-int func_004518F0(Lobby2A*, void (*)(), void*, void*, void*);
-int func_0033CE30(W2A9030*, int, int, int, int, int);
+int SFOLobby_JoinRoom(Lobby2A*, void (*)(), void*, void*, void*);
+int GuiScreen_GetLobbyString(W2A9030*, int, int, int, int, int);
 void FrontEnd_OpenPopup(char*, int, char*, int, W2A9030*, int);
 VObj2A* GuiWidget_FindChildByName(W2A9030*, char*);
 #if 0 /* merge_units */
@@ -149,9 +149,9 @@ extern "C" void func_002A9030(W2A9030* self)
         char* s;
         if (l) {
             if (l->state == 4) func_004426B0(l);
-            if (!func_004518F0(l, App_CardWaitPoll, self->mAC, self->mC8, self->mE4)) {
+            if (!SFOLobby_JoinRoom(l, App_CardWaitPoll, self->mAC, self->mC8, self->mE4)) {
                 char* g = D_004FFC04;
-                FrontEnd_OpenPopup(g, 2, D_004AB6B8, func_0033CE30(self, 0x5A, 0, 0, 0, 0), self, 0xB);
+                FrontEnd_OpenPopup(g, 2, D_004AB6B8, GuiScreen_GetLobbyString(self, 0x5A, 0, 0, 0, 0), self, 0xB);
             }
         }
         o = GuiWidget_FindChildByName(self, D_0048BBD0);

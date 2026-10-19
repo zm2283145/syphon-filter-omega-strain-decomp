@@ -2,13 +2,13 @@
 #include "types.h"
 extern "C" {
 extern "C" void func_00293890();
-extern "C" void func_002A0D80();
-extern "C" void func_002A0D90();
-extern "C" void func_002A1140();
-extern "C" void func_002A12F0();
-extern "C" void func_002A1700();
-extern "C" void func_002A1780();
-extern "C" void func_0033CCA0();
+extern "C" void GuiMissionSetup_GetClassName();
+extern "C" void GuiMissionSetup_IsType();
+extern "C" void GuiMissionSetup_HandleEvent();
+extern "C" void GuiMissionSetup_HandleInput();
+extern "C" void GuiMissionSetup_Deactivate();
+extern "C" void GuiMissionSetup_Activate();
+extern "C" void GuiScreen_PollLobby();
 extern "C" void GuiScreen_Update();
 extern "C" void GuiScreen_Sleep();
 extern "C" void GuiScreen_Wake();
@@ -31,7 +31,7 @@ void* func_0033D430(void* self, short deleteFlag);
 void operator_delete(void* allocation);
 }
 struct O002A0CF0 { void* vtable; char pad[0x84]; char m0[0x1C]; char m1[0x1C]; char m2[4]; };
-extern "C" O002A0CF0* func_002A0CF0(O002A0CF0* self, short deleteFlag)
+extern "C" O002A0CF0* GuiMissionSetup_dtor(O002A0CF0* self, short deleteFlag)
 {
     if (self) {
         self->vtable = ((char*)D_004DD730);
@@ -44,4 +44,4 @@ extern "C" O002A0CF0* func_002A0CF0(O002A0CF0* self, short deleteFlag)
     }
     return self;
 }
-void * const D_004DD730[28] = { (void*)0x0, (void*)0x0, (void*)func_002A0CF0, (void*)GuiScreen_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiScreen_Wake, (void*)GuiScreen_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)func_002A12F0, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiScreen_Update, (void*)func_002A1140, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)func_002A0D80, (void*)func_002A0D90, (void*)func_00293890, (void*)func_0033CCA0, (void*)func_002A1780, (void*)func_002A1700, (void*)0x0 };
+void * const D_004DD730[28] = { (void*)0x0, (void*)0x0, (void*)GuiMissionSetup_dtor, (void*)GuiScreen_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiScreen_Wake, (void*)GuiScreen_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiMissionSetup_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiScreen_Update, (void*)GuiMissionSetup_HandleEvent, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiMissionSetup_GetClassName, (void*)GuiMissionSetup_IsType, (void*)func_00293890, (void*)GuiScreen_PollLobby, (void*)GuiMissionSetup_Activate, (void*)GuiMissionSetup_Deactivate, (void*)0x0 };

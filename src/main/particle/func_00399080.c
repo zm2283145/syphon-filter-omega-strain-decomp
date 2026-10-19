@@ -201,7 +201,7 @@ void Renderer_FlushBatch(void* s);
 void Vec4_Copy(V4* d, const V4* s);
 void GuiBatch_AddVertexColor(V4* d, const V4* s);
 float GuiBatch_AddVertexUV(void);
-V4* func_00132000(V4* o, float x, float y, float z, float w);
+V4* Vec4_Set(V4* o, float x, float y, float z, float w);
 int ParticleDefs_FindByName(void* mgr, void* key);
 void* ParticleDefs_SlotForId(void* self, int n);
 }
@@ -256,7 +256,7 @@ static inline V4* UV(const V4& uv)
 {
     V4 tmp;
     float u = uv.x + GuiBatch_AddVertexUV();
-    return func_00132000(&tmp, u, uv.y + GuiBatch_AddVertexUV(), uv.z, uv.w);
+    return Vec4_Set(&tmp, u, uv.y + GuiBatch_AddVertexUV(), uv.z, uv.w);
 }
 static inline V4* UVW0(const V4& uv) { return UV(uv); }
 static inline V4* UVW1(const V4& uv) { return UVW0(uv); }

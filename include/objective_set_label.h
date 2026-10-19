@@ -26,7 +26,7 @@ extern unsigned char D_005721C8;
 extern char D_0051F0B0[];
 extern char D_004DE4F0[];
 extern void* Loc_LookupText(char* key);
-extern int func_00228B20(ObjLabelObjective* self, void* text);
+extern int Objective_DupString(ObjLabelObjective* self, void* text);
 extern void Event_Construct(ObjLabelMsg* msg, void* name);
 extern void Transport_Send(int target, ObjLabelMsg* msg, int a, int b);
 extern void cMessage_dtor(ObjLabelMsg* msg, int flags);
@@ -38,7 +38,7 @@ extern char* strncpy(char* dst, const char* src, unsigned int n);
         ObjLabelMsg msg;                                                      \
         ObjLabelMsg* m;                                                       \
         *(int*)((char*)self + (labelOffset)) =                                \
-            func_00228B20(self, Loc_LookupText(key));                         \
+            Objective_DupString(self, Loc_LookupText(key));                         \
         if (D_005721C8 && !quiet) {                                           \
             int id = self->id;                                                \
             m = &msg;                                                         \

@@ -274,7 +274,7 @@ void func_00448470(void)
 #pragma push /* merge_units */
 typedef struct { char c[200]; } S200;
 typedef struct { S21 name; int a; int b; S200 data; int e8; char ec; } R48;
-int func_00128C68();
+int Libc_Sscanf();
 /* the "%x" literal (0x004C0D28); retail places it 8-aligned, after 4 bytes of padding */
 static char merge_str_004C0D28[] __attribute__((aligned(8))) = "%x";
 void func_004484B0(int d0, int d1, int d2, R48 *src) {
@@ -284,7 +284,7 @@ void func_004484B0(int d0, int d1, int d2, R48 *src) {
         case 0: {
             int h[1];
             h[0] = 0;
-            func_00128C68(src, merge_str_004C0D28, h);
+            Libc_Sscanf(src, merge_str_004C0D28, h);
             LobbyArray_Append(h[0], src);
             break;
         }
@@ -1441,7 +1441,7 @@ int func_0044A1D0(LobbyCell* cell) {
 }
 
 /* Returns byte +0x265D after refreshing the cell if it is stale. */
-int func_0044A230(LobbyCell* cell) {
+int SFOLobby_CheckAgencyCell(LobbyCell* cell) {
     int last = cell->lastUpdate;
     int elapsed = Lobby_GetTime() - last;
     if (last == 0 || D_00497800 < elapsed) {

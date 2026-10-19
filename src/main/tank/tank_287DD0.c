@@ -27,7 +27,7 @@ extern int Loc_LookupText(char*);
 extern int String_AssignCStr_1C43A0(void*, char*);
 extern float SoftFloat_U64ToFloat(int);
 extern void GuiTitleScreen_CheckMemCard(Obj287E00*, int);
-extern void func_002C81D0(Ui287E00*);
+extern void FrontEnd_StopSplashThread(Ui287E00*);
 extern void FrontEnd_StartSplashThread(Ui287E00*);
 extern void FrontEnd_ClosePopup(Ui287E00*, int);
 extern int FrontEnd_OpenPopup(Ui287E00*, int, char*, int, int, int);
@@ -80,7 +80,7 @@ int GuiTitleScreen_HandleEvent(Obj287E00* self, Msg287E00* msg, unsigned short i
             r = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004A9590, D_004A95A0);
             if (open) {
                 FrontEnd_ClosePopup(D_004FFC04, tok);
-                func_002C81D0(D_004FFC04);
+                FrontEnd_StopSplashThread(D_004FFC04);
             }
         } else if (String_AssignCStr_1C43A0(msg->str, D_0048B3F0) == 0) {
             r = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004A95B0, D_004A95C0);

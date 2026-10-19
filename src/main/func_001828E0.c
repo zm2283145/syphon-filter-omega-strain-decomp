@@ -37,7 +37,7 @@ void Vec_SetPositionW1(V4* v);
 void Mtx_Multiply4b(Box* b);
 V4 Mtx_MulVec4(V4* v, M44* m);
 V4* Mtx_Multiply4(V4* v, M44* m);
-V4* func_00132000(V4* o, float x, float y, float z, float w);
+V4* Vec4_Set(V4* o, float x, float y, float z, float w);
 void Box_ExtendXYZ(Box* b, V4* v);
 }
 
@@ -47,12 +47,12 @@ static inline void TB(Box* b, M44* m)
     V4 mx; Vec4_Assign(&mx, &b->mx); Vec_SetPositionW1(&mx);
     Mtx_Multiply4b(b);
     { V4 t = Mtx_MulVec4(&mn, m); Box_ExtendXYZ(b, &t); }
-    { V4 t; Box_ExtendXYZ(b, Mtx_Multiply4(func_00132000(&t, mn.x, mn.y, mx.z, 1.0f), m)); }
-    { V4 t; Box_ExtendXYZ(b, Mtx_Multiply4(func_00132000(&t, mn.x, mx.y, mn.z, 1.0f), m)); }
-    { V4 t; Box_ExtendXYZ(b, Mtx_Multiply4(func_00132000(&t, mn.x, mx.y, mx.z, 1.0f), m)); }
-    { V4 t; Box_ExtendXYZ(b, Mtx_Multiply4(func_00132000(&t, mx.x, mn.y, mn.z, 1.0f), m)); }
-    { V4 t; Box_ExtendXYZ(b, Mtx_Multiply4(func_00132000(&t, mx.x, mn.y, mx.z, 1.0f), m)); }
-    { V4 t; Box_ExtendXYZ(b, Mtx_Multiply4(func_00132000(&t, mx.x, mx.y, mn.z, 1.0f), m)); }
+    { V4 t; Box_ExtendXYZ(b, Mtx_Multiply4(Vec4_Set(&t, mn.x, mn.y, mx.z, 1.0f), m)); }
+    { V4 t; Box_ExtendXYZ(b, Mtx_Multiply4(Vec4_Set(&t, mn.x, mx.y, mn.z, 1.0f), m)); }
+    { V4 t; Box_ExtendXYZ(b, Mtx_Multiply4(Vec4_Set(&t, mn.x, mx.y, mx.z, 1.0f), m)); }
+    { V4 t; Box_ExtendXYZ(b, Mtx_Multiply4(Vec4_Set(&t, mx.x, mn.y, mn.z, 1.0f), m)); }
+    { V4 t; Box_ExtendXYZ(b, Mtx_Multiply4(Vec4_Set(&t, mx.x, mn.y, mx.z, 1.0f), m)); }
+    { V4 t; Box_ExtendXYZ(b, Mtx_Multiply4(Vec4_Set(&t, mx.x, mx.y, mn.z, 1.0f), m)); }
     { V4 t = Mtx_MulVec4(&mx, m); Box_ExtendXYZ(b, &t); }
 }
 

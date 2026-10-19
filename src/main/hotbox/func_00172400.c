@@ -18,7 +18,7 @@ int Player_GetIndex(int);
 void Vec4_CopyAsPoint(void*,void*);
 void World_PushObjectFromAction(void*,void*);
 void cGOBJTriggerEventMsg_ctor(void*,int,int,void*,int);
-void* func_0014B160(void*,void*,void*);
+void* Mtx_SetRotationTranslation(void*,void*,void*);
 int* func_00172990(PtrVec*,int);
 extern char D_004D9360[],D_004D9940[],D_004DAF10[],D_004DB8D0[],D_004E0880[],D_004EE698[],D_004F7930[],D_004FFB50[],D_0055D4E0[],g_cEnableMsgClass[];
 extern int D_004FFBD4;
@@ -89,7 +89,7 @@ extern "C" void Hotbox_Type2Receiver(cHotbox *arg0, SfGameObject *arg1) {
         void* dest=(char*)tp+0x30;
         // Empty scheduling barrier: retain the destination address before call setup.
         asm { .set reorder }
-        func_0014B160(dest,temp_s0,&sp70);
+        Mtx_SetRotationTranslation(dest,temp_s0,&sp70);
         Event_Send(tp, temp_s1_2, 0);
         sp130.vtable = D_004D9360;
         cMessage_dtor(tp, 0);

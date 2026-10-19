@@ -6,7 +6,7 @@
 #include "types.h"
 #include "player_types.h"
 
-extern int func_00176060(PlayerComponent* self, int weapon);
+extern int Player_RemoveWeapon(PlayerComponent* self, int weapon);
 
 int Script_cPlayer_RemoveWeapon(PlayerScriptArg* args) {
     int spill[1]; /* original stack temporary; the cast form keeps it in memory */
@@ -16,6 +16,6 @@ int Script_cPlayer_RemoveWeapon(PlayerScriptArg* args) {
     *(int*)(char*)spill = args[1].i;
     weapon = *(int*)(char*)spill;
     self = (PlayerComponent*)args[0].p;
-    func_00176060(self, weapon);
+    Player_RemoveWeapon(self, weapon);
     return 0;
 }

@@ -23,7 +23,7 @@ extern void func_002B51E0(int, int*);
 extern void func_002B56E0(int, char*, int, int, void*, int*);
 extern int atoi(char*);
 
-void func_0040EFA0(S40E5D0* s) {
+void MemCard_InfoCycle(S40E5D0* s) {
     int i;
     if (s->busy) {
         s->state = s->busy;
@@ -104,7 +104,7 @@ typedef struct MemCard {
 extern int func_002B4F10(int* params, char* data);
 extern void String_Copy(char* dst, const char* src); /* String_Copy */
 extern void strncpy(void* dst, const void* src, int size); /* strncpy-style copy */
-extern void func_0040F290(void* dst, const void* src, int size);
+extern void MemCard_TitleToSjis(void* dst, const void* src, int size);
 extern char* D_00494008;
 extern char D_00493D84[];
 extern char D_00493D44[];
@@ -139,7 +139,7 @@ MemCard* MemCard_SetupIconSys(MemCard* self) {
     String_Copy(D_00493D44, D_00494008);
     String_Copy(D_00493DC4, D_00494008);
     strncpy(D_00493C40, "PS2D", 4);
-    func_0040F290(D_00493D00, "Syphon Filter:The Omega Strain", 0x20);
+    MemCard_TitleToSjis(D_00493D00, "Syphon Filter:The Omega Strain", 0x20);
     return self;
 }
 #pragma pop /* merge_units */

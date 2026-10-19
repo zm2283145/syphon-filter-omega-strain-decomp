@@ -10,9 +10,9 @@ extern G_002AF040* DME_GetLobby(void);
 extern E_002AF040* LobbyArray_At(L_002AF040* l, int i);
 extern char* String_CStr(String* s);
 extern int String_CompareNoCase(String* a, char* b);
-extern int func_0033CE30(S_002AF040* it, int id, String* a, String* b, int c, int d);
+extern int GuiScreen_GetLobbyString(S_002AF040* it, int id, String* a, String* b, int c, int d);
 extern void FrontEnd_OpenPopup(void* mgr, int a, char* fmt, int v, S_002AF040* it, int b);
-extern void func_0033CCA0(S_002AF040* self);
+extern void GuiScreen_PollLobby(S_002AF040* self);
 void func_002AF040(S_002AF040* self)
 {
     G_002AF040* g;
@@ -37,12 +37,12 @@ void func_002AF040(S_002AF040* self)
                 self->b78 = 0;
                 k = e->id == 2 ? 0x2F : 0x7F;
                 mgr = D_004FFC04;
-                FrontEnd_OpenPopup(mgr, 2, D_004ABCD0, func_0033CE30(self, k, &e->fC, &e->name, 0, 0), self, 0x17);
+                FrontEnd_OpenPopup(mgr, 2, D_004ABCD0, GuiScreen_GetLobbyString(self, k, &e->fC, &e->name, 0, 0), self, 0x17);
                 return;
             }
         }
     }
-    func_0033CCA0(self);
+    GuiScreen_PollLobby(self);
 }
 
 

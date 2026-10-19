@@ -44,10 +44,10 @@ static inline void merge_flush_func_00284020(void) {}
 
 
 extern int Global_CreateTank(void* gobj);
-extern void* func_002379D0(int handle);
+extern void* cNIEventOBJ_Identity(int handle);
 
 int Script_CreateTank(TankScriptArg* args) {
-    volatile int tank = Global_CreateTank(func_002379D0(args[0].i)); /* mirrors the original stack temporary */
+    volatile int tank = Global_CreateTank(cNIEventOBJ_Identity(args[0].i)); /* mirrors the original stack temporary */
     return tank;
 }
 /* merge_units: generate this block's code under its own pragmas */

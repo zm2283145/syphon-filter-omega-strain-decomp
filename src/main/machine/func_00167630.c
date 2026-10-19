@@ -1,4 +1,4 @@
-/* func_00167630 (machine): lobby loading-screen tick. The quad copy and identity-matrix store are GCC-style __asm__ volatile: MW does no CSE across them, so the base address and constant are rematerialised as in retail. */
+/* GameFlow_EnterMpLobby (machine): lobby loading-screen tick. The quad copy and identity-matrix store are GCC-style __asm__ volatile: MW does no CSE across them, so the base address and constant are rematerialised as in retail. */
 #pragma opt_rotateloops off
 #pragma cplusplus on
 #include "types.h"
@@ -106,7 +106,7 @@ static inline void SetCol_00167630(const V4c_00167630& c)
     D_0055A28C = c.w;
 }
 
-extern "C" void func_00167630(void* arg)
+extern "C" void GameFlow_EnterMpLobby(void* arg)
 {
     if (!D_004EE4B0) {
         D_004EE4A8 = Now_00167630();

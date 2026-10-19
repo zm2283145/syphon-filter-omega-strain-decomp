@@ -57,7 +57,7 @@ extern char D_004FFB50[];
 extern GFAB0 *D_004FFC04;
 int sprintf(char *buf, const char *fmt, ...);
 void String_Copy(char *d, const char *s);
-void func_00128F58(char *d, const char *s);
+void Libc_Strcat(char *d, const char *s);
 void GuiBitmapWidget_SetImage(void *obj, char *name, int x);
 AgentFAB0 *Agent_GetSelected(void *a, int i);
 int Loc_LookupText(void *key);
@@ -79,8 +79,8 @@ static inline void AddEntry(ObjFAB0 *o, int x, int type, int sub, int val)
         sprintf(buf, D_004C24A8, type, sub);
         String_Copy(e->name, D_004C24B0);
         if (type != 7)
-            func_00128F58(buf, D_004C24B8);
-        func_00128F58(buf, D_004C24C0);
+            Libc_Strcat(buf, D_004C24B8);
+        Libc_Strcat(buf, D_004C24C0);
         if (e->obj)
             GuiBitmapWidget_SetImage(e->obj, buf, x);
         e->val = val;

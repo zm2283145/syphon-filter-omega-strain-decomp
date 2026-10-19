@@ -9,7 +9,7 @@ extern void String_CtorCStr_13B480(String* s, const char* text);
 extern void func_0013D680(String* dst, String* src);
 extern void String_Dtor(String* s, int flag);
 extern int String_CStr(String* s);
-extern int func_0033CE30(Obj2AD* o, int type, int a, int b, int c, int d);
+extern int GuiScreen_GetLobbyString(Obj2AD* o, int type, int a, int b, int c, int d);
 extern void FrontEnd_OpenPopup(void* mgr, int a, const char* text, int b, Obj2AD* o, int c);
 
 /* Sets the id and name from rec, then registers the object (event 0x35) with the manager. */
@@ -24,5 +24,5 @@ void func_002ADA10(Obj2AD* o, NameRec* rec)
     String_Dtor(&tmp, 0);
     h = String_CStr(&o->name);
     mgr = D_004FFC04;
-    FrontEnd_OpenPopup(mgr, 5, ((char*)D_004ABB08), func_0033CE30(o, 0x35, h, 0, 0, 0), o, 0xD);
+    FrontEnd_OpenPopup(mgr, 5, ((char*)D_004ABB08), GuiScreen_GetLobbyString(o, 0x35, h, 0, 0, 0), o, 0xD);
 }

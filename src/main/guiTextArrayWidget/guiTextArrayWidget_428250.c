@@ -117,7 +117,7 @@ extern "C" void func_00428450(CellVec* v, T* pos, unsigned int n, const T* value
         return;
     if (n > 0x200000 || v->count > 0x200000 - n) {
         func_00123BE8(D_00489738->stream, D_004BF830);
-        func_00121B60();
+        Libc_Abort();
     }
     if (v->count + n <= v->cap) {
         T* p; T* q; T* src; T* dst; T* end;

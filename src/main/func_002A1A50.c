@@ -1,6 +1,6 @@
 #include "types.h"
 
-int func_002A1A50(int a0, int a1, int a2, int a3) {
+int GuiMissionSetup_WrapStep(int a0, int a1, int a2, int a3) {
     int at, v0;
     int cond;
 

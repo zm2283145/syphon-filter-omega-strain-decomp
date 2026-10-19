@@ -11,7 +11,7 @@ typedef struct Obj {
 } Obj;
 
 #pragma peephole off
-void func_00171050(void* self, Obj* o, void* a, void* b) {
+void HotboxWorld_UpdateBoxBounds(void* self, Obj* o, void* a, void* b) {
     Bounds t;
     Hotbox_ComputeNpcBounds(&t, a, b);
     { void* d = &o->b; void* s = &t; __int128 q0, q1; __asm__ volatile("lq %0, 0(%3); lq %1, 0x10(%3); sq %0, 0(%2); sq %1, 0x10(%2)" : "=&r"(q0), "=&r"(q1) : "r"(d), "r"(s) : "memory"); }

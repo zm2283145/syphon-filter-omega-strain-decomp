@@ -35,7 +35,7 @@ extern void Pad_EnableVibration(int v);
 extern void* Service_Lookup(char* a, char* b);
 extern void SoundMgr_SetChannelVolume(void* svc, int ch, int v);
 extern void SoundMgr_SetOutputMode(void* svc, int v);
-extern char* func_003CBA90(char* key);
+extern char* GameIni_GetString(char* key);
 extern int String_CompareNoCase(char* a, char* b);
 extern void* App_GetInstance(void);
 extern void Options_SetVideoMode(void* a, int mode);
@@ -88,7 +88,7 @@ void GameOptions_Apply(LightCfg_h5* cfg, unsigned int mask)
         D_005383C0 = (unsigned char)(int)(191.25f * cfg->level);
     }
     if (mask & 0x800) {
-        int same = String_CompareNoCase(func_003CBA90("BOOT_VIDEOMODE"), "PAL") == 0;
+        int same = String_CompareNoCase(GameIni_GetString("BOOT_VIDEOMODE"), "PAL") == 0;
         int mode;
         mode = cfg->alt == 0 ? (same ? 2 : 0) : 4;
         Options_SetVideoMode(App_GetInstance(), mode);

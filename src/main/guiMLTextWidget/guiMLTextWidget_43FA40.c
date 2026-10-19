@@ -95,7 +95,7 @@ void FileHal_CtorDefault(File_FBB0* f);
 void FileHal_Reopen(File_FBB0* f, const char* path, int mode);
 unsigned int FileHal_ReadAll(File_FBB0* f);
 void FileHal_Dtor(File_FBB0* f, int a);
-int func_0043FE20(Map_FBB0* m, char* text);
+int CharMap_Parse(Map_FBB0* m, char* text);
 
 int CharMap_Load(Map_FBB0* m, const char* path)
 {
@@ -111,7 +111,7 @@ int CharMap_Load(Map_FBB0* m, const char* path)
         FileHal_Dtor(&f, -1);
         return 0;
     }
-    if (!func_0043FE20(m, f.text)) {
+    if (!CharMap_Parse(m, f.text)) {
         FileHal_Dtor(&f, -1);
         return 0;
     }

@@ -11,10 +11,10 @@ typedef struct { int unk0; char name[4]; } Ctl_2A1140;
 typedef struct { char pad[0xDC]; Ctl_2A1140* unkDC; Ctl_2A1140* unkE0; } Obj_2A1140;
 
 extern int String_AssignCStr_1C43A0(void*, const char*);
-extern void func_0033C320(Obj_2A1140*, int);
-extern void func_002A0F60(Obj_2A1140*);
-extern void func_002A1590(Obj_2A1140*, int);
-extern void func_002A1600(Obj_2A1140*, int);
+extern void GuiScreen_Navigate(Obj_2A1140*, int);
+extern void GuiMissionSetup_BeginMission(Obj_2A1140*);
+extern void GuiMissionSetup_StepNumAgents(Obj_2A1140*, int);
+extern void GuiMissionSetup_StepJoinFilter(Obj_2A1140*, int);
 extern int GuiScreen_HandleEvent(Obj_2A1140*, Ctl_2A1140*, unsigned int, int, int);
 extern const char* D_0048BA40;
 extern const char* D_0048BA48;
@@ -24,25 +24,25 @@ extern unsigned char D_005064A8;
 extern int D_005064B0;
 extern int D_005064B8;
 
-int func_002A1140(Obj_2A1140* self, Ctl_2A1140* ctl, unsigned int msg, int code, int param)
+int GuiMissionSetup_HandleEvent(Obj_2A1140* self, Ctl_2A1140* ctl, unsigned int msg, int code, int param)
 {
     unsigned short m = msg;
 
     if ((m == 27 || m == 26) && code == 11) {
-        func_0033C320(self, 1);
+        GuiScreen_Navigate(self, 1);
         return 1;
     }
     if (m == 2) {
         if (String_AssignCStr_1C43A0(ctl->name, D_0048BA60) == 0) {
-            func_002A0F60(self);
+            GuiMissionSetup_BeginMission(self);
             return 1;
         }
         if (String_AssignCStr_1C43A0(ctl->name, D_0048BA40) == 0) {
-            func_002A1590(self, 1);
+            GuiMissionSetup_StepNumAgents(self, 1);
             return 1;
         }
         if (String_AssignCStr_1C43A0(ctl->name, D_0048BA48) == 0) {
-            func_002A1600(self, 1);
+            GuiMissionSetup_StepJoinFilter(self, 1);
             return 1;
         }
     }
@@ -77,27 +77,27 @@ struct Ui_002A12F0 {
 struct S_002A12F0 { char pad0[0x20]; void* f20; char pad24[0xDC - 0x24]; void* pDC; void* pE0; };
 extern "C" {
 #if 0 /* merge_units */
-void func_002A1590(S_002A12F0* self, int a);
+void GuiMissionSetup_StepNumAgents(S_002A12F0* self, int a);
 #endif /* merge_units */
-#define func_002A1590(a0, a1) (func_002A1590((Obj_2A1140 *)(a0), (a1))) /* merge_units */
+#define GuiMissionSetup_StepNumAgents(a0, a1) (GuiMissionSetup_StepNumAgents((Obj_2A1140 *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-void func_002A1600(S_002A12F0* self, int a);
+void GuiMissionSetup_StepJoinFilter(S_002A12F0* self, int a);
 #endif /* merge_units */
-#define func_002A1600(a0, a1) (func_002A1600((Obj_2A1140 *)(a0), (a1))) /* merge_units */
+#define GuiMissionSetup_StepJoinFilter(a0, a1) (GuiMissionSetup_StepJoinFilter((Obj_2A1140 *)(a0), (a1))) /* merge_units */
 
 void* Gui_GetScreenList(void);
 Pg_002A12F0* GuiManager_FindByName(void* a, char* b);
 Ui_002A12F0* Gui_GetScreenStack(void);
 #if 0 /* merge_units */
-void func_0033C320(S_002A12F0* self, int a);
+void GuiScreen_Navigate(S_002A12F0* self, int a);
 #endif /* merge_units */
-#define func_0033C320(a0, a1) (func_0033C320((Obj_2A1140 *)(a0), (a1))) /* merge_units */
+#define GuiScreen_Navigate(a0, a1) (GuiScreen_Navigate((Obj_2A1140 *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-void func_002A0F60(S_002A12F0* self);
+void GuiMissionSetup_BeginMission(S_002A12F0* self);
 #endif /* merge_units */
-#define func_002A0F60(a0) (func_002A0F60((Obj_2A1140 *)(a0))) /* merge_units */
+#define GuiMissionSetup_BeginMission(a0) (GuiMissionSetup_BeginMission((Obj_2A1140 *)(a0))) /* merge_units */
 
 int GuiScreen_HandleInput(S_002A12F0* self, Ev_002A12F0* ev);
 }
@@ -122,20 +122,20 @@ static inline unsigned char Press_002A12F0(Ev_002A12F0* e, int b)
         r = 1;
     return r;
 }
-extern "C" int func_002A12F0(S_002A12F0* self, Ev_002A12F0* ev)
+extern "C" int GuiMissionSetup_HandleInput(S_002A12F0* self, Ev_002A12F0* ev)
 {
     if (Press_002A12F0(ev, 0x8000)) {
         if (self->f20 == self->pDC)
-            func_002A1590(self, 0);
+            GuiMissionSetup_StepNumAgents(self, 0);
         else if (self->f20 == self->pE0)
-            func_002A1600(self, 0);
+            GuiMissionSetup_StepJoinFilter(self, 0);
     } else {
         bool b = ev->type == 1 && ev->f2 == 0 && ev->btn == 0x2000 && ev->f6 == 0;
         if (b) {
             if (self->f20 == self->pDC)
-                func_002A1590(self, 1);
+                GuiMissionSetup_StepNumAgents(self, 1);
             else if (self->f20 == self->pE0)
-                func_002A1600(self, 1);
+                GuiMissionSetup_StepJoinFilter(self, 1);
         }
     }
     if (Press_002A12F0(ev, 0x10)) {
@@ -144,21 +144,21 @@ extern "C" int func_002A12F0(S_002A12F0* self, Ev_002A12F0* ev)
             Gui_GetScreenStack()->Hide(self);
             p->flags |= 2;
         } else {
-            func_0033C320(self, 1);
+            GuiScreen_Navigate(self, 1);
         }
         return 1;
     } else {
         bool b = ev->type == 1 && ev->f2 == 0 && ev->btn == 0x80 && ev->f6 == 0;
         if (b) {
-            func_002A0F60(self);
+            GuiMissionSetup_BeginMission(self);
             return 1;
         }
     }
     return GuiScreen_HandleInput(self, ev);
 }
-#undef func_002A1590 /* merge_units */
-#undef func_002A1600 /* merge_units */
-#undef func_0033C320 /* merge_units */
-#undef func_002A0F60 /* merge_units */
+#undef GuiMissionSetup_StepNumAgents /* merge_units */
+#undef GuiMissionSetup_StepJoinFilter /* merge_units */
+#undef GuiScreen_Navigate /* merge_units */
+#undef GuiMissionSetup_BeginMission /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_002A12F0 */

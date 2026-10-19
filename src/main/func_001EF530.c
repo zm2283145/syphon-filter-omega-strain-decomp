@@ -16,7 +16,7 @@ extern "C" void HumanColBufA_Reserve(V1EF530* v, unsigned int n)
     if (v->cap < n) {
         if (n > 0x600000) {
             func_00123BE8(D_00489738->stream, "vector::reserve length error\n");
-            func_00121B60();
+            Libc_Abort();
         }
         V1EF530 tmp;
         tmp.cap = 0;

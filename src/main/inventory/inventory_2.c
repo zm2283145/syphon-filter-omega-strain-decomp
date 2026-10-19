@@ -62,7 +62,7 @@ extern "C" void name(name##_V* v, T* pos, unsigned int n, const T* value)     \
         return;                                                               \
     if (n > (maxN) || v->count > (maxN) - n) {                                \
         func_00123BE8(D_00489738->stream, errSym);                            \
-        func_00121B60();                                                      \
+        Libc_Abort();                                                      \
     }                                                                         \
     unsigned int cnt_ = v->count;                                             \
     if (cnt_ + n <= v->cap) {                                                 \

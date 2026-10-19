@@ -179,7 +179,7 @@ static inline void merge_flush_func_003EBC90(void) {}
 
 extern "C" {
 void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
-int func_0011A668(unsigned long p, int align);
+int Libgcc_Moddi3(unsigned long p, int align);
 }
 
 static inline void* Alloc_EBDD0(unsigned int n)
@@ -198,7 +198,7 @@ extern "C" int FStream_AllocBlock(Sub_EBDD0* s, int size)
     s->n0 = (int)Alloc_EBDD0(n);
     if (s->n0) {
         unsigned long u = (unsigned int)s->n0;
-        if (func_0011A668(u, 0x40))
+        if (Libgcc_Moddi3(u, 0x40))
             s->n8 = (int)((u + 0x7F) / 0x80 * 0x80);
         else
             s->n8 = 0;

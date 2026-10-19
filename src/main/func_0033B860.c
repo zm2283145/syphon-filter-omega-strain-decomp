@@ -13,7 +13,7 @@ extern "C" void func_0033B860(V33B860* v, char* first, char* last)
     v->count = v->cap = last - first;
     if (v->count > 0x6000000) {
         func_00123BE8(D_00489738->stream, "vector length error\n");
-        func_00121B60();
+        Libc_Abort();
     }
     if (v->count) {
         { char** pdata = &v->data; *pdata = TStr_Alloc(v->count, D_004B98B8, 0x5C); }

@@ -27,7 +27,7 @@ struct TIValueII { int a; int b; };
     {                                                                         \
         if (tree->count > 0xFFFFFFFFU - 1) {                                  \
             func_00123BE8(D_00489738->stream, errSym);                        \
-            func_00121B60();                                                  \
+            Libc_Abort();                                                  \
         }                                                                     \
         name##_Node* node = (name##_Node*)TStr_Alloc(0x14, allocFile, (allocLine)); \
         VT* v = &node->value;                                                 \

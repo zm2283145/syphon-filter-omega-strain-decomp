@@ -25,7 +25,7 @@ extern void func_0010D0D0(int);
 extern void SuspendThread(int);
 extern void App_CardWaitPoll(int, int);
 extern O2C84B0* DME_GetLobby(void);
-extern void func_004536B0(O2C84B0* o);
+extern void SFOLobby_Update(O2C84B0* o);
 }
 #pragma define_section REENT_DTOR ".dtors_drop" far_absolute RX
 struct Reent_84B0 { Reent_84B0(unsigned char b) { if (!b) D_005723C8 = 1; } __declspec(weak) __declspec(REENT_DTOR) ~Reent_84B0() { D_005723C8 = 0; } };
@@ -126,10 +126,10 @@ extern "C" void FrontEnd_SplashThreadMain(int arg)
                     if (o) {
                         if (!o->busy) {
                             o->busy = 1;
-                            func_004536B0(o);
+                            SFOLobby_Update(o);
                             o->busy = 0;
                         } else {
-                            func_004536B0(o);
+                            SFOLobby_Update(o);
                         }
                     }
                 }
@@ -207,7 +207,7 @@ void func_0025CA40(void* s);
 void Vec4_Copy(V4_002C8840* d, V4_002C8840* s);
 void GuiBatch_AddVertexColor(V4_002C8840* d, V4_002C8840* s);
 float GuiBatch_AddVertexUV(void);
-V4_002C8840* func_00132000(V4_002C8840* o, float x, float y, float z, float w);
+V4_002C8840* Vec4_Set(V4_002C8840* o, float x, float y, float z, float w);
 void Renderer_FlushPrimitives(void* s);
 void Video_BeginFrame(void* s);
 void func_0036E4B0(void* s, char* name, int a, int b);
@@ -243,7 +243,7 @@ static inline void Emit_002C8840(const V4c_002C8840& pos, const V4c_002C8840& co
     Vec4_Copy(&e->pos[D_00539224 - 1], (V4_002C8840*)&pos);
     GuiBatch_AddVertexColor(&e->c30[D_00539224 - 1], (V4_002C8840*)&col);
     u = uv.x + GuiBatch_AddVertexUV();
-    Vec4_Copy(&e->c34[D_00539224 - 1], func_00132000(&tmp, u, uv.y + GuiBatch_AddVertexUV(), uv.z, uv.w));
+    Vec4_Copy(&e->c34[D_00539224 - 1], Vec4_Set(&tmp, u, uv.y + GuiBatch_AddVertexUV(), uv.z, uv.w));
     D_005381F8 = 6LL << 32;
 }
 static inline unsigned char Prim_002C8840(void) { if (D_005392D0 & 1) return 3; return 2; }

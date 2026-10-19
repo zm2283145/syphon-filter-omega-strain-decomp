@@ -32,11 +32,11 @@ W_361AA0* GuiWidget_FindChildByName(void* o, char* name);
 void func_0041C0D0(W_361AA0* w, int v);
 void GuiArrayWidget_RowHeight(W_361AA0* w, int v);
 void FrontEnd_GetCharacterData(void* p);
-void func_00361AA0(O_361AA0* o);
+void GuiAgentInfo_Init(O_361AA0* o);
 }
 static inline W_361AA0* Cast_361AA0(W_361AA0* w, void* t) { return w && w->IsA(t) ? w : 0; }
 
-void func_00361AA0(O_361AA0* o)
+void GuiAgentInfo_Init(O_361AA0* o)
 {
     GuiScreen_Init(o);
     o->f100 = Cast_361AA0(GuiWidget_FindChildByName(o, D_004BB978), D_004A7520);

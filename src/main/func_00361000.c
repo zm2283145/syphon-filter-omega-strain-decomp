@@ -1,4 +1,4 @@
-/* func_00361000: fill the agent score sheet (name, team, rank, ratings and award columns, stats
+/* GuiAgentInfo_Refresh: fill the agent score sheet (name, team, rank, ratings and award columns, stats
  * table, rank badge, online buttons). */
 #pragma cplusplus on
 #include "types.h"
@@ -51,8 +51,8 @@ Wid_1000* GuiWidget_FindChildByName(void* self, char* name);
 void GuiTextArrayWidget_SetHAlign(Wid_1000* w, int a);
 void GuiArrayWidget_ColumnWidth(Wid_1000* w, int col, int width);
 void GuiTextArrayWidget_SetCellText(Wid_1000* w, int col, int row, char* text);
-void func_00425C30(Wid_1000* w, int col, int row, char* colour);
-void func_00425CD0(Wid_1000* w, int col, int row, int align);
+void GuiTextArrayWidget_SetCellRgba(Wid_1000* w, int col, int row, char* colour);
+void GuiTextArrayWidget_SetCellHAlign(Wid_1000* w, int col, int row, int align);
 void func_00296FA0(Vec_1000* v);
 void func_00299360(Vec_1000* v, int f);
 void AgentData_GetRatings(void* ag, Vec_1000* v);
@@ -61,10 +61,10 @@ void GuiBitmapWidget_SetImage(void* w, char* name, int img);
 void* DME_GetLobby(void);
 int func_0044A0D0(void* lb, int id, int f);
 int func_0044D670(void* lb, int id, int f);
-void func_00361000(Self_1000* self);
+void GuiAgentInfo_Refresh(Self_1000* self);
 }
 
-extern "C" void func_00361000(Self_1000* self)
+extern "C" void GuiAgentInfo_Refresh(Self_1000* self)
 {
     void* ag = Agent_GetSelected(D_004FFB50, -1);
     char buf[0x10];
@@ -142,10 +142,10 @@ extern "C" void func_00361000(Self_1000* self)
             else
                 sprintf(line, D_004BB928, self->vals[i]);
             GuiTextArrayWidget_SetCellText(self->w110, 1, i, line);
-            func_00425C30(self->w110, 0, i, D_00587BE0);
-            func_00425CD0(self->w110, 0, i, 2);
-            func_00425C30(self->w110, 1, i, D_00587BD0);
-            func_00425CD0(self->w110, 1, i, 1);
+            GuiTextArrayWidget_SetCellRgba(self->w110, 0, i, D_00587BE0);
+            GuiTextArrayWidget_SetCellHAlign(self->w110, 0, i, 2);
+            GuiTextArrayWidget_SetCellRgba(self->w110, 1, i, D_00587BD0);
+            GuiTextArrayWidget_SetCellHAlign(self->w110, 1, i, 1);
         }
     }
     {

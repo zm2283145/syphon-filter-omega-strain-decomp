@@ -1449,13 +1449,13 @@ struct cNPC_00149480 {
     virtual void RemoveGroupFromPathRegion(void* target); /* +0x1FC */
 };
 
-extern "C" void* func_0015C120(void* handle);
+extern "C" void* ScriptNode_Identity(void* handle);
 
-/* Script native: cNPC::RemoveGroupFromPathRegion(func_0015C120(args[1])); returns 0. */
+/* Script native: cNPC::RemoveGroupFromPathRegion(ScriptNode_Identity(args[1])); returns 0. */
 extern "C" int Script_cNPC_RemoveGroupFromPathRegion(ScriptArg_00149480* args)
 {
     cNPC_00149480* npc = (cNPC_00149480*)args[0].p;
-    npc->RemoveGroupFromPathRegion(func_0015C120(args[1].p));
+    npc->RemoveGroupFromPathRegion(ScriptNode_Identity(args[1].p));
     return 0;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -1495,19 +1495,19 @@ struct cNPC_001494C0 {
 };
 
 #if 0 /* merge_units */
-extern "C" void* func_0015C120(void* id);
+extern "C" void* ScriptNode_Identity(void* id);
 #endif /* merge_units */
-#define func_0015C120(a0) (func_0015C120((a0))) /* merge_units */
+#define ScriptNode_Identity(a0) (ScriptNode_Identity((a0))) /* merge_units */
 
 
 /* Script native: adds node group args[1] to the NPC path region. */
 extern "C" int Script_cNPC_AddGroupToPathRegion(ScriptArg* args)
 {
     cNPC_001494C0* npc = (cNPC_001494C0*)args[0].p;
-    npc->AddGroupToPathRegion(func_0015C120(args[1].p));
+    npc->AddGroupToPathRegion(ScriptNode_Identity(args[1].p));
     return 0;
 }
-#undef func_0015C120 /* merge_units */
+#undef ScriptNode_Identity /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001494C0(void) {}
 #pragma pop /* merge_units */
@@ -1546,11 +1546,11 @@ struct cNPC_00149500 {
     virtual void RestrictMovementToNodeGroup(void* target); /* +0x1F4 */
 };
 
-/* Script native: cNPC::RestrictMovementToNodeGroup(func_0015C120(args[1])); returns 0. */
+/* Script native: cNPC::RestrictMovementToNodeGroup(ScriptNode_Identity(args[1])); returns 0. */
 extern "C" int Script_cNPC_RestrictMovementToNodeGroup(ScriptArg_00149500* args)
 {
     cNPC_00149500* npc = (cNPC_00149500*)args[0].p;
-    npc->RestrictMovementToNodeGroup(func_0015C120(args[1].p));
+    npc->RestrictMovementToNodeGroup(ScriptNode_Identity(args[1].p));
     return 0;
 }
 /* merge_units: generate this block's code under its own pragmas */

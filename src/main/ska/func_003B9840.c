@@ -37,7 +37,7 @@ extern "C" TN_3B9840* func_003B9840(TT_3B9840* tree, TN_3B9840* parent, int left
 {
     if (tree->count > MaxSize() - 1) {
         func_00123BE8(D_00489738->stream, D_004BCEF0);
-        func_00121B60();
+        Libc_Abort();
     }
     TN_3B9840* node = (TN_3B9840*)TStr_Alloc(0x50, D_004BCF98, 0x5C);
     TV_3B9840* v = &node->value;

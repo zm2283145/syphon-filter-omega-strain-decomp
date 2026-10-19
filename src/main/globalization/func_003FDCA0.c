@@ -9,7 +9,7 @@ char * Mem_Alloc(int, int, char *, int);
 int Mem_Free(int, char * , char *, int);                      
 int PtrVector_Resize(char *, int, int *);                
 int String_Copy(char *, int);                            
-int func_00128F58(char *, char *);                          
+int Libc_Strcat(char *, char *);                          
 int func_001361D0(int *);                           
 int func_003FDEB0(char * , int);                       
 int func_003FDEC0(char * );                            
@@ -33,10 +33,10 @@ void Loc_LoadMissionPool(int arg0, char *arg1) {
     char * temp_s0_2;
 
     String_Copy(sp30, arg0);
-    func_00128F58(sp30, "\\");
-    func_00128F58(sp30, arg1);
+    Libc_Strcat(sp30, "\\");
+    Libc_Strcat(sp30, arg1);
     sprintf(sp20, "\\STRINGS%s.DAT", F_(&D_00493A40, (D_0055D470 * 4), int));
-    func_00128F58(sp30, sp20);
+    Libc_Strcat(sp30, sp20);
     temp_s0 = D_0055CA50;
     if (temp_s0 != NULL) {
         if (D_00533880 != 0) {

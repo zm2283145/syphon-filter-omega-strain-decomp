@@ -45,7 +45,7 @@ void func_0025CA40(void* s);
 void Vec4_Copy(V4* d, const V4* s);
 void GuiBatch_AddVertexColor(V4* d, const V4* s);
 float GuiBatch_AddVertexUV(void);
-V4* func_00132000(V4* o, float x, float y, float z, float w);
+V4* Vec4_Set(V4* o, float x, float y, float z, float w);
 void Renderer_FlushBatch(void* s);
 }
 #define D_00539224 (D_00539210.f24)
@@ -126,7 +126,7 @@ static inline void Emit(const V4& pos, const V4c& col, const V4c& uv)
     Vec4_Copy(&e->pos[D_00539224 - 1], &pos);
     GuiBatch_AddVertexColor(&e->c30[D_00539224 - 1], (const V4*)&col);
     u = uv.x + GuiBatch_AddVertexUV();
-    Vec4_Copy(&e->c34[D_00539224 - 1], func_00132000(&tmp, u, uv.y + GuiBatch_AddVertexUV(), uv.z, uv.w));
+    Vec4_Copy(&e->c34[D_00539224 - 1], Vec4_Set(&tmp, u, uv.y + GuiBatch_AddVertexUV(), uv.z, uv.w));
     D_005381F8 = 6LL << 32;
 }
 static inline unsigned char Prim(void) { if (D_005392D0 & 1) return 3; return 2; }

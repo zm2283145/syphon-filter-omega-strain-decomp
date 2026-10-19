@@ -41,7 +41,7 @@ void func_002ECF08(int net, int i, int* a, int* b, int* c, int* d);
 void func_002EC580(int* arr);
 int snprintf(char* s, int n, const char* fmt, ...);
 void func_003FAC40(char* p);
-void func_004536B0(int v);
+void SFOLobby_Update(int v);
 
 #pragma opt_dead_assignments off
 static inline void NetBusyEnter(void) { if (!D_005723C8) D_005723C8 = 1; }
@@ -131,7 +131,7 @@ int DME_Update(void)
     if (D_00572528 && g_DmeLobby && g_DmeLobbyActive && !D_005723C8) {
         NetBusyEnter();
         NetBusyLeave();
-        func_004536B0(g_DmeLobby);
+        SFOLobby_Update(g_DmeLobby);
     }
     return ret;
 }

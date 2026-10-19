@@ -66,7 +66,7 @@ extern char D_004AA3B0[], D_004AA3C0[], D_004AA3D0[], D_004AA3E0[], D_004AA3F0[]
 extern char D_004AA418[], D_004AA428[], D_004AA430[], D_004AA448[], D_004AA450[], D_004AA460[], D_004AA468[];
 extern char D_004AA478[], D_004AA488[], D_004AA490[], D_004AA498[], D_004AA4A0[];
 void FrontEnd_FlushMessages(Ui_2958B0* ui);
-void func_002C81D0(Ui_2958B0* ui);
+void FrontEnd_StopSplashThread(Ui_2958B0* ui);
 void FrontEnd_StartSplashThread(Ui_2958B0* ui);
 void GuiCommandCenter_Exit(S_2958B0* self);
 void GuiCommandCenter_OpenPanel(S_2958B0* self, int a);
@@ -77,12 +77,12 @@ void* Gui_GetScreenList(void);
 void* Gui_GetScreenStack(void);
 void* GuiManager_FindOrLoad(void* list, char* a, char* b);
 void GuiStack_SwapScreens(void* stack, S_2958B0* from, void* to);
-char* func_0033CE30(S_2958B0* self, int id, int a, char* s, int b, int c);
+char* GuiScreen_GetLobbyString(S_2958B0* self, int id, int a, char* s, int b, int c);
 void GuiKeyboard_Open(void* scr, char* text, char* title, S_2958B0* owner, int a, int b, int c);
 int DME_GetLobby(void);
 int func_0044AF60(int lobby, char* s);
 int func_00452FF0(int lobby, int a);
-int func_0033C320(S_2958B0* self, int a);
+int GuiScreen_Navigate(S_2958B0* self, int a);
 void String_CtorCStr_13B480(Str_2958B0* s, char* c);
 char* String_CStr(Str_2958B0* s);
 void String_Dtor(Str_2958B0* s, int f);
@@ -122,16 +122,16 @@ extern "C" int GuiCommandCenter_HandleEvent(S_2958B0* self, Msg_2958B0* msg, uns
         if (sub == 0x1A && type == 0x1A) {
             void* scr = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AA368, D_004AA378);
             if (scr)
-                GuiKeyboard_Open(scr, func_0033CE30(self, 0x5D, 0, 0, 0, 0), D_004AA288, self, 0xF, 0x1B, 0);
+                GuiKeyboard_Open(scr, GuiScreen_GetLobbyString(self, 0x5D, 0, 0, 0, 0), D_004AA288, self, 0xF, 0x1B, 0);
             return 1;
         }
         if (sub == 0x1B && type == 0x1A) {
             int lobby = DME_GetLobby();
             if (lobby && str && *str) {
                 Ui_2958B0* ui = D_004FFC04;
-                int popup = FrontEnd_OpenPopup(ui, 0, D_004AA288, func_0033CE30(self, 0x7E, 0, str, 0, 0), 0, 0);
+                int popup = FrontEnd_OpenPopup(ui, 0, D_004AA288, GuiScreen_GetLobbyString(self, 0x7E, 0, str, 0, 0), 0, 0);
                 if (func_0044AF60(lobby, str)) {
-                    func_0033C320(self, 3);
+                    GuiScreen_Navigate(self, 3);
                 } else {
                     int id;
                     switch ((unsigned char)func_00452FF0(lobby, 0)) {
@@ -141,8 +141,8 @@ extern "C" int GuiCommandCenter_HandleEvent(S_2958B0* self, Msg_2958B0* msg, uns
                     case 0x1C: id = 0x62; break;
                     default: id = 0x63; break;
                     }
-                    String_CtorCStr_13B480(&title, func_0033CE30(self, 0x5E, 0, 0, 0, 0));
-                    String_CtorCStr_13B480(&text, func_0033CE30(self, (unsigned char)id, 0, str, 0, 0));
+                    String_CtorCStr_13B480(&title, GuiScreen_GetLobbyString(self, 0x5E, 0, 0, 0, 0));
+                    String_CtorCStr_13B480(&text, GuiScreen_GetLobbyString(self, (unsigned char)id, 0, str, 0, 0));
                     char* t = String_CStr(&text);
                     FrontEnd_OpenPopup(D_004FFC04, 5, String_CStr(&title), t, self, 0x1C);
                     String_Dtor(&text, 0);
@@ -155,7 +155,7 @@ extern "C" int GuiCommandCenter_HandleEvent(S_2958B0* self, Msg_2958B0* msg, uns
         if (sub == 0x1C && type == 0x1A) {
             void* scr = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AA368, D_004AA378);
             if (scr)
-                GuiKeyboard_Open(scr, func_0033CE30(self, 0x5D, 0, 0, 0, 0), D_004AA288, self, 0xF, 0x1B, 0);
+                GuiKeyboard_Open(scr, GuiScreen_GetLobbyString(self, 0x5D, 0, 0, 0, 0), D_004AA288, self, 0xF, 0x1B, 0);
             return 1;
         }
     }
@@ -188,9 +188,9 @@ extern "C" int GuiCommandCenter_HandleEvent(S_2958B0* self, Msg_2958B0* msg, uns
                     if (ui->b32) {
                         scr = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AA390, D_004AA3A0);
                     } else {
-                        if (!func_0033C320(self, 6)) {
+                        if (!GuiScreen_Navigate(self, 6)) {
                             Ui_2958B0* ui2 = D_004FFC04;
-                            FrontEnd_OpenPopup(ui2, 2, D_004AA288, func_0033CE30(self, 0x5B, 0, 0, 0, 0), self, 0x18);
+                            FrontEnd_OpenPopup(ui2, 2, D_004AA288, GuiScreen_GetLobbyString(self, 0x5B, 0, 0, 0, 0), self, 0x18);
                         }
                         return 1;
                     }
@@ -207,9 +207,9 @@ extern "C" int GuiCommandCenter_HandleEvent(S_2958B0* self, Msg_2958B0* msg, uns
                 if (D_004FFC04->b32)
                     return 1;
                 if (self->f1CC >= 0 && self->f1CC < 0x11 && ls->fC0 >= 0) {
-                    if (!func_0033C320(self, 2)) {
+                    if (!GuiScreen_Navigate(self, 2)) {
                         Ui_2958B0* ui2 = D_004FFC04;
-                        FrontEnd_OpenPopup(ui2, 2, D_004AA288, func_0033CE30(self, 0x5B, 0, 0, 0, 0), self, 0x18);
+                        FrontEnd_OpenPopup(ui2, 2, D_004AA288, GuiScreen_GetLobbyString(self, 0x5B, 0, 0, 0, 0), self, 0x18);
                     }
                     return 1;
                 }
@@ -229,7 +229,7 @@ extern "C" int GuiCommandCenter_HandleEvent(S_2958B0* self, Msg_2958B0* msg, uns
                 scr = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AA3C0, D_004AA3D0);
                 if (noLobby) {
                     FrontEnd_ClosePopup(D_004FFC04, popup);
-                    func_002C81D0(D_004FFC04);
+                    FrontEnd_StopSplashThread(D_004FFC04);
                 }
             } else if (!String_AssignCStr_1C43A0(&msg->name, D_0048B730)) {
                 scr = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AA3E0, D_004AA3F0);
@@ -253,19 +253,19 @@ extern "C" int GuiCommandCenter_HandleEvent(S_2958B0* self, Msg_2958B0* msg, uns
         } else if (id == self->f1E0) {
             LevelSelect_SetLevel(&D_004FFC04->lvl, -1);
             if (!String_AssignCStr_1C43A0(&msg->name, D_0048B710)) {
-                if (!func_0033C320(self, 3)) {
+                if (!GuiScreen_Navigate(self, 3)) {
                     Ui_2958B0* ui = D_004FFC04;
-                    FrontEnd_OpenPopup(ui, 5, D_004AA288, func_0033CE30(self, 0x5C, 0, 0, 0, 0), self, 0x1A);
+                    FrontEnd_OpenPopup(ui, 5, D_004AA288, GuiScreen_GetLobbyString(self, 0x5C, 0, 0, 0, 0), self, 0x1A);
                 }
                 return 1;
             }
             if (!String_AssignCStr_1C43A0(&msg->name, D_0048B718)) {
-                func_0033C320(self, 4);
+                GuiScreen_Navigate(self, 4);
                 return 1;
             }
             if (!String_AssignCStr_1C43A0(&msg->name, D_0048B720)) {
                 D_004FFC04->f268 = 1;
-                func_0033C320(self, 5);
+                GuiScreen_Navigate(self, 5);
                 return 1;
             }
             GuiCommandCenter_OpenPanel(self, 0);

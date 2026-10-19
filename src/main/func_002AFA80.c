@@ -35,7 +35,7 @@ void String_Dtor(Str_002AFA80* s, int flags);
 char* func_0044A060(G_002AFA80* g);
 void GuiTextWidget_SetText(W_002AFA80* w, char* s, int a);
 unsigned char func_0044A1D0(G_002AFA80* g);
-int func_0033CE30(Self_002AFA80* self, int a, int b, int c, int d, int e);
+int GuiScreen_GetLobbyString(Self_002AFA80* self, int a, int b, int c, int d, int e);
 void FrontEnd_OpenPopup(void* a, int b, char* c, int d, Self_002AFA80* e, int f);
 void* GuiWidget_FindChildByName(Self_002AFA80* self, char* name);
 char* Loc_LookupText(char* key);
@@ -88,7 +88,7 @@ extern "C" void func_002AFA80(Self_002AFA80* self)
             self->b170 = func_0044A1D0(g);
         } else {
             void* ui = D_004FFC04;
-            FrontEnd_OpenPopup(ui, 2, D_004ABCD0, func_0033CE30(self, 0x58, 0, 0, 0, 0), self, 0xF);
+            FrontEnd_OpenPopup(ui, 2, D_004ABCD0, GuiScreen_GetLobbyString(self, 0x58, 0, 0, 0, 0), self, 0xF);
         }
     }
     w = FindAs_002AFA80(self, D_0048BCF0, D_004A7520);

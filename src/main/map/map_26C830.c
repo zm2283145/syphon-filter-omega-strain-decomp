@@ -64,12 +64,12 @@ void HudMap_Commit(S_26C8D0* s);
 
 void Hud_FormatPlayerCalloutName(Buf_26C8D0* b, int key, int c);
 void Hud_ShowCallout(int a, M_26C8D0* m, char* text, int n, int b, int c, float f0, float f1);
-void func_0026C8D0(S_26C8D0* s, M_26C8D0* m);
+void HudMap_OnTargetAdded(S_26C8D0* s, M_26C8D0* m);
 }
 static inline unsigned char IsPlayer_26C8D0(Hum_26C8D0* h) { unsigned char r = 0; if (h->ctl && h->ctl->IsPlayer()) r = 1; return r; }
 static inline int LocalId_26C8D0(Hum_26C8D0* h) { int id; if (D_005721C8) { if (IsPlayer_26C8D0(h)) id = ((h->flags & 0x7F000000) >> 24) - 1; else id = -1; } else id = 0; return id; }
 
-void func_0026C8D0(S_26C8D0* s, M_26C8D0* m)
+void HudMap_OnTargetAdded(S_26C8D0* s, M_26C8D0* m)
 {
     bool b = m->f10 == 1 || m->f10 == 2;
     if (b) {

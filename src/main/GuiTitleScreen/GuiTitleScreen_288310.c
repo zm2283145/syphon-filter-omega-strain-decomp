@@ -39,7 +39,7 @@ extern int MemCard_GetSpaceNeeded(Mgr288310* m, int v);
 extern int sprintf(char* buf, const char* fmt, ...);
 extern char* strstr(const char* s, const char* sub);
 extern char* strncpy(char* d, const char* s, int n);
-extern void func_00128F58(char* d, const char* s);
+extern void Libc_Strcat(char* d, const char* s);
 extern void String_Copy(char* d, const char* s);
 
 void GuiTitleScreen_CheckMemCard(Self288310* self, int force)
@@ -72,8 +72,8 @@ void GuiTitleScreen_CheckMemCard(Self288310* self, int force)
                     int n = p - text;
                     strncpy(buf, text, n);
                     buf[n] = 0;
-                    func_00128F58(buf, num);
-                    func_00128F58(buf, p + 4);
+                    Libc_Strcat(buf, num);
+                    Libc_Strcat(buf, p + 4);
                 } else {
                     String_Copy(buf, text);
                 }

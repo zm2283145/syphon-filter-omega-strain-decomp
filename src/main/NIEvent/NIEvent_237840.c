@@ -17,14 +17,14 @@
  */
 
 
-extern void func_0023E3D0(void* obj, float speed);
+extern void cNIEventOBJ_SetSpeedRecursive(void* obj, float speed);
 
 /* SetSpeed(object, speed): float argument is passed through a stack slot. */
 int Script_cNIEventOBJ_SetSpeed(NIEventScriptArg* args) {
     NIEventScriptArg speed[1];
 
     speed[0].i = args[1].i;
-    func_0023E3D0(args[0].p, speed[0].f);
+    cNIEventOBJ_SetSpeedRecursive(args[0].p, speed[0].f);
     return 0;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -245,7 +245,7 @@ int ScriptType_cNIEventOBJ_Init(void) {
     return ScriptType_AddAccepted(D_004F7CA8, D_004F7D20);
 }
 
-void* func_002379D0(void* self) {
+void* cNIEventOBJ_Identity(void* self) {
     return self;
 }
 

@@ -3,17 +3,17 @@
 extern "C" {
 extern "C" void GuiOnlineConnect_GetClassName();
 extern "C" void func_00293890();
-extern "C" void func_0029CB60();
+extern "C" void GuiOnlineConnect_IsType();
 extern "C" void func_0029CB90();
 extern "C" void func_0029CBA0();
-extern "C" void func_0029E1A0();
-extern "C" void func_0029E440();
-extern "C" void func_0029E8C0();
-extern "C" void func_0029ECD0();
-extern "C" void func_0029ED40();
-extern "C" void func_0029EF30();
-extern "C" void func_0029EF90();
-extern "C" void func_0033CCA0();
+extern "C" void GuiOnlineConnect_Update();
+extern "C" void GuiOnlineConnect_HandleEvent();
+extern "C" void GuiOnlineConnect_HandleInput();
+extern "C" void GuiOnlineConnect_Sleep();
+extern "C" void GuiOnlineConnect_Wake();
+extern "C" void GuiOnlineConnect_Deinit();
+extern "C" void GuiOnlineConnect_Init();
+extern "C" void GuiScreen_PollLobby();
 extern "C" void GuiWidget_FocusPrev();
 extern "C" void GuiWidget_FocusNext();
 extern "C" void GuiWidget_FocusLast();
@@ -31,7 +31,7 @@ void* func_0033D430(void* self, short deleteFlag);
 void operator_delete(void* allocation);
 }
 struct O0029CAC0 { void* vtable; char pad[0x94]; char m0[0x1C]; char m1[0x1C]; char m2[4]; };
-extern "C" O0029CAC0* func_0029CAC0(O0029CAC0* self, short deleteFlag)
+extern "C" O0029CAC0* GuiOnlineConnect_dtor(O0029CAC0* self, short deleteFlag)
 {
     if (self) {
         self->vtable = ((char*)D_004DD620);
@@ -44,4 +44,4 @@ extern "C" O0029CAC0* func_0029CAC0(O0029CAC0* self, short deleteFlag)
     }
     return self;
 }
-void * const D_004DD620[28] = { (void*)0x0, (void*)0x0, (void*)func_0029CAC0, (void*)func_0029EF90, (void*)func_0029EF30, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)func_0029ED40, (void*)func_0029ECD0, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)func_0029E8C0, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)func_0029E1A0, (void*)func_0029E440, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiOnlineConnect_GetClassName, (void*)func_0029CB60, (void*)func_00293890, (void*)func_0033CCA0, (void*)func_0029CB90, (void*)func_0029CBA0, (void*)0x0 };
+void * const D_004DD620[28] = { (void*)0x0, (void*)0x0, (void*)GuiOnlineConnect_dtor, (void*)GuiOnlineConnect_Init, (void*)GuiOnlineConnect_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiOnlineConnect_Wake, (void*)GuiOnlineConnect_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiOnlineConnect_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiOnlineConnect_Update, (void*)GuiOnlineConnect_HandleEvent, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiOnlineConnect_GetClassName, (void*)GuiOnlineConnect_IsType, (void*)func_00293890, (void*)GuiScreen_PollLobby, (void*)func_0029CB90, (void*)func_0029CBA0, (void*)0x0 };

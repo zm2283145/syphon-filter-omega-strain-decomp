@@ -28,7 +28,7 @@ extern unsigned char D_005721C0;
 extern char D_00506260[];
 extern char D_004DCF50[];
 extern char D_004DCF10[];
-void func_0023E3D0(Gun285710*);
+void cNIEventOBJ_SetSpeedRecursive(Gun285710*);
 void Event_Construct(void* m, void* type);
 void Event_Send(void* m, void* target, int immediate);
 void cMessage_dtor(void* m, int flags);
@@ -36,7 +36,7 @@ void cMessage_dtor(void* m, int flags);
 static inline int IsAuth285710(void) { return D_005721C8 ? D_005721C0 : 1; }
 extern "C" void func_00285710(Tank285710* self, float v) {
     Gun285710* t = self->turret;
-    func_0023E3D0(t);
+    cNIEventOBJ_SetSpeedRecursive(t);
     t->Fire();
     if (self->sub) self->sub->gun->Arm(1);
     if (D_005721C8 && IsAuth285710()) {
@@ -98,11 +98,11 @@ typedef struct {
 
 extern float D_0048B3D0;
 extern float D_0048B3D8;
-extern unsigned char func_00286990(Turret_285810* t, float dt);
-extern void func_00286690(Turret_285810* t, Target_285810* tgt, unsigned char valid, unsigned char r);
-extern int func_00287710(Turret_285810* t);
-extern void func_00285590(Tank_285810* self, int v);
-extern int func_00287AB0(Part_285810* p);
+extern unsigned char cTurret_Aim(Turret_285810* t, float dt);
+extern void cTank_Fire(Turret_285810* t, Target_285810* tgt, unsigned char valid, unsigned char r);
+extern int cTurret_FindTarget(Turret_285810* t);
+extern void cTank_SetEnemy(Tank_285810* self, int v);
+extern int cTankTread_Init(Part_285810* p);
 
 }
 static inline bool Null_285810(void* p) { return !p; }
@@ -112,7 +112,7 @@ static inline int Flag_285810(void) { return D_005721C8 ? D_005721C0 : 1; }
 static inline int Valid_285810(Target_285810* tgt, Turret_285810* t) { if (tgt == 0) return 1; if (tgt->id == t->targetId) return 1; return 0; }
 static inline void Part_Update_285810(Part_285810* p)
 {
-    if (p && func_00287AB0(p)) {
+    if (p && cTankTread_Init(p)) {
         int i;
         float d;
         float v;
@@ -138,20 +138,20 @@ extern "C" void cTank_v10(Tank_285810* self, float dt)
         unsigned char r;
         unsigned char valid;
         if (!(t->cooldown <= 0.0f)) t->cooldown -= dt;
-        r = func_00286990(t, dt);
+        r = cTurret_Aim(t, dt);
         tgt = t->target;
         valid = 1;
         if (!Null_285810(tgt) && tgt->id != t->targetId) valid = 0;
         tgt = valid ? tgt : 0;
         if (tgt && !t->busy && r && t->cooldown <= 0.0f) {
             if (!D_005721C8 || Flag_285810() || !(t->aux->f <= 1.0f))
-                func_00286690(t, tgt, valid, r);
+                cTank_Fire(t, tgt, valid, r);
         }
         if (!(self->timer <= 0.0f)) {
             self->timer -= dt;
         } else if (self->armed) {
             self->timer = D_0048B3D8;
-            func_00285590(self, func_00287710(self->turret));
+            cTank_SetEnemy(self, cTurret_FindTarget(self->turret));
             self->armed = 1;
         }
     }

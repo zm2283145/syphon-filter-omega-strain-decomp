@@ -30,6 +30,7 @@ extern void GuiSaveAgentWidget_IsType();
 extern void GuiScreen_HandleEvent();
 extern void GuiScreen_HandleInput();
 extern void GuiScreen_Init();
+extern void GuiScreen_PollLobby();
 extern void GuiScreen_Sleep();
 extern void GuiScreen_Update();
 extern void GuiScreen_Wake();
@@ -96,7 +97,6 @@ extern void func_0029CB90();
 extern void func_0029CBA0();
 extern void func_002A8B50();
 extern void func_002A9390();
-extern void func_0033CCA0();
 extern void func_0033D430();
 extern void func_0033DA00();
 extern void func_0033DE00();
@@ -136,7 +136,7 @@ void *D_004DE830[28] = {
     &GuiWidget_Draw, &GuiWidget_BubbleActivate, &GuiScreen_Update, &GuiScreen_HandleEvent,
     &func_0041F210, &GuiWidget_FocusFirst, &GuiWidget_FocusLast, &GuiWidget_FocusNext,
     &GuiWidget_FocusPrev, &func_00293910, &GuiSaveAgentWidget_IsType, &func_00293890,
-    &func_0033CCA0, &func_0029CB90, &func_0029CBA0, 0,
+    &GuiScreen_PollLobby, &func_0029CB90, &func_0029CBA0, 0,
 };
 
 void *D_004DE8A0[32] = {
@@ -146,7 +146,7 @@ void *D_004DE8A0[32] = {
     &GuiWidget_Draw, &GuiWidget_BubbleActivate, &func_0033DE00, &func_0033DF00,
     &func_0041F210, &GuiWidget_FocusFirst, &GuiWidget_FocusLast, &GuiWidget_FocusNext,
     &GuiWidget_FocusPrev, &func_00293910, &GuiSaveAgentWidget_IsType, &func_00293890,
-    &func_0033CCA0, &func_0029CB90, &func_0033F0C0, &func_0033EE40,
+    &GuiScreen_PollLobby, &func_0029CB90, &func_0033F0C0, &func_0033EE40,
     &func_0033E410, &func_0033E5B0, &func_002A8B50, 0,
 };
 

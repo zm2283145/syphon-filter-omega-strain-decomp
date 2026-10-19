@@ -529,7 +529,7 @@ extern char *strncpy(char *d, const char *s, unsigned int n);
 #endif /* merge_units */
 #define strncpy(a0, a1, a2) (strncpy((a0), (a1), (size_t)(a2))) /* merge_units */
 
-extern char *func_00129708(char *d, const char *s, unsigned int n);
+extern char *Libc_Strncat(char *d, const char *s, unsigned int n);
 int func_0030BA90(char *base, int kind, char *dst)
 {
     char *src;
@@ -542,7 +542,7 @@ int func_0030BA90(char *base, int kind, char *dst)
         strncpy(dst, src, 0x800);
     } else {
         strncpy(dst, base + 4, 0x800);
-        func_00129708(dst, src, 0x800);
+        Libc_Strncat(dst, src, 0x800);
     }
     return 0;
 }
@@ -557,9 +557,9 @@ extern int func_0030B510(const char *a, const char *b, size_t n);
 #define func_0030B510(a0, a1, a2) (func_0030B510((a0), (a1), (a2))) /* merge_units */
 
 #if 0 /* merge_units */
-extern char *func_00129708(char *d, const char *s, size_t n);
+extern char *Libc_Strncat(char *d, const char *s, size_t n);
 #endif /* merge_units */
-#define func_00129708(a0, a1, a2) (func_00129708((a0), (a1), (unsigned int)(a2))) /* merge_units */
+#define Libc_Strncat(a0, a1, a2) (Libc_Strncat((a0), (a1), (unsigned int)(a2))) /* merge_units */
 
 extern int func_0030BA90(char *base, int kind, char *dst);
 
@@ -579,7 +579,7 @@ int func_0030BB48(char *base, int kind, char *dst)
     }
     if (func_0030B510(base + 4, D_004AFA98, 4) == 0) {
         strncpy(dst, base + 4, 0x800);
-        func_00129708(dst, src, 0x800);
+        Libc_Strncat(dst, src, 0x800);
         return 0;
     }
     func_0030BA90(base, kind, dst);
@@ -596,5 +596,5 @@ int func_0030BB48(char *base, int kind, char *dst)
     return 0;
 }
 #undef func_0030B510 /* merge_units */
-#undef func_00129708 /* merge_units */
+#undef Libc_Strncat /* merge_units */
 /* merge_units: end func_0030BB48 */

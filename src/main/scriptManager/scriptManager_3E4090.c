@@ -47,7 +47,7 @@ extern unsigned char D_005723C8, D_005721D0;
 extern char D_004E00E0[], D_004E0840[];
 void func_003E43D0(Msg_4240*, Src_4240*);
 V4_4240* func_003E43B0(V4_4240*, float, float, float, float);
-V4_4240* func_00132000(V4_4240*, float, float, float, float);
+V4_4240* Vec4_Set(V4_4240*, float, float, float, float);
 Pl_4240* Placement_GetIdentity(Pl_4240*, V4_4240*, V4_4240*);
 Id_4240* func_0015AC90(Id_4240*, int);
 void func_003E4370(void*, int, Pl_4240*, Id_4240*);
@@ -71,7 +71,7 @@ int func_003E4240(int a, int b, int c, Src_4240* p0)
         Pl_4240* pp;
         func_003E43D0(m, p);
         r = func_003E43B0(&rot, p->qx, p->qy, p->qz, p->qw);
-        pp = Placement_GetIdentity(&pl, r, func_00132000(&pos, p->px, p->py, p->pz, 1.0f));
+        pp = Placement_GetIdentity(&pl, r, Vec4_Set(&pos, p->px, p->py, p->pz, 1.0f));
         func_003E4370(m->sub30, p->unkC, pp, func_0015AC90(&idv, p->unk10));
         m->vt = D_004E00E0;
         obj = NetMap_Lookup(p->id);

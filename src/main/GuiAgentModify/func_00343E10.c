@@ -148,7 +148,7 @@ int Appearance_GetToneDigit(void* app);
 void cVUM_GOBJ_InitModel(Model_E10* m, char* name);
 void func_00290BB0(Word_E10* w, int n);
 void func_00290A50(SVec_E10* v, Word_E10* w, unsigned char f);
-V4_E10* func_00132000(V4_E10* v, float x, float y, float z, float w);
+V4_E10* Vec4_Set(V4_E10* v, float x, float y, float z, float w);
 void func_002909C0(Sph_E10* s, int bone, float r, V4_E10* off);
 void func_002909A0(SVec_E10* v, Sph_E10** p);
 void func_001B06F0(Sph_E10* s, int f);
@@ -207,7 +207,7 @@ static inline int Eq5_E10(const char* a, const char* b) {
 static inline Man_E10* MANP_E10(Model_E10* m) { return &m->man; }
 static inline char* APP_E10(Man_E10* m) { return m->app; }
 static inline char* NAME_E10(Man_E10* m) { return m->name; }
-static inline V4_E10* Splat_E10(V4_E10* t, float) { float z = 0.0f; return func_00132000(t, z, z, z, z); }
+static inline V4_E10* Splat_E10(V4_E10* t, float) { float z = 0.0f; return Vec4_Set(t, z, z, z, z); }
 static inline void Spheres_E10(Model_E10* md)
 {
             Word_E10 w;

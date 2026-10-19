@@ -15,7 +15,7 @@ extern char D_004C24B8[];
 extern char D_004C24C0[];
 int sprintf(char* buf, const char* fmt, ...);
 void String_Copy(char* d, const char* s);
-void func_00128F58(char* d, const char* s);
+void Libc_Strcat(char* d, const char* s);
 void GuiBitmapWidget_SetImage(void* obj, char* name, int x);
 
 void func_004602C0(O_4602C0* o, int x, int type, int sub, int val)
@@ -26,8 +26,8 @@ void func_004602C0(O_4602C0* o, int x, int type, int sub, int val)
         e = &o->e[o->n];
         sprintf(buf, D_004C24A8, type, sub);
         String_Copy(e->name, D_004C24B0);
-        if (type != 7) func_00128F58(buf, D_004C24B8);
-        func_00128F58(buf, D_004C24C0);
+        if (type != 7) Libc_Strcat(buf, D_004C24B8);
+        Libc_Strcat(buf, D_004C24C0);
         if (e->obj) GuiBitmapWidget_SetImage(e->obj, buf, x);
         e->val = val;
         o->n++;

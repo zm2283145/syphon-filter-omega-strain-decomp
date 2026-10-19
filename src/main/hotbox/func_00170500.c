@@ -12,7 +12,7 @@ extern int PtrVec_Insert(PtrVec* v, int* pos, int n, int* value);
 extern int Hotbox_CreateRuntime(void* owner, void* gobj, int a2, int a3);
 
 /* push_back on a pointer vector. */
-int func_00170500(PtrVec* v, int* value) {
+int HotboxList_PushBack(PtrVec* v, int* value) {
     return PtrVec_Insert(v, v->data + v->count, 1, value);
 }
 
@@ -20,6 +20,6 @@ int func_00170500(PtrVec* v, int* value) {
 int Global_MakeGOBJInteractable(void* gobj) {
     int hotbox = Hotbox_CreateRuntime(D_004FFBD0, gobj, 0, 0);
 
-    func_00170500(&D_004EE6E0, &hotbox);
+    HotboxList_PushBack(&D_004EE6E0, &hotbox);
     return hotbox;
 }

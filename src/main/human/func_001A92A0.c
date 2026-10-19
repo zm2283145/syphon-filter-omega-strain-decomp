@@ -206,7 +206,7 @@ int printf(const char* f, ...);
 void func_00131B70(void* p, int f);
 void func_0013AAE0(void* p);
 void func_00140D40(void* p, int f);
-void func_0014B160(void* d, void* m, void* p);
+void Mtx_SetRotationTranslation(void* d, void* m, void* p);
 int func_0014D410(int v);
 int func_0014D450(int v);
 int func_0014D460(char* a);
@@ -660,7 +660,7 @@ static inline void SetPt(char* p, void* mx, char* src)
         char* d = p;
         // Empty scheduling barrier: keep the destination address before the matrix argument.
         asm { .set noat }
-        func_0014B160(d, mx, &cp);
+        Mtx_SetRotationTranslation(d, mx, &cp);
     }
 }
 static inline void SetLook(char* a, int slot, void* src)

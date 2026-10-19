@@ -8,7 +8,7 @@
 
 struct VC0033D800 { virtual int v0(); virtual int v1(); virtual int v2(); virtual int v3(); virtual int v4(); virtual int v5(); virtual int v6(); virtual int v7(); virtual int v8(); virtual int v9(); virtual int v10(); virtual int v11(); virtual int v12(); virtual int v13(); virtual int v14(); virtual int v15(); virtual int v16(); virtual int v17(); virtual int v18(); virtual int v19(); virtual int v20(); virtual int v21(); virtual int v22(); virtual int v23(...); };
 extern "C" {
-int func_002C81D0(...);
+int FrontEnd_StopSplashThread(...);
 int FrontEnd_StartSplashThread(...);
 int Gui_GetScreenList(...);
 void **Gui_GetScreenStack(...);
@@ -27,7 +27,7 @@ extern "C" void func_0033D800(char * arg0) {
     }
     FrontEnd_StartSplashThread(D_004FFC04);
     temp_s0 = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiMissionSetup", "MSNSETUP");
-    func_002C81D0(D_004FFC04);
+    FrontEnd_StopSplashThread(D_004FFC04);
     if (temp_s0 != 0) {
         F_(arg0, 0x14, unsigned short) = (unsigned short) (F_(arg0, 0x14, unsigned short) & 0xFFFD);
         temp_v0_2 = Gui_GetScreenStack();

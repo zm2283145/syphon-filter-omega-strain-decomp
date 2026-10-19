@@ -211,7 +211,7 @@ int Appearance_GetToneDigit(void* app);
 void cVUM_GOBJ_InitModel(Model_F760* m, char* name);
 void func_00290BB0(Word_F760* w, int n);
 void func_00290A50(SVec_F760* v, Word_F760* w, unsigned char f);
-V4_F760* func_00132000(V4_F760* v, float x, float y, float z, float w);
+V4_F760* Vec4_Set(V4_F760* v, float x, float y, float z, float w);
 void func_002909C0(Sph_F760* s, int bone, float r, V4_F760* off);
 void func_002909A0(SVec_F760* v, Sph_F760** p);
 void func_001B06F0(Sph_F760* s, int f);
@@ -277,7 +277,7 @@ static inline int Eq4_F760(const char* a, const char* b) {
 static inline Man_F760* MANP_F760(Model_F760* m) { return &m->man; }
 static inline char* APP_F760(Man_F760* m) { return m->app; }
 static inline char* NAME_F760(Man_F760* m) { return m->name; }
-static inline V4_F760* Splat_F760(V4_F760* t, float) { float z = 0.0f; return func_00132000(t, z, z, z, z); }
+static inline V4_F760* Splat_F760(V4_F760* t, float) { float z = 0.0f; return Vec4_Set(t, z, z, z, z); }
 static inline void Spheres_F760(Model_F760* md)
 {
             Word_F760 w;

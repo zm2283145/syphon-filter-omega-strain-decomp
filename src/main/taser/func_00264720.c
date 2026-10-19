@@ -26,7 +26,7 @@ struct Arr { Pt* data; Pt& operator[](int i) { Arr* t = this; return t->data[i];
     Pt& Back(int n) { Arr* t = this; Pt* e = t->data + n; return e[-1]; } };
 struct Obj { char pad[0x14]; int n; Arr arr; char pad1c[0x44]; M m; };
 extern "C" {
-V* func_00132000(V* v, float x, float y, float z, float w);
+V* Vec4_Set(V* v, float x, float y, float z, float w);
 void Vec4_NormalizeXYZ_132060(V* out, V* v);
 void Vec4_Cross(V* out, V* a, V* b);
 int Vec4_IsZeroXYZ(V* v);
@@ -55,7 +55,7 @@ static inline void LookFrame(M* m, V* dir, V* up)
         Vec4_NormalizeXYZ_132060(&f, dir);
         Vec4_Assign(&r, Vec4_NormalizeXYZInPlace(&c));
         Vec4_Cross(&u, &r, &f);
-        Mtx_FromRowsAndTranslation(m, &r, &f, &u, func_00132000(&w, 0.0f, 0.0f, 0.0f, 1.0f));
+        Mtx_FromRowsAndTranslation(m, &r, &f, &u, Vec4_Set(&w, 0.0f, 0.0f, 0.0f, 1.0f));
     } else if (!Vec4_IsZeroXYZ(dir)) {
         Mtx_FrameFromAxis(m, dir);
     } else {

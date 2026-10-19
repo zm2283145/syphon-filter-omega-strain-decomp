@@ -14,7 +14,7 @@ extern char D_004BE140[];
 extern char D_004BE170[];
 void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
 void Mem_Free(int pool, void* p, char* file, int line);
-void func_00121B60(void);
+void Libc_Abort(void);
 void func_00123BE8(void* s, char* msg);
 void func_003F2970(Vec_3F29B0* a, Vec_3F29B0* b);
 void func_003F4390(Vec_3F29B0* a);
@@ -31,7 +31,7 @@ extern "C" void func_003F29B0(Vec_3F29B0* v0, unsigned int n0)
     if (v0->cap < n) {
         if (n > 0xC00000) {
             func_00123BE8(D_00489738->stream, D_004BE100);
-            func_00121B60();
+            Libc_Abort();
         }
         {
             E_3F29B0* d; E_3F29B0* s; E_3F29B0* e; Vec_3F29B0 tmp;

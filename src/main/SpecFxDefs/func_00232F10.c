@@ -298,7 +298,7 @@ static inline Entry10* NewEntryM(int line) { return NewEntry(line); }
 static inline Tracer10* MakeTracerM(Self10* self, M4* m, int line) { return MakeTracer(self, m, line); }
 static inline void FreeEntryM(Entry10* e, int line) { FreeEntry(e, line); }
 
-extern "C" void func_00232F10(Self10* self, float dt)
+extern "C" void SnowField_Update(Self10* self, float dt)
 {
     It10 it;
     OIt10 oit;

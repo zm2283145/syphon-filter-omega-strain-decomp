@@ -11,7 +11,7 @@ extern "C" TONode* func_001C4F20(TOTree* tree, TONode* parent, int left, int fir
 {
     if (tree->count > 0xFFFFFFFFU - 1) {
         func_00123BE8(D_00489738->stream, D_0049F2E0);
-        func_00121B60();
+        Libc_Abort();
     }
     TONode* node = (TONode*)TStr_Alloc(0x1C, "allocator.hh", 0x5C);
     Val_1C4F20* v = (Val_1C4F20*)node->value;

@@ -28,7 +28,7 @@ extern void* memcpy(void*, void*, int);
 extern void* Agent_GetSelected(void*, int);
 extern void func_00406EC0(Blk*, char*);
 extern void Skl_Load(void*, char*, char*);
-extern void func_00361000(char*);
+extern void GuiAgentInfo_Refresh(char*);
 extern char D_004BB868[];
 extern char D_004FFB50[];
 extern char D_0055DDA0[];
@@ -121,7 +121,7 @@ void func_00360610(char* self, int* arg1, Msg* arg2) {
         p->e = D_0055D550;
     }
     F_(self, 0xFC, int) = 1;
-    func_00361000(self);
+    GuiAgentInfo_Refresh(self);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00360610 */
@@ -207,13 +207,13 @@ void func_00360510(void* p);
 #define func_00360510(a0) (func_00360510((char *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-void func_00361000(Panel_09F0* p);
+void GuiAgentInfo_Refresh(Panel_09F0* p);
 #endif /* merge_units */
-#define func_00361000(a0) (func_00361000((char *)(a0))) /* merge_units */
+#define GuiAgentInfo_Refresh(a0) (GuiAgentInfo_Refresh((char *)(a0))) /* merge_units */
 
 }
 
-extern "C" void func_003609F0(Panel_09F0* p)
+extern "C" void GuiAgentInfo_Fill(Panel_09F0* p)
 {
     Agent_09F0* a;
     char* g;
@@ -268,7 +268,7 @@ extern "C" void func_003609F0(Panel_09F0* p)
     if (a->pal) {
         p->dst->SetPal(*a->pal);
     }
-    func_00361000(p);
+    GuiAgentInfo_Refresh(p);
     p->fFC = 0;
     func_00299360(&r2, 0);
     func_00299360(&r1, 0);
@@ -279,6 +279,6 @@ extern "C" void func_003609F0(Panel_09F0* p)
 #undef func_0013D680 /* merge_units */
 #undef String_Dtor /* merge_units */
 #undef func_00360510 /* merge_units */
-#undef func_00361000 /* merge_units */
+#undef GuiAgentInfo_Refresh /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003609F0 */

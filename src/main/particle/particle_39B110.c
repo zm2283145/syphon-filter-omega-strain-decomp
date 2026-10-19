@@ -61,7 +61,7 @@ extern "C" E39B D_0053B560[4];
 #endif /* merge_units */
 #define D_0053B560 ((E39B*)&D_0053B560) /* merge_units */
 
-extern "C" void func_0039B210(int n) {
+extern "C" void RainSnowPool_Create(int n) {
 int i;
 int p;
 E39B *e;

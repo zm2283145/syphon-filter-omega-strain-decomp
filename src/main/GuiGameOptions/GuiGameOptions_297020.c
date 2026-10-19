@@ -170,7 +170,7 @@ void GuiCommandCenter_IsLevelOpen(void*);
 void GuiCommandCenter_BonusFlags(void*);
 #endif /* merge_units */
 #define GuiCommandCenter_BonusFlags(a0) (GuiCommandCenter_BonusFlags((int)(a0))) /* merge_units */
-void func_002C9AF0(void*,int);void GuiCommandCenter_RestoreState(void*);const char*func_0033CE30(void*,int,int,int,int,int);int FrontEnd_OpenPopup(void*,int,const char*,const char*,void*,int);
+void FrontEnd_SetMusic(void*,int);void GuiCommandCenter_RestoreState(void*);const char*GuiScreen_GetLobbyString(void*,int,int,int,int,int);int FrontEnd_OpenPopup(void*,int,const char*,const char*,void*,int);
 #if 0 /* merge_units */
 extern CcGameState*D_004FFC04;
 #endif /* merge_units */
@@ -207,8 +207,8 @@ extern "C" void GuiCommandCenter_Activate(CcBindings*self){
   if(current){int record=AgentData_GetLevelShortName(Agent_GetSelected(D_004FFB50,-1),current);if(record){sprintf(key,D_004AA270,record);if(AgentData_IsObjectiveComplete(Agent_GetSelected(D_004FFB50,-1),key))self->unlocked[20]=1;}}
   GuiCommandCenter_BonusFlags(self);
   {int i;CcBindings*walk;i=0;walk=self;for(;i<24;i++,walk=(CcBindings*)((char*)walk+4)){if(walk->buttons[0]){if(!self->unlocked[i])GuiWidget_SendEvent(self,walk->buttons[0],6,(int)D_004AA2E8,0);else if((i<17&&self->states[i])||(i==20&&self->states[17]))GuiWidget_SendEvent(self,walk->buttons[0],6,(int)D_004AA2C8,0);}}
-  }func_002C9AF0(D_004FFC04,0);GuiCommandCenter_RestoreState(self);
-  if(popup){String_CtorCStr_13B480(&title,func_0033CE30(self,20,0,0,0,0));String_CtorCStr_13B480(&message,func_0033CE30(self,134,0,0,0,0));char*msg=String_CStr(&message);self->popupId=FrontEnd_OpenPopup(D_004FFC04,2,String_CStr(&title),msg,self,25);String_Dtor(&message,0);String_Dtor(&title,0);}
+  }FrontEnd_SetMusic(D_004FFC04,0);GuiCommandCenter_RestoreState(self);
+  if(popup){String_CtorCStr_13B480(&title,GuiScreen_GetLobbyString(self,20,0,0,0,0));String_CtorCStr_13B480(&message,GuiScreen_GetLobbyString(self,134,0,0,0,0));char*msg=String_CStr(&message);self->popupId=FrontEnd_OpenPopup(D_004FFC04,2,String_CStr(&title),msg,self,25);String_Dtor(&message,0);String_Dtor(&title,0);}
   self->screen.active=1;
  }
 }

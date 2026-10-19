@@ -42,7 +42,7 @@ extern int func_002EC6A0(int);
 extern int func_002EC738(int);
 extern int func_00437BF0(void);
 
-void func_0042B1F0(void) {
+void Net_CleanupGame(void) {
     D_00497540 = 1;
     func_00437BF0();
     func_002EC6A0(0);

@@ -22,7 +22,7 @@ char* Loc_LookupText(char* key);
 void GuiTextWidget_SetText(void* w, char* s, int a);
 void* Gui_GetScreenStack(void);
 void GuiScreen_SetFocus(void* mgr, int a);
-int func_0033CE30(S_0029CBB0* self, int a, int b, int c, int d, int e);
+int GuiScreen_GetLobbyString(S_0029CBB0* self, int a, int b, int c, int d, int e);
 int FrontEnd_OpenPopup(void* ui, int a, char* b, int c, S_0029CBB0* d, int e);
 void MLTextWidget_Clear(void* w);
 void MLTextWidget_AddText(void* w, char* s);
@@ -43,7 +43,7 @@ static inline void SetText_0029CBB0(S_0029CBB0* self, char* key)
         GuiTextWidget_SetText(self->pF0, t, 0);
 }
 /* Selects one of the three tabs of the page and fills its list widget. */
-extern "C" void func_0029CBB0(S_0029CBB0* self, unsigned char sel)
+extern "C" void GuiOnlineConnect_ShowGroup(S_0029CBB0* self, unsigned char sel)
 {
     int i;
     Str_0029CBB0 list1;
@@ -76,7 +76,7 @@ extern "C" void func_0029CBB0(S_0029CBB0* self, unsigned char sel)
             }
             if (!l) {
                 void* ui = D_004FFC04;
-                FrontEnd_OpenPopup(ui, 2, D_004AABF0, func_0033CE30(self, 5, 0, 0, 0, 0), self, 0);
+                FrontEnd_OpenPopup(ui, 2, D_004AABF0, GuiScreen_GetLobbyString(self, 5, 0, 0, 0, 0), self, 0);
                 self->f88 = 4;
                 return;
             }

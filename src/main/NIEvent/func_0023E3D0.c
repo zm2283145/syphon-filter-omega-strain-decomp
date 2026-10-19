@@ -13,11 +13,11 @@ int func_0023DA90(Vec*);
 Obj** func_0023DAB0(Vec*, int);
 Obj** func_0023A550(Vec*, int);
 Obj** func_0023DAA0(Vec*, int);
-void func_0023E3D0(Obj* o, float t);
+void cNIEventOBJ_SetSpeedRecursive(Obj* o, float t);
 }
 #pragma push
 #pragma opt_strength_reduction off
-extern "C" void func_0023E3D0(Obj* o, float t)
+extern "C" void cNIEventOBJ_SetSpeedRecursive(Obj* o, float t)
 {
     o->f134 = t;
     for (int i = 0; i < o->v.n; i++) {
@@ -33,7 +33,7 @@ extern "C" void func_0023E3D0(Obj* o, float t)
                     Obj* d = *func_0023DAA0(&c->v, l);
                     d->f134 = t;
                     for (int m = 0; m < func_0023DA90(&d->v); m++)
-                        func_0023E3D0(*func_0023DAA0(&d->v, m), t);
+                        cNIEventOBJ_SetSpeedRecursive(*func_0023DAA0(&d->v, m), t);
                 }
             }
         }

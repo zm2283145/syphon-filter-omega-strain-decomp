@@ -247,7 +247,7 @@ __udivmoddi4 (UDItype n, UDItype d, UDItype *rp)
 }
 
 DItype
-func_0011A668 (DItype u, DItype v)
+Libgcc_Moddi3 (DItype u, DItype v)
 {
   word_type c = 0;
   DIunion uu, vv;

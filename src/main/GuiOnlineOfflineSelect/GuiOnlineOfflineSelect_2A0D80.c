@@ -17,7 +17,7 @@
 char D_004AB070[] = "GuiMissionSetup";   /* "GuiMissionSetup" */
 
 /* Class name getter: "GuiMissionSetup". */
-char* func_002A0D80(void) {
+char* GuiMissionSetup_GetClassName(void) {
     return D_004AB070;
 }
 #pragma pop /* merge_units */
@@ -29,7 +29,7 @@ int D_004AB080 = 0x4D697547;
 extern int strcmp(void*);
 
 /* Returns whether strcmp(&D_004AB080) returned 0. */
-int func_002A0D90(void) {
+int GuiMissionSetup_IsType(void) {
     return strcmp(&D_004AB080) == 0;
 }
 #pragma pop /* merge_units */

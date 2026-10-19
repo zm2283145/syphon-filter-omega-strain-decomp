@@ -19,7 +19,7 @@ extern float D_004C1FC8;
 extern int D_004FFC04;
 extern int D_005383C0;
 
-void func_002996D0(int arg0, int arg1) {
+void GuiGameOptions_VideoRevert(int arg0, int arg1) {
     F_(arg0, 0x78, int) = 0;
     F_(arg0, 0xD8, int) = 0;
     GuiGameOptions_Refresh(arg0, 0x800);

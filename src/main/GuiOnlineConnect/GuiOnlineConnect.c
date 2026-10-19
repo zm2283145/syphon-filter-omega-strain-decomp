@@ -56,7 +56,7 @@ extern GuiManager* Gui_GetScreenStack(void);
 extern int LobbyArray_Free(GuiSlot* slot);
 
 /* GuiOnlineConnect vtable slot 6: base call, reset the three slots, clear manager flags 0x0C. */
-int func_0029ECD0(GuiOnlineConnect* self) {
+int GuiOnlineConnect_Sleep(GuiOnlineConnect* self) {
     GuiManager* mgr;
 
     GuiScreen_Sleep(&self->base);
@@ -102,9 +102,9 @@ extern char D_0055A830[];
 
 
 void GuiScreen_Wake(void);
-void func_0040D5D0(void* p);
-void func_0029CBB0(S_0029ED40* self, int a);
-char* func_0033CE30(S_0029ED40* self, int a, int b, int c, int d, int e);
+void MemCard_WaitIdle(void* p);
+void GuiOnlineConnect_ShowGroup(S_0029ED40* self, int a);
+char* GuiScreen_GetLobbyString(S_0029ED40* self, int a, int b, int c, int d, int e);
 int FrontEnd_OpenPopup(void* ui, int a, char* b, char* c, S_0029ED40* d, int e);
 Ag_0029ED40* Agent_GetSelected(void* mgr, int idx);
 void String_CtorCStr_13B480(Str_0029ED40* s, const char* c);
@@ -117,28 +117,28 @@ G_0029ED40* Gui_GetScreenStack(void);
 
 
 }
-extern "C" void func_0029ED40(S_0029ED40* self)
+extern "C" void GuiOnlineConnect_Wake(S_0029ED40* self)
 {
     GuiScreen_Wake();
     D_004FFC04->b2A = 0;
-    func_0040D5D0(D_0055A830);
+    MemCard_WaitIdle(D_0055A830);
     self->b94 = 0;
-    func_0029CBB0(self, 4);
+    GuiOnlineConnect_ShowGroup(self, 4);
     if (self->f10 == 1)
         self->f88 = 6;
     else
         self->f88 = 0;
     if (self->f88 == 0) {
         void* ui = D_004FFC04;
-        self->f48 = FrontEnd_OpenPopup(ui, 0, D_004AABF0, func_0033CE30(self, 0, 0, 0, 0, 0), 0, 0);
+        self->f48 = FrontEnd_OpenPopup(ui, 0, D_004AABF0, GuiScreen_GetLobbyString(self, 0, 0, 0, 0, 0), 0, 0);
         self->f8C = 15.0f;
-        func_0029CBB0(self, 4);
+        GuiOnlineConnect_ShowGroup(self, 4);
         D_004FFC04->b265 = Agent_GetSelected(D_004FFB50, -1)->f9A0 == -1;
     } else if (Agent_GetSelected(D_004FFB50, -1)->f9A0 == -1) {
         Str_0029ED40 a;
         Str_0029ED40 b;
-        String_CtorCStr_13B480(&a, func_0033CE30(self, 3, 0, 0, 0, 0));
-        String_CtorCStr_13B480(&b, func_0033CE30(self, 0x84, 0, 0, 0, 0));
+        String_CtorCStr_13B480(&a, GuiScreen_GetLobbyString(self, 3, 0, 0, 0, 0));
+        String_CtorCStr_13B480(&b, GuiScreen_GetLobbyString(self, 0x84, 0, 0, 0, 0));
         {
             char* tb = String_CStr(&b);
             FrontEnd_OpenPopup(D_004FFC04, 2, String_CStr(&a), tb, self, 0);
@@ -165,7 +165,7 @@ extern int GuiManager_UnloadRoot(void* mgr, int resource, int arg);
 extern int GuiWidget_Deinit(GuiWidget* self);
 
 /* GuiOnlineConnect vtable slot 2: base call, then release the held resource. */
-void func_0029EF30(GuiOnlineConnect* self) {
+void GuiOnlineConnect_Deinit(GuiOnlineConnect* self) {
     int resource;
 
     GuiWidget_Deinit(&self->base.base.base);
@@ -225,7 +225,7 @@ static inline W_0029EF90* FindAs_0029EF90(Self_0029EF90* self, char* name, char*
     W_0029EF90* w = (W_0029EF90*)GuiWidget_FindChildByName(self, name);
     return (w && w->IsA(type)) ? w : 0;
 }
-extern "C" void func_0029EF90(Self_0029EF90* self)
+extern "C" void GuiOnlineConnect_Init(Self_0029EF90* self)
 {
     GuiScreen_Init(self);
     self->f10C = GuiWidget_FindChildByName(self, D_0048B920);

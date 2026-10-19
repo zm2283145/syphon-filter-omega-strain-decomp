@@ -126,7 +126,7 @@ int LoadingScreen_SetProgress(int, float);
 int LoadingScreen_Setup(int);                               
 int LoadingScreen_ctor(int, int, char *);                            
 int func_0036E4B0(char *, int, int, int);                    
-signed char *func_003CBA90(char *);                             
+signed char *GameIni_GetString(char *);                             
 int func_003F9600(char *, int);
 extern int D_004EE4C8;
 extern int D_004EE4D0;
@@ -175,7 +175,7 @@ void LoadingScreen_Start(PS0_00166430 *arg0, int d1, int arg2) {
     }
     LoadingScreen_InstallVblank();
     sprintf(sp40, "%s_LOADINGFRAMES", &D_004FFC90);
-    temp_v0 = func_003CBA90(sp40);
+    temp_v0 = GameIni_GetString(sp40);
     if ((temp_v0 == NULL) || (*temp_v0 == 0)) {
         D_004EE4D8 = 0;
         D_004EE4D0 = 0x4B0;

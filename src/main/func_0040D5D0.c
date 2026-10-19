@@ -10,7 +10,7 @@
 extern int func_002B5F48(int* a, int* b);
 
 /* Polls func_002B5F48 until it returns non-zero. */
-void func_0040D5D0(void) {
+void MemCard_WaitIdle(void) {
     int loc[2];
 
     while (func_002B5F48(&loc[1], &loc[0]) == 0) {

@@ -19,7 +19,7 @@ struct Tread00283130 { void* f0; Path00283130* f4; char p8[0x1C]; float f24; uns
 struct Tank00283130 { char p[0x68]; Tread00283130* tread; };
 union Arg00283130 { int i; float f; void* p; };
 extern "C" {
-void* func_002379D0(void* id);
+void* cNIEventOBJ_Identity(void* id);
 void* Mem_Alloc(int pool, int size, char* file, int line);
 extern char D_004A93D0[];
 }
@@ -29,8 +29,8 @@ extern "C" int Script_cTank_SetRightTread(Arg00283130* args) {
     Tread00283130* t;
 Tank00283130* self;
 Tread00283130* old;
-    path = (Path00283130*)func_002379D0(args[2].p);
-    obj = func_002379D0(args[1].p);
+    path = (Path00283130*)cNIEventOBJ_Identity(args[2].p);
+    obj = cNIEventOBJ_Identity(args[1].p);
     self = (Tank00283130*)args[0].p;
     old = self->tread;
     if (old) { AllocGuard g; Mem_Free(0, old, D_004A93D0, 0x1F9); }
@@ -64,8 +64,8 @@ extern "C" int Script_cTank_SetLeftTread(Arg002832A0* args) {
     Tread002832A0* t;
 Tank002832A0* self;
 Tread002832A0* old;
-    path = (Path002832A0*)func_002379D0(args[2].p);
-    obj = func_002379D0(args[1].p);
+    path = (Path002832A0*)cNIEventOBJ_Identity(args[2].p);
+    obj = cNIEventOBJ_Identity(args[1].p);
     self = (Tank002832A0*)args[0].p;
     old = self->tread;
     if (old) { AllocGuard g; Mem_Free(0, old, D_004A93D0, 0x1F1); }
@@ -101,9 +101,9 @@ extern "C" int Script_cTank_SetTurret_2(Arg00283410* args) {
     Tur00283410* t;
 Tank00283410* self;
 Tur00283410* old;
-    c = func_002379D0(args[3].p);
-    b = func_002379D0(args[2].p);
-    a = func_002379D0(args[1].p);
+    c = cNIEventOBJ_Identity(args[3].p);
+    b = cNIEventOBJ_Identity(args[2].p);
+    a = cNIEventOBJ_Identity(args[1].p);
     self = (Tank00283410*)args[0].p;
     old = self->turret;
     if (old) { AllocGuard g; Mem_Free(0, old, D_004A93D0, 0x1E8); }
@@ -139,10 +139,10 @@ extern "C" int Script_cTank_SetTurret(Arg002835A0* args) {
     Tur002835A0* t;
 Tank002835A0* self;
 Tur002835A0* old;
-    d = func_002379D0(args[4].p);
-    c = func_002379D0(args[3].p);
-    b = func_002379D0(args[2].p);
-    a = func_002379D0(args[1].p);
+    d = cNIEventOBJ_Identity(args[4].p);
+    c = cNIEventOBJ_Identity(args[3].p);
+    b = cNIEventOBJ_Identity(args[2].p);
+    a = cNIEventOBJ_Identity(args[1].p);
     self = (Tank002835A0*)args[0].p;
     old = self->turret;
     if (old) { AllocGuard g; Mem_Free(0, old, D_004A93D0, 0x1E8); }

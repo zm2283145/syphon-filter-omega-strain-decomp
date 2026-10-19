@@ -9,10 +9,10 @@ extern int DME_GetLobby(void);
 extern int func_00450C60(int, int, char*);
 extern int D_004FFC04;
 extern char D_004B9C60[];
-extern char* func_0033CE30(O33E4*, int, char*, int, int, int);
+extern char* GuiScreen_GetLobbyString(O33E4*, int, char*, int, int, int);
 extern int FrontEnd_OpenPopup(int, int, char*, char*, int, int);
 extern void FrontEnd_StartSplashThread(int);
-extern void func_002C81D0(int);
+extern void FrontEnd_StopSplashThread(int);
 extern int Gui_GetScreenList(void);
 extern W33E4* GuiManager_FindOrLoad(int, char*, char*);
 extern void func_00360610(W33E4*, I33E4*, char*);
@@ -24,11 +24,11 @@ extern "C" void func_0033E410(O33E4* o, I33E4* info) {
     if (!o->fa8 || !DME_GetLobby()) return;
     if (func_00450C60(DME_GetLobby(), info->f0, buf)) {
         int g = D_004FFC04;
-        int h = FrontEnd_OpenPopup(g, 0, D_004B9C60, func_0033CE30(o, 0x7D, info->name, 0, 0, 0), 0, 0);
+        int h = FrontEnd_OpenPopup(g, 0, D_004B9C60, GuiScreen_GetLobbyString(o, 0x7D, info->name, 0, 0, 0), 0, 0);
         W33E4* w;
         FrontEnd_StartSplashThread(D_004FFC04);
         w = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiAgentInfo", "AGNTINFO");
-        func_002C81D0(D_004FFC04);
+        FrontEnd_StopSplashThread(D_004FFC04);
         if (w) {
             w->f10 = o;
             func_00360610(w, info, buf);
@@ -38,6 +38,6 @@ extern "C" void func_0033E410(O33E4* o, I33E4* info) {
         FrontEnd_ClosePopup(D_004FFC04, h);
     } else {
         int g = D_004FFC04;
-        FrontEnd_OpenPopup(g, 2, D_004B9C60, func_0033CE30(o, 0x67, 0, 0, 0, 0), 0, 0);
+        FrontEnd_OpenPopup(g, 2, D_004B9C60, GuiScreen_GetLobbyString(o, 0x67, 0, 0, 0, 0), 0, 0);
     }
 }

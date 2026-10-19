@@ -5,7 +5,7 @@ void String_CtorCStr_13B480(String* s, const char* text);
 void func_0013D680(void* list, String* s);
 void String_Dtor(String* s, int flags);
 
-void func_0033D6A0(void* self, const char* fmt, const char* a0, const char* a1, const char* a2, const char* a3) {
+void Lobby_FormatString(void* self, const char* fmt, const char* a0, const char* a1, const char* a2, const char* a3) {
     String s;
     const char* args[4] = {0};
     char buf[0x400];

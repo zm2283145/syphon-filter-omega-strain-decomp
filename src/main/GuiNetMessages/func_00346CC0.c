@@ -5,7 +5,7 @@
 
 extern "C" {
 extern "C" void func_00293890();
-extern "C" void func_0033CCA0();
+extern "C" void GuiScreen_PollLobby();
 extern "C" void GuiScreen_Update();
 extern "C" void GuiScreen_Sleep();
 extern "C" void func_00346D20();
@@ -41,4 +41,4 @@ extern "C" VtableObject* func_00346CC0(VtableObject* self, short deleteFlag)
     }
     return self;
 }
-void * const D_004DEB10[28] = { (void*)0x0, (void*)0x0, (void*)func_00346CC0, (void*)func_00347820, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)func_003477D0, (void*)GuiScreen_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)func_003473E0, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiScreen_Update, (void*)func_00346D60, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)func_00346D20, (void*)func_00346D30, (void*)func_00293890, (void*)func_0033CCA0, (void*)func_003476B0, (void*)func_00347690, (void*)0x0 };
+void * const D_004DEB10[28] = { (void*)0x0, (void*)0x0, (void*)func_00346CC0, (void*)func_00347820, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)func_003477D0, (void*)GuiScreen_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)func_003473E0, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiScreen_Update, (void*)func_00346D60, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)func_00346D20, (void*)func_00346D30, (void*)func_00293890, (void*)GuiScreen_PollLobby, (void*)func_003476B0, (void*)func_00347690, (void*)0x0 };

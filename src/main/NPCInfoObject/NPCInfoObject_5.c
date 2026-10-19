@@ -143,7 +143,7 @@ extern void* D_00583870;
 extern void func_002EB650(Entry4** out, void* key);
 
 /* Looks up the global key and returns the entry's value, or -1 if not found. */
-int func_00437600(void)
+int Net_GetTalkerName(void)
 {
     Entry4* entry;
     func_002EB650(&entry, D_00583870);

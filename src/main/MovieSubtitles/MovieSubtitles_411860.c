@@ -86,8 +86,8 @@ extern TexMgr_18E0* D_00539248;
 extern char D_004BEF10[];
 extern char D_004BEF20[];
 extern u64_18E0* Gs_MakeTex1(TexEnt_18E0* e);
-extern void func_00411600(Font_18E0* f, const char* s, const char* end, float* w, float* h);
-extern u64_18E0* func_00410E50(Font_18E0* f, u64_18E0* pkt, float x, const char* s, float y, Vec_18E0* color, void* p, const char* end);
+extern void SubtitleOverlay_MeasureLine(Font_18E0* f, const char* s, const char* end, float* w, float* h);
+extern u64_18E0* SubtitleOverlay_BuildGlyphs(Font_18E0* f, u64_18E0* pkt, float x, const char* s, float y, Vec_18E0* color, void* p, const char* end);
 extern float Math_FMod(float a, float b);
 extern void FlushCache(int mode);
 extern void func_001161A0(void);
@@ -130,7 +130,7 @@ extern "C" void MovieSubtitles_SetupPackets(Sub_18E0* self)
             for (j = 0; j < n; j++) {
                 xs[j] = 0.5f * -self->w;
                 ys[j] = 0.5f * -self->h;
-                func_00411600(self->font, self->text[j], self->cur[j], &tw, &th);
+                SubtitleOverlay_MeasureLine(self->font, self->text[j], self->cur[j], &tw, &th);
                 ys[j] += (4.0f + th) * (float)(n - j);
                 if (self->flags & 4) {
                     float d = self->w - tw;
@@ -138,7 +138,7 @@ extern "C" void MovieSubtitles_SetupPackets(Sub_18E0* self)
                 }
             }
             for (k = 0; k < n; k++) {
-                self->pkt = func_00410E50(self->font, self->pkt, xs[k], self->text[k], ys[k], &self->color, self->f40, self->cur[k]);
+                self->pkt = SubtitleOverlay_BuildGlyphs(self->font, self->pkt, xs[k], self->text[k], ys[k], &self->color, self->f40, self->cur[k]);
             }
         }
         if (self->showTime) {
@@ -152,7 +152,7 @@ extern "C" void MovieSubtitles_SetupPackets(Sub_18E0* self)
             c.x = 1.0f;
             c.y = 1.0f;
             c.z = 1.0f;
-            self->pkt = func_00410E50(self->font, self->pkt, 200.0f, D_004BEF20, 218.0f, &c, self->f40, 0);
+            self->pkt = SubtitleOverlay_BuildGlyphs(self->font, self->pkt, 200.0f, D_004BEF20, 218.0f, &c, self->f40, 0);
         }
         {
             int qwc = ((self->pkt - self->base) >> 1) - 1;
@@ -208,7 +208,7 @@ extern int func_004121F0(void* src);
 extern int func_004121D0(void* src);
 extern char* func_00412190(void* src, int i);
 extern Vec411DB0* func_00412180(void* src);
-extern void func_00412150(Vec411DB0* d, Vec411DB0* s);
+extern void SubtitleTrack_LoadCue(Vec411DB0* d, Vec411DB0* s);
 extern float func_00412130(void* src);
 extern float func_00412110(void* src);
 extern int func_004120F0(void* src);
@@ -259,7 +259,7 @@ extern "C" void MovieSubtitles_Update(Sub411DB0* s)
                     s->len[j] = strlen(s->text[j]);
                     s->cur[j] = 0;
                 }
-                func_00412150(&s->color, func_00412180(s->src));
+                SubtitleTrack_LoadCue(&s->color, func_00412180(s->src));
                 s->start = func_00412130(s->src);
                 s->stop = func_00412110(s->src);
                 s->fA8 = func_004120F0(s->src);

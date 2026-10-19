@@ -10,7 +10,7 @@
 extern "C" {
 /*fc*/
 int *Mem_Alloc(...);                     
-int func_00121B60(...);                                  
+int Libc_Abort(...);                                  
 int func_00123BE8(...);                          
 unsigned int func_003B9BD0(...);                                
 extern char * D_00489738;
@@ -26,7 +26,7 @@ extern "C" void func_003B91B0(char * arg0, unsigned int arg1, int *arg2) {
     if (var_s2 != 0) {
         if (func_003B9BD0() < var_s2) {
             func_00123BE8(F_(D_00489738, 0xC, int), "cdeque::construction length error");
-            func_00121B60();
+            Libc_Abort();
         }
         {
             AllocGuard g;

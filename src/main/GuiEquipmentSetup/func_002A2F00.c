@@ -85,7 +85,7 @@ extern unsigned char D_005721C8;
 extern unsigned char D_005723F8;
 extern unsigned char D_00582B88;
 extern int D_00582CF0;
-int func_00437600(int a);
+int Net_GetTalkerName(int a);
 void func_002A3A10(S_2A2F00* self);
 void func_0041C0F0(void* w, int a);
 void func_0041C0D0(void* w, int a);
@@ -136,7 +136,7 @@ extern "C" void func_002A2F00(S_2A2F00* self, float dt)
     char* t;
 
     D_00506578++;
-    me = func_00437600(D_00582CF0);
+    me = Net_GetTalkerName(D_00582CF0);
     func_002A3A10(self);
     for (i = 0; i < 4; i++) {
         W_2A2F00* wName;

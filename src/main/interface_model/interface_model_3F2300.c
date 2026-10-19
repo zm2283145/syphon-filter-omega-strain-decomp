@@ -35,7 +35,7 @@ extern "C" void func_003F2300(BVec_3F2300* v, unsigned int n)
     if (v->cap < n) {
         if (n > 0x6000000) {
             func_00123BE8(D_00489738->stream, D_004BE100);
-            func_00121B60();
+            Libc_Abort();
         }
         char* old = v->data;
         char** pdata = &v->data;

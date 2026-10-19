@@ -9,7 +9,7 @@ extern char D_004AACE8[];
 extern char* Loc_LookupText(char* key);
 extern void String_Copy(char* d, char* s);
 extern int sprintf(char* d, const char* f, ...);
-void func_0029F340(int err, char* title, char* body, char* extra)
+void GuiOnlineConnect_GetDnasText(int err, char* title, char* body, char* extra)
 {
     char buf[16];
     int code = 0;

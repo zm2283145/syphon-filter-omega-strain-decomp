@@ -69,7 +69,7 @@ extern char D_004BC670;
 extern int D_0053BBA0;
 extern int D_0053BBA8;
 
-int func_003A6710(int arg0) {
+int Iop_LoadNetModules(int arg0) {
     if (D_004934A8 != 0) {
         if (D_004934B0 != 0) {
             LibInit_LoadIrxModule("INET.IRX", 0xA, "mem=100KB", 1);

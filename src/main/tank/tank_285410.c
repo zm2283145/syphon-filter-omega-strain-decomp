@@ -81,7 +81,7 @@ extern "C" {
 }
 static inline int IsAuth285590(void) { return D_005721C8 ? D_005721C0 : 1; }
 static inline void SetT285590(Sub285590* s, Obj285590* t) { int none; s->tgt = t; s->tid = *(t ? &t->id : (none = -1, &none)); }
-extern "C" void func_00285590(Tank285590* self, Obj285590* t) {
+extern "C" void cTank_SetEnemy(Tank285590* self, Obj285590* t) {
     if (self->sub) {
         self->sub->b54 = 0;
         SetT285590(self->sub, t);

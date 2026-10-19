@@ -34,7 +34,7 @@ struct SubDisp {
 extern "C" {
 void *Mem_Alloc(int, unsigned int, char *, int);
 void Mem_Free(int, void *, char *, int);
-int func_00128C68(char *, char *, ...);
+int Libc_Sscanf(char *, char *, ...);
 void func_00136DA0(int *);
 void func_0012F530(int *, int);
 int Font_GetLineHeight(int);
@@ -136,7 +136,7 @@ int GuiSubTitleDisplay_Parse(SubDisp *self)
             p++;
             switch (t) {
             case 'p':
-                if (func_00128C68(buf, D_004C1ED0, &pf) != 1)
+                if (Libc_Sscanf(buf, D_004C1ED0, &pf) != 1)
                     return 0;
                 if (val.i != 0) {
                     Push(list, &val);
@@ -152,7 +152,7 @@ int GuiSubTitleDisplay_Parse(SubDisp *self)
                 float cg;
                 float cb;
                 float ca;
-                if (func_00128C68(buf, D_004C1ED8, &r, &g, &b) == 3) {
+                if (Libc_Sscanf(buf, D_004C1ED8, &r, &g, &b) == 3) {
                     cr = r / 255.0f;
                     cg = g / 255.0f;
                     cb = b / 255.0f;
@@ -179,7 +179,7 @@ int GuiSubTitleDisplay_Parse(SubDisp *self)
             }
             case 'n':
                 nf = 0;
-                func_00128C68(buf, D_004C1ED0, &nf);
+                Libc_Sscanf(buf, D_004C1ED0, &nf);
                 Push(list, &val);
                 func_00459380(self->lines, &list);
                 {

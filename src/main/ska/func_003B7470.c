@@ -48,7 +48,7 @@ extern "C" void func_003B7470(V_003B7470* v, E_003B7470* pos, unsigned int n, co
     maxN = 0x300000;
     if (n > maxN || v->count > maxN - n) {
         func_00123BE8(D_00489738->stream, D_004BCE60);
-        func_00121B60();
+        Libc_Abort();
     }
     unsigned int cap = v->cap; unsigned int cnt_ = v->count;
     if (cnt_ + n <= cap) {

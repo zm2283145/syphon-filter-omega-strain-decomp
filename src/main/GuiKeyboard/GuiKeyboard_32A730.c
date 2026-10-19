@@ -109,7 +109,7 @@ extern "C" void func_0032A870(V2A870* v, const E2A870* first, const E2A870* last
     } else {
         if (n > 0x22E8BA) {
             func_00123BE8(D_00489738->stream, D_004B8850);
-            func_00121B60();
+            Libc_Abort();
         }
         func_0032AB90(v);
         if (v->data) {

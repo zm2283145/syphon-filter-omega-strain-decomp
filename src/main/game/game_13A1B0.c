@@ -34,7 +34,7 @@ extern "C" void func_0013A1B0(Elem_A1B0* allocation, int pool, int destroy, char
 
 
 /* clear(): count = 0. */
-void func_0013A290(PtrVec* v) {
+void Hud_ClearPda(PtrVec* v) {
     v->count = 0;
 }
 #pragma pop /* merge_units */

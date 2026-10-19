@@ -14,7 +14,7 @@ extern unsigned char D_004FFC29;
 extern void* D_004FFC04;
 extern G_464D20* D_004FFC2C;
 extern P_464D20* D_004FFC0C;
-int func_00437600(void* p);
+int Net_GetTalkerName(void* p);
 int func_004651F0(void);
 void func_00437950(int v);
 int Net_GetClock(int v);
@@ -28,7 +28,7 @@ static inline int IsMine_464D20(void)
 {
     void* p = D_00582CF0;
     if (p) {
-        return func_00437600(p) == NetLocalId();
+        return Net_GetTalkerName(p) == NetLocalId();
     }
     return 0;
 }

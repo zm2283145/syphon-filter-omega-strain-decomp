@@ -7,7 +7,7 @@ extern "C" void func_001748F0(PRVec* v, unsigned int n, const int* val)
     if (n) {
         if (n > 0x1800000) {
             func_00123BE8(D_00489738->stream, D_0049CA60);
-            func_00121B60();
+            Libc_Abort();
         }
         int** pdata = &v->data;
         *pdata = (int*)TStr_Alloc(n * 4, D_0049AE50, 0x5C);

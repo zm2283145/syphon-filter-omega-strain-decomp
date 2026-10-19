@@ -72,10 +72,10 @@ static inline void merge_flush_func_00282F90(void) {}
  */
 
 
-extern int func_00285590(cTank* tank, void* target);
+extern int cTank_SetEnemy(cTank* tank, void* target);
 
 int Script_cTank_ClearEnemy(TankScriptArg* args) {
-    func_00285590((cTank*)args[0].p, 0);
+    cTank_SetEnemy((cTank*)args[0].p, 0);
     return 0;
 }
 /* merge_units: generate this block's code under its own pragmas */

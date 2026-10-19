@@ -95,7 +95,7 @@ struct Path {
     Pt*& P() { return p; }
 };
 extern "C" {
-V* func_00132000(V* v, float x, float y, float z, float w);
+V* Vec4_Set(V* v, float x, float y, float z, float w);
 void Vec4_NormalizeXYZ_132060(V* out, V* v);
 void Vec4_Cross(V* out, V* a, V* b);
 V* Vec4_NormalizeXYZInPlace(V* v);
@@ -127,7 +127,7 @@ extern "C" void func_00264530(Path* s, V* org)
         Vec4_NormalizeXYZ_132060(&f, &axis);
         Vec4_Assign(&r, Vec4_NormalizeXYZInPlace(&c));
         Vec4_Cross(&u, &r, &f);
-        Mtx_FromRowsAndTranslation(&s->m, &r, &f, &u, func_00132000(&w, 0.0f, 0.0f, 0.0f, 1.0f));
+        Mtx_FromRowsAndTranslation(&s->m, &r, &f, &u, Vec4_Set(&w, 0.0f, 0.0f, 0.0f, 1.0f));
     } else if (!Vec4_IsZeroXYZ(&axis)) {
         Mtx_FrameFromAxis(&s->m, &axis);
     } else {

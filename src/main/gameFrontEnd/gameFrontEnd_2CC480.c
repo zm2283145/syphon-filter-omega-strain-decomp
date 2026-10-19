@@ -153,7 +153,7 @@ extern void Receiver_Construct(void* self, void* id);
 extern void func_002CE4F0(void* list);
 extern void DME_CreateLobby(void);
 extern void DME_SetLobbyActive(int a);
-ObjC5A0* func_002CC5A0(ObjC5A0* o)
+ObjC5A0* FrontEnd_ctor(ObjC5A0* o)
 {
     Receiver_Construct(o, D_0051EE98);
     o->vtable = D_004DE180;

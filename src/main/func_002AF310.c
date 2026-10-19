@@ -7,9 +7,9 @@ extern "C" {
     int FrontEnd_OpenPopup(int,int,char*,int,Screen* = 0,int = 0);
     int Gui_GetScreenList();
     void GuiKeyboard_Open(int,int,char*,Screen*,int,int,int);
-    void func_0033C320(Screen*,int);
+    void GuiScreen_Navigate(Screen*,int);
     void func_0033C9E0(Screen*,int,char*);
-    int func_0033CE30(Screen*,int,char*,char*,int = 0,int = 0);
+    int GuiScreen_GetLobbyString(Screen*,int,char*,char*,int = 0,int = 0);
     void func_0033D8E0(Screen*,int);
     int func_0033DF00(Screen*,int,int,int,char*);
     int GuiManager_FindOrLoad(int,char*,char*);
@@ -40,20 +40,20 @@ extern "C" int func_002AF310(Screen* arg0, int arg1, int arg2, int arg3, char* a
 
         if (arg1 == temp_s4->unk164) {
             selected = Agent_GetSelected(D_004FFB50, -1) + 0x8BC;
-            FrontEnd_OpenPopup(D_004FFC04, 5, D_004ABCD0, func_0033CE30(temp_s4, (temp_s4->unk170 != 0) ? 0x45 : 0x44, 0, (char*)selected), temp_s4, 17);
+            FrontEnd_OpenPopup(D_004FFC04, 5, D_004ABCD0, GuiScreen_GetLobbyString(temp_s4, (temp_s4->unk170 != 0) ? 0x45 : 0x44, 0, (char*)selected), temp_s4, 17);
             return 1;
         }
         if (arg1 == temp_s4->unk168) {
             int temp_v0 = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004ABCD8, D_004ABCE8);
             if (temp_v0 != 0) {
-                GuiKeyboard_Open(temp_v0, func_0033CE30(temp_s4, 0x49, 0, 0), D_004ABCD0, temp_s4, 15, 16, 0);
+                GuiKeyboard_Open(temp_v0, GuiScreen_GetLobbyString(temp_s4, 0x49, 0, 0), D_004ABCD0, temp_s4, 15, 16, 0);
             }
             return 1;
         }
         if (arg1 == temp_s4->unk16C) {
             int temp_v0_2 = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004ABCD8, D_004ABCE8);
             if (temp_v0_2 != 0) {
-                GuiKeyboard_Open(temp_v0_2, func_0033CE30(temp_s4, 0x41, 0, 0), D_004ABCD0, temp_s4, 40, 14, 0);
+                GuiKeyboard_Open(temp_v0_2, GuiScreen_GetLobbyString(temp_s4, 0x41, 0, 0), D_004ABCD0, temp_s4, 40, 14, 0);
             }
             return 1;
         }
@@ -65,7 +65,7 @@ extern "C" int func_002AF310(Screen* arg0, int arg1, int arg2, int arg3, char* a
             int temp_v0_3 = DME_GetLobby();
             if (temp_v0_3 != 0) {
                 int temp_s1 = D_004FFC04;
-                int temp_s1_2 = FrontEnd_OpenPopup(temp_s1, 0, D_004ABCD0, func_0033CE30(temp_s4, 0x42, 0, 0));
+                int temp_s1_2 = FrontEnd_OpenPopup(temp_s1, 0, D_004ABCD0, GuiScreen_GetLobbyString(temp_s4, 0x42, 0, 0));
                 if (func_0044A420(temp_v0_3, var_s0) != 0) {
                     int temp_v0_4 = DME_GetLobby();
                     if (temp_v0_4 != 0) {
@@ -78,7 +78,7 @@ extern "C" int func_002AF310(Screen* arg0, int arg1, int arg2, int arg3, char* a
                     }
                 } else {
                     int temp_s0 = D_004FFC04;
-                    FrontEnd_OpenPopup(temp_s0, 2, D_004ABCD0, func_0033CE30(temp_s4, 0x43, 0, 0));
+                    FrontEnd_OpenPopup(temp_s0, 2, D_004ABCD0, GuiScreen_GetLobbyString(temp_s4, 0x43, 0, 0));
                 }
                 FrontEnd_ClosePopup(D_004FFC04, temp_s1_2);
             }
@@ -89,15 +89,15 @@ extern "C" int func_002AF310(Screen* arg0, int arg1, int arg2, int arg3, char* a
             if (temp_v0_5 != 0) {
                 selected = Agent_GetSelected(D_004FFB50, -1);
                 int temp_s0_2 = D_004FFC04;
-                int temp_s1_3 = FrontEnd_OpenPopup(temp_s0_2, 0, D_004ABCD0, func_0033CE30(temp_s4, 0x46, 0, (char*)selected + 0x8BC));
+                int temp_s1_3 = FrontEnd_OpenPopup(temp_s0_2, 0, D_004ABCD0, GuiScreen_GetLobbyString(temp_s4, 0x46, 0, (char*)selected + 0x8BC));
                 if (func_0044A800(temp_v0_5) != 0) {
                     selected = Agent_GetSelected(D_004FFB50, -1);
                     int temp_s0_3 = D_004FFC04;
-                    FrontEnd_OpenPopup(temp_s0_3, 2, D_004ABCD0, func_0033CE30(temp_s4, 0x47, 0, (char*)selected + 0x8BC), temp_s4, 15);
+                    FrontEnd_OpenPopup(temp_s0_3, 2, D_004ABCD0, GuiScreen_GetLobbyString(temp_s4, 0x47, 0, (char*)selected + 0x8BC), temp_s4, 15);
                 } else {
                     selected = Agent_GetSelected(D_004FFB50, -1);
                     int temp_s0_4 = D_004FFC04;
-                    FrontEnd_OpenPopup(temp_s0_4, 2, D_004ABCD0, func_0033CE30(temp_s4, 0x48, 0, (char*)selected + 0x8BC));
+                    FrontEnd_OpenPopup(temp_s0_4, 2, D_004ABCD0, GuiScreen_GetLobbyString(temp_s4, 0x48, 0, (char*)selected + 0x8BC));
                 }
                 FrontEnd_ClosePopup(D_004FFC04, temp_s1_3);
             }
@@ -110,7 +110,7 @@ extern "C" int func_002AF310(Screen* arg0, int arg1, int arg2, int arg3, char* a
                     int temp_s1_4 = SFOLobby_LookupAccountId(temp_v0_6, var_s0);
                     if (func_00452FF0(temp_v0_6, 0) & 0xFF) {
                         int temp_s0_5 = D_004FFC04;
-                        FrontEnd_OpenPopup(temp_s0_5, 2, D_004ABCD0, func_0033CE30(temp_s4, 0x17, var_s0, 0));
+                        FrontEnd_OpenPopup(temp_s0_5, 2, D_004ABCD0, GuiScreen_GetLobbyString(temp_s4, 0x17, var_s0, 0));
                     } else {
                         func_0033C9E0(temp_s4, temp_s1_4, var_s0);
                     }
@@ -122,24 +122,24 @@ extern "C" int func_002AF310(Screen* arg0, int arg1, int arg2, int arg3, char* a
             int temp_v0_7 = DME_GetLobby();
             if (temp_v0_7 != 0) {
                 int temp_s0_6 = D_004FFC04;
-                int temp_s1_5 = FrontEnd_OpenPopup(temp_s0_6, 0, D_004ABCD0, func_0033CE30(temp_s4, 0x52, 0, 0));
+                int temp_s1_5 = FrontEnd_OpenPopup(temp_s0_6, 0, D_004ABCD0, GuiScreen_GetLobbyString(temp_s4, 0x52, 0, 0));
                 if (func_0044A810(temp_v0_7, temp_s4->unk100) != 0) {
                     int temp_s0_7 = D_004FFC04;
-                    FrontEnd_OpenPopup(temp_s0_7, 2, D_004ABCD0, func_0033CE30(temp_s4, 0x53, 0, 0));
+                    FrontEnd_OpenPopup(temp_s0_7, 2, D_004ABCD0, GuiScreen_GetLobbyString(temp_s4, 0x53, 0, 0));
                 } else {
                     int temp_s0_8 = D_004FFC04;
-                    FrontEnd_OpenPopup(temp_s0_8, 2, D_004ABCD0, func_0033CE30(temp_s4, 0x54, 0, 0));
+                    FrontEnd_OpenPopup(temp_s0_8, 2, D_004ABCD0, GuiScreen_GetLobbyString(temp_s4, 0x54, 0, 0));
                 }
                 FrontEnd_ClosePopup(D_004FFC04, temp_s1_5);
             }
             return 1;
         }
         if (arg3 == 15) {
-            func_0033C320(temp_s4, 1);
+            GuiScreen_Navigate(temp_s4, 1);
             return 1;
         }
         if (arg3 == 23) {
-            func_0033C320(temp_s4, 1);
+            GuiScreen_Navigate(temp_s4, 1);
             return 1;
         }
     }

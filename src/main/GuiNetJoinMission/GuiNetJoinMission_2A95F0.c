@@ -9,7 +9,7 @@ extern "C" void func_002A98D0();
 extern "C" void func_002A9B50();
 extern "C" void func_002A9BA0();
 extern "C" void func_002A9FE0();
-extern "C" void func_0033CCA0();
+extern "C" void GuiScreen_PollLobby();
 extern "C" void GuiScreen_Update();
 extern "C" void GuiScreen_Sleep();
 extern "C" void GuiScreen_Wake();
@@ -42,4 +42,4 @@ extern "C" O2A95F0* func_002A95F0(O2A95F0* self, short deleteFlag)
     }
     return self;
 }
-void * const D_004DDAF0[28] = { (void*)0x0, (void*)0x0, (void*)func_002A95F0, (void*)func_002A9FE0, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiScreen_Wake, (void*)GuiScreen_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)func_002A98D0, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiScreen_Update, (void*)func_002A97F0, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)func_002A9660, (void*)func_002A9670, (void*)func_002A97E0, (void*)func_0033CCA0, (void*)func_002A9BA0, (void*)func_002A9B50, (void*)0x0 };
+void * const D_004DDAF0[28] = { (void*)0x0, (void*)0x0, (void*)func_002A95F0, (void*)func_002A9FE0, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiScreen_Wake, (void*)GuiScreen_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)func_002A98D0, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiScreen_Update, (void*)func_002A97F0, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)func_002A9660, (void*)func_002A9670, (void*)func_002A97E0, (void*)GuiScreen_PollLobby, (void*)func_002A9BA0, (void*)func_002A9B50, (void*)0x0 };

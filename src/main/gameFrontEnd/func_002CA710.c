@@ -1,11 +1,11 @@
 extern int DME_GetLobby(void);
-extern int func_003A6710(int a);
+extern int Iop_LoadNetModules(int a);
 extern void func_00271280(int a);
 extern void func_002EA4F0(void* a, void* b);
 extern void DME_CreateLobby(void);
-extern char* func_003CBA90(int id);
+extern char* GameIni_GetString(int id);
 extern int sprintf(char* buf, const char* fmt, ...);
-extern char* func_00128F58(char* d, const char* s);
+extern char* Libc_Strcat(char* d, const char* s);
 extern unsigned int strlen(const char* s);
 extern char* Agent_GetSelected(void* a, int idx);
 extern void String_Copy(char* d, const char* s);
@@ -37,7 +37,7 @@ extern int D_004ACB30[];
 extern char D_004FFB50[];
 extern unsigned char D_0051EEA8;
 
-int func_002CA710(void* self)
+int FrontEnd_StartOnline(void* self)
 {
     Ids ids;
     char text[0x400];
@@ -54,7 +54,7 @@ int func_002CA710(void* self)
         return 0;
     }
     if (D_0048C250) {
-        if (func_003A6710(0)) {
+        if (Iop_LoadNetModules(0)) {
             D_0051EEA8 = 1;
             func_00271280(0);
             D_0048C250 = 0;
@@ -69,10 +69,10 @@ int func_002CA710(void* self)
     ids = D_0048C260;
     text[0] = 0;
     for (i = 0; i < 10; i++, p++) {
-        char* s = func_003CBA90(*p);
+        char* s = GameIni_GetString(*p);
         if (s && *s) {
             sprintf(line, D_004ACFA0, *p, s);
-            func_00128F58(text, line);
+            Libc_Strcat(text, line);
         }
     }
     len = strlen(text);
@@ -80,7 +80,7 @@ int func_002CA710(void* self)
     __clear((char*)&info, 0xC4);
 
     {
-        char* s = func_003CBA90((int)D_004ACFA8);
+        char* s = GameIni_GetString((int)D_004ACFA8);
         if (s) {
             String_Copy(info.name, s);
         }

@@ -27,7 +27,7 @@ extern "C" void func_00413FB0(V413FB0* v, E413FB0* pos, unsigned int n, const E4
         return;
     if (n > 0x800000 || v->count > 0x800000 - n) {
         func_00123BE8(D_00489738->stream, D_004BEF70);
-        func_00121B60();
+        Libc_Abort();
     }
     if (v->count + n <= v->cap) {
         unsigned int off_ = v->count * sizeof(E413FB0); E413FB0* data_ = v->data;

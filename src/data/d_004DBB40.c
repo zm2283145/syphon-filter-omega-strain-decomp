@@ -45,6 +45,8 @@ extern void Player_GetActiveWeapon();
 extern void SmokeField_Draw();
 extern void SmokeField_Update();
 extern void SmokeField_dtor();
+extern void SnowField_Draw();
+extern void SnowField_Update();
 extern void cNIEventLight_dtor();
 extern void cNIEventLight_v01();
 extern void cNIEventLight_v0B();
@@ -84,8 +86,6 @@ extern void func_0015C050();
 extern void func_0015C080();
 extern void func_0015C090();
 extern void func_0015C0A0();
-extern void func_00232E00();
-extern void func_00232F10();
 extern void func_002345D0();
 extern void func_00236380();
 extern void func_00236580();
@@ -124,8 +124,8 @@ void *D_004DBB60[68] = {
     &GObj_GetID, &Object_GetAttachedOrSelf, &func_0015C090, &func_0012ED00,
     &func_003CE810, &func_003CE7D0, &func_0012ED30, &func_0012ED40,
     &func_0012ED50, &func_003926A0, &func_003926B0, &func_003CEA00,
-    &ParticleGob_ResetTime, &ParticleGob_RequestPar, &func_00232F10, &Actor_BasePreLogic,
-    &Actor_BaseWorldUpdate, &Actor_VirtualNop, &func_00232E00, &ParticleGob_OnPresent,
+    &ParticleGob_ResetTime, &ParticleGob_RequestPar, &SnowField_Update, &Actor_BasePreLogic,
+    &Actor_BaseWorldUpdate, &Actor_VirtualNop, &SnowField_Draw, &ParticleGob_OnPresent,
     &ParticleGob_OnAbsent, &Node_SetFlag2C, &Node_ClearFlag2C, &Node_GetFlag2C,
     &func_0015BFB0, &func_0015BFC0, &func_0015BFD0, &func_00148870,
     &func_0015BFF0, &func_0015BFE0, &ParticleGob_GetBounds, &ParticleGob_ScaleBBox,

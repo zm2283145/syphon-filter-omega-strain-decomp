@@ -18,7 +18,7 @@ extern void SFOLobby_UpdateContacts(S4536B0*);
 extern void func_0044B180(S4536B0*);
 extern void func_00442700(S4536B0*);
 extern void func_0044E330(S4536B0*);
-void func_004536B0(S4536B0* s) {
+void SFOLobby_Update(S4536B0* s) {
     if (D_00585FB8) return;
     D_00585FB8 = 1;
     if (s->mode != 0 && s->mode != 1) {

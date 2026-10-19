@@ -27,7 +27,7 @@ extern void String_CtorCStr_13B480(S346*, char*);
 extern void func_003FD740(S346*);
 extern char* String_CStr(S346*);
 extern void String_Dtor(S346*, int);
-extern char* func_0033CE30(O346*, int, char*, char*, int, int);
+extern char* GuiScreen_GetLobbyString(O346*, int, char*, char*, int, int);
 
 extern int Gui_GetScreenStack(void);
 extern void GuiScreen_SetFocus(int, int);
@@ -86,7 +86,7 @@ extern "C" void func_00346FB0(O346* self, I346* info) {
             case 11: c = 0x87; break;
             }
             if (c == -1) t = D_004BA338;
-            else t = func_0033CE30(self, (unsigned char)c, info->name, info->text, 0, 0);
+            else t = GuiScreen_GetLobbyString(self, (unsigned char)c, info->name, info->text, 0, 0);
             GuiTextWidget_SetText(self->wa0, t, 0);
         }
         self->wa4->flags &= mask;
@@ -125,7 +125,7 @@ struct S_3473E0 { char pad[0x88]; P_3473E0* p88; };
 struct Ev_3473E0 { unsigned short type; unsigned short b2; char pad4[2]; unsigned short b6; unsigned short btn; };
 extern "C" {
 extern int D_00532FD0;
-int func_0033C320(S_3473E0* o, int v);
+int GuiScreen_Navigate(S_3473E0* o, int v);
 int GuiScreen_HandleInput(S_3473E0* o);
 int func_003473E0(S_3473E0* o, Ev_3473E0* ev);
 }
@@ -139,7 +139,7 @@ static inline bool Plain2_3473E0(Ev_3473E0* e, int b) { return Btn2_3473E0(e, b)
 int func_003473E0(S_3473E0* o, Ev_3473E0* ev)
 {
     if (Plain_3473E0(ev, 0x10)) {
-        if (!func_0033C320(o, D_00532FD0)) func_0033C320(o, 1);
+        if (!GuiScreen_Navigate(o, D_00532FD0)) GuiScreen_Navigate(o, 1);
         return 1;
     }
     if (Plain2_3473E0(ev, 0x1000) && o->p88) return o->p88->obj->Activate();

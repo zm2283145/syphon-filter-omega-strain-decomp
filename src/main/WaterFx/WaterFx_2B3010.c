@@ -97,7 +97,7 @@ void Renderer_FlushBatch(void* s);
 void Vec4_Copy(V* d, const V* s);
 void GuiBatch_AddVertexColor(V* d, const V* s);
 float GuiBatch_AddVertexUV(void);
-V* func_00132000(V* o, float x, float y, float z, float w);
+V* Vec4_Set(V* o, float x, float y, float z, float w);
 RLink* func_002B3950(RList* l);
 RIter* func_002B3940(RIter* it, RNode* n);
 void func_002B3930(RIter* out, RList* l);
@@ -172,7 +172,7 @@ static inline void Emit_(const V& pos, const V4c& col, const V4c& uv)
     Vec4_Copy(&e->pos[D_00539224 - 1], &pos);
     GuiBatch_AddVertexColor(&e->c30[D_00539224 - 1], (V*)&col);
     u = uv.x + GuiBatch_AddVertexUV();
-    Vec4_Copy(&e->c34[D_00539224 - 1], func_00132000(&tmp, u, uv.y + GuiBatch_AddVertexUV(), uv.z, uv.w));
+    Vec4_Copy(&e->c34[D_00539224 - 1], Vec4_Set(&tmp, u, uv.y + GuiBatch_AddVertexUV(), uv.z, uv.w));
     D_005381F8 = 6LL << 32;
 }
 static inline void Emit(const V& pos, const V4c& col, const V4c& uv) { Emit_(pos, col, uv); }

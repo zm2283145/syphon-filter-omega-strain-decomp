@@ -51,7 +51,7 @@ extern "C" void func_00139BD0(V139BD0* v, unsigned int n, const E139BD0* val)
     if (n) {
         if (n > 0x6DB6D) {
             func_00123BE8(D_00489738->stream, D_0049ABB0);
-            func_00121B60();
+            Libc_Abort();
         }
         E139BD0** pdata = &v->data;
         *pdata = (E139BD0*)TStr_Alloc(n * sizeof(E139BD0), "allocator.hh", 0x5C);

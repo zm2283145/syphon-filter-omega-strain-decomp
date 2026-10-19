@@ -10,7 +10,7 @@ extern Err_6840* D_00489738;
 extern char D_004BC4E0[];
 extern char D_004BCFB8[];
 void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
-void func_00121B60(void);
+void Libc_Abort(void);
 void func_00123BE8(void* s, char* msg);
 void* func_00139BC0(unsigned int size, void* p);
 void func_003B6B20(void* d, E_6840* s);
@@ -48,7 +48,7 @@ extern "C" void func_003B6840(V_6840* v, E_6840* first, E_6840* last)
     } else {
         if (n > 0x40000) {
             func_00123BE8(D_00489738->stream, "vector::assign length error\n");
-            func_00121B60();
+            Libc_Abort();
         }
         func_00396D00(v);
         if (v->data) {

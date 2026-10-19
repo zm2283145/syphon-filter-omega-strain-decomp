@@ -1079,13 +1079,13 @@ struct cNPC_00149C30 {
     virtual void Teleport(void* node); /* +0x10C */
 };
 
-extern "C" void* func_0015C120(void* id);
+extern "C" void* ScriptNode_Identity(void* id);
 
 /* Script native: teleports the NPC to node args[1]. */
 extern "C" int Script_Teleport(ScriptArg_00149C30* args)
 {
     cNPC_00149C30* npc = (cNPC_00149C30*)args[0].p;
-    npc->Teleport(func_0015C120(args[1].p));
+    npc->Teleport(ScriptNode_Identity(args[1].p));
     return 0;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -2319,9 +2319,9 @@ struct cNPC_0014A4A0 {
 };
 
 #if 0 /* merge_units */
-extern "C" void* func_0015C120(void* handle);
+extern "C" void* ScriptNode_Identity(void* handle);
 #endif /* merge_units */
-#define func_0015C120(a0) (func_0015C120((a0))) /* merge_units */
+#define ScriptNode_Identity(a0) (ScriptNode_Identity((a0))) /* merge_units */
 
 
 /* Script native: cNPC::SetMode((byte)args[1], node of args[2]); returns 0. */
@@ -2331,10 +2331,10 @@ extern "C" int Script_cNPC_SetMode_2(ScriptArg* args)
     unsigned char mode;
     mode = args[1].b;
     npc = (cNPC_0014A4A0*)args[0].p;
-    npc->SetMode(mode, func_0015C120(args[2].p));
+    npc->SetMode(mode, ScriptNode_Identity(args[2].p));
     return 0;
 }
-#undef func_0015C120 /* merge_units */
+#undef ScriptNode_Identity /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0014A4A0(void) {}
 #pragma pop /* merge_units */
@@ -2400,9 +2400,9 @@ extern "C" void* GObj_IdentityB(void* handle);
 #define GObj_IdentityB(a0) (GObj_IdentityB((a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern "C" void* func_0015C120(void* handle);
+extern "C" void* ScriptNode_Identity(void* handle);
 #endif /* merge_units */
-#define func_0015C120(a0) (func_0015C120((a0))) /* merge_units */
+#define ScriptNode_Identity(a0) (ScriptNode_Identity((a0))) /* merge_units */
 
 
 /* Script native: returns cNPC::CarryBodyToNode(object of args[1], node of args[2]). */
@@ -2411,10 +2411,10 @@ extern "C" int Script_cNPC_CarryBodyToNode(ScriptArg* args)
     void* body;
     cNPC_0014A520* npc = (cNPC_0014A520*)args[0].p;
     body = GObj_IdentityB(args[1].p);
-    return npc->CarryBodyToNode(body, func_0015C120(args[2].p));
+    return npc->CarryBodyToNode(body, ScriptNode_Identity(args[2].p));
 }
 #undef GObj_IdentityB /* merge_units */
-#undef func_0015C120 /* merge_units */
+#undef ScriptNode_Identity /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0014A520(void) {}
 #pragma pop /* merge_units */
@@ -2476,18 +2476,18 @@ struct cNPC_0014A5C0 {
 };
 
 #if 0 /* merge_units */
-extern "C" void* func_0015C120(void* handle);
+extern "C" void* ScriptNode_Identity(void* handle);
 #endif /* merge_units */
-#define func_0015C120(a0) (func_0015C120((a0))) /* merge_units */
+#define ScriptNode_Identity(a0) (ScriptNode_Identity((a0))) /* merge_units */
 
 
 /* Script native: returns cNPC::MoveToNode(node of args[1]). */
 extern "C" int Script_cNPC_MoveToNode(ScriptArg* args)
 {
     cNPC_0014A5C0* npc = (cNPC_0014A5C0*)args[0].p;
-    return npc->MoveToNode(func_0015C120(args[1].p));
+    return npc->MoveToNode(ScriptNode_Identity(args[1].p));
 }
-#undef func_0015C120 /* merge_units */
+#undef ScriptNode_Identity /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0014A5C0(void) {}
 #pragma pop /* merge_units */

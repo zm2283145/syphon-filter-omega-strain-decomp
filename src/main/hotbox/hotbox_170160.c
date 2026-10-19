@@ -149,13 +149,13 @@ T_0460* Hotbox_CreateRuntime(void* mgr, O_0460* obj, int a, int b);
 #endif /* merge_units */
 #define Hotbox_CreateRuntime(a0, a1, a2, a3) ((T_0460 *)Hotbox_CreateRuntime((int)(a0), (int)(a1), (a2), (a3))) /* merge_units */
 
-void func_00170500(void* list, T_0460** pt);
+void HotboxList_PushBack(void* list, T_0460** pt);
 void NetEvent_Send(O_0460* obj, int type, int size, int a, int b, int c, int d);
 T_0460* Global_MakeNPCInteractable(S_0460* self)
 {
     T_0460* t = Hotbox_CreateRuntime(D_004FFBD0, self->obj, 1, 0);
     t->mode = 3;
-    func_00170500(D_004EE6E0, &t);
+    HotboxList_PushBack(D_004EE6E0, &t);
     if (D_005721C8)
         NetEvent_Send(self->obj, 0x2A, 4, self->obj->id, t->id, 0, 0);
     return t;

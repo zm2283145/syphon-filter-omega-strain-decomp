@@ -32,7 +32,7 @@
             return;                                                             \
         if (n > (maxN) || v->count > (maxN) - n) {                          \
             func_00123BE8(D_00489738->stream, errSym);                          \
-            func_00121B60();                                                    \
+            Libc_Abort();                                                    \
         }                                                                       \
         if (v->count + n <= v->cap) {                                           \
             T* end = v->data + v->count;                                   \

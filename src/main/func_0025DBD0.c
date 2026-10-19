@@ -21,7 +21,7 @@ extern "C" void func_0025DBD0(V25DBD0* v, unsigned int n)
         unsigned int max = 0x600000;
         if (n > max) {
             func_00123BE8(D_00489738->stream, D_004A7D10);
-            func_00121B60();
+            Libc_Abort();
         }
         V25DBD0 tmp;
         tmp.cap = 0;

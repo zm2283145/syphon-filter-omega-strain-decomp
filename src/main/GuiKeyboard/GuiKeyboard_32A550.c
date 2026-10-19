@@ -53,7 +53,7 @@ extern "C" void func_0032A5A0(V32A5A0* v, const VRElem20* first, const VRElem20*
     unsigned int n = last - first;
     if (v->count > 0x22E8BA) {
         func_00123BE8(D_00489738->stream, "vector length error\n");
-        func_00121B60();
+        Libc_Abort();
     }
     if (n) {
         VRElem20** pdata = &v->data;

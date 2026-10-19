@@ -11,7 +11,7 @@ void func_004268C0(TextArrayRow* row);
 void func_00298690(void* string);
 void func_004268B0(Vec4* color);
 Vec4* func_00426890(Vec4* color, float x, float y, float z, float w);
-void func_00412150(Vec4* destination, const Vec4* source);
+void SubtitleTrack_LoadCue(Vec4* destination, const Vec4* source);
 void func_00428000(TextArrayRow* row, unsigned int columns, const TextArrayCell* value);
 void String_Dtor(void* string, int flags);
 void func_00426870(TextArrayStore* store, TextArrayRow** row);
@@ -61,7 +61,7 @@ extern "C" void TextArrayCell_InitDefaults(guiTextArrayWidget* self, unsigned in
         cell.flags = 0;
         cell.attribute = 0;
         cell.text = 0;
-        func_00412150(&cell.color, func_00426890(&white, 1.0f, 1.0f, 1.0f, 1.0f));
+        SubtitleTrack_LoadCue(&cell.color, func_00426890(&white, 1.0f, 1.0f, 1.0f, 1.0f));
         func_00428000(row, columns, &cell);
         String_Dtor(cell.string, 0);
         func_00426870(&self->store, &row);

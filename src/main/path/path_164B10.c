@@ -115,7 +115,7 @@ extern "C" void func_00164CA0(V_00164CA0* v, T* pos, unsigned int n, const T* va
     unsigned int max = 0x300000;
     if (n > max || v->count > max - n) {
         func_00123BE8(D_00489738->stream, D_0049C1C0);
-        func_00121B60();
+        Libc_Abort();
     }
     unsigned int cap = v->cap; unsigned int cnt = v->count;
     if (cnt + n <= cap) {

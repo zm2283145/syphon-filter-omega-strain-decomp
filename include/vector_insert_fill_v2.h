@@ -39,7 +39,7 @@
         unsigned int max = (maxN);                                            \
         if (n > max || v->count > max - n) {                                  \
             func_00123BE8(D_00489738->stream, errSym);                        \
-            func_00121B60();                                                  \
+            Libc_Abort();                                                  \
         }                                                                     \
         unsigned int cap = v->cap; unsigned int cnt = v->count;               \
         if (cnt + n <= cap) {                                                 \

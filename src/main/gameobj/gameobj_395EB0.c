@@ -32,7 +32,7 @@ extern "C" void func_00395EB0(V395EB0* v, unsigned int n, const SkelNode395EB0* 
     if (n) {
         if (n > 0x34F72) {
             func_00123BE8(D_00489738->stream, D_004BC460);
-            func_00121B60();
+            Libc_Abort();
         }
         SkelNode395EB0** pd = &v->data;
         *pd = (SkelNode395EB0*)TStr_Alloc(n * sizeof(SkelNode395EB0), D_004BC510, 0x5C);

@@ -44,7 +44,7 @@ extern unsigned char D_005721C0;
 extern char D_00506260[];
 extern char D_004DCF50[];
 extern char D_004DCF10[];
-void func_0023E3D0(Gun282E10*, float);
+void cNIEventOBJ_SetSpeedRecursive(Gun282E10*, float);
 void Event_Construct(void* m, void* type);
 void Event_Send(void* m, void* target, int immediate);
 void cMessage_dtor(void* m, int flags);
@@ -60,7 +60,7 @@ int tmp;
     v = *(float*)&tmp;
     self = (Tank282E10*)args[0].p;
     t = self->turret;
-    func_0023E3D0(t, v);
+    cNIEventOBJ_SetSpeedRecursive(t, v);
     t->Fire();
     if (self->sub) self->sub->gun->Arm(1);
     if (D_005721C8 && IsAuth282E10()) {

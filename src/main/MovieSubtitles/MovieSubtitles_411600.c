@@ -29,7 +29,7 @@ typedef struct { char pad[0x44]; Tex411600* tex; } TexEnt411600;
 typedef struct { char pad[8]; TexEnt411600** ents; } TexMgr411600;
 extern TexMgr411600* D_00539248;
 
-void func_00411600(Font411600* f, const char* s, const char* end, float* w, float* h)
+void SubtitleOverlay_MeasureLine(Font411600* f, const char* s, const char* end, float* w, float* h)
 {
     float th, scale, tw, adv;
     int c;

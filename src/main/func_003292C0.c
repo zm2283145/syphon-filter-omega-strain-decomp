@@ -35,7 +35,7 @@ extern "C" void func_003292C0(V_3292C0* v, T* pos, unsigned int n, const T* valu
         return;
     if (n > 0x22E8BA || v->count > 0x22E8BA - n) {
         func_00123BE8(D_00489738->stream, D_004B8810);
-        func_00121B60();
+        Libc_Abort();
     }
     if (v->count + n <= v->cap) {
         T* p; T* q; T* src; T* dst; T* end;

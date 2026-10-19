@@ -12,7 +12,7 @@ typedef int s32; typedef unsigned int u32; typedef char s8; typedef unsigned cha
 typedef struct { int x,y,w,h; unsigned char align,flip,center,pad13; char str[12]; void *font; char pad24[12]; float color[4]; float scroll,last,speed,alphaSpeed,alphaEnd,wrap; unsigned char noWrap,fade,done,ellipsis; } TextLayout;
 extern char *String_CStr(void*);
 extern void String_Copy(char*,const char*);
-extern void func_00129708(char*,const char*,int);
+extern void Libc_Strncat(char*,const char*,int);
 extern int Font_GetLineHeight(void*);
 extern int Font_GetStringWidth(void*,const char*,int);
 extern int strlen(const char*);
@@ -154,7 +154,7 @@ loop_44:
         }
         var_s0 = Font_GetStringWidth(arg0->font, var_s4, var_s3);
         if (((var_f23 + (f32) var_s0) < temp_f21) || ((var_f23 == (f32) (s32) arg0->x) && (arg0->wrap == 1.0f))) {
-            func_00129708(spE0, var_s4, var_s3);
+            Libc_Strncat(spE0, var_s4, var_s3);
             var_s4 = var_s1;
             var_f23 += (f32) var_s0;
             goto block_70;
@@ -422,7 +422,7 @@ loop_76:
                 }
                 var_s0 = Font_GetStringWidth(arg0->font, var_s4, var_s3);
                 if (((var_f23 + (f32) var_s0) < temp_f21) || ((var_f23 == (f32) arg0->x) && (arg0->wrap == 1.0f))) {
-                    func_00129708(spC0, var_s4, var_s3);
+                    Libc_Strncat(spC0, var_s4, var_s3);
                     var_s4 = var_s1;
                     var_f23 += (f32) var_s0;
                     goto block_102;

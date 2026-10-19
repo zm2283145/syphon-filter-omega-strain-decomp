@@ -213,7 +213,7 @@ int cNode_Identity(int value) {
     return tmp;
 }
 
-void* func_0015C120(void* self) {
+void* ScriptNode_Identity(void* self) {
     return self;
 }
 

@@ -69,7 +69,7 @@ void Node_GetTranslation(Vec4* out, void* node);
 void Event_Construct(Msg* m, void* type);
 void* Mtx_GetIdentity(void);
 void Vec4_CopyAsPoint(Vec4* out, void* v);
-void func_0014B160(void* data, void* obj, Vec4* v);
+void Mtx_SetRotationTranslation(void* data, void* obj, Vec4* v);
 void Event_Send(Msg* m, void* target, int immediate);
 void cMessage_dtor(Msg* m, int flags);
 void NpcPath_RelocateStuck(void* path, int id);
@@ -94,7 +94,7 @@ extern "C" void cNPC_v41(NPC_AFE0* self, Arg_AFE0* node)
         void* data = m->data;
         /* Preserve message-data address construction before the identity argument. */
         asm { .set reorder }
-        func_0014B160(data, id, &p);
+        Mtx_SetRotationTranslation(data, id, &p);
     }
     Event_Send(m, self->target, 1);
     msg.vtable = D_004D9360;

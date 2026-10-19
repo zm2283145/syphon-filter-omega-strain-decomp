@@ -23,7 +23,7 @@ extern "C" void func_003AA7B0(SkelVec* v, SkelNode* pos, unsigned int n, const S
         return;
     if (n > 0x34F72 || v->count > 0x34F72 - n) {
         func_00123BE8(D_00489738->stream, D_004BCD10);
-        func_00121B60();
+        Libc_Abort();
     }
     if (v->count + n <= v->cap) {
         SkelNode* p; SkelNode* q; SkelNode* src; SkelNode* dst; SkelNode* end;

@@ -15,7 +15,7 @@ extern void* Camera_ShakeMatrix(void*, float, float, float);
 extern void func_003B4010(void*, void*, void*, int, int, void*, void*, int, float, int, int);
 extern float Math_DegToRad(float);
 extern void* Motion_Lookup(void*, void*);
-extern void* func_00132000(void*, float, float, float, float);
+extern void* Vec4_Set(void*, float, float, float, float);
 extern void func_001F0540(void*, int, void*, float, float, void*, int);
 extern void func_001F04E0(void*, int);
 /* Builds and registers one block of motion-graph nodes. */
@@ -93,7 +93,7 @@ void func_001EFE70(void* p0)
     t2 = Motion_Lookup(p0, t1);
     f1 = f0 + Math_DegToRad(-1.8e+02f);
     f2 = f0 + Math_DegToRad(1.8e+02f);
-    func_001F0540(&v480, 22, t2, f1, f2, func_00132000(&v4F0, 0.0f, 0.0f, 1.0f, 0.0f), 1);
+    func_001F0540(&v480, 22, t2, f1, f2, Vec4_Set(&v4F0, 0.0f, 0.0f, 1.0f, 0.0f), 1);
     MotionSlider_RegisterNode(&v704, p0, CanonicalKey_Construct(&v530, "animBodyLandFaceDown"), &v480);
     func_001F04E0(&v480, -1);
     f3 = Math_DegToRad(-13.0f);
@@ -101,7 +101,7 @@ void func_001EFE70(void* p0)
     t4 = Motion_Lookup(p0, t3);
     f4 = f3 + Math_DegToRad(-1.8e+02f);
     f5 = f3 + Math_DegToRad(1.8e+02f);
-    func_001F0540(&v3A0, 22, t4, f4, f5, func_00132000(&v410, 0.0f, 0.0f, 1.0f, 0.0f), 1);
+    func_001F0540(&v3A0, 22, t4, f4, f5, Vec4_Set(&v410, 0.0f, 0.0f, 1.0f, 0.0f), 1);
     MotionSlider_RegisterNode(&v700, p0, CanonicalKey_Construct(&v450, "animBodyLandOnBack"), &v3A0);
     func_001F04E0(&v3A0, -1);
     func_003B4010(&v2E0, CanonicalKey_Construct(&v340, "dataDeathImpactWithGround"), p0, 0, 0, func_001EFE10(&v6E0, 1.0f, 1.0f), Camera_ShakeMatrix(&v330, 0.0f, 0.0f, 0.0f), -1, 1.0f, 0, 0);
@@ -114,14 +114,14 @@ void func_001EFE70(void* p0)
     t6 = Motion_Lookup(p0, t5);
     f6 = f0 + Math_DegToRad(-1.8e+02f);
     f7 = f0 + Math_DegToRad(1.8e+02f);
-    func_001F0540(&v140, 22, t6, f6, f7, func_00132000(&v1B0, 0.0f, 0.0f, 1.0f, 0.0f), 1);
+    func_001F0540(&v140, 22, t6, f6, f7, Vec4_Set(&v1B0, 0.0f, 0.0f, 1.0f, 0.0f), 1);
     MotionSlider_RegisterNode(&v6F4, p0, CanonicalKey_Construct(&v1F0, "animBodyLandFaceDown_LastFrameOnly"), &v140);
     func_001F04E0(&v140, -1);
     t7 = CanonicalKey_Construct(&vE0, "animBodyLandOnBack_UnRotatable_LastFrameOnly");
     t8 = Motion_Lookup(p0, t7);
     f8 = f3 + Math_DegToRad(-1.8e+02f);
     f9 = f3 + Math_DegToRad(1.8e+02f);
-    func_001F0540(&v60, 22, t8, f8, f9, func_00132000(&vD0, 0.0f, 0.0f, 1.0f, 0.0f), 1);
+    func_001F0540(&v60, 22, t8, f8, f9, Vec4_Set(&vD0, 0.0f, 0.0f, 1.0f, 0.0f), 1);
     MotionSlider_RegisterNode(&v6F0, p0, CanonicalKey_Construct(&v110, "animBodyLandOnBack_LastFrameOnly"), &v60);
     func_001F04E0(&v60, -1);
 }

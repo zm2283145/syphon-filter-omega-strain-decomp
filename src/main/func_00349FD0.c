@@ -22,10 +22,10 @@ extern void FrontEnd_StartSplashThread(void*);
 extern char* Loc_LookupText(char*);
 extern int FrontEnd_OpenPopup(void* ui, int a, char* b, char* c, void* d, int e);
 extern void FrontEnd_ClosePopup(void* ui, int p);
-extern void func_002C81D0(void* ui);
+extern void FrontEnd_StopSplashThread(void* ui);
 extern int Gui_GetScreenList(void);
 extern void* GuiManager_FindOrLoad(int, char*, char*);
-extern void func_003609F0(void*);
+extern void GuiAgentInfo_Fill(void*);
 extern void GuiStack_SwapScreens(int, O_49FD0*, void*);
 extern char* String_CStr(void*);
 extern void GuiSlideShow_SetReturn(void*, int, char*, int);
@@ -58,10 +58,10 @@ void GuiDossiers_Select(O_49FD0* o, int idx)
         w = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004BA5E0, D_004BA5F0);
         if (splash) {
             FrontEnd_ClosePopup(D_004FFC04, popup);
-            func_002C81D0(D_004FFC04);
+            FrontEnd_StopSplashThread(D_004FFC04);
         }
         if (w) {
-            func_003609F0(w);
+            GuiAgentInfo_Fill(w);
             GuiStack_SwapScreens(Gui_GetScreenStack(), o, w);
         }
     } else {

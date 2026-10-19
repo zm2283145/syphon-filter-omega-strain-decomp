@@ -19,7 +19,7 @@ void Vec4_Cross(V* d, const V* a, const V* b);
 int Vec4_IsZeroXYZ(const V* v);
 V Sphere_FromCenter(const V& c, const V& r);
 void Vec4_CrossW0(V* d, const V* a, const V* b);
-void* func_00132000(void*, float, float, float, float);
+void* Vec4_Set(void*, float, float, float, float);
 void Mtx_FromRowsAndTranslation(void* m, const V* a, const V* b, const V* c, void* t);
 void Mtx_FrameFromAxis(void* m, const V* a);
 void Mtx_SetIdentity(void* m);
@@ -128,7 +128,7 @@ static inline void FrameFrom_(V* m, const V& up, const V& n)
         V d;
         V tr;
         Vec4_Cross(&d, &b, &a);
-        Mtx_FromRowsAndTranslation(m, &b, &a, &d, func_00132000(&tr, 0.0f, 0.0f, 0.0f, 1.0f));
+        Mtx_FromRowsAndTranslation(m, &b, &a, &d, Vec4_Set(&tr, 0.0f, 0.0f, 0.0f, 1.0f));
     } else if (!Vec4_IsZeroXYZ(&up)) {
         Mtx_FrameFromAxis(m, &up);
     } else {

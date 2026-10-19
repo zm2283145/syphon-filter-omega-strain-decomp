@@ -54,7 +54,7 @@ void func_0025CA40(void* s);
 void Vec4_Copy(V4_0025EC20* d, V4_0025EC20* s);
 void GuiBatch_AddVertexColor(V4_0025EC20* d, V4_0025EC20* s);
 float GuiBatch_AddVertexUV(void);
-V4_0025EC20* func_00132000(V4_0025EC20* o, float x, float y, float z, float w);
+V4_0025EC20* Vec4_Set(V4_0025EC20* o, float x, float y, float z, float w);
 void Renderer_FlushPrimitives(void* s);
 }
 #define D_00539224 (D_00539210.f24)
@@ -85,7 +85,7 @@ static inline void Emit_0025EC20(const V4c_0025EC20& pos, const V4c_0025EC20& co
     Vec4_Copy(&e->pos[D_00539224 - 1], (V4_0025EC20*)&pos);
     GuiBatch_AddVertexColor(&e->c30[D_00539224 - 1], (V4_0025EC20*)&col);
     u = uv.x + GuiBatch_AddVertexUV();
-    Vec4_Copy(&e->c34[D_00539224 - 1], func_00132000(&tmp, u, uv.y + GuiBatch_AddVertexUV(), uv.z, uv.w));
+    Vec4_Copy(&e->c34[D_00539224 - 1], Vec4_Set(&tmp, u, uv.y + GuiBatch_AddVertexUV(), uv.z, uv.w));
     D_005381F8 = 6LL << 32;
 }
 static inline unsigned char Prim_0025EC20(void) { if (D_005392D0 & 1) return 3; return 2; }

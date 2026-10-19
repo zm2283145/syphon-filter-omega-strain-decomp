@@ -9,8 +9,8 @@ This is the working state and the routine for whoever continues this project
 
 | | |
 |---|---|
-| Functions matched | 13,597 of 14,331 |
-| Code matched | 80.58% |
+| Functions matched | 13,620 of 14,331 |
+| Code matched | 81.05% |
 | Data matched | 99.92% |
 | Full build | reproduces the retail executable byte for byte |
 
@@ -160,6 +160,18 @@ into translation units. Run it occasionally; see [merge_units.md](merge_units.md
   generation. Rebuild after each batch.
 
 ## Near-miss techniques (newest)
+
+- **mw38 value-returning vector operators:** write `operator-` etc. as `V r; SubV(&r, this, &o); return r;`
+  with the VU0 asm in its own inline one level deeper; this removes an extra return-slot
+  address and improved every draft it was tried on.
+- **mw38 misc (newest):** zero float struct fields through an int view to stop MW CSE-ing the
+  field address; an `(unsigned)` index cast blocks strength reduction; route a call result through
+  a temp to load a field after the call; an unconditional multiply before a ternary gives retail's
+  speculative `mul` in the delay slot; `(T*)(int)&x` stops constant-address folding; a one-iteration
+  copy loop keeps a separate source register; `i = 0; goto test;` enters a loop at its test; when
+  every delay slot in a function is unfilled, look for an asm copy macro.
+- **Fresh targets:** with most callees named, functions no earlier lane has drafted (grep the
+  address under `build/agents/`) have been the most productive targets.
 
 - **gcc 2.96 calls are cross-jumped too:** jump2 merges a call into a shared `jalr` when at
   least two trailing instructions match, so write each arm as its own call followed by its

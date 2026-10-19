@@ -196,6 +196,17 @@ def function_relative(blob, kind):
             struct.pack_into("<I", blob, data_off + r_offset, addend - value)
 
 
+def link_block(ld, base, obj, kind, start, pad):
+    """`ld -r` OBJ into BASE with all data sections merged into one KIND section laid out from
+    START (mod 16), followed by PAD zero bytes."""
+    script = base + ".ld"
+    fill = " BYTE(0)" * pad
+    with open(script, "w") as f:
+        f.write("SECTIONS\n{\n    .text 0 : { *(.text*) }\n"
+                f"    {kind} {start % 16:#x} : {{ *({' '.join(DATA_KINDS)}){fill} }}\n}}\n")
+    subprocess.check_call([ld, "-EL", "-r", "-T", script, "-o", base, obj])
+
+
 def block_kind(names):
     """Section name of a unit's merged data block (= its subsegment type)."""
     for k in (".rodata", ".data", ".sdata"):
@@ -221,29 +232,19 @@ def main():
     kind = block_kind(present)
     if kind is None:
         sys.exit(f"{raw}: the unit has a data subsegment but no data")
-    script = base + ".ld"
-    with open(script, "w") as f:
-        f.write("SECTIONS\n{\n    .text 0 : { *(.text*) }\n"
-                f"    {kind} {start % 16:#x} : {{ *({' '.join(DATA_KINDS)}) }}\n}}\n")
     # GCC objects carry ECOFF debug info (.mdebug) that `ld -r` cannot merge; the base needs none
     tmp = base + ".in.o"
     subprocess.check_call([objcopy, "--remove-section", ".mdebug", "--remove-section", ".pdr", raw, tmp])
     try:
-        subprocess.check_call([ld, "-EL", "-r", "-T", script, "-o", base, tmp])
+        link_block(ld, base, tmp, kind, start, 0)
+        # pad the block to a multiple of 4. `. = ALIGN(4)` does not grow a section in `ld -r`, and
+        # `objcopy --update-section` drops the section's relocations (jump-table words), so relink
+        # with the pad bytes appended in the link script
+        size = next(s[5] for s in sections(open(base, "rb").read()) if s[2] == kind)
+        if size % 4:
+            link_block(ld, base, tmp, kind, start, -size % 4)
     finally:
         os.unlink(tmp)
-    # pad the block to a multiple of 4 (`. = ALIGN(4)` does not grow a section in `ld -r`)
-    out = open(base, "rb").read()
-    for i, h, name, typ, flags, size, align in sections(out):
-        if name == kind and size % 4:
-            off, = struct.unpack_from("<I", out, h + 0x10)
-            pad = base + ".pad"
-            with open(pad, "wb") as f:
-                f.write(out[off:off + size] + bytes(-size % 4))
-            try:
-                subprocess.check_call([objcopy, "--update-section", f"{kind}={pad}", base])
-            finally:
-                os.unlink(pad)
     if target:
         name_block(objcopy, base, kind, target_labels(target))
     out = bytearray(open(base, "rb").read())

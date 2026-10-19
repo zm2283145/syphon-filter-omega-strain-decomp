@@ -271,6 +271,8 @@ out:
     return r;
 }
 
+extern const char D_004B0088[];
+
 int func_0030CD00(Conn_30CD00* c)
 {
     unsigned char ok;
@@ -369,7 +371,7 @@ done:
     if (q5->b2030) {
         if (q5->idx < q5->count) {
             sprintf(q5->buf, "<NewPortMappingIndex>%d</NewPortMappingIndex>", q5->idx);
-            { Req_30CD00* q6 = c->req; q6->idx++; r = UPnP_SendSoapAction(c, "GetGenericPortMappingEntry", q6->buf); }
+            { Req_30CD00* q6 = c->req; q6->idx++; r = UPnP_SendSoapAction(c, (char *)D_004B0088, q6->buf); }
             if (r == 0) {
                 func_003060D8(c->req->x10);
                 goto out;
@@ -399,3 +401,9 @@ done:
 out:
     return r;
 }
+
+/* Last literal of the block, defined after func_0030CD00 so it is still emitted last. Sized 28
+ * (27 bytes + the retail zero pad) so the .rodata block ends on a 4-byte boundary
+ * (0x4AFF30 + 0x174): tools/data_obj.py pads an odd-sized block with objcopy
+ * --update-section, which drops the block's relocations (the 30C780 jump table). */
+const char D_004B0088[28] = "GetGenericPortMappingEntry";

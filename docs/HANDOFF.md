@@ -9,8 +9,8 @@ This is the working state and the routine for whoever continues this project
 
 | | |
 |---|---|
-| Functions matched | 13,551 of 14,331 |
-| Code matched | 79.74% |
+| Functions matched | 13,572 of 14,331 |
+| Code matched | 80.12% |
 | Data matched | 99.92% |
 | Full build | reproduces the retail executable byte for byte |
 
@@ -330,8 +330,8 @@ K&R in a shared header (for example `include/SFOLobby_helpers.h`).
 - `0x2B69A0` (gcc 2.96 -G0, owns the `"/"` string at `0x4AC1C8`) and `0x31D558`
   (gcc 2.96, six `.lit4` constants) both match in `check_match`, but integrating them
   together deleted the data units `d_00476B00`–`d_00497CC8` and configure failed. They
-  need their rodata split by hand before they can go in. `0x31A630` (gcc 2.96, owns the
-  `.lit4` constant at `0x4E1BB4`) matches too and is held for the same reason.
+  need their rodata split by hand before they can go in. (`0x31A630`, which owns the
+  `.lit4` constant at `0x4E1BB4`, has since been integrated without trouble.)
 - `0x17D700` is a C++ constructor; a match compiles to
   `__ct__10Curve_d700FRC2V4RC2V4RC2V4RC2V4f`, so `config/symbol_addrs.txt` needs that
   mangled name (or the real class name) at that address first.

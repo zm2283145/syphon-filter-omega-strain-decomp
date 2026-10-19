@@ -1,0 +1,82 @@
+#pragma cplusplus on
+#pragma opt_rotateloops off
+#include "types.h"
+/* func_002CBD40: fills the network agent-info block (version 11) of the
+ * selected agent: team, accuracy/headshot percentages, stats, rating and
+ * award bits, appearance block. Stat use as in GuiAgentInfo_Fill
+ * (GuiAgentInfo_360610.c). */
+typedef struct { char pad[8]; unsigned char on; char pad2[0xB]; } Item_BD40;
+struct Rel_BD40 { int a0; int count; Item_BD40* data; unsigned char own; char pad[3]; int Size() { return count; } Item_BD40& operator[](unsigned int i) { return data[i]; } };
+struct App_BD40 { char d[0xC0]; };
+struct Agent_BD40 { char pad0[0x9A8]; App_BD40 app; char pad1[0xB50 - 0x9A8 - 0xC0]; int* team; };
+struct Info_BD40 {
+    unsigned char ver; unsigned char team; unsigned char accuracy; unsigned char headshots;
+    short kills; short s6; short s8; short sA; short sC; char pE[2];
+    int shots; int hits; int w18; int w1C; int w20; int bits;
+    App_BD40 app;
+};
+extern "C" {
+extern char g_Game[];
+void* memset(void* d, int c, unsigned int n);
+void* memcpy(void* d, const void* s, unsigned int n);
+Agent_BD40* Agent_GetSelected(void* list, int idx);
+int cAgentData_GetStat(Agent_BD40* a, int id);
+void func_00296FA0(Rel_BD40* r);
+void func_00299360(Rel_BD40* r, short f);
+void AgentData_GetRatings(Agent_BD40* a, Rel_BD40* r);
+void AgentData_GetAwardRows(Agent_BD40* a, int k, Rel_BD40* r);
+void func_002CBD40(void* self, Info_BD40* info);
+}
+static inline void CopyApp(App_BD40* d, App_BD40* s) { if (s) memcpy(d, s, sizeof(App_BD40)); }
+
+extern "C" void func_002CBD40(void* self, Info_BD40* info)
+{
+    Agent_BD40* a;
+    int bits;
+    if (info->ver != 11) {
+        memset(info, 0, 0xFC);
+        info->ver = 11;
+    }
+    a = Agent_GetSelected(g_Game, -1);
+    info->team = a->team ? a->team[1] : 0;
+    info->accuracy = (cAgentData_GetStat(a, 0xC) && cAgentData_GetStat(a, 0xC)) ? (int)(100.0f * ((float)cAgentData_GetStat(a, 0xC) / (float)cAgentData_GetStat(a, 0xB))) : 0;
+    info->headshots = (cAgentData_GetStat(a, 0xA) && cAgentData_GetStat(a, 0xA)) ? (int)(100.0f * ((float)cAgentData_GetStat(a, 0xA) / (float)cAgentData_GetStat(a, 9))) : 0;
+    info->kills = cAgentData_GetStat(a, 0xD);
+    info->s6 = cAgentData_GetStat(a, 1);
+    info->s8 = cAgentData_GetStat(a, 4);
+    info->sA = cAgentData_GetStat(a, 6);
+    info->sC = cAgentData_GetStat(a, 7);
+    info->shots = cAgentData_GetStat(a, 9);
+    info->hits = cAgentData_GetStat(a, 0xA);
+    info->w18 = cAgentData_GetStat(a, 2);
+    info->w1C = cAgentData_GetStat(a, 0);
+    info->w20 = cAgentData_GetStat(a, 8);
+    bits = 0;
+    {
+        Rel_BD40 r;
+        int i;
+        func_00296FA0(&r);
+        r.own = 1;
+        AgentData_GetRatings(a, &r);
+        for (i = 0; i < r.Size() && i < 24; i++) {
+            if (r[i].on)
+                bits |= 1 << i;
+        }
+        func_00299360(&r, 0);
+    }
+    {
+        Rel_BD40 r;
+        int i;
+        func_00296FA0(&r);
+        r.own = 1;
+        AgentData_GetAwardRows(a, 0, &r);
+        for (i = 0; i < r.Size() && i < 8; i++) {
+            if (r[i].on)
+                bits |= 1 << (i + 24);
+        }
+        func_00299360(&r, 0);
+    }
+    info->bits = bits;
+    memset(&info->app, 0, sizeof(App_BD40));
+    CopyApp(&info->app, &a->app);
+}

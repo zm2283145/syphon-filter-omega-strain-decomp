@@ -4821,5 +4821,17 @@
   "main/func_0042BA00": "cwps2-3.0b38",
   "main/func_001EB0F0": "cwps2-3.0b38",
   "main/ska/func_003AE150": "cwps2-3.0b38",
-  "main/gameCamera/func_0017F6A0": "cwps2-3.0b38"
+  "main/gameCamera/func_0017F6A0": "cwps2-3.0b38",
+  "main/human/func_001B2A80": "cwps2-3.0b38",
+  "main/human/func_001BA130": "cwps2-3.0b38",
+  "main/Loader/func_001C3510": "cwps2-3.0b38",
+  "main/gameSound/func_001C83A0": "cwps2-3.0b38",
+  "main/NIEvent/func_0023DE10": "cwps2-3.0b38",
+  "main/backpack/func_00253FE0": "cwps2-3.0b38",
+  "main/func_0025AA20": "cwps2-3.0b38",
+  "main/gameFrontEnd/func_002CBD40": "cwps2-3.0b38",
+  "main/GuiNetMessages/func_00348530": "cwps2-3.0b38",
+  "main/func_0037A370": "cwps2-3.0b38",
+  "main/func_003E7670": "cwps2-3.0b38",
+  "main/GuiGameScreen/func_0045C0F0": "cwps2-3.0b38"
 }

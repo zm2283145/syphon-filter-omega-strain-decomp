@@ -4833,5 +4833,15 @@
   "main/GuiNetMessages/func_00348530": "cwps2-3.0b38",
   "main/func_0037A370": "cwps2-3.0b38",
   "main/func_003E7670": "cwps2-3.0b38",
-  "main/GuiGameScreen/func_0045C0F0": "cwps2-3.0b38"
+  "main/GuiGameScreen/func_0045C0F0": "cwps2-3.0b38",
+  "main/NIEvent/func_00237B90": "cwps2-3.0b38",
+  "main/NIEvent/func_0023A2D0": "cwps2-3.0b38",
+  "main/func_00262A20": "cwps2-3.0b38",
+  "main/func_0026BE80": "cwps2-3.0b38",
+  "main/GuiEquipmentModify/func_002BF090": "cwps2-3.0b38",
+  "main/func_0033DF00": "cwps2-3.0b38",
+  "main/func_00373670": "cwps2-3.0b38",
+  "main/man/func_0038C920": "cwps2-3.0b38",
+  "main/gameobj/func_00393380": "cwps2-3.0b38",
+  "main/func_003E4430": "cwps2-3.0b38"
 }

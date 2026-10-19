@@ -4812,5 +4812,11 @@
   "main/GuiScoresEquip/GuiScoresEquip_6": "cwps2-3.0b38",
   "main/GuiScoresEquip/GuiScoresEquip_7": "cwps2-3.0b38",
   "main/materialProperties/materialProperties": "cwps2-3.0b38",
-  "main/materialProperties/materialProperties_2": "cwps2-3.0b38"
+  "main/materialProperties/materialProperties_2": "cwps2-3.0b38",
+  "lib/func_003085D8": "ee-gcc2.96",
+  "lib/func_003091B8": "ee-gcc2.96",
+  "lib/func_003095E8": "ee-gcc2.96",
+  "main/human/func_001A3780": "cwps2-3.0b38",
+  "main/particle/func_00398470": "cwps2-3.0b38",
+  "main/func_0042BA00": "cwps2-3.0b38"
 }

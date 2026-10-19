@@ -4811,5 +4811,10 @@
   "main/flashlight/flashlight": "cwps2-3.0b38",
   "main/inventory/inventory": "cwps2-3.0b38",
   "main/inventory/inventory_2": "cwps2-3.0b38",
-  "main/inventory/inventory_3": "cwps2-3.0b38"
+  "main/inventory/inventory_3": "cwps2-3.0b38",
+  "lib/func_0030C780": "ee-gcc2.96-G0",
+  "main/npc/func_00148600": "cwps2-3.0b38",
+  "main/func_001EDA40": "cwps2-3.0b38",
+  "main/backpack/func_00256B40": "cwps2-3.0b38",
+  "main/backpack/func_00256D90": "cwps2-3.0b38"
 }

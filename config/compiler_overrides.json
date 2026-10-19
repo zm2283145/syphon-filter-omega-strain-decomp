@@ -4880,5 +4880,18 @@
   "main/func_00261360": "cwps2-3.0b38",
   "main/func_00261690": "cwps2-3.0b38",
   "main/func_003A9090": "cwps2-3.0b38",
-  "main/ska/func_003B1290": "cwps2-3.0b38"
+  "main/ska/func_003B1290": "cwps2-3.0b38",
+  "lib/func_002F6CC8": "ee-gcc2.96",
+  "lib/func_0031A630": "ee-gcc2.96",
+  "lib/func_0031EE08": "ee-gcc2.96",
+  "lib/func_002E2F30": "ee-gcc2.96-G0",
+  "lib/func_002E8F08": "ee-gcc2.96-G0",
+  "lib/func_002F80C0": "ee-gcc2.96-G0",
+  "lib/func_002FCA18": "ee-gcc2.96-G0",
+  "main/humanIk/func_001DE3B0": "cwps2-3.0b38",
+  "main/func_001E5120": "cwps2-3.0b38",
+  "main/scriptUtils/func_002683F0": "cwps2-3.0b38",
+  "main/scriptUtils/func_00268740": "cwps2-3.0b38",
+  "main/particle/func_003A3670": "cwps2-3.0b38",
+  "main/func_0040B510": "cwps2-3.0b38"
 }

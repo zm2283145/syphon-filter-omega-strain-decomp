@@ -311,13 +311,33 @@ into translation units. Run it occasionally; see [merge_units.md](merge_units.md
   `vnop` ×4, `cfc2.ni f, vi17`, `bne k, f, done`, `ori r, zero, 1`. This sequence is the
   only accepted asm that contains a branch.
 
+## Naming from the PC port research
+
+The private PC port keeps research notes with a generated `ADDRESS_INDEX.md` of every EE
+address it cites. Name syncs (2026-10-18/19: 731 function names, 104 data names) went like this:
+
+1. Collect every cited address that is still `func_`/`D_`, read the note or port source comment,
+   and name it only where the research states what it does (mark guesses `(inferred)` and leave
+   them out). Follow the existing style (`Module_VerbNoun`, `g_` for globals, vtable names
+   from the class). Prefix C library names (`Libc_Abort`, never `abort`).
+2. Function names: append to `config/symbol_addrs.txt` (`Name = 0xADDR; // type:func`) and run
+   `tools/apply_names.py`, then rebuild every C file and require the OK line.
+3. Data names: append `Name = 0xADDR;`, rename the `D_XXXXXXXX` tokens in `src/` and `include/`
+   yourself (token-exact; `apply_names.py` only renames functions), then the normal round
+   (`data_gen.py release --all` ... `data_gen.py` ... `ninja`). The whole split is redone.
+4. Commit names separately from matches.
+
 ## Merging into translation units
 
 Matched functions are first committed one per file. Fully matched modules are then merged
 into one translation unit per original source file (`src/main/<mod>/<mod>.c`), checked
 byte for byte over the whole unit's code and data. Merge batches are prepared in
 `build/cleanup/` (not committed) with an apply script that refuses a changed tree and a
-revert list. Gotchas: every merged block ends with an empty `static inline` function so
+revert list. On 2026-10-19 `merge_units.py --all-complete` merged 284 units of 61 complete
+modules into 110; run it again whenever modules become complete. The merge of
+`main/guiTextListWidget/guiTextListWidget_6` costs 20 bytes of reported data match
+(the executable still matches), and `--unmerge` cannot split it because its blocks
+are themselves earlier merged units. Gotchas: every merged block ends with an empty `static inline` function so
 the compiler emits each function in the right C/C++ mode; MW 3.0.3 and 3.0b38 order
 locals differently; a shared helper prototype that callers use inconsistently is declared
 K&R in a shared header (for example `include/SFOLobby_helpers.h`).

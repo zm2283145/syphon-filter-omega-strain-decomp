@@ -7,7 +7,7 @@ typedef struct Msg {
     char pad[7];
 } Msg;
 typedef struct { char pad[0x3524]; void* owner; } Player;
-extern char D_0055D480[];
+extern char g_ActorActionMsgClass[];
 extern char D_004E0840[];
 extern int WeaponInv_AllowsAction(void* owner);
 extern void Event_Construct(Msg* msg, void* name);
@@ -18,7 +18,7 @@ void func_0024AA70(void* self, int enable, Player* p)
 {
     Msg msg;
     if (enable && WeaponInv_AllowsAction(p->owner)) {
-        Event_Construct(&msg, D_0055D480);
+        Event_Construct(&msg, g_ActorActionMsgClass);
         msg.vtable = D_004E0840;
         msg.value = 0x3C;
         msg.flag = 0;

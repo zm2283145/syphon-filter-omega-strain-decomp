@@ -8,4 +8,4 @@ char D_004BDCC0[32] = "nCAS::ACTION_InteractStanding";
 
 char D_004BDCE0[32] = "nCAS::ACTION_InteractCrouching";
 
-int D_004BDD00[2] = { 0, 0 };
+int g_NoneWord[2] = { 0, 0 };

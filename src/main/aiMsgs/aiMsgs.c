@@ -355,7 +355,7 @@ extern char D_004DCD70[];
 #define D_004DCD70 ((char*)&D_004DCD70) /* merge_units */
 
 extern char D_004DCC30[];
-extern char D_004FF2C0[];
+extern char g_ScriptAIUnconsciousMsgKey[];
 extern unsigned char D_005721D0;
 extern unsigned char D_005723C8;
 #pragma push
@@ -370,7 +370,7 @@ int cAIUnconsciousMsg_NetReceive(int a0, int a1, int a2, Arg26F1D0* arg) {
         void* obj;
         Arg26F1D0* a = arg;
         Evt26F1D0* p = &e;
-        Event_Construct(p, D_004FF2C0);
+        Event_Construct(p, g_ScriptAIUnconsciousMsgKey);
         e.vt = D_004DCD70;
         e.whoId = a->whoId;
         p->who = Object_LookupById((int*)((char*)&e + 0x34) /* &e.whoId */);
@@ -1131,7 +1131,7 @@ extern char D_004DCD70[];
 #define D_004DCD70 ((char*)&D_004DCD70) /* merge_units */
 
 extern char D_004DCD30[];
-extern char D_004FF268[];
+extern char g_ScriptAIActivatedMsgKey[];
 #pragma push
 #pragma opt_propagation off
 /* Network receive handler for cAIActivatedMsg (registered by cAIActivatedMsg_NetRegister): rebuilds the
@@ -1144,7 +1144,7 @@ int cAIActivatedMsg_NetReceive(int a0, int a1, int a2, Arg270390* arg) {
         void* obj;
         Arg270390* a = arg;
         Evt270390* p = &e;
-        Event_Construct(p, D_004FF268);
+        Event_Construct(p, g_ScriptAIActivatedMsgKey);
         e.vt = D_004DCD70;
         e.whoId = a->whoId;
         p->who = Object_LookupById((int*)((char*)&e + 0x34) /* &e.whoId */);

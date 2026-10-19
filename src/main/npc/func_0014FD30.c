@@ -30,7 +30,7 @@ struct Self_S {
     char pad142[0x6A]; V4* target; int f1B0;
 };
 extern "C" {
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char g_NpcRouteMgr[];
 void* Service_Lookup(void* a, void* b);
 int NpcRoute_IsHeadPending(void* svc, GObj* id);
@@ -47,13 +47,13 @@ extern "C" unsigned char NpcAi_ApproachSearch(Self_S* self) {
     V4 pos;
     V4 tgt;
     unsigned char r = 0;
-    if (!NpcRoute_IsHeadPending(Service_Lookup(D_004FFB50, g_NpcRouteMgr), self->obj)) {
+    if (!NpcRoute_IsHeadPending(Service_Lookup(g_Game, g_NpcRouteMgr), self->obj)) {
         void* svc;
         float dist;
         GObj* o;
         NpcNodeSearch_SetQuery(self->f70, self->f74, e0, 0);
         { Mat m = self->obj->GetMatrix(); V4* d = &pos; Mat* pm = &m; V4* s = &pm->r[3]; __int128 x; asm { .set reorder; lq x, 0(s) } *(__int128*)d = x; } { V4* d = &tgt; *(__int128*)d = *(__int128*)self->target; }
-        svc = Service_Lookup(D_004FFB50, g_NpcRouteMgr);
+        svc = Service_Lookup(g_Game, g_NpcRouteMgr);
         {
             V4 d;
             V4 rr;

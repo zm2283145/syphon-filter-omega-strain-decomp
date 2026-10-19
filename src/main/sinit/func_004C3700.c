@@ -11,7 +11,7 @@ extern char Script_ResetStats[], Script_ResetLevel[];
 extern int D_004EA008, D_004EA010, D_004EA018, D_004EA058, D_004EA060, D_004EA068;
 extern int D_004EA070, D_004EA078, D_004EA080, D_004EA088, D_004EA090, D_004EA0A8;
 extern char* D_004EA098;
-extern char* D_004EA0B0;
+extern char* g_LosCheckService;
 extern char D_004EA0A0[];
 extern signed char D_004EA0C8;
 extern int Script_RegisterVariable();
@@ -53,7 +53,7 @@ void func_004C3700(void)
     D_004EA098 = "cNetAgentUpdateMsg";
     D_004EA0A8 = func_002824D0(func_0012F0D0, D_004EA0A0, "cNetAgentUpdateMsg");
     if (!D_004EA0C8) {
-        D_004EA0B0 = "LOS Manager";
+        g_LosCheckService = "LOS Manager";
         D_004EA0C8 = 1;
     }
 }

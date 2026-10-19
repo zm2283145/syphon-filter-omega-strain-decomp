@@ -5,8 +5,8 @@ struct Ctl_2B0F00 { VPAD16(a) VPAD2(b) VPAD1(c) virtual unsigned char IsPlayer()
 struct Hum_2B0F00 { char pad[0xC]; unsigned int flags; char pad10[0x48]; Ctl_2B0F00* ctl; };
 struct Msg_2B0F00 { void* vtable; char base[0x1C]; unsigned char b20; char pad21[3]; int f24; int f28; };
 extern "C" {
-extern unsigned char D_005721C8;
-extern char D_004FFB50[];
+extern unsigned char g_IsMultiplayer;
+extern char g_Game[];
 extern char D_0052ACD8[];
 extern char D_004DE630[];
 extern char D_004DCF10[];
@@ -17,14 +17,14 @@ void Event_Send(Msg_2B0F00* m, Hum_2B0F00* h, int a);
 void cMessage_dtor(Msg_2B0F00* m, int flags);
 }
 static inline unsigned char IsPlayer_2B0F00(Hum_2B0F00* h) { unsigned char r = 0; if (h->ctl && h->ctl->IsPlayer()) r = 1; return r; }
-static inline int LocalId_2B0F00(Hum_2B0F00* h) { int id; if (D_005721C8) { if (IsPlayer_2B0F00(h)) id = ((h->flags & 0x7F000000) >> 24) - 1; else id = -1; } else id = 0; return id; }
+static inline int LocalId_2B0F00(Hum_2B0F00* h) { int id; if (g_IsMultiplayer) { if (IsPlayer_2B0F00(h)) id = ((h->flags & 0x7F000000) >> 24) - 1; else id = -1; } else id = 0; return id; }
 extern "C" void Global_SetLocation(Hum_2B0F00* h, int key)
 {
     if (!h || LocalId_2B0F00(h) < 0 || LocalId_2B0F00(h) >= 4)
         return;
     key = Loc_FindKeyThunk(key);
-    Game_SetPlayerLocation(D_004FFB50, LocalId_2B0F00(h), key);
-    if (D_005721C8) {
+    Game_SetPlayerLocation(g_Game, LocalId_2B0F00(h), key);
+    if (g_IsMultiplayer) {
         Msg_2B0F00 m;
         Event_Construct(&m, D_0052ACD8);
         m.vtable = D_004DE630;

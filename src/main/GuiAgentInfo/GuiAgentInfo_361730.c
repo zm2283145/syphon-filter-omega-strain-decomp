@@ -103,7 +103,7 @@ int GuiAgentInfo_HandleInput(S_3617C0* o, Ev_3617C0* ev)
 #pragma push /* merge_units */
 /*
  * Matched functions (byte-identical with the retail executable).
- * GuiAgentInfo virtual (vtable D_004DF350 slot 2); calls the GuiWidget
+ * GuiAgentInfo virtual (vtable GuiAgentInfo_vtable slot 2); calls the GuiWidget
  * implementation GuiWidget_Deinit, then func_002C9C80(D_004FFC04, 0).
  */
 

@@ -15,7 +15,7 @@ int strlen(const char *);
 #pragma cplusplus on
 struct E337A0 { int id; int pad[4]; int val; };
 extern "C" {
-extern char D_00532B10[];
+extern char g_UnlockRows[];
 extern int D_00532B14;
 E337A0** func_003305C0(void* v);
 }
@@ -23,8 +23,8 @@ static inline bool Neq337A0(E337A0* a, E337A0* b) { return !(a == b); }
 extern "C" int Awards_ResolveUnlock(int id)
 {
     if (id > -1) {
-        E337A0* first = *func_003305C0(D_00532B10);
-        E337A0* last = *func_003305C0(D_00532B10) + D_00532B14;
+        E337A0* first = *func_003305C0(g_UnlockRows);
+        E337A0* last = *func_003305C0(g_UnlockRows) + D_00532B14;
         for (; Neq337A0(first, last); first++) {
             if (id == first->id)
                 return first->val;
@@ -152,8 +152,8 @@ typedef struct { void* vt; char pad04[0x18]; int x1C; signed char kind; char pad
 typedef struct { char pad0[4]; int magic; } Pt2_Tag;
 typedef struct { char pad0[0x30]; Pt2_Tag* tgt; } Pt2_Hud;
 typedef struct { char pad0[0x84]; unsigned int done[8]; unsigned int seen[8]; } Pt2_Agent;
-extern unsigned char D_005721C8;
-extern Pt2_Hud* D_004FFC0C;
+extern unsigned char g_IsMultiplayer;
+extern Pt2_Hud* g_LocalPlayer;
 extern char D_005329C0[];
 extern void Message_GetScriptTypeKey();
 extern void cNetAddObjectiveMsg_dtor();
@@ -184,7 +184,7 @@ void AgentData_SetObjectiveBit(Pt2_Agent* ag, char* name, int notify) {
     int idx = Objective_Find(StringPool_MakeKey(name));
     Pt2_SetBit(ag->done, idx);
     Pt2_SetBit(ag->seen, idx);
-    if (notify && D_005721C8 && D_004FFC0C && D_004FFC0C->tgt->magic == 0xBEBAAFDE) {
+    if (notify && g_IsMultiplayer && g_LocalPlayer && g_LocalPlayer->tgt->magic == 0xBEBAAFDE) {
         Msg_333B90 m;
         Msg_333B90* mp = &m;
         Event_Construct(mp, D_005329C0);
@@ -192,7 +192,7 @@ void AgentData_SetObjectiveBit(Pt2_Agent* ag, char* name, int notify) {
         mp->key = Loc_FindKeyThunk(name);
         mp->kind = 4;
         mp->x1C = 0x40;
-        Event_Send(mp, D_004FFC0C->tgt, 0);
+        Event_Send(mp, g_LocalPlayer->tgt, 0);
         m.vt = D_004DCF10;
         cMessage_dtor(mp, 0);
     }

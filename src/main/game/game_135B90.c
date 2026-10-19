@@ -89,7 +89,7 @@ typedef struct {
     char coll3C[0xC];
     int f48;
 } LosReceiver_f3;
-extern char D_004EA0B0[];
+extern char g_LosCheckService[];
 extern char D_004D90A0[];
 extern void Receiver_Construct(LosReceiver_f3* r, void* type);
 extern LosVec_f3* Vec4_GetZero(void);
@@ -101,7 +101,7 @@ LosReceiver_f3* LosReceiver_Construct(LosReceiver_f3* self, int arg)
 {
     LosQuery_f3 q;
     LosSub_f3* sub;
-    Receiver_Construct(self, D_004EA0B0);
+    Receiver_Construct(self, g_LosCheckService);
     self->vtable = D_004D90A0;
     Vec4_Assign(&q.from, Vec4_GetZero());
     Vec4_Assign(&q.to, Vec4_GetZero());

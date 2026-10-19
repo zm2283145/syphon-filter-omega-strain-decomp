@@ -3,7 +3,7 @@ typedef struct { __int128 q; } Q5600;
 typedef struct { unsigned char b0; float dist; char pad8[8]; Q5600 pos; Q5600 v; } E5600;
 typedef struct { int f0; int count; int max; int fC; E5600 e[6]; } G5600;
 typedef struct { int max; int pad4[3]; G5600 g[1]; } S5600;
-extern int D_005392D0;
+extern int g_DrawMode;
 #define IDX5600(s) (*(int*)((char*)(s) + 0x11768))
 static inline int Min5600(int a, int b) { int r; if (a < b) { r = a; asm { .set reorder } } else r = b; return r; }
 #pragma peephole on
@@ -12,7 +12,7 @@ static inline int Min5600(int a, int b) { int r; if (a < b) { r = a; asm { .set 
 
 void Shadow_AddGroundEntry(S5600* s, Q5600* pos, Q5600* v, float dist)
 {
-    if (D_005392D0 & 0x40) {
+    if (g_DrawMode & 0x40) {
         G5600* g;
         char* p;
         int lim, n, slot;

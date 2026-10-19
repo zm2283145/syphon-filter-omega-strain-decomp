@@ -1,12 +1,12 @@
 #ifndef NET_LOCAL_ID_H
 #define NET_LOCAL_ID_H
 /* Inlined "local player net id" helpers (lazily initialised id in D_00494178).
-   D_005721A8 is read before the D_005721C8 test: retail loads it ahead of the
+   D_005721A8 is read before the g_IsMultiplayer test: retail loads it ahead of the
    branch. Nested use (NetObjId) needs #pragma inline_depth(10) in the user. */
 extern int D_00494178;
 extern int D_005721A8;
 extern unsigned char D_005721C0;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 int NetGame_InitLocalSlot(int*, int);
 int func_002EBBA0(int, int*);
 
@@ -14,7 +14,7 @@ static inline int NetLocalId(void)
 {
     int r;
     int a = D_005721A8;
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, a);
         r = D_00494178;
     } else r = 0;
@@ -25,7 +25,7 @@ static inline int NetLocalId(void)
 static inline int NetObjId(void)
 {
     int id;
-    int ok = D_005721C8 ? D_005721C0 : 1;
+    int ok = g_IsMultiplayer ? D_005721C0 : 1;
     if (ok) {
         id = NetLocalId();
     } else {

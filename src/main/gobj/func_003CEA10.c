@@ -64,7 +64,7 @@ extern "C" MsgClass* Event_GetType(Msg* m);
 extern "C" signed char D_004E1D88;
 extern "C" V D_004E1D90;
 extern "C" MsgClass D_0055D4D8;
-extern "C" MsgClass D_0055D4E0;
+extern "C" MsgClass g_TeleportMsgClass;
 extern "C" MsgClass g_cEnableMsgClass;
 extern "C" MsgClass g_cDisableMsgClass;
 struct Obj;
@@ -101,7 +101,7 @@ extern "C" int Object_HandleMessage(Obj* obj, Msg* msg)
 {
     int t;
     t = Event_GetType(msg)->id;
-    if (t == D_0055D4D8.id || (t = Event_GetType(msg)->id, t == D_0055D4E0.id)) {
+    if (t == D_0055D4D8.id || (t = Event_GetType(msg)->id, t == g_TeleportMsgClass.id)) {
         if (obj->xf) {
         if (!D_004E1D88) {
             D_004E1D90.x = 0;
@@ -141,7 +141,7 @@ extern "C" int Object_HandleMessage(Obj* obj, Msg* msg)
             break;
         }
         t = Event_GetType(msg)->id;
-        if (t == D_0055D4E0.id) {
+        if (t == g_TeleportMsgClass.id) {
             if (obj->NodeH) {
                 Xf* x = obj->xf;
                 if (x) {

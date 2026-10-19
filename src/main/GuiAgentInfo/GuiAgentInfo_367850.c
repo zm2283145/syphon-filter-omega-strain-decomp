@@ -46,7 +46,7 @@ void func_00367860(V3678* v)
 struct V3 { float x, y, z; } __attribute__((aligned(16)));
 struct S364590 { void* vtable; char pad4[0x44]; int unk48; char pad4C[0x34]; V3 v80; char pad90[0x4E0 - 0x90]; float f4E0; };
 extern "C" {
-char D_004DF530[];
+char GuiAgentDisplay_vtable[];
 char D_004BBB00[];
 void GuiWidget_ctor(S364590* self);
 void* Mem_Alloc(int pool, int size, char* file, int line);
@@ -64,7 +64,7 @@ extern "C" S364590* func_003678E0(void) {
         __int128 q;
         V3* d;
         GuiWidget_ctor(p);
-        p->vtable = D_004DF530;
+        p->vtable = GuiAgentDisplay_vtable;
         t.x = 0.0f; t.y = 0.0f; t.z = 3.1415927f;
         d = &p->v80;
         q = V4Load(&t);

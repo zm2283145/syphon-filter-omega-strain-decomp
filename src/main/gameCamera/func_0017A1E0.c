@@ -74,14 +74,14 @@ struct Slot { char pad[0x2E4]; float f2E4; int pad2E8; float f2EC; float f2F0; c
 struct Rs { char pad[0xA80]; Mq mtx[1]; };
 extern "C" {
 extern Holder* D_004FFBD4;
-extern char D_005435A0[];
+extern char g_LosRequestMsgClass[];
 extern char D_004D9180[];
-extern char D_004FFB50[];
-extern char D_004EA0B0[];
+extern char g_Game[];
+extern char g_LosCheckService[];
 void Event_Construct(void*, void*);
 void cMessage_dtor(void*, int);
 Svc* Service_Lookup(void* a, void* b);
-extern char D_005381F0[];
+extern char g_Video[];
 extern int D_00538C60;
 extern int D_00538C64;
 extern char D_00538C68;
@@ -108,7 +108,7 @@ struct LosMsg : MsgB {
     LosMsg(LosRes* r, const V& f, const V& d, void* o, int mask)
     {
         LosMsg* m = this;
-        Event_Construct(m, D_005435A0);
+        Event_Construct(m, g_LosRequestMsgClass);
         m->vtable = D_004D9180;
         m->x24 = 0;
         m->x28 = 0;
@@ -125,10 +125,10 @@ struct LosMsg : MsgB {
     __declspec(weak) __declspec(MSG_DTOR) ~LosMsg() { vtable = D_004D9180; }
 };
 
-#define RS ((Rs*)D_005381F0)
-#define SLOT(i) ((Slot*)(D_005381F0 + (i) * 0x110))
+#define RS ((Rs*)g_Video)
+#define SLOT(i) ((Slot*)(g_Video + (i) * 0x110))
 
-static inline void SetFog(Cam* c, float b) { Fog* fg = D_004FFBD4->fog; float fx = fg->x64; float fa = c->x60; int i = D_00538C60; char* base = D_005381F0; Slot* s = (Slot*)(base + i * 0x110); s->f2F0 = fa; s->f2E4 = b; s->f2EC = 12.0f + fx; s->f2F6 = 1; s->f2F4 = 0; }
+static inline void SetFog(Cam* c, float b) { Fog* fg = D_004FFBD4->fog; float fx = fg->x64; float fa = c->x60; int i = D_00538C60; char* base = g_Video; Slot* s = (Slot*)(base + i * 0x110); s->f2F0 = fa; s->f2E4 = b; s->f2EC = 12.0f + fx; s->f2F6 = 1; s->f2F4 = 0; }
 // 64-byte quadword copy (lq/sq pairs)
 static inline void QR(void* d, void* s) { __int128 qa, qb; __asm__ volatile("lq %0, 0x0(%3); lq %1, 0x10(%3); sq %0, 0x0(%2); lq %0, 0x20(%3); sq %1, 0x10(%2); lq %1, 0x30(%3); sq %0, 0x20(%2); sq %1, 0x30(%2)" : "=&r"(qa), "=&r"(qb) : "r"(d), "r"(s) : "memory"); }
 
@@ -144,7 +144,7 @@ bool func_0017A1E0(Cam* c, Tgt* t)
     SetTop(Transform_GetInverseMatrix(Camera_GetNode(c)));
     D_00538C68 = 1;
     V p = t->GetPos();
-    if ((unsigned char)func_00379EA0(D_005381F0, &p)) {
+    if ((unsigned char)func_00379EA0(g_Video, &p)) {
         LosRes res;
         M m = c->node->Mtx();
         V eye = m.r3;
@@ -153,7 +153,7 @@ bool func_0017A1E0(Cam* c, Tgt* t)
         eye += dir * 2.0f / len;
         {
             LosMsg msg(&res, eye, dir, t, 4);
-            Service_Lookup(D_004FFB50, D_004EA0B0)->Post(&msg);
+            Service_Lookup(g_Game, g_LosCheckService)->Post(&msg);
             if (!res.hit) vis = 1;
         }
     }

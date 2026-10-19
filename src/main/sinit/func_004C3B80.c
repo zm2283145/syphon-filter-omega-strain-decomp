@@ -1,5 +1,5 @@
 #include "types.h"
-extern char D_004EA190[];
+extern char g_NpcThinkList[];
 extern char func_0015BE20[];
 extern char D_004EA180[];
 extern char D_004EA1B0[];
@@ -10,7 +10,7 @@ extern char func_00158B10[];
 extern char func_0015BD60[];
 extern char func_0015BD40[];
 extern char D_004EA1C0[];
-extern char D_004EA370[];
+extern char g_NpcDeadList[];
 extern char func_0015BCE0[];
 extern char D_004EA360[];
 extern char WorthShootingThreshold;
@@ -249,7 +249,7 @@ extern int D_004EA750;
 extern char Script_ResetNpc[];
 extern int D_004EA758;
 extern signed char D_004EA0C8;
-extern char* D_004EA0B0;
+extern char* g_LosCheckService;
 extern int ScalarCollection_Init();
 extern int __register_global_object();
 extern int __construct_array();
@@ -263,14 +263,14 @@ extern int func_0015C130();
 extern int func_0016FE40();
 void func_004C3B80(void)
 {
-    ScalarCollection_Init(D_004EA190);
-    __register_global_object(D_004EA190, func_0015BE20, D_004EA180);
+    ScalarCollection_Init(g_NpcThinkList);
+    __register_global_object(g_NpcThinkList, func_0015BE20, D_004EA180);
     ScalarCollection_Init(D_004EA1B0);
     __register_global_object(D_004EA1B0, func_0015BDC0, D_004EA1A0);
     __construct_array(D_004EA1D0, func_00158B10, func_0015BD60, 0x18, 0x10);
     __register_global_object(0, func_0015BD40, D_004EA1C0);
-    ScalarCollection_Init(D_004EA370);
-    __register_global_object(D_004EA370, func_0015BCE0, D_004EA360);
+    ScalarCollection_Init(g_NpcDeadList);
+    __register_global_object(g_NpcDeadList, func_0015BCE0, D_004EA360);
     D_004EA390 = Script_RegisterVariable("WorthShootingThreshold", (int)&WorthShootingThreshold, D_00493890);
     D_004EA398 = Script_RegisterNative_2(Script_LosCam, D_00493880, "LosCam", 3, cGOBJ_GetScriptTypeKeyPtr(), cGOBJ_GetScriptTypeKeyPtr(), D_00493890);
     D_004EA3D0 = Script_RegisterType("cAIModeChangeMsg", func_0014A6F0, 1, 0);
@@ -388,7 +388,7 @@ void func_004C3B80(void)
     D_004EA750 = Script_RegisterNative(D_004EA3F0, Script_cNPC_Follow, D_00493880, "Follow", 4, &D_004EA3F0, cGOBJ_GetScriptTypeKeyPtr(), D_00493890, D_00493890);
     D_004EA758 = Script_RegisterNative_2(Script_ResetNpc, D_00493880, "ResetNpc", 1, &D_004EA3F0);
     if (!D_004EA0C8) {
-    D_004EA0B0 = "LOS Manager";
+    g_LosCheckService = "LOS Manager";
     D_004EA0C8 = 1;
     }
 }

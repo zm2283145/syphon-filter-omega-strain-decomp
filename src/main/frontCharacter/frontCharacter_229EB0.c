@@ -29,8 +29,8 @@ int Hog_Unload(...);
 int func_003B62E0(...);                            
 int func_00404FD0(...);                            
 extern int D_004F77A0;
-extern unsigned char D_00533880;
-extern char D_0055DDA0;
+extern unsigned char g_ProfileLockEnabled;
+extern char g_AgentPartCache;
 extern int D_005712F0;
 extern int D_005712F4;
 }
@@ -43,7 +43,7 @@ extern "C" void func_00229EB0(char * arg0) {
     char * temp_a0_4;
     char * temp_a0_5;
 
-    func_00404FD0(&D_0055DDA0, -1);
+    func_00404FD0(&g_AgentPartCache, -1);
     D_005712F0 = 0;
     D_005712F4 = 0;
     temp_a0 = (char *)(F_(arg0, 0x4, int));

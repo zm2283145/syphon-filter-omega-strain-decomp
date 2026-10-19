@@ -24,7 +24,7 @@ typedef struct {
     unsigned char count; /* 0x26 */
     unsigned char added; /* 0x27 */
 } InvMsg_h5;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern char D_00587FC0[];
 extern char D_004E1AC0[];
 extern char D_004DCF10[];
@@ -49,7 +49,7 @@ void ItemInv_Add(Inventory_h5* inv, int item, int n, int silent)
     pair.item = item;
     pair.count = n;
     ItemInv_AppendPair(inv, &inv->data[inv->size], 1, &pair);
-    if (D_005721C8 && !silent) {
+    if (g_IsMultiplayer && !silent) {
         InvMsg_h5 msg;
         Event_Construct(&msg, D_00587FC0);
         msg.vtable = D_004E1AC0;

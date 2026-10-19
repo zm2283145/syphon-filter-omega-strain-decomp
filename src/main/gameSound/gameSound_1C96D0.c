@@ -47,7 +47,7 @@ extern int snd_FlushSoundCommands(void);
 extern void ArchiveList_CloseNamed(void* a, char* name);
 extern char D_0048B2F8[];
 extern char D_004FFB8C[];
-extern char D_004FFC90[];
+extern char g_LevelDirName[];
 extern char D_0049F550[];
 extern char D_0049F570[];
 extern char D_0049F590[];
@@ -88,9 +88,9 @@ void SoundMgr_UnloadLevel(char* arg0) {
     char b[0x80];
     char c[0x80];
     char* fs = D_004FFB8C;
-    sprintf(a, D_0049F550, D_0048B2F8, D_004FFC90);
+    sprintf(a, D_0049F550, D_0048B2F8, g_LevelDirName);
     sprintf(b, D_0049F570);
-    sprintf(c, D_0049F590, D_004FFC90);
+    sprintf(c, D_0049F590, g_LevelDirName);
     ArchiveList_CloseNamed(fs, a);
     ArchiveList_CloseNamed(fs, b);
     ArchiveList_CloseNamed(fs, c);
@@ -138,8 +138,8 @@ int SoundMgr_LoadLevel(char* arg0) {
     func_003A7330(1, 0, 1);
     func_003A7330(2, 2, 2);
     func_003A7330(0xE, 2, 2);
-    sprintf(snd, "%s\\%s\\SND.HOG", D_0048B2F8, D_004FFC90);
-    sprintf(vag, "%s\\%s\\SNDVAG.HOG%s", D_0048B2F8, D_004FFC90, Loc_GetLanguageSuffix());
+    sprintf(snd, "%s\\%s\\SND.HOG", D_0048B2F8, g_LevelDirName);
+    sprintf(vag, "%s\\%s\\SNDVAG.HOG%s", D_0048B2F8, g_LevelDirName, Loc_GetLanguageSuffix());
     sprintf(vagloc, "ZMEDIA\\SNDVAG%s.HOG", Loc_GetLanguageSuffix());
     sprintf(music, D_0049F590);
     arc = Archive_Open(fs, snd, 1, 0);
@@ -182,7 +182,7 @@ int Global_SetReverb(int, int, int);
 int func_003A6D10(int, int);                              
 int snd_SetPlaybackMode(int, int);                          
 int snd_SetMasterVolumeDucker(int, int *);                          
-extern char * D_004FFD2C;
+extern char * g_OptionsRecord;
 
 void SoundMgr_Init(char * arg0) {
     struct { int f10; int f14; int f18; int f1C; int f20; int f24[3]; } sl;
@@ -223,7 +223,7 @@ void SoundMgr_Init(char * arg0) {
     F_(temp_v0, 0x90, int) = 0;
     F_(temp_v0, 0x244, signed char) = 0;
     F_(temp_v0, 0x240, int) = 0;
-    snd_SetPlaybackMode(F_(D_004FFD2C, 0x14, int), var_a1);
+    snd_SetPlaybackMode(F_(g_OptionsRecord, 0x14, int), var_a1);
     func_003A6D10(1, 4);
     Global_SetReverb(1, 0xB21, 0xB21);
     sl.f10 = 2;
@@ -247,7 +247,7 @@ int* Event_GetType(void* msg);
 extern int D_004F5370;
 extern int D_004F5378;
 extern int D_005436B0;
-extern int D_004F53B8;
+extern int g_PlaySndMsgClass;
 extern int D_004F53C8;
 extern int D_004F53D8;
 extern int D_004F53E8;
@@ -278,7 +278,7 @@ extern "C" unsigned char SoundMgr_OnMessage(void* self, Msg* msg)
         SoundMgr_LoadLevel(self);
     } else if (t = *Event_GetType(msg), t == D_005436B0) {
         SoundMgr_Frame(self);
-    } else if (t = *Event_GetType(msg), t == D_004F53B8) {
+    } else if (t = *Event_GetType(msg), t == g_PlaySndMsgClass) {
         SoundMgr_ProcessAction(self, msg->data);
     } else if (t = *Event_GetType(msg), t == D_004F53C8) {
         SoundMgr_ProcessAction(self, msg->data);

@@ -45,13 +45,13 @@ typedef struct {
     MC_File sub0;
 } MC_State;
 extern "C" {
-extern unsigned char D_00533880;
-extern int D_00533888;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
 void Alloc_Lock(int id);
 void Alloc_Unlock(int id);
 extern char D_004BE7F0[];
 extern char D_004BE830[];
-extern int D_00539248;
+extern int g_TextureMgr;
 extern int D_00571300;
 void Libc_Strcat(char* d, char* s);
 void Resource_Construct(MC_File* f);
@@ -101,11 +101,11 @@ MC_State* func_00404FD0(MC_State* s, short del)
                 MC_Tex* t = (MC_Tex*)((char*)s->tex + i * 4);
                 int b = t->b;
                 if (b != t->a)
-                    Tex_Release(D_00539248, b, 0);
+                    Tex_Release(g_TextureMgr, b, 0);
             }
             {
                 /* loading the library first orders lui before the index add */
-                int lib = D_00539248;
+                int lib = g_TextureMgr;
                 Tex_Release(lib, s->tex[i].a, 0);
             }
         }
@@ -113,27 +113,27 @@ MC_State* func_00404FD0(MC_State* s, short del)
         s->texD0 = 0;
         p = s->bufD4;
         if (p) {
-            if (D_00533880) Alloc_Lock(9);
-            D_00533888++;
+            if (g_ProfileLockEnabled) Alloc_Lock(9);
+            g_ProfileLockDepth++;
             Mem_Free(0, p, D_004BE7F0, 0x52C);
-            if (D_00533880) Alloc_Unlock(9);
-            D_00533888--;
+            if (g_ProfileLockEnabled) Alloc_Unlock(9);
+            g_ProfileLockDepth--;
             p = s->bufD8;
-            if (D_00533880) Alloc_Lock(9);
-            D_00533888++;
+            if (g_ProfileLockEnabled) Alloc_Lock(9);
+            g_ProfileLockDepth++;
             Mem_Free(0, p, D_004BE7F0, 0x52D);
-            if (D_00533880) Alloc_Unlock(9);
-            D_00533888--;
+            if (g_ProfileLockEnabled) Alloc_Unlock(9);
+            g_ProfileLockDepth--;
             s->bufD4 = 0;
             s->bufD8 = 0;
         }
         if (s->hasE8) {
             p = s->bufE8;
-            if (D_00533880) Alloc_Lock(9);
-            D_00533888++;
+            if (g_ProfileLockEnabled) Alloc_Lock(9);
+            g_ProfileLockDepth++;
             Mem_Free(0, p, D_004BE7F0, 0x532);
-            if (D_00533880) Alloc_Unlock(9);
-            D_00533888--;
+            if (g_ProfileLockEnabled) Alloc_Unlock(9);
+            g_ProfileLockDepth--;
         }
         s->bufE8 = 0;
         s->hasE8 = 0;

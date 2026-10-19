@@ -69,18 +69,18 @@ struct Manager {
     virtual void Method68(void* obj); /* +0x68 */
 };
 
-extern void* D_004FFC2C;
-extern char D_004FFB50[];
+extern void* g_Hud;
+extern char g_Game[];
 extern "C" Manager* Gui_GetScreenStack(void);
 extern "C" void Hud_ClosePauseMenu(void* p);
 extern "C" void Game_SetPaused(void* p, int n);
 
-/* Hands self to the manager (virtual +0x68), then Hud_ClosePauseMenu(D_004FFC2C) and Game_SetPaused(D_004FFB50, 0). */
+/* Hands self to the manager (virtual +0x68), then Hud_ClosePauseMenu(g_Hud) and Game_SetPaused(g_Game, 0). */
 extern "C" void GuiStartMenu_CloseAll(void* self)
 {
     Gui_GetScreenStack()->Method68(self);
-    Hud_ClosePauseMenu(D_004FFC2C);
-    Game_SetPaused(D_004FFB50, 0);
+    Hud_ClosePauseMenu(g_Hud);
+    Game_SetPaused(g_Game, 0);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00456100 */

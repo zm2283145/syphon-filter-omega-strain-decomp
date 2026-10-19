@@ -35,7 +35,7 @@ typedef struct EffectMsg {
     char partB[0xAC];
 } EffectMsg;
 
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_004F2CC0[];
 extern char D_004DAE30[];
 extern char* D_0048C148[];
@@ -60,7 +60,7 @@ void FrontEnd_SetMusic(char* self, unsigned char kind) {
     int target;
 
     if (*(int*)(self + 0x30C) != kind) {
-        target = Service_Lookup(D_004FFB50, D_004F2CC0);
+        target = Service_Lookup(g_Game, D_004F2CC0);
         SoundRequest_Ctor(&req, 5, D_0048C148[kind], 0, 0);
         EffectMsg_WrapRequest(&msg, &req);
         FileMan_Release(req.partB, -1);

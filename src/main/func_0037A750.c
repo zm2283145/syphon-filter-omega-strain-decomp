@@ -41,8 +41,8 @@ extern void Video_FreeDeferredBuffers(GsCtx37A750*, int);
 extern void Video_RollFrameStats(GsCtx37A750*);
 extern void func_003820C0(int);
 extern char D_00537F80[];
-extern int D_00533870;
-extern s64 D_00533878;
+extern int g_TimerAccum;
+extern s64 g_TickCounter64;
 
 #define GS_FRAME(fbp, fbw, psm, fbmsk) ((u64)(fbp) | ((u64)(fbw) << 16) | ((u64)(psm) << 24) | ((u64)(fbmsk) << 32))
 #define GS_ZBUF(zbp, psm, zmsk) ((u64)(zbp) | ((u64)(psm) << 24) | ((u64)(zmsk) << 32))
@@ -80,10 +80,10 @@ void Video_FrameFlag8(GsCtx37A750* c)
     GsCtx_SetBufferRegs(c, c->w, c->h, c->psm, c->fbp[c->buf], c->fbmsk, c->zpsm, c->zbp, c->zmsk, c->field);
     ((unsigned char*)c)[c->slot * 0x110 + 0x2F6] = 1;
     func_003820C0(c->dev);
-    t = *(volatile int*)0x10000800 + D_00533870;
-    D_00533878 += (int)((float)t / 5.76f);
+    t = *(volatile int*)0x10000800 + g_TimerAccum;
+    g_TickCounter64 += (int)((float)t / 5.76f);
     *(volatile int*)0x10000800 = 0;
     *(volatile int*)0x10000810 = 0x82;
-    D_00533870 = 0;
+    g_TimerAccum = 0;
 }
 

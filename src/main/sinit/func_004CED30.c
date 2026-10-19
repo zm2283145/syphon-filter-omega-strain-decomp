@@ -1,6 +1,6 @@
 #include "types.h"
 extern char* D_004F7930;
-extern char* D_004F7938;
+extern char* g_NotifyCheckpointMsgClass;
 extern char* D_004F7940;
 extern char* D_004F7980;
 extern int D_004F7968, D_004F7988, D_004F7990, D_004F7998, D_004F79A0, D_004F79A8, D_004F79B0, D_004F79B8, D_004F79C0, D_004F79C8, D_004F79D0, D_004F79D8;
@@ -20,7 +20,7 @@ extern int* Checkpoint_GetScriptTypeKeyPtr(void);
 void func_004CED30(void)
 {
     D_004F7930 = "MSGGAME_ADD_CHECKPOINT";
-    D_004F7938 = "MSGGAME_NOTIFY_CHECKPOINT";
+    g_NotifyCheckpointMsgClass = "MSGGAME_NOTIFY_CHECKPOINT";
     D_004F7940 = "MSGGAME_RESPAWN";
     D_004F7968 = Script_RegisterNative_2(Script_SetCheckpointFont, D_00493880, "SetCheckpointFont", 1, D_004EE538);
     D_004F7980 = "CHKP";

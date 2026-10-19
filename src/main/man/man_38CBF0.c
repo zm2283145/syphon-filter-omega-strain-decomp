@@ -46,7 +46,7 @@ extern void* func_0036E140(void* entry, const char* name, int a, int b);
 extern int Fstream_GetLoader(void);
 extern int Fstream_ReleaseNoCallback(int mgr, void* entry, int flag);
 extern void Tex_Release(int mgr, int handle, int flags);
-extern int D_00539248;
+extern int g_TextureMgr;
 typedef struct {
     char name[0x3C0];
     short cur[8];
@@ -72,7 +72,7 @@ void ActorModel_Release(Cc70Obj* self)
     if (self->state < 0) {
         self->state = -2;
     } else {
-        int mgr = D_00539248;
+        int mgr = g_TextureMgr;
         int i;
         for (i = 0; i < self->count; i++) {
             if (self->cur[i] != self->prev[i]) Tex_Release(mgr, self->prev[i], 0);

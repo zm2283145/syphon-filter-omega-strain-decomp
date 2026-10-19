@@ -13,9 +13,9 @@ int strlen(const char*);
 extern char D_004BC170;
 extern char D_004BC180;
 extern char D_004BC190;
-extern unsigned char D_00533880;
-extern int D_00533888;
-extern int D_00539248;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
+extern int g_TextureMgr;
 
 typedef struct {
     int pad0;
@@ -43,25 +43,25 @@ void Model_BindTextures(Mdl* self, int arg1) {
     int i;
 
     size = self->desc->count * 2;
-    if (D_00533880 != 0) {
+    if (g_ProfileLockEnabled != 0) {
         Alloc_Lock(9);
     }
-    D_00533888 += 1;
+    g_ProfileLockDepth += 1;
     ids = Mem_Alloc(0, size, &D_004BC170, 0x131);
-    if (D_00533880 != 0) {
+    if (g_ProfileLockEnabled != 0) {
         Alloc_Unlock(9);
     }
-    D_00533888 -= 1;
+    g_ProfileLockDepth -= 1;
     self->ids = ids;
     s = self->desc->names;
     for (i = 0; i < self->desc->count; i++) {
         Resource_Construct(name);
         sprintf(buf, &D_004BC180, s);
         func_0036DFB0(name, buf, arg1);
-        self->ids[i] = TexMan_FindOrLoad(D_00539248, name);
+        self->ids[i] = TexMan_FindOrLoad(g_TextureMgr, name);
         if (self->ids[i] == -1) {
             func_0036E140(name, &D_004BC190, 0, 0);
-            self->ids[i] = TexMan_FindOrLoad(D_00539248, name);
+            self->ids[i] = TexMan_FindOrLoad(g_TextureMgr, name);
         }
         s += strlen(s) + 1;
         FileMan_Release(name, -1);

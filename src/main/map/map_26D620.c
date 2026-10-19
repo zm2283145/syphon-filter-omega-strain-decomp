@@ -59,7 +59,7 @@ static inline void merge_flush_func_0026D620(void) {}
 typedef struct { char pad[0xC]; int c; } C_D6D0;
 typedef struct { char pad[0x30]; C_D6D0* p30; } B_D6D0;
 typedef struct { char pad[0x60]; int t60; int t64; char pad68[8]; __int128 q70; __int128 q80; char pad90[4]; int x94; } A_D6D0;
-extern B_D6D0* D_004FFC0C;
+extern B_D6D0* g_LocalPlayer;
 static inline int* ref_D6D0(C_D6D0* c) { return &c->c; }
 #pragma push
 #pragma peephole off
@@ -70,7 +70,7 @@ void HudMap_Release(A_D6D0* a) {
     d = &a->q80; s = &a->q70;
     a->t64 = a->t60;
     *d = *s;
-    { int* pc = &D_004FFC0C->p30->c; a->t60 = *pc; }
+    { int* pc = &g_LocalPlayer->p30->c; a->t60 = *pc; }
 }
 #pragma pop
 /* merge_units: generate this block's code under its own pragmas */

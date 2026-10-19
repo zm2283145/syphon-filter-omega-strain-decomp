@@ -16,14 +16,14 @@
  */
 
 
-extern char D_0049D010[];
+extern char g_HumanActorClassKey[];
 
 int func_00185060(char* self, int* key) {
     return *(int*)(self + 76) == *key;
 }
 
 void* func_00185080(void) {
-    return D_0049D010;
+    return g_HumanActorClassKey;
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00185060(void) {}

@@ -8,7 +8,7 @@
  *   DEFINE_TIMED_RETRY(name, idxOff, subOff, baseUpdate)
  * The timer float sits at subOff + 0x10. Declare baseUpdate before use.
  */
-extern char D_004FFB50[];
+extern char g_Game[];
 extern int Service_Lookup(char*, int);
 extern int SoundMgr_IsQuipPlaying(int, int);
 extern void VoiceQueue_Fire(char*);
@@ -19,7 +19,7 @@ extern int func_00461250(void);
 #define DEFINE_TIMED_RETRY(name, idxOff, subOff, baseUpdate)                         \
     void name(char* self, float dt)                                                  \
     {                                                                                \
-        int svc = Service_Lookup(D_004FFB50, func_00461250());                       \
+        int svc = Service_Lookup(g_Game, func_00461250());                       \
         int idx = *(int*)(self + (idxOff));                                          \
         if (idx < func_00461240(self + (subOff))) {                                  \
             if (idx == 0 || !SoundMgr_IsQuipPlaying(svc, func_00461220(self + (subOff), idx - 1))) { \

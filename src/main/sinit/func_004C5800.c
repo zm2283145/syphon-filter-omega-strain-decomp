@@ -7,7 +7,7 @@ extern char* g_NpcRouteMgr;
 extern char* D_004ED9B8;
 extern int D_004EE010;
 extern signed char D_004EA0C8;
-extern char* D_004EA0B0;
+extern char* g_LosCheckService;
 extern void __construct_array(void* arr, void* ctor, void* dtor, int size, int n);
 extern void __register_global_object(void* obj, void* dtor, void* link);
 extern void func_001640B0(void* p, int a, int b);
@@ -35,7 +35,7 @@ void func_004C5800(void)
     cNode_ctor2(D_004EE130, 1, -1, 0, 0.0f, 0.0f, 0.0f);
     __register_global_object(D_004EE130, cNode_dtor, D_004EE120);
     if (!D_004EA0C8) {
-        D_004EA0B0 = "LOS Manager";
+        g_LosCheckService = "LOS Manager";
         D_004EA0C8 = 1;
     }
 }

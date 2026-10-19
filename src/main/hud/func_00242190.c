@@ -12,7 +12,7 @@ extern int WeaponInv_GetSpare(I242*, int);
 extern int WeaponInv_HasAmmoText(I242*, int);
 extern int WeaponInv_GetClip(I242*, int);
 extern int sprintf(char*, const char*, ...);
-extern int D_004FFD30;
+extern int g_WeaponDatabase;
 extern W242* WeaponDb_Get(int, int);
 void Hud_UpdateAmmoText(H242* h, P242* p) {
     char buf[0x20];
@@ -37,7 +37,7 @@ void Hud_UpdateAmmoText(H242* h, P242* p) {
         }
     }
     IeElement_SetText(h->f69c, buf);
-    w = WeaponDb_Get(D_004FFD30, id);
+    w = WeaponDb_Get(g_WeaponDatabase, id);
     if (w->bf0 == 7) {
         h->f694 = w->f11c;
         h->b698 = 7;

@@ -6,7 +6,7 @@ static inline void GQR(void* d, const void* s) { __int128 qa, qb; __asm__ volati
 extern "C" {
 extern char D_004DF6A0[];
 extern char D_004DF640[];
-extern M4 D_0055C9F0;
+extern M4 g_IdentityMatrix;
 }
 struct R { int a, b, c; unsigned char own; };
 extern "C" R* func_0036FCD0(R* r);
@@ -30,11 +30,11 @@ extern "C" X* Xform_Construct(X* x0)
     const M4* s;
     M4* d;
     x->vt = D_004DF6A0;
-    s = &D_0055C9F0; d = &x->m; GQR(d, s);
+    s = &g_IdentityMatrix; d = &x->m; GQR(d, s);
     x->dirty = 1;
     x->vt = D_004DF640;
     void* xx = &x->w; /* dead on purpose: retail keeps this addiu */
-    s2 = &D_0055C9F0; d2 = &x->w; GQR(d2, s2);
+    s2 = &g_IdentityMatrix; d2 = &x->w; GQR(d2, s2);
     x->a0 = 0;
     r = &x->rel; func_0036FCD0(r); r->own = 1;
     return x;

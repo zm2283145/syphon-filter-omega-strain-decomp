@@ -40,9 +40,9 @@ extern int D_004EE4E8;
 extern int D_004EE500;
 extern int D_004EE508;
 extern char D_004FFB8C;
-extern unsigned char D_00533880;
-extern int D_00533888;
-extern int D_00539248;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
+extern int g_TextureMgr;
 
 typedef struct { char p0[0x148]; int *f148; unsigned char f14C; } M270_00166190;
 typedef struct { char p0[624]; M270_00166190 *f270; int f274; } PS0_00166190;
@@ -67,30 +67,30 @@ void App_Teardown(PS0_00166190 *arg0) {
         D_004EE508 = 0;
         D_0048A058 = -1;
         h = D_004EE4E8;
-        if (D_00533880 != 0) {
+        if (g_ProfileLockEnabled != 0) {
             Alloc_Lock(9);
         }
-        D_00533888 += 1;
+        g_ProfileLockDepth += 1;
         Mem_Free(0, h, &D_0049C390, 0x7F3);
-        if (D_00533880 != 0) {
+        if (g_ProfileLockEnabled != 0) {
             Alloc_Unlock(9);
         }
         D_004EE4E8 = 0;
-        D_00533888 -= 1;
+        g_ProfileLockDepth -= 1;
         ChangeThreadPriority(D_0048A048, 5);
         if (arg0->f274 != 0) {
             LoadingScreen_Release(arg0->f274);
             h = arg0->f274;
-            if (D_00533880 != 0) {
+            if (g_ProfileLockEnabled != 0) {
                 Alloc_Lock(9);
             }
-            D_00533888 += 1;
+            g_ProfileLockDepth += 1;
             LoadingScreen_dtor(h, -1);
             Mem_Free(0, h, &D_0049C390, 0x7FD);
-            if (D_00533880 != 0) {
+            if (g_ProfileLockEnabled != 0) {
                 Alloc_Unlock(9);
             }
-            D_00533888 -= 1;
+            g_ProfileLockDepth -= 1;
             arg0->f274 = 0;
         }
         if (arg0->f270->f14C != 0) {
@@ -100,7 +100,7 @@ void App_Teardown(PS0_00166190 *arg0) {
                 M270_00166190 *m = arg0->f270;
                 Hog_Register((char *)sp50, Archive_GetMemberName((char *)m, i), (char *)m, 0);
                 FileMan_FindMember((char *)sp50);
-                func_003816F0(D_00539248, (char *)sp50);
+                func_003816F0(g_TextureMgr, (char *)sp50);
             }
             ArchiveList_CloseNamed(&D_004FFB8C, (char *)arg0->f270);
             FileMan_Release((char *)sp50, -1);
@@ -133,7 +133,7 @@ extern int D_004EE4D0;
 extern signed char D_004EE4D8;
 extern int D_004EE510;
 extern int D_004EE518;
-extern char D_004FFC90;
+extern char g_LevelDirName;
 extern char LoadingScreen_ThreadMain;
 
 typedef struct { char p0[624]; int f270; int f274; char p278[8]; int f280; } PS0_00166430;
@@ -148,15 +148,15 @@ void LoadingScreen_Start(PS0_00166430 *arg0, int d1, int arg2) {
         if (!(FileMan_FindMember(spC0) & 0xFF)) {
             Archive_Open(&D_004FFB8C, arg2, 0, 1);
             arg0->f270 = func_003F9600(&D_004FFB8C, arg2);
-            if (D_00533880 != 0) {
+            if (g_ProfileLockEnabled != 0) {
                 Alloc_Lock(9);
             }
-            D_00533888 += 1;
+            g_ProfileLockDepth += 1;
             var_s2 = Mem_Alloc(0, 0x3C, &D_0049C390, 0x7A9);
-            if (D_00533880 != 0) {
+            if (g_ProfileLockEnabled != 0) {
                 Alloc_Unlock(9);
             }
-            D_00533888 -= 1;
+            g_ProfileLockDepth -= 1;
             if (var_s2 != 0) {
                 var_s2 = LoadingScreen_ctor(var_s2, arg0->f270, "loading_screen");
             }
@@ -174,7 +174,7 @@ void LoadingScreen_Start(PS0_00166430 *arg0, int d1, int arg2) {
         LoadingScreen_StartThread(&LoadingScreen_ThreadMain);
     }
     LoadingScreen_InstallVblank();
-    sprintf(sp40, "%s_LOADINGFRAMES", &D_004FFC90);
+    sprintf(sp40, "%s_LOADINGFRAMES", &g_LevelDirName);
     temp_v0 = GameIni_GetString(sp40);
     if ((temp_v0 == NULL) || (*temp_v0 == 0)) {
         D_004EE4D8 = 0;

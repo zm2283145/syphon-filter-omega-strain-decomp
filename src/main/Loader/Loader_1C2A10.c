@@ -133,7 +133,7 @@ struct Level_1C2CB0 { char pad[0xC]; TerList_1C2CB0* ters; };
 extern "C" {
 extern char D_0049F018[];
 extern char D_0048B2F8[];
-extern char D_004FFC90[];
+extern char g_LevelDirName[];
 extern void* D_004FFD48;
 #if 0 /* merge_units */
 int Pop_FindTag(PopReader_1C2CB0* r, int tag);
@@ -159,7 +159,7 @@ extern "C" void Pop_LoadTER(Level_1C2CB0* l, void* a1, PopReader_1C2CB0* r, void
         n = *(int*)r->cur;
         r->cur += 4;
         func_00165E60(App_GetInstance(), "Initializing Terrain Data...", 0);
-        sprintf(name, D_0049F018, D_0048B2F8, D_004FFC90, D_004FFC90);
+        sprintf(name, D_0049F018, D_0048B2F8, g_LevelDirName, g_LevelDirName);
         h = Archive_Open(arc, name, 0, 0);
         {
             AllocGuard g;

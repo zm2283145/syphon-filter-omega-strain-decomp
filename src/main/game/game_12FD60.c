@@ -163,8 +163,8 @@ extern void func_002C9420(void *);
 extern void AgentData_AddLevelProgress(void *, int, int, int);
 extern void AgentData_SetLevelFlag(void *, int, int, int, int);
 extern void *D_004FFC04;
-extern signed char D_004FFBA0;
-extern signed char D_004FFBA1;
+extern signed char g_GameState;
+extern signed char g_PrevGameState;
 
 void Game_RequestEolMovie(Obj12FF80 *o)
 {
@@ -215,8 +215,8 @@ void Game_RequestEolMovie(Obj12FF80 *o)
             }
             func_002C9420(D_004FFC04);
             b = "_EOL";
-            D_004FFBA1 = D_004FFBA0;
-            D_004FFBA0 = 8;
+            g_PrevGameState = g_GameState;
+            g_GameState = 8;
             break;
         }
         default:
@@ -248,7 +248,7 @@ extern int Game_CountAttractMovies(void *);
 
 extern char D_0049A908[];
 extern int D_004EA050;
-extern int D_00533870;
+extern int g_TimerAccum;
 
 int Game_PickAttractMovie(void *o, char *out)
 {
@@ -261,7 +261,7 @@ int Game_PickAttractMovie(void *o, char *out)
     int n;
 
     count = Game_CountAttractMovies(o);
-    r = (*(volatile int *)0x10000800 + D_00533870) % count;
+    r = (*(volatile int *)0x10000800 + g_TimerAccum) % count;
     if (r == D_004EA050 && count > 1) {
         r = (r == count - 1) ? 0 : r + 1;
     }

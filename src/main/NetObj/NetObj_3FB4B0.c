@@ -77,7 +77,7 @@ typedef struct NetRecvE6 {
     int context;
 } NetRecvE6;
 
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern char D_0055C7A0[];
 extern signed char D_0055C9B8;
 extern int D_0055C9C0;
@@ -92,7 +92,7 @@ int* NetMap_BindReceiver(int id, int context, int handler)
 {
     int key[1];
     key[0] = id;
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         NetRecvMap_Insert(D_0055C7A0, key)->handler = handler;
         NetRecvMap_Insert(D_0055C7A0, key)->context = context;
         return &NetRecvMap_Insert(D_0055C7A0, key)->handler;

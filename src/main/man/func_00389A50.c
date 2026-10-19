@@ -37,8 +37,8 @@ typedef struct {
     unsigned char b2BDC;
 } SkMdl;
 extern "C" {
-extern MCache D_0055DDA0;
-extern TMgr* D_00539248;
+extern MCache g_AgentPartCache;
+extern TMgr* g_TextureMgr;
 int MeshCache_FindSlot(MCache* c, __int128 key);
 void Model_HardMeshAttachPoints(SkMdl* m);
 }
@@ -47,8 +47,8 @@ extern "C" signed char ActorModel_StreamWait(SkMdl* m)
     unsigned long n = m->count;
     int lod;
     m->missing = 0;
-    int s = MeshCache_FindSlot(&D_0055DDA0, m->key);
-    if (s != -1 && !D_0055DDA0.recs[s][0].p) {
+    int s = MeshCache_FindSlot(&g_AgentPartCache, m->key);
+    if (s != -1 && !g_AgentPartCache.recs[s][0].p) {
         m->missing++;
     }
     for (lod = 0; lod < 2; lod++) {
@@ -58,19 +58,19 @@ extern "C" signed char ActorModel_StreamWait(SkMdl* m)
             if (!e->p) {
                 unsigned short h = e->h;
                 if (h) {
-                    if (D_0055DDA0.recs[e->h][lod].p) {
-                        m->part[lod][i].p = D_0055DDA0.recs[h][lod].p;
-                        m->part[lod][i].h = D_0055DDA0.recs[h][lod].h;
-                        m->part[lod][i].b6 = D_0055DDA0.recs[h][lod].b6;
-                        m->part[lod][i].b7 = D_0055DDA0.recs[h][lod].b7;
-                        m->part[lod][i].f8 = D_0055DDA0.recs[h][lod].f8;
-                        m->part[lod][i].fC = D_0055DDA0.recs[h][lod].fC;
-                        m->part[lod ^ 1][i].p = D_0055DDA0.recs[h][lod ^ 1].p;
-                        m->part[lod ^ 1][i].h = D_0055DDA0.recs[h][lod ^ 1].h;
-                        m->part[lod ^ 1][i].b6 = D_0055DDA0.recs[h][lod ^ 1].b6;
-                        m->part[lod ^ 1][i].b7 = D_0055DDA0.recs[h][lod ^ 1].b7;
-                        m->part[lod ^ 1][i].f8 = D_0055DDA0.recs[h][lod ^ 1].f8;
-                        m->part[lod ^ 1][i].fC = D_0055DDA0.recs[h][lod ^ 1].fC;
+                    if (g_AgentPartCache.recs[e->h][lod].p) {
+                        m->part[lod][i].p = g_AgentPartCache.recs[h][lod].p;
+                        m->part[lod][i].h = g_AgentPartCache.recs[h][lod].h;
+                        m->part[lod][i].b6 = g_AgentPartCache.recs[h][lod].b6;
+                        m->part[lod][i].b7 = g_AgentPartCache.recs[h][lod].b7;
+                        m->part[lod][i].f8 = g_AgentPartCache.recs[h][lod].f8;
+                        m->part[lod][i].fC = g_AgentPartCache.recs[h][lod].fC;
+                        m->part[lod ^ 1][i].p = g_AgentPartCache.recs[h][lod ^ 1].p;
+                        m->part[lod ^ 1][i].h = g_AgentPartCache.recs[h][lod ^ 1].h;
+                        m->part[lod ^ 1][i].b6 = g_AgentPartCache.recs[h][lod ^ 1].b6;
+                        m->part[lod ^ 1][i].b7 = g_AgentPartCache.recs[h][lod ^ 1].b7;
+                        m->part[lod ^ 1][i].f8 = g_AgentPartCache.recs[h][lod ^ 1].f8;
+                        m->part[lod ^ 1][i].fC = g_AgentPartCache.recs[h][lod ^ 1].fC;
                     } else {
                         m->missing++;
                     }
@@ -79,7 +79,7 @@ extern "C" signed char ActorModel_StreamWait(SkMdl* m)
         }
     }
     {
-        TMgr* mgr = D_00539248;
+        TMgr* mgr = g_TextureMgr;
         unsigned int i;
         for (i = 0; i < n; i++) {
             m->missing += mgr->entries[m->cur[i]]->f44 == mgr->def;

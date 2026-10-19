@@ -12,10 +12,10 @@ typedef struct {
     unsigned char hasKerning;
     signed char kerning[1];
 } Font;
-extern FontMgr* D_00539248;
+extern FontMgr* g_TextureMgr;
 
 int Font_GetStringWidth(Font* font, const unsigned char* s, int n) {
-    float scale = (int)D_00539248->tex[font->texId]->hdr[2];
+    float scale = (int)g_TextureMgr->tex[font->texId]->hdr[2];
     float w = 0.0f;
     int c;
     while ((c = *s) != 0 && n > 0) {

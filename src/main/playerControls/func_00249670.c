@@ -17,8 +17,8 @@ struct CamView { char pad[0x10]; V dir; char pad20[0x10]; V pos; };
 struct Cam { char pad[0xDA0]; CamView view; };
 
 extern "C" {
-extern unsigned char D_005721C8;
-extern char D_0055D480[];
+extern unsigned char g_IsMultiplayer;
+extern char g_ActorActionMsgClass[];
 extern char D_004E0840[];
 extern char D_004E0140[];
 void Event_Construct(void* m, void* type);
@@ -32,7 +32,7 @@ struct MsgB {
     MsgB() {}
     __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~MsgB() { vt = D_004E0840; cMessage_dtor(this, 0); }
     void Send(void* to) { b20 = 1; Event_Send(this, to, 1); }
-    void Init(int t, unsigned char k) { Event_Construct(this, D_0055D480); vt = D_004E0840; type = t; kind = k; }
+    void Init(int t, unsigned char k) { Event_Construct(this, g_ActorActionMsgClass); vt = D_004E0840; type = t; kind = k; }
 };
 struct MsgPt : MsgB { char p2C[4]; V pt; MsgPt(const V& v) { MsgPt* p = this; p->Init(0x39, 4); p->vt = D_004E0140; p->pt = v; } __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~MsgPt() {} };
 
@@ -44,7 +44,7 @@ extern "C" void PlayerInput_AimViewPointAction(void* s, Cam* cam, void* actor)
     float k = 100.0f;
     V pt = pos + dir * k;
     MsgPt(pt).Send(actor);
-    if (D_005721C8) func_00249490(s, actor, &pt);
+    if (g_IsMultiplayer) func_00249490(s, actor, &pt);
 }
 
 

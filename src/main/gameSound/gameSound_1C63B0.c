@@ -11,8 +11,8 @@
 #pragma push /* merge_units */
 typedef union { int i; char* s; } ScriptArg_1C63B0;
 typedef struct { void* vt; char pad04[0x1C]; signed char kind; char pad21[3]; int w24; signed char b28; char pad29[3]; int key0; int key1; } Msg_1C63B0;
-extern unsigned char D_005721C8;
-extern void* D_004FFC2C;
+extern unsigned char g_IsMultiplayer;
+extern void* g_Hud;
 extern char D_0049F490[];
 extern char D_0051F098[];
 extern char D_004DE280[];
@@ -36,12 +36,12 @@ int Script_AddPDAQuip_2(ScriptArg_1C63B0* args)
     text = *(char**)b;
     if (name) {
         text = (!text || !*text) ? D_0049F490 : text;
-        Hud_AddPdaQuip(D_004FFC2C, name, text);
+        Hud_AddPdaQuip(g_Hud, name, text);
         {
-            void* hud = D_004FFC2C;
+            void* hud = g_Hud;
             Hud_PostNotification(hud, Loc_LookupText(D_0049F490));
         }
-        if (D_005721C8) {
+        if (g_IsMultiplayer) {
             Msg_1C63B0 m;
             Msg_1C63B0* p = &m;
             Event_Construct(p, D_0051F098);
@@ -78,12 +78,12 @@ int Script_AddPDAQuip(ScriptArg_1C63B0* args)
     name = *(char**)a;
     if (name) {
         { char* t0 = 0; text = (t0 && *t0) ? t0 : D_0049F490; }
-        Hud_AddPdaQuip(D_004FFC2C, name, text);
+        Hud_AddPdaQuip(g_Hud, name, text);
         {
-            void* hud = D_004FFC2C;
+            void* hud = g_Hud;
             Hud_PostNotification(hud, Loc_LookupText(D_0049F490));
         }
-        if (D_005721C8) {
+        if (g_IsMultiplayer) {
             Msg_1C63B0 m;
             Msg_1C63B0* p = &m;
             Event_Construct(p, D_0051F098);

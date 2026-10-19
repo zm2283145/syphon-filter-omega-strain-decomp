@@ -55,8 +55,8 @@ struct Act {
     Opt* p3524;
 };
 extern "C" {
-extern unsigned char D_00533880;
-extern int D_00533888;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
 extern char D_0049D8D0[];
 extern char D_004A03C8[];
 extern char D_004A03D0[];

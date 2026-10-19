@@ -61,11 +61,11 @@ struct Self {
 struct Fog { char pad[0x150]; float fogNear, fogFar, zNear, zFar; int ci[4]; float cf[4]; };
 
 extern "C" {
-extern char D_005381F0[];
+extern char g_Video[];
 extern int D_00538C60;
 extern int D_00538C64;
 extern char D_00538C68;
-extern int D_005392D0;
+extern int g_DrawMode;
 extern long long D_005392D8;
 extern long long D_004BC1B0;
 extern float D_00539170[4];
@@ -88,8 +88,8 @@ void World_PhysicsTraversal(float t);
 void GuiAgentModify_DrawModelCallback(Self* self); void GuiAgentModify_CameraApproach(Self* self); void Fog_ComputeTerms(char* r);
 }
 
-#define SLOT(i) ((Slot*)(D_005381F0 + (i) * 0x110))
-#define STK(i) ((M*)(D_005381F0 + 0xA80 + (i) * 0x40))
+#define SLOT(i) ((Slot*)(g_Video + (i) * 0x110))
+#define STK(i) ((M*)(g_Video + 0xA80 + (i) * 0x40))
 
 static inline void UnitM(M* m) { M* p = m; int t; __asm__ volatile("sqc2 vf0, 0x30(%1); qmfc2.ni %0, vf0; pcpyud %0, %0, zero; sq %0, 0x10(%1); pexcw %0, %0; sq %0, 0x20(%1); pcpyud %0, %0, zero; sq %0, 0(%1)" : "=&r"(t) : "r"(p) : "memory"); }
 static inline void Apply33(V* out, const V* v, const M* m) { __asm__ volatile("lqc2 vf8, 0x0(%2); lqc2 vf4, 0x0(%1); lqc2 vf5, 0x10(%1); lqc2 vf6, 0x20(%1); vmulax.xyz ACC, vf4, vf8x; vmadday.xyz ACC, vf5, vf8y; vmaddz.xyz vf8, vf6, vf8z; sqc2 vf8, 0x0(%0)" : : "r"(out), "r"(m), "r"(v) : "memory"); }
@@ -277,21 +277,21 @@ extern "C" void GuiAgentModify_DrawModelCallback(Self* self)
     M cm;
     M mm;
     int saved;
-    func_0037A1E0(D_005381F0);
+    func_0037A1E0(g_Video);
     GuiAgentModify_CameraApproach(self);
-    saved = D_005392D0;
-    D_005392D0 = 0x95;
+    saved = g_DrawMode;
+    g_DrawMode = 0x95;
     { long long t = D_004BC1B0;
     D_005392D8 = t; }
     *STK(D_00538C64 + 1) = *STK(D_00538C64);
-    ((Fog*)D_005381F0)->fogNear = 0.0f;
-    ((Fog*)D_005381F0)->fogFar = 1.0f;
+    ((Fog*)g_Video)->fogNear = 0.0f;
+    ((Fog*)g_Video)->fogFar = 1.0f;
     D_00538C64++;
-    Fog_ComputeTerms(D_005381F0);
-    ((Fog*)D_005381F0)->zNear = 50.0f;
-    ((Fog*)D_005381F0)->zFar = 80.0f;
-    Fog_ComputeTerms(D_005381F0);
-    SetCol((Fog*)D_005381F0, 0.25f, 0.25f, 0.25f);
+    Fog_ComputeTerms(g_Video);
+    ((Fog*)g_Video)->zNear = 50.0f;
+    ((Fog*)g_Video)->zFar = 80.0f;
+    Fog_ComputeTerms(g_Video);
+    SetCol((Fog*)g_Video, 0.25f, 0.25f, 0.25f);
     {
         Cam* c = &SLOT(D_00538C60)->cam;
         c->fov = self->fov;
@@ -340,7 +340,7 @@ extern "C" void GuiAgentModify_DrawModelCallback(Self* self)
         { Mdl* m = self->mdl; m->x38 = 2.0f; }
         self->mdl->Draw();
     }
-    func_0037E310(D_005381F0);
+    func_0037E310(g_Video);
     {
         Slot* s = SLOT(D_00538C60);
         s->cam.f2E0 = 0;
@@ -358,6 +358,6 @@ extern "C" void GuiAgentModify_DrawModelCallback(Self* self)
         s->cam.b2F6 = 1;
     }
     D_00538C68 = 1;
-    D_005392D0 = saved;
+    g_DrawMode = saved;
     D_00538C64--;
 }

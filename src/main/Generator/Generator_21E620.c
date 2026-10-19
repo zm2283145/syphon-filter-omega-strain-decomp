@@ -76,10 +76,10 @@ extern "C" {
 extern char D_004A4A90[];
 extern char D_0051F058[];
 extern char D_004DE240[];
-extern void* D_004FFD44;
+extern void* g_ActorList;
 extern int D_00494178;
 extern int D_005721A8;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 void* Mem_Alloc(int pool, int size, char* file, int line);
 int Random_Next(void);
 void ActorObj_BuildNodeMatrix(GsMtx* out, GsActor* a);
@@ -100,8 +100,8 @@ static inline void* QAsg0(void* d0, const void* s0) { void* d = d0; __int128 q =
 static inline void MsgInit(GsMsg* m, int id, int x10, int x68) { Event_Construct(m, D_0051F058); m->vt = D_004DE240; m->id = id; m->x54 = x10; m->x58 = x68; }
 static inline void QZ(void* d0, const void* s0) { void* d = d0; __int128 q = 0; const void* s = s0; __asm__ volatile("lq %0, 0x0(%1)" : "+r"(q) : "r"(s) : "memory"); __asm__ volatile("sq %0, 0x0(%1)" : : "r"(q), "r"(d) : "memory"); }
 static inline int* IdPtr(GsObj* o) { int* p = &o->id; return p; }
-static inline int NetSlot(int a) { if (D_005721C8) { if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, a); return D_00494178; } return 0; }
-static inline int NetSlot5(int a) { int r = 0; if (D_005721C8) { if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, a); return D_00494178; } return r; }
+static inline int NetSlot(int a) { if (g_IsMultiplayer) { if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, a); return D_00494178; } return 0; }
+static inline int NetSlot5(int a) { int r = 0; if (g_IsMultiplayer) { if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, a); return D_00494178; } return r; }
 extern "C" void Generator_Spawn(GsGen* gen, GsActor* actor, int idx)
 {
     char ctx[4];
@@ -116,7 +116,7 @@ extern "C" void Generator_Spawn(GsGen* gen, GsActor* actor, int idx)
     if (idx < 0) route = -1; else route = actor->Route();
     int rnd = Random_Next();
     GsObj* obj;
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         {
             AllocGuard g;
             obj = (GsObj*)Mem_Alloc(0, 0x35A0, D_004A4A90, 0x71A);
@@ -152,7 +152,7 @@ extern "C" void Generator_Spawn(GsGen* gen, GsActor* actor, int idx)
         }
     }
     obj->spawned = 1;
-    void* reg = D_004FFD44;
+    void* reg = g_ActorList;
     obj->reg = reg;
     ObjRegistry_AppendRecursive(reg, obj);
     obj->Activate(1);
@@ -161,7 +161,7 @@ extern "C" void Generator_Spawn(GsGen* gen, GsActor* actor, int idx)
     gen->count++;
     gen->xBC = 0;
     gen->xC8 = gen->xC4;
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         GsNode* n = obj->node;
         if (n->dirty) n->Refresh();
         { GsMtx* src = &n->m; GsMtx* dst = &mc; Q4(dst, src); }
@@ -256,7 +256,7 @@ extern "C" void func_0021EAA0(Gen* self)
     {
         key = &self->key;
         int a = D_005721A8;
-        if (D_005721C8) {
+        if (g_IsMultiplayer) {
             if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, a);
             id = D_00494178;
         } else id = 0;

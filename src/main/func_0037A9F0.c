@@ -57,8 +57,8 @@ extern void Video_BuildFrameClearPacket(GsCtx37A9F0*);
 extern void ListenerList_Update(void*, float);
 extern void func_003820C0(int);
 extern char D_00537F80[];
-extern int D_00533870;
-extern s64 D_00533878;
+extern int g_TimerAccum;
+extern s64 g_TickCounter64;
 
 #define GS_CSR (*(volatile u64*)0x12001000)
 #define T0_COUNT (*(volatile int*)0x10000800)
@@ -116,10 +116,10 @@ void Video_BeginFrame(GsCtx37A9F0* c)
         ;
     if (c->frames > 1) {
         unsigned char waited;
-        c->rate = 576000.0f / (float)(int)(T0_COUNT + D_00533870);
+        c->rate = 576000.0f / (float)(int)(T0_COUNT + g_TimerAccum);
         waited = 0;
         if (c->maxRate) {
-            while (576000.0f / (float)(int)(T0_COUNT + D_00533870) > (float)c->maxRate) {
+            while (576000.0f / (float)(int)(T0_COUNT + g_TimerAccum) > (float)c->maxRate) {
                 waited = 1;
                 GS_CSR = 8;
                 while (!(GS_CSR & 8))
@@ -131,19 +131,19 @@ void Video_BeginFrame(GsCtx37A9F0* c)
             while (!(GS_CSR & 8))
                 ;
         }
-        c->dt = (float)(int)(T0_COUNT + D_00533870) / 576000.0f;
-        t = T0_COUNT + D_00533870;
-        D_00533878 += (int)((float)t / 5.76f);
+        c->dt = (float)(int)(T0_COUNT + g_TimerAccum) / 576000.0f;
+        t = T0_COUNT + g_TimerAccum;
+        g_TickCounter64 += (int)((float)t / 5.76f);
         T0_COUNT = 0;
         *(volatile int*)0x10000810 = 0x82;
-        D_00533870 = 0;
+        g_TimerAccum = 0;
         Display_SetPmode(c);
     } else {
-        t = T0_COUNT + D_00533870;
-        D_00533878 += (int)((float)t / 5.76f);
+        t = T0_COUNT + g_TimerAccum;
+        g_TickCounter64 += (int)((float)t / 5.76f);
         T0_COUNT = 0;
         *(volatile int*)0x10000810 = 0x82;
-        D_00533870 = 0;
+        g_TimerAccum = 0;
     }
     func_00382060(c->dev);
     Vif1Packet_Flip(D_00537F80);

@@ -48,7 +48,7 @@ struct Cache390570 {
 };
 
 extern "C" {
-extern Cache390570 D_0055DDA0;
+extern Cache390570 g_AgentPartCache;
 extern __int128 D_0055DDD0;
 extern __int128 D_0055DDE0;
 extern __int128 D_0055DE00;
@@ -100,11 +100,11 @@ extern "C" void Appearance_ReorderParts(Self390570* self)
     self->x23C0 = n;
     for (j = 0; j < D_0055DE8C; j++) {
         for (k = 0; k < n; k++) {
-            if (Eq390570(And390570(mask, self->pairs[k].b), And390570(mask, D_0055DDA0.e[j].key))) {
+            if (Eq390570(And390570(mask, self->pairs[k].b), And390570(mask, g_AgentPartCache.e[j].key))) {
                 __int128 ek;
                 __int128 pa;
                 pa = self->pairs[k].a;
-                ek = D_0055DDA0.e[j].key;
+                ek = g_AgentPartCache.e[j].key;
                 int s = 1;
                 if (Eq390570(And390570(D_0055DE00, pa), And390570(D_0055DE00, ek))) s += 2;
                 if (Eq390570(And390570(D_0055DE10, pa), And390570(D_0055DE10, ek))) s += 1;
@@ -142,7 +142,7 @@ extern "C" void Appearance_ReorderParts(Self390570* self)
             self->x22C0[bi] = s0;
             self->x2300[bi] = s1;
             self->x2DB0[i] = best;
-            self->x2DD0[i] = D_0055DDA0.e[best].val;
+            self->x2DD0[i] = g_AgentPartCache.e[best].val;
             i++;
         }
     } while (found);
@@ -152,7 +152,7 @@ extern "C" void Appearance_ReorderParts(Self390570* self)
             self->x2DD0[i] = 1;
         } else {
             self->x2DB0[i] = D_0055DE8C - 1;
-            self->x2DD0[i] = D_0055DDA0.e[D_0055DE8C - 1].val;
+            self->x2DD0[i] = g_AgentPartCache.e[D_0055DE8C - 1].val;
         }
     }
 }
@@ -207,9 +207,9 @@ struct Self390940 {
 
 extern "C" {
 #if 0 /* merge_units */
-extern char D_0055DDA0[];
+extern char g_AgentPartCache[];
 #endif /* merge_units */
-#define D_0055DDA0 ((char*)&D_0055DDA0) /* merge_units */
+#define g_AgentPartCache ((char*)&g_AgentPartCache) /* merge_units */
 
 extern __int128 D_0055DE40;
 extern char D_0057124C[];
@@ -305,9 +305,9 @@ static inline void Swap390940(__int128* p, __int128 from, __int128 to) {
     }
 }
 static inline void MeshP390940(Self390940* self, __int128* name) {
-    if (MeshCache_FindSlot(D_0055DDA0, *name) == -1) {
+    if (MeshCache_FindSlot(g_AgentPartCache, *name) == -1) {
         self->x2BDB = 1;
-        MeshCache_Load(D_0055DDA0, *name, D_0057124C, self->x20);
+        MeshCache_Load(g_AgentPartCache, *name, D_0057124C, self->x20);
     }
 }
 
@@ -365,7 +365,7 @@ extern "C" void ActorModel_SwitchBodyPacking(Self390940* self, App390940* src)
         j = Appearance_FindPairByType(src, D_004BC3C8);
         if (j != -1) {
             ((__int128*)self->app.pairs)[s5 * 2] = src->pairs[j].a;
-            func_00401290(D_0055DDA0, &self->app, self->x1EC0, self->app.pairs[s5].a, src->pairs[j].a,
+            func_00401290(g_AgentPartCache, &self->app, self->x1EC0, self->app.pairs[s5].a, src->pairs[j].a,
                           self->x2C0C, self->x2C0D);
         } else {
             j = Appearance_FindPairByType(src, D_004BC3D0);
@@ -385,13 +385,13 @@ extern "C" void ActorModel_SwitchBodyPacking(Self390940* self, App390940* src)
                     String_Copy(t + 0xA, D_004BC3E8);
                     MeshP390940(self, &tmp);
                     ((__int128*)self->app.pairs)[s5 * 2] = tmp;
-                    func_00401290(D_0055DDA0, &self->app, self->x1EC0, self->app.pairs[s5].a, tmp,
+                    func_00401290(g_AgentPartCache, &self->app, self->x1EC0, self->app.pairs[s5].a, tmp,
                                   self->x2C0C, self->x2C0D);
                 } else if (s4 != -1 && !s3) {
                     String_Copy(t + 0xA, D_004BC3E0);
                     MeshP390940(self, &tmp);
                     ((__int128*)self->app.pairs)[s5 * 2] = tmp;
-                    func_00401290(D_0055DDA0, &self->app, self->x1EC0, self->app.pairs[s5].a, tmp,
+                    func_00401290(g_AgentPartCache, &self->app, self->x1EC0, self->app.pairs[s5].a, tmp,
                                   self->x2C0C, self->x2C0D);
                 }
             }
@@ -426,7 +426,7 @@ extern "C" void ActorModel_SwitchBodyPacking(Self390940* self, App390940* src)
         self->app.pairs[self->x23C0].b = p->b;
     }
 }
-#undef D_0055DDA0 /* merge_units */
+#undef g_AgentPartCache /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00390940(void) {}
 #pragma pop /* merge_units */

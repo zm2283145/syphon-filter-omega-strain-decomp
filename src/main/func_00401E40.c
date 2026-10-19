@@ -10,7 +10,7 @@ typedef struct {
     char padC4[0x2C10 - 0xC4];
     __int128 keys[1];
 } KS00401E40;
-extern char D_0055DDA0[];
+extern char g_AgentPartCache[];
 int func_00401FF0(KS00401E40* s, __int128 key, int* out, int mode, int a, int b);
 static inline int ks00401E40eq(__int128 a, __int128 b) {
     __int128 t;
@@ -44,8 +44,8 @@ static inline __int128 ks00401E40from(__int128 v) {
 static inline int ks00401E40meq(__int128 m, __int128 a, __int128 b) {
     return ks00401E40eq(ks00401E40and(m, a), ks00401E40and(m, b));
 }
-/* (sub & ~mask) | (k & mask), mask at D_0055DDA0 + 0x60; in-place pands give retail registers. */
-static inline __int128 Splice(__int128 sub, __int128 k) { __int128 m = *(__int128*)(D_0055DDA0 + 0x60); __int128 nm = ks00401E40not(m); asm { pand m, k, m } asm { pand k, sub, nm } return ks00401E40or(k, m); }
+/* (sub & ~mask) | (k & mask), mask at g_AgentPartCache + 0x60; in-place pands give retail registers. */
+static inline __int128 Splice(__int128 sub, __int128 k) { __int128 m = *(__int128*)(g_AgentPartCache + 0x60); __int128 nm = ks00401E40not(m); asm { pand m, k, m } asm { pand k, sub, nm } return ks00401E40or(k, m); }
 int func_00401E40(KS00401E40* s, __int128 key, __int128 sub, int* out, int mode, int a, int b)
 {
     __int128 mask = s->m50;

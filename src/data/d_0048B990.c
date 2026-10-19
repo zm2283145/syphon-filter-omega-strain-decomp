@@ -11,7 +11,7 @@ extern char D_004AAFD0[];
 extern char D_004AAFE0[];
 extern char D_004AB0B0[];
 
-short D_0048B990[1] = { 0x65 };
+short g_DnasErrorTable[1] = { 0x65 };
 
 unsigned char D_0048B992[1] __attribute__((aligned(2))) = { 0x01 };
 

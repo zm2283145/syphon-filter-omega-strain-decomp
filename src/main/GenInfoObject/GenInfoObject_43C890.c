@@ -20,7 +20,7 @@ extern char* func_001BFED0(It_43C890* a);
 extern void func_001BFEB0(It_43C890* a);
 extern void Tex_Release(int a, int b, int c);
 extern int GuiBitmapWidget_Load(O_43C890* o);
-extern int D_00539248;
+extern int g_TextureMgr;
 extern char D_004C0018[];
 
 int GuiBitmapWidget_SetImage(O_43C890* o, char* name, int arg)
@@ -28,7 +28,7 @@ int GuiBitmapWidget_SetImage(O_43C890* o, char* name, int arg)
     Str_43C890 t2;
     Str_43C890 t;
     if (o->h48 != -1) {
-        Tex_Release(D_00539248, o->h48, 0);
+        Tex_Release(g_TextureMgr, o->h48, 0);
         o->h48 = -1;
     }
     o->f4C = 0;
@@ -63,9 +63,9 @@ int GuiBitmapWidget_SetImage(O_43C890* o, char* name, int arg)
 typedef struct { int words[3]; } String;
 typedef struct { char pad[0x48]; int handle; int unk4C; String name; } Obj;
 #if 0 /* merge_units */
-extern void* D_00539248;
+extern void* g_TextureMgr;
 #endif /* merge_units */
-#define D_00539248 (*(void **)&D_00539248) /* merge_units */
+#define g_TextureMgr (*(void **)&g_TextureMgr) /* merge_units */
 
 extern void GuiWidget_Deinit(Obj* self);
 #if 0 /* merge_units */
@@ -95,7 +95,7 @@ void GuiBitmapWidget_Deinit(Obj* self)
     String tmp;
     GuiWidget_Deinit(self);
     if (self->handle != -1) {
-        Tex_Release(D_00539248, self->handle, 0);
+        Tex_Release(g_TextureMgr, self->handle, 0);
         self->handle = -1;
     }
     self->unk4C = 0;
@@ -103,7 +103,7 @@ void GuiBitmapWidget_Deinit(Obj* self)
     func_0013D680(&self->name, &tmp);
     String_Dtor(&tmp, 0);
 }
-#undef D_00539248 /* merge_units */
+#undef g_TextureMgr /* merge_units */
 #undef Tex_Release /* merge_units */
 #undef String_CtorCStr_13B480 /* merge_units */
 #undef func_0013D680 /* merge_units */

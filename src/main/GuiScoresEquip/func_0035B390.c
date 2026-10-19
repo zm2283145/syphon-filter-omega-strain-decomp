@@ -65,11 +65,11 @@ struct Self {
 struct Fog { char pad[0x150]; float fogNear, fogFar, zNear, zFar; int ci[4]; float cf[4]; };
 
 extern "C" {
-extern char D_005381F0[];
+extern char g_Video[];
 extern int D_00538C60;
 extern int D_00538C64;
 extern char D_00538C68;
-extern int D_005392D0;
+extern int g_DrawMode;
 extern long long D_005392D8;
 extern long long D_004BC1B0;
 extern float D_00539170[4];
@@ -92,12 +92,12 @@ void World_PhysicsTraversal(float t);
 void GuiScoresEquip_UpdateFigures(Self* self);
 extern char D_004BB530[];
 extern char D_004BB550[];
-extern char D_004FFBA0;
-extern unsigned char D_005721C8;
+extern char g_GameState;
+extern unsigned char g_IsMultiplayer;
 }
 
-#define SLOT(i) ((Slot*)(D_005381F0 + (i) * 0x110))
-#define STK(i) ((M*)(D_005381F0 + 0xA80 + (i) * 0x40))
+#define SLOT(i) ((Slot*)(g_Video + (i) * 0x110))
+#define STK(i) ((M*)(g_Video + 0xA80 + (i) * 0x40))
 
 static inline void UnitM(M* m) { M* p = m; int t; __asm__ volatile("sqc2 vf0, 0x30(%1); qmfc2.ni %0, vf0; pcpyud %0, %0, zero; sq %0, 0x10(%1); pexcw %0, %0; sq %0, 0x20(%1); pcpyud %0, %0, zero; sq %0, 0(%1)" : "=&r"(t) : "r"(p) : "memory"); }
 static inline void Apply33(V* out, const V* v, const M* m) { __asm__ volatile("lqc2 vf8, 0x0(%2); lqc2 vf4, 0x0(%1); lqc2 vf5, 0x10(%1); lqc2 vf6, 0x20(%1); vmulax.xyz ACC, vf4, vf8x; vmadday.xyz ACC, vf5, vf8y; vmaddz.xyz vf8, vf6, vf8z; sqc2 vf8, 0x0(%0)" : : "r"(out), "r"(m), "r"(v) : "memory"); }
@@ -274,11 +274,11 @@ extern "C" void GuiScoresEquip_UpdateFigures(Self* self0)
     int j;
     Self* self = self0;
     int saved;
-    func_0037A1E0(D_005381F0);
-    saved = D_005392D0;
+    func_0037A1E0(g_Video);
+    saved = g_DrawMode;
     e.x = 0.0f; e.y = 5.0f; e.z = 1.5f; e.w = 1.0f;
     *STK(D_00538C64 + 1) = *STK(D_00538C64);
-    D_005392D0 = 0x15;
+    g_DrawMode = 0x15;
     D_00538C64++;
     D_005392D8 = D_004BC1B0;
     {
@@ -307,7 +307,7 @@ extern "C" void GuiScoresEquip_UpdateFigures(Self* self0)
         Rot(&mm, V(0.0f, 0.0f, 1.0f, 0.0f), self->rz);
         mm.r(3) = pp;
         Mul33(&mm, &cm, &mm);
-        if ((unsigned char)D_004FFBA0 == 2) {
+        if ((unsigned char)g_GameState == 2) {
             if (self->m[i]) {
                 char key[4];
                 bool done = false;
@@ -350,7 +350,7 @@ extern "C" void GuiScoresEquip_UpdateFigures(Self* self0)
             }
         }
         if (last != -1) {
-            bool ph = !D_005721C8 || self->b22C;
+            bool ph = !g_IsMultiplayer || self->b22C;
             self->b22C = 0;
             if (ph) World_PhysicsTraversal(t);
             for (j = 0; j < 4; j++) {
@@ -361,7 +361,7 @@ extern "C" void GuiScoresEquip_UpdateFigures(Self* self0)
             }
         }
     }
-    func_0037E310(D_005381F0);
+    func_0037E310(g_Video);
     {
         Slot* s = SLOT(D_00538C60);
         s->cam.f2E0 = 0;
@@ -379,6 +379,6 @@ extern "C" void GuiScoresEquip_UpdateFigures(Self* self0)
         s->cam.b2F6 = 1;
     }
     D_00538C68 = 1;
-    D_005392D0 = saved;
+    g_DrawMode = saved;
     D_00538C64--;
 }

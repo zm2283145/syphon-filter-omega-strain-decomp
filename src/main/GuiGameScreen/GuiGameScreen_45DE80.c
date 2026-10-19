@@ -28,7 +28,7 @@ extern "C" {
 int String_Dtor(int, int);                            
 int ActorModel_Release(int);                               
 int GuiWidget_Deinit();                                  
-extern unsigned char D_00533880;
+extern unsigned char g_ProfileLockEnabled;
 }
 extern "C" void func_0045DE80(char * arg0) {
     int temp_a0;
@@ -94,7 +94,7 @@ extern "C" {
 extern char D_004C2290[];extern char D_00587D80[];
 extern char D_004C2268[];
 extern char D_004C2430[]; extern char D_004A7520[]; extern char D_004C1D10[]; extern char D_004AA640[];
-extern char D_004FFB50[];
+extern char g_Game[];
 extern V4_45DFD0 D_00587CA0; extern V4_45DFD0 D_00587CB0;
 void GuiWidget_Init(O_45DFD0* o);
 void* Mem_Alloc(int pool, int size, char* file, int line);
@@ -137,8 +137,8 @@ void GuiGameScreen_Init(O_45DFD0* o)
     if (!o->fE0 || !o->fE4 || !o->fE8) o->fE0 = 0;
     o->f114 = Cast_45DFD0(GuiWidget_FindChildByName(o, "value_codename"), D_004A7520);
     if (o->f114) {
-        if (D_005721C8) {
-            char* s = Game_GetPlayerNameSlot(D_004FFB50, NetLocalId());
+        if (g_IsMultiplayer) {
+            char* s = Game_GetPlayerNameSlot(g_Game, NetLocalId());
             GuiTextWidget_SetText(o->f114, s ? s : D_004C2268, 0);
             o->f114->flags |= 2;
         } else {

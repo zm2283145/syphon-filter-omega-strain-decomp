@@ -48,7 +48,7 @@ extern "C" {
 extern char D_004A4A68[];
 extern char D_004DB600[];
 extern char D_004DB660[];
-extern char D_004EA370[];
+extern char g_NpcDeadList[];
 void NpcThinkList_RemoveActor(Actor_4460* a);
 void ActiveList_EraseMatching(void* v, Pred_4460 p);
 Obj_4460* Object_LookupById(unsigned short* id);
@@ -74,7 +74,7 @@ extern "C" void func_002D4460(cNPC_4460* self)
             return;
         }
         NpcThinkList_RemoveActor(a);
-            ActiveList_EraseMatching(D_004EA370, Pred_4460(e, &self));
+            ActiveList_EraseMatching(g_NpcDeadList, Pred_4460(e, &self));
         if (self->id) {
             Obj_4460* o = Object_LookupById(&self->id);
             if (o && o->magic == 0xBEBAAFDE) {

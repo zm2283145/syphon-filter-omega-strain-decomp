@@ -72,16 +72,16 @@ extern char D_004AB178[];
 extern char D_004AB190[];
 extern char D_004AB1A0[];
 extern char D_004DAE10[];
-extern char D_004FFB50[];
+extern char g_Game[];
 extern int D_00506500;
 extern int D_00506508;
 extern float D_00506510;
 extern unsigned char D_00506518[];
 extern long long D_00506520[];
 extern int D_00506578;
-extern int D_0055DDA0[][4];
+extern int g_AgentPartCache[][4];
 extern unsigned char D_005721C0;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005723F8;
 extern unsigned char D_00582B88;
 extern int D_00582CF0;
@@ -168,7 +168,7 @@ extern "C" void func_002A2F00(S_2A2F00* self, float dt)
             if (!D_00506518[k]) {
                 D_00506518[k] = 1;
                 if (self->cc) {
-                    int snd = D_0055DDA0[Appearance_GetBodyKind(p->appearance)][k + 0x3E];
+                    int snd = g_AgentPartCache[Appearance_GetBodyKind(p->appearance)][k + 0x3E];
                     if (snd)
                         func_00391020(p->skel, snd);
                 }
@@ -176,7 +176,7 @@ extern "C" void func_002A2F00(S_2A2F00* self, float dt)
                     SoundRequest_Ctor(&req, 4, D_0048BAA0[k], 0, 0);
                     func_0020F190(&msg, &req, p);
                     msg.flag = 1;
-                    Event_Send(&msg, D_004FFB50, 0);
+                    Event_Send(&msg, g_Game, 0);
                     msg.vtbl = D_004DAE10;
                     EffectMsg* m = &msg;
                     if (m->sub30) {
@@ -187,7 +187,7 @@ extern "C" void func_002A2F00(S_2A2F00* self, float dt)
                     FileMan_Release(req.partB, -1);
                     FileMan_Release(req.partA, -1);
                 }
-                Game_NetSendPauseState(D_004FFB50, 0, 0);
+                Game_NetSendPauseState(g_Game, 0, 0);
             }
             Skel_Rebind(self->skel[k], p->skel);
             self->skel[k]->b2C71 = 1;
@@ -268,13 +268,13 @@ extern "C" void func_002A2F00(S_2A2F00* self, float dt)
             D_00506520[i] = 0;
         }
     }
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         if (D_00506508) {
             unsigned char ok;
             D_00506510 += dt;
             sprintf(buf, self->timerFmt, 10 - (int)(D_00506510 / 30.0f));
             GuiTextWidget_SetText(self->timer, buf, 0);
-            if (D_005721C8)
+            if (g_IsMultiplayer)
                 ok = D_005721C0;
             else
                 ok = 1;
@@ -284,9 +284,9 @@ extern "C" void func_002A2F00(S_2A2F00* self, float dt)
             D_00506510 = 0.0f;
         }
     }
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         unsigned char ok;
-        if (D_005721C8)
+        if (g_IsMultiplayer)
             ok = D_005721C0;
         else
             ok = 1;

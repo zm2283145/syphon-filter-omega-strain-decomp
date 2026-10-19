@@ -45,7 +45,7 @@ extern "C" {
 extern int D_004EE550;
 extern int D_004ED9B8;
 extern int D_004EA770;
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char g_NpcRouteMgr[];
 int* Event_GetType(Ev_S* ev);
 void* Service_Lookup(void* a, void* b);
@@ -122,7 +122,7 @@ extern "C" unsigned char NpcAi_ModeSearch(Self_S* self, Ev_S* ev)
                     node = t->f18;
                     if (Visited(self, node)) {
                         if (self->b158) {
-                            void* svc = Service_Lookup(D_004FFB50, g_NpcRouteMgr);
+                            void* svc = Service_Lookup(g_Game, g_NpcRouteMgr);
                             if (node >= 0 && !NpcRoute_IsHeadPending(svc, self->f30))
                                 NpcPath_RequestRoute(self->route, t, node);
                         }
@@ -186,7 +186,7 @@ typedef struct { char pad[0xC]; int serial; char pad10[0x3C]; int type; } Tgt_55
 typedef struct { Tgt_552B0* target; int serial; } Hdl_552B0;
 typedef struct { char pad[0x40]; Hdl_552B0 h; } Ai_552B0;
 typedef struct { char pad[0x158]; unsigned char f158; char pad159[0x53]; Ai_552B0* ai; } Npc_552B0;
-extern int D_0049D010;
+extern int g_HumanActorClassKey;
 extern Tgt_552B0* ActorRef_Copy(Hdl_552B0* h);
 unsigned char NpcAlert_SearchAllowed(Npc_552B0* self)
 {
@@ -206,7 +206,7 @@ unsigned char NpcAlert_SearchAllowed(Npc_552B0* self)
             ok = 0;
     if (ok ? t : 0) {
         Tgt_552B0* p = ActorRef_Copy(&ai->h);
-        if (p->type != D_0049D010)
+        if (p->type != g_HumanActorClassKey)
             r = 0;
     }
     return r;

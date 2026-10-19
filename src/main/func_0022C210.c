@@ -41,7 +41,7 @@ struct World { char p[0x90]; char markers[1]; };
 struct WL { int x0; int list; };
 
 extern "C" {
-extern World* D_004FFC2C;
+extern World* g_Hud;
 extern char D_004F78DC[];
 WNode* WorldObjList_Get(void* l);
 int HudTargets_Add(void* mgr, int* key, int f);
@@ -55,7 +55,7 @@ extern "C" void HudTargets_UpdateMarkers(Tgt* self, Player* pl)
     WL* wl = (WL*)D_004F78DC;
     WNode* it = WorldObjList_Get(&wl->list)->next;
     WNode* end = WorldObjList_Get(&wl->list);
-    mgr = D_004FFC2C->markers;
+    mgr = g_Hud->markers;
     for (; it != end; it = it->next) {
         Hnd* h = &it->h;
         Tgt* t = HGet(h);

@@ -18,8 +18,8 @@ extern void GuiWidget_BaseWake(S368620* self);
 extern void GuiObjectives_SetTab(S368620* self, int a, int b);
 extern int sprintf(char* buf, const char* fmt, ...);
 extern char D_004BBC48[];
-extern char D_004FFB50[];
-extern int D_004FFC2C;
+extern char g_Game[];
+extern int g_Hud;
 extern char D_00587D00[];
 extern char D_00587D10[];
 
@@ -30,14 +30,14 @@ void GuiObjectives_Wake(S368620* self) {
     GuiWidget_BaseWake(self);
     if (self->text != 0) {
         if (self->useTimer) {
-            f = Hud_GetMissionTime(D_004FFC2C);
+            f = Hud_GetMissionTime(g_Hud);
         } else {
-            f = Agent_GetSelected(D_004FFB50, -1)->time;
+            f = Agent_GetSelected(g_Game, -1)->time;
             asm { .set reorder } /* scheduling barrier: keeps cvt at the join, not in the b delay slot */
         }
         { int t = f; int m = t / 60; sprintf(buf, D_004BBC48, m, t - m * 60); }
         if (!self->useTimer) {
-            if (Agent_GetSelected(D_004FFB50, -1)->flagB71) {
+            if (Agent_GetSelected(g_Game, -1)->flagB71) {
                 GuiTextWidget_SetColour(self->text, D_00587D00);
                 GuiTextWidget_SetColour(self->text2, D_00587D00);
             } else {
@@ -85,8 +85,8 @@ extern char D_004BBC90[]; extern char D_004BBCB0[]; extern char D_004BBCC8[]; ex
 extern char D_004BBD00[]; extern char D_004BBD18[]; extern char D_004BBD20[]; extern char D_004BBD38[]; extern char D_004BBD48[];
 extern char D_004BBD58[]; extern char D_004BBD68[]; extern char D_004BBD70[]; extern char D_004BBD80[]; extern char D_004BBD88[];
 extern char D_004A9870[]; extern char D_004AA640[]; extern char D_004A7520[];
-extern char D_004FFC90[];
-extern unsigned char D_005721C8;
+extern char g_LevelDirName[];
+extern unsigned char g_IsMultiplayer;
 static const unsigned int dat_00492F60[2] = { 0x3, 0x0 };
 extern V4_3688C0 D_00587CE0; extern V4_3688C0 D_00587CC0;
 void GuiWidget_Init(O_3688C0* o);
@@ -153,7 +153,7 @@ void GuiObjectives_Init(O_3688C0* o)
     t = Cast_3688C0(GuiWidget_FindChildByName(o, D_004BBD58), D_004A7520);
     if (t) {
         char buf[32];
-        int r = Awards_GetParTime(D_004FFC90, D_005721C8);
+        int r = Awards_GetParTime(g_LevelDirName, g_IsMultiplayer);
         if (r < 0) String_Copy(buf, D_004BBD68);
         else {
             int m = r / 60;
@@ -164,7 +164,7 @@ void GuiObjectives_Init(O_3688C0* o)
     }
     t = Cast_3688C0(GuiWidget_FindChildByName(o, D_004BBD70), D_004A7520);
     if (t) {
-        char* s = Loc_LookupText(D_005721C8 ? D_004BBD80 : D_004BBD88);
+        char* s = Loc_LookupText(g_IsMultiplayer ? D_004BBD80 : D_004BBD88);
         if (s) {
             GuiTextWidget_SetText(t, s, 0);
             func_0041C0F0(t, 1);

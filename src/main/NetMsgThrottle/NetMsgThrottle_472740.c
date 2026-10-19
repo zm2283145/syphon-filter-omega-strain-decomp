@@ -272,11 +272,11 @@ typedef struct { MSG_HDR; int act; unsigned char type; char pad29[7]; int flags;
 typedef struct { MSG_HDR; int f24; unsigned char f28; char pad29[3]; } Ev2_L;
 
 extern "C" {
-extern char D_004E0840[]; extern char D_0055D480[];
+extern char D_004E0840[]; extern char g_ActorActionMsgClass[];
 extern char D_004C3470[]; extern char D_004C3490[]; extern char D_004C34B0[]; extern char D_004C34D0[];
 extern char D_004C34F0[]; extern char D_004C3510[]; extern char D_004C3530[]; extern char D_004C3550[];
 extern char D_004C3570[]; extern char D_004C3590[];
-extern float D_0049D038;
+extern float g_DefaultMotionTransition;
 void* func_0015AC90(int* p, int v);
 unsigned char func_001960A0(int* a, int* b);
 void* Object_LookupById(int* id);
@@ -380,11 +380,11 @@ static inline X_L* Set5_L(X_L* x, int a, int b, int c, int d, int e, void* act)
 }
 static inline void RateDef_L(Rate_L* r)
 {
-    float d = D_0049D038;
+    float d = g_DefaultMotionTransition;
     r->x = d;
     r->y = d;
     r->z = Recip_L(d);
-    r->w = Recip_L(D_0049D038);
+    r->w = Recip_L(g_DefaultMotionTransition);
 }
 static inline void Install_L(Act_L* a, Sel_L* sel, Rate_L* r)
 {
@@ -520,7 +520,7 @@ static inline void BlkC_L(Act_L* actor)
 static inline void Send24_L(Act_L* actor) {
     Ev2_L m;
     Ev2_L* p = &m;
-    Event_Construct(p, D_0055D480);
+    Event_Construct(p, g_ActorActionMsgClass);
     p->vtable = D_004E0840;
     p->f24 = 0x24;
     p->f28 = 0;

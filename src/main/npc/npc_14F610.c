@@ -199,12 +199,12 @@ typedef struct Npc_14F680 {
     Perc_14F680* perc;
 } Npc_14F680;
 
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char g_NpcRouteMgr[];
 extern char g_ScriptAIDeadMsgKey[];
 extern char D_004DCCF0[];
-extern char D_004EA370[];
-extern WTab_14F680 D_0049F790[];
+extern char g_NpcDeadList[];
+extern WTab_14F680 SecondaryStateTable[];
 extern void* Service_Lookup(void* a, void* b);
 extern void NpcRoute_Release(void* mgr, Actor_14F680* a);
 extern void Event_Construct(Msg_14F680* m, void* key);
@@ -223,7 +223,7 @@ extern void NpcAi_AddToDeadList(void* list, Npc_14F680** npc);
 
 }
 
-static inline WTab_14F680* WT_14F680(int i) { return &D_0049F790[i]; }
+static inline WTab_14F680* WT_14F680(int i) { return &SecondaryStateTable[i]; }
 static inline bool Can_14F680(Wpn_14F680* w) { if (!w) return false; return WT_14F680(w->a)->ok && WT_14F680(w->b)->ok; }
 extern "C" void cNPC_v1D(Npc_14F680* self, int unused, int killer, int x, char how)
 {
@@ -232,7 +232,7 @@ extern "C" void cNPC_v1D(Npc_14F680* self, int unused, int killer, int x, char h
         Msg_14F680 msg;
         bool ok;
         {
-            void* mgr = Service_Lookup(D_004FFB50, g_NpcRouteMgr);
+            void* mgr = Service_Lookup(g_Game, g_NpcRouteMgr);
             NpcRoute_Release(mgr, self->actor);
         }
         Event_Construct(&msg, g_ScriptAIDeadMsgKey);
@@ -262,7 +262,7 @@ extern "C" void cNPC_v1D(Npc_14F680* self, int unused, int killer, int x, char h
             NpcThinkList_RemoveActor(self->actor);
             b = self->actor;
             ok = b->f2D && b->f2C && !b->f2E;
-            if (ok) NpcAi_AddToDeadList(D_004EA370, &self);
+            if (ok) NpcAi_AddToDeadList(g_NpcDeadList, &self);
         }
         msg.vtable = D_004DCCF0;
         cMessage_dtor(&msg, 0);

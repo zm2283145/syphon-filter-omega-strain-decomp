@@ -22,7 +22,7 @@ extern char D_004AD088[];
 extern char D_004AD098[];
 extern char D_004AD0A8[];
 extern char D_004FFB8C[];
-extern char D_005381F0[];
+extern char g_Video[];
 extern int D_00538C60;
 extern float D_00539170[4];
 extern char D_00571DC0[];
@@ -73,7 +73,7 @@ void FrontEnd_CreateCanvas(SelfB8C0* self, int flag)
     func_00413900(D_00571DC0, D_004AD0A8);
     func_004136F0(D_00571DC0, buf);
     if (!flag) {
-        SlotB8C0* s = (SlotB8C0*)(D_005381F0 + D_00538C60 * 0x110);
+        SlotB8C0* s = (SlotB8C0*)(g_Video + D_00538C60 * 0x110);
         float* v = D_00539170;
         s->v[0] = v[0];
         s->v[1] = v[1];

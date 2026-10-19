@@ -20,7 +20,7 @@ int operator_delete(...);
 extern char D_004BD1A8;                     /* "system.cc" */
 extern char D_004BD1E8;                     /* "system.hh" */
 extern char D_004DFDE0;                     /* Receiver vtable */
-extern unsigned char D_00533880;
+extern unsigned char g_ProfileLockEnabled;
 }
 /* Receiver destructor: frees the owned buffer; deletes self when (short)flags > 0. */
 extern "C" Receiver * Receiver_Destruct(Receiver * self, long long flags) {

@@ -20,8 +20,8 @@ int PlayerSlots_Get(int);
 extern char D_004A6698;
 extern char D_004DB8D0;
 extern char D_004F7930;
-extern unsigned char D_00533880;
-extern int D_00533888;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
 
 void Global_SetPlayersCheckpoint(int arg1, int arg2) {
     struct { char * f50[9]; int f74; int f78[2]; } sl;
@@ -34,15 +34,15 @@ void Global_SetPlayersCheckpoint(int arg1, int arg2) {
         p = PlayerSlots_Get(i);
         if (p != 0) {
             len = strlen(arg2) + 1;
-            if (D_00533880 != 0) {
+            if (g_ProfileLockEnabled != 0) {
                 Alloc_Lock(9);
             }
-            D_00533888 += 1;
+            g_ProfileLockDepth += 1;
             buf = Mem_Alloc(0, len, &D_004A6698, 0x1E6);
-            if (D_00533880 != 0) {
+            if (g_ProfileLockEnabled != 0) {
                 Alloc_Unlock(9);
             }
-            D_00533888 -= 1;
+            g_ProfileLockDepth -= 1;
             String_Copy(buf, arg2);
             Event_Construct(sl.f50, &D_004F7930);
             sl.f50[0] = &D_004DB8D0;

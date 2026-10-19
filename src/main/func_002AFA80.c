@@ -18,7 +18,7 @@ struct Self_002AFA80 {
     Str_002AFA80 s174;
 };
 extern "C" {
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_004ABCD0[];
 extern char* D_0048BCF0;
 extern char D_004A7520[];
@@ -69,7 +69,7 @@ extern "C" void func_002AFA80(Self_002AFA80* self)
             G_002AFA80* g2;
             if (n) {
                 Str_002AFA80 s;
-                String_Copy(Agent_GetSelected(D_004FFB50, -1)->name, n);
+                String_Copy(Agent_GetSelected(g_Game, -1)->name, n);
                 String_CtorCStr_13B480(&s, n);
                 func_0013D680(&self->s174, &s);
                 String_Dtor(&s, 0);
@@ -93,7 +93,7 @@ extern "C" void func_002AFA80(Self_002AFA80* self)
     }
     w = FindAs_002AFA80(self, D_0048BCF0, D_004A7520);
     if (w)
-        GuiTextWidget_SetText(w, Agent_GetSelected(D_004FFB50, -1)->name, 0);
+        GuiTextWidget_SetText(w, Agent_GetSelected(g_Game, -1)->name, 0);
     SetVis_002AFA80(self, self->p168);
     SetVis_002AFA80(self, self->p16C);
     SetVis_002AFA80(self, self->pA4);

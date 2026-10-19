@@ -66,8 +66,8 @@ struct Ui_4562E0 {
 };
 extern "C" {
 extern void* D_004FFC04;
-extern unsigned char D_004FFBA0;
-extern unsigned char D_005721C8;
+extern unsigned char g_GameState;
+extern unsigned char g_IsMultiplayer;
 char* Loc_LookupText(char* key);
 int FrontEnd_OpenPopup(void* ui, int a, char* b, char* c, Self_4562E0* d, int e);
 #if 0 /* merge_units */
@@ -152,7 +152,7 @@ extern "C" void GuiStartMenu_SelectButton(Self_4562E0* self, int which)
         pg = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004C1BB0, D_004C1BC8);
         break;
     case 4:
-        if (D_005721C8) {
+        if (g_IsMultiplayer) {
             pg = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004C1BD0, D_004C1BE0);
         } else {
             pg = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004C1BD0, D_004C1BE8);
@@ -163,7 +163,7 @@ extern "C" void GuiStartMenu_SelectButton(Self_4562E0* self, int which)
         pg = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004C1BF8, D_004C1C08);
         break;
     case 6:
-        if (D_004FFBA0 != 0x13 && D_004FFBA0 != 0x14) {
+        if (g_GameState != 0x13 && g_GameState != 0x14) {
             char* t = Loc_LookupText(D_004C1C18);
             char* m = Loc_LookupText(D_004C1C28);
             if (t && m) {

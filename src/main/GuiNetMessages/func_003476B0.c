@@ -13,7 +13,7 @@ extern "C" char D_004BA2E8[];
 static void * const dat_00492B88[2] = { (void*)D_004BA2D8, (void*)0x0 };
 static void * const dat_00492B90[2] = { (void*)D_004BA2E8, (void*)0x0 };
 extern char D_004A7520[];
-extern char D_004FFB50[];
+extern char g_Game[];
 W3476B0* GuiWidget_FindChildByName(void* self, char* name);
 void* Agent_GetSelected(void* list, int idx);
 char* AgentData_GetName(void* ag);
@@ -30,9 +30,9 @@ void func_003476B0(S3476B0* o)
     W3476B0* w;
     if (o->a80) return;
     w = cast3476B0(GuiWidget_FindChildByName(o, (*(char**)dat_00492B88)));
-    if (w) GuiTextWidget_SetText(w, AgentData_GetName(Agent_GetSelected(D_004FFB50, -1)), 0);
+    if (w) GuiTextWidget_SetText(w, AgentData_GetName(Agent_GetSelected(g_Game, -1)), 0);
     w = cast3476B0(GuiWidget_FindChildByName(o, (*(char**)dat_00492B90)));
-    if (w) GuiTextWidget_SetText(w, AgentData_GetRankText(Agent_GetSelected(D_004FFB50, -1)), 0);
+    if (w) GuiTextWidget_SetText(w, AgentData_GetRankText(Agent_GetSelected(g_Game, -1)), 0);
     o->a78 = 1;
     o->a80 = 1;
 }

@@ -36,20 +36,20 @@ typedef struct {
     SubObj b;              /* +0x114 */
     char pad1B0[0x1D0 - 0x1B0];
 } Event; /* 0x1D0-byte stack object */
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_004DADF0[]; /* vtable used while tearing down */
 extern void SoundStopMsg_Ctor(Event* e, void* src, void* arg);
 extern void Event_Send(Event* e, const char* name, int enable);
 extern void FileMan_Release(SubObj* s, int flags);
 extern void cMessage_dtor(Event* e, int flags);
 
-/* Builds a temporary event from self+0x10 and arg, dispatches it as D_004FFB50, then destroys it. */
+/* Builds a temporary event from self+0x10 and arg, dispatches it as g_Game, then destroys it. */
 void func_002395A0(char* self, void* arg)
 {
     Event e;
     SoundStopMsg_Ctor(&e, self + 0x10, arg);
     e.flag = 1;
-    Event_Send(&e, D_004FFB50, 1);
+    Event_Send(&e, g_Game, 1);
     e.vtable = D_004DADF0;
     FileMan_Release(&e.b, -1);
     FileMan_Release(&e.a, -1);

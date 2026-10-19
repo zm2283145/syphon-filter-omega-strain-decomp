@@ -31,10 +31,10 @@ extern "C" void Node_ReleaseComponent58(O3CCF30* self)
 #pragma push /* merge_units */
 #pragma cplusplus on
 #include "node_world_q4.h"
-extern "C" MtxQ4 D_0055C9F0;
+extern "C" MtxQ4 g_IdentityMatrix;
 extern "C" MtxQ4 GObj_GetWorldMatrix(OwnerQ4* o)
 {
-    NODE_WORLD_Q4_BODY(o, D_0055C9F0)
+    NODE_WORLD_Q4_BODY(o, g_IdentityMatrix)
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003CCFF0 */
@@ -77,7 +77,7 @@ extern "C" void func_003CD090(V4* out, X_3CD420* x) {
 extern "C" MtxQ4 func_003CD110(OwnerQ4* o, int* flag)
 {
     *flag = 0;
-    NODE_WORLD_Q4_BODY(o, D_0055C9F0)
+    NODE_WORLD_Q4_BODY(o, g_IdentityMatrix)
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003CD110 */
@@ -88,7 +88,7 @@ extern "C" MtxQ4 func_003CD110(OwnerQ4* o, int* flag)
 
 extern "C" MtxQ4 Node_GetComponentMatrix(OwnerQ4* o)
 {
-    NODE_WORLD_Q4_BODY(o, D_0055C9F0)
+    NODE_WORLD_Q4_BODY(o, g_IdentityMatrix)
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003CD1C0 */

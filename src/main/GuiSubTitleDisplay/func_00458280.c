@@ -36,7 +36,7 @@ extern "C" void GuiSubTitleDisplay_Update();
 extern "C" void GuiSubTitleDisplay_OnSleep();
 extern "C" void GuiSubTitleDisplay_OnWake();
 extern void * const D_004E1560[];
-extern unsigned char D_00533880;
+extern unsigned char g_ProfileLockEnabled;
 }
 extern "C" char * func_00458280(char * arg0, long long arg1) {
     int temp_s2;

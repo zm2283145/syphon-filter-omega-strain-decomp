@@ -67,8 +67,8 @@ int Alloc_Lock(int);
 int Alloc_Unlock(int);
 void* Mem_Alloc(int, int, char*, int);
 int TremorList_Push(void*, void*);
-extern unsigned char D_00533880;
-extern int D_00533888;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
 extern char D_004A8EF0[];
 }
 struct Obj { char pad[0xC]; int id; };
@@ -83,15 +83,15 @@ extern "C" void VisionFx_RequestFlash(void* list, V4* col, float a, float b, flo
     Flash* f;
     Flash* q;
     Obj* const o = 0;
-    if (D_00533880 != 0) {
+    if (g_ProfileLockEnabled != 0) {
         Alloc_Lock(9);
     }
-    D_00533888 += 1;
+    g_ProfileLockDepth += 1;
     f = (Flash*)Mem_Alloc(0, 0x40, D_004A8EF0, 0x59);
-    if (D_00533880 != 0) {
+    if (g_ProfileLockEnabled != 0) {
         Alloc_Unlock(9);
     }
-    D_00533888 -= 1;
+    g_ProfileLockDepth -= 1;
     if (f != 0) {
         f->f34 = -2;
         f->f30 = 0;

@@ -40,7 +40,7 @@ struct Self391020 {
 };
 
 extern "C" {
-extern char D_0055DDA0[];
+extern char g_AgentPartCache[];
 extern char D_005711B0[];
 extern char D_004BC310[];
 
@@ -68,20 +68,20 @@ extern "C" void func_00391020(Self391020* self)
     self->x23C0 = Appearance_GetPairCount(&self->app);
     Appearance_RequestHardMesh(&self->app, 1, self->x20);
     for (i = 0; self->app.pairs[i].b; i++) {
-        TexCache_LoadPartTexture(D_0055DDA0, self->app.pairs[i].b, D_005711B0, &self->x22C0[i], &self->x2300[i]);
+        TexCache_LoadPartTexture(g_AgentPartCache, self->app.pairs[i].b, D_005711B0, &self->x22C0[i], &self->x2300[i]);
     }
     self->x22C0[i] = 0;
     n = Appearance_GetPairCount(self->x2C14);
     for (j = 0; j <= n; j++) {
-        int s = func_004027E0(D_0055DDA0, self->x2C14->pairs[j].b);
+        int s = func_004027E0(g_AgentPartCache, self->x2C14->pairs[j].b);
         if (s != -1) {
-            func_00403940(D_0055DDA0, s);
+            func_00403940(g_AgentPartCache, s);
         }
     }
     for (i = 0; i < n; i++) {
-        int s = MeshCache_FindSlot(D_0055DDA0, self->x2C14->pairs[i].a);
+        int s = MeshCache_FindSlot(g_AgentPartCache, self->x2C14->pairs[i].a);
         if (s != -1) {
-            func_00404D90(D_0055DDA0, s);
+            func_00404D90(g_AgentPartCache, s);
         }
     }
     {
@@ -161,7 +161,7 @@ static inline void merge_flush_func_00391210(void) {}
 
 /* merge_units: begin func_00391300 */
 #pragma push /* merge_units */
-extern int D_004933D0[5];
+extern int WoundEffectTable[5];
 extern unsigned char D_0053B340;
 extern unsigned char D_0053B341;
 extern unsigned char D_0053B348;
@@ -170,12 +170,12 @@ extern int Morph_FindShapeIndex(char* name, int which);
 void Expression_Init(void)
 {
     int i;
-    if (D_004933D0[0] == -1) {
-        D_004933D0[0] = 0;
+    if (WoundEffectTable[0] == -1) {
+        WoundEffectTable[0] = 0;
     }
     for (i = 1; i < 5; i++) {
-        if (D_004933D0[i] == -1) {
-            D_004933D0[i] = D_004933D0[0];
+        if (WoundEffectTable[i] == -1) {
+            WoundEffectTable[i] = WoundEffectTable[0];
         }
     }
     D_0053B340 = Morph_FindShapeIndex("EMO_SHOT", 0);

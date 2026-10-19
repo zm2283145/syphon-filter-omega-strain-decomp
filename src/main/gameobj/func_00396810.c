@@ -12,7 +12,7 @@ int Mem_Free(...);
 int func_00189F40(...);                            
 int func_0018A260(...);                            
 int func_00396910(...);                            
-extern unsigned char D_00533880;
+extern unsigned char g_ProfileLockEnabled;
 }
 extern "C" void func_00396810(int arg0, int arg1, int arg2, int arg3, char * arg4) {
     {

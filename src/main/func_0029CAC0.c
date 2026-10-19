@@ -25,7 +25,7 @@ extern "C" void GuiWidget_Draw();
 extern "C" void GuiWidget_ClearFlag4();
 extern "C" void GuiWidget_SetFlag4();
 extern "C" void func_0041F210();
-extern void * const D_004DD620[];
+extern void * const GuiOnlineConnect_vtable[];
 void* func_0044F970(void* self, short deleteFlag);
 void* func_0033D430(void* self, short deleteFlag);
 void operator_delete(void* allocation);
@@ -34,7 +34,7 @@ struct O0029CAC0 { void* vtable; char pad[0x94]; char m0[0x1C]; char m1[0x1C]; c
 extern "C" O0029CAC0* GuiOnlineConnect_dtor(O0029CAC0* self, short deleteFlag)
 {
     if (self) {
-        self->vtable = ((char*)D_004DD620);
+        self->vtable = ((char*)GuiOnlineConnect_vtable);
         func_0044F970(self->m2, -1);
         func_0044F970(self->m1, -1);
         func_0044F970(self->m0, -1);
@@ -44,4 +44,4 @@ extern "C" O0029CAC0* GuiOnlineConnect_dtor(O0029CAC0* self, short deleteFlag)
     }
     return self;
 }
-void * const D_004DD620[28] = { (void*)0x0, (void*)0x0, (void*)GuiOnlineConnect_dtor, (void*)GuiOnlineConnect_Init, (void*)GuiOnlineConnect_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiOnlineConnect_Wake, (void*)GuiOnlineConnect_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiOnlineConnect_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiOnlineConnect_Update, (void*)GuiOnlineConnect_HandleEvent, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiOnlineConnect_GetClassName, (void*)GuiOnlineConnect_IsType, (void*)func_00293890, (void*)GuiScreen_PollLobby, (void*)func_0029CB90, (void*)func_0029CBA0, (void*)0x0 };
+void * const GuiOnlineConnect_vtable[28] = { (void*)0x0, (void*)0x0, (void*)GuiOnlineConnect_dtor, (void*)GuiOnlineConnect_Init, (void*)GuiOnlineConnect_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiOnlineConnect_Wake, (void*)GuiOnlineConnect_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiOnlineConnect_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiOnlineConnect_Update, (void*)GuiOnlineConnect_HandleEvent, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiOnlineConnect_GetClassName, (void*)GuiOnlineConnect_IsType, (void*)func_00293890, (void*)GuiScreen_PollLobby, (void*)func_0029CB90, (void*)func_0029CBA0, (void*)0x0 };

@@ -41,10 +41,10 @@ struct S_2958B0 {
 
 extern "C" {
 extern Ui_2958B0* D_004FFC04;
-extern char D_004FFB50[];
-extern char D_004FFC90[];
-extern signed char D_004FFBA0;
-extern signed char D_004FFBA1;
+extern char g_Game[];
+extern char g_LevelDirName[];
+extern signed char g_GameState;
+extern signed char g_PrevGameState;
 extern char* D_0048C160[];
 extern char* D_0048B6F8;
 extern char* D_0048B700;
@@ -180,7 +180,7 @@ extern "C" int GuiCommandCenter_HandleEvent(S_2958B0* self, Msg_2958B0* msg, uns
             LevelSelect_SetLevel(ls, lvl);
             if (lvl == -1)
                 return 1;
-            strncpy(D_004FFC90, D_0048C160[lvl], 0x80);
+            strncpy(g_LevelDirName, D_0048C160[lvl], 0x80);
             scr = 0;
             if (!String_AssignCStr_1C43A0(&msg->name, D_0048B6F8)) {
                 Ui_2958B0* ui = D_004FFC04;
@@ -198,9 +198,9 @@ extern "C" int GuiCommandCenter_HandleEvent(S_2958B0* self, Msg_2958B0* msg, uns
                     ui->b35 = 1;
                     D_004FFC04->b33 = 0;
                     D_004FFC04->b34 = self->f1CC == 0x17;
-                    D_004FFBA1 = D_004FFBA0;
-                    D_004FFBA0 = 3;
-                    AgentData_SetLevelFlag(Agent_GetSelected(D_004FFB50, -1), self->f1CC + 1, 5, 0, 1);
+                    g_PrevGameState = g_GameState;
+                    g_GameState = 3;
+                    AgentData_SetLevelFlag(Agent_GetSelected(g_Game, -1), self->f1CC + 1, 5, 0, 1);
                     return 1;
                 }
             } else if (!String_AssignCStr_1C43A0(&msg->name, D_0048B708)) {
@@ -293,28 +293,28 @@ extern "C" int GuiCommandCenter_HandleEvent(S_2958B0* self, Msg_2958B0* msg, uns
             int v = msg->f10;
             switch (v) {
             case 2:
-                sprintf(buf, D_004AA248, D_004FFC90);
-                AgentData_SetLevelFlag(Agent_GetSelected(D_004FFB50, -1), self->f1CC + 1, 5, 0, 1);
+                sprintf(buf, D_004AA248, g_LevelDirName);
+                AgentData_SetLevelFlag(Agent_GetSelected(g_Game, -1), self->f1CC + 1, 5, 0, 1);
                 break;
             case 3:
                 sprintf(buf, D_004AA488, self->f324);
-                AgentData_SetLevelFlag(Agent_GetSelected(D_004FFB50, -1), self->f1CC + 1, 5, 2, 1);
+                AgentData_SetLevelFlag(Agent_GetSelected(g_Game, -1), self->f1CC + 1, 5, 2, 1);
                 break;
             case 4:
-                sprintf(buf, D_004AA268, D_004FFC90);
-                AgentData_SetLevelFlag(Agent_GetSelected(D_004FFB50, -1), self->f1CC + 1, 5, 1, 1);
+                sprintf(buf, D_004AA268, g_LevelDirName);
+                AgentData_SetLevelFlag(Agent_GetSelected(g_Game, -1), self->f1CC + 1, 5, 1, 1);
                 break;
             case 0:
                 String_Copy(buf, D_004AA490);
                 break;
             case 1:
                 String_Copy(buf, D_004AA498);
-                AgentData_SetLevelFlag(Agent_GetSelected(D_004FFB50, -1), 0x11, 5, 1, 1);
+                AgentData_SetLevelFlag(Agent_GetSelected(g_Game, -1), 0x11, 5, 1, 1);
                 break;
             default:
                 if (v >= 10000) {
                     sprintf(buf, D_004AA4A0, 0x11, v - 9999);
-                    AgentData_SetLevelFlag(Agent_GetSelected(D_004FFB50, -1), 0x12, 5, v - 10000, 1);
+                    AgentData_SetLevelFlag(Agent_GetSelected(g_Game, -1), 0x12, 5, v - 10000, 1);
                 } else
                     return 1;
                 break;
@@ -322,8 +322,8 @@ extern "C" int GuiCommandCenter_HandleEvent(S_2958B0* self, Msg_2958B0* msg, uns
             GuiCommandCenter_BonusFlags(self);
             D_004FFC04->f13C = 1;
             String_Copy(D_004FFC04->text, buf);
-            D_004FFBA1 = D_004FFBA0;
-            D_004FFBA0 = 4;
+            g_PrevGameState = g_GameState;
+            g_GameState = 4;
             return 1;
         }
         return 1;
@@ -379,7 +379,7 @@ int i;
     self->f1B0 += 33.333332f * dt;
     self->f1B0 = Math_FMod(self->f1B0, (*(float*)dat_004AA1F8));
     func_002986B0(Fabs_00296660(1.0f - 2.0f * self->f1B0 / (*(float*)dat_004AA1F8)), &col, &D_00587B90, &D_00587B80);
-    ag = Agent_GetSelected(D_004FFB50, -1);
+    ag = Agent_GetSelected(g_Game, -1);
     if (self->state == 4) {
         n = -1;
         if (self->f1CC < 0x11)
@@ -404,7 +404,7 @@ int i;
         }
     }
     if (self->state == 3 && self->p2F0) {
-        if (Agent_GetSelected(D_004FFB50, -1)->bB68)
+        if (Agent_GetSelected(g_Game, -1)->bB68)
             GuiTextWidget_SetColour(self->p2F0, &col);
         else
             GuiTextWidget_SetColour(self->p2F0, &D_00587B80);

@@ -70,7 +70,7 @@ extern "C" void func_003CE9E0();
 extern "C" void func_003CE9F0();
 extern "C" void func_003CEA00();
 extern void * const D_004DB280[];
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 void Mem_Free(int heap, void* p, char* file, int line);
 void cGameGOBJ_dtor(void* p, int flag);
 void func_001810D0(void* p, int flag);
@@ -103,7 +103,7 @@ extern "C" S_00219470* cPathedGOBJ_dtor(S_00219470* self, short flag)
             }
             Mem_Free(0, e, D_004A4550, 0x266);
         }
-        if (D_005721C8) {
+        if (g_IsMultiplayer) {
             d = self->pD0;
             if (d) {
                 if (d->c) func_002EC2A8(func_00211DA0());

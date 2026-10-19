@@ -53,7 +53,7 @@ extern char D_004C24B8[];
 extern char D_004C24C0[];
 extern char D_004C24C8[];
 extern char D_004C24D8[];
-extern char D_004FFB50[];
+extern char g_Game[];
 extern GFAB0 *D_004FFC04;
 int sprintf(char *buf, const char *fmt, ...);
 void String_Copy(char *d, const char *s);
@@ -101,7 +101,7 @@ void GuiNewParts_BuildBonusList(ObjFAB0 *o)
     int x = D_004FFC04->f25C;
     o->n = 0;
     if (x != 0) {
-        AgentFAB0 *agent = Agent_GetSelected(D_004FFB50, -1);
+        AgentFAB0 *agent = Agent_GetSelected(g_Game, -1);
         ListFAB0 list;
         char *key;
         func_00296FA0(&list);

@@ -33,15 +33,15 @@ typedef struct Obj_00167630 {
 typedef struct Sess_00167630 { Name_00167630 name; int id; } Sess_00167630;
 
 extern "C" {
-extern char D_005381F0[];
+extern char g_Video[];
 extern int D_00538C60;
 extern int D_00538C64;
 extern char D_00538C68;
 extern V4_00167630 D_00539170;
 extern long long D_004BC1B0;
 extern long long D_005392D8;
-extern int D_00533870;
-extern unsigned long long D_00533878;
+extern int g_TimerAccum;
+extern unsigned long long g_TickCounter64;
 extern Obj_00167630* D_004EE498;
 extern unsigned char D_004EE4A0;
 extern unsigned long long D_004EE4A8;
@@ -51,9 +51,9 @@ extern char D_0049C390[];
 extern char D_0049C430[];
 extern char D_0049C448[];
 extern char D_004FFB8C[];
-extern signed char D_004FFBA0;
-extern signed char D_004FFBA1;
-extern float D_0055A280;
+extern signed char g_GameState;
+extern signed char g_PrevGameState;
+extern float g_TextColourBlock;
 extern float D_0055A284;
 extern float D_0055A288;
 extern float D_0055A28C;
@@ -82,15 +82,15 @@ void Net_RetryConnect(Sess_00167630* s);
 void func_00169390(void* p);
 }
 
-#define RS_00167630 ((Rs_00167630*)D_005381F0)
-#define SLOT_00167630(i) ((Slot_00167630*)(D_005381F0 + (i) * 0x110))
+#define RS_00167630 ((Rs_00167630*)g_Video)
+#define SLOT_00167630(i) ((Slot_00167630*)(g_Video + (i) * 0x110))
 
 static inline void UM_00167630(void* m) { int t; __asm__ volatile("sqc2 vf0, 0x30(%1); qmfc2.ni %0, vf0; pcpyud %0, %0, zero; sq %0, 0x10(%1); pexcw %0, %0; sq %0, 0x20(%1); pcpyud %0, %0, zero; sq %0, 0(%1)" : "=&r"(t) : "r"(m) : "memory"); }
 static inline void QR_00167630(void* d, void* s) { __int128 qa, qb; __asm__ volatile("lq %0, 0x0(%3); lq %1, 0x10(%3); sq %0, 0x0(%2); lq %0, 0x20(%3); sq %1, 0x10(%2); lq %1, 0x30(%3); sq %0, 0x20(%2); sq %1, 0x30(%2)" : "=&r"(qa), "=&r"(qb) : "r"(d), "r"(s) : "memory"); }
 
 static inline unsigned long long Now_00167630(void)
 {
-    return D_00533878 + (unsigned int)(int)((float)(unsigned int)(*(volatile int*)0x10000800 + D_00533870) / 5.76f);
+    return g_TickCounter64 + (unsigned int)(int)((float)(unsigned int)(*(volatile int*)0x10000800 + g_TimerAccum) / 5.76f);
 }
 
 struct V4c_00167630 {
@@ -100,7 +100,7 @@ struct V4c_00167630 {
 
 static inline void SetCol_00167630(const V4c_00167630& c)
 {
-    D_0055A280 = c.x;
+    g_TextColourBlock = c.x;
     D_0055A284 = c.y;
     D_0055A288 = c.z;
     D_0055A28C = c.w;
@@ -124,11 +124,11 @@ extern "C" void GameFlow_EnterMpLobby(void* arg)
         if (!(FileMan_FindMember(ar) & 0xFF)) {
             int h = Archive_Open(D_004FFB8C, path, 0, 0);
             void* p;
-            if (D_00533880) Alloc_Lock(9);
-            D_00533888++;
+            if (g_ProfileLockEnabled) Alloc_Lock(9);
+            g_ProfileLockDepth++;
             p = Mem_Alloc(0, 0x58, D_0049C390, 0x567);
-            if (D_00533880) Alloc_Unlock(9);
-            D_00533888--;
+            if (g_ProfileLockEnabled) Alloc_Unlock(9);
+            g_ProfileLockDepth--;
             if (p) p = func_0027B900(p, h, D_0049C448);
             D_004EE498 = (Obj_00167630*)p;
             func_0027B680(D_004EE498);
@@ -159,7 +159,7 @@ extern "C" void GameFlow_EnterMpLobby(void* arg)
     UM_00167630(&RS_00167630->mtx[D_00538C64]);
     D_00538C68 = 1;
     D_005392D8 = D_004BC1B0;
-    Video_BeginFrame(D_005381F0);
+    Video_BeginFrame(g_Video);
     {
         V4c_00167630 c(1.0f, 1.0f, 0.0f, 1.0f);
         SetCol_00167630(c);
@@ -194,16 +194,16 @@ extern "C" void GameFlow_EnterMpLobby(void* arg)
         }
         {
             Obj_00167630* o;
-            D_004FFBA1 = D_004FFBA0;
+            g_PrevGameState = g_GameState;
             o = D_004EE498;
-            D_004FFBA0 = 0xE;
-            if (D_00533880) Alloc_Lock(9);
-            D_00533888++;
+            g_GameState = 0xE;
+            if (g_ProfileLockEnabled) Alloc_Lock(9);
+            g_ProfileLockDepth++;
             func_0027B690(o, -1);
             Mem_Free(0, o, D_0049C390, 0x5A2);
-            if (D_00533880) Alloc_Unlock(9);
+            if (g_ProfileLockEnabled) Alloc_Unlock(9);
             D_004EE498 = 0;
-            D_00533888--;
+            g_ProfileLockDepth--;
         }
     }
 }

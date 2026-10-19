@@ -16,10 +16,10 @@ typedef union WeaponScriptArg {
     void* p;
 } WeaponScriptArg;
 
-/* Weapon definition, looked up by id in the table at D_004FFD30. */
+/* Weapon definition, looked up by id in the table at g_WeaponDatabase. */
 typedef struct WeaponDef {
     char pad00[0x30];
-    unsigned char unk30;     /* 0x30: index into the D_00489D60 byte table */
+    unsigned char unk30;     /* 0x30: index into the WeaponClassToSlot byte table */
     char pad31[0x48 - 0x31];
     signed char equipMode;   /* 0x48: 6 means no weapon selected */
     char pad49[0x70 - 0x49];
@@ -61,7 +61,7 @@ typedef struct WeaponRec24Vec {
     WeaponRec24* data;
 } WeaponRec24Vec;
 
-extern void* D_004FFD30;     /* weapon definition table */
+extern void* g_WeaponDatabase;     /* weapon definition table */
 extern WeaponDef* WeaponDb_Get(void* table, int id);
 
 #endif

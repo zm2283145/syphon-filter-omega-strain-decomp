@@ -5,15 +5,15 @@ int Event_Construct(Msg_5140*, void*);
 int Event_Send(Msg_5140*, void*, int);
 Hum_5140* GObj_IdentityB(int);
 int cMessage_dtor(Msg_5140*, int);
-extern int D_0049D010;
+extern int g_HumanActorClassKey;
 extern char D_004DA9D0[];
 extern char D_004DCF10[];
 extern char D_004EEE98[];
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 static inline void Set_5140(Hum_5140* self, unsigned char value, int silent) {
     Msg_5140 msg;
     self->value = value;
-    if (D_005721C8 && !silent) {
+    if (g_IsMultiplayer && !silent) {
         Event_Construct(&msg, D_004EEE98);
         msg.vtable = D_004DA9D0;
         msg.extra = 1;
@@ -34,7 +34,7 @@ unsigned char v;
 Hum_5140* g;
     v = args[1] != 0;
     g = GObj_IdentityB(args[0]);
-    if (g && g->classKey == D_0049D010) { s = g; Set_5140(s, v, 0); }
+    if (g && g->classKey == g_HumanActorClassKey) { s = g; Set_5140(s, v, 0); }
     return 0;
 }
 #pragma pop

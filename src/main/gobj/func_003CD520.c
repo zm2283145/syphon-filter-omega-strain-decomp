@@ -1,8 +1,8 @@
 #pragma cplusplus on
 #include "types.h"
 #include "node_world_q4.h"
-extern "C" MtxQ4 D_0055C9F0;
+extern "C" MtxQ4 g_IdentityMatrix;
 extern "C" MtxQ4 Node_GetWorldMatrix(OwnerQ4* o)
 {
-    NODE_WORLD_Q4_BODY(o, D_0055C9F0)
+    NODE_WORLD_Q4_BODY(o, g_IdentityMatrix)
 }

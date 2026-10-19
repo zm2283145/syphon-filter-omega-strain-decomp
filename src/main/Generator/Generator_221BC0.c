@@ -202,7 +202,7 @@ extern char D_004A4A90[];
 extern int D_004F56B8;
 extern int D_005721A8;
 extern unsigned char D_005721C0;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 void cGOBJ_ctor(Gen_221D20* o, int* id, int kind, void* info);
 Rel_221D20* func_001365E0(Rel_221D20* r);
 void func_00222B60(List_221D20* l);
@@ -348,11 +348,11 @@ extern "C" Gen_221D20* cGenerator_ctor(Gen_221D20* self, Reader_221D20* r)
     self->bD1 = 0;
     self->fB8 = 256.0f;
     self->id10 = id;
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         self->bD3 = 0;
         self->maskCC = act ? 0xFF : 0;
         NetMap_BindReceiver(self->id10, HostId_221D20(), self);
-        if (D_005721C8 ? D_005721C0 : 1) {
+        if (g_IsMultiplayer ? D_005721C0 : 1) {
             func_0043B190(&ctx);
             func_004398E0(&ctx, &id, -1);
         }

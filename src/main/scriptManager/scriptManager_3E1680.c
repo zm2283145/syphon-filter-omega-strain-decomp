@@ -60,8 +60,8 @@ int func_003E1980(char * );
 int func_003E19D0(char * );                            
 extern char D_004BD4C0;
 extern char D_004BD890;
-extern unsigned char D_00533880;
-extern int D_00533888;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
 
 int ScriptMgr_LoadScript(char * arg0, int arg1, int arg2) {
     char * sp5C;
@@ -72,15 +72,15 @@ int ScriptMgr_LoadScript(char * arg0, int arg1, int arg2) {
     var_s2 = 1;
     if (func_003E12D0() == 0) {
         temp_s0 = func_003E11C0(arg0, arg1, &D_004BD890, arg2);
-        if (D_00533880 != 0) {
+        if (g_ProfileLockEnabled != 0) {
             Alloc_Lock(9);
         }
-        D_00533888 += 1;
+        g_ProfileLockDepth += 1;
         temp_s2 = Mem_Alloc(0, 0x90, &D_004BD4C0, 0x144);
-        if (D_00533880 != 0) {
+        if (g_ProfileLockEnabled != 0) {
             Alloc_Unlock(9);
         }
-        D_00533888 -= 1;
+        g_ProfileLockDepth -= 1;
         if (temp_s2 != NULL) {
             func_003E19D0(temp_s2);
             func_003E1980(temp_s2 + 0x10);

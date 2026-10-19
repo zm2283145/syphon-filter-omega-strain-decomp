@@ -36,8 +36,8 @@ char * DisplayActor_Construct(...);
 int GuiWidget_Init(...);                                  
 extern char D_004BBA20;
 extern char D_004DA470;
-extern unsigned char D_00533880;
-extern char D_0055C9F0;
+extern unsigned char g_ProfileLockEnabled;
+extern char g_IdentityMatrix;
 }
 #pragma push
 #pragma opt_common_subs off
@@ -58,7 +58,7 @@ extern "C" void GuiAgentDisplay_Init(char * arg0) {
         F_(temp_s1, 0x0, int) = (int)(&D_004DA470);
         F_(temp_s1, 0x60, int) = 0;
         F_(temp_s1, 0x64, int) = 0;
-        Object_AttachTransform(temp_s1, &D_0055C9F0, 0);
+        Object_AttachTransform(temp_s1, &g_IdentityMatrix, 0);
         F_(temp_s1, 0x30, int) = 0;
     }
     F_(arg0, 0x90, int) = (int)(temp_s1);
@@ -93,13 +93,13 @@ DEFINE_TRIVIAL_DTOR(func_00364540)
 #pragma cplusplus on
 struct V3 { float x, y, z; V3() {} V3(float a, float b, float c) { x = a; y = b; z = c; } } __attribute__((aligned(16)));
 struct S364590 { void* vtable; char pad4[0x44]; int unk48; char pad4C[0x34]; V3 v80; char pad90[0x4E0 - 0x90]; float f4E0; };
-extern "C" char D_004DF530[];
+extern "C" char GuiAgentDisplay_vtable[];
 extern "C" void GuiWidget_ctor(S364590* self);
 extern "C" S364590* GuiAgentDisplay_ctor(S364590* self) {
     V3 t;
     float z;
     GuiWidget_ctor(self);
-    self->vtable = D_004DF530;
+    self->vtable = GuiAgentDisplay_vtable;
     t.x = 0.0f; t.y = 0.0f; t.z = 3.1415927f;
     VCopyF(&self->v80, &t);
     z = 0.0f;

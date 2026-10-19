@@ -1,6 +1,6 @@
 /*
  * Matched functions (byte-identical with the retail executable).
- * GuiAgentInfo virtual (vtable D_004DF350 slot 12); extends the base handler
+ * GuiAgentInfo virtual (vtable GuiAgentInfo_vtable slot 12); extends the base handler
  * GuiScreen_Update.
  */
 

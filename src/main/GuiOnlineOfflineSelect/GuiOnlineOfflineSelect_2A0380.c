@@ -147,7 +147,7 @@ extern Mgr_002A05B0* D_004FFC04;
 #define D_004FFC04 (*(Mgr_002A05B0 **)&D_004FFC04) /* merge_units */
 
 extern unsigned char D_0051EEA0;
-extern G_002A05B0* D_0055A830;
+extern G_002A05B0* g_MemCard;
 void GuiWidget_Update(Self_002A05B0* self);
 Ctl_002A05B0* GuiWidget_FindChildByName(Self_002A05B0* self, char* name);
 #if 0 /* merge_units */
@@ -176,7 +176,7 @@ extern "C" void GuiOnlineOfflineSelect_Update(Self_002A05B0* self)
             w->flags &= ~4;
             return;
         }
-        hide = D_0055A830->b59D && !D_0051EEA0;
+        hide = g_MemCard->b59D && !D_0051EEA0;
         if (!hide && Gui_GetScreenStack()->p20 == w) {
             GuiScreen_SetFocus(Gui_GetScreenStack(), w->h->Make(w, 1));
         }
@@ -213,9 +213,9 @@ extern Mgr_002A06C0* D_004FFC04;
 
 extern unsigned char D_0051EEA8;
 #if 0 /* merge_units */
-extern G_002A06C0* D_0055A830;
+extern G_002A06C0* g_MemCard;
 #endif /* merge_units */
-#define D_0055A830 (*(G_002A06C0 **)&D_0055A830) /* merge_units */
+#define g_MemCard (*(G_002A06C0 **)&g_MemCard) /* merge_units */
 
 void GuiWidget_BaseWake(Self_002A06C0* self);
 void FrontEnd_SetMusic(Mgr_002A06C0* m, int a);
@@ -260,7 +260,7 @@ extern "C" void GuiOnlineOfflineSelect_Wake(Self_002A06C0* self)
             w->flags &= ~4;
             return;
         }
-        hide = D_0055A830->b59D && !D_0051EEA0;
+        hide = g_MemCard->b59D && !D_0051EEA0;
         if (!hide && Gui_GetScreenStack()->p20 == w) {
             GuiScreen_SetFocus(Gui_GetScreenStack(), w->h->Make(w, 1));
         }
@@ -268,7 +268,7 @@ extern "C" void GuiOnlineOfflineSelect_Wake(Self_002A06C0* self)
     }
 }
 #undef D_004FFC04 /* merge_units */
-#undef D_0055A830 /* merge_units */
+#undef g_MemCard /* merge_units */
 #undef GuiWidget_FindChildByName /* merge_units */
 #undef Gui_GetScreenStack /* merge_units */
 #undef GuiScreen_SetFocus /* merge_units */
@@ -297,9 +297,9 @@ extern Mgr_002A0860* D_004FFC04;
 #define D_004FFC04 (*(Mgr_002A0860 **)&D_004FFC04) /* merge_units */
 
 #if 0 /* merge_units */
-extern G_002A0860* D_0055A830;
+extern G_002A0860* g_MemCard;
 #endif /* merge_units */
-#define D_0055A830 (*(G_002A0860 **)&D_0055A830) /* merge_units */
+#define g_MemCard (*(G_002A0860 **)&g_MemCard) /* merge_units */
 
 #if 0 /* merge_units */
 void GuiWidget_Update(Self_002A0860* self);
@@ -341,7 +341,7 @@ extern "C" void GuiOnlineOfflineSelect_UpdateOnline(Self_002A0860* self)
             w->flags &= ~4;
             return;
         }
-        hide = D_0055A830->b59D && !D_0051EEA0;
+        hide = g_MemCard->b59D && !D_0051EEA0;
         if (!hide && Gui_GetScreenStack()->p20 == w) {
             GuiScreen_SetFocus(Gui_GetScreenStack(), w->h->Make(w, 1));
         }
@@ -349,7 +349,7 @@ extern "C" void GuiOnlineOfflineSelect_UpdateOnline(Self_002A0860* self)
     }
 }
 #undef D_004FFC04 /* merge_units */
-#undef D_0055A830 /* merge_units */
+#undef g_MemCard /* merge_units */
 #undef GuiWidget_Update /* merge_units */
 #undef GuiWidget_FindChildByName /* merge_units */
 #undef Gui_GetScreenStack /* merge_units */

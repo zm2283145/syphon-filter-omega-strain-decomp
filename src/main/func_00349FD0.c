@@ -4,7 +4,7 @@ struct V_49FD0 { virtual int v0(); virtual int v1(); virtual int v2(); virtual i
 typedef struct { void* vt; char f4[0x44]; void* f48; } O_49FD0;
 typedef struct { char pad[0x25C]; int f25c; int f260; } G_49FD0;
 extern "C" {
-extern char D_004FFB50[];
+extern char g_Game[];
 extern G_49FD0* D_004FFC04;
 extern char D_004BA5C8[];
 extern char D_004BA5D0[];
@@ -39,7 +39,7 @@ void GuiDossiers_Select(O_49FD0* o, int idx);
 void GuiDossiers_Select(O_49FD0* o, int idx)
 {
     int id = GuiTextListWidget_GetItemId(o->f48);
-    if (id == -1 || !AgentData_IsDossierOpen(Agent_GetSelected(D_004FFB50, -1), id)) {
+    if (id == -1 || !AgentData_IsDossierOpen(Agent_GetSelected(g_Game, -1), id)) {
         GuiWidget_SendEvent(o, Gui_GetScreenStack(), 0x10, 4, 0);
         return;
     }

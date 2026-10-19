@@ -83,14 +83,14 @@ static inline void merge_flush_func_0024FC90(void) {}
 #define NULL 0
 #define VC_(p) ((int (*)())(p))
 #pragma mpwc_relax on
-extern char D_0049F790;
+extern char SecondaryStateTable;
 
 int Secondary_StatesAllowFire(char * arg0) {
     int var_v0;
 
-    var_v0 = F_((&D_0049F790 + (F_(arg0, 0x310, unsigned char) * 0x50)), 0x4C, unsigned char) != 0;
+    var_v0 = F_((&SecondaryStateTable + (F_(arg0, 0x310, unsigned char) * 0x50)), 0x4C, unsigned char) != 0;
     if (var_v0 != 0) {
-        var_v0 = F_((&D_0049F790 + (F_(arg0, 0x311, unsigned char) * 0x50)), 0x4C, unsigned char) != 0;
+        var_v0 = F_((&SecondaryStateTable + (F_(arg0, 0x311, unsigned char) * 0x50)), 0x4C, unsigned char) != 0;
     }
     return var_v0;
 }

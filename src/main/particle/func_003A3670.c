@@ -11,7 +11,7 @@ typedef struct { int pad; PNode header; } PList;
 struct PLib { int pad0; PList defs; };
 struct PBuf { void* p; int n; int pad[2]; };
 extern "C" {
-extern int D_00539248;
+extern int g_TextureMgr;
 extern PBuf D_0053B560[4];
 extern char D_004BC5D0[];
 void func_003A3900(PIt* out, PList* l);
@@ -33,7 +33,7 @@ void func_003A3670(PLib* lib)
     it = *(PItU*)&b;
     while (End_(&e, &lib->defs), it.n != e.n) {
         PDef* d = it.n->d;
-        Tex_Release(D_00539248, d->tex, 0);
+        Tex_Release(g_TextureMgr, d->tex, 0);
         {
             AllocGuard g;
             d->Destroy(-1);

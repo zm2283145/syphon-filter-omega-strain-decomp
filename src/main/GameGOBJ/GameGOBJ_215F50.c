@@ -17,7 +17,7 @@ int Mem_Free();
 extern "C" {
 extern char D_004DB040[];
 extern char D_004A4550[];
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 void func_002EC2A8(int a);
 void** func_002151B0(void* v, int i);
 void FileMan_Release(void* p, int flag);
@@ -54,7 +54,7 @@ extern "C" cElevatorGOBJ* cElevatorGOBJ_dtor(cElevatorGOBJ* self, short flag)
     if (self) {
         int i;
         self->vt = D_004DB040;
-        if (D_005721C8) {
+        if (g_IsMultiplayer) {
             ElevHandle* d = self->p128;
             if (d) {
                 if (d->c) func_002EC2A8(d->h);
@@ -251,8 +251,8 @@ struct In2_216580 {
 struct LiftMsg_216580 { void* vtable; char base[0x1C]; unsigned char b20; char pad21[3]; int kind; int floor; int from; int to; char pad34[0xC]; };
 extern "C" {
 extern unsigned char D_005721C0;
-extern int D_004F5440;
-extern int D_0055A1D8;
+extern int g_TriggerMsgKey;
+extern int g_CasEventMsgClass;
 extern char D_004DAF10[];
 int* Event_GetType(void* ev);
 void Event_Construct(void* m, void* type);
@@ -277,7 +277,7 @@ void func_003E6690(Obj_216580* o, int f);
 int Object_HandleMessage(cInteractGOBJ_216580* self, void* ev);
 }
 static inline void* At_216580(Rel_216580* r, unsigned int i) { return r->c[i]; }
-static inline int IsAuth_216580(void) { return D_005721C8 ? D_005721C0 : 1; }
+static inline int IsAuth_216580(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
 static inline int ObjId_216580(Obj_216580* o) { return o ? o->id : 0; }
 static inline void Free_216580(Msg_216580* p, int line)
 {
@@ -288,7 +288,7 @@ static inline void Free_216580(Msg_216580* p, int line)
 extern "C" int cInteractGOBJ_v01(cInteractGOBJ_216580* self, In_216580* m)
 {
     int t = *Event_GetType(m);
-    if (t == D_004F5440) {
+    if (t == g_TriggerMsgKey) {
         if (!self->xBC) {
             int id = m->id;
             Obj_216580* o = Object_LookupById(&id);
@@ -311,7 +311,7 @@ extern "C" int cInteractGOBJ_v01(cInteractGOBJ_216580* self, In_216580* m)
         return 1;
     }
     t = *Event_GetType(m);
-    if (t == D_0055A1D8) {
+    if (t == g_CasEventMsgClass) {
         In2_216580* m2 = (In2_216580*)m;
         switch (m2->kind) {
         case 14:
@@ -342,7 +342,7 @@ extern "C" int cInteractGOBJ_v01(cInteractGOBJ_216580* self, In_216580* m)
                 LiftMsg_216580 msg;
                 Obj_216580* w = m2->who;
                 LiftMsg_216580* p = &msg;
-                Event_Construct(p, &D_004F5440);
+                Event_Construct(p, &g_TriggerMsgKey);
                 msg.floor = 0;
                 msg.vtable = D_004DAF10;
                 msg.kind = 3;
@@ -378,7 +378,7 @@ extern "C" int cInteractGOBJ_v01(cInteractGOBJ_216580* self, In_216580* m)
                 LiftMsg_216580 msg;
                 Obj_216580* w = m2->who;
                 LiftMsg_216580* p = &msg;
-                Event_Construct(p, &D_004F5440);
+                Event_Construct(p, &g_TriggerMsgKey);
                 msg.floor = 0;
                 msg.vtable = D_004DAF10;
                 msg.kind = 2;

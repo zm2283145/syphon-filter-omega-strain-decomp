@@ -6,8 +6,8 @@
 #include "types.h"
 #include "man_types.h"
 
-extern int D_004933D0[256];
+extern int WoundEffectTable[256];
 
 void WoundEffectIds_Set(int index, int value) {
-    D_004933D0[index & 0xFF] = value;
+    WoundEffectTable[index & 0xFF] = value;
 }

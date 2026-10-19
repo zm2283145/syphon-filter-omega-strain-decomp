@@ -15,7 +15,7 @@ struct L4B50 {
 
 typedef struct { char pad0[0x48]; void* tbl; char pad4C[0x84 - 0x4C]; unsigned char kind; char pad85[3]; int arg; } O4B50;
 
-extern "C" char D_004FFB50[];
+extern "C" char g_Game[];
 extern "C" const char* D_0048C160[];
 extern "C" void func_00296F20(L4B50* l);
 extern "C" void func_00299270(L4B50* l, int flags);
@@ -29,7 +29,7 @@ extern "C" void GuiTextListWidget_AddItem(void* t, int id, int i, int mode);
 /* The inline size() keeps the loop-entry test on the stack slot; enum constants keep the 0/1 select as branches. */
 extern "C" void GuiPersonnelMenu_Fill(O4B50* self)
 {
-    void* ag = Agent_GetSelected(D_004FFB50, -1);
+    void* ag = Agent_GetSelected(g_Game, -1);
     L4B50 l;
     int text;
     int i;

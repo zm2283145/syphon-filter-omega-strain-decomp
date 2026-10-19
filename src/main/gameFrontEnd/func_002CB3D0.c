@@ -51,18 +51,18 @@ extern char D_004AD000[];
 extern char D_004AD010[];
 extern char D_004AD020[];
 extern char D_004AD038[];
-extern char D_005381F0[];
+extern char g_Video[];
 extern int D_00538C60;
 extern float D_00539170[4];
-extern char D_004FFC90[];
+extern char g_LevelDirName[];
 extern char D_004ACF48[];
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_004F2CC0[];
 extern char D_004F5370[];
 extern char D_004F5378[];
 extern char D_004DE220[];
 extern char D_004DE200[];
-extern int D_004FFD30;
+extern int g_WeaponDatabase;
 extern char D_0055A700[];
 void FrontEnd_ResumeGui(Self3D0* self);
 void FrontEnd_CreateCanvas(Self3D0* self, unsigned char flag);
@@ -119,7 +119,7 @@ extern "C" void FrontEnd_StartGui(Self3D0* self, unsigned char flag)
         Msg3D0 m1;
         Msg3D0 m2;
         {
-            Slot3D0* s = (Slot3D0*)(D_005381F0 + D_00538C60 * 0x110);
+            Slot3D0* s = (Slot3D0*)(g_Video + D_00538C60 * 0x110);
             float* v = D_00539170;
             s->v[0] = v[0];
             s->v[1] = v[1];
@@ -140,7 +140,7 @@ extern "C" void FrontEnd_StartGui(Self3D0* self, unsigned char flag)
         self->x30C = -1;
         {
             char* d = buf.s;
-            const char* s = D_004FFC90;
+            const char* s = g_LevelDirName;
             int n = 0;
             while ((*d++ = *s++) != 0) {
                 if (++n >= 0x7E) {
@@ -152,8 +152,8 @@ extern "C" void FrontEnd_StartGui(Self3D0* self, unsigned char flag)
             }
             buf.len = n;
         }
-        strncpy(D_004FFC90, D_004ACF48, 0x80);
-        svc = Service_Lookup(D_004FFB50, D_004F2CC0);
+        strncpy(g_LevelDirName, D_004ACF48, 0x80);
+        svc = Service_Lookup(g_Game, D_004F2CC0);
         Event_Construct(&m1, D_004F5370);
         m1.vt = D_004DE220;
         Event_Send(&m1, svc, 1);
@@ -164,7 +164,7 @@ extern "C" void FrontEnd_StartGui(Self3D0* self, unsigned char flag)
         Event_Send(&m2, svc, 1);
         m2.vt = D_004DE200;
         cMessage_dtor(&m2, 0);
-        strncpy(D_004FFC90, buf.s, 0x80);
+        strncpy(g_LevelDirName, buf.s, 0x80);
         {
             Stk3D0* a = Gui_GetScreenStack();
             GuiWidget_SendEvent(a, Gui_GetScreenStack(), 0x10, 5, 0);
@@ -182,7 +182,7 @@ extern "C" void FrontEnd_StartGui(Self3D0* self, unsigned char flag)
             next = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AD000, D_004AD010);
         }
         func_002C9EE0(self);
-        func_00145160(D_004FFD30);
+        func_00145160(g_WeaponDatabase);
         FrontEnd_SetLoadingScreen(self, 0, 0, 0);
         if (had) DME_StopThread();
         Gui_GetScreenStack()->Push(next, 0);

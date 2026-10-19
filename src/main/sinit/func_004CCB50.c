@@ -1,11 +1,11 @@
 #include "types.h"
-extern char* D_004F5440;
+extern char* g_TriggerMsgKey;
 extern char D_004A4670[];
 extern char* D_004F5448;
 extern char D_004A4690[];
 extern char* D_004F5450;
 extern char D_004A46B0[];
-extern char* D_004F5468;
+extern char* g_GameGobjClassWord;
 extern char D_004A46C8[];
 extern char func_00144930[];
 extern char D_004F5458[];
@@ -205,11 +205,11 @@ extern int Script_RegisterNative();
 extern int ScriptEnum_Register();
 void StaticInit_RegisterLift(void)
 {
-    D_004F5440 = D_004A4670;
+    g_TriggerMsgKey = D_004A4670;
     D_004F5448 = D_004A4690;
     D_004F5450 = D_004A46B0;
-    D_004F5468 = D_004A46C8;
-    __register_global_object(&D_004F5468, func_00144930, D_004F5458);
+    g_GameGobjClassWord = D_004A46C8;
+    __register_global_object(&g_GameGobjClassWord, func_00144930, D_004F5458);
     D_004F5490 = Script_RegisterNative_2(Script_CreateBlast, D_00493880, D_004A46D0, 5, cGOBJ_GetScriptTypeKeyPtr(), D_00493888, D_00493890, D_00493890, D_00493890);
     D_004F5498 = Script_RegisterNative_2(Script_CreateBlast_2, D_00493880, D_004A46D0, 6, cGOBJ_GetScriptTypeKeyPtr(), D_00493888, D_00493890, D_00493890, D_00493890, D_00493878);
     D_004F54B8 = D_004A46E0;

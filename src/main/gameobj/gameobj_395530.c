@@ -160,7 +160,7 @@ struct S00395910 {
     unsigned char f1F2;
     unsigned char f1F3;
 };
-extern "C" char D_0055C9F0[];
+extern "C" char g_IdentityMatrix[];
 extern "C" int func_00395910(S00395910* p) {
     p->f68 = 0;
     p->f70 = 0;
@@ -170,7 +170,7 @@ extern "C" int func_00395910(S00395910* p) {
     p->f1EC = 0;
     p->f1F2 = 0;
     p->f1F3 = 0;
-    return p->Set(D_0055C9F0, 0);
+    return p->Set(g_IdentityMatrix, 0);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00395910(void) {}

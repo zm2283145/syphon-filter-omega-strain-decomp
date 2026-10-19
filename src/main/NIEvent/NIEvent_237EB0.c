@@ -184,12 +184,12 @@ extern "C" Light_7F80* cNIEventLight_ctor(Light_7F80* self, Reader_7F80* r)
     self->f60 = 7;
     ReadId_7F80(r, (int*)&id);
     self->idC = id;
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         self->id10 = self->idC;
         {
             int t = self->id10;
             int a = D_005721A8; int rr = 0;
-            if (*(volatile unsigned char*)&D_005721C8) { if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, a); rr = D_00494178; } else { asm { .set reorder } }
+            if (*(volatile unsigned char*)&g_IsMultiplayer) { if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, a); rr = D_00494178; } else { asm { .set reorder } }
             NetMap_BindReceiver(t, rr, self);
         }
     }

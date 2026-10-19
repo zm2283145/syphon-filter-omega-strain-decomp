@@ -44,7 +44,7 @@ extern int D_004F5760;
 extern char Script_cGenerator_ResetPulse[];
 extern int D_004F5768;
 extern signed char D_004EA0C8;
-extern char* D_004EA0B0;
+extern char* g_LosCheckService;
 extern int __register_global_object();
 extern int Script_RegisterType();
 extern int func_0014A6A0();
@@ -79,7 +79,7 @@ void func_004CD730(void)
     D_004F5760 = Script_RegisterNative(D_004F5710, Script_cGenerator_SetMinSpawnDistance, D_00493880, "SetMinSpawnDistance", 2, &D_004F5710, D_00493890);
     D_004F5768 = Script_RegisterNative(D_004F5710, Script_cGenerator_ResetPulse, D_00493880, "ResetPulse", 1, &D_004F5710);
     if (!D_004EA0C8) {
-    D_004EA0B0 = "LOS Manager";
+    g_LosCheckService = "LOS Manager";
     D_004EA0C8 = 1;
     }
 }

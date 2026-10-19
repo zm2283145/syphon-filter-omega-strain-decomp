@@ -13,7 +13,7 @@ struct Vec_288510 { int m0; int size; char** data; unsigned char owns; int Size(
 struct Mc_288510 { char pad[0x59D]; unsigned char a; unsigned char b; unsigned char c; };
 struct Wrap_288510 { Mc_288510* p; };
 extern "C" {
-extern Wrap_288510 D_0055A830;
+extern Wrap_288510 g_MemCard;
 extern char D_00499C70[];
 Vec_288510* func_002888C0(Vec_288510* v);
 void func_002887C0(Vec_288510* v, short del);
@@ -24,7 +24,7 @@ int AgentFile_DecodeName(const unsigned char* in, char* out, int* digit, int max
 }
 extern "C" unsigned char GuiTitleScreen_SavedAgentExists(void)
 {
-    Wrap_288510* w = &D_0055A830;
+    Wrap_288510* w = &g_MemCard;
     unsigned char ok = (w->p->a && w->p->b) && w->p->c;
     if (ok) {
         Vec_288510 v;

@@ -35,7 +35,7 @@ extern void func_001BB080(Node0022E4F0** out, void* map, int* key);
 extern void func_0021D360(void* out, void* map);
 extern void func_0021D350(Node0022E4F0** out, void* in);
 extern char D_004DB8B0[];
-extern char D_004F7938[];
+extern char g_NotifyCheckpointMsgClass[];
 extern unsigned char D_005721D0;
 }
 static inline int Eq0022E4F0(Node0022E4F0* a, Node0022E4F0* b) { return a == b; }
@@ -52,7 +52,7 @@ extern "C" int func_0022E4F0(int a0, int a1, int a2, Arg0022E4F0* arg) {
         Node0022E4F0* it[1];
         int tmp[1];
         Node0022E4F0* n;
-        Event_Construct(&e, D_004F7938);
+        Event_Construct(&e, g_NotifyCheckpointMsgClass);
         e.vt = D_004DB8B0;
         k[0] = a->a4;
         func_001BB080(it, D_0055C7A0, k);

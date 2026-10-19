@@ -75,7 +75,7 @@ ss = &r; pv = &d; asm { mtc1 $zero, ret } dd = &d; x = *(__int128*)ss; *(__int12
 
 #include "scriptUtils_types.h"
 
-extern char* D_004FFC2C;
+extern char* g_Hud;
 extern void* GObj_IdentityB(void* obj);
 extern int Global_ClearCallout(char* obj);
 extern int Global_ClearCallout_2(CalloutOwner* obj);
@@ -88,7 +88,7 @@ int Script_ClearCallout_2(ScriptArg* args) {
 }
 
 int Global_ClearCallout_2(CalloutOwner* obj) {
-    return Hud_ClearCallout(D_004FFC2C, obj->callout + 12, 0, 0, 1);
+    return Hud_ClearCallout(g_Hud, obj->callout + 12, 0, 0, 1);
 }
 
 int Script_ClearCallout(ScriptArg* args) {
@@ -97,7 +97,7 @@ int Script_ClearCallout(ScriptArg* args) {
 }
 
 int Global_ClearCallout(char* obj) {
-    return Hud_ClearCallout(D_004FFC2C, obj + 12, 0, 0, 1);
+    return Hud_ClearCallout(g_Hud, obj + 12, 0, 0, 1);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00267F90 */

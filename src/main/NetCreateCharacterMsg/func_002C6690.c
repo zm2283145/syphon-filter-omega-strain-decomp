@@ -61,8 +61,8 @@ struct Actor {
 };
 extern "C" {
 extern char D_004AC940[];
-extern char D_0055D480[];
-extern char D_0055D4E0[];
+extern char g_ActorActionMsgClass[];
+extern char g_TeleportMsgClass[];
 extern char D_004E0840[];
 extern char D_004E01E0[];
 extern char D_004E0120[];
@@ -120,7 +120,7 @@ static inline void SetEulerPos(M4u* m, const Fv& p, const Ang& r)
 
 static inline void EvInit(Ev30* e, int id, unsigned char b)
 {
-    Event_Construct(e, D_0055D480);
+    Event_Construct(e, g_ActorActionMsgClass);
     e->vt = D_004E0840;
     e->f24 = id;
     e->f28 = b;
@@ -128,7 +128,7 @@ static inline void EvInit(Ev30* e, int id, unsigned char b)
 
 static inline void Ev50Init(Ev50* e, const __int128& v, float a, float b, unsigned char k)
 {
-    Event_Construct(e, D_0055D480);
+    Event_Construct(e, g_ActorActionMsgClass);
     e->vt = D_004E0840;
     e->f24 = 0;
     e->f28 = 0xC;
@@ -216,7 +216,7 @@ extern "C" void func_002C6690(Msg* msg, int arg1)
         {
             Ev70 e;
             Ev70* p = &e;
-            Event_Construct(p, D_0055D4E0);
+            Event_Construct(p, g_TeleportMsgClass);
             p->vt = D_004D9360;
             p->f24 = 2;
             MCopy(&p->m, &m);

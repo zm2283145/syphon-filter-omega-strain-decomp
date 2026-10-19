@@ -20,11 +20,11 @@ struct Obj_441CA0 {
 };
 
 extern "C" {
-extern char D_004FFB50[];
+extern char g_Game[];
 extern int D_004FFC04;
-extern int D_004FFBBC;
+extern int g_CardSlotId;
 extern unsigned char D_004FFBB8;
-extern Net_441CA0 D_0055A830;
+extern Net_441CA0 g_MemCard;
 extern char D_004C0448[]; extern char D_004C0458[]; extern char D_004C0468[];
 extern char D_004C0498[]; extern char D_004C04A8[]; extern char D_004C0530[];
 extern char D_004C0540[]; extern char D_004C0550[]; extern char D_004C0560[];
@@ -48,7 +48,7 @@ static inline int Open2(int mgr, int type, char* t, char* key, void* cb, int x) 
 
 extern "C" int GuiSaveAgentWidget_OnEvent(Obj_441CA0* self, void* w, int msg, int sub, void* arg)
 {
-    Net_441CA0* net = &D_0055A830;
+    Net_441CA0* net = &g_MemCard;
     char* err = Loc_LookupText(D_004C0468);
     char* title = Loc_LookupText(D_004C0448);
     unsigned short m = msg;
@@ -75,9 +75,9 @@ extern "C" int GuiSaveAgentWidget_OnEvent(Obj_441CA0* self, void* w, int msg, in
         if (sub == 3) {
             FrontEnd_ClosePopup(D_004FFC04, self->dlg);
             if (!self->mode)
-                AgentData_Create(Agent_GetSelected(D_004FFB50, -1), self->f50, 1);
+                AgentData_Create(Agent_GetSelected(g_Game, -1), self->f50, 1);
             if (self->mode == 3 || !self->mode)
-                D_004FFBBC = -1;
+                g_CardSlotId = -1;
             net->cb = 0;
             D_004FFBB8 = 0;
             self->Close(0);
@@ -107,8 +107,8 @@ extern "C" int GuiSaveAgentWidget_OnEvent(Obj_441CA0* self, void* w, int msg, in
                         FrontEnd_ClosePopup(D_004FFC04, self->dlg);
                         self->dlg = Open1(D_004FFC04, 2, err, D_004C04A8, self, 2);
                     } else {
-                        char* agent = Agent_GetSelected(D_004FFB50, -1);
-                        int changed = D_0055A830.impl->f5A8 != D_004FFBBC;
+                        char* agent = Agent_GetSelected(g_Game, -1);
+                        int changed = g_MemCard.impl->f5A8 != g_CardSlotId;
                         if (self->mode != 4) {
                             char* name = 0;
                             if (self->mode && !changed)

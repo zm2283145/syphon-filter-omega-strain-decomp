@@ -17,7 +17,7 @@ typedef struct {
     char ev[0x44];         /* +0x90 */
     unsigned char active;  /* +0xD4 */
 } Screen;
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_004DADF0[];
 extern void GuiWidget_BaseSleep(Screen* self);
 extern void SoundEvent_Ctor(Event* e, void* src, int a2);
@@ -36,7 +36,7 @@ void GuiSlideShow_Sleep(Screen* self)
     self->active = 0;
     SoundEvent_Ctor(&e, self->ev, 0);
     e.flag = 1;
-    Event_Send(&e, D_004FFB50, 1);
+    Event_Send(&e, g_Game, 1);
     e.vtable = D_004DADF0;
     FileMan_Release(&e.b, -1);
     FileMan_Release(&e.a, -1);

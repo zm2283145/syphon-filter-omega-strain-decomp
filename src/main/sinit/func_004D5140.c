@@ -19,12 +19,12 @@ extern int D_004BC144;
 extern int D_004BC148;
 extern int D_004BC14C;
 extern int D_00535D10;
-extern int D_00535D20;
+extern int g_LightMgr;
 extern int func_00374740;
 
 void func_004D5140(void) {
-    func_003747A0(&D_00535D20);
-    __register_global_object(&D_00535D20, &func_00374740, &D_00535D10);
+    func_003747A0(&g_LightMgr);
+    __register_global_object(&g_LightMgr, &func_00374740, &D_00535D10);
     D_004BC114 = 0;
     D_004BC110 = 0xBF800000;
     D_004BC118 = 0xBF800000;

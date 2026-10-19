@@ -5,8 +5,8 @@
 
 #include "types.h"
 
-extern char D_0053834C[]; /* float */
-extern char D_005383C8[]; /* pointer */
+extern char g_LevelFarDistance[]; /* float */
+extern char g_VideoFrameCounter[]; /* pointer */
 
 typedef struct AIStateInit {
     char pad00[0x10];
@@ -18,6 +18,6 @@ typedef struct AIStateInit {
 
 void NpcPerception_ResetView(AIStateInit* self) {
     self->unk14 = 0x3F490FDB; /* 0.7853982f */
-    self->unk10 = *(float*)D_0053834C;
-    self->unk50 = *(int*)D_005383C8 + 20;
+    self->unk10 = *(float*)g_LevelFarDistance;
+    self->unk50 = *(int*)g_VideoFrameCounter + 20;
 }

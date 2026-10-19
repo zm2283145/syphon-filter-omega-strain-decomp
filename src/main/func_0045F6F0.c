@@ -6,7 +6,7 @@ typedef struct EventMsg {
     char partB[0xBC];           /* 0x114 */
 } EventMsg;
 typedef struct { char pad[0x1C0]; char cmd[0x44]; unsigned char pending; } S;
-extern int D_004FFB50;
+extern int g_Game;
 extern int D_004DADF0;
 extern void SoundEvent_Ctor(EventMsg*, void*, int);
 extern void Event_Send(EventMsg*, void*, int);
@@ -18,7 +18,7 @@ void func_0045F6F0(S* s)
     EventMsg msg;
     s->pending = 0;
     SoundEvent_Ctor(&msg, s->cmd, 0);
-    Event_Send(&msg, &D_004FFB50, 1);
+    Event_Send(&msg, &g_Game, 1);
     msg.vtable = &D_004DADF0;
     FileMan_Release(msg.partB, -1);
     FileMan_Release(msg.partA, -1);

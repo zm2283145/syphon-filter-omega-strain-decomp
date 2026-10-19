@@ -12,9 +12,9 @@
 typedef struct { void* vtable; char pad4[0x1C]; unsigned char type; char pad21[0xF]; } Msg00232730;
 typedef struct { char pad[0x30]; void* target; } Net00232730;
 extern char D_0053B5C0[];
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005721C0;
-extern Net00232730* D_004FFC0C;
+extern Net00232730* g_LocalPlayer;
 extern char D_004DCF10[];
 extern void Global_Wind(void* a, float b, float c, float d, float e, float f);
 extern void World_StartAtmosphereEffect_Thunk(int a, int b, float c, float d, float e, float f);
@@ -26,9 +26,9 @@ void Global_RainLorelei(void)
 {
     Global_Wind(D_0053B5C0, 0.0f, 0.0f, 20.0f, 40.0f, 1.0f);
     World_StartAtmosphereEffect_Thunk(0x18, 0x1F4, 0.0f, 25.0f, 45.0f, 1.0f);
-    if (D_005721C8 && (D_005721C8 ? D_005721C0 : 1)) {
+    if (g_IsMultiplayer && (g_IsMultiplayer ? D_005721C0 : 1)) {
         Msg00232730 ev;
-        Net00232730* net = D_004FFC0C;
+        Net00232730* net = g_LocalPlayer;
         cAtmosphericEffectMsg_ctor(&ev, 2);
         ev.type = 4;
         Event_Send(&ev, net->target, 0);
@@ -48,9 +48,9 @@ void Global_RainTokyo(void)
 {
     Global_Wind(D_0053B5C0, 0.0f, 0.0f, 10.0f, 20.0f, 0.5f);
     World_StartAtmosphereEffect_Thunk(0x17, 0x12C, 0.0f, 25.0f, 45.0f, 1.0f);
-    if (D_005721C8 && (D_005721C8 ? D_005721C0 : 1)) {
+    if (g_IsMultiplayer && (g_IsMultiplayer ? D_005721C0 : 1)) {
         Msg00232730 ev;
-        Net00232730* net = D_004FFC0C;
+        Net00232730* net = g_LocalPlayer;
         cAtmosphericEffectMsg_ctor(&ev, 1);
         ev.type = 4;
         Event_Send(&ev, net->target, 0);
@@ -69,9 +69,9 @@ static inline void merge_flush_func_002328F0(void) {}
 void Global_SmokeToronto3(void)
 {
     World_StartAtmosphereEffect_Thunk(0x15, -1, 20.0f, 0.0f, 40.0f, 0.4f);
-    if (D_005721C8 && (D_005721C8 ? D_005721C0 : 1)) {
+    if (g_IsMultiplayer && (g_IsMultiplayer ? D_005721C0 : 1)) {
         Msg00232730 ev;
-        Net00232730* net = D_004FFC0C;
+        Net00232730* net = g_LocalPlayer;
         cAtmosphericEffectMsg_ctor(&ev, 0);
         ev.type = 4;
         Event_Send(&ev, net->target, 0);
@@ -90,9 +90,9 @@ static inline void merge_flush_func_002329D0(void) {}
 void Global_FogMyanmar(void)
 {
     World_StartAtmosphereEffect_Thunk(0x14, -1, 20.0f, 0.0f, 40.0f, 0.4f);
-    if (D_005721C8 && (D_005721C8 ? D_005721C0 : 1)) {
+    if (g_IsMultiplayer && (g_IsMultiplayer ? D_005721C0 : 1)) {
         Msg00232730 ev;
-        Net00232730* net = D_004FFC0C;
+        Net00232730* net = g_LocalPlayer;
         cAtmosphericEffectMsg_ctor(&ev, 4);
         ev.type = 4;
         Event_Send(&ev, net->target, 0);

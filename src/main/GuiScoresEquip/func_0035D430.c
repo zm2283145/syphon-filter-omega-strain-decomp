@@ -102,13 +102,13 @@ extern char D_004BB4B8[];
 extern char D_004BB4C8[];
 extern char D_004BB640[];
 extern char D_004FFBC0[];
-extern char D_0055C9F0[];
+extern char g_IdentityMatrix[];
 extern Blk_D430 D_0055D510[];
 extern V4_D430 D_00492EA0;
-extern unsigned char D_004FFBA0;
+extern unsigned char g_GameState;
 extern void* D_004FFC04;
 extern void* D_004F77A0;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 void FrontEnd_GetCharacterData(void* p);
 void GuiWidget_ctor(Self_D430* self);
 void* Mem_Alloc(int pool, int size, char* file, int line);
@@ -295,7 +295,7 @@ extern "C" Self_D430* GuiScoresEquip_BuildActor(Self_D430* p0)
     GuiWidget_ctor(p0);
     self->vt = D_004DF140;
     { V4E_D430* p = self->pos; V4E_D430* e = self->pos + 4; do { p++; } while (p != e); }
-    if (D_004FFBA0 == 2) FrontEnd_GetCharacterData(D_004FFC04);
+    if (g_GameState == 2) FrontEnd_GetCharacterData(D_004FFC04);
     {
         void* p;
         p = Alloc_D430(0x68, 0x54);
@@ -304,7 +304,7 @@ extern "C" Self_D430* GuiScoresEquip_BuildActor(Self_D430* p0)
             *(char**)p = D_004DA470;
             ((int*)p)[0x60 / 4] = 0;
             ((int*)p)[0x64 / 4] = 0;
-            Object_AttachTransform(p, D_0055C9F0, 0);
+            Object_AttachTransform(p, g_IdentityMatrix, 0);
             ((int*)p)[0x30 / 4] = 0;
         }
         self->gobj = p;
@@ -328,7 +328,7 @@ extern "C" Self_D430* GuiScoresEquip_BuildActor(Self_D430* p0)
             V4C_D430 r;
             Q3D_D430(&self->f1C0, &r1, &self->f1D0, r, pb);
         }
-        if (D_005721C8) {
+        if (g_IsMultiplayer) {
             V4C_D430 v(-3.2f, 8.0f, -2.0f, 1.0f);
             QAsgB_D430(&self->pos[0], &v);
         } else {
@@ -369,7 +369,7 @@ extern "C" Self_D430* GuiScoresEquip_BuildActor(Self_D430* p0)
                 String_Copy(NAME_D430(MAN(self->models[i])), nm);
             }
             self->models[i]->Init(1);
-            if (D_004FFBA0 == 2) {
+            if (g_GameState == 2) {
                 void* a = D_004F77A0;
                 void** an = (void**)((char*)self->models[i] + 0x2EC0);
                 Model_Attach(an + 4, a);

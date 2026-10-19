@@ -12,11 +12,11 @@
 #pragma cplusplus on
 extern "C" {
 typedef struct { char p0[0x2409]; unsigned char busy; } O2C84B0;
-extern volatile int D_00533870;
-extern long D_00533878;
-extern int D_00533888;
+extern volatile int g_TimerAccum;
+extern long g_TickCounter64;
+extern int g_ProfileLockDepth;
 extern int D_0048C348;
-extern unsigned char D_00587B38;
+extern unsigned char g_GuiSoundGate;
 extern unsigned char D_0051EE90;
 extern unsigned char D_00572528;
 extern unsigned char D_005723C8;
@@ -38,8 +38,8 @@ static inline int DivTime(void)
     int i;
     long n;
     int sh;
-    int c = (int)((float)(unsigned int)(*(volatile int*)0x10000800 + D_00533870) / 5.76f);
-    n = D_00533878;
+    int c = (int)((float)(unsigned int)(*(volatile int*)0x10000800 + g_TimerAccum) / 5.76f);
+    n = g_TickCounter64;
     n += c;
     sh = 30;
     d = 100;
@@ -108,15 +108,15 @@ extern "C" void FrontEnd_SplashThreadMain(int arg)
     if (arg) {
         last = 0;
         for (;;) {
-            D_00533878 += (int)((float)(unsigned int)(*(volatile int*)0x10000800 + D_00533870) / 5.76f);
+            g_TickCounter64 += (int)((float)(unsigned int)(*(volatile int*)0x10000800 + g_TimerAccum) / 5.76f);
             *(volatile int*)0x10000800 = 0;
             *(volatile int*)0x10000810 = 0x82;
-            D_00533870 = 0;
-            if (DivTime() - last >= 10 && !D_00533888) {
+            g_TimerAccum = 0;
+            if (DivTime() - last >= 10 && !g_ProfileLockDepth) {
                 func_0010D0D0(D_0048C348);
                 SpSave(buf);
                 fp = App_CardWaitPoll;
-                D_0051EE90 = D_00587B38 = 1;
+                D_0051EE90 = g_GuiSoundGate = 1;
                 fp(0, 0x3039);
                 unsigned char b;
                 if (!D_00572528 && !(b = D_005723C8)) {
@@ -133,7 +133,7 @@ extern "C" void FrontEnd_SplashThreadMain(int arg)
                         }
                     }
                 }
-                D_00587B38 = 0;
+                g_GuiSoundGate = 0;
                 D_0051EE90 = 0;
                 SpLoad(buf);
                 SuspendThread(D_0048C348);
@@ -194,7 +194,7 @@ typedef struct G_002C8840 {
     int f10; int pad14[4]; int f24; int f28; int pad2C[3]; int f38; int f3C; int pad40[2]; void* f48; int pad4C[33]; int fD0; int padD4; long long fD8;
 } G_002C8840;
 extern G_002C8840 D_00539210;
-extern char D_005381F0[];
+extern char g_Video[];
 extern long long D_005381F8;
 extern int D_00538C60;
 extern int D_00538C64;
@@ -219,12 +219,12 @@ void Tex_Release(void* m, int idx, int a, int b);
 #define D_00539228 (D_00539210.f28)
 #define D_00539238 (D_00539210.f38)
 #define D_0053923C (D_00539210.f3C)
-#define D_00539248 (D_00539210.f48)
-#define D_005392D0 (D_00539210.fD0)
+#define g_TextureMgr (D_00539210.f48)
+#define g_DrawMode (D_00539210.fD0)
 #define D_005392D8 (D_00539210.fD8)
 
-#define RS_002C8840 ((Rs_002C8840*)D_005381F0)
-#define SLOT_002C8840(i) ((Slot_002C8840*)(D_005381F0 + (i) * 0x110))
+#define RS_002C8840 ((Rs_002C8840*)g_Video)
+#define SLOT_002C8840(i) ((Slot_002C8840*)(g_Video + (i) * 0x110))
 
 static inline void UM_002C8840(void* m) { int t; __asm__ volatile("sqc2 vf0, 0x30(%1); qmfc2.ni %0, vf0; pcpyud %0, %0, zero; sq %0, 0x10(%1); pexcw %0, %0; sq %0, 0x20(%1); pcpyud %0, %0, zero; sq %0, 0(%1)" : "=&r"(t) : "r"(m) : "memory"); }
 static inline void QR_002C8840(void* d, void* s) { __int128 qa, qb; __asm__ volatile("lq %0, 0x0(%3); lq %1, 0x10(%3); sq %0, 0x0(%2); lq %0, 0x20(%3); sq %1, 0x10(%2); lq %1, 0x30(%3); sq %0, 0x20(%2); sq %1, 0x30(%2)" : "=&r"(qa), "=&r"(qb) : "r"(d), "r"(s) : "memory"); }
@@ -238,7 +238,7 @@ static inline void Emit_002C8840(const V4c_002C8840& pos, const V4c_002C8840& co
     V4_002C8840 tmp;
     Ent_002C8840* e;
     float u;
-    func_0025CA40(D_005381F0);
+    func_0025CA40(g_Video);
     e = &RS_002C8840->ents[D_00539210.f10];
     Vec4_Copy(&e->pos[D_00539224 - 1], (V4_002C8840*)&pos);
     GuiBatch_AddVertexColor(&e->c30[D_00539224 - 1], (V4_002C8840*)&col);
@@ -246,8 +246,8 @@ static inline void Emit_002C8840(const V4c_002C8840& pos, const V4c_002C8840& co
     Vec4_Copy(&e->c34[D_00539224 - 1], Vec4_Set(&tmp, u, uv.y + GuiBatch_AddVertexUV(), uv.z, uv.w));
     D_005381F8 = 6LL << 32;
 }
-static inline unsigned char Prim_002C8840(void) { if (D_005392D0 & 1) return 3; return 2; }
-static inline int Mode_002C8840(void) { if (D_005392D0 & 1) return 0x41; return 0x62; }
+static inline unsigned char Prim_002C8840(void) { if (g_DrawMode & 1) return 3; return 2; }
+static inline int Mode_002C8840(void) { if (g_DrawMode & 1) return 0x41; return 0x62; }
 
 
 extern "C" void func_002C8840(char* name)
@@ -261,18 +261,18 @@ extern "C" void func_002C8840(char* name)
     int vp;
     if (name == 0 || *name == 0) return;
     func_0036E4B0(&str, name, 0, 0);
-    idx = TexMan_FindOrLoad(D_00539248, &str);
+    idx = TexMan_FindOrLoad(g_TextureMgr, &str);
     if (idx == -1) {
         FileMan_Release(&str, -1);
         return;
     }
-    saved = D_005392D0;
+    saved = g_DrawMode;
     QR_002C8840(&RS_002C8840->mtx[D_00538C64 + 1], &RS_002C8840->mtx[D_00538C64]);
     D_00538C64++;
     UM_002C8840(&RS_002C8840->mtx[D_00538C64]);
     D_00538C68 = 1;
-    D_005392D0 = 1;
-    Renderer_BindTexture(D_00539248, idx);
+    g_DrawMode = 1;
+    Renderer_BindTexture(g_TextureMgr, idx);
     vp = (int)&D_00539170;
     {
         Slot_002C8840* s = SLOT_002C8840(D_00538C60);
@@ -290,7 +290,7 @@ extern "C" void func_002C8840(char* name)
     hw = 0.5f * ((V4_002C8840*)vp)->z;
     hh = 0.5f * ((V4_002C8840*)vp)->w;
     {
-        Tex_002C8840* t = ((Mgr_002C8840*)D_00539248)->objs[idx]->tex;
+        Tex_002C8840* t = ((Mgr_002C8840*)g_TextureMgr)->objs[idx]->tex;
         float w = (int)t->w;
         float h = (int)t->h;
         umax = 1.0f;
@@ -310,12 +310,12 @@ extern "C" void func_002C8840(char* name)
         e->c2C += D_00539224;
         e->c30 += D_00539224;
         e->c34 += D_00539224;
-        func_0025CD10(D_005381F0);
+        func_0025CD10(g_Video);
         D_00539224 = 0;
         Emit_002C8840(V4c_002C8840(-hw, hh, 0.5f, 1.0f), V4c_002C8840(1.0f, 1.0f, 1.0f, 1.0f), V4c_002C8840(0.0f, 0.0f, 1.0f, 0.0f));
         Emit_002C8840(V4c_002C8840(hw, -hh, 0.5f, 1.0f), V4c_002C8840(1.0f, 1.0f, 1.0f, 1.0f), V4c_002C8840(umax, vmax, 1.0f, 0.0f));
-        Renderer_FlushPrimitives(D_005381F0);
-        Video_BeginFrame(D_005381F0);
+        Renderer_FlushPrimitives(g_Video);
+        Video_BeginFrame(g_Video);
     }
     D_00538C64--;
     D_00538C68 = 1;
@@ -324,8 +324,8 @@ extern "C" void func_002C8840(char* name)
         s->f2F6 = 1;
         s->f2F4 = 0;
     }
-    D_005392D0 = saved;
-    Tex_Release(D_00539248, idx, 0, 1);
+    g_DrawMode = saved;
+    Tex_Release(g_TextureMgr, idx, 0, 1);
     FileMan_Release(&str, -1);
 }
 /* merge_units: generate this block's code under its own pragmas */

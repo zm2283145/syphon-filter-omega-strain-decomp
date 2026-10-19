@@ -42,7 +42,7 @@ int func_00383150(char * , int);
                          
 int operator_delete(char * );                          
 extern char D_004BC2B8;
-extern unsigned char D_00533880;
+extern unsigned char g_ProfileLockEnabled;
 }
 extern "C" char * func_00383020(char * arg0, long long arg1) {
     int temp_s2;

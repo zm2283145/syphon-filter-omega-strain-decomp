@@ -11,7 +11,7 @@ typedef struct Obj05A0 {
     char pad70[0x84 - 0x70];
     struct Obj05A0** kids;
 } Obj05A0;
-extern int D_00539248;
+extern int g_TextureMgr;
 extern char D_004BE048[];
 extern void Resource_Construct(FileMan05A0* f);
 extern void func_0036DFB0(FileMan05A0* f, char* name, int a);
@@ -71,7 +71,7 @@ void func_003F05A0(Obj05A0* o, int arg1)
         Append((char*)&s, D_004BE048);
         Resource_Construct(&fm);
         func_0036DFB0(&fm, (char*)&s + 1, arg1);
-        o->f18 = TexMan_FindOrLoad(D_00539248, &fm);
+        o->f18 = TexMan_FindOrLoad(g_TextureMgr, &fm);
         FileMan_Release(&fm, -1);
     }
     for (i = 0; i < o->count; i++) {

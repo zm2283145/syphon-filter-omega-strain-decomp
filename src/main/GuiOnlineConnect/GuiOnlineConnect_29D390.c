@@ -18,7 +18,7 @@ typedef struct { char pad0[0x8DC]; char sub[0xC4]; int key; } Agent_D390;
 typedef struct { int key; char name[4]; } Ent_D390;
 extern "C" {
 extern Fe_D390* D_004FFC04;
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_004AABF0[];
 extern char D_004AABF8[];
 extern char D_004AAC08[];
@@ -79,7 +79,7 @@ static inline unsigned char Find_D390(int n, List_D390* l, bool any)
 {
     unsigned char ok = 0;
     if (any) {
-        Agent_D390* a = Agent_GetSelected(D_004FFB50, -1);
+        Agent_D390* a = Agent_GetSelected(g_Game, -1);
         char* pr = Prof_D390(a);
         int key = *(int*)(pr + 0xC4);
         int j;
@@ -287,7 +287,7 @@ extern int D_004FFC04;
 #endif /* merge_units */
 #define D_004FFC04 (*(int*)&D_004FFC04) /* merge_units */
 
-extern unsigned char D_00587B38;
+extern unsigned char g_GuiSoundGate;
 extern char D_004AAC18[];
 extern char D_004AAC28[];
 #if 0 /* merge_units */
@@ -379,10 +379,10 @@ extern "C" void GuiOnlineConnect_Connect(O_DAF0* o, void* arg) {
         p = GuiWidget_FindChildByName(o->x108, D_004AAC28);
         if (p) p->flags &= ~2;
     }
-    D_00587B38 = 1;
+    g_GuiSoundGate = 1;
     FrontEnd_StopMusic(D_004FFC04);
     ok = SFOLobby_StartNetwork(net, arg, 1);
-    D_00587B38 = 0;
+    g_GuiSoundGate = 0;
     FrontEnd_SetMusic(D_004FFC04, 0);
     w = o->x108;
     if (w) Gui_GetScreenStack()->Hide(w);

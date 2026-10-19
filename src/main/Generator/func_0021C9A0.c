@@ -2,7 +2,7 @@
 #include "types.h"
 typedef struct { void* vtable; char pad04[0x1C]; char kind; char pad21[7]; char op; char pad29[3]; } Msg0021C9A0;
 typedef struct { char pad[0xC0]; int pulse; } Gen0021C9A0;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 unsigned int D_004A4A78[2] = { 0x0, 0x0 };
 extern char D_004DB5E0[];
 extern void Event_Construct(Msg0021C9A0* m, void* name);
@@ -12,7 +12,7 @@ int Script_cGenerator_ResetPulse(Gen0021C9A0** args)
 {
     Gen0021C9A0* g = *args;
     g->pulse = 0;
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         Msg0021C9A0 m;
         Event_Construct(&m, ((char*)D_004A4A78));
         m.vtable = D_004DB5E0;

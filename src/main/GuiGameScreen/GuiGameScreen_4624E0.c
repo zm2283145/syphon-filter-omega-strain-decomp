@@ -22,10 +22,10 @@ typedef struct {
     char lines[0xC];        /* 0x90 */
 } Self_4624E0;
 
-extern char D_004FFB50[];
-extern char D_004FFC90[];
+extern char g_Game[];
+extern char g_LevelDirName[];
 extern int D_004FFD28;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern char D_004C2698[];
 extern char D_004C26B0[];
 extern char D_004C26C8[];
@@ -46,7 +46,7 @@ void GuiEndGameObjectives_Wake(Self_4624E0* self)
     char buf[32];
     W_4624E0* w;
     GuiObjectives_Wake(self);
-    agent = Agent_GetSelected(D_004FFB50, -1);
+    agent = Agent_GetSelected(g_Game, -1);
     n = D_004FFD28;
     if (cAgentData_GetStat(agent, 0x19) > 0)
         sprintf(buf, D_004C2698, n + 1);
@@ -59,7 +59,7 @@ void GuiEndGameObjectives_Wake(Self_4624E0* self)
     if (agent->bB71) {
         int r;
         if (w) w->flags &= ~2;
-        r = Awards_GetParTime(D_004FFC90, D_005721C8);
+        r = Awards_GetParTime(g_LevelDirName, g_IsMultiplayer);
         if ((int)agent->fD4 <= r) {
             Line_4624E0 line;
             func_00462650(&line, D_004C26C8, 0x1E);

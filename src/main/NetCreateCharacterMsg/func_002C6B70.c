@@ -55,9 +55,9 @@ struct Actor : ActorV {
 struct Game { char pad[0x3264]; int team; };
 struct World { char pad[0x30]; Game* game; };
 extern "C" {
-extern RNode* D_004FFD44;
-extern World* D_004FFC0C;
-extern int D_004FFC2C;
+extern RNode* g_ActorList;
+extern World* g_LocalPlayer;
+extern int g_Hud;
 extern Cfg D_0048C0C8;
 extern char D_004AC940[];
 GObj* ObjRegistry_Find(RNode* reg, int* id);
@@ -95,7 +95,7 @@ static inline void* NewMem(int size, int line)
 
 static inline GObj* Lookup(int id)
 {
-    RNode* reg = D_004FFD44;
+    RNode* reg = g_ActorList;
     GObj* o = ObjRegistry_Find(reg, &id);
     if (o) {
         RNode* n = o->owner;
@@ -150,7 +150,7 @@ extern "C" void Coop_CreatePartnerActor(Msg* msg, int arg1)
 
     if (Lookup(msg->id.v)) {
         func_003FB750(arg1);
-        ActorWorld_RequestRemove(D_004FFD44, Lookup(msg->id.v));
+        ActorWorld_RequestRemove(g_ActorList, Lookup(msg->id.v));
         Object_DeleteLater(0.1f, Lookup(msg->id.v));
     }
     SetEulerPos(&m, pos.Set(msg->px, msg->py, msg->pz, 1.0f), Ang(msg->rx, msg->ry, msg->rz));
@@ -158,7 +158,7 @@ extern "C" void Coop_CreatePartnerActor(Msg* msg, int arg1)
     id = msg->id;
     func_00406EC0(&blk, msg->name);
     {
-        World* wd = D_004FFC0C;
+        World* wd = g_LocalPlayer;
         Game* g = wd->game;
         team = g->team;
         { const Cfg* ps = &D_0048C0C8; Cfg* pd = &cfg; *pd = *ps; }
@@ -178,7 +178,7 @@ extern "C" void Coop_CreatePartnerActor(Msg* msg, int arg1)
     }
     if (msg->items[0] != -1) WeaponInv_EquipItem(a->inv, msg->items[0]);
     {
-        RNode* reg = D_004FFD44;
+        RNode* reg = g_ActorList;
         a->owner = reg;
         ObjRegistry_AppendRecursive(reg, a);
     }
@@ -194,12 +194,12 @@ extern "C" void Coop_CreatePartnerActor(Msg* msg, int arg1)
         c = (Comp*)p;
     }
     Actor_InitComponents(a, 3, 0, c);
-    Actor_SetInvulnerable(a, Actor_IsInvulnerable(D_004FFC0C->game));
+    Actor_SetInvulnerable(a, Actor_IsInvulnerable(g_LocalPlayer->game));
     a->Activate();
     rid = NetMap_BindReceiver(msg->id.v, arg1, a);
     func_00185940(a, msg->id.v);
     func_00185970(a, rid);
     buf[0] = 0;
     Hud_AppendCalloutName(buf, a, arg1, 1);
-    Hud_ShowCallout(D_004FFC2C, a->nameC, buf + 1, 0, 0, 0, -1.0f, 0.0f);
+    Hud_ShowCallout(g_Hud, a->nameC, buf + 1, 0, 0, 0, -1.0f, 0.0f);
 }

@@ -53,7 +53,7 @@ struct PObj : Obj {};
 struct Cam { char pad[0x64]; float yaw; };
 struct Radar { void* owner; char pad4[0xC]; void* face; void* ring; void* arrow; };
 extern "C" {
-extern char D_004FFC14[];
+extern char g_CameraObject[];
 extern float D_0048B0C8;
 extern int D_0048B0D8;
 extern int D_004F8298;
@@ -79,7 +79,7 @@ static inline float MinF(float a, float b) { float r = 0.0f; __asm__ volatile("m
 static inline V SubV(V a, V b) { V r; V* rp = &r; const V* ap = &a; const V* bp = &b; __asm__ volatile("lqc2 $vf1, 0x0(%1); lqc2 $vf2, 0x0(%2); vsub.xyzw $vf1, $vf1, $vf2; sqc2 $vf1, 0x0(%0)" : : "r"(rp), "r"(ap), "r"(bp) : "memory"); return r; }
 /* the unused xx reproduces retail's dead addiu of the matrix temporary's address */
 static inline void RotBy(V* v, M m) { void* xx = &m; Rotate(v, &m, v); }
-static inline void* GetCam() { if (func_00159570(D_004FFC14)) return *List_Front(D_004FFC14); return 0; }
+static inline void* GetCam() { if (func_00159570(g_CameraObject)) return *List_Front(g_CameraObject); return 0; }
 void HudRadar_Update(Radar* r, Obj* pl)
 {
     Cam* cam = (Cam*)GetCam();

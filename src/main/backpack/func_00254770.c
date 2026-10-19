@@ -8,12 +8,12 @@ struct Bp { char pad0[0x2F3]; unsigned char b2F3; char pad2F4[0x2FC - 0x2F4]; vo
 extern "C" {
 extern int D_00494178;
 extern int D_005721A8;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern char D_005061B0[];
 extern char D_004DCEF0[];
 extern char D_004DCF10[];
-extern void* D_004FFBD0;
-extern Vec* D_004F7F30;
+extern void* g_HotboxTracker;
+extern Vec* g_BackpackList;
 int NetGame_InitLocalSlot(int*, int);
 void Event_Construct(void* m, void* type);
 void Event_Send(void* m, void* src, int f);
@@ -26,7 +26,7 @@ void PtrVector_Resize(Vec* v, int n, int* fill);
 #pragma push
 #pragma opt_common_subs off
 #pragma opt_propagation off
-static inline int LocalId() { int r;int a=D_005721A8;if(D_005721C8) { if(D_00494178==-1)NetGame_InitLocalSlot(&D_00494178,a);r=D_00494178; }else { r=0; }return r; }
+static inline int LocalId() { int r;int a=D_005721A8;if(g_IsMultiplayer) { if(D_00494178==-1)NetGame_InitLocalSlot(&D_00494178,a);r=D_00494178; }else { r=0; }return r; }
 #pragma pop
 static inline bool IdEq(Tgt* p, Hnd* h) { return p->id == h->id; }
 static inline Tgt* HGet(Hnd* h) {
@@ -37,7 +37,7 @@ static inline Tgt* HGet(Hnd* h) {
 extern "C" void Backpack_Destroy(Bp* self)
 {
     if (HGet(&self->h)) HGet(&self->h)->f3464 = 0;
-    if (!self->b2F3 && D_005721C8) {
+    if (!self->b2F3 && g_IsMultiplayer) {
         if (self->owner == LocalId()) {
             Msg m;
             Event_Construct(&m, D_005061B0);
@@ -52,14 +52,14 @@ extern "C" void Backpack_Destroy(Bp* self)
         }
     }
     if (self->fx) {
-        Hotbox_RemoveObjectBox(D_004FFBD0, self->fx);
+        Hotbox_RemoveObjectBox(g_HotboxTracker, self->fx);
         Object_Unregister(self->fx);
         Object_DeleteLater(self->fx, 0.1f);
         self->fx = 0;
     }
     Object_Unregister(self);
     {
-        Vec* v = D_004F7F30;
+        Vec* v = g_BackpackList;
         int i;
         int last = v->count - 1;
         int fill;

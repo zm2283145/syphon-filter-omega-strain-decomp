@@ -13,7 +13,7 @@ int func_0037B2C0(...);
 int func_0037B2D0(...);                          
 char * func_0037B2E0(...);                        
 int func_0037FBA0(...);              
-extern unsigned char D_00533880;
+extern unsigned char g_ProfileLockEnabled;
 }
 #pragma inline_depth(10)
 static inline int ite0(char *l) { int r; func_0037B2C0(&r, func_0037B2D0(l)); return r; }

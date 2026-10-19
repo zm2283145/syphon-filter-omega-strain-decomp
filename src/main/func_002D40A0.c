@@ -18,7 +18,7 @@ typedef struct Tgt { char p0[0x40]; float ang; float px, py, pz; } Tgt;
 typedef struct Ctl { char p0[0x3524]; void* inv; char p3528[0x3584 - 0x3528]; Tgt* tgt; } Ctl;
 typedef struct Msg { void* vtable; char pad[0x1C]; unsigned char kind; char pad2[3]; unsigned char b24; char pad3[0xB]; char data[0x40]; } Msg;
 extern "C" {
-extern char D_004EA370[], D_0055D4E0[], D_004D9360[];
+extern char g_NpcDeadList[], g_TeleportMsgClass[], D_004D9360[];
 extern void NpcThinkList_Add(Obj*);
 extern void NpcAi_AddToDeadList(void*, Self**);
 extern Ctl* AiController_GetActor(Self*);
@@ -59,7 +59,7 @@ extern "C" void func_002D40A0(Self* self)
             if (self->f44()) {
                 NpcThinkList_Add(self->obj);
             } else {
-                NpcAi_AddToDeadList(D_004EA370, &self);
+                NpcAi_AddToDeadList(g_NpcDeadList, &self);
             }
             if (AiController_GetActor(self) && AiController_GetActor(self)->tgt) {
                 V4 pos;
@@ -83,7 +83,7 @@ extern "C" void func_002D40A0(Self* self)
                 Mtx_MakeAxisRotation(&mtx, Vec4_GetX(&axis), Vec4_GetY(&axis), Vec4_GetZ(&axis), ang);
                 V4_Copy(&mtx.r[3], &pos);
                 m = &msg;
-                Event_Construct(m, D_0055D4E0);
+                Event_Construct(m, g_TeleportMsgClass);
                 m->vtable = D_004D9360;
                 m->b24 = 2;
                 if (TeleportMsg_IsMode3(m)) {

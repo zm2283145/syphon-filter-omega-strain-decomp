@@ -20,7 +20,7 @@ void GameScreen_DisplayInteractLocal(char* text, unsigned char flag);
 }
 static inline int OwnerOf_E930(Ent_E930* e)
 {
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         unsigned char ok = 0;
         Ctl_E930* c = e->ctl;
         if (c && c->isNet()) ok = 1;
@@ -38,7 +38,7 @@ static inline void Msg_Init_E930(Msg_E930* p, char* text, unsigned char flag)
 extern "C" void Global_DisplayInteract_2(Ent_E930* e, char* text, unsigned char flag)
 {
     Msg_E930 m;
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         Msg_E930* p = &m;
         Event_Construct(p, D_00586158);
         m.vt = D_004E1680;

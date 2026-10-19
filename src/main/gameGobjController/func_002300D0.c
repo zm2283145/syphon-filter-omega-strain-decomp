@@ -4,7 +4,7 @@
 #include "alloc_guard.h"
 struct CaNode { int a; int b; int c; };
 extern "C" {
-extern int D_0049D010;
+extern int g_HumanActorClassKey;
 extern char D_0049C088[];
 void* Mem_Alloc(int, int, char*, int);
 }
@@ -15,7 +15,7 @@ struct CaComp { char p[0x18]; CaNode* node; char p1c[0x14]; CaBase* owner; };
 extern "C" void Component_AttachOwner(CaComp* c, CaBase* o)
 {
     c->owner = o;
-    if (o && o->type == D_0049D010) {
+    if (o && o->type == g_HumanActorClassKey) {
         CaOwner* p = (CaOwner*)o;
         if (p->link) {
             if (p->link) {

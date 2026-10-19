@@ -25,7 +25,7 @@ struct V002A45A0 { virtual void v0(int f); virtual int v1(); virtual int v2(); v
 struct O002A45A0 { void* vt; char pad[0x44]; V002A45A0* items[4]; V002A45A0* p58; };
 extern "C" {
 
-extern char D_0055DDA0[];
+extern char g_AgentPartCache[];
 extern char D_004DD7C0[];
 extern char D_004E1220[];
 extern int D_00506500;

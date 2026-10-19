@@ -82,7 +82,7 @@ typedef struct {
 } Sub_18E0;
 
 extern "C" {
-extern TexMgr_18E0* D_00539248;
+extern TexMgr_18E0* g_TextureMgr;
 extern char D_004BEF10[];
 extern char D_004BEF20[];
 extern u64_18E0* Gs_MakeTex1(TexEnt_18E0* e);
@@ -103,9 +103,9 @@ extern "C" void MovieSubtitles_SetupPackets(Sub_18E0* self)
         self->pkt++;
         self->pkt++;
         self->pkt++;
-        *self->pkt++ = D_00539248->ents[self->font->tex]->tex0;
+        *self->pkt++ = g_TextureMgr->ents[self->font->tex]->tex0;
         *self->pkt++ = 6;
-        *self->pkt++ = *Gs_MakeTex1(D_00539248->ents[self->font->tex]);
+        *self->pkt++ = *Gs_MakeTex1(g_TextureMgr->ents[self->font->tex]);
         *self->pkt++ = 0x14;
         *self->pkt++ = 0x44;
         *self->pkt++ = 0x42;

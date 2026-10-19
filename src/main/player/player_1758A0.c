@@ -12,12 +12,12 @@
 #pragma global_optimizer off
 typedef struct { char pad[0x4C]; int kind; char pad2[0x3528 - 0x50]; void* inv; } Obj_P;
 extern Obj_P* GObj_IdentityB(void* o);
-extern int D_0049D010;
+extern int g_HumanActorClassKey;
 extern void Global_PlayerRemoveItem(void* inv, int a, int b);
 static inline void Do_001758A0(int b, int a, void* o)
 {
     Obj_P* p = GObj_IdentityB(o);
-    if (p->kind == D_0049D010)
+    if (p->kind == g_HumanActorClassKey)
         Global_PlayerRemoveItem(p->inv, a, b);
 }
 int Script_PlayerRemoveItem(int* args)
@@ -42,7 +42,7 @@ extern void Global_PlayerAddItem(void* inv, int a, int b);
 static inline void Do_00175910(int b, int a, void* o)
 {
     Obj_P* p = GObj_IdentityB(o);
-    if (p->kind == D_0049D010)
+    if (p->kind == g_HumanActorClassKey)
         Global_PlayerAddItem(p->inv, a, b);
 }
 int Script_PlayerAddItem(int* args)

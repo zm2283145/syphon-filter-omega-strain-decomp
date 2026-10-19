@@ -36,7 +36,7 @@ RT_66B0* Hotbox_CreateRuntime(int, S_66B0*, int, int);
 int ItemInv_Any(int);
 void Object_Register(S_66B0*);
 }
-extern int D_004FFBD0;
+extern int g_HotboxTracker;
 static inline T_66B0* Get_66B0(S_66B0* s) { T_66B0* t = s->tgt; bool ok = !t || t->serial == s->serial; return ok ? t : 0; }
 static inline unsigned char CanA(S_66B0* s)
 {
@@ -79,7 +79,7 @@ extern "C" void Backpack_SetOwner(S_66B0* s, T_66B0* t)
             s->Enable(1);
             Object_Register(s);
             if (!s->rt) {
-                s->rt = Hotbox_CreateRuntime(D_004FFBD0, s, 0, 1);
+                s->rt = Hotbox_CreateRuntime(g_HotboxTracker, s, 0, 1);
                 s->rt->id = s->id;
             }
         }
@@ -95,7 +95,7 @@ static inline void merge_flush_func_002566B0(void) {}
 typedef struct { char pad[0x314]; float t; } A2O256;
 typedef struct { int pad0; int count; A2O256** items; } A2L256;
 extern float D_004F7F70;
-extern A2L256* D_004F7F30;
+extern A2L256* g_BackpackList;
 extern float D_0048AF18;
 extern void Backpack_Destroy(A2O256* o);
 void Backpack_Tick(float dt) {
@@ -103,7 +103,7 @@ void Backpack_Tick(float dt) {
     int i;
     float* t;
     D_004F7F70 += dt;
-    l = D_004F7F30;
+    l = g_BackpackList;
     for (i = 0; i < l->count; i++) {
         t = &l->items[i]->t;
         if (!(*t < 0.0f)) {

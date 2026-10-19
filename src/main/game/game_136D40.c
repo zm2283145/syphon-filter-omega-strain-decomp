@@ -22,14 +22,14 @@ DEFINE_BASE_DTOR_CHAIN(func_00136D40, func_00136600)
 
 /* merge_units: begin func_00136DA0 */
 #pragma push /* merge_units */
-extern unsigned char D_00533880;
-extern int D_00533888;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
 void Alloc_Lock(int id);
 void* func_00136DA0(void* self)
 {
-    if (D_00533880)
+    if (g_ProfileLockEnabled)
         Alloc_Lock(9);
-    D_00533888++;
+    g_ProfileLockDepth++;
     return self;
 }
 /* merge_units: generate this block's code under its own pragmas */

@@ -85,8 +85,8 @@ static inline void merge_flush_func_0022E710(void) {}
 
 /* merge_units: begin func_0022E800 */
 #pragma push /* merge_units */
-extern unsigned char D_00533880;
-extern int D_00533888;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
 extern char D_004F7930[];
 extern char D_004A6698[];
 #if 0 /* merge_units */
@@ -101,11 +101,11 @@ extern void* Mem_Alloc(int, int, char*, int);
 static inline void* AllocL_f4(int size, char* file, int line)
 {
     void* p;
-    if (D_00533880) Alloc_Lock(9);
-    D_00533888++;
+    if (g_ProfileLockEnabled) Alloc_Lock(9);
+    g_ProfileLockDepth++;
     p = Mem_Alloc(0, size, file, line);
-    if (D_00533880) Alloc_Unlock(9);
-    D_00533888--;
+    if (g_ProfileLockEnabled) Alloc_Unlock(9);
+    g_ProfileLockDepth--;
     return p;
 }
 CkMsg_f4* cAddCheckpointMsg_ctor(CkMsg_f4* self, CkSrc_f4* src)

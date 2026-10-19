@@ -16,7 +16,7 @@
  */
 
 
-extern void* D_004FFD30; /* weapon definition table */
+extern void* g_WeaponDatabase; /* weapon definition table */
 extern int Actor_SetHealth(void* gobj, int hitpoints, int unk);
 
 /* Sets the hitpoints of the tank's game object. */
@@ -29,7 +29,7 @@ void cTank_SetWeapon(cTank* tank, int weaponId) {
     cTankTurret* turret = tank->turret;
 
     if (turret != 0) {
-        void* table = D_004FFD30;
+        void* table = g_WeaponDatabase;
 
         turret->weaponId = weaponId;
         turret->weaponDef = WeaponDb_Get(table, weaponId);

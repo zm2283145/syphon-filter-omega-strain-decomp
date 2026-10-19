@@ -35,7 +35,7 @@ struct Self_1000 {
 };
 
 extern "C" {
-extern char D_004FFB50[];
+extern char g_Game[];
 extern Fe_1000* D_004FFC04;
 extern char D_004BB868[], D_004BB8B0[], D_004BB8C0[], D_004BB8D0[], D_004BB8E0[], D_004BB8F0[], D_004BB8F8[];
 extern char D_004BB908[], D_004BB910[], D_004BB920[], D_004BB928[], D_004BB930[], D_004BB940[], D_004BB948[];
@@ -66,7 +66,7 @@ void GuiAgentInfo_Refresh(Self_1000* self);
 
 extern "C" void GuiAgentInfo_Refresh(Self_1000* self)
 {
-    void* ag = Agent_GetSelected(D_004FFB50, -1);
+    void* ag = Agent_GetSelected(g_Game, -1);
     char buf[0x10];
     char* t;
     GuiTextWidget_SetText(self->w100, String_CStr(self->strB8), 0);
@@ -93,7 +93,7 @@ extern "C" void GuiAgentInfo_Refresh(Self_1000* self)
         int i;
         func_00296FA0(&r);
         r.own = 1;
-        AgentData_GetRatings(Agent_GetSelected(D_004FFB50, -1), &r);
+        AgentData_GetRatings(Agent_GetSelected(g_Game, -1), &r);
         j = 0;
         for (i = 0; i < 6; i++) {
             char line[0x20];

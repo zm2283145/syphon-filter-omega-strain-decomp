@@ -13,7 +13,7 @@
 /* merge_units: begin func_0038DD40 */
 #pragma push /* merge_units */
 extern void TexCache_LoadPartTexture(void* cache, __int128 name, int arg, short* slot, short* out);
-extern char D_0055DDA0[];
+extern char g_AgentPartCache[];
 char D_00493410[16] = "_THER_BLA_----0";
 char D_00493420[16] = "_THER_COO_----0";
 char D_00493430[16] = "_THER_WAR_----0";
@@ -30,13 +30,13 @@ void TexCache_AddThermalTextures(int arg)
     short tmp;
     __int128* p;
     p = (__int128*)D_00493410;
-    TexCache_LoadPartTexture(D_0055DDA0, *p, arg, &D_0053B360, &tmp);
+    TexCache_LoadPartTexture(g_AgentPartCache, *p, arg, &D_0053B360, &tmp);
     p = (__int128*)D_00493420;
-    TexCache_LoadPartTexture(D_0055DDA0, *p, arg, &D_0053B362, &tmp);
+    TexCache_LoadPartTexture(g_AgentPartCache, *p, arg, &D_0053B362, &tmp);
     p = (__int128*)D_00493430;
-    TexCache_LoadPartTexture(D_0055DDA0, *p, arg, &D_0053B364, &tmp);
-    TexCache_LoadPartTexture(D_0055DDA0, *(__int128*)D_00493440, arg, &D_0053B366, &tmp);
-    TexCache_LoadPartTexture(D_0055DDA0, *(__int128*)D_00493450, arg, &D_0053B368, &tmp);
+    TexCache_LoadPartTexture(g_AgentPartCache, *p, arg, &D_0053B364, &tmp);
+    TexCache_LoadPartTexture(g_AgentPartCache, *(__int128*)D_00493440, arg, &D_0053B366, &tmp);
+    TexCache_LoadPartTexture(g_AgentPartCache, *(__int128*)D_00493450, arg, &D_0053B368, &tmp);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0038DD40(void) {}

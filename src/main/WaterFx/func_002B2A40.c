@@ -24,7 +24,7 @@ typedef struct {
 } E2WaterFx;
 extern int* SpecFx_GetEffectDef(int);
 extern void List_Init(E2List*);
-extern E2ModelTable* D_00539248;
+extern E2ModelTable* g_TextureMgr;
 #pragma opt_propagation off
 E2WaterFx* WaterFxRecord_Construct(E2WaterFx* s) {
     E2WaterSub* sub;
@@ -38,7 +38,7 @@ E2WaterFx* WaterFxRecord_Construct(E2WaterFx* s) {
     List_Init(&sub->list);
     sub->model = *SpecFx_GetEffectDef(0x27);
     z = 0.0f;
-    sub->count = D_00539248->models[sub->model]->info->count;
+    sub->count = g_TextureMgr->models[sub->model]->info->count;
     sub->f10 = 0;
     sub->f14 = z - z;
     sub->f18 = 0;

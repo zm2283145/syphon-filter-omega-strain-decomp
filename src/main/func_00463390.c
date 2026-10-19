@@ -27,8 +27,8 @@ typedef struct {
     char lines[0xC];        /* 0x260 */
 } Self_463390;
 
-extern char D_004FFB50[];
-extern unsigned char D_005721C8;
+extern char g_Game[];
+extern unsigned char g_IsMultiplayer;
 extern char D_004C27A0[];
 extern char D_004C27A8[];
 extern char D_004C2610[];
@@ -63,17 +63,17 @@ void GuiEndGameStatistics_QueueVoices(Self_463390* self)
     char name[32];
     int n;
 
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         int bestA = 0;
         int bestB = 0;
         int idxA = -1;
         int idxB = -1;
         int i;
         for (i = 0; i < 4; i++) {
-            Agent_463390* a = Agent_GetSelected(D_004FFB50, i);
+            Agent_463390* a = Agent_GetSelected(g_Game, i);
             if (a->bB70 && a->bB74) {
-                int pa = Pct_463390(Agent_GetSelected(D_004FFB50, i), 0x1D, 0x1E);
-                int pb = Pct_463390(Agent_GetSelected(D_004FFB50, i), 0x1B, 0x1C);
+                int pa = Pct_463390(Agent_GetSelected(g_Game, i), 0x1D, 0x1E);
+                int pb = Pct_463390(Agent_GetSelected(g_Game, i), 0x1B, 0x1C);
                 if (bestA < pa) {
                     bestA = pa;
                     idxA = i;
@@ -105,15 +105,15 @@ void GuiEndGameStatistics_QueueVoices(Self_463390* self)
     }
     func_001C10A0(&list);
     list.owned = 1;
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         int i;
         for (i = 0; i < 4; i++) {
-            Agent_463390* a = Agent_GetSelected(D_004FFB50, i);
-            if (a->bB70 && a->bB74 && !cAgentData_GetStat(Agent_GetSelected(D_004FFB50, i), 0x1A))
+            Agent_463390* a = Agent_GetSelected(g_Game, i);
+            if (a->bB70 && a->bB74 && !cAgentData_GetStat(Agent_GetSelected(g_Game, i), 0x1A))
                 PtrVec_PushBack_1C1080(&list, &i);
         }
     } else {
-        if (Agent_GetSelected(D_004FFB50, -1)->bB74 && !cAgentData_GetStat(Agent_GetSelected(D_004FFB50, -1), 0x1A))
+        if (Agent_GetSelected(g_Game, -1)->bB74 && !cAgentData_GetStat(Agent_GetSelected(g_Game, -1), 0x1A))
             PtrVec_PushBack_1C1080(&list, D_00497BD8);
     }
     n = func_00460B50(&list);

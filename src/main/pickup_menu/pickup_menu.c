@@ -15,7 +15,7 @@
 #include "types.h"
 #include "pickup_menu_types.h"
 
-extern char D_004F7E70[]; /* text colour (Vec4f; set by sinit and backpack Global_SetPickupTextColor) */
+extern char g_PickupTextColour[]; /* text colour (Vec4f; set by sinit and backpack Global_SetPickupTextColor) */
 extern float TextObj_SetColour(PickupMenu* text, char* color);
 
 /* Applies the pickup-menu text colour to a model's text object (model +0x74),
@@ -23,7 +23,7 @@ extern float TextObj_SetColour(PickupMenu* text, char* color);
 float PickupMenuEntry_SetPickupColor(PickupMenu* text) {
     text->unk10 = 1;
     text->unk11 = 1;
-    return TextObj_SetColour(text, D_004F7E70);
+    return TextObj_SetColour(text, g_PickupTextColour);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00251040 */
@@ -178,7 +178,7 @@ struct Msg_251370 {
 struct Ent_251370 { int a0; int pad4; int v; char pad0C[0x10]; };
 struct Self_251370 { Ent_251370 e[5]; char pad8C[4]; int count; int cur; };
 extern "C" {
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_004DAE30[];
 extern char D_004A79A8[];
 void Resource_Construct(void* m);
@@ -221,7 +221,7 @@ extern "C" void PickupMenu_OnLeft(Self_251370* s)
         SoundAction_CtorVoice(p, 3, D_004A79A8, 0, 0);
         EffectMsg_WrapRequest(&m, &act);
         m.flag = 1;
-        Event_Send(&m, D_004FFB50, 1);
+        Event_Send(&m, g_Game, 1);
         m.vtbl = D_004DAE30;
         FileMan_Release(m.partB, -1);
         FileMan_Release(m.partA, -1);
@@ -303,7 +303,7 @@ extern "C" void PickupMenu_OnRight(Self_251500* s)
         SoundAction_CtorVoice(p, 3, D_004A79A8, 0, 0);
         EffectMsg_WrapRequest(&m, &act);
         m.flag = 1;
-        Event_Send(&m, D_004FFB50, 1);
+        Event_Send(&m, g_Game, 1);
         m.vtbl = D_004DAE30;
         FileMan_Release(m.partB, -1);
         FileMan_Release(m.partA, -1);
@@ -384,7 +384,7 @@ extern "C" void PickupMenu_CursorPrev(Self_251690* s)
         SoundAction_CtorVoice(p, 3, D_004A79A8, 0, 0);
         EffectMsg_WrapRequest(&m, &act);
         m.flag = 1;
-        Event_Send(&m, D_004FFB50, 1);
+        Event_Send(&m, g_Game, 1);
         m.vtbl = D_004DAE30;
         FileMan_Release(m.partB, -1);
         FileMan_Release(m.partA, -1);

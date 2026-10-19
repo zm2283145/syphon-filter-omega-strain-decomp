@@ -78,7 +78,7 @@ extern "C" void func_003CE810();
 extern "C" void func_003CE9D0();
 extern "C" void func_003CEA00();
 extern void * const D_004DB8F0[];
-extern unsigned char D_00533880;
+extern unsigned char g_ProfileLockEnabled;
 }
 extern "C" char * cCheckpoint_dtor(char * arg0, long long arg1) {
     int temp_s2;

@@ -61,7 +61,7 @@ extern Ui_0029DFC0* D_004FFC04;
 #endif /* merge_units */
 #define D_004FFC04 (*(Ui_0029DFC0 **)&D_004FFC04) /* merge_units */
 
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_004AAC70[];
 extern char D_004AAC80[];
 void GuiOnlineConnect_ShowGroup(S_0029DFC0* self, unsigned char sel);
@@ -119,7 +119,7 @@ extern "C" void GuiOnlineConnect_Advance(S_0029DFC0* self)
         pg = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AAC70, D_004AAC80);
         if (pg) {
             unsigned char ok = 1;
-            if (!D_004FFC04->f265 && !IsEmpty_DFC0(Agent_GetSelected(D_004FFB50, -1) + 0x8CC))
+            if (!D_004FFC04->f265 && !IsEmpty_DFC0(Agent_GetSelected(g_Game, -1) + 0x8CC))
                 ok = 0;
             if (ok && func_002CA070(D_004FFC04))
                 func_00288DE0(pg, 1);

@@ -21,7 +21,7 @@ static inline void merge_flush_func_00176590(void) {}
 /* merge_units: begin func_001765B0 */
 #pragma push /* merge_units */
 typedef struct { char pad[0x30]; char* obj; char pad2[0x1A8 - 0x34]; float maxv; } S1765B0;
-extern int D_004FFC2C;
+extern int g_Hud;
 extern char* Loc_LookupText(char* key);
 extern void Hud_ShowCallout(int a, char* b, char* c, int d, int e, int f, float g, float h);
 void cPlayer_v26(S1765B0* p, int a1, int a2, int flag, float v)
@@ -32,7 +32,7 @@ void cPlayer_v26(S1765B0* p, int a1, int a2, int flag, float v)
     if (flag == 0 && v > 0.5f) {
         char* s;
         int d;
-        d = D_004FFC2C;
+        d = g_Hud;
         s = p->obj + 0xC;
         Hud_ShowCallout(d, s, Loc_LookupText("headshot"), 0, 0, 0, 0.1f, 1.0f);
     }
@@ -76,7 +76,7 @@ struct PC_76660 {
     char f13C[4];
 };
 extern "C" {
-extern void* D_004FFC38;
+extern void* g_Fader;
 extern char D_004D9DE0[];
 extern char D_004D9DC0[];
 extern char D_0049CAE8[];
@@ -131,7 +131,7 @@ extern "C" int PlayerComp_HandleMessage(PC_76660* self, Msg_76660* msg)
         break;
     case 16: {
         Q_76660* q;
-        ActorFader_Start(1.0f, D_004FFC38, 2);
+        ActorFader_Start(1.0f, g_Fader, 2);
         {
             AllocGuard guard;
             q = (Q_76660*)Mem_Alloc(0, 0x10, D_0049CAE8, 0x204);

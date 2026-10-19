@@ -137,7 +137,7 @@ struct Npc {
 struct MBase { void* vtable; };
 struct Msg : MBase { char pad[0x1C]; unsigned char kind; char pad2[3]; unsigned char b24; char pad3[0xB]; char data[0x40]; };
 extern "C" {
-extern char D_0055D4E0[], D_004D9360[], D_004EE550[], D_004D9340[], D_004EE698[], D_004D9940[];
+extern char g_TeleportMsgClass[], D_004D9360[], D_004EE550[], D_004D9340[], D_004EE698[], D_004D9940[];
 void Event_Construct(void* m, void* type);
 void cMessage_dtor(void* m, int flags);
 }
@@ -154,13 +154,13 @@ struct MsgB : MBase {
 };
 
 extern "C" {
-extern Tree D_004EA190;
-extern int D_005383C8;
+extern Tree g_NpcThinkList;
+extern int g_VideoFrameCounter;
 extern int D_004EA3A0;
 extern Npc* D_004EA358;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005721D0;
-extern Tab D_0049F790[];
+extern Tab SecondaryStateTable[];
 void func_0014FC10(Iter* out, Tree* t);
 Word* func_0014AB70(Word* dst, Word* src);
 void func_0014AB80(Iter* out, Tree* t);
@@ -246,7 +246,7 @@ static inline bool TabOk(Tab* t) { return t->b4C; }
 static inline bool PairOk(X* x)
 {
     bool r = 0;
-    if (TabOk(&D_0049F790[x->b310]) && TabOk(&D_0049F790[x->b311])) r = 1;
+    if (TabOk(&SecondaryStateTable[x->b310]) && TabOk(&SecondaryStateTable[x->b311])) r = 1;
     return r;
 }
 static inline int SightSelf(Perc* p, int b) { Perc* q = p; return NpcPerception_SightTest(q, p, 1, b); }
@@ -301,14 +301,14 @@ extern "C" void cNPC_v0E(Npc* self, float dt)
     Msg msg;
     bool leader = 0;
     Obj* actor = self->actor;
-    int fr = D_005383C8;
+    int fr = g_VideoFrameCounter;
     if (D_004EA3A0 == fr) {} else {
         float best = -1.0f;
-        func_0014FC10(&b, &D_004EA190);
+        func_0014FC10(&b, &g_NpcThinkList);
         func_0014AB70(&w, (Word*)&b);
         { int v = w.value; tmp = v; }
         FCopy((float*)&it, (float*)&tmp);
-        while (func_0014AB80(&e, &D_004EA190), func_0014AB70(&w2, (Word*)&e), *(volatile int*)&tmp2 = w2.value, *(int*)&it != *(volatile int*)&tmp2) {
+        while (func_0014AB80(&e, &g_NpcThinkList), func_0014AB70(&w2, (Word*)&e), *(volatile int*)&tmp2 = w2.value, *(int*)&it != *(volatile int*)&tmp2) {
             Obj* o = Get(it->h);
             if (o && Active(o)) {
                 Npc* n = o->npc58;
@@ -322,7 +322,7 @@ extern "C" void cNPC_v0E(Npc* self, float dt)
             }
             it = it->next;
         }
-        D_004EA3A0 = D_005383C8;
+        D_004EA3A0 = g_VideoFrameCounter;
     }
     if (D_004EA358 == self) leader = 1;
     if (!(self->f7C <= 0.0f)) {
@@ -339,7 +339,7 @@ extern "C" void cNPC_v0E(Npc* self, float dt)
         Obj* tgt = GetP(self->perc);
         RecR* rec;
         Obj* a;
-        if (D_005721C8 && (a = self->actor)) {
+        if (g_IsMultiplayer && (a = self->actor)) {
             rec = 0;
             if (D_005721D0) rec = a->f3584;
             if (rec) {
@@ -380,7 +380,7 @@ extern "C" void cNPC_v0E(Npc* self, float dt)
                     }
                 }
             }
-            if (!D_005721C8 || self->actor->b14) {
+            if (!g_IsMultiplayer || self->actor->b14) {
                 Y* y;
                 if ((!self->b158 || ((y = self->actor->f3310) ? Ready(y) : 0)) && self->b13C == 1 && !(self->f60 <= 0.0001f) && !self->actor->b33A5 && self->actor->f320C != 0x1A && self->actor->f320C != 0x10) {
                     V* dp = &d;
@@ -411,7 +411,7 @@ extern "C" void cNPC_v0E(Npc* self, float dt)
                             mtx.t = Node_GetTranslation(node);
                             {
                                 Msg* m = &msg;
-                                Event_Construct(m, D_0055D4E0);
+                                Event_Construct(m, g_TeleportMsgClass);
                                 m->vtable = D_004D9360;
                                 m->b24 = 2;
                                 TeleInit(m, &mtx);

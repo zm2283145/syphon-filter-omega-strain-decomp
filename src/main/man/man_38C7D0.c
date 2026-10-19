@@ -42,7 +42,7 @@ struct Self38C820 {
 };
 
 extern "C" {
-extern char D_0055DDA0[];
+extern char g_AgentPartCache[];
 int func_004027E0(char* cache, __int128 name);
 void func_00403940(char* cache, int slot);
 int MeshCache_FindSlot(char* cache, __int128 name);
@@ -54,9 +54,9 @@ extern "C" void func_0038C820(Self38C820* self)
 {
     int i;
     for (i = 0; i < self->x23C0; i++) {
-        int s = MeshCache_FindSlot(D_0055DDA0, self->pairs[i].a);
+        int s = MeshCache_FindSlot(g_AgentPartCache, self->pairs[i].a);
         if (s != -1) {
-            func_00404D90(D_0055DDA0, s);
+            func_00404D90(g_AgentPartCache, s);
         }
         if (self->x2340[i]) {
             func_0036CA70(self->x2340[i]);
@@ -64,9 +64,9 @@ extern "C" void func_0038C820(Self38C820* self)
         }
     }
     for (i = 0; i < self->x23C0; i++) {
-        int s = func_004027E0(D_0055DDA0, self->pairs[i].b);
+        int s = func_004027E0(g_AgentPartCache, self->pairs[i].b);
         if (s != -1) {
-            func_00403940(D_0055DDA0, s);
+            func_00403940(g_AgentPartCache, s);
         }
     }
 }

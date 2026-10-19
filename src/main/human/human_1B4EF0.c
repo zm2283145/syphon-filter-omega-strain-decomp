@@ -47,13 +47,13 @@ struct Act {
     void* p3584;
 };
 extern "C" {
-extern unsigned char D_00533880;
-extern int D_00533888;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
 extern char D_0049D8D0[];
 extern int D_00494178;
 extern char g_TargetVisMgr;
 extern int D_005721A8;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 void Alloc_Lock(int);
 void Alloc_Unlock(int);
 void* Mem_Alloc(int, int, char*, int);
@@ -78,7 +78,7 @@ static inline bool Ready(Act* a)
 static inline int LocalId()
 {
     int a = D_005721A8;
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         if (D_00494178 == -1)
             NetGame_InitLocalSlot(&D_00494178, a);
         return D_00494178;
@@ -103,11 +103,11 @@ extern "C" void Npc_Enable(Act* a)
             Vis* p = a->p58;
             if (!p || (p && p->Kind() != 2)) {
                 void* m;
-                if (D_00533880) Alloc_Lock(9);
-                D_00533888++;
+                if (g_ProfileLockEnabled) Alloc_Lock(9);
+                g_ProfileLockDepth++;
                 m = Mem_Alloc(0, 0x220, D_0049D8D0, 0x4BA);
-                if (D_00533880) Alloc_Unlock(9);
-                D_00533888--;
+                if (g_ProfileLockEnabled) Alloc_Unlock(9);
+                g_ProfileLockDepth--;
                 if (m) m = func_002D6030(m, a->p3584 ? a->p3584 : 0, a);
                 Actor_InitComponents(a, 4, 0, m);
             }

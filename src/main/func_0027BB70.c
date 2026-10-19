@@ -15,14 +15,14 @@ typedef struct {
 } cNetTaserMsg;
 typedef struct { char pad[0x4C]; int kind; char pad2[0x3524 - 0x50]; int* held; } T_0027BB70;
 extern signed char* D_005061D0;
-extern int D_0049D010[];
+extern int g_HumanActorClassKey[];
 extern "C" void func_00282160(int* out);
 extern "C" float Script_ReadFloat(void);
 extern "C" void HeldItem_Release(int h);
 extern "C" void func_00264980(int h, int target, int a, Vec4_27BB70 v);
 extern "C" void HeldItem_LaunchDart(int h, int target, unsigned char b, int c, Vec4_27BB70 v);
 
-static inline int Key0() { int* p = D_0049D010; return *p; }
+static inline int Key0() { int* p = g_HumanActorClassKey; return *p; }
 static inline int Held(T_0027BB70* t) { int* h = t->held; return *h; }
 static inline signed char ReadS8(void)
 {

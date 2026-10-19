@@ -42,7 +42,7 @@ static inline void merge_flush_func_0022F440(void) {}
 typedef struct Pt1SmComp { char pad[0x310]; int motion[4]; } Pt1SmComp;
 typedef struct Pt1SmActor { char pad0[0x4C]; int kind; char pad50[0x3310 - 0x50]; Pt1SmComp* comp; } Pt1SmActor;
 typedef struct Pt1SmCtrl { char pad0[0x30]; Pt1SmActor* actor; } Pt1SmCtrl;
-extern int D_0049D010;
+extern int g_HumanActorClassKey;
 extern signed char D_004E1D88;
 extern int D_004E1D90;
 extern int D_004E1D94;
@@ -61,7 +61,7 @@ static inline int* Pt1Sm_Default(void)
 }int* Controller_GetShooterMotion(Pt1SmCtrl* c)
 {
     Pt1SmActor* a = c->actor;
-    a = (a && a->kind == D_0049D010) ? a : 0;
+    a = (a && a->kind == g_HumanActorClassKey) ? a : 0;
     if (a)
         return a->comp ? a->comp->motion : Pt1Sm_Default();
     return 0;

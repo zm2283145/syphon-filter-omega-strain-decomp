@@ -86,7 +86,7 @@ struct Obj_F1A0 { char pad[0x49]; unsigned char kind; char pad4a[0xE]; R_F1A0* r
 struct List_F1A0 { int n; Obj_F1A0* items[1]; };
 extern "C" {
 extern char D_00543790[];
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 void Shadow_AddReceiver(void* mgr, Obj_F1A0* o, int flag);
 void Shadow_AddCaster(void* mgr, Obj_F1A0* o, int mode);
 }
@@ -105,7 +105,7 @@ extern "C" void Shadow_RegisterReceiver(List_F1A0* list)
             R_F1A0* rc = c->recv;
             if (rc && rc->IsLocal())
                 local = 1;
-            if (D_005721C8) {
+            if (g_IsMultiplayer) {
                 if (local)
                     Shadow_AddCaster(D_00543790, c, 2);
             } else if (local) {

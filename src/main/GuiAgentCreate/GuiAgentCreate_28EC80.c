@@ -20,7 +20,7 @@ struct S_28EC80 { char pad0[0x58]; int f58; };
 struct G_28EC80 { char pad[0x68]; unsigned int f68; };
 extern "C" {
 extern Mgr_28EC80* D_004FFC04;
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_004A99B0[];
 extern char D_004A7520[];
 void GuiWidget_BaseWake(void);
@@ -41,7 +41,7 @@ extern "C" void GuiAgentCreate_Wake(S_28EC80* self)
     p = GuiWidget_FindChildByName(self, D_004A99B0);
     p = (p && p->IsA(D_004A7520)) ? p : 0;
     if (p)
-        GuiTextWidget_SetText(p, AgentData_GetName(Agent_GetSelected(D_004FFB50, -1)), 0);
+        GuiTextWidget_SetText(p, AgentData_GetName(Agent_GetSelected(g_Game, -1)), 0);
     Gui_GetScreenStack()->f68 |= 0xC;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -70,7 +70,7 @@ extern char D_004A9870[];
 extern char D_004A9990[];
 extern char D_004A9C40[];
 extern char D_004A9A40[];
-extern char D_0055DDA0[];
+extern char g_AgentPartCache[];
 void GuiWidget_Init(Self_0028ED60* self);
 #if 0 /* merge_units */
 void* GuiWidget_FindChildByName(Self_0028ED60* self, char* name);
@@ -118,8 +118,8 @@ extern "C" void GuiAgentCreate_Init(Self_0028ED60* self)
         GuiTextWidget_SetText(self->f5C, D_004A9A40, 0);
     func_002888C0(&a);
     a.bC = 1;
-    AgentData_FilterAwards(Agent_GetSelected(D_004FFB50, -1), &a);
-    AgentPartCache_Lock(D_0055DDA0, &a);
+    AgentData_FilterAwards(Agent_GetSelected(g_Game, -1), &a);
+    AgentPartCache_Lock(g_AgentPartCache, &a);
     func_002887C0(&a, -1);
 }
 #undef GuiWidget_FindChildByName /* merge_units */

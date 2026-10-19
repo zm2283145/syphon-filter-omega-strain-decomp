@@ -25,7 +25,7 @@ struct Xf { void* vt; char pad4[0xC]; M world; unsigned char dirty; };
 struct Obj { char pad0[0x38]; int x38; char pad3C[0x14]; Xf* x50; char pad54[0x14]; Mdl* x68; };
 struct Ent { Obj* obj; char pad4[0x6C]; V c; };
 struct Shadow { char pad0[0x4D0]; Ent ent[0x200]; char pad104D0[8]; int count; };
-extern "C" int D_005392D0;
+extern "C" int g_DrawMode;
 static inline void Add(V* r, const V* a, const V* b);
 static inline void Add(V* r, const V* a, const V* b) { __asm__ volatile("lqc2 vf1, 0x0(%1); lqc2 vf2, 0x0(%2); vadd.xyzw vf1, vf1, vf2; sqc2 vf1, 0x0(%0)" : : "r"(r), "r"(a), "r"(b) : "memory"); }
 inline V Box::Sum() const { V c; Add(&c, &mn, &mx); return c; }
@@ -38,7 +38,7 @@ static inline int HasModel(Obj* o) { return o->x68->x0 ? 1 : 0; }
 extern "C" int Shadow_AddReceiver(Shadow* sh, Obj* o, int force)
 {
     int idx = -1;
-    if ((D_005392D0 & 0x60) || force) {
+    if ((g_DrawMode & 0x60) || force) {
         if (sh->count < 0x200 && o->x38 != 0x80 && HasModel(o)) {
             if (force) {
                 int i;

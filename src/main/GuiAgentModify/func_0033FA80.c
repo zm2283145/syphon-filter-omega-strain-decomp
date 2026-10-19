@@ -24,8 +24,8 @@ extern "C" {
 extern signed char D_00493A60;
 extern Blk_0033FA80 D_0055D510[];
 extern __int128 D_0055DE10;
-extern char D_0055DDA0[];
-extern char D_004FFB50[];
+extern char g_AgentPartCache[];
+extern char g_Game[];
 extern void* D_004FFC04;
 extern char D_00585E90[];
 extern char D_004B9EF8[];
@@ -103,8 +103,8 @@ extern "C" int GuiAgentModify_HandleInput(Self_0033FA80* self, Ev_0033FA80* ev)
             D_00493A60 = 0;
         QCopy_0033FA80(&D_0055D510[D_00493A60], App_0033FA80_(self->f8C->sub60), 0x44);
         Appearance_RemoveBlankPairs(&D_0055D510[D_00493A60]);
-        AgentPartCache_Unlock(D_0055DDA0);
-        AgentData_StoreAppearance(Agent_GetSelected(D_004FFB50, -1), &D_0055D510[D_00493A60]);
+        AgentPartCache_Unlock(g_AgentPartCache);
+        AgentData_StoreAppearance(Agent_GetSelected(g_Game, -1), &D_0055D510[D_00493A60]);
         if (DME_GetLobby()) {
             DME_GetLobby();
             Info_0033FA80 info = *(Info_0033FA80*)D_00585E90;
@@ -122,7 +122,7 @@ extern "C" int GuiAgentModify_HandleInput(Self_0033FA80* self, Ev_0033FA80* ev)
             char* b = Loc_LookupText(D_004B9F10);
             FrontEnd_OpenPopup(fe, 5, a, b, self, 0xC);
         } else {
-            AgentPartCache_Unlock(D_0055DDA0);
+            AgentPartCache_Unlock(g_AgentPartCache);
             World_ClearPendingIfLoaded();
             void* pg = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004B9ED0, D_004B9EE8);
             GuiStack_SwapScreens(Gui_GetScreenStack(), self, pg);

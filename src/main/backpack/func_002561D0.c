@@ -21,10 +21,10 @@ struct Pack_61D0 { char pad[0x50]; Link_61D0* link; char pad54[0x2F4 - 0x54]; un
 struct Holder_61D0 { char pad[0x30]; void* world; };
 struct Svc { VPAD1(a) virtual bool Post(void*); };
 extern "C" {
-extern char D_004D9180[], D_004FFB50[], D_005435A0[], D_004EA0B0[];
-extern void* D_004F5468;
-extern Holder_61D0* D_004FFC0C;
-extern void* D_004FFBD0;
+extern char D_004D9180[], g_Game[], g_LosRequestMsgClass[], g_LosCheckService[];
+extern void* g_GameGobjClassWord;
+extern Holder_61D0* g_LocalPlayer;
+extern void* g_HotboxTracker;
 void Event_Construct(void*, void*);
 void cMessage_dtor(void*, int);
 Svc* Service_Lookup(void*, void*);
@@ -49,7 +49,7 @@ struct MsgB {
 };
 struct MsgRay : MsgB {
     int a24; int a28; HitInfo* info; V pos; V dir; Pack_61D0* src; void* tgt; int n; unsigned char b5C;
-    MsgRay(HitInfo* i, const V& p, const V& d, Pack_61D0* s, void* t) : MsgB(D_005435A0) {
+    MsgRay(HitInfo* i, const V& p, const V& d, Pack_61D0* s, void* t) : MsgB(g_LosRequestMsgClass) {
         vtable = D_004D9180; a24 = 0; a28 = 0; info = i; V* dp = &pos; Q16(dp, &p); dir = d; src = s; tgt = t; n = 0; b5C = 0; pos.w = 1.0f; dir.w = 0.0f; }
     __declspec(weak) __declspec(MSG_DTOR) ~MsgRay() { vtable = D_004D9180; }
 } __attribute__((aligned(16)));
@@ -58,7 +58,7 @@ void Backpack_Place(Pack_61D0* p, Mtx_61D0* m, int drop)
 {
     p->link->Detach();
     if (drop) {
-        void* w = D_004FFC0C->world;
+        void* w = g_LocalPlayer->world;
         void* r = func_0013D770(func_0013D9F0(), w);
         {
             V pos; { const V* s = &m->r3; V* d = &pos; Q16(d, s); }
@@ -80,10 +80,10 @@ void Backpack_Place(Pack_61D0* p, Mtx_61D0* m, int drop)
             V dir(0.0f, 0.0f, -3.0f, 1.0f);
             {
                 MsgRay msg(&hi, from, dir, p, 0);
-                Service_Lookup(D_004FFB50, D_004EA0B0)->Post(&msg);
+                Service_Lookup(g_Game, g_LosCheckService)->Post(&msg);
                 if (hi.hit) {
                     Obj_61D0* o = *hi.s.obj;
-                    if (o->cls == D_004F5468 && o->kind == 3) {
+                    if (o->cls == g_GameGobjClassWord && o->kind == 3) {
                         Ref_61D0 r1;
                         It_61D0 it;
                         It_61D0 end;
@@ -98,5 +98,5 @@ void Backpack_Place(Pack_61D0* p, Mtx_61D0* m, int drop)
             }
         }
     }
-    if (p->hotbox) HotboxWorld_UpdateBoxBounds(D_004FFBD0, p->hotbox, p, 0);
+    if (p->hotbox) HotboxWorld_UpdateBoxBounds(g_HotboxTracker, p->hotbox, p, 0);
 }

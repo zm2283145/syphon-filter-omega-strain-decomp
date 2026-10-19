@@ -165,7 +165,7 @@ extern "C" void NpcAi_SetTeam();
 extern "C" void Component_GetOwnerId();
 extern void * const D_004D9380[];
 extern char g_NpcRouteMgr;
-extern char D_004FFB50;
+extern char g_Game;
 }
 typedef struct { void *f0; char p4[44]; V158 *f30; char p34[293]; unsigned char f159; char p15A[82]; int f1AC; int f1B0; } PS0_00158550;
 extern "C" char *cNPC_dtor(PS0_00158550 *arg0, long long arg1) {
@@ -176,7 +176,7 @@ extern "C" char *cNPC_dtor(PS0_00158550 *arg0, long long arg1) {
         if (arg0->f159 == 0) {
             ((V158 *)arg0)->v17();
         } else {
-            NpcRoute_Release(Service_Lookup(&D_004FFB50, &g_NpcRouteMgr), arg0->f30);
+            NpcRoute_Release(Service_Lookup(&g_Game, &g_NpcRouteMgr), arg0->f30);
         }
         if (arg0->f30->v29() != 0) {
             NetObjectMgr_Erase((char *)arg0->f30 + 0xC);

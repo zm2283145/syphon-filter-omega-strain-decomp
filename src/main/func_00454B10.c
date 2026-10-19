@@ -12,10 +12,10 @@ typedef struct { char pad[0x30]; A_454B10* f30; } G_454B10;
 typedef struct { char pad[0x48]; int f48; } S_454B10;
 typedef struct { char pad[0x48]; S_454B10* f48; void* f4C; } O_454B10;
 extern "C" {
-extern G_454B10* D_004FFC0C;
-extern void* D_004FFD30;
-extern void* D_004FFC2C;
-extern char D_004FFB50[];
+extern G_454B10* g_LocalPlayer;
+extern void* g_WeaponDatabase;
+extern void* g_Hud;
+extern char g_Game[];
 void GuiMultiLineText_ScrollUp(void* p, int v);
 void GuiMultiLineText_ScrollDown(void* p, int v);
 int WeaponInv_SlotOfItem(int id);
@@ -52,14 +52,14 @@ int GuiEquipmentPane_HandleInput(O_454B10* o, Ev_454B10* ev)
         int wid = o->f48 ? o->f48->f48 : -1;
         if (wid != -1) {
             unsigned char sent;
-            A_454B10* a = D_004FFC0C->f30;
+            A_454B10* a = g_LocalPlayer->f30;
             sent = 0;
             unsigned char kind = WeaponInv_SlotOfItem(wid);
             if (kind < 6) {
-                void* wd = WeaponDb_Get(D_004FFD30, wid);
+                void* wd = WeaponDb_Get(g_WeaponDatabase, wid);
                 if (wd && wd != WeaponInv_GetHeldItem(a->f3524)) {
                     sent = 1;
-                    Player_EquipItem(D_004FFC0C, wid);
+                    Player_EquipItem(g_LocalPlayer, wid);
                 }
             } else if (kind == 6 && !a->b33E7) {
                 sent = 1;
@@ -81,8 +81,8 @@ int GuiEquipmentPane_HandleInput(O_454B10* o, Ev_454B10* ev)
     }
     if (Plain2_454B10(ev, 0x800)) {
         Gui_GetScreenStack()->v24(o);
-        Hud_ClosePauseMenu(D_004FFC2C);
-        Game_SetPaused(D_004FFB50, 0);
+        Hud_ClosePauseMenu(g_Hud);
+        Game_SetPaused(g_Game, 0);
         return 1;
     }
     return 0;

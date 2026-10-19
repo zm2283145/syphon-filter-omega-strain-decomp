@@ -23,7 +23,7 @@ typedef struct {
     char padFC[0x144 - 0xFC]; int f144; int f148; int f14C; int f150;
 } O_340C80;
 char D_004B9F50[] = "head"; extern char D_004B9F58[]; extern char D_004B9F60[]; extern char D_004B9F68[];
-extern char D_0055DDA0[]; extern char D_004B9ED0[]; extern char D_004B9EE8[];
+extern char g_AgentPartCache[]; extern char D_004B9ED0[]; extern char D_004B9EE8[];
 char* String_CStr(void* s);
 void GuiAgentModify_SelectCategory(O_340C80* o, char* s);
 void GuiAgentModify_GroupHide(O_340C80* o, int v);
@@ -84,7 +84,7 @@ int GuiAgentModify_HandleEvent(O_340C80* o, Snd_340C80* snd, unsigned short msg,
     }
     if (msg == 0x1A && param == 0xC) {
         void* w;
-        AgentPartCache_Unlock(D_0055DDA0);
+        AgentPartCache_Unlock(g_AgentPartCache);
         World_ClearPendingIfLoaded();
         w = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004B9ED0, D_004B9EE8);
         GuiStack_SwapScreens(Gui_GetScreenStack(), o, w);

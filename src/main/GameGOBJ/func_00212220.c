@@ -28,7 +28,7 @@ static inline void* New_00212220(int size, int line)
 extern "C" void func_00212220(Self_00212220* self)
 {
     int ok;
-    if (D_005721C8)
+    if (g_IsMultiplayer)
         ok = D_005721C0;
     else
         ok = 1;

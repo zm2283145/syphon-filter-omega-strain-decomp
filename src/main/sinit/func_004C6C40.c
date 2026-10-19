@@ -1,5 +1,5 @@
 #include "types.h"
-extern char* D_0049D010;
+extern char* g_HumanActorClassKey;
 extern char* D_004EE960;
 extern float D_0049CED8;
 extern float D_0049CEE0;
@@ -40,7 +40,7 @@ extern float D_0049CFF0;
 extern float D_0049CFF8;
 extern float D_0049D000;
 extern float D_0049D008;
-extern float D_004F5438;
+extern float g_ThrowGravity;
 extern char D_0048A1C8;
 extern char D_00493890[];
 extern int D_004EE980;
@@ -124,14 +124,14 @@ extern char Actor_OnShockMessage[];
 extern char D_004EF080[];
 extern int D_004EF088;
 extern signed char D_004EA0C8;
-extern char* D_004EA0B0;
+extern char* g_LosCheckService;
 extern int Script_RegisterVariable();
 extern int String_CtorCStr_13B480();
 extern int __register_global_object();
 extern int func_002824D0();
 extern int cGOBJ_GetScriptTypeKeyPtr();
 extern int Script_RegisterNative_2();
-extern float D_0049D038;
+extern float g_DefaultMotionTransition;
 extern char D_0049E818[];
 extern char D_0049E820[];
 extern char D_0049E828[];
@@ -163,7 +163,7 @@ void StaticInit_ActorTuning(void)
     D_0049CF08 = 16.0f;
     D_0049CF10 = 12.0f;
     D_0049CF18 = 100.0f;
-    { float k = 0.033f; D_0049CF20 = D_004F5438 * k; }
+    { float k = 0.033f; D_0049CF20 = g_ThrowGravity * k; }
     D_0049CF28 = -3.0f;
     D_0049CF30 = -8.0f;
     D_0049CF38 = 0.1f;
@@ -194,9 +194,9 @@ void StaticInit_ActorTuning(void)
     D_0049D000 = 0.1f;
     D_0049D008 = 4.5f;
     D_004EE960 = "cTurnOnWeaponPickupMsg";
-    D_0049D010 = "HUMAN";
-    __register_global_object(&D_0049D010, func_00144930, D_004EE970);
-    D_0049D038 = 0.5f;
+    g_HumanActorClassKey = "HUMAN";
+    __register_global_object(&g_HumanActorClassKey, func_00144930, D_004EE970);
+    g_DefaultMotionTransition = 0.5f;
     Tag4Copy(D_0049D040, D_0049E818);
     Tag4Copy(D_0049D048, D_0049E820);
     Tag4Copy(D_0049D050, D_0049E828);
@@ -241,7 +241,7 @@ void StaticInit_ActorTuning(void)
     D_004EF078 = "cNetShockMsg";
     D_004EF088 = func_002824D0(Actor_OnShockMessage, D_004EF080, "cNetShockMsg");
     if (!D_004EA0C8) {
-    D_004EA0B0 = "LOS Manager";
+    g_LosCheckService = "LOS Manager";
     D_004EA0C8 = 1;
     }
 }

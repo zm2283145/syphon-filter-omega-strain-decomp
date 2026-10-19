@@ -35,7 +35,7 @@ DEFINE_BUF_HOLDER_DTOR(func_002887C0)
 #include "types.h"
 #include "loose01_types.h"
 
-extern void* D_004FFB50;
+extern void* g_Game;
 extern int Game_CountAttractMovies(void*);
 extern int GuiWidget_Init(Unk288A80*);
 
@@ -55,7 +55,7 @@ int func_002888E0(Unk288A80* self) {
     int selected;
 
     GuiWidget_Init(self);
-    selected = Game_CountAttractMovies(&D_004FFB50);
+    selected = Game_CountAttractMovies(&g_Game);
     self->unk48 = selected != 0;
     return selected;
 }

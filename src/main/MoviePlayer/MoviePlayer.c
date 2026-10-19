@@ -106,9 +106,9 @@ typedef struct Sys8450 {
     unsigned char f235;
     unsigned char f236;
 } Sys8450;
-extern int D_005381F0;
+extern int g_Video;
 extern unsigned char D_0055C740;
-extern int D_00539248;
+extern int g_TextureMgr;
 extern char D_004BE1D8[];
 extern char D_0055C230[];
 extern int D_00538200;
@@ -160,9 +160,9 @@ void MoviePlayer_Start(Sys8450* s)
     int len;
     char* name;
     int n;
-    D_0055C740 = (D_005381F0 & 4) != 0;
+    D_0055C740 = (g_Video & 4) != 0;
     func_003F79F0(0, 0, 0, 0x80);
-    func_00382ED0(D_00539248, 0x2D0, 0x240, 0x20);
+    func_00382ED0(g_TextureMgr, 0x2D0, 0x240, 0x20);
     name = s->name;
     len = strlen(name);
     strncpy(path, name, len);

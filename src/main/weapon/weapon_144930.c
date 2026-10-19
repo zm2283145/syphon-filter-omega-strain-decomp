@@ -19,12 +19,12 @@ DEFINE_TRIVIAL_DTOR(func_00144930)
 #pragma push /* merge_units */
 #include "types.h"
 typedef struct { char pad[0x1C]; unsigned char flag; } F44980;
-extern unsigned char D_00535D62;
+extern unsigned char g_LevelLightsDirty;
 void Light_Disable(F44980* p)
 {
     if (p->flag) {
         p->flag = 0;
-        D_00535D62 = 1;
+        g_LevelLightsDirty = 1;
     }
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -89,7 +89,7 @@ extern void* D_004D9280[];
 #endif /* merge_units */
 #define D_004D9280 ((void **)&D_004D9280) /* merge_units */
 
-extern int D_00535D20;
+extern int g_LightMgr;
 extern void LightMgr_RemoveFromTable(void* pool, void* p);
 E7Light* Light_Destruct(E7Light* p, short flag) {
     if (p) {
@@ -98,13 +98,13 @@ E7Light* Light_Destruct(E7Light* p, short flag) {
             p->vt = D_004D9240;
             p->id = -1;
             ((E7VC*)p)->Disable();
-            D_00535D62 = 1;
+            g_LevelLightsDirty = 1;
             if (p) {
                 p->vt = D_004D9280;
             }
         }
         if (flag > 0) {
-            LightMgr_RemoveFromTable(&D_00535D20, p);
+            LightMgr_RemoveFromTable(&g_LightMgr, p);
         }
     }
     return p;
@@ -152,7 +152,7 @@ static inline unsigned char eq4_(V4* a, V4* b) {
 void Light_SetPosition(C44_O* o, V4* v) {
     if ((eq4_(&o->v30, v) != 0) ^ 1) {
         { V4* d = &o->v30; VCopyF(d, v); }
-        D_00535D62 = 1;
+        g_LevelLightsDirty = 1;
     }
 }
 #pragma pop

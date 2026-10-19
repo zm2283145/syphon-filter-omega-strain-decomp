@@ -46,9 +46,9 @@ typedef struct Obj6E4 {
     Color4* color;
 } Obj6E4;
 
-extern Color4 D_004F7D60;
-extern Color4 D_004F7D70;
-extern float D_0055A280;
+extern Color4 g_HudTextColour;
+extern Color4 g_NvHudTextColour;
+extern float g_TextColourBlock;
 extern float D_0055A284;
 extern float D_0055A288;
 extern float D_0055A28C;
@@ -58,9 +58,9 @@ extern void Hud_SelectColourRamp(int);
 void Hud_SelectTextColorTable(Obj6E4* o, int alt) {
     Color4* c;
     Hud_SelectColourRamp(alt);
-    o->color = alt ? &D_004F7D70 : &D_004F7D60;
+    o->color = alt ? &g_NvHudTextColour : &g_HudTextColour;
     c = o->color;
-    D_0055A280 = c->r;
+    g_TextColourBlock = c->r;
     D_0055A284 = c->g;
     D_0055A288 = c->b;
     D_0055A28C = c->a;

@@ -9,7 +9,7 @@
 extern int ActiveList_RemoveFirst(char* world);
 extern int ActiveList_RemoveObject(char* world, int camera);
 extern int D_004EE908;
-extern char D_004FFB50[]; /* world object */
+extern char g_Game[]; /* world object */
 extern char D_00555070[];
 extern int ScriptFilter_Dispatch(char*, int, int);
 extern int World_PushObjectFromAction(char* world, int camera); /* push camera */
@@ -17,19 +17,19 @@ extern void func_00282020(int);
 
 /* Script binding: removes camera args[0] from the world camera stack. */
 int Script_cGameCamera_RemoveCamera(int* args) {
-    ActiveList_RemoveObject(D_004FFB50, args[0]);
+    ActiveList_RemoveObject(g_Game, args[0]);
     return 0;
 }
 
 /* Script binding: pops the current camera. */
 int Script_cGameCamera_PopCurrent(void) {
-    ActiveList_RemoveFirst(D_004FFB50);
+    ActiveList_RemoveFirst(g_Game);
     return 0;
 }
 
 /* Script binding: pushes camera args[0] as current. */
 int Script_cGameCamera_PushCurrent(int* args) {
-    World_PushObjectFromAction(D_004FFB50, args[0]);
+    World_PushObjectFromAction(g_Game, args[0]);
     return 0;
 }
 

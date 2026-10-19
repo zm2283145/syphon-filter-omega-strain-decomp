@@ -42,8 +42,8 @@ int func_003D8EF0(char * , int, int);
 int strrchr(char * , int);                             
 extern char D_00499C71;
 extern char D_004BD3B0;
-extern unsigned char D_00533880;
-extern int D_00533888;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
 extern char * D_00554F28;
 
 #pragma push
@@ -63,15 +63,15 @@ int Script_RegisterType(char * arg0, int arg1, signed char arg2, signed char arg
     if ((F_(var_s4, 0x0, signed char) == 0x63) && (F_(&D_00499C71, F_(var_s4, 0x1, signed char), signed char) & 1)) {
         var_s4 += 1;
     }
-    if (D_00533880 != 0) {
+    if (g_ProfileLockEnabled != 0) {
         Alloc_Lock(9);
     }
-    D_00533888 += 1;
+    g_ProfileLockDepth += 1;
     temp_s0 = Mem_Alloc(0, 0x50, &D_004BD3B0, 0x79);
-    if (D_00533880 != 0) {
+    if (g_ProfileLockEnabled != 0) {
         Alloc_Unlock(9);
     }
-    D_00533888 -= 1;
+    g_ProfileLockDepth -= 1;
     if (temp_s0 != NULL) {
         func_003D8EF0(temp_s0 + 4, func_00290BB0(sl.f64, 5), 1);
         func_003D8E80(temp_s0 + 0x14, func_00290BB0(&sl.f60, 5), 1);

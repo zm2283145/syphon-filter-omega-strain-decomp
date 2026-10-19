@@ -34,7 +34,7 @@ struct SkelNode {
     V v180, v190, v1A0, v1B0, v1C0;
 };
 extern "C" {
-extern M D_0055C9F0;
+extern M g_IdentityMatrix;
 extern signed char D_004E1D88;
 extern V D_004E1D90;
 void Xform_Construct(SkelNode* x);
@@ -60,8 +60,8 @@ extern "C" SkelNode* SkelNode_Construct(SkelNode* d)
 {
     Xform_Construct(d);
     d->fC0 = 0;
-    d->mD0 = D_0055C9F0;
-    d->m110 = D_0055C9F0;
+    d->mD0 = g_IdentityMatrix;
+    d->m110 = g_IdentityMatrix;
     d->b150 = 0;
     d->b151 = 1;
     d->f154 = 0.0f;
@@ -82,9 +82,9 @@ extern "C" SkelNode* SkelNode_Construct(SkelNode* d)
 typedef struct { char pad[0x60]; unsigned char a; unsigned char b; } BAE50Item;
 typedef struct { int pad[2]; BAE50Item** items; } BAE50Tbl;
 typedef struct { int i0; int i1; } BAE50Pair;
-extern BAE50Tbl* D_00539248;
+extern BAE50Tbl* g_TextureMgr;
 int ShadowBuf_IsResident(BAE50Pair* p) {
-    BAE50Item** arr = D_00539248->items;
+    BAE50Item** arr = g_TextureMgr->items;
     int r = (arr[p->i0]->a & arr[p->i0]->b) != 0;
     if (p->i1 != -1) {
         unsigned char res = 0;
@@ -105,18 +105,18 @@ typedef struct { unsigned char pad[0x50]; unsigned long long tex0; } Tex_3BAED0;
 typedef struct { int pad0[2]; Tex_3BAED0** entries; } Table_3BAED0;
 typedef struct { int pad0; int index; } Ref_3BAED0;
 #if 0 /* merge_units */
-extern Table_3BAED0* D_00539248;
+extern Table_3BAED0* g_TextureMgr;
 #endif /* merge_units */
-#define D_00539248 (*(Table_3BAED0 **)&D_00539248) /* merge_units */
+#define g_TextureMgr (*(Table_3BAED0 **)&g_TextureMgr) /* merge_units */
 
 
 unsigned int func_003BAED0(Ref_3BAED0* r)
 {
     if (r->index != -1)
-        return (unsigned int)(int)(D_00539248->entries[r->index]->tex0 & 0x3FFF) >> 5;
+        return (unsigned int)(int)(g_TextureMgr->entries[r->index]->tex0 & 0x3FFF) >> 5;
     return 0;
 }
-#undef D_00539248 /* merge_units */
+#undef g_TextureMgr /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003BAED0 */
 
@@ -126,17 +126,17 @@ typedef struct { char pad[0x50]; unsigned long bits; } Entry50;
 typedef struct { char pad[8]; Entry50** entries; } EntryTable;
 
 #if 0 /* merge_units */
-extern EntryTable* D_00539248;
+extern EntryTable* g_TextureMgr;
 #endif /* merge_units */
-#define D_00539248 (*(EntryTable **)&D_00539248) /* merge_units */
+#define g_TextureMgr (*(EntryTable **)&g_TextureMgr) /* merge_units */
 
 
 /* Returns bits 5..13 of the 64-bit field at +0x50 of the indexed table entry. */
 unsigned int func_003BAF20(int* index)
 {
-    return (unsigned int)(int)(D_00539248->entries[*index]->bits & 0x3FFF) >> 5;
+    return (unsigned int)(int)(g_TextureMgr->entries[*index]->bits & 0x3FFF) >> 5;
 }
-#undef D_00539248 /* merge_units */
+#undef g_TextureMgr /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003BAF20 */
 
@@ -151,33 +151,33 @@ unsigned int func_003BAF20(int* index)
 #include "loose03_types.h"
 
 #if 0 /* merge_units */
-extern TexRegistry* D_00539248;
+extern TexRegistry* g_TextureMgr;
 #endif /* merge_units */
-#define D_00539248 (*(TexRegistry **)&D_00539248) /* merge_units */
+#define g_TextureMgr (*(TexRegistry **)&g_TextureMgr) /* merge_units */
 
 
 int func_003BAF60(int* handle) {
-    return D_00539248->entries[*handle]->info->unk06;
+    return g_TextureMgr->entries[*handle]->info->unk06;
 }
 
 int func_003BAF90(int* handle) {
-    return D_00539248->entries[*handle]->info->unk04;
+    return g_TextureMgr->entries[*handle]->info->unk04;
 }
-#undef D_00539248 /* merge_units */
+#undef g_TextureMgr /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003BAF60 */
 
 /* merge_units: begin func_003BAFC0 */
 #pragma push /* merge_units */
 #if 0 /* merge_units */
-extern void* D_00539248;
+extern void* g_TextureMgr;
 #endif /* merge_units */
-#define D_00539248 (*(void **)&D_00539248) /* merge_units */
+#define g_TextureMgr (*(void **)&g_TextureMgr) /* merge_units */
 
 extern void TexMan_ReleaseSlot(void*, int);
 typedef struct { int a; int b; } Pair_003BAFC0;
 /* Applies the global handler to the first id and, if valid, the second id. */
-void RenderTarget_Release(Pair_003BAFC0* p) { TexMan_ReleaseSlot(D_00539248, p->a); if (p->b != -1) TexMan_ReleaseSlot(D_00539248, p->b); }
-#undef D_00539248 /* merge_units */
+void RenderTarget_Release(Pair_003BAFC0* p) { TexMan_ReleaseSlot(g_TextureMgr, p->a); if (p->b != -1) TexMan_ReleaseSlot(g_TextureMgr, p->b); }
+#undef g_TextureMgr /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003BAFC0 */

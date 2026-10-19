@@ -69,8 +69,8 @@ extern char D_0049EDB8[];
 extern char D_0049D8D0[];
 extern char D_0055C7A0[];
 extern char D_004F12D0[];
-extern char D_004FFB50[];
-extern unsigned char D_005721C8;
+extern char g_Game[];
+extern unsigned char g_IsMultiplayer;
 void Mem_Free(int, void*, char*, int);
 void WeaponInv_Dtor(void*, int);
 void Node_ReleaseComponent58(Npc*);
@@ -121,7 +121,7 @@ static inline void SendDeath(Npc* a)
     Msg m;
     SoundStopMsg_Ctor(&m, D_004F12D0, a);
     m.b20 = 1;
-    Event_Send(&m, D_004FFB50, 1);
+    Event_Send(&m, g_Game, 1);
     m.vt = D_004DADF0;
     FileMan_Release(m.sub114, -1);
     FileMan_Release(m.sub78, -1);
@@ -161,7 +161,7 @@ extern "C" Npc* Npc_Dtor(Npc* a, short flag)
             a->b31FC = 0;
         }
         for (i = 0; i < 3; i++) Actor_ShockReaction(a, i, 0, 1.0f);
-        if (D_005721C8) {
+        if (g_IsMultiplayer) {
             Net* n = a->p3584;
             if (n) {
                 if (func_002D2210(n)) func_002EC2A8(n->w24);

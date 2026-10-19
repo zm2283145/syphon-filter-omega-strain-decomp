@@ -21,10 +21,10 @@ typedef struct { char pad[0x178]; int f178; } P_4651F0;
 typedef struct { char pad[0x6C]; unsigned char b6C; unsigned char b6D; char pad6E[2]; int f70; VO_4651F0* f74; } O_4651F0;
 extern "C" {
 extern unsigned int D_00497BF0[2];
-extern unsigned char D_004FFC29;
+extern unsigned char g_LoadoutPending;
 extern void* D_004FFC04;
-extern G_4651F0* D_004FFC2C;
-extern P_4651F0* D_004FFC0C;
+extern G_4651F0* g_Hud;
+extern P_4651F0* g_LocalPlayer;
 extern char D_004C2910[];
 extern char D_004C2930[];
 extern char D_004C2948[];
@@ -33,7 +33,7 @@ int func_002CAB70(void* p);
 int GuiGameScreen_IsChooseMenuVisible(void* p);
 M_4651F0* Gui_GetScreenStack(void);
 }
-static inline bool NotBusy(void) { return !D_004FFC2C->b6AA && !GuiGameScreen_IsChooseMenuVisible(D_004FFC2C->f6A4); }
+static inline bool NotBusy(void) { return !g_Hud->b6AA && !GuiGameScreen_IsChooseMenuVisible(g_Hud->f6A4); }
 extern "C" unsigned char func_004651F0(O_4651F0* o)
 {
     unsigned char r;
@@ -43,13 +43,13 @@ extern "C" unsigned char func_004651F0(O_4651F0* o)
     if (l->n) {
         VO_4651F0* obj = l->head->obj;
         if (obj == o->f74) {
-            if (D_004FFC29) {
+            if (g_LoadoutPending) {
                 if (!String_CompareNoCase(obj->Name(), D_004C2910) || !String_CompareNoCase(l->head->obj->Name(), D_004C2930))
                     r = 1;
             } else if (!String_CompareNoCase(obj->Name(), D_004C2948)) {
-                r = NotBusy() && !D_004FFC0C->f178;
+                r = NotBusy() && !g_LocalPlayer->f178;
             } else if (!func_002CAB70(D_004FFC04)) {
-                r = D_004FFC2C->b6A9 || D_004FFC2C->b6A8;
+                r = g_Hud->b6A9 || g_Hud->b6A8;
             }
         } else {
             *(int*)D_00497BF0 = -1;
@@ -65,7 +65,7 @@ extern "C" unsigned char func_004651F0(O_4651F0* o)
 
 /* merge_units: begin func_004653B0 */
 #pragma push /* merge_units */
-extern char D_004FFB50[];
+extern char g_Game[];
 extern unsigned char D_00572400;
 extern char D_00587310[], D_005874B0[], D_00587650[], D_005877F0[], D_00587990[];
 void Game_EndLevel(void*, int);
@@ -75,11 +75,11 @@ extern int func_00465A50(void*, void*, unsigned short, int, int);
 int GuiGameCanvas_OnEvent(void* self, void* b, unsigned short type, int idx, int e)
 {
     if (type == 0x1A && idx == 0x667) {
-        Game_EndLevel(D_004FFB50, D_00572400 ? 2 : 3);
+        Game_EndLevel(g_Game, D_00572400 ? 2 : 3);
         return 1;
     }
     if (type == 0x1A && idx == 0x668) {
-        Game_EndLevel(D_004FFB50, 3);
+        Game_EndLevel(g_Game, 3);
         return 1;
     }
     if (type == 0x10 || type == 0x11) {

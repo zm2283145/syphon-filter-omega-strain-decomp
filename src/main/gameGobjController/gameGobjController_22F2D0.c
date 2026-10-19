@@ -15,7 +15,7 @@ typedef struct { char pad[0x30]; void* net; char pad34[4]; float skill; } Npc002
 void cNPC_SetSkill(Npc0022F2D0* self, float skill)
 {
     self->skill = skill;
-    if (D_005721C8 && NpcAuth_IsLocal())
+    if (g_IsMultiplayer && NpcAuth_IsLocal())
         NetEvent_Send(self->net, 0x37, 4, *(volatile int*)&skill, 0, 0, 0);
 }
 /* merge_units: generate this block's code under its own pragmas */

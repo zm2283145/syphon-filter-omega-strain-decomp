@@ -15,10 +15,10 @@ struct Obj_4415A0 {
 };
 
 extern "C" {
-extern char D_004FFB50[];
+extern char g_Game[];
 extern int D_004FFC04;
-extern int D_004FFBBC;
-extern Net_4415A0 D_0055A830;
+extern int g_CardSlotId;
+extern Net_4415A0 g_MemCard;
 extern char D_004C0448[]; extern char D_004C0458[]; extern char D_004C0468[];
 extern char D_004C0498[]; extern char D_004C04A8[];
 int Agent_GetSelected(void*, int);
@@ -35,8 +35,8 @@ static inline int ShowDlg(int mgr, int type, char* t, char* m, void* cb, int x) 
 
 extern "C" void SaveAgentWidget_Prepare(Obj_4415A0* self)
 {
-    Net_4415A0* net = &D_0055A830;
-    if (!D_0055A830.impl->f59F) {
+    Net_4415A0* net = &g_MemCard;
+    if (!g_MemCard.impl->f59F) {
         if (!SaveAgentWidget_SpaceCheck()) return;
         if (!self->shown) {
             self->shown = 1;
@@ -50,8 +50,8 @@ extern "C" void SaveAgentWidget_Prepare(Obj_4415A0* self)
         }
     }
     {
-        char* agent = (char*)Agent_GetSelected(D_004FFB50, -1);
-        bool other = D_0055A830.impl->f5A8 != D_004FFBBC;
+        char* agent = (char*)Agent_GetSelected(g_Game, -1);
+        bool other = g_MemCard.impl->f5A8 != g_CardSlotId;
         if (self->mode != 4) {
             char* name = 0;
             if (self->mode != 0 && !other) name = (self->mode == 3) ? self->name : agent + 0x8AC;

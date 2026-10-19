@@ -5,12 +5,12 @@
 
 #include "npc_types.h"
 
-extern int D_004EA350;          /* maximum number of active NPCs */
+extern int g_MaxActiveNpcCount;          /* maximum number of active NPCs */
 extern int Actor_Ignite(NpcActor* actor, int a1, int a2, int a3, int a4, float f12);
 
 /* Sets the maximum number of active NPCs. */
 void cNPC_SetMaxActiveNpcCount(int count) {
-    D_004EA350 = count;
+    g_MaxActiveNpcCount = count;
 }
 
 /* vtable slot 0x5D: SetOnFire. */

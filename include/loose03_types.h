@@ -18,7 +18,7 @@ typedef struct TexInfo {
     unsigned short unk0A;           /* 0x0A */
 } TexInfo;
 
-/* Texture entry held by the texture registry (D_00539248). */
+/* Texture entry held by the texture registry (g_TextureMgr). */
 typedef struct TexEntry {
     char pad00[0x44];
     TexInfo* info;                  /* 0x44 */
@@ -235,7 +235,7 @@ typedef struct GuiAgentInfoMember88 {
     char unk3C[0xC];                /* 0x3C */
 } GuiAgentInfoMember88;
 
-/* GuiAgentInfo screen (vtable D_004DF350, class-name getter GuiAgentInfo_GetClassName), ctor GuiAgentInfo_ctor. */
+/* GuiAgentInfo screen (vtable GuiAgentInfo_vtable, class-name getter GuiAgentInfo_GetClassName), ctor GuiAgentInfo_ctor. */
 typedef struct GuiAgentInfo {
     GuiScreenBase base;             /* 0x00 */
     GuiAgentInfoMember88 unk88;             /* 0x88 */

@@ -13,7 +13,7 @@ typedef struct { char pad0[0xC]; int id; } Pt2_Hd;
 extern int D_0055A840;
 const float D_00493938[2] = { -1.0f, 0.0f };
 const float D_00493940[2] = { -2.0f, 0.0f };
-extern char D_0055D480[];
+extern char g_ActorActionMsgClass[];
 extern char D_004E0160[];
 extern char D_004E0840[];
 extern int* Receiver_GetOwner(void);
@@ -30,7 +30,7 @@ void ObjectAction_SendKind7(Pt2_Tgt* t, char cat, Pt2_Hd* h, unsigned char flag,
     else if (val == (*(float*)D_00493940)) val = 3.4028235e38f;
     if (h) idp = &h->id;
     else { tmp[0] = -1; idp = tmp; }
-    Event_Construct(&m, D_0055D480);
+    Event_Construct(&m, g_ActorActionMsgClass);
     m.cat = cat;
     m.kind = 7;
     m.vt = D_004E0160;
@@ -98,7 +98,7 @@ static inline void KQ_Copy(void* dd, void* ss, int nn)
 }
 static inline Msg_3E6910* Msg_Init(Msg_3E6910* self, char cat, int* idp, Key_3E6910* key, float val, unsigned char flag)
 {
-    Event_Construct(self, D_0055D480);
+    Event_Construct(self, g_ActorActionMsgClass);
     self->vt = D_004E0840;
     self->cat = cat;
     self->kind = 10;

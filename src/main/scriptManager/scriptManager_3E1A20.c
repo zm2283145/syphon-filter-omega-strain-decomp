@@ -10,14 +10,14 @@
 /* merge_units: begin func_003E1A20 */
 #pragma push /* merge_units */
 extern unsigned char D_004938D0;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005721C0;
 extern void ScriptMgr_CallFunction(void*, char*, int);
-static inline int ok3E1(void) { return D_005721C8 ? D_005721C0 : 1; }
+static inline int ok3E1(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
 void Script_ClientStartLevel(void* s) {
     if (D_004938D0) {
         ScriptMgr_CallFunction(s, "init::ClientStartLevel", 0);
-        if (!D_005721C8 || ok3E1()) ScriptMgr_CallFunction(s, "init::StartLevel", 0);
+        if (!g_IsMultiplayer || ok3E1()) ScriptMgr_CallFunction(s, "init::StartLevel", 0);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */

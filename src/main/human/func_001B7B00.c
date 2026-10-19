@@ -15,19 +15,19 @@ typedef struct Blk_1B7B00 { __int128 q[68]; } Blk_1B7B00;
 typedef struct Sub60_1B7B00 { char pad[64]; Blk_1B7B00 blk; } Sub60_1B7B00;
 
 extern "C" {
-extern char D_0049D010[];
+extern char g_HumanActorClassKey[];
 extern char D_0049D8D0[];
 extern char D_004DA690[];
 extern char D_004DA2F0[];
 extern char D_004DA7B8[];
 extern char D_004DA7A8[];
-extern int D_004BDD00;
-extern int D_004EE968;
+extern int g_NoneWord;
+extern int g_ActorSerialCounter;
 extern int D_00494178;
 extern int D_005721A8;
-extern unsigned char D_005721C8;
-extern unsigned char D_00533880;
-extern int D_00533888;
+extern unsigned char g_IsMultiplayer;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
 void IdMgr_Allocate(int* id, int cat);
 void Actor_Construct(void* self, int* id, char* name);
 void func_001B7AE0(void* p);
@@ -192,7 +192,7 @@ static inline void Body_1B7B00(void* self, int x, unsigned char type, int flag, 
     W_(self, 13228) = 0;
     W_(self, 13232) = 0;
     W_(self, 13236) = 0;
-    W_(self, 13260) = D_004BDD00;
+    W_(self, 13260) = g_NoneWord;
     W_(self, 13264) = 0;
     W_(self, 13268) = 0;
     W_(self, 13272) = 0;
@@ -263,11 +263,11 @@ static inline void Body_1B7B00(void* self, int x, unsigned char type, int flag, 
     B_(self, 13720) = flag ? true : false;
     {
         void* p;
-        if (D_00533880) Alloc_Lock(9);
-        D_00533888++;
+        if (g_ProfileLockEnabled) Alloc_Lock(9);
+        g_ProfileLockDepth++;
         p = Mem_Alloc(0, 248, D_0049D8D0, line);
-        if (D_00533880) Alloc_Unlock(9);
-        D_00533888--;
+        if (g_ProfileLockEnabled) Alloc_Unlock(9);
+        g_ProfileLockDepth--;
         if (p) { int l = type == 1; if (!l) l = type == 3; p = WeaponInv_Construct(p, self, l); }
         W_(self, 13604) = (int)p;
         W_(self, 13620) = W_(self, 13604);
@@ -278,12 +278,12 @@ void* Npc_ConstructSpawned(void* self, void* mtx, int x, char* name, int health,
 {
     int id;
     IdMgr_Allocate(&id, 69);
-    Actor_Construct(self, &id, D_0049D010);
+    Actor_Construct(self, &id, g_HumanActorClassKey);
     Body_1B7B00(self, x, type, flag, tag, 540);
     if (flag) {
         int s = D_005721A8;
         int id = 0;
-        if (D_005721C8) {
+        if (g_IsMultiplayer) {
             if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, s);
             id = D_00494178;
         } else {
@@ -293,8 +293,8 @@ void* Npc_ConstructSpawned(void* self, void* mtx, int x, char* name, int health,
     }
     if (((At_1B7B00<12784, unsigned int>*)self)->v == (unsigned int)-1) {
         if (type == 2 || type == 4) {
-            ((At_1B7B00<12784, unsigned int>*)self)->v = D_004EE968;
-            D_004EE968 = D_004EE968 + 1;
+            ((At_1B7B00<12784, unsigned int>*)self)->v = g_ActorSerialCounter;
+            g_ActorSerialCounter = g_ActorSerialCounter + 1;
         }
     }
     Npc_Initialize(self, mtx, name, health, 0, weap, flag, type, label);
@@ -304,7 +304,7 @@ void* Npc_ConstructSpawned(void* self, void* mtx, int x, char* name, int health,
 
 void* Actor_Construct2(void* self, void* mtx, int x, char* name, int health, int* weap, unsigned char type, char* label, int* idp, int flag, int tag, Blk_1B7B00* src)
 {
-    Actor_Construct(self, idp, D_0049D010);
+    Actor_Construct(self, idp, g_HumanActorClassKey);
     Body_1B7B00(self, x, type, flag, tag, 448);
     if (src) {
         { Sub60_1B7B00* sb = (Sub60_1B7B00*)((char*)self + 96); QCopyN_1B7B00(&sb->blk, src, 68); }
@@ -314,8 +314,8 @@ void* Actor_Construct2(void* self, void* mtx, int x, char* name, int health, int
         B_(self, 20) = 0;
     if (((At_1B7B00<12784, unsigned int>*)self)->v == (unsigned int)-1) {
         if (type == 2 || type == 4) {
-            ((At_1B7B00<12784, unsigned int>*)self)->v = D_004EE968;
-            D_004EE968 = D_004EE968 + 1;
+            ((At_1B7B00<12784, unsigned int>*)self)->v = g_ActorSerialCounter;
+            g_ActorSerialCounter = g_ActorSerialCounter + 1;
         }
     }
     Npc_Initialize(self, mtx, name, health, 0, weap, flag, type, label);

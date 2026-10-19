@@ -3,7 +3,7 @@
 struct Obj211350 { char pad0[0xC]; int id; char p10[0xD0]; int fE0; };
 struct Msg211350 { void* vtable; char base[0x20]; int f24; int f28; int from; int to; char pad34[4]; };
 extern "C" {
-extern char D_004F5440[];
+extern char g_TriggerMsgKey[];
 extern char D_004DAF10[];
 void Event_Construct(void* m, void* type);
 void Event_Send(void* m, void* target, int immediate);
@@ -17,7 +17,7 @@ extern "C" int PathObj_ScriptTrigger(Obj211350** args) {
     Msg211350* p = &m;
     Obj211350* self = args[0];
     self->fE0 = 0;
-    Event_Construct(&m, D_004F5440);
+    Event_Construct(&m, g_TriggerMsgKey);
     m.f24 = 0;
     m.f28 = 0;
     m.vtable = D_004DAF10;

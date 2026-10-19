@@ -52,7 +52,7 @@ extern char D_004A6E38;
 #endif /* merge_units */
 #define D_004A6E38 (*(char*)&D_004A6E38) /* merge_units */
 
-extern unsigned char D_00533880;
+extern unsigned char g_ProfileLockEnabled;
 }
 extern "C" void ParticleEffectComp_Start(char * arg0) {
     int var_s1;
@@ -109,9 +109,9 @@ static inline void merge_flush_func_00236EA0(void) {}
 typedef struct { unsigned char flag; char pad[7]; } D2_FxFlag;
 typedef struct { int a; int b; } D2_FxEntry;
 extern D2_FxFlag D_004F7A54[];
-extern D2_FxEntry D_004F7A50[];
+extern D2_FxEntry SpecFxTable[];
 static inline D2_FxEntry* d2_get(int id) {
-    if ((unsigned int)id < 41) return &D_004F7A50[id];
+    if ((unsigned int)id < 41) return &SpecFxTable[id];
     return 0;
 }
 D2_FxEntry* SpecFx_GetEffectDef(signed char id) {
@@ -128,23 +128,23 @@ static inline void merge_flush_func_00236F20(void) {}
 typedef struct { int obj; unsigned char flag; char pad[3]; } E236F;
 typedef struct { char pad[0xD0]; E236F e[15]; } G236F;
 #if 0 /* merge_units */
-extern G236F D_004F7A50;
+extern G236F SpecFxTable;
 #endif /* merge_units */
-#define D_004F7A50 (*(G236F*)&D_004F7A50) /* merge_units */
+#define SpecFxTable (*(G236F*)&SpecFxTable) /* merge_units */
 
-extern int D_00539248;
+extern int g_TextureMgr;
 extern void Tex_Release(int a, int b, int c);
 void func_00236F80(void)
 {
     int i;
     for (i = 0; i < 15; i++) {
-        if (D_004F7A50.e[i].flag) {
-            Tex_Release(D_00539248, D_004F7A50.e[i].obj, 1);
-            D_004F7A50.e[i].flag = 0;
+        if (SpecFxTable.e[i].flag) {
+            Tex_Release(g_TextureMgr, SpecFxTable.e[i].obj, 1);
+            SpecFxTable.e[i].flag = 0;
         }
     }
 }
-#undef D_004F7A50 /* merge_units */
+#undef SpecFxTable /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00236F80(void) {}
 #pragma pop /* merge_units */

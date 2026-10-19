@@ -29,7 +29,7 @@ typedef struct {
     unsigned char fBE0;
     char fBE1[1];
 } ObjAB80;
-extern int D_00539248;
+extern int g_TextureMgr;
 extern void Resource_Construct(FileMan* f);
 extern void Hog_Register(FileMan* f, char* name, int a, int b);
 extern void FileMan_FindMember(FileMan* f);
@@ -125,7 +125,7 @@ void Font_LoadFnt(ObjAB80* obj, int arg1, char* name)
     }
     Resource_Construct(&fm2);
     Hog_Register(&fm2, (char*)&s + 1, arg1, 0);
-    obj->f0 = TexMan_FindOrLoad(D_00539248, &fm2);
+    obj->f0 = TexMan_FindOrLoad(g_TextureMgr, &fm2);
     FileMan_Release(&fm2, -1);
     FileMan_Release(&fm, -1);
 }
@@ -147,7 +147,7 @@ extern "C" O36AF40* func_0036AF40(O36AF40* self, short deleteFlag)
 {
     if (self) {
         self->vtable = ((char*)D_004DF630);
-        Tex_Release(D_00539248, self->handle, 0);
+        Tex_Release(g_TextureMgr, self->handle, 0);
         if (deleteFlag > 0)
             operator_delete(self);
     }

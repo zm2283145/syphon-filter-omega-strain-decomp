@@ -2,7 +2,7 @@
 extern char Script_CreateTank[];
 extern int D_00506278;
 extern int D_00506240;
-extern char* D_00506248;
+extern char* g_NetCreateTankMsgKey;
 extern char func_00283DA0[];
 extern char D_00506250[];
 extern int D_00506258;
@@ -62,7 +62,7 @@ extern int cGOBJ_GetScriptTypeKeyPtr();
 void func_004D28B0(void)
 {
     D_00506240 = Script_RegisterNative_2(Script_CreateTank, &D_00506278, "CreateTank", 1, func_002379E0());
-    D_00506248 = "cNetCreateTankMsg";
+    g_NetCreateTankMsgKey = "cNetCreateTankMsg";
     D_00506258 = func_002824D0(func_00283DA0, D_00506250, "cNetCreateTankMsg");
     D_00506260 = "cNetUpdateTankMsg";
     D_00506270 = func_002824D0(func_002838B0, D_00506268, "cNetUpdateTankMsg");

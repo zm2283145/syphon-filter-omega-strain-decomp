@@ -20,7 +20,7 @@ struct S_002A9A20 {
 extern "C" {
 extern void* D_004FFC04;
 extern char D_004AB808[];
-extern char D_004FFB50[];
+extern char g_Game[];
 G_002A9A20* DME_GetLobby(void);
 int GuiScreen_GetLobbyString(S_002A9A20* self, int a, int b, int c, int d, int e);
 int FrontEnd_OpenPopup(void* ui, int a, char* b, int c, S_002A9A20* d, int e);
@@ -41,7 +41,7 @@ extern "C" void func_002A9A20(S_002A9A20* self)
         E_002A9A20* e = LobbyArray_At(self->fA0, self->f9C);
         if (e) {
             if (SFOLobby_JoinLobby(g, self->f9C)) {
-                Prof_002A9A20* pr = &Agent_GetSelected(D_004FFB50, -1)->prof;
+                Prof_002A9A20* pr = &Agent_GetSelected(g_Game, -1)->prof;
                 Str_002A9A20 s;
                 String_CtorCStr_13B480(&s, e->name);
                 func_003FD740(&s);
@@ -198,12 +198,12 @@ extern "C" void func_002A9BA0(S_002A9BA0* self)
     }
     w = FindAs_002A9BA0(self, D_0048BBF8, D_004A7520);
     if (w)
-        GuiTextWidget_SetText(w, AgentData_GetName(Agent_GetSelected(D_004FFB50, -1)), 0);
+        GuiTextWidget_SetText(w, AgentData_GetName(Agent_GetSelected(g_Game, -1)), 0);
     w = FindAs_002A9BA0(self, D_0048BBE8, D_004A7520);
     if (w && self->p88)
         GuiTextWidget_SetText(w, String_CStr(self->p88->s48), 0);
     self->f9C = -1;
-    ag = Agent_GetSelected(D_004FFB50, -1);
+    ag = Agent_GetSelected(g_Game, -1);
     pr = &ag->prof;
     key = pr->fC4;
     pname = pr->name;

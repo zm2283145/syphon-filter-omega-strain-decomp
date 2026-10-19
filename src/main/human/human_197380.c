@@ -11,7 +11,7 @@
 #pragma push /* merge_units */
 typedef struct { void* vtable; char base[0x20]; int id; signed char b; char pad29[3]; } Msg_197380;
 typedef struct { char pad[0x4C]; int classKey; } G_197380;
-extern int D_0049D010;
+extern int g_HumanActorClassKey;
 extern char D_004EEEE8[];
 extern char D_004DA8F0[];
 extern char D_004DCF10[];
@@ -37,7 +37,7 @@ void MeleeMsg_CreateFromNet(G_197380* g)
         ReadS8_197380(bp);
         *ip = t;
     }
-    if (g && g->classKey == D_0049D010) Melee_StartAttack(g, *ip, *bp != 0);
+    if (g && g->classKey == g_HumanActorClassKey) Melee_StartAttack(g, *ip, *bp != 0);
     msg.vtable = D_004DCF10;
     cMessage_dtor(&msg, 0);
 }

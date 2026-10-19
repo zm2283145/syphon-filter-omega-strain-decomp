@@ -8,8 +8,8 @@ char * Mem_Alloc(int, int, char *, int);
 int PtrVec_PushBack_429770(char *, void **);
 int strncpy(char * , int, int);
 extern char D_004BF9B0; /* "DME.cc" */
-extern unsigned char D_00533880;
-extern int D_00533888;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
 extern unsigned char D_005723C8;
 extern char D_005724A0; /* game address list (NetworkGameList) */
 
@@ -23,15 +23,15 @@ void DME_AddGameAddress(int name, int value) {
     if (D_005723C8 == 0) {
         D_005723C8 = 1;
     }
-    if (D_00533880 != 0) {
+    if (g_ProfileLockEnabled != 0) {
         Alloc_Lock(9);
     }
-    D_00533888 += 1;
+    g_ProfileLockDepth += 1;
     entry = Mem_Alloc(0, 0x14, &D_004BF9B0, 0x72F);
-    if (D_00533880 != 0) {
+    if (g_ProfileLockEnabled != 0) {
         Alloc_Unlock(9);
     }
-    D_00533888 -= 1;
+    g_ProfileLockDepth -= 1;
     if (entry != NULL) {
         F_(entry, 0x10, int) = 0xE4A;
     }

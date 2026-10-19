@@ -13,7 +13,7 @@ typedef struct { char pad0[0x68]; int state; char pad1[0x98-0x6C]; int count; ch
 typedef struct { char pad0[0x4C]; int kind; } Ent4080;
 typedef struct { char pad0[0x70]; int num; char vec[8]; Obj4080** objs; } Lift4080;
 extern Ent4080** func_00172990(void* vec, int i);
-extern int D_004F5468;
+extern int g_GameGobjClassWord;
 #pragma opt_strength_reduction off
 unsigned char cElevatorGOBJ_LinksOpen(Lift4080* p) {
     unsigned char ok = 1;
@@ -21,7 +21,7 @@ unsigned char cElevatorGOBJ_LinksOpen(Lift4080* p) {
     Obj4080* o;
     for (i = 0; i < p->num; i++) {
         Ent4080** e = func_00172990(p->vec, i);
-        if ((*e)->kind == D_004F5468) {
+        if ((*e)->kind == g_GameGobjClassWord) {
             o = p->objs[i];
             if (o->state == 2) {
                 int c = o->count - 1;

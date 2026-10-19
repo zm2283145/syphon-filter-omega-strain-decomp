@@ -19,7 +19,7 @@ V* Vec4_GetZero(void);
 void Vec4_Assign(V*, V*);
 extern char D_004DCDE0[];
 extern float D_004A9328;
-extern M D_0055C9F0;
+extern M g_IdentityMatrix;
 }
 struct R { int a, b, c, d; };
 static inline const int* Id(const R* p) {
@@ -75,7 +75,7 @@ extern "C" PlayerCamera* PlayerCamera_Construct(PlayerCamera* self, int* k, floa
     self->fD84 = 0;
     self->fD88 = 0;
     self->vD90 = VZero();
-    self->mDA0 = D_0055C9F0;
+    self->mDA0 = g_IdentityMatrix;
     self->f30 = 2;
     return self;
 }

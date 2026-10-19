@@ -26,7 +26,7 @@ typedef struct {
     char pad0[0x90]; char action[0x44]; unsigned char playing;
 } Self_327120;
 
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_004DADF0[];
 extern char D_004DAE10[];
 extern void SoundEvent_Ctor(SoundEventMsg_327120* msg, void* action, int flags);
@@ -50,7 +50,7 @@ static inline void StopVoice_327120(Self_327120* self)
     self->playing = 0;
     SoundEvent_Ctor(&stop, self->action, 0);
     stop.flag = 1;
-    Event_Send(&stop, D_004FFB50, 1);
+    Event_Send(&stop, g_Game, 1);
     stop.vtbl = D_004DADF0;
     FileMan_Release(stop.partB, -1);
     FileMan_Release(stop.partA, -1);
@@ -65,7 +65,7 @@ static inline void PlayVoice_327120(Self_327120* self, char* voice)
     self->playing = 0;
     SoundMsg_WrapAction(&play, self->action);
     play.flag = 1;
-    Event_Send(&play, D_004FFB50, 1);
+    Event_Send(&play, g_Game, 1);
     play.vtbl = D_004DAE10;
     FileMan_Release(play.partB, -1);
     FileMan_Release(play.partA, -1);
@@ -203,7 +203,7 @@ static inline void PlayVoice_327530(Self_327530* self, char* voice)
     self->playing = 0;
     SoundEvent_Ctor(&stop, self->action, 0);
     stop.flag = 1;
-    Event_Send(&stop, D_004FFB50, 1);
+    Event_Send(&stop, g_Game, 1);
     stop.vtbl = D_004DADF0;
     FileMan_Release(stop.partB, -1);
     FileMan_Release(stop.partA, -1);
@@ -212,7 +212,7 @@ static inline void PlayVoice_327530(Self_327530* self, char* voice)
     self->playing = 0;
     SoundMsg_WrapAction(&play, self->action);
     play.flag = 1;
-    Event_Send(&play, D_004FFB50, 1);
+    Event_Send(&play, g_Game, 1);
     play.vtbl = D_004DAE10;
     FileMan_Release(play.partB, -1);
     FileMan_Release(play.partA, -1);
@@ -243,7 +243,7 @@ void GuiSlideShow_Show(Self_327530* self, int sel, int sub)
             GuiTextWidget_SetText(self->w64, buf, 0);
         }
         if (item->b1C) {
-            int a = Agent_GetSelected(D_004FFB50, -1);
+            int a = Agent_GetSelected(g_Game, -1);
             if (!AgentData_IsZeusViewed(a, item->f20, item->f24, item->f28)) {
                 if (self->w68) self->w68->flags |= 2;
                 AgentData_SetLevelFlag(a, item->f20, item->f24, item->f28, 1);

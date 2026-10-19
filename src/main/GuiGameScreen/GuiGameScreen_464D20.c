@@ -10,10 +10,10 @@ typedef struct { char pad[0x6C]; unsigned char b6C; unsigned char b6D; char pad6
 extern void* D_00582CF0;
 extern unsigned char D_00582B88;
 unsigned int D_00497BF0[2] = { 0xFFFFFFFF, 0x0 };
-extern unsigned char D_004FFC29;
+extern unsigned char g_LoadoutPending;
 extern void* D_004FFC04;
-extern G_464D20* D_004FFC2C;
-extern P_464D20* D_004FFC0C;
+extern G_464D20* g_Hud;
+extern P_464D20* g_LocalPlayer;
 int Net_GetTalkerName(void* p);
 int func_004651F0(void);
 void func_00437950(int v);
@@ -35,7 +35,7 @@ static inline int IsMine_464D20(void)
 
 void func_00464D20(O_464D20* o, float dt)
 {
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         if (o->b6C) {
             unsigned char act = func_004651F0();
             if (!D_00582B88 || !act) {
@@ -53,7 +53,7 @@ void func_00464D20(O_464D20* o, float dt)
                     o->b6D = 1;
                     o->f70 = Net_GetClock(1) + 200;
                 } else if (D_00582B88 && o->f70 < Net_GetClock(1)) {
-                    if (D_005721C8) {
+                    if (g_IsMultiplayer) {
                         func_00437950(1);
                     } else {
                         o->f70 = 0;
@@ -66,9 +66,9 @@ void func_00464D20(O_464D20* o, float dt)
                 if (!func_004651F0() || o->f70 < Net_GetClock(1)) {
                     func_00437950(0);
                     (*(int*)D_00497BF0) = -1;
-                } else if (!D_004FFC29 && !func_002CAB70(D_004FFC04) && !D_004FFC2C->b6A9 && !D_004FFC2C->b6A8
-                           && !D_004FFC2C->b6AA && !GuiGameScreen_IsChooseMenuVisible(D_004FFC2C->f6A4) && !D_004FFC0C->f178) {
-                    func_00242740(D_004FFC2C);
+                } else if (!g_LoadoutPending && !func_002CAB70(D_004FFC04) && !g_Hud->b6A9 && !g_Hud->b6A8
+                           && !g_Hud->b6AA && !GuiGameScreen_IsChooseMenuVisible(g_Hud->f6A4) && !g_LocalPlayer->f178) {
+                    func_00242740(g_Hud);
                 }
             }
             o->f70 = 0;

@@ -23,7 +23,7 @@ extern "C" {
 extern char D_004BFCA0[];
 extern unsigned char D_005721B8;
 extern unsigned char D_005721C0;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005721D0;
 extern unsigned char D_00582778;
 extern unsigned char D_00582780;
@@ -55,7 +55,7 @@ extern "C" void func_004355D0(int arg)
     if (D_005721B8) return;
     if (D_005721D0) {
         if (D_00582778 && !D_00582780) {
-            if (D_005721C8 ? D_005721C0 : 1) {
+            if (g_IsMultiplayer ? D_005721C0 : 1) {
                 E_004355D0* p0 = D_005827F0;
                 E_004355D0* p1 = D_005827F8;
                 E_004355D0* p2 = D_00582800;
@@ -73,7 +73,7 @@ extern "C" void func_004355D0(int arg)
         func_00434740(arg);
         return;
     }
-    if (!D_00582778 && D_005721C8) {
+    if (!D_00582778 && g_IsMultiplayer) {
         NEWARR(D_005827F0, 0x269);
         NEWARR(D_005827F8, 0x26A);
         NEWARR(D_00582800, 0x26B);
@@ -105,8 +105,8 @@ void* Mem_Alloc(int, int, char*, int);
 #define Mem_Alloc(a0, a1, a2, a3) (Mem_Alloc((a0), (a1), (a2), (a3))) /* merge_units */
 
 void func_00434BB0(char*, NpcInfoMsg**);
-extern unsigned char D_00533880;
-extern int D_00533888;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
 extern char D_00582B30[];
 
 void func_00435D80(int self, int key, unsigned char v)
@@ -118,11 +118,11 @@ void func_00435D80(int self, int key, unsigned char v)
         r = func_004361C0(key, &h);
         if (r) {
             NpcInfoMsg* t;
-            if (D_00533880) Alloc_Lock(9);
-            D_00533888++;
+            if (g_ProfileLockEnabled) Alloc_Lock(9);
+            g_ProfileLockDepth++;
             t = (NpcInfoMsg*)Mem_Alloc(0, 0x14, D_004BFCA0, 0x20E);
-            if (D_00533880) Alloc_Unlock(9);
-            D_00533888--;
+            if (g_ProfileLockEnabled) Alloc_Unlock(9);
+            g_ProfileLockDepth--;
             if (t) NPC_INFO_COPY(*t, r)
             m = t;
             if (m) {

@@ -31,7 +31,7 @@ struct O_7C60 { char pad[0x30]; void* recv; };
 struct S_7C60 { char pad[0xC]; O_7C60* obj; };
 struct G_7C60 { int pad0; float t; };
 extern "C" {
-extern G_7C60* D_004FFC38;
+extern G_7C60* g_Fader;
 extern char D_004F7940[];
 extern char D_004DB890[];
 extern char D_004D9DE0[];
@@ -41,8 +41,8 @@ void Event_Send(Ev_7C60* e, void* target, int a);
 void cMessage_dtor(Ev_7C60* e, int f);
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void EventQueue_Admit(Q_7C60* q);
-extern unsigned char D_00533880;
-extern int D_00533888;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
 void Alloc_Lock(int id);
 void Alloc_Unlock(int id);
 }
@@ -58,7 +58,7 @@ static inline void Init_7C60(Q_7C60* q, O_7C60* obj)
 extern "C" void Player_RespawnPollEvent(S_7C60* self)
 {
     Q_7C60* q;
-    if (D_004FFC38->t == 0.0f) {
+    if (g_Fader->t == 0.0f) {
         Ev_7C60 e;
         Event_Construct(&e, D_004F7940);
         e.target = 0;
@@ -69,13 +69,13 @@ extern "C" void Player_RespawnPollEvent(S_7C60* self)
         cMessage_dtor(&e, 0);
         return;
     }
-    if (D_00533880)
+    if (g_ProfileLockEnabled)
         Alloc_Lock(9);
-    D_00533888++;
+    g_ProfileLockDepth++;
     q = (Q_7C60*)Mem_Alloc(0, 0x10, "player.cc", 0x1AA);
-    if (D_00533880)
+    if (g_ProfileLockEnabled)
         Alloc_Unlock(9);
-    D_00533888--;
+    g_ProfileLockDepth--;
     if (q)
         Init_7C60(q, self->obj);
     EventQueue_Admit(q);

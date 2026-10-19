@@ -4,7 +4,7 @@ typedef struct Item { unsigned char flag; char name[0x20]; } Item;
 typedef struct List { int pad0; int count; Item* items; } List;
 typedef struct Box { char pad[0x94]; unsigned int size; } Box;
 typedef struct Self { char pad[0x48]; Box* box; } Self;
-extern List* D_004FFC2C;
+extern List* g_Hud;
 extern void func_00424410(Box*, int*, unsigned int*);
 extern void GuiTextListWidget_Clear(Box*);
 extern void GuiTextListWidget_AddItem(Box*, char*, int, int);
@@ -18,7 +18,7 @@ void GuiRadioLog_Refill(Self* self)
     int i;
     if (self->box == 0) return;
     func_00424410(self->box, &a, &b);
-    l = D_004FFC2C;
+    l = g_Hud;
     if (l == 0) return;
     GuiTextListWidget_Clear(self->box);
     for (i = 0; i < l->count; i++) {

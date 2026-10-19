@@ -14,7 +14,7 @@ typedef struct {
 extern char D_004EA098[];
 extern char D_004D91A0[];
 extern char D_004DCF10[];
-extern char D_004FFB50[];
+extern char g_Game[];
 extern void Event_Construct(Msg_12F0D0* m, void* type);
 extern void cMessage_dtor(Msg_12F0D0* m, int f);
 extern void Stream_ReadByte(signed char* out);
@@ -43,7 +43,7 @@ void func_0012F0D0(void)
     Stream_ReadByte(&m.id);
     Stream_ReadBool(&m.flag);
     Stream_ReadBool(&m.b2D);
-    m.agent = Agent_GetSelected(D_004FFB50, m.id);
+    m.agent = Agent_GetSelected(g_Game, m.id);
     if (m.flag) {
         func_00330E40(m.agent);
     } else {
@@ -53,12 +53,12 @@ void func_0012F0D0(void)
             if (p && m.id == func_0012F2E0(p)) {
                 func_0012F2D0(buf);
                 Hud_AppendCalloutName(buf, p, m.id, 1);
-                Hud_ShowCallout(func_0012F2C0(D_004FFB50), func_0012F2B0(p), func_0012F2A0(buf), 0, 0, 0, -1.0f, 0.0f);
+                Hud_ShowCallout(func_0012F2C0(g_Game), func_0012F2B0(p), func_0012F2A0(buf), 0, 0, 0, -1.0f, 0.0f);
                 break;
             }
         }
         if (!m.id) {
-            char* g = Agent_GetSelected(D_004FFB50, -1);
+            char* g = Agent_GetSelected(g_Game, -1);
             func_0012F280(g, func_0012F290(m.agent));
         }
     }

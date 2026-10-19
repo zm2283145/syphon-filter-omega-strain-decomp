@@ -26,7 +26,7 @@ struct It {
 };
 
 extern "C" {
-extern char* D_004FFD44;
+extern char* g_ActorList;
 void* func_00134100(char* self);
 void func_001340C0(It* out, void* v);
 void func_001340E0(It* out, void* v);
@@ -44,7 +44,7 @@ extern "C" Tgt* cTurret_FindTarget(Self* self) {
     Node* n = self->owner->node;
     if (n->dirty) n->Refresh();
     { Mtx* src = &n->m; Mtx* dst = &m; Q4(dst, src); }
-    char* reg = D_004FFD44;
+    char* reg = g_ActorList;
     func_001340C0(&it, func_00134100(reg));
     func_001340E0(&end, func_00134100(reg));
     float best = 1000.0f;

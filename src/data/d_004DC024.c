@@ -88,7 +88,7 @@ void *D_004DC038[6] __attribute__((aligned(8))) = {
     0, 0,
 };
 
-void *D_004DC050[80] = {
+void *cNIEventOBJ_vtable[80] = {
     0, 0, &cNIEventOBJ_dtor, &cNIEventOBJ_v01,
     &GObj_GetID, &Object_GetAttachedOrSelf, &func_0023FCF0, &func_0012ED00,
     &func_003CE810, &func_003CE7D0, &cNIEventOBJ_v08, &cNIEventOBJ_v09,

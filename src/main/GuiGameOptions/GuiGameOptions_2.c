@@ -26,13 +26,13 @@ int func_0029BDA0(char* self) {
 #define NULL 0
 #pragma mpwc_relax on
 int PlayerSlots_Get(int);                             
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 
 int GuiGameOptions_GetPlayers(void) {
     int var_s1;
     int var_s0;
 
-    if (D_005721C8 == 0) {
+    if (g_IsMultiplayer == 0) {
         return 1;
     }
     var_s1 = 0;

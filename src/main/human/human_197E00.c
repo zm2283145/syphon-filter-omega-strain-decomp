@@ -161,9 +161,9 @@ extern float D_0048A258;
 extern float D_0048A260;
 extern float D_0048A270;
 extern float D_0048A280;
-extern int D_004BDD00;
+extern int g_NoneWord;
 extern char D_004DAE30[];
-extern char D_004FFB50[];
+extern char g_Game[];
 int MotionCtrl_IsSelectorPlaying(void* ctrl, Key* k);
 float Actor_GetGaitPhase(void* ctrl, Key* k);
 #if 0 /* merge_units */
@@ -189,7 +189,7 @@ static inline void PlayEv(SReq* r, ActorX* a, int now)
     SEv ev;
     SoundEvent_CtorFromPreset(&ev, r, a);
     ev.flag = 1;
-    Event_Send(&ev, D_004FFB50, now);
+    Event_Send(&ev, g_Game, now);
     ev.vt = D_004DAE30;
     FileMan_Release(&ev.s114, -1);
     FileMan_Release(&ev.s78, -1);
@@ -257,7 +257,7 @@ extern "C" void Actor_UpdateAnimationEvents(ActorX* a)
         SoundEvent_CtorFromPreset(&ev, snd, a);
         int now = 1;
         ev.flag = now;
-        Event_Send(&ev, D_004FFB50, now);
+        Event_Send(&ev, g_Game, now);
         ev.vt = D_004DAE30;
         FileMan_Release(&ev.s114, -1);
         FileMan_Release(&ev.s78, -1);
@@ -268,21 +268,21 @@ extern "C" void Actor_UpdateAnimationEvents(ActorX* a)
         if (t != -1.0f) {
             if (!(t <= D_0048A250)) {
                 WeaponInv_LaunchProjectile(a->weapon, &a->target, &a->x33D0, a->speed);
-                a->target = D_004BDD00;
+                a->target = g_NoneWord;
                 a->st33E4 = 2;
             }
         } else {
             t = Secondary_MotionPhase(a->sec, &Str48(D_0049DFE0));
             if (t != -1.0f && !(t <= D_0048A250)) {
                 WeaponInv_LaunchProjectile(a->weapon, &a->target, &a->x33D0, D_0048A280);
-                a->target = D_004BDD00;
+                a->target = g_NoneWord;
                 a->st33E4 = 2;
                 {
                     SReq r(1, D_0049E060, 0, 0);
                     SEv ev;
                     SoundEvent_CtorFromPreset(&ev, &r, a);
                     ev.flag = 1;
-                    Event_Send(&ev, D_004FFB50, 0);
+                    Event_Send(&ev, g_Game, 0);
                     ev.vt = D_004DAE30;
                     FileMan_Release(&ev.s114, -1);
                     FileMan_Release(&ev.s78, -1);

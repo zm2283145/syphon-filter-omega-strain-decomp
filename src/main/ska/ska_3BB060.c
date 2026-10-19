@@ -18,7 +18,7 @@ typedef struct Mgr {
     short list[0x200];
 } Mgr;
 typedef struct Pair { int a; int b; } Pair;
-extern Mgr* D_00539248;
+extern Mgr* g_TextureMgr;
 extern void func_00382D30(Mgr*, int);
 extern void TexMan_UploadSlots(Mgr*);
 
@@ -34,16 +34,16 @@ static inline void Push(Mgr* m, int id)
 void func_003BB060(Pair* p)
 {
     Mgr* m;
-    func_00382D30(D_00539248, p->a);
-    if (p->b != -1) func_00382D30(D_00539248, p->b);
-    m = D_00539248;
+    func_00382D30(g_TextureMgr, p->a);
+    if (p->b != -1) func_00382D30(g_TextureMgr, p->b);
+    m = g_TextureMgr;
     m->f14 = 1;
     m->f15 = 1;
     m->count = 0;
     m->f16 = 0;
-    Push(D_00539248, p->a);
-    if (p->b != -1) Push(D_00539248, p->b);
-    TexMan_UploadSlots(D_00539248);
+    Push(g_TextureMgr, p->a);
+    if (p->b != -1) Push(g_TextureMgr, p->b);
+    TexMan_UploadSlots(g_TextureMgr);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003BB060 */
@@ -55,17 +55,17 @@ typedef struct { char pad[4]; unsigned short w; unsigned short h; } Pt2_Dim;
 typedef struct { char pad[0x44]; Pt2_Dim* dim; } Pt2_Tex;
 typedef struct { char pad[8]; Pt2_Tex** tex; } Pt2_TexTbl;
 #if 0 /* merge_units */
-extern Pt2_TexTbl* D_00539248;
+extern Pt2_TexTbl* g_TextureMgr;
 #endif /* merge_units */
-#define D_00539248 (*(Pt2_TexTbl **)&D_00539248) /* merge_units */
+#define g_TextureMgr (*(Pt2_TexTbl **)&g_TextureMgr) /* merge_units */
 
-extern char D_005381F0[];
+extern char g_Video[];
 extern void Renderer_ClearRect(void*, int, int, int, int, int);
 void RenderTarget_Clear(int* id, int arg1) {
-    Pt2_Dim* d = (*(Pt2_Tex**)((int)D_00539248->tex + *id * 4))->dim;
-    Renderer_ClearRect(D_005381F0, d->w, d->h, arg1, 1, 0);
+    Pt2_Dim* d = (*(Pt2_Tex**)((int)g_TextureMgr->tex + *id * 4))->dim;
+    Renderer_ClearRect(g_Video, d->w, d->h, arg1, 1, 0);
 }
-#undef D_00539248 /* merge_units */
+#undef g_TextureMgr /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003BB180 */
 
@@ -73,9 +73,9 @@ void RenderTarget_Clear(int* id, int arg1) {
 #pragma push /* merge_units */
 typedef struct F1RT3BB { int color; int depth; int colorFmt; int depthFmt; unsigned char hasDepth; } F1RT3BB;
 #if 0 /* merge_units */
-extern void* D_00539248;
+extern void* g_TextureMgr;
 #endif /* merge_units */
-#define D_00539248 (*(void **)&D_00539248) /* merge_units */
+#define g_TextureMgr (*(void **)&g_TextureMgr) /* merge_units */
 
 extern void String_Copy(char* dst, char* src);
 extern void Libc_Strcat(char* dst, char* src);
@@ -92,10 +92,10 @@ void RenderTarget_Create(F1RT3BB* rt, char* name, int w, int h, int fmt, int dep
     rt->hasDepth = depth > 0;
     rt->color = -1;
     rt->depth = -1;
-    rt->color = func_00380DB0(D_00539248, cname, w, h, fmt);
-    if (depth) rt->depth = func_00380DB0(D_00539248, dname, w, h, depth);
+    rt->color = func_00380DB0(g_TextureMgr, cname, w, h, fmt);
+    if (depth) rt->depth = func_00380DB0(g_TextureMgr, dname, w, h, depth);
 }
-#undef D_00539248 /* merge_units */
+#undef g_TextureMgr /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003BB1C0 */
 

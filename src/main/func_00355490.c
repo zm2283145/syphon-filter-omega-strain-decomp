@@ -9,7 +9,7 @@ typedef struct {
 } Self_355490;
 typedef struct { char pad[0x25C]; int f25C; } Cfg_355490;
 
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_004DADF0[];
 extern char D_004DAE10[];
 extern Cfg_355490* D_004FFC04;
@@ -29,7 +29,7 @@ static inline void StopVoice_355490(Self_355490* self)
     self->playing = 0;
     SoundEvent_Ctor(&stop, self->action, 0);
     stop.flag = 1;
-    Event_Send(&stop, D_004FFB50, 1);
+    Event_Send(&stop, g_Game, 1);
     stop.vtbl = D_004DADF0;
     FileMan_Release(stop.partB, -1);
     FileMan_Release(stop.partA, -1);
@@ -44,7 +44,7 @@ static inline void PlayVoice_355490(Self_355490* self, char* voice)
     self->playing = 0;
     SoundMsg_WrapAction(&play, self->action);
     play.flag = 1;
-    Event_Send(&play, D_004FFB50, 1);
+    Event_Send(&play, g_Game, 1);
     play.vtbl = D_004DAE10;
     FileMan_Release(play.partB, -1);
     FileMan_Release(play.partA, -1);

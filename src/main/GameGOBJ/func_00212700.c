@@ -11,8 +11,8 @@ int func_00211DA0();
 int func_002EB650(void **, int);                    
 int func_002EC2A8(int);                               
 extern char D_004A4550;
-extern unsigned char D_00533880;
-extern int D_00533888;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
 extern unsigned char D_005723C8;
 
 #pragma push
@@ -42,15 +42,15 @@ void func_00212700(int d0, int arg1) {
                     if (F_(temp_s3, 0xC, unsigned char) != 0) {
                         func_002EC2A8(func_00211DA0());
                     } else {
-                        if (D_00533880 != 0) {
+                        if (g_ProfileLockEnabled != 0) {
                             Alloc_Lock(9);
                         }
-                        D_00533888 += 1;
+                        g_ProfileLockDepth += 1;
                         Mem_Free(0, temp_s3, &D_004A4550, 0xB83);
-                        if (D_00533880 != 0) {
+                        if (g_ProfileLockEnabled != 0) {
                             Alloc_Unlock(9);
                         }
-                        D_00533888 -= 1;
+                        g_ProfileLockDepth -= 1;
                     }
                     F_(temp_v0, 0xD0, int) = NULL;
                 }

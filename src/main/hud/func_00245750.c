@@ -10,7 +10,7 @@ int cMessage_dtor(char **, int);
 extern char D_004DC310;
 extern char D_004DCF10;
 extern char D_004F7DC0;
-extern char D_004FFB50;
+extern char g_Game;
 
 void func_00245750(void) {
     struct { char * f40[9]; float f; char s[16]; } sl;
@@ -22,7 +22,7 @@ void func_00245750(void) {
     NetRead_Float(&sl.f);
     func_00281E90(sl.s, 16);
     text = sl.s[0] ? Loc_LookupText(sl.s) : 0;
-    func_00245800(func_0012F2C0(&D_004FFB50), text, sl.f);
+    func_00245800(func_0012F2C0(&g_Game), text, sl.f);
     sl.f40[0] = &D_004DCF10;
     cMessage_dtor(sl.f40, 0);
 }

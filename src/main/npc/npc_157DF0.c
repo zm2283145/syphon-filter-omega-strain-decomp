@@ -221,9 +221,9 @@ typedef struct {
 
 extern "C" {
 extern LookSlot D_004EA1D0[16];
-extern char D_004EA370[];
+extern char g_NpcDeadList[];
 extern unsigned char D_0055C780[4];
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern int D_005721A8;
 extern int D_00494178;
 extern char D_00582760[];
@@ -246,7 +246,7 @@ void cMessage_dtor(Msg *m, int f);
 int NetGame_InitLocalSlot(int *id, int session);
 }
 
-#define LOCALID(X) { int ld_a = D_005721A8; if (D_005721C8) { if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, ld_a); X = D_00494178; } else X = 0; }
+#define LOCALID(X) { int ld_a = D_005721A8; if (g_IsMultiplayer) { if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, ld_a); X = D_00494178; } else X = 0; }
 
 extern "C" void cNPC_v10(Npc *self)
 {
@@ -266,7 +266,7 @@ bool ok;
             if (self->s15())
                 NpcThinkList_Add(self->actor);
             else
-                NpcAi_AddToDeadList(D_004EA370, &self);
+                NpcAi_AddToDeadList(g_NpcDeadList, &self);
             self->slot = D_004EA1D0;
             for (i = 0; i < 16; i++) {
                 if (!D_004EA1D0[i].used) {
@@ -397,7 +397,7 @@ extern "C" Ev_8350* func_00158350(NPC_8350* self)
     Snd_8350* s = self->ctl->snd;
     if (s)
         s->Stop();
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         Ev_8350* p;
         {
             AllocGuard g;

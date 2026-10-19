@@ -24,7 +24,7 @@ struct CxStartRoute{char pad[0x10];int type;char pad14[0xC];int*nodes;int unknow
 struct CxStartPath{char pad[0x48];int remaining;int node;int segB;int segA;int type;int unknown;unsigned long long hold:1;unsigned long long flag1:1;unsigned long long flag2:1;unsigned long long stopped:1;unsigned long long rest:4;char pad64[0xC];CxStartActor*actor;CxStartRoute*route;};
 struct CxStartMsg{void*vt;char pad[0x28];int a,b;int unk34;float x,y,z;};
 extern "C" {
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern char D_0051F0C0[],D_004DE510[];
 void Event_Construct(CxStartMsg*,void*);
 void cMessage_dtor(CxStartMsg*,int);
@@ -36,7 +36,7 @@ static inline void CxStart_Construct(CxStartMsg*m,CxStartMsg*loc){Event_Construc
 static inline void CxStart_Destroy(CxStartMsg*m,CxStartMsg*loc){loc->vt=D_004DE510;cMessage_dtor(m,0);}
 #pragma opt_propagation off
 extern "C" int NpcRoute_Start(CxStartPath*self){
- if(D_005721C8 && self->actor->networked){CxStartMsg msg;CxStartMsg*m=&msg;CxStart_Construct(m,&msg);func_002D7BE0(m,self->actor->id,self->route);CxStart_Destroy(m,&msg);}
+ if(g_IsMultiplayer && self->actor->networked){CxStartMsg msg;CxStartMsg*m=&msg;CxStart_Construct(m,&msg);func_002D7BE0(m,self->actor->id,self->route);CxStart_Destroy(m,&msg);}
  if(self->hold){self->hold=0;NpcPath_HoldNode(self,-1);}
  self->remaining=self->route->count;
  int n=self->remaining;
@@ -112,7 +112,7 @@ public:
 extern "C" {
 extern char D_004ED9B8[];
 extern char D_004D9760[];
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char g_NpcRouteMgr[];
 void* Mem_Alloc(int pool, int size, void* file, int line);
 void* Service_Lookup(void*, void*);
@@ -221,7 +221,7 @@ extern "C" void NpcPath_Start(Path* self)
     Route* r = self->route;
     r->Reserve();
     if (r->x14 >= 0)
-        NpcPath_RebuildRoute(Service_Lookup(D_004FFB50, g_NpcRouteMgr), r->x14, r->x18, r);
+        NpcPath_RebuildRoute(Service_Lookup(g_Game, g_NpcRouteMgr), r->x14, r->x18, r);
 }
 #undef Event_Construct /* merge_units */
 #undef cMessage_dtor /* merge_units */
@@ -457,7 +457,7 @@ extern "C" void func_001614C0(void* src, S_14C0* self)
         self->buf = p;
     }
     if (self->id >= 0)
-        NpcPath_RebuildRoute(Service_Lookup(D_004FFB50, g_NpcRouteMgr), self->id, self->arg, self);
+        NpcPath_RebuildRoute(Service_Lookup(g_Game, g_NpcRouteMgr), self->id, self->arg, self);
 }
 #undef Mem_Alloc /* merge_units */
 #undef Service_Lookup /* merge_units */

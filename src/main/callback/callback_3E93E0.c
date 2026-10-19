@@ -107,7 +107,7 @@ typedef struct { char p0[0x1F0]; Cam3E9460 cams[1]; } W3E9460;
 typedef struct { char p0[0x60]; int h; char p64[0xC]; V3E9460 dir; } S3E9460;
 extern void Renderer_ProjectToScreen(V3E9460* out, void* m, V3E9460* v);
 extern void IeElement_SetPosition(int h, V3E9460* v);
-extern W3E9460 D_005381F0;
+extern W3E9460 g_Video;
 extern int D_00538C60;
 extern char D_0055A290[];
 #pragma push
@@ -132,7 +132,7 @@ void func_003E9460(S3E9460* s)
             sqc2 vf12, 0x0(o)
         }
     }
-    Renderer_ProjectToScreen(&t, D_005381F0.cams[D_00538C60].mtx, &v);
+    Renderer_ProjectToScreen(&t, g_Video.cams[D_00538C60].mtx, &v);
     { V3E9460* x = &v; V3E9460* d = &v; V3E9460* q = &t; VCopyF(d, q); }
     { float z = v.z; if (z < 0.0f) v.z = -z; }
     IeElement_SetPosition(s->h, &v);

@@ -148,8 +148,8 @@ static inline void merge_flush_func_00403490(void) {}
 typedef struct { char pad[0x9C]; } FileMan;
 typedef struct { char pad[0xE4]; int count; __int128* buf; } Obj37F0;
 extern "C" {
-extern unsigned char D_00533880;
-extern int D_00533888;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
 void Alloc_Lock(int id);
 void Alloc_Unlock(int id);
 #if 0 /* merge_units */
@@ -213,11 +213,11 @@ void AgentPartCache_LoadRules(Obj37F0* s, char* name)
     func_0036E4B0(&fm, name, 0, 0);
     if (!(unsigned char)FileMan_FindMember(&fm)) {
         size = FileMan_GetSize(&fm);
-        if (D_00533880) Alloc_Lock(9);
-        D_00533888++;
+        if (g_ProfileLockEnabled) Alloc_Lock(9);
+        g_ProfileLockDepth++;
         mem = Mem_Alloc(0, size, D_004BE7F0, 0x9B5);
-        if (D_00533880) Alloc_Unlock(9);
-        D_00533888--;
+        if (g_ProfileLockEnabled) Alloc_Unlock(9);
+        g_ProfileLockDepth--;
         s->buf = (__int128*)mem;
         FileMan_LoadMemberSync(&fm, &s->buf, size);
         func_0036DEC0(&fm);
@@ -256,7 +256,7 @@ typedef struct {
     P_403940 p[(0xBC10 - 0x1410) / 4];
     __int128 k[1];
 } S_403940;
-extern int D_00539248;
+extern int g_TextureMgr;
 extern __int128 D_005716E0;
 extern void Tex_Release(int a, int b, int c);
 void func_00403940(S_403940* s, unsigned int i)
@@ -265,8 +265,8 @@ void func_00403940(S_403940* s, unsigned int i)
         s->t[i]--;
         if (s->t[i] <= 0 && i >= s->count) {
             if (s->p[i].a != s->p[i].b)
-                Tex_Release(D_00539248, s->p[i].b, 0);
-            Tex_Release(D_00539248, s->p[i].a, 0);
+                Tex_Release(g_TextureMgr, s->p[i].b, 0);
+            Tex_Release(g_TextureMgr, s->p[i].a, 0);
             s->p[i].a = 0;
             s->p[i].b = 0;
             s->k[i] = D_005716E0;
@@ -294,7 +294,7 @@ typedef struct {
     A3Name names[0x600];
 } A3State;
 extern __int128 D_0055DE00;
-extern __int128 D_0055DDA0;
+extern __int128 g_AgentPartCache;
 extern int String_CompareN(char* a, char* b, int n);
 extern void func_0036DFB0(void* f, char* name, void* src);
 extern short TexMan_LoadNewTexture(int lib, void* f, void* key);
@@ -343,7 +343,7 @@ void TexCache_LoadPartTexture(A3State* st, __int128 key, void* f, short* outA, s
     }
     m = D_0055DE00;
     k = key;
-    o = D_0055DDA0;
+    o = g_AgentPartCache;
     if (a3eq(a3and(m, k), a3and(m, o)) && String_CompareN((char*)&key, "_MAKE", 5) != 0) {
         st->tex[i].a = st->tex[0].b;
         st->tex[i].b = st->tex[0].b;
@@ -357,12 +357,12 @@ void TexCache_LoadPartTexture(A3State* st, __int128 key, void* f, short* outA, s
     sprintf(buf, "%s.TDX", (char*)&key);
     buf[14] = '0';
     func_0036DFB0(f, buf, f);
-    st->tex[i].a = TexMan_LoadNewTexture(D_00539248, f, &key);
+    st->tex[i].a = TexMan_LoadNewTexture(g_TextureMgr, f, &key);
     buf[14] = '1';
     func_0036DFB0(f, buf, f);
-    st->tex[i].b = TexMan_LoadNewTexture(D_00539248, f, &key);
+    st->tex[i].b = TexMan_LoadNewTexture(g_TextureMgr, f, &key);
     if (st->tex[i].a == -1)
-        st->tex[i].a = TexCache_LoadErrorTexture(D_00539248);
+        st->tex[i].a = TexCache_LoadErrorTexture(g_TextureMgr);
     if (st->tex[i].b == -1)
         st->tex[i].b = st->tex[i].a;
     *outA = st->tex[i].a;
@@ -443,9 +443,9 @@ void TexCache_RegisterNpcTex(H2State* st, H2Hog* hog) {
             st->count++;
         }
         if (lod == 0) {
-            st->tex[i].a = Tex_FindByName(D_00539248, st->names[i].q, &reg);
+            st->tex[i].a = Tex_FindByName(g_TextureMgr, st->names[i].q, &reg);
             if (st->tex[i].a == -1)
-                st->tex[i].a = TexCache_LoadErrorTexture(D_00539248);
+                st->tex[i].a = TexCache_LoadErrorTexture(g_TextureMgr);
             if (st->tex[i].b == -1)
                 st->tex[i].b = st->tex[i].a;
         } else {
@@ -457,9 +457,9 @@ void TexCache_RegisterNpcTex(H2State* st, H2Hog* hog) {
             sb = (H2State*)((char*)st + i * 4);
             nm->f.lod = '1';
             pb = &sb->tex[0].b;
-            *pb = Tex_FindByName(D_00539248, st->names[i].q, &reg);
+            *pb = Tex_FindByName(g_TextureMgr, st->names[i].q, &reg);
             if (*pb == -1)
-                *pb = TexCache_LoadErrorTexture(D_00539248);
+                *pb = TexCache_LoadErrorTexture(g_TextureMgr);
             pa = &sb->tex[0].a;
             if (*pa == -1)
                 *pa = *pb;

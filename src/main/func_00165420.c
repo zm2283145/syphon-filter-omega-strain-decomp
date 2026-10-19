@@ -1,8 +1,8 @@
 #include "types.h"
 typedef struct { char pad[0x250]; unsigned char mode; char pad2[3]; int width; int height; int pad3; int rate; } Disp_16;
 typedef struct { char pad[0x1C]; float scale; } Cfg_16;
-extern char D_005381F0[];
-extern Cfg_16* D_004FFD2C;
+extern char g_Video[];
+extern Cfg_16* g_OptionsRecord;
 const float D_004C1FC8[2] = { 191.25f, 0.0f };
 extern int D_005383D4;
 extern int D_005383C0;
@@ -29,8 +29,8 @@ void Options_SetVideoMode(Disp_16* d, unsigned char mode)
         break;
     }
     d->mode = mode;
-    Renderer_Teardown(D_005381F0);
-    Renderer_Init(D_005381F0, d->width, d->height, 0x20, 0x10, d->mode, 0xFA0, 0x1F4);
+    Renderer_Teardown(g_Video);
+    Renderer_Init(g_Video, d->width, d->height, 0x20, 0x10, d->mode, 0xFA0, 0x1F4);
     D_005383D4 = d->rate;
-    D_005383C0 = (unsigned char)(int)((*(float*)D_004C1FC8) * D_004FFD2C->scale);
+    D_005383C0 = (unsigned char)(int)((*(float*)D_004C1FC8) * g_OptionsRecord->scale);
 }

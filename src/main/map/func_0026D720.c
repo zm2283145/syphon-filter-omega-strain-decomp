@@ -20,7 +20,7 @@ struct Self26D720 {
 };
 
 extern "C" {
-extern Cam26D720* D_004FFC2C;
+extern Cam26D720* g_Hud;
 extern float D_004FF030;
 extern float D_004FF038;
 extern float D_004FF040;
@@ -45,7 +45,7 @@ extern "C" void HudMap_Close(Self26D720* self) {
     }
     HudMap_ClearCallouts(self);
     IeNode_SetShown(*self->x8, 0, 0);
-    cam = D_004FFC2C;
+    cam = g_Hud;
     SetA_26D720(cam, D_004FF030, D_004FF038);
     SetB_26D720(cam, D_004FF040, D_004FF048, D_004FF050);
     cam->x604 = 0;

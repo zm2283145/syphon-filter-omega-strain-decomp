@@ -1,7 +1,7 @@
 #include "types.h"
 typedef struct { char pad[0x2F0]; unsigned char b2f0; } P255;
-extern int D_004FFD30;
-extern int D_004FFC2C;
+extern int g_WeaponDatabase;
+extern int g_Hud;
 extern char D_004A7B18[];
 extern int Backpack_ListItems(P255*, int*, int, int);
 extern void Backpack_QueryAmmo(P255*, int, int*, int*, int*);
@@ -19,7 +19,7 @@ unsigned char Backpack_PickupAmmo(P255* p, int arg) {
     char buf[0x80];
     unsigned char any = 0;
     if (p->b2f0) {
-        int db = D_004FFD30;
+        int db = g_WeaponDatabase;
         int n = Backpack_ListItems(p, ids, arg, 10);
         int i;
         for (i = 0; i < n; i++) {
@@ -32,7 +32,7 @@ unsigned char Backpack_PickupAmmo(P255* p, int arg) {
                 char* nm = Loc_LookupText(w + 0x80);
                 Backpack_RemoveAmmo(p, ids[i], amt);
                 sprintf(buf, D_004A7B18, nm, Loc_LookupText("PickupAmmo"));
-                Hud_PostNotification(D_004FFC2C, buf);
+                Hud_PostNotification(g_Hud, buf);
                 any = 1;
             }
         }

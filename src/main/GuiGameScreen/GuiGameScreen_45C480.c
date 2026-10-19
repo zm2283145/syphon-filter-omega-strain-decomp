@@ -18,8 +18,8 @@ int WeaponInv_GetHeldItem(int);
 int WeaponInv_HolsterCurrent(int, int);
 int WeaponInv_SlotOfItem(int, int);
 int Player_EquipItem(char * , int);
-extern char * D_004FFC0C;
-extern int D_004FFD30;
+extern char * g_LocalPlayer;
+extern int g_WeaponDatabase;
 
 void GuiGameScreen_EquipSelected(char * arg0) {
     int temp_a1;
@@ -32,12 +32,12 @@ void GuiGameScreen_EquipSelected(char * arg0) {
     if (temp_a1 != -1) {
         temp_a1_2 = temp_a1 * 4;
         temp_s2 = *(int *)((char *)F_(arg0, 0x78, int) + temp_a1_2);
-        temp_s1 = (char *)(F_(D_004FFC0C, 0x30, int));
+        temp_s1 = (char *)(F_(g_LocalPlayer, 0x30, int));
         if (temp_s2 != -2) {
             if ((WeaponInv_SlotOfItem(temp_s2, temp_a1_2) & 0xFF) < 6) {
-                temp_v0 = WeaponDb_Get(D_004FFD30, temp_s2);
+                temp_v0 = WeaponDb_Get(g_WeaponDatabase, temp_s2);
                 if ((temp_v0 != 0) && (temp_v0 != WeaponInv_GetHeldItem(F_(temp_s1, 0x3524, int)))) {
-                    Player_EquipItem(D_004FFC0C, temp_s2);
+                    Player_EquipItem(g_LocalPlayer, temp_s2);
                 }
             }
         } else {

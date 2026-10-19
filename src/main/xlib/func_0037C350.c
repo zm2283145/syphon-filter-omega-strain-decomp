@@ -21,7 +21,7 @@ typedef struct R7C350 {
 } R7C350;
 
 extern char D_00537F80[];
-extern char D_00535D20[];
+extern char g_LightMgr[];
 extern u64_t D_004BC1B0;
 extern int D_00554F04;
 extern int D_00537E50;
@@ -124,7 +124,7 @@ unsigned int Renderer_SetDrawState(R7C350* r, void* model0, unsigned int req0, u
             f |= 0x40000000;
         }
         if (f & 0x10) {
-            LightMgr_GatherModelLights(D_00535D20, 0x17, 3, mdl);
+            LightMgr_GatherModelLights(g_LightMgr, 0x17, 3, mdl);
         }
         self->dirty = 0;
     } else {
@@ -178,7 +178,7 @@ unsigned int Renderer_SetDrawState(R7C350* r, void* model0, unsigned int req0, u
         }
         if (f & 0x10) {
             unsigned int m = lights | 4;
-            LightMgr_GatherModelLights(D_00535D20, m, m, mdl);
+            LightMgr_GatherModelLights(g_LightMgr, m, m, mdl);
             if (!D_00537E50) {
                 f &= ~0x10;
             }

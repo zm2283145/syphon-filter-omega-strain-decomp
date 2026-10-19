@@ -4,7 +4,7 @@ typedef struct {
     char pad[0x104E0]; int drawn;
     char pad2[0x1176C - 0x104E4]; C5Recv* recv; int first; int n;
 } C5Shadow;
-extern int D_005392D0;
+extern int g_DrawMode;
 extern long long D_004BC1B0;
 extern long long D_005392D8;
 extern void Shadow_SilhouetteLevel(C5Shadow* s, int i);
@@ -15,11 +15,11 @@ void Shadow_RenderBatch(C5Shadow* s) {
         int save;
         s->n = n < 4 ? n : 4;
         s->drawn = s->n;
-        save = D_005392D0;
-        D_005392D0 = 5;
+        save = g_DrawMode;
+        g_DrawMode = 5;
         D_005392D8 = D_004BC1B0;
         for (i = 0; i < s->n; i++)
             Shadow_SilhouetteLevel(s, i);
-        D_005392D0 = save;
+        g_DrawMode = save;
     }
 }

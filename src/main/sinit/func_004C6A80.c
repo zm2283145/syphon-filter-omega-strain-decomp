@@ -6,7 +6,7 @@ extern char D_004EE938;
 extern int D_004EE940, D_004EE948, D_004EE950, D_004EE958;
 extern char D_00493880;
 extern signed char D_004EA0C8;
-extern char* D_004EA0B0;
+extern char* g_LosCheckService;
 extern int Script_RegisterType(char*, void*, int, int);
 extern int Script_RegisterNative(int, void*, void*, char*, int, int*);
 extern int func_002824D0(void*, void*, char*);
@@ -33,7 +33,7 @@ void func_004C6A80(void) {
     D_004EE950 = D_004EE948;
     D_004EE958 = Script_RegisterNative(D_004EE948, Script_cHumanSeenMsg_Who, cGOBJ_GetScriptTypeKeyPtr(), "Who", 1, &D_004EE948);
     if (!D_004EA0C8) {
-        D_004EA0B0 = "LOS Manager";
+        g_LosCheckService = "LOS Manager";
         D_004EA0C8 = 1;
     }
 }

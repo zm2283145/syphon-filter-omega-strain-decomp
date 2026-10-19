@@ -13,6 +13,6 @@ int WeaponInv_GetSpareRoom(Inventory* inv, unsigned char index) {
     WeaponDef* def;
     InventorySlot* slot = &inv->slots[index];
 
-    def = WeaponDb_Get(D_004FFD30, slot->id);
+    def = WeaponDb_Get(g_WeaponDatabase, slot->id);
     return def->unk70 * WeaponInv_ClipsForActor(inv->unk88, def->unk74) - slot->unkC;
 }

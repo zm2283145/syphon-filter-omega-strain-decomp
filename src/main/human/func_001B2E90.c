@@ -27,12 +27,12 @@ extern "C" {
 extern unsigned char D_00572418[];
 extern unsigned char D_0055C780[];
 extern char D_0055C7A0[];
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005721C0;
 extern char D_0049E8B0[];
-extern char D_004FFB50[];
-extern char* D_004FFC2C;
-extern void* D_004FFD44;
+extern char g_Game[];
+extern char* g_Hud;
+extern void* g_ActorList;
 char* Loc_LookupText(char*);
 char* Game_GetPlayerNameSlot(char*, int);
 int sprintf(char*, const char*, ...);
@@ -61,7 +61,7 @@ static inline int PIdx(Act* a)
 }
 static inline int NetIdx(Act* a)
 {
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         if (IsOn(a)) return PIdx(a);
         return -1;
     }
@@ -69,7 +69,7 @@ static inline int NetIdx(Act* a)
 }
 static inline unsigned char Mp()
 {
-    if (D_005721C8) return D_005721C0;
+    if (g_IsMultiplayer) return D_005721C0;
     return 1;
 }
 extern "C" bool Player_HandleLeftGame(Act* a)
@@ -84,15 +84,15 @@ extern "C" bool Player_HandleLeftGame(Act* a)
             int key;
             int pl = NetIdx(a);
             char* fmt = Loc_LookupText(D_0049E8B0);
-            sprintf(buf, fmt, Game_GetPlayerNameSlot(D_004FFB50, pl));
+            sprintf(buf, fmt, Game_GetPlayerNameSlot(g_Game, pl));
             c.r = 1.0f;
             c.g = 0.0f;
             c.b = 0.0f;
             c.a = 1.0f;
-            Notify_Insert(D_004FFC2C + 0x100, buf, &c, 1, 0);
+            Notify_Insert(g_Hud + 0x100, buf, &c, 1, 0);
             Actor_BuildVoiceKey(a, 3);
             D_0055C780[idx] = 0;
-            Agent_GetSelected(D_004FFB50, idx)->bB70 = 0;
+            Agent_GetSelected(g_Game, idx)->bB70 = 0;
             func_003FB750(idx);
             key = a->wC;
             {
@@ -105,7 +105,7 @@ extern "C" bool Player_HandleLeftGame(Act* a)
                     ReceiverMap_Erase(D_0055C7A0, &g);
                 }
             }
-            ActorWorld_RequestRemove(D_004FFD44, a);
+            ActorWorld_RequestRemove(g_ActorList, a);
             Object_DeleteLater(a, 0.1f);
             a->Fn60(1);
             ret = 1;

@@ -2,7 +2,7 @@
 #define SOUND_EVENT_NO_PROTOS
 #include "sound_event.h"
 typedef struct { char pad[0xC]; int id; } Voice_F190;
-extern char D_004F53B8[];
+extern char g_PlaySndMsgClass[];
 extern char D_004DAE30[];
 typedef struct { int type; int pad[3]; __int128 name; int x20; int pad24[0x57]; int x180; short x184; unsigned char x186; } Src_F190;
 static inline void Req_Init(SoundRequest* p, int type, __int128 name, Voice_F190* voice, int x180) {
@@ -30,7 +30,7 @@ SoundEvent* func_0020F730(SoundEvent* ev, Preset_F060* pr) {
     SoundRequest* p;
     Voice_F190* voice;
     int id;
-    Event_Construct(ev, D_004F53B8);
+    Event_Construct(ev, g_PlaySndMsgClass);
     ev->vtable = D_004DAE30;
     p = &ev->req;
     p->voiceId = -2;

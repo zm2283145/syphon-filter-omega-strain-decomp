@@ -11,8 +11,8 @@ typedef struct {
 } Msg_12FA60;
 extern "C" char D_004F5398[];
 extern "C" char D_004DADB0[];
-extern "C" char D_004FFB50[];
-extern "C" unsigned char D_005721C8;
+extern "C" char g_Game[];
+extern "C" unsigned char g_IsMultiplayer;
 extern "C" unsigned char D_005721C0;
 extern "C" void Event_Construct(Msg_12FA60* m, void* type);
 extern "C" void Event_Send(Msg_12FA60* m, void* target, int c);
@@ -35,7 +35,7 @@ extern "C" void Game_EndLevel(char* self, signed char arg1)
     } else if (mode == 0) {
         self[0x1C4] = 0;
         self[0x1C5] = 0;
-        if (D_005721C8) self[0x1C6] = 1;
+        if (g_IsMultiplayer) self[0x1C6] = 1;
         else self[0x1C6] = 0;
         self[0x1C7] = 0;
         end = true;
@@ -51,8 +51,8 @@ extern "C" void Game_EndLevel(char* self, signed char arg1)
     m.vt = D_004DADB0;
     m.id = arg1;
     p->f28 = mode == 2;
-    if (!(D_005721C8 ? D_005721C0 : 1)) m.kind = 1;
-    Event_Send(&m, D_004FFB50, 1);
+    if (!(g_IsMultiplayer ? D_005721C0 : 1)) m.kind = 1;
+    Event_Send(&m, g_Game, 1);
     m.vt = D_004DADB0;
     cMessage_dtor(&m, 0);
 }

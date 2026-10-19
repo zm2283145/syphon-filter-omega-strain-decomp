@@ -44,8 +44,8 @@ typedef struct {
     unsigned char f99;
 } W_FB90;
 typedef struct { char pad0[0x20]; char snd[0x50]; int clipSize; char pad74[0x98]; int f10C; } Db_FB90;
-extern int D_004FFD30;
-extern char D_004FFB50[];
+extern int g_WeaponDatabase;
+extern char g_Game[];
 extern char D_004DAE30[];
 Db_FB90* WeaponDb_Get(int db, int id);
 #if 0 /* merge_units */
@@ -70,7 +70,7 @@ void Weapon_StartReload(W_FB90* self)
     e = &self->ent[self->cur];
     if (e->id == -1)
         return;
-    db = WeaponDb_Get(D_004FFD30, e->id);
+    db = WeaponDb_Get(g_WeaponDatabase, e->id);
     need = db->clipSize - e->clip;
     extra = 0;
     if (e->reserve < need) {
@@ -90,7 +90,7 @@ void Weapon_StartReload(W_FB90* self)
         SoundRequest_Ctor(&req, 1, db->snd, 0, 0);
         SoundEvent_CtorFromPreset(&snd, &req, self->owner);
         snd.flag = 1;
-        Event_Send(&snd, D_004FFB50, 0);
+        Event_Send(&snd, g_Game, 0);
         snd.vt = D_004DAE30;
         FileMan_Release(&snd.s114, -1);
         FileMan_Release(&snd.s78, -1);
@@ -116,7 +116,7 @@ char *WeaponDb_Get(int, int);
 #endif /* merge_units */
 #define WeaponDb_Get(a0, a1) ((char *)WeaponDb_Get((a0), (a1))) /* merge_units */
 
-extern int D_004FFC2C;
+extern int g_Hud;
 
 
 int Weapon_TransferSpareRounds(PS0_0013FD20 *arg0, int arg1, int arg2) {
@@ -131,14 +131,14 @@ char buf[128];
         if (i == arg0->f84) continue;
         s = &arg0->s[i];
         if (s->id == -1) continue;
-        w = WeaponDb_Get(D_004FFD30, s->id);
+        w = WeaponDb_Get(g_WeaponDatabase, s->id);
         if (F_(w, 0x10C, int) != arg2) continue;
         if (F_(w, 0xF0, unsigned char) != 0) continue;
         if (s->ammo <= 0) continue;
         if (arg0->f88 != NULL && F_(arg0->f88, 0x14, unsigned char) != 0) {
             int t = Loc_LookupText(w + 0x80);
             sprintf(buf, "%s %s", t, Loc_LookupText("TransferAmmo"));
-            Hud_PostNotification(D_004FFC2C, buf);
+            Hud_PostNotification(g_Hud, buf);
         }
         { int a = s->ammo; if (arg1 < a) { total += arg1; s->ammo = a - arg1; break; } s->ammo = 0; arg1 -= a; total += a; }
     }
@@ -174,9 +174,9 @@ extern "C" void Weapon_RecordShotStats(S_FE80* self, int hit)
         if (r && r->IsLocal())
             local = 1;
         if (local && self->own->f14) {
-            Stats_Add(Agent_GetSelected(D_004FFB50, -1), 9, 1);
+            Stats_Add(Agent_GetSelected(g_Game, -1), 9, 1);
             if (hit)
-                Stats_Add(Agent_GetSelected(D_004FFB50, -1), 0xB, 1);
+                Stats_Add(Agent_GetSelected(g_Game, -1), 0xB, 1);
         }
     }
 }

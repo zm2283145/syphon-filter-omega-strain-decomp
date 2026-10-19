@@ -91,9 +91,9 @@ typedef struct { MSG_HDR; int f24; unsigned char f28; char pad29[3]; int f2C; un
 
 extern "C" {
 extern char D_004DFD80[]; extern char D_004E0840[]; extern char D_004DA910[]; extern char D_004E0160[];
-extern char D_0055D480[]; extern char D_0055A1D8[]; extern char D_004DA950[];
+extern char g_ActorActionMsgClass[]; extern char g_CasEventMsgClass[]; extern char D_004DA950[];
 extern char D_00542B60[]; extern char D_004DA930[];
-extern char D_004FFB50[];
+extern char g_Game[];
 extern int D_0049D040; extern int D_0049D048;
 extern char D_0049DC30[]; extern char D_0049DC50[];
 extern char D_0049DC70[]; extern char D_0049DC90[]; extern char D_0049DCB0[]; extern char D_0049DCD0[];
@@ -104,7 +104,7 @@ extern Name_L D_0049D320;
 extern signed char D_004EEF90; extern signed char D_004EEF98; extern signed char D_004EEFA0; extern signed char D_004EEFA8;
 extern signed char D_004EEFB0; extern signed char D_004EEFB8; extern signed char D_004EEFC0;
 extern signed char D_004EEFC8; extern signed char D_004EEFD0;
-extern float D_0049D038;
+extern float g_DefaultMotionTransition;
 void Event_Construct(void* m, void* t);
 void Event_Send(void* m, void* t, int f);
 void cMessage_dtor(void* m, int f);
@@ -238,11 +238,11 @@ static inline X_L* Set5_L(X_L* x, int a, int b, int c, int d, int e, void* act)
 }
 static inline void RateDef_L(Rate_L* r)
 {
-    float d = D_0049D038;
+    float d = g_DefaultMotionTransition;
     r->x = d;
     r->y = d;
     r->z = Recip_L(d);
-    r->w = Recip_L(D_0049D038);
+    r->w = Recip_L(g_DefaultMotionTransition);
 }
 static inline void Install_L(Act_L* a, Sel_L* sel, Rate_L* r)
 {
@@ -598,7 +598,7 @@ static inline void SendMsg4_L(Obj_L* obj, Act_L* actor)
 {
     Msg4_L m;
     Msg4_L* p = &m;
-    Event_Construct(p, D_0055A1D8);
+    Event_Construct(p, g_CasEventMsgClass);
     p->vtable = D_004DA950;
     p->f24 = 0xD;
     p->f28 = -1;
@@ -842,12 +842,12 @@ void SoundPosRequest_Ctor(SMsg_L* m, void* req, V4_L* pos);
 void FileMan_Release(void* p, int f);
 void World_PushObject(void* w, MA_L* a, int f);
 extern float D_0048A268; extern float D_0048A278;
-extern Cam_L* D_004FFBD0;
+extern Cam_L* g_HotboxTracker;
 extern char D_0049DF38[]; extern char D_0049DF48[]; extern char D_0049DF58[];
 extern char D_0049DF70[]; extern char D_0049DF88[]; extern char D_0049DFA0[];
 extern char D_0049DFB8[]; extern char D_0049DFC8[];
 extern char D_004D9360[]; extern char D_004DA8F0[]; extern char D_004DAE30[]; extern char D_004DCF10[];
-extern char D_004EEEE8[]; extern char D_0055D4E0[];
+extern char D_004EEEE8[]; extern char g_TeleportMsgClass[];
 extern char D_004F2310[]; extern char D_004F2650[];
 extern float D_004EEEB0; extern float D_004EEEB8; extern float D_004EEEC0; extern float D_004EEEC8;
 }
@@ -897,7 +897,7 @@ static inline void MtxEv_L(MA_L* t, Mtx_L* mt)
 {
     MsgM_L e;
     MsgM_L* pe = &e;
-    Event_Construct(pe, D_0055D4E0);
+    Event_Construct(pe, g_TeleportMsgClass);
     pe->vtable = D_004D9360;
     pe->f24 = 2;
     Q4(&pe->m, mt);
@@ -955,7 +955,7 @@ extern "C" void Melee_StartAttack(MA_L* a, MA_L* t, int flag)
     mode = 0x99;
     /* empty asm: scheduling barrier keeps retail beqz/delay-slot shape */
     if (two) asm { .set reorder } else mode = 0x98;
-    if (a->b33E8 == 0 && (a->b14 == 0 || D_004FFBD0->f24 <= 0.0f)) {
+    if (a->b33E8 == 0 && (a->b14 == 0 || g_HotboxTracker->f24 <= 0.0f)) {
         if (blunt == 0 && flag != 0 && t != 0) {
             if (!Stun2_L(t)) {
                 char* n0 = D_0049DF38;
@@ -994,7 +994,7 @@ extern "C" void Melee_StartAttack(MA_L* a, MA_L* t, int flag)
                     Ctl_L* c = a->ctl;
                     bool p = 0;
                     if (c && c->IsPlayer()) p = 1;
-                    if (p) World_PushObject(D_004FFB50, a, 0);
+                    if (p) World_PushObject(g_Game, a, 0);
                 }
                 a->b33E8 = 1;
                 a->f33CC = MId_L(t);
@@ -1011,7 +1011,7 @@ extern "C" void Melee_StartAttack(MA_L* a, MA_L* t, int flag)
                         SMsg_L m;
                         SoundPosRequest_Ctor(&m, D_004F2310, &pos.v);
                         m.b20 = 1;
-                        Event_Send(&m, D_004FFB50, 0);
+                        Event_Send(&m, g_Game, 0);
                         m.vt = D_004DAE30;
                         FileMan_Release((char*)&m + 0x114, -1);
                         FileMan_Release((char*)&m + 0x78, -1);
@@ -1021,7 +1021,7 @@ extern "C" void Melee_StartAttack(MA_L* a, MA_L* t, int flag)
                         SMsg_L m;
                         SoundPosRequest_Ctor(&m, D_004F2650, &pos.v);
                         m.b20 = 1;
-                        Event_Send(&m, D_004FFB50, 0);
+                        Event_Send(&m, g_Game, 0);
                         m.vt = D_004DAE30;
                         FileMan_Release((char*)&m + 0x114, -1);
                         FileMan_Release((char*)&m + 0x78, -1);

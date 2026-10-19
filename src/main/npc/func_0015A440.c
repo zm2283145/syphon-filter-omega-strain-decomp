@@ -120,10 +120,10 @@ typedef struct Raw_A440 { int p; } Raw_A440;
 
 extern "C" {
 
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005721C0;
-extern int D_005383C8;
-extern float D_0053834C;
+extern int g_VideoFrameCounter;
+extern float g_LevelFarDistance;
 extern int D_004EA380;
 extern int D_00494178;
 extern int D_005721A8;
@@ -193,7 +193,7 @@ static inline void MkEnd1(Node_A440** en)
 
 static inline int LocalSlot(int a)
 {
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         if (D_00494178 == -1)
             NetGame_InitLocalSlot(&D_00494178, a);
         return D_00494178;
@@ -207,7 +207,7 @@ extern "C" void cNPC_CriticalNextFrame(Npc_A440* self, float dt)
     int act;
     unsigned char on;
 
-    if (D_005721C8)
+    if (g_IsMultiplayer)
         on = D_005721C0;
     else
         on = 1;
@@ -217,7 +217,7 @@ extern "C" void cNPC_CriticalNextFrame(Npc_A440* self, float dt)
         return;
     id = self->obj->id;
     act = -1;
-    if (self->f141.top && self->obj->V7C() == 0 && !(((unsigned short)id + D_005383C8) & 7)) {
+    if (self->f141.top && self->obj->V7C() == 0 && !(((unsigned short)id + g_VideoFrameCounter) & 7)) {
         Lock_A440 lk;
         bool busy;
         NpcObj_A440* o;
@@ -230,9 +230,9 @@ extern "C" void cNPC_CriticalNextFrame(Npc_A440* self, float dt)
                 NpcObj_A440* pl = Object_ClosestPlayerDistSq(self->obj, &d);
                 if (pl) {
                     float r = self->range;
-                    r = (r < 0.00001f) ? D_0053834C * D_0053834C : r;
+                    r = (r < 0.00001f) ? g_LevelFarDistance * g_LevelFarDistance : r;
                     if (d < r) {
-                        if (D_005721C8)
+                        if (g_IsMultiplayer)
                             act = (((unsigned int)pl->id & 0x7F000000) >> 24) - 1;
                         else
                             self->obj->V5C(1);
@@ -246,9 +246,9 @@ extern "C" void cNPC_CriticalNextFrame(Npc_A440* self, float dt)
             float r;
             Object_ClosestPlayerDistSq(self->obj, &d);
             r = self->range;
-            r = (r < 0.00001f) ? D_0053834C * D_0053834C : r;
+            r = (r < 0.00001f) ? g_LevelFarDistance * g_LevelFarDistance : r;
             if (!(d <= 625.0f + r)) {
-                if (D_005721C8)
+                if (g_IsMultiplayer)
                     self->VC0();
                 else
                     self->obj->V60(1);
@@ -258,7 +258,7 @@ extern "C" void cNPC_CriticalNextFrame(Npc_A440* self, float dt)
         }
         func_00436BA0(&lk, -1);
     }
-    if (D_005721C8 && self->obj->V7C() == 0) {
+    if (g_IsMultiplayer && self->obj->V7C() == 0) {
         Lock_A440 lk2;
         int slot;
         int alt;

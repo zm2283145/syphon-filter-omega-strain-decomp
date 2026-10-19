@@ -90,8 +90,8 @@ typedef struct NotifyMsg {
     int pad2C;
 } NotifyMsg;
 
-extern int D_00506248;
-extern int D_004DCF70;
+extern int g_NetCreateTankMsgKey;
+extern int cNetCreateTankMsg_vtable;
 extern int D_004DCF10;
 extern void Event_Construct(NotifyMsg*, void*);
 extern void Event_Send(NotifyMsg*, void*, int);
@@ -101,9 +101,9 @@ extern void cMessage_dtor(NotifyMsg*, int);
 void func_00283820(Obj60* o) {
     NotifyMsg msg;
     int* idField;
-    Event_Construct(&msg, &D_00506248);
+    Event_Construct(&msg, &g_NetCreateTankMsgKey);
     idField = &msg.id;
-    msg.vtable = &D_004DCF70;
+    msg.vtable = &cNetCreateTankMsg_vtable;
     *idField = -1;
     msg.sender = o;
     *idField = o->id;

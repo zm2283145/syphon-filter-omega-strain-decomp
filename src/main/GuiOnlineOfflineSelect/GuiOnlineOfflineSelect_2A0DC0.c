@@ -12,10 +12,10 @@
 #pragma mpwc_relax on
 int Agent_GetSelected(char *, int, int, signed char);               
 int AgentData_AddLevelProgress(int, int, int, int);                    
-const unsigned int D_004ACB30[12] = { 0x0, 0x1, 0x2, 0x4, 0x5, 0x8, 0xC, 0xD, 0x10, 0x0, 0x0, 0x0 };
-extern char D_004FFB50;
-extern signed char D_004FFBA0;
-extern signed char D_004FFBA1;
+const unsigned int g_OnlineMissionTable[12] = { 0x0, 0x1, 0x2, 0x4, 0x5, 0x8, 0xC, 0xD, 0x10, 0x0, 0x0, 0x0 };
+extern char g_Game;
+extern signed char g_GameState;
+extern signed char g_PrevGameState;
 extern char * D_004FFC04;
 extern signed char D_005064A8;
 extern int D_005064B0;
@@ -25,14 +25,14 @@ void GuiMissionSetup_OnGameCreated(void) {
     int temp_s0;
     signed char temp_a3;
 
-    temp_a3 = D_004FFBA0;
-    D_004FFBA1 = temp_a3;
-    D_004FFBA0 = 3;
+    temp_a3 = g_GameState;
+    g_PrevGameState = temp_a3;
+    g_GameState = 3;
     F_(D_004FFC04, 0x35, signed char) = 1;
     F_(D_004FFC04, 0x33, signed char) = 1;
     temp_s0 = F_(D_004FFC04, 0x248, int);
     if (temp_s0 != -1) {
-        AgentData_AddLevelProgress(Agent_GetSelected(&D_004FFB50, -1, 3, temp_a3), F_(&(*(char*)D_004ACB30), (temp_s0 * 4), int) + 1, 6, 1);
+        AgentData_AddLevelProgress(Agent_GetSelected(&g_Game, -1, 3, temp_a3), F_(&(*(char*)g_OnlineMissionTable), (temp_s0 * 4), int) + 1, 6, 1);
     }
     D_005064A8 = 0;
     D_005064B0 = 0;

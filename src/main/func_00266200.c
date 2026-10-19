@@ -39,7 +39,7 @@ struct Def { char pad[0x3C]; int i3C; };
 struct HeldItem { Def* def; Actor* actor; unsigned char state; };
 
 extern "C" {
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern char D_00504050[];
 extern char D_004DCDA0[];
 extern char D_004DCF10[];
@@ -69,7 +69,7 @@ struct DartMsg {
 };
 
 extern "C" {
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern char D_00504050[];
 extern char D_004DCDA0[];
 extern char D_004DCF10[];
@@ -93,7 +93,7 @@ extern "C" bool HeldItem_Discharge(HeldItem* self, Tgt* tgt, bool a, int b) {
         }
         HeldItem_LaunchDart(self, tgt, a, b, v);
         fired = true;
-        if (D_005721C8) {
+        if (g_IsMultiplayer) {
             DartMsg msg(tgt, a, b, v);
             msg.kind = 4;
             msg.flags = 0x40;

@@ -115,8 +115,8 @@ extern char D_004A7A18[];
 extern char D_004A7A28[];
 extern char D_004A7A30[];
 extern char D_004A7A38[];
-extern char D_004FFB50[];
-extern int D_004FFD30;
+extern char g_Game[];
+extern int g_WeaponDatabase;
 extern ItemDef_2526F0* D_00587FF8;
 }
 
@@ -185,7 +185,7 @@ extern "C" int Pickup_BuildPromptText(Self_2526F0* self, Ctx_2526F0* ctx) {
     char* line1;
     char* line2;
 
-    db = D_004FFD30;
+    db = g_WeaponDatabase;
     extra = Owner_Get2E8(self->owner);
     prefix = Loc_LookupText(D_004A79E0);
     inv = ctx->inv;
@@ -219,7 +219,7 @@ extern "C" int Pickup_BuildPromptText(Self_2526F0* self, Ctx_2526F0* ctx) {
             same = wid == it->id;
             unlocked = false;
             cond = isSlot0 && !dual && same;
-            if (cond && AgentData_HasUnlock(Agent_GetSelected(D_004FFB50, -1), 1))
+            if (cond && AgentData_HasUnlock(Agent_GetSelected(g_Game, -1), 1))
                 unlocked = true;
             Backpack_CycleItem(self->owner, it->id, 0);
             Backpack_CycleItem(self->owner, it->id, 1);

@@ -13,12 +13,12 @@ typedef struct CalloutOwner {
     char* label;
 } CalloutOwner;
 
-extern void* D_004FFC2C;
+extern void* g_Hud;
 extern void Hud_SetCalloutLabel(void*, char*, int, int, int, int, int, float, float);
 
 /* Sets a callout label on the global HUD object. */
 void Global_SetCalloutLabel_2(CalloutOwner* owner, int a1, int value, int a3) {
-    Hud_SetCalloutLabel(D_004FFC2C, owner->label + 0xC, a1, 0, 0, a3, 1, (float)value, 0.0f);
+    Hud_SetCalloutLabel(g_Hud, owner->label + 0xC, a1, 0, 0, a3, 1, (float)value, 0.0f);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_002680E0 */
@@ -85,7 +85,7 @@ extern void Hud_ShowCallout(void*, char*, int, int, int, int, float, float);
 
 /* Sets a callout label on the global HUD object. */
 void Global_SetCallout_2(CalloutOwner* owner, int a1, int value, int a3) {
-    Hud_ShowCallout(D_004FFC2C, owner->label + 0xC, a1, 0, 0, a3, (float)value, 0.0f);
+    Hud_ShowCallout(g_Hud, owner->label + 0xC, a1, 0, 0, a3, (float)value, 0.0f);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002681D0(void) {}

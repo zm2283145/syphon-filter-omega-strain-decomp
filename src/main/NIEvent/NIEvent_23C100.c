@@ -225,7 +225,7 @@ static inline char* ReadStr_23C3C0(Pop_23C3C0* r)
     return s;
 }
 extern "C" {
-extern char D_004FFB50[];
+extern char g_Game[];
 void Resource_Construct(Obj_23C3C0* o);
 void FileMan_Release(Obj_23C3C0* o, int f);
 void Hog_Register(Obj_23C3C0* o, char* path, int a, int b);
@@ -252,12 +252,12 @@ extern "C" void NiEvent_LoadModelAsset(Self_23C3C0* self, int mode, Pop_23C3C0* 
         unsigned char found;
         a = 0;
         b = 0;
-        found = func_00131010(D_004FFB50, name, buf, &a);
-        Game_FindNamedResource(D_004FFB50, buf, &b);
+        found = func_00131010(g_Game, name, buf, &a);
+        Game_FindNamedResource(g_Game, buf, &b);
         self->tgt = NewTgt_23C3C0();
         self->tgt->owner = self;
         if (!found) {
-            func_00130D10(D_004FFB50, self->tgt, name, buf);
+            func_00130D10(g_Game, self->tgt, name, buf);
             a = 0;
         }
         self->tgt->Set40(0);
@@ -349,7 +349,7 @@ struct Self_C610 {
 extern "C" {
 extern int D_004F7C60;
 extern int D_004F7C98;
-extern char D_004DC050[];
+extern char cNIEventOBJ_vtable[];
 void func_0023F350(Self_C610* self, int kind, void* info);
 void func_00238940(OwnedVec_C610* v);
 void func_0023D180(EvSub_C610* v);
@@ -441,7 +441,7 @@ extern "C" Self_C610* cNIEventOBJ_ctor(Self_C610* self, int mode, Reader_C610* r
     int n;
     int i;
     func_0023F350(self, 0x10, &D_004F7C60);
-    *(void**)self = D_004DC050;
+    *(void**)self = cNIEventOBJ_vtable;
     { Track_C610* t = &self->t144; func_00238940(&t->vec); }
     { Track_C610* t = &self->t164; func_00238940(&t->vec); }
     { Track_C610* t = &self->t184; func_00238940(&t->vec); }
@@ -454,12 +454,12 @@ extern "C" Self_C610* cNIEventOBJ_ctor(Self_C610* self, int mode, Reader_C610* r
     }
     ReadId_C610(r, (int*)&id);
     self->idC = id;
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         self->id10 = self->idC;
         {
             int t = self->id10;
             int a = D_005721A8; int rr = 0;
-            if (*(volatile unsigned char*)&D_005721C8) { if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, a); rr = D_00494178; } else { asm { .set reorder } }
+            if (*(volatile unsigned char*)&g_IsMultiplayer) { if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, a); rr = D_00494178; } else { asm { .set reorder } }
             NetMap_BindReceiver(t, rr, self);
         }
     }

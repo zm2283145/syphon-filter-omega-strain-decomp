@@ -1,6 +1,6 @@
 #include "types.h"
 typedef struct { void* vtable; char pad[0x20]; unsigned char kind; char pad2[0xB]; char data[0x40]; } Msg;
-extern char D_0055D4E0[];
+extern char g_TeleportMsgClass[];
 extern char D_004D9360[];
 extern void Event_Construct(Msg* m, void* type);
 extern int TeleportMsg_IsMode3(Msg* m);
@@ -18,7 +18,7 @@ void func_001849B0(void* target, void* pos)
     Msg msg;
     Vec4* v;
     Msg* m = &msg;
-    Event_Construct(m, D_0055D4E0);
+    Event_Construct(m, g_TeleportMsgClass);
     msg.vtable = D_004D9360;
     msg.kind = 0;
     if (TeleportMsg_IsMode3(m)) {

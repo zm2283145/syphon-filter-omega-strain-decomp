@@ -37,7 +37,7 @@ typedef struct {
     int step;
     float timer;
 } Seq;
-extern AnimTbl* D_00539248;
+extern AnimTbl* g_TextureMgr;
 int Random_Next(void);
 static inline float RandF() { return (float)Random_Next() / 2147483648.0f; }
 
@@ -81,7 +81,7 @@ void TexFrameAnim_Update(Seq* s, float dt)
             break;
         }
     }
-    { int i = s->idx; v = s->value; a = D_00539248->anims[i]; }
+    { int i = s->idx; v = s->value; a = g_TextureMgr->anims[i]; }
     if (v != a->frame && (unsigned int)v < a->clip->count) {
         a->b60 = 0;
         a->b61 = 0;
@@ -105,9 +105,9 @@ typedef struct {
 extern VT3D1B60 D_004E0080;
 extern VT3D1B60 D_004E0060;
 #if 0 /* merge_units */
-extern M3D1B60* D_00539248;
+extern M3D1B60* g_TextureMgr;
 #endif /* merge_units */
-#define D_00539248 (*(M3D1B60 **)&D_00539248) /* merge_units */
+#define g_TextureMgr (*(M3D1B60 **)&g_TextureMgr) /* merge_units */
 
 class C3D1B60 { public: int id; void* a; int b; int c; virtual void s0(); virtual void s1(); };
 extern "C" S3D1B60* Material_Animate(S3D1B60* o, A3D1B60* a, int b, int c, int id) {
@@ -119,7 +119,7 @@ extern "C" S3D1B60* Material_Animate(S3D1B60* o, A3D1B60* a, int b, int c, int i
     o->vt = &D_004E0060;
     o->kind = a->kind;
     o->inv = 1.0f / a->rate;
-    o->count = D_00539248->list[id]->info->count;
+    o->count = g_TextureMgr->list[id]->info->count;
     o->first = 0;
     o->last = o->count - 1;
     switch (o->kind) {
@@ -140,7 +140,7 @@ extern "C" S3D1B60* Material_Animate(S3D1B60* o, A3D1B60* a, int b, int c, int i
     ((C3D1B60*)o)->s1();
     return o;
 }
-#undef D_00539248 /* merge_units */
+#undef g_TextureMgr /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003D1B60 */
 

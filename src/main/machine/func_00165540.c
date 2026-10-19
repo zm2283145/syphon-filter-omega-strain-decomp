@@ -9,8 +9,8 @@ int UsbKbd_GetCode(Kb_165540* k);
 void func_003E7CF0(Tog_165540* t);
 void func_003E7CD0(Tog_165540* t);
 extern Kb_165540 D_0055A700;
-extern signed char D_004FFBA0;
-extern signed char D_004FFBA1;
+extern signed char g_GameState;
+extern signed char g_PrevGameState;
 }
 static inline bool IsKey(Kb_165540* k, unsigned char c) { return k->active ? (unsigned char)UsbKbd_GetCode(k) == c : false; }
 static inline bool IsCode(Kb_165540* k, int c) { return k->active ? k->code == c : false; }
@@ -21,8 +21,8 @@ extern "C" void func_00165540(Obj_165540* o) {
             if (!o->tog.on) func_003E7CF0(&o->tog); else func_003E7CD0(&o->tog);
         }
         if (IsCode(k, 0x402D)) {
-            D_004FFBA1 = D_004FFBA0;
-            D_004FFBA0 = 0x10;
+            g_PrevGameState = g_GameState;
+            g_GameState = 0x10;
         }
     }
 }

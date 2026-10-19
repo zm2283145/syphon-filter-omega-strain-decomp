@@ -18,7 +18,7 @@ typedef struct ValueObj {
     float value;          /* 0x40 */
 } ValueObj;
 
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern char D_00582750[];
 extern char D_004E0EE0[];
 extern void Event_Construct(ValueMsg* msg, void* type);
@@ -29,7 +29,7 @@ extern void cMessage_dtor(ValueMsg* msg, int flags);
 void Actor_SetHealth(ValueObj* obj, int value, int silent) {
     ValueMsg msg;
     obj->value = (float)value;
-    if (D_005721C8 && !silent) {
+    if (g_IsMultiplayer && !silent) {
         Event_Construct(&msg, D_00582750);
         msg.flag = 0;
         msg.vtbl = D_004E0EE0;

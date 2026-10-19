@@ -10,15 +10,15 @@ typedef struct W_002C9510 { char pad[0x278]; unsigned char b278; } W_002C9510;
 extern char D_00571DC0[];
 extern char D_0055A700[];
 extern unsigned char D_0051EF68;
-extern char D_004FFC90[];
-extern char D_004FFB50[];
+extern char g_LevelDirName[];
+extern char g_Game[];
 extern char D_004F2CC0[];
 extern char D_004F5370[];
 extern char D_004F5378[];
 extern char D_004DE220[];
 extern char D_004DE200[];
-extern int D_004FFD30;
-extern char D_005381F0[];
+extern int g_WeaponDatabase;
+extern char g_Video[];
 void func_00412ED0(void* p);
 W_002C9510* App_GetInstance(void);
 void func_003D1730(void* p);
@@ -64,7 +64,7 @@ void FrontEnd_ResumeGui(Self_002C9510* self)
             GuiWidget_SendEvent(a, Gui_GetScreenStack(), 0x10, 5, 0);
             {
                 char* d = buf.s;
-                const char* s = D_004FFC90;
+                const char* s = g_LevelDirName;
                 int n = 0;
                 while ((*d++ = *s++) != 0) {
                     if (++n >= 0x7E) {
@@ -76,8 +76,8 @@ void FrontEnd_ResumeGui(Self_002C9510* self)
                 }
                 buf.len = n;
             }
-            strncpy(D_004FFC90, "FRONTEND", 0x80);
-            svc = Service_Lookup(D_004FFB50, D_004F2CC0);
+            strncpy(g_LevelDirName, "FRONTEND", 0x80);
+            svc = Service_Lookup(g_Game, D_004F2CC0);
             Event_Construct(&m1, D_004F5370);
             m1.vt = D_004DE220;
             Event_Send(&m1, svc, 1);
@@ -88,7 +88,7 @@ void FrontEnd_ResumeGui(Self_002C9510* self)
             Event_Send(&m2, svc, 1);
             m2.vt = D_004DE200;
             cMessage_dtor(&m2, 0);
-            strncpy(D_004FFC90, buf.s, 0x80);
+            strncpy(g_LevelDirName, buf.s, 0x80);
             {
                 unsigned char o = *(unsigned char*)&self->f30C;
                 self->f30C = 0xFF;
@@ -103,10 +103,10 @@ void FrontEnd_ResumeGui(Self_002C9510* self)
             break;
         }
         func_002C9EE0(self);
-        func_00145160(D_004FFD30);
+        func_00145160(g_WeaponDatabase);
         App_Broadcast(0x2003, 0, 0);
         self->b37 = 0;
         self->b28 = 1;
-        Video_BeginFrame(D_005381F0);
+        Video_BeginFrame(g_Video);
     }
 }

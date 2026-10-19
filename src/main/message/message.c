@@ -93,7 +93,7 @@ extern QNode* D_005435C8;
 #define D_005435C8 (*(QNode **)&D_005435C8) /* merge_units */
 extern QNode* D_005435E8;
 extern unsigned char D_005721C0;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 #if 0 /* merge_units */
 QEntry* func_003C92D0(QNode**);
 #endif /* merge_units */
@@ -161,9 +161,9 @@ extern "C" int MsgQueue_Pump(void) {
   if (k2 >= 0) { while (k2 > 0) { q = q->next; k2--; } }
   else { while (k2 < 0) { q = q->prev; k2++; } }
   CMsg* msg = q->entry.msg;
-  if (D_005721C8) {
+  if (g_IsMultiplayer) {
    if (msg->magic == 0xBEBAAFDE && dst && dst->magic == 0xBEBAAFDE) {
-    int local = D_005721C8 ? D_005721C0 : 1;
+    int local = g_IsMultiplayer ? D_005721C0 : 1;
     if (!local) dst->Handle(msg); else if (!dst->Filter(msg)) dst->Handle(msg);
    }
   } else if (dst->magic == 0xBEBAAFDE && !dst->Filter(msg)) dst->Handle(msg);
@@ -315,9 +315,9 @@ extern unsigned char D_005721D0;
 extern char D_004BD150[];
 }
 static inline int CurrentPlayer(int id) {
- if(D_005721C8) {if(D_00494178==-1)NetGame_InitLocalSlot(&D_00494178,id); return D_00494178;}return 0;
+ if(g_IsMultiplayer) {if(D_00494178==-1)NetGame_InitLocalSlot(&D_00494178,id); return D_00494178;}return 0;
 }
-static inline int LocalAuth(){return D_005721C8?D_005721C0:1;}
+static inline int LocalAuth(){return g_IsMultiplayer?D_005721C0:1;}
 static inline void Enqueue(int mode,CMsg* msg,TargetV* obj) {
  int result; QNode* pos; QEntry e;
  e.mode=mode;e.msg=msg;e.target=obj;
@@ -346,7 +346,7 @@ extern "C" int Event_Send(CMsg *arg0, TargetV *arg1, int arg2) {
     if ((arg2 == 1) && (arg0->kind & 1)) {
         arg1->Handle(arg0);
         var_s2 = 1;
-        if (D_005721C8 == 0) {
+        if (g_IsMultiplayer == 0) {
             return 1;
         }
     }
@@ -356,7 +356,7 @@ extern "C" int Event_Send(CMsg *arg0, TargetV *arg1, int arg2) {
         return 0;
     }
     temp_v0->magic = 0xBEBAAFDE;
-    if (D_005721C8 != 0) {
+    if (g_IsMultiplayer != 0) {
         if (arg1 != 0) {
             if ((D_005721D0 != 0) && (arg1->IsNet() != 0)) {
                 temp_v1 = arg0->kind;
@@ -455,8 +455,8 @@ static inline void merge_flush_func_003C9420(void) {}
 #pragma push /* merge_units */
 #pragma cplusplus on
 extern "C" {
-extern unsigned char D_00533880;
-extern int D_00533888;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
 #if 0 /* merge_units */
 int Alloc_Lock(int);
 #endif /* merge_units */
@@ -516,7 +516,7 @@ extern "C" int MsgQueue_EraseFirstPending(int *arg0) {
             if (temp_a0 != NULL) {
                 F_(temp_a0, 0x8, int) = 0;
                 temp_s1 = pr->second;
-                if (D_00533880 != 0) Alloc_Lock(9); D_00533888 += 1; ((VC003C99B0 *)(temp_s1))->v0(-1); Mem_Free(0, temp_s1, &D_004BD118, 0xCF); if (D_00533880 != 0) Alloc_Unlock(9); D_00533888 -= 1;
+                if (g_ProfileLockEnabled != 0) Alloc_Lock(9); g_ProfileLockDepth += 1; ((VC003C99B0 *)(temp_s1))->v0(-1); Mem_Free(0, temp_s1, &D_004BD118, 0xCF); if (g_ProfileLockEnabled != 0) Alloc_Unlock(9); g_ProfileLockDepth -= 1;
             }
             er0(&sl, var_s0);
             return 1;

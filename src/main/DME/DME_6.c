@@ -42,7 +42,7 @@ extern unsigned char g_DmeThreadStopRequest;
 extern unsigned char g_DmeThreadExited;
 extern unsigned char D_00572528;
 extern int D_00572508;
-extern unsigned char D_00533880; /* allocator must lock Timer0 */
+extern unsigned char g_ProfileLockEnabled; /* allocator must lock Timer0 */
 void ReferThreadStatus(int thread, EeThreadParam* status);
 void ChangeThreadPriority(int thread, int priority);
 int iWakeupThread(int thread);
@@ -70,7 +70,7 @@ extern "C" void DME_StopThread(void)
     D_00572528 = 0;
     D_00572508 = 0;
     g_DmeThreadExited = 0;
-    D_00533880 = 0;
+    g_ProfileLockEnabled = 0;
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0042A680 */

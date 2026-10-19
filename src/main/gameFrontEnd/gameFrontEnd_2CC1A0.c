@@ -47,7 +47,7 @@ extern struct ObjCC260* D_004FFC04;
 #endif /* merge_units */
 #define D_004FFC04 (*(struct ObjCC260 **)&D_004FFC04) /* merge_units */
 
-extern unsigned char D_0051EEB0;
+extern unsigned char g_DebugTriangle;
 extern char D_0055A300[];
 void FrontEnd_DrawGui(struct ObjCC260*);
 void FrontEnd_UpdateGui(struct ObjCC260*);
@@ -60,10 +60,10 @@ void App_CardWaitPoll(int arg0, int arg1)
 {
     int i;
 
-    if (D_0051EEB0 != 0) {
+    if (g_DebugTriangle != 0) {
         return;
     }
-    D_0051EEB0 = 1;
+    g_DebugTriangle = 1;
     if (arg0 == 0) {
         if (D_004FFC04->b310 == 0 || arg1 == 0x3039) {
             FrontEnd_UpdateGui(D_004FFC04);
@@ -89,7 +89,7 @@ void App_CardWaitPoll(int arg0, int arg1)
     } else if (arg0 == 3) {
         GuiWidget_BroadcastEvent(Gui_GetScreenStack(), 0x2002, arg1, 0);
     }
-    D_0051EEB0 = 0;
+    g_DebugTriangle = 0;
 }
 #undef D_004FFC04 /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
@@ -102,7 +102,7 @@ static inline void merge_flush_func_002CC260(void) {}
 typedef struct { char pad[0x2C]; unsigned char b2C; char pad2[0x2AC - 0x2D]; char name[0x40]; } ObjC3E0;
 typedef struct { char pad[0x250]; unsigned char mode; } HudC3E0;
 static unsigned int dat_0048C248[2] = { 0x1, 0x0 };
-extern void* D_004FFD2C;
+extern void* g_OptionsRecord;
 extern char D_004ACFA8[];
 extern int D_005383D4;
 extern void Options_Load(void* p);
@@ -114,7 +114,7 @@ void FrontEnd_FirstEntry(ObjC3E0* o)
 {
     if ((*(unsigned char*)dat_0048C248)) {
         char* s;
-        Options_Load(D_004FFD2C);
+        Options_Load(g_OptionsRecord);
         o->b2C = 0;
         func_002CC980();
         s = GameIni_GetString(D_004ACFA8);

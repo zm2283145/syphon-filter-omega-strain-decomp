@@ -15,7 +15,7 @@ typedef struct {
     Vec_F2A0 pos; char pad40[0x140]; int x180; short x184; unsigned char x186;
 } Src_F2A0;
 extern "C" {
-extern char D_004F53B8[];
+extern char g_PlaySndMsgClass[];
 extern char D_004DAE30[];
 extern Voice_F190* ActorRef_Copy(void* ref);
 }
@@ -46,7 +46,7 @@ static inline bool HValid(Src_F2A0* h) { Voice_F190* t = h->voice; bool ok = tru
 static inline Voice_F190* HGet(Src_F2A0* h) { return HValid(h) ? h->voice : 0; }
 extern "C" SoundEventP* EffectMsg_WrapRequest(SoundEventP* ev, Src_F2A0* src) {
     SoundRequest* p;
-    Event_Construct(ev, D_004F53B8);
+    Event_Construct(ev, g_PlaySndMsgClass);
     ev->vtable = D_004DAE30;
     p = &ev->req;
     p->voiceId = -2;

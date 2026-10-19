@@ -169,7 +169,7 @@ typedef struct G_002757A0 {
     int f10; int pad14[3]; int f20; int f24; int f28; int* f2C; int f30; int f34; int f38; int f3C; int pad40[2]; void* f48; int pad4C[33]; int fD0; int padD4; long long fD8;
 } G_002757A0;
 extern G_002757A0 D_00539210;
-extern char D_005381F0[];
+extern char g_Video[];
 extern long long D_005381F8;
 extern V4 D_004A90A0[];
 void ParticleInst_Draw(int h, int k, void* p);
@@ -190,10 +190,10 @@ void Renderer_FlushBatch(void* s);
 #define D_00539234 (D_00539210.f34)
 #define D_00539238 (D_00539210.f38)
 #define D_0053923C (D_00539210.f3C)
-#define D_00539248 (D_00539210.f48)
-#define D_005392D0 (D_00539210.fD0)
+#define g_TextureMgr (D_00539210.f48)
+#define g_DrawMode (D_00539210.fD0)
 
-#define RS_002757A0 ((Rs_002757A0*)D_005381F0)
+#define RS_002757A0 ((Rs_002757A0*)g_Video)
 
 struct V4c_002757A0 {
     float x, y, z, w;
@@ -208,15 +208,15 @@ static inline V4* UV_002757A0(const V4& uv)
 static inline void Emit_002757A0(const V4& pos, const V4c_002757A0& col, const V4& uv)
 {
     Ent_002757A0* e;
-    func_0025CA40(D_005381F0);
+    func_0025CA40(g_Video);
     e = &RS_002757A0->ents[D_00539210.f10];
     Vec4_Copy(&e->pos[D_00539224 - 1], &pos);
     GuiBatch_AddVertexColor(&e->c30[D_00539224 - 1], (V4*)&col);
     Vec4_Copy(&e->c34[D_00539224 - 1], UV_002757A0(uv));
     D_005381F8 = 6LL << 32;
 }
-static inline unsigned char Prim_002757A0(void) { if (D_005392D0 & 1) return 3; return 2; }
-static inline int Mode_002757A0(void) { if (D_005392D0 & 1) return 0x41; return 0x62; }
+static inline unsigned char Prim_002757A0(void) { if (g_DrawMode & 1) return 3; return 2; }
+static inline int Mode_002757A0(void) { if (g_DrawMode & 1) return 0x41; return 0x62; }
 
 static inline void Restart_002757A0(void)
 {
@@ -228,7 +228,7 @@ static inline void Restart_002757A0(void)
                 D_00539234++;
             } else {
                 if (D_00539220 > 0) D_0053922C[D_00539220 - 1] = D_00539230;
-                { int v; int j; Rec_002757A0* s; v = D_00539238 - 1; s = ((Rec_002757A0**)(D_005381F0 + 0xFD4))[D_00539210.f10 * 14] + D_00539220; j = 0; for (; j < 12; j++) s->v[j] = v; }
+                { int v; int j; Rec_002757A0* s; v = D_00539238 - 1; s = ((Rec_002757A0**)(g_Video + 0xFD4))[D_00539210.f10 * 14] + D_00539220; j = 0; for (; j < 12; j++) s->v[j] = v; }
                 D_00539230 = 0;
                 D_00539234 = 0;
                 D_00539228++;
@@ -259,9 +259,9 @@ extern "C" void func_002757A0(Bullet_002757A0* b)
         V4c_002757A0 c1(1.0f, 1.0f, 1.0f, 1.0f);
         V4c_002757A0 c2(1.0f, 1.0f, 1.0f, 0.5f);
         Ent_002757A0* e;
-        int saved = D_005392D0;
-        D_005392D0 = 5;
-        Renderer_BindTexture(D_00539248, b->tex);
+        int saved = g_DrawMode;
+        g_DrawMode = 5;
+        Renderer_BindTexture(g_TextureMgr, b->tex);
         D_00539238 = Prim_002757A0();
         D_0053923C = Mode_002757A0();
         D_00539228 = 0;
@@ -271,7 +271,7 @@ extern "C" void func_002757A0(Bullet_002757A0* b)
         e->c2C += D_00539224;
         e->c30 += D_00539224;
         e->c34 += D_00539224;
-        func_0025CD10(D_005381F0);
+        func_0025CD10(g_Video);
         D_00539224 = 0;
         Emit_002757A0(p0, c1, D_004A90A0[b->uv]);
         Emit_002757A0(p1, c1, D_004A90A0[b->uv + 1]);
@@ -282,8 +282,8 @@ extern "C" void func_002757A0(Bullet_002757A0* b)
         Emit_002757A0(p5, c1, D_004A90A0[b->uv + 1]);
         Emit_002757A0(p6, c2, D_004A90A0[b->uv + 2]);
         Emit_002757A0(p7, c2, D_004A90A0[b->uv + 3]);
-        Renderer_FlushBatch(D_005381F0);
-        D_005392D0 = saved;
+        Renderer_FlushBatch(g_Video);
+        g_DrawMode = saved;
     }
 }
 #pragma pop /* merge_units */
@@ -446,19 +446,19 @@ extern float D_0048B318;
 extern float D_0048B320;
 extern float D_0048B328;
 extern S3 D_0048B350;
-extern int D_0049D010[];
+extern int g_HumanActorClassKey[];
 extern signed char D_004E1DA0;
 extern signed char D_004E1DA8;
 extern V D_00497F20;
 extern V D_00497F30;
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_004EE5C0[];
 extern SoundRequest D_004EF590;
 extern char D_004D92A0[];
 extern char D_004DAE30[];
 extern char D_004A91A0[];
 extern char D_004A91B0[];
-extern void* D_004FFC3C;
+extern void* g_DecalMgr;
 void ParticleEmitter_SetRate(Emitter* e, float r);
 void ParticleInst_Update(Emitter* e, float dt, M* m, int z);
 void ParticleInst_Kill(Emitter* e, int f);
@@ -517,11 +517,11 @@ struct AreaEffect {
     static void* operator new(unsigned int sz, int line)
     {
         void* p;
-        if (D_00533880) Alloc_Lock(9);
-        D_00533888++;
+        if (g_ProfileLockEnabled) Alloc_Lock(9);
+        g_ProfileLockDepth++;
         p = Mem_Alloc(0, sz, D_004A91A0, line);
-        if (D_00533880) Alloc_Unlock(9);
-        D_00533888--;
+        if (g_ProfileLockEnabled) Alloc_Unlock(9);
+        g_ProfileLockDepth--;
         return p;
     }
 };
@@ -538,7 +538,7 @@ enum MI { MI0, MI1, MI2, MI3 };
 #pragma enumsalwaysint reset
 static inline float Pow(float b, int n) { float r = 1.0f; int i; for (i = 0; i < n; i++) r *= b; return r; }
 
-static inline bool SameTeam(Obj* o) { int* p = D_0049D010; int t = p[0]; return o->team == t; }
+static inline bool SameTeam(Obj* o) { int* p = g_HumanActorClassKey; int t = p[0]; return o->team == t; }
 inline AiMsg& AiMsg::Init(Bullet* s) { AiSound_SendImpactNoise(this, 1.0f, s->type->noise, &HGet(&s->h68)->serial, &s->pos, 4); return *this; }
 static inline V Scl(V* d) { return *d * 0.2f; }
 extern "C" void BulletPool_UpdateAll(Bullet* s, float dt)
@@ -616,7 +616,7 @@ extern "C" void BulletPool_UpdateAll(Bullet* s, float dt)
                         SoundRequest_Ctor(&req, snd, String_CStr_189540(mat->e[j].name), 0, 0);
                         SoundPosRequest_Ctor(&msg, &req, &s->pos);
                         msg.flag = 1;
-                        Event_Send(&msg, D_004FFB50, 0);
+                        Event_Send(&msg, g_Game, 0);
                         msg.vtbl = D_004DAE30;
                         FileMan_Release(msg.partB, -1);
                         FileMan_Release(msg.partA, -1);
@@ -628,7 +628,7 @@ extern "C" void BulletPool_UpdateAll(Bullet* s, float dt)
                     SoundMsg msg;
                     SoundPosRequest_Ctor(&msg, &D_004EF590, &s->pos);
                     msg.flag = 1;
-                    Event_Send(&msg, D_004FFB50, 0);
+                    Event_Send(&msg, g_Game, 0);
                     msg.vtbl = D_004DAE30;
                     FileMan_Release(msg.partB, -1);
                     FileMan_Release(msg.partA, -1);
@@ -662,14 +662,14 @@ extern "C" void BulletPool_UpdateAll(Bullet* s, float dt)
                         float sc = mat->e[mi].scale;
                         S3 sz = D_0048B350;
                         signed char z = sz.c[mat->e[mi].size];
-                        DecalMgr_AddBulletDecal(D_004FFC3C, &m, fx2, z, HGet(&s->h70), sc);
+                        DecalMgr_AddBulletDecal(g_DecalMgr, &m, fx2, z, HGet(&s->h70), sc);
                     }
                 } else {
-                    int id = *SpecFx_GetEffectDef(0x24); DecalMgr_AddBulletDecal(D_004FFC3C, &m, id, 8, HGet(&s->h70), 0.2f);
+                    int id = *SpecFx_GetEffectDef(0x24); DecalMgr_AddBulletDecal(g_DecalMgr, &m, id, 8, HGet(&s->h70), 0.2f);
                 }
             }
             if (HGet(&s->h68)) {
-                void* svc = Service_Lookup(D_004FFB50, D_004EE5C0);
+                void* svc = Service_Lookup(g_Game, D_004EE5C0);
                 AiMsg().Init(s).Send(svc);
                 Obj* tgt = HGet(&s->h70);
                 Obj* src = HGet(&s->h68);
@@ -685,7 +685,7 @@ extern "C" void BulletPool_UpdateAll(Bullet* s, float dt)
                         V a = s->pos; int z = 0;
                         V d = s->m3 - s->pos;
                         a += Scl(&d);
-                        DecalMgr_AddBloodDecal(D_004FFC3C, &a, id, z, D_0048B320);
+                        DecalMgr_AddBloodDecal(g_DecalMgr, &a, id, z, D_0048B320);
                     }
                 }
                 if (s->type->rC4 > 0.0f) {
@@ -695,7 +695,7 @@ extern "C" void BulletPool_UpdateAll(Bullet* s, float dt)
                     V b = a;
                     Blast_Prepare(HGet(&s->h68), s->type->d64, 1, &b, 0, 1, 1.0f, s->type->rC4, s->type->rC8);
                     int id = *SpecFx_GetEffectDef(0x25);
-                    if (id > -1) { int z = 0; DecalMgr_AddBloodDecal(D_004FFC3C, &a, id, z, D_0048B328); }
+                    if (id > -1) { int z = 0; DecalMgr_AddBloodDecal(g_DecalMgr, &a, id, z, D_0048B328); }
                 }
             }
         }
@@ -705,7 +705,7 @@ extern "C" void BulletPool_UpdateAll(Bullet* s, float dt)
                 if (s->type->fxD8 != -1) Effect_CreateInstance(s->type->fxD8, (M*)&s->m0);
                 if (q.hit) {
                     if (HasCtl(HGet(&s->h68)) && HGet(&s->h68)->b14 && s->type->cls == 9 && !HasCtl(q.hit) && SameTeam(q.hit))
-                        Stats_Add(Agent_GetSelected(D_004FFB50, -1), 0xA, 1);
+                        Stats_Add(Agent_GetSelected(g_Game, -1), 0xA, 1);
                 }
                 AreaEffect* ae = (AreaEffect*)AreaEffect::operator new(0xE0, 0x1F5); if (ae) AreaEffect_Construct(ae, HGet(&s->h68), s->m3, s->type, 1);
                 V b; b = s->m3;
@@ -716,7 +716,7 @@ extern "C" void BulletPool_UpdateAll(Bullet* s, float dt)
                     SoundRequest_Ctor(&req, 1, D_004A91B0, 0, 0);
                     SoundPosRequest_Ctor(&msg, &req, &s->pos);
                     msg.flag = 1;
-                    Event_Send(&msg, D_004FFB50, 0);
+                    Event_Send(&msg, g_Game, 0);
                     msg.vtbl = D_004DAE30;
                     FileMan_Release(msg.partB, -1);
                     FileMan_Release(msg.partA, -1);

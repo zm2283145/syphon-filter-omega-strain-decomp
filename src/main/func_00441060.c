@@ -8,7 +8,7 @@ char* WeaponDb_Get(int, int);
 void WeaponDb_Preload(int, int, int);
 char* Loc_LookupText(char*);
 void GuiTextWidget_SetText(int, char*, int);
-extern int D_004FFD30;
+extern int g_WeaponDatabase;
 extern char D_004C03B8[];
 }
 
@@ -28,10 +28,10 @@ extern "C" void GuiWeaponDisplay_Set(char* self, int id) {
     F_(self, 0x4C, int) = 0;
     cur = F_(self, 0x48, int);
     if (cur != -1) {
-        w = WeaponDb_Get(D_004FFD30, cur);
+        w = WeaponDb_Get(g_WeaponDatabase, cur);
         SetIcon(self, w);
         if (F_(self, 0x4C, int) == 0) {
-            WeaponDb_Preload(D_004FFD30, F_(self, 0x48, int), 0);
+            WeaponDb_Preload(g_WeaponDatabase, F_(self, 0x48, int), 0);
             SetIcon(self, w);
         }
         if (F_(self, 0xA0, int) != 0) {

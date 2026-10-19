@@ -27,8 +27,8 @@ typedef struct LightState_h5 {
     unsigned char c175;
     unsigned char c176;
 } LightState_h5;
-extern LightState_h5* D_004FFC0C;
-extern char D_004FFB50[];
+extern LightState_h5* g_LocalPlayer;
+extern char g_Game[];
 extern char D_004F2CC0[];
 extern int D_005383C0;
 extern void Pad_EnableVibration(int v);
@@ -43,43 +43,43 @@ void GameOptions_Apply(LightCfg_h5* cfg, unsigned int mask)
 {
     void* svc;
     if (mask & 1) {
-        if (D_004FFC0C) {
-            D_004FFC0C->c174 = cfg->b4;
+        if (g_LocalPlayer) {
+            g_LocalPlayer->c174 = cfg->b4;
         }
     }
     if (mask & 2) {
         Pad_EnableVibration(cfg->b5);
     }
     if (mask & 4) {
-        if (D_004FFC0C) {
-            D_004FFC0C->c175 = cfg->b6;
+        if (g_LocalPlayer) {
+            g_LocalPlayer->c175 = cfg->b6;
         }
     }
     if (mask & 8) {
-        if (D_004FFC0C) {
-            D_004FFC0C->c176 = cfg->b7;
+        if (g_LocalPlayer) {
+            g_LocalPlayer->c176 = cfg->b7;
         }
     }
     if (mask & 0x10) {
-        svc = Service_Lookup(D_004FFB50, D_004F2CC0);
+        svc = Service_Lookup(g_Game, D_004F2CC0);
         if (svc) {
             SoundMgr_SetChannelVolume(svc, 0, (int)(1024.0f * cfg->vol0));
         }
     }
     if (mask & 0x20) {
-        svc = Service_Lookup(D_004FFB50, D_004F2CC0);
+        svc = Service_Lookup(g_Game, D_004F2CC0);
         if (svc) {
             SoundMgr_SetChannelVolume(svc, 2, (int)(1024.0f * cfg->vol2));
         }
     }
     if (mask & 0x40) {
-        svc = Service_Lookup(D_004FFB50, D_004F2CC0);
+        svc = Service_Lookup(g_Game, D_004F2CC0);
         if (svc) {
             SoundMgr_SetChannelVolume(svc, 1, (int)(1024.0f * cfg->vol1));
         }
     }
     if (mask & 0x80) {
-        svc = Service_Lookup(D_004FFB50, D_004F2CC0);
+        svc = Service_Lookup(g_Game, D_004F2CC0);
         if (svc) {
             SoundMgr_SetOutputMode(svc, cfg->mode14);
         }

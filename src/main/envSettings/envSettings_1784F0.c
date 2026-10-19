@@ -116,8 +116,8 @@ extern "C" void func_00147A10();
 extern void * const D_004D9F10[];
 extern char D_004D9240[];
 extern char D_004D9280[];
-extern char D_00535D20[];
-extern unsigned char D_00535D62;
+extern char g_LightMgr[];
+extern unsigned char g_LevelLightsDirty;
 void LightMgr_RemoveFromTable(void* pool, void* p);
 }
 class S_8580 {
@@ -138,12 +138,12 @@ extern "C" S_8580* func_00178580(S_8580* self, short flag)
             VT(s) = D_004D9240;
             s->id = -1;
             self->Shutdown();
-            D_00535D62 = 1;
+            g_LevelLightsDirty = 1;
             if (s)
                 VT(s) = D_004D9280;
         }
         if (flag > 0)
-            LightMgr_RemoveFromTable(D_00535D20, s);
+            LightMgr_RemoveFromTable(g_LightMgr, s);
     }
     return s;
 }
@@ -239,7 +239,7 @@ extern "C" EnvSettings_178630* cEnvSettings_ctor(EnvSettings_178630* obj, Reader
     ReadFloat_178630(r, &obj->color.x);
     ReadFloat_178630(r, &obj->color.y);
     ReadFloat_178630(r, &obj->color.z);
-    l = LightMgr_AllocPoint(D_00535D20, 1, lo);
+    l = LightMgr_AllocPoint(g_LightMgr, 1, lo);
     if (l) {
         LevelLight_CreateDirectional(l, 1, Vec4_SetFromVec3W(&tmp, &obj->color, 0.0f));
         *(void**)((char*)l + 4) = D_004D9F10;

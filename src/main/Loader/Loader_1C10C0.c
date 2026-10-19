@@ -20,7 +20,7 @@ struct Vec_1C10C0 { int cap; int count; Node_1C10C0** data; };
 extern "C" {
 extern char D_0049EE88[];
 extern Vec_1C10C0* D_004FFBE0;
-extern char D_004FFB50[];
+extern char g_Game[];
 void* Mem_Alloc(int pool, int size, char* file, int line);
 int Pop_FindTag(PopReader_1C10C0* r, int tag);
 Node_1C10C0* Node_Construct(void* p, PopReader_1C10C0* r, int i);
@@ -64,7 +64,7 @@ extern "C" void Loader_InitNodes(void* a0, PopReader_1C10C0* r)
                 func_0040C940(list->data[i]);
                 Node_1C10C0* q = list->data[i];
                 if (q->flags & 0x200)
-                    World_RegisterNode(D_004FFB50, q);
+                    World_RegisterNode(g_Game, q);
             }
         }
     }

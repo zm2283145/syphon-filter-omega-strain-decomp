@@ -13,7 +13,7 @@ int Pad_ResetHeldMask(...);
 int Gui_GetScreenList(...);                                
 void **Gui_GetScreenStack(...);                             
 int GuiManager_FindByName(...);                        
-extern char D_004FFB50;
+extern char g_Game;
 extern unsigned char D_004FFBB7;
 extern char D_0055A300;
 }
@@ -38,7 +38,7 @@ extern "C" void Hud_ClosePauseMenu(char * arg0) {
         }
         Pad_ResetHeldMask(&D_0055A300);
         if (D_004FFBB7 != 0) {
-            Game_SetPaused(&D_004FFB50, 0);
+            Game_SetPaused(&g_Game, 0);
         }
         F_(arg0, 0x6A8, unsigned char) = 0U;
     }

@@ -15,7 +15,7 @@ struct Self_0028B3C0 {
 extern "C" {
 extern signed char D_00493A60;
 extern Blk_0028B3C0 D_0055D510[];
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_004A98E0[];
 extern char D_004A98F0[];
 extern char D_004A9900[];
@@ -69,7 +69,7 @@ extern "C" int GuiAgentCreate_HandleInput(Self_0028B3C0* self, Ev_0028B3C0* ev)
             D_00493A60 = 0;
         QCopy_0028B3C0(&D_0055D510[D_00493A60], App_0028B3C0(self->f70->sub60), 0x44);
         Appearance_RemoveBlankPairs(&D_0055D510[D_00493A60]);
-        ag = Agent_GetSelected(D_004FFB50, -1);
+        ag = Agent_GetSelected(g_Game, -1);
         n = AgentData_GetName(ag);
         if (!n || !*n) {
             pg = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004A98E0, D_004A98F0);
@@ -101,7 +101,7 @@ extern "C" int GuiAgentCreate_HandleInput(Self_0028B3C0* self, Ev_0028B3C0* ev)
                 self->f54->flags &= ~2;
             GuiScreen_SetFocus(Gui_GetScreenStack(), self->GetFocus());
         } else if (self->fCC == 4) {
-            void* ag = Agent_GetSelected(D_004FFB50, -1);
+            void* ag = Agent_GetSelected(g_Game, -1);
             void* pg = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004A98E0, D_004A98F0);
             if (pg) {
                 char* t = Loc_LookupText(D_004A9900);

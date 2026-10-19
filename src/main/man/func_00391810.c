@@ -23,8 +23,8 @@ typedef struct {
     int time;
 } Lpd;
 
-extern int D_00533870;
-extern long D_00533878;
+extern int g_TimerAccum;
+extern long g_TickCounter64;
 
 static inline int DivTime(long n)
 {
@@ -81,5 +81,5 @@ void Lpd_Init(Lpd* s, int* data)
             s->trk[i].fb = 0.0f;
         }
     }
-    s->time = DivTime(D_00533878 + (int)((float)(unsigned int)(*(volatile int*)0x10000800 + D_00533870) / 5.76f));
+    s->time = DivTime(g_TickCounter64 + (int)((float)(unsigned int)(*(volatile int*)0x10000800 + g_TimerAccum) / 5.76f));
 }

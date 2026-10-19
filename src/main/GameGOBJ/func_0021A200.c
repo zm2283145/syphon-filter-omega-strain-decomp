@@ -51,17 +51,17 @@ struct Handle { int a, b; };
 struct It { Obj** p; };
 struct Vec;
 extern "C" {
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005721C0;
 extern char D_0051EE68[];
 extern char D_004DE130[];
 extern char D_004DAEB0[];
 extern char D_004A4550[];
-extern void* D_004FFBDC;
+extern void* g_TremorList;
 extern float D_0048A9A0;
 extern float D_0048A9A8;
 extern float D_0048A9B0;
-extern int D_0049D010;
+extern int g_HumanActorClassKey;
 void Event_Construct(void* m, void* type);
 void cMessage_dtor(void* m, int flags);
 void Transport_Send(int target, BlastMsg* msg, int a, int b);
@@ -116,8 +116,8 @@ static inline bool Eq(It* a, It* b) { Obj** e = b->p; return a->p == e; }
 static inline bool Ne(It* a, It* b) { return !Eq(a, b); }
 static inline bool Standing(Obj* o) { bool r = false; if (o->b2D && o->b2C) r = true; return r; }
 static inline bool Alive(Obj* o) { bool r = false; if (Standing(o) && ((o->b2E != 0) ^ 1)) r = true; return r; }
-static inline bool DeadOk(void) { unsigned char r; if (D_005721C8) r = D_005721C0; else r = true; return r; }
-static inline int HumanKey(void) { int* p = &D_0049D010; return *p; }
+static inline bool DeadOk(void) { unsigned char r; if (g_IsMultiplayer) r = D_005721C0; else r = true; return r; }
+static inline int HumanKey(void) { int* p = &g_HumanActorClassKey; return *p; }
 static inline void GetBegin(It* o, Vec* v) { It tb; PtrVec_Begin(&tb, v); func_00133980(o, &tb); }
 static inline void GetEnd(It* o, Vec* v) { It te; PtrVec_End(&te, v); func_00133980(o, &te); }
 /* the extra inline level orders the iterator temps like retail */
@@ -126,7 +126,7 @@ static inline void GetEnd2(It* o, Vec* v) { GetEnd(o, v); }
 #pragma opt_rotateloops off
 extern "C" void Blast_Prepare(Obj* obj, int dmg, float fdmg, float r0, float r1, unsigned char flag, V* at, unsigned char skipHumans, int quiet)
 {
-    if (D_005721C8 && !quiet) {
+    if (g_IsMultiplayer && !quiet) {
         BlastMsg msg;
         BlastMsg* p = &msg;
         Ref* r = &obj->ref;
@@ -152,7 +152,7 @@ extern "C" void Blast_Prepare(Obj* obj, int dmg, float fdmg, float r0, float r1,
         V t = obj->GetPos();
         c = t;
     }
-    void* fx = D_004FFBDC;
+    void* fx = g_TremorList;
     VisionFx_RequestFlash(fx, &c, 1.0f, 1.0f, r0 * D_0048A9A0, r1 * D_0048A9A8);
     void* arr = World_GetActorArray();
     It it;

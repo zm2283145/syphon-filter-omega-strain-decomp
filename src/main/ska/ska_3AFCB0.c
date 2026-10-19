@@ -104,8 +104,8 @@ static inline void merge_flush_func_003AFCB0(void) {}
 
 /* merge_units: begin func_003AFF10 */
 #pragma push /* merge_units */
-extern unsigned char D_00533880;
-extern int D_00533888;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
 extern void Alloc_Lock(int);
 extern void Alloc_Unlock(int);
 extern void* Mem_Alloc(int, int, char*, int);
@@ -113,11 +113,11 @@ extern void func_003B0020(int* list, AnimTrans_f3** item);
 static inline void* AllocL_f3(int size, char* file, int line)
 {
     void* p;
-    if (D_00533880) Alloc_Lock(9);
-    D_00533888++;
+    if (g_ProfileLockEnabled) Alloc_Lock(9);
+    g_ProfileLockDepth++;
     p = Mem_Alloc(0, size, file, line);
-    if (D_00533880) Alloc_Unlock(9);
-    D_00533888--;
+    if (g_ProfileLockEnabled) Alloc_Unlock(9);
+    g_ProfileLockDepth--;
     return p;
 }
 AnimTrans_f3* AnimSelector_BeginTransition(AnimSel_f3* sel, int a, int b, int target)

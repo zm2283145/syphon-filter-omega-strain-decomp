@@ -4,7 +4,7 @@
 #include "vslot_pad.h"
 #include "cmessage.h"
 #include "alloc_guard.h"
-extern "C" char D_004EA370[], D_0055D4E0[], D_004D9360[], D_004D9340[], D_004EE550[];
+extern "C" char g_NpcDeadList[], g_TeleportMsgClass[], D_004D9360[], D_004D9340[], D_004EE550[];
 typedef struct V4 { float x, y, z, w; V4& operator-=(const V4& o); } __attribute__((aligned(16))) V4;
 typedef struct M4 { V4 r[4]; V4& T() { return r[3]; } } M4;
 struct Obj {
@@ -190,7 +190,7 @@ extern "C" void func_002D5160(Self* self, float dt)
                     MakeRot(&mtx, CV(0.0f, 0.0f, 1.0f), ang);
                     SetT(&mtx, Node_GetTranslation(self->node));
                     m = &msg;
-                    Event_Construct(m, D_0055D4E0);
+                    Event_Construct(m, g_TeleportMsgClass);
                     m->vtable = D_004D9360;
                     m->b24 = 2;
                     SetMtx(m, &mtx);
@@ -217,7 +217,7 @@ extern "C" void func_002D5160(Self* self, float dt)
                     p2.y = t3->py;
                     p2.z = t3->pz;
                     m2 = &msg2;
-                    Event_Construct(m2, D_0055D4E0);
+                    Event_Construct(m2, g_TeleportMsgClass);
                     m2->vtable = D_004D9360;
                     m2->b24 = 0;
                     SetPt(m2, Mtx_GetIdentity(), &p2);
@@ -272,20 +272,20 @@ extern "C" void func_002D5160(Self* self, float dt)
     } else {
         if (!self->f44()) {
             func_0014AC80(&it);
-            func_0014AC70(&b, D_004EA370);
+            func_0014AC70(&b, g_NpcDeadList);
             func_0014AC60(&it, &b);
-            while (func_0014AC20(&end, D_004EA370), func_0014AC00(&it, &end)) {
+            while (func_0014AC20(&end, g_NpcDeadList), func_0014AC00(&it, &end)) {
                 if (*func_0014AC50(&it) == self) break;
                 func_0014AC30(&it);
             }
             func_0014ABF0(&w4, (Word*)&it);
             x = w4;
-            func_0014ABE0(&end2, D_004EA370);
+            func_0014ABE0(&end2, g_NpcDeadList);
             func_0014ABD0(&w3, (Word*)&end2);
             y = w3;
             if (x.value == y.value) {
                 NpcThinkList_RemoveActor(self->obj);
-                NpcAi_AddToDeadList(D_004EA370, &self);
+                NpcAi_AddToDeadList(g_NpcDeadList, &self);
             }
         } else if (AiController_GetActor(self) && AiController_GetActor(self)->tgt) {
             Tgt* t4 = AiController_GetActor(self)->tgt;
@@ -302,7 +302,7 @@ extern "C" void func_002D5160(Self* self, float dt)
                 p4.y = t5->py;
                 p4.z = t5->pz;
                 m4 = &msg4;
-                Event_Construct(m4, D_0055D4E0);
+                Event_Construct(m4, g_TeleportMsgClass);
                 m4->vtable = D_004D9360;
                 m4->b24 = 0;
                 SetPt(m4, Mtx_GetIdentity(), &p4);

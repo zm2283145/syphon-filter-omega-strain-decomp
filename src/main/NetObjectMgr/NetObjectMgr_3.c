@@ -37,7 +37,7 @@ void func_0042DA20(Iter* out, Tree* t) {
 
 extern "C" {
 extern RbTree D_005826A0;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005721C0;
 extern int D_005721A8;
 extern int D_00494178;
@@ -77,7 +77,7 @@ static inline const GobjId* object_id(cGOBJ* object)
 static inline int current_peer(void)
 {
     int session = D_005721A8;
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         if (D_00494178 == -1)
             NetGame_InitLocalSlot(&D_00494178, session);
         return D_00494178;
@@ -87,7 +87,7 @@ static inline int current_peer(void)
 
 static inline int is_host(void)
 {
-    return D_005721C8 ? D_005721C0 : 1;
+    return g_IsMultiplayer ? D_005721C0 : 1;
 }
 
 static inline void request_transfer(cGOBJ* object, int peer, int owner)

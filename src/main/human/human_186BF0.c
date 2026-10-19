@@ -53,12 +53,12 @@ struct Npc_00186BF0 {
     char pad33A6[0x3524 - 0x33A6]; int f3524;
 };
 extern "C" {
-extern char D_0055D480[];
+extern char g_ActorActionMsgClass[];
 extern char D_004E0840[];
 extern char D_004E01E0[];
 extern char D_004F0430[];
 extern char D_004F00F0[];
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_004DAE30[];
 void Event_Construct(void* m, void* type);
 void Event_Send(void* m, void* target, int immediate);
@@ -73,7 +73,7 @@ void Controller_DeathNotice(Npc_00186BF0* self, int a1, Att_00186BF0* att, int a
 }
 static inline Msg_00186BF0* Ctor_00186BF0(Msg_00186BF0* p)
 {
-    Event_Construct(p, D_0055D480);
+    Event_Construct(p, g_ActorActionMsgClass);
     p->vt = D_004E0840;
     p->kind = 0x42;
     p->b28 = 2;
@@ -81,7 +81,7 @@ static inline Msg_00186BF0* Ctor_00186BF0(Msg_00186BF0* p)
 }
 static inline void Send_00186BF0(Msg_00186BF0* p, int anim, Npc_00186BF0* self)
 {
-    Event_Construct(p, D_0055D480);
+    Event_Construct(p, g_ActorActionMsgClass);
     p->vt = D_004E0840;
     p->kind = 0x42;
     p->b28 = 2;
@@ -146,7 +146,7 @@ extern "C" void Actor_Kill(Npc_00186BF0* self, int a1, Att_00186BF0* att, int a3
         Msg_00186BF0 msg;
         int a = (unsigned char)anim;
         Msg_00186BF0* p = &msg;
-        Event_Construct(p, D_0055D480);
+        Event_Construct(p, g_ActorActionMsgClass);
         p->vt = D_004E0840;
         p->kind = 0x42;
         p->b28 = 2;
@@ -158,7 +158,7 @@ extern "C" void Actor_Kill(Npc_00186BF0* self, int a1, Att_00186BF0* att, int a3
             Snd_00186BF0 s;
             SoundEvent_CtorFromPreset(&s, snd, self);
             s.flag = 1;
-            Event_Send(&s, D_004FFB50, 0);
+            Event_Send(&s, g_Game, 0);
             s.vt = D_004DAE30;
             FileMan_Release(&s.s114, -1);
             FileMan_Release(&s.s78, -1);
@@ -215,7 +215,7 @@ extern "C" void Actor_RecordDeathStats(Npc_00186F30* self, Act_00186F30* att, un
             r = 1;
         if (r) {
             if (att->b14) {
-                void* ag = Agent_GetSelected(D_004FFB50, -1);
+                void* ag = Agent_GetSelected(g_Game, -1);
                 Stats_Add(ag, 0, 1);
                 if (!TeamTable_AreEnemies(att, self)) {
                     int k;

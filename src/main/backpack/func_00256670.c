@@ -6,7 +6,7 @@
 #include "types.h"
 #include "backpack_types.h"
 
-extern int D_004FFBD0;
+extern int g_HotboxTracker;
 extern void HotboxWorld_UpdateBoxBounds(int manager, BackpackLink* link, cBackpack* backpack, int a3);
 extern void func_003CDBE0(cBackpack* backpack);
 
@@ -14,6 +14,6 @@ extern void func_003CDBE0(cBackpack* backpack);
 void cBackpack_v28(cBackpack* backpack) {
     func_003CDBE0(backpack);
     if (backpack->link != 0) {
-        HotboxWorld_UpdateBoxBounds(D_004FFBD0, backpack->link, backpack, 0);
+        HotboxWorld_UpdateBoxBounds(g_HotboxTracker, backpack->link, backpack, 0);
     }
 }

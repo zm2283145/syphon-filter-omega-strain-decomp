@@ -10,8 +10,8 @@
 typedef struct { char pad[0x4C]; int type; } A_455550;
 typedef struct { char pad[0x30]; A_455550* f30; } G_455550;
 typedef struct { char pad[0x48]; void* f48; } O_455550;
-extern G_455550* D_004FFC0C;
-extern int D_0049D010;
+extern G_455550* g_LocalPlayer;
+extern int g_HumanActorClassKey;
 extern void GuiWidget_BaseWake(O_455550*);
 extern int Player_GetHeldItem(G_455550*);
 extern void GuiEquipmentPane_Cycle(O_455550*, int);
@@ -21,12 +21,12 @@ void GuiEquipmentPane_Wake(O_455550* o)
 {
     G_455550* g;
     GuiWidget_BaseWake(o);
-    if (o->f48 && (g = D_004FFC0C)) {
+    if (o->f48 && (g = g_LocalPlayer)) {
         if (Player_GetHeldItem(g) == -1) {
             GuiEquipmentPane_Cycle(o, 1);
         } else {
             A_455550* a = g->f30;
-            a = (a && a->type == D_0049D010) ? a : 0;
+            a = (a && a->type == g_HumanActorClassKey) ? a : 0;
             GuiEquipmentPane_SetItem(o, a, Player_GetHeldItem(g));
         }
     }
@@ -91,11 +91,11 @@ int GuiWeaponStats_HandleInput(void* self, E4557C0* e)
 typedef struct { char pad0[0x60]; int f60; int f64; char pad68[8]; int f70; int f74; } Wpn_00455840;
 typedef struct { char pad0[0x30]; int f30; } G_00455840;
 #if 0 /* merge_units */
-extern G_00455840* D_004FFC0C;
+extern G_00455840* g_LocalPlayer;
 #endif /* merge_units */
-#define D_004FFC0C (*(G_00455840 **)&D_004FFC0C) /* merge_units */
+#define g_LocalPlayer (*(G_00455840 **)&g_LocalPlayer) /* merge_units */
 
-extern int D_004FFD30;
+extern int g_WeaponDatabase;
 extern char D_004C1A38[];
 extern char D_004C1A50[];
 extern char D_004C1A88[];
@@ -121,9 +121,9 @@ void GuiWeaponStats_Fill(void* list, int id)
         t = Loc_LookupText(key);
         GuiTextArrayWidget_SetCellText(list, 0, i, t ? t : D_004C1A38);
     }
-    w = WeaponDb_Get(D_004FFD30, id);
+    w = WeaponDb_Get(g_WeaponDatabase, id);
     if (w) {
-        int actor = D_004FFC0C->f30;
+        int actor = g_LocalPlayer->f30;
         for (i = 0; i < 4; i++) {
             String_Copy(buf, D_004C1A98);
             switch (i) {
@@ -150,6 +150,6 @@ void GuiWeaponStats_Fill(void* list, int id)
         }
     }
 }
-#undef D_004FFC0C /* merge_units */
+#undef g_LocalPlayer /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00455840 */

@@ -90,13 +90,13 @@ typedef struct Obj8E030 {
     short texB[0x20];           /* 0x2300 */
 } Obj8E030;
 
-extern int D_00539248;
+extern int g_TextureMgr;
 extern short Tex_FindInList(int lib, __int128 name);
 extern short TexCache_LoadErrorTexture(int lib);
 
 void func_0038E030(Obj8E030* o)
 {
-    int lib = D_00539248;
+    int lib = g_TextureMgr;
     int i;
     for (i = 0; (long)o->parts[i].name.q != 0; i++) {
         Name8E030 n;

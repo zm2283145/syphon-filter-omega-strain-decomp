@@ -4,11 +4,11 @@ typedef struct { char pad[0x2F1]; unsigned char b2F1; unsigned char b2F2; char p
 typedef struct { void* vtable; char pad4[0x1C]; unsigned char cls; char pad21[3]; unsigned char sub; char pad25[3]; O_00281680* obj; int val; } M_00281680;
 extern "C" {
 extern char* D_005061D0;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern int D_005721A8;
 extern int D_00494178;
-extern int D_004FFC0C;
-extern int D_004FFC2C;
+extern int g_LocalPlayer;
+extern int g_Hud;
 extern char D_005061B0[];
 extern char D_004DCEF0[];
 extern char D_004DCF10[];
@@ -31,7 +31,7 @@ typedef struct { char pad[0x24]; unsigned char type; char pad25[3]; O_00281680* 
 static inline char R8_00281680(void) { return *D_005061D0++; }
 static inline int LocalId_00281680(void) {
     int session = D_005721A8;
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         if (D_00494178 == -1)
             NetGame_InitLocalSlot(&D_00494178, session);
         return D_00494178;
@@ -92,12 +92,12 @@ extern "C" void func_00281680(S_00281680* p, T_00281680* t) {
         if (p->owner != LocalId_00281680()) p->obj->owner = p->owner;
     } else if (ty == 5) {
         p->obj->owner = p->owner;
-        Hud_PostNotification(D_004FFC2C, "Backpack already in use");
+        Hud_PostNotification(g_Hud, "Backpack already in use");
     } else if (ty == 3) {
         int o = p->obj->owner; if (o != LocalId_00281680()) {
             p->obj->owner = LocalId_00281680();
             { O_00281680* ob = p->obj; if (!ob->b2F2) ob->b2F2 = 1; }
-            Player_HandlePickupTrigger(D_004FFC0C, p->obj);
+            Player_HandlePickupTrigger(g_LocalPlayer, p->obj);
         }
     } }
 }

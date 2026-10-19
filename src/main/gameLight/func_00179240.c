@@ -54,7 +54,7 @@ extern "C" {
 extern char D_004DA1D0[];
 extern char D_004DA0B0[];
 extern char D_004DA070[];
-extern char D_00535D20[];
+extern char g_LightMgr[];
 extern void* D_004EE890;
 void cGOBJ_ctor(GLight* obj, int* id, int kind, void* type);
 GLt* LightMgr_AllocPoint(void* pool, int n);
@@ -112,7 +112,7 @@ GLight* cGameDirectionalLight_ctor(GLight* obj, LReader* r)
     Align(r);
     ReadFloat(r, &k);
     {
-        GLt* l = LightMgr_AllocPoint(D_00535D20, 2);
+        GLt* l = LightMgr_AllocPoint(g_LightMgr, 2);
         if (l) l = MakeDir(l, rec, col, dir, tmp);
         obj->light = l;
     }

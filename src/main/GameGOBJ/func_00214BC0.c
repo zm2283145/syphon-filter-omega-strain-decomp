@@ -4,8 +4,8 @@
 
 #include "gobj_types.h"
 
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 
 int func_00214BC0(void) {
-    return D_005721C8;
+    return g_IsMultiplayer;
 }

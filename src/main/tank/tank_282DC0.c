@@ -13,14 +13,14 @@
 typedef struct { char pad[0x68]; int weapon; int weaponId; } Ang2DC0;
 typedef struct { char pad[0x6C]; Ang2DC0* angles; } Tank2DC0;
 typedef union { int i; Tank2DC0* p; } Arg2DC0;
-extern int D_004FFD30;
+extern int g_WeaponDatabase;
 extern int WeaponDb_Get(int db, int id);
 int Script_cTank_SetWeapon(Arg2DC0* args) {
     volatile int id = args[1].i;
     Ang2DC0* a = args[0].p->angles;
     int i = id;
     if (a) {
-        int db = D_004FFD30;
+        int db = g_WeaponDatabase;
         a->weaponId = i;
         a->weapon = WeaponDb_Get(db, i);
     }
@@ -39,7 +39,7 @@ struct Sub282E10 { Gun282E10* gun; };
 struct Tank282E10 { char p[0x60]; Gun282E10* turret; char p64[8]; Sub282E10* sub; };
 struct Msg282E10 { void* vtable; char base[0x18]; int f1C; unsigned char b20; char p21[3]; unsigned char b24; char p25[3]; int f28; float f2C; };
 extern "C" {
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005721C0;
 extern char D_00506260[];
 extern char D_004DCF50[];
@@ -49,7 +49,7 @@ void Event_Construct(void* m, void* type);
 void Event_Send(void* m, void* target, int immediate);
 void cMessage_dtor(void* m, int flags);
 }
-static inline int IsAuth282E10(void) { return D_005721C8 ? D_005721C0 : 1; }
+static inline int IsAuth282E10(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
 union Arg282E10 { int i; float f; void* p; };
 extern "C" int Script_cTank_Move(Arg282E10* args) {
     float v;
@@ -63,7 +63,7 @@ int tmp;
     cNIEventOBJ_SetSpeedRecursive(t, v);
     t->Fire();
     if (self->sub) self->sub->gun->Arm(1);
-    if (D_005721C8 && IsAuth282E10()) {
+    if (g_IsMultiplayer && IsAuth282E10()) {
         Msg282E10 m;
         Event_Construct(&m, D_00506260);
         m.vtable = D_004DCF50;

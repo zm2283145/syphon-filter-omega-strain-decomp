@@ -41,8 +41,8 @@ int Mem_Alloc();
 signed char CharMap_Load();                         
 extern char D_00493A40;
 extern char D_004BE440;
-extern unsigned char D_00533880;
-extern int D_00533888;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
 extern char D_0055CA40;
 extern int D_0055CA74;
 extern int D_0055CA80;
@@ -59,18 +59,18 @@ void Loc_LoadCommonPool(int arg0) {
     int temp_s1;
 
     sprintf(sp130, "%s\\COMMON\\STRINGS%s.DAT", arg0, F_(&D_00493A40, (D_0055D470 * 4), int));
-    if (D_00533880 != 0) {
+    if (g_ProfileLockEnabled != 0) {
         Alloc_Lock(9);
     }
-    D_00533888 += 1;
+    g_ProfileLockDepth += 1;
     temp_s1 = Mem_Alloc(0, 0x1E000, &D_004BE440, 0x110);
-    if (D_00533880 != 0) {
+    if (g_ProfileLockEnabled != 0) {
         Alloc_Unlock(9);
     }
     D_0055D458 = temp_s1;
     D_0055D460 = temp_s1;
     D_0055D468 = temp_s1;
-    D_00533888 -= 1;
+    g_ProfileLockDepth -= 1;
     Loc_ReadPoolFile(&D_0055CA40, sp130);
     D_0055CA80 = D_0055CA74;
     D_0055D468 = D_0055D460;

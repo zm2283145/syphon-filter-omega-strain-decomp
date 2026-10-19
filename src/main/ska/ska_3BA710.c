@@ -65,7 +65,7 @@ struct SkelSA {
     char pad[0xBC];
     XfSA* xf;
 };
-extern "C" char D_0055C9F0[];
+extern "C" char g_IdentityMatrix[];
 extern "C" void SkelNode_AttachParent(SkelSA* n, void* parent)
 {
     XfSA* xf;
@@ -76,7 +76,7 @@ extern "C" void SkelNode_AttachParent(SkelSA* n, void* parent)
     Vec4SA v(xf->pos.x, xf->pos.y, xf->pos.z);
     v.w = 1.0f;
     n->SetPos(&v);
-    n->SetName(D_0055C9F0);
+    n->SetName(g_IdentityMatrix);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003BA760(void) {}

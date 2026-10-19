@@ -16,10 +16,10 @@ typedef struct HudObjMsg_e1 {
     char pad2[8];
 } HudObjMsg_e1;
 typedef struct { char pad[0xC]; int id; } GObjId_e1;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern char D_0052ACF8[];
 extern char D_004DE650[];
-extern char* D_004FFC2C;
+extern char* g_Hud;
 extern GObjId_e1* GObj_IdentityB(int);
 extern void Event_Construct(HudObjMsg_e1* msg, void* name);
 extern void Transport_Send(int target, HudObjMsg_e1* msg, int a, int b);
@@ -29,7 +29,7 @@ int Game_RemoveHudObjective(int* args)
 {
     HudObjMsg_e1 msg;
     GObjId_e1* obj = GObj_IdentityB(args[0]);
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         int id = obj->id;
         Event_Construct(&msg, D_0052ACF8);
         msg.vtable = D_004DE650;
@@ -39,7 +39,7 @@ int Game_RemoveHudObjective(int* args)
         msg.vtable = D_004DE650;
         cMessage_dtor(&msg, 0);
     }
-    ObjMarkerMgr_Remove(D_004FFC2C + 0x90, &obj->id, 1);
+    ObjMarkerMgr_Remove(g_Hud + 0x90, &obj->id, 1);
     return 0;
 }
 #pragma pop /* merge_units */
@@ -99,7 +99,7 @@ extern "C" int Game_AddHudObjective3(int* args)
     if (!text || !*text) {
         printf(D_004A8F80);
     } else {
-        if (D_005721C8) {
+        if (g_IsMultiplayer) {
             HudObjMsg_274D40 m;
             marker = obj->marker;
             p = &m;
@@ -114,7 +114,7 @@ extern "C" int Game_AddHudObjective3(int* args)
             m.vt = D_004DE280;
             cMessage_dtor(&m, 0);
         }
-        ObjMarkerMgr_Insert(D_004FFC2C + 0x90, &obj->marker, text, b);
+        ObjMarkerMgr_Insert(g_Hud + 0x90, &obj->marker, text, b);
     }
     return 0;
 }
@@ -170,7 +170,7 @@ extern "C" int Game_AddHudObjective2(int* args)
     if (!text || !*text) {
         printf(D_004A8F80);
     } else {
-        if (D_005721C8) {
+        if (g_IsMultiplayer) {
             HudObjMsg_274EC0 m;
             marker = obj->marker;
             p = &m;
@@ -185,7 +185,7 @@ extern "C" int Game_AddHudObjective2(int* args)
             m.vt = D_004DE280;
             cMessage_dtor(&m, 0);
         }
-        ObjMarkerMgr_Insert(D_004FFC2C + 0x90, &obj->marker, text, b);
+        ObjMarkerMgr_Insert(g_Hud + 0x90, &obj->marker, text, b);
     }
     return 0;
 }

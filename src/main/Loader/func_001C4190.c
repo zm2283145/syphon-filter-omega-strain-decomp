@@ -1,8 +1,8 @@
 #include "types.h"
 typedef struct { int w[8]; } Pop_1C4190;
 extern char D_0048B2F8[];
-extern char D_004FFB50[];
-extern char D_004FFC90[];
+extern char g_Game[];
+extern char g_LevelDirName[];
 extern void func_00165E60(void* a, char* name, int x);
 extern void* App_GetInstance(void);
 extern int sprintf(char* buf, const char* fmt, ...);
@@ -31,10 +31,10 @@ void Loader_LoadLevelData(void* l, void* arc)
     Pop_1C4190 pop;
     int h;
     func_00165E60(App_GetInstance(), "Loading Level Data...", 0);
-    sprintf(name, "%s\\%s\\DATA.HOG", D_0048B2F8, D_004FFC90, D_004FFC90);
+    sprintf(name, "%s\\%s\\DATA.HOG", D_0048B2F8, g_LevelDirName, g_LevelDirName);
     h = Archive_Open(arc, name, 1, 0);
-    Population_Load(&pop, D_004FFC90, h);
-    func_00136A70(D_004FFB50, &pop, arc);
+    Population_Load(&pop, g_LevelDirName, h);
+    func_00136A70(g_Game, &pop, arc);
     Loader_AllocateLights(l, &pop);
     Loader_InitLights(l, &pop);
     Loader_InitPopulatedCameras(l, &pop);

@@ -26,7 +26,7 @@ typedef struct Human_00198F90 {
     unsigned char value;
 } Human_00198F90;
 
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern char D_004EEE98[];
 extern char D_004DA9D0[]; /* message vtable */
 extern char D_004DCF10[]; /* base message vtable */
@@ -34,11 +34,11 @@ extern void Event_Construct(HumanMsg_00198F90* msg, void* name);
 extern void Event_Send(HumanMsg_00198F90* msg, void* target, int flags);
 extern void cMessage_dtor(HumanMsg_00198F90* msg, int flags);
 
-/* Stores the byte at +0x346C and, when D_005721C8 is set and not silent, broadcasts it. */
+/* Stores the byte at +0x346C and, when g_IsMultiplayer is set and not silent, broadcasts it. */
 void Actor_SetStunImmune(Human_00198F90* self, unsigned char value, int silent) {
     HumanMsg_00198F90 msg;
     self->value = value;
-    if (D_005721C8 && !silent) {
+    if (g_IsMultiplayer && !silent) {
         Event_Construct(&msg, D_004EEE98);
         msg.vtable = D_004DA9D0;
         msg.extra = 2;
@@ -89,11 +89,11 @@ extern void cMessage_dtor(HumanMsg_00199040* msg, int flags);
 #define cMessage_dtor(a0, a1) (cMessage_dtor((void *)(a0), (a1))) /* merge_units */
 
 
-/* Stores the byte at +0x346C and, when D_005721C8 is set and not silent, broadcasts it. */
+/* Stores the byte at +0x346C and, when g_IsMultiplayer is set and not silent, broadcasts it. */
 void Actor_SetNotGasable(Human_00199040* self, unsigned char value, int silent) {
     HumanMsg_00199040 msg;
     self->value = value;
-    if (D_005721C8 && !silent) {
+    if (g_IsMultiplayer && !silent) {
         Event_Construct(&msg, D_004EEE98);
         msg.vtable = D_004DA9D0;
         msg.extra = 1;

@@ -20,7 +20,7 @@ int func_00392FF0(...);
 int func_003961E0(...);                            
 int func_00396620(...);                            
 int operator_delete(...);                             
-extern unsigned char D_00533880;
+extern unsigned char g_ProfileLockEnabled;
 }
 #pragma inline_depth(10)
 static inline void itb_(char **o, char *l) { int r; List_Begin(&r, l); func_00392FF0(o, &r); }

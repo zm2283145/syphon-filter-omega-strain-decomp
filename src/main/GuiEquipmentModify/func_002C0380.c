@@ -6,11 +6,11 @@
 
 #include "types.h"
 
-extern char D_00535D20[];
+extern char g_LightMgr[];
 extern int LightMgr_RebuildTable(void* p);
 extern int GuiWidget_Draw(void* self);
 
 int func_002C0380(void* self) {
-    LightMgr_RebuildTable(D_00535D20);
+    LightMgr_RebuildTable(g_LightMgr);
     return GuiWidget_Draw(self);
 }

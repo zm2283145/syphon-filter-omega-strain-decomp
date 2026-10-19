@@ -4,7 +4,7 @@
 extern "C" {
 extern char D_004A6E38[];
 extern char D_004A6F38[];
-extern char D_004DBB60[];
+extern char SnowField_vtable[];
 extern char D_004DF860[];
 void cGOBJ_dtor(void* p, int flag);
 void ParticleInst_Kill(void* p, int flag);
@@ -38,7 +38,7 @@ static inline void Kill2(E_345D0* e) { void* q = e->a; if (q) { AllocGuard g2; P
 extern "C" S_345D0* func_002345D0(S_345D0* self, short flag)
 {
     if (self) {
-        *(char**)self = D_004DBB60;
+        *(char**)self = SnowField_vtable;
         {
             It_345D0 it;
             It_345D0 t2;

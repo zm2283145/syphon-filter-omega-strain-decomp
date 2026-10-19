@@ -4,8 +4,8 @@ typedef struct { unsigned char flag; char pad1[0x10]; char name[0x10]; } Item_45
 typedef struct { int pad0; int count; Item_454440* items; } List_454440;
 typedef struct { char pad[0x94]; int count; } Box_454440;
 typedef struct { char pad[0x48]; Box_454440* box; void* f4C; char f50[4]; } S_454440;
-extern List_454440* D_004FFC2C;
-extern char D_004FFB50[];
+extern List_454440* g_Hud;
+extern char g_Game[];
 extern char D_004DADF0[];
 extern void String_Copy(char*, char*);
 extern void GuiSubTitleDisplay_Clear(void*);
@@ -23,7 +23,7 @@ int GuiRadioLog_HandleEvent(S_454440* self, void* ev, unsigned short code, int a
     if (code == 0x14) {
         SoundEvent_Ctor(&msg, self->f50, 0);
         msg.kind = 1;
-        Event_Send(&msg, D_004FFB50, 1);
+        Event_Send(&msg, g_Game, 1);
         if (self->f4C)
             GuiSubTitleDisplay_Clear(self->f4C);
         msg.vtable = D_004DADF0;
@@ -33,7 +33,7 @@ int GuiRadioLog_HandleEvent(S_454440* self, void* ev, unsigned short code, int a
         return 1;
     }
     if (code == 0x13) {
-        List_454440* l = D_004FFC2C;
+        List_454440* l = g_Hud;
         buf[0] = 0;
         if (l && idx < l->count) {
             String_Copy(buf, l->items[idx].name);

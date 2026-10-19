@@ -5,7 +5,7 @@ struct Npc_f4 { char pad[0xC]; int id; };
 struct Think_f4 { Npc_f4* npc; int id; };
 extern "C" {
 extern char D_0049B670[];
-extern char D_004EA190[];
+extern char g_NpcThinkList[];
 void* Mem_Alloc(int, int, char*, int);
 void func_0015B030(void*, Think_f4**);
 }
@@ -31,6 +31,6 @@ extern "C" void NpcThinkList_Add(Npc_f4* npc)
         p->id = *src;
     }
     t[0] = p;
-    func_0015B030(D_004EA190, t);
+    func_0015B030(g_NpcThinkList, t);
 }
 

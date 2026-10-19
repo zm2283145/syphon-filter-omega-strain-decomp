@@ -5,7 +5,7 @@ struct Vec_4422D0 { int m0; int size; char** data; unsigned char owns; int Size(
 struct Mc_4422D0 { char pad[0x59D]; unsigned char a; unsigned char b; unsigned char c; };
 struct Wrap_4422D0 { Mc_4422D0* p; };
 extern "C" {
-extern Wrap_4422D0 D_0055A830;
+extern Wrap_4422D0 g_MemCard;
 extern char D_00499C70[];
 Vec_4422D0* func_002888C0(Vec_4422D0* v);
 void func_002887C0(Vec_4422D0* v, short del);
@@ -24,7 +24,7 @@ extern "C" int SaveAgentWidget_FindSlotFile(int slot, const char* want, char* ou
     int i;
     func_002888C0(&v);
     v.owns = 1;
-    MemCardWrap_Enumerate(&D_0055A830, &v);
+    MemCardWrap_Enumerate(&g_MemCard, &v);
     for (i = 0; i < v.Size(); i++) {
         if (!strchr(v.data[i], '.') && ((D_00499C70 + 1)[**func_002888B0(&v, i)] & 4) &&
             AgentFile_DecodeName((unsigned char*)v.data[i], name, &digit, 0x10)) {

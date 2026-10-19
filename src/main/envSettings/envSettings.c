@@ -154,7 +154,7 @@ struct V4E { float x, y, z, w; void Set(const EV3& v) { float a, b, c; b = v.y; 
     void Set2(const EV3& v) { float a, b, c; c = v.z; b = v.y; a = v.x; x = a; y = b; z = c; w = 0.0f; } } __attribute__((aligned(16)));
 struct Light_ { char pad[0x18]; float invLen2; char pad1C[4]; V4E dir; };
 extern "C" {
-extern char D_00535D20[];
+extern char g_LightMgr[];
 extern float D_00554ED4;
 EV3* func_00178420(EV3* dst, EV3* src);
 Light_* LightMgr_FindByTypeAndId(void* mgr, int type, int id);
@@ -200,7 +200,7 @@ void EnvController_ActivateFirst(EnvCtl* c, Env* e)
         if (o) o->SetOn(1);
     }
     {
-        Light_* l = LightMgr_FindByTypeAndId(D_00535D20, 1, 1);
+        Light_* l = LightMgr_FindByTypeAndId(g_LightMgr, 1, 1);
         if (l) {
             V4E d;
             EV3* v = &c->cur->c84;

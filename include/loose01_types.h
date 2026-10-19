@@ -133,7 +133,7 @@ typedef union ScriptArg {
 } ScriptArg;
 #endif
 
-/* Object reached through D_004FFC2C; holds the objective marker manager at +0x90. */
+/* Object reached through g_Hud; holds the objective marker manager at +0x90. */
 typedef struct GameUI {
     char pad00[0x90];
     char markerMgr[0x40];  /* 0x90: ObjMarkerMgr (see hudTargets_types.h) */
@@ -161,7 +161,7 @@ typedef struct PtrMsg {
 } PtrMsg;
 
 /*
- * Record view into the table at D_005381F0: record i starts at D_005381F0 + i * 0x110
+ * Record view into the table at g_Video: record i starts at g_Video + i * 0x110
  * (index from D_00538C60); only the fields used here (0x2E0..0x2F6) are named.
  */
 typedef struct Slot110View {
@@ -181,7 +181,7 @@ typedef struct FxLight {
     char pad04[0x3C];
 } FxLight;
 
-/* FX light settings reached through D_004FFC30: five lights from +0x74. */
+/* FX light settings reached through g_VisionFxMan: five lights from +0x74. */
 typedef struct FxLightSet {
     char pad00[0x74];
     FxLight lights[5];     /* 0x74 */

@@ -30,21 +30,21 @@ typedef struct Screen_00166FE0 {
 } Screen_00166FE0;
 
 extern "C" {
-extern char D_005381F0[];
+extern char g_Video[];
 extern int D_00538C60;
 extern int D_00538C64;
 extern char D_00538C68;
 extern V4_00166FE0 D_00539170;
 extern long long D_004BC1B0;
 extern long long D_005392D8;
-extern int D_00533870;
-extern unsigned long long D_00533878;
+extern int g_TimerAccum;
+extern unsigned long long g_TickCounter64;
 extern unsigned long long D_004EE4B8;
 extern signed char D_004EE4C0;
 extern char D_0049C3E8[];
 extern char D_0049C3F0[];
 extern char D_0049C400[];
-extern float D_0055A280;
+extern float g_TextColourBlock;
 extern float D_0055A284;
 extern float D_0055A288;
 extern float D_0055A28C;
@@ -58,15 +58,15 @@ int TextManager_Get(void);
 void TextManager_DrawImmediate(int a);
 }
 
-#define RS_00166FE0 ((Rs_00166FE0*)D_005381F0)
-#define SLOT_00166FE0(i) ((Slot_00166FE0*)(D_005381F0 + (i) * 0x110))
+#define RS_00166FE0 ((Rs_00166FE0*)g_Video)
+#define SLOT_00166FE0(i) ((Slot_00166FE0*)(g_Video + (i) * 0x110))
 
 static inline void UM_00166FE0(void* m) { int t; __asm__ volatile("sqc2 vf0, 0x30(%1); qmfc2.ni %0, vf0; pcpyud %0, %0, zero; sq %0, 0x10(%1); pexcw %0, %0; sq %0, 0x20(%1); pcpyud %0, %0, zero; sq %0, 0(%1)" : "=&r"(t) : "r"(m) : "memory"); }
 static inline void QR_00166FE0(void* d, void* s) { __int128 qa, qb; __asm__ volatile("lq %0, 0x0(%3); lq %1, 0x10(%3); sq %0, 0x0(%2); lq %0, 0x20(%3); sq %1, 0x10(%2); lq %1, 0x30(%3); sq %0, 0x20(%2); sq %1, 0x30(%2)" : "=&r"(qa), "=&r"(qb) : "r"(d), "r"(s) : "memory"); }
 
 static inline unsigned long long Now_00166FE0(void)
 {
-    return D_00533878 + (unsigned int)(int)((float)(unsigned int)(*(volatile int*)0x10000800 + D_00533870) / 5.76f);
+    return g_TickCounter64 + (unsigned int)(int)((float)(unsigned int)(*(volatile int*)0x10000800 + g_TimerAccum) / 5.76f);
 }
 
 struct V4c_00166FE0 {
@@ -76,7 +76,7 @@ struct V4c_00166FE0 {
 
 static inline void SetCol_00166FE0(const V4c_00166FE0& c)
 {
-    D_0055A280 = c.x;
+    g_TextColourBlock = c.x;
     D_0055A284 = c.y;
     D_0055A288 = c.z;
     D_0055A28C = c.w;
@@ -113,7 +113,7 @@ extern "C" void func_00166FE0(Screen_00166FE0* self, int first, int last)
     UM_00166FE0(&RS_00166FE0->mtx[D_00538C64]);
     D_00538C68 = 1;
     D_005392D8 = D_004BC1B0;
-    Video_BeginFrame(D_005381F0);
+    Video_BeginFrame(g_Video);
     {
         V4c_00166FE0 c(1.0f, 1.0f, 0.0f, 1.0f);
         SetCol_00166FE0(c);

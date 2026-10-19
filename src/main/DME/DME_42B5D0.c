@@ -8,7 +8,7 @@ unsigned int func_0011C858(int v);
 void func_002EBEC8(int* out, int a);
 extern int D_00494180;
 extern int D_005721A8;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005723F8;
 extern unsigned char D_00572400;
 extern unsigned int D_00572428;
@@ -19,7 +19,7 @@ extern int D_00572538;
 
 static inline int HostCount_42B5D0(void)
 {
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         int n;
         func_002EBEC8(&n, D_005721A8);
         return n;

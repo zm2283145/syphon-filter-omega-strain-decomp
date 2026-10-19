@@ -67,7 +67,7 @@ typedef struct Item { char str[0xC]; int flags; char f10; char pad11[3]; int f14
 typedef struct Self { char pad[0x90]; Child* child; int f94; char f98; char pad99[0xA0 - 0x99]; char fA0[0x10]; } Self;
 
 extern "C" {
-extern char D_005381F0[];
+extern char g_Video[];
 extern int D_00538C64;
 extern char D_00538C68;
 void func_00423600(Self* self, int a, int b, float* r);
@@ -82,7 +82,7 @@ static inline void SetPos(Child* c, int x, int y) { c->x = x; c->y = y; }
 static inline void SetSize(Child* c, int w, int h) { c->w = w; c->h = h; }
 static inline void SetF10(Child* c, char v) { c->f10 = v; }
 static inline void SetF20(Child* c, int v) { c->f20 = v; }
-static inline Mtx* MtxAt(int i) { return &((Render*)D_005381F0)->mtx[i]; }
+static inline Mtx* MtxAt(int i) { return &((Render*)g_Video)->mtx[i]; }
 static inline void GQR(void* d, void* s) { __int128 qa, qb; __asm__ volatile("lq %0, 0x0(%3); lq %1, 0x10(%3); sq %0, 0x0(%2); lq %0, 0x20(%3); sq %1, 0x10(%2); lq %1, 0x30(%3); sq %0, 0x20(%2); sq %1, 0x30(%2)" : "=&r"(qa), "=&r"(qb) : "r"(d), "r"(s) : "memory"); }
 static inline void UM(void* p) { int t; __asm__ volatile("sqc2 $vf0, 0x30(%1); qmfc2.ni %0, $vf0; pcpyud %0, %0, $zero; sq %0, 0x10(%1); pexcw %0, %0; sq %0, 0x20(%1); pcpyud %0, %0, $zero; sq %0, 0x0(%1)" : "=&r"(t) : "r"(p) : "memory"); }
 

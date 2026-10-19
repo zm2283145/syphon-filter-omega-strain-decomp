@@ -102,7 +102,7 @@ typedef struct {
     char memberA[0x9C];
     char memberB[0xAC];
 } Msg00239780;
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_004DAE30[];
 extern void SoundEvent_CtorFromPreset(Msg00239780* m, void* preset, void* a);
 extern void Event_Send(Msg00239780* m, void* target, int a);
@@ -113,7 +113,7 @@ void NiEventSound_Fire(char* self, void* a)
     Msg00239780 m;
     SoundEvent_CtorFromPreset(&m, self + 0x10, a);
     m.b20 = 1;
-    Event_Send(&m, D_004FFB50, 1);
+    Event_Send(&m, g_Game, 1);
     m.vtable = D_004DAE30;
     FileMan_Release(m.memberB, -1);
     FileMan_Release(m.memberA, -1);

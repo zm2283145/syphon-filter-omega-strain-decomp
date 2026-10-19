@@ -24,7 +24,7 @@ extern unsigned char D_004EE628;
 extern int D_004EE618;
 extern int D_004EE610;
 extern unsigned char D_005721C0;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005721D0;
 extern char D_0049C800[];
 extern char D_0049C650[];
@@ -43,11 +43,11 @@ struct Blk_A0A0 {
     static void* operator new(unsigned int sz, int line)
     {
         void* p;
-        if (D_00533880) Alloc_Lock(9);
-        D_00533888++;
+        if (g_ProfileLockEnabled) Alloc_Lock(9);
+        g_ProfileLockDepth++;
         p = Mem_Alloc(0, sz, D_0049C650, line);
-        if (D_00533880) Alloc_Unlock(9);
-        D_00533888--;
+        if (g_ProfileLockEnabled) Alloc_Unlock(9);
+        g_ProfileLockDepth--;
         return p;
     }
 };
@@ -65,7 +65,7 @@ static inline void Set_A0A0(void* nv)
 extern "C" void TeamRelations_CreateMultiplayer(void)
 {
     
-    if (D_005721C8 ? D_005721C0 : 1) {
+    if (g_IsMultiplayer ? D_005721C0 : 1) {
         if (D_005721D0 && !D_004EE618) {
             int id;
             P_A0A0* p;

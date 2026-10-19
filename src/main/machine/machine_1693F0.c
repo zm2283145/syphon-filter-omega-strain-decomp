@@ -12,9 +12,9 @@ int sprintf(void *, const void *, ...);
 
 /* merge_units: begin func_001693F0 */
 #pragma push /* merge_units */
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005721C0;
-extern char D_004FFB50[];
+extern char g_Game[];
 extern void DME_StartThread(void);
 extern void TeamRelations_Create(void);
 extern void World_Setup(void* w);
@@ -25,15 +25,15 @@ extern void NetObj_LoadNetworkData(void);
 extern void DME_Update(void);
 static inline int IsHostGR(void)
 {
-    if (D_005721C8) return D_005721C0;
+    if (g_IsMultiplayer) return D_005721C0;
     return 1;
 }
 void Game_Reset(void)
 {
-    if (D_005721C8) DME_StartThread();
+    if (g_IsMultiplayer) DME_StartThread();
     TeamRelations_Create();
-    World_Setup(D_004FFB50);
-    if (D_005721C8) {
+    World_Setup(g_Game);
+    if (g_IsMultiplayer) {
         DME_JoinGame();
         func_0042B0C0();
         if (!IsHostGR()) {
@@ -43,7 +43,7 @@ void Game_Reset(void)
             TeamRelations_Create();
         }
     }
-    if (D_005721C8) DME_Update();
+    if (g_IsMultiplayer) DME_Update();
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001693F0(void) {}
@@ -56,9 +56,9 @@ typedef struct { char pad[0x278]; unsigned char b278; } O169;
 extern unsigned char D_0048A010;
 extern char D_00555070[];
 extern char D_0048B2F8[];
-extern char D_004FFC90[];
+extern char g_LevelDirName[];
 extern char D_004FFB8C[];
-extern char D_0055DDA0[];
+extern char g_AgentPartCache[];
 extern void func_003A64F0(void);
 extern void func_00165DC0(O169*);
 extern int ScriptMgr_ExportSymbols(char*, char*, char*);
@@ -77,7 +77,7 @@ void App_BindIopRpc(O169* o) {
     D_0048A010 = 0;
     func_003A64F0();
     func_00165DC0(o);
-    if (ScriptMgr_ExportSymbols(D_00555070, D_0048B2F8, D_004FFC90)) {
+    if (ScriptMgr_ExportSymbols(D_00555070, D_0048B2F8, g_LevelDirName)) {
         char* arc;
         int h;
         sprintf(buf, "%s\\COMMON\\SCRIPTS.HOG", D_0048B2F8);
@@ -88,7 +88,7 @@ void App_BindIopRpc(O169* o) {
         PartsTable_Load(h);
         ArchiveList_CloseNamed(arc, buf);
     }
-    ManUtils_LoadSKL(D_0055DDA0);
+    ManUtils_LoadSKL(g_AgentPartCache);
     Heap_AllocSlot(2, 0xC1C00, 16);
     func_0042C1E0();
     o->b278 = 1;
@@ -102,13 +102,13 @@ static inline void merge_flush_func_001694B0(void) {}
 #pragma push /* merge_units */
 typedef struct F1Game1695 { char pad0[0x250]; unsigned char b250; char pad251[3]; int x254; int x258; int pad25C; int x260; } F1Game1695;
 typedef struct F1Cfg1695 { char pad0[0x1C]; float scale; } F1Cfg1695;
-extern unsigned char D_004FFBA0;
-extern F1Cfg1695* D_004FFD2C;
+extern unsigned char g_GameState;
+extern F1Cfg1695* g_OptionsRecord;
 extern float D_004C1FC8;
 extern int D_005383D4;
 extern int D_005383C0;
 extern void* D_004FFC04;
-extern char D_005381F0[];
+extern char g_Video[];
 extern void* func_0010D050(void);
 extern void ChangeThreadPriority(void* p, int n);
 extern void func_003A65F0(int n);
@@ -130,10 +130,10 @@ void StringPool_Load(F1Game1695* g)
     Loc_LoadCommonPool(D_0048B2F8);
     func_003A6560();
     func_00165DD0(g);
-    if (D_004FFBA0 == 9) {
-        Renderer_Init(D_005381F0, g->x254, g->x258, 0x20, 0x10, g->b250, 4000, 500);
+    if (g_GameState == 9) {
+        Renderer_Init(g_Video, g->x254, g->x258, 0x20, 0x10, g->b250, 4000, 500);
         D_005383D4 = g->x260;
-        D_005383C0 = (unsigned char)(int)(D_004C1FC8 * D_004FFD2C->scale);
+        D_005383C0 = (unsigned char)(int)(D_004C1FC8 * g_OptionsRecord->scale);
         Boot_LoadFonts(g);
         FrontEnd_CreateCanvas(D_004FFC04, 0);
         FrontEnd_SetLoadingScreen(D_004FFC04, 1, "ROOT", 0);

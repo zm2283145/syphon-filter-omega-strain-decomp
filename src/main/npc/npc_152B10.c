@@ -92,7 +92,7 @@ struct Pt1HrNpc {
     Pt1HrPerc* perc;
 };
 extern "C" {
-extern void* D_004FFC0C;
+extern void* g_LocalPlayer;
 Pt1HrActor* Controller_GetAimTarget(void* players);
 void NpcPerception_AddAwareness(Pt1HrPerc* p, Pt1HrActor* a, int kind, float amount);
 float NpcPerception_IsEnemy(Pt1HrPerc* p, Pt1HrActor* a);
@@ -127,7 +127,7 @@ extern "C" void NpcAlert_HearingReaction(Pt1HrNpc* self, unsigned char kind, Pt1
     who = 0;
     if (kind == 4 && src->ctrl) {
         if (src->ctrl->IsPlayerControlled()) {
-            who = Controller_GetAimTarget(D_004FFC0C);
+            who = Controller_GetAimTarget(g_LocalPlayer);
             if (who && who != self->actor)
                 NpcPerception_AddAwareness(self->perc, who, 2, 0.0f);
         } else if (src->ctrl->IsAiControlled()) {

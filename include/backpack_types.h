@@ -46,7 +46,7 @@ typedef struct cItemMsg {
     int who;                         /* 0x2C: identity word of the sender */
 } cItemMsg;
 
-/* Object behind global D_004FFD30; only the field used here. */
+/* Object behind global g_WeaponDatabase; only the field used here. */
 typedef struct BackpackWorld {
     char pad00[0xB8];
     char* unkB8;                     /* 0xB8 */

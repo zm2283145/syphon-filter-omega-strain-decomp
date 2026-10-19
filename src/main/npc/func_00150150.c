@@ -30,7 +30,7 @@ struct Self_S {
     char pad142[0x6A]; V4* target; int f1B0;
 };
 extern "C" {
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char g_NpcRouteMgr[];
 void* Service_Lookup(void* a, void* b);
 int NpcRoute_IsHeadPending(void* svc, GObj* id);
@@ -63,7 +63,7 @@ extern "C" unsigned char NpcAi_CoverSearch(Self_S* self) {
         r = 1;
         self->f13F = 10;
     } else {
-        void* svc = Service_Lookup(D_004FFB50, g_NpcRouteMgr);
+        void* svc = Service_Lookup(g_Game, g_NpcRouteMgr);
         if (!NpcRoute_IsHeadPending(svc, self->obj)) {
         float dist;
         GObj* o;

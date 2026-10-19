@@ -6,7 +6,7 @@ typedef struct { char pad[0x48]; void* f48; void* f4C; void* f50; L_455260* f54;
 typedef struct { char pad[0x3528]; void* f3528; } A_455260;
 extern "C" {
 extern Itm_455260* D_00587FF8;
-extern void* D_004FFD30;
+extern void* g_WeaponDatabase;
 extern char D_004C1A38[];
 extern char D_004C1A40[];
 extern char D_004C1A50[];
@@ -74,7 +74,7 @@ void GuiEquipmentPane_SetItem(O_455260* o, A_455260* a, int id)
             Fill(o->f54, ItemInv_Count(inv, item));
             flag = 1;
         } else if (id > -1) {
-            char* w = WeaponDb_Get(D_004FFD30, id);
+            char* w = WeaponDb_Get(g_WeaponDatabase, id);
             char key[16] = {0};
 
             key[0] = 'D';

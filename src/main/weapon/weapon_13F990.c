@@ -64,7 +64,7 @@ DEFINE_VTABLE_BASE_DTOR(cOutOfAmmoMsg_dtor, D_004D91E0, cMessage_dtor)
 typedef struct { char pad[0x3C]; int range; } WeapEntD4;
 typedef struct { int a; int b; int id; int c; } SlotD4;
 typedef struct { SlotD4 slots[8]; char pad[4]; unsigned char cur; } LosD4;
-extern void* D_004FFD30;
+extern void* g_WeaponDatabase;
 extern WeapEntD4* WeaponDb_Get(void* db, int id);
 float Weapon_GetHeldRange(LosD4* p)
 {
@@ -73,7 +73,7 @@ float Weapon_GetHeldRange(LosD4* p)
     if (i != 6) {
         SlotD4* s = p->slots + i; int id = s->id;
         if (id != -1) {
-            r = WeaponDb_Get(D_004FFD30, id)->range;
+            r = WeaponDb_Get(g_WeaponDatabase, id)->range;
         }
     }
     return r;
@@ -91,20 +91,20 @@ extern int WeaponDb_Get(int db, int id);
 #define WeaponDb_Get(a0, a1) ((int)WeaponDb_Get((void *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int D_004FFD30;
+extern int g_WeaponDatabase;
 #endif /* merge_units */
-#define D_004FFD30 (*(int*)&D_004FFD30) /* merge_units */
+#define g_WeaponDatabase (*(int*)&g_WeaponDatabase) /* merge_units */
 
 typedef struct { char pad[0x68]; int weapon; } S_FB50;
 int WeaponInv_GetSlot6Record(S_FB50* p)
 {
     int r;
     int id = p->weapon;
-    if (id != -1) { r = WeaponDb_Get(D_004FFD30, id); asm { .set reorder } /* empty-asm barrier: keeps the call arm's b; nop */ } else r = 0;
+    if (id != -1) { r = WeaponDb_Get(g_WeaponDatabase, id); asm { .set reorder } /* empty-asm barrier: keeps the call arm's b; nop */ } else r = 0;
     return r;
 }
 #undef WeaponDb_Get /* merge_units */
-#undef D_004FFD30 /* merge_units */
+#undef g_WeaponDatabase /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0013FB50(void) {}
 #pragma pop /* merge_units */

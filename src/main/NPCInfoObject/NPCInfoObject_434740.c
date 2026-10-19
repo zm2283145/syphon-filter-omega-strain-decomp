@@ -26,7 +26,7 @@ extern void* D_00582A88;
 extern void* D_00582A90;
 extern void* D_00582A98;
 extern int D_005721A8;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern int D_00494178;
 
 extern unsigned int Net_GetClock(int clock);
@@ -49,7 +49,7 @@ static inline void service_slot(unsigned int* deadline, unsigned char* pending,
 static inline int current_peer(void)
 {
     int session = D_005721A8;
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         if (D_00494178 == -1)
             NetGame_InitLocalSlot(&D_00494178, session);
         return D_00494178;
@@ -102,23 +102,23 @@ int Alloc_Unlock(int);
 char * Mem_Alloc(int, int, char *, int);                      
 int func_00434BB0(char *, void **);                      
 extern char D_004BFCA0;
-extern unsigned char D_00533880;
-extern int D_00533888;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
 extern char D_00582AF0;
 
 void func_00434AA0(int d0, char * arg1) {
     char * sp3C;
     char * temp_s0;
 
-    if (D_00533880 != 0) {
+    if (g_ProfileLockEnabled != 0) {
         Alloc_Lock(9);
     }
-    D_00533888 += 1;
+    g_ProfileLockDepth += 1;
     temp_s0 = Mem_Alloc(0, 0x14, &D_004BFCA0, 0x30B);
-    if (D_00533880 != 0) {
+    if (g_ProfileLockEnabled != 0) {
         Alloc_Unlock(9);
     }
-    D_00533888 -= 1;
+    g_ProfileLockDepth -= 1;
     if (temp_s0 != NULL) {
         F_(temp_s0, 0x4, unsigned char) = F_(arg1, 0x4, unsigned char);
         F_(temp_s0, 0x0, int) = F_(arg1, 0x0, int);

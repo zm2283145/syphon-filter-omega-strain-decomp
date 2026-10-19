@@ -71,9 +71,9 @@ extern char D_004BB568[];
 extern char D_004BB578[];
 extern char D_004BB580[];
 extern char D_004BB588[];
-extern void* D_004FFD30;
+extern void* g_WeaponDatabase;
 extern char D_00533790[];
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 Stack_35BFB0* Gui_GetScreenStack(void);
 char* Loc_LookupText(char* key);
 Player_35BFB0* PlayerSlots_Get(int i);
@@ -104,7 +104,7 @@ static inline void SetLoc_35BFB0(W_35BFB0* w, char* key)
 static inline void ShowItem_35BFB0(W_35BFB0* w, Item_35BFB0* it)
 {
     if (it) {
-        WDef_35BFB0* d = WeaponDb_Get(D_004FFD30, it->id);
+        WDef_35BFB0* d = WeaponDb_Get(g_WeaponDatabase, it->id);
         SetLoc_35BFB0(w, d->name);
     } else {
         GuiTextWidget_SetText(w, D_004BB530, 0);
@@ -113,7 +113,7 @@ static inline void ShowItem_35BFB0(W_35BFB0* w, Item_35BFB0* it)
 
 #define SHOW_ITEM(W, IT) \
     if (IT) { \
-        WDef_35BFB0* d = WeaponDb_Get(D_004FFD30, (IT)->id); \
+        WDef_35BFB0* d = WeaponDb_Get(g_WeaponDatabase, (IT)->id); \
         char* t = Loc_LookupText(d->name); \
         if (t) \
             GuiTextWidget_SetText(W, t, 0); \
@@ -193,7 +193,7 @@ extern "C" void GuiScoresEquip_Update(Screen_35BFB0* s, float dt)
                 for (j = 15; j < 20; j++) GuiTextWidget_SetText(s->rows[slot][j], D_004BB530, 0);
             }
             if (s->skel[slot]->inv.arr[0]) {
-                WDef_35BFB0* d = WeaponDb_Get(D_004FFD30, s->skel[slot]->inv.arr[0]->id);
+                WDef_35BFB0* d = WeaponDb_Get(g_WeaponDatabase, s->skel[slot]->inv.arr[0]->id);
                 s->skel[slot]->inv.Slot(d->slot) = s->skel[slot]->inv.Slot(0);
             }
             SHOW_ITEM(s->rows[slot][15], s->skel[slot]->inv.arr[3])
@@ -202,7 +202,7 @@ extern "C" void GuiScoresEquip_Update(Screen_35BFB0* s, float dt)
             SHOW_ITEM(s->rows[slot][18], s->skel[slot]->inv.arr[8])
             SHOW_ITEM(s->rows[slot][19], s->skel[slot]->inv.arr[9])
             if (s->skel[slot]->inv.arr[0]) {
-                WDef_35BFB0* d = WeaponDb_Get(D_004FFD30, s->skel[slot]->inv.arr[0]->id);
+                WDef_35BFB0* d = WeaponDb_Get(g_WeaponDatabase, s->skel[slot]->inv.arr[0]->id);
                 s->skel[slot]->inv.Slot(d->slot) = 0;
             }
         } else {
@@ -234,7 +234,7 @@ extern "C" void GuiScoresEquip_Update(Screen_35BFB0* s, float dt)
                     } else {
                         int idx;
                         s->f48[m]->flags |= 2;
-                        if (D_005721C8) {
+                        if (g_IsMultiplayer) {
                             bool ok = false;
                             if (p->f58 && p->f58->IsActive()) ok = true;
                             if (ok) idx = Slot_35BFB0(p);

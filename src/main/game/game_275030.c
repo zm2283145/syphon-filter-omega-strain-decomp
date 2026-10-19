@@ -15,15 +15,15 @@ int ObjMarkerMgr_Remove(int, char * , int);
 int Transport_Send(int, char **, int, int);                    
 int cMessage_dtor(char **, int);                           
 extern char D_004DE650;
-extern int D_004FFC2C;
+extern int g_Hud;
 extern char D_0052ACF8;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 
 void func_00275030(char * arg0, int arg1) {
     struct { char * f30[8]; signed char f50[4]; int f54[3]; } sl;
     int temp_s0;
 
-    if ((arg1 == 0) && (D_005721C8 != 0)) {
+    if ((arg1 == 0) && (g_IsMultiplayer != 0)) {
         temp_s0 = F_(arg0, 0xC, int);
         Event_Construct(sl.f30, &D_0052ACF8);
         sl.f30[0] = &D_004DE650;
@@ -33,7 +33,7 @@ void func_00275030(char * arg0, int arg1) {
         sl.f30[0] = &D_004DE650;
         cMessage_dtor(sl.f30, 0);
     }
-    ObjMarkerMgr_Remove(D_004FFC2C + 0x90, arg0 + 0xC, 1);
+    ObjMarkerMgr_Remove(g_Hud + 0x90, arg0 + 0xC, 1);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00275030 */
@@ -48,9 +48,9 @@ extern char D_0051F098[];
 extern char D_004DE280[];
 extern char D_004A8F80[];
 #if 0 /* merge_units */
-extern char* D_004FFC2C;
+extern char* g_Hud;
 #endif /* merge_units */
-#define D_004FFC2C (*(char **)&D_004FFC2C) /* merge_units */
+#define g_Hud (*(char **)&g_Hud) /* merge_units */
 
 #if 0 /* merge_units */
 extern void Event_Construct(HudObjMsg_2750E0* m, void* type);
@@ -80,7 +80,7 @@ extern "C" void Hud_AddObjective(HudObjGObj_2750E0* obj, char* a, char* b, int q
         printf(D_004A8F80);
         return;
     }
-    if (!quiet && D_005721C8) {
+    if (!quiet && g_IsMultiplayer) {
         int marker = obj->marker;
         HudObjMsg_2750E0 m;
         HudObjMsg_2750E0* p = &m;
@@ -95,9 +95,9 @@ extern "C" void Hud_AddObjective(HudObjGObj_2750E0* obj, char* a, char* b, int q
         m.vt = D_004DE280;
         cMessage_dtor(&m, 0);
     }
-    ObjMarkerMgr_Insert(D_004FFC2C + 0x90, &obj->marker, text, b);
+    ObjMarkerMgr_Insert(g_Hud + 0x90, &obj->marker, text, b);
 }
-#undef D_004FFC2C /* merge_units */
+#undef g_Hud /* merge_units */
 #undef Event_Construct /* merge_units */
 #undef cMessage_dtor /* merge_units */
 #undef Transport_Send /* merge_units */
@@ -233,11 +233,11 @@ int Script_SetRadarFriendCol(ScriptArg* args)
 #pragma push /* merge_units */
 #pragma global_optimizer off
 
-extern float D_004FFDC0, D_004FFDC4, D_004FFDC8, D_004FFDCC;
+extern float g_HudPlayerMarkerColour, D_004FFDC4, D_004FFDC8, D_004FFDCC;
 
 static inline void Global_SetRadarTeamCol(int r, int g, int b, float a)
 {
-    D_004FFDC0 = r / 255.0f;
+    g_HudPlayerMarkerColour = r / 255.0f;
     D_004FFDC4 = g / 255.0f;
     D_004FFDC8 = b / 255.0f;
     D_004FFDCC = a;

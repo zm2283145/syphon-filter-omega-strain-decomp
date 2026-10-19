@@ -7,7 +7,7 @@
 #include "types.h"
 #include "human_types.h"
 
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 
 unsigned char Actor_IsInvulnerable(Actor* actor) {
     return actor->unk33A4;
@@ -18,7 +18,7 @@ void Actor_SetInvulnerable(Actor* actor, int value) {
     ActorLink3584* link;
 
     actor->unk33A4 = value;
-    if (D_005721C8 != 0 && actor->unk14 != 0) {
+    if (g_IsMultiplayer != 0 && actor->unk14 != 0) {
         link = actor->unk3584;
         if (link != 0) {
             link->unk34 = value;

@@ -12,7 +12,7 @@ int Mem_Free(...);
 int func_002458E0(...);                            
 int HudObject_ctor(...);           
 extern char D_0049A890;
-extern unsigned char D_00533880;
+extern unsigned char g_ProfileLockEnabled;
 }
 #pragma opt_common_subs off
 extern "C" int Game_CreateHud(char * arg0) {

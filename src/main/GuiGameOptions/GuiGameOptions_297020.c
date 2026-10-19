@@ -9,7 +9,7 @@
 #include "types.h"
 typedef struct { int pad0; int name; char pad8[0xC]; } Item_7020;
 typedef struct { int a; int count; Item_7020* items; char flag; } List_7020;
-extern char D_004FFB50;
+extern char g_Game;
 extern unsigned char D_0048B868;
 extern char* D_0048C160[];
 extern unsigned char D_004ACD30[];
@@ -41,7 +41,7 @@ void GuiCommandCenter_IsLevelOpen(char* self) {
     unsigned char* pc;
     for (k = 0; k < 0x11; k++) self[0x178 + k] = 0;
     self[0x18F] = 0;
-    sel = Agent_GetSelected(&D_004FFB50, -1);
+    sel = Agent_GetSelected(&g_Game, -1);
     func_00296FA0(&list);
     list.flag = 1;
     if (D_0048B868) AgentData_GetAwardRows(sel, 3, &list);
@@ -52,7 +52,7 @@ void GuiCommandCenter_IsLevelOpen(char* self) {
             if (D_004FFBB5) {
                 if (name) {
                     if (i != 0x11) {
-                        int s = Agent_GetSelected(&D_004FFB50, -1);
+                        int s = Agent_GetSelected(&g_Game, -1);
                         if (AgentData_IsLevelDone(s, StringPool_MakeKey(name))) ok = 1;
                     } else {
                         ok = 1;
@@ -100,7 +100,7 @@ void GuiCommandCenter_BonusFlags(int arg0) {
     signed char temp_v0;
     char * temp_v1;
 
-    temp_s1 = Agent_GetSelected(&D_004FFB50, -1);
+    temp_s1 = Agent_GetSelected(&g_Game, -1);
     var_s0 = 0;
     do {
         temp_v0 = AgentData_GetBonusFlag(temp_s1, var_s0 + 1, -1);
@@ -176,9 +176,9 @@ extern CcGameState*D_004FFC04;
 #endif /* merge_units */
 #define D_004FFC04 (*(CcGameState **)&D_004FFC04) /* merge_units */
 #if 0 /* merge_units */
-extern char D_004FFB50[];
+extern char g_Game[];
 #endif /* merge_units */
-#define D_004FFB50 ((char*)&D_004FFB50) /* merge_units */
+#define g_Game ((char*)&g_Game) /* merge_units */
 extern char*D_0048C1A0;
 extern char*D_0048B658;extern char*D_0048B660;extern char*D_0048B680;extern char*D_0048B688;extern char*D_0048B690;extern char*D_0048B698;extern char*D_0048B6A0;extern char*D_0048B6F8;extern char*D_0048B708;
 extern char D_004A7520[],D_004A9870[],D_004AA270[],D_004AA288[],D_004AA2C8[],D_004AA2E8[],D_004AA308[],D_004AA4A8[],D_004AA4B8[],D_004AA4C8[];
@@ -197,14 +197,14 @@ extern "C" void GuiCommandCenter_Activate(CcBindings*self){
   if(self->childa8){bool enabled=online&&!mode;if(enabled)self->childa8->flags|=4;else self->childa8->flags&=0xfffb;if(!online||mode)GuiWidget_SendEvent(self,self->childa8,6,(int)D_004AA308,0);}
   GuiWidget*w3=(GuiWidget*)GuiWidget_FindChildByName(self,D_0048B658);if(w3){bool enabled=online&&!mode;if(enabled)w3->flags|=2;else w3->flags&=0xfffd;}
   GuiWidget*w4=(GuiWidget*)GuiWidget_FindChildByName(self,D_0048B660);if(w4){bool enabled=!online||mode;if(enabled)w4->flags|=2;else w4->flags&=0xfffd;}
-  GuiWidget*name=(GuiWidget*)GuiFindAs(self,D_0048B680,D_004A7520);if(name)GuiTextWidget_SetText(name,AgentData_GetName(Agent_GetSelected(D_004FFB50,-1)),0);
-  GuiWidget*rank=(GuiWidget*)GuiFindAs(self,D_0048B688,D_004A7520);if(rank)GuiTextWidget_SetText(rank,AgentData_GetRankText(Agent_GetSelected(D_004FFB50,-1)),0);
-  GuiWidget*points=(GuiWidget*)GuiFindAs(self,D_0048B690,D_004A7520);if(points){sprintf(score,D_004AA4C8,AgentData_TotalPoints(Agent_GetSelected(D_004FFB50,-1)));GuiTextWidget_SetText(points,score,0);}
+  GuiWidget*name=(GuiWidget*)GuiFindAs(self,D_0048B680,D_004A7520);if(name)GuiTextWidget_SetText(name,AgentData_GetName(Agent_GetSelected(g_Game,-1)),0);
+  GuiWidget*rank=(GuiWidget*)GuiFindAs(self,D_0048B688,D_004A7520);if(rank)GuiTextWidget_SetText(rank,AgentData_GetRankText(Agent_GetSelected(g_Game,-1)),0);
+  GuiWidget*points=(GuiWidget*)GuiFindAs(self,D_0048B690,D_004A7520);if(points){sprintf(score,D_004AA4C8,AgentData_TotalPoints(Agent_GetSelected(g_Game,-1)));GuiTextWidget_SetText(points,score,0);}
   if(D_004FFC04->mode||!D_004FFC04->online){GuiWidget*a=(GuiWidget*)GuiWidget_FindChildByName(self,D_0048B6A0);if(a)a->flags&=0xfffd;GuiWidget*b=(GuiWidget*)GuiWidget_FindChildByName(self,D_0048B698);if(b)b->flags&=0xfffd;}
-  else{GuiWidget*a=(GuiWidget*)GuiFindAs(self,D_0048B698,D_004A7520);if(a){GuiTextWidget_SetText(a,(char*)(Agent_GetSelected(D_004FFB50,-1)+0x95c),0);a->flags|=2;}GuiWidget*b=(GuiWidget*)GuiWidget_FindChildByName(self,D_0048B6A0);if(b)b->flags|=2;}
+  else{GuiWidget*a=(GuiWidget*)GuiFindAs(self,D_0048B698,D_004A7520);if(a){GuiTextWidget_SetText(a,(char*)(Agent_GetSelected(g_Game,-1)+0x95c),0);a->flags|=2;}GuiWidget*b=(GuiWidget*)GuiWidget_FindChildByName(self,D_0048B6A0);if(b)b->flags|=2;}
   GuiCommandCenter_IsLevelOpen(self);self->unlocked[17]=0;self->unlocked[18]=0;self->unlocked[19]=0;self->unlocked[21]=D_004FFC04->online;self->unlocked[20]=0;
   const char*current=D_0048C1A0;
-  if(current){int record=AgentData_GetLevelShortName(Agent_GetSelected(D_004FFB50,-1),current);if(record){sprintf(key,D_004AA270,record);if(AgentData_IsObjectiveComplete(Agent_GetSelected(D_004FFB50,-1),key))self->unlocked[20]=1;}}
+  if(current){int record=AgentData_GetLevelShortName(Agent_GetSelected(g_Game,-1),current);if(record){sprintf(key,D_004AA270,record);if(AgentData_IsObjectiveComplete(Agent_GetSelected(g_Game,-1),key))self->unlocked[20]=1;}}
   GuiCommandCenter_BonusFlags(self);
   {int i;CcBindings*walk;i=0;walk=self;for(;i<24;i++,walk=(CcBindings*)((char*)walk+4)){if(walk->buttons[0]){if(!self->unlocked[i])GuiWidget_SendEvent(self,walk->buttons[0],6,(int)D_004AA2E8,0);else if((i<17&&self->states[i])||(i==20&&self->states[17]))GuiWidget_SendEvent(self,walk->buttons[0],6,(int)D_004AA2C8,0);}}
   }FrontEnd_SetMusic(D_004FFC04,0);GuiCommandCenter_RestoreState(self);
@@ -216,7 +216,7 @@ extern "C" void GuiCommandCenter_Activate(CcBindings*self){
 #undef GuiCommandCenter_IsLevelOpen /* merge_units */
 #undef GuiCommandCenter_BonusFlags /* merge_units */
 #undef D_004FFC04 /* merge_units */
-#undef D_004FFB50 /* merge_units */
+#undef g_Game /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_002973B0 */
 

@@ -29,9 +29,9 @@ void SoundPosRequest_Ctor(F2Ev_199590* e, void* name, V_199590* pos);
 void Event_Send(F2Ev_199590* e, void* tgt, int n);
 void FileMan_Release(F2Str_199590* s, int f);
 void cMessage_dtor(F2Ev_199590* e, int f);
-extern void* D_004FFC2C;
+extern void* g_Hud;
 extern char D_004F0DF0[];
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_004DAE30[];
 }
 static inline unsigned char Has_199590(O_199590* o)
@@ -44,7 +44,7 @@ extern "C" void Actor_InfraredSwitch(O_199590* o, unsigned char on)
 {
     E_199590* e = WeaponInv_GetSlot6Record(o->weapons);
     int v = 0;
-    void* mgr = D_004FFC2C;
+    void* mgr = g_Hud;
     if (e) v = e->b100;
     o->b346F = on ? v : 0;
     if (Has_199590(o) && o->active && o->b33E7) {
@@ -57,7 +57,7 @@ extern "C" void Actor_InfraredSwitch(O_199590* o, unsigned char on)
         F2Ev_199590 ev;
         SoundPosRequest_Ctor(&ev, D_004F0DF0, &pos);
         ev.flag = 1;
-        Event_Send(&ev, D_004FFB50, 0);
+        Event_Send(&ev, g_Game, 0);
         ev.vt = D_004DAE30;
         FileMan_Release(&ev.s114, -1);
         FileMan_Release(&ev.s78, -1);
@@ -135,7 +135,7 @@ extern "C" void Flashlight_Toggle(O_199770* o)
         armed = o->weapons->ammo > -1;
         if (!armed) on = 0;
         Flashlight_SetState(o->state, on);
-        if (Has_199770(o) && o->active && armed) Hud_SetFlashlightIcon(D_004FFC2C, 0, on);
+        if (Has_199770(o) && o->active && armed) Hud_SetFlashlightIcon(g_Hud, 0, on);
     }
 }
 #undef Hud_SetFlashlightIcon /* merge_units */
@@ -191,7 +191,7 @@ extern "C" void Goggles_Toggle(O_199860* o)
         if (Has_199860(o) && o->active) {
             int v = 0;
             if (o->b33E7 && WeaponInv_GetSlot6Record(o->weapons)) v = WeaponInv_GetSlot6Record(o->weapons)->b100;
-            Hud_SetGoggles(D_004FFC2C, v);
+            Hud_SetGoggles(g_Hud, v);
         }
     }
 }

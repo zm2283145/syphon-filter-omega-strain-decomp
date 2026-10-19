@@ -2,12 +2,12 @@
 #include "types.h"
 union A25E4A0 { int i; float f; void* p; };
 struct Fx25E4A0 { char p[8]; unsigned char b8; char p9[3]; unsigned char bC, bD; char pE[2]; int f10; float f14, f18, f1C, f20; char p24[4]; float f28; };
-extern "C" Fx25E4A0* D_004FFC30;
+extern "C" Fx25E4A0* g_VisionFxMan;
 #pragma push
 #pragma opt_dead_assignments off
 extern "C" int Script_setFxFlair(A25E4A0* args)
 {
-    Fx25E4A0* f = D_004FFC30;
+    Fx25E4A0* f = g_VisionFxMan;
     int tz;
 int ty;
 int tx;

@@ -28,19 +28,19 @@ typedef struct cElevatorGOBJ {
     int* floorLocks;
 } cElevatorGOBJ;
 
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern char D_004F54C8[];
 extern char D_004DAEF0[]; /* floor message vtable */
 extern void Event_Construct(FloorMsg* msg, void* name);
 extern void Transport_Send(int target, FloorMsg* msg, int a, int b);
 extern void cMessage_dtor(FloorMsg* msg, int flags);
 
-/* Unlocks a floor and, when D_005721C8 is set and not silent, broadcasts the change. */
+/* Unlocks a floor and, when g_IsMultiplayer is set and not silent, broadcasts the change. */
 void cElevatorGOBJ_UnlockFloor(cElevatorGOBJ* self, int floor, int silent) {
     FloorMsg msg;
     if (floor >= 0 && floor < self->floorCount) {
         self->floorLocks[floor] = 0;
-        if (D_005721C8 && !silent) {
+        if (g_IsMultiplayer && !silent) {
             Event_Construct(&msg, D_004F54C8);
             msg.floor = floor;
             msg.vtable = D_004DAEF0;
@@ -90,7 +90,7 @@ void cElevatorGOBJ_LockFloor(cElevatorGOBJ_002155F0* self, int floor, int silent
 {
     if (floor >= 0 && floor < self->floorCount) {
         self->floorLocked[floor] = 1;
-        if (D_005721C8 && !silent) {
+        if (g_IsMultiplayer && !silent) {
             ElevatorMsg msg;
             Event_Construct(&msg, D_004F54C8);
             msg.floor = floor;

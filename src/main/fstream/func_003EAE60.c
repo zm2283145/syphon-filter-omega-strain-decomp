@@ -106,11 +106,11 @@ extern "C" int AsyncLoader_QueueLoad(Loader_EAE60* ldr, char* name, void (*cb)(S
     }
     if (!req) {
         Req_EAE60* n;
-        if (D_00533880) Alloc_Lock(9);
-        D_00533888++;
+        if (g_ProfileLockEnabled) Alloc_Lock(9);
+        g_ProfileLockDepth++;
         n = (Req_EAE60*)Mem_Alloc(0, 0x18, &D_004BE010, 0x24D);
-        if (D_00533880) Alloc_Unlock(9);
-        D_00533888--;
+        if (g_ProfileLockEnabled) Alloc_Unlock(9);
+        g_ProfileLockDepth--;
         if (n) {
             n->cb = 0;
             n->user = 0;

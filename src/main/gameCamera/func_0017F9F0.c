@@ -4,7 +4,7 @@ typedef struct { float x, y, z, w; } __attribute__((aligned(16))) V4;
 typedef struct { V4 a; V4 b; } VP;
 
 extern char D_004DA470[], D_004DA580[], D_004DAD90[], D_004DAD70[], D_004DA440[], D_004DA410[], D_004DA3E0[], D_004DA2F0[];
-extern char D_0055C9F0[];
+extern char g_IdentityMatrix[];
 extern float D_0048A158, D_0048A160;
 extern float D_004A3FC8;
 extern signed char D_004E1D80;
@@ -193,7 +193,7 @@ void* Camera_ConstructFov(char* self, int a1, float fov, int a2)
     F(void*, self, 0) = D_004DA470;
     F(float, self, 0x60) = 0.5f * fov;
     F(int, self, 0x64) = 0;
-    Object_AttachTransform(self, D_0055C9F0, 0);
+    Object_AttachTransform(self, g_IdentityMatrix, 0);
     F(int, self, 0x30) = 0;
     F(void*, self, 0) = D_004DA580;
     Rig_Init(self + 0x70);

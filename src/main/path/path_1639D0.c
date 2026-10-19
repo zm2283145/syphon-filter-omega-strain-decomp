@@ -78,8 +78,8 @@ struct CxRuManager { char pad[0x20]; CxRuList queue;};
 struct CxRuIt { CxRuLink* link;};
 extern "C" {
 extern unsigned char D_004ED9D0;
-extern int D_005383C8;
-extern int D_004ED9C0[];
+extern int g_VideoFrameCounter;
+extern int g_NpcRegionTable[];
 unsigned char NpcRoute_Search(CxRuReq*);
 unsigned char NpcRoute_ScoreNodes(CxRuReq*);
 void List_Erase(CxRuIt*,CxRuList*,CxRuIt*);
@@ -108,10 +108,10 @@ extern "C" void NpcRoute_Update(CxRuManager* self){
             NpcRouteMgr_FreeRequest(self,req);
         }
     }
-    int slot=D_005383C8&3;
+    int slot=g_VideoFrameCounter&3;
     if(slot<4 && PlayerSlots_Get(slot)){
         const CxRuV4* pos=PlayerSlots_Get(slot)->Matrix().Pos();
-        int* region=&D_004ED9C0[slot];
+        int* region=&g_NpcRegionTable[slot];
         int id=NpcRoute_RegionAt(pos,*region);
         if(id>=0)*region=id;
     }

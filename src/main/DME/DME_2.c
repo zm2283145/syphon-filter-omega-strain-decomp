@@ -17,7 +17,7 @@
 extern "C" {
 int Mem_Alloc(int, int, char *, int);
 int func_00453E20(int); /* SFOLobby constructor ("MediusLobby") */
-extern unsigned char D_00533880;
+extern unsigned char g_ProfileLockEnabled;
 extern int g_DmeLobby;
 extern signed char g_DmeLobbyActive;
 }

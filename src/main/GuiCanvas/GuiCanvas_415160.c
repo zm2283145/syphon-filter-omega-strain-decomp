@@ -203,8 +203,8 @@ static unsigned int D_004940B0[16] = {
     0x1000, 0x4000, 0x8000, 0x2000, 0x10, 0x40, 0x80, 0x20,
     0x200, 0x400, 0x4, 0x1, 0x8, 0x2, 0x800, 0x100
 };
-extern int D_00533870;
-extern long D_00533878;
+extern int g_TimerAccum;
+extern long g_TickCounter64;
 extern int D_00571FD8;
 extern int D_00571FE0[2][16];
 extern int D_00572060[2][16];
@@ -232,7 +232,7 @@ extern "C" void GuiCanvas_PadClock(W_415510* w, Pad_415510* pads)
 {
     int now;
     int p;
-    now = DivTime(D_00533878 + (int)((float)(unsigned int)(*(volatile int*)0x10000800 + D_00533870) / 5.76f));
+    now = DivTime(g_TickCounter64 + (int)((float)(unsigned int)(*(volatile int*)0x10000800 + g_TimerAccum) / 5.76f));
     for (p = 0; p < 2; p++) {
         int j;
         for (j = 0; j < 16; j++) {

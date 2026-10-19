@@ -16,8 +16,8 @@ int sprintf();
 extern char D_0048B2F8;
 extern char D_0049C390;
 extern char D_004FFB8C;
-extern unsigned char D_00533880;
-extern int D_00533888;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
 
 #pragma opt_common_subs off
 void func_001674E0(char * arg0) {
@@ -31,15 +31,15 @@ void func_001674E0(char * arg0) {
         func_0036E4B0(sp40, spE0, 0, 0);
         if (!(FileMan_FindMember(sp40) & 0xFF)) {
             temp_s0 = Archive_Open(&D_004FFB8C, spE0, 0, 0);
-            if (D_00533880 != 0) {
+            if (g_ProfileLockEnabled != 0) {
                 Alloc_Lock(9);
             }
-            D_00533888 += 1;
+            g_ProfileLockDepth += 1;
             var_s2 = (char *)(Mem_Alloc(0, 0x58, &D_0049C390, 0x5B7));
-            if (D_00533880 != 0) {
+            if (g_ProfileLockEnabled != 0) {
                 Alloc_Unlock(9);
             }
-            D_00533888 -= 1;
+            g_ProfileLockDepth -= 1;
             if (var_s2 != NULL) {
                 var_s2 = (char *)(func_0027B900(var_s2, temp_s0, "IALOBBYN"));
             }

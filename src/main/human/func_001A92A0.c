@@ -113,15 +113,15 @@ struct VO {
 #define VO_(o) ((VO*)(o))
 
 extern "C" {
-extern unsigned char D_005721C8;
-extern int D_0049D010;
-extern float D_0049D038;
+extern unsigned char g_IsMultiplayer;
+extern int g_HumanActorClassKey;
+extern float g_DefaultMotionTransition;
 extern char D_0049D048[], D_0049DBC0[], D_0049E080[], D_0049E4A0[], D_0049E4D0[], D_0049E500[], D_0049E520[];
 extern char D_0049E540[], D_0049E558[], D_0049E570[], D_0049E590[], D_0049E5B0[], D_0049E5C8[], D_0049E5E0[];
 extern char D_0049E600[], D_0049E620[], D_0049E640[];
 extern char D_004D9180[], D_004D9360[], D_004DA930[], D_004DA950[], D_004DCC70[], D_004E00E0[], D_004E01A0[];
-extern char D_004E0840[], D_004EA0B0[], D_004FF2B0[], D_004FFB50[], D_00542B60[], D_005435A0[], D_0055A1D8[];
-extern char D_0055D480[], D_0055D4E0[];
+extern char D_004E0840[], g_LosCheckService[], D_004FF2B0[], g_Game[], D_00542B60[], g_LosRequestMsgClass[], g_CasEventMsgClass[];
+extern char g_ActorActionMsgClass[], g_TeleportMsgClass[];
 extern signed char D_004EED58;
 extern char D_004EED60[];
 
@@ -284,7 +284,7 @@ static inline unsigned char IsLoc(char* a)
 }
 static inline void QCp(void* d, const void* s) { const void* ss = s; void* dd = d; __int128 q; __asm__ volatile("lq %0, 0x0(%2)\n sq %0, 0x0(%1)" : "=&r"(q) : "r"(dd), "r"(ss) : "memory"); }
 #define NETFLAG(bit, on) \
-    if (D_005721C8) { unsigned char* np = (unsigned char*)AP(0x3584); if (np && AB(0x14)) { if (on) np[0x50] |= (bit); else np[0x50] &= ~(bit); } }
+    if (g_IsMultiplayer) { unsigned char* np = (unsigned char*)AP(0x3584); if (np && AB(0x14)) { if (on) np[0x50] |= (bit); else np[0x50] &= ~(bit); } }
 /* NAME_COPY_N: the empty asm in the else arm is a scheduling barrier that keeps the zero store unhoisted. */
 #define NAME_COPY_N(dst, src) \
     { \
@@ -346,7 +346,7 @@ static inline void PlaySlotI(char* a, XS* xp, V4* rp, int mode)
     func_0018A260(&e2, -1);
     func_0018A260(&e1, -1);
 }
-#define PlaySlot(a, mode) PST(a, RT(D_0049D038), XT(), mode)
+#define PlaySlot(a, mode) PST(a, RT(g_DefaultMotionTransition), XT(), mode)
 static inline void PlayNamed(char* a, void* x, void* name, V4* r, int mode)
 {
     int id;
@@ -388,7 +388,7 @@ static inline unsigned char IsDown(char* a)
 }
 static inline void FailInit(char* p)
 {
-    Event_Construct(p, D_0055A1D8);
+    Event_Construct(p, g_CasEventMsgClass);
     PP(p, 0) = D_004DA950;
     PI(p, 0x24) = 9;
     PI(p, 0x28) = -1;
@@ -396,7 +396,7 @@ static inline void FailInit(char* p)
 }
 static inline void EvInit(char* p, int id, unsigned char b)
 {
-    Event_Construct(p, D_0055D480);
+    Event_Construct(p, g_ActorActionMsgClass);
     PP(p, 0) = D_004E0840;
     PI(p, 0x24) = id;
     PB(p, 0x28) = b;
@@ -404,7 +404,7 @@ static inline void EvInit(char* p, int id, unsigned char b)
 struct FailEv {
     char c[0x40];
     FailEv() {
-        Event_Construct(this, D_0055A1D8);
+        Event_Construct(this, g_CasEventMsgClass);
         PP(this, 0) = D_004DA950;
         PI(this, 0x24) = 9;
         PI(this, 0x28) = -1;
@@ -444,7 +444,7 @@ static inline void PlaySlotBI(char* a, XS* xp, V4* rp, int mode)
     func_0018A260(&e2, -1);
     func_0018A260(&e1, -1);
 }
-#define PlaySlotB(a, mode) PSBT(a, RT2(D_0049D038), XT(), mode)
+#define PlaySlotB(a, mode) PSBT(a, RT2(g_DefaultMotionTransition), XT(), mode)
 static inline void SelCtor(char* p, int id, unsigned char f, void* xp)
 {
     PB(p, 0) = 2;
@@ -462,7 +462,7 @@ inline void CtlS::Sel(Buf_A0* selp, V4* rtp)
     int out;
     Y2 y;
     char* q = ctl + 0x34;
-    s = (unsigned char*)Actor_SetMotionOverride(q, AnimRate_Init(rtp, D_0049D038));
+    s = (unsigned char*)Actor_SetMotionOverride(q, AnimRate_Init(rtp, g_DefaultMotionTransition));
     func_0018A700(&y, -1);
     Actor_ResolveMotionSelection(selp, &out, &y, *(void**)s);
     if (out) {
@@ -491,7 +491,7 @@ inline void CtlS::Sel2(Buf_A0* rsel, Buf_A0* selp, V4* rtp)
     int out;
     Y2 y;
     char* q = ctl + 0x34;
-    s = (unsigned char*)Actor_SetMotionOverride(q, AnimRate_Init(rtp, D_0049D038));
+    s = (unsigned char*)Actor_SetMotionOverride(q, AnimRate_Init(rtp, g_DefaultMotionTransition));
     func_0018A700(&y, -1);
     Actor_ResolveMotionSelection(rsel, &out, &y, *(void**)s);
     if (out) {
@@ -860,7 +860,7 @@ inline void CtlT::SelX(const RTU& rtr, const ST& sr)
     int out;
     Y2 y;
     char* q = ctl + 0x34;
-    s = (unsigned char*)Actor_SetMotionOverride(q, AnimRate_Init(rtp, D_0049D038));
+    s = (unsigned char*)Actor_SetMotionOverride(q, AnimRate_Init(rtp, g_DefaultMotionTransition));
     func_0018A700(&y, -1);
     Actor_ResolveMotionSelection(selp, &out, &y, *(void**)s);
     if (out) {
@@ -892,7 +892,7 @@ inline void CtlT::SelX2(const RTU& rtr, const ST& sr)
     int out;
     Y2 y;
     char* q = ctl + 0x34;
-    s = (unsigned char*)Actor_SetMotionOverride(q, AnimRate_Init(rtp, D_0049D038));
+    s = (unsigned char*)Actor_SetMotionOverride(q, AnimRate_Init(rtp, g_DefaultMotionTransition));
     func_0018A700(&y, -1);
     Actor_ResolveMotionSelection(rsel, &out, &y, *(void**)s);
     if (out) {
@@ -966,12 +966,12 @@ static inline void DirTailP(char* a, char* m, V4* d, char* dp)
 }
 
 #define NETFP(bit, src) \
-    { unsigned char* op = (unsigned char*)(src); if (D_005721C8) { unsigned char* np = (unsigned char*)AP(0x3584); if (np && AB(0x14)) { if (*op) np[0x50] |= (bit); else np[0x50] &= ~(bit); } } }
+    { unsigned char* op = (unsigned char*)(src); if (g_IsMultiplayer) { unsigned char* np = (unsigned char*)AP(0x3584); if (np && AB(0x14)) { if (*op) np[0x50] |= (bit); else np[0x50] &= ~(bit); } } }
 static inline void SetA0(char* w, unsigned char v) { w[0xA0] = v; }
 static inline void LnkF(char* x, char* y) { char* xc = x; char* yc = y; ActorRelation_AddChild(xc + 0x100, yc + 0x100); }
 static inline void QCp2(void* d, const void* s) { __int128 q; __asm__ volatile("lq %0, 0x0(%0)" : "=r"(q) : "0"(s) : "memory"); void* dd = d; __asm__ volatile("sq %0, 0x0(%1)" : : "r"(q), "r"(dd) : "memory"); }
 static inline void LnkH(char* y, char* x) { char* xc; char* yc; yc = y; xc = x; ActorRelation_AddChild(xc + 0x100, yc + 0x100); }
-static inline bool IsCls2(char* p) { int d = D_0049D010; int k = PI(p, 0x4C); return k == d; }
+static inline bool IsCls2(char* p) { int d = g_HumanActorClassKey; int k = PI(p, 0x4C); return k == d; }
 static inline bool NotB(unsigned char v) { return !v; }
 static inline VC FlPos(char* a) { return *(const VC*)Root_GetWorldBasePlacement(Actor_GetFloorRoot2(a)); }
 static inline unsigned char AtFlY(char* m, const VC& fl) { V4* mp; unsigned char e, e2; mp = (V4*)(m + 0x30); e = 0; e2 = 0; if (MF(0x30) == fl.x && mp->y == fl.y) e2 = 1; if (e2 && mp->z == fl.z) e = 1; return e; }
@@ -992,7 +992,7 @@ extern "C" unsigned char Actor_HandleActionMessage(char* a, char* m)
             AB(0x30AD) = 0;
             break;
         case 13:
-            if (D_005721C8) {
+            if (g_IsMultiplayer) {
                 if (!AB(0x14) && IsLoc(a)) {
                     if (MU(0xC) < AU(0x3594)) {
                         printf(D_0049E4A0, MU(0xC), AU(0x3594));
@@ -1021,7 +1021,7 @@ extern "C" unsigned char Actor_HandleActionMessage(char* a, char* m)
                                 { char* hp = h2.c; Ptr_Identity(hp + 0x10); func_0013AAE0(hp + 0x20); }
                                 {
                                 char* ep = ev1.c;
-                                Event_Construct(ep, D_005435A0);
+                                Event_Construct(ep, g_LosRequestMsgClass);
                                 PP(ep, 0) = D_004D9180;
                                 PI(ep, 0x24) = 0;
                                 PI(ep, 0x28) = 0;
@@ -1036,7 +1036,7 @@ extern "C" unsigned char Actor_HandleActionMessage(char* a, char* m)
                                 }
                                 {
                                 char* ep = ev2.c;
-                                Event_Construct(ep, D_005435A0);
+                                Event_Construct(ep, g_LosRequestMsgClass);
                                 PP(ep, 0) = D_004D9180;
                                 PI(ep, 0x24) = 0;
                                 PI(ep, 0x28) = 0;
@@ -1049,7 +1049,7 @@ extern "C" unsigned char Actor_HandleActionMessage(char* a, char* m)
                                 PB(ep, 0x5C) = 0;
                                 func_001AE370(ep);
                                 }
-                                svc = Service_Lookup(D_004FFB50, D_004EA0B0);
+                                svc = Service_Lookup(g_Game, g_LosCheckService);
                                 v = func_0014D410(func_0014D450(func_0014D460(a)));
                                 if (v) LosProvider_SeedRegion(func_001AE360(svc), v);
                                 VO_(svc)->f01(&ev1);
@@ -1057,7 +1057,7 @@ extern "C" unsigned char Actor_HandleActionMessage(char* a, char* m)
                                 if ((*(unsigned char*)h1.c || *(unsigned char*)h2.c) && IsLoc(a)) {
                                     char* ep; char* src; void* mx;
                                     ep = ev3.c; src = m + 0x30;
-                                    Event_Construct(ep, D_0055D4E0);
+                                    Event_Construct(ep, g_TeleportMsgClass);
                                     PP(ep, 0) = D_004D9360;
                                     PB(ep, 0x24) = 0;
                                     mx = Mtx_GetIdentity();
@@ -1329,20 +1329,20 @@ extern "C" unsigned char Actor_HandleActionMessage(char* a, char* m)
         if (AI(0x320C) == 0 && !((AI(0x3248) >> 30) & 1)) {
             BitArray_Assign(a + 0x3248, 0x1F, 0);
             BitArray_Assign(a + 0x3248, 0x1E, 1);
-            if (D_005721C8) { char* np = AP(0x3584); if (np && AB(0x14)) np[0x51] = 0xB; }
+            if (g_IsMultiplayer) { char* np = AP(0x3584); if (np && AB(0x14)) np[0x51] = 0xB; }
         }
         break;
     case 0xC:
         if (AI(0x320C) == 0 && !((AI(0x3248) >> 31) & 1)) {
             BitArray_Assign(a + 0x3248, 0x1E, 0);
             BitArray_Assign(a + 0x3248, 0x1F, 1);
-            if (D_005721C8) { char* np = AP(0x3584); if (np && AB(0x14)) np[0x51] = 0xC; }
+            if (g_IsMultiplayer) { char* np = AP(0x3584); if (np && AB(0x14)) np[0x51] = 0xC; }
         }
         break;
     case 0xD:
         BitArray_Assign(a + 0x3248, 0x1E, 0);
         BitArray_Assign(a + 0x3248, 0x1F, 0);
-        if (D_005721C8) { char* np = AP(0x3584); if (np && AB(0x14)) np[0x51] = 0xD; }
+        if (g_IsMultiplayer) { char* np = AP(0x3584); if (np && AB(0x14)) np[0x51] = 0xD; }
         break;
     case 0xE:
         if (AI(0x320C) == 0) {
@@ -1384,9 +1384,9 @@ extern "C" unsigned char Actor_HandleActionMessage(char* a, char* m)
     case 0x11:
         if (AP(0x3310) && !IsDown(a) &&
             (((AI(0x320C) == 7 || AI(0x320C) == 8) && Actor_HangSlotClimbable(AP(0x3310))) || (!AB(0x14) && IsLoc(a)))) {
-            if (D_005721C8 && AB(0x14) && IsLoc(a)) FwdMsg(a, m, 0);
+            if (g_IsMultiplayer && AB(0x14) && IsLoc(a)) FwdMsg(a, m, 0);
             {
-                PNT(a, KT(D_0049E540), RT(D_0049D038), func_001AE050(func_001AE050(func_001AE050(func_001AE050(func_001AE050(XT().p(), 0, 0x2E, a), 1, 0x2F, a), 3, 0x30, a), 5, 0x31, a), 6, 0x32, a), 1);
+                PNT(a, KT(D_0049E540), RT(g_DefaultMotionTransition), func_001AE050(func_001AE050(func_001AE050(func_001AE050(func_001AE050(XT().p(), 0, 0x2E, a), 1, 0x2F, a), 3, 0x30, a), 5, 0x31, a), 6, 0x32, a), 1);
             }
             PlaySlot(a, 0);
             APri(a, 1, 1);
@@ -1399,7 +1399,7 @@ extern "C" unsigned char Actor_HandleActionMessage(char* a, char* m)
     case 0x13:
         if (!IsDown(a)) {
             if (((AI(0x3210) >> 7) & 1) || ((AI(0x3210) >> 8) & 1) || (!AB(0x14) && IsLoc(a))) {
-                if (D_005721C8 && AB(0x14) && IsLoc(a)) FwdMsg(a, m, 0);
+                if (g_IsMultiplayer && AB(0x14) && IsLoc(a)) FwdMsg(a, m, 0);
                 BitArray_Assign(a + 0x3248, 0xA, 0);
                 BitArray_Assign(a + 0x3248, 0xB, 0);
                 BitArray_Assign(a + 0x3248, 0xC, 0);
@@ -1527,12 +1527,12 @@ extern "C" unsigned char Actor_HandleActionMessage(char* a, char* m)
                 }
                 {
                     V4u rr;
-                    PNT(a, KT(D_0049E558), RT(D_0049D038), func_00190F90(func_001AE050(func_001AE050(func_001AE050(func_001AE050(func_001AE050(XT().p(), 0, 0x71, a), 1, 0x72, a), 3, 0x74, a), 5, 0x75, a), 6, 0x76, a), func_00192750(&rr, 0.12f, 0.12f, 0), 0x73, a), 1);
+                    PNT(a, KT(D_0049E558), RT(g_DefaultMotionTransition), func_00190F90(func_001AE050(func_001AE050(func_001AE050(func_001AE050(func_001AE050(XT().p(), 0, 0x71, a), 1, 0x72, a), 3, 0x74, a), 5, 0x75, a), 6, 0x76, a), func_00192750(&rr, 0.12f, 0.12f, 0), 0x73, a), 1);
                 }
                 {
-                    PNT(a, KT(D_0049E570), RT(D_0049D038), func_001AE050(func_001AE050(func_001AE050(func_001AE050(func_001AE050(XT().p(), 0, 0x77, a), 1, 0x78, a), 3, 0x79, a), 5, 0x7A, a), 6, 0x7B, a), 0);
+                    PNT(a, KT(D_0049E570), RT(g_DefaultMotionTransition), func_001AE050(func_001AE050(func_001AE050(func_001AE050(func_001AE050(XT().p(), 0, 0x77, a), 1, 0x78, a), 3, 0x79, a), 5, 0x7A, a), 6, 0x7B, a), 0);
                 }
-                if (D_005721C8 && AB(0x14)) {
+                if (g_IsMultiplayer && AB(0x14)) {
                     Ev30 c;
                     char* ep = c.c;
                     cMessage_ctor3(ep, m);
@@ -1590,15 +1590,15 @@ extern "C" unsigned char Actor_HandleActionMessage(char* a, char* m)
                         cMessage_dtor(ep, 0);
                     }
                     {
-                        PNT(a, *(KT*)&k, RT(D_0049D038), func_001AE050(func_001AE050(func_001AE050(func_001AE050(func_001AE050(XT().p(), 0, 0x7C, a), 1, 0x7D, a), 3, 0x7E, a), 5, 0x7F, a), 6, 0x80, a), 1);
+                        PNT(a, *(KT*)&k, RT(g_DefaultMotionTransition), func_001AE050(func_001AE050(func_001AE050(func_001AE050(func_001AE050(XT().p(), 0, 0x7C, a), 1, 0x7D, a), 3, 0x7E, a), 5, 0x7F, a), 6, 0x80, a), 1);
                     }
                     PlaySlotB(a, 0);
                     done = 1;
-                    if (D_005721C8 && AB(0x14)) FwdMsg(a, m, 1);
+                    if (g_IsMultiplayer && AB(0x14)) FwdMsg(a, m, 1);
                 }
                 if (!done && WeakRef_Get(a + 0x3478)) {
                     PlaySelT(a, XT(), AI(0x326C), 1);
-                    if (D_005721C8 && AB(0x14)) FwdMsg(a, m, 1);
+                    if (g_IsMultiplayer && AB(0x14)) FwdMsg(a, m, 1);
                 }
             }
         }
@@ -1606,11 +1606,11 @@ extern "C" unsigned char Actor_HandleActionMessage(char* a, char* m)
     case 0x2E:
         if (!((AI(0x324C) >> 5) & 1)) {
             {
-                PNT(a, KT(D_0049E5C8), RT(D_0049D038), func_001AE050(func_001AE050(func_001AE050(func_001AE050(func_001AE050(XT().p(), 0, 0x81, a), 1, 0x82, a), 3, 0x83, a), 5, 0x84, a), 6, 0x85, a), 1);
+                PNT(a, KT(D_0049E5C8), RT(g_DefaultMotionTransition), func_001AE050(func_001AE050(func_001AE050(func_001AE050(func_001AE050(XT().p(), 0, 0x81, a), 1, 0x82, a), 3, 0x83, a), 5, 0x84, a), 6, 0x85, a), 1);
             }
             {
                 char* c;
-                PNLTr(a, c, KT(D_0049E5E0), RT(D_0049D038), func_001AE050(func_001AE050(func_001AE050(func_001AE050(func_001AE050(XT().p(), 0, 0x86, a), 1, 0x87, a), 3, 0x89, a), 5, 0x88, a), 6, 0x8A, a), 0);
+                PNLTr(a, c, KT(D_0049E5E0), RT(g_DefaultMotionTransition), func_001AE050(func_001AE050(func_001AE050(func_001AE050(func_001AE050(XT().p(), 0, 0x86, a), 1, 0x87, a), 3, 0x89, a), 5, 0x88, a), 6, 0x8A, a), 0);
             }
         }
         break;
@@ -1631,10 +1631,10 @@ extern "C" unsigned char Actor_HandleActionMessage(char* a, char* m)
                 break;
             }
             {
-                PNT(a, *(KT*)&k1, RT(D_0049D038), func_001AE050(func_001AE050(func_001AE050(func_001AE050(func_001AE050(XT().p(), 0, 0x8B, a), 1, 0x8C, a), 3, 0x8D, a), 5, 0x8E, a), 6, 0x8F, a), 1);
+                PNT(a, *(KT*)&k1, RT(g_DefaultMotionTransition), func_001AE050(func_001AE050(func_001AE050(func_001AE050(func_001AE050(XT().p(), 0, 0x8B, a), 1, 0x8C, a), 3, 0x8D, a), 5, 0x8E, a), 6, 0x8F, a), 1);
             }
             {
-                PNLT4(a, *(KT*)&k2, RT2(D_0049D038), XT(), 0);
+                PNLT4(a, *(KT*)&k2, RT2(g_DefaultMotionTransition), XT(), 0);
             }
         }
         break;
@@ -1679,7 +1679,7 @@ extern "C" unsigned char Actor_HandleActionMessage(char* a, char* m)
         break;
     case 0x2A:
         if (!IsDown(a) && PF(AP(0x3294), 0xD0) == 0.0f && MB(0x28) == 0xE) {
-            if (D_005721C8 && AB(0x14) && IsLoc(a)) {
+            if (g_IsMultiplayer && AB(0x14) && IsLoc(a)) {
                 struct { char c[0x60]; } __attribute__((aligned(16))) c;
                 char* ep = c.c;
                 cMessage_ctor3(ep, m);

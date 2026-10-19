@@ -36,7 +36,7 @@ public:
 };
 typedef struct { char pad[0xC]; unsigned int id; char pad10[0x48]; G2Sub157* sub; } G2Gen157;
 extern "C" {
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 void func_00436C00(int* t);
 int func_00434440(int* t, unsigned int* id);
 void func_00436BA0(int* t, int f);
@@ -46,7 +46,7 @@ static inline unsigned char G2IsB(G2Gen157* g) { unsigned char r = 0; if (g->sub
 extern "C" void cNPC_Deactivate(G2Npc157* n, G2Gen157* g)
 {
     if (n->dead) return;
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         int v = -1;
         if (g) {
             if (G2IsA(g) || G2IsB(g)) {
@@ -106,7 +106,7 @@ typedef struct { char pad[0x30]; Body_7510* body; } Npc_7510;
 static inline int LocalId_7510(void)
 {
     int a = D_005721A8;
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         if (D_00494178 == -1)
             NetGame_InitLocalSlot(&D_00494178, a);
         return D_00494178;

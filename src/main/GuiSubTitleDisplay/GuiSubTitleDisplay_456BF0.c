@@ -140,15 +140,15 @@ int SoundMgr_SetGroupsPaused(int, int);
 int HudTicker_SetShown(int, int);                            
 int GuiWidget_BaseSleep(int);                               
 extern int D_004F2CC0;
-extern int D_004FFB50;
-extern int D_004FFC2C;
-extern unsigned char D_005721C8;
+extern int g_Game;
+extern int g_Hud;
+extern unsigned char g_IsMultiplayer;
 
 void GuiStartMenuBackdrop_OnSleep(int arg0) {
-    if (D_005721C8 == 0) {
-        SoundMgr_SetGroupsPaused(Service_Lookup(&D_004FFB50, &D_004F2CC0), 0);
+    if (g_IsMultiplayer == 0) {
+        SoundMgr_SetGroupsPaused(Service_Lookup(&g_Game, &D_004F2CC0), 0);
     }
-    HudTicker_SetShown(D_004FFC2C + 0x100, 1);
+    HudTicker_SetShown(g_Hud + 0x100, 1);
     GuiWidget_BaseSleep(arg0);
 }
 #pragma pop /* merge_units */
@@ -160,10 +160,10 @@ void GuiStartMenuBackdrop_OnSleep(int arg0) {
 int GuiWidget_BaseWake(int);
 
 void GuiStartMenuBackdrop_OnWake(int arg0) {
-    if (D_005721C8 == 0) {
-        SoundMgr_SetGroupsPaused(Service_Lookup(&D_004FFB50, &D_004F2CC0), 1);
+    if (g_IsMultiplayer == 0) {
+        SoundMgr_SetGroupsPaused(Service_Lookup(&g_Game, &D_004F2CC0), 1);
     }
-    HudTicker_SetShown(D_004FFC2C + 0x100, 0);
+    HudTicker_SetShown(g_Hud + 0x100, 0);
     GuiWidget_BaseWake(arg0);
 }
 #pragma pop /* merge_units */

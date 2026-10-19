@@ -17,8 +17,8 @@ extern "C" void func_003E61F0();
 extern "C" void func_003E7250();
 void * const D_004E01C0[8] = { (void*)0x0, (void*)0x0, (void*)func_001867C0, (void*)func_003E7250, (void*)func_003E61F0, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
 extern char D_004E0840;
-extern char D_0055D480;
-extern unsigned char D_005721C8;
+extern char g_ActorActionMsgClass;
+extern unsigned char g_IsMultiplayer;
 /* Warning: Gap in callee-saved word stack region.
  * Saved: [0x0, 0x10, 0x14, 0x18, 0x1c, 0x20, 0x24, 0x28, 0x2c, 0x30, 0x34], gap at: 0x8. */
 }
@@ -33,8 +33,8 @@ extern "C" void Actor_ApplyFlash(char * arg0, int arg1, float farg0) {
             ((VC001866E0 *)(temp_a0))->v19();
         }
     }
-    if ((D_005721C8 != 0) && (arg1 == 0)) {
-        Event_Construct(sl.f40, &D_0055D480);
+    if ((g_IsMultiplayer != 0) && (arg1 == 0)) {
+        Event_Construct(sl.f40, &g_ActorActionMsgClass);
         sl.f64 = 0x46;
         sl.f68[0] = 3;
         sl.f40[0] = &(*(char*)D_004E01C0);

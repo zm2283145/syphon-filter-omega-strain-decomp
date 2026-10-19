@@ -10,7 +10,7 @@
 
 typedef union ScriptArg { int i; float f; void* p; } ScriptArg;
 typedef struct { char data[0x30]; } Rank;
-extern char D_00532B50[];
+extern char g_RankRows[];
 extern int Loc_FindKeyThunk(const char* s);           /* string hash */
 extern int Awards_ResolveUnlock(int hash);
 extern int func_0032EB80(void* registry);
@@ -39,7 +39,7 @@ int Script_cAgentData__RegisterRank_3(ScriptArg* args)
     p0[0] = args[0].i;
     a0 = *(int*)p0;
     req = Awards_ResolveUnlock(Loc_FindKeyThunk((const char*)a2));
-    func_0032EAD0(D_00532B50, Awards_FormatRankTitle(&r, a0, a1, req, func_0032EB80(D_00532B50), a3));
+    func_0032EAD0(g_RankRows, Awards_FormatRankTitle(&r, a0, a1, req, func_0032EB80(g_RankRows), a3));
     return 0;
 }
 #pragma pop /* merge_units */
@@ -90,7 +90,7 @@ int Script_cAgentData__RegisterRank_2(RankArgs* args) {
     w0 = args->a0;
     v0 = w0;
     id = Awards_ResolveUnlock(Loc_FindKeyThunk(v2));
-    func_0032EAD0(D_00532B50, Awards_FormatRankTitle(&rec, v0, v1, id, func_0032EB80(D_00532B50), 0));
+    func_0032EAD0(g_RankRows, Awards_FormatRankTitle(&rec, v0, v1, id, func_0032EB80(g_RankRows), 0));
     return 0;
 }
 #undef Loc_FindKeyThunk /* merge_units */
@@ -142,7 +142,7 @@ int Script_cAgentData__RegisterRank(ScriptArg* args)
     name[0] = args[0].i;
     n = *(volatile int*)name;
     agent = Awards_ResolveUnlock(Loc_FindKeyThunk(0));
-    func_0032EAD0(D_00532B50, Awards_FormatRankTitle(&rank, n, s, agent, func_0032EB80(D_00532B50), 0));
+    func_0032EAD0(g_RankRows, Awards_FormatRankTitle(&rank, n, s, agent, func_0032EB80(g_RankRows), 0));
     return 0;
 }
 #undef Loc_FindKeyThunk /* merge_units */

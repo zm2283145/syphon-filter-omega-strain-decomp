@@ -30,7 +30,7 @@ typedef struct {
 
 extern "C" {
 extern char D_004A7520[];
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_004DADF0[];
 extern char D_004DAE10[];
 extern void SoundEvent_Ctor(SoundEventMsg_45F4D0* msg, void* action, int flags);
@@ -49,7 +49,7 @@ static inline void StopVoice_45F4D0(Self_45F4D0* self)
     SoundEventMsg_45F4D0 stop;
     self->playing = 0;
     SoundEvent_Ctor(&stop, self->action, 0);
-    Event_Send(&stop, D_004FFB50, 1);
+    Event_Send(&stop, g_Game, 1);
     stop.vtbl = D_004DADF0;
     FileMan_Release(stop.partB, -1);
     FileMan_Release(stop.partA, -1);
@@ -64,7 +64,7 @@ static inline void PlayVoice_45F4D0(Self_45F4D0* self, char* voice)
     self->playing = 0;
     SoundMsg_WrapAction(&play, self->action);
     play.flag = 1;
-    Event_Send(&play, D_004FFB50, 1);
+    Event_Send(&play, g_Game, 1);
     play.vtbl = D_004DAE10;
     FileMan_Release(play.partB, -1);
     FileMan_Release(play.partA, -1);

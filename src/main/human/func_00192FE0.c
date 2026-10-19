@@ -7,7 +7,7 @@
 typedef struct { __int128 r[4]; } Mtx;
 
 extern "C" {
-extern char D_0055D4E0[];
+extern char g_TeleportMsgClass[];
 extern char D_004D9360[];
 void AnimChannel_SetDirect(void* ch, int mode, float value);
 }
@@ -23,7 +23,7 @@ static inline void Ev(char* t, Mtx* mt)
 {
     Msg e;
     Msg* pe = &e;
-    Event_Construct(pe, D_0055D4E0);
+    Event_Construct(pe, g_TeleportMsgClass);
     pe->vtable = D_004D9360;
     pe->kind = 2;
     Q4(&pe->m, mt);

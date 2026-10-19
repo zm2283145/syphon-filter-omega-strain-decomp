@@ -4,7 +4,7 @@ struct Sub282AF0 { char p[0x54]; unsigned char b54; };
 struct Tank282AF0 { char p[0x6C]; Sub282AF0* sub; };
 struct Msg282AF0 { void* vtable; char base[0x18]; int f1C; unsigned char b20; char p21[3]; unsigned char b24; char p25[3]; int f28; int f2C; };
 extern "C" {
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005721C0;
 extern char D_00506260[];
 extern char D_004DCF50[];
@@ -13,11 +13,11 @@ void Event_Construct(void* m, void* type);
 void Event_Send(void* m, void* target, int immediate);
 void cMessage_dtor(void* m, int flags);
 }
-static inline int IsAuth282AF0(void) { return D_005721C8 ? D_005721C0 : 1; }
+static inline int IsAuth282AF0(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
 extern "C" int Script_cTank_StopFiring(Tank282AF0** args) {
     Tank282AF0* self = args[0];
     if (self->sub) self->sub->b54 = 1;
-    if (D_005721C8 && IsAuth282AF0()) {
+    if (g_IsMultiplayer && IsAuth282AF0()) {
         Msg282AF0 m;
         Event_Construct(&m, D_00506260);
         m.vtable = D_004DCF50;

@@ -15,7 +15,7 @@ int CreateThread(int *);
 int StartThread(int, int);
 int ChangeThreadPriority(int, int);
 extern char D_004E9B70; /* _gp */
-extern signed char D_00533880; /* allocator must lock Timer0 (DME thread may preempt) */
+extern signed char g_ProfileLockEnabled; /* allocator must lock Timer0 (DME thread may preempt) */
 extern int g_DmeThreadId;
 extern int g_DmeMainThreadId;
 extern unsigned char D_00572528; /* DME thread running */
@@ -40,7 +40,7 @@ int DME_CreateThread(int entry) {
         ChangeThreadPriority(g_DmeThreadId, 0xA);
         g_DmeThreadId = CreateThread(&param.status);
         StartThread(g_DmeThreadId, 0);
-        D_00533880 = 1;
+        g_ProfileLockEnabled = 1;
         D_00572528 = 1;
     }
     return 1;

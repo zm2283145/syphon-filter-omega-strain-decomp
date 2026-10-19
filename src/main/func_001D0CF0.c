@@ -13,7 +13,7 @@ struct Slot {
     char padE0[0x20];
 };
 extern "C" {
-extern Slot D_004F32B0[];
+extern Slot UpperBodyNodeTable[];
 void func_001D0DF0(V4* out, V4* q, int one, void* inner);
 }
 static inline void Cp(void* d0, const void* s) { void* d = d0; __int128 t; __asm__ volatile("lq %0, 0x0(%1)" : "=r"(t) : "r"(s)); __asm__ volatile("sq %0, 0x0(%1)" : : "r"(t), "r"(d) : "memory"); }
@@ -28,7 +28,7 @@ static inline void QMul(V4* o, const V4* b, const V4* c) {
 }
 extern "C" void UpperBody_FootRotation(void* self, const V4* q, int idx, int flag)
 {
-    Slot* s = &D_004F32B0[idx];
+    Slot* s = &UpperBodyNodeTable[idx];
     Src* src = s->src;
     if (flag) {
         V4 a, d, r2, c, r;

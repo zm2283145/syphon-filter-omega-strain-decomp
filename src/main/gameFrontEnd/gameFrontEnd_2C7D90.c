@@ -93,7 +93,7 @@ extern int D_0051EF78;
 extern int D_0051EF80;
 extern int D_0051EF88;
 extern int D_0051EF90;
-extern unsigned char D_00587B38;
+extern unsigned char g_GuiSoundGate;
 }
 
 extern "C" void FrontEnd_SetLoadingScreen(Self7D90* self, int on, char* a, char* b)
@@ -117,7 +117,7 @@ extern "C" void FrontEnd_SetLoadingScreen(Self7D90* self, int on, char* a, char*
         return;
     }
     if (on) {
-        D_00587B38 = 1;
+        g_GuiSoundGate = 1;
         a = a ? a : D_004ACEB0;
         b = b ? b : D_004ACEB8;
         D_0051EF80 = GuiManager_FindOrLoad(Gui_GetScreenList(), b, a);
@@ -147,7 +147,7 @@ extern "C" void FrontEnd_SetLoadingScreen(Self7D90* self, int on, char* a, char*
             o->f68(D_0051EF80);
         }
         GuiManager_Update(Gui_GetScreenList(), 0.0f);
-        D_00587B38 = 0;
+        g_GuiSoundGate = 0;
         D_0051EF80 = 0;
         D_0051EF88 = 0;
         self->f2D = 0;
@@ -162,7 +162,7 @@ static inline void merge_flush_func_002C7D90(void) {}
 /* merge_units: begin func_002C7FC0 */
 #pragma push /* merge_units */
 extern char* DME_GetLobby(void);
-extern char D_004FFB50[];
+extern char g_Game[];
 extern void* Agent_GetSelected(char* name, int index);
 extern int D_0052FE80;
 extern void* func_00336E80(void* agent, int i);
@@ -170,7 +170,7 @@ extern void LobbyArray_Append(void* list, void* item);
 int func_002C7FC0(void)
 {
     char* owner = DME_GetLobby();
-    void* agent = Agent_GetSelected(D_004FFB50, -1);
+    void* agent = Agent_GetSelected(g_Game, -1);
     void* list;
     int i;
     if (!owner || !agent)
@@ -198,15 +198,15 @@ extern A2C8090* Agent_GetSelected(void*, int);
 #define Agent_GetSelected(a0, a1) ((A2C8090 *)Agent_GetSelected((void *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-extern char D_004FFB50;
+extern char g_Game;
 #endif /* merge_units */
-#define D_004FFB50 (*(char*)&D_004FFB50) /* merge_units */
+#define g_Game (*(char*)&g_Game) /* merge_units */
 
 #define LobbyArray_At(a0, a1) ((E2C8090 *)LobbyArray_At((a0), (a1))) /* merge_units */
 extern void func_00336EC0(A2C8090*, E2C8090*);
 int FrontEnd_FlushMessages(void) {
     char* g = DME_GetLobby();
-    A2C8090* ag = Agent_GetSelected(&D_004FFB50, -1);
+    A2C8090* ag = Agent_GetSelected(&g_Game, -1);
     int i;
     L2C8090* l;
     int n;
@@ -231,7 +231,7 @@ int FrontEnd_FlushMessages(void) {
 }
 #undef LobbyArray_At /* merge_units */
 #undef Agent_GetSelected /* merge_units */
-#undef D_004FFB50 /* merge_units */
+#undef g_Game /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002C8090(void) {}
 #pragma pop /* merge_units */
@@ -244,7 +244,7 @@ extern "C" {
 extern int D_0048C358;
 extern int D_0048C350;
 extern int D_0048C348;
-extern void* D_0051EF70;
+extern void* g_SplashThreadStack;
 void RemoveIntcHandler(int id, int sema);
 void TerminateThread(int thread);
 void DeleteThread(int thread);
@@ -263,11 +263,11 @@ extern "C" void FrontEnd_StopSplashThread(Obj81D0* o)
         }
         D_0048C358 = -1;
         {
-            void* p = D_0051EF70;
+            void* p = g_SplashThreadStack;
             AllocGuard guard;
             Mem_Free(0, p, "gameFrontEnd.cc", 0x89C);
         }
-        D_0051EF70 = 0;
+        g_SplashThreadStack = 0;
         o->active = 0;
     }
 }

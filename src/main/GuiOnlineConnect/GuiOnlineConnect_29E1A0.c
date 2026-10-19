@@ -12,7 +12,7 @@ struct Str_0029E1A0 { char d[0x10]; };
 struct S_0029E1A0 { char pad0[0x48]; int f48; char pad4C[0x3C]; int f88; char pad8C[0x120 - 0x8C]; int f120; };
 extern "C" {
 extern void* D_004FFC04;
-extern unsigned char D_0051EEB0;
+extern unsigned char g_DebugTriangle;
 extern char D_004AABF0[];
 void GuiScreen_Update(S_0029E1A0* self);
 void FrontEnd_StartSplashThread(void* ui);
@@ -38,7 +38,7 @@ void GuiOnlineConnect_Advance(S_0029E1A0* self);
 extern "C" void GuiOnlineConnect_Update(S_0029E1A0* self)
 {
     GuiScreen_Update(self);
-    if (D_0051EEB0)
+    if (g_DebugTriangle)
         return;
     if (!self->f88) {
         FrontEnd_StartSplashThread(D_004FFC04);
@@ -115,10 +115,10 @@ struct S_0029E440 {
 extern "C" {
 extern char D_004AAC18[];
 extern char D_004AAC28[];
-extern char D_005381F0[];
-extern char D_004FFB50[];
+extern char g_Video[];
+extern char g_Game[];
 extern char D_004F2CC0[];
-extern int* D_0055A830;
+extern int* g_MemCard;
 extern char D_004FFBA4[];
 extern "C" char D_004AABC8[];
 static void * const dat_0048B988[2] = { (void*)D_004AABC8, (void*)0x0 };
@@ -210,11 +210,11 @@ extern "C" int GuiOnlineConnect_HandleEvent(S_0029E440* self, void* w, int msg, 
             if (m == 0x1A) {
                 void* svc;
                 int id;
-                Renderer_Teardown(D_005381F0);
-                svc = Service_Lookup(D_004FFB50, D_004F2CC0);
+                Renderer_Teardown(g_Video);
+                svc = Service_Lookup(g_Game, D_004F2CC0);
                 if (svc)
                     SoundMgr_UnloadLevel(svc);
-                id = D_0055A830 ? *D_0055A830 : -1;
+                id = g_MemCard ? *g_MemCard : -1;
                 if (id != -1)
                     func_002B4FA8(id);
                 func_002B4E50();

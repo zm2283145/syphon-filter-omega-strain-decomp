@@ -12,21 +12,21 @@
 typedef struct { char pad[5]; unsigned char v; } Cfg_1470;
 typedef struct { char pad[0x67]; unsigned char on; char pad68[0x1DC - 0x68]; Cfg_1470* cfg; } S_1470;
 typedef struct { char pad[0xC]; unsigned char flag; } G_1470;
-extern unsigned char D_005721C8;
-extern G_1470* D_004FFC38;
+extern unsigned char g_IsMultiplayer;
+extern G_1470* g_Fader;
 void PadRumble_Stop(void);
 void Pad_EnableVibration(unsigned char v);
 void Game_SetPaused(S_1470* self, unsigned char on)
 {
-    if (!D_005721C8)
+    if (!g_IsMultiplayer)
         self->on = on;
     if (self->on) {
         PadRumble_Stop();
         Pad_EnableVibration(0);
-        D_004FFC38->flag = 1;
+        g_Fader->flag = 1;
     } else {
         Pad_EnableVibration(self->cfg->v);
-        D_004FFC38->flag = 0;
+        g_Fader->flag = 0;
     }
 }
 /* merge_units: generate this block's code under its own pragmas */

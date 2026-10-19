@@ -18,7 +18,7 @@ typedef struct {
     char pad9D[3]; void* fA0; void* fA4; char padA8[0x28]; int fD0; int fD4; char padD8[4]; int fDC;
 } S_45CA20;
 typedef struct { char pad[0x6A8]; unsigned char busy; } G_45CA20;
-extern G_45CA20* D_004FFC2C;
+extern G_45CA20* g_Hud;
 extern int D_00497ACC[];
 extern int D_00497AEC[];
 void GuiGameScreen_GatherWeapons(S_45CA20* o);
@@ -39,7 +39,7 @@ void GuiGameScreen_ToggleWeaponSelect(S_45CA20* o, int on)
     pf = &w->flags;
     if ((unsigned char)on == Has_45CA20(pf, 4)) return;
     if (on) {
-        if (D_004FFC2C->busy) return;
+        if (g_Hud->busy) return;
         Set_45CA20(pf, 2);
         o->w->flags |= 4;
         GuiGameScreen_GatherWeapons(o);
@@ -105,7 +105,7 @@ typedef struct {
 } S_45CC90;
 extern char D_004C2210[];
 extern char D_004C2228[];
-extern void* D_004FFD30;
+extern void* g_WeaponDatabase;
 extern void* D_00497AC0;
 extern W_45CC90* GuiFactory_CreateWidget(char*);
 extern W_45CC90* GuiWidget_FindChildByName(W_45CC90*, char*);
@@ -149,7 +149,7 @@ void GuiGameScreen_InitWeaponSelect(S_45CC90* self)
         GuiWidget_AddChild(self->root, self->items[i]);
         self->items[i]->fA4 = 0;
     }
-    WeaponDb_LoadModel(D_004FFD30, D_00497AC0, self->fD8, -1, 0, 0, 0);
+    WeaponDb_LoadModel(g_WeaponDatabase, D_00497AC0, self->fD8, -1, 0, 0, 0);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0045CC90(void) {}

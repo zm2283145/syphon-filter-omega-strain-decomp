@@ -29,10 +29,10 @@ static inline void merge_flush_func_00158980(void) {}
 /* merge_units: begin func_001589D0 */
 #pragma push /* merge_units */
 extern void ObjectList_EraseRange(int* out, int* key, int* value, int** ref);
-extern int D_004EA190;
+extern int g_NpcThinkList;
 extern int D_004EA194;
 extern int D_004EA198;
-extern int D_004EA370;
+extern int g_NpcDeadList;
 extern int D_004EA374;
 extern int D_004EA378;
 extern int D_004EA1B0;
@@ -53,10 +53,10 @@ void func_001589D0(void) {
 
     ref1 = &D_004EA194;
     value1 = D_004EA198;
-    ObjectList_EraseRange(&out1, &D_004EA190, &value1, &ref1);
+    ObjectList_EraseRange(&out1, &g_NpcThinkList, &value1, &ref1);
     ref2 = &D_004EA374;
     value2 = D_004EA378;
-    ObjectList_EraseRange(&out2, &D_004EA370, &value2, &ref2);
+    ObjectList_EraseRange(&out2, &g_NpcDeadList, &value2, &ref2);
     ref3 = &D_004EA1B4;
     value3 = D_004EA1B8;
     ObjectList_EraseRange(&out3, &D_004EA1B0, &value3, &ref3);

@@ -46,7 +46,7 @@ extern "C" int func_0023F680(int a0, int a1, int a2, ArgF680* arg) {
                 if (!a->off) {
                     if (o->kind == 5 && o->cam) {
                         cNIEventOBJ_ActivateCamera(o->cam);
-                        if (D_005721C8 && NpcAuth_IsLocal()) {
+                        if (g_IsMultiplayer && NpcAuth_IsLocal()) {
                             EvF680 e;
                             Event_Construct(&e, D_004F7C38);
                             e.vt = D_004DC2D0;
@@ -59,7 +59,7 @@ extern "C" int func_0023F680(int a0, int a1, int a2, ArgF680* arg) {
                 } else {
                     if (o->kind == 5 && o->cam) {
                         cNIEventOBJ_DeactivateCamera(o->cam);
-                        if (D_005721C8 && NpcAuth_IsLocal()) {
+                        if (g_IsMultiplayer && NpcAuth_IsLocal()) {
                             EvF680 e;
                             Event_Construct(&e, D_004F7C38);
                             e.vt = D_004DC2D0;

@@ -30,8 +30,8 @@ typedef struct {
     short selByCat[16];     /* +0x90C */
 } Self_D560;
 
-extern void* D_004FFD30;
-extern char D_004FFB50[];
+extern void* g_WeaponDatabase;
+extern char g_Game[];
 extern char D_004AC2F0[], D_004AC300[], D_004AC310[], D_004AC320[], D_004AC330[], D_004AC340[], D_004AC350[], D_004AC360[];
 
 extern char* String_CStr(void* str);
@@ -67,7 +67,7 @@ int GuiEquipmentModify_HandleEvent(Self_D560* self, Wid_D560* w, unsigned short 
         self->selByCat[self->cat] = param;
         val = 0;
         if (self->sel < self->count)
-            val = WeaponDb_Get(D_004FFD30, self->items[self->sel])->value;
+            val = WeaponDb_Get(g_WeaponDatabase, self->items[self->sel])->value;
         c = self->cat;
         if (c != 0 && c != self->curSlot) {
             self->dst->eq.slots[c] = val;
@@ -88,7 +88,7 @@ int GuiEquipmentModify_HandleEvent(Self_D560* self, Wid_D560* w, unsigned short 
             if (val)
                 self->dst->eq.slots[self->curSlot] = 0;
         }
-        if (AgentData_HasUnlock(Agent_GetSelected(D_004FFB50, -1), 1)) {
+        if (AgentData_HasUnlock(Agent_GetSelected(g_Game, -1), 1)) {
             if (self->curSlot == 3)
                 self->dst->eq.slots[1] = self->dst->eq.slots[0];
             else
@@ -175,7 +175,7 @@ int GuiEquipmentModify_HandleEvent(Self_D560* self, Wid_D560* w, unsigned short 
     }
     if (msg == 0x1A && a3 == 0) {
         GuiStack_SwapScreens(Gui_GetScreenStack(), self, 0);
-        Game_EndLevel(D_004FFB50, 3);
+        Game_EndLevel(g_Game, 3);
         return 1;
     }
     return GuiWidget_OnEvent(self, w, msg, a3, param);

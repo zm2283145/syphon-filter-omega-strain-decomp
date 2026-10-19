@@ -154,7 +154,7 @@ struct ActivateController {
 };
 
 extern "C" {
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern int D_005721A8;
 extern int D_00494178;
 extern char D_00582770[];
@@ -188,7 +188,7 @@ static inline const GobjId* object_id(cGOBJ* object)
 static inline int current_peer(void)
 {
     int session = D_005721A8;
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         if (D_00494178 == -1)
             NetGame_InitLocalSlot(&D_00494178, session);
         return D_00494178;

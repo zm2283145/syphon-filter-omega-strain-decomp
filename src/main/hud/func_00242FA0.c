@@ -1,6 +1,6 @@
 #include "types.h"
-extern unsigned char D_00533880;
-extern int D_00533888;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
 void Alloc_Lock(int id);
 void Alloc_Unlock(int id);
 typedef struct { int key; float f4; int id; int c; int d; int x14; signed char x18; } Ent_242FA0;
@@ -65,11 +65,11 @@ int Hud_ShowCallout(char* o, float scale, float fade, int* key, int a2, int id, 
     End_(&e2, o + 0x6E8);
     if (it.n == e2.n) {
         Ent_242FA0* e;
-        if (D_00533880) Alloc_Lock(9);
-        D_00533888++;
+        if (g_ProfileLockEnabled) Alloc_Lock(9);
+        g_ProfileLockDepth++;
         e = Mem_Alloc(0, 0x1C, D_004A7210, 0x505);
-        if (D_00533880) Alloc_Unlock(9);
-        D_00533888--;
+        if (g_ProfileLockEnabled) Alloc_Unlock(9);
+        g_ProfileLockDepth--;
         if (e) {
             func_0016F7E0(e, key);
             e->f4 = scale;

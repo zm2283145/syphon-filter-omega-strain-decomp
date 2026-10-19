@@ -15,7 +15,7 @@ extern int D_004BE020;
 extern "C" void Effect_Draw();
 extern "C" void Effect_Update();
 extern void * const D_004E0760[];
-extern unsigned char D_00533880;
+extern unsigned char g_ProfileLockEnabled;
 }
 extern "C" int func_003EC050(int arg0, long long arg1) {
     if (arg0 != NULL) {

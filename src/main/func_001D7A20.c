@@ -5,7 +5,7 @@ extern "C" {
 char* func_001D7B10(void* v);
 char* func_001D7AD0(void* v);
 void func_001D7B00(It1D7A20* out, void* v, char** p);
-extern char* D_004F32B0[];
+extern char* UpperBodyNodeTable[];
 }
 struct O1D7A20 { int pad; char* list; };
 static inline bool It1D7A20_eq(char* a, char* b) { return a == b; }
@@ -25,7 +25,7 @@ extern "C" void func_001D7A20(O1D7A20* o)
         char* t = func_001D7AD0(v);
         func_001D7B00(&end, v, &t);
     }
-    char** out = D_004F32B0;
+    char** out = UpperBodyNodeTable;
     char* e = end.p;
     for (; It1D7A20_ne(p, e); p += 0x1D0) {
         *out = p;

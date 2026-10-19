@@ -2,7 +2,7 @@
 #include "types.h"
 struct Ev48C0 { unsigned short type; unsigned short sub; unsigned short x4; unsigned short x6; unsigned short key; };
 struct W48C0 { char pad[0x4C]; int m4C; };
-extern int D_004FFC2C;
+extern int g_Hud;
 extern "C" {
 void Hud_ToggleMap(int a);
 void HudMap_Reset(int a);
@@ -24,7 +24,7 @@ extern "C" int GuiMapScreen_HandleInput(W48C0* self, Ev48C0* e)
     if (press) {
         switch (e->key) {
         case 0x10:
-            Hud_ToggleMap(D_004FFC2C);
+            Hud_ToggleMap(g_Hud);
             break;
         case 0x100:
             HudMap_Reset(self->m4C);

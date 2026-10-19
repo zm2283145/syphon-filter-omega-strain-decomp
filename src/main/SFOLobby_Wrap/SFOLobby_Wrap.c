@@ -34,7 +34,7 @@ extern "C" {
 int Mem_Alloc(int, int, char *, int);                      
 int memset(int, int, int);                              
 extern char D_004C0B20;
-extern unsigned char D_00533880;
+extern unsigned char g_ProfileLockEnabled;
 }
 extern "C" int func_00443F40(int arg0) {
     int temp_s1;

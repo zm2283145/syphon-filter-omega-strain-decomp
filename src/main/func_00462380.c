@@ -11,7 +11,7 @@ struct Stack_462380 {
     virtual void Pop(void* screen);
 };
 extern "C" {
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern char D_004C2660[];
 extern char D_004C2668[];
 extern char D_004C2680[];
@@ -47,7 +47,7 @@ extern "C" int GuiEndGameObjectives_HandleInput(void* self, Ev_462380* ev)
         char* name;
         void* pg;
         Gui_GetScreenStack()->Pop(self);
-        name = D_005721C8 ? D_004C2660 : D_004C2668;
+        name = g_IsMultiplayer ? D_004C2660 : D_004C2668;
         pg = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004C2680, name);
         Gui_GetScreenStack()->Push(pg, 1);
         return 1;

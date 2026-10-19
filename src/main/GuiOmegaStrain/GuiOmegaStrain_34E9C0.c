@@ -41,7 +41,7 @@ int GuiOmegaStrain_IsType(void* self, const char* name) {
 #pragma push /* merge_units */
 typedef struct { char pad[0x18]; int a18; } E34EA00;
 typedef struct { int a0; int count; E34EA00* data; unsigned char aC; } L34EA00;
-extern char D_004FFB50[];
+extern char g_Game[];
 extern void func_00296F20(L34EA00* l);
 extern void func_00299270(L34EA00* l, int flags);
 extern void* Agent_GetSelected(void* list, int idx);
@@ -52,7 +52,7 @@ void GuiOmegaStrain_Show(void* o, int idx)
     L34EA00 l;
     func_00296F20(&l);
     l.aC = 1;
-    AgentData_GetAwardItems(Agent_GetSelected(D_004FFB50, -1), 4, 0, &l);
+    AgentData_GetAwardItems(Agent_GetSelected(g_Game, -1), 4, 0, &l);
     if (idx >= 0 && idx < l.count) GuiPersonnelScreen_ShowItem(o, idx, ((E34EA00*)((char*)l.data + idx * 28))->a18);
     func_00299270(&l, 0);
 }

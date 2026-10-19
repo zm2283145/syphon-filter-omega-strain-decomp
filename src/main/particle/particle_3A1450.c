@@ -116,7 +116,7 @@ struct Src { char pad[0x30]; V4 pos; };
 extern "C" V4 D_00535D40;
 extern "C" unsigned char D_00535D60;
 extern "C" unsigned char D_00535D61;
-extern "C" char D_00535D20[];
+extern "C" char g_LightMgr[];
 extern "C" V4 D_00537D80;
 #if 0 /* merge_units */
 extern "C" void ParticleEmitter_SpawnChild(Self_003A1760* self, float t, int arg);
@@ -161,7 +161,7 @@ extern "C" void ParticleEmitterBase_Update(Self_003A1760* self, float t, int arg
             D_00535D60 = 1;
             D_00535D61 = 1;
         }
-        LightMgr_GatherModelLights(D_00535D20, 0x16, 1, 0);
+        LightMgr_GatherModelLights(g_LightMgr, 0x16, 1, 0);
         void* xx = &self->col; /* dead on purpose: retail keeps this addiu */
         SQ(&self->col, LQ(&D_00537D80)); /* split lq/sq: retail interleaves the address setup */
         self->col.x = 0.0078125f * (self->col.x * self->GetDef()->s[0]);
@@ -290,7 +290,7 @@ struct Ids { char pad[0x16]; char b16; char pad17; unsigned int cnt; short ids[1
 struct Obj { char pad[8]; Nd* first; char padC[4]; Nd end; };
 struct Obj2 { char pad[0x1C]; int f1C; char pad20[0x50 - 0x20]; float f50; float f54; float f58; float f5C; };
 extern "C" {
-extern char D_005381F0[];
+extern char g_Video[];
 extern int D_00538C60;
 extern int D_00538C64;
 extern char D_00538C68;
@@ -311,14 +311,14 @@ extern V D_005381D0;
 extern M D_005390F0;
 extern float D_00538380;
 extern float D_00538370;
-extern Ids* D_00539248;
+extern Ids* g_TextureMgr;
 void func_00375A30(void* a, int b, int c, int d);
 void Renderer_UpdateCameraMatrices(void* r);
 void Renderer_SetDrawState(void* r, M* m, int a, int f);
 void func_00382910(Ids* p);
 }
-#define RS ((Rs*)D_005381F0)
-#define SLOT(i) ((SlotX*)((Slot*)D_005381F0 + (i)))
+#define RS ((Rs*)g_Video)
+#define SLOT(i) ((SlotX*)((Slot*)g_Video + (i)))
 static inline void AddId(Ids* l, int id)
 {
     if (l->cnt < 0x200 && (l->cnt == 0 || l->ids[l->cnt - 1] != id))
@@ -363,7 +363,7 @@ extern "C" void ParticleInst_Draw(Obj2* o, int flags, M* mtx)
             D_0053BAC0 = 1;
             D_0053BAD0.x = 0.0f; D_0053BAD0.y = 0.0f; D_0053BAD0.z = 0.0f; D_0053BAD0.w = 1.0f;
         }
-        Renderer_UpdateCameraMatrices(D_005381F0);
+        Renderer_UpdateCameraMatrices(g_Video);
         V q;
         V p = D_0053BAD0;
         M* mm = &D_005390F0;
@@ -375,14 +375,14 @@ extern "C" void ParticleInst_Draw(Obj2* o, int flags, M* mtx)
         a = (a < 255.0f) ? a : 255.0f;
     }
     Nd* n = self->first;
-    Ids* l = D_00539248;
+    Ids* l = g_TextureMgr;
     l->cnt = 0;
     l->b16 = 0;
     for (; n != &self->end; n = n->next) {
-        AddId(D_00539248, n->GetDef()->f74);
-        if (n->bC) { int id = n->f170; if (id >= 0) AddId(D_00539248, id); }
+        AddId(g_TextureMgr, n->GetDef()->f74);
+        if (n->bC) { int id = n->f170; if (id >= 0) AddId(g_TextureMgr, id); }
     }
-    func_00382910(D_00539248);
+    func_00382910(g_TextureMgr);
     n = self->first;
     if (!D_0053BAE0) {
         D_0053BAE0 = 1;
@@ -391,7 +391,7 @@ extern "C" void ParticleInst_Draw(Obj2* o, int flags, M* mtx)
     D_005381D0 = D_0053BAF0;
     int st = 0x100005;
     if (n->GetDef()->b64) st |= 0x2000;
-    Renderer_SetDrawState(D_005381F0, mtx, 2, st);
+    Renderer_SetDrawState(g_Video, mtx, 2, st);
     M* cur = 0;
     while (n != &self->end) {
         if (!n->b84 || !n->f6C) { n = n->next; continue; }
@@ -423,9 +423,9 @@ extern "C" void ParticleInst_Draw(Obj2* o, int flags, M* mtx)
         }
         if (dirty) {
             if (cur)
-                Renderer_SetDrawState(D_005381F0, cur, 2, st);
+                Renderer_SetDrawState(g_Video, cur, 2, st);
             else
-                Renderer_SetDrawState(D_005381F0, mtx, 2, st);
+                Renderer_SetDrawState(g_Video, mtx, 2, st);
         }
         n->Draw(o->f50, a, o->f54, 2, o->f5C);
         n = n->next;

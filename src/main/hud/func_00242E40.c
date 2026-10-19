@@ -3,7 +3,7 @@ typedef struct {
     void* vt; char pad04[0x18]; int w1C; signed char kind; char pad21[3]; signed char b24; char pad25[3];
     int id; float f0; float f1; char key[16]; int a3; signed char c0; signed char c1;
 } Msg_242E40;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern char D_0051EE48[];
 extern char D_004DE0F0[];
 extern int Loc_LookupText(char* key);
@@ -18,7 +18,7 @@ void Hud_SetCalloutLabel(int a0, int* a1, float f0, float f1, char* key, int a3,
     int text = Loc_LookupText(key);
     if (text) {
         Hud_ShowCallout(a0, a1, f0, f1, text, a3, c0, c1);
-        if (D_005721C8 && send) {
+        if (g_IsMultiplayer && send) {
             Msg_242E40 m;
             Msg_242E40* p = &m;
             Event_Construct(p, D_0051EE48);

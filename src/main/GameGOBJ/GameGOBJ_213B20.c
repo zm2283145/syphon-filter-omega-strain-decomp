@@ -28,11 +28,11 @@ typedef struct {
 } LdSnd2_00213B20;
 typedef struct { void* vtable; char base[0x20]; int kind; int arg; } LdMsg_00213B20;
 typedef struct { char pad[0x150]; char preset[0x2E0 - 0x150]; char action[1]; } Lift_00213B20;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005721C0;
 extern char D_004F5448[];
 extern char D_004DAED0[];
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_004DAE30[];
 extern char D_004DADF0[];
 extern void SoundStopMsg_Ctor(LdSnd2_00213B20* e, void* action, Lift_00213B20* l);
@@ -48,15 +48,15 @@ void Lift_FinishArrival(Lift_00213B20* l)
     LdSnd2_00213B20 ev1;
     LdMsg_00213B20 msg;
     SoundStopMsg_Ctor(&ev1, l->action, l);
-    Event_Send(&ev1, D_004FFB50, 1);
+    Event_Send(&ev1, g_Game, 1);
     ev1.vt = D_004DADF0;
     FileMan_Release(&ev1.s114, -1);
     FileMan_Release(&ev1.s78, -1);
     cMessage_dtor(&ev1, 0);
     SoundEvent_CtorFromPreset(&ev, l->preset, l);
     ev.flag = 1;
-    Event_Send(&ev, D_004FFB50, 1);
-    if (!D_005721C8 || (D_005721C8 ? D_005721C0 : 1)) {
+    Event_Send(&ev, g_Game, 1);
+    if (!g_IsMultiplayer || (g_IsMultiplayer ? D_005721C0 : 1)) {
         Event_Construct(&msg, D_004F5448);
         msg.vtable = D_004DAED0;
         msg.kind = 0;

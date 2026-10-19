@@ -12,7 +12,7 @@
 #pragma push /* merge_units */
 typedef struct { char pad[0x2C]; unsigned char x2C; unsigned char x2D; unsigned char x2E; char pad2[0x3469 - 0x2F]; unsigned char disguise; } Ctl_AC90;
 typedef struct { char pad[0x30]; Ctl_AC90* ctl; } NPC_AC90;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern void NetEvent_Send(Ctl_AC90* c, int id, int kind, int v, int a, int b, int d);
 void cNPC_SetHasDisguise(NPC_AC90* self, unsigned char v, int send)
 {
@@ -20,7 +20,7 @@ void cNPC_SetHasDisguise(NPC_AC90* self, unsigned char v, int send)
     unsigned char cur = c->x2D && c->x2C && !c->x2E && c->disguise;
     if (v != cur) {
         c->disguise = v;
-        if (D_005721C8 && send)
+        if (g_IsMultiplayer && send)
             NetEvent_Send(self->ctl, 0x39, 4, v, 0, 0, 0);
     }
 }
@@ -48,8 +48,8 @@ extern void NetEvent_Send(void* owner, int type, int size, int a, int b, int c, 
 
 void cNPC_v71(NPC_AD30* self, float f)
 {
-    if (D_005721C8) {
-        if (D_005721C8 ? D_005721C0 : 1)
+    if (g_IsMultiplayer) {
+        if (g_IsMultiplayer ? D_005721C0 : 1)
             NetEvent_Send(self->owner, 0x33, 4, (unsigned int)f, 0, 0, 0);
     }
     if (f < 1e-5f) self->f98 = 0.0f;
@@ -70,10 +70,10 @@ extern void NetEvent_Send(int id, int ev, int a, int b, int c, int d, int e);
 #endif /* merge_units */
 #define NetEvent_Send(a0, a1, a2, a3, a4, a5, a6) (NetEvent_Send((void *)(a0), (a1), (a2), (a3), (a4), (a5), (a6))) /* merge_units */
 
-static inline int NpcIsHost(void) { return D_005721C8 ? D_005721C0 : 1; }
+static inline int NpcIsHost(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
 void cNPC_v72(NpcB* self)
 {
-    if (D_005721C8 && NpcIsHost()) {
+    if (g_IsMultiplayer && NpcIsHost()) {
         NetEvent_Send(self->netId, 0x34, 4, 0, 0, 0, 0);
     }
     self->timer = 0;

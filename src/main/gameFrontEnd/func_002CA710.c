@@ -33,8 +33,8 @@ extern int D_0048C160[];
 extern Ids D_0048C260;
 extern char D_004ACFA0[];
 extern char D_004ACFA8[];
-extern int D_004ACB30[];
-extern char D_004FFB50[];
+extern int g_OnlineMissionTable[];
+extern char g_Game[];
 extern unsigned char D_0051EEA8;
 
 int FrontEnd_StartOnline(void* self)
@@ -76,7 +76,7 @@ int FrontEnd_StartOnline(void* self)
         }
     }
     len = strlen(text);
-    ag = Agent_GetSelected(D_004FFB50, -1) + 0x8DC;
+    ag = Agent_GetSelected(g_Game, -1) + 0x8DC;
     __clear((char*)&info, 0xC4);
 
     {
@@ -88,7 +88,7 @@ int FrontEnd_StartOnline(void* self)
     String_Copy(info.name2, ag + 0x80);
     func_00453C70(o, 0, &info, text, len, 1);
     {
-        int* q = D_004ACB30;
+        int* q = g_OnlineMissionTable;
         for (j = 0; j < 9; j++, q++) {
             func_00442670(o, D_0048C160[*q]);
         }

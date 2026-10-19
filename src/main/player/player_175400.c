@@ -11,14 +11,14 @@
 #pragma push /* merge_units */
 typedef struct { char pad[0x4C]; int kind; char pad2[0x33B4 - 0x50]; int bodies; } Plr_5400;
 extern Plr_5400* PlayerSlots_Get(int i);
-extern int D_0049D010;
+extern int g_HumanActorClassKey;
 int Script_SetPlayerBodies(int* args)
 {
     unsigned char f = ((unsigned char)(args[0] != 0) != 0) ^ 1;
     int i;
     for (i = 0; i < 4; i++) {
         Plr_5400* p = PlayerSlots_Get(i);
-        if (p && p->kind == D_0049D010)
+        if (p && p->kind == g_HumanActorClassKey)
             p->bodies = f;
     }
     return 0;
@@ -44,7 +44,7 @@ int Script_SetPlayerInvulnerability(int* args)
     C3Ent175480* e;
     for (i = 0; i < 4; i++) {
         e = PlayerSlots_Get(i);
-        if (e != 0 && e->team == D_0049D010) {
+        if (e != 0 && e->team == g_HumanActorClassKey) {
             Actor_SetInvulnerable(e, on);
         }
     }
@@ -80,7 +80,7 @@ extern Plr_RB* GObj_IdentityB(void* o);
 int Script_RestoreBody(void** args)
 {
     Plr_RB* p = GObj_IdentityB(args[0]);
-    if (p->kind == D_0049D010) {
+    if (p->kind == g_HumanActorClassKey) {
         Msg_RB m1;
         Msg_RB m2;
         Event_Construct(&m1, D_004F80A8);

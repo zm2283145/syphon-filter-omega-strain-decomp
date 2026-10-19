@@ -50,10 +50,10 @@ struct Cfg { char pad[0x59D]; unsigned char b59D; };
 struct Holder { Cfg* cfg; };
 extern "C" {
 extern char D_004A9930[], D_004A9940[], D_004A9950[], D_004A9960[];
-extern char D_004FFB50[];
+extern char g_Game[];
 extern int D_004FFC04;
-extern Holder D_0055A830;
-extern char D_0055DDA0[];
+extern Holder g_MemCard;
+extern char g_AgentPartCache[];
 void Appearance_RemoveBlankPairs(Look* l);
 void AgentPartCache_Unlock(void* p);
 Agent* Agent_GetSelected(void* p, int i);
@@ -65,24 +65,24 @@ void GuiStack_SwapScreens(int stack, Screen* s, int n);
 int Loc_LookupText(char* s);
 void FrontEnd_OpenPopup(int a, int b, int t1, int t2, Screen* s, int c);
 }
-/* opt_propagation off + the Holder* local keep the lui/addiu/lw 0 form for D_0055A830. */
+/* opt_propagation off + the Holder* local keep the lui/addiu/lw 0 form for g_MemCard. */
 #pragma opt_propagation off
 extern "C" void GuiAgentCreate_Save(Screen* self)
 {
     Look look;
     QMoveP(&look, &self->data->prof, 0x44);
     Appearance_RemoveBlankPairs(&look);
-    AgentPartCache_Unlock(D_0055DDA0);
+    AgentPartCache_Unlock(g_AgentPartCache);
     {
-        Agent* a = Agent_GetSelected(D_004FFB50, -1);
+        Agent* a = Agent_GetSelected(g_Game, -1);
         a->b8DC = 0;
         a->b91C = 0;
         a->i99C = -1;
         a->b95C = 0;
         a->i9A0 = -1;
     }
-    AgentData_StoreAppearance(Agent_GetSelected(D_004FFB50, -1), &look);
-    Holder* h = &D_0055A830;
+    AgentData_StoreAppearance(Agent_GetSelected(g_Game, -1), &look);
+    Holder* h = &g_MemCard;
     if (h->cfg->b59D) {
         int n = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004A9930, D_004A9940);
         GuiStack_SwapScreens(Gui_GetScreenStack(), self, n);
@@ -116,7 +116,7 @@ struct Self_0028BBE0 {
 extern "C" {
 extern char D_004A7520[];
 extern unsigned char D_004FFBB8;
-extern int D_004FFBBC;
+extern int g_CardSlotId;
 #if 0 /* merge_units */
 extern Ui_0028BBE0* D_004FFC04;
 #endif /* merge_units */
@@ -214,7 +214,7 @@ extern "C" int GuiAgentCreate_HandleEvent(Self_0028BBE0* self, Src_0028BBE0* w, 
             W_0028BBE0* x;
             if (text && *text) {
                 W_0028BBE0* t;
-                AgentData_SetName(Agent_GetSelected(D_004FFB50, -1), text);
+                AgentData_SetName(Agent_GetSelected(g_Game, -1), text);
                 t = FindAs_0028BBE0(self, "value_agent_name", D_004A7520);
                 if (t)
                     GuiTextWidget_SetText(t, text, 0);
@@ -230,8 +230,8 @@ extern "C" int GuiAgentCreate_HandleEvent(Self_0028BBE0* self, Src_0028BBE0* w, 
         } else if (sub == 3) {
             void* pg;
             D_004FFBB8 = 0;
-            D_004FFBBC = -1;
-            AgentData_Create(Agent_GetSelected(D_004FFB50, -1), 0, 1);
+            g_CardSlotId = -1;
+            AgentData_Create(Agent_GetSelected(g_Game, -1), 0, 1);
             if (D_004FFC04->b2E)
                 pg = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiCommandCenter", "CMDCENTR");
             else

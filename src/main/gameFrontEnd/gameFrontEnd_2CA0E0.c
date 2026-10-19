@@ -159,7 +159,7 @@ static inline void merge_flush_func_002CA350(void) {}
 typedef struct { char pad[0x264]; unsigned char b264; } S2CA640;
 int FrontEnd_LeaveOnline(S2CA640* s, int a); /* gsynth: defined below */
 typedef struct { char p0[0x255C]; int state; } L2CA580;
-extern unsigned char D_0051EEB0;
+extern unsigned char g_DebugTriangle;
 extern unsigned char D_005723B8;
 #if 0 /* merge_units */
 extern L2CA580* DME_GetLobby(void);
@@ -181,7 +181,7 @@ extern void func_00453B00(L2CA580* l, int v);
 void func_002CA580(void* s)
 {
     L2CA580* l;
-    if (D_0051EEB0) return;
+    if (g_DebugTriangle) return;
     l = DME_GetLobby();
     if (!l) return;
     SFOLobby_Update(l);

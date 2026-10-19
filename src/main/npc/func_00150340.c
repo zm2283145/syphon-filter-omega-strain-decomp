@@ -77,11 +77,11 @@ typedef M (*VFnM)(void*);
 
 extern "C" {
 extern float WorthShootingThreshold;
-extern int D_004BDD00;
-extern char D_0055D480[], D_004E0840[], D_004E0200[];
-extern unsigned char D_005721C8;
+extern int g_NoneWord;
+extern char g_ActorActionMsgClass[], D_004E0840[], D_004E0200[];
+extern unsigned char g_IsMultiplayer;
 struct GunDef { char pad[0x4C]; unsigned char ok; char pad4D[3]; unsigned char Ok() { return ok; } };
-extern GunDef D_0049F790[];
+extern GunDef SecondaryStateTable[];
 Obj* ActorRef_Copy(Hdl*);
 int WeaponInv_IsFullAuto(void*);
 unsigned char WeaponInv_GetHeldClass(void*);
@@ -104,7 +104,7 @@ struct MsgB {
 };
 struct Msg3B : MsgB {
     int id; unsigned char sub; char pad29[7];
-    Msg3B() : MsgB(D_0055D480) { vtable = D_004E0840; id = 0x3B; sub = 0xB; }
+    Msg3B() : MsgB(g_ActorActionMsgClass) { vtable = D_004E0840; id = 0x3B; sub = 0xB; }
     __declspec(weak) __declspec(MSG_DTOR) ~Msg3B() { vtable = D_004E0840; }
 };
 struct FireMsg : Msg3B {
@@ -131,7 +131,7 @@ static inline void Sub(V* r, V* a, V* b) { __asm__ volatile("lqc2 vf1, 0x0(%1); 
 static inline void Add(V* r, V* a, V* b) { __asm__ volatile("lqc2 vf1, 0x0(%1); lqc2 vf2, 0x0(%2); vadd.xyzw vf1, vf1, vf2; sqc2 vf1, 0x0(%0)" : : "r"(r), "r"(a), "r"(b) : "memory"); }
 static inline unsigned char GunReady(Gun* g) {
     unsigned char ok = 0;
-    if (D_0049F790[g->a].Ok() && D_0049F790[g->b].Ok()) ok = 1;
+    if (SecondaryStateTable[g->a].Ok() && SecondaryStateTable[g->b].Ok()) ok = 1;
     return ok;
 }
 static inline unsigned char HasGun(Owner* o) {
@@ -140,7 +140,7 @@ static inline unsigned char HasGun(Owner* o) {
 }
 inline FireMsg::FireMsg(Obj* tgt, int tm, V p, float y) {
     vtable = D_004E0200;
-    serial = *(tgt ? &tgt->serial : &D_004BDD00);
+    serial = *(tgt ? &tgt->serial : &g_NoneWord);
     team = tm;
     f38 = 0;
     pos = p;
@@ -249,7 +249,7 @@ void NpcAttack_FiringGate(Npc* self, float dt)
         if (!(self->cool <= 0.0f)) self->cool -= dt;
     }
 
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         char* s = self->owner->stats;
         if (s) s += 0x1C;
         unsigned short* p = (unsigned short*)s;

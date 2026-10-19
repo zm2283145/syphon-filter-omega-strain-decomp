@@ -3,7 +3,7 @@ typedef struct { char pad[0xC]; unsigned char ready; } Obj_4D0910;
 extern char D_004F8350[], D_004F8338[];
 extern char func_00267360[];
 extern signed char D_004EA0C8;
-extern char* D_004EA0B0;
+extern char* g_LosCheckService;
 extern void func_002674C0(void* p);
 extern void func_002674B0(void* p, int n);
 extern int func_001361D0(int* n);
@@ -20,7 +20,7 @@ void func_004D0910(void)
         __register_global_object(o, func_00267360, D_004F8338);
     }
     if (!D_004EA0C8) {
-        D_004EA0B0 = "LOS Manager";
+        g_LosCheckService = "LOS Manager";
         D_004EA0C8 = 1;
     }
 }

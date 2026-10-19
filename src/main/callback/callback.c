@@ -114,9 +114,9 @@ G9BA0* HudTracker_Delete(G9BA0* self, short del)
 #pragma inline_depth(12)
 #include "eventQueue.h"
 extern "C" {
-extern unsigned char D_00533880;
+extern unsigned char g_ProfileLockEnabled;
 extern unsigned char g_EventQueueClosed;            /* queue closed */
-extern int D_00533888;
+extern int g_ProfileLockDepth;
 extern char g_EventQueue[];                   /* queued events */
 extern EQEvent* g_EventQueueRunning;                 /* event currently running */
 void Alloc_Lock(int);void Alloc_Unlock(int);

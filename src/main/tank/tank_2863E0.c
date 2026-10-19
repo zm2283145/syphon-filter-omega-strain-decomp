@@ -25,7 +25,7 @@ void TargetVis_Register(void* list);
 void Object_Register(Obj_63E0* o);
 int NetMap_BindReceiver(int id, int owner, Obj_63E0* o);
 }
-static inline int NetHostOk_63E0(void) { return D_005721C8 ? D_005721C0 : 1; }
+static inline int NetHostOk_63E0(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
 extern "C" void func_002863E0(Obj_63E0* o, int arg1)
 {
     o->f60 = arg1;
@@ -37,7 +37,7 @@ extern "C" void func_002863E0(Obj_63E0* o, int arg1)
     Object_Register(o);
     o->activate(1);
     o->f74 = 0;
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         o->id10 = o->idC;
         if (!NetHostOk_63E0()) o->b14 = 0;
         {

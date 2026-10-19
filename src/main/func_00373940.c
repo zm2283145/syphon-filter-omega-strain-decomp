@@ -43,7 +43,7 @@ struct LMgr { char pad0[0x4C]; int count; char pad50[0x10]; LEnt ents[1]; };
 extern "C" {
 void Renderer_UpdateCameraMatrices(void*);
 unsigned int Shadow_ClipCode(void*, M*, V*);
-extern char D_005381F0[];
+extern char g_Video[];
 extern M D_005390F0;
 }
 /* Adds a light to the manager's per-frame table if it is directional (type 2), its transformed
@@ -58,9 +58,9 @@ extern "C" void LightMgr_BuildTable(LMgr* self, Light* l, M* m, V* cam, float f)
         ok = true;
     } else {
         V q = Xform3(l->pos, m); V e; V d;
-        Renderer_UpdateCameraMatrices(D_005381F0);
+        Renderer_UpdateCameraMatrices(g_Video);
         M* view = &D_005390F0;
-        ok = (Shadow_ClipCode(D_005381F0, view, &q) & ~0x40) == 0;
+        ok = (Shadow_ClipCode(g_Video, view, &q) & ~0x40) == 0;
         if (ok) {
             code = 3;
         } else {

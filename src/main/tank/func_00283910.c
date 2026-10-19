@@ -3,7 +3,7 @@
 typedef struct { void* vtable; char pad4[0x18]; int flags; unsigned char cls; char pad21[3]; unsigned char type; char pad25[3]; int w; float f; } M_00283910;
 extern "C" {
 extern char* D_005061D0;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005721C0;
 extern char D_00506260[];
 extern char D_004DCF50[];
@@ -24,7 +24,7 @@ static inline short R16_00283910(void) { unsigned char lo = *D_005061D0++; unsig
 static inline int R32_00283910(void) { unsigned short lo = R16_00283910(); return lo + ((unsigned short)R16_00283910() << 16); }
 static inline char R8_00283910(void) { return *D_005061D0++; }
 static inline float RF_00283910(void) { int i = R32_00283910(); return *(float*)&i; }
-static inline int Ok_00283910(void) { return D_005721C8 ? D_005721C0 : 1; }
+static inline int Ok_00283910(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
 static inline void Send_00283910(T_00283910* t, int type, int w, float f) {
     M_00283910 m;
     Event_Construct(&m, D_00506260);
@@ -49,13 +49,13 @@ extern "C" void func_00283910(M_00283910* p, T_00283910* t) {
             cNIEventOBJ_SetSpeedRecursive(f, a);
             a->v67();
             if (t->x) t->x->obj->v68(1);
-            if (D_005721C8 && Ok_00283910()) Send_00283910(t, 1, 0, f);
+            if (g_IsMultiplayer && Ok_00283910()) Send_00283910(t, 1, 0, f);
             break;
         }
         case 2:
             if (t->x) t->x->b54 = 0;
             t->b70 = 1;
-            if (D_005721C8 && Ok_00283910()) Send_00283910(t, 2, 0, 0.0f);
+            if (g_IsMultiplayer && Ok_00283910()) Send_00283910(t, 2, 0, 0.0f);
             break;
         case 3:
             if (t->x) {
@@ -65,7 +65,7 @@ extern "C" void func_00283910(M_00283910* p, T_00283910* t) {
             break;
         case 4:
             if (t->x) t->x->b54 = 1;
-            if (D_005721C8 && Ok_00283910()) Send_00283910(t, 4, 0, 0.0f);
+            if (g_IsMultiplayer && Ok_00283910()) Send_00283910(t, 4, 0, 0.0f);
             break;
         }
     }

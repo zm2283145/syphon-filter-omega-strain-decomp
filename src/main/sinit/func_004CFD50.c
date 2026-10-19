@@ -54,7 +54,7 @@ extern int D_004F7FA0;
 extern char Script_RemoveAllBackpacks[];
 extern int D_004F7FA8;
 extern signed char D_004EA0C8;
-extern char* D_004EA0B0;
+extern char* g_LosCheckService;
 extern int func_002824D0();
 extern int Script_RegisterType();
 extern int Script_RegisterNative();
@@ -93,7 +93,7 @@ void func_004CFD50(void)
     D_004F7FA0 = Script_RegisterNative(D_004F7F78, Script_cBackpack_StealPlayerWeapons_3, D_00493880, "StealPlayerWeapons", 4, &D_004F7F78, D_004EA170, D_004EA170, D_004EA170);
     D_004F7FA8 = Script_RegisterNative_2(Script_RemoveAllBackpacks, D_00493880, "RemoveAllBackpacks", 0);
     if (!D_004EA0C8) {
-    D_004EA0B0 = "LOS Manager";
+    g_LosCheckService = "LOS Manager";
     D_004EA0C8 = 1;
     }
 }

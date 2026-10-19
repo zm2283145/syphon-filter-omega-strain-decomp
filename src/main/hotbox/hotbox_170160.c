@@ -26,7 +26,7 @@ typedef struct { char p0[0x98]; int f98; } Obj70200;
 extern "C" {
 extern unsigned char D_005723C8;
 extern unsigned char D_005721D0;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005721C0;
 extern char D_004EE698[], D_004D9940[];
 extern void Event_Construct(Msg70200* e, void* type);
@@ -62,7 +62,7 @@ extern "C" int func_00170200(int a0, int a1, int a2, Pk70200* arg) {
         obj = Object_LookupById(&id1);
         if (obj) {
             MsgQueue_QueueClone(&msg, obj, 0, 0);
-            if (D_005721C8 ? D_005721C0 : 1) {
+            if (g_IsMultiplayer ? D_005721C0 : 1) {
                 int act = (unsigned char)msg.f24;
                 if (act == 0) {
                     obj->f98++;
@@ -91,14 +91,14 @@ Obj_0360* Hotbox_CreateRuntime(int, int, int, int);
 int NetGame_InitLocalSlot(int*, int);
 int func_002EBBA0(int, int*);
 extern int D_00494178;
-extern int D_004FFBD0;
+extern int g_HotboxTracker;
 extern int D_005721A8;
 #pragma inline_depth(10)
 static inline int LocalId_0360(void)
 {
     int r;
     int a = D_005721A8; /* read before the flag test: retail loads it ahead of the branch */
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, a);
         r = D_00494178;
     } else r = 0;
@@ -107,7 +107,7 @@ static inline int LocalId_0360(void)
 static inline int NetId_0360(void)
 {
     int id;
-    int ok = D_005721C8 ? D_005721C0 : 1;
+    int ok = g_IsMultiplayer ? D_005721C0 : 1;
     if (ok) {
         id = LocalId_0360();
     } else {
@@ -119,10 +119,10 @@ static inline int NetId_0360(void)
 }
 void func_00170360(int arg0, int* arg1)
 {
-    Obj_0360* o = Hotbox_CreateRuntime(D_004FFBD0, arg0, 1, 0);
+    Obj_0360* o = Hotbox_CreateRuntime(g_HotboxTracker, arg0, 1, 0);
     o->idC = *arg1;
     o->id10 = *arg1;
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         int t = o->id10;
         NetMap_BindReceiver(t, NetId_0360(), o);
     }
@@ -139,11 +139,11 @@ typedef struct { char pad[0xC]; int id; char pad10[0x80]; int mode; } T_0460;
 typedef struct { char pad[0xC]; int id; } O_0460;
 typedef struct { char pad[0x30]; O_0460* obj; } S_0460;
 #if 0 /* merge_units */
-extern void* D_004FFBD0;
+extern void* g_HotboxTracker;
 #endif /* merge_units */
-#define D_004FFBD0 (*(void **)&D_004FFBD0) /* merge_units */
+#define g_HotboxTracker (*(void **)&g_HotboxTracker) /* merge_units */
 
-extern char D_004EE6E0[];
+extern char g_RuntimeHotboxes[];
 #if 0 /* merge_units */
 T_0460* Hotbox_CreateRuntime(void* mgr, O_0460* obj, int a, int b);
 #endif /* merge_units */
@@ -153,14 +153,14 @@ void HotboxList_PushBack(void* list, T_0460** pt);
 void NetEvent_Send(O_0460* obj, int type, int size, int a, int b, int c, int d);
 T_0460* Global_MakeNPCInteractable(S_0460* self)
 {
-    T_0460* t = Hotbox_CreateRuntime(D_004FFBD0, self->obj, 1, 0);
+    T_0460* t = Hotbox_CreateRuntime(g_HotboxTracker, self->obj, 1, 0);
     t->mode = 3;
-    HotboxList_PushBack(D_004EE6E0, &t);
-    if (D_005721C8)
+    HotboxList_PushBack(g_RuntimeHotboxes, &t);
+    if (g_IsMultiplayer)
         NetEvent_Send(self->obj, 0x2A, 4, self->obj->id, t->id, 0, 0);
     return t;
 }
-#undef D_004FFBD0 /* merge_units */
+#undef g_HotboxTracker /* merge_units */
 #undef Hotbox_CreateRuntime /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00170460(void) {}

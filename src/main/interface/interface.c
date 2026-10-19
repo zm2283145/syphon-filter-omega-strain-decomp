@@ -12,7 +12,7 @@
 #include "interface_types.h"
 extern "C" {
 void Mem_Free(int pool, void* p, char* file, int line);
-extern void* D_00539248;                            /* texture manager */
+extern void* g_TextureMgr;                            /* texture manager */
 void func_003EF120(InterfaceModel* p, int flags);   /* InterfaceModel dtor */
 void func_00381260(void* p);
 void operator_delete(void* p);
@@ -27,7 +27,7 @@ extern "C" Interface* Interface_Dtor(Interface* self, short flag)
             func_003EF120(b, -1);
             Mem_Free(0, b, "interface.cc", 0x45);
         }
-        func_00381260(D_00539248);
+        func_00381260(g_TextureMgr);
         if (flag > 0)
             operator_delete(self);
     }

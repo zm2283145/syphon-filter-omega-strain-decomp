@@ -11,7 +11,7 @@ extern "C" {
 int Mem_Free(...);                     
 int func_0036D5D0(...);                         
 extern char D_0049AE60;
-extern unsigned char D_00533880;
+extern unsigned char g_ProfileLockEnabled;
 }
 extern "C" void func_003F9A30(void ***arg0, int *arg1, void ***arg2) {
     void **temp_s0;

@@ -20,8 +20,8 @@ extern "C" void func_003A23F0();
 extern "C" void func_003A6090();
 extern void * const D_004DFB10[];
 extern char D_004DFB50;
-extern unsigned char D_00533880;
-extern int D_00539248;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_TextureMgr;
 }
 #pragma opt_common_subs off
 extern "C" char * ShatterEmitter_Destroy(char * arg0, long long arg1) {
@@ -32,7 +32,7 @@ extern "C" char * ShatterEmitter_Destroy(char * arg0, long long arg1) {
         F_(arg0, 0x0, int) = (int)(&(*(char*)D_004DFB10));
         temp_a1 = F_(arg0, 0x170, int);
         if (temp_a1 >= 0) {
-            Tex_Release(D_00539248, temp_a1, 1);
+            Tex_Release(g_TextureMgr, temp_a1, 1);
         }
         temp_s2 = F_(arg0, 0x124, int);
         if (temp_s2 != 0) {

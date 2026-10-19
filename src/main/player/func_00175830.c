@@ -13,7 +13,7 @@ typedef struct Actor {
     void* items;
 } Actor;
 
-extern int D_0049D010;
+extern int g_HumanActorClassKey;
 extern Actor* GObj_IdentityB(void*);
 extern int Global_PlayerGetItemCount(void*, int);
 
@@ -27,7 +27,7 @@ int Script_PlayerGetItemCount(ScriptArg* args) {
     item[0] = args[1].i;
     itemValue = *(int*)item;
     actor = GObj_IdentityB(args[0].p);
-    if (actor->type == D_0049D010) {
+    if (actor->type == g_HumanActorClassKey) {
         count = Global_PlayerGetItemCount(actor->items, itemValue);
     } else {
         count = 0;

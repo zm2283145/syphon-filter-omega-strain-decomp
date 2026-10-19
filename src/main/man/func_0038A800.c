@@ -44,8 +44,8 @@ typedef struct {
     signed char selector[32];
 } TxModel;
 extern "C" {
-    extern TxManager* D_00539248;
-    extern int D_0053B358,D_0055DE90;
+    extern TxManager* g_TextureMgr;
+    extern int g_VisionThermal,D_0055DE90;
     extern short D_0053B360[],D_0053B362,D_0053B364,D_0053B366,D_0053B368;
     void func_00382910(TxManager*);
 }
@@ -58,7 +58,7 @@ static inline void tx_queue(TxManager* m,int id){
 extern "C" long long ManModel_BindLodTexture(TxModel* self,int which,int override,unsigned char flag){
     long long result=0;
     int count=self->count;
-    TxManager* mgr=D_00539248;
+    TxManager* mgr=g_TextureMgr;
     if(override){
         int n;
         long long*p;
@@ -87,7 +87,7 @@ extern "C" long long ManModel_BindLodTexture(TxModel* self,int which,int overrid
         }
         return 0x20059a019930acc0LL;
     }
-    if(D_0053B358){
+    if(g_VisionThermal){
         mgr->count=0;
         mgr->flag=0;
         tx_queue(mgr,D_0053B360[0]);

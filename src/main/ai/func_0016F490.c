@@ -8,8 +8,8 @@
 #include "ai_types.h"
 
 extern char g_NpcRouteMgr[];
-extern char D_004FFB50[];  /* global service registry */
-extern char D_005721C8[];  /* multiplayer flag byte */
+extern char g_Game[];  /* global service registry */
+extern char g_IsMultiplayer[];  /* multiplayer flag byte */
 extern int Service_Lookup(int, int);
 extern int func_001589D0(void);
 extern int NpcAi_ResetFireProgress(void);
@@ -21,7 +21,7 @@ void NpcAi_SetTeam(cAI* self, int value) {
     AIGObjSub* sub;
 
     self->unk54 = value;
-    if (*(unsigned char*)D_005721C8 != 0) {
+    if (*(unsigned char*)g_IsMultiplayer != 0) {
         gobj = self->gobj;
         if (gobj != 0) {
             sub = gobj->unk3584;
@@ -34,10 +34,10 @@ void NpcAi_SetTeam(cAI* self, int value) {
 
 int func_0016F4D0(void) {
     func_001589D0();
-    return func_00164330(Service_Lookup((int)D_004FFB50, (int)g_NpcRouteMgr));
+    return func_00164330(Service_Lookup((int)g_Game, (int)g_NpcRouteMgr));
 }
 
 int func_0016F510(void) {
-    NpcRouteMgr_AllocRequestPool(Service_Lookup((int)D_004FFB50, (int)g_NpcRouteMgr));
+    NpcRouteMgr_AllocRequestPool(Service_Lookup((int)g_Game, (int)g_NpcRouteMgr));
     return NpcAi_ResetFireProgress();
 }

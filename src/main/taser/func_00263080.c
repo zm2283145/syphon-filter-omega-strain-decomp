@@ -137,17 +137,17 @@ extern int Random_Next(void);
 extern void* Service_Lookup(void* w, void* key);
 extern void AiSound_SendImpactNoise(HNoiseMsg_263080* m, float a, int* id, HPos_263080* pos, signed char kind, float b);
 
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern char D_00504050[];
 extern char D_004DCDA0[];
 extern char D_004DCF10[];
-extern char D_0055D480[];
+extern char g_ActorActionMsgClass[];
 extern char D_004E01E0[];
 extern char D_004E0840[];
 extern int D_0048B1D8;
 extern char D_004F12D0[];
 extern char D_004F1470[];
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_004DADF0[];
 extern char D_004A81E8[];
 extern float D_0048B150;
@@ -208,7 +208,7 @@ static inline HNode_263080* Erase1263(int* l, HNode_263080* it) { return EraseN2
 extern "C" void HeldItem_Release(HeldItem_263080* s)
 {
     if (s->state) {
-        if (s->actor->f14 && D_005721C8) {
+        if (s->actor->f14 && g_IsMultiplayer) {
             HTaserMsg_263080 m;
             Event_Construct(&m, D_00504050);
             m.i28 = 0;
@@ -226,7 +226,7 @@ extern "C" void HeldItem_Release(HeldItem_263080* s)
             HSnd_263080 b;
             Actor_ShockReaction(Handle_Ptr(s), 2, 0, 1.0f);
             Actor_ShockReaction(Handle_Get(s), 1, 0, 1.0f);
-            Event_Construct(&sm, D_0055D480);
+            Event_Construct(&sm, g_ActorActionMsgClass);
             sm.state = 7;
             sm.sub = 2;
             sm.vt = D_004E01E0;
@@ -235,10 +235,10 @@ extern "C" void HeldItem_Release(HeldItem_263080* s)
             Event_Send(&sm, Handle_Get(s), 0);
             SoundStopMsg_Ctor(&a, D_004F12D0, Handle_Get(s));
             a.flag = 1;
-            Event_Send(&a, D_004FFB50, 0);
+            Event_Send(&a, g_Game, 0);
             SoundStopMsg_Ctor(&b, D_004F1470, Handle_Get(s));
             b.flag = 1;
-            Event_Send(&b, D_004FFB50, 0);
+            Event_Send(&b, g_Game, 0);
             b.vt = D_004DADF0;
             FileMan_Release(&b.s114, -1);
             FileMan_Release(&b.s78, -1);
@@ -270,7 +270,7 @@ extern "C" void HeldItem_Release(HeldItem_263080* s)
             s->owned = 0;
         }
         if (s->state == 2) {
-            World_PopObject(D_004FFB50);
+            World_PopObject(g_Game);
             if (Handle_Get(s)) {
                 if (s->bBC) {
                     Handle_Ptr(s)->f100(s->actor, 1, 4, 0, 0, 0, 10000.0f);
@@ -279,7 +279,7 @@ extern "C" void HeldItem_Release(HeldItem_263080* s)
                     if (s->actor->f14) {
                         HIface_263080* q = s->actor->p58;
                         bool ok = HasF54b(s->actor);
-                        if (ok) Stats_Add(Agent_GetSelected(D_004FFB50, -1), 6, 1);
+                        if (ok) Stats_Add(Agent_GetSelected(g_Game, -1), 6, 1);
                     }
                     t = Handle_Get(s);
                     t->f100(s->actor, 1, 7, 0, 0, 0, 0.0f);
@@ -293,7 +293,7 @@ extern "C" void HeldItem_Release(HeldItem_263080* s)
         if (Random_Next() & 1) s->fC8 = -s->fC8;
         if (Random_Next() & 1) s->fCC = -s->fCC;
         if (s->count > 1) {
-            void* svc = Service_Lookup(D_004FFB50, D_004EE5C0);
+            void* svc = Service_Lookup(g_Game, D_004EE5C0);
             HNoiseMsg_263080 nm;
             AiSound_SendImpactNoise(&nm, 1.0f, s->actor->pos, &s->pos[s->count - 1], 4, s->def->fFC);
             Event_Send(&nm, svc, 0);

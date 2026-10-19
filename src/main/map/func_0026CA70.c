@@ -18,13 +18,13 @@ struct Ctx { Scr* scr; };
 struct HSelf { char pad0[8]; Ctx* ctx; char padC[4]; char cull[4]; int count; DbObj** objs; char pad1C[4]; Mtx mtx; };
 
 extern "C" {
-extern char D_005381F0[];
+extern char g_Video[];
 extern int D_00538C60;
 extern int D_00538C64;
 extern char D_00538C68;
-extern int D_005392D0;
+extern int g_DrawMode;
 extern int D_005382E4;
-extern char D_004FFC14[];
+extern char g_CameraObject[];
 extern float D_0048B278;
 extern float D_0048B290;
 extern float D_0048B298;
@@ -48,8 +48,8 @@ void TreeIter_Increment(DbIt* it);
 void func_0013F090(DbMap* m, short del);
 }
 
-#define SlotAt(i) ((Slot*)(D_005381F0 + 0x1F0 + (i) * 0x110))
-static inline Mtx* MtxAt(int i) { return &((Render*)D_005381F0)->mtx[i]; }
+#define SlotAt(i) ((Slot*)(g_Video + 0x1F0 + (i) * 0x110))
+static inline Mtx* MtxAt(int i) { return &((Render*)g_Video)->mtx[i]; }
 static inline void GQR(void* d, void* s) { __int128 qa, qb; __asm__ volatile("lq %0, 0x0(%3); lq %1, 0x10(%3); sq %0, 0x0(%2); lq %0, 0x20(%3); sq %1, 0x10(%2); lq %1, 0x30(%3); sq %0, 0x20(%2); sq %1, 0x30(%2)" : "=&r"(qa), "=&r"(qb) : "r"(d), "r"(s) : "memory"); }
 static inline void UM(void* p) { void* pp = p; int t; __asm__ volatile("sqc2 $vf0, 0x30(%1); qmfc2.ni %0, $vf0; pcpyud %0, %0, $zero; sq %0, 0x10(%1); pexcw %0, %0; sq %0, 0x20(%1); pcpyud %0, %0, $zero; sq %0, 0x0(%1)" : "=&r"(t) : "r"(pp) : "memory"); }
 static inline void MM(void* d, void* a, void* b)
@@ -82,14 +82,14 @@ extern "C" void HudMap_Draw(HSelf* self)
         return;
     nearZ = GetNear(SlotAt(D_00538C60));
     farZ = GetFar(SlotAt(D_00538C60));
-    Front(D_004FFC14);
+    Front(g_CameraObject);
     { int k = D_00538C64; GQR(MtxAt(k + 1), MtxAt(k)); }
     D_00538C64++;
     GQR(MtxAt(D_00538C64), &self->mtx);
     D_00538C68 = 1;
     SetClip(SlotAt(D_00538C60), D_0048B2B0, D_0048B298, D_0048B290);
-    D_005392D0 = 1;
-    func_0037A1E0(D_005381F0);
+    g_DrawMode = 1;
+    func_0037A1E0(g_Video);
     D_005382E4 = 2;
     HudMap_Cull(self->cull);
     func_0013F800(&map, cmp, alloc);
@@ -110,10 +110,10 @@ extern "C" void HudMap_Draw(HSelf* self)
         d->Draw();
     }
     func_0013F090(&map, -1);
-    D_005392D0 = 0;
+    g_DrawMode = 0;
     D_00538C68 = 1;
     D_00538C64--;
-    func_0037A1E0(D_005381F0);
+    func_0037A1E0(g_Video);
     SetClip(SlotAt(D_00538C60), D_0048B2B0, 1.25f, D_0048B290);
     D_005382E4 = 1;
     UM(&m208);
@@ -133,7 +133,7 @@ extern "C" void HudMap_Draw(HSelf* self)
     UM(&D_0055C0C0);
     D_005382E4 = 2;
     D_0055C100 = 0;
-    func_0037A1E0(D_005381F0);
+    func_0037A1E0(g_Video);
     {
         Slot* s = SlotAt(D_00538C60);
         s->fF0 = nearZ;

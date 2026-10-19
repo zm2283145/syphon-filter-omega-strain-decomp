@@ -13,9 +13,9 @@ struct Obj_441780 {
 };
 
 extern "C" {
-extern char D_004FFB50[];
+extern char g_Game[];
 extern int D_004FFC04;
-extern Net_441780 D_0055A830;
+extern Net_441780 g_MemCard;
 extern char D_004C04B8[]; extern char D_004C04C0[]; extern char D_004C04C8[];
 extern char D_004C04D8[]; extern char D_004C0468[];
 int Agent_GetSelected(void*, int);
@@ -38,14 +38,14 @@ static inline int ShowMsg(int mgr, int type, char* t, char* msg, void* cb, int x
 
 extern "C" int SaveAgentWidget_SpaceCheck(Obj_441780* self)
 {
-    Net_441780* net = &D_0055A830;
+    Net_441780* net = &g_MemCard;
     int need = 0;
     int have;
     int lim;
     if (self->mode == 4) {
         if (!MemCardWrap_Exists(net, D_004C04B8)) need = 1000;
     } else if (!SaveAgentWidget_FindSlotFile(self->f50, 0, 0)) {
-        need = AgentData_GetSaveSize(Agent_GetSelected(D_004FFB50, -1));
+        need = AgentData_GetSaveSize(Agent_GetSelected(g_Game, -1));
     }
     have = MemCard_GetSpaceNeeded(net, need);
     lim = net->impl->f5A4;

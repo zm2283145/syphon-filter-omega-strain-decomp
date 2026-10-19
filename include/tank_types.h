@@ -41,7 +41,7 @@ typedef struct TankLink {
     unsigned char unk28;  /* 0x28 */
 } TankLink;
 
-/* Weapon definition table (global at D_004FFD30) lookup by weapon id. */
+/* Weapon definition table (global at g_WeaponDatabase) lookup by weapon id. */
 extern void* WeaponDb_Get(void* table, int id);
 
 #endif

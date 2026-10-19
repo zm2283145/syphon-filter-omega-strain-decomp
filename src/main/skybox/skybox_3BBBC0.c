@@ -17,7 +17,7 @@ int Fstream_ReleaseNoCallback(int, char *, int);
 int Fstream_GetLoader();                                
 int operator_delete(char * );                          
 int sprintf(char *, char *, char * );                        
-extern char D_005381F0;
+extern char g_Video;
 
 char * func_003BBBC0(char * arg0, short arg1) {
     int spD0[32];
@@ -33,7 +33,7 @@ char * func_003BBBC0(char * arg0, short arg1) {
                 Fstream_ReleaseNoCallback(Fstream_GetLoader(), sp30, 1);
                 FileMan_Release(sp30, -1);
             } else {
-                func_0037B2F0(&D_005381F0, F_(arg0, 0x44, int), -1);
+                func_0037B2F0(&g_Video, F_(arg0, 0x44, int), -1);
             }
         }
         if (arg1 > 0) {

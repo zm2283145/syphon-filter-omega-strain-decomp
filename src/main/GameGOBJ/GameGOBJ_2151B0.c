@@ -52,7 +52,7 @@ typedef struct ElevatorMsg {
     char memberB[0x1D0 - 0x114]; /* +0x114 */
 } ElevatorMsg;
 
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_004DADF0[];
 extern char g_TargetVisMgr[];
 extern "C" void SoundStopMsg_Ctor(ElevatorMsg* msg, int* floors, cElevatorGOBJ_002151C0* self);
@@ -67,7 +67,7 @@ extern "C" void cElevatorGOBJ_v07(cElevatorGOBJ_002151C0* self)
 {
     ElevatorMsg msg;
     SoundStopMsg_Ctor(&msg, &self->floors, self);
-    Event_Send(&msg, D_004FFB50, 1);
+    Event_Send(&msg, g_Game, 1);
     /* ~ElevatorMsg() */
     msg.vtable = D_004DADF0;
     FileMan_Release(msg.memberB, -1);

@@ -5,7 +5,7 @@ typedef struct { char pad[0x30]; int x30; int x34; int x38; int x3C; PS_24A850 p
 typedef struct { char pad[0x2E00]; unsigned char state; } X_24A850;
 extern int Camera_IsBoomActive(void* y);
 extern void Player_MpAimViewExit(O_24A850* o, X_24A850* x);
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 #pragma opt_rotateloops off
 void PlayerInput_EnterAimView(O_24A850* o, X_24A850* x, void* y, float val)
 {
@@ -22,7 +22,7 @@ void PlayerInput_EnterAimView(O_24A850* o, X_24A850* x, void* y, float val)
         int c = o->x30 == 8 && !(o->x38 == 8);
         if (c) {
             x->state = 0;
-            if (D_005721C8) Player_MpAimViewExit(o, x);
+            if (g_IsMultiplayer) Player_MpAimViewExit(o, x);
         }
     }
 }

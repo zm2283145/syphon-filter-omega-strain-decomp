@@ -7,7 +7,7 @@
 #include "types.h"
 #include "loose01_types.h"
 
-extern FxLightSet* D_004FFC30;
+extern FxLightSet* g_VisionFxMan;
 
 /* args[0] = light index (0..4), args[1] = distance. */
 int Script_setFxLightDist(ScriptArg* args) {
@@ -17,7 +17,7 @@ int Script_setFxLightDist(ScriptArg* args) {
     float dist;
 
     d.i = args[1].i;
-    set = D_004FFC30;
+    set = g_VisionFxMan;
     index = args[0].i;
     dist = d.f;
     if (index < 5) {

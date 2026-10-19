@@ -17,7 +17,7 @@ extern char D_004BA9B8[];
 extern char D_004BA9C8[];
 extern char D_004BA9D8[];
 extern int GuiTextListWidget_GetItemId(void*);
-extern char D_004FFB50[];
+extern char g_Game[];
 extern A4EC00* Agent_GetSelected(char*, int);
 extern int Gui_GetScreenStack(void);
 extern void GuiWidget_SendEvent(O4EC00*, int, int, int, int);
@@ -47,7 +47,7 @@ extern "C" void GuiOmegaStrain_Select(O4EC00* o, int idx) {
     void* w;
     int x;
     Item_4EC00** pd; int off;
-    AgentData_GetAwardItems(Agent_GetSelected(D_004FFB50, -1), 4, 0, &v);
+    AgentData_GetAwardItems(Agent_GetSelected(g_Game, -1), 4, 0, &v);
     if (idx >= 0 && idx < v.count) {
         pd = &v.data; off = idx * (int)sizeof(Item_4EC00);
         if (((Item_4EC00*)((char*)*pd + off))->kind == 2) {

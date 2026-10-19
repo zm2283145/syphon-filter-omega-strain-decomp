@@ -62,9 +62,9 @@ struct NPC_AFE0 {
     char pad[0x2C]; void* target; char pad2[0x6C]; int a0; char pad3[0x10C]; void* path;
 };
 extern "C" {
-extern char D_0055D4E0[];
+extern char g_TeleportMsgClass[];
 extern char D_004D9360[];
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 void Node_GetTranslation(Vec4* out, void* node);
 void Event_Construct(Msg* m, void* type);
 void* Mtx_GetIdentity(void);
@@ -85,7 +85,7 @@ extern "C" void cNPC_v41(NPC_AFE0* self, Arg_AFE0* node)
     void* id;
     Node_GetTranslation(&t, node);
     m = &msg;
-    Event_Construct(m, D_0055D4E0);
+    Event_Construct(m, g_TeleportMsgClass);
     msg.kind = 0;
     msg.vtable = D_004D9360;
     id = Mtx_GetIdentity();
@@ -103,6 +103,6 @@ extern "C" void cNPC_v41(NPC_AFE0* self, Arg_AFE0* node)
     self->Reset();
     self->a0 = 0;
     NpcAi_SetMovementState(self, 0, 0);
-    if (D_005721C8)
+    if (g_IsMultiplayer)
         NetEvent_Send(self->target, 7, 4, node->id, 0, 0, 0);
 }

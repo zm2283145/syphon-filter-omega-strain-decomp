@@ -100,9 +100,9 @@ extern "C" {
 extern float D_0048B0F0;
 extern float D_0048B100;
 extern float D_0048B108;
-extern int D_0049D010;
+extern int g_HumanActorClassKey;
 extern char D_004A8210[];
-extern int D_004FFC2C;
+extern int g_Hud;
 void Combat_HitDirection(Mtx* m, V4* v, Vd* out);
 void HeldItem_Release(HeldItem* h);
 float Math_CosThunk(float);
@@ -240,7 +240,7 @@ extern "C" void HeldItem_UpdateFlight(HeldItem* self, float dt) {
         if (k != 3 && k != 2) dead = false;
         int* pd;
         int id;
-        if (!dead && (pd = &D_0049D010, id = *pd, q.tgt->x4C == id)) {
+        if (!dead && (pd = &g_HumanActorClassKey, id = *pd, q.tgt->x4C == id)) {
             Tgt* t = q.tgt;
             bool mine = false;
             bool held = false;
@@ -255,7 +255,7 @@ extern "C" void HeldItem_UpdateFlight(HeldItem* self, float dt) {
             if (blocked || t->x320C == 2 || t->x320C == 0x1A || Actor_IsInvulnerable(t) || t->b346A || func_00265910(self)) {
                 HeldItem_Release(self);
             } else if ((m2 || q.hit == 3) && t->x33A0) {
-                Hud_ShowCallout(5.0f, 0.0f, D_004FFC2C, (char*)t + 0xC, D_004A8210, -1, 0, 0);
+                Hud_ShowCallout(5.0f, 0.0f, g_Hud, (char*)t + 0xC, D_004A8210, -1, 0, 0);
                 HeldItem_Release(self);
             } else {
                 func_00264BB0(self, t, q.part);

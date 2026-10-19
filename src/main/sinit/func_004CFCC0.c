@@ -4,13 +4,13 @@ int Script_RegisterNative_2();
 extern char D_00493880;
 extern char D_00493888;
 extern char D_00493890;
-extern int D_004F7E70;
+extern int g_PickupTextColour;
 extern int D_004F7E74;
 extern int D_004F7E78;
 extern int D_004F7E7C;
 extern int D_004F7E88;
 void StaticInit_PickupTextColour(void) {
-    D_004F7E70 = 1050253722;
+    g_PickupTextColour = 1050253722;
     D_004F7E74 = 1057803469;
     D_004F7E78 = 1061158912;
     D_004F7E7C = 1065353216;

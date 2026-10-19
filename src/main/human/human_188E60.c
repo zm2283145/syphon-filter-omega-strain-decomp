@@ -41,7 +41,7 @@ typedef struct {
     E4Str s114;
     char pad1B0[0x10];
 } __attribute__((aligned(16))) E4Ev;
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_004DAE30[];
 extern void SoundRequest_Ctor(E4Req* r, int a, char* b, int c, int d);
 extern void SoundEvent_CtorFromPreset(E4Ev* e, E4Req* r, int preset);
@@ -55,7 +55,7 @@ void Actor_SendSoundImmediate(int preset)
     SoundRequest_Ctor(&req, 0, "F_LADDER_M", 0, 0);
     SoundEvent_CtorFromPreset(&ev, &req, preset);
     ev.flag = 1;
-    Event_Send(&ev, D_004FFB50, 1);
+    Event_Send(&ev, g_Game, 1);
     ev.vt = D_004DAE30;
     FileMan_Release(&ev.s114, -1);
     FileMan_Release(&ev.s78, -1);
@@ -120,7 +120,7 @@ extern char D_0049D928[];
 extern char D_0049D938[];
 extern char D_0049D950[];
 extern char D_0049D960[];
-extern float D_004A0438;
+extern float g_NegFltMax;
 extern float D_0049CF40;
 extern float D_0049CF38;
 float ActorPhysical_QueryWaterHeight(Ground* g);
@@ -191,7 +191,7 @@ extern "C" void Actor_SurfaceSoundEffects(Actor* a, unsigned char mode, int forc
 {
     if (a->g == 0)
         return;
-    unsigned char water = a->g->fE4 != D_004A0438;
+    unsigned char water = a->g->fE4 != g_NegFltMax;
     float depth = ActorPhysical_QueryWaterHeight(a->g);
     if (!water) {
         V hit;
@@ -221,7 +221,7 @@ extern "C" void Actor_SurfaceSoundEffects(Actor* a, unsigned char mode, int forc
                 SoundRequest_Ctor(&req, snd, nm, 0, 0);
                 SoundPosRequest_Ctor(&ev, &req, &hit);
                 ev.flag = 1;
-                Event_Send(&ev, D_004FFB50, 0);
+                Event_Send(&ev, g_Game, 0);
                 ev.vt = D_004DAE30;
                 FileMan_Release(&ev.s114, -1);
                 FileMan_Release(&ev.s78, -1);
@@ -245,7 +245,7 @@ extern "C" void Actor_SurfaceSoundEffects(Actor* a, unsigned char mode, int forc
                 SoundRequest_Ctor(&req, k, nm, 0, 0);
                 SoundEvent_CtorFromPreset(&ev, &req, a);
                 ev.flag = 1;
-                Event_Send(&ev, D_004FFB50, 1);
+                Event_Send(&ev, g_Game, 1);
                 ev.vt = D_004DAE30;
                 FileMan_Release(&ev.s114, -1);
                 FileMan_Release(&ev.s78, -1);
@@ -289,7 +289,7 @@ extern "C" void Actor_SurfaceSoundEffects(Actor* a, unsigned char mode, int forc
         SoundRequest_Ctor(&req, 0, nm, 0, 0);
         SoundEvent_CtorFromPreset(&ev, &req, a);
         ev.flag = 1;
-        Event_Send(&ev, D_004FFB50, 1);
+        Event_Send(&ev, g_Game, 1);
         ev.vt = D_004DAE30;
         FileMan_Release(&ev.s114, -1);
         FileMan_Release(&ev.s78, -1);

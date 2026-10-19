@@ -18,7 +18,7 @@ extern int D_004FFD60;
 extern int D_004FFD68;
 extern int D_004FFD70;
 extern int D_004FFD78;
-extern char D_0055C9F0[];
+extern char g_IdentityMatrix[];
 }
 
 #define S4(n) virtual void s##n##a(); virtual void s##n##b(); virtual void s##n##c(); virtual void s##n##d();
@@ -72,7 +72,7 @@ extern "C" void ObjMarker_ConstructIcon(Marker274750* m, signed char big)
         *(char**)o = D_004DC810;
     }
     m->icon = (Icon274750*)o;
-    m->icon->SetProp(D_0055C9F0, 0);
+    m->icon->SetProp(g_IdentityMatrix, 0);
 }
 
 

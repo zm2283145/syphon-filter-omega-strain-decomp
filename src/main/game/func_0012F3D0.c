@@ -12,7 +12,7 @@ int Mem_Alloc(int, int, char *, int);
 int Mem_Free(int, int, char *, int);                         
 int String_Copy(int, int);                            
 int strlen(int);                                    
-extern unsigned char D_00533880;
+extern unsigned char g_ProfileLockEnabled;
 }
 extern "C" void func_0012F3D0(char * arg0, int arg1) {
     int temp_s2;

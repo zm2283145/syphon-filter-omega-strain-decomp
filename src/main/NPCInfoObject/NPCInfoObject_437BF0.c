@@ -6,7 +6,7 @@
 
 /* merge_units: begin func_00437BF0 */
 #pragma push /* merge_units */
-#define LOCALID_(X) { int ld_a = D_005721A8; /* read before the flag test: retail loads it ahead of the branch */ if (D_005721C8) { if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, ld_a); X = D_00494178; } else X = 0; }
+#define LOCALID_(X) { int ld_a = D_005721A8; /* read before the flag test: retail loads it ahead of the branch */ if (g_IsMultiplayer) { if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, ld_a); X = D_00494178; } else X = 0; }
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
@@ -25,7 +25,7 @@ extern int D_00497548;
 unsigned int D_00497550[2] = { 0xFFFFFFFF, 0x0 };
 unsigned int D_00497558[2] = { 0xFFFFFFFF, 0x0 };
 extern int D_005721A8;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern unsigned char D_00582B88;
 extern signed char D_00582D00;
 extern int D_00582D08;
@@ -207,7 +207,7 @@ static inline int LocalIdX_7F90(void)
 {
     int r = 0;
     int a = D_005721A8;
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, a);
         r = D_00494178;
     } else { asm { .set reorder } } /* scheduling barrier: keeps the empty else block (b + nop) */

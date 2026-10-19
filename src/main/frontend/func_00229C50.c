@@ -12,7 +12,7 @@ int App_GetInstance(...);
 int FrontEndScene_LoadSkeletons(...);                               
 int func_0022A040(...);                       
 int MotionManager_Init(...);                                  
-extern unsigned char D_00533880;
+extern unsigned char g_ProfileLockEnabled;
 extern int D_00543790;
 extern int D_00543794;
 }

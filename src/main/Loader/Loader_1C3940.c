@@ -16,7 +16,7 @@ int sprintf(void *, const void *, ...);
 typedef struct { int unk0; int size; unsigned int base; char* cur; } PopReader_1C3940;
 extern char D_0048B2F8[];
 extern char D_0049F030[];
-extern char D_004FFC90[];
+extern char g_LevelDirName[];
 extern void func_00165E60(void* a, char* name, int x);
 extern void* App_GetInstance(void);
 extern int Archive_Open(void* a, char* name, int b, int c);
@@ -35,7 +35,7 @@ void Pop_LoadMissionSections(void* l, void* a1, PopReader_1C3940* r, void* arc)
         char name[128];
         int h;
         int mis;
-        sprintf(name, "%s\\%s\\OBJECTS.HOG", D_0048B2F8, D_004FFC90, D_004FFC90);
+        sprintf(name, "%s\\%s\\OBJECTS.HOG", D_0048B2F8, g_LevelDirName, g_LevelDirName);
         h = Archive_Open(arc, name, 1, 0);
         func_00165E60(App_GetInstance(), "Initializing Terrain and GOBJ's...", 0);
         Pop_LoadTER(l, a1, r, arc);
@@ -64,8 +64,8 @@ static inline void merge_flush_func_001C3940(void) {}
 #pragma push /* merge_units */
 typedef struct { int cap; int count; void** data; } Vec_1C3B00;
 typedef struct { char pad[0x10]; Vec_1C3B00* vec; } Obj_1C3B00;
-extern unsigned char D_00533880;
-extern int D_00533888;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
 extern char D_0049EE88[];
 extern void Alloc_Lock(int n);
 extern void Alloc_Unlock(int n);
@@ -80,13 +80,13 @@ void func_001C3B00(Obj_1C3B00* o)
         int g[2];
         while (v->count) {
             void* p = *PtrVec_Back_1C3C30(v);
-            if (D_00533880)
+            if (g_ProfileLockEnabled)
                 Alloc_Lock(9);
-            D_00533888++;
+            g_ProfileLockDepth++;
             Mem_Free(0, p, D_0049EE88, 0x10D);
-            if (D_00533880)
+            if (g_ProfileLockEnabled)
                 Alloc_Unlock(9);
-            D_00533888--;
+            g_ProfileLockDepth--;
             o->vec->count--;
             v = o->vec;
         }

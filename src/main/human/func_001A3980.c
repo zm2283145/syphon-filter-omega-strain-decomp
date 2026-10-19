@@ -91,10 +91,10 @@ typedef struct Act_L {
 typedef struct { MSG_HDR; int f24; int f28; void* f2C; } Msg4_L;
 
 extern "C" {
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_004DAE30[];
 extern char D_004DADF0[];
-extern char D_0055A1D8[];
+extern char g_CasEventMsgClass[];
 extern char D_004DA950[];
 extern char D_0049E1C8[]; extern char D_0049D920[]; extern char D_0049E1D0[]; extern char D_0049E1E0[];
 extern char D_0049E1E8[]; extern char D_0049E1F8[];
@@ -102,8 +102,8 @@ extern char D_004F24B0[]; extern char D_004F1E30[];
 extern char D_0049DD50[];
 extern int D_0049D040; extern int D_0049D048;
 extern signed char D_0049D023;
-extern float D_004A03E0; extern float D_004A0438;
-extern int D_004BDD00;
+extern float D_004A03E0; extern float g_NegFltMax;
+extern int g_NoneWord;
 void SoundRequest_Ctor(Req_L* r, int a, char* b, int c, int d);
 void SoundEvent_CtorFromPreset(void* e, void* r, void* owner);
 void SoundStopMsg_Ctor(Snd2_L* e, void* r, void* owner);
@@ -186,7 +186,7 @@ static inline void Prio_L(char* p, signed char k, int v)
         SoundRequest_Ctor(&req, T, NAME, 0, 0); \
         SoundEvent_CtorFromPreset(&ev, &req, a); \
         ev.flag = 1; \
-        Event_Send(&ev, D_004FFB50, IMM); \
+        Event_Send(&ev, g_Game, IMM); \
         ev.vt = D_004DAE30; \
         FileMan_Release(&ev.s114, -1); \
         FileMan_Release(&ev.s78, -1); \
@@ -200,7 +200,7 @@ static inline void Prio_L(char* p, signed char k, int v)
         void* pr = PRESET; \
         SoundEvent_CtorFromPreset(&ev, pr, a); \
         ev.flag = 1; \
-        Event_Send(&ev, D_004FFB50, 0); \
+        Event_Send(&ev, g_Game, 0); \
         ev.vt = D_004DAE30; \
         FileMan_Release(&ev.s114, -1); \
         FileMan_Release(&ev.s78, -1); \
@@ -211,7 +211,7 @@ static inline void SendC_L(Act_L* a, int kind)
 {
     Msg4_L m;
     Msg4_L* p = &m;
-    Event_Construct(p, D_0055A1D8);
+    Event_Construct(p, g_CasEventMsgClass);
     p->vtable = D_004DA950;
     p->f24 = kind;
     p->f28 = -1;
@@ -224,7 +224,7 @@ static inline void SendCI_L(Act_L* a, int kind)
 {
     Msg4_L m;
     Msg4_L* p = &m;
-    Event_Construct(p, D_0055A1D8);
+    Event_Construct(p, g_CasEventMsgClass);
     p->vtable = D_004DA950;
     p->f24 = kind;
     p->f28 = -1;
@@ -237,7 +237,7 @@ static inline void SendL_L(Act_L* a, int kind, Act_L* arg)
 {
     Msg4_L m;
     Msg4_L* p = &m;
-    Event_Construct(p, D_0055A1D8);
+    Event_Construct(p, g_CasEventMsgClass);
     p->vtable = D_004DA950;
     p->f24 = kind;
     p->f28 = -1;
@@ -248,7 +248,7 @@ static inline void SendL_L(Act_L* a, int kind, Act_L* arg)
 }
 struct MsgT_L {
     Msg4_L m;
-    MsgT_L(int kind, void* arg) { Msg4_L* p = &m; Event_Construct(p, D_0055A1D8); p->vtable = D_004DA950; p->f24 = kind; p->f28 = -1; p->f2C = arg; }
+    MsgT_L(int kind, void* arg) { Msg4_L* p = &m; Event_Construct(p, g_CasEventMsgClass); p->vtable = D_004DA950; p->f24 = kind; p->f28 = -1; p->f2C = arg; }
     void SendLnk(Act_L* a) { int one = 1; m.f20 = one; Event_Send(&m, a->f3474, one); }
     void SendCtl(Act_L* a) { int one = 1; m.f20 = one; Event_Send(&m, a->ctl, one); }
     void SendCtlN(Act_L* a) { Event_Send(&m, a->ctl, 1); }
@@ -472,7 +472,7 @@ extern "C" int AnimToken_Handle(Act_L* a, Ev_L* e)
         if (a->phys) {
             if (PhysOn_L(a)) {
                 Phys_L* p = a->phys;
-                bool mv = p->fE4 != D_004A0438;
+                bool mv = p->fE4 != g_NegFltMax;
                 ActorPhysical_QueryWaterHeight(a->phys);
                 if (!mv) {
                     SND(1, ((a->f3248 >> 2) & 1) == 0 ? D_0049E1C8 : D_0049D920, 0)
@@ -535,7 +535,7 @@ extern "C" int AnimToken_Handle(Act_L* a, Ev_L* e)
         if (e->type != 0x97) break;
     case 0x96:
         { Phys_L* p = a->phys; p->b3D0 = 1; }
-        World_PopObject(D_004FFB50);
+        World_PopObject(g_Game);
         a->b33E8 = 0;
         break;
     case 0x98: {
@@ -772,7 +772,7 @@ extern "C" int AnimToken_Handle(Act_L* a, Ev_L* e)
         }
         if (a->b326B) {
             if (IsPlayer_L(a) && a->b14) {
-                ActiveList_RemoveFirst(D_004FFB50);
+                ActiveList_RemoveFirst(g_Game);
                 a->b326B = 0;
             }
         }
@@ -858,7 +858,7 @@ extern "C" int AnimToken_Handle(Act_L* a, Ev_L* e)
             break;
         }
         if (IsPlayer_L(a) && a->b14 && a->b326B) {
-            ActiveList_RemoveFirst(D_004FFB50);
+            ActiveList_RemoveFirst(g_Game);
             a->b326B = 0;
         }
         WeaponInv_RestoreHiddenItem(a->inv);
@@ -942,7 +942,7 @@ extern "C" int AnimToken_Handle(Act_L* a, Ev_L* e)
             SoundRequest_Ctor(&req, 0, D_0049E1E8, 0, 0);
             SoundStopMsg_Ctor(&ev, &req, a);
             ev.flag = 1;
-            Event_Send(&ev, D_004FFB50, 1);
+            Event_Send(&ev, g_Game, 1);
             ev.vt = D_004DADF0;
             FileMan_Release(&ev.s114, -1);
             FileMan_Release(&ev.s78, -1);
@@ -1151,7 +1151,7 @@ extern "C" int AnimToken_Handle(Act_L* a, Ev_L* e)
     case 0xA0:
         a->f324C &= ~0x200;
         WeaponInv_LaunchProjectile(a->inv, a->f33E0, &a->id, a->f33D0);
-        a->id = D_004BDD00;
+        a->id = g_NoneWord;
         a->f33E4 = 2;
         break;
     case 0xA1:
@@ -1160,7 +1160,7 @@ extern "C" int AnimToken_Handle(Act_L* a, Ev_L* e)
         if ((*(volatile int*)&a->f324C >> 9) & 1) {
             a->f324C &= ~0x200;
             WeaponInv_LaunchProjectile(a->inv, a->f33E0, &a->id, a->f33D0);
-            a->id = D_004BDD00;
+            a->id = g_NoneWord;
             a->f33E4 = 2;
         }
         Inventory_ReleaseItem(a->inv);

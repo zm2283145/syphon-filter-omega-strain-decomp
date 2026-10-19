@@ -25,7 +25,7 @@ int Mem_Free();
 extern "C" {
 int ParticleInst_Kill(...);                            
 int Object_Deactivate(...);                         
-extern unsigned char D_00533880;
+extern unsigned char g_ProfileLockEnabled;
 }
 #pragma opt_common_subs off
 extern "C" void ParticleGob_OnAbsent(char * arg0, int arg1) {

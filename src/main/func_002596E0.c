@@ -32,9 +32,9 @@ struct Hit { int w[4]; };
 struct Actor { char pad[0x346B]; unsigned char b346B; };
 struct Eff { char pad[0x70]; V m70; char pad80[0x10]; V m90[4]; };
 extern "C" {
-extern char D_004FFB50[];
-extern char D_004EA0B0[];
-extern signed char D_0049D024;
+extern char g_Game[];
+extern char g_LosCheckService[];
+extern signed char g_HeadNodeCode;
 void* Service_Lookup(void* a, void* b);
 int Actor_GetSkeleton(Actor* a);
 void Model_GetSkeletonNodePos(V* out, int n, int node);
@@ -45,12 +45,12 @@ extern "C" bool AreaEffect_GasExposure(Eff* self, Actor* actor)
     if (!actor->b346B) {
         Hit hit;
         Query q;
-        void* mgr = Service_Lookup(D_004FFB50, D_004EA0B0);
+        void* mgr = Service_Lookup(g_Game, g_LosCheckService);
         for (int i = 0; i < 5; i++) {
             V from;
             V pos;
             QC(&from, i ? &self->m90[i - 1] : &self->m70);
-            Model_GetSkeletonNodePos(&pos, Actor_GetSkeleton(actor), D_0049D024);
+            Model_GetSkeletonNodePos(&pos, Actor_GetSkeleton(actor), g_HeadNodeCode);
             from.z = pos.z;
             { void* xx = &pos; /* dead on purpose: retail keeps this addiu */ }
             V d(Sub(pos, from));

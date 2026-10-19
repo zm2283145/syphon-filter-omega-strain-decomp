@@ -31,7 +31,7 @@ char D_00492A40[16][16] = {
 extern Tab_341C50 D_00492A00[16];
 extern signed char D_00492A01[];
 extern short D_00492A02[];
-extern char D_0055DDA0[];
+extern char g_AgentPartCache[];
 extern char D_004B9F20[];
 extern char D_004B9F70[];
 extern char D_004B9F78[];
@@ -67,8 +67,8 @@ void GuiAgentModify_SelectCategory(S_341C50* o, char* name)
                 return;
             }
             o->mode = D_00492A00[o->cur].mode;
-            o->v100 = AgentPartCache_FindMesh(D_0055DDA0, o->items->e[o->slot].a);
-            o->v104 = AgentPartCache_FindTexture(D_0055DDA0, o->items->e[o->slot].b);
+            o->v100 = AgentPartCache_FindMesh(g_AgentPartCache, o->items->e[o->slot].a);
+            o->v104 = AgentPartCache_FindTexture(g_AgentPartCache, o->items->e[o->slot].b);
             GuiAgentModify_Refresh(o);
             if (o->count) o->pos = o->pos % o->count;
             else o->pos = 0;

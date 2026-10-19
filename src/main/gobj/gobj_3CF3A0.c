@@ -221,7 +221,7 @@ block_75:
 /* merge_units: begin func_003CFAB0 */
 #pragma push /* merge_units */
 extern char *strchr(const char*,int); extern char *strncpy(char*,const char*,unsigned int);
-extern int D_00533870; extern long long D_00533878;
+extern int g_TimerAccum; extern long long g_TickCounter64;
 extern void Font_DrawString(void*,const char*,float,float,float,float*,float,float,float);
 static inline int DivTicks(long long n,int divisor){
  int bit=0x40000000;int result=0;
@@ -305,9 +305,9 @@ void TextObj_Draw(TextLayout *arg0) {
             temp_f22-=(float)(arg0->h/2-(var_fp*Font_GetLineHeight(arg0->font))/2);
         }
         var_s4 = String_CStr(arg0->str);
-        temp_v0 = *(s32 *)0x10000800 + D_00533870;
+        temp_v0 = *(s32 *)0x10000800 + g_TimerAccum;
         var_f1=(float)(unsigned int)temp_v0;
-        var_a2=DivTicks(D_00533878+(int)(var_f1/5.76f),100);
+        var_a2=DivTicks(g_TickCounter64+(int)(var_f1/5.76f),100);
         if (!arg0->last) {
             arg0->last = (f32) var_a2;
         }

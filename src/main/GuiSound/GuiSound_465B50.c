@@ -10,7 +10,7 @@ typedef struct {
     SoundPart b;
     char pad2[0x20];
 } SoundEvent;
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_004DADF0[];
 extern void SoundEvent_Ctor(SoundEvent* ev, int id, int flags);
 extern void Event_Send(SoundEvent* ev, void* target, int flags);
@@ -23,7 +23,7 @@ int GuiSound_Stop(void* self, int id)
     SoundEvent ev;
     SoundEvent_Ctor(&ev, id, 0);
     ev.local = 1;
-    Event_Send(&ev, D_004FFB50, 1);
+    Event_Send(&ev, g_Game, 1);
     ev.vtable = D_004DADF0;
     FileMan_Release(&ev.b, -1);
     FileMan_Release(&ev.a, -1);

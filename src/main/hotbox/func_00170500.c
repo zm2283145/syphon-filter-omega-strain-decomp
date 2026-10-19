@@ -6,8 +6,8 @@
 #include "types.h"
 #include "hotbox_types.h"
 
-extern PtrVec D_004EE6E0;  /* list of created hotboxes */
-extern void* D_004FFBD0;
+extern PtrVec g_RuntimeHotboxes;  /* list of created hotboxes */
+extern void* g_HotboxTracker;
 extern int PtrVec_Insert(PtrVec* v, int* pos, int n, int* value);
 extern int Hotbox_CreateRuntime(void* owner, void* gobj, int a2, int a3);
 
@@ -16,10 +16,10 @@ int HotboxList_PushBack(PtrVec* v, int* value) {
     return PtrVec_Insert(v, v->data + v->count, 1, value);
 }
 
-/* Creates a hotbox for a game object and records it in D_004EE6E0. */
+/* Creates a hotbox for a game object and records it in g_RuntimeHotboxes. */
 int Global_MakeGOBJInteractable(void* gobj) {
-    int hotbox = Hotbox_CreateRuntime(D_004FFBD0, gobj, 0, 0);
+    int hotbox = Hotbox_CreateRuntime(g_HotboxTracker, gobj, 0, 0);
 
-    HotboxList_PushBack(&D_004EE6E0, &hotbox);
+    HotboxList_PushBack(&g_RuntimeHotboxes, &hotbox);
     return hotbox;
 }

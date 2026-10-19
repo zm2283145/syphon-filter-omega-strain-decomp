@@ -161,10 +161,10 @@ extern char D_004A7AD0[];
 extern char D_004A7AD8[];
 extern char D_004A7AE0[];
 extern char D_004A7AE8[];
-extern char D_004F7E70[];
+extern char g_PickupTextColour[];
 extern int D_004F7E90;
 extern int D_004F7E98;
-extern char D_004FFB50[];
+extern char g_Game[];
 }
 
 static inline int Owner_Get2E8(Owner_253070* o) {
@@ -275,15 +275,15 @@ extern "C" Self_253070* PickupMenu_Build(Self_253070* self, void* root, Owner_25
         Lbl_253070* l;
         IeElement_SetText(self->wA0, Loc_LookupText(D_004A7AD8));
         IeElement_SetText(self->wA4, Loc_LookupText(D_004A7AE0));
-        IeElement_SetText(self->wA8, AgentData_GetName(Agent_GetSelected(D_004FFB50, -1)));
+        IeElement_SetText(self->wA8, AgentData_GetName(Agent_GetSelected(g_Game, -1)));
         l = self->wA8->unk74;
         l->unk10 = 2;
-        TextObj_SetColour(l, D_004F7E70);
+        TextObj_SetColour(l, g_PickupTextColour);
         l->unk5B = 1;
         IeElement_SetText(self->wAC, Loc_LookupText(D_004A7AE8));
         l = self->wAC->unk74;
         l->unk10 = 2;
-        TextObj_SetColour(l, D_004F7E70);
+        TextObj_SetColour(l, g_PickupTextColour);
     }
     IeElement_EvaluateAt(self->wA4, self->unk98);
     IeElement_Fade(self->wA4, self->unk98 + D_0048AEF0);

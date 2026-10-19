@@ -19,8 +19,8 @@ typedef struct {
     char pad0[0xC]; char a0C[0x60 - 0xC]; char a60[0x3310 - 0x60];
     VObj* w3310; VObj* w3314;
 } Act;
-extern unsigned char D_00533880;
-extern int D_00533888;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
 extern char D_0049D8D0;
 extern char g_TargetVisMgr;
 void Alloc_Lock(int);
@@ -46,22 +46,22 @@ extern "C" void func_001B4970(Act* a)
     if (a->w3310) ActorPhys_ReleaseWaterEffect(a->w3310);
     o = a->w3310;
     if (o) {
-        if (D_00533880) Alloc_Lock(9);
-        D_00533888++;
+        if (g_ProfileLockEnabled) Alloc_Lock(9);
+        g_ProfileLockDepth++;
         o->~VObj();
         Mem_Free(0, o, &D_0049D8D0, 0x456);
-        if (D_00533880) Alloc_Unlock(9);
-        D_00533888--;
+        if (g_ProfileLockEnabled) Alloc_Unlock(9);
+        g_ProfileLockDepth--;
         a->w3310 = 0;
     }
     o = a->w3314;
     if (o) {
-        if (D_00533880) Alloc_Lock(9);
-        D_00533888++;
+        if (g_ProfileLockEnabled) Alloc_Lock(9);
+        g_ProfileLockDepth++;
         o->~VObj();
         Mem_Free(0, o, &D_0049D8D0, 0x45B);
-        if (D_00533880) Alloc_Unlock(9);
-        D_00533888--;
+        if (g_ProfileLockEnabled) Alloc_Unlock(9);
+        g_ProfileLockDepth--;
         a->w3314 = 0;
     }
     func_00436BA0(&loc, -1);

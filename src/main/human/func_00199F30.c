@@ -80,16 +80,16 @@ typedef struct {
 } Actor;
 typedef struct { char* vt; char pad4[0x20]; int i24; int i28; int i2C; } Msg;
 extern "C" {
-extern u8 D_005721C8;
-extern int D_005383C8;
+extern u8 g_IsMultiplayer;
+extern int g_VideoFrameCounter;
 extern float D_0049CED8, D_0049CF48, D_0049CF50, D_0049CF58, D_0049CF60, D_0049CF68, D_0049CF70, D_0049CF78, D_0049CF80, D_0049CF88;
 extern float D_0049CF90, D_0049CF98, D_0049CFA0, D_0049CFA8, D_0049CFB8, D_0049CFC0, D_0049CFC8, D_0049CFD0, D_0049CFD8, D_0049CFE0, D_0049CFE8;
-extern float D_004A0438;
+extern float g_NegFltMax;
 extern char D_004D92A0[];
 extern char D_004DA950[];
 extern char D_004EE5C0[];
-extern char D_004FFB50[];
-extern char D_0055A1D8[];
+extern char g_Game[];
+extern char g_CasEventMsgClass[];
 void Actor_SetPendingFlag(void* f, u8 bit, int on);
 void Actor_PrepareNavigation(Actor* a, float dt);
 int Inventory_GetEquipMode(Inv* inv);
@@ -240,7 +240,7 @@ static inline void SendMsg(Actor* a, int id)
 {
     Msg m;
     Msg* p = &m;
-    Event_Construct(p, D_0055A1D8);
+    Event_Construct(p, g_CasEventMsgClass);
     p->vt = D_004DA950;
     p->i24 = id;
     p->i28 = -1;
@@ -392,7 +392,7 @@ typedef struct { Msg m; int x[4]; } NMsg;
 static inline void FireNoise(Actor* a)
 {
     NMsg m;
-    void* svc = Service_Lookup(D_004FFB50, D_004EE5C0);
+    void* svc = Service_Lookup(g_Game, D_004EE5C0);
     { int* p = (int*)a->c0C; AiSound_SendFireNoise((Msg*)&m, p, 3, 1.0f, a->f31F8); }
     Event_Send((Msg*)&m, svc, 0);
     m.m.vt = D_004D92A0;
@@ -458,7 +458,7 @@ extern "C" void Actor_UpdateAnimationState(Actor* a, float dt)
     if (a->st.mode == 2) {
         Actor_SetPendingFlag(&a->i3200, 5, 1);
     }
-    if ((D_005721C8 && !a->b14) || !Vt54(a)) {
+    if ((g_IsMultiplayer && !a->b14) || !Vt54(a)) {
         Actor_PrepareNavigation(a, dt);
     }
     busy = C6(a);
@@ -527,7 +527,7 @@ extern "C" void Actor_UpdateAnimationState(Actor* a, float dt)
     } else {
         Actor_SetPendingFlag(&a->i3200, 4, ((a->i3248 >> 1) & 1) != 0);
     }
-    if (D_005721C8 && a->p3584 && a->b14) {
+    if (g_IsMultiplayer && a->p3584 && a->b14) {
         int b4 = ((a->i3204 >> 4) & 1) != 0;
         if (b4) {
             a->p3584->b50 |= 2;
@@ -750,7 +750,7 @@ extern "C" void Actor_UpdateAnimationState(Actor* a, float dt)
                     f20 = 0.0f;
                 } else {
                     if (aim) { float x = a->ctl->f2C8; float h = 0.5f; f20 = h * (1.0f - x); }
-                    if (a->ctl && a->ctl->fE4 != D_004A0438) {
+                    if (a->ctl && a->ctl->fE4 != g_NegFltMax) {
                         float r;
                         f21 = 2.25f;
                         r = ActorPhysical_QueryWaterHeight(a->ctl);
@@ -761,7 +761,7 @@ extern "C" void Actor_UpdateAnimationState(Actor* a, float dt)
                 }
                 AnimChannel_SetTarget(blk->anim, 2, 0, f20, fast ? D_0049CF50 : D_0049CF48, 3.0f);
             }
-            if (f20 > 0.5f && ((a->i3204 >> 1) & 1) && !(D_005383C8 & 0xF)) {
+            if (f20 > 0.5f && ((a->i3204 >> 1) & 1) && !(g_VideoFrameCounter & 0xF)) {
                 FireNoise(a);
             }
             UpdateLean2(a, blk);

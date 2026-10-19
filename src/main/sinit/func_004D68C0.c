@@ -8,9 +8,9 @@ extern char D_0055A340;
 extern char D_0055A6C0;
 extern char D_0055A700;
 extern char D_0055A820;
-extern int D_0055A830;
+extern int g_MemCard;
 extern signed char D_0055A834;
-extern int D_0055A838;
+extern int g_CardWaitPollFn;
 extern signed char D_0055A83C;
 extern char func_003EA340;
 
@@ -32,7 +32,7 @@ void func_004D68C0(void) {
     func_003D18D0(&D_0055A700);
     D_0055A834 = 0;
     D_0055A83C = 0;
-    D_0055A830 = 0;
-    D_0055A838 = 0;
-    __register_global_object(&D_0055A830, &func_003EA340, &D_0055A820);
+    g_MemCard = 0;
+    g_CardWaitPollFn = 0;
+    __register_global_object(&g_MemCard, &func_003EA340, &D_0055A820);
 }

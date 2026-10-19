@@ -31,7 +31,7 @@ void LoadingScreen_SetProgress(B5cObj* o, float x) {
 
 #include "loose01_types.h"
 
-extern char D_005381F0[];
+extern char g_Video[];
 extern int D_00538C60;
 extern int IeScreen_Draw(int*);
 extern int IeScreen_Update(int*, float);
@@ -42,7 +42,7 @@ int HudLoading_Update(HandleHolder* self, float f) {
 
 /* Resets the current slot record (index D_00538C60) and calls IeScreen_Draw on the handle. */
 int LoadingScreen_Draw(HandleHolder* self) {
-    Slot110View* slot = (Slot110View*)(D_005381F0 + D_00538C60 * 272);
+    Slot110View* slot = (Slot110View*)(g_Video + D_00538C60 * 272);
 
     slot->unk2E0 = 0;
     slot->unk2E8 = 100.0f;
@@ -163,7 +163,7 @@ extern void IeElement_SetShown(int o, int on);
 
 extern char* Loc_LookupText(char* key);
 extern int LoadingScreen_SetText(int obj, char* name, char* text);
-extern char D_004FFC90[];
+extern char g_LevelDirName[];
 
 void LoadingScreen_Setup(Hud271D80* self) {
     int ctx = *self->ctx;
@@ -198,7 +198,7 @@ void LoadingScreen_Setup(Hud271D80* self) {
     if (self->f20) IeElement_PlayRange(self->f20, 0.0f, 300.0f, 0);
     t = Loc_LookupText("level_techname1");
     if (!t) t = Loc_LookupText("level_name");
-    self->f30 = LoadingScreen_SetText(ctx, "levelname1", t ? t : D_004FFC90);
+    self->f30 = LoadingScreen_SetText(ctx, "levelname1", t ? t : g_LevelDirName);
     t = Loc_LookupText("level_techname2");
     if (t) self->f34 = LoadingScreen_SetText(ctx, "levelname2", t);
     t = Loc_LookupText("level_briefing");

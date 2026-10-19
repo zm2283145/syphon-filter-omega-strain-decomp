@@ -54,8 +54,8 @@ extern "C" {
 extern char D_0049F530[];
 extern char D_0049F538[];
 extern char D_0049F548[];
-extern char D_004FFC90[];
-extern int D_004FFC2C;
+extern char g_LevelDirName[];
+extern int g_Hud;
 int sprintf(char*, const char*, ...);
 int strlen(const char*);
 int String_CompareNoCase(const char*, const char*);
@@ -116,9 +116,9 @@ extern "C" void SoundMgr_Frame(Self_8E10* self)
         if (r->type == 5) {
             if (IsLoading(r) && self->hog && !self->x20) {
                 if (String_CompareNoCase(r->name, D_0049F530) == 0) {
-                    sprintf(buf, D_0049F538, D_004FFC90);
+                    sprintf(buf, D_0049F538, g_LevelDirName);
                     if (Hog_FindFileNoCase(self->hog, buf, 0) == -1) {
-                        String_Copy(tmp, D_004FFC90);
+                        String_Copy(tmp, g_LevelDirName);
                         tmp[strlen(tmp) - 1] = 0;
                         sprintf(buf, D_0049F538, tmp);
                     }
@@ -146,8 +146,8 @@ extern "C" void SoundMgr_Frame(Self_8E10* self)
                         else
                             snd_PlayVAGStream(sec, 0, 0, 0, vol, pan, 0xE, 0, 0, 0, SoundMgr_OnStreamReply, (unsigned int)r);
                     }
-                    if (r->x186 && D_004FFC2C)
-                        HudObject_Subtitle(D_004FFC2C, r->name, 0, 0);
+                    if (r->x186 && g_Hud)
+                        HudObject_Subtitle(g_Hud, r->name, 0, 0);
                     if (r->state == 4 && v && r->b.b94 && v->b49 == 2)
                         Lpd_Init(v->x60, FileMan_ReadData(&r->b), 0);
                     r->state = 1;

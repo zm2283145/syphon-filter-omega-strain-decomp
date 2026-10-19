@@ -13,7 +13,7 @@ char* Agent_GetSelected(int, int);
 int NetGame_InitLocalSlot(int*, int);
 extern int D_00494178;
 extern int D_005721A8;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 
 void Game_ClearOtherAgentsB70(int arg0)
 {
@@ -22,7 +22,7 @@ void Game_ClearOtherAgentsB70(int arg0)
     do {
         int v;
         int a = D_005721A8; /* read before the flag test: retail loads it ahead of the branch */
-        if (D_005721C8) {
+        if (g_IsMultiplayer) {
             if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, a);
             v = D_00494178;
         } else v = 0;
@@ -63,10 +63,10 @@ void Game_NetSendPauseState(int arg0, unsigned char arg1, unsigned char arg2)
 {
     Msg_12EEE0 m;
     Msg_12EEE0* p;
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         int id;
         int a = D_005721A8;
-        if (D_005721C8) {
+        if (g_IsMultiplayer) {
             if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, a);
             id = D_00494178;
         } else id = 0;

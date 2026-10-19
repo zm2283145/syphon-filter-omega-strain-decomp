@@ -24,7 +24,7 @@ extern "C" {
 extern char D_004BB4D8[];
 extern char D_004BB530[];
 extern char D_004A9870[];
-extern G_35AEC0* D_004FFC2C;
+extern G_35AEC0* g_Hud;
 W_35AEC0* GuiWidget_FindChildByName(void* self, char* name);
 char* Loc_LookupText(char* key);
 void GuiTextWidget_SetText(W_35AEC0* w, char* text, int flags);
@@ -66,7 +66,7 @@ int GuiScoresEquip_HandleInput(S_35AEC0* o, Ev_35AEC0* ev)
         }
         return 1;
     }
-    if (Plain2_35AEC0(ev, 0x800) && D_004FFC2C->b6A8) {
+    if (Plain2_35AEC0(ev, 0x800) && g_Hud->b6A8) {
         GuiStartMenu_CloseAll(o);
         return 1;
     }

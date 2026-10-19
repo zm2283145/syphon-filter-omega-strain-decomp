@@ -3,7 +3,7 @@ extern char D_004ABEB8[];
 extern char D_004ABEC8[];
 extern char D_004ABED0[];
 extern char D_00587C90[];
-extern char* D_004FFC2C;
+extern char* g_Hud;
 extern int sprintf(char* buf, const char* fmt, ...);
 extern char* Loc_LookupText(char* key);
 extern char* Loc_GetTextById(int id);
@@ -31,7 +31,7 @@ void func_002B1190(int a, int b, int id)
     if (p)
         String_Copy(np, p);
     sprintf(out, D_004ABEC8, fmt, txt ? txt : D_004ABED0);
-    Notify_Insert(D_004FFC2C + 0x100, out, D_00587C90, 1, 0);
+    Notify_Insert(g_Hud + 0x100, out, D_00587C90, 1, 0);
 }
 
 

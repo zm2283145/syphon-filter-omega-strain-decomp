@@ -2676,14 +2676,14 @@ static inline void merge_flush_func_0014A7C0(void) {}
 /* merge_units: begin func_0014A810 */
 #pragma push /* merge_units */
 typedef struct { char pad[0x30]; void* actor; } cNPC_0014A810;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern void Actor_SetInvulnerable(void* actor, int on);
 extern void NetEvent_Send(void* actor, int id, int size, unsigned char value, int a, int b, int c);
 /* Sets invulnerability and replicates it when networked and not silent. */
 void cNPC_SetInvulnerable(cNPC_0014A810* npc, int on, int silent)
 {
     Actor_SetInvulnerable(npc->actor, on);
-    if (D_005721C8 && !silent)
+    if (g_IsMultiplayer && !silent)
         NetEvent_Send(npc->actor, 0x2E, 4, on, 0, 0, 0);
 }
 /* merge_units: generate this block's code under its own pragmas */

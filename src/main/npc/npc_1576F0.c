@@ -88,7 +88,7 @@ public:
 };
 typedef struct { char pad[0xC]; unsigned int id; char pad10[0x48]; G3Sub157* sub; } G3Gen157;
 extern "C" {
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 void func_00436C00(int* t);
 int func_00434440(int* t, unsigned int* id);
 void func_00436BA0(int* t, int f);
@@ -97,7 +97,7 @@ static inline unsigned char G3IsA(G3Gen157* g) { unsigned char r = 0; if (g->sub
 static inline unsigned char G3IsB(G3Gen157* g) { unsigned char r = 0; if (g->sub && g->sub->IsB()) r = 1; return r; }
 extern "C" void NpcAi_ActivateForPlayer(G3Npc157* n, G3Gen157* g)
 {
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         if (n->IsAlive()) {
             int v = -1;
             if (g) {
@@ -151,7 +151,7 @@ public:
 static inline int DefaultBody()
 {
     int a = D_005721A8;
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         if (D_00494178 == -1)
             NetGame_InitLocalSlot(&D_00494178, a);
         return D_00494178;

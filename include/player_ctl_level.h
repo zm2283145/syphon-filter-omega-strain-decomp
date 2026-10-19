@@ -44,7 +44,7 @@ struct PlyCtlLevelObj {
     PlyCtlLevelData* data;
 };
 
-extern "C" unsigned char D_005721C8;
+extern "C" unsigned char g_IsMultiplayer;
 
 static inline bool PlyCtlLevel_Has(PlyCtlLevelData* d)
 {
@@ -56,7 +56,7 @@ static inline bool PlyCtlLevel_Has(PlyCtlLevelData* d)
     {                                                                         \
         PlyCtlLevelData* d = self->data;                                      \
         int r;                                                                \
-        if (D_005721C8) {                                                     \
+        if (g_IsMultiplayer) {                                                     \
             if (PlyCtlLevel_Has(d))                                           \
                 r = ((d->flags & 0x7F000000) >> 24) - 1;                      \
             else                                                              \

@@ -26,10 +26,10 @@ int Service_Lookup(void* a, void* b);
 void Event_Construct(Msg* m, void* type);
 void Event_Send(Msg* m, int target, int immediate);
 void cMessage_dtor(Msg* m, int flags);
-extern char D_0055A830[];
-extern unsigned char D_0051EEB0;
+extern char g_MemCard[];
+extern unsigned char g_DebugTriangle;
 extern unsigned char D_0051EE90;
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_004F2CC0[];
 extern char D_005436B0[];
 extern char D_004D9160[];
@@ -57,8 +57,8 @@ extern "C" void FrontEnd_UpdateGui(ObjCBB30* o)
             o->last = now - 100;
         dt = SoftFloat_U64ToFloat(now - o->last) / 1000.0f;
         if (o->b2A && o->b28)
-            func_0040E320(D_0055A830);
-        if (D_0051EEB0) {
+            func_0040E320(g_MemCard);
+        if (g_DebugTriangle) {
             GuiCanvas_NestedUpdate(Gui_GetScreenStack(), dt);
         } else {
             GuiManager_Update(Gui_GetScreenList(), dt);
@@ -67,7 +67,7 @@ extern "C" void FrontEnd_UpdateGui(ObjCBB30* o)
         }
         o->last = now;
         if (!D_0051EE90) {
-            int target = Service_Lookup(D_004FFB50, D_004F2CC0);
+            int target = Service_Lookup(g_Game, D_004F2CC0);
             Msg msg;
             Event_Construct(&msg, D_005436B0);
             msg.vtable = D_004D9160;

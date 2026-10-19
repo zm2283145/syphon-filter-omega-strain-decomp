@@ -28,7 +28,7 @@ int *Mem_Alloc(...);
 int func_003D6BE0(...);                   
 int func_003DD9F0(...);                           
 extern int D_004BD4C0;
-extern unsigned char D_00533880;
+extern unsigned char g_ProfileLockEnabled;
 extern int D_00555070;
 }
 extern "C" void func_003DC5A0(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7) {

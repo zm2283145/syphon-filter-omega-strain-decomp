@@ -43,10 +43,10 @@ extern "C" {
     void func_0016B310(void*,void*);
     void func_0016E860(void*,int);
     void List_Begin_16E880(void*,void*);
-    extern void* D_0049D010;
-    extern char D_004EA190[];
-    extern SfAiComponent* D_004FFC0C;
-    extern unsigned char D_005721C8;
+    extern void* g_HumanActorClassKey;
+    extern char g_NpcThinkList[];
+    extern SfAiComponent* g_LocalPlayer;
+    extern unsigned char g_IsMultiplayer;
 }
 #pragma push
 #pragma bool off
@@ -105,7 +105,7 @@ extern "C" SfGameObject* NpcPerception_NextCandidate(SfAiPerception* arg0, SfGam
     SfGameObject* var_a0;
     SfGameObject* var_v0;
 
-    container = D_004EA190;
+    container = g_NpcThinkList;
     var_s3 = 0;
     List_Begin_16E880(&spA8, container);
     func_0016E860(&spAC, spA8);
@@ -140,7 +140,7 @@ extern "C" SfGameObject* NpcPerception_NextCandidate(SfAiPerception* arg0, SfGam
                 } else {
                     spCC.p = spCC.p->next;
                 }
-            } else if (D_005721C8) {
+            } else if (g_IsMultiplayer) {
                 temp_a0_3=(ControllerV*)arg1->controller;
                 if(temp_a0_3->IsPlayer()) {
                     var_s1=0;var_s6=0;
@@ -179,7 +179,7 @@ extern "C" SfGameObject* NpcPerception_NextCandidate(SfAiPerception* arg0, SfGam
                     } else {
                         goto block_56;
                     }
-                } else if (temp_s0_2->classWord == D_0049D010) {
+                } else if (temp_s0_2->classWord == g_HumanActorClassKey) {
                     var_v0_2 = Active(temp_s0_2);
                     if (var_v0_2 != 0) {
                         var_v0_2 = ((SfActor*)temp_s0_2)->pickupable != 0;
@@ -207,7 +207,7 @@ extern "C" SfGameObject* NpcPerception_NextCandidate(SfAiPerception* arg0, SfGam
         func_0016B2D0(&sp94, container);
         func_0016B300(&spB8, &sp94);
         if ((spCC.p == spB8) && (var_s3 == 0)) {
-            if (D_005721C8 != 0) {
+            if (g_IsMultiplayer != 0) {
                 var_s1_2 = 0;
             loop_62:
                 temp_v0_3 = PlayerSlots_Get(var_s1_2);
@@ -223,13 +223,13 @@ extern "C" SfGameObject* NpcPerception_NextCandidate(SfAiPerception* arg0, SfGam
                 }
             } else {
                 temp_a0_7 = (ControllerV*)arg0->component;
-                if (temp_a0_7->Enemy((SfGameObject*)D_004FFC0C->actor) == 0) {
+                if (temp_a0_7->Enemy((SfGameObject*)g_LocalPlayer->actor) == 0) {
                     if (arg0->flags2 & 1) {
                         goto block_71;
                     }
                 } else {
                 block_71:
-                    var_s3 = (SfGameObject*)D_004FFC0C->actor;
+                    var_s3 = (SfGameObject*)g_LocalPlayer->actor;
                 }
             }
             if (var_s3 == 0) {
@@ -256,7 +256,7 @@ extern "C" SfGameObject* NpcPerception_NextCandidate(SfAiPerception* arg0, SfGam
                             } else {
                                 goto block_93;
                             }
-                        } else if (temp_s0_4->classWord == D_0049D010) {
+                        } else if (temp_s0_4->classWord == g_HumanActorClassKey) {
                             var_v0_3 = Active(temp_s0_4);
                             if (var_v0_3 != 0) {
                                 var_v0_3 = ((SfActor*)temp_s0_4)->pickupable != 0;

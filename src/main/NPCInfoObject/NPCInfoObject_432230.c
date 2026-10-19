@@ -123,11 +123,11 @@ void func_00432720(char**, const Raw_2750&);
 void func_0015AF40(int*, char**);
 extern char D_00582B30;
 extern unsigned char D_005721C0;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 }
 #define Begin_2750(o) func_00432740(o, List_Begin(&D_00582B30))
 #define End_2750(o) func_00432720(o, func_00432730(&D_00582B30))
-static inline unsigned char IsHost_2510() { if (D_005721C8) return D_005721C0; return 1; }
+static inline unsigned char IsHost_2510() { if (g_IsMultiplayer) return D_005721C0; return 1; }
 extern "C" void func_00432510(int d0, Ent_2750* tbl, int key) {
   if (IsHost_2510() && *(int*)&D_00582B30) {
     char* end;

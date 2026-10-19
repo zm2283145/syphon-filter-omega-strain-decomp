@@ -27,11 +27,11 @@ struct Obj_441A10 {
 };
 
 extern "C" {
-extern char D_004FFB50[];
+extern char g_Game[];
 extern int D_004FFC04;
-extern int D_004FFBBC;
+extern int g_CardSlotId;
 extern unsigned char D_004FFBB8;
-extern Net_441A10 D_0055A830;
+extern Net_441A10 g_MemCard;
 extern char D_004C0448[]; extern char D_004C04F0[]; extern char D_004C0500[];
 extern char D_004C0510[]; extern char D_004C0520[];
 int* Agent_GetSelected(void*, int);
@@ -46,8 +46,8 @@ static inline int ShowDlg(int mgr, int type, char* t, char* m, void* cb, int x) 
 
 extern "C" void GuiSaveAgentWidget_HandleEvent(Obj_441A10* self)
 {
-    Net_441A10* net = &D_0055A830;
-    if (self->mode != 0 && self->mode != 4) self->f50 = Agent_GetSelected(D_004FFB50, -1)[1];
+    Net_441A10* net = &g_MemCard;
+    if (self->mode != 0 && self->mode != 4) self->f50 = Agent_GetSelected(g_Game, -1)[1];
     self->shown = 0;
     net->cb = (void*)App_CardWaitPollThunk;
     MemCard_Refresh(net);
@@ -68,7 +68,7 @@ extern "C" void GuiSaveAgentWidget_HandleEvent(Obj_441A10* self)
         return;
     }
     D_004FFBB8 = 1;
-    if (self->mode != 0 && D_004FFBBC != net->impl->f5A8) {
+    if (self->mode != 0 && g_CardSlotId != net->impl->f5A8) {
         self->dlg = ShowDlg(D_004FFC04, 5, D_004C0448, D_004C0520, self, 5);
         return;
     }

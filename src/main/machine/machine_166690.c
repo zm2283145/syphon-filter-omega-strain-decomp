@@ -23,8 +23,8 @@ extern int D_0048A048;
 extern char D_0049C390;
 extern char D_004E9B70;
 extern int D_004EE4E8;
-extern unsigned char D_00533880;
-extern int D_00533888;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
 
 typedef struct {
     int status;
@@ -48,16 +48,16 @@ void LoadingScreen_StartThread(void *fn) {
     int mem;
 
     size = D_0048A040 + 0x10;
-    if (D_00533880 != 0) {
+    if (g_ProfileLockEnabled != 0) {
         Alloc_Lock(9);
     }
-    D_00533888 += 1;
+    g_ProfileLockDepth += 1;
     mem = Mem_Alloc(0, size, &D_0049C390, 0x770);
-    if (D_00533880 != 0) {
+    if (g_ProfileLockEnabled != 0) {
         Alloc_Unlock(9);
     }
     D_004EE4E8 = mem;
-    D_00533888 -= 1;
+    g_ProfileLockDepth -= 1;
     tp.status = 0x10;
     tp.func = fn;
     tp.stack = (void *)(mem & ~0xF);

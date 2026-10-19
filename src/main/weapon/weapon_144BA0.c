@@ -20,7 +20,7 @@ typedef struct { void* vt; char pad[0x1C]; unsigned char flag; char pad21[0x57];
 typedef struct { char pad[0x48]; char m48[0x9C]; char mE4[0xAC]; } Req_4BA0;
 typedef struct { char pad[0x88]; int src; char pad8C[0x38]; int snd[6]; } S_4BA0;
 extern char D_004DADF0[];
-extern char D_004FFB50[];
+extern char g_Game[];
 void SoundRequest_Ctor(Req_4BA0* r, int a, int id, int b, int c);
 void SoundStopMsg_Ctor(Msg_4BA0* m, Req_4BA0* r, int src);
 void Event_Send(Msg_4BA0* m, void* target, int a);
@@ -35,7 +35,7 @@ void WeaponInv_StopLoopSound(S_4BA0* self, unsigned char slot)
         SoundRequest_Ctor(&req, 1, *p, 0, 0);
         SoundStopMsg_Ctor(&msg, &req, self->src);
         msg.flag = 1;
-        Event_Send(&msg, D_004FFB50, 0);
+        Event_Send(&msg, g_Game, 0);
         *p = 0;
         msg.vt = D_004DADF0;
         FileMan_Release(msg.m114, -1);
@@ -104,7 +104,7 @@ static inline void merge_flush_func_00144C70(void) {}
 #pragma cplusplus on
 
 extern "C" {
-extern unsigned char D_00489D70[];
+extern unsigned char WeaponHolsterAttachPoints[];
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void* HeldItem_Construct(void* p, void* actor);
 void WeaponInv_Add(void* inv, int item, int a, int b, int c, int d);
@@ -179,7 +179,7 @@ extern "C" WiInv* WeaponInv_Construct(WiInv* self, void* actor, int withHeld) {
         self->slots[i].itemId = -1;
         self->slots[i].clip = 0;
         self->slots[i].spare = 0;
-        self->slots[i].holsterOk = D_00489D70[i] < 8;
+        self->slots[i].holsterOk = WeaponHolsterAttachPoints[i] < 8;
     }
     self->current = 6;
     self->actor = actor;

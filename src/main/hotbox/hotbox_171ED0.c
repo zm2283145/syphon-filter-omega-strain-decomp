@@ -18,12 +18,12 @@ typedef struct { char pad[0x49]; unsigned char b49; } T171;
 typedef struct { char pad[0xC]; int fc; } E171;
 typedef struct { char pad[0x64]; int n; T171** items; char pad2[0x24]; int type; int f94; } O171;
 extern "C" {
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern char g_cDisableMsgClass[];
 extern char D_004E0860[];
 extern char D_004EE698[];
 extern char D_004D9940[];
-extern char D_004FFB50[];
+extern char g_Game[];
 extern void* D_004FFBD4;
 extern int Player_GetIndex(int);
 extern void Event_Construct(void*, char*);
@@ -42,7 +42,7 @@ extern void ActiveList_RemoveObject(char*, T171*);
     if (((V171*)(o))->v25()) { \
         int i; \
         for (i = 0; i < (o)->n; i++) { \
-            if (D_005721C8) { \
+            if (g_IsMultiplayer) { \
                 int id = -1; \
                 if (ev) id = Player_GetIndex((ev)->fc); \
                 Event_Construct(&mi, g_cDisableMsgClass); \
@@ -114,7 +114,7 @@ extern "C" void Hotbox_SendLinkMessages(O171* o, E171* ev) {
         break;
     }
     case 11:
-        if (o->n && o->items[0]->b49 == 9) ActiveList_RemoveObject(D_004FFB50, o->items[0]);
+        if (o->n && o->items[0]->b49 == 9) ActiveList_RemoveObject(g_Game, o->items[0]);
         break;
     case 0: case 2: case 3: case 4: case 6: case 10: case 17:
         break;

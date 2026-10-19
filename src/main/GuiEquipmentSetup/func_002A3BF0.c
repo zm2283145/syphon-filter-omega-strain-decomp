@@ -42,9 +42,9 @@ extern char D_004AB230[];
 extern char D_004AB240[];
 extern char D_004AB120[];
 extern char D_004AB250[];
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005721C0;
-extern Net_002A3BF0* D_004FFC0C;
+extern Net_002A3BF0* g_LocalPlayer;
 extern G_002A3BF0* D_004FFC04;
 extern void* D_00506550;
 extern int D_00506508;
@@ -80,9 +80,9 @@ extern "C" void func_002A3BF0(S_002A3BF0* self0)
     }
     w = FIND(D_004AB0B0, D_004A9870);
     t = Loc_LookupText(D_004AB1A0);
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         unsigned char ok;
-        if (D_005721C8)
+        if (g_IsMultiplayer)
             ok = D_005721C0;
         else
             ok = 1;
@@ -91,7 +91,7 @@ extern "C" void func_002A3BF0(S_002A3BF0* self0)
         else
             t = Loc_LookupText(D_004AB100);
     }
-    if (D_004FFC0C->p30->GetState() == 3)
+    if (g_LocalPlayer->p30->GetState() == 3)
         t = Loc_LookupText(D_004AB100);
     if (t && w)
         GuiTextWidget_SetText(w, t, 0);

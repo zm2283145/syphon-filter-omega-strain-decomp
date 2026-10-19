@@ -84,9 +84,9 @@ typedef struct { MSG_HDR; int f24; unsigned char f28; char pad29[3]; int f2C; un
 
 extern "C" {
 extern char D_004DFD80[]; extern char D_004E0840[]; extern char D_004DA910[]; extern char D_004E0160[];
-extern char D_0055D480[]; extern char D_0055A1D8[]; extern char D_004DA950[];
+extern char g_ActorActionMsgClass[]; extern char g_CasEventMsgClass[]; extern char D_004DA950[];
 extern char D_00542B60[]; extern char D_004DA930[];
-extern char D_004FFB50[];
+extern char g_Game[];
 extern int D_0049D040; extern int D_0049D048;
 extern char D_0049DC30[]; extern char D_0049DC50[];
 extern char D_0049DC70[]; extern char D_0049DC90[]; extern char D_0049DCB0[]; extern char D_0049DCD0[];
@@ -97,7 +97,7 @@ extern Name_L D_0049D320;
 extern signed char D_004EEF90; extern signed char D_004EEF98; extern signed char D_004EEFA0; extern signed char D_004EEFA8;
 extern signed char D_004EEFB0; extern signed char D_004EEFB8; extern signed char D_004EEFC0;
 extern signed char D_004EEFC8; extern signed char D_004EEFD0;
-extern float D_0049D038;
+extern float g_DefaultMotionTransition;
 void Event_Construct(void* m, void* t);
 void Event_Send(void* m, void* t, int f);
 void cMessage_dtor(void* m, int f);
@@ -232,11 +232,11 @@ static inline X_L* Set5_L(X_L* x, int a, int b, int c, int d, int e, void* act)
 }
 static inline void RateDef_L(Rate_L* r)
 {
-    float d = D_0049D038;
+    float d = g_DefaultMotionTransition;
     r->x = d;
     r->y = d;
     r->z = Recip_L(d);
-    r->w = Recip_L(D_0049D038);
+    r->w = Recip_L(g_DefaultMotionTransition);
 }
 static inline void Install_L(Act_L* a, Sel_L* sel, Rate_L* r)
 {
@@ -592,7 +592,7 @@ static inline void SendMsg4_L(Obj_L* obj, Act_L* actor)
 {
     Msg4_L m;
     Msg4_L* p = &m;
-    Event_Construct(p, D_0055A1D8);
+    Event_Construct(p, g_CasEventMsgClass);
     p->vtable = D_004DA950;
     p->f24 = 0xD;
     p->f28 = -1;
@@ -805,7 +805,7 @@ extern "C" void Actor_HandleObjectAction(Act_L* actor, Msg_L* msg)
             float val = c.val;
             signed char t = (signed char)c.type;
             idp = &c.id;
-            Event_Construct(p, D_0055D480);
+            Event_Construct(p, g_ActorActionMsgClass);
             p->vtable = D_004E0840;
             p->type = t;
             p->kind = 7;
@@ -987,7 +987,7 @@ extern "C" void Actor_HandleObjectAction(Act_L* actor, Msg_L* msg)
                 Ctl_L* c = actor->ctl;
                 if (c && c->IsPlayer()) isP = 1;
                 if (isP && actor->b14 && !actor->b326B) {
-                    World_PushObjectFromAction(D_004FFB50, p);
+                    World_PushObjectFromAction(g_Game, p);
                     actor->b326B = 1;
                 }
             }

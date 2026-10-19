@@ -22,14 +22,14 @@ DEFINE_VTABLE_BASE_DTOR(func_002C9A40, D_004D97F0, cMessage_dtor)
 
 /* merge_units: begin func_002C9AA0 */
 #pragma push /* merge_units */
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_004F2CC0[];
 extern void* Service_Lookup(char* a, char* b);
 extern void SoundMgr_StopMusic(void* p);
 typedef struct { char pad[0x30C]; int handle; } Obj9AA0;
 void FrontEnd_StopMusic(Obj9AA0* o)
 {
-    void* s = Service_Lookup(D_004FFB50, D_004F2CC0);
+    void* s = Service_Lookup(g_Game, D_004F2CC0);
     if (s)
         SoundMgr_StopMusic(s);
     o->handle = -1;

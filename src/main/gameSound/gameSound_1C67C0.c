@@ -21,9 +21,9 @@ extern void SoundRequest_Ctor(E2SoundReq*, int, char*, int, int);
 #endif /* merge_units */
 #define SoundRequest_Ctor(a0, a1, a2, a3, a4) (SoundRequest_Ctor((void *)(a0), (a1), (void *)(a2), (void *)(a3), (a4))) /* merge_units */
 
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005721C0;
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_004DAE10[];
 #if 0 /* merge_units */
 extern void SoundMsg_WrapAction(E2SoundMsg*, E2SoundReq*);
@@ -52,10 +52,10 @@ void Voice_PlayQuip(char* name, int arg) {
     if (name == 0 || *name == 0) return;
     SoundRequest_Ctor(&req, 4, name, 0, arg);
     req.play = 1;
-    ok = D_005721C8 ? D_005721C0 : 1;
+    ok = g_IsMultiplayer ? D_005721C0 : 1;
     if (ok) {
         SoundMsg_WrapAction(&msg, &req);
-        Event_Send(&msg, D_004FFB50, 0);
+        Event_Send(&msg, g_Game, 0);
         msg.vtbl = D_004DAE10;
         FileMan_Release(msg.b, -1);
         FileMan_Release(msg.a, -1);
@@ -85,7 +85,7 @@ void Transport_Send(int, void*, int, int);
 void Global_StopMusic(const char* name, Hum_6890* h);
 }
 static inline unsigned char IsPlayer_6890(Hum_6890* h) { unsigned char r = 0; if (h->ctl && h->ctl->IsPlayer()) r = 1; return r; }
-static inline int LocalId_6890(Hum_6890* h) { int id; if (D_005721C8) { if (IsPlayer_6890(h)) id = ((h->flags & 0x7F000000) >> 24) - 1; else id = -1; } else id = 0; return id; }
+static inline int LocalId_6890(Hum_6890* h) { int id; if (g_IsMultiplayer) { if (IsPlayer_6890(h)) id = ((h->flags & 0x7F000000) >> 24) - 1; else id = -1; } else id = 0; return id; }
 extern "C" void Global_StopMusic(const char* name, Hum_6890* h)
 {
     SoundEvent ev;
@@ -94,15 +94,15 @@ extern "C" void Global_StopMusic(const char* name, Hum_6890* h)
     SoundEvent_Ctor(&ev, &req, 1);
     FileMan_Release(&req.b, -1);
     FileMan_Release(&req.a, -1);
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         if (h->b14) {
             ev.kind = 1;
-            Event_Send(&ev, D_004FFB50, 0);
+            Event_Send(&ev, g_Game, 0);
         } else {
             Transport_Send(0, &ev, 0, LocalId_6890(h));
         }
     } else {
-        Event_Send(&ev, D_004FFB50, 0);
+        Event_Send(&ev, g_Game, 0);
     }
     ev.vtable = D_004DADF0;
     FileMan_Release(&ev.req.b, -1);
@@ -131,15 +131,15 @@ extern "C" void Global_PlayMusic(const char* name, Hum_6890* h)
     EffectMsg_WrapRequest(&ev, &req);
     FileMan_Release(&req.b, -1);
     FileMan_Release(&req.a, -1);
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         if (h->b14) {
             ev.kind = 1;
-            Event_Send(&ev, D_004FFB50, 0);
+            Event_Send(&ev, g_Game, 0);
         } else {
             Transport_Send(0, &ev, 0, LocalId_6890(h));
         }
     } else {
-        Event_Send(&ev, D_004FFB50, 0);
+        Event_Send(&ev, g_Game, 0);
     }
     ev.vtable = D_004DAE30;
     FileMan_Release(&ev.req.b, -1);
@@ -171,9 +171,9 @@ typedef struct EventMsg {
 } EventMsg;
 
 #if 0 /* merge_units */
-extern int D_004FFB50;
+extern int g_Game;
 #endif /* merge_units */
-#define D_004FFB50 (*(int*)&D_004FFB50) /* merge_units */
+#define g_Game (*(int*)&g_Game) /* merge_units */
 
 #if 0 /* merge_units */
 extern int D_004DADF0;
@@ -205,7 +205,7 @@ extern void cMessage_dtor(EventMsg*, int);
 #endif /* merge_units */
 #define cMessage_dtor(a0, a1) (cMessage_dtor((void *)(a0), (a1))) /* merge_units */
 
-static inline int Snd_Allowed(void) { return D_005721C8 ? D_005721C0 : 1; }
+static inline int Snd_Allowed(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
 void Sound_StopForObject(int channel, int id, int obj) {
     EventMsg msg;
     SndCmd cmd;
@@ -213,14 +213,14 @@ void Sound_StopForObject(int channel, int id, int obj) {
     SoundEvent_Ctor(&msg, &cmd, 0);
     FileMan_Release(cmd.partB, -1);
     FileMan_Release(cmd.partA, -1);
-    if (!D_005721C8 || !Snd_Allowed()) msg.immediate = 1;
-    Event_Send(&msg, &D_004FFB50, 0);
+    if (!g_IsMultiplayer || !Snd_Allowed()) msg.immediate = 1;
+    Event_Send(&msg, &g_Game, 0);
     msg.vtable = &D_004DADF0;
     FileMan_Release(msg.partB, -1);
     FileMan_Release(msg.partA, -1);
     cMessage_dtor(&msg, 0);
 }
-#undef D_004FFB50 /* merge_units */
+#undef g_Game /* merge_units */
 #undef D_004DADF0 /* merge_units */
 #undef SoundRequest_Ctor /* merge_units */
 #undef SoundEvent_Ctor /* merge_units */

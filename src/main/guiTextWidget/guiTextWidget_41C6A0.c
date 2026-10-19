@@ -50,7 +50,7 @@ extern "C" void GuiWidget_SetFlag4();
 extern "C" void GuiWidget_Deinit();
 extern "C" void GuiWidget_Init();
 extern void * const D_004E0AC0[];
-extern unsigned char D_00533880;
+extern unsigned char g_ProfileLockEnabled;
 }
 extern "C" char * func_0041C6A0(char * arg0, long long arg1) {
     int temp_s2;

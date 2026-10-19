@@ -12,7 +12,7 @@
 typedef struct { unsigned char flag; char p[3]; int id; int c; int ammo; } E_INV;
 typedef struct { int pad; E_INV e[7]; char pad2[0x84 - 0x74]; unsigned char cur; } INV;
 typedef struct { char pad[0x200]; int x[64]; } WDef;
-extern void* D_004FFD30;
+extern void* g_WeaponDatabase;
 typedef struct { char pad[0x10C]; int x10C; } WD_3670;
 extern WD_3670* WeaponDb_Get(void* db, int id);
 int WeaponInv_HasSpareOfAmmoType(INV* self, int kind)
@@ -21,7 +21,7 @@ int WeaponInv_HasSpareOfAmmoType(INV* self, int kind)
     for (i = 0; i < 6; i++) {
         E_INV* e = &self->e[0];
         if (e->id != -1) {
-            WD_3670* w = WeaponDb_Get(D_004FFD30, e->id);
+            WD_3670* w = WeaponDb_Get(g_WeaponDatabase, e->id);
             if (w->x10C == kind && e->ammo > 0)
                 return 1;
         }
@@ -48,7 +48,7 @@ extern WDef_3710* WeaponDb_Get(void* db, int id);
 int WeaponInv_HasAmmoText(INV_00143710* self, int id)
 {
     if (id == -1 && self->cur != 6) id = self->e[self->cur].id;
-    return id != -1 ? WeaponDb_Get(D_004FFD30, id)->x70 != 0 : 0;
+    return id != -1 ? WeaponDb_Get(g_WeaponDatabase, id)->x70 != 0 : 0;
 }
 #undef WeaponDb_Get /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
@@ -90,7 +90,7 @@ extern E3Def437* WeaponDb_Get(void* table, int id);
 static inline E3Slot437* GetSel(E3Inv437* inv) { return &inv->slots[inv->selected]; }
 int WeaponInv_GetHeldClass(E3Inv437* inv) {
     if (inv->selected != 6) {
-        return WeaponDb_Get(D_004FFD30, GetSel(inv)->id)->unkF0;
+        return WeaponDb_Get(g_WeaponDatabase, GetSel(inv)->id)->unkF0;
     }
     return 11;
 }
@@ -111,7 +111,7 @@ extern void* WeaponDb_Get(void* db, int id);
 
 void* WeaponInv_GetHeldItem(INV_001437E0* self)
 {
-    return self->cur != 6 ? WeaponDb_Get(D_004FFD30, *(int*)((char*)self + self->cur * 16 + 8)) : 0;
+    return self->cur != 6 ? WeaponDb_Get(g_WeaponDatabase, *(int*)((char*)self + self->cur * 16 + 8)) : 0;
 }
 #undef WeaponDb_Get /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
@@ -129,7 +129,7 @@ extern WD_3820* WeaponDb_Get(void* db, int id);
 
 int WeaponInv_IsFullAuto(INV* self)
 {
-    return self->cur != 6 ? WeaponDb_Get(D_004FFD30, *(int*)((char*)self + self->cur * 16 + 8))->x78 == 1 : 0;
+    return self->cur != 6 ? WeaponDb_Get(g_WeaponDatabase, *(int*)((char*)self + self->cur * 16 + 8))->x78 == 1 : 0;
 }
 #undef WeaponDb_Get /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
@@ -172,7 +172,7 @@ int WeaponInv_GetClipSize(INV* self, char slot)
     if ((unsigned char)slot == 6)
         slot = self->cur;
     if ((unsigned char)slot != 6)
-        return WeaponDb_Get(D_004FFD30, *(int*)((char*)self + (unsigned char)slot * 16 + 8))->x70;
+        return WeaponDb_Get(g_WeaponDatabase, *(int*)((char*)self + (unsigned char)slot * 16 + 8))->x70;
     return 0;
 }
 #undef WeaponDb_Get /* merge_units */

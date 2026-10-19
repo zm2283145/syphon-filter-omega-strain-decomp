@@ -18,7 +18,7 @@ struct WRef_2330 { WObj_2330* obj; int serial; };
 struct WMgr_2330 { char pad[0x400]; WRef_2330* refs[20]; char pad450[4]; int count; };
 extern "C" {
 extern char D_004ABFB0[];
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_004DAE30[];
 void SoundRequest_Ctor(SoundRequest* req, int kind, char* name, WObj_2330* a, int b);
 void EffectMsg_WrapRequest(EffectMsg* msg, SoundRequest* req);
@@ -52,7 +52,7 @@ void WaterFx_Remove(WMgr_2330* m, WObj_2330* target)
         SoundRequest_Ctor(&req, 0, D_004ABFB0, target, 0);
         EffectMsg_WrapRequest(&msg, &req);
         msg.flag = 1;
-        Event_Send(&msg, D_004FFB50, 0);
+        Event_Send(&msg, g_Game, 0);
         SetH_2330(m->refs[i], 0);
         m->count--;
         msg.vtbl = D_004DAE30;

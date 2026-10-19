@@ -36,11 +36,11 @@ struct Actor_18C770 {
     Ctl_18C770* ctl;
 };
 extern "C" {
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_004DAE10[];
 extern char D_0049DC10[];
-extern char D_004FFC90[];
-extern unsigned char D_005721C8;
+extern char g_LevelDirName[];
+extern unsigned char g_IsMultiplayer;
 void Resource_Construct(void* m);
 void FileMan_Release(void* part, int flags);
 void cMessage_dtor(void* msg, int flags);
@@ -78,11 +78,11 @@ extern "C" void Actor_BuildVoiceKey(Actor_18C770* actor, int b)
     p->h184 = -1;
     p->w180 = 0;
     p->b186 = 0;
-    n = Objective_GetLevelMissionNumber(D_004FFC90);
+    n = Objective_GetLevelMissionNumber(g_LevelDirName);
     if (n > 0) {
         Msg_18C770 m;
         int idx;
-        if (D_005721C8) {
+        if (g_IsMultiplayer) {
             if (HasCtl(actor)) idx = ((actor->flags & 0x7F000000) >> 24) - 1;
             else idx = -1;
         } else {
@@ -92,7 +92,7 @@ extern "C" void Actor_BuildVoiceKey(Actor_18C770* actor, int b)
         SoundAction_CtorVoice(&act, 4, buf, 0, 0);
         SoundMsg_WrapAction(&m, &act);
         m.flag = 1;
-        Event_Send(&m, D_004FFB50, 1);
+        Event_Send(&m, g_Game, 1);
         m.vtbl = D_004DAE10;
         FileMan_Release(m.partB, -1);
         FileMan_Release(m.partA, -1);

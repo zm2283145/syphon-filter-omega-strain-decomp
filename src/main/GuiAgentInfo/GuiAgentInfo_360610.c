@@ -30,8 +30,8 @@ extern void func_00406EC0(Blk*, char*);
 extern void Skl_Load(void*, char*, char*);
 extern void GuiAgentInfo_Refresh(char*);
 extern char D_004BB868[];
-extern char D_004FFB50[];
-extern char D_0055DDA0[];
+extern char g_Game[];
+extern char g_AgentPartCache[];
 extern C16 D_0055D510;
 extern __int128 D_0055D520;
 extern C16 D_0055D530;
@@ -107,12 +107,12 @@ void func_00360610(char* self, int* arg1, Msg* arg2) {
         }
         memset(buf, 0, 0x100);
         memcpy(buf, arg2->data, 0xC0);
-        Agent_GetSelected(D_004FFB50, -1);
+        Agent_GetSelected(g_Game, -1);
         p = (Blk*)(F_(self, 0x120, char*) + 0xA0);
         memset(p, 0, 0x440);
         func_00406EC0(p, buf);
     } else {
-        Skl_Load(D_0055DDA0, "GAMEDATA\\FRONTEND\\MALE.SKL", "GAMEDATA\\FRONTEND\\FEMALE.SKL");
+        Skl_Load(g_AgentPartCache, "GAMEDATA\\FRONTEND\\MALE.SKL", "GAMEDATA\\FRONTEND\\FEMALE.SKL");
         p = (Blk*)(F_(self, 0x120, char*) + 0xA0);
         p->a = D_0055D510;
         p->b = D_0055D520;
@@ -169,9 +169,9 @@ typedef struct {
 
 extern "C" {
 #if 0 /* merge_units */
-extern char D_004FFB50;
+extern char g_Game;
 #endif /* merge_units */
-#define D_004FFB50 (*(char*)&D_004FFB50) /* merge_units */
+#define g_Game (*(char*)&g_Game) /* merge_units */
 
 #if 0 /* merge_units */
 Agent_09F0* Agent_GetSelected(void* list, int idx);
@@ -224,7 +224,7 @@ extern "C" void GuiAgentInfo_Fill(Panel_09F0* p)
     Pal_09F0* src;
 
     func_00360510(&p->s88);
-    a = Agent_GetSelected(&D_004FFB50, -1);
+    a = Agent_GetSelected(&g_Game, -1);
     String_CtorCStr_13B480(&s1, AgentData_GetName(a));
     func_0013D680(p->strB8, &s1);
     String_Dtor(&s1, 0);
@@ -248,7 +248,7 @@ extern "C" void GuiAgentInfo_Fill(Panel_09F0* p)
     p->sB4 = cAgentData_GetStat(a, 0);
     func_00296FA0(&r1);
     r1.own = 1;
-    AgentData_GetRatings(Agent_GetSelected(&D_004FFB50, -1), &r1);
+    AgentData_GetRatings(Agent_GetSelected(&g_Game, -1), &r1);
     int k = 0; for (int i = 0; i < 6; i++) {
         int j;
         for (j = 0; j < 4; j++) {
@@ -273,7 +273,7 @@ extern "C" void GuiAgentInfo_Fill(Panel_09F0* p)
     func_00299360(&r2, 0);
     func_00299360(&r1, 0);
 }
-#undef D_004FFB50 /* merge_units */
+#undef g_Game /* merge_units */
 #undef Agent_GetSelected /* merge_units */
 #undef String_CtorCStr_13B480 /* merge_units */
 #undef func_0013D680 /* merge_units */

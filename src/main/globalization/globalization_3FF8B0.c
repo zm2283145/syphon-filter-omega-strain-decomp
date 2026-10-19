@@ -33,11 +33,11 @@ extern "C" int func_003FF8B0(int a0, int a1, int a2, Pk003FF8B0* arg) {
 
 /* merge_units: begin func_003FF930 */
 #pragma push /* merge_units */
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern void Transport_Send(int a, int b, int c, int d);
 void func_003FF930(int a, int b)
 {
-    if (D_005721C8)
+    if (g_IsMultiplayer)
         Transport_Send(b, a, -1, -1);
 }
 #pragma pop /* merge_units */

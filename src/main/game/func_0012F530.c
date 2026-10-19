@@ -1,14 +1,14 @@
 #include "types.h"
-extern unsigned char D_00533880;
-extern int D_00533888;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
 void Alloc_Unlock(int id);
 void operator_delete(void* p);
 void* func_0012F530(void* self, short flags)
 {
     if (self) {
-        if (D_00533880)
+        if (g_ProfileLockEnabled)
             Alloc_Unlock(9);
-        D_00533888--;
+        g_ProfileLockDepth--;
         if (flags > 0)
             operator_delete(self);
     }

@@ -1,11 +1,11 @@
-extern int D_0055A44C;
+extern int g_Pad0HeldMask;
 extern unsigned char D_004FFBB8;
 
 typedef struct {
     char pad0[0x59D];
     unsigned char flag;
 } Game59D;
-extern Game59D *D_0055A830;
+extern Game59D *g_MemCard;
 
 typedef struct {
     char pad0[0xAC];
@@ -23,7 +23,7 @@ void GuiAgentCreate_Update(Obj *o, float dt)
     int flags;
     float step;
     GuiWidget_Update(o, dt);
-    flags = D_0055A44C;
+    flags = g_Pad0HeldMask;
     step = 3.1415927f * (dt / 30.0f);
     if (o->locked == 0) {
         if (flags & 1) {
@@ -39,6 +39,6 @@ void GuiAgentCreate_Update(Obj *o, float dt)
             }
         }
     }
-    D_004FFBB8 = D_0055A830->flag != 0;
+    D_004FFBB8 = g_MemCard->flag != 0;
 }
 #pragma pop

@@ -44,7 +44,7 @@ typedef struct {
     signed char cur;        /* +0xEF */
 } S_C390;
 
-extern char D_0055DDA0[];
+extern char g_AgentPartCache[];
 extern char D_004A9A28[];
 extern char D_004A9A30[];
 extern char D_004A9A38[];
@@ -115,26 +115,26 @@ void GuiAgentCreate_StepOption(S_C390* self, int back, int fwd)
         if (self->mode == 0) {
             int r;
             s = &self->tbl->skel;
-            r = AgentPacking_StepMeshA(D_0055DDA0, dir, s->e[self->slot].a, self->vE0, self->slot, self->row, self->tone, s->app, s->x1EC0);
+            r = AgentPacking_StepMeshA(g_AgentPartCache, dir, s->e[self->slot].a, self->vE0, self->slot, self->row, self->tone, s->app, s->x1EC0);
             if (r != -1) {
                 self->vE0 = r;
-                self->vE4 = AgentPartCache_FindTexture(D_0055DDA0, self->tbl->skel.e[self->slot].b);
+                self->vE4 = AgentPartCache_FindTexture(g_AgentPartCache, self->tbl->skel.e[self->slot].b);
             }
         } else if (self->mode == 7) {
             Skel_C390* s = &self->tbl->skel;
-            int r = AgentPacking_StepMeshB(D_0055DDA0, dir, s->e[self->slot].a, self->vE0, self->slot, self->row, self->tone, s->app, s->x1EC0);
+            int r = AgentPacking_StepMeshB(g_AgentPartCache, dir, s->e[self->slot].a, self->vE0, self->slot, self->row, self->tone, s->app, s->x1EC0);
             if (r != -1) {
                 self->vE0 = r;
-                self->vE4 = AgentPartCache_FindTexture(D_0055DDA0, self->tbl->skel.e[self->slot].b);
+                self->vE4 = AgentPartCache_FindTexture(g_AgentPartCache, self->tbl->skel.e[self->slot].b);
             }
         } else if (self->mode == 1 || self->mode == 2) {
             int slot = self->slot;
             int r;
             s = &self->tbl->skel;
             if (slot < self->tbl->skel.count)
-                r = AgentPacking_StepColour(D_0055DDA0, dir, s->e[slot].a, s->e[slot].b, self->vE4, slot, self->row, self->tone, s->app, s->x1EC0);
+                r = AgentPacking_StepColour(g_AgentPartCache, dir, s->e[slot].a, s->e[slot].b, self->vE4, slot, self->row, self->tone, s->app, s->x1EC0);
             else
-                r = AgentPacking_StepColour(D_0055DDA0, dir, *D_0048B460, s->e[slot].b, self->vE4, slot, self->row, self->tone, s->app, s->x1EC0);
+                r = AgentPacking_StepColour(g_AgentPartCache, dir, *D_0048B460, s->e[slot].b, self->vE4, slot, self->row, self->tone, s->app, s->x1EC0);
             if (r != -1)
                 self->vE4 = r;
         } else if (self->mode == 3) {
@@ -151,8 +151,8 @@ void GuiAgentCreate_StepOption(S_C390* self, int back, int fwd)
             self->tbl->skel.i23F4 = 0;
             FindIdx_C390(self);
             Skel_ApplyScalePreset(&self->tbl->skel, -1);
-            self->vE0 = AgentPartCache_FindMesh(D_0055DDA0, self->tbl->skel.e[self->slot].a);
-            self->vE4 = AgentPartCache_FindTexture(D_0055DDA0, self->tbl->skel.e[self->slot].b);
+            self->vE0 = AgentPartCache_FindMesh(g_AgentPartCache, self->tbl->skel.e[self->slot].a);
+            self->vE4 = AgentPartCache_FindTexture(g_AgentPartCache, self->tbl->skel.e[self->slot].b);
             self->tone = Appearance_GetToneDigit(self->tbl->skel.app);
             self->tbl->skel.tone = self->tone;
             self->row = Appearance_GetBodyKind(self->tbl->skel.app);
@@ -167,7 +167,7 @@ void GuiAgentCreate_StepOption(S_C390* self, int back, int fwd)
             self->vE8 = ActorModel_StepMorph(&self->tbl->skel, dir, self->vE8, self->row);
         } else if (self->mode == 8) {
             Skel_C390* s = &self->tbl->skel;
-            int r = AgentPacking_StepTexture(D_0055DDA0, dir, s->e[self->slot].a, s->e[self->slot].b, self->vE4, self->slot, self->row, self->tone, s->app, s->x1EC0);
+            int r = AgentPacking_StepTexture(g_AgentPartCache, dir, s->e[self->slot].a, s->e[self->slot].b, self->vE4, self->slot, self->row, self->tone, s->app, s->x1EC0);
             if (r != -1)
                 self->vE4 = r;
         }

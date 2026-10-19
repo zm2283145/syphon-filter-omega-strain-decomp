@@ -7,7 +7,7 @@
 #include "loose00_types.h"
 
 extern char D_004D91C0[]; /* LosResultEvent vtable */
-extern char D_005435A8[]; /* "LOS result ready" event descriptor */
+extern char g_LosResultMsgClass[]; /* "LOS result ready" event descriptor */
 extern int Event_Construct(void*, void*);
 extern int Vec4_Assign(Vec4*, Vec4*);
 extern int Vec4_Copy(Vec4*, Vec4*);
@@ -19,7 +19,7 @@ extern int func_00139BB0(Vec4*, Vec4*);
 LosResultEvent* LosResultEvent_Ctor(LosResultEvent* ev, LosResult* src) {
     LosResult* dst;
 
-    Event_Construct(ev, D_005435A8);
+    Event_Construct(ev, g_LosResultMsgClass);
     dst = &ev->result;
     ev->vtable = D_004D91C0;
     dst->status = src->status;

@@ -36,7 +36,7 @@ extern void Loc_SetLanguage(unsigned char id);
 extern char* Loc_GetCurrentLanguageName(void);
 extern int strstr(char* a, char* b);
 
-extern int D_004FFD2C;
+extern int g_OptionsRecord;
 extern char D_004FFBB5;
 extern char D_004FFBB1;
 extern int D_00494188;
@@ -49,7 +49,7 @@ void Game_LoadIni(Game* g) {
     int j;
 
     func_003CBE90("SFO_GAME.INI");
-    func_0045A700(D_004FFD2C);
+    func_0045A700(g_OptionsRecord);
     { char* mode = GameIni_GetString("BOOT_VIDEOMODE"); printf("videomode: %s\n", mode); }
     { int pal = String_CompareNoCase(GameIni_GetString("BOOT_VIDEOMODE"), "PAL") == 0; if (pal) {
         g->videoMode = 2;
@@ -154,7 +154,7 @@ extern char D_0048B2F8[];
 extern char D_0049C360[];
 extern char D_004FFB8C[];
 extern int D_00533868;
-extern int D_0055A278;
+extern int g_InterfaceFont;
 extern S165 D_0055C5D0;
 extern int D_0055C650;
 extern M165 D_0055C654;
@@ -190,7 +190,7 @@ void Boot_LoadFonts(O165* o) {
     *TextManager_Get() = x;
     o->i248 = x;
     D_00533868 = x;
-    D_0055A278 = o->i280[1];
+    g_InterfaceFont = o->i280[1];
     D_0055C5D0 = r->name;
     D_0055C650 = r->i80;
     D_0055C654 = r->m;

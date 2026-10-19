@@ -72,7 +72,7 @@ extern int D_004FF248;
 extern int D_004FF250;
 extern int D_004FF258;
 extern int D_004FF260;
-extern void* D_004FF268;
+extern void* g_ScriptAIActivatedMsgKey;
 extern void* g_ScriptAIDeactivatedMsgKey;
 extern void* g_ScriptAIDeadMsgKey;
 extern void* g_ScriptAITimeElapsedMsgKey;
@@ -80,10 +80,10 @@ extern void* g_ScriptAIWaypointReachedMsgKey;
 extern void* g_ScriptAIDestinationReachedMsgKey;
 extern void* g_ScriptAINewAwarenessMsgKey;
 extern void* g_ScriptAIWeaponFiredMsgKey;
-extern void* D_004FF2A8;
+extern void* g_AIPickupableAwarenessMsgKey;
 extern void* D_004FF2B0;
 extern void* D_004FF2B8;
-extern void* D_004FF2C0;
+extern void* g_ScriptAIUnconsciousMsgKey;
 extern char D_00583918;
 void func_004D17B0(void) {
     D_004FF128 = Script_RegisterType("cAIActivatedMsg", ScriptType_cAIActivatedMsg_Init, 1, 0);
@@ -126,7 +126,7 @@ void func_004D17B0(void) {
     D_004FF250 = Script_RegisterType("cAIUnconsciousMsg", ScriptType_cAIUnconsciousMsg_Init, 1, 0);
     D_004FF258 = D_004FF250;
     D_004FF260 = Script_RegisterNative(D_004FF250, Script_cAIUnconsciousMsg_Who, cGOBJ_GetScriptTypeKeyPtr(), "Who", 1, &D_004FF250);
-    D_004FF268 = "Script AI Activated Message";
+    g_ScriptAIActivatedMsgKey = "Script AI Activated Message";
     g_ScriptAIDeactivatedMsgKey = "Script AI Deactivated Message";
     g_ScriptAIDeadMsgKey = "Script AI Dead Message";
     g_ScriptAITimeElapsedMsgKey = "Script AI Time Elapsed Message";
@@ -134,8 +134,8 @@ void func_004D17B0(void) {
     g_ScriptAIDestinationReachedMsgKey = "Script AI DestinationReached Message";
     g_ScriptAINewAwarenessMsgKey = "Script AI NewAwareness Message";
     g_ScriptAIWeaponFiredMsgKey = "Script AI WeaponFired Message";
-    D_004FF2A8 = "Script AI Pickupable Message";
+    g_AIPickupableAwarenessMsgKey = "Script AI Pickupable Message";
     D_004FF2B0 = "Script AI Body Moved Message";
     D_004FF2B8 = "Script AI Disguise Taken Message";
-    D_004FF2C0 = "Script AI Unconscious Message";
+    g_ScriptAIUnconsciousMsgKey = "Script AI Unconscious Message";
 }

@@ -51,7 +51,7 @@ extern void func_002371F0();
 extern void Effect_Draw();
 extern void Effect_Update();
 void * const D_004DBB20[8] = { (void*)0x0, (void*)0x0, (void*)func_002371F0, (void*)Effect_Update, (void*)Effect_Draw, (void*)0x0, (void*)0x0, (void*)0x0 };
-extern char D_00535D20[];
+extern char g_LightMgr[];
 extern char D_004D9200[];
 extern void SpecFx_Construct(LFx_f4*);
 extern LObj_f4* LightMgr_AllocPoint(void*, int);
@@ -69,7 +69,7 @@ LFx_f4* SpawnLightEffect_Construct(LFx_f4* self, LDesc_f4* d)
     LObj_f4* o;
     SpecFx_Construct(self);
     self->vt = ((char*)D_004DBB20);
-    o = LightMgr_AllocPoint(D_00535D20, 4);
+    o = LightMgr_AllocPoint(g_LightMgr, 4);
     if (o) {
         float a, b;
         V4_f4 v;

@@ -7,7 +7,7 @@ extern "C" {
 extern int D_00494178;
 extern int D_005721A8;
 extern bool D_005721C0;
-extern bool D_005721C8;
+extern bool g_IsMultiplayer;
 int NetGame_InitLocalSlot(int*,int);
 int func_002EBBA0(int,int*);
 }
@@ -15,9 +15,9 @@ int func_002EBBA0(int,int*);
 #pragma inline_depth(12)
 #pragma opt_common_subs off
 #pragma opt_propagation off
-static inline int LocalId() { int r=0;int a=D_005721A8;if(D_005721C8) { if(D_00494178==-1)NetGame_InitLocalSlot(&D_00494178,a);r=D_00494178; }else { /* Keep the default-id branch. */ asm { .set reorder } }return r; }
+static inline int LocalId() { int r=0;int a=D_005721A8;if(g_IsMultiplayer) { if(D_00494178==-1)NetGame_InitLocalSlot(&D_00494178,a);r=D_00494178; }else { /* Keep the default-id branch. */ asm { .set reorder } }return r; }
 static inline int KnownLocal(bool online) { int r=0;int a=D_005721A8;if(online) { if(D_00494178==-1)NetGame_InitLocalSlot(&D_00494178,a);r=D_00494178; }else { /* Keep the default-id branch. */ asm { .set reorder } }return r; }
-static inline bool Hosting() {bool r;if(D_005721C8)r=D_005721C0;else {r=1; /* Preserve the offline branch. */ asm { .set reorder }}return r;}
+static inline bool Hosting() {bool r;if(g_IsMultiplayer)r=D_005721C0;else {r=1; /* Preserve the offline branch. */ asm { .set reorder }}return r;}
 static inline int OwnerId() {int id;if(Hosting())id=LocalId();else{int tmp;func_002EBBA0(D_005721A8,&tmp);id=tmp;}return id;}
 struct Mat { __int128 q[4]; Mat() {} };
 struct Backpack {
@@ -25,7 +25,7 @@ struct Backpack {
  char pad4[8];int id,netid;unsigned char active;char pad15[0x1A];unsigned char flag2f;char pad30[0x30];unsigned char flag60;char pad61[0x28F];unsigned char dropped;char pad2f1[0xF];int x300,x304,owner,x30c;float timer;int x314;
 };
 extern "C" {
-extern int D_004F7F30;
+extern int g_BackpackList;
 extern float D_004F7F70;
 extern char D_004A7B50[];
 extern "C" void Actor_ApplyContactDamage();
@@ -95,7 +95,7 @@ extern "C" void func_003CE9E0();
 extern "C" void func_003CE9F0();
 extern "C" void func_003CEA00();
 void * const D_004DC350[68] = { (void*)0x0, (void*)0x0, (void*)cBackpack_dtor, (void*)cBackpack_v01, (void*)GObj_GetID, (void*)Object_GetAttachedOrSelf, (void*)func_0015C090, (void*)func_0012ED00, (void*)func_003CE810, (void*)func_003CE7D0, (void*)func_0012ED30, (void*)func_0012ED40, (void*)func_0012ED50, (void*)cBackpack_v0B, (void*)cBackpack_v0C, (void*)func_003CEA00, (void*)func_003CE9F0, (void*)func_003CE9E0, (void*)cBackpack_v10, (void*)Actor_BasePreLogic, (void*)Actor_BaseWorldUpdate, (void*)Actor_VirtualNop, (void*)cBackpack_v14, (void*)Object_Activate, (void*)Object_Deactivate, (void*)Node_SetFlag2C, (void*)Node_ClearFlag2C, (void*)Node_GetFlag2C, (void*)func_0015BFB0, (void*)func_0015BFC0, (void*)func_0015BFD0, (void*)func_00148870, (void*)func_0015BFF0, (void*)func_0015BFE0, (void*)cBackpack_v20, (void*)func_0015C000, (void*)Object_AttachTransform, (void*)Player_GetActiveWeapon, (void*)func_003CDDC0, (void*)func_003CDD80, (void*)func_003CDD40, (void*)func_003CDC20, (void*)cBackpack_v28, (void*)func_003CDA60, (void*)func_003CD920, (void*)func_003CD7A0, (void*)func_0015C010, (void*)func_00153860, (void*)Object_GetEye, (void*)func_0015C020, (void*)func_00140E90, (void*)func_0015C030, (void*)func_0015C040, (void*)func_0015C050, (void*)Node_GetWorldMatrix, (void*)func_003CD4A0, (void*)Node_GetLightRefPoint, (void*)PathObj_GetPosition, (void*)Node_GetComponentMatrix, (void*)func_003CD110, (void*)func_003CD090, (void*)GObj_GetWorldMatrix, (void*)func_0013E060, (void*)func_0015C080, (void*)Actor_ApplyContactDamage, (void*)func_0015C0A0, (void*)GObj_GetLifeState, (void*)Controller_DeathNotice };
-extern char D_0055C9F0[];
+extern char g_IdentityMatrix[];
 void* Mem_Alloc(int,int,char*,int);
 void Backpack_CheckCap();
 void IdMgr_Allocate(int*,int);
@@ -120,7 +120,7 @@ static inline void ConstructBack(Backpack* obj,int* id) {
  *(void**)obj=((char*)D_004DC350);
  obj->x304=-2;obj->x300=0;obj->flag2f=1;
  Backpack_Reset(obj,0);
- obj->attach(D_0055C9F0,0);
+ obj->attach(g_IdentityMatrix,0);
  obj->dropped=1;obj->flag60=0;obj->timer=D_004F7F70;
 }
 
@@ -132,7 +132,7 @@ static inline void Bind(Backpack* obj) {
 }
 extern "C" Backpack* Backpack_Construct(void* actor,int carry,int* id) {
  Backpack* result=0;
- int registry=D_004F7F30;
+ int registry=g_BackpackList;
  Backpack_CheckCap();
  Backpack* obj=(Backpack*)AllocBack();
  if(obj) ConstructBack(obj,id);
@@ -141,7 +141,7 @@ extern "C" Backpack* Backpack_Construct(void* actor,int carry,int* id) {
  else {Mat m;VU0_UnitMatrix(&m);Backpack_Place(result,&m,1);}
  if(carry) { /* Preserve the carry branch before clearing the owner. */ asm { .set reorder } } else actor=0;
  Backpack_SetOwner(result,actor);
- { bool online=D_005721C8;if(online) {result->owner=KnownLocal(online);Bind(result);} }
+ { bool online=g_IsMultiplayer;if(online) {result->owner=KnownLocal(online);Bind(result);} }
  return result;
 }
 #pragma pop

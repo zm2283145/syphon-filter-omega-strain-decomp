@@ -93,7 +93,7 @@ typedef struct {
     int action;         /* 0x24 */
     unsigned char b28;  /* 0x28 */
 } NavDirMsg_h5;
-extern char D_0055D480[];
+extern char g_ActorActionMsgClass[];
 extern char D_004E0840[];
 extern void Event_Construct(NavDirMsg_h5* msg, void* name);
 extern void Event_Send(NavDirMsg_h5* msg, void* target, int flags);
@@ -117,7 +117,7 @@ int Ladder_AiNavRequest(void* actor, float* dir)
     }
     if (action != -1) {
         NavDirMsg_h5 msg;
-        Event_Construct(&msg, D_0055D480);
+        Event_Construct(&msg, g_ActorActionMsgClass);
         msg.vtable = D_004E0840;
         msg.action = action;
         msg.b20 = 1;

@@ -1,5 +1,5 @@
 #include "types.h"
-extern char D_0055DDA0[];
+extern char g_AgentPartCache[];
 extern char D_004B9ED0[];
 extern char D_004B9EE8[];
 extern void AgentPartCache_Unlock(void* a);
@@ -12,7 +12,7 @@ extern void GuiStack_SwapScreens(void* a, int b, int c);
 void func_00340C00(int arg)
 {
     int entry;
-    AgentPartCache_Unlock(D_0055DDA0);
+    AgentPartCache_Unlock(g_AgentPartCache);
     World_ClearPendingIfLoaded();
     entry = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004B9ED0, D_004B9EE8);
     GuiStack_SwapScreens(Gui_GetScreenStack(), arg, entry);

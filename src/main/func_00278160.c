@@ -27,7 +27,7 @@ typedef struct HitFlags {
 
 extern void* D_004FFC34;
 extern float D_004A9098;
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_004DAE30[];
 extern void WaterFx_PointSplash(void* fx, float a, float b);
 extern void SoundRequest_Ctor(SoundRequest* req, int kind, void* name, int a, int b);
@@ -45,7 +45,7 @@ void Bullet_OnWaterCrossing(void* self, Hit08* hit, HitFlags* info) {
         SoundRequest_Ctor(&req, 1, "B_HIT_WATER", 0, 0);
         SoundPosRequest_Ctor(&msg, &req, hit);
         msg.flag = 1;
-        Event_Send(&msg, D_004FFB50, 1);
+        Event_Send(&msg, g_Game, 1);
         msg.vtbl = D_004DAE30;
         FileMan_Release(msg.partB, -1);
         FileMan_Release(msg.partA, -1);

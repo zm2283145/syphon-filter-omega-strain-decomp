@@ -14,8 +14,8 @@ extern "C" {
 extern char D_004E15E0[];
 extern char D_004D9240[];
 extern char D_004D9280[];
-extern char D_00535D20[];
-extern unsigned char D_00535D62;
+extern char g_LightMgr[];
+extern unsigned char g_LevelLightsDirty;
 void LightMgr_RemoveFromTable(void* pool, void* p);
 }
 class S_8580 {
@@ -36,12 +36,12 @@ extern "C" S_8580* Flashlight_ReleaseGlare(S_8580* self, short flag)
             VT(s) = D_004D9240;
             s->id = -1;
             self->Shutdown();
-            D_00535D62 = 1;
+            g_LevelLightsDirty = 1;
             if (s)
                 VT(s) = D_004D9280;
         }
         if (flag > 0)
-            LightMgr_RemoveFromTable(D_00535D20, s);
+            LightMgr_RemoveFromTable(g_LightMgr, s);
     }
     return s;
 }
@@ -66,7 +66,7 @@ int Mem_Free(...);
 int TargetVis_Unregister(...);
 int operator_delete(...);
 extern char g_TargetVisMgr;
-extern unsigned char D_00533880;
+extern unsigned char g_ProfileLockEnabled;
 }
 /* Deleting destructor (called as (fl, 1) from 001b57c0); frees the object when (short)flags > 0. */
 extern "C" char * Flashlight_Destroy(Flashlight *fl, long long flags) {
@@ -111,7 +111,7 @@ int IdMgr_Allocate(...);
 void **Mem_Alloc(...);
 void **cGOBJ_ctor(...);
 extern char D_004C2018;
-extern char D_0055C9F0; /* identity matrix */
+extern char g_IdentityMatrix; /* identity matrix */
 }
 extern "C" Flashlight * Flashlight_Construct(Flashlight * fl, int owner) {
     int kind;
@@ -130,7 +130,7 @@ extern "C" Flashlight * Flashlight_Construct(Flashlight * fl, int owner) {
     }
     fl->litSpot = obj;
     spotObj = (void **)(fl->litSpot);
-    ((VC0045BAD0 *)(spotObj))->v34(&D_0055C9F0, 0); /* vcall +0x90: set transform to identity */
+    ((VC0045BAD0 *)(spotObj))->v34(&g_IdentityMatrix, 0); /* vcall +0x90: set transform to identity */
     fl->on = 0;
     fl->beamLight = 0;
     fl->glareLight = 0;

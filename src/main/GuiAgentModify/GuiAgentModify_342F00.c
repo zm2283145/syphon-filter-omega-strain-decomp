@@ -15,7 +15,7 @@ typedef struct { char pad[0x2F]; unsigned char a2F; } G342F00;
 typedef struct { char pad[0x68]; unsigned int a68; } M342F00;
 typedef struct { char pad[0xB68]; unsigned char aB68; char padB69[9]; unsigned char aB72; } A342F00;
 extern G342F00* D_004FFC04;
-extern char D_004FFB50[];
+extern char g_Game[];
 extern void GuiWidget_BaseWake(S342F00* o);
 extern void GuiWidget_SendEvent(void* self, void* w, int a, int b, int c);
 extern M342F00* Gui_GetScreenStack(void);
@@ -30,7 +30,7 @@ void GuiAgentModify_Wake(S342F00* o)
     if (o->a78) o->a78->a14 &= ~2;
     m = Gui_GetScreenStack();
     m->a68 |= 0xC;
-    ag = Agent_GetSelected(D_004FFB50, -1);
+    ag = Agent_GetSelected(g_Game, -1);
     ag->aB68 = 0;
     ag->aB72 = 1;
     o->a158 = 0;
@@ -147,9 +147,9 @@ void GuiAgentModify_Init(O_342FA0* o)
     }
     a = Cast_342FA0(GuiWidget_FindChildByName(o, "value_agent"), D_004A7520);
     b = Cast_342FA0(GuiWidget_FindChildByName(o, "value_rank"), D_004A7520);
-    if (Agent_GetSelected(D_004FFB50, -1)->bB70) {
-        GuiTextWidget_SetText(a, AgentData_GetName(Agent_GetSelected(D_004FFB50, -1)), 0);
-        GuiTextWidget_SetText(b, AgentData_GetRankText(Agent_GetSelected(D_004FFB50, -1)), 0);
+    if (Agent_GetSelected(g_Game, -1)->bB70) {
+        GuiTextWidget_SetText(a, AgentData_GetName(Agent_GetSelected(g_Game, -1)), 0);
+        GuiTextWidget_SetText(b, AgentData_GetRankText(Agent_GetSelected(g_Game, -1)), 0);
     } else {
         GuiTextWidget_SetText(a, "Player", 0);
         GuiTextWidget_SetText(b, Loc_GetTextById(Loc_FindKeyThunk("Rank_00") + 1), 0);
@@ -172,7 +172,7 @@ typedef union { __int128 q; char c[16]; } Key;
 
 
 
-extern char D_0055DDA0[];
+extern char g_AgentPartCache[];
 extern int func_004027E0(void *t, __int128 key);
 extern void func_004022E0(void *t, __int128 key, E *e, short *a, short *b, unsigned char u, signed char s);
 
@@ -182,7 +182,7 @@ void GuiAgentModify_AdvancePatchB(O *o, int idx)
     char *lo, *hi, *b;
     int i;
     k.q = o->p->sub.e[idx].key;
-    if (func_004027E0(D_0055DDA0, k.q) != -1)
+    if (func_004027E0(g_AgentPartCache, k.q) != -1)
         return;
     
     b = k.c;
@@ -196,9 +196,9 @@ void GuiAgentModify_AdvancePatchB(O *o, int idx)
         } else {
             (*lo)++;
         }
-        if (func_004027E0(D_0055DDA0, k.q) != -1) {
+        if (func_004027E0(g_AgentPartCache, k.q) != -1) {
             Sub *s = &o->p->sub;
-            func_004022E0(D_0055DDA0, k.q, &s->e[idx], &s->a[idx], &s->b[idx], s->u, s->s);
+            func_004022E0(g_AgentPartCache, k.q, &s->e[idx], &s->a[idx], &s->b[idx], s->u, s->s);
             o->p->sub.e[idx].key = k.q;
             return;
         }

@@ -6,7 +6,7 @@ typedef struct { char pad[0xA80]; M4_E88 m[1]; } MStack_E88;
 typedef struct { char pad[0x62]; unsigned char b62; } Info_E88;
 typedef struct { char pad[0x20]; V4_E88 v20; float m30[16]; Info_E88* p70; } Elem_E88;
 extern "C" {
-extern MStack_E88 D_005381F0;
+extern MStack_E88 g_Video;
 extern int D_00538C64;
 extern char D_00538C68;
 }
@@ -58,7 +58,7 @@ extern "C" void IeElement_PushMatrix(Elem_E88* e)
     M4_E88 r;
     M4_E88 t;
     {
-        GQR(&D_005381F0.m[D_00538C64 + 1], &D_005381F0.m[D_00538C64]);
+        GQR(&g_Video.m[D_00538C64 + 1], &g_Video.m[D_00538C64]);
         void* x0 = &a; /* dead on purpose */
         D_00538C64++;
     }
@@ -68,21 +68,21 @@ extern "C" void IeElement_PushMatrix(Elem_E88* e)
         GV(&a.q[3], &e->v20);
     }
     if (e->p70->b62) {
-        M4Mul(&t, &a, &D_005381F0.m[D_00538C64]);
+        M4Mul(&t, &a, &g_Video.m[D_00538C64]);
         {
             M4_E88* pr = &r;
             void* x2 = &r; /* dead on purpose */
             GQR(&r, &t);
-            GQR(&D_005381F0.m[D_00538C64], pr);
+            GQR(&g_Video.m[D_00538C64], pr);
         }
         D_00538C68 = 1;
     } else {
-        M4_E88* c = &D_005381F0.m[D_00538C64];
+        M4_E88* c = &g_Video.m[D_00538C64];
         M4Mul(c, c, &a);
         D_00538C68 = 1;
     }
     if (!IsIdent(e->m30)) {
-        M4_E88* c = &D_005381F0.m[D_00538C64];
+        M4_E88* c = &g_Video.m[D_00538C64];
         M4Mul(c, c, e->m30);
         D_00538C68 = 1;
     }

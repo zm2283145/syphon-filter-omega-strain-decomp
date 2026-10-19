@@ -34,7 +34,7 @@ int PtrVec_PushBack_429770(int vec, int value) {
 typedef struct NetConnInfo_h5 { int session; int status; } NetConnInfo_h5;
 extern int D_00494178;
 extern int D_005721A8;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005723C8;
 extern int g_DmeConnectRetries;
 extern int g_DmeConnectMaxRetries;
@@ -45,7 +45,7 @@ extern void NetGame_InitLocalSlot(int* out, int session);
 extern void func_002EBBA0(int session, int* out);
 static inline int LocalSlot_h5(int session)
 {
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         if (D_00494178 == -1) {
             NetGame_InitLocalSlot(&D_00494178, session);
         }
@@ -68,7 +68,7 @@ void DME_OnConnectResult(NetConnInfo_h5* info)
         }
     } else {
         D_005724B0 = DME_STATE_CONNECTED;
-        D_005721C8 = 1;
+        g_IsMultiplayer = 1;
         NetGame_InitLocalSlot(slot, info->session);
         D_00494178 = slot[0];
         func_002EBBA0(info->session, slot);
@@ -131,7 +131,7 @@ extern "C" void DME_OnClientDisconnect(Pk429920* p)
         D_005724B0 = DME_STATE_DISCONNECTED;
     }
     D_00572418[p->id] = 1;
-    if (D_005721C8) ok = D_005721C0; else ok = 1;
+    if (g_IsMultiplayer) ok = D_005721C0; else ok = 1;
     if (ok) {
         if (g_DmeClientLevelInfo[3] == -1) g_DmeClientLevelInfo[3] = 0;
         else if (g_DmeClientLevelInfo[2] == -1) g_DmeClientLevelInfo[2] = 0;
@@ -175,7 +175,7 @@ void DME_OnClientConnect(Pk429A90* p) {
     if (!D_005723C8) D_005723C8 = 1;
     D_005723F0++;
     D_00572418[p->id] = 0;
-    if (D_005721C8) ok = D_005721C0; else ok = 1;
+    if (g_IsMultiplayer) ok = D_005721C0; else ok = 1;
     if (ok && p->id) g_DmeClientLevelInfo[p->id] = DME_LEVELINFO_PENDING;
     D_005723C8 = 0;
 }

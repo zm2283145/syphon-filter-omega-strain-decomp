@@ -50,8 +50,8 @@ int func_001D8720();
 extern char D_0049D8D0;
 extern char * D_004EE9D0;
 extern char * D_004EE9D8;
-extern unsigned char D_00533880;
-extern int D_00533888;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
 
 void Human_InitStatics(void) {
     int sp2C;
@@ -64,15 +64,15 @@ void Human_InitStatics(void) {
     func_001D8720();
     sp2C = 0x15;
     if (D_004EE9D0 == NULL) {
-        if (D_00533880 != 0) {
+        if (g_ProfileLockEnabled != 0) {
             Alloc_Lock(9);
         }
-        D_00533888 += 1;
+        g_ProfileLockDepth += 1;
         temp_s0 = Mem_Alloc(0, 0x10, &D_0049D8D0, 0xB1A);
-        if (D_00533880 != 0) {
+        if (g_ProfileLockEnabled != 0) {
             Alloc_Unlock(9);
         }
-        D_00533888 -= 1;
+        g_ProfileLockDepth -= 1;
         if (temp_s0 != NULL) {
             func_001AFD30(temp_s0);
             func_001AFD20(temp_s0, func_001361D0(&sp2C));
@@ -82,15 +82,15 @@ void Human_InitStatics(void) {
         HumanCentroid_GetTable(temp_s0);
     }
     if (D_004EE9D8 == NULL) {
-        if (D_00533880 != 0) {
+        if (g_ProfileLockEnabled != 0) {
             Alloc_Lock(9);
         }
-        D_00533888 += 1;
+        g_ProfileLockDepth += 1;
         temp_s0_2 = Mem_Alloc(0, 0x10, &D_0049D8D0, 0xB20);
-        if (D_00533880 != 0) {
+        if (g_ProfileLockEnabled != 0) {
             Alloc_Unlock(9);
         }
-        D_00533888 -= 1;
+        g_ProfileLockDepth -= 1;
         if (temp_s0_2 != NULL) {
             func_001AFD00(temp_s0_2);
             func_001AFCF0(temp_s0_2, func_001361D0(&sp2C));

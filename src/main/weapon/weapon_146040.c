@@ -17,8 +17,8 @@ int Mem_Free();
 /* merge_units: begin func_00146040 */
 #pragma push /* merge_units */
 #pragma cplusplus on
-extern unsigned char D_00533880;
-extern int D_00533888;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
 extern char D_0049B1D0[];
 extern char *D_00489CC0[];
 #if 0 /* merge_units */
@@ -41,7 +41,7 @@ struct Obj46 {
     float mx[4];
     char p400[0x20];
     Obj46() { mn[0] = 3.4028235e38f; mn[1] = 3.4028235e38f; mn[2] = 3.4028235e38f; mn[3] = 1.0f; mx[0] = -3.4028235e38f; mx[1] = -3.4028235e38f; mx[2] = -3.4028235e38f; mx[3] = 1.0f; }
-    void *operator new(unsigned int sz, int line) { void *o; if (D_00533880) Alloc_Lock(9); D_00533888++; o = Mem_Alloc(0, sz, D_0049B1D0, line); if (D_00533880) Alloc_Unlock(9); D_00533888--; return o; }
+    void *operator new(unsigned int sz, int line) { void *o; if (g_ProfileLockEnabled) Alloc_Lock(9); g_ProfileLockDepth++; o = Mem_Alloc(0, sz, D_0049B1D0, line); if (g_ProfileLockEnabled) Alloc_Unlock(9); g_ProfileLockDepth--; return o; }
 };
 typedef struct { char p0[4]; int f4; } Tbl46;
 typedef struct { char p0[0x148]; Tbl46 *f148; } Src46;
@@ -70,7 +70,7 @@ static inline int NameCmp_46(const char *a, const char *b)
     }
 }
 
-#define OBJ46_NEW(o, line) do { if (D_00533880) Alloc_Lock(9); D_00533888++; o = (Obj46 *)Mem_Alloc(0, 0x420, D_0049B1D0, line); if (D_00533880) Alloc_Unlock(9); D_00533888--; o = new (o) Obj46; } while (0)
+#define OBJ46_NEW(o, line) do { if (g_ProfileLockEnabled) Alloc_Lock(9); g_ProfileLockDepth++; o = (Obj46 *)Mem_Alloc(0, 0x420, D_0049B1D0, line); if (g_ProfileLockEnabled) Alloc_Unlock(9); g_ProfileLockDepth--; o = new (o) Obj46; } while (0)
 
 extern "C" void WeaponDb_LoadShellsArchive(Slot46 *self, Src46 *src)
 {
@@ -94,11 +94,11 @@ extern "C" void WeaponDb_LoadShellsArchive(Slot46 *self, Src46 *src)
             ManModel_ctor(t, name, 0, 0, 0, 0, 0, 0);
             ActorModel_LoadFromHog(t, x);
             WeaponDb_CloneModel(self, t, t);
-            if (D_00533880) Alloc_Lock(9);
-            D_00533888++;
+            if (g_ProfileLockEnabled) Alloc_Lock(9);
+            g_ProfileLockDepth++;
             Mem_Free(0, t, D_0049B1D0, 0x2BC);
-            if (D_00533880) Alloc_Unlock(9);
-            D_00533888--;
+            if (g_ProfileLockEnabled) Alloc_Unlock(9);
+            g_ProfileLockDepth--;
         }
     }
 }

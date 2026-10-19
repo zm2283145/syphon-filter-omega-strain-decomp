@@ -1,7 +1,7 @@
 #include "types.h"
 typedef struct { int a; int b; } E794;
 typedef struct { char pad0[0x1C]; unsigned char flag; char pad1[0x60-0x1D]; E794 e[16]; } S794;
-extern unsigned char D_00535D62;
+extern unsigned char g_LevelLightsDirty;
 void Light_InitEnabled(S794* p) {
     unsigned int i;
     for (i = 0; i < 16; i++) {
@@ -10,6 +10,6 @@ void Light_InitEnabled(S794* p) {
     }
     if (p->flag == 0) {
         p->flag = 1;
-        D_00535D62 = 1;
+        g_LevelLightsDirty = 1;
     }
 }

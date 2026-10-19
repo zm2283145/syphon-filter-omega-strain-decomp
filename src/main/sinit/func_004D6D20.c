@@ -3,7 +3,7 @@
 #define NULL 0
 #pragma mpwc_relax on
 extern char *D_0055D4D8;
-extern char *D_0055D4E0;
+extern char *g_TeleportMsgClass;
 extern signed char D_0055D4E8;
 extern signed char D_0055D4F0;
 
@@ -13,7 +13,7 @@ void func_004D6D20(void) {
         D_0055D4E8 = 1;
     }
     if (D_0055D4F0 == 0) {
-        D_0055D4E0 = "Teleport Message";
+        g_TeleportMsgClass = "Teleport Message";
         D_0055D4F0 = 1;
     }
 }

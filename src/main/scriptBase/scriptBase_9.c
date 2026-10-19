@@ -41,8 +41,8 @@ int strlen(char *);
 extern char D_00499C71;
 extern char D_004BD3B0;
 extern char D_004BD3C8;
-extern unsigned char D_00533880;
-extern int D_00533888;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
 extern int D_00554F18;
 
 #pragma push
@@ -63,26 +63,26 @@ int Script_RegisterVariable(char * arg0, int arg1, int arg2) {
     }
     func_003D7E90();
     sprintf(sp60, &D_004BD3C8, var_s0);
-    if (D_00533880 != 0) {
+    if (g_ProfileLockEnabled != 0) {
         Alloc_Lock(9);
     }
-    D_00533888 += 1;
+    g_ProfileLockDepth += 1;
     temp_s2 = Mem_Alloc(0, 0x20, &D_004BD3B0, 0x89);
-    if (D_00533880 != 0) {
+    if (g_ProfileLockEnabled != 0) {
         Alloc_Unlock(9);
     }
-    D_00533888 -= 1;
+    g_ProfileLockDepth -= 1;
     if (temp_s2 != NULL) {
         temp_v1 = strlen((char*)sp60) + 1; temp_s0 = (temp_v1 + 0x1F) / 32 * 32;
-        if (D_00533880 != 0) {
+        if (g_ProfileLockEnabled != 0) {
             Alloc_Lock(9);
         }
-        D_00533888 += 1;
+        g_ProfileLockDepth += 1;
         temp_s1 = Mem_Alloc(0, temp_s0, &D_004BD3B0, 0x130);
-        if (D_00533880 != 0) {
+        if (g_ProfileLockEnabled != 0) {
             Alloc_Unlock(9);
         }
-        D_00533888 -= 1;
+        g_ProfileLockDepth -= 1;
         memcpy(temp_s1, sp60, temp_s0);
         F_(temp_s2, 0x0, int) = (int)(temp_s1);
         F_(temp_s2, 0x4, int) = arg2;

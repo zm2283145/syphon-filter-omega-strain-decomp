@@ -87,7 +87,7 @@ extern "C" char D_004A4550[];
 extern "C" {
 extern char D_004DB040[];
 extern int D_004F54A0;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern char D_004A45D0[], D_004A45E0[], D_004A45F0[], D_004A4600[], D_004A4610[];
 extern char D_004A4620[], D_004A4630[];
 extern int D_0048A9C0;
@@ -173,7 +173,7 @@ extern "C" Lift_215700* Lift_Ctor(Lift_215700* self, int a, Reader_215700* r)
     self->f790 = 0;
     D_004F54A0 = 0;
     self->f68 = 3;
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         func_00211980(self);
     } else {
         State_215700* p;

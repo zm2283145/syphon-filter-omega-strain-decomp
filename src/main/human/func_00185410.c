@@ -6,18 +6,18 @@ int Event_Send(Msg_5410*, void*, int);
 Hum_5410* GObj_IdentityB(int);
 int Global_ForceHolster(int);
 int cMessage_dtor(Msg_5410*, int);
-extern int D_0049D010;
+extern int g_HumanActorClassKey;
 extern char D_004DA9B0[];
 extern char D_004DCF10[];
 extern char D_004EF030[];
 extern unsigned char D_005721C0;
-extern unsigned char D_005721C8;
-static inline unsigned char IsLocal_5410(void) { unsigned char v; if (D_005721C8) v = D_005721C0; else v = 1; return v; }
+extern unsigned char g_IsMultiplayer;
+static inline unsigned char IsLocal_5410(void) { unsigned char v; if (g_IsMultiplayer) v = D_005721C0; else v = 1; return v; }
 static inline void Holster_5410(Hum_5410* selfp) {
     Msg_5410 msg;
     Hum_5410* self = selfp;
     Global_ForceHolster(self->holster);
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         if (IsLocal_5410()) {
             Event_Construct(&msg, D_004EF030);
             msg.vtable = D_004DA9B0;
@@ -35,7 +35,7 @@ static inline void Holster_5410(Hum_5410* selfp) {
 int Script_ForceHolster(int* args)
 {
     Hum_5410* g = GObj_IdentityB(args[0]);
-    if (g && g->classKey == D_0049D010) Holster_5410(g);
+    if (g && g->classKey == g_HumanActorClassKey) Holster_5410(g);
     return 0;
 }
 #pragma pop

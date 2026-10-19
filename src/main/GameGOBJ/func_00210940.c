@@ -7,7 +7,7 @@ int SoundEvent_CtorFromPreset(char **, char * , char * );
 int cMessage_dtor(char **, int);                           
 int FileMan_Release(char *, int);                            
 extern char D_004DAE30;
-extern char D_004FFB50;
+extern char g_Game;
 extern char func_001C6700;
 
 #pragma opt_common_subs off
@@ -24,7 +24,7 @@ int Script_cSoundGOBJ_Trigger(void **arg0) {
         if (&func_001C6700 == NULL) {
             sl.f30[0] = 1;
         }
-        Event_Send(sl.f10, &D_004FFB50, 1);
+        Event_Send(sl.f10, &g_Game, 1);
         sl.f10[0] = &D_004DAE30;
         FileMan_Release(sl.f124, -1);
         FileMan_Release(sl.f88, -1);

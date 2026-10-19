@@ -18,7 +18,7 @@ extern char D_00493890[];
 extern char* D_004F77A8;
 extern char D_004F77B0[];
 extern char g_TargetVisMgr[];
-extern char* D_004EA0B0;
+extern char* g_LosCheckService;
 extern signed char D_004EA0C8;
 extern int D_004F78E8;
 extern int D_004F78F0;
@@ -57,7 +57,7 @@ void func_004CEB50(void)
     D_004F7920 = Script_RegisterNative_2(Script_SetWaypoint, D_00493880, D_004A6648, 1, cGOBJ_GetScriptTypeKeyPtr());
     D_004F7928 = Script_RegisterVariable(D_004A6658, (int)D_0048AC70, D_00493878);
     if (!D_004EA0C8) {
-        D_004EA0B0 = D_004A6668;
+        g_LosCheckService = D_004A6668;
         D_004EA0C8 = 1;
     }
 }

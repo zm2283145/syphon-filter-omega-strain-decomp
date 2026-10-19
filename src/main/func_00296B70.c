@@ -7,7 +7,7 @@ typedef struct { char pad[0x190]; W_96B70* panel; void* list; } Scr_96B70;
 struct Rows_96B70;
 struct AwardVec_96B70;
 extern "C" {
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_004AA200[];
 extern void func_00296FA0(Rows_96B70*);
 extern void func_00299360(Rows_96B70*, int);
@@ -45,7 +45,7 @@ void GuiCommandCenter_ShowBonus(Scr_96B70* s, int idx)
         return;
     }
     {
-        void* agent = Agent_GetSelected(D_004FFB50, -1);
+        void* agent = Agent_GetSelected(g_Game, -1);
         Rows_96B70 rows;
         AgentData_GetAwardRows(agent, 3, &rows);
         if (((Row_96B70*)((char*)rows.data + idx * (int)sizeof(Row_96B70)))->kind == 1) {

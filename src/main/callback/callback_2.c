@@ -67,8 +67,8 @@ void EventQueue_Pump(int a, int b){
 #pragma push /* merge_units */
 #pragma cplusplus on
 extern "C" {
-extern unsigned char D_00533880;
-extern int D_00533888;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
 void Alloc_Lock(int id);
 void Alloc_Unlock(int id);
 void Mem_Free(int pool, void* p, char* file, int line);
@@ -77,14 +77,14 @@ void ActiveList_EraseMatching(void* list, EQPred pred);
 
 static inline void EQ_Delete(EQEvent* e)
 {
-    if (D_00533880)
+    if (g_ProfileLockEnabled)
         Alloc_Lock(9);
-    D_00533888++;
+    g_ProfileLockDepth++;
     e->~EQEvent();
     Mem_Free(0, e, D_004BDFC8, 0x36);
-    if (D_00533880)
+    if (g_ProfileLockEnabled)
         Alloc_Unlock(9);
-    D_00533888--;
+    g_ProfileLockDepth--;
 }
 /* Removes an event from the queue and destroys it (unless it is running). */
 extern "C" void EventQueue_Remove(EQEvent* ev)

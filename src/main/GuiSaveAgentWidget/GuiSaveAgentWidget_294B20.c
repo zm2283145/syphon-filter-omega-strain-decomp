@@ -74,7 +74,7 @@ struct S2_00294C60 { char pad0[0x1CC]; int f1CC; int f1D0; };
 extern "C" {
 extern char D_004AA288[];
 extern char* D_0048C160[];
-extern char D_004FFC90[];
+extern char g_LevelDirName[];
 extern Mgr_00294C60* D_004FFC04;
 extern char D_004AA200[];
 #if 0 /* merge_units */
@@ -119,7 +119,7 @@ extern "C" void GuiCommandCenter_SetTexts(S_00294C60* self)
             Str12_00294C60* st;
             char* txt;
             key = D_0048C160[i];
-            strncpy(D_004FFC90, key, 0x80);
+            strncpy(g_LevelDirName, key, 0x80);
             if (!self->b1F0[i]) {
                 char* t = Loc_LookupText(key);
                 if (t) {

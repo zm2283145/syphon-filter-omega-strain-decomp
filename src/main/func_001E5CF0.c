@@ -15,15 +15,15 @@ void WaterFx_Ensure(float, int, O_5CF0*);
 void WaterFx_Remove(int, O_5CF0*);
 void WaterFx_UpdateHeight(float, int, O_5CF0*);
 }
-extern float D_004A0438;
+extern float g_NegFltMax;
 extern int D_004FFC34;
-extern int D_0049D010;
+extern int g_HumanActorClassKey;
 static inline unsigned char C54(O_5CF0* o) { unsigned char r = 0; Ctl5CF0* c = o->ctl; if (c && c->Check54()) r = 1; return r; }
 #pragma opt_common_subs off
 static inline unsigned char IsDeep(A_5CF0* a, float d) {
     unsigned char r = 0;
-    float k = D_004A0438;
-    if (d != D_004A0438) {
+    float k = g_NegFltMax;
+    if (d != g_NegFltMax) {
         W_5CF0* w = (d != k) ? &a->water : 0;
         if (!(w->level <= 0.974f)) r = 1;
     }
@@ -42,7 +42,7 @@ extern "C" void ActorPhys_NotifyWaterSupport(A_5CF0* a, float prev)
     left = Left(wasIn, isIn);
     moved = Moved(wasIn, isIn, prev, d);
     o = 0;
-    { O_5CF0* ob = a->obj; if (ob->kind == D_0049D010) { unsigned char ok = 0; Ctl5CF0* c = ob->ctl; if (c && c->Check58(ob)) ok = 1; if (ok || C54(a->obj)) o = a->obj; } }
+    { O_5CF0* ob = a->obj; if (ob->kind == g_HumanActorClassKey) { unsigned char ok = 0; Ctl5CF0* c = ob->ctl; if (c && c->Check58(ob)) ok = 1; if (ok || C54(a->obj)) o = a->obj; } }
     if (o) o->inWater = isIn;
     if (isIn) {
         WaterFx_Ensure(d, D_004FFC34, a->obj);

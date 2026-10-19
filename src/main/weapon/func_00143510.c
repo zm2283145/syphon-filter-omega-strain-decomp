@@ -14,7 +14,7 @@ int Inventory_GetEquipMode(Inventory* inv) {
     if (selected != 6) {
         InventorySlot* slot = &inv->slots[selected];
 
-        mode = WeaponDb_Get(D_004FFD30, slot->id)->equipMode;
+        mode = WeaponDb_Get(g_WeaponDatabase, slot->id)->equipMode;
     }
     return mode;
 }

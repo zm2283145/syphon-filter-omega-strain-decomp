@@ -40,7 +40,7 @@ void Net_OnRemoteClientJoined(Join_AAB0* j)
         printf("\n\n\n\tRemote client joined the game: %d[%d]\n", j->addr, j->slot);
         {
             int ok = 1;
-            if (D_005721C8) ok = D_005721C0;
+            if (g_IsMultiplayer) ok = D_005721C0;
             if (ok) D_005724B0 = 10; else if (D_005724B0 == 9) D_005724B0 = 10; else D_005724B0 = 9;
         }
         D_00493A10[j->slot] = 0;

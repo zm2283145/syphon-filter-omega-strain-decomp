@@ -15,7 +15,7 @@ int strlen(const char *);
 /* merge_units: begin func_00214BD0 */
 #pragma push /* merge_units */
 typedef struct { char pad[0xFC]; int n; int* items; char pad2[0x24]; int* f128; } E214;
-extern void* D_004FFC0C;
+extern void* g_LocalPlayer;
 extern void func_00176160(void*, E214*);
 extern void func_001761E0(void*, int);
 extern void func_00176220(void*, char*);
@@ -24,7 +24,7 @@ extern void func_00176260(void*);
 extern char* Loc_LookupText(char*);
 #pragma opt_strength_reduction off
 void cElevatorGOBJ_ChooseFloor(E214* e) {
-    void* m = D_004FFC0C;
+    void* m = g_LocalPlayer;
     int i;
     func_00176160(m, e);
     func_001761E0(m, *e->f128);
@@ -48,9 +48,9 @@ typedef struct Lift_00214C90 {
     char pad0[0xC]; int id; char pad10[0x10C - 0x10]; int nFloors; int* locked;
     char pad114[0x128 - 0x114]; State_00214C90* state; char pad12C[0x790 - 0x12C]; Snd_00214C90* snd;
 } Lift_00214C90;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005721C0;
-extern char D_004F5440[];
+extern char g_TriggerMsgKey[];
 extern char D_004DAF10[];
 extern char D_004F5448[];
 extern char D_004DAED0[];
@@ -65,14 +65,14 @@ extern void cElevatorGOBJ_ChooseFloor(Lift_00214C90* l);
 extern void func_002EC3C8(void* h);
 extern void Lift_DeactivateRecipients(Lift_00214C90* l);
 extern unsigned char Lift_OpenDoors(Lift_00214C90* l);
-static inline int IsAuth_00214C90(void) { return D_005721C8 ? D_005721C0 : 1; }
+static inline int IsAuth_00214C90(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
 static inline int ObjId_00214C90(Obj_00214C90* o) { return o ? o->id : 0; }
 void Lift_SeekFloor(Lift_00214C90* l, int floor, int a2, int a3)
 {
-    if (D_005721C8 && IsAuth_00214C90()) {
+    if (g_IsMultiplayer && IsAuth_00214C90()) {
         LiftMsg_00214C90 msg;
         LiftMsg_00214C90* m = &msg;
-        Event_Construct(m, D_004F5440);
+        Event_Construct(m, g_TriggerMsgKey);
         msg.floor = floor;
         msg.vtable = D_004DAF10;
         msg.kind = 1;
@@ -84,7 +84,7 @@ void Lift_SeekFloor(Lift_00214C90* l, int floor, int a2, int a3)
         cMessage_dtor(&msg, 0);
     }
     if (a2 && floor < 0) {
-        if (D_005721C8) {
+        if (g_IsMultiplayer) {
             if (a3) {
                 cElevatorGOBJ_ChooseFloor(l);
             } else {

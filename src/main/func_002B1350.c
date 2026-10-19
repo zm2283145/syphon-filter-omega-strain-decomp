@@ -26,10 +26,10 @@ extern "C" {
     void GuiWidget_SendEvent(void*,void*,int,int,int=0);
     int sprintf(char*,const char*,...);
     extern unsigned char D_0048BD10[];
-    extern char D_0048BD14[],D_004ABEB8[],D_004ABEC8[],D_004ABED0[],D_004ABED8[],D_004ABEE8[],D_004ABEF8[],D_004DCF10[],D_004DE630[],D_004FFB50[],D_0052ACD8[],D_00587C90[];
-    extern State* D_004FFC0C;
-    extern int D_004FFC2C;
-    extern unsigned char D_005721C8;
+    extern char D_0048BD14[],D_004ABEB8[],D_004ABEC8[],D_004ABED0[],D_004ABED8[],D_004ABEE8[],D_004ABEF8[],D_004DCF10[],D_004DE630[],g_Game[],D_0052ACD8[],D_00587C90[];
+    extern State* g_LocalPlayer;
+    extern int g_Hud;
+    extern unsigned char g_IsMultiplayer;
 }
 static inline unsigned char B13Has(Entity* e) {
     unsigned char ok=0;
@@ -38,16 +38,16 @@ static inline unsigned char B13Has(Entity* e) {
 }
 static inline int B13Index(Entity* e) {
     int idx;
-    if(D_005721C8) {
+    if(g_IsMultiplayer) {
         if(B13Has(e)) idx=((e->unkC & 0x7F000000)>>24)-1;
         else idx=-1;
     } else idx=0;
     return idx;
 }
 static inline int B13Player() {
-    if(D_004FFC0C && D_004FFC0C->unk30) {
-        Entity* e=D_004FFC0C->unk30;
-        return func_0012F5B0(D_004FFB50,B13Index(e));
+    if(g_LocalPlayer && g_LocalPlayer->unk30) {
+        Entity* e=g_LocalPlayer->unk30;
+        return func_0012F5B0(g_Game,B13Index(e));
     }
     return -1;
 }
@@ -125,7 +125,7 @@ extern "C" int GuiQuickChat_HandleInput(Screen* arg0, Input* arg1) {
                     var_s0 += 4;
                 } while (var_s2 < 4);
             } else {
-                temp_s1 = D_004FFC0C;
+                temp_s1 = g_LocalPlayer;
                 if (temp_s1 != 0) {
                     temp_s2 = temp_s1->unk30;
                     var_s0_2=1;
@@ -148,8 +148,8 @@ extern "C" int GuiQuickChat_HandleInput(Screen* arg0, Input* arg1) {
                     }
                     var_s3_2=var_s3_2 ? var_s3_2 : D_004ABED0;
                     sprintf(sp90, D_004ABEC8, temp_s6, var_s3_2);
-                    Notify_Insert(D_004FFC2C + 0x100, sp90, D_00587C90, 1);
-                    if (D_005721C8 != 0) {
+                    Notify_Insert(g_Hud + 0x100, sp90, D_00587C90, 1);
+                    if (g_IsMultiplayer != 0) {
                         var_s2_3=B13Player();
                         temp_a2 = arg0->unk48;
                         temp_s0_2 = *(int*)(temp_s0 + (D_0048BD14 + (temp_a2 * 0x14)));
@@ -164,8 +164,8 @@ extern "C" int GuiQuickChat_HandleInput(Screen* arg0, Input* arg1) {
                     }
                 }
                 GuiWidget_SendEvent(((Screen*)((var_s4<<2)+(int)arg0))->unk4C, Gui_GetScreenStack(), 0x10, 1);
-                if (D_004FFC2C != 0) {
-                    func_002426E0(D_004FFC2C);
+                if (g_Hud != 0) {
+                    func_002426E0(g_Hud);
                 } else {
                     arg0->unk14 = (unsigned short) (arg0->unk14 & 0xFFFD);
                 }
@@ -174,8 +174,8 @@ extern "C" int GuiQuickChat_HandleInput(Screen* arg0, Input* arg1) {
         }
         if (temp_v1 == 0x10) {
             GuiWidget_SendEvent(arg0, Gui_GetScreenStack(), 0x10, 1);
-            if (D_004FFC2C != 0) {
-                func_002426E0(D_004FFC2C);
+            if (g_Hud != 0) {
+                func_002426E0(g_Hud);
             } else {
                 arg0->unk14 = (unsigned short) (arg0->unk14 & 0xFFFD);
             }

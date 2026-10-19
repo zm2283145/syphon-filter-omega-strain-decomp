@@ -4,7 +4,7 @@ enum OnOff { ON0, ON1 };
 typedef struct { int a; int pad[8]; } Ent;
 typedef struct { int unk00; int count; Ent* data; } EntVec;
 typedef struct { char pad[0x48]; void* f48; } Self;
-extern char D_004FFB50[];
+extern char g_Game[];
 extern EntVec D_00532B70;
 void* Agent_GetSelected(void* list, int idx);
 int AgentData_GetName(void* ag);
@@ -13,7 +13,7 @@ int Loc_LookupText(int id);
 int AgentData_IsDossierOpen(void* self, int i);
 void GuiDossiers_Fill(Self* self)
 {
-    void* ag = Agent_GetSelected(D_004FFB50, -1);
+    void* ag = Agent_GetSelected(g_Game, -1);
     EntVec* v = &D_00532B70;
     int i;
     GuiTextListWidget_AddItem(self->f48, AgentData_GetName(ag), 0, 0);

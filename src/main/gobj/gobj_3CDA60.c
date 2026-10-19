@@ -293,7 +293,7 @@ extern char D_004BD228;
 #endif /* merge_units */
 #define D_004BD228 (*(char*)&D_004BD228) /* merge_units */
 
-extern unsigned char D_00533880;
+extern unsigned char g_ProfileLockEnabled;
 }
 #pragma push
 #pragma opt_common_subs off

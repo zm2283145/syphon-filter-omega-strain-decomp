@@ -109,9 +109,9 @@ struct Sys { char p[0x18]; WList objs; };
 struct World { char p[0x90]; Sys sys; Sys* S() { return &sys; } };
 
 extern "C" {
-extern World* D_004FFC2C;
-extern char D_004FFC14;
-extern int D_0049D010;
+extern World* g_Hud;
+extern char g_CameraObject;
+extern int g_HumanActorClassKey;
 extern float D_0048AC24;
 extern float D_0048AC28;
 extern float D_0048AC2C;
@@ -190,13 +190,13 @@ static inline void Leave3(RList* l, Tgt* t) { Leave2(l, HndT(t)); }
 static inline void Push2(RList* l, Tgt* t) { RPush(l, HndT(t)); }
 Tgt* Targeting_LockPick(Tgt* self, Tgt* cur, RList* recent)
 {
-    WList& wl = D_004FFC2C->S()->objs;
+    WList& wl = g_Hud->S()->objs;
     WIt2 it = WBegin(wl);
     WIt2 end = WEnd(wl);
     V4 off(0.0f, 0.0f, 5.0f, 1.0f);
     Mtx sm = self->GetMtx();
     V4 aim = Xform(sm, off);
-    Cam* cam = func_00159570(&D_004FFC14) ? *List_Front(&D_004FFC14) : 0;
+    Cam* cam = func_00159570(&g_CameraObject) ? *List_Front(&g_CameraObject) : 0;
     V4 aim2;
     Mtx3 cm = cam->GetMtx();
     aim2 = aim;
@@ -220,7 +220,7 @@ Tgt* Targeting_LockPick(Tgt* self, Tgt* cur, RList* recent)
         if (t->Kind() != 2) continue;
         int cover = t->x44;
         {
-            int* pd = &D_0049D010;
+            int* pd = &g_HumanActorClassKey;
             int ty = *pd;
             if (t->x4C == ty && t->x346C) continue;
         }

@@ -19,11 +19,11 @@
 
 extern void AgentData_ResetMission(int);
 extern int Agent_GetSelected(int, int);
-extern char D_004FFB50[];                      /* world object */
-extern char* D_004FFC0C;                       /* world +0xBC service */
-extern GameTimerService* D_004FFC2C;           /* world +0xDC service */
-extern int D_004FFC3C;                         /* world +0xEC service */
-extern unsigned char D_005721C8;               /* multiplayer flag */
+extern char g_Game[];                      /* world object */
+extern char* g_LocalPlayer;                       /* world +0xBC service */
+extern GameTimerService* g_Hud;           /* world +0xDC service */
+extern int g_DecalMgr;                         /* world +0xEC service */
+extern unsigned char g_IsMultiplayer;               /* multiplayer flag */
 extern int Game_IsMultiplayer(void);
 extern int Global_ResetLevel(void);
 extern void Global_ResetStats(void);
@@ -45,17 +45,17 @@ int Global_ResetLevel(void) {
     GameTimerService* svc;
     int agent;
 
-    PlayerInput_ClosePickupMenu((int)(D_004FFC0C + 0x50));
+    PlayerInput_ClosePickupMenu((int)(g_LocalPlayer + 0x50));
     Backpack_RemoveAll();
     AreaEffect_FinishAll();
-    agent = Agent_GetSelected((int)D_004FFB50, -1);
+    agent = Agent_GetSelected((int)g_Game, -1);
     AgentData_ResetMission(agent);
-    svc = D_004FFC2C;
+    svc = g_Hud;
     svc->unk6DC = 0;
     svc->unk6E0 = 0xbf800000; /* -1.0f */
-    Hud_ClearPda(D_004FFC2C);
-    HudTicker_Reset((int)((char*)D_004FFC2C + 0x100));
-    DecalMgr_KillAll(D_004FFC3C);
+    Hud_ClearPda(g_Hud);
+    HudTicker_Reset((int)((char*)g_Hud + 0x100));
+    DecalMgr_KillAll(g_DecalMgr);
     return Script_ClearSchedules_3DFB20();
 }
 
@@ -69,9 +69,9 @@ void Global_ResetStats(void) {
     GameTimerService* svc;
     int agent;
 
-    agent = Agent_GetSelected((int)D_004FFB50, -1);
+    agent = Agent_GetSelected((int)g_Game, -1);
     AgentData_ResetMission(agent);
-    svc = D_004FFC2C;
+    svc = g_Hud;
     svc->unk6DC = 0;
     svc->unk6E0 = 0xbf800000; /* -1.0f */
 }
@@ -81,7 +81,7 @@ int Script_IsMultiplayer(void) {
 }
 
 int Game_IsMultiplayer(void) {
-    return D_005721C8;
+    return g_IsMultiplayer;
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0012F6E0(void) {}
@@ -152,7 +152,7 @@ extern int Hud_StartGlobalTimer(GameTimerService*, int, float);
 
 /* Starts the global timer: forwards to the timer service. */
 int Global_StartGlobalTimer(int id, float value) {
-    return Hud_StartGlobalTimer(D_004FFC2C, id, value);
+    return Hud_StartGlobalTimer(g_Hud, id, value);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0012F890(void) {}

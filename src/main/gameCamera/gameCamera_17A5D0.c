@@ -17,15 +17,15 @@
 
 
 extern int ActiveList_RemoveObject(char* world, int camera);
-extern char D_004FFB50[]; /* world object */
+extern char g_Game[]; /* world object */
 extern int World_PushObjectFromAction(char* world, int camera); /* push camera */
 
 int cNIEventOBJ_DeactivateCamera(int camera) {
-    return ActiveList_RemoveObject(D_004FFB50, camera);
+    return ActiveList_RemoveObject(g_Game, camera);
 }
 
 int cNIEventOBJ_ActivateCamera(int camera) {
-    return World_PushObjectFromAction(D_004FFB50, camera);
+    return World_PushObjectFromAction(g_Game, camera);
 }
 
 void* func_0017A5F0(char* self) {

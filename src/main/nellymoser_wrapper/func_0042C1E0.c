@@ -9,8 +9,8 @@ typedef struct NellyInfo {
     char pad68[0x38];
 } NellyInfo;
 
-extern unsigned char D_00533880;
-extern int D_00533888;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
 extern char D_004BFA40[]; /* "nellymoser_wrapper.c" */
 void Alloc_Lock(int id);
 void Alloc_Unlock(int id);
@@ -74,13 +74,13 @@ void func_0031C260(int h);
 static inline void* nm_alloc(unsigned int size, int line)
 {
     void* p;
-    if (D_00533880)
+    if (g_ProfileLockEnabled)
         Alloc_Lock(9);
-    D_00533888++;
+    g_ProfileLockDepth++;
     p = Mem_Alloc(0, size, D_004BFA40, line);
-    if (D_00533880)
+    if (g_ProfileLockEnabled)
         Alloc_Unlock(9);
-    D_00533888--;
+    g_ProfileLockDepth--;
     return p;
 }
 

@@ -21,7 +21,7 @@ void NetMap_BindReceiver(int a, int b, void* c);
 }
 static inline int IsHost_00211980(void)
 {
-    return D_005721C8 ? D_005721C0 : 1;
+    return g_IsMultiplayer ? D_005721C0 : 1;
 }
 static inline void* New_00211980(int size, int line)
 {

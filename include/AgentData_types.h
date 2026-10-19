@@ -66,7 +66,7 @@ typedef struct ByteVec {
 /* Game object as seen by Global_IsObjectiveComplete; only the class key. */
 typedef struct AgentGObj {
     char pad00[0x4C];
-    int classKey;                     /* 0x4C: compared with D_0049D010 */
+    int classKey;                     /* 0x4C: compared with g_HumanActorClassKey */
 } AgentGObj;
 
 /* Generic byte-flag holder used by func_00336D90 / func_00336E10. */

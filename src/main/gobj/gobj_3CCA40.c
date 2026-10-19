@@ -66,7 +66,7 @@ typedef struct { void* vt; char base[0x1C]; unsigned char kind; char pad21[3]; i
 extern "C" {
 extern char D_004E08A0[];
 extern char g_MsgLibDamageRequestKey[];
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005721C0;
 void Event_Construct(Msg_3CCB00* m, void* type);
 void Event_Send(Msg_3CCB00* m, void* target, int f);
@@ -85,7 +85,7 @@ extern "C" int Actor_ApplyContactDamage(Self_3CCB00* self, int attacker, int p2,
     if (!(self->health <= 0.0f)) {
         int idmg;
         Msg_3CCB00 m;
-        if (!D_005721C8 || !IsGod_3CCB00(self)) self->health = self->health - dmg;
+        if (!g_IsMultiplayer || !IsGod_3CCB00(self)) self->health = self->health - dmg;
         Event_Construct(&m, g_MsgLibDamageRequestKey);
         idmg = (int)dmg;
         m.attacker = attacker;
@@ -94,7 +94,7 @@ extern "C" int Actor_ApplyContactDamage(Self_3CCB00* self, int attacker, int p2,
         m.p2 = p2;
         m.dmg = idmg;
         m.flag = 1;
-        if (D_005721C8) {
+        if (g_IsMultiplayer) {
             if (self->ctl == 0 && flag == 0) {
                 m.kind = 2;
                 m.flag = 0;
@@ -114,8 +114,8 @@ extern "C" int Actor_ApplyContactDamage(Self_3CCB00* self, int attacker, int p2,
         }
         m.vt = D_004E08A0;
         cMessage_dtor(&m, 0);
-    } else if (D_005721C8) {
-        int v = D_005721C8 ? D_005721C0 : 1;
+    } else if (g_IsMultiplayer) {
+        int v = g_IsMultiplayer ? D_005721C0 : 1;
         if (!v && !self->ctl && !flag) {
             Msg_3CCB00 m2;
             Event_Construct(&m2, g_MsgLibDamageRequestKey);

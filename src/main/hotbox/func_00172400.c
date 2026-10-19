@@ -20,9 +20,9 @@ void World_PushObjectFromAction(void*,void*);
 void cGOBJTriggerEventMsg_ctor(void*,int,int,void*,int);
 void* Mtx_SetRotationTranslation(void*,void*,void*);
 int* func_00172990(PtrVec*,int);
-extern char D_004D9360[],D_004D9940[],D_004DAF10[],D_004DB8D0[],D_004E0880[],D_004EE698[],D_004F7930[],D_004FFB50[],D_0055D4E0[],g_cEnableMsgClass[];
+extern char D_004D9360[],D_004D9940[],D_004DAF10[],D_004DB8D0[],D_004E0880[],D_004EE698[],D_004F7930[],g_Game[],g_TeleportMsgClass[],g_cEnableMsgClass[];
 extern int D_004FFBD4;
-extern void* D_004FFC0C;
+extern void* g_LocalPlayer;
 }
 extern "C" void Hotbox_Type2Receiver(cHotbox *arg0, SfGameObject *arg1) {
     EnableMsg sp2B0;
@@ -78,10 +78,10 @@ extern "C" void Hotbox_Type2Receiver(cHotbox *arg0, SfGameObject *arg1) {
     default:
         goto done;
     case 2:
-        temp_s1_2 = D_004FFC0C;
+        temp_s1_2 = g_LocalPlayer;
         Node_GetTranslation(&sp2A0, (void*)*arg0->unk60.data);
         tp=&sp130;
-        Event_Construct(tp, &D_0055D4E0);
+        Event_Construct(tp, &g_TeleportMsgClass);
         sp130.mode = 0;
         sp130.vtable = D_004D9360;
         temp_s0 = Mtx_GetIdentity();
@@ -172,7 +172,7 @@ extern "C" void Hotbox_Type2Receiver(cHotbox *arg0, SfGameObject *arg1) {
         if (arg0->unk60.count != 0) {
             temp_a1 = (SfGameObject*)*arg0->unk60.data;
             if (temp_a1->classByte == 9) {
-                World_PushObjectFromAction(&D_004FFB50, temp_a1);
+                World_PushObjectFromAction(&g_Game, temp_a1);
                 goto done;
             }
         }

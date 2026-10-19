@@ -36,7 +36,7 @@ extern "C" {
 extern char D_004D9240[];
 extern char D_004D9280[];
 extern signed char D_0048A148;
-extern unsigned char D_00535D62;
+extern unsigned char g_LevelLightsDirty;
 }
 extern "C" DirLight* LevelLight_CreateDirectional(DirLight* l, unsigned char a, V4c* c)
 {
@@ -57,7 +57,7 @@ extern "C" DirLight* LevelLight_CreateDirectional(DirLight* l, unsigned char a, 
     l->dir.y = 0.0f;
     l->dir.z = 0.0f;
     l->dir.w = one;
-    D_00535D62 = 1;
+    g_LevelLightsDirty = 1;
     w = c->w; z = c->z; y = c->y; x = c->x;
     v.x = x; v.y = y; v.z = z; v.w = w;
     l->f18 = one / LenSqP(&v);

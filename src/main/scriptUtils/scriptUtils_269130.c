@@ -113,10 +113,10 @@ static inline void merge_flush_func_00269200(void) {}
 
 /* merge_units: begin func_00269230 */
 #pragma push /* merge_units */
-extern int D_00533870;
+extern int g_TimerAccum;
 extern void srand(int seed);
 /* Seeds the random generator from the hardware timer plus a global. */
-void Global_Randomize(void) { srand(*(volatile int*)0x10000800 + D_00533870); }
+void Global_Randomize(void) { srand(*(volatile int*)0x10000800 + g_TimerAccum); }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00269230(void) {}
 #pragma pop /* merge_units */

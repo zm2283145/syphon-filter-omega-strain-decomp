@@ -106,7 +106,7 @@ DEFINE_BUF_HOLDER_DTOR(func_002C20B0)
 #pragma push /* merge_units */
 #include "loose02_types.h"
 
-extern void* D_004FFD30;                    /* weapon definition table */
+extern void* g_WeaponDatabase;                    /* weapon definition table */
 extern GuiEquipmentModifyObj* D_0051EE10;   /* GuiEquipmentModify instance */
 extern WeaponDefL2* WeaponDb_Get(void* table, int id);
 extern int GuiEquipmentModify_WeaponBoxMatrix(GuiEquipmentModifyObj* screen, WeaponLinkL2* link, int arg);
@@ -130,10 +130,10 @@ void GuiEquipmentModify_DrawWeaponBox2(void) {
         index = screen->weaponIndex;
         link = 0;
         if (index < screen->weaponCount) {
-            link = WeaponDb_Get(D_004FFD30, screen->weaponIds[index])->attachment;
+            link = WeaponDb_Get(g_WeaponDatabase, screen->weaponIds[index])->attachment;
         }
         if (link != 0 && D_0051EE10->unkD4 != 0) {
-            def = WeaponDb_Get(D_004FFD30, link->weaponId);
+            def = WeaponDb_Get(g_WeaponDatabase, link->weaponId);
             if (def->kind == 7) {
                 link = def->link;
             }
@@ -176,7 +176,7 @@ void GuiEquipmentModify_DrawWeaponBox1(void)
         if (g->f88 != g->fFC) o = g->p4C->arr[g->f88];
         else o = g->p4C->arr[0];
         if (o && g->fD0) {
-            W2C2290* w = WeaponDb_Get(D_004FFD30, o->h40A);
+            W2C2290* w = WeaponDb_Get(g_WeaponDatabase, o->h40A);
             if (w->kind == 7) o = w->alt;
             if (o) GuiEquipmentModify_WeaponBoxMatrix(D_0051EE10, o, D_0051EE10->fD0);
         }

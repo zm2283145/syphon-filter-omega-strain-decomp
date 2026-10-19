@@ -15,7 +15,7 @@ int func_003E7D60(...);
 int func_0042B850(...);                            
 extern char D_0049C390;
 extern char D_004D97B0;
-extern unsigned char D_00533880;
+extern unsigned char g_ProfileLockEnabled;
 extern char D_0055A700;
 extern int g_FrameCounter;
 }

@@ -34,7 +34,7 @@ Rec34F920* func_0034F920(Rec34F920* self) {
 #pragma push /* merge_units */
 #include "types.h"
 extern void* D_0048C160[];
-extern char D_004FFB50[];
+extern char g_Game[];
 extern void* Agent_GetSelected(void* list, int idx);
 extern __int128 StringPool_MakeKey(void* p);
 extern int AgentData_IsLevelDone(void* agent, __int128 v);
@@ -45,7 +45,7 @@ void GuiMissionStatistics_Select(void* self, int idx)
 {
     void* p = idx <= 16 ? D_0048C160[idx] : 0;
     if (p) {
-        void* ag = Agent_GetSelected(D_004FFB50, -1);
+        void* ag = Agent_GetSelected(g_Game, -1);
         if (AgentData_IsLevelDone(ag, StringPool_MakeKey(p))) {
             GuiWidget_SendEvent(self, Gui_GetScreenStack(), 0x10, 1, 0);
             GuiPersonnelScreen_OpenMenu(self, "CSUBMENU", 6, idx, 0, 0);

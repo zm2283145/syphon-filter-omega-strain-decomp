@@ -209,13 +209,13 @@ struct ItemList { char p[0x10]; Act* owner; };
 struct Hog { char p[0xA0]; };
 struct Skl { char p[0x440]; };
 extern "C" {
-extern unsigned char D_00533880;
-extern int D_00533888;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
 extern char D_0049D8D0[];
 extern int D_00494178;
 extern int D_005721A8;
 extern unsigned char D_005721C0;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern Desc* D_004FFBD8;
 extern char D_0049E8F0[];
 extern char D_0048B2F8[];
@@ -225,7 +225,7 @@ extern char D_0049E928[];
 extern char D_0049E940[];
 extern char D_0055D4F8;
 extern char D_004FFB8C;
-extern char D_004FFB50;
+extern char g_Game;
 extern float D_0048A1C8;
 extern float D_0048A1D0;
 #if 0 /* merge_units */
@@ -275,7 +275,7 @@ static inline int LocalId()
 {
     int a = D_005721A8;
     int r = 0;
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         if (D_00494178 == -1)
             NetGame_InitLocalSlot(&D_00494178, a);
         return D_00494178;
@@ -286,7 +286,7 @@ static inline int LocalId2()
 {
     int a = D_005721A8;
     int r = 0;
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         if (D_00494178 == -1)
             NetGame_InitLocalSlot(&D_00494178, a);
         r = D_00494178;
@@ -364,8 +364,8 @@ extern "C" bool Npc_Initialize(Act* a, Mtx* mtx, char* name, int health, int max
         }
     }
     if (name) {
-        if (D_005721C8) {
-            if (type == 1 && !(D_005721C8 ? D_005721C0 : (unsigned char)1)) {
+        if (g_IsMultiplayer) {
+            if (type == 1 && !(g_IsMultiplayer ? D_005721C0 : (unsigned char)1)) {
                 switch (LocalId()) {
                 case 1: strncpy(a->x3318, D_0049E908, 0x80); break;
                 case 2: strncpy(a->x3318, D_0049E918, 0x80); break;
@@ -414,7 +414,7 @@ extern "C" bool Npc_Initialize(Act* a, Mtx* mtx, char* name, int health, int max
         for (i = 0; i < 2; i++) {
             a->x3588[i] = weap[i];
             if (weap[i] != -1) {
-                if (D_005721C8) {
+                if (g_IsMultiplayer) {
                     if (!s2)
                         WeaponInv_Add(a->x3524, weap[i], 1, 0, 0, 0);
                     else
@@ -426,7 +426,7 @@ extern "C" bool Npc_Initialize(Act* a, Mtx* mtx, char* name, int health, int max
         }
     }
     WeaponInv_EquipFirst(a->x3524);
-    if (!D_005721C8) {
+    if (!g_IsMultiplayer) {
         Actor_InitComponents(a, type, s2, 0);
     } else {
         if (type != 4) Actor_InitComponents(a, type, s2, 0);
@@ -441,7 +441,7 @@ extern "C" bool Npc_Initialize(Act* a, Mtx* mtx, char* name, int health, int max
     if (On(a)) {
         int idx;
         int ag;
-        if (D_005721C8) {
+        if (g_IsMultiplayer) {
             if (On(a))
                 idx = ((unsigned)(a->wC & 0x7F000000) >> 24) - 1;
             else
@@ -454,7 +454,7 @@ extern "C" bool Npc_Initialize(Act* a, Mtx* mtx, char* name, int health, int max
             int x = p != 0;
             if (x) x = (unsigned char)p->IsOn();
             x = (unsigned char)x;
-            ag = x ? Agent_GetSelected(&D_004FFB50, idx) : 0;
+            ag = x ? Agent_GetSelected(&g_Game, idx) : 0;
         }
         if (ag) {
             if (AgentData_HasUnlock(ag, 3)) {

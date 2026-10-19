@@ -9,7 +9,7 @@
 extern "C" {
 int Mem_Free(int, int, char *, int);                         
 extern char D_004BE7F0;
-extern unsigned char D_00533880;
+extern unsigned char g_ProfileLockEnabled;
 extern int D_0055D4F8;
 extern int D_0055D4FC;
 extern int D_0055D500;

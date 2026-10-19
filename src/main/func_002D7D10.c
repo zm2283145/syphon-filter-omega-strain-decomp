@@ -7,7 +7,7 @@ struct Msg2 : Msg { int val; int id; unsigned char m38; char p39[7]; V4 v; float
 struct Info { unsigned char dead; char p1[7]; int val; signed char id; };
 struct Obj { char p0[0x44]; Info* info; char p48[4]; void* target; };
 extern "C" {
-extern char D_0055D480[], D_004E0840[], D_004E0200[];
+extern char g_ActorActionMsgClass[], D_004E0840[], D_004E0200[];
 extern signed char D_004E1D88;
 extern V4 D_004E1D90;
 }
@@ -32,7 +32,7 @@ extern "C" void func_002D7D10(Obj* o)
         int val[1]; val[0] = in->dead ? -1 : in->val;
         Msg2 msg;
         m = &msg;
-        Event_Construct(m, D_0055D480);
+        Event_Construct(m, g_ActorActionMsgClass);
         m->vtable = D_004E0840;
         m->a24 = 0x3B;
         m->a28 = 0xB;

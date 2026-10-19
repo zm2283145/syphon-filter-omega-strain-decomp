@@ -90,8 +90,8 @@ static inline void merge_flush_func_00185A30(void) {}
 class C_185C70 { public: VPAD16(a) VPAD2(b) VPAD1(c) virtual int IsLocal(); };
 struct O_185C70 { char pad[0xC]; unsigned int id; char pad10[0x48]; C_185C70* ctl; };
 extern "C" {
-extern unsigned char D_005721C8;
-extern char D_004FFB50[];
+extern unsigned char g_IsMultiplayer;
+extern char g_Game[];
 void* Agent_GetSelected(void* list, int idx);
 }
 static inline unsigned char Has_185C70(O_185C70* o)
@@ -103,13 +103,13 @@ static inline unsigned char Has_185C70(O_185C70* o)
 extern "C" void* Player_GetAgentData(O_185C70* o)
 {
     int idx;
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         if (Has_185C70(o)) idx = ((o->id & 0x7F000000) >> 24) - 1;
         else idx = -1;
     } else {
         idx = 0;
     }
-    if (Has_185C70(o)) return Agent_GetSelected(D_004FFB50, idx);
+    if (Has_185C70(o)) return Agent_GetSelected(g_Game, idx);
     return 0;
 }
 /* merge_units: generate this block's code under its own pragmas */

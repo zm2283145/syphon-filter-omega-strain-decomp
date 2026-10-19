@@ -34,7 +34,7 @@ void Mem_Free(int, void*, char*, int);
 extern char D_004BC5D0[];
 extern char D_0053BB08;
 extern float D_0053BB10[4];
-extern int D_005383C8;
+extern int g_VideoFrameCounter;
 extern V D_004BC550;
 extern int D_0053BB20;
 extern char D_0053B540[];
@@ -401,7 +401,7 @@ void ShatterEmitter_Update(Obj9C* o, float dt, Ctx9C* ctx, Ctx9C* a2, void* a3)
                 if (below || n.Dot(o->v110) < 0.0f) {
                     int e;
                     t->dead = 1;
-                    D_0053BB20 = D_005383C8;
+                    D_0053BB20 = g_VideoFrameCounter;
                     for (e = 0; e < o->desc->nEmit; e++) {
                         if (EMIT(e).f14 < 0.0f) {
                             pos.Set3(t->c);

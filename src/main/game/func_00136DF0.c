@@ -65,8 +65,8 @@ void operator_delete(void* p);
 }
 
 /* allocator lock taken without a guard object (no stack slot) */
-#define LOCKC_36DF0() { if (D_00533880) Alloc_Lock(9); D_00533888++; }
-#define UNLOCKC_36DF0() { if (D_00533880) Alloc_Unlock(9); D_00533888--; }
+#define LOCKC_36DF0() { if (g_ProfileLockEnabled) Alloc_Lock(9); g_ProfileLockDepth++; }
+#define UNLOCKC_36DF0() { if (g_ProfileLockEnabled) Alloc_Unlock(9); g_ProfileLockDepth--; }
 #define DELETE_36DF0(p, dtor, line) \
     { void* q = (p); if (q) { LOCKC_36DF0() dtor(q, -1); Mem_Free(0, q, D_0049A890, line); UNLOCKC_36DF0() } }
 

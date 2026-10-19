@@ -21,7 +21,7 @@ typedef struct ElevE6 {
     char key[4];
 } ElevE6;
 
-extern "C" char D_004FFB50[];
+extern "C" char g_Game[];
 extern "C" char D_004DADF0[];
 extern "C" char g_TargetVisMgr[];
 extern "C" void SoundStopMsg_Ctor(ElevE6Msg* msg, void* key, ElevE6* self);
@@ -36,7 +36,7 @@ extern "C" void cElevatorGOBJ_v16(ElevE6* self, void* arg)
 {
     ElevE6Msg msg;
     SoundStopMsg_Ctor(&msg, self->key, self);
-    Event_Send(&msg, D_004FFB50, 1);
+    Event_Send(&msg, g_Game, 1);
     msg.vtbl = D_004DADF0;
     FileMan_Release(msg.b, -1);
     FileMan_Release(msg.a, -1);

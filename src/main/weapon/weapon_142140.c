@@ -48,7 +48,7 @@ typedef struct {
     char pad78[0x78];
     unsigned char fF0;
 } Wpn_142170;
-extern int D_004FFD30;
+extern int g_WeaponDatabase;
 extern float MaxNpcAmmoPct;
 extern float D_00489C20;
 Wpn_142170* WeaponDb_Get(int, int);
@@ -62,7 +62,7 @@ void WeaponInv_RandomizeDroppedAmmo(Inv_142170* inv)
     for (i = 0; i < 6; i++) {
         Slot_142170* s = &inv->slots[i];
         if (s->id != -1) {
-            Wpn_142170* w = WeaponDb_Get(D_004FFD30, s->id);
+            Wpn_142170* w = WeaponDb_Get(g_WeaponDatabase, s->id);
             int total = w->clip * WeaponInv_ClipsForActor(inv->actor, w->f74);
             float pct;
             int n;
@@ -102,9 +102,9 @@ typedef struct { int a; int id; int c; int d; } E_INV;
 typedef struct { int pad; E_INV e[7]; char pad2[0x84 - 0x74]; unsigned char cur; char pad3[3]; void* owner; char pad4[0xA8 - 0x8C]; unsigned char lock; } INV;
 typedef struct { char pad[0xA8]; unsigned char xA8; } WDef_2320;
 #if 0 /* merge_units */
-extern void* D_004FFD30;
+extern void* g_WeaponDatabase;
 #endif /* merge_units */
-#define D_004FFD30 (*(void **)&D_004FFD30) /* merge_units */
+#define g_WeaponDatabase (*(void **)&g_WeaponDatabase) /* merge_units */
 
 #if 0 /* merge_units */
 extern WDef_2320* WeaponDb_Get(void* db, int id);
@@ -120,13 +120,13 @@ void WeaponInv_MoveItemsToBackpack(INV* self, void* o)
         return;
     for (i = 7; i >= 0; i--) {
         E_INV* e = (E_INV*)((char*)self + i * 16 + 4);
-        if (e->id != -1 && WeaponDb_Get(D_004FFD30, e->id)->xA8) {
+        if (e->id != -1 && WeaponDb_Get(g_WeaponDatabase, e->id)->xA8) {
             Backpack_AddWeapon(o, e->id, e->d, e->c, 0);
             WeaponInv_RemoveSlot(self, i, 0, 0, 0);
         }
     }
 }
-#undef D_004FFD30 /* merge_units */
+#undef g_WeaponDatabase /* merge_units */
 #undef WeaponDb_Get /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00142320(void) {}

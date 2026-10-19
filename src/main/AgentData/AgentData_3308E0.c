@@ -16,7 +16,7 @@ int strcmp(const void *, const void *);
 #pragma cplusplus on
 struct E308E0 { int id; int val; int pad[4]; };
 extern "C" {
-extern char D_00532B10[];
+extern char g_UnlockRows[];
 int func_0032E3F0(void* t);
 int func_0032E3C0(void* t);
 void func_0032E3E0(E308E0** out, void* t, int* raw);
@@ -33,11 +33,11 @@ extern "C" int UnlockTable_FindBitByName(__int128 key)
     E308E0* last;
     int k;
     int r;
-    t1 = func_0032E3F0(D_00532B10);
-    func_0032E3E0(&b, D_00532B10, &t1);
+    t1 = func_0032E3F0(g_UnlockRows);
+    func_0032E3E0(&b, g_UnlockRows, &t1);
     first = b;
-    t2 = func_0032E3C0(D_00532B10);
-    func_0032E3E0(&e, D_00532B10, &t2);
+    t2 = func_0032E3C0(g_UnlockRows);
+    func_0032E3E0(&e, g_UnlockRows, &t2);
     last = e;
     k = Loc_FindKeyThunk(&key);
     for (; Neq308E0(first, last); first++) {
@@ -178,7 +178,7 @@ typedef struct LookupE6 {
     int value;
 } LookupE6;
 
-extern int D_00532AF4;
+extern int g_LevelRowCount;
 extern LookupE6* D_00532AF8;
 extern void* Loc_GetStoredKey(void* name);
 extern int String_CompareNoCase(void* a, void* b);
@@ -188,7 +188,7 @@ static inline LookupE6* EntryE6(int i) { return &D_00532AF8[i]; }
 /* Finds the table entry whose name matches, returning its value (default 0x16). */
 int Objective_GetLevelMissionNumber(void* name)
 {
-    int count = D_00532AF4;
+    int count = g_LevelRowCount;
     int i;
     for (i = 0; i < count; i++) {
         if (String_CompareNoCase(Loc_GetStoredKey(EntryE6(i)->name), name) == 0) {
@@ -220,7 +220,7 @@ static inline Lookup30C30* Entry30C30(int i) { return &D_00532AF8[i]; }
 /* Finds the table entry whose name matches and returns one of its two paired values. */
 int Awards_GetParTime(void* name, int second)
 {
-    int count = D_00532AF4;
+    int count = g_LevelRowCount;
     int i;
     for (i = 0; i < count; i++) {
         if (String_CompareNoCase(Loc_GetStoredKey(Entry30C30(i)->name), name) == 0) {
@@ -268,7 +268,7 @@ typedef struct DosEntryVec {
     DosEntry* data;
 } DosEntryVec;
 
-extern DosDefVec D_00532B50;
+extern DosDefVec g_RankRows;
 extern DosEntryVec D_00532B70;
 extern char D_004B99A8[];
 #if 0 /* merge_units */
@@ -285,9 +285,9 @@ void Global_cAgentData__RegisterDossier(int agent, const char* name)
     int i;
     DosEntry e;
     char buf[16];
-    for (i = 0; i < D_00532B50.count; i++) {
-        if (strcmp(At(&D_00532B50, i)->name, name) == 0) {
-            found = At(&D_00532B50, i)->index;
+    for (i = 0; i < g_RankRows.count; i++) {
+        if (strcmp(At(&g_RankRows, i)->name, name) == 0) {
+            found = At(&g_RankRows, i)->index;
             break;
         }
     }

@@ -13,8 +13,8 @@ int List_PushBack_269530();
 extern char D_004A82B8;
 extern char D_004DCA80;
 extern char D_004F83C0;
-extern unsigned char D_00533880;
-extern int D_00533888;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
 
 #pragma push
 #pragma opt_common_subs off
@@ -22,15 +22,15 @@ char * cNodeList_ctor(int arg0) {
     struct { int f30; int f34[2]; char * f3C; } sl;
     char * temp_s1;
 
-    if (D_00533880 != 0) {
+    if (g_ProfileLockEnabled != 0) {
         Alloc_Lock(9);
     }
-    D_00533888 += 1;
+    g_ProfileLockDepth += 1;
     temp_s1 = (char *)(Mem_Alloc(0, 0x64, &D_004A82B8, 0x70));
-    if (D_00533880 != 0) {
+    if (g_ProfileLockEnabled != 0) {
         Alloc_Unlock(9);
     }
-    D_00533888 -= 1;
+    g_ProfileLockDepth -= 1;
     if (temp_s1 != NULL) {
         sl.f30 = 0;
         IdMgr_Allocate(sl.f34, 0xF5);

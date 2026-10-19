@@ -36,11 +36,11 @@ static inline void merge_flush_func_00256FD0(void) {}
 #pragma opt_strength_reduction off
 typedef struct { char pad[0x2F3]; unsigned char b2F3; char pad2[0x308 - 0x2F4]; int x308; } G3E_00257040;
 typedef struct { int pad; int count; G3E_00257040** items; } G3L_00257040;
-extern unsigned char D_005721C8;
-extern G3L_00257040* D_004F7F30;
+extern unsigned char g_IsMultiplayer;
+extern G3L_00257040* g_BackpackList;
 void func_00257040(int x) {
-    if (D_005721C8) {
-        G3L_00257040* l = D_004F7F30;
+    if (g_IsMultiplayer) {
+        G3L_00257040* l = g_BackpackList;
         int i;
         for (i = 0; i < l->count; i++) {
             G3E_00257040* e = l->items[i];
@@ -63,14 +63,14 @@ static inline void merge_flush_func_00257040(void) {}
 typedef struct BackpackEntry{char pad[0x60];unsigned char active;}BackpackEntry;
 typedef struct BackpackRegistry{int capacity,count;BackpackEntry**items;}BackpackRegistry;
 #if 0 /* merge_units */
-extern BackpackRegistry*D_004F7F30;
+extern BackpackRegistry*g_BackpackList;
 #endif /* merge_units */
-#define D_004F7F30 (*(BackpackRegistry **)&D_004F7F30) /* merge_units */
+#define g_BackpackList (*(BackpackRegistry **)&g_BackpackList) /* merge_units */
 
 void Backpack_Destroy(BackpackEntry*);void Backpack_RestoreCrateSnapshots(void);void func_00170570(void);
 static inline int Identity(int n){return n;}
-void Backpack_RemoveAll(void){BackpackRegistry*list=D_004F7F30;int i;for(i=0;i<list->count;i++){int offset=i<<2;int base=(int)list->items;BackpackEntry*p=*(BackpackEntry**)(base+offset);if(!p->active){i--;Backpack_Destroy(p);}}Backpack_RestoreCrateSnapshots();func_00170570();}
-#undef D_004F7F30 /* merge_units */
+void Backpack_RemoveAll(void){BackpackRegistry*list=g_BackpackList;int i;for(i=0;i<list->count;i++){int offset=i<<2;int base=(int)list->items;BackpackEntry*p=*(BackpackEntry**)(base+offset);if(!p->active){i--;Backpack_Destroy(p);}}Backpack_RestoreCrateSnapshots();func_00170570();}
+#undef g_BackpackList /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_002570C0(void) {}
 #pragma pop /* merge_units */

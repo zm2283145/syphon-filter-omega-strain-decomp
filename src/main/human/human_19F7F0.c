@@ -139,7 +139,7 @@ void WeaponInv_RestoreHiddenItem(int item);
 extern char D_0049D040[];
 extern char D_0049D048[];
 extern char D_004DA950[];
-extern char D_0055A1D8[];
+extern char g_CasEventMsgClass[];
 
 static inline int ActBit(int v, int n) { return (v >> n) & 1; }
 static inline bool IsDown(Actor9F* a, int n) { return (a->cur3238 >> n) & 1; }
@@ -169,7 +169,7 @@ extern "C" void Actor_ReactToActionChanges(Actor9F* a)
             }
             {
                 ActMsg m;
-                Event_Construct(&m, D_0055A1D8);
+                Event_Construct(&m, g_CasEventMsgClass);
                 m.actor = a;
                 m.action = (char)act;
                 m.kind = 1;
@@ -184,7 +184,7 @@ extern "C" void Actor_ReactToActionChanges(Actor9F* a)
     }
     if (ActTriggered(a, 16)) {
         ActMsg m;
-        Event_Construct(&m, D_0055A1D8);
+        Event_Construct(&m, g_CasEventMsgClass);
         m.actor = 0;
         m.vtable = D_004DA950;
         m.action = 0xC;
@@ -198,7 +198,7 @@ extern "C" void Actor_ReactToActionChanges(Actor9F* a)
         ActMsg m;
         a->flags3248 &= ~0x100;
         a->flags3248 &= ~0x200;
-        Event_Construct(&m, D_0055A1D8);
+        Event_Construct(&m, g_CasEventMsgClass);
         m.actor = 0;
         m.vtable = D_004DA950;
         m.action = 7;

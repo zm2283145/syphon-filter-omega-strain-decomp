@@ -74,7 +74,7 @@ typedef struct {
     char pad190[0x1CC - 0x190];
     int f1CC;
 } Self_52C0;
-extern char D_004FFB50;
+extern char g_Game;
 extern char* D_0048C160[];
 int Agent_GetSelected(void*, int);
 int AgentData_IsLevelDone(int, __int128);
@@ -86,7 +86,7 @@ int GuiCommandCenter_GetDefaultSlot(Self_52C0* self) {
     int i;
     idx = -1;
     for (k = 0; k < 0x11; k++) {
-        if (AgentData_IsLevelDone(Agent_GetSelected(&D_004FFB50, -1), StringPool_MakeKey(D_0048C160[k]))) idx = k;
+        if (AgentData_IsLevelDone(Agent_GetSelected(&g_Game, -1), StringPool_MakeKey(D_0048C160[k]))) idx = k;
     }
     if (idx == 0 || self->f1CC == -1) return 0x16;
     if (idx != -1) return idx;

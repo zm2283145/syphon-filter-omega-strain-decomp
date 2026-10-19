@@ -10,9 +10,9 @@ extern unsigned char* DME_GetLobby(void);
 extern char* strncpy(char*, const char*, int);
 extern char D_004ACF48[];
 extern char D_004F2CC0[];
-extern char D_004FFB50[];
-extern char D_004FFC90[];
-extern int D_004FFD30;
+extern char g_Game[];
+extern char g_LevelDirName[];
+extern int g_WeaponDatabase;
 extern unsigned char D_0051EF68;
 extern char D_0055A700[];
 
@@ -57,14 +57,14 @@ void FrontEnd_SuspendGui(Obj9860* self, unsigned char mode)
         case 0: {
             void* svc;
             D_0051EF68 = 0;
-            svc = Service_Lookup(D_004FFB50, D_004F2CC0);
+            svc = Service_Lookup(g_Game, D_004F2CC0);
             if (svc) {
                 PStr save;
                 unsigned char* g;
-                Copy(&save, D_004FFC90);
-                strncpy(D_004FFC90, D_004ACF48, 0x80);
+                Copy(&save, g_LevelDirName);
+                strncpy(g_LevelDirName, D_004ACF48, 0x80);
                 SoundMgr_UnloadLevel(svc);
-                strncpy(D_004FFC90, save.text, 0x80);
+                strncpy(g_LevelDirName, save.text, 0x80);
                 g = DME_GetLobby();
                 if (g && g[0x2409] == 0) {
                     D_0051EF68 = 1;
@@ -78,7 +78,7 @@ void FrontEnd_SuspendGui(Obj9860* self, unsigned char mode)
         }
 
         func_002C9E20(self);
-        func_001450F0(D_004FFD30);
+        func_001450F0(g_WeaponDatabase);
         func_002C9C80(self, 1);
         self->f37 = 1;
         self->f28 = 0;

@@ -79,7 +79,7 @@ extern "C" void func_003CE9F0();
 extern "C" void func_003CEA00();
 extern "C" void Object_HandleMessage();
 extern void * const D_004DFF50[];
-extern unsigned char D_00533880;
+extern unsigned char g_ProfileLockEnabled;
 typedef struct { int f0; char p4[68]; unsigned char f48; char p49[7]; int f50; int f54; int f58; } PS0_003CEF20;
 }
 extern "C" char * cGOBJ_dtor(PS0_003CEF20 *arg0, long long arg1) {

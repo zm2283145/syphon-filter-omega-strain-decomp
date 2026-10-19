@@ -15,7 +15,7 @@ struct LEDF0 {
 
 typedef struct { char pad0[0x48]; void* tbl; } OEDF0;
 
-extern "C" char D_004FFB50[];
+extern "C" char g_Game[];
 extern "C" void func_00296F20(LEDF0* l);
 extern "C" void func_00299270(LEDF0* l, int flags);
 extern "C" void* Agent_GetSelected(void* list, int idx);
@@ -25,7 +25,7 @@ extern "C" void GuiTextListWidget_AddItem(void* t, int id, int i, int mode);
 
 extern "C" void GuiOmegaStrain_Fill(OEDF0* self)
 {
-    void* ag = Agent_GetSelected(D_004FFB50, -1);
+    void* ag = Agent_GetSelected(g_Game, -1);
     LEDF0 l;
     int text;
     int i;

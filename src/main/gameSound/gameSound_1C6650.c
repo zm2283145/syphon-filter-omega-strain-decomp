@@ -15,7 +15,7 @@ int SoundRequest_Ctor(void*, int, void*, int, int);
 int cMessage_dtor(void*, int);
 int FileMan_Release(void*, int);
 extern char D_004DADF0[];
-extern char D_004FFB50[];
+extern char g_Game[];
 extern unsigned char func_001C6700(void);
 typedef struct { int w[43]; } A2C4; typedef struct { int w[39]; } A228; typedef struct { int w[18]; } A1E0; typedef struct { int w[47]; } A124; typedef struct { int w[39]; } A88; typedef struct { void* vt; int w[29]; } A10;
 /* stop all quips: broadcast a stop sound event; the message objects share one
@@ -27,7 +27,7 @@ void Global_StopAllQuips(void) {
     if (&func_001C6700 != 0) {
         SoundRequest_Ctor(&L.sp1E0, 4, "", 0, 0);
         SoundEvent_Ctor(&L.sp10, &L.sp1E0, 0);
-        Event_Send(&L.sp10, D_004FFB50, 0);
+        Event_Send(&L.sp10, g_Game, 0);
         L.sp10.vt = D_004DADF0;
         FileMan_Release(&L.sp124, -1);
         FileMan_Release(&L.sp88, -1);
@@ -44,9 +44,9 @@ static inline void merge_flush_func_001C6650(void) {}
 
 /* merge_units: begin func_001C6700 */
 #pragma push /* merge_units */
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005721C0;
-unsigned char func_001C6700(void) { if (D_005721C8) return D_005721C0; return 1; }
+unsigned char func_001C6700(void) { if (g_IsMultiplayer) return D_005721C0; return 1; }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001C6700(void) {}
 #pragma pop /* merge_units */

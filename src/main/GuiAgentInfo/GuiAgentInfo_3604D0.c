@@ -8,7 +8,7 @@
 #pragma push /* merge_units */
 /*
  * Matched functions (byte-identical with the retail executable).
- * GuiAgentInfo class-name getter (vtable D_004DF350 slot 19).
+ * GuiAgentInfo class-name getter (vtable GuiAgentInfo_vtable slot 19).
  */
 
 #include "loose03_types.h"

@@ -54,14 +54,14 @@ extern char D_0049EE88[];
 extern char D_0049F050[], D_0049F070[], D_0049F090[], D_0049F0A8[], D_0049F0B8[];
 extern char D_0048B2F8[];
 extern char D_0057124C[], D_005711B0[];
-extern char D_004FFB50[];
+extern char g_Game[];
 extern NetState* D_004FFC04;
 extern unsigned char D_004FFBB2;
 extern signed char D_00493A60;
 extern NpcColor D_0055D510[];
 extern int D_0055DE94;
-extern BodyTbl D_0055DDA0;
-extern void* D_004FFD44;
+extern BodyTbl g_AgentPartCache;
+extern void* g_ActorList;
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void func_00165E60(void* a, char* name, int x);
 void* App_GetInstance(void);
@@ -144,7 +144,7 @@ extern "C" void Pop_LoadNPC(void* unused, PopReader* r, void* arc)
                     if (p)
                         p = Npc_Construct(p, r, 1, 0, 0);
                 }
-                World_RegisterActor(D_004FFB50, p->actorId);
+                World_RegisterActor(g_Game, p->actorId);
                 p->SetActive(1);
                 Player_SetLocal(p);
                 if (D_0055DE94) {
@@ -152,7 +152,7 @@ extern "C" void Pop_LoadNPC(void* unused, PopReader* r, void* arc)
                     int idx = ((p->flagsC & 0x7F000000) >> 24) - 1;
                     if (idx < 0)
                         idx = 0;
-                    int v = D_0055DDA0.tbl[kind][idx];
+                    int v = g_AgentPartCache.tbl[kind][idx];
                     if (v)
                         func_00391020(p->sub60, v);
                 }
@@ -164,7 +164,7 @@ extern "C" void Pop_LoadNPC(void* unused, PopReader* r, void* arc)
                 if (p)
                     p = Npc_Construct(p, r, 2, 0, 0);
             }
-            void* reg = D_004FFD44;
+            void* reg = g_ActorList;
             p->reg = reg;
             ObjRegistry_AppendRecursive(reg, p);
         }
@@ -198,7 +198,7 @@ extern "C" void Pop_LoadNPC(void* unused, PopReader* r, void* arc)
             Align(r);
         }
     }
-    func_00403FC0(&D_0055DDA0);
+    func_00403FC0(&g_AgentPartCache);
     FileMan_Release(&e, -1);
 }
 /* merge_units: generate this block's code under its own pragmas */

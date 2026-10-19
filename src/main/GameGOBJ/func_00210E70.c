@@ -10,8 +10,8 @@ struct Obj_00210E70 { char pad0[0xC]; int id; char pad10[4]; unsigned char b14; 
 struct LiftMsg_00210E70 { void* vtable; char base[0x1C]; unsigned char b20; char pad21[3]; int kind; int floor; int from; int to; char pad34[4]; };
 struct Lift_00210E70 { char pad0[0xC]; int id; };
 extern "C" {
-extern unsigned char D_005721C8;
-extern int D_004F5440;
+extern unsigned char g_IsMultiplayer;
+extern int g_TriggerMsgKey;
 extern char D_004DAF10[];
 void Event_Construct(void* m, void* type);
 void cMessage_dtor(void* m, int flags);
@@ -41,14 +41,14 @@ extern "C" int Script_cElevatorGOBJ_ChooseFloor_2(void** args)
             LiftMsg_00210E70* p = &msg;
             int dest;
             int tid;
-            Event_Construct(p, &D_004F5440);
+            Event_Construct(p, &g_TriggerMsgKey);
             msg.vtable = D_004DAF10;
             msg.kind = 1;
             msg.floor = -1;
             p->to = ObjId_00210E70(o);
             p->from = ObjId_00210E70(0);
             tid = l->id;
-            if (D_005721C8) {
+            if (g_IsMultiplayer) {
                 if (IsPlayerCtl_00210E70(o))
                     dest = ((unsigned int)(o->id & 0x7F000000) >> 24) - 1;
                 else

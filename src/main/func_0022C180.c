@@ -7,7 +7,7 @@
 #include "types.h"
 #include "loose01_types.h"
 
-extern GameUI* D_004FFC2C;
+extern GameUI* g_Hud;
 extern MarkerTarget* GObj_IdentityB(void*);
 extern int Global_SetRadarBlip(MarkerTarget*);
 extern int printf(char*, int, int, int, int, int, int, int, float, float, float, float, float, float, float, float);
@@ -25,5 +25,5 @@ int Radar_SetBlipDeprecated(MarkerTarget* obj, int a1, int a2, int a3, int t0, i
 }
 
 int Global_SetRadarBlip(MarkerTarget* obj) {
-    return HudTargets_Add(D_004FFC2C->markerMgr, &obj->markerKey, 1);
+    return HudTargets_Add(g_Hud->markerMgr, &obj->markerKey, 1);
 }

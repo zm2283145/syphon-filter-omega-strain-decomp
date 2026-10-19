@@ -44,8 +44,8 @@ extern "C" {
     char*Loc_LookupText(const char*);
     void GuiTextWidget_SetText(void*,const char*,int);
     void GuiAgentSave_CardWaitPoll();
-    extern char D_0055A830[];
-    extern void(*D_0055A838)();
+    extern char g_MemCard[];
+    extern void(*g_CardWaitPollFn)();
     extern void*D_004FFC04;
     extern signed char D_00499C70[];
     struct NameBuf {
@@ -68,7 +68,7 @@ extern "C" void AgentOpen_BuildSlotList(GuiSaveAgentWidget*self) {
     files.owned=1;
     func_002888C0(&slots);
     slots.owned=1;
-    MemCardWrap_Enumerate(D_0055A830,&files);
+    MemCardWrap_Enumerate(g_MemCard,&files);
     zero=0;
     PtrVector_Resize(&slots,8,&zero);
     for(int i=0;i<slots.vec.b;i++)AO_DATA(slots)[i]=0;
@@ -89,7 +89,7 @@ extern "C" void AgentOpen_BuildSlotList(GuiSaveAgentWidget*self) {
                 do {
                     if(!data[j]) {
                         if(!popup) {
-                            D_0055A838=GuiAgentSave_CardWaitPoll;
+                            g_CardWaitPollFn=GuiAgentSave_CardWaitPoll;
                             popup=1;
                             popupId=FrontEnd_OpenPopup(D_004FFC04,0,D_004A9D80,D_004A9D90,self,0);
                         }
@@ -97,7 +97,7 @@ extern "C" void AgentOpen_BuildSlotList(GuiSaveAgentWidget*self) {
                         strncpy(oldname,AO_DATA(files)[i],ext-AO_DATA(files)[i]);
                         oldname[ext-AO_DATA(files)[i]]=0;
                         if(AgentFile_EncodeName(oldname,newname,j,32)) {
-                            MemCardWrap_Rename(D_0055A830,AO_DATA(files)[i],newname);
+                            MemCardWrap_Rename(g_MemCard,AO_DATA(files)[i],newname);
                             AO_DATA(slots)[j]=newname;
                         }
                         break;
@@ -108,7 +108,7 @@ extern "C" void AgentOpen_BuildSlotList(GuiSaveAgentWidget*self) {
     }
     if(popup) {
         FrontEnd_ClosePopup(D_004FFC04,popupId);
-        D_0055A838=0;
+        g_CardWaitPollFn=0;
     }
     char*name=(char*)&D_004A9DB0;
     name[0]='0';

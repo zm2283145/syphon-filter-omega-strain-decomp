@@ -3,7 +3,7 @@ typedef struct AmmoPair{int primary[4];int secondary[4];}AmmoPair;
 typedef struct AmmoEntry{AmmoPair v;int item,count;}AmmoEntry;
 typedef struct AmmoSlot{unsigned char kind;char pad[3];AmmoEntry entries[5];int count;unsigned char active;char padD1[3];}AmmoSlot;
 typedef struct BackpackQuery{char pad[0x64];AmmoSlot slots[3];}BackpackQuery;
-extern int D_004FFD30;
+extern int g_WeaponDatabase;
 int WeaponInv_SlotOfItem(int);
 unsigned char* WeaponDb_Get(int, int);
 static inline int Min(int a, int b) {
@@ -30,7 +30,7 @@ outer_body:
         for (j = 0; j < slot->count; j++, entry++) {
             if (entry->item == item) {
                 total = 0;
-                w = WeaponDb_Get(D_004FFD30, item);
+                w = WeaponDb_Get(g_WeaponDatabase, item);
                 for (k = 0; ((amount != 0) ^ 1) == 0 && k < entry->count; k++) {
                     take = Min(entry->v.primary[k], amount);
                     amount -= take;

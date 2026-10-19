@@ -33,7 +33,7 @@ int func_0015AF40(...);
                       
 int func_00434BB0(...);                      
 extern char D_004BFCA0;
-extern unsigned char D_00533880;
+extern unsigned char g_ProfileLockEnabled;
 extern char D_00582AB0;
 extern char D_00582AD0;
 }
@@ -176,14 +176,14 @@ static inline void merge_flush_func_00435070(void) {}
 
 /* merge_units: begin func_004352C0 */
 #pragma push /* merge_units */
-#define LOCALID_(X) { int ld_a = D_005721A8; /* read before the flag test: retail loads it ahead of the branch */ if (D_005721C8) { if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, ld_a); X = D_00494178; } else X = 0; }
+#define LOCALID_(X) { int ld_a = D_005721A8; /* read before the flag test: retail loads it ahead of the branch */ if (g_IsMultiplayer) { if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, ld_a); X = D_00494178; } else X = 0; }
 #pragma mpwc_relax on
 int func_002EB650(void **, int);                      
 int NetGame_InitLocalSlot(int *, int);                        
 int func_002EC460(int);                               
 extern int D_00494178;
 extern int D_005721A8;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005827A0;
 extern unsigned char D_005827A8;
 extern unsigned char D_005827B0;

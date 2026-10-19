@@ -91,7 +91,7 @@ void func_003FB9C0(Obj_B9C0* o)
         if (o) p = (int*)&o->h; else { tmp[0] = -1; p = tmp; }
         pr->id = *p;
     }
-    if (D_005721C8 && D_005724B0 != 7) {
+    if (g_IsMultiplayer && D_005724B0 != 7) {
         unsigned int own;
         func_00436C00(ctx);
         own = (o->h & 0x7F000000) >> 24;
@@ -132,7 +132,7 @@ static inline void merge_flush_func_003FBB10(void) {}
 
 /* merge_units: begin func_003FBBA0 */
 #pragma push /* merge_units */
-#define LOCALID_(X) { int ld_a = D_005721A8; /* read before the flag test: retail loads it ahead of the branch */ if (D_005721C8) { if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, ld_a); X = D_00494178; } else X = 0; }
+#define LOCALID_(X) { int ld_a = D_005721A8; /* read before the flag test: retail loads it ahead of the branch */ if (g_IsMultiplayer) { if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, ld_a); X = D_00494178; } else X = 0; }
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
@@ -140,7 +140,7 @@ int NetGame_InitLocalSlot(int *, int);
 extern int D_00494178;
 extern int D_0055C7B0;
 extern int D_005721A8;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 
 int func_003FBBA0(void) {
     int var_a0;
@@ -197,8 +197,8 @@ extern signed char D_00493A11;
 extern signed char D_00493A12;
 extern signed char D_00493A13;
 extern char D_004BE228;
-extern unsigned char D_00533880;
-extern int D_00533888;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
 #if 0 /* merge_units */
 extern char D_0055C770;
 #endif /* merge_units */
@@ -269,17 +269,17 @@ loop_4:
     } while (var_a2 < 3);
     temp_s0 = D_0055C988;
     if (temp_s0 != NULL) {
-        if (D_00533880 != 0) {
+        if (g_ProfileLockEnabled != 0) {
             Alloc_Lock(9, var_a1, var_a2);
         }
-        D_00533888 += 1;
+        g_ProfileLockDepth += 1;
         func_00436BA0(temp_s0, -1);
         Mem_Free(0, temp_s0, &D_004BE228, 0x12E);
-        if (D_00533880 != 0) {
+        if (g_ProfileLockEnabled != 0) {
             Alloc_Unlock(9);
         }
         D_0055C988 = NULL;
-        D_00533888 -= 1;
+        g_ProfileLockDepth -= 1;
     }
     D_0055C780 = 0;
     D_0055C781 = 0;

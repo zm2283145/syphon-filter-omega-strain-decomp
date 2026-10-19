@@ -20,7 +20,7 @@ typedef struct { MSG_HDR_S7; int id; char pad28[8]; Q_S7 pos; float f40; } MsgT_
 extern "C" {
 extern char D_00542B60[]; extern char D_004DA930[];
 extern char D_004EEED0[]; extern char D_004DA8D0[]; extern char D_004DCF10[];
-extern char D_0049E000[]; extern char D_00504068[]; extern char D_004DCDC0[]; extern unsigned char D_005721C8;
+extern char D_0049E000[]; extern char D_00504068[]; extern char D_004DCDC0[]; extern unsigned char g_IsMultiplayer;
 void Event_Construct(void* m, void* t);
 void Event_Send(void* m, void* t, int f);
 void cMessage_dtor(void* m, int f);
@@ -72,7 +72,7 @@ extern "C" void Actor_StartGrenadeThrow(SA_S7* a, int* id, Q_S7* pos, float f)
             a->f33E0 = f;
             a->b33E4 = 1;
             { Sub3524_S7* sp = a->f3524; sp->bEF = 1; }
-            if (D_005721C8 && a->b14) {
+            if (g_IsMultiplayer && a->b14) {
                 MsgT_S7* pm = &m;
                 Event_Construct(pm, D_00504068);
                 pm->vtable = D_004DCF10;

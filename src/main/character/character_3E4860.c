@@ -62,7 +62,7 @@ float Fixed13ToFloat(int value) {
 #include "loose04_types.h"
 
 extern char D_004E0840[];         /* Msg3E43D0 vtable */
-extern char D_0055D480[];         /* Msg3E43D0 type descriptor */
+extern char g_ActorActionMsgClass[];         /* Msg3E43D0 type descriptor */
 extern void* cMessage_ctor5(void* self, void* type, void* arg);
 
 Vec4* func_003E4920(Vec4* v, float x, float y, float z, float w) {
@@ -75,7 +75,7 @@ Vec4* func_003E4920(Vec4* v, float x, float y, float z, float w) {
 
 /* Builds the message from explicit values. */
 Msg3E43D0* func_003E4940(Msg3E43D0* self, void* arg, int a, int b) {
-    cMessage_ctor5(self, D_0055D480, arg);
+    cMessage_ctor5(self, g_ActorActionMsgClass, arg);
     self->vtable = D_004E0840;
     self->unk24 = a;
     self->unk28 = b;
@@ -94,7 +94,7 @@ typedef struct V4 { float x, y, z, w; } __attribute__((aligned(16))) V4;
 typedef struct Sub { V4 v; float f40, f44; unsigned char b48; char p49[7]; } Sub;
 typedef struct Packet { int kind, id; unsigned char a8, a9; char pad[2]; float x, y, z, w; float f1C, f20; unsigned char b24; } Packet;
 typedef struct Msg { void* vt; char p4[0x20]; int a24; unsigned char a28; char p29[7]; Sub sub; char p50[0x10]; } Msg;
-extern unsigned char D_005723C8, D_005721D0; extern char D_0055D480[], D_004E0840[], D_004E0120[];
+extern unsigned char D_005723C8, D_005721D0; extern char g_ActorActionMsgClass[], D_004E0840[], D_004E0120[];
 extern "C" {
 #if 0 /* merge_units */
 void cMessage_ctor5(Msg*, void*, Packet*);
@@ -112,7 +112,7 @@ extern "C" int func_003E49B0(int a, int b, int c, Packet* p0) {
         Packet* p = p0;
         void** obj;
         Msg* m = &msg;
-        cMessage_ctor5(m, D_0055D480, p);
+        cMessage_ctor5(m, g_ActorActionMsgClass, p);
         m->vt = D_004E0840;
         m->a24 = p->a8;
         m->a28 = p->a9;
@@ -135,7 +135,7 @@ extern "C" int func_003E49B0(int a, int b, int c, Packet* p0) {
 #pragma opt_propagation off
 #pragma opt_common_subs off
 typedef struct Packet_003E4AF0{int kind,id;unsigned char action,on;char pad[2];int a,b;float time;unsigned char enabled;}Packet_003E4AF0;
-typedef struct Msg_003E4AF0{void*vt;char p4[0x20];int action;unsigned char on;char p29[3];int a,b;float time;unsigned char enabled;char p39[3];}Msg_003E4AF0;extern char D_0055D480[],D_004E0840[],D_004E0160[];
+typedef struct Msg_003E4AF0{void*vt;char p4[0x20];int action;unsigned char on;char p29[3];int a,b;float time;unsigned char enabled;char p39[3];}Msg_003E4AF0;extern char g_ActorActionMsgClass[],D_004E0840[],D_004E0160[];
 #if 0 /* merge_units */
 void cMessage_ctor5(Msg_003E4AF0*,void*,Packet_003E4AF0*);
 #endif /* merge_units */
@@ -152,7 +152,7 @@ void cMessage_dtor(Msg_003E4AF0*,int);
 int func_003E4AF0(int a,int b,int c,Packet_003E4AF0*p0){
  Msg_003E4AF0 msg;Packet_003E4AF0*p;
  if(!D_005723C8)D_005723C8=1;
- p=p0;if(D_005721D0){void**obj;cMessage_ctor5(&msg,D_0055D480,p);msg.vt=D_004E0840;msg.action=p->action;msg.on=p->on;msg.vt=D_004E0160;msg.a=p->a;msg.b=p->b;msg.time=p->time;msg.enabled=p->enabled;
+ p=p0;if(D_005721D0){void**obj;cMessage_ctor5(&msg,g_ActorActionMsgClass,p);msg.vt=D_004E0840;msg.action=p->action;msg.on=p->on;msg.vt=D_004E0160;msg.a=p->a;msg.b=p->b;msg.time=p->time;msg.enabled=p->enabled;
  obj=NetMap_Lookup(p->id);if(obj)MsgQueue_QueueClone(&msg,*obj,0,0);
  msg.vt=D_004E0840;cMessage_dtor(&msg,0);}
  D_005723C8=0;return 0x1C;
@@ -168,7 +168,7 @@ int func_003E4AF0(int a,int b,int c,Packet_003E4AF0*p0){
 #pragma opt_propagation off
 #pragma opt_common_subs off
 typedef struct Packet_003E4BE0{int kind,id;unsigned char action,on;char pad[2];int a,b;}Packet_003E4BE0;
-typedef struct Msg_003E4BE0{void*vt;char p4[0x20];int action;unsigned char on;char p29[3];int a,b;char p34[4];}Msg_003E4BE0;extern char D_0055D480[],D_004E0840[],D_004E0180[];
+typedef struct Msg_003E4BE0{void*vt;char p4[0x20];int action;unsigned char on;char p29[3];int a,b;char p34[4];}Msg_003E4BE0;extern char g_ActorActionMsgClass[],D_004E0840[],D_004E0180[];
 #if 0 /* merge_units */
 void cMessage_ctor5(Msg_003E4BE0*,void*,Packet_003E4BE0*);
 #endif /* merge_units */
@@ -185,7 +185,7 @@ void cMessage_dtor(Msg_003E4BE0*,int);
 int func_003E4BE0(int a,int b,int c,Packet_003E4BE0*p0){
  Msg_003E4BE0 msg;Packet_003E4BE0*p;
  if(!D_005723C8)D_005723C8=1;
- p=p0;if(D_005721D0){void**obj;cMessage_ctor5(&msg,D_0055D480,p);msg.vt=D_004E0840;msg.action=p->action;msg.on=p->on;msg.vt=D_004E0180;msg.a=p->a;msg.b=p->b;
+ p=p0;if(D_005721D0){void**obj;cMessage_ctor5(&msg,g_ActorActionMsgClass,p);msg.vt=D_004E0840;msg.action=p->action;msg.on=p->on;msg.vt=D_004E0180;msg.a=p->a;msg.b=p->b;
  obj=NetMap_Lookup(p->id);if(obj)MsgQueue_QueueClone(&msg,*obj,0,0);
  msg.vt=D_004E0840;cMessage_dtor(&msg,0);}
  D_005723C8=0;return 0x14;
@@ -201,7 +201,7 @@ int func_003E4BE0(int a,int b,int c,Packet_003E4BE0*p0){
 #pragma opt_propagation off
 #pragma opt_common_subs off
 typedef struct Packet_003E4CC0{int kind,id;unsigned char action,on;char pad[2];int a,b;}Packet_003E4CC0;
-typedef struct Msg_003E4CC0{void*vt;char p4[0x20];int action;unsigned char on;char p29[3];int a,b;char p34[4];}Msg_003E4CC0;extern char D_0055D480[],D_004E0840[],D_004E01A0[];
+typedef struct Msg_003E4CC0{void*vt;char p4[0x20];int action;unsigned char on;char p29[3];int a,b;char p34[4];}Msg_003E4CC0;extern char g_ActorActionMsgClass[],D_004E0840[],D_004E01A0[];
 #if 0 /* merge_units */
 void cMessage_ctor5(Msg_003E4CC0*,void*,Packet_003E4CC0*);
 #endif /* merge_units */
@@ -218,7 +218,7 @@ void cMessage_dtor(Msg_003E4CC0*,int);
 int func_003E4CC0(int a,int b,int c,Packet_003E4CC0*p0){
  Msg_003E4CC0 msg;Packet_003E4CC0*p;
  if(!D_005723C8)D_005723C8=1;
- p=p0;if(D_005721D0){void**obj;cMessage_ctor5(&msg,D_0055D480,p);msg.vt=D_004E0840;msg.action=p->action;msg.on=p->on;msg.vt=D_004E01A0;msg.a=p->a;
+ p=p0;if(D_005721D0){void**obj;cMessage_ctor5(&msg,g_ActorActionMsgClass,p);msg.vt=D_004E0840;msg.action=p->action;msg.on=p->on;msg.vt=D_004E01A0;msg.a=p->a;
  obj=NetMap_Lookup(p->id);if(obj)MsgQueue_QueueClone(&msg,*obj,0,0);
  msg.vt=D_004E0840;cMessage_dtor(&msg,0);}
  D_005723C8=0;return 0x10;
@@ -235,7 +235,7 @@ int func_003E4CC0(int a,int b,int c,Packet_003E4CC0*p0){
 #pragma opt_common_subs off
 typedef struct V4Local{float x,y,z,w;}V4Local;
 typedef struct Packet_003E4DA0{int kind,id;unsigned char action,on;char pad[2];V4Local vec;}Packet_003E4DA0;
-typedef struct Msg_003E4DA0{void*vt;char p4[0x20];int action;unsigned char on;char p29[3];char p2c[4];V4Local vec;char p40[8];}Msg_003E4DA0;extern char D_0055D480[],D_004E0840[],D_004E0140[];
+typedef struct Msg_003E4DA0{void*vt;char p4[0x20];int action;unsigned char on;char p29[3];char p2c[4];V4Local vec;char p40[8];}Msg_003E4DA0;extern char g_ActorActionMsgClass[],D_004E0840[],D_004E0140[];
 #if 0 /* merge_units */
 void cMessage_ctor5(Msg_003E4DA0*,void*,Packet_003E4DA0*);
 #endif /* merge_units */
@@ -254,7 +254,7 @@ static inline void CopyV(V4Local*d,V4Local*s){float y;float z;float w;float x;w=
 int func_003E4DA0(int a,int b,int c,Packet_003E4DA0*p0){
  Msg_003E4DA0 msg;Packet_003E4DA0*p;
  if(!D_005723C8)D_005723C8=1;
- p=p0;if(D_005721D0){void**obj;cMessage_ctor5(&msg,D_0055D480,p);msg.vt=D_004E0840;msg.action=p->action;msg.on=p->on;msg.vt=D_004E0140;CopyV(&msg.vec,&p->vec);
+ p=p0;if(D_005721D0){void**obj;cMessage_ctor5(&msg,g_ActorActionMsgClass,p);msg.vt=D_004E0840;msg.action=p->action;msg.on=p->on;msg.vt=D_004E0140;CopyV(&msg.vec,&p->vec);
  obj=NetMap_Lookup(p->id);if(obj)MsgQueue_QueueClone(&msg,*obj,0,0);
  msg.vt=D_004E0840;cMessage_dtor(&msg,0);}
  D_005723C8=0;return 0x1C;
@@ -270,7 +270,7 @@ int func_003E4DA0(int a,int b,int c,Packet_003E4DA0*p0){
 #pragma opt_propagation off
 #pragma opt_common_subs off
 typedef struct Packet_003E4E90{int kind,id;unsigned char action,on;char pad[2];float a;int b;}Packet_003E4E90;
-typedef struct Msg_003E4E90{void*vt;char p4[0x20];int action;unsigned char on;char p29[3];float a;int b;char p34[4];}Msg_003E4E90;extern char D_0055D480[],D_004E0840[],D_004E01C0[];
+typedef struct Msg_003E4E90{void*vt;char p4[0x20];int action;unsigned char on;char p29[3];float a;int b;char p34[4];}Msg_003E4E90;extern char g_ActorActionMsgClass[],D_004E0840[],D_004E01C0[];
 #if 0 /* merge_units */
 void cMessage_ctor5(Msg_003E4E90*,void*,Packet_003E4E90*);
 #endif /* merge_units */
@@ -287,7 +287,7 @@ void cMessage_dtor(Msg_003E4E90*,int);
 int func_003E4E90(int a,int b,int c,Packet_003E4E90*p0){
  Msg_003E4E90 msg;Packet_003E4E90*p;
  if(!D_005723C8)D_005723C8=1;
- p=p0;if(D_005721D0){void**obj;cMessage_ctor5(&msg,D_0055D480,p);msg.vt=D_004E0840;msg.action=p->action;msg.on=p->on;msg.vt=D_004E01C0;msg.a=p->a;
+ p=p0;if(D_005721D0){void**obj;cMessage_ctor5(&msg,g_ActorActionMsgClass,p);msg.vt=D_004E0840;msg.action=p->action;msg.on=p->on;msg.vt=D_004E01C0;msg.a=p->a;
  obj=NetMap_Lookup(p->id);if(obj)MsgQueue_QueueClone(&msg,*obj,0,0);
  msg.vt=D_004E0840;cMessage_dtor(&msg,0);}
  D_005723C8=0;return 0x10;
@@ -303,7 +303,7 @@ int func_003E4E90(int a,int b,int c,Packet_003E4E90*p0){
 #pragma opt_propagation off
 #pragma opt_common_subs off
 typedef struct Packet_003E4F70{int kind,id;unsigned char action,on;char pad[2];float a;int b;}Packet_003E4F70;
-typedef struct Msg_003E4F70{void*vt;char p4[0x20];int action;unsigned char on;char p29[3];int a,b;char p34[4];}Msg_003E4F70;extern char D_0055D480[],D_004E0840[],D_004E01E0[];
+typedef struct Msg_003E4F70{void*vt;char p4[0x20];int action;unsigned char on;char p29[3];int a,b;char p34[4];}Msg_003E4F70;extern char g_ActorActionMsgClass[],D_004E0840[],D_004E01E0[];
 #if 0 /* merge_units */
 void cMessage_ctor5(Msg_003E4F70*,void*,Packet_003E4F70*);
 #endif /* merge_units */
@@ -320,7 +320,7 @@ void cMessage_dtor(Msg_003E4F70*,int);
 int func_003E4F70(int a,int b,int c,Packet_003E4F70*p0){
  Msg_003E4F70 msg;Packet_003E4F70*p;
  if(!D_005723C8)D_005723C8=1;
- p=p0;if(D_005721D0){void**obj;cMessage_ctor5(&msg,D_0055D480,p);msg.vt=D_004E0840;msg.action=p->action;msg.on=p->on;msg.vt=D_004E01E0;msg.a=(int)p->a;
+ p=p0;if(D_005721D0){void**obj;cMessage_ctor5(&msg,g_ActorActionMsgClass,p);msg.vt=D_004E0840;msg.action=p->action;msg.on=p->on;msg.vt=D_004E01E0;msg.a=(int)p->a;
  obj=NetMap_Lookup(p->id);if(obj)MsgQueue_QueueClone(&msg,*obj,0,0);
  msg.vt=D_004E0840;cMessage_dtor(&msg,0);}
  D_005723C8=0;return 0x10;

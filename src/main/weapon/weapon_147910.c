@@ -15,7 +15,7 @@
 #include "types.h"
 #include "loose00_types.h"
 
-extern char D_004FFD30[];
+extern char g_WeaponDatabase[];
 extern int Global_ReloadWeapons(void);
 extern int WeaponDb_LoadReloadVariant(int);
 extern int Resource_Construct(void*);
@@ -47,7 +47,7 @@ int Script_ReloadWeapons(void) {
 int Global_ReloadWeapons(void) {
     int db;
 
-    db = *(int*)D_004FFD30;
+    db = *(int*)g_WeaponDatabase;
     return WeaponDb_LoadReloadVariant(db);
 }
 

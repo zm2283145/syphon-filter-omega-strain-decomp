@@ -13,7 +13,7 @@ extern int D_004F7E30, D_004F7E38, D_004F7E40;
 extern char* D_004F7E48;
 extern int D_004F7E50, D_004F7E58, D_004F7E60, D_004F7E68;
 extern signed char D_004EA0C8;
-extern char* D_004EA0B0;
+extern char* g_LosCheckService;
 extern char ScriptType_cMenuChoiceMsg_Init[];
 extern char Script_cMenuChoiceMsg_Choice[];
 extern char Script_cMenuChoiceMsg_Who[];
@@ -52,7 +52,7 @@ void func_004CF9B0(void)
     D_004F7E60 = Script_RegisterNative(*func_002472F0(), Script_cMenuChoiceMsg_Choice, D_00493888, D_004A7958, 1, func_002472F0());
     D_004F7E68 = Script_RegisterNative(*func_002472F0(), Script_cMenuChoiceMsg_Who, cSystem_GetScriptTypeKeyPtr(), D_004A7960, 1, func_002472F0());
     if (!D_004EA0C8) {
-        D_004EA0B0 = D_004A7968;
+        g_LosCheckService = D_004A7968;
         D_004EA0C8 = 1;
     }
 }

@@ -32,7 +32,7 @@ struct Msg {
 struct Obj { char pad[0x59D]; unsigned char ready; };
 struct Net { Obj* obj; unsigned char busy; };
 extern "C" {
-extern Net D_0055A830;
+extern Net g_MemCard;
 extern int D_004979A0;
 extern Msg* Options_SetDefaults(Msg*);
 extern int MemCardWrap_GetSize(Net*, int);
@@ -44,7 +44,7 @@ int Options_Load(Msg* s);
 
 int Options_Load(Msg* s)
 {
-    Net* n = &D_0055A830;
+    Net* n = &g_MemCard;
     Msg m;
     Options_SetDefaults(&m);
     if (((n->busy != 0) ^ 1) && n->obj->ready) {
@@ -77,7 +77,7 @@ int GameOptions_WriteConfigFile(Msg* src);
 }
 int GameOptions_WriteConfigFile(Msg* src)
 {
-    Net* n = &D_0055A830;
+    Net* n = &g_MemCard;
     if (((n->busy != 0) ^ 1) && n->obj->ready) {
         Msg m(*src);
         int saved = m.g;

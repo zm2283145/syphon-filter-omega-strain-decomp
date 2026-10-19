@@ -10,7 +10,7 @@ struct E_6450 { int pad0; unsigned char b4; char pad5[3]; int i8; char padC[0x10
 struct S_6450 { char pad[0x74]; void* actor; E_6450* ents; };
 
 extern "C" {
-extern signed char D_0049D020[];
+extern signed char ActorNodeCodeTable[];
 void* Actor_GetSkeleton(void* h);
 V_6450 Model_GetSkeletonNodePos(void* skel, int node);
 }
@@ -41,11 +41,11 @@ extern "C" void FireEffectObj_RecordMatrix(S_6450* s, int i, M_6450* out)
 {
     E_6450* e = &s->ents[i];
     unsigned char b = e->b4;
-    V_6450 p = Model_GetSkeletonNodePos(Actor_GetSkeleton(s->actor), D_0049D020[b]);
+    V_6450 p = Model_GetSkeletonNodePos(Actor_GetSkeleton(s->actor), ActorNodeCodeTable[b]);
     int k = e->i8;
     if (k != 0x15) {
         unsigned char c = k;
-        V_6450 q = Model_GetSkeletonNodePos(Actor_GetSkeleton(s->actor), D_0049D020[c]);
+        V_6450 q = Model_GetSkeletonNodePos(Actor_GetSkeleton(s->actor), ActorNodeCodeTable[c]);
         Add_6450(&p, &q);
         {
             int tt; V_6450* d; V_6450* src; float h;

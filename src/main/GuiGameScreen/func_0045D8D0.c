@@ -7,10 +7,10 @@ int GuiWidget_Draw();
 int GuiGameScreen_DrawRoundCounts();                            
 int func_0045D710();                            
 int func_0045D7F0();                                  
-extern char * D_004FFC2C;
+extern char * g_Hud;
 
 void GuiGameScreen_Draw(char * arg0) {
-    if (F_(D_004FFC2C, 0x6A8, unsigned char) == 0) {
+    if (F_(g_Hud, 0x6A8, unsigned char) == 0) {
         if (F_(F_(arg0, 0x6C, int), 0x14, unsigned short) & 2) {
             func_0045D7F0();
             GuiWidget_Draw(arg0);

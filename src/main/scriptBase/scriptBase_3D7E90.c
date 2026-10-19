@@ -35,7 +35,7 @@ int func_003D84A0(char * );
 int func_003D84C0(char * , int);                       
 int func_003D84D0(char * );                            
 extern char D_004BD3B0;
-extern unsigned char D_00533880;
+extern unsigned char g_ProfileLockEnabled;
 extern unsigned char D_00554F10;
 extern char * D_00554F18;
 extern char * D_00554F20;

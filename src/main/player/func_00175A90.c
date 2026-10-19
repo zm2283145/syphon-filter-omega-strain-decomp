@@ -3,7 +3,7 @@
 typedef struct { char pad[0x6AC]; char timer[0x30]; float baseTime; } SoundMgr175;
 typedef union { int i; float f; } ScriptArg;
 
-extern SoundMgr175* D_004FFC2C;
+extern SoundMgr175* g_Hud;
 extern int Loc_LookupText(int id);
 extern void HudTimer_Start(void* timer, int obj, float time);
 
@@ -18,6 +18,6 @@ int Script_cPlayer_SetTimer_2(ScriptArg* args)
     *(int*)timeArg = args[1].i;
     time = *timeArg;
     id = *(int*)idArg ? Loc_LookupText(*(int*)idArg) : 0;
-    HudTimer_Start(D_004FFC2C->timer, id, time + D_004FFC2C->baseTime);
+    HudTimer_Start(g_Hud->timer, id, time + g_Hud->baseTime);
     return 0;
 }

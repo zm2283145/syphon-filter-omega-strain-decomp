@@ -131,7 +131,7 @@ typedef struct {
 } __attribute__((aligned(16))) F2Ev;
 typedef struct { char pad[0xC]; int preset; unsigned char kind; } F2Arg;
 extern char D_0049D910[];
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_004DAE30[];
 extern void SoundRequest_Ctor(F2Req* r, int a, char* b, int c, int d);
 extern void SoundEvent_CtorFromPreset(F2Ev* e, F2Req* r, int preset);
@@ -146,7 +146,7 @@ static inline void Play_F2(int preset)
     SoundRequest_Ctor(&req, 1, D_0049D910, 0, 0);
     SoundEvent_CtorFromPreset(&ev, &req, preset);
     ev.flag = 1;
-    Event_Send(&ev, D_004FFB50, 1);
+    Event_Send(&ev, g_Game, 1);
     ev.vt = D_004DAE30;
     FileMan_Release(&ev.s114, -1);
     FileMan_Release(&ev.s78, -1);

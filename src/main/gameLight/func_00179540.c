@@ -26,7 +26,7 @@ extern "C" {
 extern char D_004D9240[];
 extern char D_004D9280[];
 extern signed char D_0048A150;
-extern unsigned char D_00535D62;
+extern unsigned char g_LevelLightsDirty;
 }
 extern "C" DirLight* LevelLight_InitPoint(DirLight* l, unsigned char a, V4c* c, V4c* pos, unsigned char b)
 {
@@ -42,7 +42,7 @@ extern "C" DirLight* LevelLight_InitPoint(DirLight* l, unsigned char a, V4c* c, 
     l->f1E = a;
     l->color = *c;
     Q16(&l->dir, pos);
-    D_00535D62 = 1;
+    g_LevelLightsDirty = 1;
     w = c->w; z = c->z; y = c->y; x = c->x;
     v.x = x; v.y = y; v.z = z; v.w = w;
     l->f18 = 1.0f / LenSqP(&v);

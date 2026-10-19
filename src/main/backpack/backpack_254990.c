@@ -46,8 +46,8 @@ struct BP {
 };
 
 extern "C" {
-extern int D_004FFD30;
-extern int D_004FFBD0;
+extern int g_WeaponDatabase;
+extern int g_HotboxTracker;
 int WeaponInv_SlotOfItem(int id);
 void* WeaponDb_Get(int db, int item);
 int func_001A3730(Owner_00254990* o);
@@ -93,7 +93,7 @@ extern "C" void Backpack_CheckEmpty(BP* bp) {
             } else if (s2->count) {
                 int j;
                 e = s2->e;
-                WeaponDb_Get(D_004FFD30, s2->e[0].item);
+                WeaponDb_Get(g_WeaponDatabase, s2->e[0].item);
                 for (j = 0; all && j < s2->count; j++, e++) {
                     if (e->n) all = false;
                 }
@@ -103,7 +103,7 @@ extern "C" void Backpack_CheckEmpty(BP* bp) {
     if (all) {
         if (bp->b60 == 1) {
             if (bp->fx) {
-                Hotbox_RemoveObjectBox(D_004FFBD0, bp->fx);
+                Hotbox_RemoveObjectBox(g_HotboxTracker, bp->fx);
                 Object_Unregister(bp->fx);
                 Object_DeleteLater(bp->fx, 0.1f);
                 bp->fx = 0;

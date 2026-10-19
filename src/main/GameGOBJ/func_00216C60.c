@@ -96,9 +96,9 @@ struct PathObj {
 };
 
 extern "C" {
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_004DAE30[];
-extern char D_004F5440[];
+extern char g_TriggerMsgKey[];
 extern char D_004DAF10[];
 extern char D_004F5450[];
 extern char D_004DAE90[];
@@ -125,7 +125,7 @@ struct LiftMsg {
     LiftMsg(int k, int f)
     {
         LiftMsg* p = this;
-        Event_Construct(p, D_004F5440);
+        Event_Construct(p, g_TriggerMsgKey);
         p->vtable = D_004DAF10;
         p->mkind = k;
         p->floor = f;
@@ -180,7 +180,7 @@ extern "C" void PathObj_Update(PathObj* self, float dt)
             SoundEventP ev;
             SoundEvent_CtorFromPreset(&ev, self->snd, self);
             ev.kind = 1;
-            Event_Send(&ev, D_004FFB50, 1);
+            Event_Send(&ev, g_Game, 1);
             ev.vtable = D_004DAE30;
             FileMan_Release(&ev.req.b, -1);
             FileMan_Release(&ev.req.a, -1);

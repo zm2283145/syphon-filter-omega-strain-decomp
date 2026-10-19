@@ -43,16 +43,16 @@ typedef struct { int a0; int count; R34E4D0* data; } T34E4D0;
 typedef struct { int pad0; int id; } C34E4D0;
 typedef struct { char pad[0xB50]; C34E4D0* cur; } A34E4D0;
 typedef struct { char pad[0x48]; int a48; } S34E4D0;
-extern char D_004FFB50[];
-extern T34E4D0 D_00532B50;
+extern char g_Game[];
+extern T34E4D0 g_RankRows;
 extern A34E4D0* Agent_GetSelected(void* list, int idx);
 extern char* Loc_LookupText(char* key);
 extern void GuiTextListWidget_AddItem(int list, char* name, int idx, int state);
 #pragma opt_strength_reduction off
 void GuiRanks_Fill(S34E4D0* o)
 {
-    A34E4D0* ag = Agent_GetSelected(D_004FFB50, -1);
-    T34E4D0* t = &D_00532B50;
+    A34E4D0* ag = Agent_GetSelected(g_Game, -1);
+    T34E4D0* t = &g_RankRows;
     C34E4D0* cur = ag->cur;
     int i;
     for (i = 0; i < t->count; i++) {

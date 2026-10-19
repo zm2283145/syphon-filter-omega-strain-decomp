@@ -256,8 +256,8 @@ static inline void merge_flush_func_002AC400(void) {}
 typedef struct { char pad0[0x248]; int f248; } U_002AC470;
 extern U_002AC470* D_004FFC04;
 extern unsigned char D_004FFBB5;
-extern char D_004FFB50[];
-extern int D_004ACB30[];
+extern char g_Game[];
+extern int g_OnlineMissionTable[];
 extern const char* D_0048C160[];
 extern void* Agent_GetSelected(void* list, int idx);
 extern __int128 StringPool_MakeKey(const char* s);
@@ -295,8 +295,8 @@ int func_002AC470(S_002AC470* self, E_002AC470* e)
                 int cur = D_004FFC04->f248;
                 if (cur == -1 || k == cur) {
                     if (D_004FFBB5) {
-                        void* ag = Agent_GetSelected(D_004FFB50, -1);
-                        if (!AgentData_IsLevelDone(ag, StringPool_MakeKey(D_0048C160[D_004ACB30[k]])))
+                        void* ag = Agent_GetSelected(g_Game, -1);
+                        if (!AgentData_IsLevelDone(ag, StringPool_MakeKey(D_0048C160[g_OnlineMissionTable[k]])))
                             goto check;
                     }
                     if (e->f34 && e->f34 < e->f38) {

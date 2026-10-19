@@ -6,7 +6,7 @@ struct Tgt { char pad[0x130]; int f130; };
 struct Ent { char pad[0xF0]; unsigned char type; char padF1[0xF]; signed char b100; char p101[0x2F]; int f130; };
 struct Hud { char pad[0x7C]; SprVec v; int cur; };
 extern "C" {
-extern char D_004FFC14[];
+extern char g_CameraObject[];
 extern void* D_004FFC10;
 int func_00159570(void*);
 void** List_Front(void*);
@@ -18,7 +18,7 @@ void IeElement_SetShown(Spr*, int);
 void IeElement_EvaluateAt(Spr*, float);
 void IeElement_Fade(Spr*, float);
 }
-static inline void* GetCam() { if (func_00159570(D_004FFC14)) return *List_Front(D_004FFC14); return 0; }
+static inline void* GetCam() { if (func_00159570(g_CameraObject)) return *List_Front(g_CameraObject); return 0; }
 static inline bool IsNoCross(Ent* e) {
     unsigned char b = 0;
     unsigned int k = e->type - 3;

@@ -23,7 +23,7 @@ struct Sub285710 { Gun285710* gun; };
 struct Tank285710 { char p[0x60]; Gun285710* turret; char p64[8]; Sub285710* sub; };
 struct Msg285710 { void* vtable; char base[0x18]; int f1C; unsigned char b20; char p21[3]; unsigned char b24; char p25[3]; int f28; float f2C; };
 extern "C" {
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005721C0;
 extern char D_00506260[];
 extern char D_004DCF50[];
@@ -33,13 +33,13 @@ void Event_Construct(void* m, void* type);
 void Event_Send(void* m, void* target, int immediate);
 void cMessage_dtor(void* m, int flags);
 }
-static inline int IsAuth285710(void) { return D_005721C8 ? D_005721C0 : 1; }
+static inline int IsAuth285710(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
 extern "C" void func_00285710(Tank285710* self, float v) {
     Gun285710* t = self->turret;
     cNIEventOBJ_SetSpeedRecursive(t);
     t->Fire();
     if (self->sub) self->sub->gun->Arm(1);
-    if (D_005721C8 && IsAuth285710()) {
+    if (g_IsMultiplayer && IsAuth285710()) {
         Msg285710 m;
         Event_Construct(&m, D_00506260);
         m.vtable = D_004DCF50;
@@ -107,7 +107,7 @@ extern int cTankTread_Init(Part_285810* p);
 }
 static inline bool Null_285810(void* p) { return !p; }
 static inline bool NotNull_285810(void* p) { return p != 0; }
-static inline int Flag_285810(void) { return D_005721C8 ? D_005721C0 : 1; }
+static inline int Flag_285810(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
 
 static inline int Valid_285810(Target_285810* tgt, Turret_285810* t) { if (tgt == 0) return 1; if (tgt->id == t->targetId) return 1; return 0; }
 static inline void Part_Update_285810(Part_285810* p)
@@ -144,7 +144,7 @@ extern "C" void cTank_v10(Tank_285810* self, float dt)
         if (!Null_285810(tgt) && tgt->id != t->targetId) valid = 0;
         tgt = valid ? tgt : 0;
         if (tgt && !t->busy && r && t->cooldown <= 0.0f) {
-            if (!D_005721C8 || Flag_285810() || !(t->aux->f <= 1.0f))
+            if (!g_IsMultiplayer || Flag_285810() || !(t->aux->f <= 1.0f))
                 cTank_Fire(t, tgt, valid, r);
         }
         if (!(self->timer <= 0.0f)) {
@@ -175,7 +175,7 @@ static inline void merge_flush_func_00285810(void) {}
 extern "C" {
 char * Mem_Alloc(...);                      
 extern char D_004A93D0;
-extern unsigned char D_00533880;
+extern unsigned char g_ProfileLockEnabled;
 }
 typedef struct { char p0[104]; int f68; } PS0_00285AA0;
 extern "C" void func_00285AA0(PS0_00285AA0 *arg0, int arg1, char * arg2) {

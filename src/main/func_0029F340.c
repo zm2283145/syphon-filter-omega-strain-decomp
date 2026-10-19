@@ -1,5 +1,5 @@
 #include "types.h"
-extern short D_0048B990[];
+extern short g_DnasErrorTable[];
 extern signed char D_0048B992[];
 extern signed char D_0048B993[];
 extern char D_004AACB8[];
@@ -18,8 +18,8 @@ void GuiOnlineConnect_GetDnasText(int err, char* title, char* body, char* extra)
     int b = 0;
     char* t;
     for (i = 0; i < 0x22; i++) {
-        if (-err == *(short*)((char*)D_0048B990 + i * 4)) {
-            code = *(short*)((char*)D_0048B990 + i * 4);
+        if (-err == *(short*)((char*)g_DnasErrorTable + i * 4)) {
+            code = *(short*)((char*)g_DnasErrorTable + i * 4);
             a = *(signed char*)((char*)D_0048B992 + i * 4);
             b = *(signed char*)((char*)D_0048B993 + i * 4);
             break;

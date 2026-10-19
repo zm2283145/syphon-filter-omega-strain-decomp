@@ -63,7 +63,7 @@ M* Mtx_InvertRigid(M* m);
 void Shadow_LookAt(V* pos, V* dir, M* m);
 void Shadow_Perspective(M* out, float* a, float* b, float fov, float f13, float f14, float f15, float f16, float n, float f, float f19, float s0, float s8);
 void Shadow_AddToReceivers(Shadow* sh, int idx, V* c);
-extern char D_005381F0[];
+extern char g_Video[];
 extern int D_00538C64;
 extern M D_00539070;
 }
@@ -161,7 +161,7 @@ extern "C" void Shadow_BuildProjection(Shadow* sh, int idx)
             type = PT1;
             extra = 0.0f;
         } else {
-            Cp_(&camPos, Inverse(*(M*)(D_005381F0 + D_00538C64 * 0x40 + 0xA80)));
+            Cp_(&camPos, Inverse(*(M*)(g_Video + D_00538C64 * 0x40 + 0xA80)));
             dist = (camPos - l->pos).Length();
             fov = Math_Atan(radius / dist);
             n = dist - 3.0f * radius - 6.0f;

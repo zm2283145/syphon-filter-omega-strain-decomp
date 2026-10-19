@@ -18,7 +18,7 @@ void func_004344C0(int self, int key, int v)
     int h;
     NpcInfoMsg m;
     NpcInfoRec* r;
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         func_004355D0(self);
         if (NpcAuth_IsLocal()) {
             r = func_004361C0(key, &h);
@@ -47,7 +47,7 @@ void func_00434600(int self, int key, int v)
     int h;
     NpcInfoMsg m;
     NpcInfoRec* r;
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         func_004355D0(self);
         if (NpcAuth_IsLocal()) {
             r = func_004361C0(key, &h);

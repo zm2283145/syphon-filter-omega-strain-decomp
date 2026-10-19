@@ -409,7 +409,7 @@ int func_00468D38(void);
 int func_00468DD8(void);
 int func_00468EF0(void);
 extern int D_00497928;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern char D_005723B8;
 extern unsigned char D_00585FC0;
 }
@@ -470,7 +470,7 @@ extern "C" int SFOLobby_Poll(Conn4534A0* self, int start, int timeout, int flag)
     self->now = now;
     if (flag != 0) {
         ok = func_00468DD8();
-    } else if (self->mode == 0xA && D_005721C8 != 0) {
+    } else if (self->mode == 0xA && g_IsMultiplayer != 0) {
         ok = func_00468EF0();
     } else {
         fallback = true;

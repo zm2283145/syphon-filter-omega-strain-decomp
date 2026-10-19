@@ -46,10 +46,10 @@ struct Item { char pad[0x3C]; int range; };
 struct Plr { char pad[0x3524]; int inv; };
 struct RayMsg { void* vt; char base[0x20]; int f24; int f28; HitRes* res; V start; V end; Plr* pl; void* cl; int f58; unsigned char b5C; };
 extern "C" {
-extern char* D_004FFC2C;
-extern char D_004FFB50[];
-extern char D_004EA0B0[];
-extern char D_005435A0[];
+extern char* g_Hud;
+extern char g_Game[];
+extern char g_LosCheckService[];
+extern char g_LosRequestMsgClass[];
 extern char D_004D9180[];
 Svc* Service_Lookup(void* a, void* b);
 void Event_Construct(void* m, void* type);
@@ -61,7 +61,7 @@ Item* WeaponInv_GetHeldItem(int inv);
 extern "C" unsigned char Player_AimViewThrownPoint(V* out, Obj* obj, Plr* p)
 {
     M m = SubMtx(obj->sub);
-    char* hud = D_004FFC2C;
+    char* hud = g_Hud;
     Hud_SetLockMeter(hud, 0.0f);
     V a;
     unsigned char r = 0;
@@ -76,7 +76,7 @@ extern "C" unsigned char Player_AimViewThrownPoint(V* out, Obj* obj, Plr* p)
     V dir = m.r1 * range;
     RayMsg* mp = &msg;
     V* st = &m.t;
-    Event_Construct(mp, D_005435A0);
+    Event_Construct(mp, g_LosRequestMsgClass);
     mp->vt = D_004D9180;
     mp->f24 = 0;
     mp->f28 = 0;
@@ -89,7 +89,7 @@ extern "C" unsigned char Player_AimViewThrownPoint(V* out, Obj* obj, Plr* p)
     mp->b5C = 0;
     mp->start.w = 1.0f;
     mp->end.w = 0.0f;
-    Service_Lookup(D_004FFB50, D_004EA0B0)->Send(&msg);
+    Service_Lookup(g_Game, g_LosCheckService)->Send(&msg);
     b.x = 0.0f; b.y = range; b.z = 0.0f; b.w = 1.0f;
     MulV(&b, &m);
     if (res.hit) {
@@ -156,12 +156,12 @@ extern "C" Hit_249B10* PlayerInput_AimViewLock(int a0, int a1, Pl_249B10* p)
     r = Flashlight_BeamProbe(p, &pr, 0x10);
     if (pr.hit && !TeamTable_AreEnemies(p, pr.hit)) {
         pr.kind = 0;
-        Hud_ShowNoFire(D_004FFC2C);
+        Hud_ShowNoFire(g_Hud);
     } else {
-        Hud_HideNoFire(D_004FFC2C);
+        Hud_HideNoFire(g_Hud);
     }
     show = pr.kind == 2 && !IsKind23(pr.hit);
-    h = D_004FFC2C;
+    h = g_Hud;
     if (pr.kind == 0)
         Hud_SetLockMeter(h, 1.0f);
     else
@@ -186,7 +186,7 @@ typedef struct { char pad[0x38]; int state; char pad3C[0x24]; float v60[4]; char
 typedef struct { float x; float y; } QtIn;
 typedef struct { char pad[0xDC]; unsigned char busy; } QtSub;
 typedef struct { char pad[0x320C]; int mode; char pad3210[0x100]; QtSub* sub; } QtPl;
-extern char D_0055D480[];
+extern char g_ActorActionMsgClass[];
 extern char D_004E0840[];
 extern float D_004A7580;
 #if 0 /* merge_units */
@@ -222,7 +222,7 @@ extern "C" void Player_UpdateQuickTurn(QtState* q, QtIn* in, float dt, QtPl* pl,
         } else if (!(in->y < 0.0f) && in->y < 0.5f) {
             if (!(q->t <= 0.0f) && q->t <= D_004A7580 && q->flag && pl->mode != 3) {
                 QtMsg msg;
-                Event_Construct(&msg, D_0055D480);
+                Event_Construct(&msg, g_ActorActionMsgClass);
                 msg.vtable = D_004E0840;
                 msg.kind = 0xE;
                 msg.b = 0;
@@ -283,8 +283,8 @@ extern void cMessage_dtor(Msg_00249F40* msg, int flags);
 
 extern int PlayerInput_ZoneEnteredThisFrame(In_00249F40* in);
 extern int PlayerInput_CrouchToggle(In_00249F40* in, Pl_00249F40* p);
-#define SENDB(V) { Msg_00249F40 msg; Event_Construct(&msg, D_0055D480); msg.vtable = D_004E0840; msg.value = V; msg.b20 = 1; msg.b28 = 0; Event_Send(&msg, p, 1); msg.vtable = D_004E0840; cMessage_dtor(&msg, 0); }
-#define SEND(V) { Msg_00249F40 msg; Event_Construct(&msg, D_0055D480); msg.vtable = D_004E0840; msg.b20 = 1; msg.value = V; msg.b28 = 0; Event_Send(&msg, p, 1); msg.vtable = D_004E0840; cMessage_dtor(&msg, 0); }
+#define SENDB(V) { Msg_00249F40 msg; Event_Construct(&msg, g_ActorActionMsgClass); msg.vtable = D_004E0840; msg.value = V; msg.b20 = 1; msg.b28 = 0; Event_Send(&msg, p, 1); msg.vtable = D_004E0840; cMessage_dtor(&msg, 0); }
+#define SEND(V) { Msg_00249F40 msg; Event_Construct(&msg, g_ActorActionMsgClass); msg.vtable = D_004E0840; msg.b20 = 1; msg.value = V; msg.b28 = 0; Event_Send(&msg, p, 1); msg.vtable = D_004E0840; cMessage_dtor(&msg, 0); }
 void PlayerInput_HandleCross(In_00249F40* in, Pl_00249F40* p, float v)
 {
     int t = 1;
@@ -354,7 +354,7 @@ struct St_24A1C0 {
 extern "C" {
 extern char D_004D9320[];
 extern unsigned char D_0048AEC8;
-extern int D_004FFBD0;
+extern int g_HotboxTracker;
 #if 0 /* merge_units */
 void Event_Construct(Msg_24A1C0* m, void* type);
 #endif /* merge_units */
@@ -404,7 +404,7 @@ extern "C" void PlayerInput_HandleTriangle(St_24A1C0* s, Pl_24A1C0* p, float v)
     if (edge) {
         int k = s->x138 ? 0x2D : 0x2C;
         Msg_24A1C0 m;
-        Event_Construct(&m, D_0055D480);
+        Event_Construct(&m, g_ActorActionMsgClass);
         m.x20 = 1;
         m.kind = (signed char)k;
         m.b = 0;
@@ -414,7 +414,7 @@ extern "C" void PlayerInput_HandleTriangle(St_24A1C0* s, Pl_24A1C0* p, float v)
         cMessage_dtor(&m, 0);
         if (p->mode == 0x14) {
             Msg2_24A1C0 m2x;
-            Event_Construct(&m2x.base, D_0055D480);
+            Event_Construct(&m2x.base, g_ActorActionMsgClass);
             m2x.base.kind = 0x28;
             m2x.base.b = 1;
             m2x.base.vtable = D_004D9320;
@@ -429,7 +429,7 @@ extern "C" void PlayerInput_HandleTriangle(St_24A1C0* s, Pl_24A1C0* p, float v)
     }
     if (edge && !Busy_(p) && !IsKind23_0024A1C0(p)) {
         int mode = p->mode;
-        if ((mode == 0 || mode == 0x11 || mode == 0x12) && Actor_TryObjectInteraction(D_004FFBD0, p, 1, 0)) {
+        if ((mode == 0 || mode == 0x11 || mode == 0x12) && Actor_TryObjectInteraction(g_HotboxTracker, p, 1, 0)) {
             int i;
             s->x12C = 1;
             s->xC8 = 0;
@@ -450,7 +450,7 @@ extern "C" void PlayerInput_HandleTriangle(St_24A1C0* s, Pl_24A1C0* p, float v)
     if (pressed) {
         {
             Msg_24A1C0 m3;
-            Event_Construct(&m3, D_0055D480);
+            Event_Construct(&m3, g_ActorActionMsgClass);
             m3.x20 = 1;
             m3.vtable = D_004E0840;
             m3.kind = 0xF;
@@ -461,7 +461,7 @@ extern "C" void PlayerInput_HandleTriangle(St_24A1C0* s, Pl_24A1C0* p, float v)
         }
         {
             Msg_24A1C0 m4;
-            Event_Construct(&m4, D_0055D480);
+            Event_Construct(&m4, g_ActorActionMsgClass);
             m4.vtable = D_004E0840;
             m4.kind = 0x1B;
             m4.x20 = 1;

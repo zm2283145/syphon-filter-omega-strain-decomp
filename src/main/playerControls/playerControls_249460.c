@@ -79,7 +79,7 @@ static inline void merge_flush_func_00249530(void) {}
 #pragma push /* merge_units */
 typedef struct { char p[0xC]; int id; } Obj249580;
 typedef struct { void* vtable; char base[0x1C]; unsigned char b20; char p21[3]; int f24; unsigned char b28; char p29[3]; int f2C; } Msg249580;
-extern char D_0055D480[];
+extern char g_ActorActionMsgClass[];
 extern char D_004E01A0[];
 extern char D_004E0840[];
 void Event_Construct(void* m, void* type);
@@ -89,7 +89,7 @@ void PlayerInput_LookAtLockAction(void* self, Obj249580* o, void* target) {
     if (o) {
         Msg249580 m;
         int id = o->id;
-        Event_Construct(&m, D_0055D480);
+        Event_Construct(&m, g_ActorActionMsgClass);
         m.f24 = 0x3E;
 m.b28 = 5;
 m.vtable = D_004E01A0;
@@ -100,7 +100,7 @@ m.f2C = id;
         cMessage_dtor(&m, 0);
     } else {
         Msg249580 m;
-        Event_Construct(&m, D_0055D480);
+        Event_Construct(&m, g_ActorActionMsgClass);
         m.vtable = D_004E0840;
         m.f24 = 0x3F;
         m.b20 = 1;

@@ -6,11 +6,11 @@
 #include "types.h"
 #include "weapon_types.h"
 
-extern signed char D_00489D60[];
+extern signed char WeaponClassToSlot[];
 
-/* Maps a weapon id through definition byte +0x30 and the D_00489D60 table. */
+/* Maps a weapon id through definition byte +0x30 and the WeaponClassToSlot table. */
 int WeaponInv_SlotOfItem(int id) {
-    WeaponDef* def = WeaponDb_Get(D_004FFD30, id);
+    WeaponDef* def = WeaponDb_Get(g_WeaponDatabase, id);
 
-    return D_00489D60[def->unk30];
+    return WeaponClassToSlot[def->unk30];
 }

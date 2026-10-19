@@ -39,15 +39,15 @@ extern "C" {
 typedef struct Hud { char pad[0x14]; unsigned short flags; } Hud;
 typedef struct Self { char pad[0x80]; int x80; char pad84[0x8D4]; Hud* hud; char* fmt; } Self;
 typedef struct Tbl { char pad[0xF8]; int t[1][4]; } Tbl;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005721C0;
 extern unsigned char D_005723F8;
 extern unsigned char D_00506518[];
 extern int D_00506508;
 extern float D_00506510;
 extern char D_0048BAA0[][8];
-extern Tbl D_0055DDA0;
-extern char D_004FFB50[];
+extern Tbl g_AgentPartCache;
+extern char g_Game[];
 extern char D_004DAE10[];
 extern void GuiWidget_Update(Self*, float);
 extern Ent* PlayerSlots_Get(int);
@@ -80,7 +80,7 @@ extern "C" void func_002C03C0(Self* self, float dt) {
     Ent* e;
     int i;
     GuiWidget_Update(self, dt);
-    if (!D_005721C8) return;
+    if (!g_IsMultiplayer) return;
     for (i = 0; i < 4; i++) {
         e = PlayerSlots_Get(i);
         if (!e) continue;
@@ -98,14 +98,14 @@ extern "C" void func_002C03C0(Self* self, float dt) {
         if (D_00506518[i]) continue;
         D_00506518[i] = 1;
         if (self->x80) {
-            int a = D_0055DDA0.t[Appearance_GetBodyKind(e->xA0)][i];
+            int a = g_AgentPartCache.t[Appearance_GetBodyKind(e->xA0)][i];
             if (a) func_00391020(e->x60, a);
         }
         if (i != 0) {
             SoundRequest_Ctor(&req, 4, D_0048BAA0[i], 0, 0);
             func_0020F190(&msg, &req, e);
             msg.flag = 1;
-            Event_Send(&msg, D_004FFB50, 0);
+            Event_Send(&msg, g_Game, 0);
             msg.vtbl = D_004DAE10;
             SoundMsg* m = &msg;
             if (m->payload) {
@@ -116,13 +116,13 @@ extern "C" void func_002C03C0(Self* self, float dt) {
             FileMan_Release(req.partB, -1);
             FileMan_Release(req.partA, -1);
         }
-        Game_NetSendPauseState(D_004FFB50, 0, 0);
+        Game_NetSendPauseState(g_Game, 0, 0);
     }
     if (D_00506508) {
         D_00506510 += dt;
         sprintf(buf, self->fmt, 10 - (int)(D_00506510 / 30.0f));
         if (self->hud) GuiTextWidget_SetText(self->hud, buf, 0);
-        if ((D_005721C8 ? D_005721C0 : 1) && !(D_00506510 <= 300.0f)) DME_SendPlayGameMsg();
+        if ((g_IsMultiplayer ? D_005721C0 : 1) && !(D_00506510 <= 300.0f)) DME_SendPlayGameMsg();
     }
 }
 #undef FileMan_Release /* merge_units */

@@ -12,7 +12,7 @@
 #pragma push /* merge_units */
 typedef struct { int a; int id; int b; int count; } S141240;
 typedef struct { char pad[0xF0]; unsigned char kind; } W141240;
-extern void* D_004FFD30;
+extern void* g_WeaponDatabase;
 extern W141240* WeaponDb_Get(void*, int);
 extern int WeaponInv_IsReadyToFire(void*, int);
 int Weapon_CanAttack(char* self) {
@@ -20,7 +20,7 @@ int Weapon_CanAttack(char* self) {
     S141240* s;
     if (i != 6) {
         s = (S141240*)(self + (i << 4) + 4);
-        switch (WeaponDb_Get(D_004FFD30, s->id)->kind) {
+        switch (WeaponDb_Get(g_WeaponDatabase, s->id)->kind) {
         case 0: case 8: case 9:
             return WeaponInv_IsReadyToFire(self, 0);
         case 1: case 7:
@@ -51,10 +51,10 @@ struct Own_1300 { char pad[0x14]; unsigned char f14; char pad15[0x43]; R_1300* r
 struct W_1300 { char pad[0x48]; unsigned char kind; char pad49[0xA7]; unsigned char fF0; };
 struct S_1300 { int pad0; Slot_1300 slots[8]; unsigned char cur; char pad85[3]; Own_1300* own; };
 extern "C" {
-extern char D_0055D480[];
+extern char g_ActorActionMsgClass[];
 extern char D_004E0840[];
 extern char D_004DAE30[];
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_004F27F0[];
 extern char D_004F2990[];
 extern char D_004F2B30[];
@@ -75,10 +75,10 @@ extern "C" int Weapon_DryFire(S_1300* self)
     Ev_1300 e;
     if (self->cur != 6) {
         Slot_1300* s = &self->slots[self->cur];
-        W_1300* w = WeaponDb_Get(D_004FFD30, s->id);
+        W_1300* w = WeaponDb_Get(g_WeaponDatabase, s->id);
         if (!w->fF0 && !s->f8) {
             if (s->count > 0) {
-                Event_Construct(&e, D_0055D480);
+                Event_Construct(&e, g_ActorActionMsgClass);
                 e.f28 = 0;
                 e.vt = D_004E0840;
                 e.id = 0x3C;
@@ -108,7 +108,7 @@ extern "C" int Weapon_DryFire(S_1300* self)
                     if (preset) {
                         SoundEvent_CtorFromPreset(&se, preset, self->own);
                         se.f20 = 1;
-                        Event_Send(&se, D_004FFB50, 0);
+                        Event_Send(&se, g_Game, 0);
                         se.vt = D_004DAE30;
                         FileMan_Release(se.f114, -1);
                         FileMan_Release(se.f78, -1);

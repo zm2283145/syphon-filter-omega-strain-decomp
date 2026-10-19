@@ -16,7 +16,7 @@ struct Obj_23FD00 {
     char m1A4[0x10];
 };
 extern "C" {
-extern char D_004DC050[];
+extern char cNIEventOBJ_vtable[];
 extern char D_004DC190[];
 void Mem_Free(int pool, void* p, char* file, int line);
 void func_00239370(void* p, int f);
@@ -45,7 +45,7 @@ extern "C" Obj_23FD00* cNIEventOBJ_dtor(Obj_23FD00* l, short flag)
 {
     if (l) {
         VObj_23FD00* o;
-        l->vt = D_004DC050;
+        l->vt = cNIEventOBJ_vtable;
         o = l->obj;
         if (o) {
             AllocGuard g;

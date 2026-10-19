@@ -13,8 +13,8 @@ int strlen(int);
 extern char D_004A6698;
 extern char D_004DB8D0;
 extern char D_004F7930;
-extern unsigned char D_00533880;
-extern int D_00533888;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
 
 void Global_SetCheckpoint(char * arg0, int arg1, int arg2) {
     struct { char * f50[9]; int f74; int f78[2]; } sl;
@@ -22,15 +22,15 @@ void Global_SetCheckpoint(char * arg0, int arg1, int arg2) {
     int temp_s0_2;
 
     temp_s0 = strlen(arg2) + 1;
-    if (D_00533880 != 0) {
+    if (g_ProfileLockEnabled != 0) {
         Alloc_Lock(9);
     }
-    D_00533888 += 1;
+    g_ProfileLockDepth += 1;
     temp_s0_2 = Mem_Alloc(0, temp_s0, &D_004A6698, 0x1D6);
-    if (D_00533880 != 0) {
+    if (g_ProfileLockEnabled != 0) {
         Alloc_Unlock(9);
     }
-    D_00533888 -= 1;
+    g_ProfileLockDepth -= 1;
     String_Copy(temp_s0_2, arg2);
     Event_Construct(sl.f50, &D_004F7930);
     sl.f74 = arg1;

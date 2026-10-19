@@ -64,8 +64,8 @@ int Alloc_Unlock(int);
 int Mem_Alloc(int, int, char *, int);
 int MotionManager_Ctor(int, char *, char *);             /* MotionManager ctor (compare, allocator) */
 extern char D_004BEDD0;                             /* "motionManager.cc" */
-extern unsigned char D_00533880;                    /* allocator locking enabled */
-extern int D_00533888;                              /* allocation guard depth */
+extern unsigned char g_ProfileLockEnabled;                    /* allocator locking enabled */
+extern int g_ProfileLockDepth;                              /* allocation guard depth */
 
 /* Create the motion manager once (an inlined AllocGuard wraps the allocation). */
 void MotionManager_Init(void) {
@@ -73,15 +73,15 @@ void MotionManager_Init(void) {
     int mgr;
 
     if (g_MotionManager == 0) {
-        if (D_00533880 != 0) {
+        if (g_ProfileLockEnabled != 0) {
             Alloc_Lock(9);
         }
-        D_00533888 += 1;
+        g_ProfileLockDepth += 1;
         mgr = Mem_Alloc(0, sizeof(MotionManager), &D_004BEDD0, 0x20);
-        if (D_00533880 != 0) {
+        if (g_ProfileLockEnabled != 0) {
             Alloc_Unlock(9);
         }
-        D_00533888 -= 1;
+        g_ProfileLockDepth -= 1;
         if (mgr != 0) {
             MotionManager_Ctor(mgr, (char *)sl.less, (char *)&sl.alloc);
         }

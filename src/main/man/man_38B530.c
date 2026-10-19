@@ -50,7 +50,7 @@ typedef struct {
 extern GripTab_38B530 D_00571510[];
 extern u8 D_0053B340[];
 extern u8 D_0053B348[];
-extern char D_00493360[], D_00493380[], D_004933A0[];
+extern char g_MorphCurveGrip[], g_MorphCurveActive[], g_MorphCurvePeriodic[];
 #if 0 /* merge_units */
 extern float KeyTrack_Sample(int frame, char* track);
 #endif /* merge_units */
@@ -75,7 +75,7 @@ void Equip_UpdateGrip(Equip_38B530* e)
                 e->w0 = 0.0f;
             }
         }
-        f = KeyTrack_Sample(e->s0, D_00493360);
+        f = KeyTrack_Sample(e->s0, g_MorphCurveGrip);
         e->w0 = f;
         e->w0b = 1.0f - f;
     }
@@ -91,7 +91,7 @@ void Equip_UpdateGrip(Equip_38B530* e)
                 e->w1 = 0.0f;
             }
         }
-        f = KeyTrack_Sample(e->s1, D_00493360);
+        f = KeyTrack_Sample(e->s1, g_MorphCurveGrip);
         e->w1 = f;
         e->w1b = 1.0f - f;
     }
@@ -103,7 +103,7 @@ void Equip_UpdateGrip(Equip_38B530* e)
         }
         if (e->count < 8) {
             e->ids[e->count] = D_0053B340[e->type];
-            e->vals[e->count] = KeyTrack_Sample(e->s2, D_00493380);
+            e->vals[e->count] = KeyTrack_Sample(e->s2, g_MorphCurveActive);
             if (!e->vals[e->count]) {
             } else {
                 e->count++;
@@ -120,7 +120,7 @@ void Equip_UpdateGrip(Equip_38B530* e)
         }
         if (e->count < 8) {
             e->ids[e->count] = D_0053B348[e->type];
-            e->vals[e->count] = KeyTrack_Sample(e->timer, D_004933A0);
+            e->vals[e->count] = KeyTrack_Sample(e->timer, g_MorphCurvePeriodic);
             if (!e->vals[e->count]) {
             } else {
                 e->count++;

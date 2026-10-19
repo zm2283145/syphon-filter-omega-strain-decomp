@@ -99,7 +99,7 @@ typedef struct {
     unsigned char count; /* 0x26 */
     unsigned char added; /* 0x27 */
 } InvMsg_h5;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern char D_00587FC0[];
 extern void Message_GetScriptTypeKey();
 extern void cNetInventoryMsg_dtor();
@@ -127,7 +127,7 @@ int ItemInv_Remove(Inventory_h5* inv, int item, int n, int silent)
                 removed = inv->data[i].count;
                 inv->data[i].count = 0;
             }
-            if (D_005721C8 && !silent) {
+            if (g_IsMultiplayer && !silent) {
                 InvMsg_h5 msg;
                 Event_Construct(&msg, D_00587FC0);
                 msg.vtable = ((char*)D_004E1AC0);

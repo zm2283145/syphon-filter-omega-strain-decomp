@@ -6,7 +6,7 @@ extern char BlindDuration, BlindNVFactor;
 extern char func_0017EFC0[], func_0025DA40[];
 extern int D_004F8020, D_004F8028;
 extern signed char D_004EA0C8;
-extern char* D_004EA0B0;
+extern char* g_LosCheckService;
 extern void func_00219DF0(void* p);
 extern void func_0025DBC0(void* p, int n);
 extern void func_0025DBA0(void* p);
@@ -37,7 +37,7 @@ void func_004D0190(void)
         __register_global_object(o, func_0025DA40, D_004F8030);
     }
     if (!D_004EA0C8) {
-        D_004EA0B0 = "LOS Manager";
+        g_LosCheckService = "LOS Manager";
         D_004EA0C8 = 1;
     }
 }

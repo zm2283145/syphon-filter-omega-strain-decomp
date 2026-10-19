@@ -50,13 +50,13 @@ struct VUM_21ADD0 {
     GObj_21ADD0* owner;
 };
 extern "C" {
-extern char D_004F5468[];
+extern char g_GameGobjClassWord[];
 extern char D_004DB4C0[];
 extern char D_004A4638[];
 extern char D_004A4640[];
 extern char D_0049C088[];
 extern char D_004A4550[];
-extern char D_004FFB50[];
+extern char g_Game[];
 void cGOBJ_ctor(GObj_21ADD0* o, int* id, int kind, void* info);
 void PtrVec_InitEmpty(Rel_21ADD0* r);
 void func_0021B770(Rel_21ADD0* r);
@@ -109,7 +109,7 @@ static inline void* New_21ADD0(int size, char* file, int line)
 static inline int ObjId_21ADD0(void)
 {
     int id;
-    int ok = D_005721C8 ? D_005721C0 : 1;
+    int ok = g_IsMultiplayer ? D_005721C0 : 1;
     if (ok) {
         id = NetLocalId();
     } else {
@@ -129,7 +129,7 @@ static inline Name_21ADD0* NewName_21ADD0(void)
     }
     return p;
 }
-static inline int IsAuth_21ADD0(void) { return D_005721C8 ? D_005721C0 : 1; }
+static inline int IsAuth_21ADD0(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
 extern "C" GObj_21ADD0* cGameGOBJ_ctor(GObj_21ADD0* self, int arg, Reader_21ADD0* r, int kind)
 {
     int got;
@@ -151,7 +151,7 @@ extern "C" GObj_21ADD0* cGameGOBJ_ctor(GObj_21ADD0* self, int arg, Reader_21ADD0
     int i;
     int j;
     gid = -1;
-    cGOBJ_ctor(self, &gid, 0xF, D_004F5468);
+    cGOBJ_ctor(self, &gid, 0xF, g_GameGobjClassWord);
     *(void**)self = D_004DB4C0;
     {
         RelFlag_21ADD0* rf = &self->r74;
@@ -215,7 +215,7 @@ self->name18 = NewName_21ADD0();
     if (self->b60 && FileMan_FindMember(&e) == 0) {
         unsigned char have;
         got = 0;
-        have = Game_FindNamedResource(D_004FFB50, s, &got);
+        have = Game_FindNamedResource(g_Game, s, &got);
         {
             VUM_21ADD0* v = (VUM_21ADD0*)New_21ADD0(0x1F4, D_004A4550, 0xBC);
             if (v) {
@@ -226,7 +226,7 @@ self->name18 = NewName_21ADD0();
         }
         self->vum->owner = self;
         if (!have)
-            func_00130D10(D_004FFB50, self->vum, s, 0);
+            func_00130D10(g_Game, self->vum, s, 0);
         ld.a = &e;
         ld.b = &e;
         ld.c = got;
@@ -253,7 +253,7 @@ self->name18 = NewName_21ADD0();
         }
     }
     self->f6C = 0;
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         if (!IsAuth_21ADD0())
             self->b14 = 0;
         int id = self->id10;

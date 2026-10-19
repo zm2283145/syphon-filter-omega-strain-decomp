@@ -47,9 +47,9 @@ struct Pred_A890 {
 };
 
 extern "C" {
-extern unsigned char D_005721C8;
-extern PtrVec D_004EA370;
-extern Tree D_004EA190;
+extern unsigned char g_IsMultiplayer;
+extern PtrVec g_NpcDeadList;
+extern Tree g_NpcThinkList;
 
 extern void NetEvent_Send(Actor_A890* actor, int id, int size, unsigned char value, int a, int b, int c);
 extern void NpcThinkList_Add(Actor_A890* actor);
@@ -92,7 +92,7 @@ extern "C" void cNPC_v73(cNPC_A890* self, char on, int send)
     unsigned char state;
 
     self->actor->unk3468 = on;
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         self->inactive = !on;
         if (send) {
             NetEvent_Send(self->actor, 0x21, 4, on, 0, 0, 0);
@@ -107,29 +107,29 @@ extern "C" void cNPC_v73(cNPC_A890* self, char on, int send)
     }
     if (on) {
         func_0014AC80(&it);
-        func_0014AC70(&b, &D_004EA370);
+        func_0014AC70(&b, &g_NpcDeadList);
         func_0014AC60(&it, &b);
-        func_0014AC20(&end, &D_004EA370);
+        func_0014AC20(&end, &g_NpcDeadList);
         while (func_0014AC00(&it, &end)) {
             if (*func_0014AC50(&it) == self) {
                 break;
             }
             func_0014AC30(&it);
-            func_0014AC20(&end, &D_004EA370);
+            func_0014AC20(&end, &g_NpcDeadList);
         }
         func_0014ABF0(&w4, (Word*)&it);
         x = w4.value;
-        func_0014ABE0(&end2, &D_004EA370);
+        func_0014ABE0(&end2, &g_NpcDeadList);
         func_0014ABD0(&w3, (Word*)&end2);
         if (x != w3.value) {
             NpcThinkList_Add(self->actor);
-            ActiveList_EraseMatching(&D_004EA370, Pred_A890(e, &self));
+            ActiveList_EraseMatching(&g_NpcDeadList, Pred_A890(e, &self));
         }
     } else {
-        List_Begin(&b2, &D_004EA190);
+        List_Begin(&b2, &g_NpcThinkList);
         func_0014ABC0(&w1, (Word*)&b2);
         n = (Node_A890*)w1.value;
-        func_0014AB80(&end3, &D_004EA190);
+        func_0014AB80(&end3, &g_NpcThinkList);
         func_0014AB70(&w2, (Word*)&end3);
         while (n != (Node_A890*)w2.value) {
             Actor_A890* actor = self->actor;
@@ -145,11 +145,11 @@ extern "C" void cNPC_v73(cNPC_A890* self, char on, int send)
             }
             if ((Actor_A890*)(valid ? o : 0) == actor) {
                 NpcThinkList_RemoveActor(actor);
-                NpcAi_AddToDeadList(&D_004EA370, &self);
+                NpcAi_AddToDeadList(&g_NpcDeadList, &self);
                 return;
             }
             n = n->next;
-            func_0014AB80(&end3, &D_004EA190);
+            func_0014AB80(&end3, &g_NpcThinkList);
             func_0014AB70(&w2, (Word*)&end3);
         }
     }

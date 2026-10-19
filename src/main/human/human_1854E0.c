@@ -24,7 +24,7 @@ DEFINE_VTABLE2_BASE_DTOR(cNetForceHolsterMsg_dtor, D_004DA9B0, D_004DCF10, cMess
 #pragma push /* merge_units */
 typedef struct { char pad[0x4C]; int classKey; char pad50[0x3524 - 0x50]; void* weapons; } G_185550;
 typedef union { int i; unsigned char b; } A_185550;
-extern int D_0049D010;
+extern int g_HumanActorClassKey;
 extern G_185550* GObj_IdentityB(int handle);
 extern void Global_SetHardpointVis(void* w, unsigned char hp, unsigned char vis);
 int Script_SetHardpointVis(A_185550* args)
@@ -32,7 +32,7 @@ int Script_SetHardpointVis(A_185550* args)
     unsigned char vis = args[2].i != 0;
     unsigned char hp = args[1].b;
     G_185550* g = GObj_IdentityB(args[0].i);
-    if (g && g->classKey == D_0049D010) Global_SetHardpointVis(g->weapons, hp, vis);
+    if (g && g->classKey == g_HumanActorClassKey) Global_SetHardpointVis(g->weapons, hp, vis);
     return 0;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -55,7 +55,7 @@ int Script_GetActiveWeapon(int* args)
     volatile int r;
     G_1855C0* g = GObj_IdentityB(args[0]);
     int v = -1;
-    if (g && g->classKey == D_0049D010) {
+    if (g && g->classKey == g_HumanActorClassKey) {
         W_1855C0* w = g->weapons;
         v = (w->cur != 6) ? w->s[w->cur].id : -1;
     }

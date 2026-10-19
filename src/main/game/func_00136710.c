@@ -12,7 +12,7 @@ int func_0040E4C0(...);
 extern char D_0049A890;
 extern unsigned char D_004E9FF0;
 extern char D_00555070;
-extern char D_0055A830;
+extern char g_MemCard;
 }
 
 extern "C" void Awards_Init(char * arg0) {
@@ -24,7 +24,7 @@ extern "C" void Awards_Init(char * arg0) {
     if (D_004E9FF0 == 0) {
         D_004E9FF0 = 1;
         WeaponDb_Load(F_(arg0, 0x1E0, int));
-        func_0040E4C0(&D_0055A830);
+        func_0040E4C0(&g_MemCard);
         ScriptMgr_CallFunction(&D_00555070, "awards::init", 0);
         var_s1 = 0;
         var_s0 = arg0;
@@ -41,6 +41,6 @@ extern "C" void Awards_Init(char * arg0) {
             var_s0 += 4;
         } while (var_s1 < 4);
     }
-    var_a2 = D_005721C8 ? NetLocalId() : 0;
+    var_a2 = g_IsMultiplayer ? NetLocalId() : 0;
     { int cur = F_(arg0, 0x1D8, int); if (var_a2 != cur) { int* pa = (int*)(arg0 + 0x1C8) + cur; int* pb = (int*)(arg0 + 0x1C8) + var_a2; int t = *pa; *pa = *pb; *pb = t; *(int*)(arg0 + 0x1D8) = var_a2; } }
 }

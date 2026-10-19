@@ -121,9 +121,9 @@ extern char D_004BA0A0[];
 extern char D_004BA0B8[];
 extern char D_004BA0C8[];
 extern char D_004B9F80[];
-extern char D_0055C9F0[];
-extern char D_0055DDA0[];
-extern char D_004FFB50[];
+extern char g_IdentityMatrix[];
+extern char g_AgentPartCache[];
+extern char g_Game[];
 extern Blk_E10 D_0055D510[];
 extern void* D_004F77A0;
 extern char D_00492900[2][16][8];
@@ -319,7 +319,7 @@ extern "C" Self_E10* GuiAgentModify_ctor(Self_E10* p0)
             *(char**)p = D_004DA470;
             ((int*)p)[0x60 / 4] = 0;
             ((int*)p)[0x64 / 4] = 0;
-            Object_AttachTransform(p, D_0055C9F0, 0);
+            Object_AttachTransform(p, g_IdentityMatrix, 0);
             ((int*)p)[0x30 / 4] = 0;
         }
         self->f90 = p;
@@ -426,8 +426,8 @@ extern "C" Self_E10* GuiAgentModify_ctor(Self_E10* p0)
     }
     self->f10D = D_00492A01[self->f10F].slot;
     self->f10E = D_00492A00[self->f10F].mode;
-    self->f100 = AgentPartCache_FindMesh(D_0055DDA0, MANP_E10(self->model)->e[self->f10D].a);
-    self->f104 = AgentPartCache_FindTexture(D_0055DDA0, MANP_E10(self->model)->e[self->f10D].b);
+    self->f100 = AgentPartCache_FindMesh(g_AgentPartCache, MANP_E10(self->model)->e[self->f10D].a);
+    self->f104 = AgentPartCache_FindTexture(g_AgentPartCache, MANP_E10(self->model)->e[self->f10D].b);
     GuiAgentModify_Refresh(self);
     self->fE0 = 0;
     self->name = D_0056F9B0.name;
@@ -443,8 +443,8 @@ extern "C" Self_E10* GuiAgentModify_ctor(Self_E10* p0)
         Aw_E10* pa = &a;
         func_002888C0(pa);
         pa->bC = 1;
-        AgentData_FilterAwards(Agent_GetSelected(D_004FFB50, -1), pa);
-        AgentPartCache_Lock(D_0055DDA0, pa);
+        AgentData_FilterAwards(Agent_GetSelected(g_Game, -1), pa);
+        AgentPartCache_Lock(g_AgentPartCache, pa);
         func_002887C0(pa, -1);
     }
     return self;

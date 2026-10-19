@@ -14,7 +14,7 @@ typedef struct SoundMsg {
 } SoundMsg; /* size 0x1C0 */
 typedef struct { char pad[0x14]; unsigned short flags; char pad16[0x78 - 0x16]; int x78; } Sub_5CE10;
 typedef struct { char pad[0x68]; Sub_5CE10* sub; } Scr_5CE10;
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_004DAE10[];
 extern char D_004C21F8[];
 extern char* Loc_LookupText(char* key);
@@ -46,7 +46,7 @@ void GuiGameScreen_ShowSubtitle(Scr_5CE10* self, char* name, int unused, int sou
         FileMan_Release(req.partB, -1);
         FileMan_Release(req.partA, -1);
         msg.flag = 1;
-        Event_Send(&msg, D_004FFB50, 1);
+        Event_Send(&msg, g_Game, 1);
         msg.vtbl = D_004DAE10;
         FileMan_Release(msg.partB, -1);
         FileMan_Release(msg.partA, -1);

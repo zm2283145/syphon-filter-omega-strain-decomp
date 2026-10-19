@@ -15,7 +15,7 @@ int sprintf(void *, const void *, ...);
 #pragma push /* merge_units */
 typedef struct { char pad[0x24C]; int textIndex; } Ctx9070;
 typedef struct { char pad[0x35]; unsigned char enabled; } Obj9070;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern Ctx9070* D_004FFC04;
 extern char D_004ACBE8[];
 extern char D_004ACBF8[];
@@ -27,7 +27,7 @@ char* App_GetAgentNameGate(Obj9070* o)
 {
     int i;
     char* key;
-    if (o->enabled && !D_005721C8) {
+    if (o->enabled && !g_IsMultiplayer) {
         i = D_004FFC04->textIndex;
         if (i != -1) {
             key = ((char**)dat_0048C1B0)[i];
@@ -68,7 +68,7 @@ extern "C" void Hud_FormatPlayerCalloutName(int a, int key, int c)
         int k;
         if (!o)
             continue;
-        if (D_005721C8) {
+        if (g_IsMultiplayer) {
             unsigned char has = 0;
             if (o->ctl && o->ctl->isTeamed())
                 has = 1;
@@ -97,7 +97,7 @@ static inline void merge_flush_func_002C9170(void) {}
 extern void* Player_GetAgentData(int id);
 extern char* AgentData_GetName(void* p);
 extern char* Game_GetPlayerNameSlot(void* tbl, int id);
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_004ACF28[];
 
 typedef struct {
@@ -135,7 +135,7 @@ void Hud_AppendCalloutName(char* buf, int id, int nameId, int newline)
         Append(buf, AgentData_GetName(Player_GetAgentData(id)));
     }
     c = newline ? '\n' : ' ';
-    sprintf(tmp, D_004ACF28, (char)c, 0x11, Game_GetPlayerNameSlot(D_004FFB50, nameId), 0x10);
+    sprintf(tmp, D_004ACF28, (char)c, 0x11, Game_GetPlayerNameSlot(g_Game, nameId), 0x10);
     Append(buf, tmp);
 }
 /* merge_units: generate this block's code under its own pragmas */

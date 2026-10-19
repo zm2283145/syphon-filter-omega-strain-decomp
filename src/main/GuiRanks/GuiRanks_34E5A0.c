@@ -9,7 +9,7 @@ typedef struct { void* vt; char f4[0x44]; void* f48; char pad[0x18]; int f64; } 
 typedef struct { char pad[0x25C]; int f25c; } G34E5;
 extern "C" {
 extern int GuiTextListWidget_GetItemId(void*);
-extern char D_004FFB50[];
+extern char g_Game[];
 extern A34E5* Agent_GetSelected(char*, int);
 extern int Gui_GetScreenStack(void);
 extern void GuiWidget_SendEvent(O34E5*, int, int, int, int);
@@ -32,7 +32,7 @@ extern "C" void GuiRanks_Select(O34E5* o, int idx) {
     void* w;
     int x;
     if (sel == -1) return;
-    if (!(Agent_GetSelected(D_004FFB50, -1)->fb50->f4 < sel)) {
+    if (!(Agent_GetSelected(g_Game, -1)->fb50->f4 < sel)) {
     GuiWidget_SendEvent(o, Gui_GetScreenStack(), 0x10, 1, 0);
     w = GuiManager_FindOrLoad(Gui_GetScreenList(), "GuiSlideShow", "ZEUSHELL");
     if (!w) return;
@@ -45,7 +45,7 @@ extern "C" void GuiRanks_Select(O34E5* o, int idx) {
     sprintf(buf, "0_%d_%d.tdx", o->f64, sel + 1);
     {
         T34E5* tab;
-        Agent_GetSelected(D_004FFB50, -1);
+        Agent_GetSelected(g_Game, -1);
         tab = func_0034E760();
         GuiSlideShow_AddSlide(w, x, buf, D_004FFC04->f25c, tab->f8[sel].f10);
     }

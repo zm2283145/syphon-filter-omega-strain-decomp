@@ -51,10 +51,10 @@ struct Npc {
 };
 
 extern "C" {
-extern char D_0055D480[], D_004E0840[], D_004E0140[], D_004E01A0[], D_004D9320[];
-extern unsigned char D_005721C8;
+extern char g_ActorActionMsgClass[], D_004E0840[], D_004E0140[], D_004E01A0[], D_004D9320[];
+extern unsigned char g_IsMultiplayer;
 extern unsigned char D_00489DE0, D_00489DE8;
-extern int D_0049D010, D_004EA770;
+extern int g_HumanActorClassKey, D_004EA770;
 LNode* func_0014EE80(void*);
 LNode* func_0014EE70(void*);
 void func_0014EE60(It*, LNode*);
@@ -75,7 +75,7 @@ struct MsgB {
     __declspec(weak) __declspec(MSG_DTOR) ~MsgB() { cMessage_dtor(this, 0); }
 };
 struct Msg3D : MsgB {
-    Msg3D(unsigned char k) : MsgB(D_0055D480) { vtable = D_004E0840; id = 0x3D; kind = k; }
+    Msg3D(unsigned char k) : MsgB(g_ActorActionMsgClass) { vtable = D_004E0840; id = 0x3D; kind = k; }
     __declspec(weak) __declspec(MSG_DTOR) ~Msg3D() { vtable = D_004E0840; }
 };
 struct PosMsg : Msg3D {
@@ -148,7 +148,7 @@ static inline void SetLook(Npc* self, Obj* o, float t, signed char idx, int prio
         self->slots[(unsigned char)idx].prio = prio;
     }
 }
-static inline int Key0(void) { int* p = &D_0049D010; return *p; }
+static inline int Key0(void) { int* p = &g_HumanActorClassKey; return *p; }
 static inline int Key1(void) { int* p = &D_004EA770; return *p; }
 static inline int Ld(int* p) { return *p; }
 static inline bool IsKey(Obj* o, int* k) { return o->f4C == *k; }
@@ -220,17 +220,17 @@ void NpcAttack_SelectLookAt(Npc* self, float dt)
                 V p = self->slots[0].h.Get()->GetPos(-1);
                 p.z += 4.5f;
                 Send(PosMsg(p), self->owner);
-                if (D_005721C8) NetEvent_Send(self->owner, 0xE, 4, *(int*)&p.x, *(int*)&p.y, *(int*)&p.z, 0);
+                if (g_IsMultiplayer) NetEvent_Send(self->owner, 0xE, 4, *(int*)&p.x, *(int*)&p.y, *(int*)&p.z, 0);
             } else {
                 Send(SerMsg(&self->slots[0].h.Get()->serial), self->owner);
-                if (D_005721C8) NetEvent_Send(self->owner, 0xE, 4, self->slots[0].h.Get()->serial, 0, 0, 0);
+                if (g_IsMultiplayer) NetEvent_Send(self->owner, 0xE, 4, self->slots[0].h.Get()->serial, 0, 0, 0);
             }
             self->f1A8 = 1;
             self->slots[0].f17D = 0;
         }
     } else if (self->f1A8) {
         Send(ByteMsg(D_00489DE0), self->owner);
-        if (D_005721C8) NetEvent_Send(self->owner, 0xE, 4, 0, 0, 0, 0);
+        if (g_IsMultiplayer) NetEvent_Send(self->owner, 0xE, 4, 0, 0, 0, 0);
         self->f1A8 = 0;
     } else {
         unsigned char g = 0;

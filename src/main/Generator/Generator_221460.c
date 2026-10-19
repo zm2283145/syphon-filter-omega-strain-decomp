@@ -11,14 +11,14 @@
 /* merge_units: begin func_00221460 */
 #pragma push /* merge_units */
 typedef struct { char pad[0xC]; char f0C[4]; } Gen00221460;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern void Object_Deactivate(Gen00221460* self, int a);
 extern void func_0043B190(void* msg);
 extern void func_0043A030(void* msg, void* target);
 void cGenerator_v16(Gen00221460* self)
 {
     Object_Deactivate(self, 0);
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         int msg[1];
         func_0043B190(msg);
         func_0043A030(msg, self->f0C);
@@ -50,7 +50,7 @@ extern "C" void cGenerator_v15(Gen_12D0* g)
 {
     char ctx[4];
     Object_Activate(g, 0);
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
     int ok = g->b2D != 0;
     ok = ok ? g->b2C != 0 : ok;
     ok = ok ? (g->b2E != 0) ^ 1 : ok;
@@ -115,16 +115,16 @@ struct Gen_221610 {
 struct Ev_221610 { void* vt; char pad4[0x20]; int arg; unsigned char kind; };
 struct Ev2_221610 { void* vt; char pad4[0x28]; int id; };
 extern "C" {
-extern int D_005435A8;
+extern int g_LosResultMsgClass;
 extern int D_004A4A68;
 extern int D_0051F058;
 extern int D_0051F068;
 extern int D_004A4A78;
 extern int g_cEnableMsgClass;
 extern int g_cDisableMsgClass;
-extern int D_005383C8;
+extern int g_VideoFrameCounter;
 extern int D_004F56C0;
-extern int D_004FFD44;
+extern int g_ActorList;
 extern char D_00555070[];
 extern unsigned char D_005721C0;
 int* Event_GetType(void* ev);
@@ -153,7 +153,7 @@ void Object_DeleteLater(Tgt_221610* o, float f);
 }
 static inline bool IsType_221610(void* m, int* cls) { int t = *Event_GetType(m); return t == *cls; }
 static inline bool IsDying_221610(Tgt_221610* o) { unsigned char s = o->State(); return s == 2 || s == 3; }
-static inline int IsAuth_221610(void) { return D_005721C8 ? D_005721C0 : 1; }
+static inline int IsAuth_221610(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
 extern "C" bool cGenerator_v01(Gen_221610* self, void* msg)
 {
     char ctx[4];
@@ -178,7 +178,7 @@ extern "C" bool cGenerator_v01(Gen_221610* self, void* msg)
     Hnd_221610 h2;
     Ev_221610* m = (Ev_221610*)msg;
     bool r;
-    if (IsType_221610(m, &D_005435A8)) {
+    if (IsType_221610(m, &g_LosResultMsgClass)) {
         r = 1;
     } else if (IsType_221610(m, &D_004A4A68)) {
         if (m->kind == 1)
@@ -239,7 +239,7 @@ extern "C" bool cGenerator_v01(Gen_221610* self, void* msg)
                     func_00222880(&ret1, &self->list90, &arg1);
                 }
             }
-            ActorWorld_RequestRemove(D_004FFD44, o);
+            ActorWorld_RequestRemove(g_ActorList, o);
             Script_DropFromGroups(D_00555070, o);
             if (o->magic == (int)0xBEBAAFDE)
                 Object_DeleteLater(o, 1.0f);
@@ -254,18 +254,18 @@ extern "C" bool cGenerator_v01(Gen_221610* self, void* msg)
         } else if (k == 2) {
             self->nC0 = 0;
         } else if (k == 3) {
-            if (D_004F56C0 != D_005383C8)
-                D_004F56C0 = D_005383C8;
+            if (D_004F56C0 != g_VideoFrameCounter)
+                D_004F56C0 = g_VideoFrameCounter;
         }
         r = 1;
     } else {
         if (IsType_221610(m, &g_cEnableMsgClass)) {
-            if (!D_005721C8 || IsAuth_221610())
+            if (!g_IsMultiplayer || IsAuth_221610())
                 self->EnableNet(m->arg);
             else
                 self->Enable(m->arg);
         } else if (IsType_221610(m, &g_cDisableMsgClass)) {
-            if (!D_005721C8 || IsAuth_221610())
+            if (!g_IsMultiplayer || IsAuth_221610())
                 self->DisableNet(m->arg);
             else
                 self->Disable(m->arg);

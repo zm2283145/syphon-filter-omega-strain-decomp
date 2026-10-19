@@ -7,7 +7,7 @@
 #include "types.h"
 #include "loose00_types.h"
 
-extern int D_0055A278; /* current interface font */
+extern int g_InterfaceFont; /* current interface font */
 extern int Global_SetInterfaceFont(int font);
 extern FontOwner* App_GetInstance(void);
 
@@ -26,6 +26,6 @@ int Global_SetInterfaceFont(int font) {
 
     owner = App_GetInstance();
     handle = owner->fonts[font & 255];
-    D_0055A278 = handle;
+    g_InterfaceFont = handle;
     return (int)owner;
 }

@@ -28,13 +28,13 @@ void *D_00489D00[24] = {
     0, (void *)0x6, D_0049B1A0, 0,
 };
 
-unsigned char D_00489D60[2] = { 0x00, 0x01 };
+unsigned char WeaponClassToSlot[2] = { 0x00, 0x01 };
 
 unsigned char D_00489D62[14] __attribute__((aligned(2))) = {
     0x02, 0x00, 0x01, 0x03, 0x06, 0x07, 0x04, 0x05, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-unsigned char D_00489D70[1] = { 0x03 };
+unsigned char WeaponHolsterAttachPoints[1] = { 0x03 };
 
 unsigned char D_00489D71[1] __attribute__((aligned(1))) = { 0x04 };
 
@@ -50,7 +50,7 @@ unsigned char D_00489D76[1] __attribute__((aligned(2))) = { 0x06 };
 
 unsigned char D_00489D77[1] __attribute__((aligned(1))) = { 0x07 };
 
-unsigned char D_00489D78[8] = { 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00 };
+unsigned char WeaponHandAttachPoints[8] = { 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00 };
 
 float D_00489D80[2] = { 1.1f, 0.0f };
 
@@ -60,7 +60,7 @@ float D_00489D90[2] = { 5.5f, 0.0f };
 
 float D_00489D98[2] = { 2.0f, 0.0f };
 
-unsigned char D_00489DA0[16] = {
+unsigned char g_DoKnifeDmg[16] = {
     0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 

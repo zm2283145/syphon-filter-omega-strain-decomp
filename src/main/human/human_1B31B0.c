@@ -49,11 +49,11 @@ struct Act {
 };
 extern "C" {
 extern char D_004F1FD0[];
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_004DAE30[];
 extern char D_004DADF0[];
-extern void* D_004FFC30;
-extern void* D_004FFC2C;
+extern void* g_VisionFxMan;
+extern void* g_Hud;
 extern unsigned char D_0053B540;
 void SoundEvent_CtorFromPreset(Snd* e, void* r, void* owner);
 void SoundStopMsg_Ctor(Snd2* e, void* r, void* owner);
@@ -82,8 +82,8 @@ extern "C" void Actor_UpdateNightVisionBlind(Act* a)
                 case 2: m = 2; break;
                 case 3: m = 3; break;
                 }
-                VisionMgr_SetPendingMode(D_004FFC30, m, 0);
-                Hud_SelectTextColorTable(D_004FFC2C, s == 1);
+                VisionMgr_SetPendingMode(g_VisionFxMan, m, 0);
+                Hud_SelectTextColorTable(g_Hud, s == 1);
                 D_0053B540 = s == 1;
             }
         }
@@ -93,7 +93,7 @@ extern "C" void Actor_UpdateNightVisionBlind(Act* a)
             Snd ev;
             SoundEvent_CtorFromPreset(&ev, D_004F1FD0, a);
             ev.flag = 1;
-            Event_Send(&ev, D_004FFB50, 0);
+            Event_Send(&ev, g_Game, 0);
             a->b33B9 = 1;
             ev.vt = D_004DAE30;
             FileMan_Release(&ev.s114, -1);
@@ -104,7 +104,7 @@ extern "C" void Actor_UpdateNightVisionBlind(Act* a)
         Snd2 ev;
         SoundStopMsg_Ctor(&ev, D_004F1FD0, a);
         ev.flag = 1;
-        Event_Send(&ev, D_004FFB50, 0);
+        Event_Send(&ev, g_Game, 0);
         a->b33B9 = 0;
         ev.vt = D_004DADF0;
         FileMan_Release(&ev.s114, -1);

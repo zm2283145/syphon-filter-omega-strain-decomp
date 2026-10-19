@@ -20,7 +20,7 @@ struct Obj_23BDC0 {
     int id;
 };
 extern "C" {
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 void Event_Construct(Msg_23BDC0* msg, void* type);
 void cMessage_dtor(Msg_23BDC0* msg, int flags);
 extern char g_cDisableMsgClass[];
@@ -30,7 +30,7 @@ void NetMsg_Send(Msg_23BDC0* msg, int id, int x);
 extern "C" void cNIEventOBJ_v18(Obj_23BDC0* self)
 {
     self->Toggle(-1);
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         Msg_23BDC0 msg;
         Event_Construct(&msg, g_cDisableMsgClass);
         msg.vtable = D_004E0860;
@@ -75,7 +75,7 @@ void func_003FF930(Msg_23BE50* msg, int id);
 extern "C" void cNIEventOBJ_v17(Obj_23BE50* self)
 {
     self->Toggle(-1);
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         Msg_23BE50 msg;
         Event_Construct(&msg, g_cEnableMsgClass);
         msg.vtable = D_004E0880;

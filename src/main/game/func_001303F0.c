@@ -11,7 +11,7 @@ extern "C" {
 char * Mem_Alloc(...);                      
 int strncpy(...);                            
 extern char D_0049A890;
-extern unsigned char D_00533880;
+extern unsigned char g_ProfileLockEnabled;
 }
 typedef struct { char p0[172]; int fAC; } PS0_001303F0;
 #pragma push

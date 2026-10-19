@@ -41,8 +41,8 @@ static inline void merge_flush_func_001C61A0(void) {}
 #pragma push /* merge_units */
 #define AND &&
 typedef struct { void* vt; char pad04[0x1C]; signed char kind; char pad21[3]; int w24; signed char b28; char pad29[3]; int key0; int key1; } Msg_1C6200;
-extern unsigned char D_005721C8;
-extern void* D_004FFC2C;
+extern unsigned char g_IsMultiplayer;
+extern void* g_Hud;
 extern char D_0049F490[];
 extern char D_0051F098[];
 extern char D_004DE280[];
@@ -61,12 +61,12 @@ void func_001C6200(char* name, char* text0, int silent)
     
     if (name) {
         char* text = (!text0 || !*text0) ? D_0049F490 : text0;
-        Hud_AddPdaQuip(D_004FFC2C, name, text);
+        Hud_AddPdaQuip(g_Hud, name, text);
         {
-            void* hud = D_004FFC2C;
+            void* hud = g_Hud;
             Hud_PostNotification(hud, Loc_LookupText(D_0049F490));
         }
-        if (!silent AND D_005721C8) {
+        if (!silent AND g_IsMultiplayer) {
             Msg_1C6200 m;
             Msg_1C6200* p = &m;
             Event_Construct(p, D_0051F098);

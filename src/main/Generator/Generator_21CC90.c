@@ -21,7 +21,7 @@ public:
 typedef struct { char pad[0xC]; unsigned int id; char pad10[0x48]; F7Sub_21C* sub; } F7Gen_21C;
 typedef struct { F7Sub_21C* target; int arg; } F7Ctx_21C;
 extern "C" {
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 F7Gen_21C* GObj_IdentityB(int h);
 void func_00436C00(int* t);
 int func_00434440(int* t, unsigned int* id);
@@ -33,7 +33,7 @@ extern "C" int Script_cGenerator_DisableBy(F7Ctx_21C* c)
 {
     F7Gen_21C* g = GObj_IdentityB(c->arg);
     F7Sub_21C* t = c->target;
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         int v = -1;
         if (g) {
             if (F7IsA(g) || F7IsB(g)) {
@@ -82,7 +82,7 @@ extern "C" int Script_cGenerator_EnableBy(F8Ctx_21C* c)
 {
     F8Gen_21C* g = GObj_IdentityB(c->arg);
     F8Sub_21C* t = c->target;
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         int v = -1;
         if (g) {
             if (F8IsA(g) || F8IsB(g)) {

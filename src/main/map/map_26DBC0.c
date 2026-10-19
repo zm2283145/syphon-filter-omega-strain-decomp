@@ -54,10 +54,10 @@ extern "C" {
 extern int D_004FFD70;
 extern int D_004FFD68;
 extern char D_004FF0B0[];
-extern Holder26DBC0* D_004FFC0C;
+extern Holder26DBC0* g_LocalPlayer;
 extern char D_004A8808[];
 extern char D_004E0360[];
-extern Cam26DBC0* D_004FFC2C;
+extern Cam26DBC0* g_Hud;
 extern float D_004FF030;
 extern float D_004FF038;
 extern float D_004FF040;
@@ -86,7 +86,7 @@ extern "C" void HudMap_Open(Self26DBC0* self)
     IeNode_SetShown(D_004FFD68, 1, 1);
     h = IeElement_Create(D_004FFD70);
     IeElement_SetColour(h, D_004FF0B0);
-    hd = D_004FFC0C;
+    hd = g_LocalPlayer;
     if (hd && hd->x30) {
         Obj26DBC0* o;
         {
@@ -101,7 +101,7 @@ extern "C" void HudMap_Open(Self26DBC0* self)
     }
     HudMap_UpdateCamera(0.0f, self);
     HudMap_AddPlayerCallouts(self);
-    c = D_004FFC2C;
+    c = g_Hud;
     D_004FF030 = c->x620;
     D_004FF038 = c->x624;
     c->x620 = 0.5f;

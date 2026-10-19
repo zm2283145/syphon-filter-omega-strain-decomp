@@ -14,13 +14,13 @@
 struct P_1B3960 { char pad[0xC]; int h; };
 class O_1B3960 { public: VPAD16(a) VPAD4(b) VPAD2(c) virtual void Kill(int f); char pad4[0x54]; void* npc; };
 extern "C" {
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005721C0;
 P_1B3960* PlayerSlots_Get(int i);
 int Player_GetIndex(int h);
 void cNPC_Deactivate(void* npc, P_1B3960* p);
 }
-static inline int Net_1B3960(void) { return D_005721C8 ? D_005721C0 : 1; }
+static inline int Net_1B3960(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
 static inline void Deact_1B3960(void* npc, P_1B3960* f) { if (f && Net_1B3960()) cNPC_Deactivate(npc, f); }
 extern "C" void func_001B3960(O_1B3960* self, int id)
 {
@@ -58,7 +58,7 @@ P_1B3A60* PlayerSlots_Get(int i);
 
 void NpcAi_ActivateForPlayer(N_1B3A60* npc, P_1B3A60* p);
 }
-static inline int Net_1B3A60(void) { return D_005721C8 ? D_005721C0 : 1; }
+static inline int Net_1B3A60(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
 static inline void Act_1B3A60(N_1B3A60* npc, P_1B3A60* f) { if (f && Net_1B3A60()) NpcAi_ActivateForPlayer(npc, f); }
 extern "C" void func_001B3A60(O_1B3A60* self, int id)
 {

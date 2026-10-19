@@ -24,8 +24,8 @@ void func_00170CF0(void*,void*);
 void func_00170D00(void*,void*);
 void func_00170D10(void*,void*);
 void func_00170D20(void*,void*);
-extern char D_004D9940[],D_004EE688[],D_004EE698[];
-extern unsigned char D_005721C0,D_005721C8;
+extern char D_004D9940[],g_HotboxList[],D_004EE698[];
+extern unsigned char D_005721C0,g_IsMultiplayer;
 }
 #pragma push
 #pragma bool off
@@ -86,7 +86,7 @@ extern "C" void Hotbox_UpdateTracker(HotboxReceiver* arg0, void* arg1, void* arg
     if (arg2 == 0) {
         arg2 = arg0->unk28;
     }
-    func_00170D20(&sp140, &D_004EE688);
+    func_00170D20(&sp140, &g_HotboxList);
     func_00170D10(&sp170, &sp140);
     func_00170D00(&sp13C, arg2);
     func_00170D10(&sp16C, &sp13C);
@@ -100,8 +100,8 @@ extern "C" void Hotbox_UpdateTracker(HotboxReceiver* arg0, void* arg1, void* arg
             temp_s2 = (cHotbox*)sp17C.p->value;
             if (((HotboxV*)temp_s2)->Test(arg1) == 0 || (var_v0=Active((SfGameObject*)temp_s2), var_v0==0)) {
 
-                if (D_005721C8 != 0) {
-                    if (D_005721C8 != 0) {
+                if (g_IsMultiplayer != 0) {
+                    if (g_IsMultiplayer != 0) {
                         var_v0_2 = D_005721C0;
                     } else {
                         var_v0_2 = 1;
@@ -145,11 +145,11 @@ block_19:
             }
         } while (sp178.p != sp17C.p);
     }
-    func_00170D20(&sp12C, &D_004EE688);
+    func_00170D20(&sp12C, &g_HotboxList);
     func_00170D10(&sp158, &sp12C);
     sp15C.p = sp158;
     sp114 = sp15C;
-    func_00170D00(&sp128, &D_004EE688);
+    func_00170D00(&sp128, &g_HotboxList);
     func_00170D10(&sp154, &sp128);
     sp17C = sp154;
     var_a0 = sp17C.p;
@@ -177,8 +177,8 @@ loop_40:
                 }
                 func_00170C40(&sp150, &sp120);
                 if (sp150 == sp14C) {
-                    if (D_005721C8 != 0) {
-                        if (D_005721C8 != 0) {
+                    if (g_IsMultiplayer != 0) {
+                        if (g_IsMultiplayer != 0) {
                             var_v0_3 = D_005721C0;
                         } else {
                             var_v0_3 = 1;

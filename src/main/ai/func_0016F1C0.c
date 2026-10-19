@@ -11,8 +11,8 @@ typedef struct {
 } AIMsg;
 typedef struct { char pad[0x30]; void* target; } NetCtx;
 typedef struct { char pad[0x30]; void* owner; char pad2[0x28]; unsigned char disabled; } cAI;
-extern NetCtx* D_004FFC0C;
-extern char D_004FF268[];
+extern NetCtx* g_LocalPlayer;
+extern char g_ScriptAIActivatedMsgKey[];
 extern void cAIActivatedMsg_dtor();
 extern void cAIActivatedMsg_v01();
 extern void cAIActivatedMsg_v02();
@@ -28,9 +28,9 @@ void cAI_v10(cAI* self)
 {
     if (!self->disabled) {
         AIMsg msg;
-        void* target = D_004FFC0C->target;
+        void* target = g_LocalPlayer->target;
         unsigned char* kind;
-        Event_Construct(&msg, D_004FF268);
+        Event_Construct(&msg, g_ScriptAIActivatedMsgKey);
         msg.target = target;
         kind = &msg.kind;
         *kind = 2;

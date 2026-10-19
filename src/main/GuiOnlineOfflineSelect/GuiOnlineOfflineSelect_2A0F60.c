@@ -6,7 +6,7 @@ struct S_002A0F60 { char pad[0xF4]; P_002A0F60* pF4; };
 extern "C" {
 extern Ui_002A0F60* D_004FFC04;
 extern char D_004AAFF0[];
-extern char D_004FFB50[];
+extern char g_Game[];
 extern unsigned char D_005064A8;
 extern int D_005064B0;
 extern char* D_005064B8;
@@ -27,7 +27,7 @@ void GuiMissionSetup_OnGameCreated(void* self);
 static inline bool Nz_002A0F60(int v) { return v != 0; }
 extern "C" void GuiMissionSetup_BeginMission(S_002A0F60* self)
 {
-    Game_ClearOtherAgentsB70(D_004FFB50);
+    Game_ClearOtherAgentsB70(g_Game);
     D_004FFC04->f254 = self->pF4->f40;
     if (!D_004FFC04->b32) {
         void* g = DME_GetLobby();

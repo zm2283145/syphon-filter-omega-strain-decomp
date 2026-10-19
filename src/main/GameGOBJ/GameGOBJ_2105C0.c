@@ -21,7 +21,7 @@ DEFINE_VTABLE_BASE_DTOR(cPathedNotice_dtor, D_004DAE90, cMessage_dtor)
 
 /* merge_units: begin func_00210620 */
 #pragma push /* merge_units */
-#define LOCALID_(X) { int ld_a = D_005721A8; /* read before the flag test: retail loads it ahead of the branch */ if (D_005721C8) { if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, ld_a); X = D_00494178; } else X = 0; }
+#define LOCALID_(X) { int ld_a = D_005721A8; /* read before the flag test: retail loads it ahead of the branch */ if (g_IsMultiplayer) { if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, ld_a); X = D_00494178; } else X = 0; }
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
@@ -31,7 +31,7 @@ int func_002EB650(void **);
 int NetGame_InitLocalSlot(int *, int);                        
 extern int D_00494178;
 extern int D_005721A8;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005723C8;
 
 #pragma push

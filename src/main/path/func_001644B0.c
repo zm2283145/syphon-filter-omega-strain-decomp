@@ -10,7 +10,7 @@ int ObjectList_EraseRange(int *, char *, int *, char **);
 int PathList_PushBack(char *, char **, int *);
 extern char D_0049C1B8;
 extern int D_004EA798;
-extern int D_004ED9C0;
+extern int g_NpcRegionTable;
 extern int D_004ED9C4;
 extern int D_004ED9C8;
 extern int D_004ED9CC;
@@ -49,7 +49,7 @@ extern "C" void NpcRouteMgr_AllocRequestPool(char *arg0) {
         sp6C += 0x610;
     } while (var_s2 < 0x10);
     D_004ED9D0 = 0;
-    D_004ED9C0 = -1;
+    g_NpcRegionTable = -1;
     D_004ED9C4 = -1;
     D_004ED9C8 = -1;
     D_004ED9CC = -1;

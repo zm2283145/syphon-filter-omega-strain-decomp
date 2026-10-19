@@ -6,8 +6,8 @@ struct H377780 { char pad[0x10]; int x10; int nIds; int x18; int nLights; char p
 struct M377780 { int loaded; H377780* h; short* ids; };
 extern "C" {
 extern char D_004BC170[];
-extern char D_00535D20[];
-extern void* D_00539248;
+extern char g_LightMgr[];
+extern void* g_TextureMgr;
 void LightMgr_Unregister(void* mgr, void* light, void* owner);
 void Tex_Release(void* mgr, int id, int f);
 void func_00376930(M377780* m);
@@ -29,11 +29,11 @@ extern "C" void Model_Unload(M377780* m)
         return;
     }
     for (i = 0; i < m->h->nLights; i++)
-        LightMgr_Unregister(D_00535D20, m->h->lights[i].light, m);
+        LightMgr_Unregister(g_LightMgr, m->h->lights[i].light, m);
     {
         int j;
         for (j = 0; j < m->h->nIds; j++)
-            Tex_Release(D_00539248, m->ids[j], 1);
+            Tex_Release(g_TextureMgr, m->ids[j], 1);
     }
     if (m->ids) {
         Rel377780(m->ids, 0x122);

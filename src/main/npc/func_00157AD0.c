@@ -47,8 +47,8 @@ extern "C" {
 extern char D_004A4A68[];
 extern char D_004DB600[];
 extern char D_004DB660[];
-extern PtrVec D_004EA370;
-extern char D_004FFB50[];
+extern PtrVec g_NpcDeadList;
+extern char g_Game[];
 extern char g_NpcRouteMgr[];
 extern int Service_Lookup(void* a, void* b);
 extern void NpcRoute_Release(int mgr, Actor_7AD0* actor);
@@ -90,12 +90,12 @@ extern "C" void cNPC_v11(cNPC_7AD0* self)
         return;
     }
     {
-        int mgr = Service_Lookup(D_004FFB50, g_NpcRouteMgr);
+        int mgr = Service_Lookup(g_Game, g_NpcRouteMgr);
         NpcRoute_Release(mgr, self->actor);
     }
     NpcRoute_ReleaseBuffer(self->route);
     cAI_v11(self);
-    ActiveList_EraseMatching(&D_004EA370, Pred_7AD0(e, &self));
+    ActiveList_EraseMatching(&g_NpcDeadList, Pred_7AD0(e, &self));
     NpcThinkList_RemoveActor(self->actor);
     if (Look_7AD0* l = self->look) {
         begin = &l->begin;

@@ -74,7 +74,7 @@ typedef struct {
     char pad8C[0xD8 - 0x8C];
     T_45D710* def;
 } O_45D710;
-extern void* D_004FFD30;
+extern void* g_WeaponDatabase;
 W_45D710* WeaponDb_Get(void* db, int id);
 
 static inline T_45D710* W_Get(W_45D710* w)
@@ -90,7 +90,7 @@ void func_0045D710(O_45D710* o)
         if (o->ids[i] == -2) {
             o->def->v = -1;
         } else {
-            W_45D710* w = WeaponDb_Get(D_004FFD30, o->ids[i]);
+            W_45D710* w = WeaponDb_Get(g_WeaponDatabase, o->ids[i]);
             if (w) {
                 T_45D710* t = W_Get(w);
                 if (t) t->v = o->vals[i];
@@ -126,7 +126,7 @@ void func_0045D7F0(O_45D710_0045D7F0* o)
     PtrVector_Resize(o->vec80, o->n, &D_00497B08);
     for (i = 0; i < o->n; i++) {
         if (o->ids[i] != -2) {
-            W_45D710* w = WeaponDb_Get(D_004FFD30, o->ids[i]);
+            W_45D710* w = WeaponDb_Get(g_WeaponDatabase, o->ids[i]);
             if (w) {
                 T_45D710* t = W_Get(w);
                 if (t) o->vals[i] = t->v;

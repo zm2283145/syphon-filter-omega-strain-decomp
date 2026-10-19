@@ -22,7 +22,7 @@ typedef struct ObjLabelObjective {
     int id;
 } ObjLabelObjective;
 
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern char D_0051F0B0[];
 extern char D_004DE4F0[];
 extern void* Loc_LookupText(char* key);
@@ -39,7 +39,7 @@ extern char* strncpy(char* dst, const char* src, unsigned int n);
         ObjLabelMsg* m;                                                       \
         *(int*)((char*)self + (labelOffset)) =                                \
             Objective_DupString(self, Loc_LookupText(key));                         \
-        if (D_005721C8 && !quiet) {                                           \
+        if (g_IsMultiplayer && !quiet) {                                           \
             int id = self->id;                                                \
             m = &msg;                                                         \
             Event_Construct(m, D_0051F0B0);                                   \

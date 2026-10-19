@@ -10,7 +10,7 @@ typedef struct {
     E2Slot slots[16];
 } E2Group;
 extern void Model_SetPatchBit(void*, int, int);
-extern unsigned char D_00535D62;
+extern unsigned char g_LevelLightsDirty;
 void PntLight_Disable(E2Group* g) {
     int i;
     if (g->active && g->count) {
@@ -22,6 +22,6 @@ void PntLight_Disable(E2Group* g) {
     }
     if (g->dirty) {
         g->dirty = 0;
-        D_00535D62 = 1;
+        g_LevelLightsDirty = 1;
     }
 }

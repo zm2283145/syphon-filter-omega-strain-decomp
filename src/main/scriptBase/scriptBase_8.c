@@ -83,8 +83,8 @@ typedef char* va_list;
 #define va_start(__AP, __LASTARG) (__AP = ((char*) __builtin_next_arg (__LASTARG) - (__builtin_args_info (2) >= 8 ? 0 : (8 - __builtin_args_info (2)) * 8)))
 #define va_arg(__AP, __type) (*(__type *) (void *) ((__AP += 8) - 8))
 
-extern unsigned char D_00533880;
-extern int D_00533888;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
 extern char D_004BD3B0[];
 typedef struct { char pad[8]; char** tab; } ScrMgr;
 extern ScrMgr* D_00554F28;
@@ -109,11 +109,11 @@ int Script_RegisterNative(int id, int a1, int a2, int a3, int count, ...)
     for (i = 0; i < count; i++) {
         args[i] = va_arg(ap, int);
     }
-    if (D_00533880) Alloc_Lock(9);
-    D_00533888++;
+    if (g_ProfileLockEnabled) Alloc_Lock(9);
+    g_ProfileLockDepth++;
     p = Mem_Alloc(0, 0x1C, D_004BD3B0, 0xCA);
-    if (D_00533880) Alloc_Unlock(9);
-    D_00533888--;
+    if (g_ProfileLockEnabled) Alloc_Unlock(9);
+    g_ProfileLockDepth--;
     if (p) p = func_003D7380(p, a3, a1, a2, count, args);
     item = p;
     func_003D8720(o + 0x14, &item);

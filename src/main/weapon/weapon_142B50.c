@@ -13,7 +13,7 @@
 typedef struct { char pad[0x64]; int rate; } Weap_2B50;
 typedef struct { int pad0; int pad4; int id; int padC; } Slot_2B50;
 typedef struct { Slot_2B50 slots[8]; char pad[4]; unsigned char cur; } S_2B50;
-extern void* D_004FFD30;
+extern void* g_WeaponDatabase;
 const float D_00489C10[2] = { 1.0f, 0.0f };
 Weap_2B50* WeaponDb_Get(void* db, int id);
 int WeaponInv_GetHeldRating(S_2B50* self)
@@ -21,7 +21,7 @@ int WeaponInv_GetHeldRating(S_2B50* self)
     unsigned char i = self->cur;
     int r = 0;
     if (i != 6)
-        { float f = WeaponDb_Get(D_004FFD30, self->slots[i].id)->rate; r = (int)(f * (*(float*)D_00489C10)); }
+        { float f = WeaponDb_Get(g_WeaponDatabase, self->slots[i].id)->rate; r = (int)(f * (*(float*)D_00489C10)); }
     return r;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -34,15 +34,15 @@ static inline void merge_flush_func_00142B50(void) {}
 #pragma bool off
 static inline int E1IsNone(int x) { return x == -1; }
 typedef struct { char pad[0x18]; int id; char pad1c[0x84 - 0x1C]; unsigned char state; unsigned char sub; char pad86[2]; char* equip; char pad8c[0xA4 - 0x8C]; int timer; } AnimHost_e1;
-extern unsigned char D_00489D78[];
-extern unsigned char D_00489D70[];
+extern unsigned char WeaponHandAttachPoints[];
+extern unsigned char WeaponHolsterAttachPoints[];
 extern void Equip_SwapSlots(void*, int, int);
 void WeaponInv_Holster(AnimHost_e1* self, unsigned char b)
 {
     if (b == 0 && (E1IsNone(self->id) ^ 1)) {
         WeaponInv_Holster(self, 1);
     }
-    Equip_SwapSlots(self->equip + 0x60, D_00489D78[b], D_00489D70[b]);
+    Equip_SwapSlots(self->equip + 0x60, WeaponHandAttachPoints[b], WeaponHolsterAttachPoints[b]);
     self->state = 6;
     self->sub = b;
     self->timer = -1;
@@ -93,7 +93,7 @@ typedef struct {
 } WiInv;
 extern "C" {
 extern char D_004F1950[];
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_004DAE30[];
 void WeaponInv_HolsterCurrent(WiInv* inv);
 #if 0 /* merge_units */
@@ -136,7 +136,7 @@ extern "C" bool WeaponInv_Equip(WiInv* self, unsigned char slot)
                 WiSnd snd;
                 SoundPosRequest_Ctor(&snd, D_004F1950, &id);
                 snd.flag = 1;
-                Event_Send(&snd, D_004FFB50, 0);
+                Event_Send(&snd, g_Game, 0);
                 snd.vt = D_004DAE30;
                 FileMan_Release(&snd.s114, -1);
                 FileMan_Release(&snd.s78, -1);
@@ -144,7 +144,7 @@ extern "C" bool WeaponInv_Equip(WiInv* self, unsigned char slot)
             }
         }
         self->cur = slot;
-        WiSwap(&self->owner->equip, D_00489D70[slot], D_00489D78[slot], swapped);
+        WiSwap(&self->owner->equip, WeaponHolsterAttachPoints[slot], WeaponHandAttachPoints[slot], swapped);
         self->timer = -1;
     }
     return swapped;
@@ -163,7 +163,7 @@ typedef struct { char pad[0x24A2]; unsigned char flags[8]; } Own_2E00;
 void WeaponInv_SetSlotModelState(INV* self, unsigned char slot, char v)
 {
     if (*(int*)((char*)self + slot * 16 + 8) != -1)
-        { Own_2E00* ow = (Own_2E00*)self->owner; ow->flags[D_00489D70[slot]] = v; }
+        { Own_2E00* ow = (Own_2E00*)self->owner; ow->flags[WeaponHolsterAttachPoints[slot]] = v; }
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00142E00(void) {}

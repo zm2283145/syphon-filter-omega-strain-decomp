@@ -49,7 +49,7 @@ struct Act {
 extern "C" {
 
 extern char D_0049D8D0[];
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern int StartingArmor;
 
 void* Mem_Alloc(int, int, char*, int);
@@ -78,7 +78,7 @@ static inline void* Alloc(int size, int line)
 }
 extern "C" void Actor_InitComponents(Act* a, unsigned char kind, int* ai, void* comp)
 {
-    if (D_005721C8 && a->p58) {
+    if (g_IsMultiplayer && a->p58) {
         if (Ready(a)) {
             a->b2D = 0;
             Detach(a);

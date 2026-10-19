@@ -67,17 +67,17 @@ extern char D_0049AF50[];
 extern char D_0049AF70[];
 extern char D_0049AF90[];
 extern char D_0049AFF8[];
-extern char D_004FFB50[];
-extern signed char D_004FFBA0;
-extern signed char D_004FFBA1;
+extern char g_Game[];
+extern signed char g_GameState;
+extern signed char g_PrevGameState;
 extern StrObj D_004FFBA4;
 extern signed char D_004FFBB0;
 extern signed char D_004FFBB2;
 extern signed char D_004FFBB4;
 extern signed char D_004FFBB5;
 extern int D_004FFC04;
-extern char D_004FFC90[];
-extern unsigned char D_005721C8;
+extern char g_LevelDirName[];
+extern unsigned char g_IsMultiplayer;
 extern signed char D_005723C0;
 extern char D_005724A0[];
 extern unsigned char D_005724B0;
@@ -108,8 +108,8 @@ extern int Game_MainUpdate(int);
 
 static inline void Game_SetState(int s)
 {
-    D_004FFBA1 = D_004FFBA0;
-    D_004FFBA0 = s;
+    g_PrevGameState = g_GameState;
+    g_GameState = s;
 }
 
 int Game_ParseCommandLine(int argc, char **argv)
@@ -149,14 +149,14 @@ int Game_ParseCommandLine(int argc, char **argv)
                 case 'g':
                     D_004FFBB4 = 1;
                     if (*val) {
-                        strncpy(D_004FFC90, val, 0x80);
+                        strncpy(g_LevelDirName, val, 0x80);
                         printf(D_0049AF10, val);
                     }
                     break;
                 case 'f':
                     break;
                 case 'l':
-                    strncpy(D_004FFC90, val, 0x80);
+                    strncpy(g_LevelDirName, val, 0x80);
                     LevelSelect_FindByName(D_004FFC04 + 0x188, val);
                     printf(D_0049AF30, val);
                     run = 0;
@@ -178,7 +178,7 @@ int Game_ParseCommandLine(int argc, char **argv)
                     D_00494170 = 0;
                     Game_SetState(14);
                     host = 1;
-                    D_005721C8 = 1;
+                    g_IsMultiplayer = 1;
                     run = 0;
                     named = host;
                     break;
@@ -195,7 +195,7 @@ int Game_ParseCommandLine(int argc, char **argv)
                         strncpy(name, val, 0x10);
                         named = 1;
                     }
-                    D_005721C8 = 1;
+                    g_IsMultiplayer = 1;
                     host = 1;
                     run = 0;
                     break;
@@ -203,7 +203,7 @@ int Game_ParseCommandLine(int argc, char **argv)
                     D_00494190 = 0;
                     break;
                 case 'p':
-                    func_0012F3D0(D_004FFB50, val);
+                    func_0012F3D0(g_Game, val);
                     break;
                 case 'x':
                     Game_SetState(1);
@@ -225,7 +225,7 @@ int Game_ParseCommandLine(int argc, char **argv)
     if (skip) {
         App_BindIopRpc(App_GetInstance());
     } else {
-        if (D_005721C8 && host) {
+        if (g_IsMultiplayer && host) {
             App_BindIopRpc(App_GetInstance());
             App_InitSystemsOnce();
             if (named) {

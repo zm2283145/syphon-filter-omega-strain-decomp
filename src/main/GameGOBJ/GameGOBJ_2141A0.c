@@ -51,7 +51,7 @@ typedef struct {
     F214Obj** objs;
 } F214Mgr;
 extern F214Ent* func_00172990(void*, int);
-extern int D_004F5468;
+extern int g_GameGobjClassWord;
 #pragma opt_strength_reduction off
 unsigned char cElevatorGOBJ_LinksClosed(F214Mgr* m)
 {
@@ -59,7 +59,7 @@ unsigned char cElevatorGOBJ_LinksClosed(F214Mgr* m)
     int i;
     for (i = 0; i < m->count; i++) {
         F214Ent* e = func_00172990(m->list, i);
-        if (e->def->type == D_004F5468) {
+        if (e->def->type == g_GameGobjClassWord) {
             F214Obj* o = m->objs[i];
             if (((F214Hdr*)o)->kind == 2) {
                 if (!o->active || *o->state) {
@@ -86,7 +86,7 @@ struct Msg214310 { void* vtable; char base[0x1C]; unsigned char b20; char pad21[
 struct State214310 { int cur; };
 struct Lift214310 { char p[0xEC]; int count; Car214310** cars; char pF4[0x34]; State214310* state; };
 extern "C" {
-extern char D_004F5440[];
+extern char g_TriggerMsgKey[];
 extern char D_004DAF10[];
 void Event_Construct(void* m, void* type);
 void Event_Send(void* m, void* target, int immediate);
@@ -107,7 +107,7 @@ extern "C" unsigned char cElevatorGOBJ_TriggerFloorExtras(Lift214310* l)
         if (l->cars[i]->kind == 2) {
             Msg214310 m;
             Msg214310* p = &m;
-            Event_Construct(&m, D_004F5440);
+            Event_Construct(&m, g_TriggerMsgKey);
             m.vtable = D_004DAF10;
             m.kind = 0;
             m.floor = 0;
@@ -142,7 +142,7 @@ typedef struct ElevatorMsg214470 {
 } ElevatorMsg214470;
 struct Lift214470 { char p[0x70]; int count; char list[8]; Car214470** cars; char p80[0x2E0 - 0x80]; int floors; };
 extern "C" {
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_004DADF0[];
 void SoundStopMsg_Ctor(ElevatorMsg214470* msg, int* floors, Lift214470* self);
 void FileMan_Release(void* member, int flag);
@@ -165,7 +165,7 @@ extern "C" unsigned char cElevatorGOBJ_TriggerLinks(Lift214470* l)
     {
         ElevatorMsg214470 msg;
         SoundStopMsg_Ctor(&msg, &l->floors, l);
-        Event_Send(&msg, D_004FFB50, 1);
+        Event_Send(&msg, g_Game, 1);
         msg.vtable = D_004DADF0;
         FileMan_Release(msg.memberB, -1);
         FileMan_Release(msg.memberA, -1);
@@ -173,10 +173,10 @@ extern "C" unsigned char cElevatorGOBJ_TriggerLinks(Lift214470* l)
     }
     for (i = 0; i < l->count; i++) {
         found = 1;
-        Ent214470* e = *func_00172990(l->list, i); if (e->type == D_004F5468) {
+        Ent214470* e = *func_00172990(l->list, i); if (e->type == g_GameGobjClassWord) {
             if (l->cars[i]->kind == 2) {
                 Msg214470* p = &m;
-                Event_Construct(&m, D_004F5440);
+                Event_Construct(&m, g_TriggerMsgKey);
                 m.vtable = D_004DAF10;
                 m.kind = 0;
                 m.floor = 0;
@@ -218,12 +218,12 @@ struct Lift_00214640 {
     char pad144[0x790 - 0x144]; Snd_00214640* snd;
 };
 extern "C" {
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005721C0;
 #if 0 /* merge_units */
-extern int D_004F5440;
+extern int g_TriggerMsgKey;
 #endif /* merge_units */
-#define D_004F5440 (*(int*)&D_004F5440) /* merge_units */
+#define g_TriggerMsgKey (*(int*)&g_TriggerMsgKey) /* merge_units */
 
 extern int D_004F7E48;
 int* Event_GetType(void* ev);
@@ -235,7 +235,7 @@ void Transport_Send(int target, LiftMsg_00214640* msg, int a, int b);
 void func_00214BC0();
 void func_002EC460(void* h);
 }
-static inline int IsAuth_00214640(void) { return D_005721C8 ? D_005721C0 : 1; }
+static inline int IsAuth_00214640(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
 static inline int ObjId_00214640(Obj_00214640* o) { return o ? o->id : 0; }
 static inline unsigned char IsPlayerCtl_00214640(Obj_00214640* o)
 {
@@ -282,11 +282,11 @@ extern "C" int Lift_Receive(Lift_00214640* l, In_00214640* m)
     LiftMsg_00214640 msgB;
     LiftMsg_00214640 msg;
     int t = *Event_GetType(m);
-    if (t == D_004F5440) {
+    if (t == g_TriggerMsgKey) {
         switch (m->kind) {
         case 4:
         case 1:
-            if (D_005721C8) {
+            if (g_IsMultiplayer) {
                 unsigned char isPlayer;
                 id1 = m->id;
                 o = Object_LookupById(&id1);
@@ -332,14 +332,14 @@ extern "C" int Lift_Receive(Lift_00214640* l, In_00214640* m)
                     LiftMsg_00214640* p = &msg;
                     int dest;
                     int tid;
-                    Event_Construct(p, &D_004F5440);
+                    Event_Construct(p, &g_TriggerMsgKey);
                     msg.vtable = D_004DAF10;
                     msg.kind = 1;
                     msg.floor = -1;
                     p->to = ObjId_00214640(o);
                     p->from = ObjId_00214640(0);
                     tid = l->id;
-                    if (D_005721C8) {
+                    if (g_IsMultiplayer) {
                         if (IsPlayerCtl_00214640(o))
                             dest = ((unsigned int)(o->id & 0x7F000000) >> 24) - 1;
                         else
@@ -370,7 +370,7 @@ extern "C" int Lift_Receive(Lift_00214640* l, In_00214640* m)
             if (floor != -0xFF) {
                 Obj_00214640* who = ((In2_00214640*)m)->who;
                 LiftMsg_00214640* p = &msgB;
-                Event_Construct(p, &D_004F5440);
+                Event_Construct(p, &g_TriggerMsgKey);
                 msgB.floor = floor;
                 msgB.vtable = D_004DAF10;
                 msgB.kind = 1;
@@ -385,7 +385,7 @@ extern "C" int Lift_Receive(Lift_00214640* l, In_00214640* m)
     }
     return PathObj_Receive(l, m);
 }
-#undef D_004F5440 /* merge_units */
+#undef g_TriggerMsgKey /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00214640(void) {}
 #pragma pop /* merge_units */

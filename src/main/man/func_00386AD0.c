@@ -77,7 +77,7 @@ extern int D_004933F0;
 extern float D_004933F8;
 extern int D_00493400;
 extern int D_00493408;
-extern int D_0053B358;
+extern int g_VisionThermal;
 extern M D_0055DEC0;
 extern M D_00537E10;
 extern V D_00537D80;
@@ -103,7 +103,7 @@ extern "C" void Skm_UploadBones(Skm* s, Pkt* p, void* unused, void* pal, U64 t0,
     p->f74 = f;
     p->i78 = s->c2BDA - 1;
     p->i7C = s->h2BD8 << 4;
-    if (s1 || D_0053B358) {
+    if (s1 || g_VisionThermal) {
         QZero(&p->m, 4);
         float g = s1;
         p->v.x = g;

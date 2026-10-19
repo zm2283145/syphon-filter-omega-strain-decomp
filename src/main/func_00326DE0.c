@@ -5,7 +5,7 @@ typedef struct { char pad[0x14]; Item6DE0* items; char pad18[4]; int sel; char p
 typedef struct { char pad[0x48]; char list[8]; Grp6DE0* groups; char pad54[4]; int sel; } Menu6DE0;
 typedef struct { char pad[0x25C]; int db; } G6DE0;
 extern G6DE0* D_004FFC04;
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_004B8748[];
 extern char D_004B8758[];
 extern char D_004B8768[];
@@ -35,7 +35,7 @@ void GuiSlideShow_Load(Menu6DE0* self, int cat, int selIdx, int selVal, int flag
     if (cat <= 0 || cat > 18) return;
     db = D_004FFC04->db;
     if (db == 0) return;
-    agent = Agent_GetSelected(D_004FFB50, -1);
+    agent = Agent_GetSelected(g_Game, -1);
     for (i = 0; i < 5; i++) {
         sprintf(buf, D_004B8748, i);
         GuiSlideShow_AddCategory(self, Loc_LookupText(buf));

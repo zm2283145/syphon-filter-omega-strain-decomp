@@ -44,7 +44,7 @@ char D_0049AB10[] = "%s\\%s\\SCRIPTS.HOG";
 char D_0049AB30[] = "%s\\COMMON\\IARCADEN.HOG";
 char D_0049AB48[] = "iarcade";
 char D_0049AB50[] = "iarcade::init";
-extern char D_004FFC90[];
+extern char g_LevelDirName[];
 extern char D_00555070[]; /* script interpreter */
 #if 0 /* merge_units */
 extern void* Archive_Open(void* self, char* path, int a, int b);
@@ -67,7 +67,7 @@ void IArcade_Init(void* self)
     cScriptInterpreter_CheckAllReferences(D_00555070);
     cScriptInterpreter_ExecuteInitCode(D_00555070);
     ScriptMgr_CallFunction(D_00555070, D_0049AB50, 0);
-    sprintf(path, D_0049AB10, D_0048B2F8, D_004FFC90);
+    sprintf(path, D_0049AB10, D_0048B2F8, g_LevelDirName);
     Archive_Open(self, path, 0, 1);
 }
 #undef Archive_Open /* merge_units */

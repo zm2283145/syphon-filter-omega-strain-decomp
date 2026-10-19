@@ -90,7 +90,7 @@ typedef struct {
 } Self_412320;
 extern "C" {
 extern char D_004BEE90[];
-extern Slot_412320 D_005381F0[];
+extern Slot_412320 g_Video[];
 extern int D_00538C60;
 extern int D_00538C64;
 extern char D_00538C68;
@@ -107,7 +107,7 @@ extern "C" void SubtitleTrack_Destroy(Self_412320* self)
     D_00538C60--;
     {
         int idx = D_00538C60;
-        ((Row_412320*)&D_005381F0[idx])->f2F6 = 1;
+        ((Row_412320*)&g_Video[idx])->f2F6 = 1;
         sceGsSyncPath(0, 0, idx, 1);
     }
     for (i = 0; i < 2; i++) {

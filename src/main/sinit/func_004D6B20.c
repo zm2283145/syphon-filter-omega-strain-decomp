@@ -1,6 +1,6 @@
 #include "types.h"
 #include "vu0_ops.h"
-extern char D_0055C9F0[];
+extern char g_IdentityMatrix[];
 void StaticInit_DefaultMatrix(void) {
-    VU0_UnitMatrix(D_0055C9F0);
+    VU0_UnitMatrix(g_IdentityMatrix);
 }

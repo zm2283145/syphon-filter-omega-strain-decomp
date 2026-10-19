@@ -39,7 +39,7 @@ void GuiTextListWidget_Clear(Widget*);
 extern State* D_004FFC04;
 extern int D_00506508;
 extern Screen* D_0051EE10;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 void GuiEquipmentModify_DrawWeaponBox2();
 void GuiEquipmentModify_DrawWeaponBox1();
 void GuiEquipmentModify_DrawFigure();
@@ -177,7 +177,7 @@ extern "C" void GuiEquipmentModify_Init(Screen* arg0) {
     if (arg0->unk95C == 0) {
         arg0->unk95C = D_0048BA80;
     }
-    if ((D_00506508 == 0) || (D_005721C8 == 0)) {
+    if ((D_00506508 == 0) || (g_IsMultiplayer == 0)) {
         temp_v1_8 = arg0->unk958;
         if (temp_v1_8 != 0) {
             temp_v1_8->unk14 = (unsigned short) (temp_v1_8->unk14 & 0xFFFD);
@@ -185,7 +185,7 @@ extern "C" void GuiEquipmentModify_Init(Screen* arg0) {
     }
     var_s0 = (Widget*)GuiFindAs(arg0, D_004AC590, D_004A7520);
     if (var_s0 != 0) {
-        if (D_005721C8 != 0) {
+        if (g_IsMultiplayer != 0) {
             var_a0 = D_004AC5A0;
         } else {
             var_a0 = D_004AC5B0;
@@ -206,7 +206,7 @@ struct V002C0F00 { virtual void v0(int f); virtual int v1(); virtual int v2(); v
 struct O002C0F00 { void* vt; char pad[0x48]; V002C0F00* p4C; V002C0F00* p50; };
 extern "C" {
 
-extern char D_0055DDA0[];
+extern char g_AgentPartCache[];
 extern char D_004DDEE0[];
 extern char D_004E1220[];
 extern int D_00506500;
@@ -402,14 +402,14 @@ extern char D_004AC288[];
 extern char D_004AC298[];
 extern char D_004AC600[];
 extern char D_004FFBC0[];
-extern char D_0055C9F0[];
+extern char g_IdentityMatrix[];
 extern Blk_1100 D_0055D510[];
 #if 0 /* merge_units */
 extern void* D_00506500;
 #endif /* merge_units */
 #define D_00506500 (*(void **)&D_00506500) /* merge_units */
 
-extern void* D_004FFD30;
+extern void* g_WeaponDatabase;
 void GuiWidget_ctor(Self_1100* self);
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void cGOBJ_ctor(void* p, int* a, int b, int* c);
@@ -610,17 +610,17 @@ static inline void F_1100(Self_1100* self, M4_1100* mtx, Req_1100* req)
         if ((pl = self->plr) != 0) {
             Wpn_1100* w = pl->man.wpn[0];
             if (w) {
-                int n = WeaponDb_Get(D_004FFD30, w->id)->b30;
+                int n = WeaponDb_Get(g_WeaponDatabase, w->id)->b30;
                 if (n > 0 && n < 10) self->fFC = n;
             }
-            if (!D_005721C8 && D_0055DE94) {
+            if (!g_IsMultiplayer && D_0055DE94) {
                 void* a = D_0055DE98[Appearance_GetBodyKind(APP_1100(MAN(self->plr)))].p;
                 if (a) func_00391020(MAN(self->plr), a);
             }
             Skel_Rebind(self->model, MAN(self->plr));
         } else {
             { int n = 0x44; int i = D_00493A60; Model_1100* m = self->model; QCopy_1100(APP_1100(MAN(m)), &D_0055D510[i], n); }
-            if (!D_005721C8 && D_0055DE94) {
+            if (!g_IsMultiplayer && D_0055DE94) {
                 void* a = D_0055DE98[Appearance_GetBodyKind(APP_1100(MAN(self->model)))].p;
                 if (a) func_00391020(MAN(self->model), a);
             }
@@ -710,7 +710,7 @@ extern "C" Self_1100* GuiEquipmentModify_ctor(Self_1100* p0)
             *(char**)p = D_004DA470;
             ((int*)p)[0x60 / 4] = 0;
             ((int*)p)[0x64 / 4] = 0;
-            Object_AttachTransform(p, D_0055C9F0, 0);
+            Object_AttachTransform(p, g_IdentityMatrix, 0);
             ((int*)p)[0x30 / 4] = 0;
         }
         self->gobj = p;
@@ -756,7 +756,7 @@ extern "C" Self_1100* GuiEquipmentModify_ctor(Self_1100* p0)
         w = GetW_1100(ManA_1100(self->model), o);
         if (w) {
             self->fDC[self->fD8] = w->id;
-            self->fF0[self->fD8] = WeaponDb_Get(D_004FFD30, GetW_1100(ManA_1100(self->model), o)->id)->b30;
+            self->fF0[self->fD8] = WeaponDb_Get(g_WeaponDatabase, GetW_1100(ManA_1100(self->model), o)->id)->b30;
             self->fD8++;
         }
     }

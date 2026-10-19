@@ -20,7 +20,7 @@ typedef struct RankVec {
     RankRow* data;
 } RankVec;
 
-extern RankVec D_00532B50;
+extern RankVec g_RankRows;
 extern int AgentData_TotalPoints(cAgentData* agent);
 extern int strcmp(const char*, const char*);
 
@@ -32,13 +32,13 @@ static inline unsigned char HasRank(cAgentData* agent, char* name) {
     pts = AgentData_TotalPoints(agent);
     best = -1;
     bestPts = 0;
-    for (i = 0; i < D_00532B50.count; i++) {
-        if (pts >= D_00532B50.data[i].points && D_00532B50.data[i].points >= bestPts) {
-            bestPts = D_00532B50.data[i].points;
+    for (i = 0; i < g_RankRows.count; i++) {
+        if (pts >= g_RankRows.data[i].points && g_RankRows.data[i].points >= bestPts) {
+            bestPts = g_RankRows.data[i].points;
             best = i;
         }
     }
-    if (best > -1 && strcmp(D_00532B50.data[best].name, name) == 0)
+    if (best > -1 && strcmp(g_RankRows.data[best].name, name) == 0)
         return 1;
     return 0;
 }

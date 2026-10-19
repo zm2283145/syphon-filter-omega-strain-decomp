@@ -31,7 +31,7 @@ struct Obj {
 extern "C" {
 extern int D_004F82A0;
 extern Mtx D_004F82B0;
-extern char D_004FFC14[];
+extern char g_CameraObject[];
 Obj* Object_LookupById(int*);
 int func_00159570(void*);
 Cam** List_Front(void*);
@@ -44,7 +44,7 @@ void Vec3_Negate(V* v);
 void Mtx_TransformByTranspose(V* v, Mtx* m);
 void Mtx_SetTranslation(Mtx* m, V* t);
 }
-static inline Cam* GetCam() { return func_00159570(D_004FFC14) ? *List_Front(D_004FFC14) : 0; }
+static inline Cam* GetCam() { return func_00159570(g_CameraObject) ? *List_Front(g_CameraObject) : 0; }
 
 extern "C" void HudRadar_ComputeMarkerMatrix(void)
 {

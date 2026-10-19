@@ -13,7 +13,7 @@ typedef struct { void* vt; char pad[0x18]; int size; unsigned char kind; char pa
 typedef struct { int pad0; int id; int x8; int count; } Slot_2620;
 typedef struct { int pad0; Slot_2620 slots[8]; unsigned char cur; char pad85[3]; void* own; } S_2620;
 typedef struct { char pad[0x18]; int x18; } H_2620;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern char D_0052ACC8[];
 extern char D_004DE610[];
 void Event_Construct(Ev_2620* e, void* type);
@@ -38,7 +38,7 @@ int func_00142620(S_2620* self, int slot, int amount, int remote)
     else
         dec = n;
     s->count -= dec;
-    if (D_005721C8 && !remote) {
+    if (g_IsMultiplayer && !remote) {
         Ev_2620 e;
         Event_Construct(&e, D_0052ACC8);
         e.slot = slot;
@@ -92,7 +92,7 @@ extern void cMessage_dtor(Msg_INV* msg, int flags);
 int WeaponInv_SetClip(INV* self, unsigned char slot, int v, int quiet)
 {
     self->e[slot].d = v;
-    if (D_005721C8 && !quiet) {
+    if (g_IsMultiplayer && !quiet) {
         Msg_INV msg;
         Event_Construct(&msg, D_0052ACC8);
         msg.vtable = D_004DE610;
@@ -120,7 +120,7 @@ static inline void merge_flush_func_00142760(void) {}
 typedef struct { char pad[0xF0]; unsigned char state; char pad2[0x10C-0xF1]; int team; } S2960;
 int WeaponInv_IsSameAmmo(void* unused, S2960* a, S2960* b); /* gsynth: defined below */typedef struct { int a; int id; int c; int d; } E_830;
 typedef struct { int pad; E_830 e[7]; char pad2[0x84 - 0x74]; signed char held; } INV_830;
-extern int D_004FFD30;
+extern int g_WeaponDatabase;
 extern void* WeaponInv_GetHeldItem(INV_830* self);
 extern void* WeaponDb_Get(int db, int id);
 #if 0 /* merge_units */
@@ -141,7 +141,7 @@ int WeaponInv_AddAmmo(INV_830* self, void* who, int req)
     }
     for (i = 0; req && i < 6; i++) {
         if (i != (unsigned char)self->held && self->e[i].id != -1) {
-            if (WeaponInv_IsSameAmmo(self, WeaponDb_Get(D_004FFD30, self->e[i].id), who)) {
+            if (WeaponInv_IsSameAmmo(self, WeaponDb_Get(g_WeaponDatabase, self->e[i].id), who)) {
                 int n = WeaponInv_AddSpare(self, (unsigned char)i, req, 0);
                 total += n;
                 req -= n;

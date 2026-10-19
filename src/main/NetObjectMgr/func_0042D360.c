@@ -5,7 +5,7 @@
 
 extern "C" {
 extern RbTree D_005826E0;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005721C0;
 cGOBJ* Object_LookupById(const GobjId* id);
 void func_0042EE70(PendingTransferIterator* result, RbTree* tree, const GobjId* id);
@@ -37,7 +37,7 @@ static inline bool needs_transfer_update(cGOBJ* object)
 
 static inline int is_host(void)
 {
-    return D_005721C8 ? D_005721C0 : 1;
+    return g_IsMultiplayer ? D_005721C0 : 1;
 }
 
 static inline void assign_end(PendingTransferIterator* result, RbTree* tree)

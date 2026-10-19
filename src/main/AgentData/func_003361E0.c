@@ -32,7 +32,7 @@ typedef struct {
     unsigned char unkB74;
 } Agent_61E0;
 
-extern int D_00532AF4;
+extern int g_LevelRowCount;
 int func_00336440(BV_61E0* v);
 char* func_00336450(BV_61E0* v, int i);
 void AgentLevelVec_Resize(LvlVec_61E0* v, unsigned int n, const Lvl_61E0* value);
@@ -63,7 +63,7 @@ void AgentData_Reset(Agent_61E0* a)
     a->unkB50 = 0;
     a->unkB71 = 0;
     a->unkB70 = 0;
-    n = D_00532AF4;
+    n = g_LevelRowCount;
     e1.w[1] = -1;
     e1.w[0] = -1;
     e1.w[3] = 0;

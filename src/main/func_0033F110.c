@@ -18,7 +18,7 @@ extern char D_004B9C60[];
 extern char D_004B9C28[];
 static char* D_004928E0 = D_004B9C28;
 extern char D_004A7520[];
-extern char D_004FFB50[];
+extern char g_Game[];
 extern unsigned char D_00532FF0;
 extern int D_00532FF8;
 extern int D_00533000;
@@ -56,7 +56,7 @@ void func_0033F110(O* o)
     o->b78 = 1;
     w = Cast(GuiWidget_FindChildByName(o, D_004928E0), D_004A7520);
     if (w)
-        GuiTextWidget_SetText(w, AgentData_GetName(Agent_GetSelected(D_004FFB50, -1)), 0);
+        GuiTextWidget_SetText(w, AgentData_GetName(Agent_GetSelected(g_Game, -1)), 0);
     D_00532FF0 = 0;
     D_00532FF8 = 0;
     D_00533000 = 0;

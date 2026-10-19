@@ -16,7 +16,7 @@ extern void func_00175700();
 extern void func_0025E100();
 extern void func_0025E3E0();
 void * const D_004DC7F0[8] = { (void*)0x0, (void*)0x0, (void*)func_00175700, (void*)func_0025E100, (void*)func_0025E3E0, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
-extern int D_0049D010;
+extern int g_HumanActorClassKey;
 extern void Event_Construct(Msg_SB* msg, void* name);
 extern void Event_Send(Msg_SB* msg, void* target, int flags);
 extern void cMessage_dtor(Msg_SB* msg, int flags);
@@ -29,7 +29,7 @@ extern GObj_SB* GObj_IdentityB(void* o);int Script_SwitchBodies_2(void** args)
     b = NpcScript_GetReceiver(args[1]);
     a = (Plr_SB*)GObj_IdentityB(args[0]);
     bp = b->ctl;
-    if (a->kind == D_0049D010 && bp->kind == D_0049D010) {
+    if (a->kind == g_HumanActorClassKey && bp->kind == g_HumanActorClassKey) {
         Msg_SB msg;
         Event_Construct(&msg, D_004F80B8);
         msg.vtable = ((char*)D_004DC7F0);

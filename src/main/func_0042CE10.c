@@ -12,14 +12,14 @@ extern void func_0043FF70();
 extern void func_00440160();
 void * const D_004E1160[8] = { (void*)0x0, (void*)0x0, (void*)func_0042CED0, (void*)func_0043FF70, (void*)func_00440160, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
 extern unsigned char D_005721C0;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern char D_00583990;
 
 void func_0042CE10(int *arg0) {
     struct { char * f20[7]; int f3C; signed char f40[4]; int f44[3]; } sl;
     int var_v0;
 
-    if (D_005721C8 != 0) {
+    if (g_IsMultiplayer != 0) {
         var_v0 = D_005721C0;
     } else {
         var_v0 = 1;

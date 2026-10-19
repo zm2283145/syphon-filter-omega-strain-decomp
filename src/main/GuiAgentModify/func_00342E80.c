@@ -7,7 +7,7 @@
 #include "types.h"
 #include "GuiAgentModify_types.h"
 
-extern char D_0055DDA0[];
+extern char g_AgentPartCache[];
 extern int AgentPartCache_Unlock(void* p);
 extern void World_ClearPendingIfLoaded(void);
 extern GuiManagerState* Gui_GetScreenStack(void);
@@ -15,7 +15,7 @@ extern int GuiWidget_BaseSleep(void* self);
 extern int GuiWidget_Deinit(void* self);
 
 int GuiAgentModify_Deinit(void* self) {
-    AgentPartCache_Unlock(D_0055DDA0);
+    AgentPartCache_Unlock(g_AgentPartCache);
     World_ClearPendingIfLoaded();
     return GuiWidget_Deinit(self);
 }

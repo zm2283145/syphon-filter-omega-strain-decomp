@@ -11,7 +11,7 @@ struct PathNode_1790 { char pad[0x64]; unsigned int flags; };
 struct Route_1790 { char pad0[0x58]; int node; char pad5C[0x74 - 0x5C]; V* dest; };
 struct Npc_1790 { char pad0[0x68]; unsigned int flags; char pad6C[0x1AC - 0x6C]; V* pos; Route_1790* route; };
 extern "C" {
-extern char D_004D9180[], D_004FFB50[], D_005435A0[], D_004EA0B0[];
+extern char D_004D9180[], g_Game[], g_LosRequestMsgClass[], g_LosCheckService[];
 void Event_Construct(void*, void*);
 void cMessage_dtor(void*, int);
 Svc* Service_Lookup(void*, void*);
@@ -27,7 +27,7 @@ struct MsgB {
 };
 struct MsgLos : MsgB {
     void* a24; void* a28; int a2C; V pos; V dir; int a50; int a54; int n; unsigned char b5C;
-    MsgLos(void* s, void* u, const V& p, const V& d) : MsgB(D_005435A0) {
+    MsgLos(void* s, void* u, const V& p, const V& d) : MsgB(g_LosRequestMsgClass) {
         vtable = D_004D9180; a24 = s; a28 = u; a2C = 0; V* dp = &pos; Q16(dp, &p); dir = d; a50 = 0; a54 = 0; n = 4; b5C = 2; pos.w = 1.0f; dir.w = 0.0f; }
     __declspec(weak) __declspec(MSG_DTOR) ~MsgLos() { vtable = D_004D9180; }
 } __attribute__((aligned(16)));
@@ -66,7 +66,7 @@ unsigned char NpcAi_LosCheckFromDestination(Npc_1790* n)
     from.z += 4.5f;
     if (n->route->node >= 0 && (NpcPath_GetNode(n->route->node)->flags & 4)) d.z -= 3.0f;
     if (!IsZeroXYZ(&d)) {
-        Svc* svc = Service_Lookup(D_004FFB50, D_004EA0B0);
+        Svc* svc = Service_Lookup(g_Game, g_LosCheckService);
         {
             MsgLos m(n, 0, from, d);
             ok = svc->Post(&m);

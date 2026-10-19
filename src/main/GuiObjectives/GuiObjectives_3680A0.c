@@ -23,7 +23,7 @@ struct S3680A0 { char pad[0x48]; void* w48; char pad4C[0x5C - 0x4C]; int sel; };
 struct Hud3680A0 { char pad[0x6A0]; int a6A0; };
 
 extern "C" {
-extern Hud3680A0* D_004FFC2C;
+extern Hud3680A0* g_Hud;
 extern char D_00587C90[];
 void* ObjMan_GetService(void);
 T3680A0* ObjMan_GetObjective(void* mgr, int id);
@@ -58,7 +58,7 @@ extern "C" int GuiObjectives_HandleEvent(S3680A0* self, void* sender, unsigned s
                     void* b[1];
                     int t[1];
                     char buf[0x100];
-                    char* base = (char*)D_004FFC2C + 0x90;
+                    char* base = (char*)g_Hud + 0x90;
                     void* list = base + 0x24;
                     I3680A0* item;
                     N3680A0* n;
@@ -69,10 +69,10 @@ extern "C" int GuiObjectives_HandleEvent(S3680A0* self, void* sender, unsigned s
                         if (item->h.Get() != 0 && item->h.Get() == obj) {
                             char* name;
                             HudMarkers_SetHighlight(base, item);
-                            HudMap_Commit(D_004FFC2C->a6A0);
+                            HudMap_Commit(g_Hud->a6A0);
                             name = HudMarker_GetTickerText(item, buf);
                             if (name)
-                                Notify_Insert((char*)D_004FFC2C + 0x100, name, D_00587C90, 2, 1);
+                                Notify_Insert((char*)g_Hud + 0x100, name, D_00587C90, 2, 1);
                         }
                     }
                 }
@@ -94,9 +94,9 @@ struct Ev_368300 { unsigned short type; unsigned short b2; char pad4[2]; unsigne
 struct G_368300 { char pad[0x6A8]; unsigned char b6A8; };
 extern "C" {
 #if 0 /* merge_units */
-extern G_368300* D_004FFC2C;
+extern G_368300* g_Hud;
 #endif /* merge_units */
-#define D_004FFC2C (*(G_368300 **)&D_004FFC2C) /* merge_units */
+#define g_Hud (*(G_368300 **)&g_Hud) /* merge_units */
 
 void GuiObjectives_SetTab(S_368300* o, int page, int f);
 M_368300* Gui_GetScreenStack(void);
@@ -132,7 +132,7 @@ int GuiObjectives_HandleInput(S_368300* o, Ev_368300* ev)
         GuiStartMenu_ReturnToMenu(o);
         return 1;
     }
-    if (Plain2_368300(ev, 0x800) && D_004FFC2C->b6A8) {
+    if (Plain2_368300(ev, 0x800) && g_Hud->b6A8) {
         GuiStartMenu_CloseAll(o);
         return 1;
     }
@@ -140,7 +140,7 @@ int GuiObjectives_HandleInput(S_368300* o, Ev_368300* ev)
         && (Gui_GetScreenStack()->focus == o->w68 || Gui_GetScreenStack()->focus == o->w6C)) return 1;
     return 0;
 }
-#undef D_004FFC2C /* merge_units */
+#undef g_Hud /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00368300 */
 
@@ -156,11 +156,11 @@ extern void GuiTextWidget_SetColour(void* text, void* color);
 extern void GuiWidget_Update(S368620* self, float dt);
 extern int sprintf(char* buf, const char* fmt, ...);
 extern char D_004BBC48[];
-extern char D_004FFB50[];
+extern char g_Game[];
 #if 0 /* merge_units */
-extern int D_004FFC2C;
+extern int g_Hud;
 #endif /* merge_units */
-#define D_004FFC2C (*(int*)&D_004FFC2C) /* merge_units */
+#define g_Hud (*(int*)&g_Hud) /* merge_units */
 
 extern char D_00587D00[];
 extern char D_00587D10[];
@@ -173,14 +173,14 @@ void GuiObjectives_Update(S368620* self, float dt) {
     GuiObjectives_FillList(self);
     if (self->text != 0) {
         if (self->useTimer) {
-            f = Hud_GetMissionTime(D_004FFC2C);
+            f = Hud_GetMissionTime(g_Hud);
         } else {
-            f = Agent_GetSelected(D_004FFB50, -1)->time;
+            f = Agent_GetSelected(g_Game, -1)->time;
             asm { .set reorder } /* scheduling barrier: keeps cvt at the join, not in the b delay slot */
         }
         { int t = f; int m = t / 60; sprintf(buf, D_004BBC48, m, t - m * 60); }
         if (!self->useTimer) {
-            if (Agent_GetSelected(D_004FFB50, -1)->flagB71) {
+            if (Agent_GetSelected(g_Game, -1)->flagB71) {
                 GuiTextWidget_SetColour(self->text, D_00587D00);
                 GuiTextWidget_SetColour(self->text2, D_00587D00);
             } else {
@@ -191,6 +191,6 @@ void GuiObjectives_Update(S368620* self, float dt) {
         GuiTextWidget_SetText(self->text, buf, 0);
     }
 }
-#undef D_004FFC2C /* merge_units */
+#undef g_Hud /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00368620 */

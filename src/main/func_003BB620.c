@@ -1,11 +1,11 @@
 /* Set the 1-bit field at bit 5 and the 3-bit field at bits 6..8 of the 64-bit
- * register word at +0x58 from flag bits 2/3 of D_005392D0. */
+ * register word at +0x58 from flag bits 2/3 of g_DrawMode. */
 typedef struct {
     char pad[0x58];
     unsigned long reg;              /* 0x58 */
 } Obj003BB620;
 
-extern int D_005392D0;
+extern int g_DrawMode;
 
 unsigned long* Gs_MakeTex1(Obj003BB620* self)
 {
@@ -16,7 +16,7 @@ unsigned long* Gs_MakeTex1(Obj003BB620* self)
     int flags;
     enable = 0;
     mode = 0;
-    flags = D_005392D0;
+    flags = g_DrawMode;
     bit4 = (flags & 4) != 0;
     bit8 = (flags & 8) != 0;
     if (flags & 0xC) {

@@ -15,7 +15,7 @@ typedef struct {
     Vec_F2A0 pos; char pad40[0x140]; int x180; short x184; unsigned char x186;
 } Src_F2A0;
 extern "C" {
-extern char D_004F53B8[];
+extern char g_PlaySndMsgClass[];
 extern char D_004DAE30[];
 extern Voice_F190* ActorRef_Copy(void* ref);
 }
@@ -45,7 +45,7 @@ static inline unsigned char GetX186(Src_F2A0* s) { return s->x186; }
 static inline void SetX186(SoundRequest* p, unsigned char v) { p->x186 = v; }
 extern "C" SoundEventP* SoundPosRequest_Ctor(SoundEventP* ev, Src_F2A0* src, Vec_F2A0* pos) {
     SoundRequest* p;
-    Event_Construct(ev, D_004F53B8);
+    Event_Construct(ev, g_PlaySndMsgClass);
     ev->vtable = D_004DAE30;
     p = &ev->req;
     p->voiceId = -2;

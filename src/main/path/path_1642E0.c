@@ -61,7 +61,7 @@ int NpcRoute_Release(...);
 int func_00164850(...);                            
 extern int D_0049C1B8;
 extern int D_004EE118;
-extern unsigned char D_00533880;
+extern unsigned char g_ProfileLockEnabled;
 }
 static inline int Identity(int p){return p;}
 #define DECLS int sp48; int sp44; int sp40;

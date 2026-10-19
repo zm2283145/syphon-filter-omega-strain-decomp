@@ -19,7 +19,7 @@ extern void cEquipGogglesMsg_v04();
 extern void cEquipGogglesMsg_v05();
 extern void func_002823E0();
 void * const D_004DA8B0[8] = { (void*)0x0, (void*)0x0, (void*)cEquipGogglesMsg_dtor, (void*)cEquipGogglesMsg_v01, (void*)func_002823E0, (void*)Message_GetScriptTypeKey, (void*)cEquipGogglesMsg_v04, (void*)cEquipGogglesMsg_v05 };
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern Message* Event_Construct(Message*, void*);
 extern void cMessage_dtor(void* msg, int flags);
 extern int Secondary_RequestOneShot(int target, Key_1992B0* key, int n, AnimEvent* ev);
@@ -53,7 +53,7 @@ void Goggles_SetMode(O_1992B0* o, unsigned char on, int f)
             cMessage_dtor(&ev, 0);
             if (r) {
                 o->b33E5 = 1;
-                if (D_005721C8 && !f) {
+                if (g_IsMultiplayer && !f) {
                     Msg3_1992B0* pm = &m;
                     Event_Construct(&pm->base, D_004EEE80);
                     pm->base.vtable = D_004DCF10;

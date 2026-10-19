@@ -224,7 +224,7 @@ extern "C" void Npc_DeadStateDrop(char * arg0) {
             if (x != 0) {
                 WorldInv_AddArmor(F_(arg0, 0x3464, int), x, F_(arg0, 0x339C, int));
             }
-            unsigned char on = *(volatile unsigned char*)&D_005721C8; if (on != 0) { int h; int id; int a = D_005721A8; if (on) { if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, a); id = D_00494178; } else id = 0;
+            unsigned char on = *(volatile unsigned char*)&g_IsMultiplayer; if (on != 0) { int h; int id; int a = D_005721A8; if (on) { if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, a); id = D_00494178; } else id = 0;
                 h = F_(arg0, 0x3464, int);
                 Event_Construct(sp40, &D_005061B0);
                 sp40[0] = &(*(char*)D_004DCEF0);

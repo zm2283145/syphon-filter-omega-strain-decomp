@@ -17,7 +17,7 @@ typedef struct EventMsg {
     char partB[0xBC];           /* 0x114 */
 } EventMsg;
 
-extern int D_004FFB50;
+extern int g_Game;
 extern int D_004DADF0;
 extern void SoundRequest_Ctor(SndCmd*, signed char, int, int, int);
 extern void SoundEvent_Ctor(EventMsg*, void*, int);
@@ -34,7 +34,7 @@ void Global_StopSnd(int channel, int id) {
     FileMan_Release(cmd.partB, -1);
     FileMan_Release(cmd.partA, -1);
     msg.immediate = 1;
-    Event_Send(&msg, &D_004FFB50, 0);
+    Event_Send(&msg, &g_Game, 0);
     msg.vtable = &D_004DADF0;
     FileMan_Release(msg.partB, -1);
     FileMan_Release(msg.partA, -1);

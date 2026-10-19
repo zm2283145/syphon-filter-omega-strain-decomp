@@ -44,7 +44,7 @@ static inline void merge_flush_func_00285D60(void) {}
 #pragma cplusplus on
 struct T285EE0 { void* vt; char pad[0x5C]; int x60; void* p64; void* p68; void* p6C; };
 extern "C" {
-extern char D_004DCF90[];
+extern char cTank_vtable[];
 extern char g_TargetVisMgr[];
 void TargetVis_Unregister(void* mgr, int id);
 void cGOBJ_dtor(void* p, int f);
@@ -60,7 +60,7 @@ static inline void Rel285EE0(void* p, int line)
 extern "C" T285EE0* cTank_dtor(T285EE0* self, short del)
 {
     if (self) {
-        self->vt = D_004DCF90;
+        self->vt = cTank_vtable;
         Rel285EE0(self->p64, 0x1DA);
         Rel285EE0(self->p68, 0x1DD);
         Rel285EE0(self->p6C, 0x1E0);
@@ -93,7 +93,7 @@ int NetMap_BindReceiver(int id, int owner, Tank_60F0* o);
 void cGOBJ_ctor(Tank_60F0* o, void* id, int a, int* b);
 void IdMgr_Allocate(void* out, int kind);
 }
-static inline int NetHostOk_60F0(void) { return D_005721C8 ? D_005721C0 : 1; }
+static inline int NetHostOk_60F0(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
 extern "C" Tank_60F0* cTank_ctor(Tank_60F0* o, int arg1)
 {
     char id[4];
@@ -101,7 +101,7 @@ extern "C" Tank_60F0* cTank_ctor(Tank_60F0* o, int arg1)
     z[0] = 0;
     IdMgr_Allocate(id, 0xF9);
     cGOBJ_ctor(o, id, 0, z);
-    *(char**)o = D_004DCF90;
+    *(char**)o = cTank_vtable;
     o->f60 = arg1;
     o->f6C = 0;
     o->f68 = 0;
@@ -111,7 +111,7 @@ extern "C" Tank_60F0* cTank_ctor(Tank_60F0* o, int arg1)
     Object_Register(o);
     o->activate(1);
     o->f74 = 0;
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         o->id10 = o->idC;
         if (!NetHostOk_60F0()) o->b14 = 0;
         {
@@ -153,13 +153,13 @@ void cGOBJ_ctor(Tank_6270* o, void* id, int a, int* b);
 #define cGOBJ_ctor(a0, a1, a2, a3) (cGOBJ_ctor((Tank_60F0 *)(a0), (a1), (a2), (a3))) /* merge_units */
 
 }
-static inline int NetHostOk_6270(void) { return D_005721C8 ? D_005721C0 : 1; }
+static inline int NetHostOk_6270(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
 extern "C" Tank_6270* cTank_ctor2(Tank_6270* o, int arg1, void* id)
 {
     int z[1];
     z[0] = 0;
     cGOBJ_ctor(o, id, 0, z);
-    *(char**)o = D_004DCF90;
+    *(char**)o = cTank_vtable;
     o->f60 = arg1;
     o->f6C = 0;
     o->f68 = 0;
@@ -169,7 +169,7 @@ extern "C" Tank_6270* cTank_ctor2(Tank_6270* o, int arg1, void* id)
     Object_Register(o);
     o->activate(1);
     o->f74 = 0;
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         o->id10 = o->idC;
         if (!NetHostOk_6270()) o->b14 = 0;
         {

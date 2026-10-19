@@ -87,7 +87,7 @@ typedef struct G {
     int f10; int pad14[4]; int f24; int f28; int pad2C[3]; int f38; int f3C; int pad40[2]; TexMgr* f48; int pad4C[33]; int fD0; int padD4; long long fD8;
 } G;
 extern G D_00539210;
-extern char D_005381F0[];
+extern char g_Video[];
 extern long long D_005381F8;
 extern long long D_004BC1B0[];
 void Renderer_BindTexture(void* m, int idx);
@@ -107,10 +107,10 @@ RIter* func_002B3920(RIter* d, RIter* s);
 #define D_00539228 (D_00539210.f28)
 #define D_00539238 (D_00539210.f38)
 #define D_0053923C (D_00539210.f3C)
-#define D_00539248 (D_00539210.f48)
-#define D_005392D0 (D_00539210.fD0)
+#define g_TextureMgr (D_00539210.f48)
+#define g_DrawMode (D_00539210.fD0)
 #define D_005392D8 (D_00539210.fD8)
-#define RS ((Rs*)D_005381F0)
+#define RS ((Rs*)g_Video)
 
 static inline void GQ(void* d, const void* s) { __int128 q; __asm__ volatile("lq %1, 0(%2); sq %1, 0(%0)" : "+r"(d), "=&r"(q) : "r"(s) : "memory"); }
 static inline void CP(V* d, const V* s) { __int128 q; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=r"(q) : "r"(d), "r"(s) : "memory"); }
@@ -167,7 +167,7 @@ static inline void Emit_(const V& pos, const V4c& col, const V4c& uv)
     V tmp;
     Ent* e;
     float u;
-    func_0025CA40(D_005381F0);
+    func_0025CA40(g_Video);
     e = &RS->ents[D_00539210.f10];
     Vec4_Copy(&e->pos[D_00539224 - 1], &pos);
     GuiBatch_AddVertexColor(&e->c30[D_00539224 - 1], (V*)&col);
@@ -177,8 +177,8 @@ static inline void Emit_(const V& pos, const V4c& col, const V4c& uv)
 }
 static inline void Emit(const V& pos, const V4c& col, const V4c& uv) { Emit_(pos, col, uv); }
 static inline void TexFrame(TexMgr* m, int idx, unsigned int f) { Tex* t = m->tex[idx]; { if (f != t->frame && f < t->info->count) { t->b60 = 0; t->b61 = 0; t->frame = f; } } }
-static inline unsigned char Prim(void) { if (D_005392D0 & 1) return 3; return 2; }
-static inline int Mode(void) { if (D_005392D0 & 1) return 0x41; return 0x62; }
+static inline unsigned char Prim(void) { if (g_DrawMode & 1) return 3; return 2; }
+static inline int Mode(void) { if (g_DrawMode & 1) return 0x41; return 0x62; }
 
 static inline RIter It0(RNode* n) { RIter t; func_002B3940(&t, n); return t; }
 static inline RIter Begin(RList* l) { return It0(func_002B3950(l)->next); }
@@ -196,8 +196,8 @@ extern "C" void WaterFx_RenderRipples(Water* w)
         if (r->blend == 3) a *= 0.7f;
         s = r->alpha * a;
         if (a <= 0.0078125f) continue;
-        TexFrame(D_00539248, w->tex, r->frame);
-        Renderer_BindTexture(D_00539248, w->tex);
+        TexFrame(g_TextureMgr, w->tex, r->frame);
+        Renderer_BindTexture(g_TextureMgr, w->tex);
         { int bl = r->blend; D_005392D8 = D_004BC1B0[bl]; }
         k = w->base + w->range * (1.0f - r->age / 1.2f);
         V c0, c1, c2, c3;
@@ -221,13 +221,13 @@ extern "C" void WaterFx_RenderRipples(Water* w)
             e->c30 += D_00539224;
             e->c34 += D_00539224;
         }
-        func_0025CD10(D_005381F0);
+        func_0025CD10(g_Video);
         D_00539224 = 0;
         Emit(c0, V4c(1.0f, 1.0f, 1.0f, s), V4c(0.0f, 1.0f, 1.0f, 0.0f));
         Emit(c1, V4c(1.0f, 1.0f, 1.0f, a), V4c(0.0f, 0.0f, 1.0f, 0.0f));
         Emit(c2, V4c(1.0f, 1.0f, 1.0f, s), V4c(1.0f, 1.0f, 1.0f, 0.0f));
         Emit(c3, V4c(1.0f, 1.0f, 1.0f, a), V4c(1.0f, 0.0f, 1.0f, 0.0f));
-        Renderer_FlushBatch(D_005381F0);
+        Renderer_FlushBatch(g_Video);
     }
     D_005392D8 = D_004BC1B0[0];
 }

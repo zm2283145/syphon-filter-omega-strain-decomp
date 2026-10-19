@@ -23,12 +23,12 @@ struct BP_7A40 {
 struct List_7A40 { int pad0; int count; BP_7A40** items; };
 
 extern "C" {
-extern List_7A40* D_004F7F30;
+extern List_7A40* g_BackpackList;
 extern int D_0048AF10;
 extern int D_00494178;
 extern int D_005721A8;
-extern unsigned char D_005721C8;
-extern int D_004FFBD0;
+extern unsigned char g_IsMultiplayer;
+extern int g_HotboxTracker;
 int func_001A3730(Owner_7A40* o);
 int NetGame_InitLocalSlot(int*, int);
 void Hotbox_RemoveObjectBox(int, void*);
@@ -44,7 +44,7 @@ static inline bool HolderReady(BP_7A40* bp) {
 
 #pragma opt_strength_reduction off
 extern "C" void Backpack_CheckCap(void) {
-    List_7A40* list = D_004F7F30;
+    List_7A40* list = g_BackpackList;
     int n;
     int cnt;
     int i;
@@ -62,7 +62,7 @@ extern "C" void Backpack_CheckCap(void) {
         int me;
         {
             int a = D_005721A8;
-            if (D_005721C8) {
+            if (g_IsMultiplayer) {
                 if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, a);
                 me = D_00494178;
             } else me = 0;
@@ -70,7 +70,7 @@ extern "C" void Backpack_CheckCap(void) {
         int j;
         for (j = 0; j < n; j++) {
             BP_7A40* bp = list->items[j];
-            if (!D_005721C8 || bp->owner == me) {
+            if (!g_IsMultiplayer || bp->owner == me) {
                 if (HolderReady(bp)) {
                     if (bp->level > best && !bp->b2F2 && bp->timer < 0.0f) best = bp->level;
                 }
@@ -82,7 +82,7 @@ extern "C" void Backpack_CheckCap(void) {
             int k;
             for (k = 0; k < n; k++) {
                 BP_7A40* bp = list->items[k];
-                if (!D_005721C8 || bp->owner == me) {
+                if (!g_IsMultiplayer || bp->owner == me) {
                     if (HolderReady(bp) && bp->level == best && !bp->b2F2 && bp->timer < 0.0f) {
                         if (bp->dist < bestd) {
                             bestd = bp->dist;
@@ -94,7 +94,7 @@ extern "C" void Backpack_CheckCap(void) {
             sel->b2F2 = 1;
             sel->timer = 0.0f;
             if (sel->fx) {
-                Hotbox_RemoveObjectBox(D_004FFBD0, sel->fx);
+                Hotbox_RemoveObjectBox(g_HotboxTracker, sel->fx);
                 Object_Unregister(sel->fx);
                 Object_DeleteLater(sel->fx, 0.1f);
                 sel->fx = 0;

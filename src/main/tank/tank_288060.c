@@ -69,13 +69,13 @@ typedef struct {
 } Ui288060;
 
 extern "C" int D_0048B3F0;
-extern "C" Cfg288060* D_0055A830;
+extern "C" Cfg288060* g_MemCard;
 extern "C" unsigned char D_004FFBB8;
 extern "C" unsigned char D_004FFBB1;
 extern "C" Ui288060* D_004FFC04;
 extern "C" char D_004A95E8[];
-extern "C" signed char D_004FFBA0;
-extern "C" signed char D_004FFBA1;
+extern "C" signed char g_GameState;
+extern "C" signed char g_PrevGameState;
 
 extern "C" Ent288060* GuiWidget_FindChildByName(Self288060* self, int id);
 extern "C" unsigned char GuiTitleScreen_SavedAgentExists(void);
@@ -89,7 +89,7 @@ extern "C" void GuiWidget_Update(Self288060* self, float dt);
 extern "C" void GuiTitleScreen_Update(Self288060* self, float dt)
 {
     Ent288060* e = GuiWidget_FindChildByName(self, D_0048B3F0);
-    unsigned char flag = D_0055A830->x59D != 0;
+    unsigned char flag = g_MemCard->x59D != 0;
     if (e) {
         unsigned char s = GuiTitleScreen_SavedAgentExists();
         if (!s && Gui_GetScreenStack()->x20 == e) {
@@ -110,8 +110,8 @@ extern "C" void GuiTitleScreen_Update(Self288060* self, float dt)
             if (D_004FFBB1 && t - self->x4C > 30.0f) {
                 D_004FFC04->x13C = 1;
                 String_Copy(D_004FFC04->name, D_004A95E8);
-                D_004FFBA1 = D_004FFBA0;
-                D_004FFBA0 = 4;
+                g_PrevGameState = g_GameState;
+                g_GameState = 4;
             }
         }
     }
@@ -154,7 +154,7 @@ int GuiTitleScreen_HandleInput(int arg0) {
 #include "loose01_types.h"
 
 extern int Agent_GetSelected(void*, int);
-extern void* D_004FFB50;
+extern void* g_Game;
 #if 0 /* merge_units */
 extern int D_004FFC04;
 #endif /* merge_units */
@@ -167,7 +167,7 @@ extern int GuiWidget_BaseWake(Unk288A80*);
 
 int GuiTitleScreen_Wake(Unk288A80* self) {
     GuiWidget_BaseWake(self);
-    AgentData_ResetProfileNames(Agent_GetSelected(&D_004FFB50, -1));
+    AgentData_ResetProfileNames(Agent_GetSelected(&g_Game, -1));
     FrontEnd_SetMusic(D_004FFC04, 0);
     return GuiTitleScreen_CheckMemCard(self, 0);
 }

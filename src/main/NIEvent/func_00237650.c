@@ -13,7 +13,7 @@ extern void func_0023FF50();
 void * const D_004DC2D0[8] = { (void*)0x0, (void*)0x0, (void*)func_00237720, (void*)func_0023FF50, (void*)func_0023F920, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
 extern char D_004F7C38;
 extern unsigned char D_005721C0;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 
 int Script_cNIEventOBJ_DeactivateCamera(void **arg0) {
     struct { char * f20[9]; signed char f44[12]; } sl;
@@ -26,8 +26,8 @@ int Script_cNIEventOBJ_DeactivateCamera(void **arg0) {
         temp_a0 = F_(temp_s0, 0x140, int);
         if (temp_a0 != 0) {
             cNIEventOBJ_DeactivateCamera(temp_a0);
-            if (D_005721C8 != 0) {
-                if (D_005721C8 != 0) {
+            if (g_IsMultiplayer != 0) {
+                if (g_IsMultiplayer != 0) {
                     var_v0 = D_005721C0;
                 } else {
                     var_v0 = 1;

@@ -47,8 +47,8 @@ static inline void merge_flush_func_00135020(void) {}
 #pragma push /* merge_units */
 #pragma cplusplus on
 extern "C" {
-extern unsigned char D_00533880;
-extern int D_00533888;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
 void Alloc_Lock(int id);
 void Alloc_Unlock(int id);
 }struct Cfg_1350E0 { char pad[0xC4]; int fC4; };
@@ -109,8 +109,8 @@ extern char D_004D9100[];
 extern char D_004DAE30[];
 extern char D_004F2CC0[];
 extern char D_004F53F0[];
-extern char D_004FFB50[];
-extern char D_004FFC90[];
+extern char g_Game[];
+extern char g_LevelDirName[];
 extern Shd_1350E0* D_0053924C;
 extern char D_0053B540[];
 extern char D_0053BB90[];
@@ -205,13 +205,13 @@ extern "C" void World_Setup(World_1350E0* w)
     IdMgr_Init();
     {
         void* p;
-        { if (D_00533880) Alloc_Lock(9); D_00533888++; p = Mem_Alloc(0, 0x24, D_0049A890, 0x1E3); if (D_00533880) Alloc_Unlock(9); D_00533888--; }
+        { if (g_ProfileLockEnabled) Alloc_Lock(9); g_ProfileLockDepth++; p = Mem_Alloc(0, 0x24, D_0049A890, 0x1E3); if (g_ProfileLockEnabled) Alloc_Unlock(9); g_ProfileLockDepth--; }
         if (p) GobjScopeBase_Ctor(p, 0x82, World_GetActorArray());
         w->f1F4 = p;
     }
     {
         void* p;
-        { if (D_00533880) Alloc_Lock(9); D_00533888++; p = Mem_Alloc(0, 0x24, D_0049A890, 0x1E4); if (D_00533880) Alloc_Unlock(9); D_00533888--; }
+        { if (g_ProfileLockEnabled) Alloc_Lock(9); g_ProfileLockDepth++; p = Mem_Alloc(0, 0x24, D_0049A890, 0x1E4); if (g_ProfileLockEnabled) Alloc_Unlock(9); g_ProfileLockDepth--; }
         if (p) GobjScopeBase_Ctor(p, 0x3E8, World_GetActorArray());
         w->f1F8 = p;
     }
@@ -219,7 +219,7 @@ extern "C" void World_Setup(World_1350E0* w)
     App_GetInstance();
     if (w->f98 == 0) {
         Coll_1350E0* p;
-        { if (D_00533880) Alloc_Lock(9); D_00533888++; p = (Coll_1350E0*)Mem_Alloc(0, 0x10, D_0049A890, 0x1EC); if (D_00533880) Alloc_Unlock(9); D_00533888--; }
+        { if (g_ProfileLockEnabled) Alloc_Lock(9); g_ProfileLockDepth++; p = (Coll_1350E0*)Mem_Alloc(0, 0x10, D_0049A890, 0x1EC); if (g_ProfileLockEnabled) Alloc_Unlock(9); g_ProfileLockDepth--; }
         if (p) {
             func_001366F0(p);
             p->bC = 1;
@@ -228,15 +228,15 @@ extern "C" void World_Setup(World_1350E0* w)
     }
     if (w->f90 == 0) {
         Coll_1350E0* p;
-        { if (D_00533880) Alloc_Lock(9); D_00533888++; p = (Coll_1350E0*)Mem_Alloc(0, 0x10, D_0049A890, 0x1EF); if (D_00533880) Alloc_Unlock(9); D_00533888--; }
+        { if (g_ProfileLockEnabled) Alloc_Lock(9); g_ProfileLockDepth++; p = (Coll_1350E0*)Mem_Alloc(0, 0x10, D_0049A890, 0x1EF); if (g_ProfileLockEnabled) Alloc_Unlock(9); g_ProfileLockDepth--; }
         if (p) {
             func_001365E0(p);
             p->bC = 1;
         }
         w->f90 = p;
     }
-    Loc_LoadMissionPool(D_0048B2F8, D_004FFC90);
-    sprintf(path, D_0049AA70, D_0048B2F8, D_004FFC90);
+    Loc_LoadMissionPool(D_0048B2F8, g_LevelDirName);
+    sprintf(path, D_0049AA70, D_0048B2F8, g_LevelDirName);
     func_0036E4B0(&pf, path, 0, 0);
     if ((unsigned char)FileMan_FindMember(&pf)) {
         sprintf(path, D_0049AA90, D_0048B2F8);
@@ -245,13 +245,13 @@ extern "C" void World_Setup(World_1350E0* w)
     ParticleSystem_Construct(D_0053B540, 0x1388);
     {
         void* p;
-        { if (D_00533880) Alloc_Lock(9); D_00533888++; p = Mem_Alloc(0, 0x230, D_0049A890, 0x20C); if (D_00533880) Alloc_Unlock(9); D_00533888--; }
+        { if (g_ProfileLockEnabled) Alloc_Lock(9); g_ProfileLockDepth++; p = Mem_Alloc(0, 0x230, D_0049A890, 0x20C); if (g_ProfileLockEnabled) Alloc_Unlock(9); g_ProfileLockDepth--; }
         if (p) p = DecalMgr_ctor(p, 0x64, 0x14);
         w->fEC = p;
     }
     {
         void* p;
-        { if (D_00533880) Alloc_Lock(9); D_00533888++; p = Mem_Alloc(0, 0xC, D_0049A890, 0x20F); if (D_00533880) Alloc_Unlock(9); D_00533888--; }
+        { if (g_ProfileLockEnabled) Alloc_Lock(9); g_ProfileLockDepth++; p = Mem_Alloc(0, 0xC, D_0049A890, 0x20F); if (g_ProfileLockEnabled) Alloc_Unlock(9); g_ProfileLockDepth--; }
         if (p) ScalarCollection_Init(p);
         w->f8C = p;
     }
@@ -267,7 +267,7 @@ extern "C" void World_Setup(World_1350E0* w)
     Pad_EnableVibration(w->f1DC->b5);
     {
         Los_1350E0* p;
-        { if (D_00533880) Alloc_Lock(9); D_00533888++; p = (Los_1350E0*)Mem_Alloc(0, 0x4C, D_0049A890, 0x22E); if (D_00533880) Alloc_Unlock(9); D_00533888--; }
+        { if (g_ProfileLockEnabled) Alloc_Lock(9); g_ProfileLockDepth++; p = (Los_1350E0*)Mem_Alloc(0, 0x4C, D_0049A890, 0x22E); if (g_ProfileLockEnabled) Alloc_Unlock(9); g_ProfileLockDepth--; }
         if (p) {
             LosReceiver_Construct(p, 0x1E);
             p->vtbl = D_004D9100;
@@ -282,7 +282,7 @@ extern "C" void World_Setup(World_1350E0* w)
     FileMan_Release(req.partB, -1);
     FileMan_Release(req.partA, -1);
     m.flag = 1;
-    Event_Send(&m, D_004FFB50, 0);
+    Event_Send(&m, g_Game, 0);
     Level_LoadSkas(w->f88, w->f3C);
     Loader_LoadLevelData(w->f88, w->f3C);
     sprintf(arc, D_0049AAC0, D_0048B2F8);

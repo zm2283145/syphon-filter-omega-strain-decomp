@@ -93,7 +93,7 @@ struct V0035D1F0 { virtual void v0(int f); virtual int v1(); virtual int v2(); v
 struct O0035D1F0 { void* vt; char pad[0x1A0]; V0035D1F0* items[4]; V0035D1F0* p1B4; };
 extern "C" {
 
-extern char D_0055DDA0[];
+extern char g_AgentPartCache[];
 extern char D_004DF140[];
 extern char D_004E1220[];
 extern int D_00506500;

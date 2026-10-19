@@ -48,7 +48,7 @@ typedef struct GuiWidget43BEF0 {
 /* Widget built by GuiBitmapWidget_ctor (vtable D_004E0FC0); owns a registry handle. */
 typedef struct GuiWidget43CB20 {
     GuiWidget base;                 /* 0x00 */
-    int handle;                     /* 0x48 -1 = none, released through D_00539248 */
+    int handle;                     /* 0x48 -1 = none, released through g_TextureMgr */
     int unk4C;                      /* 0x4C */
     int unk50;                      /* 0x50 */
     int unk54;                      /* 0x54 */
@@ -109,10 +109,10 @@ typedef struct GuiWidget456D90 {
 typedef struct GuiWidget464B30 {
     GuiWidget base;                 /* 0x00 */
     int child;                      /* 0x48 child found by GuiWidget_FindChildByName */
-    int unk4C;                      /* 0x4C copied from (*D_004FFC2C)->unk6A0 */
+    int unk4C;                      /* 0x4C copied from (*g_Hud)->unk6A0 */
 } GuiWidget464B30;
 
-/* Global object reached through D_004FFC2C (only the field read here). */
+/* Global object reached through g_Hud (only the field read here). */
 typedef struct Global4FFC2C {
     char pad000[0x6A0];
     int unk6A0;                     /* 0x6A0 */

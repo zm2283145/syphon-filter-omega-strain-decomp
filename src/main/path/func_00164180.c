@@ -9,7 +9,7 @@ extern void NpcRoute_HandleRouteLosResult(CxRequest*, void*);
 extern void NpcRoute_HandleLosResult(CxRequest*, void*);
 extern int D_004ED9B8;
 extern unsigned char D_004ED9D0;
-extern int D_005435A8;
+extern int g_LosResultMsgClass;
 extern int D_005436B0;
 
 unsigned char NpcRouteMgr_HandleMessage(CxRouter* self, char* event) {
@@ -21,7 +21,7 @@ unsigned char NpcRouteMgr_HandleMessage(CxRouter* self, char* event) {
         type=*Event_GetType(event);
         if(type!=D_004ED9B8) {
             type=*Event_GetType(event);
-            if(type==D_005435A8) {
+            if(type==g_LosResultMsgClass) {
                 if(D_004ED9D0==2) {
                     D_004ED9D0=0;
                 } else if(self->count>0) {

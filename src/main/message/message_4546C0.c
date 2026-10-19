@@ -1,7 +1,7 @@
 #include "types.h"
 #include "sound_event.h"
 typedef struct { char pad[0x4C]; void* f4C; char f50[4]; } S_4546C0;
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_004DADF0[];
 extern char D_004DAE10[];
 extern void GuiSubTitleDisplay_Clear(void*);
@@ -17,7 +17,7 @@ void GuiRadioLog_Play(S_4546C0* self, char* name)
 
     SoundEvent_Ctor(&m1, self->f50, 0);
     m1.kind = 1;
-    Event_Send(&m1, D_004FFB50, 1);
+    Event_Send(&m1, g_Game, 1);
     if (self->f4C)
         GuiSubTitleDisplay_Clear(self->f4C);
     m1.vtable = D_004DADF0;
@@ -30,7 +30,7 @@ void GuiRadioLog_Play(S_4546C0* self, char* name)
     SoundAction_CtorVoice(self->f50, 4, name, 0, 0x3E8);
     SoundMsg_WrapAction(&m2, self->f50);
     m2.kind = 1;
-    Event_Send(&m2, D_004FFB50, 1);
+    Event_Send(&m2, g_Game, 1);
     m2.vtable = D_004DAE10;
     FileMan_Release(&m2.req.b, -1);
     FileMan_Release(&m2.req.a, -1);

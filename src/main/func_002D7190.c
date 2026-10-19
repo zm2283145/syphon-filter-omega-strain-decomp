@@ -5,7 +5,7 @@ typedef struct { int f0; int f4; signed char f8; char p9[3]; int fC; int f10; in
 typedef struct { void* vt; char p4[0x20]; int f24; int f28; signed char f2C; char p2D[3]; int f30; int f34; int f38; } Msg2D7190;
 extern "C" {
 extern unsigned char D_005721D0;
-extern unsigned char D_004FFBA0;
+extern unsigned char g_GameState;
 extern char D_0051F0A8[], D_004DE4D0[];
 extern void Event_Construct(Msg2D7190* e, void* type);
 extern void** NetMap_Lookup(int);
@@ -16,7 +16,7 @@ extern void cMessage_dtor(Msg2D7190*, int);
 #pragma opt_propagation off
 extern "C" int func_002D7190(int a0, int a1, int a2, Pk2D7190* arg) {
     NetRecvGuard g;
-    if (D_005721D0 && D_004FFBA0 != 0x14) {
+    if (D_005721D0 && g_GameState != 0x14) {
         Msg2D7190 msg;
         void** obj;
         Pk2D7190* p = arg;

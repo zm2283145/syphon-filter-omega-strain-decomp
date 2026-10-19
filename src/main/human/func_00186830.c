@@ -9,10 +9,10 @@ void ScreenFx_Start(void*, int, float, float, float, float);
 void Event_Construct(Msg_6830*, void*);
 void Event_Send(Msg_6830*, void*, int);
 void cMessage_dtor(Msg_6830*, int);
-extern void* D_004FFC30;
+extern void* g_VisionFxMan;
 extern float D_0048A2C8;
-extern unsigned char D_005721C8;
-extern char D_0055D480[];
+extern unsigned char g_IsMultiplayer;
+extern char g_ActorActionMsgClass[];
 extern char D_004E01C0[];
 extern char D_004E0840[];
 }
@@ -23,10 +23,10 @@ static inline unsigned char IsPlayer_6830(Hum_6830* h) { unsigned char r = 0; if
 extern "C" void Actor_ApplyBlind(Hum_6830* h, int silent, float v)
 {
     h->blind = v;
-    if (h->alive && IsPlayer_6830(h)) ScreenFx_Start(D_004FFC30, 1, 0.0f, D_0048A2C8, v, v);
-    if (D_005721C8 && !silent) {
+    if (h->alive && IsPlayer_6830(h)) ScreenFx_Start(g_VisionFxMan, 1, 0.0f, D_0048A2C8, v, v);
+    if (g_IsMultiplayer && !silent) {
         Msg_6830 m;
-        Event_Construct(&m, D_0055D480);
+        Event_Construct(&m, g_ActorActionMsgClass);
         m.id = 0x45;
         m.sub = 3;
         m.vt = D_004E01C0;

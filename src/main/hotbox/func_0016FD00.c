@@ -11,7 +11,7 @@ void * const D_004E0880[8] = { (void*)0x0, (void*)0x0, (void*)cEnableMsg_dtor, (
 void func_003FF930(ToggleEventMsg* msg, int id);
 void Hotbox_Enable(ToggleSender* self)
 {
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         ToggleEventMsg msg;
         Event_Construct(&msg, g_cEnableMsgClass);
         msg.vtable = ((char*)D_004E0880);

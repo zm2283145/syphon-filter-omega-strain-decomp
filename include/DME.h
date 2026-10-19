@@ -10,7 +10,7 @@
  *   D_005724B0  connection state, DmeConnState
  *   D_005721A8  network session handle
  *   D_005721C0  this machine is the host (set when NetGame_Create succeeds)
- *   D_005721C8  online flag
+ *   g_IsMultiplayer  online flag
  *   D_005723C8  network-callback busy byte (set on entry, cleared on exit)
  *   D_005721D8  disconnect pending; reason string in D_005721E0[16]
  *   D_005723F0  connected client count

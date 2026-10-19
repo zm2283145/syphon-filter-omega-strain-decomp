@@ -2,8 +2,8 @@
 #include "types.h"
 extern "C" {
 extern char* D_005061D0;
-extern unsigned char D_005721C8;
-extern char D_004FFB50[];
+extern unsigned char g_IsMultiplayer;
+extern char g_Game[];
 void Game_SetPlayerLocation(char* a, int b, int c);
 void func_002B1190(int a, int b, int c);
 }
@@ -13,7 +13,7 @@ typedef struct { char pad[0x24]; int a; int b; } M_00323AD0;
 static inline short R16_00323AD0(void) { unsigned char lo = *D_005061D0++; unsigned char hi = *D_005061D0++; return lo + (hi << 8); }
 static inline int R32_00323AD0(void) { unsigned short lo = R16_00323AD0(); return lo + ((unsigned short)R16_00323AD0() << 16); }
 static inline int Idx_00323AD0(O_00323AD0* o) {
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         unsigned char r = 0;
         if (o->c && o->c->v19()) r = 1;
         if (r) return ((o->flags & 0x7F000000) >> 24) - 1;
@@ -26,7 +26,7 @@ extern "C" void func_00323AD0(M_00323AD0* m, O_00323AD0* o) {
     m->b = R32_00323AD0();
     if (o) {
         if (m->a == -1) {
-            Game_SetPlayerLocation(D_004FFB50, Idx_00323AD0(o), m->b);
+            Game_SetPlayerLocation(g_Game, Idx_00323AD0(o), m->b);
             return;
         }
         func_002B1190(m->a, Idx_00323AD0(o) + 1, m->b);

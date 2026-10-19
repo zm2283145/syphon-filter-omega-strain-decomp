@@ -1,7 +1,7 @@
 #include "types.h"
 typedef struct { void* vtable; char pad[0x24]; int value; char pad2[4]; } Msg;
-extern char D_00506248[];
-extern char D_004DCF70[];
+extern char g_NetCreateTankMsgKey[];
+extern char cNetCreateTankMsg_vtable[];
 extern char D_004DCF10[];
 extern void Event_Construct(Msg* m, void* type);
 extern void func_00283E10(Msg* m, void* target);
@@ -10,8 +10,8 @@ extern void cMessage_dtor(Msg* m, int flags);
 void func_00283DA0(void* target)
 {
     Msg msg;
-    Event_Construct(&msg, D_00506248);
-    msg.vtable = D_004DCF70;
+    Event_Construct(&msg, g_NetCreateTankMsgKey);
+    msg.vtable = cNetCreateTankMsg_vtable;
     msg.value = -1;
     func_00283E10(&msg, target);
     msg.vtable = D_004DCF10;

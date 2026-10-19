@@ -206,8 +206,8 @@ struct LosRes {
 struct Svc { VPAD1(a) virtual void Post(void* m); };
 
 extern "C" {
-extern float D_004F5438;
-extern V D_004F5430;
+extern float g_ThrowGravity;
+extern V g_GameGravity;
 extern float D_0048AF98;
 extern float D_0048AF30;
 extern float D_0048AF88;
@@ -217,17 +217,17 @@ extern float D_0048AF48;
 extern float D_0048AF58;
 extern float D_0048AF20;
 extern float D_0048AFA0;
-extern char D_005435A0[];
+extern char g_LosRequestMsgClass[];
 extern char D_004D9180[];
-extern char D_004FFB50[];
-extern char D_004EA0B0[];
+extern char g_Game[];
+extern char g_LosCheckService[];
 extern char D_004EE5C0[];
 extern char D_004D92A0[];
 extern char D_004DAE30[];
 extern char D_004A7C88[];
 extern char D_004A7C98[];
 extern char D_004A7CA8[];
-extern void* D_004FFC3C;
+extern void* g_DecalMgr;
 void Sphere_FromCenter(V* o, V* a, V* b);
 void Vec4_Scale(V* o, V* a, float k);
 void Vec4_Add(V* o, V* a, V* b);
@@ -290,7 +290,7 @@ struct LosMsg {
     {
         LosMsg* m = this;
         const V* fp = &f;
-        Event_Construct(m, D_005435A0);
+        Event_Construct(m, g_LosRequestMsgClass);
         m->vtable = D_004D9180;
         m->x24 = 0;
         m->x28 = 0;
@@ -312,11 +312,11 @@ struct AreaEffect {
     static void* operator new(unsigned int sz, int line)
     {
         void* p;
-        if (D_00533880) Alloc_Lock(9);
-        D_00533888++;
+        if (g_ProfileLockEnabled) Alloc_Lock(9);
+        g_ProfileLockDepth++;
         p = Mem_Alloc(0, sz, D_004A7C88, line);
-        if (D_00533880) Alloc_Unlock(9);
-        D_00533888--;
+        if (g_ProfileLockEnabled) Alloc_Unlock(9);
+        g_ProfileLockDepth--;
         return p;
     }
 };
@@ -381,11 +381,11 @@ extern "C" void Projectile_Update(Projectile* s, float dt)
     s->age += dt;
     hit = false;
     if (!s->rest) {
-        if (s->rec->cls == 7) D_004F5438 += D_0048AF98;
+        if (s->rec->cls == 7) g_ThrowGravity += D_0048AF98;
         if (s->first) {
             s->launch *= dt;
             s->prev.Set(s->pos.Sub3(s->launch));
-            s->force += D_004F5430 * D_0048AF30;
+            s->force += g_GameGravity * D_0048AF30;
             s->prevdt = dt;
             s->first = 0;
         }
@@ -398,7 +398,7 @@ extern "C" void Projectile_Update(Projectile* s, float dt)
         Integrate(s, ratio, dt2, inv);
         V D = s->Move();
         move = D;
-        if (s->rec->cls == 7) D_004F5438 -= D_0048AF98;
+        if (s->rec->cls == 7) g_ThrowGravity -= D_0048AF98;
         if (s->prev.z < D_0048AF88) {
             Object_Unregister(s);
             Object_DeleteLater(s, D_0048AF28);
@@ -407,7 +407,7 @@ extern "C" void Projectile_Update(Projectile* s, float dt)
         }
         LosRes res;
         LosMsg msg(&res, s->prev, D, s);
-        Service_Lookup(D_004FFB50, D_004EA0B0)->Post(&msg);
+        Service_Lookup(g_Game, g_LosCheckService)->Post(&msg);
         hit = res.hit;
         if (hit) {
             s->stuck = 0;
@@ -468,14 +468,14 @@ extern "C" void Projectile_Update(Projectile* s, float dt)
                     s->prev.Set(P0 - D);
                     Integrate(s, ratio, dt2, inv);
                     if (s->age > 0.5f) {
-                        Svc* svc = Service_Lookup(D_004FFB50, D_004EE5C0);
+                        Svc* svc = Service_Lookup(g_Game, D_004EE5C0);
                         FireMsg(&s->serial, 5, 1.0f, 15.0f).Send(svc);
                         SoundRequest req;
                         SoundEventP ev;
                         SoundRequest_Ctor(&req, 1, s->rec->snd, 0, 0);
                         SoundEvent_CtorFromPreset(&ev, &req, s);
                         ev.kind = 1;
-                        Event_Send(&ev, D_004FFB50, 0);
+                        Event_Send(&ev, g_Game, 0);
                         s->age = 0.0f;
                         ev.vtable = D_004DAE30;
                         FileMan_Release(&ev.req.b, -1);
@@ -537,11 +537,11 @@ extern "C" void Projectile_Update(Projectile* s, float dt)
                 float dist = Len(&move);
                 V d = impact.Sub2(s->prev);
                 V p = s->prev + d * 0.9f;
-                DecalMgr_AddBloodDecal(D_004FFC3C, &p, id, z, D_0048AFA0);
+                DecalMgr_AddBloodDecal(g_DecalMgr, &p, id, z, D_0048AFA0);
             }
         }
         if (HGet(&s->owner)) {
-            Svc* svc = Service_Lookup(D_004FFB50, D_004EE5C0);
+            Svc* svc = Service_Lookup(g_Game, D_004EE5C0);
             int* id = &HGet(&s->owner)->serial;
             float one = 1.0f;
             AiMsg(one, s->rec->noise, id, &ident.r3, 4).Send(svc);
@@ -569,7 +569,7 @@ extern "C" void Projectile_Update(Projectile* s, float dt)
         SoundRequest_Ctor(&req, 1, name, 0, 0);
         SoundEvent_CtorFromPreset(&ev, &req, s);
         ev.kind = 1;
-        Event_Send(&ev, D_004FFB50, 0);
+        Event_Send(&ev, g_Game, 0);
         Object_Unregister(s);
         Object_DeleteLater(s, D_0048AF28);
         s->retired = 1;

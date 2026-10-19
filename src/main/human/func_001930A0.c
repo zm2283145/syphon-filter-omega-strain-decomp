@@ -38,7 +38,7 @@ extern char D_0049DE50[]; extern char D_0049DE70[]; extern char D_0049DE90[]; ex
 extern char D_0049DED0[]; extern char D_0049DEF0[]; extern char D_0049DD30[]; extern char D_0049DCF0[];
 extern char D_0049DF00[]; extern char D_0049DF10[]; extern char D_0049DF20[];
 extern char D_004E00E0[]; extern char D_004E0840[];
-extern float D_0049D038; extern float D_004A03B8;
+extern float g_DefaultMotionTransition; extern float D_004A03B8;
 extern float D_0049D180; extern float D_0049D188; extern float D_0049D190;
 extern signed char D_004EEF00; extern signed char D_004EEF08; extern signed char D_004EEF10;
 void* func_0015AC90(int* p, int v);
@@ -171,11 +171,11 @@ static inline X_L* Set5_L(X_L* x, int a, int b, int c, int d, int e, void* act)
 }
 static inline void RateDef_L(Rate_L* r)
 {
-    float d = D_0049D038;
+    float d = g_DefaultMotionTransition;
     r->x = d;
     r->y = d;
     r->z = Recip_L(d);
-    r->w = Recip_L(D_0049D038);
+    r->w = Recip_L(g_DefaultMotionTransition);
 }
 static inline void Rate2_L(Rate_L* r, float a, float b)
 {
@@ -564,7 +564,7 @@ extern "C" void Actor_HandleLedgeAction(Act_L* actor, Msg_L* msg)
             if (!D_004EEF08) { D_0049D188 = 7.0f; D_004EEF08 = 1; }
             if (!D_004EEF10) { float k = 1.0f / (D_0049D188 - D_0049D180); D_004EEF10 = 1; D_0049D190 = k; }
             { float o = 1.0f; t = ClampY_L(D_0049D190 * (dy - D_0049D180), 0.0f, o);
-            d = D_0049D038;
+            d = g_DefaultMotionTransition;
             lim = Min_L(d, d * (o - 2.0f * t)); }
             SiteC_L(actor, d, lim);
             Auto_L(actor);

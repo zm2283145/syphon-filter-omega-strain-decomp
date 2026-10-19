@@ -145,7 +145,7 @@ extern char g_cDisableMsgClass[];
 extern int D_00494178;
 extern int D_005721A8;
 extern unsigned char D_005721C0;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 void cGOBJ_ctor(Hotbox*, int*, int, void*);
 void PtrVec_InitEmpty(Items_172AE0*);
 void Mtx_SetBasis(Mtx* m, V4* a, V4* b, V4* c);
@@ -184,9 +184,9 @@ static inline bool IsIdent(float* m) {
            m[12] == 0.0f && m[13] == 0.0f && m[14] == 0.0f && m[15] == 1.0f;
 }
 static inline Leaf_172AE0* First(PtrVec* v) { return func_00171EB0(v) ? (Leaf_172AE0*)*func_00171EA0(v, 0) : 0; }
-static inline unsigned char IsLocal(void) { unsigned char v; if (D_005721C8) v = D_005721C0; else v = 1; return v; }
+static inline unsigned char IsLocal(void) { unsigned char v; if (g_IsMultiplayer) v = D_005721C0; else v = 1; return v; }
 #pragma inline_depth(10)
-static inline int LocalId() { int r=0;int a=D_005721A8;if(D_005721C8) { if(D_00494178==-1)NetGame_InitLocalSlot(&D_00494178,a);r=D_00494178; }else { /* Keep the default-id branch. */ asm { .set reorder } }return r; }
+static inline int LocalId() { int r=0;int a=D_005721A8;if(g_IsMultiplayer) { if(D_00494178==-1)NetGame_InitLocalSlot(&D_00494178,a);r=D_00494178; }else { /* Keep the default-id branch. */ asm { .set reorder } }return r; }
 #pragma opt_strength_reduction off
 #pragma opt_unroll_loops off
 #pragma opt_rotateloops off
@@ -291,7 +291,7 @@ extern "C" Hotbox* cHotbox_ctor(Hotbox* self, Reader* r, int type)
     }
     self->h10 = id;
     if (!IsLocal()) self->b14 = 0;
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         int t = self->h10.v;
         int nid;
         if (IsLocal()) nid = LocalId(); else { func_002EBBA0(D_005721A8, &tmp); nid = tmp; }

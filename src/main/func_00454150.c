@@ -9,8 +9,8 @@ struct M_454150 {
 typedef struct { unsigned short type; unsigned short b2; char pad4[2]; unsigned short b6; unsigned short btn; } Ev_454150;
 typedef struct { char pad[0x48]; void* f48; } O_454150;
 extern "C" {
-extern void* D_004FFC2C;
-extern char D_004FFB50[];
+extern void* g_Hud;
+extern char g_Game[];
 M_454150* Gui_GetScreenStack(void);
 void GuiStartMenu_ReturnToMenu(O_454150* o);
 void Hud_ClosePauseMenu(void* p);
@@ -32,8 +32,8 @@ int GuiRadioLog_HandleInput(O_454150* o, Ev_454150* ev)
     }
     if (Plain2_454150(ev, 0x800)) {
         Gui_GetScreenStack()->v24(o);
-        Hud_ClosePauseMenu(D_004FFC2C);
-        Game_SetPaused(D_004FFB50, 0);
+        Hud_ClosePauseMenu(g_Hud);
+        Game_SetPaused(g_Game, 0);
         return 1;
     }
     return 0;

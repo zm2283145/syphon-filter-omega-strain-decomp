@@ -37,15 +37,15 @@ typedef struct Path_00219070 {
     char pad0[0x64]; Handler_00219070* handler; char pad68[8]; int count; char pad74[8]; Node_00219070** nodes;
     char pad80[0xDC - 0x80]; unsigned char bDC; char padDD[3]; int fE0; void* preset;
 } Path_00219070;
-extern int D_004F5440;
+extern int g_TriggerMsgKey;
 extern "C" {
 extern char D_004F5450[];
 extern char D_004DAE90[];
 extern char D_004DAF10[];
 extern char D_004DAE30[];
-extern char D_004FFB50[];
+extern char g_Game[];
 extern int D_0055D4D8;
-extern int D_0055D4E0;
+extern int g_TeleportMsgClass;
 extern int* Event_GetType(void* ev);
 extern void Event_Construct(void* m, void* type);
 extern void Event_Send(void* m, void* target, int immediate);
@@ -59,7 +59,7 @@ static inline int ObjId_00219070(Obj_00219070* o) { return o ? o->id : 0; }
 extern "C" int PathObj_Receive(Path_00219070* self, void* ev)
 {
     int t = *Event_GetType(ev);
-    if (t == D_004F5440) {
+    if (t == g_TriggerMsgKey) {
         int i;
         Snd_00219070 s;
         LiftMsg_00219070 msg;
@@ -78,7 +78,7 @@ extern "C" int PathObj_Receive(Path_00219070* self, void* ev)
         if (self->preset) {
             SoundEvent_CtorFromPreset(&s, self->preset, self);
             s.flag = 1;
-            Event_Send(&s, D_004FFB50, 1);
+            Event_Send(&s, g_Game, 1);
             s.vt = D_004DAE30;
             FileMan_Release(&s.s114, -1);
             FileMan_Release(&s.s78, -1);
@@ -87,7 +87,7 @@ extern "C" int PathObj_Receive(Path_00219070* self, void* ev)
         for (i = 0; i < self->count; i++) {
             if (self->nodes[i]->type == 0xB) {
                 LiftMsg_00219070* m = &msg;
-                Event_Construct(m, &D_004F5440);
+                Event_Construct(m, &g_TriggerMsgKey);
                 msg.vtable = D_004DAF10;
                 msg.kind = 0;
                 msg.floor = 0;
@@ -101,7 +101,7 @@ extern "C" int PathObj_Receive(Path_00219070* self, void* ev)
         return 1;
     }
     t = *Event_GetType(ev);
-    if (t == D_0055D4D8 || (t = *Event_GetType(ev), t == D_0055D4E0)) {
+    if (t == D_0055D4D8 || (t = *Event_GetType(ev), t == g_TeleportMsgClass)) {
         Handler_00219070* h = self->handler;
         if (h)
             h->Receive(ev);

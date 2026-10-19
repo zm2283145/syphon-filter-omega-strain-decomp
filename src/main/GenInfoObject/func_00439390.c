@@ -27,7 +27,7 @@ extern "C" void func_00439390(int id, int sess, int kind)
             func_00438C40(tbl);
             for (i = 0, f = D_005838A0; i < 4; i++, f++) {
                 if (*f) {
-                    int ok = D_005721C8 ? D_005721C0 : 1;
+                    int ok = g_IsMultiplayer ? D_005721C0 : 1;
                     if (ok) {
                         NetOwnEnt* e;
                         int bit;

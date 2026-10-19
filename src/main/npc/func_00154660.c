@@ -54,9 +54,9 @@ struct Ev_00154660 { char pad[0x24]; unsigned char b24; };
 extern "C" {
 extern int D_004EE550;
 extern int D_004ED9B8;
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char g_NpcRouteMgr[];
-extern int D_004ED9C0[];
+extern int g_NpcRegionTable[];
 int* Event_GetType(Ev_00154660* ev);
 void* Service_Lookup(void* a, void* b);
 void NpcRoute_Release(void* svc, int a);
@@ -73,7 +73,7 @@ extern "C" unsigned char NpcAi_ScriptControlMode(Self_00154660* self, Ev_0015466
     if (t == D_004EE550) {
         if (ev->b24 == 0) {
             float f;
-            NpcRoute_Release(Service_Lookup(D_004FFB50, g_NpcRouteMgr), self->f30);
+            NpcRoute_Release(Service_Lookup(g_Game, g_NpcRouteMgr), self->f30);
             if (self->f138 >= 0) {
                 NpcRoute_RequestToNode(self->p1B0, self->f138);
             } else if (self->fF4 != -1) {
@@ -88,7 +88,7 @@ extern "C" unsigned char NpcAi_ScriptControlMode(Self_00154660* self, Ev_0015466
                     if (c && c->IsPlayer())
                         r = 1;
                     if (r) {
-                        z = D_004ED9C0[Controller_NotifySeen(a)];
+                        z = g_NpcRegionTable[Controller_NotifySeen(a)];
                     } else if (a->ctl && a->ctl->IsAi()) {
                         z = a->ctl->p1B0->f5C;
                     } else {

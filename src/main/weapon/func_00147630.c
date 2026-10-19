@@ -11,8 +11,8 @@ void* memcpy(void*, const void*, unsigned int);
 extern char D_0048B2F8;
 extern char D_0049B1D0;
 extern char D_0049B310;
-extern unsigned char D_00533880;
-extern int D_00533888;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
 
 typedef struct {
     char p0[0x64];
@@ -76,15 +76,15 @@ void WeaponDb_LoadReloadVariant(WDb* db) {
     }
     memcpy(old, db->data, db->size);
     p = db->data;
-    if (D_00533880 != 0) {
+    if (g_ProfileLockEnabled != 0) {
         Alloc_Lock(9);
     }
-    D_00533888 += 1;
+    g_ProfileLockDepth += 1;
     Mem_Free(0, p, &D_0049B1D0, 0x10B);
-    if (D_00533880 != 0) {
+    if (g_ProfileLockEnabled != 0) {
         Alloc_Unlock(9);
     }
-    D_00533888 -= 1;
+    g_ProfileLockDepth -= 1;
     db->data = old;
     db->hdr = (WHdr*)db->data;
     FileMan_Release(sp40, -1);

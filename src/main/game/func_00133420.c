@@ -63,7 +63,7 @@ extern "C" {
 extern float D_00538340;
 extern float D_00538344;
 extern float D_00538348;
-extern float D_0053834C;
+extern float g_LevelFarDistance;
 extern int D_00538350;
 extern int D_00538354;
 extern int D_00538358;
@@ -72,11 +72,11 @@ extern float D_00538360;
 extern float D_00538364;
 extern float D_00538368;
 extern float D_0053836C;
-extern char D_005381F0[];
+extern char g_Video[];
 extern char D_005436B0[];
 extern char D_004D9160[];
 extern char D_004F2CC0[];
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern int D_00489BC0;
 float World_GetElapsedTime(World_133420* w);
 void Hud_Update(Hud_133420* h, float dt);
@@ -172,15 +172,15 @@ extern "C" int World_UpdateFrame(World_133420* self)
         float n = FogNear(e);
         D_00538340 = n;
         D_00538344 = f;
-        Fog_ComputeTerms(D_005381F0);
+        Fog_ComputeTerms(g_Video);
     }
     {
         EnvBlend_133420* e = self->env;
         float f = ZFar(e);
         float n = ZNear(e);
         D_00538348 = n;
-        D_0053834C = f;
-        Fog_ComputeTerms(D_005381F0);
+        g_LevelFarDistance = f;
+        Fog_ComputeTerms(g_Video);
     }
     {
         void* arr = World_GetActorArray();
@@ -229,7 +229,7 @@ extern "C" int World_UpdateFrame(World_133420* self)
         cMessage_dtor(&m, 0);
     }
     ActorWorld_FlushPending();
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         self->netTimer += dt;
         if (self->netTimer > (float)D_00489BC0) {
             self->netTimer = 0.0f;

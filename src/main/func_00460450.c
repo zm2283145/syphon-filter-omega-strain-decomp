@@ -40,8 +40,8 @@ extern "C" {
 extern char D_004C25F8[];
 extern char D_004C2608[];
 extern char D_004C2610[];
-extern char D_004FFB50[];
-extern unsigned char D_005721C8;
+extern char g_Game[];
+extern unsigned char g_IsMultiplayer;
 int sprintf(char *buf, const char *fmt, ...);
 Agent0450 *Agent_GetSelected(void *a, int i);
 void PtrVec_PushBack_1C1080(VecI0450 *v, int *p);
@@ -102,9 +102,9 @@ void GuiEndGameAwards_QueueVoices(Obj0450 *o)
     v8.owns = 1;
     func_001C10A0(&v7);
     v7.owns = 1;
-    n = D_005721C8 ? 4 : 1;
+    n = g_IsMultiplayer ? 4 : 1;
     for (idx = 0; idx < n; idx++) {
-        Agent0450 *agent = Agent_GetSelected(D_004FFB50, idx);
+        Agent0450 *agent = Agent_GetSelected(g_Game, idx);
         List0450 list;
         func_00296FA0(&list);
         list.flag = 1;

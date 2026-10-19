@@ -26,7 +26,7 @@ typedef struct { int v; } Res_433160;
 extern "C" {
 extern char D_004BFCA0[];
 extern unsigned char D_005721C0;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005723C8;
 extern char D_00582778;
 extern unsigned char D_00582780;
@@ -56,7 +56,7 @@ struct Reent_433160 {
     Reent_433160() { if (!D_005723C8) D_005723C8 = 1; }
     __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~Reent_433160() { D_005723C8 = 0; }
 };
-static inline unsigned char IsHost_433160() { if (D_005721C8) return D_005721C0; return 1; }
+static inline unsigned char IsHost_433160() { if (g_IsMultiplayer) return D_005721C0; return 1; }
 static inline void Free_433160(Ent_433160* p, int line) { AllocGuard g; Mem_Free(0, p, D_004BFCA0, line); }
 
 extern "C" void func_00433160(void* self, int key)
@@ -176,7 +176,7 @@ extern char D_004BFCA0;
 #endif /* merge_units */
 #define D_004BFCA0 (*(char*)&D_004BFCA0) /* merge_units */
 
-extern unsigned char D_00533880;
+extern unsigned char g_ProfileLockEnabled;
 #if 0 /* merge_units */
 extern int D_005827F0;
 #endif /* merge_units */
@@ -304,7 +304,7 @@ static inline void Reg_433A60(int* key, int* out)
 
 void func_00433A60(void)
 {
-    if (D_005721D0 && (D_005721C8 ? D_005721C0 : 1)) {
+    if (D_005721D0 && (g_IsMultiplayer ? D_005721C0 : 1)) {
         Reg_433A60(&D_00582A78, &D_005827F0);
         Reg_433A60(&D_00582A80, &D_005827F8);
         Reg_433A60(&D_00582A88, &D_00582800);
@@ -380,7 +380,7 @@ void func_00433F20(int self, int key, signed char v)
     int h;
     NpcInfoMsg m;
     NpcInfoRec* r;
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         func_004355D0(self);
         r = func_004361C0(key, &h);
         if (r) {
@@ -400,7 +400,7 @@ static inline void merge_flush_func_00433F20(void) {}
 
 /* merge_units: begin func_004340C0 */
 #pragma push /* merge_units */
-#define LOCALID_(X) { int ld_a = D_005721A8; /* read before the flag test: retail loads it ahead of the branch */ if (D_005721C8) { if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, ld_a); X = D_00494178; } else X = 0; }
+#define LOCALID_(X) { int ld_a = D_005721A8; /* read before the flag test: retail loads it ahead of the branch */ if (g_IsMultiplayer) { if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, ld_a); X = D_00494178; } else X = 0; }
 #pragma mpwc_relax on
 int NetGame_InitLocalSlot(int *, int);                        
 #if 0 /* merge_units */
@@ -466,7 +466,7 @@ void func_004341F0(int self, int key)
     int h;
     NpcInfoMsg m;
     NpcInfoRec* r;
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         func_004355D0(self);
         r = func_004361C0(key, &h);
         if (r) {

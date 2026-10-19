@@ -1,6 +1,6 @@
 #include "types.h"
 typedef struct { char pad[0xC]; unsigned char ready; } Obj_4C5D90;
-extern char D_004EE688[], D_004EE678[], D_004EE6A8[], D_004EE6E0[], D_004EE6C8[];
+extern char g_HotboxList[], D_004EE678[], D_004EE6A8[], g_RuntimeHotboxes[], D_004EE6C8[];
 extern char* D_004EE6B8;
 extern char* D_004EE698;
 extern char* D_004EE6C0;
@@ -31,8 +31,8 @@ extern int func_0014A6A0();
 extern int func_00175FB0();
 void func_004C5D90(void)
 {
-    LinkList_Ctor(D_004EE688);
-    __register_global_object(D_004EE688, func_00171740, D_004EE678);
+    LinkList_Ctor(g_HotboxList);
+    __register_global_object(g_HotboxList, func_00171740, D_004EE678);
     D_004EE698 = D_0049C930;
     D_004EE6B8 = D_0049C940;
     __register_global_object(&D_004EE6B8, func_00144930, D_004EE6A8);
@@ -41,7 +41,7 @@ void func_004C5D90(void)
         Obj_4C5D90* o;
         D_004EE6C0 = D_0049C948;
         n[0] = 0x14;
-        o = (Obj_4C5D90*)D_004EE6E0;
+        o = (Obj_4C5D90*)g_RuntimeHotboxes;
         func_00173910(o);
         func_00173900(o, func_001361D0(n));
         o->ready = 0;

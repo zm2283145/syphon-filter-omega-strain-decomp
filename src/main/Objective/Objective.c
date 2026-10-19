@@ -964,7 +964,7 @@ static inline void merge_flush_func_00225BB0(void) {}
 extern char D_004F7578[];
 extern char D_004F75E8[];
 extern char D_004F75F0[];
-extern char D_004FFB50[];
+extern char g_Game[];
 extern cObjectiveMan* Service_Lookup(int, int);
 extern cObjectiveMan* func_00225C20(cObjectiveMan*);
 extern int* func_00225C50(void);
@@ -1006,7 +1006,7 @@ cObjectiveMan* Script_GetObjectiveManager(void) {
 
 /* Looks up the objective manager in the global service registry. */
 cObjectiveMan* ObjMan_GetService() {
-    return Service_Lookup((int)D_004FFB50, (int)D_004F7578);
+    return Service_Lookup((int)g_Game, (int)D_004F7578);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00225BF0(void) {}
@@ -1107,12 +1107,12 @@ extern char D_0051F0B0;
 #endif /* merge_units */
 #define D_0051F0B0 (*(char*)&D_0051F0B0) /* merge_units */
 
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 
 void cObjectiveMan_SetPartialSuccess(int d0, int arg1, int arg2) {
     struct { char * f30[7]; int f4C; signed char f50[12]; signed char f5C[4]; int f60[8]; } sl;
 
-    if (D_005721C8 != 0) {
+    if (g_IsMultiplayer != 0) {
         Event_Construct(sl.f30, &D_0051F0B0);
         sl.f60[0] = arg2;
         sl.f30[0] = &(*(char*)D_004DE4F0);
@@ -1207,7 +1207,7 @@ static inline void SetF225F00(int* p, int v) { *p = v; }
 #pragma opt_dead_assignments off
 void cObjectiveMan_SucceedPart(void* self, void* obj)
 {
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         Msg225F00 m;
         Event_Construct(&m, D_0051F0B0);
         m.vtable = D_004DE4F0;
@@ -1277,7 +1277,7 @@ int ObjectiveMgr_GetCompleted(void* s, int* buf, int n, int f);
 
 void Objective_QueueThresholdVoice(int id, int f);
 void Actor_BuildVoiceKey(void* a, int v);
-extern int D_0049D010;
+extern int g_HumanActorClassKey;
 
 static inline void SetF225FA0(int* p, int v) { *p = v; }
 #pragma push
@@ -1290,7 +1290,7 @@ void Objective_Succeed(void* self, void* obj, Act225FA0* actor)
     int n;
     Msg225FA0 m;
     int buf[20];
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         Event_Construct(&m, D_0051F0B0);
         m.vtable = D_004DE4F0;
         m.f30 = -1;
@@ -1308,7 +1308,7 @@ void Objective_Succeed(void* self, void* obj, Act225FA0* actor)
     n = ObjectiveMgr_GetCompleted(ObjMan_GetService(), buf, 0x14, 1);
     if (n == total) Objective_QueueThresholdVoice(0x17, 1);
     else if (n >= half && n - 1 < half) Objective_QueueThresholdVoice(0x16, 1);
-    if (actor && actor->kind == D_0049D010) Actor_BuildVoiceKey(actor, 0xD);
+    if (actor && actor->kind == g_HumanActorClassKey) Actor_BuildVoiceKey(actor, 0xD);
 }
 #pragma pop
 #undef D_0051F0B0 /* merge_units */
@@ -1370,7 +1370,7 @@ extern void Actor_BuildVoiceKey(E7FActor* a, int n);
 
 void Objective_Fail(void* self, void* obj, E7FActor* actor)
 {
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         E7FMsg msg;
         Event_Construct(&msg, D_0051F0B0);
         msg.vtable = D_004DE4F0;
@@ -1383,7 +1383,7 @@ void Objective_Fail(void* self, void* obj, E7FActor* actor)
         cMessage_dtor(&msg, 0);
     }
     Objective_SetFailed(obj);
-    if (actor && actor->type == D_0049D010) {
+    if (actor && actor->type == g_HumanActorClassKey) {
         Actor_BuildVoiceKey(actor, 11);
     }
 }
@@ -1407,12 +1407,12 @@ static inline void merge_flush_func_002260F0(void) {}
  */
 
 
-extern char D_004FFC2C[]; /* global UI receiver */
+extern char g_Hud[]; /* global UI receiver */
 extern void Hud_ClosePauseMenu(int);
 
 void func_002261C0(cObjectiveMan* mgr) {
     if (mgr->unkAC != 0) {
-        Hud_ClosePauseMenu(*(int*)D_004FFC2C);
+        Hud_ClosePauseMenu(*(int*)g_Hud);
         mgr->unkAC = 0;
     }
 }
@@ -1926,7 +1926,7 @@ void Objective_Deactivate(); /* gsynth: defined below */
 void ObjMan_StartStage(C1Man_2273* m, int stage, int quiet)
 {
     int i;
-    if (D_005721C8 && !quiet) {
+    if (g_IsMultiplayer && !quiet) {
         C1Msg_2273 msg;
         Event_Construct(&msg, D_0051F0B0);
         msg.vtbl = D_004DE4F0;
@@ -2350,9 +2350,9 @@ typedef struct { void* vt; char pad04[0x1C]; signed char kind; char pad21[3]; in
 extern int D_005721A8;
 extern int D_00494178;
 #if 0 /* merge_units */
-extern void* D_004FFC2C;
+extern void* g_Hud;
 #endif /* merge_units */
-#define D_004FFC2C (*(void **)&D_004FFC2C) /* merge_units */
+#define g_Hud (*(void **)&g_Hud) /* merge_units */
 
 extern char D_0051F098[];
 extern char D_004DE280[];
@@ -2380,7 +2380,7 @@ extern void NetGame_InitLocalSlot(int*, int);
 #endif /* merge_units */
 #define NetGame_InitLocalSlot(a0, a1) ((void)NetGame_InitLocalSlot((a0), (a1))) /* merge_units */
 
-#define LOCALID_(X) { int ld_a = D_005721A8; if (D_005721C8) { if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, ld_a); X = D_00494178; } else X = 0; }
+#define LOCALID_(X) { int ld_a = D_005721A8; if (g_IsMultiplayer) { if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, ld_a); X = D_00494178; } else X = 0; }
 static inline int KeyOf_227A90(char* s) { return s ? Loc_FindKeyThunk(s) : -1; }
 static inline int LocalId_227A90() { int r; LOCALID_(r); return r; }
 static inline int IsMine_227A90(Obj_227A90* o) { int owner = o->owner; return Player_GetIndex(owner) == LocalId_227A90(); }
@@ -2388,7 +2388,7 @@ static inline int IsMine2_227A90(Obj_227A90* o) { int owner = o->owner; int me =
 void ObjMan_SetDisplayLabel(void* mgr, char* key, Obj_227A90* obj, int quiet)
 {
     void* text = Loc_LookupText(key);
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         if (obj) {
             int owner = obj->owner;
             int me;
@@ -2397,7 +2397,7 @@ void ObjMan_SetDisplayLabel(void* mgr, char* key, Obj_227A90* obj, int quiet)
             pi = Player_GetIndex(owner);
             if (pi != me) goto skip;
         }
-        Hud_PostNotification(D_004FFC2C, text);
+        Hud_PostNotification(g_Hud, text);
     skip:
         if (!quiet) {
             Msg_227A90 m;
@@ -2418,10 +2418,10 @@ void ObjMan_SetDisplayLabel(void* mgr, char* key, Obj_227A90* obj, int quiet)
             cMessage_dtor(&m, 0);
         }
     } else {
-        Hud_PostNotification(D_004FFC2C, text);
+        Hud_PostNotification(g_Hud, text);
     }
 }
-#undef D_004FFC2C /* merge_units */
+#undef g_Hud /* merge_units */
 #undef Event_Construct /* merge_units */
 #undef Transport_Send /* merge_units */
 #undef cMessage_dtor /* merge_units */
@@ -2447,7 +2447,7 @@ extern void Hud_PostNotification(int, char*);
 
 
 void ObjMan_Notify(cObjectiveMan* mgr, char* text) {
-    Hud_PostNotification(*(int*)D_004FFC2C, text);
+    Hud_PostNotification(*(int*)g_Hud, text);
 }
 #undef Hud_PostNotification /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
@@ -2579,7 +2579,7 @@ ObjMan_7ED0* ObjMan_Ctor(ObjMan_7ED0* o)
     for (i = 0; i < 0x20; i++) o->arr[i] = 0;
     o->b24 = 0;
     o->bAC = 0;
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         int id[1];
         IdMgr_Allocate(id, 0xF6);
         o->idC = id[0];
@@ -2588,7 +2588,7 @@ ObjMan_7ED0* ObjMan_Ctor(ObjMan_7ED0* o)
             int t = o->id10;
             NetMap_BindReceiver(t, NetObjId(), o);
         }
-        if (!(D_005721C8 ? D_005721C0 : 1)) o->b14 = 0;
+        if (!(g_IsMultiplayer ? D_005721C0 : 1)) o->b14 = 0;
     }
     return o;
 }
@@ -2634,9 +2634,9 @@ struct ObjMap228 {
 };
 struct Mgr228 { char pad[0x90]; ObjMap228 map; };
 #if 0 /* merge_units */
-extern "C" Mgr228* D_004FFC2C;
+extern "C" Mgr228* g_Hud;
 #endif /* merge_units */
-#define D_004FFC2C (*(Mgr228 **)&D_004FFC2C) /* merge_units */
+#define g_Hud (*(Mgr228 **)&g_Hud) /* merge_units */
 
 
 struct Ev228 {
@@ -2665,12 +2665,12 @@ static inline const int& IdOf(Tracked* p) { if (p) return p->serial; int m = -1;
 extern "C" void cObjective_ClearMapObject(Obj228* self, int quiet)
 {
     if (Get1(&self->ref)) {
-        Mgr228* g = D_004FFC2C;
+        Mgr228* g = g_Hud;
         g->map.Remove(&Get2(&self->ref)->serial);
     }
     self->ref.obj = 0;
     self->ref.serial = IdOf(0);
-    if (!quiet && D_005721C8) {
+    if (!quiet && g_IsMultiplayer) {
         Ev228 ev;
         Event_Construct(&ev, &D_0051F0B0);
         ev.vt = D_004DE4F0;
@@ -2687,7 +2687,7 @@ extern "C" void cObjective_ClearMapObject(Obj228* self, int quiet)
 #undef Event_Send /* merge_units */
 #undef cMessage_dtor /* merge_units */
 #undef D_0051F0B0 /* merge_units */
-#undef D_004FFC2C /* merge_units */
+#undef g_Hud /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00228050(void) {}
 #pragma pop /* merge_units */
@@ -2728,9 +2728,9 @@ struct ObjMap228_00228190 {
 };
 struct Mgr228_00228190 { char pad[0x90]; ObjMap228_00228190 map; };
 #if 0 /* merge_units */
-extern "C" Mgr228_00228190* D_004FFC2C;
+extern "C" Mgr228_00228190* g_Hud;
 #endif /* merge_units */
-#define D_004FFC2C (*(Mgr228_00228190 **)&D_004FFC2C) /* merge_units */
+#define g_Hud (*(Mgr228_00228190 **)&g_Hud) /* merge_units */
 
 
 struct Ev228_00228190 {
@@ -2760,10 +2760,10 @@ extern "C" void cObjective_SetMapObject(Obj228* self, Tracked* obj, char* name, 
     self->ref.obj = obj;
     self->ref.serial = IdOf(obj);
     if (Get(&self->ref)) {
-        Mgr228_00228190* g = D_004FFC2C;
+        Mgr228_00228190* g = g_Hud;
         g->map.Add(&Get2_00228190(&self->ref)->serial, self, name);
     }
-    if (!quiet && D_005721C8 && Get1(&self->ref)) {
+    if (!quiet && g_IsMultiplayer && Get1(&self->ref)) {
         int id = Handle_Resolve(&self->ref)->serial;
         Ev228_00228190 ev;
         Ev228_00228190* e = &ev;
@@ -2784,7 +2784,7 @@ extern "C" void cObjective_SetMapObject(Obj228* self, Tracked* obj, char* name, 
 #undef Event_Send /* merge_units */
 #undef cMessage_dtor /* merge_units */
 #undef D_0051F0B0 /* merge_units */
-#undef D_004FFC2C /* merge_units */
+#undef g_Hud /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00228190(void) {}
 #pragma pop /* merge_units */
@@ -2856,7 +2856,7 @@ extern char D_004A5D88;
 #endif /* merge_units */
 #define D_004A5D88 (*(char*)&D_004A5D88) /* merge_units */
 
-extern unsigned char D_00533880;
+extern unsigned char g_ProfileLockEnabled;
 }
 extern "C" int Objective_DupString(ObjLabelObjective* d0, void* arg1) {
     int temp_s0;
@@ -3199,7 +3199,7 @@ extern int cMessage_dtor(ObjActMsg_e8* msg, int flags);
 void Objective_Activate(ObjAct_e8* self)
 {
     self->active = 1;
-    if (D_005721C8 && D_005721D0) {
+    if (g_IsMultiplayer && D_005721D0) {
         ObjActMsg_e8 msg;
         Event_Construct(&msg, D_00572188);
         msg.vtable = ((char*)D_004E0E60);
@@ -3257,7 +3257,7 @@ extern int cMessage_dtor(Visitor* v, int flags);
 void Objective_Deactivate(Objective_00229100* self)
 {
     self->active = 0;
-    if (D_005721C8 && D_005721D0) {
+    if (g_IsMultiplayer && D_005721D0) {
         Visitor v;
         Event_Construct(&v, D_00572198);
         v.vtable = D_004E0E80;
@@ -3373,7 +3373,7 @@ int NetMap_BindReceiver(int a, int b, void* c);
 static inline int ObjId_229900(int& tmp)
 {
     int id;
-    int ok = D_005721C8 ? D_005721C0 : 1;
+    int ok = g_IsMultiplayer ? D_005721C0 : 1;
     if (ok) {
         id = NetLocalId();
     } else {
@@ -3434,13 +3434,13 @@ extern "C" Obj_229900* Objective_Ctor(Obj_229900* self, int arg)
     self->x80 = 0;
     self->x84 = 0;
     self->x88 = 0;
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         IdMgr_Allocate(&id, 0xF6);
         self->id = id;
         self->netid = self->id;
         int nid = self->netid;
         NetMap_BindReceiver(nid, ObjId_229900(tmp), self);
-        if (!(D_005721C8 ? D_005721C0 : 1))
+        if (!(g_IsMultiplayer ? D_005721C0 : 1))
             self->active = 0;
     }
     return self;

@@ -6,7 +6,7 @@ typedef struct { char pad[0x1C0]; Vec16 pos; } Elem1D0;
 typedef struct { char pad[0x20]; Elem1D0* elems; } Table1D2;
 typedef struct { int unk0; Table1D2* table; } Obj1D2;
 
-extern Slot1D2 D_004F32B0[];
+extern Slot1D2 UpperBodyNodeTable[];
 extern void func_00132840(Vec16* v);
 extern void* Quat_Assign(Vec16* v, void* src);
 extern void* func_001D2C00(void* inner);
@@ -26,7 +26,7 @@ void UpperBodyIk_SetRotation(Obj1D2* self, void* point, int idx)
     Slot1D2* slot;
     Vec16* pos;
     void* r;
-    slot = &D_004F32B0[idx];
+    slot = &UpperBodyNodeTable[idx];
     out = slot->out;
     pos = &self->table->elems[idx].pos;
     func_00132840(&a);

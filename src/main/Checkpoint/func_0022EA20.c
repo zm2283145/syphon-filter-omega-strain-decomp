@@ -13,7 +13,7 @@ int Mem_Free(...);
 int String_Copy(...);                            
 int strlen(...);                                    
 extern char D_004A6698;
-extern unsigned char D_00533880;
+extern unsigned char g_ProfileLockEnabled;
 }
 #pragma opt_common_subs off
 extern "C" void Checkpoint_SetLabel(char * arg0, int arg1) {

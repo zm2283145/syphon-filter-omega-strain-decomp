@@ -8,8 +8,8 @@ int Mem_Free(int, int, char *, int);
 int func_002EB650(void **, int);                    
 unsigned int D_00497578[2] = { 0xFFFFFFFF, 0x0 };
 extern char D_004BFD60;
-extern unsigned char D_00533880;
-extern int D_00533888;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
 extern unsigned char D_005723C8;
 extern signed char D_00583880;
 extern int D_00583888;
@@ -24,15 +24,15 @@ void func_00439560(int d0, int arg1) {
     if (func_002EB650((void **)sp38, arg1) == 0) {
         temp_s1 = D_00583888;
         if (temp_s1 != 0) {
-            if (D_00533880 != 0) {
+            if (g_ProfileLockEnabled != 0) {
                 Alloc_Lock(9);
             }
-            D_00533888 += 1;
+            g_ProfileLockDepth += 1;
             Mem_Free(0, temp_s1, &D_004BFD60, 0x234);
-            if (D_00533880 != 0) {
+            if (g_ProfileLockEnabled != 0) {
                 Alloc_Unlock(9);
             }
-            D_00533888 -= 1;
+            g_ProfileLockDepth -= 1;
         }
         D_00583888 = F_(sp38[0], 0x1C, int);
         D_00583880 = 1;

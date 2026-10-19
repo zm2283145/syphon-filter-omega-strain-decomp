@@ -14,8 +14,8 @@ int func_003E2D50();
 int func_003E2D60();                            
 int func_003E3460();                                  
 extern char D_004BD4C0;
-extern unsigned char D_00533880;
-extern int D_00533888;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
 
 #pragma push
 #pragma opt_common_subs off
@@ -41,15 +41,15 @@ char * func_003E28E0(char * arg0, int arg1) {
     F_(temp_s1_2, 0xC, signed char) = 0;
     F_(arg0, 0x4E78, int) = arg1;
     temp_s1_3 = F_(arg0, 0x4E78, int) * 4;
-    if (D_00533880 != 0) {
+    if (g_ProfileLockEnabled != 0) {
         Alloc_Lock(9);
     }
-    D_00533888 += 1;
+    g_ProfileLockDepth += 1;
     temp_s1_4 = Mem_Alloc(0, temp_s1_3, &D_004BD4C0, 0x34);
-    if (D_00533880 != 0) {
+    if (g_ProfileLockEnabled != 0) {
         Alloc_Unlock(9);
     }
-    D_00533888 -= 1;
+    g_ProfileLockDepth -= 1;
     F_(arg0, 0x4E6C, int) = temp_s1_4;
     F_(arg0, 0x4E7C, int) = 0;
     F_(arg0, 0x4E70, int) = (int) (F_(arg0, 0x4E6C, int) + (F_(arg0, 0x4E78, int) * 4));

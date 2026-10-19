@@ -43,8 +43,8 @@ int func_00280390(int, int, s8, int);          /* extern */
 int func_00280470(int, int, int, int);    /* extern */
 int Mtx_ToEulerXYZ(int, int);                        /* extern */
 extern int D_00497F00;
-extern s32 D_0049D010;
-extern s8 D_0049D024;
+extern s32 g_HumanActorClassKey;
+extern s8 g_HeadNodeCode;
 extern int D_004A9338;
 extern s8 D_004E1D80;
 extern s8 D_004E1D88;
@@ -799,7 +799,7 @@ void PlayerCamera_Follow(int arg0, int arg1) {
         s128* p530 = &sp530;
         { s128* p4b0 = &sp4B0; QCopy(p530, p4b0); }
         if ((*(int*)((char*)(arg0) + 0xD84)) != -1) {
-            int* pg = &D_0049D010;
+            int* pg = &g_HumanActorClassKey;
             var_v1_2 = WRGet(arg0 + 0xCFC);
             int g = *(volatile int*)pg;
             if ((*(volatile int*)((char*)(var_v1_2) + 0x4C)) == g) {
@@ -810,7 +810,7 @@ void PlayerCamera_Follow(int arg0, int arg1) {
                     float up = 0.25f;
                     QuatF v;
                     Mtx sp410;
-                    Model_GetComponentTransform(((int)&sp410), Actor_GetSkeleton(var_s5), D_0049D024);
+                    Model_GetComponentTransform(((int)&sp410), Actor_GetSkeleton(var_s5), g_HeadNodeCode);
                     Mtx* pm = &sp410;
                     v.x = 0.0f; v.z = up; v.y = 0.0f; v.w = 1.0f;
                     QuatF* pv = &v;

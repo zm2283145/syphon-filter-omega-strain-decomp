@@ -21,7 +21,7 @@ extern "C" {
     int func_0044A810(int,int);
     int SFOLobby_LookupAccountId(int,char*);
     unsigned char func_00452FF0(int,int);
-    extern char D_004ABCD0[],D_004ABCD8[],D_004ABCE8[],D_004FFB50[];
+    extern char D_004ABCD0[],D_004ABCD8[],D_004ABCE8[],g_Game[];
     extern int D_004FFC04;
 }
 extern "C" int func_002AF310(Screen* arg0, int arg1, int arg2, int arg3, char* arg4) {
@@ -39,7 +39,7 @@ extern "C" int func_002AF310(Screen* arg0, int arg1, int arg2, int arg3, char* a
     if (temp_v1 == 2) {
 
         if (arg1 == temp_s4->unk164) {
-            selected = Agent_GetSelected(D_004FFB50, -1) + 0x8BC;
+            selected = Agent_GetSelected(g_Game, -1) + 0x8BC;
             FrontEnd_OpenPopup(D_004FFC04, 5, D_004ABCD0, GuiScreen_GetLobbyString(temp_s4, (temp_s4->unk170 != 0) ? 0x45 : 0x44, 0, (char*)selected), temp_s4, 17);
             return 1;
         }
@@ -87,15 +87,15 @@ extern "C" int func_002AF310(Screen* arg0, int arg1, int arg2, int arg3, char* a
         if (arg3 == 17) {
             int temp_v0_5 = DME_GetLobby();
             if (temp_v0_5 != 0) {
-                selected = Agent_GetSelected(D_004FFB50, -1);
+                selected = Agent_GetSelected(g_Game, -1);
                 int temp_s0_2 = D_004FFC04;
                 int temp_s1_3 = FrontEnd_OpenPopup(temp_s0_2, 0, D_004ABCD0, GuiScreen_GetLobbyString(temp_s4, 0x46, 0, (char*)selected + 0x8BC));
                 if (func_0044A800(temp_v0_5) != 0) {
-                    selected = Agent_GetSelected(D_004FFB50, -1);
+                    selected = Agent_GetSelected(g_Game, -1);
                     int temp_s0_3 = D_004FFC04;
                     FrontEnd_OpenPopup(temp_s0_3, 2, D_004ABCD0, GuiScreen_GetLobbyString(temp_s4, 0x47, 0, (char*)selected + 0x8BC), temp_s4, 15);
                 } else {
-                    selected = Agent_GetSelected(D_004FFB50, -1);
+                    selected = Agent_GetSelected(g_Game, -1);
                     int temp_s0_4 = D_004FFC04;
                     FrontEnd_OpenPopup(temp_s0_4, 2, D_004ABCD0, GuiScreen_GetLobbyString(temp_s4, 0x48, 0, (char*)selected + 0x8BC));
                 }

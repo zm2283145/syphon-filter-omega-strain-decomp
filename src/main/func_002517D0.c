@@ -26,7 +26,7 @@ struct Msg_2517D0 {
 };
 struct Self_2517D0 { char pad0[0x90]; int count; int cur; };
 extern "C" {
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_004DAE30[];
 extern char D_004A79A8[];
 void Resource_Construct(void* m);
@@ -66,7 +66,7 @@ extern "C" void PickupMenu_CursorNext(Self_2517D0* s)
         SoundAction_CtorVoice(p, 3, D_004A79A8, 0, 0);
         EffectMsg_WrapRequest(&m, &act);
         m.flag = 1;
-        Event_Send(&m, D_004FFB50, 1);
+        Event_Send(&m, g_Game, 1);
         m.vtbl = D_004DAE30;
         FileMan_Release(m.partB, -1);
         FileMan_Release(m.partA, -1);

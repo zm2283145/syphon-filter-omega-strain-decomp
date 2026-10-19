@@ -15,7 +15,7 @@ int func_00123BE8(...);
 unsigned int func_003B9BD0(...);                                
 extern char * D_00489738;
 extern char D_0049AE50;
-extern unsigned char D_00533880;
+extern unsigned char g_ProfileLockEnabled;
 }
 extern "C" void func_003B91B0(char * arg0, unsigned int arg1, int *arg2) {
     int *temp_s0;

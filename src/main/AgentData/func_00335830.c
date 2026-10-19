@@ -38,9 +38,9 @@ extern char D_004B92C0[];
 extern char D_004B92D0[];
 extern V5830 D_005329F0;
 extern Lvl5830 *D_00532AF8;
-extern Game5830 D_004FFB50;
-extern void *D_004FFC2C;
-extern unsigned char D_005721C8;
+extern Game5830 g_Game;
+extern void *g_Hud;
+extern unsigned char g_IsMultiplayer;
 extern int D_00532A40[];
 extern int D_00532A10[];
 int strlen(const char *s);
@@ -93,11 +93,11 @@ extern "C" void AgentData_EndLevel(A5830 *self, unsigned char done)
     char buf[32];
     Awd5830 awd;
     self->bB74 = done;
-    if (self->fD4 < 0.0f) self->fD4 = Hud_GetMissionTime(D_004FFC2C);
+    if (self->fD4 < 0.0f) self->fD4 = Hud_GetMissionTime(g_Hud);
     for (i = 0; i < self->nLevels; i++) {
         rec = &self->recs[i];
         name = Loc_GetStoredKey(D_00532AF8[i].name);
-        if (String_CompareNoCase(name, D_004FFB50.levelName) == 0 && done) {
+        if (String_CompareNoCase(name, g_Game.levelName) == 0 && done) {
             ok = 1;
             self->count3C++;
             Code5830(name);
@@ -109,8 +109,8 @@ extern "C" void AgentData_EndLevel(A5830 *self, unsigned char done)
                 n2 = Loc_GetStoredKey(it->name);
                 if (Awards_MatchKeyPattern(self, pat, n2, '*') && !Awards_MatchKeyPattern(self, D_004B92C0, n2, '*')) {
                     if (!Bit5830(self->bits, it->idx)) {
-                        if ((D_005721C8 && Bit5830(D_00532A40, it->idx)) ||
-                            (!D_005721C8 && Bit5830(D_00532A10, it->idx))) {
+                        if ((g_IsMultiplayer && Bit5830(D_00532A40, it->idx)) ||
+                            (!g_IsMultiplayer && Bit5830(D_00532A10, it->idx))) {
                             ok = 0;
                             break;
                         }
@@ -121,12 +121,12 @@ extern "C" void AgentData_EndLevel(A5830 *self, unsigned char done)
                 int *t;
                 self->bB71 = 1;
                 t = &rec->t0;
-                if (D_005721C8) t = &rec->t4;
+                if (g_IsMultiplayer) t = &rec->t4;
                 if (*t < 0 || self->fD4 < (float)*t) *t = (int)self->fD4;
             }
             if (rec->i14 < 0 || self->i70 < rec->i14) rec->i14 = self->i70;
             if (rec->i10 < 0 || self->i6C < rec->i10) rec->i10 = self->i6C;
-            Code5830(D_004FFB50.levelName);
+            Code5830(g_Game.levelName);
             sprintf(buf, D_004B92D0, D_00532990);
             AgentData_SetObjectiveBit(self, buf, 0);
         }

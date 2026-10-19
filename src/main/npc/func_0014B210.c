@@ -5,8 +5,8 @@
 
 #include "npc_types.h"
 
-extern char D_0055C9F0[];
+extern char g_IdentityMatrix[];
 
 void* Mtx_GetIdentity(void) {
-    return D_0055C9F0;
+    return g_IdentityMatrix;
 }

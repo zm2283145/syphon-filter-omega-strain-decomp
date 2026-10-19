@@ -44,10 +44,10 @@ void ObjMarker_ConstructIcon(MRec* rec, unsigned char enemy);
 int TargetVis_Test(char* a, int b, VObj* c, int d, int e);
 VObj* Controller_GetAimTarget(VObj* c);
 void WeakHandleList_Append(int* res, char* list, char** pos, Hnd* h);
-extern char* D_004FFC0C;
+extern char* g_LocalPlayer;
 extern char g_TargetVisMgr[];
 extern float D_004FFDB0[4];
-extern float D_004FFDC0[4];
+extern float g_HudPlayerMarkerColour[4];
 extern float D_004FFDD0[4];
 extern float D_004FFDE0[4];
 extern float D_004FFDF0[4];
@@ -86,9 +86,9 @@ extern "C" unsigned char HudTargets_RemoveMarker(MRec* rec, char* list, char* hl
             VObj* c = obj->x58;
             if (c && c->IsActive()) act = 1;
             if (act) {
-                SetBoth(rec, D_004FFDC0);
+                SetBoth(rec, g_HudPlayerMarkerColour);
             } else {
-                char* pl = D_004FFC0C;
+                char* pl = g_LocalPlayer;
                 int e = TeamTable_AreEnemies(F_(pl, 0x30, int), (int)obj) != 0;
                 if (!e) e = TeamTable_AreEnemies((int)obj, F_(pl, 0x30, int)) != 0;
                 act = e;

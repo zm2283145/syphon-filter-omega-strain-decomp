@@ -24,10 +24,10 @@ typedef struct SndMsg {
     char partB[0xAC];
 } __attribute__((aligned(16))) SndMsg;
 
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_004DAE10[];
 extern char D_004DAE30[];
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005721C0;
 extern void SoundRequest_Ctor(SndReq* req, signed char kind, int a, int b, int c);
 extern void SoundMsg_WrapAction(SndMsg* msg, SndReq* req);
@@ -36,7 +36,7 @@ extern void Event_Send(SndMsg* msg, void* target, int flags);
 extern void FileMan_Release(void* part, int flags);
 extern void cMessage_dtor(SndMsg* msg, int flags);
 
-static inline int Snd_Allowed(void) { return D_005721C8 ? D_005721C0 : 1; }
+static inline int Snd_Allowed(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
 
 void Global_PlaySnd_2(int channel, int a, int b) {
     SndMsg msg1;
@@ -48,8 +48,8 @@ void Global_PlaySnd_2(int channel, int a, int b) {
         SoundMsg_WrapAction(&msg1, &req1);
         FileMan_Release(req1.partB, -1);
         FileMan_Release(req1.partA, -1);
-        if (!D_005721C8 || !Snd_Allowed()) msg1.immediate = 1;
-        Event_Send(&msg1, D_004FFB50, 0);
+        if (!g_IsMultiplayer || !Snd_Allowed()) msg1.immediate = 1;
+        Event_Send(&msg1, g_Game, 0);
         msg1.vtbl = D_004DAE10;
         FileMan_Release(msg1.partB, -1);
         FileMan_Release(msg1.partA, -1);
@@ -59,8 +59,8 @@ void Global_PlaySnd_2(int channel, int a, int b) {
         EffectMsg_WrapRequest(&msg2, &req2);
         FileMan_Release(req2.partB, -1);
         FileMan_Release(req2.partA, -1);
-        if (!D_005721C8 || !Snd_Allowed()) msg2.immediate = 1;
-        Event_Send(&msg2, D_004FFB50, 0);
+        if (!g_IsMultiplayer || !Snd_Allowed()) msg2.immediate = 1;
+        Event_Send(&msg2, g_Game, 0);
         msg2.vtbl = D_004DAE30;
         FileMan_Release(msg2.partB, -1);
         FileMan_Release(msg2.partA, -1);
@@ -92,7 +92,7 @@ void Global_PlaySnd(int chan, int a) {
         msg1.immediate = 1;
         SoundRequest_Ctor(&req2, channel, a, 0, 0);
         SoundMsg_WrapAction(&msg2, &req2);
-        Event_Send(&msg2, D_004FFB50, 0);
+        Event_Send(&msg2, g_Game, 0);
         msg2.vtbl = D_004DAE10;
         FileMan_Release(msg2.partB, -1);
         FileMan_Release(msg2.partA, -1);
@@ -111,7 +111,7 @@ void Global_PlaySnd(int chan, int a) {
         msg3.immediate = 1;
         SoundRequest_Ctor(&req4, channel, a, 0, 0);
         EffectMsg_WrapRequest(&msg4, &req4);
-        Event_Send(&msg4, D_004FFB50, 0);
+        Event_Send(&msg4, g_Game, 0);
         msg4.vtbl = D_004DAE30;
         FileMan_Release(msg4.partB, -1);
         FileMan_Release(msg4.partA, -1);

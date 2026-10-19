@@ -17,10 +17,10 @@ int Mem_Free();
 /* merge_units: begin func_00245810 */
 #pragma push /* merge_units */
 typedef struct { char pad[0x6DC]; float a; float b; } B5bObj;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern int Net_GetClock(int);float Hud_GetNetworkTime(B5bObj* o) {
     float t;
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         t = (float)Net_GetClock(0) / 1000.0f;
         if (o->b < 0.0f) {
             o->b = t;
@@ -42,7 +42,7 @@ static inline void merge_flush_func_00245810(void) {}
 float Hud_GetNetworkTime();
 
 float Hud_GetMissionTime(int arg0) {
-    if (D_005721C8 != 0) {
+    if (g_IsMultiplayer != 0) {
         return Hud_GetNetworkTime() - F_(arg0, 0x6E0, float);
     }
     return F_(arg0, 0x6DC, float);

@@ -23,11 +23,11 @@ extern void cPARTICLE_GOBJ_v10(G1C5*);
 extern int func_00394170(G1C5*);
 extern int func_00394140(G1C5*, int*);
 extern int* SpecFx_GetEffectDef(int);
-extern int D_005383C8;
+extern int g_VideoFrameCounter;
 extern void SoundRequest_Ctor(R1C5*, int, char*, int, int);
 extern void SoundPosRequest_Ctor(M1C5*, R1C5*, int*);
 extern void Event_Send(M1C5*, char*, int);
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_004DAE30[];
 extern void FileMan_Release(void*, int);
 #if 0 /* merge_units */
@@ -43,11 +43,11 @@ void ParticleGob_Update(G1C5* g) {
     if (!func_00394170(g)) return;
     if ((unsigned char)func_00394140(g, x) != 1) return;
     if (g->f60 != *SpecFx_GetEffectDef(9)) return;
-    if (D_005383C8 & 7) return;
+    if (g_VideoFrameCounter & 7) return;
     SoundRequest_Ctor(&req, 0, "O_GLASS_BREAK_S", 0, 0);
     SoundPosRequest_Ctor(&msg, &req, x);
     msg.b20 = 1;
-    Event_Send(&msg, D_004FFB50, 0);
+    Event_Send(&msg, g_Game, 0);
     msg.vt = D_004DAE30;
     FileMan_Release((char*)&msg + 0x114, -1);
     FileMan_Release((char*)&msg + 0x78, -1);

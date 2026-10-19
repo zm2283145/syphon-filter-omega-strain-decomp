@@ -48,9 +48,9 @@ typedef struct Pt1FsSelf {
     int visId;
 } Pt1FsSelf;
 extern char g_FlashlightClickSound[];
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_004DAE30[];
-extern char D_00535D20[];
+extern char g_LightMgr[];
 extern char D_004D9280[];
 extern char D_004D9240[];
 extern char D_004D9200[];
@@ -68,7 +68,7 @@ extern "C" void func_00147A10();
 void * const D_004E15E0[16] = { (void*)0x0, (void*)0x0, (void*)Flashlight_ReleaseGlare, (void*)PointLightComp_Start, (void*)0x1479E0, (void*)func_00147A00, (void*)func_00147A10, (void*)func_001479A0, (void*)FlashGlare_GetCoronaSize, (void*)FlashGlare_GetCoronaFlag, (void*)Light_SetPosition, (void*)Light_Enable, (void*)Light_Disable, (void*)FlashGlare_GetRange, (void*)0x0, (void*)0x0 };
 extern char g_TargetVisMgr[];
 extern signed char D_004979B0;
-extern unsigned char D_00535D62;
+extern unsigned char g_LevelLightsDirty;
 extern "C" void SoundPosRequest_Ctor(Pt1FsSnd* e, void* preset, Pt1FsId* id);
 extern "C" void Event_Send(void* msg, void* target, int immediate);
 extern "C" void cMessage_dtor(void* msg, int flags);
@@ -90,7 +90,7 @@ extern "C" void Flashlight_SetState(Pt1FsSelf* self, int on)
         Pt1FsSnd snd;
         SoundPosRequest_Ctor(&snd, g_FlashlightClickSound, &id);
         snd.flag = 1;
-        Event_Send(&snd, D_004FFB50, 0);
+        Event_Send(&snd, g_Game, 0);
         WeaponInv_SetSlotModelState(self->owner->weapons, 7, on);
         snd.vt = D_004DAE30;
         FileMan_Release(&snd.s114, -1);
@@ -99,7 +99,7 @@ extern "C" void Flashlight_SetState(Pt1FsSelf* self, int on)
     }
     self->on = on;
     if (self->on) {
-        Pt1FsLight* l = LightMgr_AllocPoint(D_00535D20, 4);
+        Pt1FsLight* l = LightMgr_AllocPoint(g_LightMgr, 4);
         if (l) {
             *(void**)((char*)l + 4) = D_004D9280;
             l->kind = D_004979B0;
@@ -117,12 +117,12 @@ extern "C" void Flashlight_SetState(Pt1FsSelf* self, int on)
             l->dir.y = 0.0f;
             l->dir.z = 0.0f;
             l->dir.w = 1.0f;
-            D_00535D62 = 1;
+            g_LevelLightsDirty = 1;
             l->id = 0;
             *(void**)((char*)l + 4) = D_004D9200;
         }
         self->beam = l;
-        l = LightMgr_AllocPoint(D_00535D20, 4);
+        l = LightMgr_AllocPoint(g_LightMgr, 4);
         if (l) {
             Pt1FsV4 color;
             Pt1FsV4 pos;

@@ -55,10 +55,10 @@ struct HeldItem { char pad0[4]; void* ctl; char pad8[0xC]; int idx; Seg* segs; S
 
 extern "C" {
 extern float D_0048B1C8;
-extern char D_005435A0[];
+extern char g_LosRequestMsgClass[];
 extern char D_004D9180[];
-extern char D_004FFB50[];
-extern char D_004EA0B0[];
+extern char g_Game[];
+extern char g_LosCheckService[];
 void Event_Construct(void*, void*);
 void cMessage_dtor(void*, int);
 Svc* Service_Lookup(void* a, void* b);
@@ -83,7 +83,7 @@ struct LosMsg : MsgB {
     LosMsg(LosRes* r, const V& f, const V& d, void* o)
     {
         LosMsg* m = this;
-        Event_Construct(m, D_005435A0);
+        Event_Construct(m, g_LosRequestMsgClass);
         m->vtable = D_004D9180;
         m->x24 = 0;
         m->x28 = 0;
@@ -112,7 +112,7 @@ int func_00265910(HeldItem* h)
         d.Set(*last - from);
         LosRes res;
         LosMsg msg(&res, from, d, h->ctl);
-        Service_Lookup(D_004FFB50, D_004EA0B0)->Post(&msg);
+        Service_Lookup(g_Game, g_LosCheckService)->Post(&msg);
         hit = res.hit;
     }
     return hit;

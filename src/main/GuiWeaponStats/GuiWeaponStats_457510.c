@@ -50,7 +50,7 @@ char * Mem_Alloc(int, int, char *, int);
                       
 extern char D_004C1CA0;
 extern char D_004E1430;
-extern unsigned char D_00533880;
+extern unsigned char g_ProfileLockEnabled;
 }
 extern "C" char * func_004575D0(void) {
     char * temp_s0;

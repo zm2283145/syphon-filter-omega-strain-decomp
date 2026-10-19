@@ -6,11 +6,11 @@
 #include "types.h"
 #include "player_types.h"
 
-extern int D_0049D010;     /* NPC class token */
+extern int g_HumanActorClassKey;     /* NPC class token */
 extern int D_004EE788;     /* cPlayer class type id */
 extern int D_004EE790;     /* cPlayer script type */
 extern char D_00555070[];
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern int GObj_IdentityA(void*);
 extern int ScriptFilter_Dispatch(void* filter, int a0, int a1);
 extern int WeaponInv_EquipItem(void* inventory, int a1);
@@ -85,14 +85,14 @@ int cPlayer_v0C(int a0, int a1) {
 
 /*
  * For an NPC-class actor: calls WeaponInv_EquipItem on its inventory (a1 is passed
- * through) and, when the D_005721C8 flag is set, func_002493C0 on the input state.
+ * through) and, when the g_IsMultiplayer flag is set, func_002493C0 on the input state.
  */
 void Player_EquipItem(PlayerComponent* self, int a1) {
     PlayerActor* actor = self->actor;
 
-    if (actor != 0 && actor->classToken == D_0049D010) {
+    if (actor != 0 && actor->classToken == g_HumanActorClassKey) {
         WeaponInv_EquipItem(actor->inventory, a1);
-        if (D_005721C8 != 0) {
+        if (g_IsMultiplayer != 0) {
             func_002493C0(&self->input, actor);
         }
     }

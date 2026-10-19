@@ -23,23 +23,23 @@ float D_00493348[2] = { 0.95f, 0.0f };
 
 float D_00493350[4] = { 0.02f, 0.0f, 0.0f, 0.0f };
 
-int D_00493360[8] = {
+int g_MorphCurveGrip[8] = {
     0, 0, 0x2, 0x3f800000,
     0x6, 0x3f800000, 0x8, 0,
 };
 
-int D_00493380[8] = {
+int g_MorphCurveActive[8] = {
     0, 0, 0x6, 0x3f800000,
     0x3c, 0x3f800000, 0x48, 0,
 };
 
-int D_004933A0[12] = {
+int g_MorphCurvePeriodic[12] = {
     0, 0, 0x1, 0x3f800000,
     0x3, 0x3f800000, 0x8, 0,
     0xffff, 0, 0, 0,
 };
 
-int D_004933D0[1] = { 0xffffffff };
+int WoundEffectTable[1] = { 0xffffffff };
 
 int D_004933D4[5] __attribute__((aligned(4))) = {
     0xffffffff, 0xffffffff, 0xffffffff, 0,

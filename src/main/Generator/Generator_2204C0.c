@@ -64,12 +64,12 @@ struct HitRes { unsigned char hit; char pad1[0x1F]; HitSub s; char pad88[0x10]; 
 struct RayMsg { void* vt; char base[0x20]; int f24; int f28; HitRes* res; V start; V end; Obj* pl; Obj* cl; int f58; unsigned char b5C; };
 struct Plr { char pad[0x30]; Obj* obj; };
 extern "C" {
-extern unsigned char D_005721C8;
-extern Plr* D_004FFC0C;
-extern char D_004FFC14[];
-extern char D_004FFB50[];
-extern char D_004EA0B0[];
-extern char D_005435A0[];
+extern unsigned char g_IsMultiplayer;
+extern Plr* g_LocalPlayer;
+extern char g_CameraObject[];
+extern char g_Game[];
+extern char g_LosCheckService[];
+extern char g_LosRequestMsgClass[];
 extern char D_004D9180[];
 LNode* func_0021E000(void* l);
 LNode** func_0021DFE0(It* it, LNode* n);
@@ -93,7 +93,7 @@ static inline void End(It* o, Gen* g) { It t; func_0021DFE0(&t, func_0021E000(&g
 static inline void DoRay(Svc* svc, HitRes* res, const V& start, const V& end, Obj* pl, Obj* cl) {
     RayMsg msg;
     RayMsg* m = &msg;
-    Event_Construct(m, D_005435A0);
+    Event_Construct(m, g_LosRequestMsgClass);
     m->vt = D_004D9180;
     m->f24 = 0;
     m->f28 = 0;
@@ -130,7 +130,7 @@ extern "C" int Generator_SpawnTest(Gen* self, void* node)
         }
         if (found) goto done;
         r = 1;
-        if (D_005721C8) {
+        if (g_IsMultiplayer) {
             for (int i = 0; i < 4; i++) {
                 Obj* p = PlayerSlots_Get(i);
                 if (p) {
@@ -144,7 +144,7 @@ extern "C" int Generator_SpawnTest(Gen* self, void* node)
                 }
             }
         } else {
-            Obj* p = D_004FFC0C->obj;
+            Obj* p = g_LocalPlayer->obj;
             V d;
             Node_GetTranslation(&d, node);
             d.SubEq(SubPos(p->sub));
@@ -154,25 +154,25 @@ extern "C" int Generator_SpawnTest(Gen* self, void* node)
             float ang = 0.87266463f;
             V d;
             Node_GetTranslation(&d, node);
-            d.SubEq(SubPos((*List_Front(D_004FFC14))->sub));
+            d.SubEq(SubPos((*List_Front(g_CameraObject))->sub));
             d.z = 0.0f;
             d.Normalize();
-            V f = SubMtx((*List_Front(D_004FFC14))->sub).r1;
+            V f = SubMtx((*List_Front(g_CameraObject))->sub).r1;
             f.z = 0.0f;
             float dot = f.Dot(d);
             if (dot + (1.0f - Math_Cos(ang)) < 1.0f) {
                 r = 1;
             } else {
-                Obj* pl = D_004FFC0C->obj;
+                Obj* pl = g_LocalPlayer->obj;
                 Obj* cl = 0;
-                if (D_005721C8) cl = Object_ClosestPlayerDistSq(node, 0);
-                Svc* svc = Service_Lookup(D_004FFB50, D_004EA0B0);
+                if (g_IsMultiplayer) cl = Object_ClosestPlayerDistSq(node, 0);
+                Svc* svc = Service_Lookup(g_Game, g_LosCheckService);
                 V end;
                 V start;
                 Node_GetTranslation(&start, node);
                 start.z += 6.0f;
-                end = SubPos((*List_Front(D_004FFC14))->sub);
-                end.AddEq(SubMtx((*List_Front(D_004FFC14))->sub).r1 * 1.5f);
+                end = SubPos((*List_Front(g_CameraObject))->sub);
+                end.AddEq(SubMtx((*List_Front(g_CameraObject))->sub).r1 * 1.5f);
                 end.SubEq(start);
                 HitRes res;
                 DoRay(svc, &res, start, end, pl, cl);
@@ -338,7 +338,7 @@ void func_0043A030(void* t, void* p);
 
 void cGenerator_v18(G_220D70* g, int bit)
 {
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         int t[1];
         Msg_220D70 msg;
         if (bit >= 0)
@@ -447,7 +447,7 @@ extern "C" void cGenerator_v17(Gen_0FD0* g, int who)
     char ctx2[4];
     Msg_0FD0 msg;
     g->b2C = 1;
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         int ok = g->b2D != 0;
         ok = ok ? g->b2C != 0 : ok;
         ok = ok ? (g->b2E != 0) ^ 1 : ok;

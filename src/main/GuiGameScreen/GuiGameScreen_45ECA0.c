@@ -11,14 +11,14 @@
 /* merge_units: begin func_0045ECA0 */
 #pragma push /* merge_units */
 typedef struct { char pad[0x6A4]; void* hud; } Game0045ECA0;
-extern Game0045ECA0* D_004FFC2C;
+extern Game0045ECA0* g_Hud;
 extern int Loc_LookupText(int id);
 extern void GuiGameScreen_ShowInteract(void* hud, int text, int b, int c);
 /* Show a localized message on the HUD if one exists. */
 void GameScreen_DisplayInteractLocal(int id, int b)
 {
     void* hud;
-    if (D_004FFC2C && (hud = D_004FFC2C->hud) != 0) {
+    if (g_Hud && (hud = g_Hud->hud) != 0) {
         GuiGameScreen_ShowInteract(hud, Loc_LookupText(id), b, 1);
     }
 }
@@ -35,9 +35,9 @@ typedef struct InteractOwner {
 } InteractOwner;
 
 #if 0 /* merge_units */
-extern InteractOwner* D_004FFC2C;
+extern InteractOwner* g_Hud;
 #endif /* merge_units */
-#define D_004FFC2C (*(InteractOwner **)&D_004FFC2C) /* merge_units */
+#define g_Hud (*(InteractOwner **)&g_Hud) /* merge_units */
 
 #if 0 /* merge_units */
 extern void GuiGameScreen_ShowInteract(void* display, int a, int b, int show);
@@ -47,11 +47,11 @@ extern void GuiGameScreen_ShowInteract(void* display, int a, int b, int show);
 
 /* Shows the interact prompt on the current display, if any. */
 void Global_DisplayInteract(int a, int b) {
-    if (D_004FFC2C && D_004FFC2C->display) {
-        GuiGameScreen_ShowInteract(D_004FFC2C->display, a, b, 1);
+    if (g_Hud && g_Hud->display) {
+        GuiGameScreen_ShowInteract(g_Hud->display, a, b, 1);
     }
 }
-#undef D_004FFC2C /* merge_units */
+#undef g_Hud /* merge_units */
 #undef GuiGameScreen_ShowInteract /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0045ED00(void) {}

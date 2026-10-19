@@ -86,7 +86,7 @@ extern char * D_00532FE0;
 #endif /* merge_units */
 #define D_00532FE0 (*(char **)&D_00532FE0) /* merge_units */
 
-extern unsigned char D_00533880;
+extern unsigned char g_ProfileLockEnabled;
 }
 extern "C" char * GuiScreen_ctor(char * arg0) {
     char * temp_s1;

@@ -56,7 +56,7 @@ typedef struct { void* vt; char p4[0x24]; int f28; float f2C; float f30; char na
 extern "C" {
 extern unsigned char D_005721D0;
 extern char D_0051EE48[], D_004DE0F0[];
-extern void *D_004FFC2C;
+extern void *g_Hud;
 extern void Event_Construct(Msg2C50E0* e, void* type);
 extern char *Loc_GetStoredKey(int);
 extern char *strncpy(char *, const char *, unsigned int);
@@ -83,9 +83,9 @@ extern "C" int func_002C50E0(int a0, int a1, int a2, Pk2C50E0* arg) {
         msg.b49 = p->fA;
         strncpy(m->name, Loc_GetStoredKey(p->fC), 0x10);
         if (p->f8 == 0) {
-            Hud_SetCalloutLabel(D_004FFC2C, &msg.f28, msg.name, msg.f44, msg.f2C, msg.f30, msg.b48, msg.b49, 0);
+            Hud_SetCalloutLabel(g_Hud, &msg.f28, msg.name, msg.f44, msg.f2C, msg.f30, msg.b48, msg.b49, 0);
         } else {
-            Hud_ClearCallout(D_004FFC2C, &msg.f28, msg.f44, msg.b48, 0);
+            Hud_ClearCallout(g_Hud, &msg.f28, msg.f44, msg.b48, 0);
         }
         msg.vt = D_004DE0F0;
         cMessage_dtor(&msg, 0);

@@ -4,7 +4,7 @@
 struct E_32FFD0 { int id; int pad[4]; int val; };
 struct O_32FFD0 { int key; int p4; int key2; int c; int val; int x; };
 extern "C" {
-extern char D_00532B10[];
+extern char g_UnlockRows[];
 E_32FFD0* func_0032E3F0(void* t);
 E_32FFD0* func_0032E3C0(void* t);
 void func_0032E3E0(E_32FFD0** out, void* t, E_32FFD0** raw);
@@ -21,11 +21,11 @@ static inline int Find_32FFD0(const char* key)
         E_32FFD0* t1;
         E_32FFD0* t2;
         E_32FFD0* first;
-        t1 = func_0032E3F0(D_00532B10);
-        func_0032E3E0(&b, D_00532B10, &t1);
+        t1 = func_0032E3F0(g_UnlockRows);
+        func_0032E3E0(&b, g_UnlockRows, &t1);
         first = b;
-        t2 = func_0032E3C0(D_00532B10);
-        func_0032E3E0(&e, D_00532B10, &t2);
+        t2 = func_0032E3C0(g_UnlockRows);
+        func_0032E3E0(&e, g_UnlockRows, &t2);
         for (E_32FFD0* last = e; Neq_32FFD0(first, last); first++) {
             if (k == first->id) return first->val;
         }

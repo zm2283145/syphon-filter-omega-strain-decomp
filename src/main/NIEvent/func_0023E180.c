@@ -29,13 +29,13 @@ struct Sub {
 };
 struct Obj { char pad[0x50]; Sub* sub; };
 extern "C" {
-extern char D_004FFC14[];
+extern char g_CameraObject[];
 int func_00159570(void*);
 Obj** List_Front(void*);
 void Mtx_FromRowsAndTranslation(Mtx* m, V* a, V* b, V* c, V* t);
 Mtx NiEvent_ComputeWorld(void* node);
 }
-static inline Obj* GetCam() { return func_00159570(D_004FFC14) ? *List_Front(D_004FFC14) : 0; }
+static inline Obj* GetCam() { return func_00159570(g_CameraObject) ? *List_Front(g_CameraObject) : 0; }
 static inline const V& SubPos(Sub* o) { if (o->f50) o->Sync(); return o->m.t; }
 
 struct Ev_3E180 { char pad[0x94]; void* node; char pad98[0xE0 - 0x98]; V pos; };

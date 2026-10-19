@@ -10,23 +10,23 @@ int IeElement_Construct(int, int );
 int IeNode_SetShown(int, int, int);                              
 int IeNode_LinkElement(int , int *);                     
 extern int D_004BE030;
-extern unsigned char D_00533880;
-extern int D_00533888;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
 
 int IeElement_Create(int arg0) {
     int sp3C;
     int var_s1;
 
     IeNode_SetShown(arg0, 1, 1);
-    if (D_00533880 != 0) {
+    if (g_ProfileLockEnabled != 0) {
         Alloc_Lock(9);
     }
-    D_00533888 += 1;
+    g_ProfileLockDepth += 1;
     var_s1 = Mem_Alloc(0, 0x80, &D_004BE030, 0x207);
-    if (D_00533880 != 0) {
+    if (g_ProfileLockEnabled != 0) {
         Alloc_Unlock(9);
     }
-    D_00533888 -= 1;
+    g_ProfileLockDepth -= 1;
     if (var_s1 != 0) {
         var_s1 = IeElement_Construct(var_s1, arg0);
     }

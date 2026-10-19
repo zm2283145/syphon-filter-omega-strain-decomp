@@ -69,11 +69,11 @@ struct Hud_A190 {
     Wdg_A190* list;
 };
 extern "C" {
-extern unsigned char D_005721C8;
-extern int D_0049D010;
+extern unsigned char g_IsMultiplayer;
+extern int g_HumanActorClassKey;
 extern void* D_004FFC04;
-extern Net_A190* D_004FFC0C;
-extern char D_004FFB50[];
+extern Net_A190* g_LocalPlayer;
+extern char g_Game[];
 extern char D_004DAE30[];
 extern char D_004DD5E0[];
 extern char D_004DCF10[];
@@ -119,8 +119,8 @@ void EffectMsg_WrapRequest(void* msg, void* action);
 int GuiSaveAgentWidget_OnEvent(Hud_A190* self, Wdg_A190* w, unsigned short msg, int sub, int text);
 }
 static inline unsigned char IsLocal_A190(Plr_A190* p) { unsigned char r = 0; if (p->ctl && p->ctl->IsLocal()) r = 1; return r; }
-static inline int LocalId_A190(Plr_A190* p) { int id; if (D_005721C8) { if (IsLocal_A190(p)) id = ((p->flags & 0x7F000000) >> 24) - 1; else id = -1; } else id = 0; return id; }
-static inline Plr_A190* AsHuman_A190(Plr_A190* p) { return (p && p->kind == D_0049D010) ? p : 0; }
+static inline int LocalId_A190(Plr_A190* p) { int id; if (g_IsMultiplayer) { if (IsLocal_A190(p)) id = ((p->flags & 0x7F000000) >> 24) - 1; else id = -1; } else id = 0; return id; }
+static inline Plr_A190* AsHuman_A190(Plr_A190* p) { return (p && p->kind == g_HumanActorClassKey) ? p : 0; }
 
 extern "C" int GuiGameOptions_HandleEvent(Hud_A190* self, Wdg_A190* w, unsigned short msg, int sub, int text)
 {
@@ -224,8 +224,8 @@ extern "C" int GuiGameOptions_HandleEvent(Hud_A190* self, Wdg_A190* w, unsigned 
             return 1;
         }
         if (sub == 13) {
-            if (msg == 0x1A && D_004FFC0C) {
-                int id; Plr_A190* o = D_004FFC0C->plr;
+            if (msg == 0x1A && g_LocalPlayer) {
+                int id; Plr_A190* o = g_LocalPlayer->plr;
                 if (AsHuman_A190(o)) {
                     int slot;
                     id = self->w404;
@@ -252,7 +252,7 @@ extern "C" int GuiGameOptions_HandleEvent(Hud_A190* self, Wdg_A190* w, unsigned 
             SoundAction_CtorVoice(self->snd, 1, D_0048B900, 0, 0);
             EffectMsg_WrapRequest(&ev, self->snd);
             ev.flag = 1;
-            Event_Send(&ev, D_004FFB50, 1);
+            Event_Send(&ev, g_Game, 1);
             ev.vtbl = D_004DAE30;
             FileMan_Release(ev.partB, -1);
             FileMan_Release(ev.partA, -1);

@@ -23,7 +23,7 @@ struct Type { char pad[0xF0]; unsigned char cls; char padF1[0x104 - 0xF1]; int r
 struct Projectile { char pad[0x70]; V pos; char pad80[0xF0 - 0x80]; V launch; char pad100[0x120 - 0x100]; Type* rec; };
 extern "C" {
 extern float D_004F7FE0;
-extern float D_004F5438;
+extern float g_ThrowGravity;
 extern float D_0048AF98;
 void Projectile_SolveBallistic(V* out, const V* from, const V* to, V* extra, float g, float k, float minAng);
 void Projectile_Launch(Projectile* p, V* to, float k);
@@ -33,7 +33,7 @@ void Projectile_Launch(Projectile* p, V* to, float k)
     bool lob = p->rec->cls == 1;
     float minAng;
     minAng = !lob ? -1000.0f : D_004F7FE0;
-    float g = D_004F5438;
+    float g = g_ThrowGravity;
     if (p->rec->cls == 7) g += D_0048AF98;
     V vel;
     V* from = &p->pos;
@@ -115,7 +115,7 @@ extern float D_004F7FE8;
 extern float D_0048AF40;
 extern float D_0048AF90;
 extern char D_004DC6C0[];
-extern char D_0055C9F0[];
+extern char g_IdentityMatrix[];
 void IdMgr_Allocate(int* id, int kind);
 void cGOBJ_ctor(void* self, int* gid, int n, int* tag);
 V* Vec4_Set(V* out, float x, float y, float z, float w);
@@ -173,7 +173,7 @@ ProjC* Projectile_Construct(ProjC* self, POwnerC* owner, M4P* mtx, PTypeC* rec)
             int none;
             self->ownerId = *(owner ? &owner->serial : (none = -1, &none));
         }
-        self->SetName(D_0055C9F0, 0);
+        self->SetName(g_IdentityMatrix, 0);
         self->node->SetMatrix(m);
         self->Activate(1);
         Object_Register(self);

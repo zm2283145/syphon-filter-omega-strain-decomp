@@ -19,14 +19,14 @@ typedef struct NotifyMsg {
     int pad2C;
 } NotifyMsg;
 
-extern int D_00506248;
+extern int g_NetCreateTankMsgKey;
 extern void Message_GetScriptTypeKey();
 extern void cNetCreateTankMsg_dtor();
 extern void cNetCreateTankMsg_v01();
 extern void cNetCreateTankMsg_v04();
 extern void cNetCreateTankMsg_v05();
 extern void func_002823E0();
-void * const D_004DCF70[8] = { (void*)0x0, (void*)0x0, (void*)cNetCreateTankMsg_dtor, (void*)cNetCreateTankMsg_v01, (void*)func_002823E0, (void*)Message_GetScriptTypeKey, (void*)cNetCreateTankMsg_v04, (void*)cNetCreateTankMsg_v05 };
+void * const cNetCreateTankMsg_vtable[8] = { (void*)0x0, (void*)0x0, (void*)cNetCreateTankMsg_dtor, (void*)cNetCreateTankMsg_v01, (void*)func_002823E0, (void*)Message_GetScriptTypeKey, (void*)cNetCreateTankMsg_v04, (void*)cNetCreateTankMsg_v05 };
 extern int D_004DCF10;
 extern void Event_Construct(NotifyMsg*, void*);
 extern void Event_Send(NotifyMsg*, void*, int);
@@ -37,9 +37,9 @@ int Script_cTank_NetCreate(Obj60** args) {
     Obj60* o = *args;
     NotifyMsg msg;
     int* idField;
-    Event_Construct(&msg, &D_00506248);
+    Event_Construct(&msg, &g_NetCreateTankMsgKey);
     idField = &msg.id;
-    msg.vtable = &(*(int*)D_004DCF70);
+    msg.vtable = &(*(int*)cNetCreateTankMsg_vtable);
     *idField = -1;
     msg.sender = o;
     *idField = o->id;

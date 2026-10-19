@@ -20,9 +20,9 @@ int Net_GetClock(int);
 int NpcAi_CountThinking(void);
 unsigned char Generator_SpawnTest(Gen* g, Gen* s);
 void Generator_Spawn(Gen* g, Gen* s, int i);
-extern int D_004EA350;
+extern int g_MaxActiveNpcCount;
 extern int D_004F56B8;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 void cGenerator_v10(Gen* self, float dt);
 }
 struct Gen {
@@ -54,11 +54,11 @@ void cGenerator_v10(Gen* self, float dt)
     }
     func_0043B190(ctx);
     if (self->bD1) return;
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         if (!func_0043AA40(ctx, self->key)) return;
         if (!(D_004F56B8 < Net_GetClock(1))) return;
     }
-    if (!(D_004EA350 > NpcAi_CountThinking())) return;
+    if (!(g_MaxActiveNpcCount > NpcAi_CountThinking())) return;
     if (!self->CanSpawn()) return;
     if (!(self->nC0 < self->n8C)) return;
     if (self->fBC <= self->f84) return;

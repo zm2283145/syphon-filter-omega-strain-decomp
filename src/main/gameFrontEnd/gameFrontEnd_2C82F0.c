@@ -33,7 +33,7 @@ static const unsigned int dat_0048C340[2] = { 0x18000, 0x0 };
 extern int D_0048C348;
 extern int D_0048C350;
 extern int D_0048C358;
-extern void* D_0051EF70;
+extern void* g_SplashThreadStack;
 extern char D_004ACF10[];
 extern char D_004E9B70[];
 void* Mem_Alloc(int pool, int size, char* file, int line);
@@ -57,7 +57,7 @@ extern "C" void FrontEnd_StartSplashThread(Obj82F0* o)
             p = Mem_Alloc(0, size, D_004ACF10, 0x862);
         }
         tp.status = 0x10;
-        D_0051EF70 = p;
+        g_SplashThreadStack = p;
         tp.entry = (void*)FrontEnd_SplashThreadMain;
         tp.stack = (void*)((unsigned int)p & ~0xF);
         tp.waitType = 0;

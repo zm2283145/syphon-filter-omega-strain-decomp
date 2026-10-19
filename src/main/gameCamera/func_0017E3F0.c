@@ -78,7 +78,7 @@ struct Cam_17E3F0 {
 
 extern "C" {
 extern char D_004DA470[], D_004DA580[], D_004DAD90[], D_004DAD70[], D_004DA440[], D_004DA410[], D_004DA3E0[], D_004DA2F0[];
-extern char D_0055C9F0[];
+extern char g_IdentityMatrix[];
 extern float D_004A3FC8;
 extern char D_0048A158[], D_0048A160[];
 extern signed char D_004E1D80;
@@ -167,7 +167,7 @@ extern "C" Cam_17E3F0* Camera_ConstructStream(Cam_17E3F0* self, Reader_17E3F0* r
     self->vtbl = D_004DA470;
     self->f60 = 0;
     self->f64 = 0;
-    Object_AttachTransform(self, D_0055C9F0, 0);
+    Object_AttachTransform(self, g_IdentityMatrix, 0);
     self->f30 = 0;
     self->vtbl = D_004DA580;
     {

@@ -86,7 +86,7 @@ void*Gui_GetScreenStack();
 void GuiScreen_SetFocus(void*,void*);void GuiWidget_SendEvent(void*,void*,int,int,int);void GuiTextWidget_SetText(void*,const char*,int);
 int Agent_GetSelected(void*,int);int AgentData_IsObjectiveComplete(int,const char*);int AgentData_HasZeus(int,int,int,int);int AgentData_GetLevelShortName(int,const char*);
 int String_CompareNoCase(const char*,const char*);void String_Copy(char*,const char*);int atoi(const char*);char*Loc_LookupText(const char*);int sprintf(char*,const char*,...);
-extern char D_004AA200[],D_004AA210[],D_004AA228[],D_004AA238[],D_004AA248[],D_004AA250[],D_004AA260[],D_004AA268[],D_004AA270[],D_004AA280[],D_004FFB50[],D_004FFC90[];
+extern char D_004AA200[],D_004AA210[],D_004AA228[],D_004AA238[],D_004AA248[],D_004AA250[],D_004AA260[],D_004AA268[],D_004AA270[],D_004AA280[],g_Game[],g_LevelDirName[];
 }
 extern "C" void GuiCommandCenter_OpenPanel(CcBindings*self,unsigned char requested){
  char label[32],text[32];int objective;
@@ -99,7 +99,7 @@ extern "C" void GuiCommandCenter_OpenPanel(CcBindings*self,unsigned char request
   self->focus[0]=0;self->focus[1]=0;self->focus[2]=0;self->focus[3]=0;self->focus[4]=0;self->focus[5]=0;((GuiWidget*)self)->unk20=(int)self;break;
  case 5:{
   for(int i=0;i<10;i++){if(self->tail[i]){self->tail[i]->flags&=0xfffd;self->tail[i]->flags&=0xfffb;self->tail[i]->unk10=-1;}else return;}
-  char*locked=Loc_LookupText(D_004AA200);int agent=Agent_GetSelected(D_004FFB50,-1);
+  char*locked=Loc_LookupText(D_004AA200);int agent=Agent_GetSelected(g_Game,-1);
   if(self->selection==20){
    for(int i=0;i<10;i++){
     self->tail[i]->flags|=2;bool missing=1;
@@ -107,22 +107,22 @@ extern "C" void GuiCommandCenter_OpenPanel(CcBindings*self,unsigned char request
     if(missing)GuiTextWidget_SetText(self->tail[i],locked,0);
    }
   }else{
-   char*name=D_004FFC90;int i=0;
+   char*name=g_LevelDirName;int i=0;
    if(!String_CompareNoCase(name,D_004AA228)){self->tail[0]->flags|=2;self->tail[0]->flags|=4;self->tail[0]->unk10=0;GuiTextWidget_SetText(self->tail[i++],Loc_LookupText(D_004AA238),0);}
    self->tail[i]->flags|=2;
    if(AgentData_HasZeus(agent,self->selection+1,5,0)){self->tail[i]->flags|=4;self->tail[i]->unk10=2;sprintf(text,D_004AA248,name);GuiTextWidget_SetText(self->tail[i++],Loc_LookupText(text),0);}
    else{GuiTextWidget_SetText(self->tail[i++],locked,0);}
-   sprintf(text,D_004AA250,D_004FFC90);char*title=Loc_LookupText(text);
-   sprintf(text,D_004AA260,D_004FFC90);char*requirement=Loc_LookupText(text);
+   sprintf(text,D_004AA250,g_LevelDirName);char*title=Loc_LookupText(text);
+   sprintf(text,D_004AA260,g_LevelDirName);char*requirement=Loc_LookupText(text);
    if(title&&*title&&requirement&&*requirement){
     self->tail[i]->flags|=2;bool missing=1;
-    if(requirement[1]==':'&&requirement[2]){text[0]=requirement[0];text[1]=0;objective=atoi(text);String_Copy(text,requirement+2);if(AgentData_IsObjectiveComplete(Agent_GetSelected(D_004FFB50,-1),text)){missing=0;self->objective=objective;self->tail[i]->unk10=3;}}
+    if(requirement[1]==':'&&requirement[2]){text[0]=requirement[0];text[1]=0;objective=atoi(text);String_Copy(text,requirement+2);if(AgentData_IsObjectiveComplete(Agent_GetSelected(g_Game,-1),text)){missing=0;self->objective=objective;self->tail[i]->unk10=3;}}
     if(missing)GuiTextWidget_SetText(self->tail[i],locked,0);else{GuiTextWidget_SetText(self->tail[i],title,0);self->tail[i]->flags|=4;}i++;
    }
    self->tail[i]->flags|=2;bool enabled=0;
    sprintf(text,D_004AA268,name);char*title2=Loc_LookupText(text);
-   int record=AgentData_GetLevelShortName(Agent_GetSelected(D_004FFB50,-1),name);
-   if(title2&&record){sprintf(text,D_004AA270,record);if(AgentData_IsObjectiveComplete(Agent_GetSelected(D_004FFB50,-1),text)){enabled=1;if(!String_CompareNoCase(name,D_004AA280))self->tail[i]->unk10=1;else self->tail[i]->unk10=4;}}
+   int record=AgentData_GetLevelShortName(Agent_GetSelected(g_Game,-1),name);
+   if(title2&&record){sprintf(text,D_004AA270,record);if(AgentData_IsObjectiveComplete(Agent_GetSelected(g_Game,-1),text)){enabled=1;if(!String_CompareNoCase(name,D_004AA280))self->tail[i]->unk10=1;else self->tail[i]->unk10=4;}}
    if(enabled){GuiTextWidget_SetText(self->tail[i],title2,0);self->tail[i]->flags|=4;}else GuiTextWidget_SetText(self->tail[i],Loc_LookupText(D_004AA200),0);
   }
   break;

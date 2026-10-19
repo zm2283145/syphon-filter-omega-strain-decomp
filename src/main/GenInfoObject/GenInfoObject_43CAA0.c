@@ -14,7 +14,7 @@
 #include "loose05_types.h"
 
 extern char D_004E0FC0[]; /* vtable */
-extern int D_00539248;    /* resource registry */
+extern int g_TextureMgr;    /* resource registry */
 extern int Tex_Release(int registry, int handle, int arg);
 extern int GuiWidget_BaseSleep(void* self);
 extern int GuiWidget_BaseWake(void* self);
@@ -25,7 +25,7 @@ extern int GuiBitmapWidget_Load(GuiWidget43CB20* self);
 void GuiBitmapWidget_Sleep(GuiWidget43CB20* self) {
     GuiWidget_BaseSleep(self);
     if (self->handle != -1) {
-        Tex_Release(D_00539248, self->handle, 0);
+        Tex_Release(g_TextureMgr, self->handle, 0);
         self->handle = -1;
     }
 }

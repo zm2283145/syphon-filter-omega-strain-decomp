@@ -16,21 +16,21 @@ int func_002B4E50();
 int func_002B4FA8(int);                               
 int Renderer_Teardown(char *);                               
 extern char D_004F2CC0;
-extern char D_004FFB50;
-extern char D_005381F0;
-extern int *D_0055A830;
+extern char g_Game;
+extern char g_Video;
+extern int *g_MemCard;
 
 
 void func_0029EC50(void) {
     int temp_v0;
     int var_a0;
 
-    Renderer_Teardown(&D_005381F0);
-    temp_v0 = Service_Lookup(&D_004FFB50, &D_004F2CC0);
+    Renderer_Teardown(&g_Video);
+    temp_v0 = Service_Lookup(&g_Game, &D_004F2CC0);
     if (temp_v0 != 0) {
         SoundMgr_UnloadLevel(temp_v0);
     }
-    var_a0 = D_0055A830 ? *D_0055A830 : -1;
+    var_a0 = g_MemCard ? *g_MemCard : -1;
     if (var_a0 != -1) {
         func_002B4FA8(var_a0);
     }
@@ -90,15 +90,15 @@ extern Ui_0029ED40* D_004FFC04;
 
 extern char D_004AABF0[];
 #if 0 /* merge_units */
-extern char D_004FFB50[];
+extern char g_Game[];
 #endif /* merge_units */
-#define D_004FFB50 ((char*)&D_004FFB50) /* merge_units */
+#define g_Game ((char*)&g_Game) /* merge_units */
 
 
 #if 0 /* merge_units */
-extern char D_0055A830[];
+extern char g_MemCard[];
 #endif /* merge_units */
-#define D_0055A830 ((char*)&D_0055A830) /* merge_units */
+#define g_MemCard ((char*)&g_MemCard) /* merge_units */
 
 
 void GuiScreen_Wake(void);
@@ -121,7 +121,7 @@ extern "C" void GuiOnlineConnect_Wake(S_0029ED40* self)
 {
     GuiScreen_Wake();
     D_004FFC04->b2A = 0;
-    MemCard_WaitIdle(D_0055A830);
+    MemCard_WaitIdle(g_MemCard);
     self->b94 = 0;
     GuiOnlineConnect_ShowGroup(self, 4);
     if (self->f10 == 1)
@@ -133,8 +133,8 @@ extern "C" void GuiOnlineConnect_Wake(S_0029ED40* self)
         self->f48 = FrontEnd_OpenPopup(ui, 0, D_004AABF0, GuiScreen_GetLobbyString(self, 0, 0, 0, 0, 0), 0, 0);
         self->f8C = 15.0f;
         GuiOnlineConnect_ShowGroup(self, 4);
-        D_004FFC04->b265 = Agent_GetSelected(D_004FFB50, -1)->f9A0 == -1;
-    } else if (Agent_GetSelected(D_004FFB50, -1)->f9A0 == -1) {
+        D_004FFC04->b265 = Agent_GetSelected(g_Game, -1)->f9A0 == -1;
+    } else if (Agent_GetSelected(g_Game, -1)->f9A0 == -1) {
         Str_0029ED40 a;
         Str_0029ED40 b;
         String_CtorCStr_13B480(&a, GuiScreen_GetLobbyString(self, 3, 0, 0, 0, 0));
@@ -152,8 +152,8 @@ extern "C" void GuiOnlineConnect_Wake(S_0029ED40* self)
     Gui_GetScreenStack()->f68 |= 0xC;
 }
 #undef D_004FFC04 /* merge_units */
-#undef D_004FFB50 /* merge_units */
-#undef D_0055A830 /* merge_units */
+#undef g_Game /* merge_units */
+#undef g_MemCard /* merge_units */
 #undef Gui_GetScreenStack /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0029ED40 */
@@ -261,14 +261,14 @@ extern "C" void GuiOnlineConnect_Init(Self_0029EF90* self)
 
 /* merge_units: begin GuiOnlineConnect_29F2A0 */
 #pragma push /* merge_units */
-extern char D_004DD620[];   /* GuiOnlineConnect vtable */
+extern char GuiOnlineConnect_vtable[];   /* GuiOnlineConnect vtable */
 extern GuiScreen* GuiScreen_ctor(GuiScreen* self);
 extern GuiSlot* LobbyArray_ctor(GuiSlot* slot);
 
 /* GuiOnlineConnect constructor. */
 GuiOnlineConnect* GuiOnlineConnect_ctor(GuiOnlineConnect* self) {
     GuiScreen_ctor(&self->base);
-    self->base.base.base.vtable = D_004DD620;
+    self->base.base.base.vtable = GuiOnlineConnect_vtable;
     LobbyArray_ctor(&self->slots[0]);
     LobbyArray_ctor(&self->slots[1]);
     LobbyArray_ctor(&self->slots[2]);

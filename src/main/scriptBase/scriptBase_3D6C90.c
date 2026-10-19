@@ -92,8 +92,8 @@ static inline void merge_flush_func_003D6D00(void) {}
 #pragma cplusplus on
 
 extern "C" {
-extern unsigned char D_00533880;
-extern int D_00533888;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
 void Alloc_Lock(int id);
 void Alloc_Unlock(int id);
 void operator_delete(void* p);
@@ -119,25 +119,25 @@ extern "C" Owner* func_003D6F40(Owner* self, short flag)
 {
     if (self) {
         void* d = self->data;
-        if (D_00533880)
+        if (g_ProfileLockEnabled)
             Alloc_Lock(9);
-        D_00533888++;
+        g_ProfileLockDepth++;
         Mem_Free(0, d, D_004BD3B0, 0x170);
-        if (D_00533880)
+        if (g_ProfileLockEnabled)
             Alloc_Unlock(9);
-        D_00533888--;
+        g_ProfileLockDepth--;
         for (int i = 0; i < self->items.count; i++) {
             Item* it = *func_003D7370(&self->items, i);
             AllocGuard g;
             if (it) {
                 void* p = it->data;
-                if (D_00533880)
+                if (g_ProfileLockEnabled)
                     Alloc_Lock(9);
-                D_00533888++;
+                g_ProfileLockDepth++;
                 Mem_Free(0, p, D_004BD3B0, 0x15C);
-                if (D_00533880)
+                if (g_ProfileLockEnabled)
                     Alloc_Unlock(9);
-                D_00533888--;
+                g_ProfileLockDepth--;
             }
             Mem_Free(0, it, D_004BD3B0, 0x173);
         }

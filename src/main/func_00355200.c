@@ -16,7 +16,7 @@ typedef struct ObjF4 {
     unsigned char pending;      /* 0xF4 */
 } ObjF4;
 
-extern int D_004FFB50;
+extern int g_Game;
 extern int D_004DADF0;
 extern void SoundEvent_Ctor(EventMsg*, void*, int);
 extern void Event_Send(EventMsg*, void*, int);
@@ -29,7 +29,7 @@ void func_00355200(ObjF4* o) {
     o->pending = 0;
     SoundEvent_Ctor(&msg, o->target, 0);
     msg.immediate = 1;
-    Event_Send(&msg, &D_004FFB50, 1);
+    Event_Send(&msg, &g_Game, 1);
     msg.vtable = &D_004DADF0;
     FileMan_Release(msg.partB, -1);
     FileMan_Release(msg.partA, -1);

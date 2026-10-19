@@ -39,7 +39,7 @@ static inline void merge_flush_func_00246640(void) {}
 
 /* merge_units: begin func_00246690 */
 #pragma push /* merge_units */
-extern float D_004F7D70;
+extern float g_NvHudTextColour;
 extern float D_004F7D74;
 extern float D_004F7D78;
 extern float D_004F7D7C;
@@ -48,7 +48,7 @@ extern float D_004F7D7C;
 void Global_SetNVInterfaceTextColor(int r, int g, int b, float a)
 {
     D_004F7D7C = a;
-    D_004F7D70 = (float)r / 255.0f;
+    g_NvHudTextColour = (float)r / 255.0f;
     D_004F7D74 = (float)g / 255.0f;
     D_004F7D78 = (float)b / 255.0f;
 }
@@ -88,7 +88,7 @@ static inline void merge_flush_func_002466F0(void) {}
 
 /* merge_units: begin func_00246740 */
 #pragma push /* merge_units */
-extern float D_004F7D60;
+extern float g_HudTextColour;
 extern float D_004F7D64;
 extern float D_004F7D68;
 extern float D_004F7D6C;
@@ -97,7 +97,7 @@ extern float D_004F7D6C;
 void Global_SetInterfaceTextColor(int r, int g, int b, float a)
 {
     D_004F7D6C = a;
-    D_004F7D60 = r / 255.0f;
+    g_HudTextColour = r / 255.0f;
     D_004F7D64 = g / 255.0f;
     D_004F7D68 = b / 255.0f;
 }

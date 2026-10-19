@@ -24,7 +24,7 @@ extern char D_004DAA10[];
 extern int D_00494178;
 extern int D_005721A8;
 extern unsigned char D_005721C0;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 void cGOBJ_ctor(Part_59D0*, int*, int, void*);
 void* Resource_Construct(void* entry);
 void* FileMan_Release(void* entry, int flags);
@@ -57,9 +57,9 @@ static inline void ReadV(Reader* r, V4* v, float w)
     float z = ReadF(r);
     v->x = x; v->y = y; v->z = z; v->w = w;
 }
-static inline unsigned char IsLocal() {unsigned char r;if(D_005721C8)r=D_005721C0;else {r=1; asm { .set reorder }}return r;}
+static inline unsigned char IsLocal() {unsigned char r;if(g_IsMultiplayer)r=D_005721C0;else {r=1; asm { .set reorder }}return r;}
 #pragma inline_depth(10)
-static inline int LocalId() { int r=0;int a=D_005721A8;if(*(volatile unsigned char*)&D_005721C8) { if(D_00494178==-1)NetGame_InitLocalSlot(&D_00494178,a);r=D_00494178; }else { asm { .set reorder } }return r; }
+static inline int LocalId() { int r=0;int a=D_005721A8;if(*(volatile unsigned char*)&g_IsMultiplayer) { if(D_00494178==-1)NetGame_InitLocalSlot(&D_00494178,a);r=D_00494178; }else { asm { .set reorder } }return r; }
 extern "C" Part_59D0* Loader_ReadParticleRecord(Part_59D0* self, Reader* r)
 {
     FEnt fe;
@@ -125,7 +125,7 @@ extern "C" Part_59D0* Loader_ReadParticleRecord(Part_59D0* self, Reader* r)
         int col = IdMgr_FindCollision(s2, s1);
         if (col) ZoneMgr_Associate(col, self, 1, col);
     }
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         if (!IsLocal()) self->b14 = 0;
         {
             int h = self->h10.v;

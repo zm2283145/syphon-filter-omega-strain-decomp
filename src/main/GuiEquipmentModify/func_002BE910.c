@@ -13,7 +13,7 @@ struct Inv_002BE910 { char pad[0x2410]; Item_002BE910* slots[8]; };
 struct Act_002BE910 { char pad[0x60]; Inv_002BE910 inv; };
 struct S_002BE910 { char pad0[0x48]; void* p48; Act_002BE910* p4C; char pad50[0x34]; void* p84; int f88; char pad8C[0x70]; int fFC; };
 extern "C" {
-extern int D_004FFD30;
+extern int g_WeaponDatabase;
 extern char D_004AC370[];
 extern char D_004AC390[];
 extern char D_004AC3A0[];
@@ -56,11 +56,11 @@ extern "C" void GuiEquipmentModify_BuildCurrentColumn(S_002BE910* self)
         int k = self->f88;
         Item_002BE910* it = inv->slots[k];
         if (it) {
-            wp = WeaponDb_Get(D_004FFD30, it->h40A);
+            wp = WeaponDb_Get(g_WeaponDatabase, it->h40A);
         } else if (self->fFC == k) {
             Item_002BE910* it2 = inv->slots[0];
             if (it2)
-                wp = WeaponDb_Get(D_004FFD30, it2->h40A);
+                wp = WeaponDb_Get(g_WeaponDatabase, it2->h40A);
         }
     }
     if (wp) {

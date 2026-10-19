@@ -245,7 +245,7 @@ extern char D_004AA640[];
 extern char D_004AAE00[];
 extern char D_004B88F0[];
 extern char D_004BB3D0[];
-extern char D_004FFB50[];
+extern char g_Game[];
 extern QCol_356CD0 D_00587BA0;
 extern QCol_356CD0 D_00587BB0;
 extern QCol_356CD0 D_00587BC0;
@@ -283,7 +283,7 @@ void GuiPersonnelScreen_Init(S_356CD0* o)
     }
     o->w50 = cast_356CD0(GuiWidget_FindChildByName(o, D_00492C98), D_004B88F0);
     w = cast_356CD0(GuiWidget_FindChildByName(o, D_00492C80), D_004A7520);
-    if (w) GuiTextWidget_SetText(w, AgentData_GetName(Agent_GetSelected(D_004FFB50, -1)), 0);
+    if (w) GuiTextWidget_SetText(w, AgentData_GetName(Agent_GetSelected(g_Game, -1)), 0);
 }
 #undef GuiTextWidget_SetText /* merge_units */
 #pragma pop /* merge_units */

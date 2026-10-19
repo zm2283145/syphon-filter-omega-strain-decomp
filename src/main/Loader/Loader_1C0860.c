@@ -129,9 +129,9 @@ static inline void merge_flush_func_001C0A90(void) {}
 /* merge_units: begin func_001C0C00 */
 #pragma push /* merge_units */
 typedef struct Pop_001C0C00 { int version; int size; unsigned int base; char* cur; } Pop_001C0C00;
-extern unsigned char D_00533880;
-extern int D_00533888;
-extern char D_004EE688[];
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
+extern char g_HotboxList[];
 void Alloc_Lock(int id);
 void Alloc_Unlock(int id);
 #if 0 /* merge_units */
@@ -177,11 +177,11 @@ static inline int ReadInt_001C0C00(Pop_001C0C00* r)
 static inline void* Alloc_001C0C00(int size, int line)
 {
     void* p;
-    if (D_00533880) Alloc_Lock(9);
-    D_00533888++;
+    if (g_ProfileLockEnabled) Alloc_Lock(9);
+    g_ProfileLockDepth++;
     p = Mem_Alloc(0, size, D_0049EE88, line);
-    if (D_00533880) Alloc_Unlock(9);
-    D_00533888--;
+    if (g_ProfileLockEnabled) Alloc_Unlock(9);
+    g_ProfileLockDepth--;
     return p;
 }
 void Loader_InitHotboxes(void* self, Pop_001C0C00* r)
@@ -224,7 +224,7 @@ void Loader_InitHotboxes(void* self, Pop_001C0C00* r)
                     }
                 }
                 tmp[0] = p;
-                Hotbox_AddToGlobalList(D_004EE688, tmp);
+                Hotbox_AddToGlobalList(g_HotboxList, tmp);
                 Object_Register(p);
             }
         }

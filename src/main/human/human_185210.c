@@ -35,12 +35,12 @@ struct B7_Human {
     float health;
 };
 extern "C" B7_GObj* GObj_IdentityB(int id);
-extern "C" int D_0049D010;
+extern "C" int g_HumanActorClassKey;
 extern "C" void Global_ShockToDeath(B7_Human* o, float a, float b, int c, int d);
 extern "C" int Script_ShockToDeath(int* args)
 {
     B7_GObj* o = GObj_IdentityB(args[0]);
-    if (o && o->type == D_0049D010) {
+    if (o && o->type == g_HumanActorClassKey) {
         B7_Human* h = (B7_Human*)o;
         unsigned char s = h->GetState();
         bool dying = (s == 2 || s == 3);
@@ -59,7 +59,7 @@ static inline void merge_flush_func_00185280(void) {}
 #pragma push /* merge_units */
 typedef struct { char pad[0x3524]; void* weapons; } H_185330;
 typedef struct { char pad[0x30]; H_185330* player; } G_185330;
-extern G_185330* D_004FFC0C;
+extern G_185330* g_LocalPlayer;
 extern void WeaponInv_ClearSlots(void* w);
 extern void WeaponInv_Add(void* w, int id, int a, int b, int c, int d);
 extern int WeaponInv_SlotOfItem(int id);
@@ -75,7 +75,7 @@ int Script_SetPlayerWeapons(int* args)
     pb = b;
     a = args[0];
     pa = a;
-    w = D_004FFC0C->player->weapons;
+    w = g_LocalPlayer->player->weapons;
     WeaponInv_ClearSlots(w);
     if (pa > -1) WeaponInv_Add(w, pa, 1, 0, 1, 0);
     if (pb > -1) {

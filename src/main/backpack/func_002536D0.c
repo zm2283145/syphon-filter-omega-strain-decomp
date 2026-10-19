@@ -2,7 +2,7 @@
 #include "types.h"
 extern "C" {
 extern char* D_005061D0;
-extern int D_004FFBD0;
+extern int g_HotboxTracker;
 extern void Object_Register(void* o);
 extern void* Hotbox_CreateRuntime(int a, void* o, int b, int c);
 extern void Backpack_UpdateBoxPriority(void* o);
@@ -43,7 +43,7 @@ extern "C" void func_002536D0(S_002536D0* p) {
         ((VC_002536D0*)p)->v21(1);
         Object_Register(p);
         if (p->obj == 0) {
-            p->obj = (Obj_002536D0*)Hotbox_CreateRuntime(D_004FFBD0, p, 0, 1);
+            p->obj = (Obj_002536D0*)Hotbox_CreateRuntime(g_HotboxTracker, p, 0, 1);
             p->obj->v = p->id;
         }
     }

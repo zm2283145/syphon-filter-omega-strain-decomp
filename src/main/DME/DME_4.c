@@ -21,7 +21,7 @@ DEFINE_VTABLE_BASE_DTOR(cNetPlayGameMsg_dtor, D_004E0EC0, cMessage_dtor)
 #define NULL 0
 #pragma mpwc_relax on
 extern unsigned char D_005721C0;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005723C8;
 extern unsigned char D_005724B0;
 
@@ -34,7 +34,7 @@ void DME_OnJoinResult(int *result) {
         D_005723C8 = 1;
     }
     if (*result == 0) {
-        isHost = D_005721C8 ? D_005721C0 : 1;
+        isHost = g_IsMultiplayer ? D_005721C0 : 1;
         if (isHost != 0) {
             D_005724B0 = DME_STATE_JOINED;
         } else if (D_005724B0 == DME_STATE_JOIN_WAIT) {

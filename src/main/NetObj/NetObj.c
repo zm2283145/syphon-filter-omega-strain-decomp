@@ -114,9 +114,9 @@ struct Event3FB020 {
 
 extern "C" {
 extern int D_0055C7B8;
-extern int D_0055D480;
+extern int g_ActorActionMsgClass;
 extern unsigned char D_005721C0;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 int Net_GetClock(int);
 int* Event_GetType(Event3FB020*);
 unsigned char NetObj_SendMessage(int a, int b, void* c, int target, int type);
@@ -135,7 +135,7 @@ extern "C" int Transport_Send(int target, Event3FB020* e, int a2, int a3)
     if (D_005721D0 && target > -1 && r > -1) {
         send = 1;
         int* ty = Event_GetType(e);
-        if (*ty == D_0055D480) {
+        if (*ty == g_ActorActionMsgClass) {
             if (e->sub == 1 || e->sub == 0xC || e->kind == 1 || e->kind == 2 || e->kind == 0x43 ||
                 e->kind == 0x3E || e->kind == 0x3F || e->kind == 0x39 || e->kind == 0x3A || e->kind == 0xD)
                 send = 0;
@@ -150,7 +150,7 @@ extern "C" int Transport_Send(int target, Event3FB020* e, int a2, int a3)
                     r = -1;
             }
             if (e->flags & 2) {
-                if (!(D_005721C8 ? D_005721C0 : 1)) {
+                if (!(g_IsMultiplayer ? D_005721C0 : 1)) {
                     int type = e->f1C;
                     func_002EBBA0(D_005721A8, &peer);
                     if (!NetObj_SendMessage(handle, r, buf, peer, type))

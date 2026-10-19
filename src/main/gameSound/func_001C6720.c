@@ -13,7 +13,7 @@ typedef struct SoundMsg {
     char partB[0xAC];   /* 0x114 */
 } SoundMsg; /* size 0x1C0 */
 
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_004DAE10[];
 extern void SoundRequest_Ctor(SoundRequest* req, int kind, int a, int b, int c);
 extern void SoundMsg_WrapAction(SoundMsg* msg, SoundRequest* req);
@@ -27,7 +27,7 @@ void Global_PlayQuip(int a, int b, int c) {
     SoundRequest req;
     SoundRequest_Ctor(&req, 4, a, b, c);
     SoundMsg_WrapAction(&msg, &req);
-    Event_Send(&msg, D_004FFB50, 0);
+    Event_Send(&msg, g_Game, 0);
     msg.vtbl = D_004DAE10;
     FileMan_Release(msg.partB, -1);
     FileMan_Release(msg.partA, -1);

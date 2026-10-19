@@ -52,7 +52,7 @@ extern char D_004ED9B8[];
 extern char D_004D9760[];
 extern char D_0051F0C0[];
 extern char D_004DE510[];
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 PNode* NpcPath_GetNode(int id);
 void Node_GetTranslation(V4* out, PNode* node);
 void Event_Construct(void* m, void* type);
@@ -136,7 +136,7 @@ extern "C" void NpcPath_Update(Path* self)
             Notify5(self, 5);
             self->held = !NpcPath_SetSegment(self, next);
             self->f5C = NpcPath_GetNode(self->seg)->f7C;
-            if (D_005721C8 && self->actor->f14) {
+            if (g_IsMultiplayer && self->actor->f14) {
                 Route* r = self->route;
                 if (r->nodes) {
                     r->count = 0;

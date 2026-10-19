@@ -44,14 +44,14 @@ static inline void merge_flush_func_0045EBC0(void) {}
 
 /* merge_units: begin func_0045EC60 */
 #pragma push /* merge_units */
-extern GameHudOwner* D_004FFC2C;
+extern GameHudOwner* g_Hud;
 extern void GuiGameScreen_HideInteract(void* hud, int enable);
 
 /* Enable the interaction prompt when both the owner and its HUD are present. */
 void GameScreen_ClearInteractLocal(void)
 {
-    if (D_004FFC2C && D_004FFC2C->hud)
-        GuiGameScreen_HideInteract(D_004FFC2C->hud, 1);
+    if (g_Hud && g_Hud->hud)
+        GuiGameScreen_HideInteract(g_Hud->hud, 1);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0045EC60(void) {}

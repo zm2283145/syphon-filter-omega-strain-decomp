@@ -22,11 +22,11 @@ extern char* D_00533000;
 extern unsigned char D_00532FF0;
 extern int D_00532FF8;
 extern int D_005721A8;
-extern char D_004FFBA0;
-extern char D_004FFBA1;
-extern char D_004FFB50[];
-extern char D_004FFC90[];
-extern int D_004ACB30[];
+extern char g_GameState;
+extern char g_PrevGameState;
+extern char g_Game[];
+extern char g_LevelDirName[];
+extern int g_OnlineMissionTable[];
 extern char* D_0048C160[];
 extern char* GuiScreen_GetLobbyString(O5B0*, unsigned char, char*, int, int, int);
 extern int FrontEnd_OpenPopup(FE5B0*, int, char*, char*, O5B0*, int);
@@ -75,14 +75,14 @@ extern "C" void func_0033E5B0(O5B0* o, Info5B0* info, int arg2) {
     }
     name = 0;
     if (info->rest.w[7] >= 0 && info->rest.w[7] < 9) {
-        int lv = D_004ACB30[info->rest.w[7]];
+        int lv = g_OnlineMissionTable[info->rest.w[7]];
         if (lv != -1) {
             int cur = D_004FFC04->f24C;
             if (cur == -1 || lv == cur) name = D_0048C160[lv];
         }
     }
     if (name && name[0]) {
-        strncpy(D_004FFC90, name, 0x80);
+        strncpy(g_LevelDirName, name, 0x80);
     } else {
         String_CtorCStr_13B480(&a1, GuiScreen_GetLobbyString(o, 0x66, 0, 0, 0, 0));
         String_CtorCStr_13B480(&b1, GuiScreen_GetLobbyString(o, 0x68, info->name.c, 0, 0, 0));
@@ -161,13 +161,13 @@ extern "C" void func_0033E5B0(O5B0* o, Info5B0* info, int arg2) {
         void* ls;
         if (n < 1 || n > 4) n = 4;
         D_004FFC04->f254 = n;
-        Game_ClearOtherAgentsB70(D_004FFB50);
+        Game_ClearOtherAgentsB70(g_Game);
         App_GetInstance();
         App_InitSystemsOnce();
         lobby->f2560 = lobby->f255C;
         saved = D_004FFC04->f24C;
         ls = D_004FFC04->ls;
-        LevelSelect_SetLevel(ls, D_004ACB30[info->rest.w[7]]);
+        LevelSelect_SetLevel(ls, g_OnlineMissionTable[info->rest.w[7]]);
         if (SFOLobby_JoinGame(lobby, info->rest.w[9])) {
             bool timeout;
             int deadline = (int)Time_GetMilliseconds() + 60000;
@@ -179,8 +179,8 @@ extern "C" void func_0033E5B0(O5B0* o, Info5B0* info, int arg2) {
             timeout = false;
             if (!D_00532FF0) timeout = true;
             if (!timeout && (D_00532FF8 != 0) == 1) {
-                D_004FFBA1 = D_004FFBA0;
-                D_004FFBA0 = 3;
+                g_PrevGameState = g_GameState;
+                g_GameState = 3;
                 D_004FFC04->f35 = 1;
             } else {
                 char* msg;

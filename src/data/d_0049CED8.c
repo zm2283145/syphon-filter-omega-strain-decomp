@@ -78,19 +78,19 @@ float D_0049D000[2] = { 0.0f, 0.0f };
 
 float D_0049D008[2] = { 0.0f, 0.0f };
 
-int D_0049D010[4] = { 0, 0, 0, 0 };
+int g_HumanActorClassKey[4] = { 0, 0, 0, 0 };
 
-unsigned char D_0049D020[3] = { 0x00, 0x02, 0x05 };
+unsigned char ActorNodeCodeTable[3] = { 0x00, 0x02, 0x05 };
 
 unsigned char D_0049D023[1] __attribute__((aligned(1))) = { 0x09 };
 
-unsigned char D_0049D024[8] __attribute__((aligned(4))) = { 0x0e, 0x08, 0x0d, 0x11, 0x13, 0x0a, 0x0f, 0x12 };
+unsigned char g_HeadNodeCode[8] __attribute__((aligned(4))) = { 0x0e, 0x08, 0x0d, 0x11, 0x13, 0x0a, 0x0f, 0x12 };
 
 unsigned char D_0049D02C[12] __attribute__((aligned(4))) = {
     0x14, 0x01, 0x04, 0x07, 0x0c, 0x03, 0x06, 0x0b, 0x10, 0x00, 0x00, 0x00,
 };
 
-float D_0049D038[2] = { 0.0f, 0.0f };
+float g_DefaultMotionTransition[2] = { 0.0f, 0.0f };
 
 int D_0049D040[2] = { 0, 0 };
 

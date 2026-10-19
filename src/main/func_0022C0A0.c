@@ -7,7 +7,7 @@
 #include "types.h"
 #include "loose01_types.h"
 
-extern GameUI* D_004FFC2C;
+extern GameUI* g_Hud;
 extern MarkerTarget* GObj_IdentityB(void*);
 extern int Global_ClearRadarBlip(MarkerTarget*);
 extern void Global_SetWaypoint(MarkerTarget*);
@@ -20,7 +20,7 @@ int Script_SetWaypoint(ScriptArg* args) {
 }
 
 void Global_SetWaypoint(MarkerTarget* obj) {
-    HudTargets_SelectWaypoint(D_004FFC2C->markerMgr, obj);
+    HudTargets_SelectWaypoint(g_Hud->markerMgr, obj);
 }
 
 int Script_ClearRadarBlip(ScriptArg* args) {
@@ -29,5 +29,5 @@ int Script_ClearRadarBlip(ScriptArg* args) {
 }
 
 int Global_ClearRadarBlip(MarkerTarget* obj) {
-    return ObjMarkerMgr_Remove(D_004FFC2C->markerMgr, &obj->markerKey, 0);
+    return ObjMarkerMgr_Remove(g_Hud->markerMgr, &obj->markerKey, 0);
 }

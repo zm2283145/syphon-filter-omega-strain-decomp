@@ -196,7 +196,7 @@ typedef struct SoundEventMsg {
     char pad1C0[0x10];
 } SoundEventMsg;
 extern char* D_0048B908;
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_004DADF0[];
 extern char D_004DAE10[];
 #if 0 /* merge_units */
@@ -300,11 +300,11 @@ extern "C" int GuiGameOptions_HandleInput(S_00299B90* self, Ev_00299B90* ev)
                 FileMan_Release(req.partB, -1);
                 FileMan_Release(req.partA, -1);
                 evm.flag = 1;
-                Event_Send(&evm, D_004FFB50, 1);
+                Event_Send(&evm, g_Game, 1);
                 SoundAction_CtorVoice(self->action, 4, D_0048B908, 0, 0);
                 SoundMsg_WrapAction(&play, self->action);
                 play.flag = 1;
-                Event_Send(&play, D_004FFB50, 1);
+                Event_Send(&play, g_Game, 1);
                 play.vtbl = D_004DAE10;
                 FileMan_Release(play.partB, -1);
                 FileMan_Release(play.partA, -1);

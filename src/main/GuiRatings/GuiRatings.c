@@ -56,7 +56,7 @@ typedef struct { char pad[0x34]; float f34; float f38; float f3C; float f40; } W
 typedef struct { int x0; int x4; int x8; int xC; } TO_4D8C0;
 typedef struct { char pad[0x6C]; W_4D8C0* w6C[0x19]; int countD0; Rec_4D8C0* recsD4; char padD8[4]; TO_4D8C0* textDC; } S_4D8C0;
 extern "C" {
-extern MStack_4D8C0 D_005381F0;
+extern MStack_4D8C0 g_Video;
 extern int D_00538C64;
 extern char D_00538C68;
 extern char D_004BA870[];
@@ -77,9 +77,9 @@ void GuiRatings_Draw(S_4D8C0* s)
     int i;
     GuiWidget_Draw(s);
     if (!s->textDC) return;
-    GQR(&D_005381F0.m[D_00538C64 + 1], &D_005381F0.m[D_00538C64]);
+    GQR(&g_Video.m[D_00538C64 + 1], &g_Video.m[D_00538C64]);
     D_00538C64++;
-    UM(&D_005381F0.m[D_00538C64]);
+    UM(&g_Video.m[D_00538C64]);
     D_00538C68 = 1;
     for (i = 0; i < 6; i++) {
         int j;

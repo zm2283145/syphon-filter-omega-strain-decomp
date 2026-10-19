@@ -58,7 +58,7 @@ typedef struct { int kind; int id; unsigned short h8; short pA; int fC; int f10;
 typedef struct { void* vt; char p4[0x14]; int f18; char p1C[8]; int f24; int f28; int f2C; int f30; char p34[4]; } Msg211700;
 struct Obj211700 { VPAD8(a) VPAD2(b) virtual int Accept(Msg211700* m); };
 extern "C" {
-extern char D_004F5440[], D_004DAF10[];
+extern char g_TriggerMsgKey[], D_004DAF10[];
 void cMessage_ctor5(Msg211700*, void*, Pk211700*);
 void* Object_LookupById(int*);
 void MsgQueue_QueueClone(Msg211700*, void*, int, int);
@@ -74,7 +74,7 @@ extern "C" int func_00211700(int a0, int a1, int a2, Pk211700* arg) {
     if (D_005721D0) {
         Msg211700 msg;
         void** obj;
-        cMessage_ctor5(&msg, D_004F5440, p);
+        cMessage_ctor5(&msg, g_TriggerMsgKey, p);
         msg.vt = D_004DAF10;
         msg.f24 = p->h8;
         msg.f28 = p->fC;

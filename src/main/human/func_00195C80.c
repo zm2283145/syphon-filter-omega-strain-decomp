@@ -8,11 +8,11 @@
 #include "human_types.h"
 
 extern char D_004E0840[];   /* ArgMsg vtable */
-extern char D_0055D480[];   /* CAS action message type */
+extern char g_ActorActionMsgClass[];   /* CAS action message type */
 extern Message* Event_Construct(Message*, void*);
 
 ArgMsg* Actor_SendCasAction(ArgMsg* self, int action, int flag) {
-    Event_Construct(&self->base, D_0055D480);
+    Event_Construct(&self->base, g_ActorActionMsgClass);
     self->base.vtable = D_004E0840;
     self->arg0 = action;
     self->arg1 = flag;

@@ -48,7 +48,7 @@ static inline void merge_flush_func_004702A0(void) {}
 /* merge_units: begin func_004703B0 */
 #pragma push /* merge_units */
 typedef struct { char p[8]; char m8[0x20]; char m28[4]; } E4703B0;
-extern void* D_004FFD30;
+extern void* g_WeaponDatabase;
 #if 0 /* merge_units */
 extern E4703B0* D_00587FF8;
 #endif /* merge_units */
@@ -59,7 +59,7 @@ extern void WeaponDb_LoadModel(void* m, void* a, void* b, int c, int d, int e, i
 #pragma opt_strength_reduction off
 void ItemTable_LoadModels(void)
 {
-    void* m = D_004FFD30;
+    void* m = g_WeaponDatabase;
     int i;
     for (i = 0; i < D_00587FF4; i++) WeaponDb_LoadModel(m, D_00587FF8[i].m8, D_00587FF8[i].m28, -1, 0, 0, 0);
 }

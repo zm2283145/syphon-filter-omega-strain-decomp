@@ -27,7 +27,7 @@ struct V28F520 { virtual void v0(int f); virtual int v1(); virtual int v2(); vir
 struct O28F520 { void* vt; char pad[0x5C]; V28F520* items[4]; char pad70[4]; V28F520* p74; };
 extern "C" {
 extern char D_004DD1B0[];
-extern char D_0055DDA0[];
+extern char g_AgentPartCache[];
 void AgentPartCache_Unlock(void* p);
 void World_ClearPendingIfLoaded(void);
 void GuiWidget_Destroy(void* p, int f);
@@ -53,7 +53,7 @@ extern "C" O28F520* GuiAgentCreate_dtor(O28F520* self, short del)
             self->items[i]->v22(1);
             Del28F520(self->items[i], 0x16D);
         }
-        AgentPartCache_Unlock(D_0055DDA0);
+        AgentPartCache_Unlock(g_AgentPartCache);
         World_ClearPendingIfLoaded();
         GuiWidget_Destroy(self, 0);
         if (del > 0)
@@ -184,7 +184,7 @@ extern signed char D_00493A60;
 extern char D_004A9AC0[];
 extern char D_004A9AE0[];
 extern char D_004A9AA0[];
-extern char D_0055C9F0[];
+extern char g_IdentityMatrix[];
 extern char D_004A9B00[];
 extern char D_004A9B10[];
 extern char D_004A9A28[];
@@ -381,7 +381,7 @@ extern "C" Self_F760* GuiAgentCreate_ctor(Self_F760* p0)
     self->fD0 = 1;
     FrontEnd_GetCharacterData(D_004FFC04);
     D_00493A60 = -1;
-    Skl_Load(D_0055DDA0, D_004A9AC0, D_004A9AE0);
+    Skl_Load(g_AgentPartCache, D_004A9AC0, D_004A9AE0);
     {
         void* p;
         p = Alloc_F760(0x68, 0xFB);
@@ -390,7 +390,7 @@ extern "C" Self_F760* GuiAgentCreate_ctor(Self_F760* p0)
             *(char**)p = D_004DA470;
             ((int*)p)[0x60 / 4] = 0;
             ((int*)p)[0x64 / 4] = 0;
-            Object_AttachTransform(p, D_0055C9F0, 0);
+            Object_AttachTransform(p, g_IdentityMatrix, 0);
             ((int*)p)[0x30 / 4] = 0;
         }
         self->f74 = p;
@@ -514,8 +514,8 @@ extern "C" Self_F760* GuiAgentCreate_ctor(Self_F760* p0)
     }
     self->fED = D_0048B500[self->fD8][self->fEF].slot;
     self->fEE = D_0048B500[self->fD8][self->fEF].mode;
-    self->fE0 = AgentPartCache_FindMesh(D_0055DDA0, MANP_F760(self->f70)->e[(signed char)self->fED].a);
-    self->fE4 = AgentPartCache_FindTexture(D_0055DDA0, MANP_F760(self->f70)->e[(signed char)self->fED].b);
+    self->fE0 = AgentPartCache_FindMesh(g_AgentPartCache, MANP_F760(self->f70)->e[(signed char)self->fED].a);
+    self->fE4 = AgentPartCache_FindTexture(g_AgentPartCache, MANP_F760(self->f70)->e[(signed char)self->fED].b);
     GuiAgentCreate_UpdateCount(self);
     self->fC0 = 0;
     self->name = D_0056F9B0.name;

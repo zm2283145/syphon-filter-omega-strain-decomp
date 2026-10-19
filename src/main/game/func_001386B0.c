@@ -12,7 +12,7 @@ char * Mem_Alloc(int, int, char *, int);
 int Vec4_Assign(...);                      
 int cMessage_ctor(...);                    
 extern char D_004D9180;
-extern unsigned char D_00533880;
+extern unsigned char g_ProfileLockEnabled;
 }
 extern "C" char * func_001386B0(char * arg0) {
     char * temp_s0;

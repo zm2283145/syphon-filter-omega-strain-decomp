@@ -50,8 +50,8 @@ struct Light_e1 { int pad; LightFn_e1* vt; int id; };
 extern LightFn_e1 D_004DA070[];
 extern LightFn_e1 D_004D9240[];
 extern LightFn_e1 D_004D9280[];
-extern char D_00535D62;
-extern char D_00535D20[];
+extern char g_LevelLightsDirty;
+extern char g_LightMgr[];
 extern "C" void LightMgr_RemoveFromTable(void*, Light_e1*);
 extern "C" Light_e1* DirLight_Destruct(Light_e1* self, short reg)
 {
@@ -61,13 +61,13 @@ extern "C" Light_e1* DirLight_Destruct(Light_e1* self, short reg)
             self->vt = D_004D9240;
             self->id = -1;
             ((LightV_e1*)self)->Disable();
-            D_00535D62 = 1;
+            g_LevelLightsDirty = 1;
             if (self != 0) {
                 self->vt = D_004D9280;
             }
         }
         if (reg > 0) {
-            LightMgr_RemoveFromTable(D_00535D20, self);
+            LightMgr_RemoveFromTable(g_LightMgr, self);
         }
     }
     return self;

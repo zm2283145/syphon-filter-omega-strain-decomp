@@ -12,7 +12,7 @@ struct Sub285410 { char p[0x54]; unsigned char b54; };
 struct Tank285410 { char p[0x6C]; Sub285410* sub; };
 struct Msg285410 { void* vtable; char base[0x18]; int f1C; unsigned char b20; char p21[3]; unsigned char b24; char p25[3]; int f28; int f2C; };
 extern "C" {
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005721C0;
 extern char D_00506260[];
 extern char D_004DCF50[];
@@ -21,10 +21,10 @@ void Event_Construct(void* m, void* type);
 void Event_Send(void* m, void* target, int immediate);
 void cMessage_dtor(void* m, int flags);
 }
-static inline int IsAuth285410(void) { return D_005721C8 ? D_005721C0 : 1; }
+static inline int IsAuth285410(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
 extern "C" void func_00285410(Tank285410* self) {
     if (self->sub) self->sub->b54 = 1;
-    if (D_005721C8 && IsAuth285410()) {
+    if (g_IsMultiplayer && IsAuth285410()) {
         Msg285410 m;
         Event_Construct(&m, D_00506260);
         m.vtable = D_004DCF50;
@@ -49,11 +49,11 @@ struct Tank2854D0 { char p[0x6C]; Sub2854D0* sub; unsigned char b70; };
 struct Msg2854D0 { void* vtable; char base[0x18]; int f1C; unsigned char b20; char p21[3]; unsigned char b24; char p25[3]; int f28; int f2C; };
 extern "C" {
 }
-static inline int IsAuth2854D0(void) { return D_005721C8 ? D_005721C0 : 1; }
+static inline int IsAuth2854D0(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
 extern "C" void func_002854D0(Tank2854D0* self) {
     if (self->sub) self->sub->b54 = 0;
     self->b70 = 1;
-    if (D_005721C8 && IsAuth2854D0()) {
+    if (g_IsMultiplayer && IsAuth2854D0()) {
         Msg2854D0 m;
         Event_Construct(&m, D_00506260);
         m.vtable = D_004DCF50;
@@ -79,7 +79,7 @@ struct Tank285590 { char p[0x6C]; Sub285590* sub; unsigned char b70; };
 struct Msg285590 { void* vtable; char base[0x18]; int f1C; unsigned char b20; char p21[3]; unsigned char b24; char p25[3]; Obj285590* f28; int f2C; };
 extern "C" {
 }
-static inline int IsAuth285590(void) { return D_005721C8 ? D_005721C0 : 1; }
+static inline int IsAuth285590(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
 static inline void SetT285590(Sub285590* s, Obj285590* t) { int none; s->tgt = t; s->tid = *(t ? &t->id : (none = -1, &none)); }
 extern "C" void cTank_SetEnemy(Tank285590* self, Obj285590* t) {
     if (self->sub) {
@@ -87,7 +87,7 @@ extern "C" void cTank_SetEnemy(Tank285590* self, Obj285590* t) {
         SetT285590(self->sub, t);
     }
     self->b70 = 0;
-    if (D_005721C8 && IsAuth285590()) {
+    if (g_IsMultiplayer && IsAuth285590()) {
         Msg285590 m;
         Event_Construct(&m, D_00506260);
         m.vtable = D_004DCF50;

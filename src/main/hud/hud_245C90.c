@@ -59,14 +59,14 @@ static inline void merge_flush_func_00245E00(void) {}
 typedef struct { int cap; int count; int* data; } List245E;
 typedef struct { char pad[0xD4]; List245E* list; } Mgr245E;
 typedef struct { char pad[0x54]; int* ctx; char pad2[0x24]; char m7C[4]; } Obj245E;
-extern Mgr245E* D_004FFD30;
+extern Mgr245E* g_WeaponDatabase;
 extern int Hud_FindOrCreateElement(int ctx, int id);
 extern void Hud_PushReticleElement(void* set, int* h);
 extern void IeElement_SetShown(int h, int v);
 #pragma opt_strength_reduction off
 void Hud_BuildReticleElements(Obj245E* s) {
     int ctx = *s->ctx;
-    List245E* list = D_004FFD30->list;
+    List245E* list = g_WeaponDatabase->list;
     int i;
     for (i = 0; i < list->count; i++) {
         int h[1];

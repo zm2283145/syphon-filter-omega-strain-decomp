@@ -9,7 +9,7 @@
 #include "types.h"
 typedef struct { int a, b, c, d; } I4;
 extern float D_005383A8;
-extern char D_005381F0[];
+extern char g_Video[];
 extern char D_005390F0[];
 extern int D_00542D9C;
 extern int D_00542D2C;
@@ -33,7 +33,7 @@ void Culler_Setup(void)
     vu->b = v.b;
     vu->c = v.c;
     vu->d = v.d;
-    Renderer_UpdateCameraMatrices(D_005381F0);
+    Renderer_UpdateCameraMatrices(g_Video);
     {
 void* s = D_005390F0; __int128 t; void* d = vu + 1;
         asm {

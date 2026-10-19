@@ -104,8 +104,8 @@ extern void func_003D2180(int*, int);
 #define func_003D2180(a0, a1) (func_003D2180((Iter *)(a0), (PtrVec *)(a1))) /* merge_units */
 
 extern int strcmp(int, int);
-extern char D_005381F0[];
-extern Mgr3D2190* D_00539248;
+extern char g_Video[];
+extern Mgr3D2190* g_TextureMgr;
 #pragma push
 #pragma opt_common_subs off
 void Global_DecTexture(int list, int name)
@@ -126,7 +126,7 @@ int db;
     func_003D2110(a, list);
     while (func_003D20F0(it, func_003D2170(e, a)) != 0) {
         ent = *func_003D2160(it);
-        db = func_003797D0(D_005381F0);
+        db = func_003797D0(g_Video);
         if (strcmp(func_003D2140(Tex_GetRecord(db, func_003D2150(ent))), name) == 0) {
             found = ent;
             break;
@@ -137,7 +137,7 @@ int db;
     if (found != 0) {
         n = found->cur - 1;
         if (n < found->count) {
-            t = D_00539248->list[found->idx];
+            t = g_TextureMgr->list[found->idx];
             if (n != t->frame && n < t->anim->frames) {
                 t->f60 = 0;
                 t->f61 = 0;
@@ -206,9 +206,9 @@ extern void func_003D2180(int*, int);
 #define func_003D2180(a0, a1) (func_003D2180((Iter *)(a0), (PtrVec *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
-extern Mgr3D2320* D_00539248;
+extern Mgr3D2320* g_TextureMgr;
 #endif /* merge_units */
-#define D_00539248 (*(Mgr3D2320 **)&D_00539248) /* merge_units */
+#define g_TextureMgr (*(Mgr3D2320 **)&g_TextureMgr) /* merge_units */
 
 #pragma push
 #pragma opt_common_subs off
@@ -230,7 +230,7 @@ int db;
     func_003D2110(a, list);
     while (func_003D20F0(it, func_003D2170(e, a)) != 0) {
         ent = *func_003D2160(it);
-        db = func_003797D0(D_005381F0);
+        db = func_003797D0(g_Video);
         if (strcmp(func_003D2140(Tex_GetRecord(db, func_003D2150(ent))), name) == 0) {
             found = ent;
             break;
@@ -241,7 +241,7 @@ int db;
     if (found != 0) {
         n = found->cur + 1;
         if (n < found->count) {
-            t = D_00539248->list[found->idx];
+            t = g_TextureMgr->list[found->idx];
             if (n != t->frame && n < t->anim->frames) {
                 t->f60 = 0;
                 t->f61 = 0;
@@ -260,7 +260,7 @@ int db;
 #undef func_003D2160 /* merge_units */
 #undef func_003D2170 /* merge_units */
 #undef func_003D2180 /* merge_units */
-#undef D_00539248 /* merge_units */
+#undef g_TextureMgr /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003D2320 */
 

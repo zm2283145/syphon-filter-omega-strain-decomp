@@ -9,7 +9,7 @@ extern void NetGame_InitLocalSlot(int* id, int session);
 extern int func_002EB650(NetOwnerHdl** out, int id);
 static inline int NetOwner_LocalId(int session)
 {
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         if (D_00494178 == -1)
             NetGame_InitLocalSlot(&D_00494178, session);
         return D_00494178;

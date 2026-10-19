@@ -51,13 +51,13 @@ typedef struct Render6250 {
     Mtx6250 mtx[1];
 } Render6250;
 
-extern char D_005381F0[];
+extern char g_Video[];
 extern char D_00537F80[];
 extern char D_00543790[];
 extern Q6250 D_005381D0;
 extern int D_00538C64;
 extern char D_00538C68;
-extern TexMgr6250* D_00539248;
+extern TexMgr6250* g_TextureMgr;
 extern int D_005381C4;
 extern int D_005380F8;
 extern int D_00538170;
@@ -76,7 +76,7 @@ extern void Shadow_NextReceiverBatch(void*);
 
 /* quadword copy through a register (lq/sq) */
 static inline void QC(const void* s0, void* d0) { void* d = d0; __int128 q; const void* s = s0; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=&r"(q) : "r"(d), "r"(s) : "memory"); }
-static inline Mtx6250* MtxAt(int i) { return &((Render6250*)D_005381F0)->mtx[i]; }
+static inline Mtx6250* MtxAt(int i) { return &((Render6250*)g_Video)->mtx[i]; }
 /* 4-quadword copy alternating two registers */
 static inline void GQR(void* d, void* s) { __int128 qa, qb; __asm__ volatile("lq %0, 0x0(%3); lq %1, 0x10(%3); sq %0, 0x0(%2); lq %0, 0x20(%3); sq %1, 0x10(%2); lq %1, 0x30(%3); sq %0, 0x20(%2); sq %1, 0x30(%2)" : "=&r"(qa), "=&r"(qb) : "r"(d), "r"(s) : "memory"); }
 /* VU0 4x4 matrix multiply */
@@ -146,7 +146,7 @@ void Model_Draw(Model6250* m, unsigned int flags, Mtx6250* xf)
         }
         D_00538C68 = 1;
     }
-    tm = D_00539248;
+    tm = g_TextureMgr;
     {
         short* id = m->texIds;
         int i;
@@ -179,7 +179,7 @@ void Model_Draw(Model6250* m, unsigned int flags, Mtx6250* xf)
     D_005381C4++;
     QC(&m->data->color, &D_005381D0);
     D_005392D8 = D_004BC1B0;
-    Renderer_SetDrawState(D_005381F0, xf, flags, m->extra);
+    Renderer_SetDrawState(g_Video, xf, flags, m->extra);
     if (m->qwc <= 0x300) {
         Dma_StartToSpr(spr, (int)m->data->packet, m->qwc);
         Dma_WaitToSpr();
@@ -211,7 +211,7 @@ void Model_Draw(Model6250* m, unsigned int flags, Mtx6250* xf)
         D_005381C4 = 0;
         SetTexEnv();
         D_005381C4++;
-        Renderer_SetDrawState(D_005381F0, xf, flags, m->extra);
+        Renderer_SetDrawState(g_Video, xf, flags, m->extra);
         p = func_00375B40(D_00537F80, 1, m->qwc);
         QCopy6250(m->data->packet, m->qwc, p);
         DmaPacket_Close(D_00537F80, 1, p + m->qwc);

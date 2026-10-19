@@ -14,7 +14,7 @@ int NetGame_InitLocalSlot(int*, int);
 extern int D_00494178;
 extern int D_00497550;
 extern int D_005721A8;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern unsigned char D_00582B88;
 extern int D_00582D30;
 void func_00438240(Buf_8240* b)
@@ -26,7 +26,7 @@ void func_00438240(Buf_8240* b)
         int a = D_00497550;
         n = 0;
         if (a == -1) a = D_005721A8;
-        if (D_005721C8 && D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, a);
+        if (g_IsMultiplayer && D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, a);
         if (n < b->len) {
             do {
                 int k = func_0042BA00(1, p + n);
@@ -61,7 +61,7 @@ int lgAudInit(void* a, void* b);
 int lgAudEnumHint(int* hint);
 unsigned char func_004384C0(void);
 
-static inline int NetOk_438340(void) { return D_005721C8 ? D_005721C0 : 1; }
+static inline int NetOk_438340(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
 
 unsigned char func_00438340(void)
 {

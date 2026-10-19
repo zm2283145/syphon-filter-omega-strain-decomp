@@ -19,11 +19,11 @@ struct Obj_441370 {
 };
 
 extern "C" {
-extern char D_004FFB50[];
+extern char g_Game[];
 extern int D_004FFC04;
-extern int D_004FFD2C;
-extern int D_004FFBBC;
-extern Net_441370 D_0055A830;
+extern int g_OptionsRecord;
+extern int g_CardSlotId;
+extern Net_441370 g_MemCard;
 extern char D_004C0448[]; extern char D_004C0458[]; extern char D_004C0468[];
 extern char D_004C0478[]; extern char D_004C0488[];
 int Agent_GetSelected(void*, int);
@@ -42,8 +42,8 @@ static inline int ShowDlg(int mgr, int type, char* t, char* m, void* cb, int x) 
 
 extern "C" void SaveAgentWidget_Save(Obj_441370* self)
 {
-    Net_441370* net = &D_0055A830;
-    int agent = Agent_GetSelected(D_004FFB50, -1);
+    Net_441370* net = &g_MemCard;
+    int agent = Agent_GetSelected(g_Game, -1);
     if (SaveAgentWidget_SpaceCheck(self)) {
         unsigned char ok;
         int old;
@@ -52,10 +52,10 @@ extern "C" void SaveAgentWidget_Save(Obj_441370* self)
             self->dlg = ShowDlg(D_004FFC04, 0, D_004C0448, D_004C0458, self, 0);
         }
         if (self->mode == 4) {
-            ok = GameOptions_WriteConfigFile(D_004FFD2C);
+            ok = GameOptions_WriteConfigFile(g_OptionsRecord);
         } else {
             char addr[0x20];
-            if (SaveAgentWidget_FindSlotFile(self->f50, (char*)Agent_GetSelected(D_004FFB50, -1) + 0x8AC, addr))
+            if (SaveAgentWidget_FindSlotFile(self->f50, (char*)Agent_GetSelected(g_Game, -1) + 0x8AC, addr))
                 MemCardWrap_Remove(net, addr);
             if (self->mode == 0) ok = AgentData_Create(agent, self->f50, 0);
             else ok = AgentData_Save(agent);
@@ -69,7 +69,7 @@ extern "C" void SaveAgentWidget_Save(Obj_441370* self)
         } else {
             net->f8 = 0;
             self->Close(1);
-            D_004FFBBC = net->impl->f5A8;
+            g_CardSlotId = net->impl->f5A8;
         }
         FrontEnd_ClosePopup(D_004FFC04, old);
     }

@@ -55,9 +55,9 @@ struct A4110 {
 extern "C" {
 extern char *D_0052FDF0;
 extern int D_0052AFD0[];
-extern int D_00533870;
+extern int g_TimerAccum;
 extern void *D_004FFC04;
-extern Mc4110 D_0055A830;
+extern Mc4110 g_MemCard;
 extern int D_0052FE80;
 extern Ent4110 D_0052FE90[];
 extern char *D_004926D0;
@@ -71,7 +71,7 @@ int MemCardWrap_Read(Mc4110 *mc, char *name, void *buf, int size);
 void AgentData_Reset(void *self);
 void awards_SetAwardsAndBonuses(void *self, int a, int b);
 extern char D_0052FE00[];
-extern int D_004FFBBC;
+extern int g_CardSlotId;
 }
 static inline bool Idle4110(Mc4110 *m) { return !m->busy; }
 static inline void WInt4110(int v) { *(int *)D_0052FDF0 = v; D_0052FDF0 += 4; }
@@ -110,12 +110,12 @@ extern "C" int AgentData_Load(A4110 *self, char *name, int digit)
     else fn = D_004B92B0;
     r = 1;
     AgentData_Reset(self);
-    mc = &D_0055A830;
+    mc = &g_MemCard;
     if (Idle4110(mc) && Ready4110(mc)) {
         D_0052FDF0 = (char *)D_0052AFD0;
         ok = MemCardWrap_Read(mc, fn, D_0052FDF0, 0x4E20) != 0;
         if (ok) {
-            D_004FFBBC = mc->cfg->i5A8;
+            g_CardSlotId = mc->cfg->i5A8;
             *(int *)self->pad00 = RInt4110();
             if (*(int *)self->pad00 >= 0xC) {
                 D_0052FDF0 += 4;
@@ -264,7 +264,7 @@ typedef struct Agent070 {
 } Agent070;
 
 extern RangeTable070 D_00532A70[5];
-extern DosDefVec070 D_00532B50;
+extern DosDefVec070 g_RankRows;
 #if 0 /* merge_units */
 extern void AgentData_StepAwardElement(Agent070* self, RangeRec070* rec, RangeDef070* def, int x);
 #endif /* merge_units */
@@ -302,7 +302,7 @@ void AgentData_AwardPass(Agent070* self, int x)
     }
     AgentData_ApplyReachedRatings(self, x);
     pts = AgentData_TotalPoints(self);
-    dv = &D_00532B50;
+    dv = &g_RankRows;
     for (i = 0; i < dv->count; i++) {
         if (pts >= dv->data[i].need) {
             AgentData_UnlockById(self, dv->data[i].id);
@@ -362,14 +362,14 @@ static inline void merge_flush_func_003351E0(void) {}
 #pragma push /* merge_units */
 typedef struct { char pad[0x80]; char name[1]; } W352C0;
 
-extern void* D_004FFD30;
+extern void* g_WeaponDatabase;
 extern W352C0* WeaponDb_Get(void* db, int id);
 extern void cAgentData_UnlockWeapon(A352C0* self, const char* name);
 void AgentData_UnlockById(A352C0* self, int id)
 {
     if (id > -1) {
         if (id < 10000) {
-            cAgentData_UnlockWeapon(self, WeaponDb_Get(D_004FFD30, id)->name);
+            cAgentData_UnlockWeapon(self, WeaponDb_Get(g_WeaponDatabase, id)->name);
         } else {
             int i = (unsigned char)(id - 10000);
             if (i > -1)

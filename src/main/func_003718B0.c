@@ -17,8 +17,8 @@ extern "C" {
 extern char D_004DF700[];
 extern char D_004D9240[];
 extern char D_004D9280[];
-extern unsigned char D_00535D62;
-extern LM18B0 D_00535D20;
+extern unsigned char g_LevelLightsDirty;
+extern LM18B0 g_LightMgr;
 void SyncDCache(LE18B0*, LE18B0*);
 }
 
@@ -73,10 +73,10 @@ extern "C" L18B0* func_003718B0(L18B0* p, short flag)
             p->vt = D_004D9240;
             p->x8 = -1;
             ((VI18B0*)p)->Disable();
-            D_00535D62 = 1;
+            g_LevelLightsDirty = 1;
             if (p) p->vt = D_004D9280;
         }
-        if (flag > 0) Remove18B0(&D_00535D20, p);
+        if (flag > 0) Remove18B0(&g_LightMgr, p);
     }
     return p;
 }

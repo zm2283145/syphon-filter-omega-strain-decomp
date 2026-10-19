@@ -11,10 +11,10 @@
 /* merge_units: begin func_00257E90 */
 #pragma push /* merge_units */
 typedef struct Backpack{void*vt;char pad[0x2F8];void*actor;}Backpack;
-extern char D_004DC350[];extern void*D_004FFBD0;
+extern char D_004DC350[];extern void*g_HotboxTracker;
 void Hotbox_RemoveObjectBox(void*,void*);void Object_Unregister(void*);void Object_DeleteLater(void*,float);void cGOBJ_dtor(Backpack*,int);void operator_delete(void*);
 Backpack*cBackpack_dtor(Backpack*self,int flags){
- if(self){self->vt=D_004DC350;if(self->actor){Hotbox_RemoveObjectBox(D_004FFBD0,self->actor);Object_Unregister(self->actor);Object_DeleteLater(self->actor,0.1f);self->actor=0;}
+ if(self){self->vt=D_004DC350;if(self->actor){Hotbox_RemoveObjectBox(g_HotboxTracker,self->actor);Object_Unregister(self->actor);Object_DeleteLater(self->actor,0.1f);self->actor=0;}
  cGOBJ_dtor(self,0);if((short)flags>0)operator_delete(self);}
  return self;
 }
@@ -43,12 +43,12 @@ struct Backpack_00257F30 {
 struct Reader {int version;int a,b;char* cur;};
 struct Weapon {char p0[0x70];int unit;char p74[0x7C];unsigned char kind;};
 extern "C" {
-extern char D_004F7F68[],D_004DC350[],D_0055C9F0[];
-extern int D_004FFD30;
+extern char D_004F7F68[],D_004DC350[],g_IdentityMatrix[];
+extern int g_WeaponDatabase;
 #if 0 /* merge_units */
-extern int D_004FFBD0;
+extern int g_HotboxTracker;
 #endif /* merge_units */
-#define D_004FFBD0 (*(int*)&D_004FFBD0) /* merge_units */
+#define g_HotboxTracker (*(int*)&g_HotboxTracker) /* merge_units */
 
 void cGOBJ_ctor(Backpack_00257F30*,int*,int,void*);
 #if 0 /* merge_units */
@@ -65,14 +65,14 @@ void ZoneMgr_Associate(int,Backpack_00257F30*,int,int);
 }
 static inline int Read(Reader* r) {int v=*(int*)r->cur;r->cur+=4;return v;}
 static inline void ReadFloat(Reader* r,float* out) {*out=*(float*)r->cur;r->cur+=4;}
-static inline void Ensure(Backpack_00257F30* obj) {if(!obj->link){obj->active(1);Object_Register(obj);if(!obj->link){obj->link=Hotbox_CreateRuntime(D_004FFBD0,obj,0,1);obj->link->id=obj->id;}}}
+static inline void Ensure(Backpack_00257F30* obj) {if(!obj->link){obj->active(1);Object_Register(obj);if(!obj->link){obj->link=Hotbox_CreateRuntime(g_HotboxTracker,obj,0,1);obj->link->id=obj->id;}}}
 extern "C" Backpack_00257F30* cBackpack_ctor(Backpack_00257F30* obj0,Reader* r0) {
  int flag; int weapon;int slot;int n;int amount;Weapon* w;int j;Backpack_00257F30* obj=obj0;Reader* r=r0;
  int id=-1;
  V4 pos;
  cGOBJ_ctor(obj,&id,0,D_004F7F68);
  *(void**)obj=D_004DC350;obj->x304=-2;obj->x300=0;
- Backpack_Reset(obj,0);obj->attach(D_0055C9F0,0);
+ Backpack_Reset(obj,0);obj->attach(g_IdentityMatrix,0);
  int hi=Read(r);int lo=Read(r);obj->id=lo|(hi<<16);
  ReadFloat(r,&pos.x);ReadFloat(r,&pos.y);ReadFloat(r,&pos.z);pos.w=1.0f;
  obj->transform->set(&pos);
@@ -83,7 +83,7 @@ extern "C" Backpack_00257F30* cBackpack_ctor(Backpack_00257F30* obj0,Reader* r0)
    if(remainder)r->cur=ptr+(4-(int)remainder);
   }
   if(weapon>=0) {
-   w=WeaponDb_Get(D_004FFD30,weapon);
+   w=WeaponDb_Get(g_WeaponDatabase,weapon);
    if(amount>0 || !w->unit) {
     if(w->kind==1 || w->kind==7) {amount*=n;n=1;}
     j=0;if(0<n){do {Backpack_AddWeapon(obj,weapon,(amount-1)*w->unit,w->unit,flag);j++;}while(j<n);}
@@ -99,7 +99,7 @@ extern "C" Backpack_00257F30* cBackpack_ctor(Backpack_00257F30* obj0,Reader* r0)
  return obj;
 }
 #pragma pop
-#undef D_004FFBD0 /* merge_units */
+#undef g_HotboxTracker /* merge_units */
 #undef Backpack_Reset /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00257F30(void) {}
@@ -116,10 +116,10 @@ static inline void merge_flush_func_00257F30(void) {}
 struct WeaponInfo{int a,b;int flags;int c;};
 struct Tables{char pad[0x3524];WeaponInfo*weapons;};
 struct World{char pad[0x30];Tables*tables;};
-extern "C" World*D_004FFC0C;
+extern "C" World*g_LocalPlayer;
 struct Id{volatile int value;Id(int v):value(v){}}; static inline const Id* Identity(const Id*p){return p;} static inline void Assign(Id*d,const Id*s){d->value=s->value;}
 extern "C" void Backpack_Reset(void*self,int preserve){
- WeaponInfo*weapons=D_004FFC0C->tables->weapons;int i=0;char*p=(char*)self;
+ WeaponInfo*weapons=g_LocalPlayer->tables->weapons;int i=0;char*p=(char*)self;
  do{int flags=weapons[F(p,0x64,unsigned char)].flags;if(!preserve||flags>-1){F(p,0x130,int)=0;F(p,0x134,unsigned char)=0;}i++;p+=0xD4;}while(i<3);
  if(!preserve){F(self,0x2FC,int)=0;F(self,0x30C,int)=2;}
  F(self,0x2E0,int)=3;F(self,0x2E4,int)=0;F(self,0x2F2,unsigned char)=0;F(self,0x300,int)=0;

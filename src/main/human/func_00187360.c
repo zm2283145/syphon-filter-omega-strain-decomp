@@ -55,11 +55,11 @@ extern int BodyPenetrationResistance;
 extern int HeadPenetrationResistance;
 extern int FireDmgToIgnite;
 extern int D_0048A2C0;
-extern int D_004FFC2C;
+extern int g_Hud;
 extern char D_0049D8F0[];
 extern char D_004D9180[], D_004DAE30[], D_004DCC30[], D_004DCD70[], D_004E01E0[], D_004E0840[], D_004E08A0[];
-extern char D_004EA0B0[], D_004EF0B0[], D_004EF250[], D_004EF730[], D_004EFF50[], D_004F0290[], D_004F05D0[], D_004F0910[];
-extern char D_004FF2C0[], D_004FFB50[], D_005435A0[], D_0055D480[];
+extern char g_LosCheckService[], D_004EF0B0[], D_004EF250[], D_004EF730[], D_004EFF50[], D_004F0290[], D_004F05D0[], D_004F0910[];
+extern char g_ScriptAIUnconsciousMsgKey[], g_Game[], g_LosRequestMsgClass[], g_ActorActionMsgClass[];
 extern int g_MsgLibDamageRequestKey;
 void Event_Construct(void*, void*);
 void Event_Send(void*, void*, int);
@@ -87,7 +87,7 @@ struct MsgB {
 };
 struct MsgRay : MsgB {
     int a24; int a28; HitInfo* info; V pos; V dir; Actor* src; Actor* tgt; int n; unsigned char b5C;
-    MsgRay(HitInfo* i, const V& p, V d, Actor* s, Actor* t) : MsgB(D_005435A0) {
+    MsgRay(HitInfo* i, const V& p, V d, Actor* s, Actor* t) : MsgB(g_LosRequestMsgClass) {
         vtable = D_004D9180; a24 = 0; a28 = 0; info = i; V* dp = &pos; Q16(dp, &p); dir = d; src = s; tgt = t; n = 0x10; b5C = 0; pos.w = 1.0f; dir.w = 0.0f; }
     __declspec(weak) __declspec(MSG_DTOR) ~MsgRay() { vtable = D_004D9180; }
 } __attribute__((aligned(16)));
@@ -99,7 +99,7 @@ struct MsgDmg : MsgB {
 };
 struct MsgI : MsgB {
     int id; unsigned char sub; char pad29[3];
-    MsgI(int i, unsigned char s) : MsgB(D_0055D480) { vtable = D_004E0840; id = i; sub = s; }
+    MsgI(int i, unsigned char s) : MsgB(g_ActorActionMsgClass) { vtable = D_004E0840; id = i; sub = s; }
     __declspec(weak) __declspec(MSG_DTOR) ~MsgI() { vtable = D_004E0840; }
 };
 struct MsgVal : MsgI {
@@ -109,7 +109,7 @@ struct MsgVal : MsgI {
 };
 struct MsgWho : MsgB {
     Actor* who; int pad28[2];
-    MsgWho(Actor* w) : MsgB(D_004FF2C0) { vtable = D_004DCD70; who = w; kind = 2; }
+    MsgWho(Actor* w) : MsgB(g_ScriptAIUnconsciousMsgKey) { vtable = D_004DCD70; who = w; kind = 2; }
     __declspec(weak) __declspec(MSG_DTOR) ~MsgWho() { vtable = D_004DCD70; }
 };
 struct MsgWho2 : MsgWho {
@@ -141,7 +141,7 @@ int Actor_HandleCombatEvent(Actor* self, float dmg, Actor* src, unsigned char lo
         if (hitPos) from = *hitPos;
         V to = self->Pos(0);
         MsgRay m(&info, from, Diff(to, from), src, self);
-        Service_Lookup(D_004FFB50, D_004EA0B0)->Post(&m);
+        Service_Lookup(g_Game, g_LosCheckService)->Post(&m);
         if (info.hit)
             return 0;
     }
@@ -179,7 +179,7 @@ int Actor_HandleCombatEvent(Actor* self, float dmg, Actor* src, unsigned char lo
             if (type != 9) self->armorHP = (int)((float)self->armorHP - armorDmg);
             snd2 = D_004EF730;
             if (IsHuman(src) && !IsHuman(self))
-                Hud_ShowCallout(5.0f, D_004FFC2C, &self->serial, D_0049D8F0, -1, 0.0f, 0, 0);
+                Hud_ShowCallout(5.0f, g_Hud, &self->serial, D_0049D8F0, -1, 0.0f, 0, 0);
         }
         arm -= BodyPenetrationResistance;
     } else {
@@ -240,7 +240,7 @@ int Actor_HandleCombatEvent(Actor* self, float dmg, Actor* src, unsigned char lo
         SEv e;
         SoundEvent_CtorFromPreset(&e, snd1, self);
         e.kind = 1;
-        Event_Send(&e, D_004FFB50, 1);
+        Event_Send(&e, g_Game, 1);
         e.vtable = D_004DAE30;
         FileMan_Release(&e.s114, -1);
         FileMan_Release(&e.s78, -1);
@@ -250,7 +250,7 @@ int Actor_HandleCombatEvent(Actor* self, float dmg, Actor* src, unsigned char lo
         SEv e;
         SoundEvent_CtorFromPreset(&e, snd2, self);
         e.kind = 1;
-        Event_Send(&e, D_004FFB50, 1);
+        Event_Send(&e, g_Game, 1);
         e.vtable = D_004DAE30;
         FileMan_Release(&e.s114, -1);
         FileMan_Release(&e.s78, -1);

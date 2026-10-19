@@ -63,7 +63,7 @@ static inline void merge_flush_func_00253620(void) {}
 
 /* merge_units: begin func_00253670 */
 #pragma push /* merge_units */
-extern float D_004F7E70;
+extern float g_PickupTextColour;
 extern float D_004F7E74;
 extern float D_004F7E78;
 extern float D_004F7E7C;
@@ -72,7 +72,7 @@ extern unsigned char D_004F7E80;
 /* Sets the pickup text colour from 0-255 RGB and a float alpha, and marks it overridden. */
 void Global_SetPickupTextColor(int r, int g, int b, float a)
 {
-    D_004F7E70 = r / 255.0f;
+    g_PickupTextColour = r / 255.0f;
     D_004F7E74 = g / 255.0f;
     D_004F7E78 = b / 255.0f;
     D_004F7E7C = a;

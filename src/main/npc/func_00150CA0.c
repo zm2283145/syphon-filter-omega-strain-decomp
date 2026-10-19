@@ -54,10 +54,10 @@ struct SRec { char pad[0x24]; float dist; };
 
 extern "C" {
 extern float WorthShootingThreshold;
-extern int D_0049D010;
+extern int g_HumanActorClassKey;
 extern int D_004EA770;
-extern char D_0055D480[], D_004E0840[], D_004E0140[], D_004E01A0[];
-extern unsigned char D_005721C8;
+extern char g_ActorActionMsgClass[], D_004E0840[], D_004E0140[], D_004E01A0[];
+extern unsigned char g_IsMultiplayer;
 SRec* NpcPerception_SensedRecord(Ai*, Obj*);
 V* func_00151780(M*, int);
 void Event_Construct(void*, void*);
@@ -76,7 +76,7 @@ struct MsgB {
 };
 struct MsgI : MsgB {
     int id; unsigned char sub; char pad29[3];
-    MsgI(int i, unsigned char s) : MsgB(D_0055D480) { vtable = D_004E0840; id = i; sub = s; }
+    MsgI(int i, unsigned char s) : MsgB(g_ActorActionMsgClass) { vtable = D_004E0840; id = i; sub = s; }
     __declspec(weak) __declspec(MSG_DTOR) ~MsgI() { vtable = D_004E0840; }
 };
 struct MsgPos : MsgI {
@@ -92,7 +92,7 @@ struct MsgSer : MsgI {
 
 static inline int Ld(int* p) { return *p; }
 static inline int Ld2(const int& p) { return p; }
-static inline int Key0() { int* p = &D_0049D010; return *p; }
+static inline int Key0() { int* p = &g_HumanActorClassKey; return *p; }
 static inline int Key1() { int* p = &D_004EA770; return *p; }
 static inline float Range(Npc* self) {
     float r = self->range;
@@ -180,7 +180,7 @@ unsigned char NpcAttack_WeaponPosture(Npc* p)
         MsgI(0x3A, 0).Send(self->owner, 0);
         MsgI(0x3F, 0).Send(self->owner, 0);
     }
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         unsigned char st = self->Stance();
         char* s = self->owner->stats;
         if (s) s += 0x1C;

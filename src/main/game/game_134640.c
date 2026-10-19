@@ -50,20 +50,20 @@ struct World_134640 {
 extern "C" {
 extern char D_0049A890[];
 extern char D_0049AEA0[];
-extern char D_004EA0B0[];
+extern char g_LosCheckService[];
 extern VDel_134640* D_004EA0B8;
 extern char D_004F2CC0[];
 extern char D_004F7578[];
-extern char D_00535D20[];
-extern int D_0053B350;
-extern int D_0053B358;
+extern char g_LightMgr[];
+extern int g_VisionNight;
+extern int g_VisionThermal;
 extern char D_0053B540[];
 extern char D_0053BB90[];
 extern char D_00543790[];
 extern char D_00555070[];
-extern char D_0055DDA0[];
+extern char g_AgentPartCache[];
 extern unsigned char D_005721B8;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005721D8;
 extern unsigned char D_005723B0;
 extern char g_TargetVisMgr[];
@@ -205,8 +205,8 @@ extern "C" void World_Teardown(World_134640* w)
     ScreenFx_Start(w->fE0, 0, 0.0f, 0.0f, 0.0f, 0.0f);
     VisionFx_Prepare(w->fE0);
     WaterFx_Clear(w->fE4);
-    D_0053B350 = 0;
-    D_0053B358 = 0;
+    g_VisionNight = 0;
+    g_VisionThermal = 0;
     func_00275550();
     func_00238F20();
     Script_Cleanup(D_00555070);
@@ -224,7 +224,7 @@ extern "C" void World_Teardown(World_134640* w)
     func_00136CD0(w);
     func_00257150();
     mode = 0;
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         if (TakeFlag_134640()) {
             if (D_005723B0 == 1) mode = 1;
             else if (D_005723B0 == 2) mode = 2;
@@ -288,7 +288,7 @@ extern "C" void World_Teardown(World_134640* w)
     func_001309A0(w);
     func_00130950(w);
     {
-        VDel_134640* p = func_003CAB50(w, Service_Lookup(w, D_004EA0B0));
+        VDel_134640* p = func_003CAB50(w, Service_Lookup(w, g_LosCheckService));
         AllocGuard g;
         p->Del(-1);
         Mem_Free(0, p, D_0049A890, 0x366);
@@ -299,15 +299,15 @@ extern "C" void World_Teardown(World_134640* w)
     MotionManager_Shutdown();
     Destroy_134640();
     func_003C2A80();
-    LightMgr_FreePools(D_00535D20);
+    LightMgr_FreePools(g_LightMgr);
     func_00236F80();
     func_003D5750(D_00543790);
-    func_00404FD0(D_0055DDA0, -1);
+    func_00404FD0(g_AgentPartCache, -1);
     func_00407BE0();
     FStream_CancelRequests(Fstream_GetLoader());
     ObjMan_DeleteAll(Service_Lookup(w, D_004F7578));
     if (had) DME_StopThread();
-    D_005721C8 = 0;
+    g_IsMultiplayer = 0;
     D_005721B8 = 0;
     MsgQueue_ClearPending();
     EventQueue_ClearAll();

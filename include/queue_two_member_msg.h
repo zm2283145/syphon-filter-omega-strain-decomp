@@ -10,7 +10,7 @@
  */
 extern unsigned char D_005723C8;
 extern unsigned char D_005721D0;
-extern char D_004FFB50[];
+extern char g_Game[];
 extern void MsgQueue_QueueClone(void* msg, void* queue, int a, int b);
 extern void FileMan_Release(void* member, int flags);
 extern void cMessage_dtor(void* self, int flags);
@@ -31,7 +31,7 @@ extern void cMessage_dtor(void* self, int flags);
             D_005723C8 = 1;                                                   \
         if (D_005721D0) {                                                     \
             ctor(&msg, arg);                                                  \
-            MsgQueue_QueueClone(&msg, D_004FFB50, 0, 0);                      \
+            MsgQueue_QueueClone(&msg, g_Game, 0, 0);                      \
             msg.vtable = vtableSym;                                           \
             FileMan_Release(msg.memberB, -1);                                   \
             FileMan_Release(msg.memberA, -1);                                   \

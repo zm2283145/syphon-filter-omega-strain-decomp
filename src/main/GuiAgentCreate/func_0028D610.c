@@ -13,7 +13,7 @@ typedef struct {
 extern char D_0048B560[11][20];
 extern Tab_28D610 D_0048B500[][11];
 extern unsigned char D_0048B501[][44];
-extern char D_0055DDA0[];
+extern char g_AgentPartCache[];
 extern char D_004A9A30[];
 extern char D_004A9A38[];
 extern char D_004A9A40[];
@@ -44,8 +44,8 @@ void GuiAgentCreate_SelectOption(S_28D610* o, char* name)
         if (i < 11) {
             o->slot = D_0048B501[o->row][o->cur * 4];
             o->mode = D_0048B500[o->row][o->cur].mode;
-            o->vE0 = AgentPartCache_FindMesh(D_0055DDA0, o->items->e[o->slot].a);
-            o->vE4 = AgentPartCache_FindTexture(D_0055DDA0, o->items->e[o->slot].b);
+            o->vE0 = AgentPartCache_FindMesh(g_AgentPartCache, o->items->e[o->slot].a);
+            o->vE4 = AgentPartCache_FindTexture(g_AgentPartCache, o->items->e[o->slot].b);
             GuiAgentCreate_UpdateCount(o);
             if (o->w58) o->w58->flags |= 2;
             Slider_28D610(o, o->w58, 10, (int)((100.0f / (float)(o->count - 1)) * (float)o->pos), 0);

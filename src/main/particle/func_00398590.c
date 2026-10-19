@@ -23,7 +23,7 @@ struct Q_0050 { __int128 q; };
 
 extern "C" {
 extern char D_00537F80[];
-extern char D_005381F0[];
+extern char g_Video[];
 extern char D_00538080[];
 extern char D_0053B6A0[];
 extern unsigned char D_0053B540;
@@ -169,8 +169,8 @@ extern "C" void PhysEmitter_Draw(char* e, float t, float a, float b, float c)
         u -= v;
         z += F_(s3, 0x44, float);
         w += F_(s3, 0x48, float);
-        F_(s3, 0xB0, u64_t) = *Gs_MakeTex1(func_00398B00(func_003797D0(D_005381F0), F_(s3, 0x74, int)));
-        F_(s3, 0xC0, u64_t) = *func_00379700(func_00398B00(func_003797D0(D_005381F0), F_(s3, 0x74, int)));
+        F_(s3, 0xB0, u64_t) = *Gs_MakeTex1(func_00398B00(func_003797D0(g_Video), F_(s3, 0x74, int)));
+        F_(s3, 0xC0, u64_t) = *func_00379700(func_00398B00(func_003797D0(g_Video), F_(s3, 0x74, int)));
         lim = 0x21;
         if (F_(s3, 0x64, unsigned char)) {
             F_(s3, 0xB8, u64_t) = 0x15;

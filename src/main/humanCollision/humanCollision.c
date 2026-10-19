@@ -55,7 +55,7 @@ int HumanColBufB_Dtor(int, int); /* buffer B dtor */
 extern int g_HumanColPresetMgr; /* HumanColPresetMgr* */
 extern int g_HumanColBufB; /* HumanColVec* (buffer B) */
 extern int g_HumanColBufA; /* HumanColVec* (buffer A) */
-extern unsigned char D_00533880;
+extern unsigned char g_ProfileLockEnabled;
 extern char HumanColPreset_Dtor;
 }
 /* Destroy and free the preset manager and both buffers. */

@@ -25,8 +25,8 @@ typedef struct {
 typedef struct SndObj_00212AE0 {
     char pad0[0x60]; char preset[0x1F0 - 0x60]; unsigned char playing; unsigned char active; unsigned char local;
 } SndObj_00212AE0;
-extern int D_004FFC0C;
-extern char D_004FFB50[];
+extern int g_LocalPlayer;
+extern char g_Game[];
 extern char D_004DADF0[];
 extern int Event_Send(void* m, void* target, int immediate);
 extern int cMessage_dtor(void* m, int flags);
@@ -40,12 +40,12 @@ void cSoundGOBJ_v16(SndObj_00212AE0* self, int arg)
         SndObj_00212AE0* owner;
         if (self->local)
             owner = self;
-        else if (D_004FFC0C)
+        else if (g_LocalPlayer)
             owner = 0;
         else
             owner = self;
         SoundStopMsg_Ctor(&c, self->preset, owner);
-        Event_Send(&c, D_004FFB50, 1);
+        Event_Send(&c, g_Game, 1);
         c.vt = D_004DADF0;
         FileMan_Release(&c.s114, -1);
         FileMan_Release(&c.s78, -1);
@@ -83,9 +83,9 @@ int FileMan_Release(char *, int);
                             
 extern char D_004DAE30;
 #if 0 /* merge_units */
-extern char D_004FFB50;
+extern char g_Game;
 #endif /* merge_units */
-#define D_004FFB50 (*(char*)&D_004FFB50) /* merge_units */
+#define g_Game (*(char*)&g_Game) /* merge_units */
 
 void func_001C6700(); /* gsynth: address taken */
 #define func_001C6700 (*(char *)func_001C6700) /* merge_units */
@@ -106,7 +106,7 @@ void cSoundGOBJ_v15(char * arg0, int arg1) {
             if (&func_001C6700 == NULL) {
                 sl.f50[0] = 1;
             }
-            Event_Send(sl.f30, &D_004FFB50, 1);
+            Event_Send(sl.f30, &g_Game, 1);
             sl.f30[0] = &D_004DAE30;
             FileMan_Release(sl.f144, -1);
             FileMan_Release(sl.fA8, -1);
@@ -119,7 +119,7 @@ void cSoundGOBJ_v15(char * arg0, int arg1) {
 #undef Event_Send /* merge_units */
 #undef cMessage_dtor /* merge_units */
 #undef FileMan_Release /* merge_units */
-#undef D_004FFB50 /* merge_units */
+#undef g_Game /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00212BB0(void) {}
 #pragma pop /* merge_units */
@@ -147,7 +147,7 @@ typedef struct {
 typedef struct SndObj_00212C80 {
     char pad0[0x60]; char preset[0x1F0 - 0x60]; unsigned char playing; char pad1F1; unsigned char local;
 } SndObj_00212C80;
-extern int D_004F5440;
+extern int g_TriggerMsgKey;
 extern int g_cEnableMsgClass;
 extern int g_cDisableMsgClass;
 #if 0 /* merge_units */
@@ -182,7 +182,7 @@ static inline void Play_00212C80(SndObj_00212C80* self, Snd_00212C80* s)
         SoundEvent_CtorFromPreset(s, self->preset, owner);
         if (!func_001C6700)
             s->flag = 1;
-        Event_Send(s, D_004FFB50, 1);
+        Event_Send(s, g_Game, 1);
         s->vt = D_004DAE30;
         FileMan_Release(&s->s114, -1);
         FileMan_Release(&s->s78, -1);
@@ -195,7 +195,7 @@ int cSoundGOBJ_v01(SndObj_00212C80* self, void* ev)
     Snd_00212C80 b;
     Snd2_00212C80 c;
     int t = *Event_GetType(ev);
-    if (t == D_004F5440) {
+    if (t == g_TriggerMsgKey) {
         Play_00212C80(self, &a);
         return 1;
     }
@@ -211,12 +211,12 @@ int cSoundGOBJ_v01(SndObj_00212C80* self, void* ev)
             SndObj_00212C80* owner;
             if (self->local)
                 owner = self;
-            else if (D_004FFC0C)
+            else if (g_LocalPlayer)
                 owner = 0;
             else
                 owner = self;
             SoundStopMsg_Ctor(&c, self->preset, owner);
-            Event_Send(&c, D_004FFB50, 1);
+            Event_Send(&c, g_Game, 1);
             c.vt = D_004DADF0;
             FileMan_Release(&c.s114, -1);
             FileMan_Release(&c.s78, -1);
@@ -437,7 +437,7 @@ struct Lift {
     LuShm* shm;
 };
 extern "C" {
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005721C0;
 extern unsigned char D_005721D0;
 extern int D_004F54A0;
@@ -482,7 +482,7 @@ int FileMan_Release(LuStr* s, int flag);
 #define FileMan_Release(a0, a1) (FileMan_Release((Str_00212AE0 *)(a0), (a1))) /* merge_units */
 
 }
-static inline bool LuIsHost(void) { unsigned char r; if (D_005721C8) r = D_005721C0; else r = true; return r; }
+static inline bool LuIsHost(void) { unsigned char r; if (g_IsMultiplayer) r = D_005721C0; else r = true; return r; }
 static inline LuShm* LuCreate(void)
 {
     int h;
@@ -504,7 +504,7 @@ static inline void LuGetEnd(LuIt* o, LuVec* v) { LuIt te; PtrVec_End(&te, v); fu
 extern "C" void Lift_Update(Lift* l, float dt)
 {
     LuIt it;
-    if (D_005721C8 && LuIsHost()) {
+    if (g_IsMultiplayer && LuIsHost()) {
         if (!l->shm && D_004F54A0 < Net_GetClock(1)) {
             l->shm = LuCreate();
             if (l->shm) {
@@ -541,8 +541,8 @@ extern "C" void Lift_Update(Lift* l, float dt)
                 ev1.flag = 1;
                 SoundEvent_CtorFromPreset(&ev2, l->preset2, l);
                 ev2.flag = 1;
-                Event_Send(&ev1, D_004FFB50, 1);
-                Event_Send(&ev2, D_004FFB50, 1);
+                Event_Send(&ev1, g_Game, 1);
+                Event_Send(&ev2, g_Game, 1);
                 l->fDC = 0;
                 l->fE0 = 0;
                 ev2.vt = D_004DAE30;
@@ -558,7 +558,7 @@ extern "C" void Lift_Update(Lift* l, float dt)
         }
         if (l->f70 <= 0) Lift_FinishArrival(l);
         if (l->f70 > 0 && cElevatorGOBJ_DoorsClosed(l)) {
-            if (!D_005721C8 || LuIsHost()) {
+            if (!g_IsMultiplayer || LuIsHost()) {
                 LuMsg msg;
                 LuMsg* m = &msg;
                 Event_Construct(m, D_004F5448);

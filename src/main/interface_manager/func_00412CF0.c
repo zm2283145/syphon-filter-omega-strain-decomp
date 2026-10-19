@@ -20,7 +20,7 @@ struct Hog412CF0 { char pad[0xA8]; };
 
 extern "C" {
 extern char D_004BEF30[];
-extern void* D_00539248;
+extern void* g_TextureMgr;
 void Interface_Dtor(void* p, int flags);
 void Mem_Free(int pool, void* allocation, char* file, int line);
 void Resource_Construct(Hog412CF0* h);
@@ -75,7 +75,7 @@ extern "C" void func_00412CF0(Self412CF0* self, int idx)
         for (i = 0; i < n; i++) {
             Hog_Register(&h, Archive_GetMemberName(arc, i), arc, 0);
             FileMan_FindMember(&h);
-            func_003816F0(D_00539248, &h);
+            func_003816F0(g_TextureMgr, &h);
         }
         FileMan_Release(&h, -1);
     }

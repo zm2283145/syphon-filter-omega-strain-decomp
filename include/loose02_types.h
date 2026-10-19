@@ -152,7 +152,7 @@ typedef struct GuiMenuScreen {
     char pad110[0x160 - 0x110];
 } GuiMenuScreen;
 
-/* GuiOnlineConnect screen (table D_004DD620). */
+/* GuiOnlineConnect screen (table GuiOnlineConnect_vtable). */
 typedef struct GuiOnlineConnect {
     GuiScreen base;                 /* 0x00 */
     int unk88;                      /* 0x88 */
@@ -177,7 +177,7 @@ typedef struct GuiOnlineConnect {
     int unk120;                     /* 0x120: -2 after construction */
 } GuiOnlineConnect;
 
-/* GuiMissionSetup screen (table D_004DD730). */
+/* GuiMissionSetup screen (table GuiMissionSetup_vtable). */
 typedef struct GuiMissionSetup {
     GuiScreen base;                 /* 0x00 */
     GuiSlot slots[3];               /* 0x88 */

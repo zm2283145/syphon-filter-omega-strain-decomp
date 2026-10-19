@@ -52,9 +52,9 @@ typedef struct { char pad[0x1C]; void* f1C; } Sel_4566D0;
 typedef struct { char pad[0x20]; Sel_4566D0* sel; } Mgr_4566D0;
 typedef struct { char pad[0xAC]; void* fAC; } O_4566D0;
 extern "C" {
-extern void* D_004FFC2C;
+extern void* g_Hud;
 extern unsigned char D_004FFBB7;
-extern char D_004FFB50[];
+extern char g_Game[];
 Mgr_4566D0* Gui_GetScreenStack(void);
 void Hud_ClosePauseMenu(void* p);
 void Game_SetPaused(void* p, int v);
@@ -68,15 +68,15 @@ static inline bool Plain2_4566D0(Ev_4566D0* e, int b) { return Btn2_4566D0(e, b)
 int GuiStartMenu_OnInput(O_4566D0* o, Ev_4566D0* ev)
 {
     if (Plain2_4566D0(ev, 0x10) && Gui_GetScreenStack()->sel->f1C == o->fAC) {
-        Hud_ClosePauseMenu(D_004FFC2C);
+        Hud_ClosePauseMenu(g_Hud);
         if (D_004FFBB7)
-            Game_SetPaused(D_004FFB50, 0);
+            Game_SetPaused(g_Game, 0);
         return 1;
     }
     if (Plain2_4566D0(ev, 0x800)) {
-        Hud_ClosePauseMenu(D_004FFC2C);
+        Hud_ClosePauseMenu(g_Hud);
         if (D_004FFBB7)
-            Game_SetPaused(D_004FFB50, 0);
+            Game_SetPaused(g_Game, 0);
         return 1;
     }
     return GuiObjectives_HandleInput(o, ev);

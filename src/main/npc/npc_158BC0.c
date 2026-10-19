@@ -34,11 +34,11 @@ struct Trk_8BC0 {
     static void* operator new(unsigned int sz, int line)
     {
         void* p;
-        if (D_00533880) Alloc_Lock(9);
-        D_00533888++;
+        if (g_ProfileLockEnabled) Alloc_Lock(9);
+        g_ProfileLockDepth++;
         p = Mem_Alloc(0, sz, D_0049C088, line);
-        if (D_00533880) Alloc_Unlock(9);
-        D_00533888--;
+        if (g_ProfileLockEnabled) Alloc_Unlock(9);
+        g_ProfileLockDepth--;
         return p;
     }
 };
@@ -46,11 +46,11 @@ struct Trk_8BC0 {
 static inline void* NpcNew_8BC0(int sz, int line)
 {
     void* p;
-    if (D_00533880) Alloc_Lock(9);
-    D_00533888++;
+    if (g_ProfileLockEnabled) Alloc_Lock(9);
+    g_ProfileLockDepth++;
     p = Mem_Alloc(0, sz, D_0049B670, line);
-    if (D_00533880) Alloc_Unlock(9);
-    D_00533888--;
+    if (g_ProfileLockEnabled) Alloc_Unlock(9);
+    g_ProfileLockDepth--;
     return p;
 }
 
@@ -317,10 +317,10 @@ struct It_A { ItP_A q; };
 struct NpcList_A { int count; };
 
 extern "C" {
-extern NpcList_A D_004EA370;
-extern char D_004FFC14[];
-extern float D_0053834C;
-extern unsigned char D_005721C8;
+extern NpcList_A g_NpcDeadList;
+extern char g_CameraObject[];
+extern float g_LevelFarDistance;
+extern unsigned char g_IsMultiplayer;
 void func_00159580(It_A* out, NpcList_A* l);
 void func_0014ABE0(It_A* out, NpcList_A* l);
 It_A* func_0014ABD0(It_A* dst, It_A* src);
@@ -349,7 +349,7 @@ extern "C" bool Npc_IsDeadRemovalAllowed(Npc_A* self)
     if (self->actor->GetState() == 3 && self->IsActive() && AVAIL(self)) {
         bool ok = true;
         Actor_A* found = 0;
-        NpcList_A* l = &D_004EA370;
+        NpcList_A* l = &g_NpcDeadList;
         if (l->count > 3) {
             It_A it;
             It_A b;
@@ -370,21 +370,21 @@ extern "C" bool Npc_IsDeadRemovalAllowed(Npc_A* self)
                 }
                 it.q.p = it.q.p->next;
             cond:
-                func_0014ABE0(&ei, &D_004EA370);
+                func_0014ABE0(&ei, &g_NpcDeadList);
                 func_0014ABD0(&e, &ei);
             } while (it.q.p != e.q.p);
         }
         if (found != self->actor) {
-            float maxSq = D_0053834C * D_0053834C;
+            float maxSq = g_LevelFarDistance * g_LevelFarDistance;
             V_A pos = self->actor->GetPos(-1);
-            Cam_A* c = (func_00159570(D_004FFC14) ? *List_Front(D_004FFC14) : 0)->cam;
+            Cam_A* c = (func_00159570(g_CameraObject) ? *List_Front(g_CameraObject) : 0)->cam;
             if (c->b50)
                 c->Update();
             pos.Sub(c->pos);
             float d = pos.LenSq();
             if (d < 400.0f || (self->actor->x38 != 0x80 && d < maxSq)) {
                 ok = false;
-            } else if (D_005721C8) {
+            } else if (g_IsMultiplayer) {
                 for (int i = 0; i < 4; i++) {
                     Actor_A* p = PlayerSlots_Get(i);
                     if (p && !p->b14) {

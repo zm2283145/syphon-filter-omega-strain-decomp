@@ -121,12 +121,12 @@ extern "C" Population* Population_Load(Population* p, char* name, void* arg) {
         p->ownsData = 1;
         {
         int sz = p->size;
-        if (D_00533880) Alloc_Lock(9);
-        D_00533888++;
+        if (g_ProfileLockEnabled) Alloc_Lock(9);
+        g_ProfileLockDepth++;
         m = Mem_Alloc(1, sz, D_0049CDA0, 0x27);
         }
-        if (D_00533880) Alloc_Unlock(9);
-        D_00533888--;
+        if (g_ProfileLockEnabled) Alloc_Unlock(9);
+        g_ProfileLockDepth--;
         p->data = m;
         FileMan_LoadMemberSync(&h, &p->data, p->size);
         func_0036DEC0(&h);

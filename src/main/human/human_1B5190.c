@@ -30,11 +30,11 @@ public:
     void* p3584;
 };
 extern "C" {
-extern unsigned char D_00533880;
-extern int D_00533888;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
 extern char D_0049D8D0;
 extern char g_TargetVisMgr;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 void Alloc_Lock(int);
 void Alloc_Unlock(int);
 void ActorModel_Deactivate(void*);
@@ -57,7 +57,7 @@ extern "C" void Npc_Deactivate(Act* a, int arg)
     TargetVis_Unregister(&g_TargetVisMgr, a);
     for (i = 0; i < 3; i++) Actor_ShockReaction(a, i, 0, 1.0f);
     func_003928D0(a, arg);
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         func_00436C00(&loc);
         func_00433CE0(&loc, a->a0C);
         if (a->p3584) {
@@ -68,22 +68,22 @@ extern "C" void Npc_Deactivate(Act* a, int arg)
     if (a->w3310) ActorPhys_ReleaseWaterEffect(a->w3310);
     o = a->w3310;
     if (o) {
-        if (D_00533880) Alloc_Lock(9);
-        D_00533888++;
+        if (g_ProfileLockEnabled) Alloc_Lock(9);
+        g_ProfileLockDepth++;
         o->~VObj();
         Mem_Free(0, o, &D_0049D8D0, 0x456);
-        if (D_00533880) Alloc_Unlock(9);
-        D_00533888--;
+        if (g_ProfileLockEnabled) Alloc_Unlock(9);
+        g_ProfileLockDepth--;
         a->w3310 = 0;
     }
     o = a->w3314;
     if (o) {
-        if (D_00533880) Alloc_Lock(9);
-        D_00533888++;
+        if (g_ProfileLockEnabled) Alloc_Lock(9);
+        g_ProfileLockDepth++;
         o->~VObj();
         Mem_Free(0, o, &D_0049D8D0, 0x45B);
-        if (D_00533880) Alloc_Unlock(9);
-        D_00533888--;
+        if (g_ProfileLockEnabled) Alloc_Unlock(9);
+        g_ProfileLockDepth--;
         a->w3314 = 0;
     }
 }
@@ -127,7 +127,7 @@ static inline int LocalId_53D0(void)
 {
     int r;
     int a = D_005721A8; /* read before the flag test: retail loads it ahead of the branch */
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         if (D_00494178 == -1) NetGame_InitLocalSlot(&D_00494178, a);
         r = D_00494178;
     } else r = 0;
@@ -146,7 +146,7 @@ void Npc_Activate(char * arg0, int arg1) {
     Human_ApplyBoundSpheres(arg0);
     Human_ApplyCentroidWeights(arg0);
     TargetVis_Register(&g_TargetVisMgr, arg0);
-    if (D_005721C8 != 0) {
+    if (g_IsMultiplayer != 0) {
         if ((F_(arg0, 0x3584, int) == 0) && (D_005721D0 != 0)) {
             func_002D1FF0(arg0 + 0xC, F_(arg0, 0x10, int));
             temp_s1 = F_(arg0, 0x10, int);

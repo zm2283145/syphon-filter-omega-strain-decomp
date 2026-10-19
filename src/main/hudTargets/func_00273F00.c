@@ -21,7 +21,7 @@ int HudTracker_Kill(...);
 int operator_delete(...);                             
 extern unsigned char D_0048B308;
 extern char D_004A8F60;
-extern unsigned char D_00533880;
+extern unsigned char g_ProfileLockEnabled;
 }
 #pragma inline_depth(10)
 static inline void beg0(char **o, char *l) { int r; func_002731F0(&r, l); func_002731E0(o, &r); }

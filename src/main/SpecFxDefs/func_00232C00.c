@@ -2,7 +2,7 @@
 #include "types.h"
 #include "alloc_guard.h"
 extern "C" {
-extern void* D_004FFC0C;
+extern void* g_LocalPlayer;
 extern char D_004A6E38[];
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void World_SetAtmosphereEffect(void* w, void* o);
@@ -16,7 +16,7 @@ static inline void* GAlloc(int sz, int line)
 }
 extern "C" void World_StartAtmosphereEffect(signed char type, void* src, float a, float b, float c, float d)
 {
-    void* w = D_004FFC0C;
+    void* w = g_LocalPlayer;
     World_SetAtmosphereEffect(w, 0);
     if (type == 0x16 || type == 0x17 || type == 0x18) {
         void* p = GAlloc(0xD0, 0x4CD);

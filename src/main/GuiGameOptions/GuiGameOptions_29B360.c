@@ -263,7 +263,7 @@ char* func_0012F2A0(Name_BBA0*);
 extern char D_00506440[];
 extern char D_004DD5E0[];
 extern char D_004DCF10[];
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_004AA960[];
 extern char D_004AA970[];
 
@@ -276,17 +276,17 @@ void func_0029BBA0(void) {
     m.vt = D_004DD5E0;
     Stream_ReadU32(&m.id);
     Stream_ReadU32(&m.arg);
-    if (func_0029BDA0(D_004FFB50) && func_0029BD70(func_0029BDA0(D_004FFB50))
-        && m.arg == func_0012F2E0(func_0029BD70(func_0029BDA0(D_004FFB50)))) {
+    if (func_0029BDA0(g_Game) && func_0029BD70(func_0029BDA0(g_Game))
+        && m.arg == func_0012F2E0(func_0029BD70(func_0029BDA0(g_Game)))) {
         fmt = Loc_LookupText(D_004AA960);
         if (!fmt) {
-            Game_EndLevel(D_004FFB50, 2);
+            Game_EndLevel(g_Game, 2);
             GameOptions_QueueDialog(1, D_004AA970, 0);
         } else {
             func_0012F2D0(&nm);
             Hud_FormatPlayerCalloutName(&nm, m.id, 0);
             sprintf(buf, fmt, func_0012F2A0(&nm));
-            Game_EndLevel(D_004FFB50, 2);
+            Game_EndLevel(g_Game, 2);
             GameOptions_QueueDialog(1, D_004AA970, buf);
         }
     }
@@ -331,11 +331,11 @@ static inline void merge_flush_func_0029BD00(void) {}
 
 /* merge_units: begin func_0029BD70 */
 #pragma push /* merge_units */
-extern int D_0049D010;
+extern int g_HumanActorClassKey;
 #pragma push
 
 int func_0029BD70(int arg0) {
-    int v = F_(arg0, 0x30, int); return (v && F_(v, 0x4C, int) == D_0049D010) ? v : 0;
+    int v = F_(arg0, 0x30, int); return (v && F_(v, 0x4C, int) == g_HumanActorClassKey) ? v : 0;
 }
 #pragma pop
 /* merge_units: generate this block's code under its own pragmas */

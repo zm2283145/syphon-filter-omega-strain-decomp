@@ -12,7 +12,7 @@ int func_003D6010(...);
 int memcpy(...);                            
 int strlen(...);                                    
 extern char D_004BD3B0;
-extern unsigned char D_00533880;
+extern unsigned char g_ProfileLockEnabled;
 }
 extern "C" char * func_003D6030(char * arg0, int arg1, int arg2, signed char arg3) {
     int temp_v1;

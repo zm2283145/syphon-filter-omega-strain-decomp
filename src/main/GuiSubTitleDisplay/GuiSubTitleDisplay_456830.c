@@ -17,9 +17,9 @@ extern char D_004C1C60[];
 extern char D_004C1C70[];
 extern char D_004C1A38[];
 extern char D_004A7520[];
-extern unsigned char D_004FFBA0;
-extern int D_004FFC2C;
-extern char D_004FFB50[];
+extern unsigned char g_GameState;
+extern int g_Hud;
+extern char g_Game[];
 VObj45* GuiWidget_FindChildByName(W456830*, char*);
 int sprintf(char*, const char*, ...);
 char* Loc_LookupText(char*);
@@ -64,10 +64,10 @@ extern "C" int GuiStartMenu_OnEvent(W456830* self, Ev45* ev, int code, int a3, i
         }
     }
     if (c == 0x1A && a3 == 0) {
-        if (D_004FFBA0 != 0x13 && D_004FFBA0 != 0x14) {
-            Hud_ClosePauseMenu(D_004FFC2C);
-            Game_EndLevel(D_004FFB50, 2);
-            Game_SetPaused(D_004FFB50, 0);
+        if (g_GameState != 0x13 && g_GameState != 0x14) {
+            Hud_ClosePauseMenu(g_Hud);
+            Game_EndLevel(g_Game, 2);
+            Game_SetPaused(g_Game, 0);
         }
         return 1;
     }

@@ -25,7 +25,7 @@ void GameScreen_ClearInteractLocal(void);
 }
 static inline int OwnerOf_E730(Ent_E730* e)
 {
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         unsigned char ok = 0;
         Ctl_E730* c = e->ctl;
         if (c && c->isNet()) ok = 1;
@@ -37,7 +37,7 @@ static inline int OwnerOf_E730(Ent_E730* e)
 extern "C" void Global_ClearInteract(Ent_E730* e)
 {
     Msg_E730 m;
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         Event_Construct(&m, D_00586170);
         m.vt = ((char*)D_004E16A0);
         m.f1C = 0x40;

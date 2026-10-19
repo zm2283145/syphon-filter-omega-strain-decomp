@@ -16,14 +16,14 @@ struct Hum_61F0 { char pad[0xC]; unsigned int flags; char pad10[0x48]; Ctl_61F0*
 extern "C" {
 void* Agent_GetSelected(void*, int);
 int AgentData_HasUnlock(void*, int);
-extern char D_004FFB50[];
+extern char g_Game[];
 extern float D_0048A2D0;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 }
 static inline unsigned char IsPlayer_61F0(Hum_61F0* h) { unsigned char r = 0; if (h->ctl && h->ctl->IsPlayer()) r = 1; return r; }
 static inline int IsPlayerB_61F0(Hum_61F0* h) { int b = h->ctl != 0; if (b) b = h->ctl->IsPlayer(); return b; }
-static inline int LocalId_61F0(Hum_61F0* h) { int id; if (D_005721C8) { if (IsPlayer_61F0(h)) id = ((h->flags & 0x7F000000) >> 24) - 1; else id = -1; } else id = 0; return id; }
-static inline void* Agent_61F0(Hum_61F0* h) { return IsPlayerB_61F0(h) ? Agent_GetSelected(D_004FFB50, LocalId_61F0(h)) : 0; }
+static inline int LocalId_61F0(Hum_61F0* h) { int id; if (g_IsMultiplayer) { if (IsPlayer_61F0(h)) id = ((h->flags & 0x7F000000) >> 24) - 1; else id = -1; } else id = 0; return id; }
+static inline void* Agent_61F0(Hum_61F0* h) { return IsPlayerB_61F0(h) ? Agent_GetSelected(g_Game, LocalId_61F0(h)) : 0; }
 /* clips granted to an actor: the player's count is scaled when the agent has perk 5 */
 #pragma push
 #pragma opt_propagation off
@@ -31,7 +31,7 @@ extern "C" int WeaponInv_ClipsForActor(Hum_61F0* h, int n)
 {
     int r = n;
     if (IsPlayer_61F0(h)) {
-        int id = LocalId_61F0(h); void* ag = IsPlayerB_61F0(h) ? Agent_GetSelected(D_004FFB50, id) : 0;
+        int id = LocalId_61F0(h); void* ag = IsPlayerB_61F0(h) ? Agent_GetSelected(g_Game, id) : 0;
         if (AgentData_HasUnlock(ag, 5)) {
             r = (int)(n * D_0048A2D0);
             if (r == n) r++;
@@ -79,7 +79,7 @@ extern "C" {
 extern char D_0049D8E0[];
 extern char D_004DAE30[];
 extern char D_004DADF0[];
-extern char D_0055D480[];
+extern char g_ActorActionMsgClass[];
 extern "C" void Message_GetScriptTypeKey();
 extern "C" void func_00186670();
 extern "C" void func_003E60F0();
@@ -128,7 +128,7 @@ extern "C" void Actor_Ignite(Npc_00186360* self, unsigned char on, Obj_00186360*
             SoundRequest_Ctor(&req, 1, D_0049D8E0, 0, 0);
             SoundEvent_CtorFromPreset(&ev, &req, self);
             ev.flag = 1;
-            Event_Send(&ev, D_004FFB50, 0);
+            Event_Send(&ev, g_Game, 0);
             ev.vt = D_004DAE30;
             FileMan_Release(&ev.s114, -1);
             FileMan_Release(&ev.s78, -1);
@@ -145,7 +145,7 @@ extern "C" void Actor_Ignite(Npc_00186360* self, unsigned char on, Obj_00186360*
             SoundRequest_Ctor(&req, 1, D_0049D8E0, 0, 0);
             SoundStopMsg_Ctor(&ev, &req, self);
             ev.flag = 1;
-            Event_Send(&ev, D_004FFB50, 0);
+            Event_Send(&ev, g_Game, 0);
             ev.vt = D_004DADF0;
             FileMan_Release(&ev.s114, -1);
             FileMan_Release(&ev.s78, -1);
@@ -154,11 +154,11 @@ extern "C" void Actor_Ignite(Npc_00186360* self, unsigned char on, Obj_00186360*
             FileMan_Release(&req.s48, -1);
         }
     }
-    if (D_005721C8 && !quiet) {
+    if (g_IsMultiplayer && !quiet) {
         int id = GetId_00186360(obj, t2);
         int st = self->b326A;
         Msg_00186360 m;
-        Event_Construct(&m, D_0055D480);
+        Event_Construct(&m, g_ActorActionMsgClass);
         m.kind = 0x44;
         m.b28 = 6;
         m.id = id;

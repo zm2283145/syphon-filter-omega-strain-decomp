@@ -23,11 +23,11 @@ public:
     virtual int f();
 };
 struct O_0012F2E0 { char pad[0xC]; unsigned int xC; char pad2[0x58-0x10]; V_0012F2E0* x58; };
-extern "C" { extern unsigned char D_005721C8; }
+extern "C" { extern unsigned char g_IsMultiplayer; }
 extern "C" int func_0012F2E0(O_0012F2E0* o)
 {
     int r;
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         bool ok = false;
         if (o->x58 && o->x58->f()) ok = true;
         r = ok ? (int)((o->xC & 0x7F000000) >> 24) - 1 : -1;

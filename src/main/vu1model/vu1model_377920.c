@@ -39,7 +39,7 @@ typedef struct {
     unsigned char ok;
 } ModelL;
 extern "C" {
-extern char D_00535D20[];
+extern char g_LightMgr[];
 extern void FileMan_FindMember(void* f);
 extern void FileMan_LoadMemberSync(void* f, ModelL* m, int z);
 extern void func_0036DEC0(void* f);
@@ -81,7 +81,7 @@ extern "C" void Model_Load(ModelL* m, void* f, void* tex) {
         Model_SetupExtraTable(m);
     }
     for (int j = 0; j < m->hdr->nLight; j++) {
-        LightMgr_Register(D_00535D20, m->hdr->lights[j].id, m, j);
+        LightMgr_Register(g_LightMgr, m->hdr->lights[j].id, m, j);
     }
     m->cnt = 0;
     for (int i = 0; i < m->hdr->nMesh; i++) {

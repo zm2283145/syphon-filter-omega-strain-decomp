@@ -50,7 +50,7 @@ struct Self {
 };
 
 extern "C" {
-extern char D_005381F0[];
+extern char g_Video[];
 extern long long D_005381F8;
 extern int D_00538C60;
 extern int D_00538C64;
@@ -61,8 +61,8 @@ extern int D_00539224;
 extern int D_00539228;
 extern int D_00539238;
 extern int D_0053923C;
-extern TexMan* D_00539248;
-extern int D_005392D0;
+extern TexMan* g_TextureMgr;
+extern int g_DrawMode;
 void GuiWidget_Draw(Self* self);
 void Renderer_BindTexture(TexMan* m, int idx);
 void func_0025CD10(char* r);
@@ -74,9 +74,9 @@ V4* Vec4_Set(V4* o, float x, float y, float z, float w);
 void Renderer_FlushPrimitives(char* r);
 }
 
-#define SlotAt(i) ((Slot*)(D_005381F0 + 0x1F0 + (i) * 0x110))
-#define EntAt(i) ((Ent*)(D_005381F0 + 0xFB0 + (i) * 0x38))
-static inline Mtx* MtxAt(int i) { return &((Render*)D_005381F0)->mtx[i]; }
+#define SlotAt(i) ((Slot*)(g_Video + 0x1F0 + (i) * 0x110))
+#define EntAt(i) ((Ent*)(g_Video + 0xFB0 + (i) * 0x38))
+static inline Mtx* MtxAt(int i) { return &((Render*)g_Video)->mtx[i]; }
 static inline void GQR(void* d, void* s) { __int128 qa, qb; __asm__ volatile("lq %0, 0x0(%3); lq %1, 0x10(%3); sq %0, 0x0(%2); lq %0, 0x20(%3); sq %1, 0x10(%2); lq %1, 0x30(%3); sq %0, 0x20(%2); sq %1, 0x30(%2)" : "=&r"(qa), "=&r"(qb) : "r"(d), "r"(s) : "memory"); }
 static inline void UM(void* p) { int t; __asm__ volatile("sqc2 $vf0, 0x30(%1); qmfc2.ni %0, $vf0; pcpyud %0, %0, $zero; sq %0, 0x10(%1); pexcw %0, %0; sq %0, 0x20(%1); pcpyud %0, %0, $zero; sq %0, 0x0(%1)" : "=&r"(t) : "r"(p) : "memory"); }
 
@@ -87,7 +87,7 @@ static inline void Emit(const V4& pos, const V4& col, const V4c& uv)
     V4 tmp;
     Ent* e;
     float u;
-    func_0025CA40(D_005381F0);
+    func_0025CA40(g_Video);
     e = EntAt(D_00539210);
     Vec4_Copy(e->pos + (D_00539224 - 1) * 16, &pos);
     GuiBatch_AddVertexColor(e->c30 + (D_00539224 - 1) * 16, &col);
@@ -100,13 +100,13 @@ extern "C" void GuiBitmapWidget_Draw(Self* self)
 {
     GuiWidget_Draw(self);
     if (self->tex == -1) return;
-    int save = D_005392D0;
+    int save = g_DrawMode;
     { int i = D_00538C64; GQR(MtxAt(i + 1), MtxAt(i)); }
     D_00538C64++;
     UM(MtxAt(D_00538C64));
     D_00538C68 = 1;
-    D_005392D0 = 5;
-    Renderer_BindTexture(D_00539248, self->tex);
+    g_DrawMode = 5;
+    Renderer_BindTexture(g_TextureMgr, self->tex);
     {
         Slot* s = SlotAt(D_00538C60);
         float* v = D_00539170;
@@ -123,14 +123,14 @@ extern "C" void GuiBitmapWidget_Draw(Self* self)
     p1 = V4(self->x + self->w, self->y - self->h, self->z, 0.0f);
     float us = 1.0f;
     float vs = 1.0f;
-    float tw = (int)TexQ(D_00539248, self->tex)->info->w;
-    float th = (int)TexQ(D_00539248, self->tex)->info->h;
+    float tw = (int)TexQ(g_TextureMgr, self->tex)->info->w;
+    float th = (int)TexQ(g_TextureMgr, self->tex)->info->h;
     if (tw == 1024.0f && th == 512.0f) {
         us = 0.625f;
         vs = 0.9375f;
     }
-    { unsigned char t; if (D_005392D0 & 1) t = 3; else t = 2; D_00539238 = t; }
-    { int m; if (D_005392D0 & 1) m = 0x41; else m = 0x62; D_0053923C = m; }
+    { unsigned char t; if (g_DrawMode & 1) t = 3; else t = 2; D_00539238 = t; }
+    { int m; if (g_DrawMode & 1) m = 0x41; else m = 0x62; D_0053923C = m; }
     D_00539228 = 0;
     {
         int m = D_0053923C;
@@ -141,13 +141,13 @@ extern "C" void GuiBitmapWidget_Draw(Self* self)
         e->c2C += D_00539224 * 16;
         e->c30 += D_00539224 * 16;
         e->c34 += D_00539224 * 16;
-        func_0025CD10(D_005381F0);
+        func_0025CD10(g_Video);
         D_00539224 = 0;
     }
     Emit(p0, self->color, V4c(0.0f, 0.0f, 1.0f, 0.0f));
     Emit(p1, self->color, V4c(us, vs, 1.0f, 0.0f));
-    Renderer_FlushPrimitives(D_005381F0);
-    D_005392D0 = save;
+    Renderer_FlushPrimitives(g_Video);
+    g_DrawMode = save;
     D_00538C68 = 1;
     D_00538C64--;
 }
@@ -188,9 +188,9 @@ Quad* func_0043C6B0(Quad* d, Quad* s) {
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 int Tex_Release(int, int, int);                       
 #if 0 /* merge_units */
-extern int D_00539248;
+extern int g_TextureMgr;
 #endif /* merge_units */
-#define D_00539248 (*(int*)&D_00539248) /* merge_units */
+#define g_TextureMgr (*(int*)&g_TextureMgr) /* merge_units */
 
 
 #pragma opt_common_subs off
@@ -199,11 +199,11 @@ void func_0043C6E0(int arg0) {
 
     temp_a1 = F_(arg0, 0x48, int);
     if (temp_a1 != -1) {
-        Tex_Release(D_00539248, temp_a1, 0);
+        Tex_Release(g_TextureMgr, temp_a1, 0);
         F_(arg0, 0x48, int) = -1;
     }
 }
-#undef D_00539248 /* merge_units */
+#undef g_TextureMgr /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0043C6E0 */
 
@@ -220,9 +220,9 @@ int func_0036E4B0();
 int Resource_Construct();                               
 int TexMan_FindOrLoad();                        
 #if 0 /* merge_units */
-extern int D_00539248;
+extern int g_TextureMgr;
 #endif /* merge_units */
-#define D_00539248 (*(int*)&D_00539248) /* merge_units */
+#define g_TextureMgr (*(int*)&g_TextureMgr) /* merge_units */
 
 
 #pragma push
@@ -236,16 +236,16 @@ int GuiBitmapWidget_Load(char * arg0) {
     if (F_(arg0, 0x4C, int) != 0) {
         Resource_Construct(sl.fC0);
         Hog_Register(sl.fC0, String_CStr(arg0 + 0x50), F_(arg0, 0x4C, int), 0);
-        F_(arg0, 0x48, int) = TexMan_FindOrLoad(D_00539248, sl.fC0);
+        F_(arg0, 0x48, int) = TexMan_FindOrLoad(g_TextureMgr, sl.fC0);
         FileMan_Release(sl.fC0, -1);
     } else {
         func_0036E4B0(sl.f20, String_CStr(arg0 + 0x50), 0, 0);
-        F_(arg0, 0x48, int) = TexMan_FindOrLoad(D_00539248, sl.f20);
+        F_(arg0, 0x48, int) = TexMan_FindOrLoad(g_TextureMgr, sl.f20);
         FileMan_Release(sl.f20, -1);
     }
     return ~F_(arg0, 0x48, int) != 0;
 }
 #pragma pop
-#undef D_00539248 /* merge_units */
+#undef g_TextureMgr /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0043C730 */

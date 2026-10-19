@@ -13,7 +13,7 @@ int func_002887C0(char * , int);
 int func_00336610(char * , int);                         
 int func_0033A330(char * , int);                         
 int operator_delete(char * );                          
-extern unsigned char D_00533880;
+extern unsigned char g_ProfileLockEnabled;
 extern char func_003365A0;
 }
 extern "C" char * func_00336460(char * arg0, long long arg1) {

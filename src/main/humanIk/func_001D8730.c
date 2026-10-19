@@ -10,8 +10,8 @@ int func_00136DA0(char *);
 int func_001D8830(int, int);                            
 extern int D_004F2D80;
 extern int D_004F2D88;
-extern unsigned char D_00533880;
-extern int D_00533888;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
 
 void func_001D8730(void) {
     int sp28[2];
@@ -20,16 +20,16 @@ void func_001D8730(void) {
 
     temp_s0 = D_004F2D80;
     if (temp_s0 != 0) {
-        if (D_00533880 != 0) {
+        if (g_ProfileLockEnabled != 0) {
             Alloc_Lock(9);
         }
-        D_00533888 += 1;
+        g_ProfileLockDepth += 1;
         Mem_Free(0, temp_s0, "humanIk.cc", 0x27E);
-        if (D_00533880 != 0) {
+        if (g_ProfileLockEnabled != 0) {
             Alloc_Unlock(9);
         }
         D_004F2D80 = 0;
-        D_00533888 -= 1;
+        g_ProfileLockDepth -= 1;
     }
     temp_s0_2 = D_004F2D88;
     if (temp_s0_2 != 0) {

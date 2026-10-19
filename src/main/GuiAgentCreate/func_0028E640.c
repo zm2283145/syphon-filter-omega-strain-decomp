@@ -15,7 +15,7 @@ struct CamE {
     Fl f0, f1, f2, f3, f4, f5, f6;
 };
 struct CamMgr { char pad[0x11C10]; CamE e[1]; };
-extern "C" CamMgr D_0055DDA0;
+extern "C" CamMgr g_AgentPartCache;
 struct CamOwner { char pad[0x2E10]; signed char sel[8]; };
 struct CamT {
     char pad0[0x70];
@@ -30,8 +30,8 @@ struct CamT {
     signed char ed;
 };
 static inline void GetE(CamT* t, CamE& o) {
-    if (t->d0 == 0) o = D_0055DDA0.e[t->owner->sel[t->ed]];
-    else o = D_0055DDA0.e[0];
+    if (t->d0 == 0) o = g_AgentPartCache.e[t->owner->sel[t->ed]];
+    else o = g_AgentPartCache.e[0];
 }
 
 extern "C" void GuiAgentCreate_CameraApproach(CamT* t)

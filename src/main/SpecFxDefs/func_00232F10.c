@@ -188,11 +188,11 @@ struct Self10 {
 
 extern "C" {
 extern FxFlag D_004F7A54[];
-extern FxDef D_004F7A50[];
+extern FxDef SpecFxTable[];
 extern char D_004A6E38[];
 extern char D_004A6F38[];
-extern char D_004FFC14[];
-extern char D_004EE688[];
+extern char g_CameraObject[];
+extern char g_HotboxList[];
 extern char D_0053B5C0[];
 Cam10** List_Front(void* p);
 void func_00232EE0(It10* out, void* list);
@@ -220,7 +220,7 @@ Box func_00234110(Box0* a, Box0* b);
 
 static inline FxDef* GetDef_(int id)
 {
-    if ((unsigned int)id < 41) return &D_004F7A50[id];
+    if ((unsigned int)id < 41) return &SpecFxTable[id];
     return 0;
 }
 static inline FxDef* GetDef(signed char id)
@@ -312,7 +312,7 @@ extern "C" void SnowField_Update(Self10* self, float dt)
     Cam10* cam;
     Entry10* e;
 
-    cam = *List_Front(D_004FFC14);
+    cam = *List_Front(g_CameraObject);
     if (cam && self->c4 >= 0) {
         M4 m;
         UM(&m);
@@ -354,7 +354,7 @@ extern "C" void SnowField_Update(Self10* self, float dt)
             }
         }
 
-        char* gl = D_004EE688;
+        char* gl = g_HotboxList;
 
         for (OBegin(&oit, gl); ONotEnd(&oit, gl); oit.n = oit.n->next) {
             Obj10* o = oit.n->value;
@@ -427,7 +427,7 @@ extern "C" void SnowField_Update(Self10* self, float dt)
                 b2 = func_00234110(&big, e->obj->GetBox());
                 SetCP(&m, &b2, V4());
                 func_003A3340(e->t, cam, &b2, self->id != 0x16);
-                func_003A3310(e->t, scale, ((CamF*)*List_Front(D_004FFC14))->f60);
+                func_003A3310(e->t, scale, ((CamF*)*List_Front(g_CameraObject))->f60);
                 ParticleInst_Update(e->t, dt, &m, 0);
             }
         }

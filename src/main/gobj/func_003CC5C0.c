@@ -2,7 +2,7 @@
 #include "types.h"
 typedef struct { void* vt; char pad04[0x1C]; signed char kind; char pad21[3]; signed char b24; char pad25[3]; int id; int hp; } Msg_3CC5C0;
 typedef struct { char pad[0xC]; int id; char pad10[0x30]; float hp; } Obj_3CC5C0;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern char D_00582750[];
 extern void Message_GetScriptTypeKey();
 extern void func_003CC670();
@@ -21,7 +21,7 @@ int Script_cGOBJ_SetHitpoints(int* args) {
     v = hp;
     o = (Obj_3CC5C0*)args[0];
     o->hp = v;
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         Msg_3CC5C0 m;
         Event_Construct(&m, D_00582750);
         m.b24 = 0;

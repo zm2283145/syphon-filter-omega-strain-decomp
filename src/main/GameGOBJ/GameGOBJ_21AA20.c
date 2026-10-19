@@ -47,7 +47,7 @@ public:
     virtual void Reset(int arg);
 };
 typedef struct { char p0[0x10]; int target; char p14[0x2C - 0x14]; unsigned char flag; char p2d[0x78 - 0x2D]; int n; C1Ch_21A9** ch; } C1Obj_21A9;
-extern "C" unsigned char D_005721C8;
+extern "C" unsigned char g_IsMultiplayer;
 extern "C" char g_cEnableMsgClass[];
 extern "C" char D_004E0880[];
 extern "C" void Event_Construct(C1Msg_21A9* m, void* type);
@@ -57,7 +57,7 @@ extern "C" void cMessage_dtor(C1Msg_21A9* m, int flags);
 extern "C" void cGameGOBJ_Enable(C1Obj_21A9* o)
 {
     int i;
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         C1Msg_21A9 msg;
         Event_Construct(&msg, g_cEnableMsgClass);
         msg.vtbl = D_004E0880;

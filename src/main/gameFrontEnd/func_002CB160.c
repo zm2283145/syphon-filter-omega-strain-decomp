@@ -12,13 +12,13 @@ struct Self_002CB160 {
 struct W_002CB160 { char pad[0x278]; unsigned char b278; };
 extern "C" {
 extern char D_00571DC0[];
-extern char D_005381F0[];
+extern char g_Video[];
 extern char D_004ACF10[];
 extern char D_0055A700[];
-extern int D_004FFD30;
-extern char D_004FFB50[];
+extern int g_WeaponDatabase;
+extern char g_Game[];
 extern char D_004F2CC0[];
-extern char D_004FFC90[];
+extern char g_LevelDirName[];
 extern char D_004ACF48[];
 void GuiCanvas_Destroy(void);
 void func_004139C0(void* p);
@@ -50,7 +50,7 @@ extern "C" void FrontEnd_TeardownGui(Self_002CB160* self)
             Obj_002CB160* p;
             void* svc;
             for (i = 0; i < 3; i++)
-                Video_BeginFrame(D_005381F0);
+                Video_BeginFrame(g_Video);
             p = self->p260;
             if (p) {
                 AllocGuard g;
@@ -61,14 +61,14 @@ extern "C" void FrontEnd_TeardownGui(Self_002CB160* self)
             { W_002CB160* w = App_GetInstance(); w->b278 = 1; }
             func_003D1700(D_0055A700);
             func_002C9E20(self);
-            func_001450F0(D_004FFD30);
+            func_001450F0(g_WeaponDatabase);
             func_002C9C80(self, 1);
-            svc = Service_Lookup(D_004FFB50, D_004F2CC0);
+            svc = Service_Lookup(g_Game, D_004F2CC0);
             if (svc) {
                 PStr_002CB160 buf;
                 {
                     char* d = buf.s;
-                    const char* s = D_004FFC90;
+                    const char* s = g_LevelDirName;
                     int n = 0;
                     while ((*d++ = *s++) != 0) {
                         if (++n >= 0x7E) {
@@ -80,13 +80,13 @@ extern "C" void FrontEnd_TeardownGui(Self_002CB160* self)
                     }
                     buf.len = n;
                 }
-                strncpy(D_004FFC90, D_004ACF48, 0x80);
+                strncpy(g_LevelDirName, D_004ACF48, 0x80);
                 SoundMgr_UnloadLevel(svc);
-                strncpy(D_004FFC90, buf.s, 0x80);
+                strncpy(g_LevelDirName, buf.s, 0x80);
             }
             if (DME_GetLobby())
                 func_004538D0(DME_GetLobby());
-            Renderer_Teardown(D_005381F0);
+            Renderer_Teardown(g_Video);
         }
         self->b29 = 0;
         self->b28 = 0;

@@ -173,7 +173,7 @@ extern char D_004DFD80[];
 #endif /* merge_units */
 #define D_004DFD80 ((char*)&D_004DFD80) /* merge_units */
 
-extern char D_005721C8[];
+extern char g_IsMultiplayer[];
 extern char D_005721D0[];
 #if 0 /* merge_units */
 extern int Net_GetClock(int);
@@ -192,7 +192,7 @@ int Event_Construct(int a0, int a1) {
     *(int*)((char*)a0 + 24) = 0;
     *(int*)((char*)a0 + 28) = 0;
     *(char*)((char*)a0 + 32) = v0;
-    v0 = *(unsigned char*)(char*)D_005721C8;
+    v0 = *(unsigned char*)(char*)g_IsMultiplayer;
     cond = v0 == 0;
     s0 = a0;
     if (cond) goto L003C9E88;

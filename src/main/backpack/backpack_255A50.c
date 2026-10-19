@@ -26,7 +26,7 @@ struct Pt1SpObj {
     Pt1SpProxy* proxy;
 };
 extern "C" {
-extern void* D_004FFBD0;
+extern void* g_HotboxTracker;
 void Object_Register(Pt1SpObj* o);
 Pt1SpProxy* Hotbox_CreateRuntime(void* mgr, Pt1SpObj* o, int a, int b);
 }
@@ -44,7 +44,7 @@ extern "C" void WorldInv_AddArmor(Pt1SpObj* o, int a, int b)
     Object_Register(o);
     if (o->proxy)
         return;
-    o->proxy = Hotbox_CreateRuntime(D_004FFBD0, o, 0, 1);
+    o->proxy = Hotbox_CreateRuntime(g_HotboxTracker, o, 0, 1);
     o->proxy->id = o->id;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -91,9 +91,9 @@ struct BP {
 
 extern "C" {
 #if 0 /* merge_units */
-extern int D_004FFBD0;
+extern int g_HotboxTracker;
 #endif /* merge_units */
-#define D_004FFBD0 (*(int*)&D_004FFBD0) /* merge_units */
+#define g_HotboxTracker (*(int*)&g_HotboxTracker) /* merge_units */
 
 int WeaponInv_SlotOfItem(int id);
 #if 0 /* merge_units */
@@ -110,7 +110,7 @@ Link* Hotbox_CreateRuntime(int manager, BP* bp, int a2, int a3);
 
 static inline void CreateLink(BP* bp) {
     if (bp->link == 0) {
-        bp->link = Hotbox_CreateRuntime(D_004FFBD0, bp, 0, 1);
+        bp->link = Hotbox_CreateRuntime(g_HotboxTracker, bp, 0, 1);
         bp->link->owner = bp->unk0C;
     }
 }
@@ -166,7 +166,7 @@ extern "C" void Backpack_AddWeapon(BP* bp, int item, int amount, int extra, unsi
         CreateLink(bp);
     }
 }
-#undef D_004FFBD0 /* merge_units */
+#undef g_HotboxTracker /* merge_units */
 #undef Object_Register /* merge_units */
 #undef Hotbox_CreateRuntime /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
@@ -201,9 +201,9 @@ struct BP_00255CF0 {
 
 extern "C" {
 #if 0 /* merge_units */
-extern int D_004FFBD0;
+extern int g_HotboxTracker;
 #endif /* merge_units */
-#define D_004FFBD0 (*(int*)&D_004FFBD0) /* merge_units */
+#define g_HotboxTracker (*(int*)&g_HotboxTracker) /* merge_units */
 
 #if 0 /* merge_units */
 void Object_Register(BP_00255CF0* self);
@@ -219,7 +219,7 @@ Link* Hotbox_CreateRuntime(int manager, BP_00255CF0* bp, int a2, int a3);
 
 static inline void CreateLink_00255CF0(BP_00255CF0* bp) {
     if (bp->link == 0) {
-        bp->link = Hotbox_CreateRuntime(D_004FFBD0, bp, 0, 1);
+        bp->link = Hotbox_CreateRuntime(g_HotboxTracker, bp, 0, 1);
         bp->link->owner = bp->unk0C;
     }
 }
@@ -236,7 +236,7 @@ extern "C" void Backpack_MarkFlagSlot(BP_00255CF0* bp, int item) {
     bp->unk2F1 = 1;
     bp->unk30C = 0;
 }
-#undef D_004FFBD0 /* merge_units */
+#undef g_HotboxTracker /* merge_units */
 #undef Object_Register /* merge_units */
 #undef Hotbox_CreateRuntime /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */

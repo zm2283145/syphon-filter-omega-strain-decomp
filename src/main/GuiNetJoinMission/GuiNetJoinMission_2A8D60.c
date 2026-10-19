@@ -100,7 +100,7 @@ extern char* D_0048BBC8;
 extern char* D_0048BBD0;
 extern char D_004A7520[];
 extern char D_004AB6B8[];
-extern char D_004FFB50[];
+extern char g_Game[];
 #if 0 /* merge_units */
 extern char* D_004FFC04;
 #endif /* merge_units */
@@ -159,7 +159,7 @@ extern "C" void func_002A9030(W2A9030* self)
         if (o) GuiTextWidget_SetText(o, D_004FFC04 + 0x1C8, 0);
         o = GuiWidget_FindChildByName(self, D_0048BBC8);
         o = (o != 0 && o->v20(D_004A7520) != 0) ? o : 0;
-        if (o) GuiTextWidget_SetText(o, Agent_GetSelected(D_004FFB50, -1) + 0x95C, 0);
+        if (o) GuiTextWidget_SetText(o, Agent_GetSelected(g_Game, -1) + 0x95C, 0);
         func_0033D8E0(self, 0);
         if (DME_GetLobby()) func_004515F0(DME_GetLobby(), 1);
         s = Loc_LookupText(D_0048BBD8);

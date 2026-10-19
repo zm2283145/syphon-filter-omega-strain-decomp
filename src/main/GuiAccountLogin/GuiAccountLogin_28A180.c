@@ -251,7 +251,7 @@ extern Mgr_28A5C0* D_004FFC04;
 #endif /* merge_units */
 #define D_004FFC04 (*(Mgr_28A5C0 **)&D_004FFC04) /* merge_units */
 
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_004A96F8[];
 extern char D_004A9718[];
 extern char D_004A9880[];
@@ -277,7 +277,7 @@ extern "C" void func_0028A5C0(S_28A5C0* self)
 {
     W28A5C0* p;
     GuiScreen_Init();
-    self->f9C = Agent_GetSelected(D_004FFB50, -1);
+    self->f9C = Agent_GetSelected(g_Game, -1);
     self->p88 = GuiWidget_FindChildByName(self, D_0048B400);
     p = GuiWidget_FindChildByName(self, D_0048B408);
     p = (p && p->IsA(D_004A9880)) ? p : 0;

@@ -26,7 +26,7 @@ extern void MLTextWidget_AddText(void*, char*);
 extern V455* GuiWidget_FindChildByName(W455*, char*);
 extern char D_004A7520[];
 extern char D_004C1A38[];
-extern char D_004FFC90[];
+extern char g_LevelDirName[];
 extern void GuiTextWidget_SetText(V455*, char*, int);
 }
 extern "C" void GuiBriefingPane_Wake(W455* w) {
@@ -41,8 +41,8 @@ extern "C" void GuiBriefingPane_Wake(W455* w) {
     p = GuiWidget_FindChildByName(w, "label_briefingheader");
     p = (p && p->v20(D_004A7520)) ? p : 0;
     if (p) {
-        char* t = Loc_LookupText(D_004FFC90);
-        GuiTextWidget_SetText(p, t ? t : D_004FFC90, 0);
+        char* t = Loc_LookupText(g_LevelDirName);
+        GuiTextWidget_SetText(p, t ? t : g_LevelDirName, 0);
     }
 }
 #pragma pop /* merge_units */
@@ -88,8 +88,8 @@ struct M_455E10 {
 typedef struct { unsigned short type; unsigned short b2; char pad4[2]; unsigned short b6; unsigned short btn; } Ev_455E10;
 typedef struct { char pad[0x48]; void* f48; } O_455E10;
 extern "C" {
-extern void* D_004FFC2C;
-extern char D_004FFB50[];
+extern void* g_Hud;
+extern char g_Game[];
 void GuiMultiLineText_ScrollUp(void* p, int v);
 void GuiMultiLineText_ScrollDown(void* p, int v);
 M_455E10* Gui_GetScreenStack(void);
@@ -121,8 +121,8 @@ int GuiBriefingPane_HandleInput(O_455E10* o, Ev_455E10* ev)
     }
     if (Plain2_455E10(ev, 0x800)) {
         Gui_GetScreenStack()->v24(o);
-        Hud_ClosePauseMenu(D_004FFC2C);
-        Game_SetPaused(D_004FFB50, 0);
+        Hud_ClosePauseMenu(g_Hud);
+        Game_SetPaused(g_Game, 0);
         return 1;
     }
     return 0;

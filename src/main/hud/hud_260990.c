@@ -72,11 +72,11 @@ typedef struct {
 } VisionFx;
 
 extern VfxFlareId D_004A7DB0[];
-extern VfxTexReg* D_00539248;
+extern VfxTexReg* g_TextureMgr;
 extern int* SpecFx_GetEffectDef(int id);
 
-static inline int VfxTexW(int h) { return D_00539248->entries[h]->info->w; }
-static inline int VfxTexH(int h) { return D_00539248->entries[h]->info->h; }
+static inline int VfxTexW(int h) { return g_TextureMgr->entries[h]->info->w; }
+static inline int VfxTexH(int h) { return g_TextureMgr->entries[h]->info->h; }
 
 void VisionFx_LoadFlareTextures(VisionFx* self)
 {

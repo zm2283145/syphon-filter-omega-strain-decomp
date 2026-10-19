@@ -48,7 +48,7 @@ extern char D_004BE830[];
 extern char D_004BE838[];
 extern char D_004BE840[];
 extern char D_004BE848[];
-extern char D_00493AF0[24][7];
+extern char g_MorphGripKeys[24][7];
 extern int D_005712F0[2];
 extern __int128* D_005712F8[2];
 extern __int128* D_005714F0[2][2];
@@ -148,7 +148,7 @@ void Skf_Register(Cache_S* c, Npc_S* npc)
                 cnt = D_00571500[x][y];
                 k = 0;
                 out = D_00571510[x][y];
-                nm = D_00493AF0[0];
+                nm = g_MorphGripKeys[0];
                 for (; k < 24; k++) {
                     *out = 0;
                     e = pkt;

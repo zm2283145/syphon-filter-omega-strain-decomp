@@ -90,7 +90,7 @@ struct ActorModelData {
 extern "C" V4 D_00535D40;
 extern "C" unsigned char D_00535D60;
 extern "C" unsigned char D_00535D61;
-extern "C" int D_0053B350;
+extern "C" int g_VisionNight;
 extern "C" void Skm_Draw(void* a, void* b, int c, int d, int e, int f);
 
 static inline int Vec4_Equal_(V4* a, V4* b) {
@@ -129,7 +129,7 @@ extern "C" void ActorModel_Draw(ActorModel* self) {
         D_00535D60 = 1;
         D_00535D61 = 1;
     }
-    if (D_0053B350 != 0) {
+    if (g_VisionNight != 0) {
         Skm_Draw(d->part60, d->part2E50, d->lod, 0, 0, 1);
     } else {
         Skm_Draw(d->part60, d->part2E50, d->lod, 0, 0, 0);

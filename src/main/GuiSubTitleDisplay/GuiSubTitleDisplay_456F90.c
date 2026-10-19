@@ -14,7 +14,7 @@ extern void GuiWidget_Init(void*);
 extern V456* GuiWidget_FindChildByName(void*, char*);
 extern char D_004A7520[];
 extern char D_004C1A38[];
-extern char D_004FFB50[];
+extern char g_Game[];
 extern int Agent_GetSelected(char*, int);
 extern char* AgentData_GetName(int);
 extern void GuiTextWidget_SetText(V456*, char*, int);
@@ -25,7 +25,7 @@ extern "C" void GuiStartMenuBackdrop_Init(void* w) {
     p = GuiWidget_FindChildByName(w, "value_agentname");
     p = (p && p->v20(D_004A7520)) ? p : 0;
     if (p) {
-        char* s = AgentData_GetName(Agent_GetSelected(D_004FFB50, -1));
+        char* s = AgentData_GetName(Agent_GetSelected(g_Game, -1));
         GuiTextWidget_SetText(p, s ? s : D_004C1A38, 0);
     }
 }

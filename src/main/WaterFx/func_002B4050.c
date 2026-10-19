@@ -36,7 +36,7 @@ typedef struct G {
     int f10; int pad14[4]; int f24; int f28; int pad2C[3]; int f38; int f3C; int pad40[2]; void* f48; int pad4C[33]; int fD0; int padD4; long long fD8;
 } G;
 extern G D_00539210;
-extern char D_005381F0[];
+extern char g_Video[];
 extern long long D_005381F8;
 extern long long D_004BC1B0;
 void Renderer_BindTexture(void* m, int idx);
@@ -52,11 +52,11 @@ void Renderer_FlushBatch(void* s);
 #define D_00539228 (D_00539210.f28)
 #define D_00539238 (D_00539210.f38)
 #define D_0053923C (D_00539210.f3C)
-#define D_00539248 (D_00539210.f48)
-#define D_005392D0 (D_00539210.fD0)
+#define g_TextureMgr (D_00539210.f48)
+#define g_DrawMode (D_00539210.fD0)
 #define D_005392D8 (D_00539210.fD8)
 
-#define RS ((Rs*)D_005381F0)
+#define RS ((Rs*)g_Video)
 
 struct V4c {
     float x, y, z, w;
@@ -121,7 +121,7 @@ static inline void Emit(const V4& pos, const V4c& col, const V4c& uv)
     V4 tmp;
     Ent* e;
     float u;
-    func_0025CA40(D_005381F0);
+    func_0025CA40(g_Video);
     e = &RS->ents[D_00539210.f10];
     Vec4_Copy(&e->pos[D_00539224 - 1], &pos);
     GuiBatch_AddVertexColor(&e->c30[D_00539224 - 1], (const V4*)&col);
@@ -129,8 +129,8 @@ static inline void Emit(const V4& pos, const V4c& col, const V4c& uv)
     Vec4_Copy(&e->c34[D_00539224 - 1], Vec4_Set(&tmp, u, uv.y + GuiBatch_AddVertexUV(), uv.z, uv.w));
     D_005381F8 = 6LL << 32;
 }
-static inline unsigned char Prim(void) { if (D_005392D0 & 1) return 3; return 2; }
-static inline int Mode(void) { if (D_005392D0 & 1) return 0x41; return 0x62; }
+static inline unsigned char Prim(void) { if (g_DrawMode & 1) return 3; return 2; }
+static inline int Mode(void) { if (g_DrawMode & 1) return 0x41; return 0x62; }
 
 static inline void AddX(V4* out, const V4c& a0, const V4& b0, const V4c*& a, const V4*& b, V4*& pr, const V4*& sp, V4*& o)
 {
@@ -151,7 +151,7 @@ extern "C" void WaterFx_RenderSplash(Splash* s)
     { float z = 0.0f; if (z == *(volatile float*)&s->t) return; }
     { float k = 0.14f; a = k * s->t; }
     if (a <= 0.0078125f) return;
-    Renderer_BindTexture(D_00539248, s->tex);
+    Renderer_BindTexture(g_TextureMgr, s->tex);
     D_005392D8 = D_004BC1B0;
     { float k = (5.0f - s->t) / 5.0f; r = s->r20 + k * s->r24; }
     V4 c0, c1, c2, c3;
@@ -169,13 +169,13 @@ extern "C" void WaterFx_RenderSplash(Splash* s)
     e->c2C += D_00539224;
     e->c30 += D_00539224;
     e->c34 += D_00539224;
-    func_0025CD10(D_005381F0);
+    func_0025CD10(g_Video);
     D_00539224 = 0;
     Emit(c0, V4c(1.0f, 1.0f, 1.0f, a), V4c(0.0f, 1.0f, 1.0f, 0.0f));
     Emit(c1, V4c(1.0f, 1.0f, 1.0f, a), V4c(0.0f, 0.0f, 1.0f, 0.0f));
     Emit(c2, V4c(1.0f, 1.0f, 1.0f, a), V4c(1.0f, 1.0f, 1.0f, 0.0f));
     Emit(c3, V4c(1.0f, 1.0f, 1.0f, a), V4c(1.0f, 0.0f, 1.0f, 0.0f));
-    Renderer_FlushBatch(D_005381F0);
+    Renderer_FlushBatch(g_Video);
 }
 
 

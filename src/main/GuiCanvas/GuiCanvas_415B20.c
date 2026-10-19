@@ -70,14 +70,14 @@ struct W { char pad0[0x14]; unsigned short flags; char pad16[0x44 - 0x16]; Draw*
 struct Self { char pad0[0x14]; unsigned short flags; char pad16[0x28 - 0x16]; char children[0xC]; };
 
 extern "C" {
-extern char D_005381F0[];
+extern char g_Video[];
 extern int D_00538318;
 extern long long D_004BC1B0;
 extern long long D_005392D8;
 extern int D_00538C60;
 extern int D_00538C64;
 extern char D_00538C68;
-extern int D_005392D0;
+extern int g_DrawMode;
 void List_Begin(LIt* out, void* list);
 void func_0028C0B0(LIt* out, LIt* in);
 void func_0028C0A0(LIt* out, void* list);
@@ -85,8 +85,8 @@ void func_0028C090(LIt* out, LIt* in);
 void func_0037A1E0(char* r);
 }
 
-#define SlotAt(i) ((Slot*)(D_005381F0 + 0x1F0 + (i) * 0x110))
-static inline Mtx* MtxAt(int i) { return &((Render*)D_005381F0)->mtx[i]; }
+#define SlotAt(i) ((Slot*)(g_Video + 0x1F0 + (i) * 0x110))
+static inline Mtx* MtxAt(int i) { return &((Render*)g_Video)->mtx[i]; }
 static inline void GQR(void* d, void* s) { __int128 qa, qb; __asm__ volatile("lq %0, 0x0(%3); lq %1, 0x10(%3); sq %0, 0x0(%2); lq %0, 0x20(%3); sq %1, 0x10(%2); lq %1, 0x30(%3); sq %0, 0x20(%2); sq %1, 0x30(%2)" : "=&r"(qa), "=&r"(qb) : "r"(d), "r"(s) : "memory"); }
 static inline void UM(void* p) { int t; __asm__ volatile("sqc2 $vf0, 0x30(%1); qmfc2.ni %0, $vf0; pcpyud %0, %0, $zero; sq %0, 0x10(%1); pexcw %0, %0; sq %0, 0x20(%1); pcpyud %0, %0, $zero; sq %0, 0x0(%1)" : "=&r"(t) : "r"(p) : "memory"); }
 static inline void MM(void* d, void* a, void* b)
@@ -109,7 +109,7 @@ extern "C" void GuiFrontendCanvas_Draw(Self* self)
         D_00538C64++;
         UM(MtxAt(D_00538C64));
         D_00538C68 = 1;
-        save = D_005392D0;
+        save = g_DrawMode;
         {
             Slot* s = SlotAt(D_00538C60);
             s->fF0 = 0.0f;
@@ -123,16 +123,16 @@ extern "C" void GuiFrontendCanvas_Draw(Self* self)
         m.m[12] = 0.0f; m.m[13] = 0.0f; m.m[14] = 1.0f; m.m[15] = 1.0f;
         { Mtx* c = MtxAt(D_00538C64); MM(c, c, &m); }
         D_00538C68 = 1;
-        D_005392D0 = save | 4;
+        g_DrawMode = save | 4;
         List_Begin(&beginTmp, self->children);
         func_0028C0B0(&first, &beginTmp);
         for (it = first; func_0028C0A0(&endTmp, self->children), func_0028C090(&last, &endTmp), it.node != last.node; it.node = it.node->next) {
             if (it.node->value->flags & 2) {
-                func_0037A1E0(D_005381F0);
+                func_0037A1E0(g_Video);
                 it.node->value->d->Paint();
             }
         }
-        D_005392D0 = save;
+        g_DrawMode = save;
         D_00538C68 = 1;
         D_00538C64--;
     }

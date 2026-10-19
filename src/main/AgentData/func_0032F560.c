@@ -7,7 +7,7 @@
 #include "AgentData_types.h"
 
 extern unsigned char AgentData_IsObjectiveComplete(cAgentData* agent, int key);
-extern int D_0049D010;
+extern int g_HumanActorClassKey;
 extern AgentGObj* GObj_IdentityB(int handle);
 extern unsigned char Global_IsObjectiveComplete(AgentGObj* gobj, int key);
 extern unsigned char cAgentData_HasBonusLevel(cAgentData* agent, int level);
@@ -38,7 +38,7 @@ int Script_IsObjectiveComplete(AgentScriptArg* args) {
 
 /* Queries the agent data of an object of the agent class; other objects report false. */
 unsigned char Global_IsObjectiveComplete(AgentGObj* gobj, int key) {
-    if (gobj->classKey == D_0049D010) {
+    if (gobj->classKey == g_HumanActorClassKey) {
         return AgentData_IsObjectiveComplete(Player_GetAgentData(gobj), key);
     }
     return 0;

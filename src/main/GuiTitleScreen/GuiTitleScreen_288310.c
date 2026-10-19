@@ -19,10 +19,10 @@ typedef struct {
 } Self288310;
 
 extern unsigned char D_00506330;
-extern Mgr288310 D_0055A830;
+extern Mgr288310 g_MemCard;
 extern void* D_004FFC04;
-extern int D_004FFBBC;
-extern char D_004FFB50[];
+extern int g_CardSlotId;
+extern char g_Game[];
 extern char D_004A95F0[];
 extern char D_004A9600[];
 extern char D_004A9610[];
@@ -51,7 +51,7 @@ void GuiTitleScreen_CheckMemCard(Self288310* self, int force)
     if (D_00506330 && !force)
         return;
     D_00506330 = 1;
-    m = &D_0055A830;
+    m = &g_MemCard;
     MemCard_Refresh(m);
     if (!GuiTitleScreen_SavedAgentExists()) {
         if (!m->cfg->x59D) {
@@ -60,7 +60,7 @@ void GuiTitleScreen_CheckMemCard(Self288310* self, int force)
             self->x50 = FrontEnd_OpenPopup(ui, 4, a, Loc_LookupText(D_004A9600), self, 1);
         } else if (m->cfg->x59E) {
             int have = m->cfg->x5A4;
-            int need = MemCard_GetSpaceNeeded(m, AgentData_GetSaveSize(Agent_GetSelected(D_004FFB50, -1)));
+            int need = MemCard_GetSpaceNeeded(m, AgentData_GetSaveSize(Agent_GetSelected(g_Game, -1)));
             if (have < need) {
                 char* text;
                 char* p;
@@ -80,9 +80,9 @@ void GuiTitleScreen_CheckMemCard(Self288310* self, int force)
                 ui = D_004FFC04;
                 self->x50 = FrontEnd_OpenPopup(ui, 4, Loc_LookupText(D_004A95F0), buf, self, 1);
             } else {
-                D_004FFBBC = m->cfg->x5A8;
+                g_CardSlotId = m->cfg->x5A8;
             }
         }
     }
-    D_004FFBBC = m->cfg->x5A8;
+    g_CardSlotId = m->cfg->x5A8;
 }

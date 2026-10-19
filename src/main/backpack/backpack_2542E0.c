@@ -50,9 +50,9 @@ struct Bp {
     Hnd h;
 };
 extern "C" {
-extern char D_004FFB50[];
-extern char D_004EA0B0[];
-extern char D_005435A0[];
+extern char g_Game[];
+extern char g_LosCheckService[];
+extern char g_LosRequestMsgClass[];
 extern char D_004D9180[];
 Svc* Service_Lookup(void* a, void* b);
 void Event_Construct(void* m, void* type);
@@ -76,7 +76,7 @@ extern "C" void cBackpack_v10(Bp* self)
                 V dir(0.0f, 0.0f, -5.0f, 1.0f);
                 RayMsg msg;
                 RayMsg* m = &msg;
-                Event_Construct(m, D_005435A0);
+                Event_Construct(m, g_LosRequestMsgClass);
                 m->vt = D_004D9180;
                 m->f24 = 0;
                 m->f28 = 0;
@@ -89,7 +89,7 @@ extern "C" void cBackpack_v10(Bp* self)
                 m->b5C = 0;
                 m->start.w = 1.0f;
                 m->end.w = 0.0f;
-                Service_Lookup(D_004FFB50, D_004EA0B0)->Send(&msg);
+                Service_Lookup(g_Game, g_LosCheckService)->Send(&msg);
                 if (res.hit) {
                     V d = *(V*)&res.pos - start;
                     self->OnHit(d);
@@ -122,8 +122,8 @@ struct Ev_00254600 { char pad[0x30]; int id; };
 struct Msg_00254600 { void* vtable; char pad4[0x1C]; signed char b20; char pad21[3]; signed char b24; char pad25[3]; void* bp; int id; };
 struct Bp_00254600 { char pad0[0xC]; int net; char pad10[0x2F3 - 0x10]; unsigned char b2F3; char pad2F4[0x308 - 0x2F4]; int owner; char pad30C[8]; float f314; };
 extern "C" {
-extern unsigned char D_005721C8;
-extern int D_004F5440;
+extern unsigned char g_IsMultiplayer;
+extern int g_TriggerMsgKey;
 extern char D_005061B0[];
 extern char D_004DCEF0[];
 extern char D_004DCF10[];
@@ -136,7 +136,7 @@ int Object_HandleMessage(Bp_00254600* b, Ev_00254600* ev);
 extern "C" int cBackpack_v01(Bp_00254600* bp, Ev_00254600* ev)
 {
     int t = *Event_GetType(ev);
-    if (t == D_004F5440) {
+    if (t == g_TriggerMsgKey) {
         int id = ev->id;
         Ctl_00254600* c = Object_LookupById(&id)->ctl;
         if (c && c->IsActive() && ((CtlObj_00254600*)c)->b14) {
@@ -146,7 +146,7 @@ extern "C" int cBackpack_v01(Bp_00254600* bp, Ev_00254600* ev)
                     Player_HandlePickupTrigger(c, bp);
                 }
             } else {
-                if (D_005721C8) {
+                if (g_IsMultiplayer) {
                     Msg_00254600 m;
                     Event_Construct(&m, D_005061B0);
                     m.id = who;

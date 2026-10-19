@@ -17,7 +17,7 @@
  */
 
 
-extern char D_004FFB50[]; /* world object */
+extern char g_Game[]; /* world object */
 extern int Global_RequestLevelEnd(void);
 extern int Game_EndLevel(char* world, int);
 
@@ -27,7 +27,7 @@ int Script_RequestLevelEnd(void) {
 }
 
 int Global_RequestLevelEnd(void) {
-    return Game_EndLevel(D_004FFB50, 0);
+    return Game_EndLevel(g_Game, 0);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0012F9A0(void) {}

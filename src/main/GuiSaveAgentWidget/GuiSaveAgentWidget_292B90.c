@@ -20,7 +20,7 @@ extern char D_004A9CE8[];
 extern char D_004A9D38[];
 extern char D_004A9D48[];
 extern char D_004A9D58[];
-extern char D_004FFB50[];
+extern char g_Game[];
 extern Mgr_00292B90* D_004FFC04;
 extern char D_00493A60;
 extern Blk_00292B90 D_0055D510;
@@ -67,7 +67,7 @@ extern "C" int GuiAgentLoad_HandleEvent(void* self, Obj_00292B90* o, int msg)
         o = p;
         if (o) {
             int id = atoi(String_CStr(&o->s4));
-            Agent_00292B90* ag = (Agent_00292B90*)Agent_GetSelected(D_004FFB50, -1);
+            Agent_00292B90* ag = (Agent_00292B90*)Agent_GetSelected(g_Game, -1);
             unsigned char r = AgentData_Load(ag, String_CStr(&o->s48), id);
             if (r == 0) {
                 void* pg;

@@ -71,13 +71,13 @@ public:
 struct Slot { int a; int b; int id; int c; };
 struct Self { Slot slots[8]; int pad80; unsigned char cur; char pad85[3]; Actor* actor; };
 extern "C" {
-extern void* D_004FFD30;
-extern char D_004FFB50[];
-extern char D_004EA0B0[];
-extern unsigned char D_00489DA0;
-extern int D_0049D010[];
+extern void* g_WeaponDatabase;
+extern char g_Game[];
+extern char g_LosCheckService[];
+extern unsigned char g_DoKnifeDmg;
+extern int g_HumanActorClassKey[];
 }
-static inline int Team() { int* p = D_0049D010; return *p; }
+static inline int Team() { int* p = g_HumanActorClassKey; return *p; }
 extern "C" {
 char* WeaponDb_Get(void* db, int id);
 void* Service_Lookup(void* a, void* b);
@@ -95,14 +95,14 @@ extern "C" void Melee_ApplyHit(Self* self, Actor* target, int heavy)
 {
     int extra;
     if (self->cur != 5) return;
-    unsigned char* w = (unsigned char*)WeaponDb_Get(D_004FFD30, ((Slot*)((char*)self + (self->cur << 4)))->id);
+    unsigned char* w = (unsigned char*)WeaponDb_Get(g_WeaponDatabase, ((Slot*)((char*)self + (self->cur << 4)))->id);
     unsigned char t = w[0xF0];
     if (t != 3 && t != 4 && t != 0xA) return;
-    if (!D_00489DA0) return;
+    if (!g_DoKnifeDmg) return;
     if (CtrlBusy(target)) return;
     V from(self->actor->GetPos());
     V d(Sub(target->GetPos(), from));
-    void* mgr = Service_Lookup(D_004FFB50, D_004EA0B0);
+    void* mgr = Service_Lookup(g_Game, g_LosCheckService);
     Hit hit;
     Query q;
     if ((unsigned char)LosMgr_TraceBullet(mgr, &hit, &q, &from, d, 0, 0, 0, 0x58, 0, 0, 0)) return;
@@ -113,7 +113,7 @@ extern "C" void Melee_ApplyHit(Self* self, Actor* target, int heavy)
         if (target->w4C != Team()) return;
         if (((unsigned char*)target)[0x346A]) return;
         if (CtrlBusy(self->actor) && ((unsigned char*)self->actor)[0x14] && !Actor_IsInvulnerable(target))
-            Stats_Add(Agent_GetSelected(D_004FFB50, -1), 6, 1);
+            Stats_Add(Agent_GetSelected(g_Game, -1), 6, 1);
         Global_ShockToDeath(target, 0, 1, 0.5f, 10000.0f);
         return;
     }
@@ -156,8 +156,8 @@ struct Own_1CD0 { char pad[0x58]; R_1CD0* recv; char pad5C[4]; char equip[4]; };
 struct W_1CD0 { char pad[0x13C]; int slot; };
 struct S_1CD0 { int pad0; Slot_1CD0 slots[8]; unsigned char cur; char pad85[3]; Own_1CD0* own; char pad8C[0x63]; unsigned char busy; };
 extern "C" {
-extern unsigned char D_005721C8;
-extern char D_004EA150[];
+extern unsigned char g_IsMultiplayer;
+extern char g_OutOfAmmoMsgClass[];
 extern char D_004D91E0[];
 #if 0 /* merge_units */
 W_1CD0* WeaponDb_Get(void* db, int id);
@@ -178,17 +178,17 @@ extern "C" void Inventory_ReleaseItem(S_1CD0* self)
         unsigned char local;
         R_1CD0* r;
         if (s->count > 0) {
-            Equip_SetSlot(self->own->equip, 0, WeaponDb_Get(D_004FFD30, s->id)->slot);
+            Equip_SetSlot(self->own->equip, 0, WeaponDb_Get(g_WeaponDatabase, s->id)->slot);
             return;
         }
         local = 0;
         r = self->own->recv;
         if (r && r->IsLocal())
             local = 1;
-        if (local && !D_005721C8) {
+        if (local && !g_IsMultiplayer) {
             int id = s->id;
             Ev_1CD0 e;
-            Event_Construct(&e, D_004EA150);
+            Event_Construct(&e, g_OutOfAmmoMsgClass);
             e.id = id;
             e.vt = D_004D91E0;
             Event_Send(&e, self->own->recv, 0);

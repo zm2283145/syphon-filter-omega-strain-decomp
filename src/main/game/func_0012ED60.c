@@ -4,7 +4,7 @@ int NetGame_InitLocalSlot(int*, int);
 int PlayerSlots_Get(int);
 unsigned int D_00494178[2] = { 0xFFFFFFFF, 0x0 };
 extern int D_005721A8;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 int Game_RemotePlayersReady(int arg0)
 {
     int i;
@@ -12,7 +12,7 @@ int Game_RemotePlayersReady(int arg0)
     do {
         int v;
         int a = D_005721A8; /* read before the flag test: retail loads it ahead of the branch */
-        if (D_005721C8) {
+        if (g_IsMultiplayer) {
             if ((*(int*)D_00494178) == -1) NetGame_InitLocalSlot(&(*(int*)D_00494178), a);
             v = (*(int*)D_00494178);
         } else v = 0;

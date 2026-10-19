@@ -22,8 +22,8 @@
 #ifdef __cplusplus
 
 extern "C" {
-extern unsigned char D_00533880; /* allocator locking enabled */
-extern int D_00533888;           /* allocator lock depth */
+extern unsigned char g_ProfileLockEnabled; /* allocator locking enabled */
+extern int g_ProfileLockDepth;           /* allocator lock depth */
 void Alloc_Lock(int id);
 void Alloc_Unlock(int id);
 }
@@ -32,13 +32,13 @@ void Alloc_Unlock(int id);
 
 struct AllocGuard {
     AllocGuard() {
-        if (D_00533880) Alloc_Lock(9);
-        D_00533888++;
+        if (g_ProfileLockEnabled) Alloc_Lock(9);
+        g_ProfileLockDepth++;
     }
     /* order matters: weak first, then the section */
     __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~AllocGuard() {
-        if (D_00533880) Alloc_Unlock(9);
-        D_00533888--;
+        if (g_ProfileLockEnabled) Alloc_Unlock(9);
+        g_ProfileLockDepth--;
     }
 };
 

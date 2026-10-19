@@ -146,7 +146,7 @@ extern void IeElement_SetPosition(int h, V3E97D0* v);
 #endif /* merge_units */
 #define IeElement_SetPosition(a0, a1) (IeElement_SetPosition((a0), (void *)(a1))) /* merge_units */
 
-extern W3E97D0 D_005381F0;
+extern W3E97D0 g_Video;
 extern int D_00538C60;
 #pragma push
 #pragma opt_common_subs off
@@ -157,7 +157,7 @@ void HudTracker_Draw(S3E97D0* s)
     unsigned char neg;
     HudTracker_ToCameraSpace(&s->dir);
     neg = s->dir.y < 0.0f;
-    Renderer_ProjectToScreen(&t, D_005381F0.cams[D_00538C60].mtx, &s->dir);
+    Renderer_ProjectToScreen(&t, g_Video.cams[D_00538C60].mtx, &s->dir);
     {
         V3E97D0* d = &s->dir;
         V3E97D0* q = &t;

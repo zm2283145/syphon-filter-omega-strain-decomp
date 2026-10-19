@@ -47,7 +47,7 @@ typedef struct G {
     int f10; int pad14[3]; int f20; int f24; int f28; int* f2C; int f30; int f34; int f38; int f3C; int pad40[2]; void* f48; int pad4C[33]; int fD0; int padD4; long long fD8;
 } G;
 extern G D_00539210;
-extern char D_005381F0[];
+extern char g_Video[];
 extern long long D_005381F8;
 extern int D_00538C64;
 extern char D_00538C68;
@@ -69,11 +69,11 @@ V* Vec4_Set(V* o, float x, float y, float z, float w);
 #define D_00539234 (D_00539210.f34)
 #define D_00539238 (D_00539210.f38)
 #define D_0053923C (D_00539210.f3C)
-#define D_00539248 (D_00539210.f48)
-#define D_005392D0 (D_00539210.fD0)
+#define g_TextureMgr (D_00539210.f48)
+#define g_DrawMode (D_00539210.fD0)
 #define D_005392D8 (D_00539210.fD8)
 
-#define RS ((Rs*)D_005381F0)
+#define RS ((Rs*)g_Video)
 
 static inline void QR(void* d, void* s) { __int128 qa, qb; __asm__ volatile("lq %0, 0x0(%3); lq %1, 0x10(%3); sq %0, 0x0(%2); lq %0, 0x20(%3); sq %1, 0x10(%2); lq %1, 0x30(%3); sq %0, 0x20(%2); sq %1, 0x30(%2)" : "=&r"(qa), "=&r"(qb) : "r"(d), "r"(s) : "memory"); }
 static inline void MulM(void* d, const void* m) { __asm__ volatile("lqc2 vf4, 0x0(%0); lqc2 vf5, 0x10(%0); lqc2 vf6, 0x20(%0); lqc2 vf7, 0x30(%0); lqc2 vf8, 0x0(%1); lqc2 vf9, 0x10(%1); lqc2 vf10, 0x20(%1); lqc2 vf11, 0x30(%1); vmulax.xyzw ACC, vf4, vf8x; vmadday.xyzw ACC, vf5, vf8y; vmaddaz.xyzw ACC, vf6, vf8z; vmaddw.xyzw vf12, vf7, vf8w; vmulax.xyzw ACC, vf4, vf9x; vmadday.xyzw ACC, vf5, vf9y; vmaddaz.xyzw ACC, vf6, vf9z; vmaddw.xyzw vf13, vf7, vf9w; vmulax.xyzw ACC, vf4, vf10x; vmadday.xyzw ACC, vf5, vf10y; vmaddaz.xyzw ACC, vf6, vf10z; vmaddw.xyzw vf14, vf7, vf10w; vmulax.xyzw ACC, vf4, vf11x; vmadday.xyzw ACC, vf5, vf11y; vmaddaz.xyzw ACC, vf6, vf11z; vmaddw.xyzw vf15, vf7, vf11w; sqc2 vf12, 0x0(%0); sqc2 vf13, 0x10(%0); sqc2 vf14, 0x20(%0); sqc2 vf15, 0x30(%0)" : : "r"(d), "r"(m) : "memory"); }
@@ -81,8 +81,8 @@ static inline void Xform(V* d, const Mtx* m) { __asm__ volatile("lqc2 vf8, 0x0(%
 static inline V operator*(const Mtx& m, const V& v) { V t = v; const V* pt = &t; Xform((V*)pt, &m); return V(pt, 0); }
 static inline void MulV(V* d, const Mtx& m, const V& v) { V t = v; const V* pt = &t; Xform((V*)pt, &m); { V* dd = d; const V* ss = pt; __int128 q; __asm__ volatile("lq %0, 0x0(%2); sq %0, 0x0(%1)" : "=&r"(q), "+r"(dd) : "r"(ss) : "memory"); } }
 
-static inline unsigned char Prim(void) { if (D_005392D0 & 1) return 3; return 2; }
-static inline int Mode(void) { if (D_005392D0 & 1) return 0x41; return 0x62; }
+static inline unsigned char Prim(void) { if (g_DrawMode & 1) return 3; return 2; }
+static inline int Mode(void) { if (g_DrawMode & 1) return 0x41; return 0x62; }
 static inline void Begin(void)
 {
     Ent* e;
@@ -95,7 +95,7 @@ static inline void Begin(void)
     e->c2C += D_00539224;
     e->c30 += D_00539224;
     e->c34 += D_00539224;
-    func_0025CD10(D_005381F0);
+    func_0025CD10(g_Video);
     D_00539224 = 0;
 }
 static inline void Emit(const V& pos, const V& col, const V& uv)
@@ -103,7 +103,7 @@ static inline void Emit(const V& pos, const V& col, const V& uv)
     V tmp;
     Ent* e;
     float u;
-    func_0025CA40(D_005381F0);
+    func_0025CA40(g_Video);
     e = &RS->ents[D_00539210.f10];
     Vec4_Copy(&e->pos[D_00539224 - 1], &pos);
     GuiBatch_AddVertexColor(&e->c30[D_00539224 - 1], &col);
@@ -121,7 +121,7 @@ static inline bool EndStrip(void)
         } else {
 
             if (D_00539220 > 0) D_0053922C[D_00539220 - 1] = D_00539230;
-            { int v; int j; Strip** pc; Strip* s; v = D_00539238 - 1; s = ((Strip**)(D_005381F0 + 0xFD4))[D_00539210.f10 * 14] + D_00539220; j = 0; for (; j < 12; j++) s->idx[j] = v; }
+            { int v; int j; Strip** pc; Strip* s; v = D_00539238 - 1; s = ((Strip**)(g_Video + 0xFD4))[D_00539210.f10 * 14] + D_00539220; j = 0; for (; j < 12; j++) s->idx[j] = v; }
             D_00539230 = 0;
             D_00539234 = 0;
             D_00539228++;
@@ -140,8 +140,8 @@ extern "C" void DecalMgr_Draw(Arg* a)
     int i;
     bool first;
     V col;
-    saved = D_005392D0;
-    D_005392D0 = 0x400005;
+    saved = g_DrawMode;
+    g_DrawMode = 0x400005;
     Begin();
     tex = -1;
     first = true;
@@ -176,11 +176,11 @@ extern "C" void DecalMgr_Draw(Arg* a)
             if (!c1 && b == blend) c2 = 0;
             if (!c2 && it->obj == obj) c3 = 0;
             if (c3 != false) {
-                Renderer_FlushBatch(D_005381F0);
+                Renderer_FlushBatch(g_Video);
                 Begin();
                 if (tex != it->tex) {
                     tex = it->tex;
-                    Renderer_BindTexture(D_00539248, tex);
+                    Renderer_BindTexture(g_TextureMgr, tex);
                 }
                 if (b != blend) {
                     blend = b;
@@ -218,11 +218,11 @@ extern "C" void DecalMgr_Draw(Arg* a)
         }
         first = !EndStrip();
     }
-    Renderer_FlushBatch(D_005381F0);
+    Renderer_FlushBatch(g_Video);
     if (obj) {
         D_00538C64--;
         D_00538C68 = 1;
     }
-    D_005392D0 = saved;
+    g_DrawMode = saved;
     D_005392D8 = D_004BC1B0[0];
 }

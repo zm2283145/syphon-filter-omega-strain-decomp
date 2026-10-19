@@ -16,7 +16,7 @@ typedef struct {
     Aux_286570* aux;
 } Turret_286570;
 extern unsigned char D_005721C0;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern unsigned char cTurret_Aim(Turret_286570* t, float dt);
 extern void cTank_Fire(Turret_286570* t, Target_286570* tgt, unsigned char valid, unsigned char r);
 }
@@ -39,7 +39,7 @@ struct Obj_286570 {
 };
 struct Own_286570 { Obj_286570* obj; };
 static inline bool Null_286570(void* p) { return !p; }
-static inline int Flag_286570(void) { return D_005721C8 ? D_005721C0 : 1; }
+static inline int Flag_286570(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
 
 extern "C" int func_00286570(Own_286570* self)
 {
@@ -58,7 +58,7 @@ extern "C" void func_00286590(Turret_286570* t, float dt)
     if (!Null_286570(tgt) && tgt->id != t->targetId) valid = 0;
     tgt = valid ? tgt : 0;
     if (tgt && !t->busy && r && t->cooldown <= 0.0f) {
-        if (!D_005721C8 || Flag_286570() || !(t->aux->f <= 1.0f))
+        if (!g_IsMultiplayer || Flag_286570() || !(t->aux->f <= 1.0f))
             cTank_Fire(t, tgt, valid, r);
     }
 }

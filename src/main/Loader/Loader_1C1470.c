@@ -216,7 +216,7 @@ typedef struct G4PopReader {
     unsigned int base;
     int* cur;
 } G4PopReader;
-extern char D_00535D20[];
+extern char g_LightMgr[];
 extern void* App_GetInstance(void);
 #if 0 /* merge_units */
 extern void func_00165E60(void* h, void* s, int f);
@@ -249,16 +249,16 @@ void Loader_AllocateLights(void* level, G4PopReader* r)
     }
     n = *r->cur;
     r->cur++;
-    LightMgr_AllocPool(D_00535D20, 16, n);
+    LightMgr_AllocPool(g_LightMgr, 16, n);
     G4_Align(r);
     if (!(unsigned char)Pop_FindTag(r, 0x3A524944)) {
         return;
     }
     n = *r->cur;
     r->cur++;
-    LightMgr_AllocPool(D_00535D20, 2, n);
-    LightMgr_AllocPool(D_00535D20, 4, 0x18);
-    LightMgr_AllocPool(D_00535D20, 1, 1);
+    LightMgr_AllocPool(g_LightMgr, 2, n);
+    LightMgr_AllocPool(g_LightMgr, 4, 0x18);
+    LightMgr_AllocPool(g_LightMgr, 1, 1);
 }
 #undef func_00165E60 /* merge_units */
 #undef Pop_FindTag /* merge_units */
@@ -274,7 +274,7 @@ struct PopReader_1C1B60 { int unk0; int size; unsigned int base; char* cur; };
 struct Sky_1C1B60 { char pad[0x90]; int count; };
 extern "C" {
 extern char D_0048B2F8[];
-extern char D_004FFC90[];
+extern char g_LevelDirName[];
 #if 0 /* merge_units */
 int Pop_FindTag(PopReader_1C1B60* r, int tag);
 #endif /* merge_units */
@@ -290,7 +290,7 @@ extern "C" void Loader_InitSkybox(void* a0, void* a1, PopReader_1C1B60* r, void*
         int h;
         int n;
         func_00165E60(App_GetInstance(), "Initializing Skybox...", 0);
-        sprintf(name, "%s\\%s\\TEX.HOG", D_0048B2F8, D_004FFC90, D_004FFC90);
+        sprintf(name, "%s\\%s\\TEX.HOG", D_0048B2F8, g_LevelDirName, g_LevelDirName);
         h = Archive_Open(arc, name, 0, 0);
         n = *(int*)r->cur;
         r->cur += 4;

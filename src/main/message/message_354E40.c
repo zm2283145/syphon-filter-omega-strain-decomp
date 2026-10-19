@@ -28,7 +28,7 @@ extern "C" {
 extern char D_004BB088[];
 static char* D_00492C48 = D_004BB088;
 extern char D_004A7520[];
-extern char D_004FFB50[];
+extern char g_Game[];
 extern const char* D_0048C160[];
 void String_CtorCStr_13B480(Str4E40* s, const char* text);
 void func_0013D680(void* dst, Str4E40* s);
@@ -70,7 +70,7 @@ void GuiPersonnelMenu_Setup(O4E40* self, const char* a, const char* b, unsigned 
     self->f90 = d;
     w = Cast(GuiWidget_FindChildByName(self, D_00492C48), D_004A7520);
     if (w) {
-        void* ag = Agent_GetSelected(D_004FFB50, -1);
+        void* ag = Agent_GetSelected(g_Game, -1);
         if (self->kind != 6) {
             L4E40 l;
             func_00296FA0(&l);

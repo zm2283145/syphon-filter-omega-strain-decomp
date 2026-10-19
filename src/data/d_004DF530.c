@@ -24,7 +24,7 @@ extern void func_003678E0();
 extern void func_003679D0();
 extern void func_0041F210();
 
-void *D_004DF530[24] = {
+void *GuiAgentDisplay_vtable[24] = {
     0, 0, &func_00365260, &GuiAgentDisplay_Init,
     &GuiAgentDisplay_Deinit, &GuiWidget_SetFlag4, &GuiWidget_ClearFlag4, &GuiAgentDisplay_Wake,
     &GuiWidget_BaseSleep, &GuiWidget_BubbleType0, &GuiWidget_BubbleType1, &func_00293950,

@@ -181,7 +181,7 @@ typedef struct G_00399080 {
     int f10; int pad14[3]; int f20; int f24; int f28; int* f2C; int f30; int f34; int f38; int f3C; int pad40[2]; void* f48; int pad4C[33]; int fD0; int padD4; long long fD8;
 } G_00399080;
 extern G_00399080 D_00539210;
-extern char D_005381F0[];
+extern char g_Video[];
 extern long long D_005381F8;
 extern long long D_004BC1B0[];
 extern char D_0053B540[];
@@ -213,14 +213,14 @@ void* ParticleDefs_SlotForId(void* self, int n);
 #define D_00539234 (D_00539210.f34)
 #define D_00539238 (D_00539210.f38)
 #define D_0053923C (D_00539210.f3C)
-#define D_00539248 (D_00539210.f48)
-#define D_005392D0 (D_00539210.fD0)
+#define g_TextureMgr (D_00539210.f48)
+#define g_DrawMode (D_00539210.fD0)
 #define D_005392D8 (D_00539210.fD8)
 
-#define RS ((Rs_00399080*)D_005381F0)
+#define RS ((Rs_00399080*)g_Video)
 
-static inline unsigned char Prim(void) { if (D_005392D0 & 1) return 3; return 2; }
-static inline int Mode(void) { if (D_005392D0 & 1) return 0x41; return 0x62; }
+static inline unsigned char Prim(void) { if (g_DrawMode & 1) return 3; return 2; }
+static inline int Mode(void) { if (g_DrawMode & 1) return 0x41; return 0x62; }
 
 static inline void Begin(void)
 {
@@ -234,19 +234,19 @@ static inline void Begin(void)
     e->c2C += D_00539224;
     e->c30 += D_00539224;
     e->c34 += D_00539224;
-    func_0025CD10(D_005381F0);
+    func_0025CD10(g_Video);
     D_00539224 = 0;
 }
 static inline void Flush(int& n)
 {
-    func_00371170(D_005381F0);
+    func_00371170(g_Video);
     Begin();
     n = 0;
 }
 static inline void EmitC(const V4& pos, const V4& col)
 {
     Ent_00399080* e;
-    func_0025CA40(D_005381F0);
+    func_0025CA40(g_Video);
     e = &RS->ents[D_00539210.f10];
     Vec4_Copy(&e->pos[D_00539224 - 1], &pos);
     GuiBatch_AddVertexColor(&e->c30[D_00539224 - 1], &col);
@@ -263,7 +263,7 @@ static inline V4* UVW1(const V4& uv) { return UVW0(uv); }
 static inline void Emit(V4 pos, const V4& col, const V4& uv)
 {
     Ent_00399080* e;
-    func_0025CA40(D_005381F0);
+    func_0025CA40(g_Video);
     e = &RS->ents[D_00539210.f10];
     Vec4_Copy(&e->pos[D_00539224 - 1], &pos);
     GuiBatch_AddVertexColor(&e->c30[D_00539224 - 1], &col);
@@ -280,7 +280,7 @@ static inline void Restart(void)
                 D_00539234++;
             } else {
                 if (D_00539220 > 0) D_0053922C[D_00539220 - 1] = D_00539230;
-                { int v; int j; Rec_00399080* s; v = D_00539238 - 1; s = ((Rec_00399080**)(D_005381F0 + 0xFD4))[D_00539210.f10 * 14] + D_00539220; j = 0; for (; j < 12; j++) s->v[j] = v; }
+                { int v; int j; Rec_00399080* s; v = D_00539238 - 1; s = ((Rec_00399080**)(g_Video + 0xFD4))[D_00539210.f10 * 14] + D_00539220; j = 0; for (; j < 12; j++) s->v[j] = v; }
                 D_00539230 = 0;
                 D_00539234 = 0;
                 D_00539228++;
@@ -311,7 +311,7 @@ extern "C" void func_00399080(Self* self)
     if (At(self, 0) == 0) return;
     col.Set(self->info->f140, self->info->f144, self->info->f148, 1.0f);
     D_005392D8 = D_004BC1B0[self->info->f38];
-    D_005392D0 = 5;
+    g_DrawMode = 5;
     n = 0;
     Begin();
     start = 0;
@@ -326,7 +326,7 @@ extern "C" void func_00399080(Self* self)
     if (found) {
         int j;
         c2.Set(0.0f, 0.0f, 0.0f, self->info->f14);
-        Renderer_BindTexture(D_00539248, found->f74);
+        Renderer_BindTexture(g_TextureMgr, found->f74);
         start = self->f6C / 12;
         for (j = 0; j < start; j++) {
             Elem* e = At(self, j);
@@ -345,7 +345,7 @@ extern "C" void func_00399080(Self* self)
         if (n > 0) Flush(n);
     }
     }
-    Renderer_BindTexture(D_00539248, self->info->f74);
+    Renderer_BindTexture(g_TextureMgr, self->info->f74);
     if (self->f130 == 1) {
         c3.Set(0.0f, 0.0f, 0.0f, self->info->f14);
         for (i = start; i < self->f6C; i++) {
@@ -361,7 +361,7 @@ extern "C" void func_00399080(Self* self)
                 }
             }
         }
-        if (n > 0) func_00371170(D_005381F0);
+        if (n > 0) func_00371170(g_Video);
     } else {
         if (!D_0053BB40) {
             D_0053BB40 = 1;
@@ -400,7 +400,7 @@ extern "C" void func_00399080(Self* self)
                 }
             }
         }
-        if (n > 0) Renderer_FlushBatch(D_005381F0);
+        if (n > 0) Renderer_FlushBatch(g_Video);
     }
 }
 

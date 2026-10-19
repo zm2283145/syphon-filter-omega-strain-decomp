@@ -20,11 +20,11 @@ typedef struct { char pad[0x2000]; LightEnt_F4C0 e[1]; } LightTab_F4C0;
 typedef struct { int mode; char pad4[0x194 - 4]; Light_F4C0* skip; char pad198[0x1D4 - 0x198]; int tex[9]; } VisionFx_F4C0;
 
 extern "C" {
-extern char D_00535D20[];
+extern char g_LightMgr[];
 extern int D_00535D70;
 extern LightTab_F4C0* D_00535D74;
 extern float D_004A7DE0[9][4];
-extern char D_005381F0[];
+extern char g_Video[];
 extern int D_004A7E70[];
 extern float D_004A7EA0[];
 void LightMgr_CollectCoronas(void* m, int a, int b, int c);
@@ -60,7 +60,7 @@ extern "C" void VisionFx_DrawCorona(VisionFx_F4C0* fx) {
         alpha = 0.7f;
         break;
     }
-    LightMgr_CollectCoronas(D_00535D20, a, b, c);
+    LightMgr_CollectCoronas(g_LightMgr, a, b, c);
     for (i = 0; i < D_00535D70; i++) {
         l = D_00535D74->e[i].light;
         if (l != fx->skip) {
@@ -78,7 +78,7 @@ extern "C" void VisionFx_DrawCorona(VisionFx_F4C0* fx) {
             flag = (l->aux & 0x10) > 0;
             vflag = l->Flag();
             if (flag) size *= l->SizeFactor();
-            Corona_Draw(D_005381F0, pos, cols, fx->tex, D_004A7E70, D_004A7EA0, n, size, flag, vflag);
+            Corona_Draw(g_Video, pos, cols, fx->tex, D_004A7E70, D_004A7EA0, n, size, flag, vflag);
         }
     }
 }

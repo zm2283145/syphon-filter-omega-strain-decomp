@@ -10,9 +10,9 @@ int* func_00171EA0(PtrVec* v, int i);
 int func_00171EB0(PtrVec* v);
 int** func_00171EC0(PtrVec* v);
 extern unsigned char D_005721C0;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern char D_004DAF10[];
-static inline unsigned char IsLocal_1C90(void) { unsigned char v; if (D_005721C8) v = D_005721C0; else v = 1; return v; }
+static inline unsigned char IsLocal_1C90(void) { unsigned char v; if (g_IsMultiplayer) v = D_005721C0; else v = 1; return v; }
 static inline Leaf_1C90* First_1C90(PtrVec* v) { return func_00171EB0(v) ? (Leaf_1C90*)*func_00171EA0(v, 0) : 0; }
 #pragma push
 #pragma opt_strength_reduction off
@@ -25,7 +25,7 @@ int cHotbox_v43(Obj_1C90* self, int arg)
     for (i = 0; i < self->items.count; i++) {
         Msg_1C90 m;
         cGOBJTriggerEventMsg_ctor(&m, 4, self->f94, arg, self);
-        if (D_005721C8) {
+        if (g_IsMultiplayer) {
             int owned = 0;
             if (self->f94 == -1 && ((Item_1C90*)self->items.data[i])->f49 == 0xE) {
                 Item_1C90* it = (Item_1C90*)(*func_00171EC0(&self->items))[i];

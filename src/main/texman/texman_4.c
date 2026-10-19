@@ -33,16 +33,16 @@ typedef struct TdxMgr {
     char pad0[8];
     TexE** ents;
 } TdxMgr;
-extern int D_005392D0;
+extern int g_DrawMode;
 extern int D_00539250;
 
 void Renderer_BindTexture(TdxMgr* m, int idx)
 {
     TexE* e = m->ents[idx];
-    if (D_005392D0 & 4) {
+    if (g_DrawMode & 4) {
         e->x58 &= ~0x1E0;
         e->x58 |= 0x120;
-    } else if (D_005392D0 & 8) {
+    } else if (g_DrawMode & 8) {
         e->x58 &= ~0x1E0;
         e->x58 |= 0x160;
     } else {

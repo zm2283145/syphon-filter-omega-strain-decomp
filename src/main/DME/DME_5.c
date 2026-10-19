@@ -37,10 +37,10 @@ extern unsigned char g_DmeThreadStopRequest;
 extern bool g_DmeThreadExited;
 extern unsigned char D_00572528;
 extern int D_00572508;
-extern unsigned char D_00533880;
+extern unsigned char g_ProfileLockEnabled;
 extern unsigned char D_005724B0;
 extern int D_005721A8;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005721C0;
 extern char D_00497540;
 extern unsigned char D_005721D8;
@@ -66,7 +66,7 @@ int sprintf(char* d, const char* f, ...);
 }
 static inline int NetTimeMs(void) { int t; return func_002EBC48(&t) == 0 ? t : -1; }
 enum NetRole_A1B0 { ROLE_CLIENT_A1B0, ROLE_HOST_A1B0 };
-static inline int IsHost(void) { return D_005721C8 ? D_005721C0 : 1; }
+static inline int IsHost(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
 /* leaves the game and records "F_TO_JOINGAME" as the disconnect reason */
 static inline void AbortJoin(void)
 {
@@ -108,7 +108,7 @@ extern "C" void DME_JoinGame(void)
     D_00572528 = 0;
     D_00572508 = 0;
     g_DmeThreadExited = 0;
-    D_00533880 = 0;
+    g_ProfileLockEnabled = 0;
     if (D_005724B0 != DME_STATE_JOINED && D_005724B0 != DME_STATE_DISCONNECTED) {
     D_005724B0 = DME_STATE_JOINING;
     name = D_004BFA10;

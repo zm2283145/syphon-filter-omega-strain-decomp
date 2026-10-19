@@ -18,7 +18,7 @@ struct Stack_134110 {
 struct Fader_134110 { float a; float b; };
 extern "C" {
 extern void* D_004FFC04;
-extern Fader_134110* D_004FFC38;
+extern Fader_134110* g_Fader;
 extern char D_005721E0[];
 extern char D_005721F0[];
 extern char D_0049AA18[];
@@ -28,12 +28,12 @@ extern char D_0049AA58[];
 extern char D_004D9160[];
 extern char D_004F2CC0[];
 extern char D_005436B0[];
-extern char D_005381F0[];
+extern char g_Video[];
 extern char D_0055A300[];
 extern float D_004E9FF8;
 extern char D_004EA000;
-extern int D_00533870;
-extern unsigned long long D_00533878;
+extern int g_TimerAccum;
+extern unsigned long long g_TickCounter64;
 void MsgQueue_ClearPending(void);
 Stack_134110* Gui_GetScreenStack(void);
 void* Gui_GetScreenList(void);
@@ -57,16 +57,16 @@ void* Service_Lookup(void* a, void* b);
 
 static inline unsigned long long Now_134110(void)
 {
-    return D_00533878 + (unsigned int)(int)((float)(unsigned int)(*(volatile int*)0x10000800 + D_00533870) / 5.76f);
+    return g_TickCounter64 + (unsigned int)(int)((float)(unsigned int)(*(volatile int*)0x10000800 + g_TimerAccum) / 5.76f);
 }
 
 static inline void Fade_134110(int mode)
 {
-    ActorFader_Start(D_004FFC38, mode, 1.0f);
-    while (D_004FFC38->b != 0.0f) {
-        ActorFader_Update(D_004FFC38, 0.05f);
-        ActorFader_GetAlpha(D_004FFC38);
-        Video_BeginFrame(D_005381F0);
+    ActorFader_Start(g_Fader, mode, 1.0f);
+    while (g_Fader->b != 0.0f) {
+        ActorFader_Update(g_Fader, 0.05f);
+        ActorFader_GetAlpha(g_Fader);
+        Video_BeginFrame(g_Video);
     }
 }
 
@@ -118,7 +118,7 @@ extern "C" void LevelEnd_RunDebrief(void* svc, unsigned char mode)
         Gui_GetScreenStack()->Update(dt);
         Gui_GetScreenStack()->Draw();
         func_00169390(App_GetInstance());
-        Video_BeginFrame(D_005381F0);
+        Video_BeginFrame(g_Video);
         {
             CMsg m;
             Event_Construct(&m, D_005436B0);

@@ -36,9 +36,9 @@ struct A4110 {
 extern "C" {
 extern char *D_0052FDF0;
 extern int D_0052AFD0[];
-extern int D_00533870;
+extern int g_TimerAccum;
 extern void *D_004FFC04;
-extern Mc4110 D_0055A830;
+extern Mc4110 g_MemCard;
 extern int D_0052FE80;
 extern Ent4110 D_0052FE90[];
 extern char *D_004926D0;
@@ -76,12 +76,12 @@ extern "C" int AgentData_Save(A4110 *self)
     r = 0;
     if (self->name8AC[0] != 0) {
         FrontEnd_FlushMessages(D_004FFC04);
-        mc = &D_0055A830;
+        mc = &g_MemCard;
         if (Idle4110(mc) && mc->cfg->b59D) {
             D_0052FDF0 = (char *)D_0052AFD0;
             start = D_0052FDF0;
             WInt4110(0x11);
-            { int t = *(int *)0x10000800 + D_00533870; t += t << 16; WInt4110(t ^ 0xFFFF); }
+            { int t = *(int *)0x10000800 + g_TimerAccum; t += t << 16; WInt4110(t ^ 0xFFFF); }
             WBuf4110(self->stats, 0x38);
             for (a = 0; a < func_00334780(); a++) WInt4110(self->objectiveBits[a]);
             WBuf4110(self->name8AC, 0x10);

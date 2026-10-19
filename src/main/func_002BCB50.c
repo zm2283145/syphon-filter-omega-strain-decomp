@@ -25,10 +25,10 @@ int WeaponInv_SlotOfItem(short);
 void* GuiManager_FindOrLoad(void*,char*,char*);
 void GuiWidget_SendEvent(void*,void*,int,int,int=0);
 extern signed char D_00489D62[];
-extern char D_004A9870[],D_004AC2B0[],D_004AC2C8[],D_004AC2D0[],D_004AC2E0[],D_004AC2F0[],D_004AC300[],D_004AC310[],D_004AC320[],D_004AC330[],D_004AC340[],D_004AC350[],D_004AC360[],D_004FFB50[],D_0055A300[];
+extern char D_004A9870[],D_004AC2B0[],D_004AC2C8[],D_004AC2D0[],D_004AC2E0[],D_004AC2F0[],D_004AC300[],D_004AC310[],D_004AC320[],D_004AC330[],D_004AC340[],D_004AC350[],D_004AC360[],g_Game[],D_0055A300[];
 extern void* D_004FFC04;
-extern signed char D_004FFC29;
-extern unsigned char D_005721C8;
+extern signed char g_LoadoutPending;
+extern unsigned char g_IsMultiplayer;
 }
 // Return an integer short-circuit result without a final byte conversion.
 #pragma push
@@ -127,22 +127,22 @@ extern "C" int GuiEquipmentModify_Accept(Screen* arg0, GuiGridInput* arg1) {
             }
         }
         var_s0_2 = 0;
-        if (D_005721C8 != 0) {
+        if (g_IsMultiplayer != 0) {
             var_s0_2 = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AC2B0, D_004AC2C8);
         } else {
-            D_004FFC29 = 0;
+            g_LoadoutPending = 0;
             Pad_Reset(D_0055A300);
         }
         GuiStack_SwapScreens(Gui_GetScreenStack(), arg0, var_s0_2);
-        Game_NetSendPauseState(D_004FFB50, 0, 0);
+        Game_NetSendPauseState(g_Game, 0, 0);
         return 1;
     }
     var_v0 = Press(arg1,0x10);
     if (var_v0 != 0) {
-        if (D_005721C8 != 0) {
+        if (g_IsMultiplayer != 0) {
             temp_s0 = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AC2B0, D_004AC2C8);
             GuiStack_SwapScreens(Gui_GetScreenStack(), arg0, temp_s0);
-            Game_NetSendPauseState(D_004FFB50, 0, 0);
+            Game_NetSendPauseState(g_Game, 0, 0);
             return 1;
         }
         temp_s0_2 = Loc_LookupText(D_004AC2D0);

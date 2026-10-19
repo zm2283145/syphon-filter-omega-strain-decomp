@@ -113,17 +113,17 @@ extern float D_00489C88;
 extern float D_00489C90;
 extern float D_00489C98;
 extern float D_00489CA0;
-extern float D_005383D8;
+extern float g_VideoFrameRate;
 extern char D_0049B1D0[];
 extern char D_004D9200[];
 extern char D_004D9240[];
 extern char D_004D9280[];
 extern char D_004DF860[];
 extern char D_004E1140[];
-extern char D_00535D20[];
-extern unsigned char D_00535D62;
+extern char g_LightMgr[];
+extern unsigned char g_LevelLightsDirty;
 extern char D_00583968[];
-extern char D_0055C9F0[];
+extern char g_IdentityMatrix[];
 void Weapon_Discharge(WiInv* self, WiObj* target, int sub, unsigned char view, int a);
 unsigned char WeaponInv_GetHeldClass(WiInv* self);
 void Effect_SpawnById(int id, WiFx* fx);
@@ -197,7 +197,7 @@ extern "C" void WeaponInv_Update(WiInv* self, float dt)
         if (!(self->cooldown[j] <= 0.0f))
             self->cooldown[j] -= dt;
         self->unkB4[j] += dt;
-        if (!self->aimView && self->actor->f38 != 0x80 && !(D_005383D8 <= 35.0f)
+        if (!self->aimView && self->actor->f38 != 0x80 && !(g_VideoFrameRate <= 35.0f)
             && WeaponInv_GetHeldClass(self) != 8 && !(self->unkB4[j] <= 0.5f) && self->unkB4[j] < 1.5f) {
             WiFx fx;
             self->actor->ctl->GetMuzzle(&fx, j != 0, 0);
@@ -235,7 +235,7 @@ extern "C" void WeaponInv_Update(WiInv* self, float dt)
         HeldItem_Dispatch(self->held, dt);
     if (WeaponInv_GetHeldClass(self) == 10 && self->actor->GetState() != 3) {
         if (!self->light) {
-            WiLight* l = LightMgr_AllocPoint(D_00535D20, 4);
+            WiLight* l = LightMgr_AllocPoint(g_LightMgr, 4);
             if (l) {
                 *(void**)((char*)l + 4) = D_004D9280;
                 l->kind = D_00489C08;
@@ -253,7 +253,7 @@ extern "C" void WeaponInv_Update(WiInv* self, float dt)
                 l->dir.y = 0.0f;
                 l->dir.z = 0.0f;
                 l->dir.w = 1.0f;
-                D_00535D62 = 1;
+                g_LevelLightsDirty = 1;
                 l->id = 0.0f;
                 *(void**)((char*)l + 4) = D_004D9200;
             }
@@ -274,7 +274,7 @@ extern "C" void WeaponInv_Update(WiInv* self, float dt)
             if (o) WiFxCtor(o, def, id);
 
             self->fx = o;
-            self->fx->Attach(D_0055C9F0, 0);
+            self->fx->Attach(g_IdentityMatrix, 0);
             Object_Register(self->fx);
         }
         {

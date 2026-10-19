@@ -50,9 +50,9 @@ int func_00465600(int a0, int a1) {
 struct Ui_00465610 { char pad[0x33]; unsigned char f33; char pad34; unsigned char f35; };
 extern "C" {
 extern Ui_00465610* D_004FFC04;
-extern signed char D_004FFBA0;
-extern signed char D_004FFBA1;
-extern unsigned char D_00587B38;
+extern signed char g_GameState;
+extern signed char g_PrevGameState;
+extern unsigned char g_GuiSoundGate;
 extern char D_004C2988[];
 extern char D_00586AF0[];
 extern char D_00586C90[];
@@ -72,8 +72,8 @@ extern "C" int GuiFrontendCanvas_OnEvent(void* self, void* sender, int message, 
     if (m == 0x1E) {
         if (!GuiWidget_BroadcastEvent(self, message, first, second)) {
             if ((first != 0) == 1) {
-                D_004FFBA1 = D_004FFBA0;
-                D_004FFBA0 = 3;
+                g_PrevGameState = g_GameState;
+                g_GameState = 3;
             } else {
                 D_004FFC04->f35 = 0;
                 D_004FFC04->f33 = 0;
@@ -84,7 +84,7 @@ extern "C" int GuiFrontendCanvas_OnEvent(void* self, void* sender, int message, 
     }
     if (m == 0x10 || m == 0x11) {
         char* tbl;
-        if (D_00587B38)
+        if (g_GuiSoundGate)
             return 1;
         tbl = 0;
         switch (first) {
@@ -113,12 +113,12 @@ extern "C" int GuiFrontendCanvas_OnEvent(void* self, void* sender, int message, 
 #pragma mpwc_relax on
 int func_003A6650(int);                                 
 int func_00465A40();                                  
-extern unsigned char D_0051EEB0;
+extern unsigned char g_DebugTriangle;
 
 void GuiCanvas_HandlePad(int d0, char * arg1) {
     int var_v1;
 
-    if (D_0051EEB0 != 0) {
+    if (g_DebugTriangle != 0) {
         var_v1 = F_(arg1, 0x0, unsigned short) == 1;
         if (var_v1 != 0) {
             var_v1 = F_(arg1, 0x2, unsigned short) == 0;

@@ -46,11 +46,11 @@ void func_0016DB20(void*, void*);
 void func_0016DB30(void*, void*);
 void StaticInit_FloorContactVecs(void*, int);
 extern char D_0049C650[];
-extern int D_0049D010;
+extern int g_HumanActorClassKey;
 extern char D_004D9340[], D_004DCC90[], D_004DCD70[], D_004EE550[], D_004EE568[], D_004EE580[];
 extern signed char D_004EE560;
-extern unsigned char D_00533880;
-extern int D_00533888;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
 extern char g_ScriptAINewAwarenessMsgKey[];
 }
 #pragma define_section MSG_DTOR ".dtors_drop" far_absolute RX
@@ -76,7 +76,7 @@ static inline int Ld(int* p) { return *p; }
 static inline bool SameObj(AObj* a, AObj* b) { return a->id == b->id; }
 static inline const V& T(const M& m) { return m.r[3]; }
 static inline bool Human(AObj* o) { bool r = false; bool a = Active(o); if (a && o->human) r = true; return r; }
-static inline int Key0() { int* p = &D_0049D010; return *p; }
+static inline int Key0() { int* p = &g_HumanActorClassKey; return *p; }
 static inline bool Keep(AObj* o) { bool r = false; if (Active(o) && o->team == Key0()) r = Human(o); return r; }
 static inline bool Aimed(void* c, AObj* o) { return Controller_GetAimTarget(c) == o; }
 static inline float MaxA(float a, float b) { float r; asm { max.s r, a, b } return r; }
@@ -127,11 +127,11 @@ static inline float Len(V* a) {
     return ret;
 }
 static inline void FreeRec(ARec* r, int line) {
-    if (D_00533880) Alloc_Lock(9);
-    D_00533888++;
+    if (g_ProfileLockEnabled) Alloc_Lock(9);
+    g_ProfileLockDepth++;
     Mem_Free(0, r, D_0049C650, line);
-    if (D_00533880) Alloc_Unlock(9);
-    D_00533888--;
+    if (g_ProfileLockEnabled) Alloc_Unlock(9);
+    g_ProfileLockDepth--;
 }
 static inline void Er2(void* recs, void* a, Raw* t) { char y[4], x[4]; void* pa = a; func_0016DB30(x, pa); List_Erase(y, recs, x); func_0016DB20(t, y); }
 static inline void Er1(void* recs, AIt* it, AIt* r) { Raw t; char a[4]; func_0015AF40(a, it); Er2(recs, a, &t); r->p = t.p; }

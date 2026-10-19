@@ -30,13 +30,13 @@ extern unsigned char D_0048A100;
 extern char D_0049C650;
 extern int D_004EE620;
 extern unsigned char D_004EE628;
-extern unsigned char D_00533880;
-extern unsigned char D_005721C8;
+extern unsigned char g_ProfileLockEnabled;
+extern unsigned char g_IsMultiplayer;
 }
 extern "C" void TeamRelations_Create(void) {
     int temp_s0;
 
-    if (D_005721C8 != 0) {
+    if (g_IsMultiplayer != 0) {
         if (D_004EE628 == 0) {
             TeamRelations_CreateMultiplayer();
         }

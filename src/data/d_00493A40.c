@@ -16,7 +16,7 @@ extern char D_004BEAF0[];
 extern char D_004BEB20[];
 extern char D_004BEB50[];
 
-struct D_00493AF0_s {
+struct g_MorphGripKeys_s {
     char m0[4];
     int m1[43];
 };
@@ -46,7 +46,7 @@ int D_00493AD0[4] = { 0x6c656231, 0x4c425f74, 0x4f4e5f41, 0x5f454e };
 
 int D_00493AE0[4] = { 0x4b414d5f, 0x4c425f45, 0x4f4e5f41, 0x30454e };
 
-struct D_00493AF0_s D_00493AF0 = {
+struct g_MorphGripKeys_s g_MorphGripKeys = {
     "AT1",
     {
         0x41000000, 0x3254, 0x54420000, 0x31,

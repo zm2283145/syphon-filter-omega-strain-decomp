@@ -14,8 +14,8 @@
 /* merge_units: begin func_00136200 */
 #pragma push /* merge_units */
 typedef struct F1Los136 { void* vt; char pad4[0x1C]; int x20; char pad24[0xC]; Vec4 v30; char st40[0x20]; int x60; char pad64[0xC]; } F1Los136;
-extern unsigned char D_00533880;
-extern int D_00533888;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
 extern F1Los136* D_004EA0B8;
 extern char D_004DA2F0[];
 extern void Alloc_Lock(int);
@@ -28,11 +28,11 @@ extern void func_001364B0(void* p);
 static inline void* f1_Alloc136(int size, char* file, int line)
 {
     void* p;
-    if (D_00533880) Alloc_Lock(9);
-    D_00533888++;
+    if (g_ProfileLockEnabled) Alloc_Lock(9);
+    g_ProfileLockDepth++;
     p = Mem_Alloc(0, size, file, line);
-    if (D_00533880) Alloc_Unlock(9);
-    D_00533888--;
+    if (g_ProfileLockEnabled) Alloc_Unlock(9);
+    g_ProfileLockDepth--;
     return p;
 }
 void LosProvider_Create(int arg)

@@ -96,8 +96,8 @@ extern char D_004DF860;
 #endif /* merge_units */
 #define D_004DF860 (*(char*)&D_004DF860) /* merge_units */
 
-extern unsigned char D_00533880;
-extern int D_00533888;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
 
 typedef struct { int f0; char p4[43]; signed char f2F; char p30[48]; int f60; int f64; short f68; char p6A[6]; int f70; int f74; int f78; int f7C; int f80; int f84; } PS0_00236810;
 char * FireEffectObj_Ctor(PS0_00236810 *arg0, int arg1, int arg2, int arg3, float farg0) {
@@ -118,27 +118,27 @@ char * FireEffectObj_Ctor(PS0_00236810 *arg0, int arg1, int arg2, int arg3, floa
     arg0->f70 = 0x3F800000;
     arg0->f2F = 1;
     arg0->f0 = (int)(&D_004DBD80);
-    if (D_00533880 != 0) {
+    if (g_ProfileLockEnabled != 0) {
         Alloc_Lock(9);
     }
-    D_00533888 += 1;
+    g_ProfileLockDepth += 1;
     temp_s5 = Mem_Alloc(0, arg3 * 4, &D_004A6E38, 0x194);
-    if (D_00533880 != 0) {
+    if (g_ProfileLockEnabled != 0) {
         Alloc_Unlock(9);
     }
     var_s0 = 0;
-    D_00533888 -= 1;
+    g_ProfileLockDepth -= 1;
     arg0->f7C = (int)(temp_s5);
     for (var_s0 = 0; var_s0 < arg3; var_s0++) {
-            if (D_00533880 != 0) {
+            if (g_ProfileLockEnabled != 0) {
                 Alloc_Lock(9);
             }
-            D_00533888 += 1;
+            g_ProfileLockDepth += 1;
             temp_s6 = Mem_Alloc(0, 0x20, &D_004A6E38, 0x197);
-            if (D_00533880 != 0) {
+            if (g_ProfileLockEnabled != 0) {
                 Alloc_Unlock(9);
             }
-            D_00533888 -= 1;
+            g_ProfileLockDepth -= 1;
             if (temp_s6 != NULL) {
                 F_(temp_s6, 0x0, int) = 0;
                 F_(temp_s6, 0x4, float) = farg0;

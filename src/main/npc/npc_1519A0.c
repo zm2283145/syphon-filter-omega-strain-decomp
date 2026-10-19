@@ -57,7 +57,7 @@ typedef struct Msg_00151A90 {
 typedef struct Tgt_00151A90 { char pad[0x320C]; int state; } Tgt_00151A90;
 typedef struct Self_00151A90 { char pad[0x30]; Tgt_00151A90* target; char pad34[0x114 - 0x34]; int mode; } Self_00151A90;
 typedef struct Ev_00151A90 { char pad[0x24]; int type; } Ev_00151A90;
-extern char D_0055D480[];
+extern char g_ActorActionMsgClass[];
 extern char D_004E0840[];
 extern void Event_Construct(Msg_00151A90* msg, void* name);
 extern void Event_Send(Msg_00151A90* msg, void* target, int flags);
@@ -68,7 +68,7 @@ int NpcAi_HandleLivingMessage(Self_00151A90* self, Ev_00151A90* ev)
     case 6: {
         int v = self->mode == 4 ? 0x11 : 0x13;
         Msg_00151A90 msg;
-        Event_Construct(&msg, D_0055D480);
+        Event_Construct(&msg, g_ActorActionMsgClass);
         msg.value = v;
         msg.b28 = 0;
         msg.vtable = D_004E0840;
@@ -82,7 +82,7 @@ int NpcAi_HandleLivingMessage(Self_00151A90* self, Ev_00151A90* ev)
     case 9:
         if (self->mode == 4) {
             Msg_00151A90 msg;
-            Event_Construct(&msg, D_0055D480);
+            Event_Construct(&msg, g_ActorActionMsgClass);
             msg.b28 = 0;
             msg.vtable = D_004E0840;
             msg.value = 0x11;
@@ -98,7 +98,7 @@ int NpcAi_HandleLivingMessage(Self_00151A90* self, Ev_00151A90* ev)
         int m = self->mode;
         if (m == 4) {
             Msg_00151A90 msg;
-            Event_Construct(&msg, D_0055D480);
+            Event_Construct(&msg, g_ActorActionMsgClass);
             msg.b28 = 0;
             msg.vtable = D_004E0840;
             msg.value = 0xF;
@@ -109,7 +109,7 @@ int NpcAi_HandleLivingMessage(Self_00151A90* self, Ev_00151A90* ev)
             cMessage_dtor(&msg, 0);
         } else if (m == 11) {
             Msg_00151A90 msg;
-            Event_Construct(&msg, D_0055D480);
+            Event_Construct(&msg, g_ActorActionMsgClass);
             msg.b28 = 0;
             msg.vtable = D_004E0840;
             msg.value = 0x10;
@@ -121,7 +121,7 @@ int NpcAi_HandleLivingMessage(Self_00151A90* self, Ev_00151A90* ev)
         } else if (m == 3) {
             if (self->target->state != 0x10) {
                 Msg_00151A90 msg;
-                Event_Construct(&msg, D_0055D480);
+                Event_Construct(&msg, g_ActorActionMsgClass);
                 msg.b28 = 0;
                 msg.vtable = D_004E0840;
                 msg.value = 0x1A;

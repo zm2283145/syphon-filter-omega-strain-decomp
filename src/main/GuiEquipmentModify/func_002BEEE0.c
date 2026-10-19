@@ -9,7 +9,7 @@ extern "C" {
 extern void GuiTextListWidget_Clear(L2BE*);
 extern void GuiArrayWidget_SetTable(L2BE*, int, int);
 extern void GuiArrayWidget_Select(L2BE*, int, int);
-extern int D_004FFD30;
+extern int g_WeaponDatabase;
 extern WD2BE* WeaponDb_Get(int, int);
 extern char* Loc_LookupText(char*);
 extern void GuiTextListWidget_AddItem(L2BE*, char*, int, int);
@@ -25,7 +25,7 @@ extern "C" void GuiEquipmentModify_BuildList(O2BE* o) {
     o->f94->f88 = o->fcc;
     o->fcc->flags &= ~2;
     for (i = 0; i < o->f104; i++) {
-        WD2BE* w = WeaponDb_Get(D_004FFD30, o->h10c[i]);
+        WD2BE* w = WeaponDb_Get(g_WeaponDatabase, o->h10c[i]);
         char* t = Loc_LookupText(w->name);
         if (t) GuiTextListWidget_AddItem(o->f94, t, i, 0);
         else GuiTextListWidget_AddItem(o->f94, w->name, i, 0);

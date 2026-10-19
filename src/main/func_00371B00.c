@@ -9,7 +9,7 @@ typedef struct {
     int n5C;
     E4Slot slots[16];
 } E4Obj;
-extern unsigned char D_00535D62;
+extern unsigned char g_LevelLightsDirty;
 extern void Model_SetPatchBit(void* a, int b, int c);
 void PntLight_Enable(E4Obj* o)
 {
@@ -22,6 +22,6 @@ void PntLight_Enable(E4Obj* o)
     }
     if (!o->b1C) {
         o->b1C = 1;
-        D_00535D62 = 1;
+        g_LevelLightsDirty = 1;
     }
 }

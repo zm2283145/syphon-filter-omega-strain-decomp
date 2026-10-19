@@ -4,10 +4,10 @@ typedef struct { int pad0; int id; int x8; int count; } Slot_2450;
 typedef struct { char pad[0x60]; char equip[4]; } Own_2450;
 typedef struct { char pad[0x139]; unsigned char keep; } W_2450;
 typedef struct { int pad0; Slot_2450 slots[8]; unsigned char cur; char pad85[3]; Own_2450* own; } S_2450;
-extern void* D_004FFD30;
-extern unsigned char D_005721C8;
-extern unsigned char D_00489D70[];
-extern unsigned char D_00489D78[];
+extern void* g_WeaponDatabase;
+extern unsigned char g_IsMultiplayer;
+extern unsigned char WeaponHolsterAttachPoints[];
+extern unsigned char WeaponHandAttachPoints[];
 extern char D_0052ACC8[];
 extern void Message_GetScriptTypeKey();
 extern void func_001425C0();
@@ -30,17 +30,17 @@ void WeaponInv_RemoveSlot(S_2450* self, int slot, int unused, int drop, int remo
     s->x8 = 0;
     cur = self->cur;
     if (i == cur || (i == 1 && cur == 0)) {
-        kind = D_00489D78[i];
+        kind = WeaponHandAttachPoints[i];
         if (i == cur)
             self->cur = 6;
     } else {
-        kind = D_00489D70[i];
+        kind = WeaponHolsterAttachPoints[i];
     }
     Equip_ClearSlot(self->own->equip, kind, i);
-    if (drop && !WeaponDb_Get(D_004FFD30, s->id)->keep)
-        WeaponDb_Unload(D_004FFD30, s->id, 0);
+    if (drop && !WeaponDb_Get(g_WeaponDatabase, s->id)->keep)
+        WeaponDb_Unload(g_WeaponDatabase, s->id, 0);
     s->id = -1;
-    if (D_005721C8 && !remote) {
+    if (g_IsMultiplayer && !remote) {
         Ev_2450 e;
         Event_Construct(&e, D_0052ACC8);
         e.slot = slot;

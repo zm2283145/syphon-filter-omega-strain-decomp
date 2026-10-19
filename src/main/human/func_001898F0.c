@@ -41,12 +41,12 @@ struct Y_898F0 { int a, b; };
 struct Obj_898F0 { int f0; unsigned char b4; unsigned char b5; char pad6[2]; void* vt; Act_898F0* fC; unsigned char b10; };
 
 extern "C" {
-extern char D_0055D480[]; extern char D_004E0840[];
-extern char D_004F7938[]; extern char D_004DB8B0[];
-extern char D_0055A1D8[]; extern char D_004DA950[];
+extern char g_ActorActionMsgClass[]; extern char D_004E0840[];
+extern char g_NotifyCheckpointMsgClass[]; extern char D_004DB8B0[];
+extern char g_CasEventMsgClass[]; extern char D_004DA950[];
 extern char D_004D9DE0[]; extern char D_004DA970[];
 extern char D_0049D8D0[];
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern float D_004A03E0;
 void MotionTokens_Init(void* p);
 void func_0018A8C0(void* p);
@@ -131,7 +131,7 @@ extern "C" void Actor_Revive(Act_898F0* self)
     Ev_898F0 e2;
     Anim_898F0* an;
 
-    Event_Construct(&m1, D_0055D480);
+    Event_Construct(&m1, g_ActorActionMsgClass);
     m1.vtable = D_004E0840;
     m1.kind = 1;
     m1.f24 = 0xA;
@@ -182,7 +182,7 @@ extern "C" void Actor_Revive(Act_898F0* self)
         if (r && self->b14) {
             Obj_898F0* o;
             self->b33A4 = 1;
-            if (D_005721C8 && self->b14 && self->s3584)
+            if (g_IsMultiplayer && self->b14 && self->s3584)
                 self->s3584->b34 = 1;
             {
                 AllocGuard guard;
@@ -211,10 +211,10 @@ extern "C" void Actor_Revive(Act_898F0* self)
     self->f33A8 = 0;
     self->f33AC = 0;
     self->b33A5 = 0;
-    Event_Construct(&m3, D_004F7938);
+    Event_Construct(&m3, g_NotifyCheckpointMsgClass);
     m3.vtable = D_004DB8B0;
     Event_Send(&m3, self->ctl, 0);
-    Event_Construct(&m4, D_0055A1D8);
+    Event_Construct(&m4, g_CasEventMsgClass);
     m4.vtable = D_004DA950;
     m4.f2C = 0;
     m4.f24 = 0x11;

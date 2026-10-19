@@ -23,7 +23,7 @@ typedef struct { void* vtable; char base[0x20]; int kind; int arg; } LdMsg_f3;
 typedef struct { char pad[0x150]; char preset[1]; } Lift_f3;
 extern char D_004F5448[];
 extern char D_004DAED0[];
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_004DAE30[];
 extern int cElevatorGOBJ_LinksClosed(Lift_f3* l);
 extern int cElevatorGOBJ_TriggerLinks(Lift_f3* l);
@@ -52,7 +52,7 @@ unsigned char Lift_OpenDoors(Lift_f3* l)
         }
         SoundEvent_CtorFromPreset(&ev, l->preset, l);
         ev.flag = 1;
-        Event_Send(&ev, D_004FFB50, 1);
+        Event_Send(&ev, g_Game, 1);
         ev.vt = D_004DAE30;
         FileMan_Release(&ev.s114, -1);
         FileMan_Release(&ev.s78, -1);

@@ -93,8 +93,8 @@ struct Msg40 { void* vt; char base[0x1C]; unsigned char b20; char p21[3]; int ty
 struct Msg60 { void* vt; char base[0x1C]; unsigned char b20; char p21[3]; int type; unsigned char kind; char p29[7]; int id; int sub; unsigned char b38; char p39[7]; V v; float f50; char p54[0xC]; };
 
 extern "C" {
-extern char* D_004FFC2C;
-extern char D_004FFB50[];
+extern char* g_Hud;
+extern char g_Game[];
 extern char g_TargetVisMgr[];
 extern int D_0048AED0;
 extern float D_0048AED8;
@@ -103,10 +103,10 @@ extern unsigned char D_0048AEE8;
 extern float D_004A7550;
 extern float D_004A7558;
 extern float D_004A7590;
-extern unsigned char D_005721C8;
-extern char D_004FFC14[];
+extern unsigned char g_IsMultiplayer;
+extern char g_CameraObject[];
 extern Obj* D_004FFC10;
-extern char D_0055D480[];
+extern char g_ActorActionMsgClass[];
 extern char D_004E0840[];
 extern char D_004E01A0[];
 extern char D_004E0200[];
@@ -147,7 +147,7 @@ struct MsgB {
     MsgB(int t, unsigned char k) { MsgB* p = this; p->Init(t, k); }
     __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~MsgB() { vt = D_004E0840; cMessage_dtor(this, 0); }
     void Send(Obj* to) { b20 = 1; Event_Send(this, to, 1); }
-    void Init(int t, unsigned char k) { Event_Construct(this, D_0055D480); vt = D_004E0840; type = t; kind = k; }
+    void Init(int t, unsigned char k) { Event_Construct(this, g_ActorActionMsgClass); vt = D_004E0840; type = t; kind = k; }
 };
 struct MsgId : MsgB { int id; MsgId(const int& i) { MsgId* p = this; p->Init(0x3E, 5); p->vt = D_004E01A0; p->id = i; } __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~MsgId() {} };
 struct MsgFlag : MsgB { unsigned char f; MsgFlag(const unsigned char& b) { MsgFlag* p = this; p->Init(0x39, 1); p->vt = D_004D9320; p->f = b; } __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~MsgFlag() {} };
@@ -197,7 +197,7 @@ extern "C" void Player_RunTargeting(Input* self, void* cam, Obj* actor, bool r1,
     struct { int v; } none;
     bool autoLock = false;
     Obj* prev = HGet(&self->lock);
-    char* hud = D_004FFC2C;
+    char* hud = g_Hud;
     self->noTarget = 0;
     if (self->mode == 8) {
         Targeting_LockTimer(self, dt);
@@ -236,7 +236,7 @@ extern "C" void Player_RunTargeting(Input* self, void* cam, Obj* actor, bool r1,
         if (!r1) self->latch = 0;
         Targeting_LockTimer(self, dt);
     }
-    if (HGet(&self->pick) && l1 && AgentData_HasUnlock(Agent_GetSelected(D_004FFB50, -1), 2) && CanSee(actor, HGet(&self->pick), 0)) {
+    if (HGet(&self->pick) && l1 && AgentData_HasUnlock(Agent_GetSelected(g_Game, -1), 2) && CanSee(actor, HGet(&self->pick), 0)) {
         V d = actor->GetPos() - HGet(&self->pick)->GetPos();
         float lim = D_0048AED8; float l2 = lim * lim;
         if (d.LenSq() < l2) {
@@ -260,7 +260,7 @@ extern "C" void Player_RunTargeting(Input* self, void* cam, Obj* actor, bool r1,
         id = HGet(&self->lock)->serial;
         MsgId(id).Send(actor);
         MsgAim(id, self->sub).Send(actor);
-        if (D_005721C8) {
+        if (g_IsMultiplayer) {
             func_002494E0(self, actor, HGet(&self->lock)->f10, &id, self->sub);
             func_00249420(self, actor, &id, 1);
         }
@@ -274,15 +274,15 @@ extern "C" void Player_RunTargeting(Input* self, void* cam, Obj* actor, bool r1,
             pt = XformR(V(0.0f, 5000.0f, z, 0.0f), actor->GetMtx());
             MsgB(0x3F, 0).Send(actor);
             MsgPt(pt).Send(actor);
-            if (D_005721C8) func_00249490(self, actor, &pt);
+            if (g_IsMultiplayer) func_00249490(self, actor, &pt);
         } else {
             MsgB(0x3F, 0).Send(actor);
             MsgFlag(D_0048AEE8).Send(actor);
-            if (D_005721C8) func_00249420(self, actor, &id, 0);
+            if (g_IsMultiplayer) func_00249420(self, actor, &id, 0);
         }
     }
     {
-        Obj* cur = func_00159570(D_004FFC14) ? *List_Front(D_004FFC14) : 0;
+        Obj* cur = func_00159570(g_CameraObject) ? *List_Front(g_CameraObject) : 0;
         if (D_004FFC10 != cur) {
             Hud_OnTargetChanged(hud);
         } else {

@@ -34,7 +34,7 @@ char* ObjMarkerRecord_Init(...);
 int ObjMarkerList_Append(...);
 char* Object_LookupById(...);
 int TeamTable_AreEnemies(...);
-extern char* D_004FFC0C;
+extern char* g_LocalPlayer;
 extern char D_004A8F60;
 extern char D_004A8F70;
 extern char D_004FFDA0;
@@ -71,7 +71,7 @@ extern "C" int HudTargets_Add(char* mgr, int* id, int force) {
     if (!ne(&it, &e1)) {
         char* obj = Object_LookupById(id);
         if (obj != NULL && (force || F_(obj, 0x58, int) != 0)) {
-            int en = (unsigned char) TeamTable_AreEnemies(F_(D_004FFC0C, 0x30, int), obj);
+            int en = (unsigned char) TeamTable_AreEnemies(F_(g_LocalPlayer, 0x30, int), obj);
             {
                 MRec* p;
                 {

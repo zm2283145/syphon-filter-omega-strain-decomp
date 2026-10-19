@@ -29,14 +29,14 @@ int Hud_IsGuiFocused(Obj2426* s);
 void Pad_ResetHeldMask(void* p);
 void GuiGameScreen_ToggleWeaponSelect(void* p, int v);
 void func_00437950(int v);
-extern char D_004FFB50[];
+extern char g_Game[];
 extern char D_0055A300[];
 extern char D_004A7260[];
 extern char D_004A7248[];
 }
 extern "C" void Hud_OpenPauseMenu(Obj2426* s) {
     if (s->b6A8) return;
-    Game_SetPaused(D_004FFB50, 1);
+    Game_SetPaused(g_Game, 1);
     if (s->b6A9) Hud_CloseMapScreen(s);
     if (!Hud_IsGuiFocused(s)) Pad_ResetHeldMask(D_0055A300);
     {
@@ -72,8 +72,8 @@ static inline void merge_flush_func_00242B00(void) {}
 
 /* merge_units: begin func_00242B40 */
 #pragma push /* merge_units */
-extern unsigned char D_00533880;
-extern int D_00533888;
+extern unsigned char g_ProfileLockEnabled;
+extern int g_ProfileLockDepth;
 void Alloc_Lock(int id);
 void Alloc_Unlock(int id);
 typedef struct { void* vtable; char pad[0x18]; int x1C; unsigned char x20; char pad21[3]; unsigned char x24; char pad25[3]; int key; char pad2C[0x18]; int id; unsigned char flag; unsigned char x49; } Msg_242B40;
@@ -81,7 +81,7 @@ typedef struct { int key; int x4; int id; int c; int d; } Ent_242B40;
 typedef struct Node_242B40 { struct Node_242B40* prev; struct Node_242B40* next; Ent_242B40* ent; } Node_242B40;
 typedef struct { Node_242B40* n; } It_242B40;
 
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern char D_0051EE48[];
 extern char D_004DE0F0[];
 extern char D_004A7210[];
@@ -112,7 +112,7 @@ int Hud_ClearCallout(char* o, int* key, int id, signed char flag, int send)
     It_242B40 b8;
     It_242B40 b4;
     int gap;
-    if (D_005721C8 && send) {
+    if (g_IsMultiplayer && send) {
         Event_Construct(&m, D_0051EE48);
         m.vtable = D_004DE0F0;
         m.x24 = 1;
@@ -137,8 +137,8 @@ int Hud_ClearCallout(char* o, int* key, int id, signed char flag, int send)
             }
             e = it.n->ent;
             {
-                if (D_00533880) Alloc_Lock(9);
-                D_00533888++;
+                if (g_ProfileLockEnabled) Alloc_Lock(9);
+                g_ProfileLockDepth++;
                 if (e) {
                     if (e->c)
                         IeElement_SetText(e->c, 0);
@@ -146,8 +146,8 @@ int Hud_ClearCallout(char* o, int* key, int id, signed char flag, int send)
                         HudTracker_Kill(e->d);
                 }
                 Mem_Free(0, e, D_004A7210, 0x55F);
-                if (D_00533880) Alloc_Unlock(9);
-                D_00533888--;
+                if (g_ProfileLockEnabled) Alloc_Unlock(9);
+                g_ProfileLockDepth--;
             }
             EraseI_(o + 0x6E8, it.n);
             return 1;

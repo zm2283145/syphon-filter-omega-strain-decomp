@@ -18,8 +18,8 @@ struct Node_26D810 { int f0; Node_26D810* next; M_26D810* id; };
 struct Holder_26D810 { char pad[0x30]; Hum_26D810* x30; };
 struct Self_26D810 { int* x0; };
 extern "C" {
-extern int D_004FFC2C;
-extern Holder_26D810* D_004FFC0C;
+extern int g_Hud;
+extern Holder_26D810* g_LocalPlayer;
 Hum_26D810* Object_LookupById(M_26D810* id);
 void List_Begin_16E880(int* out, int* list);
 void func_0026C390(Node_26D810** out, int b);
@@ -43,14 +43,14 @@ void HudMap_ClearCallouts(Self_26D810* self)
         if (h) {
             r = 0;
             if (h->ctl && h->ctl->IsPlayer()) r = 1;
-            if (r) Hud_ClearCallout(D_004FFC2C, it->id, 4, 1, 0);
+            if (r) Hud_ClearCallout(g_Hud, it->id, 4, 1, 0);
         }
     }
-    Holder_26D810* hd = D_004FFC0C;
+    Holder_26D810* hd = g_LocalPlayer;
     if (hd) {
         h = hd->x30;
         if (h)
-            Hud_ClearCallout(D_004FFC2C, (M_26D810*)&h->flags, 4, 1, 0);
+            Hud_ClearCallout(g_Hud, (M_26D810*)&h->flags, 4, 1, 0);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -69,11 +69,11 @@ struct Holder_26D940 { char pad[0x30]; Hum_26D940* x30; };
 struct Self_26D940 { int* x0; };
 struct Buf_26D940 { char b0; char text[0x8F]; };
 extern "C" {
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 #if 0 /* merge_units */
-extern Holder_26D940* D_004FFC0C;
+extern Holder_26D940* g_LocalPlayer;
 #endif /* merge_units */
-#define D_004FFC0C (*(Holder_26D940 **)&D_004FFC0C) /* merge_units */
+#define g_LocalPlayer (*(Holder_26D940 **)&g_LocalPlayer) /* merge_units */
 
 #if 0 /* merge_units */
 Hum_26D940* Object_LookupById(M_26D940* id);
@@ -95,7 +95,7 @@ void Hud_ShowCallout(int a, M_26D940* m, char* text, int n, int b, int c, float 
 void HudMap_AddPlayerCallouts(Self_26D940* self);
 }
 static inline unsigned char IsPlayer_26D940(Hum_26D940* h) { unsigned char r = 0; if (h->ctl && h->ctl->IsPlayer()) r = 1; return r; }
-static inline int LocalId_26D940(Hum_26D940* h) { int id; if (D_005721C8) { if (IsPlayer_26D940(h)) id = ((h->flags & 0x7F000000) >> 24) - 1; else id = -1; } else id = 0; return id; }
+static inline int LocalId_26D940(Hum_26D940* h) { int id; if (g_IsMultiplayer) { if (IsPlayer_26D940(h)) id = ((h->flags & 0x7F000000) >> 24) - 1; else id = -1; } else id = 0; return id; }
 static inline Node_26D940* Begin_26D940(int* list) { Node_26D940* n; int b; List_Begin_16E880(&b, list); func_0026C390(&n, b); return n; }
 static inline void End_26D940(Node_26D940** out, int* list) { int e; func_0026C320(&e, list); func_0026C350(out, &e); }
 
@@ -112,11 +112,11 @@ void HudMap_AddPlayerCallouts(Self_26D940* self)
                 Buf_26D940 buf;
                 buf.b0 = 0;
                 Hud_FormatPlayerCalloutName(&buf, id, 1);
-                Hud_ShowCallout(D_004FFC2C, it->id, buf.text, 4, 1, 0, -1.0f, -1.0f);
+                Hud_ShowCallout(g_Hud, it->id, buf.text, 4, 1, 0, -1.0f, -1.0f);
             }
         }
     }
-    Holder_26D940* hd = D_004FFC0C;
+    Holder_26D940* hd = g_LocalPlayer;
     if (hd) {
         h = hd->x30;
         if (h) {
@@ -125,12 +125,12 @@ void HudMap_AddPlayerCallouts(Self_26D940* self)
                 Buf_26D940 buf;
                 buf.b0 = 0;
                 Hud_FormatPlayerCalloutName(&buf, id, 1);
-                Hud_ShowCallout(D_004FFC2C, (M_26D940*)&hd->x30->flags, buf.text, 4, 1, 0, -1.0f, -1.0f);
+                Hud_ShowCallout(g_Hud, (M_26D940*)&hd->x30->flags, buf.text, 4, 1, 0, -1.0f, -1.0f);
             }
         }
     }
 }
-#undef D_004FFC0C /* merge_units */
+#undef g_LocalPlayer /* merge_units */
 #undef Object_LookupById /* merge_units */
 #undef func_0026C390 /* merge_units */
 #undef func_0026C350 /* merge_units */

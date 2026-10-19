@@ -119,7 +119,7 @@ void *D_004DBB40[8] = {
     &func_002823E0, &Message_GetScriptTypeKey, &cNetSpawnParticleMsg_v04, &cNetSpawnParticleMsg_v05,
 };
 
-void *D_004DBB60[68] = {
+void *SnowField_vtable[68] = {
     0, 0, &func_002345D0, &Object_HandleMessage,
     &GObj_GetID, &Object_GetAttachedOrSelf, &func_0015C090, &func_0012ED00,
     &func_003CE810, &func_003CE7D0, &func_0012ED30, &func_0012ED40,

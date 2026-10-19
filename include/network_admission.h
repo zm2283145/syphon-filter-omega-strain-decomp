@@ -11,7 +11,7 @@ extern unsigned int D_0057242C;
 extern unsigned int D_00572430;
 extern unsigned char D_00572400;
 extern unsigned char D_005723F8;
-extern unsigned char D_005721C8;
+extern unsigned char g_IsMultiplayer;
 extern int D_005721A8;
 extern int D_00494180;
 SoftwareDoubleBits func_0011C7A0(int value);
@@ -33,7 +33,7 @@ static inline unsigned int retry_threshold(void)
 
 static inline int player_count(void)
 {
-    if (D_005721C8) {
+    if (g_IsMultiplayer) {
         int count;
         func_002EBEC8(&count, D_005721A8);
         return count;

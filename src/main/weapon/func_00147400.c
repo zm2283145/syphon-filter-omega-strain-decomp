@@ -37,7 +37,7 @@ extern int func_00147600(void* v, Obj_147400* value);
 extern char D_0049B310[];
 extern char D_0048B2F8[];
 extern int D_004926E0;
-extern char D_00532B10[];
+extern char g_UnlockRows[];
 
 unsigned char WeaponDb_Load(WeaponDb_147400* db)
 {
@@ -57,7 +57,7 @@ unsigned char WeaponDb_Load(WeaponDb_147400* db)
     }
     if (db->loaded) {
         for (i = 0; i < db->hdr->count; i++) {
-            func_00147600(D_00532B10, Awards_RegisterName(&tmp, i, D_004926E0++));
+            func_00147600(g_UnlockRows, Awards_RegisterName(&tmp, i, D_004926E0++));
             db->recs[i].x138 = 0;
             db->recs[i].x130 = -1;
             db->recs[i].x134 = -1;

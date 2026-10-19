@@ -53,6 +53,11 @@ through temporaries) that C cannot express. The cheapest remaining gains are:
 - Inline asm only for instructions C cannot express. A scheduling barrier, weak stub or
   fake `x++; x--;` pair needs a one-line comment saying why it is there.
 - Never use CodeWarrior 3.03J. Never force-push or rewrite published history.
+- Register pinning (`register T x asm("$n")`) is allowed only as a last resort in EE-GCC
+  library code (`src/lib/`), after declaration order, temporaries and types have failed,
+  with a one-line comment saying why. Never in Metrowerks game code. It emits no
+  instructions but forces register choice, so the original source almost certainly did
+  not contain it.
 - Keep line endings LF.
 
 ## Tools you need
@@ -169,7 +174,7 @@ into translation units. Run it occasionally; see [merge_units.md](merge_units.md
 - **gcc 2.96 (newest):** declare callees `int` rather than `void` early (stores move in and
   out of call delay slots); `return 0` right after `if (ret) return ret;` lets gcc reuse
   the known-zero v0, so send it through a single final `return 0`; volatile fields fix
-  store order; `register int x asm("$19")` pins a register; store zeros as `0.0f`.
+  store order; store zeros as `0.0f`. Register pinning: see Ground rules.
 - **Multi-function retail units:** write one file with every function of the unit in
   retail order; `integrate_pending.py` now sizes the new C unit from all of the object's
   `.text` sections (it used to take the first function's size only).

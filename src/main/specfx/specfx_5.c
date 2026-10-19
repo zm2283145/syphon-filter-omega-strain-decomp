@@ -1,5 +1,5 @@
 /*
- * main/specfx: 4 files, 003EC710-003EC9F0
+ * main/specfx: 5 files, 003EC710-003ECA90
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -114,3 +114,13 @@ extern "C" void* EffectComponent_Alloc(int size)
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003EC9F0 */
+
+/* merge_units: begin specfx_3ECA90 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+#include "base_dtor_chain.h"
+
+/* Deleting destructor that runs the base destructor. */
+DEFINE_BASE_DTOR_CHAIN(func_003ECA90, func_00135C90)
+#pragma pop /* merge_units */
+/* merge_units: end specfx_3ECA90 */

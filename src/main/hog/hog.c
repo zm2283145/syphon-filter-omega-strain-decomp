@@ -1,5 +1,5 @@
 /*
- * main/hog: hog.cc (3 files, 0036CB90-0036CEF0)
+ * main/hog: 6 files, 0036CB90-0036D200
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -105,11 +105,13 @@ void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
 #endif /* merge_units */
 #define Mem_Alloc(a0, a1, a2, a3) (Mem_Alloc((a0), (int)(a1), (a2), (a3))) /* merge_units */
 
+
 void String_Copy(char* d, char* s);
 #if 0 /* merge_units */
 int FileHal_Read(FileHalFile* f, void* buf, int size, int pos); /* FileHal_Read */
 #endif /* merge_units */
 #define FileHal_Read(a0, a1, a2, a3) (FileHal_Read((a0), (a1), (a2), (a3))) /* merge_units */
+
 
 }
 static inline void* Hog_Alloc_0036CEF0(int pool, unsigned int n, int line) { AllocGuard g; return Mem_Alloc(pool, n, D_004BBF88, line); }
@@ -160,3 +162,59 @@ extern "C" int Hog_Load(Hog* self, char* name, int stream, int pool)
 #undef FileHal_Read /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0036CEF0 */
+
+/* merge_units: begin func_0036D200 */
+#pragma push /* merge_units */
+typedef struct { char pad[0x14C]; unsigned char on; char p1[3]; unsigned int idx; char* cur; char p2[4]; char* base; } SL36D2;
+#pragma opt_rotateloops off
+char* Archive_GetMemberName(SL36D2* p, int n) {
+    int i;
+    char* s;
+    char* r;
+    if (!p->on) return 0;
+    s = p->base;
+    i = 0;
+    if (!(n < p->idx)) { s = p->cur; i = p->idx; }
+    while (i < n) { while (*s++) ; i++; }
+    p->idx = i;
+    r = s;
+    while (*s++) ;
+    p->cur = r;
+    return p->cur;
+}
+#pragma opt_rotateloops reset
+#pragma pop /* merge_units */
+/* merge_units: end func_0036D200 */
+
+/* merge_units: begin func_0036D2A0 */
+#pragma push /* merge_units */
+typedef struct { int pad0; int count; } H36D2A0;
+typedef struct { char pad[0x148]; H36D2A0* hdr; unsigned char loaded; char pad14D[0xF]; char* names; } S36D2A0;
+extern int String_CompareNoCase(char* a, char* b);
+int Hog_FindFileNoCase(S36D2A0* o, char* name)
+{
+    int i;
+    char* s;
+    if (!o->loaded) return 0;
+    s = o->names;
+    for (i = 0; i < o->hdr->count; i++) {
+        char* cur = s;
+        while (*s++) ;
+        if (String_CompareNoCase(name, cur) == 0) break;
+    }
+    if (i >= o->hdr->count) i = -1;
+    return i;
+}
+#pragma pop /* merge_units */
+/* merge_units: end func_0036D2A0 */
+
+/* merge_units: begin func_0036D380 */
+#pragma push /* merge_units */
+typedef struct { char pad[0x14C]; unsigned char a14C; char pad2[0x13]; int* a160; } S36D380;
+int Hog_GetEntrySize(S36D380* o, int k)
+{
+    if (!o->a14C) return 0;
+    return o->a160[k + 1] - o->a160[k];
+}
+#pragma pop /* merge_units */
+/* merge_units: end func_0036D380 */

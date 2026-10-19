@@ -1,13 +1,29 @@
 /*
- * main/SFOLobby_Account: SFOLobby_Account.cc (9 files, 004452F0-00445B90)
+ * main/SFOLobby_Account: 10 files, 004452D0-004452F0
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* library prototypes shared by the blocks below (C linkage) */
-#include "SFOLobby_helpers.h"
-void *memset(void *, int, int);
-char *strncpy(void *, const void *, int);
+/* merge_units: begin SFOLobby_Account_4452D0 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Address lies just before SFOLobby_Account.cc (starts 0x004452F0).
+ */
+
+#include "types.h"
+
+extern int D_004976D8;
+
+int func_004452D0(void) {
+    return D_004976D8;
+}
+
+void func_004452E0(int value) {
+    D_004976D8 = value;
+}
+#pragma pop /* merge_units */
+/* merge_units: end SFOLobby_Account_4452D0 */
 
 /* merge_units: begin func_004452F0 */
 #pragma push /* merge_units */
@@ -140,12 +156,12 @@ int func_004456E0(O445* o, int mode); /* gsynth: defined below */
  * until real names are known.
  */
 
-#include "types.h"
 
 #if 0 /* merge_units */
 extern int func_004456E0(void* self, int enable);
 #endif /* merge_units */
-#define func_004456E0(a0, a1) (func_004456E0((void *)(a0), (a1))) /* merge_units */
+#define func_004456E0(a0, a1) (func_004456E0((O445 *)(a0), (a1))) /* merge_units */
+
 
 
 /* func_004456E0(self, 1). */
@@ -250,12 +266,14 @@ int func_00445850(char* s)
 #if 0 /* merge_units */
 extern int func_00445420(LobbyAccount* self);
 #endif /* merge_units */
-#define func_00445420(a0) (func_00445420((void *)(a0))) /* merge_units */
+#define func_00445420(a0) (func_00445420((char *)(a0))) /* merge_units */
+
 
 #if 0 /* merge_units */
 extern int func_004452F0(LobbyAccount* self);
 #endif /* merge_units */
-#define func_004452F0(a0) (func_004452F0((void *)(a0))) /* merge_units */
+#define func_004452F0(a0) (func_004452F0((char *)(a0))) /* merge_units */
+
 
 
 /* Submit the two account fields, then clear their first bytes after use. */
@@ -283,10 +301,12 @@ extern int func_00445420(char*);
 #endif /* merge_units */
 #define func_00445420(a0) (func_00445420((a0))) /* merge_units */
 
+
 #if 0 /* merge_units */
 extern int func_004452F0(char*);
 #endif /* merge_units */
 #define func_004452F0(a0) (func_004452F0((a0))) /* merge_units */
+
 
 extern int func_0044CA30(void*);
 extern int SFOLobby_ConnectLobby(void*);

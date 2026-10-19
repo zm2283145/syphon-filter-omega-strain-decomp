@@ -6,5 +6,5 @@
 
 #include "types.h"
 
-void func_00259490(void) {
+void AreaEffect_Draw(void) {
 }

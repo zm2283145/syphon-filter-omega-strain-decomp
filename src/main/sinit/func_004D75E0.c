@@ -4,6 +4,6 @@
 #pragma mpwc_relax on
 extern char *D_00582750;
 
-void func_004D75E0(void) {
+void StaticInit_NetSetGobjMsgName(void) {
     D_00582750 = "NetSetGobjMsg";
 }

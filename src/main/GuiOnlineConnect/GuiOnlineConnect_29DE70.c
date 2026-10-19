@@ -85,7 +85,7 @@ void GuiStack_SwapScreens(void* ui, S_0029DFC0* self, void* pg);
 #endif /* merge_units */
 #define GuiStack_SwapScreens(a0, a1, a2) (GuiStack_SwapScreens((int)(a0), (O29D *)(a1), (a2))) /* merge_units */
 
-int func_002CA070(void* ui);
+int FrontEnd_IsRegisterEnabled(void* ui);
 void func_00288DE0(void* pg, int a);
 char* Agent_GetSelected(void* a, int b);
 int strlen(const char* s);
@@ -121,7 +121,7 @@ extern "C" void GuiOnlineConnect_Advance(S_0029DFC0* self)
             unsigned char ok = 1;
             if (!D_004FFC04->f265 && !IsEmpty_DFC0(Agent_GetSelected(g_Game, -1) + 0x8CC))
                 ok = 0;
-            if (ok && func_002CA070(D_004FFC04))
+            if (ok && FrontEnd_IsRegisterEnabled(D_004FFC04))
                 func_00288DE0(pg, 1);
             else
                 func_00288DE0(pg, 0);

@@ -8,7 +8,7 @@
 /* libgcc2 __floatdisf. Retail libgcc was assembled without delay-slot swapping (as with gas -g);
    `.set nomove` reproduces that. The EE soft-float libcalls are aliased to their retail functions. */
 __asm__(".set nomove\n"
-        "litodp = func_0011C7A0\n"
+        "litodp = SoftFloat_IntToDouble\n"
         "dpmul = SoftFloat_DoubleMultiply\n"
         "dpadd = SoftFloat_DoubleAdd\n"
         "dptofp = SoftFloat_DoubleToFloat");
@@ -57,9 +57,9 @@ __asm__(".set nomove\n"
         "dpcmp = SoftFloat_UnpackAndCompare\n"
         "dpmul = SoftFloat_DoubleMultiply\n"
         "dptoul = func_0011C980\n"
-        "__floatdidf = func_0011B7E0\n"
+        "__floatdidf = Libgcc_Floatdidf\n"
         "dpadd = SoftFloat_DoubleAdd\n"
-        "dpsub = func_0011C200");UDItype func_0011B970(DFtype a)
+        "dpsub = SoftFloat_DoubleSub");UDItype func_0011B970(DFtype a)
 {
   DFtype b;
   UDItype v;

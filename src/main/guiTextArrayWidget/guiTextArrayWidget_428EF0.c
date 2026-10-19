@@ -20,7 +20,7 @@ void func_003FB4B0(void*, int);
 }
 #pragma push
 #pragma opt_propagation off
-extern "C" int func_00428EF0(int a0, int a1, int a2, Pk428EF0* arg) {
+extern "C" int cActivateMsg_NetReceive(int a0, int a1, int a2, Pk428EF0* arg) {
     NetRecvGuard g;
     if (D_005721D0) {
         Pk428EF0* p = arg;
@@ -69,7 +69,7 @@ struct Msg_0022ED30 : ClonedMessageBase {
 #define CLONE_BODY(p, s) p->vtable = D_004E0E80;
 
 extern "C" { char D_004BF970[] = "DeactivateMsg.hh"; }
-DEFINE_MESSAGE_CLONE(func_00428FF0, Msg_0022ED30, 0x24, D_004BF970, 0x13, CLONE_BODY)
+DEFINE_MESSAGE_CLONE(cDeactivateMsg_v01, Msg_0022ED30, 0x24, D_004BF970, 0x13, CLONE_BODY)
 #pragma pop /* merge_units */
 /* merge_units: end func_00428FF0 */
 
@@ -77,16 +77,16 @@ DEFINE_MESSAGE_CLONE(func_00428FF0, Msg_0022ED30, 0x24, D_004BF970, 0x13, CLONE_
 #pragma push /* merge_units */
 extern int D_005721A0;
 extern int func_002E9A10(void);
-extern int func_003C9C30(int*);
+extern int Event_UnpackHeader(int*);
 extern int func_002E9F08(void*, void*);
-extern void func_00429190(void);
+extern void cDeactivateMsg_NetReceive(void);
 
-/* Registers the func_00429190 handler when the preconditions hold; returns 1 on success. */
-unsigned char func_004290F0(void) {
+/* Registers the cDeactivateMsg_NetReceive handler when the preconditions hold; returns 1 on success. */
+unsigned char cDeactivateMsg_NetRegister(void) {
     unsigned char ok = 0;
     int tmp[2];
-    if (func_002E9A10() == 0 && func_003C9C30(tmp) != 0 &&
-        func_002E9F08(&D_005721A0, func_00429190) == 0) {
+    if (func_002E9A10() == 0 && Event_UnpackHeader(tmp) != 0 &&
+        func_002E9F08(&D_005721A0, cDeactivateMsg_NetReceive) == 0) {
         ok = 1;
     }
     return ok;
@@ -99,7 +99,7 @@ unsigned char func_004290F0(void) {
 extern int Event_PackHeader(void* msg, int a1, int* outType, int a3, int a4, int a5, L4EventBuf* buf);
 
 /* Serializer for a message with no payload: header plus type id, 8 bytes. */
-int func_00429150(void* msg, int a1, int* outType, int a3, int a4, int a5, L4EventBuf* buf) {
+int cDeactivateMsg_v02(void* msg, int a1, int* outType, int a3, int a4, int a5, L4EventBuf* buf) {
     Event_PackHeader(msg, a1, outType, a3, a4, a5, buf);
     *outType = D_005721A0;
     return 8;

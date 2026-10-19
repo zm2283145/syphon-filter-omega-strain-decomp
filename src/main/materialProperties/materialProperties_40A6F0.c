@@ -62,7 +62,7 @@ void func_0040A7D0(void* self, void* p)
 
 #include "loose04_types.h"
 
-extern int func_00138350(void* obj, int flags);
+extern int String_Dtor_138350(void* obj, int flags);
 
 void* func_0040A830(char* self) {
     return self + 4;
@@ -71,7 +71,7 @@ void* func_0040A830(char* self) {
 /* Destroys obj (flags -1) when it is non-null. */
 void func_0040A840(void* self, void* obj) {
     if (obj != 0) {
-        func_00138350(obj, -1);
+        String_Dtor_138350(obj, -1);
     }
 }
 

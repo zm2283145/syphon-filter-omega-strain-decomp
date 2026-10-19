@@ -14,7 +14,7 @@ extern char g_Video;
 extern int D_00539310;
 extern int D_00539318;
 extern int D_00539320;
-void func_004D52B0(void) {
+void StaticInit_RegisterTextureNatives(void) {
     func_0037F9D0(&g_Video);
     __register_global_object(&g_Video, func_0037F8D0, &D_005381E0);
     D_00539310 = Script_RegisterNative_2(Script_IncTexture, &D_00493880, "IncTexture", 1, &D_00493898);

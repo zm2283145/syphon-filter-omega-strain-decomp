@@ -1,7 +1,7 @@
 #include "types.h"
 /* Loads the saved settings block field by field, then registers the net message type. */
 extern int func_002E9A10(void);
-extern int func_003C9C30(void* f);
+extern int Event_UnpackHeader(void* f);
 extern int func_002E9A98(void* f, void* buf, int size, int count);
 extern int NetMsg_RegisterType(void* t, int id, void* fn);
 extern char D_0051F060[];
@@ -10,7 +10,7 @@ unsigned char func_002D0FE0(void)
 {
     struct { long long file; int a, b, c; float d[3]; float e[3]; int f, g; } L;
     int err; unsigned char ok = 0; err = func_002E9A10();
-    if (err == 0 && func_003C9C30(&L.file) && err == 0 &&
+    if (err == 0 && Event_UnpackHeader(&L.file) && err == 0 &&
         func_002E9A98(&L.file, &L.a, 4, 1) == 0 &&
         func_002E9A98(&L.file, &L.b, 4, 1) == 0 &&
         func_002E9A98(&L.file, &L.c, 4, 1) == 0 &&

@@ -3,7 +3,7 @@
 #define NULL 0
 #pragma mpwc_relax on
 int String_Copy(char *, char *);                            
-int func_002CF648(int *, int *);                    
+int Medius_InitCommLib(int *, int *);                    
 int func_002EB910(char *);                               
 int func_00476998();                                
 int memset(int *, int, int);                              
@@ -41,7 +41,7 @@ int func_00444EC0(void) {
     sl.f40 = &func_00445130;
     sl.f48 = 0x20;
     sl.f4C[0] = func_00476998();
-    keep = temp_v0 = func_002CF648(&sl.f30, &sl.f5C);
+    keep = temp_v0 = Medius_InitCommLib(&sl.f30, &sl.f5C);
     if (temp_v0 != 0) {
         return keep;
     }

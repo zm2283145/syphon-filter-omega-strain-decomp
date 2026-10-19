@@ -1,5 +1,5 @@
 typedef struct { int x0, x4, x8, xC, x10, x14, x18, x1C, x20, x24, x28, x2C; } P2F9780;
-extern void func_002F7FB0(char *buf, int len, unsigned int *out, int n);
+extern void Sha1_Digest(char *buf, int len, unsigned int *out, int n);
 /* same-unit callee stub: weak, in a section the link discards; restores retail branch-likely choices */
 int __attribute__((weak, section(".dtors_drop"))) func_002F7D28(int a) { return 0; }
 /* same-unit callee stub: weak, in a section the link discards; restores retail branch-likely choices */
@@ -19,7 +19,7 @@ unsigned int func_002F9780(int id, int sub, char *buf, int len)
     unsigned int hdr = 0;
     unsigned int r = 0;
     if (len && buf) {
-        func_002F7FB0(buf, len, &hdr, 4);
+        Sha1_Digest(buf, len, &hdr, 4);
         hdr &= 0x1FFFFFFF;
     } else {
         len = 0;

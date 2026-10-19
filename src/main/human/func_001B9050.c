@@ -30,7 +30,7 @@ extern int Curve_HasRemaining(Ch*);
 extern void AnimChannel_RebuildSegment(void*, float*, float*, float*, float*);
 extern void AnimChannel_UpdateEndpoint(void*, int, float*, float*);
 extern void func_0017CA90(void*, int);
-extern void* func_00139BC0(int, void*);
+extern void* Mem_PlacementNew(int, void*);
 extern void func_0017CA00(void*, float*, float*, float*, void*, float);
 }
 static inline bool Eq(float a, float b) { return a == b; }
@@ -67,7 +67,7 @@ extern "C" void AnimChannel_PreUpdate(Ch* c)
             void* v;
             c->f10 = c->f8 + Wrap(c, c->f10 - c->f8);
             func_0017CA90(c->a18, -1);
-            v = func_00139BC0(0x18, c->a18);
+            v = Mem_PlacementNew(0x18, c->a18);
             if (v) func_0017CA00(v, &c->f8, &c->fC, &c->f10, &D_0048A180, c->f28);
         } else {
             bool ne = !Eq(0.0f, c->f34);

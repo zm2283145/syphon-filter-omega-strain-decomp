@@ -1,7 +1,7 @@
 extern unsigned int D_00486194;
-extern unsigned int func_0010D140(void);
-extern int *func_00123320(void);
-unsigned int func_0010D860(int incr)
+extern unsigned int EndOfHeap(void);
+extern int *Newlib_Errno(void);
+unsigned int Newlib_SysSbrk(int incr)
 {
     int s, v;
     unsigned int n, old;
@@ -15,8 +15,8 @@ unsigned int func_0010D860(int incr)
         } while (v & 0x10000);
     }
     n = D_00486194 + incr;
-    if (func_0010D140() < n) {
-        *func_00123320() = 12;
+    if (EndOfHeap() < n) {
+        *Newlib_Errno() = 12;
         if (s) __asm__ volatile("ei");
         return -1;
     }

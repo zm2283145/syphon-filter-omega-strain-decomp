@@ -11,7 +11,7 @@
 extern void* strcmp(void* key);
 
 /* Returns whether the lookup of "GuiArrayWidget" yields null. */
-int func_004234D0(void) {
+int GuiArrayWidget_IsType(void) {
     return strcmp("GuiArrayWidget") == 0;
 }
 #pragma pop /* merge_units */
@@ -80,15 +80,15 @@ void GuiArrayWidget_SetTable(Unk423540* self, int a, int b) {
     self->unk74 = b;
 }
 
-int func_004235C0(Unk423540* self, int a, int b) {
+int GuiArrayWidget_SendEvent21(Unk423540* self, int a, int b) {
     return GuiWidget_SendEventUp(self, 21, a, b);
 }
 
-int func_004235E0(Unk423540* self, int a, int b) {
+int GuiArrayWidget_SendEvent20(Unk423540* self, int a, int b) {
     return GuiWidget_SendEventUp(self, 20, a, b);
 }
 
-void func_00423600(void) {
+void GuiArrayWidget_DrawCell(void) {
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00423540 */

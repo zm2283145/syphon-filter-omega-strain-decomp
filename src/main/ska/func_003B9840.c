@@ -36,7 +36,7 @@ static inline unsigned int MaxSize() { unsigned int r; r = 0xFFFFFFFFU; return r
 extern "C" TN_3B9840* func_003B9840(TT_3B9840* tree, TN_3B9840* parent, int left, int first, const TV_3B9840* src)
 {
     if (tree->count > MaxSize() - 1) {
-        func_00123BE8(D_00489738->stream, D_004BCEF0);
+        Libc_Fprintf(D_00489738->stream, D_004BCEF0);
         Libc_Abort();
     }
     TN_3B9840* node = (TN_3B9840*)TStr_Alloc(0x50, D_004BCF98, 0x5C);

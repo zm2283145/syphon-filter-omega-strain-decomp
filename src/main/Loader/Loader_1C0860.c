@@ -48,14 +48,14 @@ void* Mem_Alloc(int pool, int size, char* file, int line);
 void Object_Register(void* o);
 int Pop_FindTag(PopReader_1C0920* r, int tag);
 void* Camera_ConstructStream(void* p, PopReader_1C0920* r);
-void func_00165E60(void* a, char* name, int x);
+void Loader_UpdateLoadingScreen(void* a, char* name, int x);
 void* App_GetInstance(void);
 }
 extern "C" void Loader_InitPopulatedCameras(void* a0, PopReader_1C0920* r)
 {
     if (r->cur) {
         int mis;
-        func_00165E60(App_GetInstance(), "Initializing Populated Cameras...", 0);
+        Loader_UpdateLoadingScreen(App_GetInstance(), "Initializing Populated Cameras...", 0);
         mis = (int)((unsigned long long)(unsigned int)r->cur & 3);
         if (mis)
             r->cur += 4 - mis;
@@ -98,7 +98,7 @@ extern "C" void Loader_InitFireObjects(void* a0, PopReader_1C0A90* r)
 {
     if (r->cur) {
         int mis;
-        func_00165E60(App_GetInstance(), "Initializing Fire Objects...", 0);
+        Loader_UpdateLoadingScreen(App_GetInstance(), "Initializing Fire Objects...", 0);
         mis = (int)((unsigned long long)(unsigned int)r->cur & 3);
         if (mis)
             r->cur += 4 - mis;
@@ -145,9 +145,9 @@ int App_GetInstance(void);
 #define App_GetInstance() ((int)App_GetInstance()) /* merge_units */
 
 #if 0 /* merge_units */
-void func_00165E60(int a, char* b, int c);
+void Loader_UpdateLoadingScreen(int a, char* b, int c);
 #endif /* merge_units */
-#define func_00165E60(a0, a1, a2) (func_00165E60((void *)(a0), (a1), (a2))) /* merge_units */
+#define Loader_UpdateLoadingScreen(a0, a1, a2) (Loader_UpdateLoadingScreen((void *)(a0), (a1), (a2))) /* merge_units */
 
 #if 0 /* merge_units */
 int Pop_FindTag(Pop_001C0C00* r, int tag);
@@ -187,7 +187,7 @@ static inline void* Alloc_001C0C00(int size, int line)
 void Loader_InitHotboxes(void* self, Pop_001C0C00* r)
 {
     if (r->cur) {
-        func_00165E60(App_GetInstance(), "Initializing Hotboxes...", 0);
+        Loader_UpdateLoadingScreen(App_GetInstance(), "Initializing Hotboxes...", 0);
         Align_001C0C00(r);
         if ((unsigned char)Pop_FindTag(r, 0x3A584F42)) {
             int n = ReadInt_001C0C00(r);
@@ -232,7 +232,7 @@ void Loader_InitHotboxes(void* self, Pop_001C0C00* r)
 }
 #undef Mem_Alloc /* merge_units */
 #undef App_GetInstance /* merge_units */
-#undef func_00165E60 /* merge_units */
+#undef Loader_UpdateLoadingScreen /* merge_units */
 #undef Pop_FindTag /* merge_units */
 #undef Object_Register /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
@@ -252,7 +252,7 @@ extern int Pop_FindTag(PopReader_1C0EE0* r, int tag);
 #endif /* merge_units */
 #define Pop_FindTag(a0, a1) (Pop_FindTag((void *)(a0), (a1))) /* merge_units */
 
-extern void func_00165E60(void* a, char* name, int x);
+extern void Loader_UpdateLoadingScreen(void* a, char* name, int x);
 extern void* App_GetInstance(void);
 extern void func_001C10A0(Inner_1C0EE0* t);
 extern void func_001C4410(VV_1C0EE0* v, int n, Inner_1C0EE0* fill);
@@ -265,7 +265,7 @@ void Loader_InitNodeGroups(void* a0, PopReader_1C0EE0* r)
     D_004FFBE4 = 0;
     if (r->cur) {
         int mis;
-        func_00165E60(App_GetInstance(), "Initializing Node Groups...", 0);
+        Loader_UpdateLoadingScreen(App_GetInstance(), "Initializing Node Groups...", 0);
         mis = (int)((unsigned long long)(unsigned int)r->cur & 3);
         if (mis)
             r->cur += 4 - mis;

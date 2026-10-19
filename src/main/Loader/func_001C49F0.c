@@ -21,12 +21,12 @@ static inline void Construct1C49F0(E1C49F0* p, const E1C49F0* src)
         { func_001C5370(p, src); p->b = src->b; }
 }
 
-extern "C" void func_001C49F0(V1C49F0* v, E1C49F0* pos, unsigned int n, const E1C49F0* value)
+extern "C" void Vector_Insert_1C49F0(V1C49F0* v, E1C49F0* pos, unsigned int n, const E1C49F0* value)
 {
     if (n == 0)
         return;
     if (n > 0x600000 || v->count > 0x600000 - n) {
-        func_00123BE8(D_00489738->stream, D_0049F2C0);
+        Libc_Fprintf(D_00489738->stream, D_0049F2C0);
         Libc_Abort();
     }
     if (v->count + n <= v->cap) {

@@ -9,12 +9,12 @@ extern char D_004E0E60[];
 extern int D_00572190;
 void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
 int func_002E9A10(void);
-int func_003C9C30(NetworkValuePacket* packet);
+int Event_UnpackHeader(NetworkValuePacket* packet);
 int func_002E9A98(NetworkValuePacket* packet, void* destination, int size, int count);
 int func_002E9F08(int* type, NetworkValueHandler callback);
 int Event_PackHeader(NetworkValueEvent* self, int first, int* type, int third,
                       int fourth, unsigned int capacity, NetworkValuePacket* packet);
-int func_00428EF0(int first, int second, int third, const NetworkValuePacket* packet);
+int cActivateMsg_NetReceive(int first, int second, int third, const NetworkValuePacket* packet);
 }
 
 static inline void copy_event_base(NetworkValueEvent* destination, const NetworkValueEvent* source)
@@ -31,7 +31,7 @@ static inline void copy_event_base(NetworkValueEvent* destination, const Network
 }
 
 /* Allocate an event clone and preserve its base header and value payload. */
-extern "C" NetworkValueEvent* func_00428CD0(const NetworkValueEvent* source)
+extern "C" NetworkValueEvent* cActivateMsg_v01(const NetworkValueEvent* source)
 {
     NetworkValueEvent* result;
     {
@@ -48,20 +48,20 @@ extern "C" NetworkValueEvent* func_00428CD0(const NetworkValueEvent* source)
 }
 
 /* Register the value-event payload fields and its receive callback. */
-extern "C" bool func_00428DE0(void)
+extern "C" bool cActivateMsg_NetRegister(void)
 {
     bool success = false;
     NetworkValuePacket packet;
-    if (!func_002E9A10() && func_003C9C30(&packet) &&
+    if (!func_002E9A10() && Event_UnpackHeader(&packet) &&
         !func_002E9A98(&packet, &packet.value, 4, 1) &&
         !func_002E9A98(&packet, &packet.state, 1, 1) &&
-        !func_002E9F08(&D_00572190, func_00428EF0))
+        !func_002E9F08(&D_00572190, cActivateMsg_NetReceive))
         success = true;
     return success;
 }
 
 /* Pack the payload when the retail capacity and output-type requirements hold. */
-extern "C" int func_00428E70(NetworkValueEvent* self, int first, int* type, int third,
+extern "C" int cActivateMsg_v02(NetworkValueEvent* self, int first, int* type, int third,
                             int fourth, unsigned int capacity, NetworkValuePacket* packet)
 {
     Event_PackHeader(self, first, type, third, fourth, capacity, packet);

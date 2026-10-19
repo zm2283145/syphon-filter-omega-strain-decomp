@@ -28,7 +28,7 @@ struct TIValueII { int a; int b; };
                                  int left, int first, const VT* src)          \
     {                                                                         \
         if (tree->count > 0xFFFFFFFFU - 1) {                                  \
-            func_00123BE8(D_00489738->stream, errSym);                        \
+            Libc_Fprintf(D_00489738->stream, errSym);                        \
             Libc_Abort();                                                  \
         }                                                                     \
         name##_Node* node = (name##_Node*)TStr_Alloc(sizeof(name##_Node), allocFile, (allocLine)); \
@@ -53,4 +53,4 @@ struct TIValueII { int a; int b; };
 struct TIV_002D1430 { int w0; int w1; int w2; unsigned char w3; int w4; int w5; };
 
 extern "C" { char D_004AD4C0[] = "tree::insert length error\n"; }
-DEFINE_TREE_INSERT_V8X(func_002D1430, TIV_002D1430, D_004AD4C0, D_004AD508, 0x5C, func_0013CD40)
+DEFINE_TREE_INSERT_V8X(Tree_Insert_2D1430, TIV_002D1430, D_004AD4C0, D_004AD508, 0x5C, func_0013CD40)

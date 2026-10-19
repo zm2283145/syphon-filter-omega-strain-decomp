@@ -29,7 +29,7 @@ int FrontEnd_OpenPopup(void* ui, int a, char* b, char* c, void* d, int e);
 void* GuiManager_FindOrLoad(void* a, char* b, char* c);
 char* GuiScreen_GetLobbyString(void* self, int id, int a, int b, int c, int d);
 void String_CtorCStr_13B480(void* s, char* t);
-void func_0013D680(void* d, const void* s);
+void String_AssignString(void* d, const void* s);
 void String_Dtor(void* s, int f);
 char* String_CStr(void* s);
 void func_0033D0C0(void* self);
@@ -42,7 +42,7 @@ struct Str_3D0C0 {
     Str_3D0C0(char* s) { String_CtorCStr_13B480(this, s); }
     /* out-of-line copy is weak and dropped at link (as include/alloc_guard.h) */
     __declspec(weak) __declspec(DROPDTOR) ~Str_3D0C0() { String_Dtor(this, 0); }
-    Str_3D0C0& operator=(const Str_3D0C0& o) { func_0013D680(this, &o); return *this; }
+    Str_3D0C0& operator=(const Str_3D0C0& o) { String_AssignString(this, &o); return *this; }
 };
 void func_0033D0C0(void* self)
 {

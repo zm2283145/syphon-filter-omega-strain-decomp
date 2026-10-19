@@ -9,6 +9,6 @@
 /* "rt_crypt version: 1.01.0024" */
 
 /* Library version string getter: "rt_crypt version: 1.01.0024". */
-char* func_002F7FA0(void) {
+char* RtCrypt_GetVersion(void) {
     return "rt_crypt version: 1.01.0024";
 }

@@ -11,10 +11,10 @@ extern int func_001F3030(void);
 extern ObjVec* func_001F3760(ObjVec*);
 extern ObjVec* func_001F3790(ObjVec*);
 extern ObjVec* func_001F37C0(ObjVec*);
-extern int func_0020B3F0(int, int);
+extern int Vector_Reserve_20B3F0(int, int);
 
-int func_001F3710(int a0, int a1) {
-    return func_0020B3F0(a0, a1);
+int Vector_Reserve_20B3F0_Thunk_1F3710(int a0, int a1) {
+    return Vector_Reserve_20B3F0(a0, a1);
 }
 
 int func_001F3720(void) {

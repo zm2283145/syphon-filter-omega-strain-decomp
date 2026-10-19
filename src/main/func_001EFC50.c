@@ -16,7 +16,7 @@ extern char D_004A05B8[];
 extern char D_004A05C8[];
 extern char D_004A05D8[];
 #pragma optimization_level 1
-void func_001EFC50(void* p0)
+void MotionGraph_BuildStealthKills(void* p0)
 {
     B4 v1EC;
     B4 v1E8;

@@ -3,7 +3,7 @@ extern int D_0048C418;
 extern char D_004AD288[];
 extern int func_002E9648(void);
 extern int printf(const char *, ...);
-int func_002CF3A8(void)
+int Medius_CloseReportLib(void)
 {
     int r = 0;
     if (D_0048C414 != 1) return -0xC;

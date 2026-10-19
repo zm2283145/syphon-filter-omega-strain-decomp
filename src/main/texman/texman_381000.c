@@ -47,7 +47,7 @@ typedef struct {
 extern "C" {
 extern char D_004BC2B8[];
 void func_003BBBC0(Obj_381080* o, int flags);
-void func_00383420(ListNode_381080** result, List_381080* list, ListNode_381080** first, ListNode_381080** last);
+void ObjectList_EraseRange_383420(ListNode_381080** result, List_381080* list, ListNode_381080** first, ListNode_381080** last);
 }
 static inline void Free_381080(Obj_381080* o)
 {
@@ -62,7 +62,7 @@ static inline void ListClear_381080(List_381080* self)
     ListNode_381080* last;
     last = (ListNode_381080*)&self->sentinelPrev;
     first = self->first;
-    func_00383420(&result, self, &first, &last);
+    ObjectList_EraseRange_383420(&result, self, &first, &last);
 }
 static inline void Reset_381080(Mgr_381080* m)
 {

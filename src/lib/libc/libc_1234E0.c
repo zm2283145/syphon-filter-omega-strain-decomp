@@ -18,12 +18,12 @@ typedef struct __sFILE {
 struct _glue { struct _glue *_next; int _niobs; FILE *_iobs; };
 struct _reent { int _errno; char p0[0x34]; int __sdidinit; char p1[0x1D8 - 0x3C]; struct _glue __sglue; };extern struct _reent *D_00489738;
 extern void __sinit(struct _reent *);
-extern int func_00124BC0(struct _reent *, int (*)(FILE *));
+extern int Newlib_Fwalk(struct _reent *, int (*)(FILE *));
 int fflush(FILE *fp)
 {
     int n, t;
     unsigned char *p;
-    if (fp == 0) return func_00124BC0(D_00489738, fflush);
+    if (fp == 0) return Newlib_Fwalk(D_00489738, fflush);
     do {
         if ((fp)->_data == 0)
             (fp)->_data = D_00489738;
@@ -96,7 +96,7 @@ char *func_001235F8(char *buf, int n, FILE_001235F8 *fp)
 /* merge_units: end func_001235F8 */
 
 /* merge_units: begin func_00123730 */
-extern int func_00128D10(); extern int func_00128D78(); extern int func_00128DF8(); extern int func_00128E60();
+extern int Newlib_Sread(); extern int Newlib_Swrite(); extern int Newlib_Sseek(); extern int Newlib_Sclose();
 typedef struct { unsigned char* _p; int _r; int _w; short _flags; short _file; unsigned char* _bf_base; int _bf_size; int _lbfsize; void* _cookie; void* _read; void* _write; void* _seek; void* _close; char pad[0x24]; void* _data; } FILE_00123730;
 void func_00123730(FILE_00123730* ptr, int flags, int file, void* data)
 {
@@ -109,10 +109,10 @@ void func_00123730(FILE_00123730* ptr, int flags, int file, void* data)
   ptr->_bf_size = 0;
   ptr->_lbfsize = 0;
   ptr->_cookie = ptr;
-  ptr->_read = func_00128D10;
-  ptr->_write = func_00128D78;
-  ptr->_seek = func_00128DF8;
-  ptr->_close = func_00128E60;
+  ptr->_read = Newlib_Sread;
+  ptr->_write = Newlib_Swrite;
+  ptr->_seek = Newlib_Sseek;
+  ptr->_close = Newlib_Sclose;
   ptr->_data = data;
 }
 /* merge_units: end func_00123730 */
@@ -121,7 +121,7 @@ void func_00123730(FILE_00123730* ptr, int flags, int file, void* data)
 extern void* _malloc_r(void* d, unsigned int n);
 extern void* memset(void* p, int c, unsigned int n);
 struct glue_00123790 { struct glue_00123790* _next; int _niobs; void* _iobs; };
-struct glue_00123790* func_00123790(void* d, int n)
+struct glue_00123790* Newlib_Sfmoreglue(void* d, int n)
 {
   struct glue_00123790 *g;
   g = (struct glue_00123790 *) _malloc_r (d, sizeof (*g) + n * 0x58);
@@ -137,11 +137,11 @@ struct glue_00123790* func_00123790(void* d, int n)
 
 /* merge_units: begin func_00123808 */
 #if 0 /* merge_units */
-extern struct _glue *func_00123790(struct _reent *, int);
+extern struct _glue *Newlib_Sfmoreglue(struct _reent *, int);
 #endif /* merge_units */
-#define func_00123790(a0, a1) ((struct _glue *)func_00123790((void *)(a0), (a1))) /* merge_units */
+#define Newlib_Sfmoreglue(a0, a1) ((struct _glue *)Newlib_Sfmoreglue((void *)(a0), (a1))) /* merge_units */
 
-FILE *func_00123808(struct _reent *d)
+FILE *Newlib_Sfp(struct _reent *d)
 {
     FILE *fp;
     int n;
@@ -150,7 +150,7 @@ FILE *func_00123808(struct _reent *d)
     for (g = &d->__sglue;; g = g->_next) {
         for (fp = g->_iobs, n = g->_niobs; --n >= 0; fp++)
             if (fp->_flags == 0) goto found;
-        if (g->_next == 0 && (g->_next = func_00123790(d, 4)) == 0) break;
+        if (g->_next == 0 && (g->_next = Newlib_Sfmoreglue(d, 4)) == 0) break;
     }
     d->_errno = 0xC;
     return 0;
@@ -170,5 +170,5 @@ found:
     fp->_data = d;
     return fp;
 }
-#undef func_00123790 /* merge_units */
+#undef Newlib_Sfmoreglue /* merge_units */
 /* merge_units: end func_00123808 */

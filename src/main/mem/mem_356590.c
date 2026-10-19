@@ -66,11 +66,11 @@ extern "C" {
 extern char D_004DF020[];
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void GuiPersonnelScreen_ctor(void* self);
-void func_00298690(void* str);
+void String_CtorEmpty(void* str);
 void GuiPersonnelMenu_ctor(void* payload);
 }
 struct O356600 { void* vtable; char pad4[0x68]; char s6C[0xC]; char s78[0xC]; char pad84[0x2C]; char pB0[0x1A0]; };
-extern "C" O356600* func_00356600(void)
+extern "C" O356600* GuiPersonnelMenu_Create(void)
 {
     O356600* p;
     {
@@ -80,8 +80,8 @@ extern "C" O356600* func_00356600(void)
     if (p) {
         GuiPersonnelScreen_ctor(p);
         p->vtable = D_004DF020;
-        func_00298690(p->s6C);
-        func_00298690(p->s78);
+        String_CtorEmpty(p->s6C);
+        String_CtorEmpty(p->s78);
         GuiPersonnelMenu_ctor(p->pB0);
     }
     return p;
@@ -95,6 +95,6 @@ extern "C" O356600* func_00356600(void)
 #include "vtable_base_dtor.h"
 
 /* Derived destructor: restore vtable, run base destructor, optionally delete. */
-DEFINE_VTABLE_BASE_DTOR(func_003566D0, D_004DF0B0, GuiWidget_Destroy)
+DEFINE_VTABLE_BASE_DTOR(GuiPersonnelScreen_dtor_3566D0, D_004DF0B0, GuiWidget_Destroy)
 #pragma pop /* merge_units */
 /* merge_units: end func_003566D0 */

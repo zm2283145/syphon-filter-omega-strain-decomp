@@ -53,7 +53,7 @@ extern char D_004BAC88[];
 extern char D_004BACC8[];
 void func_00352750(TStr* d, const TStr* s);
 void func_00351FC0(E2460* p, int f);
-void* func_00139BC0(unsigned int size, void* p);
+void* Mem_PlacementNew(unsigned int size, void* p);
 #if 0 /* merge_units */
 void func_00352320(void* d, const E2460* s);
 #endif /* merge_units */
@@ -84,7 +84,7 @@ extern "C" void func_00352460(V2460* v, const E2460* first, const E2460* last)
             v->count = n;
         } else if (v->count < n) {
             for (; first != last; first++, p++) {
-                void* m = func_00139BC0(sizeof(E2460), p);
+                void* m = Mem_PlacementNew(sizeof(E2460), p);
                 if (m)
                     func_00352320(m, first);
                 v->count++;
@@ -92,7 +92,7 @@ extern "C" void func_00352460(V2460* v, const E2460* first, const E2460* last)
         }
     } else {
         if (n > 0x4CCCCC) {
-            func_00123BE8(D_00489738->stream, D_004BAC10);
+            Libc_Fprintf(D_00489738->stream, D_004BAC10);
             Libc_Abort();
         }
         func_00351F40(v);
@@ -110,7 +110,7 @@ extern "C" void func_00352460(V2460* v, const E2460* first, const E2460* last)
         {
             E2460* p = v->data;
             for (; first != last; first++, p++) {
-                void* m = func_00139BC0(sizeof(E2460), p);
+                void* m = Mem_PlacementNew(sizeof(E2460), p);
                 if (m)
                     func_00352320(m, first);
                 v->count++;

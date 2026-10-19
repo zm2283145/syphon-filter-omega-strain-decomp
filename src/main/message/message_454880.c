@@ -12,7 +12,7 @@ int GuiSubTitleDisplay_Clear();
 extern char D_004DADF0;
 extern char g_Game;
 
-void func_00454880(char * arg0) {
+void GuiRadioLog_ClearFlag4(char * arg0) {
     struct { char * f20[8]; signed char f40[88]; int f98[39]; int f134[47]; } sl;
     int temp_a0;
 

@@ -21,7 +21,7 @@ int func_003065D8(int *out)
 
 /* merge_units: begin func_00306630 */
 extern int func_0010CEE0(unsigned short t, void (*cb)(), int arg);
-extern int func_0010D050(void);
+extern int GetThreadId(void);
 extern void SleepThread(void);
 extern void func_00306D70();
 extern double SoftFloat_FloatToDouble(float);
@@ -38,7 +38,7 @@ int func_00306630(unsigned int ms)
             n = (unsigned int)t;
             t = 0.0f;
         }
-        func_0010CEE0(n, func_00306D70, func_0010D050());
+        func_0010CEE0(n, func_00306D70, GetThreadId());
         SleepThread();
     }
     return 0;

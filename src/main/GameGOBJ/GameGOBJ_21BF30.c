@@ -21,7 +21,7 @@
 
 DEFINE_RESIZE_ELEMENT(Elem16, 16)
 #pragma opt_common_subs off
-DEFINE_VECTOR_RESIZE(func_0021BF30, Elem16, func_0021C330, func_0021C260)
+DEFINE_VECTOR_RESIZE(func_0021BF30, Elem16, Vector_Insert_21C330, func_0021C260)
 #pragma opt_common_subs reset
 #pragma pop /* merge_units */
 /* merge_units: end func_0021BF30 */

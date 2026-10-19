@@ -4,6 +4,6 @@
 #pragma mpwc_relax on
 extern char *D_0051EE58;
 
-void func_004D3520(void) {
+void StaticInit_NetCopyMsgName(void) {
     D_0051EE58 = "NetCopyMsg";
 }

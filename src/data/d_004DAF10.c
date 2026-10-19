@@ -36,6 +36,8 @@ extern void cElevatorGOBJ_v3D();
 extern void cGOBJTriggerEventMsg_dtor();
 extern void cGOBJTriggerEventMsg_v01();
 extern void cGOBJTriggerEventMsg_v02();
+extern void cGOBJ_v35();
+extern void cGOBJ_v39();
 extern void cGameGOBJ_ActivateWithPart();
 extern void cGameGOBJ_DeactivateWithPart();
 extern void cGameGOBJ_Disable();
@@ -43,10 +45,31 @@ extern void cGameGOBJ_Draw();
 extern void cGameGOBJ_Enable();
 extern void cGameGOBJ_GetBounds();
 extern void cGameGOBJ_GetModelCol();
+extern void cGameGOBJ_v04();
+extern void cGameGOBJ_v08();
+extern void cGameGOBJ_v09();
+extern void cGameGOBJ_v10();
+extern void cGameGOBJ_v15();
+extern void cGameGOBJ_v16();
+extern void cGameGOBJ_v2F();
+extern void cGameGOBJ_v42();
 extern void cInteractGOBJ_dtor();
 extern void cInteractGOBJ_v01();
 extern void cInteractGOBJ_v0B();
 extern void cInteractGOBJ_v0C();
+extern void cNode_v06();
+extern void cNode_v07();
+extern void cNode_v0D();
+extern void cNode_v14();
+extern void cNode_v24();
+extern void cNode_v25();
+extern void cNode_v26();
+extern void cNode_v27();
+extern void cNode_v28();
+extern void cNode_v29();
+extern void cNode_v2A();
+extern void cNode_v2B();
+extern void cNode_v3A();
 extern void cSoundGOBJ_dtor();
 extern void cSoundGOBJ_v01();
 extern void cSoundGOBJ_v0B();
@@ -79,31 +102,8 @@ extern void func_0015C050();
 extern void func_0015C080();
 extern void func_0015C090();
 extern void func_0015C0A0();
-extern void func_002152D0();
-extern void func_00216C50();
-extern void func_0021A920();
-extern void func_0021ABC0();
-extern void func_0021AC20();
-extern void func_0021BD70();
-extern void func_0021BD80();
-extern void func_0021BE50();
-extern void func_003CD090();
-extern void func_003CD110();
-extern void func_003CD4A0();
-extern void func_003CD7A0();
-extern void func_003CD920();
-extern void func_003CDA60();
-extern void func_003CDBE0();
-extern void func_003CDC20();
-extern void func_003CDD40();
-extern void func_003CDD80();
-extern void func_003CDDC0();
-extern void func_003CE7D0();
-extern void func_003CE810();
-extern void func_003CE9D0();
 extern void func_003CE9E0();
 extern void func_003CE9F0();
-extern void func_003CEA00();
 
 void *D_004DAF10[8] = {
     0, 0, &cGOBJTriggerEventMsg_dtor, &cGOBJTriggerEventMsg_v01,
@@ -113,61 +113,61 @@ void *D_004DAF10[8] = {
 void *D_004DAF30[68] = {
     0, 0, &cSoundGOBJ_dtor, &cSoundGOBJ_v01,
     &GObj_GetID, &Object_GetAttachedOrSelf, &func_0015C090, &func_0012ED00,
-    &func_003CE810, &func_003CE7D0, &func_0012ED30, &func_0012ED40,
-    &func_0012ED50, &cSoundGOBJ_v0B, &cSoundGOBJ_v0C, &func_003CEA00,
+    &cNode_v06, &cNode_v07, &func_0012ED30, &func_0012ED40,
+    &func_0012ED50, &cSoundGOBJ_v0B, &cSoundGOBJ_v0C, &cNode_v0D,
     &cSoundGOBJ_v0E, &cSoundGOBJ_v0F, &cSoundGOBJ_v10, &Actor_BasePreLogic,
-    &Actor_BaseWorldUpdate, &Actor_VirtualNop, &func_003CE9D0, &cSoundGOBJ_v15,
+    &Actor_BaseWorldUpdate, &Actor_VirtualNop, &cNode_v14, &cSoundGOBJ_v15,
     &cSoundGOBJ_v16, &Node_SetFlag2C, &Node_ClearFlag2C, &Node_GetFlag2C,
     &func_0015BFB0, &func_0015BFC0, &func_0015BFD0, &func_00148870,
     &func_0015BFF0, &func_0015BFE0, &func_0013EE60, &func_0015C000,
-    &Object_AttachTransform, &Player_GetActiveWeapon, &func_003CDDC0, &func_003CDD80,
-    &func_003CDD40, &func_003CDC20, &func_003CDBE0, &func_003CDA60,
-    &func_003CD920, &func_003CD7A0, &func_0015C010, &func_00153860,
+    &Object_AttachTransform, &Player_GetActiveWeapon, &cNode_v24, &cNode_v25,
+    &cNode_v26, &cNode_v27, &cNode_v28, &cNode_v29,
+    &cNode_v2A, &cNode_v2B, &func_0015C010, &func_00153860,
     &Object_GetEye, &func_0015C020, &func_00140E90, &func_0015C030,
-    &func_0015C040, &func_0015C050, &Node_GetWorldMatrix, &func_003CD4A0,
-    &Node_GetLightRefPoint, &PathObj_GetPosition, &Node_GetComponentMatrix, &func_003CD110,
-    &func_003CD090, &GObj_GetWorldMatrix, &func_0013E060, &func_0015C080,
+    &func_0015C040, &func_0015C050, &Node_GetWorldMatrix, &cGOBJ_v35,
+    &Node_GetLightRefPoint, &PathObj_GetPosition, &Node_GetComponentMatrix, &cGOBJ_v39,
+    &cNode_v3A, &GObj_GetWorldMatrix, &func_0013E060, &func_0015C080,
     &Actor_ApplyContactDamage, &func_0015C0A0, &GObj_GetLifeState, &Controller_DeathNotice,
 };
 
 void *D_004DB040[72] = {
     0, 0, &cElevatorGOBJ_dtor, &Lift_Receive,
     &GObj_GetID, &Object_GetAttachedOrSelf, &cElevatorGOBJ_v04, &Lift_PublishFloorLocks,
-    &cElevatorGOBJ_v06, &cElevatorGOBJ_v07, &func_0021BD70, &func_0021BD80,
-    &func_0012ED50, &Lift_GetScriptType, &Lift_ScriptFilter, &func_003CEA00,
+    &cElevatorGOBJ_v06, &cElevatorGOBJ_v07, &cGameGOBJ_v08, &cGameGOBJ_v09,
+    &func_0012ED50, &Lift_GetScriptType, &Lift_ScriptFilter, &cNode_v0D,
     &func_003CE9F0, &func_003CE9E0, &Lift_Update, &GObj_Tick,
     &Actor_BaseWorldUpdate, &Actor_VirtualNop, &cGameGOBJ_Draw, &cElevatorGOBJ_v15,
     &cElevatorGOBJ_v16, &cGameGOBJ_Enable, &cGameGOBJ_Disable, &Node_GetFlag2C,
     &func_0015BFB0, &func_0015BFC0, &func_0015BFD0, &func_00148870,
     &func_0015BFF0, &func_0015BFE0, &cGameGOBJ_GetBounds, &func_0015C000,
-    &Object_AttachTransform, &Player_GetActiveWeapon, &func_003CDDC0, &func_003CDD80,
-    &func_003CDD40, &func_003CDC20, &func_003CDBE0, &func_003CDA60,
-    &func_003CD920, &func_003CD7A0, &cGameGOBJ_GetModelCol, &func_00153860,
-    &Object_GetEye, &func_002152D0, &func_00140E90, &func_0015C030,
-    &func_0015C040, &func_0015C050, &Node_GetWorldMatrix, &func_003CD4A0,
-    &Node_GetLightRefPoint, &PathObj_GetPosition, &Node_GetComponentMatrix, &func_003CD110,
-    &func_003CD090, &GObj_GetWorldMatrix, &func_0013E060, &cElevatorGOBJ_v3D,
+    &Object_AttachTransform, &Player_GetActiveWeapon, &cNode_v24, &cNode_v25,
+    &cNode_v26, &cNode_v27, &cNode_v28, &cNode_v29,
+    &cNode_v2A, &cNode_v2B, &cGameGOBJ_GetModelCol, &func_00153860,
+    &Object_GetEye, &cGameGOBJ_v2F, &func_00140E90, &func_0015C030,
+    &func_0015C040, &func_0015C050, &Node_GetWorldMatrix, &cGOBJ_v35,
+    &Node_GetLightRefPoint, &PathObj_GetPosition, &Node_GetComponentMatrix, &cGOBJ_v39,
+    &cNode_v3A, &GObj_GetWorldMatrix, &func_0013E060, &cElevatorGOBJ_v3D,
     &Actor_ApplyContactDamage, &func_0015C0A0, &GObj_GetLifeState, &Controller_DeathNotice,
-    &func_00216C50, 0, 0, 0,
+    &cGameGOBJ_v42, 0, 0, 0,
 };
 
 void *D_004DB160[72] = {
     0, 0, &cInteractGOBJ_dtor, &cInteractGOBJ_v01,
-    &GObj_GetID, &Object_GetAttachedOrSelf, &func_0021BE50, &func_0012ED00,
-    &cGameGOBJ_ActivateWithPart, &cGameGOBJ_DeactivateWithPart, &func_0021BD70, &func_0021BD80,
-    &func_0012ED50, &cInteractGOBJ_v0B, &cInteractGOBJ_v0C, &func_003CEA00,
-    &func_003CE9F0, &func_003CE9E0, &func_0021A920, &GObj_Tick,
-    &Actor_BaseWorldUpdate, &Actor_VirtualNop, &cGameGOBJ_Draw, &func_0021AC20,
-    &func_0021ABC0, &cGameGOBJ_Enable, &cGameGOBJ_Disable, &Node_GetFlag2C,
+    &GObj_GetID, &Object_GetAttachedOrSelf, &cGameGOBJ_v04, &func_0012ED00,
+    &cGameGOBJ_ActivateWithPart, &cGameGOBJ_DeactivateWithPart, &cGameGOBJ_v08, &cGameGOBJ_v09,
+    &func_0012ED50, &cInteractGOBJ_v0B, &cInteractGOBJ_v0C, &cNode_v0D,
+    &func_003CE9F0, &func_003CE9E0, &cGameGOBJ_v10, &GObj_Tick,
+    &Actor_BaseWorldUpdate, &Actor_VirtualNop, &cGameGOBJ_Draw, &cGameGOBJ_v15,
+    &cGameGOBJ_v16, &cGameGOBJ_Enable, &cGameGOBJ_Disable, &Node_GetFlag2C,
     &func_0015BFB0, &func_0015BFC0, &func_0015BFD0, &func_00148870,
     &func_0015BFF0, &func_0015BFE0, &cGameGOBJ_GetBounds, &func_0015C000,
-    &Object_AttachTransform, &Player_GetActiveWeapon, &func_003CDDC0, &func_003CDD80,
-    &func_003CDD40, &func_003CDC20, &func_003CDBE0, &func_003CDA60,
-    &func_003CD920, &func_003CD7A0, &cGameGOBJ_GetModelCol, &func_00153860,
-    &Object_GetEye, &func_002152D0, &func_00140E90, &func_0015C030,
-    &func_0015C040, &func_0015C050, &Node_GetWorldMatrix, &func_003CD4A0,
-    &Node_GetLightRefPoint, &PathObj_GetPosition, &Node_GetComponentMatrix, &func_003CD110,
-    &func_003CD090, &GObj_GetWorldMatrix, &func_0013E060, &func_0015C080,
+    &Object_AttachTransform, &Player_GetActiveWeapon, &cNode_v24, &cNode_v25,
+    &cNode_v26, &cNode_v27, &cNode_v28, &cNode_v29,
+    &cNode_v2A, &cNode_v2B, &cGameGOBJ_GetModelCol, &func_00153860,
+    &Object_GetEye, &cGameGOBJ_v2F, &func_00140E90, &func_0015C030,
+    &func_0015C040, &func_0015C050, &Node_GetWorldMatrix, &cGOBJ_v35,
+    &Node_GetLightRefPoint, &PathObj_GetPosition, &Node_GetComponentMatrix, &cGOBJ_v39,
+    &cNode_v3A, &GObj_GetWorldMatrix, &func_0013E060, &func_0015C080,
     &Actor_ApplyContactDamage, &func_0015C0A0, &GObj_GetLifeState, &Controller_DeathNotice,
-    &func_00216C50, 0, 0, 0,
+    &cGameGOBJ_v42, 0, 0, 0,
 };

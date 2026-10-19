@@ -7,7 +7,7 @@
 #include "types.h"
 #include "loose00_types.h"
 
-extern int func_001EEF30(Vec16Array* v, FlagElem16* pos, int n, int value);
+extern int Vector_Insert_1EEF30(Vec16Array* v, FlagElem16* pos, int n, int value);
 
 /* push_back(value) on an array of 16-byte elements. */
 int func_001E1130(Vec16Array* v, int value) {
@@ -16,5 +16,5 @@ int func_001E1130(Vec16Array* v, int value) {
 
     count = v->count;
     data = v->data;
-    return func_001EEF30(v, data + count, 1, value);
+    return Vector_Insert_1EEF30(v, data + count, 1, value);
 }

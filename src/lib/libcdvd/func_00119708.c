@@ -9,7 +9,7 @@ extern char D_00498DF0[];
 extern char D_00498DB8[];
 extern char D_00498DD8[];
 extern void func_00118718(void);
-extern int func_0010D1B0(int);
+extern int PollSema(int);
 extern int SignalSema(int);
 extern int func_00119510(int);
 extern void func_0010FBC0(int);
@@ -28,7 +28,7 @@ int sceCdDiskReady(int mode)
     int j;
     if (D_00487890 > 0) scePrintf(D_00498DF0);
     func_00118718();
-    if (D_004878B0 != func_0010D1B0(D_004878B0)) return mode != 8 ? 6 : -1;
+    if (D_004878B0 != PollSema(D_004878B0)) return mode != 8 ? 6 : -1;
     func_0010FBC0(0);
     i = 0;
     if (D_004878C8 < 0) {

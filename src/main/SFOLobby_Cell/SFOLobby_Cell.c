@@ -992,7 +992,7 @@ extern void func_00449660(S449770*, int);
 #endif /* merge_units */
 #define func_00449660(a0, a1) (func_00449660((void *)(a0), (a1))) /* merge_units */
 
-extern unsigned char func_00452FF0(S449770*, int);
+extern unsigned char SFOLobby_FormatError(S449770*, int);
 int func_00449770(S449770* s)
 {
     int i;
@@ -1001,7 +1001,7 @@ int func_00449770(S449770* s)
     for (i = 0; i < s->n74; i++) {
         func_00449660(s, LobbyArray_At(s->f70, i)->f1C);
     }
-    return func_00452FF0(s, 0) == 0;
+    return SFOLobby_FormatError(s, 0) == 0;
 }
 #undef LobbyArray_At /* merge_units */
 #undef func_00449510 /* merge_units */
@@ -1508,16 +1508,16 @@ char* func_0044A290(S44A290* s)
 #pragma push /* merge_units */
 typedef struct { char p0[0x21C]; int f21C; int f220; char p224[0x24C - 0x224]; int f24C; char p250[0x16DC - 0x250]; char f16DC[0xEC]; signed char f17C8; char p17C9[0x2410 - 0x17C9]; int f2410; char p2414[4]; char name[0x17C]; char out[0xC8]; } S44A420;
 typedef struct { int f0; int count; char p8[8]; int f10; int f14; signed char f18; } List44A420;
-extern int func_00443100(S44A420*, char*, int);
+extern int SFOLobby_CheckText(S44A420*, char*, int);
 #if 0 /* merge_units */
-extern int func_00452FF0(S44A420*, int);
+extern int SFOLobby_FormatError(S44A420*, int);
 #endif /* merge_units */
-#define func_00452FF0(a0, a1) ((int)func_00452FF0((void *)(a0), (a1))) /* merge_units */
+#define SFOLobby_FormatError(a0, a1) ((int)SFOLobby_FormatError((void *)(a0), (a1))) /* merge_units */
 
 extern List44A420* LobbyArray_ctor(List44A420*);
 extern void LobbyArray_Init(List44A420*, int, int, int);
 #define LobbyArray_At(a0, a1) ((int *)LobbyArray_At((a0), (a1))) /* merge_units */
-extern void func_0044F970(List44A420*, int);
+extern void LobbyArray_dtor(List44A420*, int);
 extern int func_00467838(void*, void*);
 extern int func_004673C8(void*, void*);
 extern int func_00467278(void*, void*);
@@ -1547,7 +1547,7 @@ int func_0044A420(S44A420* s, char* msg)
     int i;
 
     func_00451AE0();
-    if (func_00443100(s, msg, 0) == 0) {
+    if (SFOLobby_CheckText(s, msg, 0) == 0) {
         SFOLobby_SetError(s, 3, D_004C0D10, 0x268);
         return 0;
     }
@@ -1596,24 +1596,24 @@ int func_0044A420(S44A420* s, char* msg)
     s->f24C = func_00467278(&req3, func_00448700);
     if (s->f24C != 0) {
         SFOLobby_SetError(s, 1, D_004C0D10, 0x2BB);
-        func_0044F970(&list, -1);
+        LobbyArray_dtor(&list, -1);
         return 0;
     }
     while ((s->f220 != 0) ^ 1) {
         SFOLobby_CallUpdateHook(s, 0, 0);
         if (SFOLobby_Poll(s, s->f2410, D_00497890, 0) == 0) {
             SFOLobby_SetError(s, 2, D_004C0D10, 0x2C6);
-            func_0044F970(&list, -1);
+            LobbyArray_dtor(&list, -1);
             return 0;
         }
     }
     memset(s->out, 0, 0xC8);
     strncpy(s->out, msg, 0xC7);
-    if (func_00452FF0(s, 0)) {
-        func_0044F970(&list, -1);
+    if (SFOLobby_FormatError(s, 0)) {
+        LobbyArray_dtor(&list, -1);
         return 0;
     }
-    func_0044F970(&list, -1);
+    LobbyArray_dtor(&list, -1);
     return 1;
 }
 #pragma pop
@@ -1621,7 +1621,7 @@ int func_0044A420(S44A420* s, char* msg)
 #undef func_004484B0 /* merge_units */
 #undef func_00448470 /* merge_units */
 #undef func_00448700 /* merge_units */
-#undef func_00452FF0 /* merge_units */
+#undef SFOLobby_FormatError /* merge_units */
 #undef D_004C0D10 /* merge_units */
 #undef func_00448470 /* merge_units */
 #pragma pop /* merge_units */
@@ -1809,9 +1809,9 @@ extern int func_00449510(S44AC10*);
 #define func_00449510(a0) (func_00449510((void *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern unsigned char func_00452FF0(S44AC10*, int);
+extern unsigned char SFOLobby_FormatError(S44AC10*, int);
 #endif /* merge_units */
-#define func_00452FF0(a0, a1) (func_00452FF0((void *)(a0), (a1))) /* merge_units */
+#define SFOLobby_FormatError(a0, a1) (SFOLobby_FormatError((void *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void func_0044A290(S44AC10*);
@@ -1910,7 +1910,7 @@ int func_0044AC10(S44AC10* s, int id)
     }
     s->busy = 0;
     if (s->fC08 < 0) {
-        if (func_00452FF0(s, 0) == 0x2A) {
+        if (SFOLobby_FormatError(s, 0) == 0x2A) {
             func_00449510(s);
             if (s->f74 != 0) {
                 SFOLobby_SetError(s, 0x3F, D_004C0D10, 0x1A6);
@@ -1927,7 +1927,7 @@ int func_0044AC10(S44AC10* s, int id)
 #undef func_00449A00 /* merge_units */
 #undef func_00449D20 /* merge_units */
 #undef func_00449510 /* merge_units */
-#undef func_00452FF0 /* merge_units */
+#undef SFOLobby_FormatError /* merge_units */
 #undef func_0044A290 /* merge_units */
 #undef func_00450A90 /* merge_units */
 #undef D_004C0D10 /* merge_units */
@@ -1939,9 +1939,9 @@ int func_0044AC10(S44AC10* s, int id)
 #define strlen(a0) ((unsigned int)strlen((a0))) /* merge_units */
 typedef struct { char p0[0x1CC]; int done; char p1D0[0x7C]; int f24C; char p250[0x21B8]; signed char busy; char p2409[7]; int f2410; char p2414[4]; char name[0x14C]; unsigned char b2564; } S44AF60;
 #if 0 /* merge_units */
-extern int func_00443100(S44AF60*, char*, int);
+extern int SFOLobby_CheckText(S44AF60*, char*, int);
 #endif /* merge_units */
-#define func_00443100(a0, a1, a2) (func_00443100((void *)(a0), (a1), (a2))) /* merge_units */
+#define SFOLobby_CheckText(a0, a1, a2) (SFOLobby_CheckText((void *)(a0), (a1), (a2))) /* merge_units */
 
 extern int func_00466A28(void*, void*);
 extern int func_00476998(void);
@@ -1984,7 +1984,7 @@ int func_0044AF60(S44AF60* s, char* arg1)
         SFOLobby_SetError(s, 0x1A, D_004C0D10, 0xF1);
         return 0;
     }
-    if (func_00443100(s, arg1, 0) == 0) {
+    if (SFOLobby_CheckText(s, arg1, 0) == 0) {
         SFOLobby_SetError(s, 3, D_004C0D10, 0xF7);
         return 0;
     }
@@ -2019,7 +2019,7 @@ int func_0044AF60(S44AF60* s, char* arg1)
 }
 #pragma pop
 #undef func_00448EB0 /* merge_units */
-#undef func_00443100 /* merge_units */
+#undef SFOLobby_CheckText /* merge_units */
 #undef func_00449F40 /* merge_units */
 #undef func_0044A420 /* merge_units */
 #undef func_00449A00 /* merge_units */

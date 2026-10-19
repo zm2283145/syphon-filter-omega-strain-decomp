@@ -48,7 +48,7 @@ int cScriptInterpreter_ExecuteInitCode(int );
 #define cScriptInterpreter_ExecuteInitCode(a0) (cScriptInterpreter_ExecuteInitCode((void *)(a0))) /* merge_units */
        
 int Script_PrintWarning();                               
-int func_003D7E30();                                  
+int Script_SaveSymbolMarks();                                  
 extern unsigned char D_004938D0;
 
 int ScriptMgr_InitClient(int arg0) {
@@ -66,7 +66,7 @@ int ScriptMgr_InitClient(int arg0) {
                 Script_PrintWarning(((int*)"client init reference check failed..."));
             }
         }
-        func_003D7E30();
+        Script_SaveSymbolMarks();
         F_(arg0, 0x4E60, int) = F_(arg0, 0xC, int);
         F_(arg0, 0x4E64, int) = F_(arg0, 0x28, int);
     }

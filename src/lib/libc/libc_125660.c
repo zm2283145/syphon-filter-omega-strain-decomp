@@ -15,8 +15,8 @@ struct malloc_chunk {
 typedef struct malloc_chunk *mchunkptr;
 typedef struct malloc_chunk *mbinptr;
 extern mbinptr D_00489748[];
-extern void func_001261B0(void *);
-extern void func_00126230(void *);
+extern void Newlib_MallocLock(void *);
+extern void Newlib_MallocUnlock(void *);
 #define av_ D_00489748
 #define SIZE_SZ 4
 #define PREV_INUSE 0x1
@@ -79,7 +79,7 @@ extern struct mallinfo D_00489B78;
 extern unsigned long D_00489B58;
 extern char *D_00489B60;
 extern unsigned long D_00489B68, D_00489B70;
-extern char *func_00128658(void *, int);
+extern char *Newlib_SbrkR(void *, int);
 extern void _free_r(void *, void *);
 #define sbrked_mem (D_00489B78.arena)
 #define initial_top ((mchunkptr)(bin_at(0)))
@@ -88,7 +88,7 @@ extern void _free_r(void *, void *);
 #define MALLOC_ALIGN_MASK (MALLOC_ALIGNMENT - 1)
 #define chunk2mem(p) ((void *)((char *)(p) + 2 * SIZE_SZ))
 #define set_head_size(p, s) ((p)->size = (((p)->size & PREV_INUSE) | (s)))
-extern void func_00125408(void *, INTERNAL_SIZE_T);
+extern void Newlib_MallocExtendTop(void *, INTERNAL_SIZE_T);
 #define last(b) ((b)->bk)
 #define first(b) ((b)->fd)
 #define next_bin(b) ((mbinptr)((char *)(b) + 2 * sizeof(mbinptr)))
@@ -120,7 +120,7 @@ void *_malloc_r(void *reent_ptr, unsigned int bytes)
 
     INTERNAL_SIZE_T nb = request2size(bytes);
 
-    func_001261B0(reent_ptr);
+    Newlib_MallocLock(reent_ptr);
 
     if (is_small_request(nb)) {
         idx = smallbin_index(nb);
@@ -130,7 +130,7 @@ void *_malloc_r(void *reent_ptr, unsigned int bytes)
             victim_size = chunksize(victim);
             unlink(victim, bck, fwd);
             set_inuse_bit_at_offset(victim, victim_size);
-            func_00126230(reent_ptr);
+            Newlib_MallocUnlock(reent_ptr);
             return chunk2mem(victim);
         }
         idx += 2;
@@ -146,7 +146,7 @@ void *_malloc_r(void *reent_ptr, unsigned int bytes)
             } else if (remainder_size >= 0) {
                 unlink(victim, bck, fwd);
                 set_inuse_bit_at_offset(victim, victim_size);
-                func_00126230(reent_ptr);
+                Newlib_MallocUnlock(reent_ptr);
                 return chunk2mem(victim);
             }
         }
@@ -162,13 +162,13 @@ void *_malloc_r(void *reent_ptr, unsigned int bytes)
             link_last_remainder(remainder);
             set_head(remainder, remainder_size | PREV_INUSE);
             set_foot(remainder, remainder_size);
-            func_00126230(reent_ptr);
+            Newlib_MallocUnlock(reent_ptr);
             return chunk2mem(victim);
         }
         clear_last_remainder;
         if (remainder_size >= 0) {
             set_inuse_bit_at_offset(victim, victim_size);
-            func_00126230(reent_ptr);
+            Newlib_MallocUnlock(reent_ptr);
             return chunk2mem(victim);
         }
         frontlink(victim, victim_size, remainder_index, bck, fwd);
@@ -197,12 +197,12 @@ void *_malloc_r(void *reent_ptr, unsigned int bytes)
                         link_last_remainder(remainder);
                         set_head(remainder, remainder_size | PREV_INUSE);
                         set_foot(remainder, remainder_size);
-                        func_00126230(reent_ptr);
+                        Newlib_MallocUnlock(reent_ptr);
                         return chunk2mem(victim);
                     } else if (remainder_size >= 0) {
                         set_inuse_bit_at_offset(victim, victim_size);
                         unlink(victim, bck, fwd);
-                        func_00126230(reent_ptr);
+                        Newlib_MallocUnlock(reent_ptr);
                         return chunk2mem(victim);
                     }
                 }
@@ -232,10 +232,10 @@ void *_malloc_r(void *reent_ptr, unsigned int bytes)
 
     remainder_size = long_sub_size_t(chunksize(top), nb);
     if (chunksize(top) < nb || remainder_size < (long)MINSIZE) {
-        func_00125408(reent_ptr, nb);
+        Newlib_MallocExtendTop(reent_ptr, nb);
         remainder_size = long_sub_size_t(chunksize(top), nb);
         if (chunksize(top) < nb || remainder_size < (long)MINSIZE) {
-            func_00126230(reent_ptr);
+            Newlib_MallocUnlock(reent_ptr);
             return 0;
         }
     }
@@ -243,7 +243,7 @@ void *_malloc_r(void *reent_ptr, unsigned int bytes)
     set_head(victim, nb | PREV_INUSE);
     top = chunk_at_offset(victim, nb);
     set_head(top, remainder_size | PREV_INUSE);
-    func_00126230(reent_ptr);
+    Newlib_MallocUnlock(reent_ptr);
     return chunk2mem(victim);
 }
 /* merge_units: end func_00125660 */

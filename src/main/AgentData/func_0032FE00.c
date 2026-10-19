@@ -32,7 +32,7 @@ static inline int Find_32FE00(const char* key)
     }
     return -1;
 }
-extern "C" O_32FE00* func_0032FE00(O_32FE00* self, const char* name, int id, char flag, int a, int b, const char* key)
+extern "C" O_32FE00* RatingRow_Construct(O_32FE00* self, const char* name, int id, char flag, int a, int b, const char* key)
 {
     self->key = Loc_FindKeyThunk(name);
     self->id = id;

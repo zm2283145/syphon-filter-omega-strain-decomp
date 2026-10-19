@@ -53,7 +53,7 @@ extern int D_004F7D20;
 extern int D_004F7D28;
 extern int D_004F7D30;
 extern int D_004F7D38;
-void func_004CF440(void) {
+void StaticInit_RegisterNIEvent(void) {
     D_004F7C28 = "MSGGAME_NI_EVENT_SHUTTLE";
     D_004F7C30 = "MSGGAME_NI_EVENT_NOTICE";
     D_004F7C38 = "MSGGAME_NI_CAMERA_MSG";

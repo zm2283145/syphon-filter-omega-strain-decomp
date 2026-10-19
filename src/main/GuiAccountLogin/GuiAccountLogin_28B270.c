@@ -43,6 +43,6 @@ void func_0028B270(SsoString* str, const char* first, const char* last) {
 
 /* Factory: allocate, run the base constructor, set the vtable and mode. */
 extern "C" { char D_004A9840[] = "guiWidget.hh"; }
-DEFINE_GUARDED_NEW_VT_INT(func_0028B2C0, 0xB0, D_004A9840, GuiScreen_ctor, D_004DD120, 0x84, 7)
+DEFINE_GUARDED_NEW_VT_INT(GuiAccountLogin_Create, 0xB0, D_004A9840, GuiScreen_ctor, D_004DD120, 0x84, 7)
 #pragma pop /* merge_units */
 /* merge_units: end func_0028B2C0 */

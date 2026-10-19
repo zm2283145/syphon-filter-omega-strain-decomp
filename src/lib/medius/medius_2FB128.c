@@ -76,12 +76,12 @@ int func_002FB238(L *l)
 
 /* merge_units: begin func_002FB2D8 */
 void *(*D_004908E0)(int) = 0;
-extern void *func_00125368(int);
+extern void *Libc_Malloc(int);
 int func_002FB2D8(void **out, long sz)
 {
     void *p;
     if (D_004908E0 == 0) {
-        p = func_00125368(sz);
+        p = Libc_Malloc(sz);
         *out = p;
         if (p == 0) return 1;
     } else {
@@ -113,11 +113,11 @@ int Net_AllocZeroed(void **out, long sz)
 
 /* merge_units: begin func_002FB3C0 */
 void (*D_004908E4)(int) = 0;
-extern void func_001253C0(int);
+extern void Libc_Free(int);
 int func_002FB3C0(int *p)
 {
     if (*p) {
-        if (D_004908E4 == 0) func_001253C0(*p);
+        if (D_004908E4 == 0) Libc_Free(*p);
         else D_004908E4(*p);
         *p = 0;
     }

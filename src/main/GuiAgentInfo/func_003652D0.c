@@ -3,6 +3,6 @@
 extern int strcmp(void*);
 
 /* Returns whether strcmp(((int*)"GuiAgentDisplay")) returned 0. */
-int func_003652D0(void) {
+int GuiAgentDisplay_IsType(void) {
     return strcmp(((int*)"GuiAgentDisplay")) == 0;
 }

@@ -21,7 +21,7 @@ static inline int Eq2D7A80(Node2D7A80* a, Node2D7A80* b) { return a == b; }
 #pragma push
 #pragma bool off
 #pragma opt_propagation off
-extern "C" int func_002D7A80(int a0, int a1, int a2, Arg2D7A80* arg) {
+extern "C" int cNetPathMsg_NetReceive(int a0, int a1, int a2, Arg2D7A80* arg) {
     NetRecvGuard g;
     if (D_005721D0) {
         Evt2D7A80 e;

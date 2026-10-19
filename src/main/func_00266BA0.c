@@ -40,14 +40,14 @@ extern char D_004A8250[];
 extern char D_004A8260[];
 void func_00267230(V_00266BA0* a, V_00266BA0* b);
 }
-extern "C" void func_00266BA0(V_00266BA0* v, E_00266BA0* pos, unsigned int n, const E_00266BA0* value)
+extern "C" void Vector_Insert_266BA0(V_00266BA0* v, E_00266BA0* pos, unsigned int n, const E_00266BA0* value)
 {
     unsigned int maxN;
     if (n == 0)
         return;
     maxN = 0x180000;
     if (n > maxN || v->count > maxN - n) {
-        func_00123BE8(D_00489738->stream, D_004A8220);
+        Libc_Fprintf(D_00489738->stream, D_004A8220);
         Libc_Abort();
     }
     unsigned int cap = v->cap; unsigned int cnt_ = v->count;

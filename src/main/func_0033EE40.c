@@ -6,7 +6,7 @@ extern void* GuiManager_FindOrLoad(int, char*, char*);
 extern char* GuiScreen_GetLobbyString(O33E*, int, int, int, int, int);
 extern void GuiKeyboard_Open(void*, char*, char*, O33E*, int, int, int);
 extern char D_004B9C60[];
-void func_0033EE40(O33E* o, int* p) {
+void GuiMenuScreen_OpenKeyboard(O33E* o, int* p) {
     void* w;
     if (!o->fa8 || !DME_GetLobby()) return;
     o->f100 = p ? *p : 0;

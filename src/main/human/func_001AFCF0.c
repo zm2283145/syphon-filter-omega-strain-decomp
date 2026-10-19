@@ -8,7 +8,7 @@
 
 extern int PtrVec_Reserve(void*, int);
 
-int func_001AFCF0(void* self, int arg) {
+int PtrVec_Reserve_Thunk_1AFCF0(void* self, int arg) {
     return PtrVec_Reserve(self, arg);
 }
 
@@ -19,7 +19,7 @@ Rel* func_001AFD00(Rel* r) {
     return r;
 }
 
-int func_001AFD20(void* self, int arg) {
+int PtrVec_Reserve_Thunk_1AFD20(void* self, int arg) {
     return PtrVec_Reserve(self, arg);
 }
 

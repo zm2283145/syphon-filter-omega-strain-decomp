@@ -1,5 +1,5 @@
 #include "types.h"
-int func_002824D0();
+int NetMsgTable_Add();
 int cGOBJ_GetScriptTypeKeyPtr();
 int Script_RegisterNative_2();
 int ScriptEnum_Register();
@@ -36,14 +36,14 @@ extern int D_005861A8;
 extern int D_005861B0;
 extern void* D_005861B8;
 extern void* D_005861C0;
-void func_004D7E20(void) {
+void StaticInit_GuiGameScreen(void) {
     D_00586140 = ScriptEnum_Register("eJoystickButton", &D_00497A30, 12);
     D_00586148 = Script_RegisterNative_2(Script_PlayXA, &D_00493880, "PlayXA", 1, &D_004938A0);
     D_00586150 = Script_RegisterNative_2(Script_PlayXA_2, &D_00493880, "PlayXA", 2, &D_004938A0, &D_00493898);
     D_00586158 = "cDisplayClientInteractMsg";
-    D_00586168 = func_002824D0(func_0045EBC0, &D_00586160, "cDisplayClientInteractMsg");
+    D_00586168 = NetMsgTable_Add(func_0045EBC0, &D_00586160, "cDisplayClientInteractMsg");
     D_00586170 = "cClearClientInteractMsg";
-    D_00586180 = func_002824D0(func_0045EB70, &D_00586178, "cClearClientInteractMsg");
+    D_00586180 = NetMsgTable_Add(func_0045EB70, &D_00586178, "cClearClientInteractMsg");
     D_00586188 = Script_RegisterNative_2(Script_DisplayInteract, &D_00493880, "DisplayInteract", 1, &D_00493898);
     D_00586190 = Script_RegisterNative_2(Script_DisplayInteract_2, &D_00493880, "DisplayInteract", 2, &D_00493898, &D_00586140);
     D_00586198 = Script_RegisterNative_2(Script_DisplayInteract_3, &D_00493880, "DisplayInteract", 2, cGOBJ_GetScriptTypeKeyPtr(), &D_004938A0);

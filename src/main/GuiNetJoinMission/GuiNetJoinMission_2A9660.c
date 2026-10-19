@@ -17,7 +17,7 @@
 char D_004AB8F0[] = "GuiOnlineOptions";   /* "GuiOnlineOptions" */
 
 /* Class name getter: "GuiOnlineOptions". */
-char* func_002A9660(void) {
+char* GuiOnlineOptions_GetClassName(void) {
     return D_004AB8F0;
 }
 #pragma pop /* merge_units */
@@ -27,7 +27,7 @@ char* func_002A9660(void) {
 #pragma push /* merge_units */
 extern int strcmp(const char*, const char*);
 /* Returns whether the string equals the table name. */
-int func_002A9670(void* a0, const char* s) { return strcmp("GuiOnlineOptions", s) == 0; }
+int GuiOnlineOptions_IsType(void* a0, const char* s) { return strcmp("GuiOnlineOptions", s) == 0; }
 #pragma pop /* merge_units */
 /* merge_units: end func_002A9670 */
 

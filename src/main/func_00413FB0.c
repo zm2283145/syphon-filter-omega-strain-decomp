@@ -9,7 +9,7 @@ struct V413FB0 { unsigned int cap; unsigned int count; E413FB0* data; };
 extern "C" {
 extern char D_004BEF70[];
 extern char D_004BEFA0[];
-void func_0013BCB0(E413FB0* d, const E413FB0* s);
+void String_CopyCtor(E413FB0* d, const E413FB0* s);
 void func_004144D0(E413FB0* first, E413FB0* last, E413FB0* dlast);
 void func_00414410(E413FB0* first, unsigned int n, const E413FB0* value);
 void func_004143D0(V413FB0* a, V413FB0* b);
@@ -18,7 +18,7 @@ void func_004145A0(V413FB0* v, int flags);
 static inline void Construct413FB0(E413FB0* p, const E413FB0* src)
 {
     if (p)
-        func_0013BCB0(p, src);
+        String_CopyCtor(p, src);
 }
 
 extern "C" void func_00413FB0(V413FB0* v, E413FB0* pos, unsigned int n, const E413FB0* value)
@@ -26,7 +26,7 @@ extern "C" void func_00413FB0(V413FB0* v, E413FB0* pos, unsigned int n, const E4
     if (n == 0)
         return;
     if (n > 0x800000 || v->count > 0x800000 - n) {
-        func_00123BE8(D_00489738->stream, D_004BEF70);
+        Libc_Fprintf(D_00489738->stream, D_004BEF70);
         Libc_Abort();
     }
     if (v->count + n <= v->cap) {

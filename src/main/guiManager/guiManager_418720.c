@@ -26,10 +26,10 @@ DEFINE_BASE_DTOR_CHAIN(func_00418720, String_Dtor)
 
 #include "loose04_types.h"
 
-extern int func_0013BCB0(L4WordVec*, int);
+extern int String_CopyCtor(L4WordVec*, int);
 
 int func_00418780(L4WordVec* v, int a1, int value) {
-    int ret = func_0013BCB0(v, a1);
+    int ret = String_CopyCtor(v, a1);
 
     v->unk0C = value;
     return ret;

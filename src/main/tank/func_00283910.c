@@ -8,7 +8,7 @@ extern unsigned char D_005721C0;
 extern char D_00506260[];
 extern char D_004DCF50[];
 extern char D_004DCF10[];
-void func_00282160(int* p);
+void NetStream_ReadObject(int* p);
 void cTank_SetEnemy(void* t, int w);
 void cNIEventOBJ_SetSpeedRecursive(float f, void* o);
 void cTank_Fire(void* x);
@@ -34,9 +34,9 @@ static inline void Send_00283910(T_00283910* t, int type, int w, float f) {
     m.vtable = D_004DCF10;
     cMessage_dtor(&m, 0);
 }
-extern "C" void func_00283910(M_00283910* p, T_00283910* t) {
+extern "C" void cNetUpdateTankMsg_Apply(M_00283910* p, T_00283910* t) {
     p->type = R8_00283910();
-    func_00282160(&p->w);
+    NetStream_ReadObject(&p->w);
     p->f = RF_00283910();
     if (t) {
         switch (p->type) {

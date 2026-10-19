@@ -34,7 +34,7 @@ extern void func_002A96A0(S2A97F0* s, int f);
 #define func_002A96A0(a0, a1) ((void)func_002A96A0((int)(a0), (a1))) /* merge_units */
 
 extern int GuiScreen_HandleEvent(S2A97F0* s, int a, unsigned short b, int c, int d);
-int func_002A97F0(S2A97F0* s, int a, unsigned short b, int c, int d)
+int GuiOnlineOptions_HandleEvent(S2A97F0* s, int a, unsigned short b, int c, int d)
 {
     if (s->x90 == a && b == 0x13) {
         s->x9C = GuiTextListWidget_GetItemId(s->x90, d);
@@ -86,7 +86,7 @@ static inline unsigned char Press_002A98D0(Ev_002A98D0* e, unsigned int b)
         r = 1;
     return r;
 }
-extern "C" int func_002A98D0(S_002A98D0* self, Ev_002A98D0* ev)
+extern "C" int GuiOnlineOptions_HandleInput(S_002A98D0* self, Ev_002A98D0* ev)
 {
     if (Press_002A98D0(ev, 0x10)) {
         if (self->f98 == -1 && self->f9C != -1)

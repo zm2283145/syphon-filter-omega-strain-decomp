@@ -6,11 +6,11 @@
 
 #include "types.h"
 
-extern int func_003592A8(int, int);
+extern int Insck_Listen(int, int);
 
 int func_0045AC88(int a0, int a1) {
     int tmp0;
 
-    tmp0 = func_003592A8(a0, a1);
+    tmp0 = Insck_Listen(a0, a1);
     return tmp0;
 }

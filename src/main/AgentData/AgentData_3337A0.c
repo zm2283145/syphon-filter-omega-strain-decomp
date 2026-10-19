@@ -41,7 +41,7 @@ static inline void merge_flush_func_003337A0(void) {}
 #pragma push /* merge_units */
 extern int Awards_FindRequirementRow(int, int, int);
 
-void func_00333860(void) {
+void AgentData_CompleteRequirement(void) {
     int a0, a1, a2, v0, v1;
     int cond;
 

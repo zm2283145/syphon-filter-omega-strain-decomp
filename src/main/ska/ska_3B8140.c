@@ -74,7 +74,7 @@ struct V003B8230 { unsigned int cap; unsigned int count; E003B8230* data; };
 extern "C" {
 extern char D_004BCE80[];
 extern char D_004BCFB8[];
-void* func_00139BC0(unsigned int size, void* p);
+void* Mem_PlacementNew(unsigned int size, void* p);
 void func_003B6B20(void* dst, const E003B8230* src);
 void func_003B8100(V003B8230* a, V003B8230* b);
 void func_003961E0(V003B8230* a, int f);
@@ -83,7 +83,7 @@ extern "C" void func_003B8230(V003B8230* v, unsigned int n)
 {
     if (v->cap < n) {
         if (n > 0x40000) {
-            func_00123BE8(D_00489738->stream, D_004BCE80);
+            Libc_Fprintf(D_00489738->stream, D_004BCE80);
             Libc_Abort();
         }
         V003B8230 tmp;
@@ -96,7 +96,7 @@ extern "C" void func_003B8230(V003B8230* v, unsigned int n)
         E003B8230* s = v->data;
         E003B8230* e = s + v->count;
         for (; s < e; s++, d++) {
-            void* o = func_00139BC0(sizeof(E003B8230), d);
+            void* o = Mem_PlacementNew(sizeof(E003B8230), d);
             if (o) func_003B6B20(o, s);
             tmp.count++;
         }

@@ -43,7 +43,7 @@ extern void func_002A88C0(int* it, void* set, int* key);
 extern void func_002A88B0(int* it, void* set);
 extern int func_002A8890(int* a, int* b);
 /* Returns o when it is the root widget or is registered with the manager, else 0. */
-void* func_0032D750(void* o)
+void* GuiMessageBox_ValidateTarget_32D750(void* o)
 {
     Mgr32D750* m;
 int key[1];
@@ -83,7 +83,7 @@ char* func_0032D7E0(char* s) {
 /* Resize a vector of 4-byte elements. */
 DEFINE_RESIZE_ELEMENT(Elem4, 4)
 #pragma opt_common_subs off
-DEFINE_VECTOR_RESIZE(func_0032D870, Elem4, PtrVec_Insert, PtrVector_Erase)
+DEFINE_VECTOR_RESIZE(PtrVector_Resize_32D870, Elem4, PtrVec_Insert, PtrVector_Erase)
 #pragma opt_common_subs reset
 #pragma pop /* merge_units */
 /* merge_units: end func_0032D870 */

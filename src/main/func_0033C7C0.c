@@ -8,7 +8,7 @@ extern char* GuiScreen_GetLobbyString(O33*, int, char*, char*, int, int);
 extern int FrontEnd_OpenPopup(void*, int, char*, char*, int, int);
 extern void FrontEnd_ClosePopup(void*, int);
 extern int SFOLobby_AddBuddy(int, int);
-extern unsigned char func_00452FF0(int, int);
+extern unsigned char SFOLobby_FormatError(int, int);
 extern void String_CtorCStr_13B480(String*, char*);
 extern char* String_CStr(String*);
 extern void String_Dtor(String*, int);
@@ -30,7 +30,7 @@ void func_0033C7C0(O33* self, int buddy, char* name)
         int c;
         String a;
         String b;
-        switch (func_00452FF0(lobby, 0)) {
+        switch (SFOLobby_FormatError(lobby, 0)) {
         case 0x1E: c = 0x3C; break;
         case 0x25: c = 0x3D; break;
         case 0x1D: c = 0x17; break;

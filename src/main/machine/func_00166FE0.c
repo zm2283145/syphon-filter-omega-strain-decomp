@@ -1,4 +1,4 @@
-/* func_00166FE0 (machine): loading-screen progress tick (sibling of GameFlow_EnterMpLobby). The quad copy and
+/* Game_DrawWaitingForPlayers (machine): loading-screen progress tick (sibling of GameFlow_EnterMpLobby). The quad copy and
    identity-matrix store are GCC-style __asm__ volatile: MW does no CSE across them, so the base address
    and constant are rematerialised as in retail. */
 #pragma opt_rotateloops off
@@ -82,7 +82,7 @@ static inline void SetCol_00166FE0(const V4c_00166FE0& c)
     D_0055A28C = c.w;
 }
 
-extern "C" void func_00166FE0(Screen_00166FE0* self, int first, int last)
+extern "C" void Game_DrawWaitingForPlayers(Screen_00166FE0* self, int first, int last)
 {
     int n;
     if (self->anim == 0) return;

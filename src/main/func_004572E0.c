@@ -7,6 +7,6 @@
 #include "types.h"
 
 
-char* func_004572E0(void) {
+char* GuiWeaponStats_GetClassName(void) {
     return "GuiWeaponStats";
 }

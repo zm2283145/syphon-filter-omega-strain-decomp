@@ -10,8 +10,8 @@ typedef struct { unsigned char cmd; unsigned char arg; } ReqDE60;
 typedef struct { unsigned int idx; int pad; ReqDE60 q[512]; } RingDE60;
 extern int D_004E2400;
 extern int WaitSema(int);
-extern int func_0010D090(int);
-extern int func_0010D010(int);
+extern int WakeupThread(int);
+extern int RotateThreadReadyQueue(int);
 extern int func_0010D0D0(int);
 extern int func_0010F350(const char *, ...);
 void func_0010DE60(RingDE60 *r)
@@ -23,10 +23,10 @@ void func_0010DE60(RingDE60 *r)
         r->idx = i + 1;
         switch (r->q[i].cmd) {
         case 0:
-            func_0010D090(r->q[i].arg);
+            WakeupThread(r->q[i].arg);
             break;
         case 1:
-            func_0010D010(r->q[i].arg);
+            RotateThreadReadyQueue(r->q[i].arg);
             break;
         case 2:
             func_0010D0D0(r->q[i].arg);
@@ -56,7 +56,7 @@ extern int CreateSema(SemaParamDF38 *);
 extern int CreateThread(ThreadParamDF38 *);
 extern int DeleteSema(int);
 extern int StartThread(int, void *);
-extern int func_0010D050(void);
+extern int GetThreadId(void);
 extern int ChangeThreadPriority(int, int);
 int func_0010DF38(void)
 {
@@ -80,7 +80,7 @@ int func_0010DF38(void)
     D_004E2408[0] = 0;
     D_004E2408[1] = 0;
     StartThread(D_00486198, D_004E2408);
-    ChangeThreadPriority(func_0010D050(), 1);
+    ChangeThreadPriority(GetThreadId(), 1);
     return D_00486198;
 }
 #undef func_0010DE60 /* merge_units */
@@ -95,7 +95,7 @@ extern QE010 D_004E2408;
 #define D_004E2408 (*(QE010*)&D_004E2408) /* merge_units */
 
 extern void iSignalSema(int);
-extern int func_0010D0A0(int);
+extern int _iWakeupThread(int);
 int iWakeupThread(int tid)
 {
     register int v0 __asm__("$2");
@@ -104,7 +104,7 @@ int iWakeupThread(int tid)
     /* inline syscall: $v1 = syscall number */
     __asm__ volatile("li $3, -0x2F\n\tsyscall" : "=r"(v0) : : "$3");
     t = v0;
-    if (t != tid) return func_0010D0A0(tid);
+    if (t != tid) return _iWakeupThread(tid);
     if (t >= 0x100 || D_00486198 == 0) return -1;
     i = D_004E2408.x4 & 0x1FF;
     D_004E2408.x4 = i + 1;
@@ -146,7 +146,7 @@ extern QE128 D_004E2408;
 #endif /* merge_units */
 #define D_004E2408 (*(QE128*)&D_004E2408) /* merge_units */
 
-extern int func_0010D0E0(int);
+extern int iSuspendThread(int);
 int func_0010E128(int tid)
 {
     register int v0 __asm__("$2");
@@ -155,7 +155,7 @@ int func_0010E128(int tid)
     /* inline syscall: $v1 = syscall number */
     __asm__ volatile("li $3, -0x2F\n\tsyscall" : "=r"(v0) : : "$3");
     t = v0;
-    if (t != tid) return func_0010D0E0(tid);
+    if (t != tid) return iSuspendThread(tid);
     if (t >= 0x100 || D_00486198 == 0) return -1;
     i = D_004E2408.x4 & 0x1FF;
     D_004E2408.x4 = i + 1;

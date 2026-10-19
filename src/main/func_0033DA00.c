@@ -18,7 +18,7 @@ static inline int Down2_33DA00(Ev_33DA00* e) { return e->type == 1 && e->b2 == 0
 static inline int Btn2_33DA00(Ev_33DA00* e, int b) { return Down2_33DA00(e) && e->btn == b; }
 static inline int Plain2_33DA00(Ev_33DA00* e, int b) { return Btn2_33DA00(e, b) && e->b6 == 0; }
 
-int func_0033DA00(O_33DA00* o, Ev_33DA00* ev)
+int GuiMenuScreen_HandleInput(O_33DA00* o, Ev_33DA00* ev)
 {
     if (Plain_33DA00(ev, 0x10) || Plain2_33DA00(ev, 0x8000)) {
         if (Gui_GetScreenStack()->f20 == o->f88) {

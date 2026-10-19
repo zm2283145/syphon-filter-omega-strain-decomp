@@ -46,10 +46,10 @@ static inline void merge_flush_func_00136080(void) {}
 int Alloc_Lock(int);                                    
 int Alloc_Unlock(int);                                  
 int Mem_Alloc(int, int, int *, int);                      
-int func_001361C0(int , int);                       
+int Vector_Reserve_139920_Thunk(int , int);                       
 int func_001361D0(int *);                           
 int func_001361E0(int );                            
-int func_00139920(int , int);                       
+int Vector_Reserve_139920(int , int);                       
 extern int D_004EA0C0;
 extern unsigned char g_ProfileLockEnabled;
 extern int g_ProfileLockDepth;
@@ -71,13 +71,13 @@ void func_001360D0(int arg0) {
         if (temp_s1 != NULL) {
             sp3C = arg0;
             func_001361E0(temp_s1);
-            func_001361C0(temp_s1, func_001361D0(&sp3C));
+            Vector_Reserve_139920_Thunk(temp_s1, func_001361D0(&sp3C));
             F_(temp_s1, 0xC, signed char) = 1;
         }
         D_004EA0C0 = temp_s1;
         return;
     }
-    func_00139920(D_004EA0C0, arg0);
+    Vector_Reserve_139920(D_004EA0C0, arg0);
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001360D0(void) {}

@@ -24,7 +24,7 @@ int FileMan_FindMember(int* f);
 unsigned int FileMan_GetSize(int* f);
 int func_0036D880(int* f);
 void* Tdx_Read(Obj_37FEA0* o, int* f, int* flags);
-void func_00383560(It_37FEA0* result, void* list, It_37FEA0* pos);
+void List_Erase_383560(It_37FEA0* result, void* list, It_37FEA0* pos);
 int func_00380360(void* t);
 void Tex_DestroyRecord(void* t, int a, int b, char* file, int line);
 void func_003801A0(Obj_37FEA0* o, int v);
@@ -35,7 +35,7 @@ void AsyncLoader_QueueLoad(int q, int* f, void* cb, void* t, int a, int b, int c
 void Tex_BuildGsRegisters(void* t, int a, void* data, int flags);
 }
 
-static inline void Erase(It_37FEA0* out, List_37FEA0* l, It_37FEA0* b) { It_37FEA0 result; It_37FEA0 value; value = *b; func_00383560(&result, l, &value); *out = result; }
+static inline void Erase(It_37FEA0* out, List_37FEA0* l, It_37FEA0* b) { It_37FEA0 result; It_37FEA0 value; value = *b; List_Erase_383560(&result, l, &value); *out = result; }
 
 extern "C" int TexMan_LoadNewTexture(Obj_37FEA0* o, int* file, int arg2)
 {

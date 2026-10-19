@@ -12,7 +12,7 @@
 
 extern "C" {
 GuiStreamString* String_CtorCStr_13B480(GuiStreamString* result, const char* text);
-void func_0013D680(GuiStreamString* destination, const GuiStreamString* source);
+void String_AssignString(GuiStreamString* destination, const GuiStreamString* source);
 void String_Dtor(GuiStreamString* string, int flags);
 }
 
@@ -35,11 +35,11 @@ static inline void read_flag(GuiWidgetStreamRecord* self, char** cursor, unsigne
 }
 
 /* Load the widget name, four aligned coordinates and two flag words. */
-extern "C" int func_0041F210(GuiWidgetStreamRecord* self, char** cursor)
+extern "C" int GuiWidget_Load(GuiWidgetStreamRecord* self, char** cursor)
 {
     GuiStreamString name;
     String_CtorCStr_13B480(&name, read_string(cursor));
-    func_0013D680(&self->name, &name);
+    String_AssignString(&self->name, &name);
     String_Dtor(&name, 0);
     *cursor = (char*)(((unsigned int)*cursor + 3) & ~3u);
     self->first = *(float*)*cursor;

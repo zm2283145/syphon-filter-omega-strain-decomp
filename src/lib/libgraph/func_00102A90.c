@@ -1,6 +1,6 @@
-extern int func_001115B0(const char *, int);
-extern int func_00111BF0(int, void *, int);
-extern int func_00111838(int);
+extern int sceOpen(const char *, int);
+extern int sceRead(int, void *, int);
+extern int sceClose(int);
 extern int atoi(const char *);
 
 int func_00102A90(void)
@@ -8,12 +8,12 @@ int func_00102A90(void)
     char buf[256];
     char *p;
     unsigned int i;
-    int fd = func_001115B0("rom0:ROMVER", 1);
+    int fd = sceOpen("rom0:ROMVER", 1);
     if (fd < 0) return -1;
     for (i = 0, p = buf; i < 256; i++) {
-        func_00111BF0(fd, p, 1);
+        sceRead(fd, p, 1);
         if (*p++ == 0) break;
     }
-    func_00111838(fd);
+    sceClose(fd);
     return atoi(buf + (i - 9)) > 0x1315670;
 }

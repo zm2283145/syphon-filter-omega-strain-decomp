@@ -1,10 +1,10 @@
 
 extern void* Service_Lookup(void* a, void* b);
-extern void func_001450F0(int);
+extern void WeaponDb_UnloadWpnHog(int);
 extern char* App_GetInstance(void);
 extern void SoundMgr_UnloadLevel(void*);
 extern void func_002C9C80(void*, int);
-extern void func_002C9E20(void*);
+extern void FrontEnd_UnloadZeusHog(void*);
 extern void func_003D1700(void*);
 extern unsigned char* DME_GetLobby(void);
 extern char* strncpy(char*, const char*, int);
@@ -77,8 +77,8 @@ void FrontEnd_SuspendGui(Obj9860* self, unsigned char mode)
             break;
         }
 
-        func_002C9E20(self);
-        func_001450F0(g_WeaponDatabase);
+        FrontEnd_UnloadZeusHog(self);
+        WeaponDb_UnloadWpnHog(g_WeaponDatabase);
         func_002C9C80(self, 1);
         self->f37 = 1;
         self->f28 = 0;

@@ -31,7 +31,7 @@ int* func_0016FE40(void) {
     return &D_004EE738;
 }
 
-int func_0016FE50(void) {
+int cHotbox_v0B(void) {
     return D_004EE738;
 }
 

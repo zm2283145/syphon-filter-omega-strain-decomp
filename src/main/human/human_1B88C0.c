@@ -27,7 +27,7 @@ extern "C" {
 extern float D_0048A1B0;
 extern char D_0048A1A8;
 extern void func_0017CA90(void*, int);
-extern void* func_00139BC0(int, void*);
+extern void* Mem_PlacementNew(int, void*);
 extern void func_0017CA00(void*, float*, float*, float*, void*, float);
 }
 static inline bool Gt(float a, float b) { return a > b; }
@@ -51,7 +51,7 @@ extern "C" void AngleCurve_PreUpdate(AC* c)
         void* v;
         c->f10 = c->f8 + WrapPi(c->f10 - c->f8);
         func_0017CA90(c->a18, -1);
-        v = func_00139BC0(0x18, c->a18);
+        v = Mem_PlacementNew(0x18, c->a18);
         if (v) func_0017CA00(v, &c->f8, &c->fC, &c->f10, &D_0048A1A8, c->f28);
     } else {
         bool ne = !Eq(0.0f, c->f34);
@@ -311,7 +311,7 @@ void AnimChannel_AddOffset(Ch* c, float* dt)
     c->f8 = Clamp(c, c->f8);
     c->f10 = c->f8 + Wrap(c, c->f10 - c->f8);
     func_0017CA90(&c->f18, -1);
-    v = func_00139BC0(0x18, &c->f18);
+    v = Mem_PlacementNew(0x18, &c->f18);
     if (v) func_0017CA00(v, &c->f8, &c->fC, &c->f10, &D_0048A190, c->f28);
 }
 #pragma pop /* merge_units */

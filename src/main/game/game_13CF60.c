@@ -85,7 +85,7 @@ extern unsigned char D_005724B0;
 extern void StaticInit_RunAll(void);
 extern char *strrchr(const char *, int);
 extern StrObj *String_CtorCStr_13B480(StrObj *, const char *);
-extern void func_0013D680(StrObj *, StrObj *);
+extern void String_AssignString(StrObj *, StrObj *);
 extern void String_Dtor(void *, short);
 extern char *strncpy(char *, const char *, int);
 extern void printf(char *, ...);
@@ -137,7 +137,7 @@ int Game_ParseCommandLine(int argc, char **argv)
     if (base == 0) base = argv[0];
     else base = base + 1;
     String_CtorCStr_13B480(&tmp, base);
-    func_0013D680(&D_004FFBA4, &tmp);
+    String_AssignString(&D_004FFBA4, &tmp);
     String_Dtor(&tmp, 0);
     Game_SetState(9);
     if (argc > 1) {

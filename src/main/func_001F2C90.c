@@ -12,7 +12,7 @@ extern ListIter* func_001F2CF0(ListIter*);
 extern ListIter* ListIter_Next(ListIter*);
 extern void func_001F2D50(void);
 
-int func_001F2C90(ListIter* a, ListIter* b) {
+int ListIter_NotEqual_Thunk_1F2C90(ListIter* a, ListIter* b) {
     return ListIter_NotEqual(a, b);
 }
 

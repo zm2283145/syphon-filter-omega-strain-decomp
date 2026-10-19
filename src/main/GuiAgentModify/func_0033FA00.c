@@ -9,7 +9,7 @@ extern void* Gui_GetScreenStack(void);
 extern void GuiStack_SwapScreens(void*, int, void*);
 
 /* Resets state, looks up a named entry and hands it to GuiStack_SwapScreens with the argument. */
-void func_0033FA00(int arg) {
+void GuiAgentModify_ReturnToCommandCenter(int arg) {
     void* entry;
     AgentPartCache_Unlock(&g_AgentPartCache);
     World_ClearPendingIfLoaded();

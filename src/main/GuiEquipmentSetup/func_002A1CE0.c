@@ -7,6 +7,6 @@
 #include "types.h"
 
 
-int func_002A1CE0(void) {
+int GuiEquipmentSetup_GetClassName(void) {
     return (int)"GuiEquipmentSetup";
 }

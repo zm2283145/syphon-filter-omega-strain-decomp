@@ -7,10 +7,10 @@
 #include "types.h"
 
 extern int func_001F3030(void);
-extern int func_0020A790(int, int);
+extern int Vector_Reserve_20A790(int, int);
 
-int func_001F4350(int a0, int a1) {
-    return func_0020A790(a0, a1);
+int Vector_Reserve_20A790_Thunk_1F4350(int a0, int a1) {
+    return Vector_Reserve_20A790(a0, a1);
 }
 
 int func_001F4360(void) {

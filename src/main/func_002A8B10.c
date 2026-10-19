@@ -9,6 +9,6 @@
 char D_004AB700[] = "GuiNetJoinMission";   /* "GuiNetJoinMission" */
 
 /* Class name getter: "GuiNetJoinMission". */
-char* func_002A8B10(void) {
+char* GuiNetJoinMission_GetClassName(void) {
     return D_004AB700;
 }

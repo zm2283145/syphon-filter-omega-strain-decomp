@@ -4,8 +4,8 @@
 
 #include "gobj_types.h"
 
-extern int func_00212220(Mover* obj);
+extern int PathObj_CreateInfoObject(Mover* obj);
 
 int cPathedGOBJ_v3D(Mover* obj) {
-    return func_00212220(obj);
+    return PathObj_CreateInfoObject(obj);
 }

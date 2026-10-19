@@ -37,7 +37,7 @@ void func_003E3B20(PtrVec* a, PtrVec* b) {
 #include "word_vector_erase.h"
 
 /* Erase a range from a vector of 4-byte elements. */
-DEFINE_WORD_VECTOR_ERASE(func_003E3B60)
+DEFINE_WORD_VECTOR_ERASE(PtrVector_Erase_3E3B60)
 #pragma pop /* merge_units */
 /* merge_units: end func_003E3B60 */
 

@@ -1,7 +1,7 @@
 #include "types.h"
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
-int func_00443EA0(int);                               
-int func_00443F40(int);                             
+int SFOLobby_Free(int);                               
+int SFOLobby_AllocZeroed(int);                             
 extern int D_00585E58;
 
 #pragma opt_common_subs off
@@ -10,7 +10,7 @@ void LobbyArray_Init(int arg0, int arg1, int arg2, int arg3) {
 
     temp_a0 = F_(arg0, 0x14, int);
     if (temp_a0 != 0) {
-        func_00443EA0(temp_a0);
+        SFOLobby_Free(temp_a0);
         D_00585E58 -= F_(arg0, 0x0, int) * F_(arg0, 0x10, int);
     }
     F_(arg0, 0x0, int) = 0;
@@ -26,6 +26,6 @@ void LobbyArray_Init(int arg0, int arg1, int arg2, int arg3) {
     }
     F_(arg0, 0x8, int) = F_(arg0, 0x0, int);
     F_(arg0, 0x18, signed char) = 1;
-    F_(arg0, 0x14, int) = func_00443F40(F_(arg0, 0x0, int) * F_(arg0, 0x10, int));
+    F_(arg0, 0x14, int) = SFOLobby_AllocZeroed(F_(arg0, 0x0, int) * F_(arg0, 0x10, int));
     D_00585E58 += F_(arg0, 0x0, int) * F_(arg0, 0x10, int);
 }

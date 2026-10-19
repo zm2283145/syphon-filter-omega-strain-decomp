@@ -7,7 +7,7 @@ void printf(char*, int);
 void Heap_AllocSlot(int, int, int);
 extern float D_004ACC90[];
 /* size a memory pool from the configured level (MB table), log it and create it */
-void func_0012F630(O_F630* o)
+void Game_AllocStreamBuffer(O_F630* o)
 {
     char buf[0x40];
     int size;

@@ -3,4 +3,4 @@
 #include "stream_string_dtor.h"
 
 /* Destroy a string holder: free heap storage, optionally delete. */
-DEFINE_STREAM_STRING_DTOR(func_00349B00)
+DEFINE_STREAM_STRING_DTOR(String_Dtor_349B00)

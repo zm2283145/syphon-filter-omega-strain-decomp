@@ -25,8 +25,8 @@ typedef struct {
     int active;         /* 0x44 */
 } IpuRing;
 
-extern void func_001161A0(void);
-extern void func_001161F8(void);
+extern void DIntr(void);
+extern void EIntr(void);
 extern void WaitSema(int sema);
 extern void SignalSema(int sema);
 
@@ -46,11 +46,11 @@ int func_003F5050(IpuRing* s)
         SignalSema(s->sema);
         return 0;
     }
-    func_001161A0();
+    DIntr();
     DMAC_ENABLEW = DMAC_ENABLER | 0x10000;
     D4_CHCR = 5;
     DMAC_ENABLEW = DMAC_ENABLER & ~0x10000;
-    func_001161F8();
+    EIntr();
     chcr = D4_CHCR;
     madr = D4_MADR;
     n = s->n;
@@ -85,11 +85,11 @@ int func_003F5050(IpuRing* s)
         if (started) {
             chcr = (chcr & 0x0FFFFFFF) | 0x30000000;
         }
-        func_001161A0();
+        DIntr();
         DMAC_ENABLEW = DMAC_ENABLER | 0x10000;
         D4_CHCR = chcr | 0x100;
         DMAC_ENABLEW = DMAC_ENABLER & ~0x10000;
-        func_001161F8();
+        EIntr();
     }
     SignalSema(s->sema);
     return 1;

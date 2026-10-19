@@ -11,7 +11,7 @@ extern "C" void func_001C53C0(PRVec_1C53C0* v, int* first, int* last)
 {
     v->count = v->cap = last - first;
     if (v->count > 0x1800000) {
-        func_00123BE8(D_00489738->stream, "vector length error\n");
+        Libc_Fprintf(D_00489738->stream, "vector length error\n");
         Libc_Abort();
     }
     unsigned int n = v->count;

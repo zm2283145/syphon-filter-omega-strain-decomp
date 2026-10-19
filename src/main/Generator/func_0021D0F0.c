@@ -8,7 +8,7 @@
 
 extern int D_004F56D8;      /* NPC message base script type key */
 
-void func_0021D0F0(void) {
+void ScriptType_cGeneratorMessageBase_Init(void) {
 }
 
 int func_0021D100(void) {

@@ -39,7 +39,7 @@ extern char D_004E9B70[];
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void FrontEnd_SplashThreadMain(void);
 int FrontEnd_SplashVblankHandler(void);
-int func_0010D050(void);
+int GetThreadId(void);
 void ChangeThreadPriority(int thread, int prio);
 int CreateThread(Thp82F0* p);
 void StartThread(int thread, void* arg);
@@ -65,7 +65,7 @@ extern "C" void FrontEnd_StartSplashThread(Obj82F0* o)
         tp.gpReg = D_004E9B70;
         tp.initPriority = 5;
         tp.stackSize = (*(int*)dat_0048C340);
-        D_0048C348 = func_0010D050();
+        D_0048C348 = GetThreadId();
         ChangeThreadPriority(D_0048C348, 10);
         D_0048C350 = CreateThread(&tp);
         StartThread(D_0048C350, o);

@@ -37,7 +37,7 @@ typedef struct {
     int fC;
 } ConnResp;
 
-int func_002CF420(ConnReq *req, int *status)
+int Medius_ConnectServer(ConnReq *req, int *status)
 {
     ConnMsg msg;
     ConnResp resp;

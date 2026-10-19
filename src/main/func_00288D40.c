@@ -6,14 +6,14 @@
 /* Derived destructor: restore vtable, run base destructor, optionally delete. */
 extern "C" {
 extern "C" void GuiAccountLogin_IsType();
-extern "C" void func_00288DA0();
+extern "C" void GuiAccountLogin_GetClassName();
 extern "C" void func_002891D0();
-extern "C" void func_00289990();
-extern "C" void func_00289C80();
-extern "C" void func_0028A430();
-extern "C" void func_0028A470();
-extern "C" void func_0028A4B0();
-extern "C" void func_0028A5C0();
+extern "C" void GuiAccountLogin_HandleInput();
+extern "C" void GuiAccountLogin_HandleEvent();
+extern "C" void GuiAccountLogin_Deactivate();
+extern "C" void GuiAccountLogin_Activate();
+extern "C" void GuiAccountLogin_Wake();
+extern "C" void GuiAccountLogin_Init();
 extern "C" void GuiScreen_PollLobby();
 extern "C" void GuiScreen_Update();
 extern "C" void GuiScreen_Sleep();
@@ -28,18 +28,18 @@ extern "C" void GuiWidget_Draw();
 extern "C" void GuiWidget_ClearFlag4();
 extern "C" void GuiWidget_SetFlag4();
 extern "C" void GuiWidget_Deinit();
-extern "C" void func_0041F210();
+extern "C" void GuiWidget_Load();
 extern void * const D_004DD120[];
-void* func_0033D430(void* self, short deleteFlag);
+void* GuiScreen_dtor(void* self, short deleteFlag);
 }
-extern "C" VtableObject* func_00288D40(VtableObject* self, short deleteFlag)
+extern "C" VtableObject* GuiAccountLogin_dtor(VtableObject* self, short deleteFlag)
 {
     if (self) {
         self->vtable = ((char*)D_004DD120);
-        func_0033D430(self, 0);
+        GuiScreen_dtor(self, 0);
         if (deleteFlag > 0)
             operator_delete(self);
     }
     return self;
 }
-void * const D_004DD120[28] = { (void*)0x0, (void*)0x0, (void*)func_00288D40, (void*)func_0028A5C0, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)func_0028A4B0, (void*)GuiScreen_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)func_00289990, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiScreen_Update, (void*)func_00289C80, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)func_00288DA0, (void*)GuiAccountLogin_IsType, (void*)func_002891D0, (void*)GuiScreen_PollLobby, (void*)func_0028A470, (void*)func_0028A430, (void*)0x0 };
+void * const D_004DD120[28] = { (void*)0x0, (void*)0x0, (void*)GuiAccountLogin_dtor, (void*)GuiAccountLogin_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiAccountLogin_Wake, (void*)GuiScreen_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiAccountLogin_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiScreen_Update, (void*)GuiAccountLogin_HandleEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiAccountLogin_GetClassName, (void*)GuiAccountLogin_IsType, (void*)func_002891D0, (void*)GuiScreen_PollLobby, (void*)GuiAccountLogin_Activate, (void*)GuiAccountLogin_Deactivate, (void*)0x0 };

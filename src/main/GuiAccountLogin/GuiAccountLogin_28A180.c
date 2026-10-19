@@ -157,7 +157,7 @@ extern int D_004FFC04;
 extern int FrontEnd_FreePolicyLists(int);
 
 /* If the pending flag is set, call FrontEnd_FreePolicyLists on the global at D_004FFC04 and clear it. */
-void func_0028A430(Unk28A430* self) {
+void GuiAccountLogin_Deactivate(Unk28A430* self) {
     if (self->pending != 0) {
         FrontEnd_FreePolicyLists(D_004FFC04);
         self->pending = 0;
@@ -178,7 +178,7 @@ extern int D_004FFC04;
 
 
 #pragma opt_common_subs off
-void func_0028A470(int arg0) {
+void GuiAccountLogin_Activate(int arg0) {
     if (F_(arg0, 0x80, unsigned char) == 0) {
         FrontEnd_DownloadPolicies(D_004FFC04);
         F_(arg0, 0x80, unsigned char) = 1U;
@@ -198,7 +198,7 @@ extern unsigned char D_00506360;
 char* AgentData_GetName(char* a);
 void GuiScreen_Wake(S* s);
 void GuiTextWidget_SetText(W* w, char* s, int a);
-void func_0028A4B0(S* self)
+void GuiAccountLogin_Wake(S* self)
 {
     if (self->state == 1) {
         if (self->p8C) {
@@ -273,7 +273,7 @@ void GuiTextWidget_SetText(void* w, char* s, int a);
 #define GuiTextWidget_SetText(a0, a1, a2) (GuiTextWidget_SetText((W *)(a0), (a1), (a2))) /* merge_units */
 
 }
-extern "C" void func_0028A5C0(S_28A5C0* self)
+extern "C" void GuiAccountLogin_Init(S_28A5C0* self)
 {
     W28A5C0* p;
     GuiScreen_Init();
@@ -341,7 +341,7 @@ SsoString* String_CtorCStr(SsoString* self, const char* text)
 
 extern "C" { char D_004A97C0[] = "basic_string: out_of_range"; }
 extern "C" { char D_004A97E0[] = "basic_string: length_error"; }
-DEFINE_STRING_REPLACE_RANGE(func_0028A860, D_004A97C0, D_004A97E0, D_0049ADE0, 0x5C, D_0049AE90, 0x64, D_0048B430, D_0048B438, func_00125FE8, String_Assign)
+DEFINE_STRING_REPLACE_RANGE(func_0028A860, D_004A97C0, D_004A97E0, D_0049ADE0, 0x5C, D_0049AE90, 0x64, D_0048B430, D_0048B438, Libc_Memmove, String_Assign)
 #pragma pop /* merge_units */
 /* merge_units: end func_0028A860 */
 
@@ -361,7 +361,7 @@ DEFINE_SHORT_STRING_ASSIGN(func_0028AD50)
 #include "string_reserve.h"
 
 extern "C" { char D_004A9800[] = "basic_string::reserve length_error"; }
-DEFINE_STRING_RESERVE(func_0028ADE0, D_004A9800, D_0049ADE0, 0x5C, D_0049AE90, 0x64)
+DEFINE_STRING_RESERVE(String_Reserve_28ADE0, D_004A9800, D_0049ADE0, 0x5C, D_0049AE90, 0x64)
 #pragma pop /* merge_units */
 /* merge_units: end func_0028ADE0 */
 

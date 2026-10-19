@@ -31,11 +31,11 @@ void func_002D0D70(Conn9C0*);
 int atoi(char*);
 void func_002D0DB0(Conn9C0*, int, int, int, void*);
 void func_00352C30(char*);
-int func_002CF420(Conn9C0*, int*);
+int Medius_ConnectServer(Conn9C0*, int*);
 int func_002CF1C8(Req9C0A*, void*);
 int func_002CF078(Req9C0B*, void*);
 int func_00476998(void);
-int func_002CF5E0(void);
+int Medius_DisconnectServer(void);
 void func_002EBC48(int*);
 int func_004446E0(int);
 void SFOLobby_CallUpdateHook(char*, int, int);
@@ -63,7 +63,7 @@ static inline bool Poll(void) {
 }
 
 static inline int Busy(void) {
-    int r = func_002CF5E0();
+    int r = Medius_DisconnectServer();
     if (r) return r;
     return 0;
 }
@@ -84,7 +84,7 @@ int func_004449C0(int a, char* b) {
         func_00352C30(conn.sub);
     else
         memset(conn.sub, 0, sizeof(conn.sub));
-    r = func_002CF420(&conn, &x);
+    r = Medius_ConnectServer(&conn, &x);
     if (r) return r;
     if (conn.wait) {
         D_00584528 = 0;

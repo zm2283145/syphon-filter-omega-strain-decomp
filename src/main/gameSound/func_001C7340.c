@@ -10,7 +10,7 @@ extern char D_004DAC70[];
 extern char D_004F2D00[];
 
 /* net message handler: read quip id and argument, play the quip if it resolves */
-void func_001C7340(void)
+void cPlayQuipMsg_NetReceive(void)
 {
     Msg_7340 m;
     void* p;

@@ -36,7 +36,7 @@ T8D80* func_00408D80(T8D80* t, short del)
 
 #include "loose04_types.h"
 
-extern int func_0013BCB0(L4Elem124Vec*, int);
+extern int String_CopyCtor(L4Elem124Vec*, int);
 
 void func_00408DF0(Iter* out, void* self, Iter* src) {
     out->p = src->p;
@@ -48,7 +48,7 @@ L4Elem124* func_00408E00(L4Elem124Vec* v) {
 }
 
 int func_00408E30(L4Elem124Vec* v, int a1, int value) {
-    int ret = func_0013BCB0(v, a1);
+    int ret = String_CopyCtor(v, a1);
 
     v->unk0C = value;
     return ret;

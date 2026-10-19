@@ -8,7 +8,7 @@
 
 extern int D_004F5388;
 
-void func_0020E540(void) {
+void ScriptType_cStartLevelMsg_Init(void) {
 }
 
 int cStartLevelMsg_v03(void) {

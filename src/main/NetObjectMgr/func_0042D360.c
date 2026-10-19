@@ -8,7 +8,7 @@ extern RbTree D_005826E0;
 extern unsigned char g_IsMultiplayer;
 extern unsigned char D_005721C0;
 cGOBJ* Object_LookupById(const GobjId* id);
-void func_0042EE70(PendingTransferIterator* result, RbTree* tree, const GobjId* id);
+void ObjMap_Find_42EE70(PendingTransferIterator* result, RbTree* tree, const GobjId* id);
 PendingTransferIterator func_0042D780(RbTree* tree);
 void func_0042D770(PendingTransferIterator* result, const PendingTransferIterator& source);
 void func_0042F2C0(RbTree* tree, const PendingTransferIterator& position);
@@ -67,7 +67,7 @@ extern "C" void func_0042D360(const GobjId* id, int peer)
     cGOBJ* object = Object_LookupById(id);
     if (object && object->attached && controller(object)->is_ready()) {
         key.word = id->word;
-        func_0042EE70(&found, &D_005826E0, &key);
+        ObjMap_Find_42EE70(&found, &D_005826E0, &key);
         PendingTransferNode* node = found.node;
         pending_end(&end);
         if ((node == end.node) ^ 1) {

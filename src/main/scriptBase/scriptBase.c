@@ -79,7 +79,7 @@ struct AList {
     AIter begin() { return AIter(head.next); }
     AIter end() { return AIter(&head); }
 };
-extern "C" void func_00383420(AIter*, AList*, AIter*, AIter*);
+extern "C" void ObjectList_EraseRange_383420(AIter*, AList*, AIter*, AIter*);
 
 extern "C" void func_003D5D10(AList* l, APred pred)
 {
@@ -92,7 +92,7 @@ extern "C" void func_003D5D10(AList* l, APred pred)
             {
                 AIter r, a, b;
                 a = i; b = j;
-                func_00383420(&r, l, &a, &b);
+                ObjectList_EraseRange_383420(&r, l, &a, &b);
                 i = r;
             }
             if (i == e) break;

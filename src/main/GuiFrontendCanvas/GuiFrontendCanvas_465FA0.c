@@ -12,7 +12,7 @@
 
 extern "C" { char D_004C29B0[] = "basic_string: out_of_range"; }
 extern "C" { char D_004C29D0[] = "basic_string: length_error"; }
-DEFINE_STRING_REPLACE_RANGE_XD(func_00465FA0, D_004C29B0, D_004C29D0, D_0049ADE0, 0x5C, D_0049AE90, 0x64, D_00497BF8, D_00497C00, func_00125FE8, String_Assign, String_Dtor)
+DEFINE_STRING_REPLACE_RANGE_XD(func_00465FA0, D_004C29B0, D_004C29D0, D_0049ADE0, 0x5C, D_0049AE90, 0x64, D_00497BF8, D_00497C00, Libc_Memmove, String_Assign, String_Dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00465FA0 */
 
@@ -22,7 +22,7 @@ DEFINE_STRING_REPLACE_RANGE_XD(func_00465FA0, D_004C29B0, D_004C29D0, D_0049ADE0
 #include "string_reserve.h"
 
 extern "C" { char D_004C29F0[] = "basic_string::reserve length_error"; }
-DEFINE_STRING_RESERVE(func_00466410, D_004C29F0, D_0049ADE0, 0x5C, D_0049AE90, 0x64)
+DEFINE_STRING_RESERVE(String_Reserve_466410, D_004C29F0, D_0049ADE0, 0x5C, D_0049AE90, 0x64)
 #pragma pop /* merge_units */
 /* merge_units: end func_00466410 */
 
@@ -33,7 +33,7 @@ DEFINE_STRING_RESERVE(func_00466410, D_004C29F0, D_0049ADE0, 0x5C, D_0049AE90, 0
 #include "stream_string_dtor.h"
 
 /* Destroy a string holder: free heap storage, optionally delete. */
-DEFINE_STREAM_STRING_DTOR(func_00466750)
+DEFINE_STREAM_STRING_DTOR(String_Dtor_466750)
 #pragma pop /* merge_units */
 /* merge_units: end func_00466750 */
 

@@ -3,7 +3,7 @@ extern char D_004B0E18[];
 extern void printf(const char *fmt, const char *file, int line, const char *msg);
 extern int func_00312E28(void *p);
 extern int func_002FB3C0(void *pp);
-int func_00310F08(void *p)
+int RtXml_DestroyParser(void *p)
 {
     if (p == 0) {
         printf(D_004B0DE0, D_004B0E18, 0x116, "NULL != parser");

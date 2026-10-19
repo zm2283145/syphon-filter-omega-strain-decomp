@@ -11,7 +11,7 @@ struct G0043BF50 { void* vtable; };
 #define GW(off) (*(int*)((char*)p + (off)))
 #define GB(off) (*(char*)((char*)p + (off)))
 #define GH(off) (*(unsigned short*)((char*)p + (off)))
-extern "C" G0043BF50* func_0043BF50(void)
+extern "C" G0043BF50* GuiScrollBarWidget_Create(void)
 {
     G0043BF50* p;
     {

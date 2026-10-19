@@ -4,9 +4,9 @@
 #include "guiTextWidget_types.h"
 
 extern "C" {
-void func_00298690(void* string);
+void String_CtorEmpty(void* string);
 GuiStreamString* String_CtorCStr_13B480(GuiStreamString* string, const char* text);
-void func_0013D680(void* destination, const void* source);
+void String_AssignString(void* destination, const void* source);
 void String_Dtor(void* string, int flags);
 void func_00422A50(TextListEntryVec* entries, TextListEntry* position,
                    int count, const TextListEntry* value);
@@ -22,9 +22,9 @@ extern "C" int GuiTextListWidget_AddItem(TextRenderWidget* self, const char* tex
         return 0;
     GuiStreamString temporary;
     TextListEntry entry;
-    func_00298690(entry.text);
+    String_CtorEmpty(entry.text);
     String_CtorCStr_13B480(&temporary, text);
-    func_0013D680(entry.text, &temporary);
+    String_AssignString(entry.text, &temporary);
     String_Dtor(&temporary, 0);
     entry.unk0C = value;
     entry.unk10 = style;

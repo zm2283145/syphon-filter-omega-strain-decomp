@@ -327,7 +327,7 @@ typedef struct { char p0[4]; int state; E382C30** items; char pC[0x410]; int cou
 extern void func_00380250(N382C30** out, int it);
 extern int func_00380260(void* list);
 extern N382C30* func_00380270(void* list, int off);
-extern void func_00383560(int* out, void* list, N382C30** it);
+extern void List_Erase_383560(int* out, void* list, N382C30** it);
 #pragma push
 #pragma opt_common_subs off
 void TexMan_ReleaseSlot(M382C30* m, int idx)
@@ -351,7 +351,7 @@ void TexMan_ReleaseSlot(M382C30* m, int idx)
 loop:
             if (idx == n->key) {
                 it[0] = n;
-                func_00383560(r, &m->count, it);
+                List_Erase_383560(r, &m->count, it);
             } else {
                 n = n->next;
                 func_00380250(end, func_00380260(&m->count));

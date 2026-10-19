@@ -8,7 +8,7 @@ extern int D_0048AAE8;
 extern void func_002106F0();
 extern void func_00210620();
 extern void func_00210780();
-void func_002107F0(void)
+void tGimmeTheElevatorMenu_NetRegister(void)
 {
     int out[1];
     Desc_2107F0 desc;

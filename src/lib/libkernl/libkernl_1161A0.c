@@ -1,4 +1,4 @@
-int func_001161A0(void)
+int DIntr(void)
 {
     int s, v;
     __asm__ volatile("mfc0 %0, $12" : "=r"(s));

@@ -24,7 +24,7 @@ extern int D_00532FF8;
 extern int D_00533000;
 void GuiScreen_Wake(O* o);
 void String_CtorCStr_13B480(String* s, const char* text);
-void func_0013D680(void* list, String* s);
+void String_AssignString(void* list, String* s);
 void String_Dtor(String* s, int flags);
 void func_0033D8E0(O* o, unsigned char mode);
 W* GuiWidget_FindChildByName(void* o, char* name);
@@ -32,11 +32,11 @@ void* Agent_GetSelected(void* p, int i);
 char* AgentData_GetName(void* a);
 void GuiTextWidget_SetText(W* w, char* s, int f);
 Mgr* Gui_GetScreenStack(void);
-void func_0033F110(O* o);
+void GuiMenuScreen_Wake(O* o);
 }
 static inline W* Cast(W* w, void* t) { return w && w->IsA(t) ? w : 0; }
 
-void func_0033F110(O* o)
+void GuiMenuScreen_Wake(O* o)
 {
     W* w;
     GuiScreen_Wake(o);
@@ -45,7 +45,7 @@ void func_0033F110(O* o)
     {
         String s;
         String_CtorCStr_13B480(&s, D_004B9C60);
-        func_0013D680(o->f104, &s);
+        String_AssignString(o->f104, &s);
         String_Dtor(&s, 0);
     }
     if (o->f88) {

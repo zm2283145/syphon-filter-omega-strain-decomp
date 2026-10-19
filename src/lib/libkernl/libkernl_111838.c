@@ -13,7 +13,7 @@ extern Entry *func_00110D38(int);
 extern int func_001111B0(int);extern void func_001111E0(void),WaitSema(int),DeleteSema(int);
 extern int CreateSema(void *);
 extern int sceSifCallRpc(void *,int,int,void *,int,void *,int,void *,void *);
-int func_00111838(int fd){
+int sceClose(int fd){
  int sem[8],out;
  Entry *entry=func_00110D38(fd);
  int *req=D_004E4800;
@@ -38,7 +38,7 @@ int func_00111838(int fd){
 extern int D_0048623C,D_004E4800[],D_004E5440,D_0048624C;
 extern volatile int D_004861B8[32];extern void func_001111E0(void),WaitSema(int),SignalSema(int),DeleteSema(int);
 static inline int isNowait(unsigned short mode){return mode&0x8000;}
-int func_001119B8(int fd,int offset,int whence){
+int sceLseek(int fd,int offset,int whence){
  int *g=D_004E4800;
  Entry *iob;
  int inuse,uv,h,rc,i,result;
@@ -74,7 +74,7 @@ int func_001119B8(int fd,int offset,int whence){
 
 /* merge_units: begin func_00111BF0 */
 extern void func_0010FB10(void *,int);
-int func_00111BF0(int fd,void *buf,int nbyte){
+int sceRead(int fd,void *buf,int nbyte){
  int *g=D_004E4800;
  Entry *iob;
  int inuse,uv,h,rc,i,result;

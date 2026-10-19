@@ -19,7 +19,7 @@ extern int g_ProfileLockDepth;
 
 #pragma push
 #pragma opt_common_subs off
-char * func_003E28E0(char * arg0, int arg1) {
+char * ScriptInterpreter_ctor(char * arg0, int arg1) {
     struct { char pad40[8]; int f48; int f4C; } sl;
     int temp_s1_3;
     int temp_s1_4;

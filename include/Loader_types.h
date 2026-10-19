@@ -9,7 +9,7 @@ typedef struct LoaderOwnedVec {
     char owns;          /* 0x0C: set to 1 by the constructors */
 } LoaderOwnedVec;
 
-/* Object initialised by func_0013BCB0 with an extra word at +0x0C (size unknown). */
+/* Object initialised by String_CopyCtor with an extra word at +0x0C (size unknown). */
 typedef struct LoaderObj {
     char pad00[0x0C];
     int unk0C;          /* 0x0C */

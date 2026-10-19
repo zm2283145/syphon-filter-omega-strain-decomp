@@ -1,6 +1,6 @@
 #include "types.h"
-int func_00443EA0(int);
-int func_00443F40(int);
+int SFOLobby_Free(int);
+int SFOLobby_AllocZeroed(int);
 int memcpy(int, int, int);
 int Name_Compare48(int, int, int);
 void LobbyArray_RemoveAt(void *, int);
@@ -55,11 +55,11 @@ void LobbyArray_Append(Arr *a, int elem) {
             LobbyArray_RemoveAt(a, 0);
         } else {
             newcap = a->cap + a->grow;
-            p = func_00443F40(newcap * a->size);
+            p = SFOLobby_AllocZeroed(newcap * a->size);
             D_00585E58 += newcap * a->size;
             if (p == 0) return;
             memcpy(p, a->data, a->cap * a->size);
-            func_00443EA0(a->data);
+            SFOLobby_Free(a->data);
             D_00585E58 -= a->cap * a->size;
             a->cap = newcap;
             a->data = p;

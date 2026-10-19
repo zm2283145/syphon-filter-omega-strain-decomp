@@ -824,7 +824,7 @@ int func_0046E790(void)
 /* merge_units: end func_0046E790 */
 
 /* merge_units: begin func_004700F8 */
-int func_004700F8(char *s, int n)
+int Medius_TerminateString(char *s, int n)
 {
     if (s == 0) return -0x63;
     if (n > 0) s[n - 1] = 0;

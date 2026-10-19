@@ -19,7 +19,7 @@ void GuiTextListWidget_AddItem(L_0029D120* l, char* s, int i, int a);
 void GuiArrayWidget_Select(L_0029D120* l, int a, int b);
 void GuiOnlineConnect_ShowGroup(S_0029D120* self, int a);
 void SFOLobby_LeaveNetworkState(void* g);
-unsigned char func_00452FF0(void* g, int a);
+unsigned char SFOLobby_FormatError(void* g, int a);
 void FrontEnd_LeaveOnline(void* ui, int a);
 char* GuiScreen_GetLobbyString(S_0029D120* self, int a, int b, int c, int d, int e);
 void String_CtorCStr_13B480(Str_0029D120* s, const char* c);
@@ -52,7 +52,7 @@ extern "C" void GuiOnlineConnect_ListConfigs(S_0029D120* self)
         unsigned char r;
         SFOLobby_LeaveNetworkState(g);
         self->b94 = 0;
-        r = func_00452FF0(g, 0);
+        r = SFOLobby_FormatError(g, 0);
         if (r == 0x2F || r == 0x30) {
             Str_0029D120 a;
             Str_0029D120 b;

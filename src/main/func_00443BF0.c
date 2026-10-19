@@ -7,12 +7,12 @@ void* memcpy(void*, const void*, unsigned int);
 char* strstr(const char*, const char*);
 char* strchr(const char*, int);
 int strlen(const char*);
-void func_004434A0(void*, char*, char*);
-void func_00443260(void*, char*, char*);
+void SFOLobby_ParseIntSetting(void*, char*, char*);
+void SFOLobby_ParseServerSetting(void*, char*, char*);
 extern char D_004C0B10[];
 }
 
-extern "C" void func_00443BF0(void* self, char* text, int len, int mode)
+extern "C" void SFOLobby_ParseSettings(void* self, char* text, int len, int mode)
 {
     int start;
     int end;
@@ -40,8 +40,8 @@ extern "C" void func_00443BF0(void* self, char* text, int len, int mode)
         while ((bool)*val && *val <= ' ') val++;
         for (i = strlen(val) - 1; val[i] <= ' ' && i >= 0; i--) val[i] = 0;
         for (i = strlen(key) - 1; key[i] <= ' ' && i >= 0; i--) key[i] = 0;
-        if (mode) func_004434A0(self, key, val);
-        else func_00443260(self, key, val);
+        if (mode) SFOLobby_ParseIntSetting(self, key, val);
+        else SFOLobby_ParseServerSetting(self, key, val);
     }
 }
 

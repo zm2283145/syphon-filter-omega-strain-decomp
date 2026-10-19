@@ -18,7 +18,7 @@ extern char ScriptType_cNode_Init;
 extern char Script_cNode_IsType;
 extern char func_00144930;
 
-void func_004C5720(void) {
+void StaticInit_RegisterNode(void) {
     D_004EA770 = "NODE";
     __register_global_object(&D_004EA770, &func_00144930, &D_004EA760);
     D_004EA778 = Script_RegisterType("cNode", &ScriptType_cNode_Init, 0, 1);

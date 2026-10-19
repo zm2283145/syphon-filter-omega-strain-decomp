@@ -62,7 +62,7 @@ static inline void merge_flush_func_0035E020(void) {}
 #pragma cplusplus on
 
 /* Find a name key in a tree; end() when absent. */
-DEFINE_NAME_TREE_FIND(func_0035E0A0)
+DEFINE_NAME_TREE_FIND(Tree_Compare_35E0A0)
 #pragma pop /* merge_units */
 /* merge_units: end func_0035E0A0 */
 
@@ -74,7 +74,7 @@ struct VRElem20 { float a; float b; unsigned char c; int d; int e; };
 extern "C" {
 char D_004BB660[] = "vector length error\n";
 }
-DEFINE_VECTOR_INIT_RANGE(func_0035E1C0, VRElem20, 0x4CCCCC, D_004BB660, D_0049ED58, 0x5C)
+DEFINE_VECTOR_INIT_RANGE(Array_CopyRange20_35E1C0, VRElem20, 0x4CCCCC, D_004BB660, D_0049ED58, 0x5C)
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0035E1C0(void) {}
 #pragma pop /* merge_units */
@@ -96,7 +96,7 @@ DEFINE_TREE_FIND(func_0035E350, func_0013C310)
 /* Resize a vector of 60-byte elements. */
 DEFINE_RESIZE_ELEMENT(Elem60, 60)
 #pragma opt_common_subs off
-DEFINE_VECTOR_RESIZE(func_0035E420, Elem60, AnimChannelVec_Grow, func_001BEB20)
+DEFINE_VECTOR_RESIZE(ChannelVector_Resize_35E420, Elem60, AnimChannelVec_Grow, func_001BEB20)
 #pragma opt_common_subs reset
 #pragma pop /* merge_units */
 /* merge_units: end func_0035E420 */
@@ -108,7 +108,7 @@ DEFINE_VECTOR_RESIZE(func_0035E420, Elem60, AnimChannelVec_Grow, func_001BEB20)
 /* Resize a vector of 8-byte elements. */
 DEFINE_RESIZE_ELEMENT(Elem8, 8)
 #pragma opt_common_subs off
-DEFINE_VECTOR_RESIZE(func_0035E4B0, Elem8, func_001BF5A0, func_001BF440)
+DEFINE_VECTOR_RESIZE(func_0035E4B0, Elem8, Vector_Insert_1BF5A0, func_001BF440)
 #pragma opt_common_subs reset
 #pragma pop /* merge_units */
 /* merge_units: end func_0035E4B0 */

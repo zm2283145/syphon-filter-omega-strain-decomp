@@ -67,7 +67,7 @@ int func_0034A6E8(Ctx *c, Blk **out, unsigned char *flag)
 typedef struct { char pad[0x30]; int bufsize; } NetCd_7A8;
 extern int scePrintf(const char *fmt, ...);
 extern int sceSifMCallRpc(void *cd, unsigned int fno, unsigned int mode, void *send, int ssize, void *recv, int rsize, void *end, void *edata);
-int func_0034A7A8(NetCd_7A8 *cd, int fno, void *buf, int ssize, int rsize)
+int Libnet_CallRpc(NetCd_7A8 *cd, int fno, void *buf, int ssize, int rsize)
 {
     int bsize;
     ssize = (ssize + 63) & ~63;
@@ -134,9 +134,9 @@ int func_0034A968(void *cd, char *dst, char *buf, int idx)
 
 /* merge_units: begin func_0034A9A8 */
 #if 0 /* merge_units */
-extern int func_0034A7A8(void *cd, int fno, void *buf, int ssize, int rsize);
+extern int Libnet_CallRpc(void *cd, int fno, void *buf, int ssize, int rsize);
 #endif /* merge_units */
-#define func_0034A7A8(a0, a1, a2, a3, a4) (func_0034A7A8((NetCd_7A8 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
+#define Libnet_CallRpc(a0, a1, a2, a3, a4) (Libnet_CallRpc((NetCd_7A8 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
 
 #if 0 /* merge_units */
 extern int func_0034A828(void *cd, void *buf, int idx, void *src, int len);
@@ -160,12 +160,12 @@ int func_0034A9A8(void *cd, unsigned int *buf, void *dst, int n, int x)
     buf[0] = n; buf[1] = x;
     r = func_0034A828(cd, buf, 2, dst, n * 8);
     if (r < 0) return r;
-    if (func_0034A7A8(cd, 0x14, buf, n * 8 + 8, n * 8 + 4) < 0) return -0x21E;
+    if (Libnet_CallRpc(cd, 0x14, buf, n * 8 + 8, n * 8 + 4) < 0) return -0x21E;
     r = func_0034A880(cd, dst, buf, 2, n * 8);
     if (r < 0) return r;
     return buf[0];
 }
-#undef func_0034A7A8 /* merge_units */
+#undef Libnet_CallRpc /* merge_units */
 #undef func_0034A828 /* merge_units */
 #undef func_0034A880 /* merge_units */
 #undef func_0034A968 /* merge_units */
@@ -173,9 +173,9 @@ int func_0034A9A8(void *cd, unsigned int *buf, void *dst, int n, int x)
 
 /* merge_units: begin func_0034AA50 */
 #if 0 /* merge_units */
-extern int func_0034A7A8(void *cd, int fno, void *buf, int ssize, int rsize);
+extern int Libnet_CallRpc(void *cd, int fno, void *buf, int ssize, int rsize);
 #endif /* merge_units */
-#define func_0034A7A8(a0, a1, a2, a3, a4) (func_0034A7A8((NetCd_7A8 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
+#define Libnet_CallRpc(a0, a1, a2, a3, a4) (Libnet_CallRpc((NetCd_7A8 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
 
 #if 0 /* merge_units */
 extern int func_0034A828(void *cd, void *buf, int idx, void *src, int len);
@@ -206,12 +206,12 @@ int func_0034AA50(void *cd, unsigned int *buf, unsigned int flags, void *dst, ch
     n = func_0034A8D8(cd, buf, 5, str);
     if (n < 0) return n;
     buf[4] = n;
-    if (func_0034A7A8(cd, 6, buf, n + 0x14, 0x14) < 0) return -0x21E;
+    if (Libnet_CallRpc(cd, 6, buf, n + 0x14, 0x14) < 0) return -0x21E;
     n = func_0034A880(cd, dst, buf, 1, 16);
     if (n < 0) return n;
     return buf[0];
 }
-#undef func_0034A7A8 /* merge_units */
+#undef Libnet_CallRpc /* merge_units */
 #undef func_0034A828 /* merge_units */
 #undef func_0034A880 /* merge_units */
 #undef func_0034A968 /* merge_units */
@@ -219,9 +219,9 @@ int func_0034AA50(void *cd, unsigned int *buf, unsigned int flags, void *dst, ch
 
 /* merge_units: begin func_0034AB38 */
 #if 0 /* merge_units */
-extern int func_0034A7A8(void *cd, int fno, void *buf, int ssize, int rsize);
+extern int Libnet_CallRpc(void *cd, int fno, void *buf, int ssize, int rsize);
 #endif /* merge_units */
-#define func_0034A7A8(a0, a1, a2, a3, a4) (func_0034A7A8((NetCd_7A8 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
+#define Libnet_CallRpc(a0, a1, a2, a3, a4) (Libnet_CallRpc((NetCd_7A8 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
 
 #if 0 /* merge_units */
 extern int func_0034A828(void *cd, void *buf, int idx, void *src, int len);
@@ -244,12 +244,12 @@ int func_0034AB38(void *cd, unsigned int *buf, char *dst, int n, void *src)
     buf[0] = n;
     r = func_0034A828(cd, buf, 1, src, 16);
     if (r < 0) return r;
-    if (func_0034A7A8(cd, 7, buf, 0x14, n + 0x14) < 0) return -0x21E;
+    if (Libnet_CallRpc(cd, 7, buf, 0x14, n + 0x14) < 0) return -0x21E;
     r = func_0034A968(cd, dst, buf, 5);
     if (r < 0) return r;
     return buf[0];
 }
-#undef func_0034A7A8 /* merge_units */
+#undef Libnet_CallRpc /* merge_units */
 #undef func_0034A828 /* merge_units */
 #undef func_0034A880 /* merge_units */
 #undef func_0034A968 /* merge_units */
@@ -257,9 +257,9 @@ int func_0034AB38(void *cd, unsigned int *buf, char *dst, int n, void *src)
 
 /* merge_units: begin func_0034ABE0 */
 #if 0 /* merge_units */
-extern int func_0034A7A8(void *cd, int fno, void *buf, int ssize, int rsize);
+extern int Libnet_CallRpc(void *cd, int fno, void *buf, int ssize, int rsize);
 #endif /* merge_units */
-#define func_0034A7A8(a0, a1, a2, a3, a4) (func_0034A7A8((NetCd_7A8 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
+#define Libnet_CallRpc(a0, a1, a2, a3, a4) (Libnet_CallRpc((NetCd_7A8 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
 
 #if 0 /* merge_units */
 extern int func_0034A828(void *cd, void *buf, int idx, void *src, int len);
@@ -289,12 +289,12 @@ int func_0034ABE0(void *cd, unsigned int *buf, unsigned int flags, char *dst, in
     }
     r = func_0034A828(cd, buf, 4, addr, 16);
     if (r < 0) return r;
-    if (func_0034A7A8(cd, 0x12, buf, 0x24, len + 0x20) < 0) return -0x21E;
+    if (Libnet_CallRpc(cd, 0x12, buf, 0x24, len + 0x20) < 0) return -0x21E;
     r = func_0034A968(cd, dst, buf, 8);
     if (r < 0) return r;
     return buf[0];
 }
-#undef func_0034A7A8 /* merge_units */
+#undef Libnet_CallRpc /* merge_units */
 #undef func_0034A828 /* merge_units */
 #undef func_0034A880 /* merge_units */
 #undef func_0034A968 /* merge_units */
@@ -302,9 +302,9 @@ int func_0034ABE0(void *cd, unsigned int *buf, unsigned int flags, char *dst, in
 
 /* merge_units: begin func_0034ACC8 */
 #if 0 /* merge_units */
-extern int func_0034A7A8(void *cd, int fno, void *buf, int ssize, int rsize);
+extern int Libnet_CallRpc(void *cd, int fno, void *buf, int ssize, int rsize);
 #endif /* merge_units */
-#define func_0034A7A8(a0, a1, a2, a3, a4) (func_0034A7A8((NetCd_7A8 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
+#define Libnet_CallRpc(a0, a1, a2, a3, a4) (Libnet_CallRpc((NetCd_7A8 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
 
 #if 0 /* merge_units */
 extern int func_0034A828(void *cd, void *buf, int idx, void *src, int len);
@@ -327,10 +327,10 @@ int func_0034ACC8(void *cd, unsigned int *buf, void *src)
     int r;
     r = func_0034A828(cd, buf, 1, src, 0x40);
     if (r < 0) return r;
-    if (func_0034A7A8(cd, 1, buf, 0x44, 4) < 0) return -0x21E;
+    if (Libnet_CallRpc(cd, 1, buf, 0x44, 4) < 0) return -0x21E;
     return buf[0] ? buf[0] : -0x21C;
 }
-#undef func_0034A7A8 /* merge_units */
+#undef Libnet_CallRpc /* merge_units */
 #undef func_0034A828 /* merge_units */
 #undef func_0034A880 /* merge_units */
 #undef func_0034A968 /* merge_units */
@@ -338,33 +338,33 @@ int func_0034ACC8(void *cd, unsigned int *buf, void *src)
 
 /* merge_units: begin func_0034AD40 */
 #if 0 /* merge_units */
-extern int func_0034A7A8(void *cd, int fno, void *buf, int ssize, int rsize);
+extern int Libnet_CallRpc(void *cd, int fno, void *buf, int ssize, int rsize);
 #endif /* merge_units */
-#define func_0034A7A8(a0, a1, a2, a3, a4) (func_0034A7A8((NetCd_7A8 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
+#define Libnet_CallRpc(a0, a1, a2, a3, a4) (Libnet_CallRpc((NetCd_7A8 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
 
-#define NET_RPC0(name, fno) int name(void *cd, unsigned int *buf) { if (func_0034A7A8(cd, fno, buf, 0, 4) < 0) return -0x21E; return buf[0]; }
-#define NET_RPC1(name, fno) int name(void *cd, unsigned int *buf, unsigned int a) { buf[0] = a; if (func_0034A7A8(cd, fno, buf, 4, 4) < 0) return -0x21E; return buf[0]; }
-#define NET_RPC2(name, fno) int name(void *cd, unsigned int *buf, unsigned int a, unsigned int b) { buf[0] = a; buf[1] = b; if (func_0034A7A8(cd, fno, buf, 8, 4) < 0) return -0x21E; return buf[0]; }
+#define NET_RPC0(name, fno) int name(void *cd, unsigned int *buf) { if (Libnet_CallRpc(cd, fno, buf, 0, 4) < 0) return -0x21E; return buf[0]; }
+#define NET_RPC1(name, fno) int name(void *cd, unsigned int *buf, unsigned int a) { buf[0] = a; if (Libnet_CallRpc(cd, fno, buf, 4, 4) < 0) return -0x21E; return buf[0]; }
+#define NET_RPC2(name, fno) int name(void *cd, unsigned int *buf, unsigned int a, unsigned int b) { buf[0] = a; buf[1] = b; if (Libnet_CallRpc(cd, fno, buf, 8, 4) < 0) return -0x21E; return buf[0]; }
 
 NET_RPC2(func_0034AD40, 0x2)
-#undef func_0034A7A8 /* merge_units */
+#undef Libnet_CallRpc /* merge_units */
 /* merge_units: end func_0034AD40 */
 
 /* merge_units: begin func_0034AD88 */
 #if 0 /* merge_units */
-extern int func_0034A7A8(void *cd, int fno, void *buf, int ssize, int rsize);
+extern int Libnet_CallRpc(void *cd, int fno, void *buf, int ssize, int rsize);
 #endif /* merge_units */
-#define func_0034A7A8(a0, a1, a2, a3, a4) (func_0034A7A8((NetCd_7A8 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
+#define Libnet_CallRpc(a0, a1, a2, a3, a4) (Libnet_CallRpc((NetCd_7A8 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
 
 NET_RPC2(func_0034AD88, 0x3)
-#undef func_0034A7A8 /* merge_units */
+#undef Libnet_CallRpc /* merge_units */
 /* merge_units: end func_0034AD88 */
 
 /* merge_units: begin func_0034ADD0 */
 #if 0 /* merge_units */
-extern int func_0034A7A8(void *cd, int fno, void *buf, int ssize, int rsize);
+extern int Libnet_CallRpc(void *cd, int fno, void *buf, int ssize, int rsize);
 #endif /* merge_units */
-#define func_0034A7A8(a0, a1, a2, a3, a4) (func_0034A7A8((NetCd_7A8 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
+#define Libnet_CallRpc(a0, a1, a2, a3, a4) (Libnet_CallRpc((NetCd_7A8 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
 
 #if 0 /* merge_units */
 extern int func_0034A828(void *cd, void *buf, int idx, void *src, int len);
@@ -388,14 +388,14 @@ int func_0034ADD0(void *cd, int *buf, int a, void *dst, int len, int *p, int x)
     buf[0] = a;
     if (p) buf[1] = *p; else buf[1] = 0;
     buf[2] = len; buf[3] = x;
-    if (func_0034A7A8(cd, 4, buf, 16, len + 8) < 0) return -0x21E;
+    if (Libnet_CallRpc(cd, 4, buf, 16, len + 8) < 0) return -0x21E;
     if (buf[0] < 0) return buf[0];
     if (p) *p = buf[1];
     r = func_0034A880(cd, dst, buf, 2, buf[0]);
     if (r < 0) return r;
     return buf[0];
 }
-#undef func_0034A7A8 /* merge_units */
+#undef Libnet_CallRpc /* merge_units */
 #undef func_0034A828 /* merge_units */
 #undef func_0034A880 /* merge_units */
 #undef func_0034A968 /* merge_units */
@@ -403,9 +403,9 @@ int func_0034ADD0(void *cd, int *buf, int a, void *dst, int len, int *p, int x)
 
 /* merge_units: begin func_0034AE98 */
 #if 0 /* merge_units */
-extern int func_0034A7A8(void *cd, int fno, void *buf, int ssize, int rsize);
+extern int Libnet_CallRpc(void *cd, int fno, void *buf, int ssize, int rsize);
 #endif /* merge_units */
-#define func_0034A7A8(a0, a1, a2, a3, a4) (func_0034A7A8((NetCd_7A8 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
+#define Libnet_CallRpc(a0, a1, a2, a3, a4) (Libnet_CallRpc((NetCd_7A8 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
 
 #if 0 /* merge_units */
 extern int func_0034A828(void *cd, void *buf, int idx, void *src, int len);
@@ -429,7 +429,7 @@ int func_0034AE98(void *cd, int *buf, int a, void *dst, int len, int *p, void *a
     buf[0] = a;
     if (p) buf[1] = *p; else buf[1] = 0;
     buf[2] = len; buf[3] = x;
-    if (func_0034A7A8(cd, 0xD, buf, 16, len + 0x1C) < 0) return -0x21E;
+    if (Libnet_CallRpc(cd, 0xD, buf, 16, len + 0x1C) < 0) return -0x21E;
     if (buf[0] < 0) return buf[0];
     if (p) *p = buf[1];
     r = func_0034A880(cd, addr, buf, 2, 16);
@@ -439,7 +439,7 @@ int func_0034AE98(void *cd, int *buf, int a, void *dst, int len, int *p, void *a
     if (r < 0) return r;
     return buf[0];
 }
-#undef func_0034A7A8 /* merge_units */
+#undef Libnet_CallRpc /* merge_units */
 #undef func_0034A828 /* merge_units */
 #undef func_0034A880 /* merge_units */
 #undef func_0034A968 /* merge_units */
@@ -447,9 +447,9 @@ int func_0034AE98(void *cd, int *buf, int a, void *dst, int len, int *p, void *a
 
 /* merge_units: begin func_0034AFA8 */
 #if 0 /* merge_units */
-extern int func_0034A7A8(void *cd, int fno, void *buf, int ssize, int rsize);
+extern int Libnet_CallRpc(void *cd, int fno, void *buf, int ssize, int rsize);
 #endif /* merge_units */
-#define func_0034A7A8(a0, a1, a2, a3, a4) (func_0034A7A8((NetCd_7A8 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
+#define Libnet_CallRpc(a0, a1, a2, a3, a4) (Libnet_CallRpc((NetCd_7A8 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
 
 #if 0 /* merge_units */
 extern int func_0034A828(void *cd, void *buf, int idx, void *src, int len);
@@ -475,11 +475,11 @@ int func_0034AFA8(void *cd, int *buf, int a, void *src, int len, int *p, int x)
     buf[2] = len; buf[3] = x;
     r = func_0034A828(cd, buf, 4, src, len);
     if (r < 0) return r;
-    if (func_0034A7A8(cd, 5, buf, len + 16, 8) < 0) return -0x21E;
+    if (Libnet_CallRpc(cd, 5, buf, len + 16, 8) < 0) return -0x21E;
     if (p) *p = buf[1];
     return buf[0];
 }
-#undef func_0034A7A8 /* merge_units */
+#undef Libnet_CallRpc /* merge_units */
 #undef func_0034A828 /* merge_units */
 #undef func_0034A880 /* merge_units */
 #undef func_0034A968 /* merge_units */
@@ -487,9 +487,9 @@ int func_0034AFA8(void *cd, int *buf, int a, void *src, int len, int *p, int x)
 
 /* merge_units: begin func_0034B050 */
 #if 0 /* merge_units */
-extern int func_0034A7A8(void *cd, int fno, void *buf, int ssize, int rsize);
+extern int Libnet_CallRpc(void *cd, int fno, void *buf, int ssize, int rsize);
 #endif /* merge_units */
-#define func_0034A7A8(a0, a1, a2, a3, a4) (func_0034A7A8((NetCd_7A8 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
+#define Libnet_CallRpc(a0, a1, a2, a3, a4) (Libnet_CallRpc((NetCd_7A8 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
 
 #if 0 /* merge_units */
 extern int func_0034A828(void *cd, void *buf, int idx, void *src, int len);
@@ -517,11 +517,11 @@ int func_0034B050(void *cd, int *buf, int a, void *src, int len, int *p, void *a
     if (r < 0) return r;
     r = func_0034A828(cd, buf, 9, src, len);
     if (r < 0) return r;
-    if (func_0034A7A8(cd, 0xE, buf, len + 0x24, 8) < 0) return -0x21E;
+    if (Libnet_CallRpc(cd, 0xE, buf, len + 0x24, 8) < 0) return -0x21E;
     if (p) *p = buf[1];
     return buf[0];
 }
-#undef func_0034A7A8 /* merge_units */
+#undef Libnet_CallRpc /* merge_units */
 #undef func_0034A828 /* merge_units */
 #undef func_0034A880 /* merge_units */
 #undef func_0034A968 /* merge_units */
@@ -529,19 +529,19 @@ int func_0034B050(void *cd, int *buf, int a, void *src, int len, int *p, void *a
 
 /* merge_units: begin func_0034B138 */
 #if 0 /* merge_units */
-extern int func_0034A7A8(void *cd, int fno, void *buf, int ssize, int rsize);
+extern int Libnet_CallRpc(void *cd, int fno, void *buf, int ssize, int rsize);
 #endif /* merge_units */
-#define func_0034A7A8(a0, a1, a2, a3, a4) (func_0034A7A8((NetCd_7A8 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
+#define Libnet_CallRpc(a0, a1, a2, a3, a4) (Libnet_CallRpc((NetCd_7A8 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
 
 NET_RPC2(func_0034B138, 0xF)
-#undef func_0034A7A8 /* merge_units */
+#undef Libnet_CallRpc /* merge_units */
 /* merge_units: end func_0034B138 */
 
 /* merge_units: begin func_0034B180 */
 #if 0 /* merge_units */
-extern int func_0034A7A8(void *cd, int fno, void *buf, int ssize, int rsize);
+extern int Libnet_CallRpc(void *cd, int fno, void *buf, int ssize, int rsize);
 #endif /* merge_units */
-#define func_0034A7A8(a0, a1, a2, a3, a4) (func_0034A7A8((NetCd_7A8 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
+#define Libnet_CallRpc(a0, a1, a2, a3, a4) (Libnet_CallRpc((NetCd_7A8 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
 
 #if 0 /* merge_units */
 extern int func_0034A828(void *cd, void *buf, int idx, void *src, int len);
@@ -559,10 +559,10 @@ extern int func_0034A968(void *cd, char *dst, void *buf, int idx);
 #define func_0034A968(a0, a1, a2, a3) (func_0034A968((a0), (a1), (char *)(a2), (a3))) /* merge_units */
 
 
-#define NET_RPC_IO(name, fno) int name(void *cd, int *buf, int a, int b, void *data, int len) { int r; buf[0] = a; buf[1] = b; buf[2] = len; r = func_0034A828(cd, buf, 3, data, len); if (r < 0) return r; if (func_0034A7A8(cd, fno, buf, len + 12, len + 12) < 0) return -0x21E; r = func_0034A880(cd, data, buf, 3, len); if (r < 0) return r; return buf[0]; }
-#define NET_RPC_LIST(name, fno, esz) int name(void *cd, int *buf, void *dst, int n) { int r; buf[0] = n; if (func_0034A7A8(cd, fno, buf, 4, n * esz + 4) < 0) return -0x21E; if (buf[0] < 0) return buf[0]; r = func_0034A880(cd, dst, buf, 1, buf[0] * esz); if (r < 0) return r; return buf[0]; }
+#define NET_RPC_IO(name, fno) int name(void *cd, int *buf, int a, int b, void *data, int len) { int r; buf[0] = a; buf[1] = b; buf[2] = len; r = func_0034A828(cd, buf, 3, data, len); if (r < 0) return r; if (Libnet_CallRpc(cd, fno, buf, len + 12, len + 12) < 0) return -0x21E; r = func_0034A880(cd, data, buf, 3, len); if (r < 0) return r; return buf[0]; }
+#define NET_RPC_LIST(name, fno, esz) int name(void *cd, int *buf, void *dst, int n) { int r; buf[0] = n; if (Libnet_CallRpc(cd, fno, buf, 4, n * esz + 4) < 0) return -0x21E; if (buf[0] < 0) return buf[0]; r = func_0034A880(cd, dst, buf, 1, buf[0] * esz); if (r < 0) return r; return buf[0]; }
 NET_RPC_IO(func_0034B180, 0x13)
-#undef func_0034A7A8 /* merge_units */
+#undef Libnet_CallRpc /* merge_units */
 #undef func_0034A828 /* merge_units */
 #undef func_0034A880 /* merge_units */
 #undef func_0034A968 /* merge_units */
@@ -570,9 +570,9 @@ NET_RPC_IO(func_0034B180, 0x13)
 
 /* merge_units: begin func_0034B230 */
 #if 0 /* merge_units */
-extern int func_0034A7A8(void *cd, int fno, void *buf, int ssize, int rsize);
+extern int Libnet_CallRpc(void *cd, int fno, void *buf, int ssize, int rsize);
 #endif /* merge_units */
-#define func_0034A7A8(a0, a1, a2, a3, a4) (func_0034A7A8((NetCd_7A8 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
+#define Libnet_CallRpc(a0, a1, a2, a3, a4) (Libnet_CallRpc((NetCd_7A8 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
 
 #if 0 /* merge_units */
 extern int func_0034A828(void *cd, void *buf, int idx, void *src, int len);
@@ -589,7 +589,7 @@ extern int func_0034A968(void *cd, char *dst, void *buf, int idx);
 #endif /* merge_units */
 #define func_0034A968(a0, a1, a2, a3) (func_0034A968((a0), (a1), (char *)(a2), (a3))) /* merge_units */
 NET_RPC_LIST(func_0034B230, 8, 4)
-#undef func_0034A7A8 /* merge_units */
+#undef Libnet_CallRpc /* merge_units */
 #undef func_0034A828 /* merge_units */
 #undef func_0034A880 /* merge_units */
 #undef func_0034A968 /* merge_units */
@@ -597,9 +597,9 @@ NET_RPC_LIST(func_0034B230, 8, 4)
 
 /* merge_units: begin func_0034B2C0 */
 #if 0 /* merge_units */
-extern int func_0034A7A8(void *cd, int fno, void *buf, int ssize, int rsize);
+extern int Libnet_CallRpc(void *cd, int fno, void *buf, int ssize, int rsize);
 #endif /* merge_units */
-#define func_0034A7A8(a0, a1, a2, a3, a4) (func_0034A7A8((NetCd_7A8 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
+#define Libnet_CallRpc(a0, a1, a2, a3, a4) (Libnet_CallRpc((NetCd_7A8 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
 
 #if 0 /* merge_units */
 extern int func_0034A828(void *cd, void *buf, int idx, void *src, int len);
@@ -616,7 +616,7 @@ extern int func_0034A968(void *cd, char *dst, void *buf, int idx);
 #endif /* merge_units */
 #define func_0034A968(a0, a1, a2, a3) (func_0034A968((a0), (a1), (char *)(a2), (a3))) /* merge_units */
 NET_RPC_IO(func_0034B2C0, 9)
-#undef func_0034A7A8 /* merge_units */
+#undef Libnet_CallRpc /* merge_units */
 #undef func_0034A828 /* merge_units */
 #undef func_0034A880 /* merge_units */
 #undef func_0034A968 /* merge_units */
@@ -624,9 +624,9 @@ NET_RPC_IO(func_0034B2C0, 9)
 
 /* merge_units: begin func_0034B370 */
 #if 0 /* merge_units */
-extern int func_0034A7A8(void *cd, int fno, void *buf, int ssize, int rsize);
+extern int Libnet_CallRpc(void *cd, int fno, void *buf, int ssize, int rsize);
 #endif /* merge_units */
-#define func_0034A7A8(a0, a1, a2, a3, a4) (func_0034A7A8((NetCd_7A8 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
+#define Libnet_CallRpc(a0, a1, a2, a3, a4) (Libnet_CallRpc((NetCd_7A8 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
 
 #if 0 /* merge_units */
 extern int func_0034A828(void *cd, void *buf, int idx, void *src, int len);
@@ -643,7 +643,7 @@ extern int func_0034A968(void *cd, char *dst, void *buf, int idx);
 #endif /* merge_units */
 #define func_0034A968(a0, a1, a2, a3) (func_0034A968((a0), (a1), (char *)(a2), (a3))) /* merge_units */
 NET_RPC_LIST(func_0034B370, 0xA, 72)
-#undef func_0034A7A8 /* merge_units */
+#undef Libnet_CallRpc /* merge_units */
 #undef func_0034A828 /* merge_units */
 #undef func_0034A880 /* merge_units */
 #undef func_0034A968 /* merge_units */
@@ -651,9 +651,9 @@ NET_RPC_LIST(func_0034B370, 0xA, 72)
 
 /* merge_units: begin func_0034B410 */
 #if 0 /* merge_units */
-extern int func_0034A7A8(void *cd, int fno, void *buf, int ssize, int rsize);
+extern int Libnet_CallRpc(void *cd, int fno, void *buf, int ssize, int rsize);
 #endif /* merge_units */
-#define func_0034A7A8(a0, a1, a2, a3, a4) (func_0034A7A8((NetCd_7A8 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
+#define Libnet_CallRpc(a0, a1, a2, a3, a4) (Libnet_CallRpc((NetCd_7A8 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
 
 #if 0 /* merge_units */
 extern int func_0034A828(void *cd, void *buf, int idx, void *src, int len);
@@ -671,7 +671,7 @@ extern int func_0034A968(void *cd, char *dst, void *buf, int idx);
 #define func_0034A968(a0, a1, a2, a3) (func_0034A968((a0), (a1), (char *)(a2), (a3))) /* merge_units */
 
 NET_RPC_LIST(func_0034B410, 0xB, 16)
-#undef func_0034A7A8 /* merge_units */
+#undef Libnet_CallRpc /* merge_units */
 #undef func_0034A828 /* merge_units */
 #undef func_0034A880 /* merge_units */
 #undef func_0034A968 /* merge_units */
@@ -679,19 +679,19 @@ NET_RPC_LIST(func_0034B410, 0xB, 16)
 
 /* merge_units: begin func_0034B4A0 */
 #if 0 /* merge_units */
-extern int func_0034A7A8(void *cd, int fno, void *buf, int ssize, int rsize);
+extern int Libnet_CallRpc(void *cd, int fno, void *buf, int ssize, int rsize);
 #endif /* merge_units */
-#define func_0034A7A8(a0, a1, a2, a3, a4) (func_0034A7A8((NetCd_7A8 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
+#define Libnet_CallRpc(a0, a1, a2, a3, a4) (Libnet_CallRpc((NetCd_7A8 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
 
 NET_RPC1(func_0034B4A0, 0xC)
-#undef func_0034A7A8 /* merge_units */
+#undef Libnet_CallRpc /* merge_units */
 /* merge_units: end func_0034B4A0 */
 
 /* merge_units: begin func_0034B4E8 */
 #if 0 /* merge_units */
-extern int func_0034A7A8(void *cd, int fno, void *buf, int ssize, int rsize);
+extern int Libnet_CallRpc(void *cd, int fno, void *buf, int ssize, int rsize);
 #endif /* merge_units */
-#define func_0034A7A8(a0, a1, a2, a3, a4) (func_0034A7A8((NetCd_7A8 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
+#define Libnet_CallRpc(a0, a1, a2, a3, a4) (Libnet_CallRpc((NetCd_7A8 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
 
 #if 0 /* merge_units */
 extern int func_0034A828(void *cd, void *buf, int idx, void *src, int len);
@@ -712,12 +712,12 @@ int func_0034B4E8(void *cd, unsigned int *buf, void *dst, int len, int x)
 {
     int r;
     buf[0] = len; buf[1] = x;
-    if (func_0034A7A8(cd, 0x11, buf, 8, len + 4) < 0) return -0x21E;
+    if (Libnet_CallRpc(cd, 0x11, buf, 8, len + 4) < 0) return -0x21E;
     r = func_0034A880(cd, dst, buf, 1, len);
     if (r < 0) return r;
     return buf[0];
 }
-#undef func_0034A7A8 /* merge_units */
+#undef Libnet_CallRpc /* merge_units */
 #undef func_0034A828 /* merge_units */
 #undef func_0034A880 /* merge_units */
 #undef func_0034A968 /* merge_units */
@@ -725,49 +725,49 @@ int func_0034B4E8(void *cd, unsigned int *buf, void *dst, int len, int x)
 
 /* merge_units: begin func_0034B580 */
 #if 0 /* merge_units */
-extern int func_0034A7A8(void *cd, int fno, void *buf, int ssize, int rsize);
+extern int Libnet_CallRpc(void *cd, int fno, void *buf, int ssize, int rsize);
 #endif /* merge_units */
-#define func_0034A7A8(a0, a1, a2, a3, a4) (func_0034A7A8((NetCd_7A8 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
+#define Libnet_CallRpc(a0, a1, a2, a3, a4) (Libnet_CallRpc((NetCd_7A8 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
 
 NET_RPC0(func_0034B580, 0x10)
-#undef func_0034A7A8 /* merge_units */
+#undef Libnet_CallRpc /* merge_units */
 /* merge_units: end func_0034B580 */
 
 /* merge_units: begin func_0034B5C0 */
 #if 0 /* merge_units */
-extern int func_0034A7A8(void *cd, int fno, void *buf, int ssize, int rsize);
+extern int Libnet_CallRpc(void *cd, int fno, void *buf, int ssize, int rsize);
 #endif /* merge_units */
-#define func_0034A7A8(a0, a1, a2, a3, a4) (func_0034A7A8((NetCd_7A8 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
+#define Libnet_CallRpc(a0, a1, a2, a3, a4) (Libnet_CallRpc((NetCd_7A8 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
 
 NET_RPC1(func_0034B5C0, 0x32)
-#undef func_0034A7A8 /* merge_units */
+#undef Libnet_CallRpc /* merge_units */
 /* merge_units: end func_0034B5C0 */
 
 /* merge_units: begin func_0034B608 */
 #if 0 /* merge_units */
-extern int func_0034A7A8(void *cd, int fno, void *buf, int ssize, int rsize);
+extern int Libnet_CallRpc(void *cd, int fno, void *buf, int ssize, int rsize);
 #endif /* merge_units */
-#define func_0034A7A8(a0, a1, a2, a3, a4) (func_0034A7A8((NetCd_7A8 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
+#define Libnet_CallRpc(a0, a1, a2, a3, a4) (Libnet_CallRpc((NetCd_7A8 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
 
 NET_RPC1(func_0034B608, 0x33)
-#undef func_0034A7A8 /* merge_units */
+#undef Libnet_CallRpc /* merge_units */
 /* merge_units: end func_0034B608 */
 
 /* merge_units: begin func_0034B650 */
 #if 0 /* merge_units */
-extern int func_0034A7A8(void *cd, int fno, void *buf, int ssize, int rsize);
+extern int Libnet_CallRpc(void *cd, int fno, void *buf, int ssize, int rsize);
 #endif /* merge_units */
-#define func_0034A7A8(a0, a1, a2, a3, a4) (func_0034A7A8((NetCd_7A8 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
+#define Libnet_CallRpc(a0, a1, a2, a3, a4) (Libnet_CallRpc((NetCd_7A8 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
 
 NET_RPC1(func_0034B650, 0x34)
-#undef func_0034A7A8 /* merge_units */
+#undef Libnet_CallRpc /* merge_units */
 /* merge_units: end func_0034B650 */
 
 /* merge_units: begin func_0034B698 */
 #if 0 /* merge_units */
-extern int func_0034A7A8(void *cd, int fno, void *buf, int ssize, int rsize);
+extern int Libnet_CallRpc(void *cd, int fno, void *buf, int ssize, int rsize);
 #endif /* merge_units */
-#define func_0034A7A8(a0, a1, a2, a3, a4) (func_0034A7A8((NetCd_7A8 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
+#define Libnet_CallRpc(a0, a1, a2, a3, a4) (Libnet_CallRpc((NetCd_7A8 *)(a0), (a1), (a2), (a3), (a4))) /* merge_units */
 
 #if 0 /* merge_units */
 extern int func_0034A828(void *cd, void *buf, int idx, void *src, int len);
@@ -788,11 +788,11 @@ int func_0034B698(void *cd, unsigned int *buf, unsigned int a, unsigned int *p)
 {
     buf[0] = a;
     if (p) buf[1] = *p; else buf[1] = 0;
-    if (func_0034A7A8(cd, 0x35, buf, 8, 8) < 0) return -0x21E;
+    if (Libnet_CallRpc(cd, 0x35, buf, 8, 8) < 0) return -0x21E;
     if (p) *p = buf[1];
     return buf[0];
 }
-#undef func_0034A7A8 /* merge_units */
+#undef Libnet_CallRpc /* merge_units */
 #undef func_0034A828 /* merge_units */
 #undef func_0034A880 /* merge_units */
 #undef func_0034A968 /* merge_units */

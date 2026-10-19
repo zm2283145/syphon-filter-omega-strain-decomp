@@ -23,7 +23,7 @@ extern "C" {
 Ent** func_003B14D0(EVec* v);
 Ent* func_003B14A0(Ent* d, Ent* s);
 V4 func_003B1450(Ent* e);
-V4 func_003B1420(V4* a, V4* b);
+V4 Vec4_Add_3B1420(V4* a, V4* b);
 V4* Quat_Assign(V4* d, V4* s);
 int func_003B7470(EVec* v, Ent* pos, int n, Ent* value);
 void func_003B1290(Contrib* c, Ent* e, float k);
@@ -43,7 +43,7 @@ void func_003B1290(Contrib* c, Ent* e, float k)
             if (it->weight == 0.0f) {
                 func_003B14A0(it, e);
             } else {
-                Quat_Assign(&it->v, &func_003B1420(&func_003B1450(it), &func_003B1450(e)));
+                Quat_Assign(&it->v, &Vec4_Add_3B1420(&func_003B1450(it), &func_003B1450(e)));
                 it->weight += e->weight;
                 it->active = 0;
             }

@@ -52,10 +52,10 @@ typedef struct { unsigned long psize:8; unsigned long dsize:24; int dest; unsign
 typedef struct { void *src; unsigned int dest; int size,attr; } Dma5618;
 extern ResetPacket5618 D_004E6400;
 extern int func_00118310(int,int);
-extern void func_0010D430(void);
-extern unsigned int func_0010D570(unsigned int);
+extern void sceSifStopDma(void);
+extern unsigned int sceSifGetReg(unsigned int);
 extern void func_0010FB10(void *,int);
-extern int func_0010D560(unsigned int,unsigned int);
+extern int sceSifSetReg(unsigned int,unsigned int);
 extern int sceSifSetDma(Dma5618 *,int);
 int func_00115618(char *args,int mode)
 {
@@ -63,7 +63,7 @@ int func_00115618(char *args,int mode)
  int n;
  unsigned int dest;
  func_00118310(0,0);func_00118310(1,0);
- func_0010D430();dest=func_0010D570(0x80000000);
+ sceSifStopDma();dest=sceSifGetReg(0x80000000);
  D_004E6400.mode=mode;
  for(n=0;args[n];n++)D_004E6400.args[n]=args[n];
  D_004E6400.dest=0;
@@ -73,10 +73,10 @@ int func_00115618(char *args,int mode)
  D_004E6400.psize=0x68;
  dma.src=&D_004E6400;dma.dest=dest;dma.size=0x68;dma.attr=0x44;
  func_0010FB10(&D_004E6400,0x68);
- func_0010D560(4,0x40000);
+ sceSifSetReg(4,0x40000);
  if(sceSifSetDma(&dma,1)){
-  func_0010D560(4,0x10000);func_0010D560(4,0x20000);
-  func_0010D560(0x80000002,0);func_0010D560(0x80000000,0);
+  sceSifSetReg(4,0x10000);sceSifSetReg(4,0x20000);
+  sceSifSetReg(0x80000002,0);sceSifSetReg(0x80000000,0);
   return 1;
  }
  return 0;
@@ -85,10 +85,10 @@ int func_00115618(char *args,int mode)
 
 /* merge_units: begin func_00115770 */
 #if 0 /* merge_units */
-extern unsigned int func_0010D570(int);
+extern unsigned int sceSifGetReg(int);
 #endif /* merge_units */
-#define func_0010D570(a0) (func_0010D570((unsigned int)(a0))) /* merge_units */
+#define sceSifGetReg(a0) (sceSifGetReg((unsigned int)(a0))) /* merge_units */
 
-int func_00115770(void) { if (func_0010D570(4) & 0x10000) return 1; return 0; }
-#undef func_0010D570 /* merge_units */
+int func_00115770(void) { if (sceSifGetReg(4) & 0x10000) return 1; return 0; }
+#undef sceSifGetReg /* merge_units */
 /* merge_units: end func_00115770 */

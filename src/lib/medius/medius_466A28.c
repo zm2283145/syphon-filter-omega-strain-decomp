@@ -9,13 +9,13 @@ int D_00497CC0 = 0;
 int D_00497CC4 = -1;
 extern int D_00598670;
 extern int D_0059842C;
-extern int func_004700F8(char *, int);
+extern int Medius_TerminateString(char *, int);
 extern int Net_SendLocked(int, int, int, int, int, int, void *);
 int func_00466A28(char *a, int b)
 {
-    func_004700F8(a, 0x15);
-    func_004700F8(a + 0x15, 0x11);
-    func_004700F8(a + 0x2C, 0x20);
+    Medius_TerminateString(a, 0x15);
+    Medius_TerminateString(a + 0x15, 0x11);
+    Medius_TerminateString(a + 0x2C, 0x20);
     if (D_00497CC0 != 1) return -0xF;
     if (D_00497CC4 < 0) return -0x10;
     D_0059842C = b;
@@ -30,8 +30,8 @@ extern int D_00598678;
 extern int D_00598430;
 int func_00466AD0(char *a, int b)
 {
-    func_004700F8(a, 0x15);
-    func_004700F8(a + 0x15, 0x11);
+    Medius_TerminateString(a, 0x15);
+    Medius_TerminateString(a + 0x15, 0x11);
     if (D_00497CC0 != 1) return -0xF;
     if (D_00497CC4 < 0) return -0x10;
     D_00598430 = b;
@@ -44,9 +44,9 @@ extern int D_00598688;
 extern int D_00598434;
 int func_00466B70(char *a, int b)
 {
-    func_004700F8(a, 0x15);
-    func_004700F8(a + 0x15, 0x11);
-    func_004700F8(a + 0x2C, 0x20);
+    Medius_TerminateString(a, 0x15);
+    Medius_TerminateString(a + 0x15, 0x11);
+    Medius_TerminateString(a + 0x2C, 0x20);
     if (D_00497CC0 != 1) return -0xF;
     if (D_00497CC4 < 0) return -0x10;
     D_00598434 = b;
@@ -59,8 +59,8 @@ extern int D_00598680;
 extern int D_00598438;
 int func_00466C18(char *a, int b)
 {
-    func_004700F8(a, 0x15);
-    func_004700F8(a + 0x15, 0x11);
+    Medius_TerminateString(a, 0x15);
+    Medius_TerminateString(a + 0x15, 0x11);
     if (D_00497CC0 != 1) return -0xF;
     if (D_00497CC4 < 0) return -0x10;
     D_00598438 = b;
@@ -73,9 +73,9 @@ extern int D_00598690;
 extern int D_0059843C;
 int func_00466CB8(char *a, int b)
 {
-    func_004700F8(a, 0x15);
-    func_004700F8(a + 0x15, 0x11);
-    func_004700F8(a + 0x2C, 0x20);
+    Medius_TerminateString(a, 0x15);
+    Medius_TerminateString(a + 0x15, 0x11);
+    Medius_TerminateString(a + 0x2C, 0x20);
     if (D_00497CC0 != 1) return -0xF;
     if (D_00497CC4 < 0) return -0x10;
     D_0059843C = b;
@@ -88,9 +88,9 @@ extern int D_00598698;
 extern int D_00598440;
 int func_00466D60(char *a, int b)
 {
-    func_004700F8(a, 0x15);
-    func_004700F8(a + 0x15, 0x11);
-    func_004700F8(a + 0x2C, 0xC8);
+    Medius_TerminateString(a, 0x15);
+    Medius_TerminateString(a + 0x15, 0x11);
+    Medius_TerminateString(a + 0x2C, 0xC8);
     if (D_00497CC0 != 1) return -0xF;
     if (D_00497CC4 < 0) return -0x10;
     D_00598440 = b;
@@ -103,8 +103,8 @@ extern int D_005986A0;
 extern int D_00598444;
 int func_00466E08(char *a, int b)
 {
-    func_004700F8(a, 0x15);
-    func_004700F8(a + 0x15, 0x11);
+    Medius_TerminateString(a, 0x15);
+    Medius_TerminateString(a + 0x15, 0x11);
     if (D_00497CC0 != 1) return -0xF;
     if (D_00497CC4 < 0) return -0x10;
     D_00598444 = b;
@@ -117,9 +117,9 @@ extern int D_005986A8;
 extern int D_00598448;
 int func_00466EA8(char *a, int b)
 {
-    func_004700F8(a, 0x15);
-    func_004700F8(a + 0x15, 0x11);
-    func_004700F8(a + 0x2C, 0xC8);
+    Medius_TerminateString(a, 0x15);
+    Medius_TerminateString(a + 0x15, 0x11);
+    Medius_TerminateString(a + 0x2C, 0xC8);
     if (D_00497CC0 != 1) return -0xF;
     if (D_00497CC4 < 0) return -0x10;
     D_00598448 = b;
@@ -132,8 +132,8 @@ extern int D_005986B0;
 extern int D_0059844C;
 int func_00466F50(char *a, int b)
 {
-    func_004700F8(a, 0x15);
-    func_004700F8(a + 0x15, 0x11);
+    Medius_TerminateString(a, 0x15);
+    Medius_TerminateString(a + 0x15, 0x11);
     if (D_00497CC0 != 1) return -0xF;
     if (D_00497CC4 < 0) return -0x10;
     D_0059844C = b;
@@ -146,8 +146,8 @@ extern int D_005986B8;
 extern int D_00598450;
 int func_00466FF0(char *a, int b)
 {
-    func_004700F8(a, 0x15);
-    func_004700F8(a + 0x15, 0x11);
+    Medius_TerminateString(a, 0x15);
+    Medius_TerminateString(a + 0x15, 0x11);
     if (D_00497CC0 != 1) return -0xF;
     if (D_00497CC4 < 0) return -0x10;
     D_00598450 = b;
@@ -160,9 +160,9 @@ extern int D_005986C0;
 extern int D_00598454;
 int func_00467090(char *a, int b)
 {
-    func_004700F8(a, 0x15);
-    func_004700F8(a + 0x15, 0x11);
-    func_004700F8(a + 0x30, 0xC8);
+    Medius_TerminateString(a, 0x15);
+    Medius_TerminateString(a + 0x15, 0x11);
+    Medius_TerminateString(a + 0x30, 0xC8);
     if (D_00497CC0 != 1) return -0xF;
     if (D_00497CC4 < 0) return -0x10;
     D_00598454 = b;
@@ -175,8 +175,8 @@ extern int D_005986C8;
 extern int D_00598458;
 int func_00467138(char *a, int b)
 {
-    func_004700F8(a, 0x15);
-    func_004700F8(a + 0x15, 0x11);
+    Medius_TerminateString(a, 0x15);
+    Medius_TerminateString(a + 0x15, 0x11);
     if (D_00497CC0 != 1) return -0xF;
     if (D_00497CC4 < 0) return -0x10;
     D_00598458 = b;
@@ -189,8 +189,8 @@ extern int D_005986D8;
 extern int D_0059845C;
 int func_004671D8(char *a, int b)
 {
-    func_004700F8(a, 0x15);
-    func_004700F8(a + 0x15, 0x11);
+    Medius_TerminateString(a, 0x15);
+    Medius_TerminateString(a + 0x15, 0x11);
     if (D_00497CC0 != 1) return -0xF;
     if (D_00497CC4 < 0) return -0x10;
     D_0059845C = b;
@@ -203,9 +203,9 @@ extern int D_005986E0;
 extern int D_00598460;
 int func_00467278(char *a, int b)
 {
-    func_004700F8(a, 0x15);
-    func_004700F8(a + 0x15, 0x11);
-    func_004700F8(a + 0x26, 0xC8);
+    Medius_TerminateString(a, 0x15);
+    Medius_TerminateString(a + 0x15, 0x11);
+    Medius_TerminateString(a + 0x26, 0xC8);
     if (D_00497CC0 != 1) return -0xF;
     if (D_00497CC4 < 0) return -0x10;
     D_00598460 = b;
@@ -218,9 +218,9 @@ extern int D_005986E8;
 extern int D_00598464;
 int func_00467320(char *a, int b)
 {
-    func_004700F8(a, 0x15);
-    func_004700F8(a + 0x15, 0x11);
-    func_004700F8(a + 0x2C, 0xC8);
+    Medius_TerminateString(a, 0x15);
+    Medius_TerminateString(a + 0x15, 0x11);
+    Medius_TerminateString(a + 0x2C, 0xC8);
     if (D_00497CC0 != 1) return -0xF;
     if (D_00497CC4 < 0) return -0x10;
     D_00598464 = b;
@@ -233,8 +233,8 @@ extern int D_005986F0;
 extern int D_00598468;
 int func_004673C8(char *a, int b)
 {
-    func_004700F8(a, 0x15);
-    func_004700F8(a + 0x15, 0x11);
+    Medius_TerminateString(a, 0x15);
+    Medius_TerminateString(a + 0x15, 0x11);
     if (D_00497CC0 != 1) return -0xF;
     if (D_00497CC4 < 0) return -0x10;
     D_00598468 = b;
@@ -247,9 +247,9 @@ extern int D_005986D0;
 extern int D_0059846C;
 int func_00467468(char *a, int b)
 {
-    func_004700F8(a, 0x15);
-    func_004700F8(a + 0x15, 0x11);
-    func_004700F8(a + 0x2C, 0xC8);
+    Medius_TerminateString(a, 0x15);
+    Medius_TerminateString(a + 0x15, 0x11);
+    Medius_TerminateString(a + 0x2C, 0xC8);
     if (D_00497CC0 != 1) return -0xF;
     if (D_00497CC4 < 0) return -0x10;
     D_0059846C = b;
@@ -262,9 +262,9 @@ extern int D_005986F8;
 extern int D_00598470;
 int func_00467510(char *a, int b)
 {
-    func_004700F8(a, 0x15);
-    func_004700F8(a + 0x15, 0x11);
-    func_004700F8(a + 0x30, 0xC8);
+    Medius_TerminateString(a, 0x15);
+    Medius_TerminateString(a + 0x15, 0x11);
+    Medius_TerminateString(a + 0x30, 0xC8);
     if (D_00497CC0 != 1) return -0xF;
     if (D_00497CC4 < 0) return -0x10;
     D_00598470 = b;
@@ -277,8 +277,8 @@ extern int D_00598700;
 extern int D_00598474;
 int func_004675B8(char *a, int b)
 {
-    func_004700F8(a, 0x15);
-    func_004700F8(a + 0x15, 0x11);
+    Medius_TerminateString(a, 0x15);
+    Medius_TerminateString(a + 0x15, 0x11);
     if (D_00497CC0 != 1) return -0xF;
     if (D_00497CC4 < 0) return -0x10;
     D_00598474 = b;
@@ -291,8 +291,8 @@ extern int D_00598710;
 extern int D_00598478;
 int func_00467658(char *a, int b)
 {
-    func_004700F8(a, 0x15);
-    func_004700F8(a + 0x15, 0x11);
+    Medius_TerminateString(a, 0x15);
+    Medius_TerminateString(a + 0x15, 0x11);
     if (D_00497CC0 != 1) return -0xF;
     if (D_00497CC4 < 0) return -0x10;
     D_00598478 = b;
@@ -305,8 +305,8 @@ extern int D_00598708;
 extern int D_0059847C;
 int func_004676F8(char *a, int b)
 {
-    func_004700F8(a, 0x15);
-    func_004700F8(a + 0x15, 0x11);
+    Medius_TerminateString(a, 0x15);
+    Medius_TerminateString(a + 0x15, 0x11);
     if (D_00497CC0 != 1) return -0xF;
     if (D_00497CC4 < 0) return -0x10;
     D_0059847C = b;
@@ -319,8 +319,8 @@ extern int D_00598718;
 extern int D_00598480;
 int func_00467798(char *a, int b)
 {
-    func_004700F8(a, 0x15);
-    func_004700F8(a + 0x15, 0x11);
+    Medius_TerminateString(a, 0x15);
+    Medius_TerminateString(a + 0x15, 0x11);
     if (D_00497CC0 != 1) return -0xF;
     if (D_00497CC4 < 0) return -0x10;
     D_00598480 = b;
@@ -333,8 +333,8 @@ extern int D_00598720;
 extern int D_00598484;
 int func_00467838(char *a, int b)
 {
-    func_004700F8(a, 0x15);
-    func_004700F8(a + 0x15, 0x11);
+    Medius_TerminateString(a, 0x15);
+    Medius_TerminateString(a + 0x15, 0x11);
     if (D_00497CC0 != 1) return -0xF;
     if (D_00497CC4 < 0) return -0x10;
     D_00598484 = b;
@@ -347,8 +347,8 @@ extern int D_00598728;
 extern int D_00598488;
 int func_004678D8(char *a, int b)
 {
-    func_004700F8(a, 0x15);
-    func_004700F8(a + 0x15, 0x11);
+    Medius_TerminateString(a, 0x15);
+    Medius_TerminateString(a + 0x15, 0x11);
     if (D_00497CC0 != 1) return -0xF;
     if (D_00497CC4 < 0) return -0x10;
     D_00598488 = b;
@@ -361,9 +361,9 @@ extern int D_00598730;
 extern int D_0059848C;
 int func_00467978(char *a, int b)
 {
-    func_004700F8(a, 0x15);
-    func_004700F8(a + 0x15, 0x11);
-    func_004700F8(a + 0x2C, 0x100);
+    Medius_TerminateString(a, 0x15);
+    Medius_TerminateString(a + 0x15, 0x11);
+    Medius_TerminateString(a + 0x2C, 0x100);
     if (D_00497CC0 != 1) return -0xF;
     if (D_00497CC4 < 0) return -0x10;
     D_0059848C = b;
@@ -376,8 +376,8 @@ extern int D_00598758;
 extern int D_00598490;
 int func_00467A20(char *a, int b)
 {
-    func_004700F8(a, 0x15);
-    func_004700F8(a + 0x15, 0x11);
+    Medius_TerminateString(a, 0x15);
+    Medius_TerminateString(a + 0x15, 0x11);
     if (D_00497CC0 != 1) return -0xF;
     if (D_00497CC4 < 0) return -0x10;
     D_00598490 = b;
@@ -390,7 +390,7 @@ extern int D_005987BC;
 extern int D_00598494;
 int func_00467AC0(char *a, int b)
 {
-    func_004700F8(a, 0x15);
+    Medius_TerminateString(a, 0x15);
     if (D_00497CC0 != 1) return -0xF;
     if (D_00497CC4 < 0) return -0x10;
     D_00598494 = b;
@@ -403,7 +403,7 @@ extern int D_005987C4;
 extern int D_00598498;
 int func_00467B50(char *a, int b)
 {
-    func_004700F8(a, 0x15);
+    Medius_TerminateString(a, 0x15);
     if (D_00497CC0 != 1) return -0xF;
     if (D_00497CC4 < 0) return -0x10;
     D_00598498 = b;
@@ -416,7 +416,7 @@ extern int D_005987E4;
 extern int D_0059849C;
 int func_00467BE0(char *a, int b)
 {
-    func_004700F8(a, 0x15);
+    Medius_TerminateString(a, 0x15);
     if (D_00497CC0 != 1) return -0xF;
     if (D_00497CC4 < 0) return -0x10;
     D_0059849C = b;
@@ -428,9 +428,9 @@ int func_00467BE0(char *a, int b)
 extern int D_00598808;
 int func_00467C70(char *a, int b)
 {
-    func_004700F8(a, 0x15);
-    func_004700F8(a + 0x35, 0xC8);
-    func_004700F8(a + 0x15, 0x20);
+    Medius_TerminateString(a, 0x15);
+    Medius_TerminateString(a + 0x35, 0xC8);
+    Medius_TerminateString(a + 0x15, 0x20);
     if (D_00497CC0 != 1) return -0xF;
     if (D_00497CC4 < 0) return -0x10;
     D_00598448 = b;

@@ -17,7 +17,7 @@ typedef struct { int unk0; int size; unsigned int base; char* cur; } PopReader_1
 extern char D_0048B2F8[];
 extern char D_0049F030[];
 extern char g_LevelDirName[];
-extern void func_00165E60(void* a, char* name, int x);
+extern void Loader_UpdateLoadingScreen(void* a, char* name, int x);
 extern void* App_GetInstance(void);
 extern int Archive_Open(void* a, char* name, int b, int c);
 extern void Pop_LoadTER(void* l, void* a1, PopReader_1C3940* r, void* arc);
@@ -37,20 +37,20 @@ void Pop_LoadMissionSections(void* l, void* a1, PopReader_1C3940* r, void* arc)
         int mis;
         sprintf(name, "%s\\%s\\OBJECTS.HOG", D_0048B2F8, g_LevelDirName, g_LevelDirName);
         h = Archive_Open(arc, name, 1, 0);
-        func_00165E60(App_GetInstance(), "Initializing Terrain and GOBJ's...", 0);
+        Loader_UpdateLoadingScreen(App_GetInstance(), "Initializing Terrain and GOBJ's...", 0);
         Pop_LoadTER(l, a1, r, arc);
         Loader_InitActivationMap(l, r);
         Loader_InitNodes(l, r);
         Loader_InitSoundGOBJs(l, r, arc);
         Pop_LoadGOB(l, r, h);
-        func_00165E60(App_GetInstance(), "Loading Character Models...", 0);
+        Loader_UpdateLoadingScreen(App_GetInstance(), "Loading Character Models...", 0);
         Pop_LoadNPC(l, r, arc);
-        func_00165E60(App_GetInstance(), D_0049F030, 0);
+        Loader_UpdateLoadingScreen(App_GetInstance(), D_0049F030, 0);
         Loader_LoadParticles(l, r, arc);
         mis = (int)((unsigned long long)(unsigned int)r->cur & 3);
         if (mis)
             r->cur += 4 - mis;
-        func_00165E60(App_GetInstance(), "Loading Skybox...", 0);
+        Loader_UpdateLoadingScreen(App_GetInstance(), "Loading Skybox...", 0);
         Loader_InitSkybox(l, a1, r, arc);
         Loader_InitNIEvents(l, r, h);
     }

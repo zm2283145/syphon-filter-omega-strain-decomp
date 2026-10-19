@@ -56,7 +56,7 @@ void* func_002A7A10(SsoString* str, const char* first, const char* last)
 /* Derived destructor: restore vtable, run base destructor, optionally delete. */
 extern "C" {
 extern "C" void GuiMessageBox_GetClassName();
-extern "C" void func_002A7AD0();
+extern "C" void GuiMessageBox_IsType();
 extern "C" void GuiMessageBox_HandleInput();
 extern "C" void GuiMessageBox_HandleEvent();
 extern "C" void GuiMessageBox_Init();
@@ -74,11 +74,11 @@ extern "C" void GuiWidget_Draw();
 extern "C" void GuiWidget_ClearFlag4();
 extern "C" void GuiWidget_SetFlag4();
 extern "C" void GuiWidget_Deinit();
-extern "C" void func_0041F210();
+extern "C" void GuiWidget_Load();
 extern void * const D_004DD9D0[];
 void* GuiWidget_Destroy(void* self, short deleteFlag);
 }
-extern "C" VtableObject* func_002A7A60(VtableObject* self, short deleteFlag)
+extern "C" VtableObject* GuiMessageBox_dtor(VtableObject* self, short deleteFlag)
 {
     if (self) {
         self->vtable = ((char*)D_004DD9D0);
@@ -88,6 +88,6 @@ extern "C" VtableObject* func_002A7A60(VtableObject* self, short deleteFlag)
     }
     return self;
 }
-void * const D_004DD9D0[24] = { (void*)0x0, (void*)0x0, (void*)func_002A7A60, (void*)GuiMessageBox_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiMessageBox_Wake, (void*)GuiMessageBox_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiMessageBox_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiMessageBox_HandleEvent, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiMessageBox_GetClassName, (void*)func_002A7AD0, (void*)0x0 };
+void * const D_004DD9D0[24] = { (void*)0x0, (void*)0x0, (void*)GuiMessageBox_dtor, (void*)GuiMessageBox_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiMessageBox_Wake, (void*)GuiMessageBox_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiMessageBox_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiMessageBox_HandleEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiMessageBox_GetClassName, (void*)GuiMessageBox_IsType, (void*)0x0 };
 #pragma pop /* merge_units */
 /* merge_units: end func_002A7A60 */

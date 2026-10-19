@@ -22,7 +22,7 @@ extern E* func_002098E0(void* alloc, unsigned int n, int hint);
 
 #pragma push
 #pragma optimization_level 1
-void func_00209A20(V* v, E* first, E* last)
+void Vector_Assign_209A20(V* v, E* first, E* last)
 {
     unsigned int n;
     E* p;

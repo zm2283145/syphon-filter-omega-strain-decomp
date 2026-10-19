@@ -14,18 +14,18 @@ extern void Receiver_GetScriptTypeKey();
 extern void Receiver_ScriptDispatch();
 extern void * const D_004D97B0[];
 void func_0042B800(void* p, int f);
-void func_00138350(void* p, int f);
+void String_Dtor_138350(void* p, int f);
 void __destroy_array(void* arr, void* dtor, int size, int n);
 void ListReceiver_Dtor(S_96D0* p, int f);
 void operator_delete(void* p);
-S_96D0* func_001696D0(S_96D0* self, short del)
+S_96D0* App_dtor(S_96D0* self, short del)
 {
     if (self) {
         self->vt = ((char*)D_004D97B0);
         func_0042B800(self->m279, -1);
         if (self->sub) {
-            __destroy_array(self->a14C, func_00138350, 0xC, 0x14);
-            __destroy_array(self->a44, func_00138350, 0xC, 0x16);
+            __destroy_array(self->a14C, String_Dtor_138350, 0xC, 0x14);
+            __destroy_array(self->a44, String_Dtor_138350, 0xC, 0x16);
         }
         ListReceiver_Dtor(self, 0);
         if (del > 0)
@@ -33,4 +33,4 @@ S_96D0* func_001696D0(S_96D0* self, short del)
     }
     return self;
 }
-void * const D_004D97B0[16] = { (void*)0x0, (void*)0x0, (void*)func_001696D0, (void*)Object_BroadcastToChildren, (void*)GObj_GetID, (void*)func_0012ECF0, (void*)func_001383D0, (void*)func_0012ED00, (void*)func_0012ED10, (void*)func_0012ED20, (void*)func_0012ED30, (void*)func_0012ED40, (void*)func_0012ED50, (void*)Receiver_GetScriptTypeKey, (void*)Receiver_ScriptDispatch, (void*)0x0 };
+void * const D_004D97B0[16] = { (void*)0x0, (void*)0x0, (void*)App_dtor, (void*)Object_BroadcastToChildren, (void*)GObj_GetID, (void*)func_0012ECF0, (void*)func_001383D0, (void*)func_0012ED00, (void*)func_0012ED10, (void*)func_0012ED20, (void*)func_0012ED30, (void*)func_0012ED40, (void*)func_0012ED50, (void*)Receiver_GetScriptTypeKey, (void*)Receiver_ScriptDispatch, (void*)0x0 };

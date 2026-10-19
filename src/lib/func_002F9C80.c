@@ -1,7 +1,7 @@
 typedef struct { int x0, x4, x8, xC, x10, x14, x18, x1C, x20, x24, x28, x2C; } P2F9C80;
 extern P2F9C80 *func_002F7D68(int id);
 extern P2F9C80 *func_002F7ED8(P2F9C80 *p, int sub);
-extern void func_002F7FB0(char *buf, int len, unsigned int *out, int n);
+extern void Sha1_Digest(char *buf, int len, unsigned int *out, int n);
 /* same-unit callee stub: weak, in a section the link discards; restores retail branch-likely choices */
 int __attribute__((weak, section(".dtors_drop"))) func_002F7D28(int a) { return 0; }
 extern void func_002F3728(int st, int key, unsigned int hdr);
@@ -57,7 +57,7 @@ int func_002F9C80(int id, int sub, unsigned int hdr, char *buf, int len)
         break;
     }
     if (len && !r) {
-        func_002F7FB0(buf, len, &chk, 4);
+        Sha1_Digest(buf, len, &chk, 4);
         chk = (chk & 0x1FFFFFFF) | (hdr & 0xE0000000);
         if (hdr != chk && ((hdr & 0xE0000000) == 0xE0000000 || (hdr & 0xE0000000) == 0x80000000)) {
             if ((hdr & 0xE0000000) == 0x80000000) {
@@ -66,7 +66,7 @@ int func_002F9C80(int id, int sub, unsigned int hdr, char *buf, int len)
             } else {
                 func_002FA0F8(buf, p->x1C);
             }
-            func_002F7FB0(buf, len, &chk, 4);
+            Sha1_Digest(buf, len, &chk, 4);
             chk = (chk & 0x1FFFFFFF) | (hdr & 0xE0000000);
         }
         if (hdr != chk)

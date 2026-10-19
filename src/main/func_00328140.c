@@ -7,16 +7,16 @@ typedef struct {
     G_328140* data;
 } O_328140;
 extern char D_004B8790[];
-void func_00298690(void* s);
+void String_CtorEmpty(void* s);
 void String_CtorCStr_13B480(Str_328140* s, char* c);
-void func_0013D680(Str_328140* d, Str_328140* s);
+void String_AssignString(Str_328140* d, Str_328140* s);
 void String_Dtor(void* s, int f);
 void func_003292C0(void* v, E_328140* pos, int n, E_328140* e);
 
 static inline void CtorE_328140(E_328140* e)
 {
-    func_00298690(&e->name);
-    func_00298690(&e->desc);
+    String_CtorEmpty(&e->name);
+    String_CtorEmpty(&e->desc);
 }
 static inline void DtorS_328140(Str_328140* s)
 {
@@ -39,11 +39,11 @@ int GuiSlideShow_AddSlide(O_328140* o, int idx, char* name, int val, char* desc)
         int r;
         CtorE_328140(&e);
         String_CtorCStr_13B480(&ta, name);
-        func_0013D680(&e.name, &ta);
+        String_AssignString(&e.name, &ta);
         String_Dtor(&ta, 0);
         e.val = val;
         { Str_328140* p = &tb; String_CtorCStr_13B480(p, desc ? desc : D_004B8790); }
-        func_0013D680(&e.desc, &tb);
+        String_AssignString(&e.desc, &tb);
         String_Dtor(&tb, 0);
         e.flag = 0;
         func_003292C0(g->list, g->data + g->count, 1, &e);

@@ -108,7 +108,7 @@ extern int func_0030ECC0(UpnpE588 *u);
 #endif /* merge_units */
 #define func_0030ECC0(a0) (func_0030ECC0((UpnpE330 *)(a0))) /* merge_units */
 
-extern int func_0030C1B8(UpnpE588 *u, char *a, char *b);
+extern int UPnP_SendSoapAction(UpnpE588 *u, char *a, char *b);
 int UPnP_GetStatusInfo(UpnpE588 *u, int arg, int cb)
 {
     int r;
@@ -116,7 +116,7 @@ int UPnP_GetStatusInfo(UpnpE588 *u, int arg, int cb)
     if (u->state != 0) return 7;
     if (cb == 0) return 2;
     if (func_0030ECC0(u) != 0) return 3;
-    r = func_0030C1B8(u, D_004AFFB0, D_004AFF28);
+    r = UPnP_SendSoapAction(u, D_004AFFB0, D_004AFF28);
     if (r == 0) {
         u->state = 4;
         func_003060D8((char *)u->ctx + 0x10);
@@ -138,9 +138,9 @@ extern int func_0030ECC0(UpnpE588_0030E648 *u);
 #define func_0030ECC0(a0) (func_0030ECC0((UpnpE330 *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int func_0030C1B8(UpnpE588_0030E648 *u, char *a, char *b);
+extern int UPnP_SendSoapAction(UpnpE588_0030E648 *u, char *a, char *b);
 #endif /* merge_units */
-#define func_0030C1B8(a0, a1, a2) (func_0030C1B8((UpnpE588 *)(a0), (a1), (a2))) /* merge_units */
+#define UPnP_SendSoapAction(a0, a1, a2) (UPnP_SendSoapAction((UpnpE588 *)(a0), (a1), (a2))) /* merge_units */
 
 int UPnP_GetExternalIPAddress(UpnpE588_0030E648 *u, int arg, int cb)
 {
@@ -149,7 +149,7 @@ int UPnP_GetExternalIPAddress(UpnpE588_0030E648 *u, int arg, int cb)
     if (u->state != 0) return 7;
     if (cb == 0) return 2;
     if (func_0030ECC0(u) != 0) return 3;
-    r = func_0030C1B8(u, D_004AFFF0, D_004AFF28);
+    r = UPnP_SendSoapAction(u, D_004AFFF0, D_004AFF28);
     if (r == 0) {
         u->state = 5;
         func_003060D8((char *)u->ctx + 0x10);
@@ -159,7 +159,7 @@ int UPnP_GetExternalIPAddress(UpnpE588_0030E648 *u, int arg, int cb)
     return r;
 }
 #undef func_0030ECC0 /* merge_units */
-#undef func_0030C1B8 /* merge_units */
+#undef UPnP_SendSoapAction /* merge_units */
 /* merge_units: end func_0030E648 */
 
 /* merge_units: begin func_0030E708 */
@@ -170,7 +170,7 @@ extern int func_0030ECC0(UpnpE708 *u);
 #endif /* merge_units */
 #define func_0030ECC0(a0) (func_0030ECC0((UpnpE330 *)(a0))) /* merge_units */
 
-extern int func_0030BFE8(UpnpE708 *u, int arg, char *b);
+extern int UPnP_SendQueryStateVariable(UpnpE708 *u, int arg, char *b);
 int UPnP_GetPortMappingNumberOfEntries(UpnpE708 *u, int arg, int cb)
 {
     int r;
@@ -178,7 +178,7 @@ int UPnP_GetPortMappingNumberOfEntries(UpnpE708 *u, int arg, int cb)
     if (u->state != 0) return 7;
     if (cb == 0) return 2;
     if (func_0030ECC0(u) != 0) return 3;
-    r = func_0030BFE8(u, arg, "PortMappingNumberOfEntries");
+    r = UPnP_SendQueryStateVariable(u, arg, "PortMappingNumberOfEntries");
     if (r == 0) {
         u->state = 6;
         func_003060D8((char *)u->ctx + 0x10);
@@ -199,9 +199,9 @@ extern int func_0030ECC0(UpnpE7C8 *u);
 #define func_0030ECC0(a0) (func_0030ECC0((UpnpE330 *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int func_0030C1B8(UpnpE7C8 *u, char *a, char *b);
+extern int UPnP_SendSoapAction(UpnpE7C8 *u, char *a, char *b);
 #endif /* merge_units */
-#define func_0030C1B8(a0, a1, a2) (func_0030C1B8((UpnpE588 *)(a0), (a1), (a2))) /* merge_units */
+#define UPnP_SendSoapAction(a0, a1, a2) (UPnP_SendSoapAction((UpnpE588 *)(a0), (a1), (a2))) /* merge_units */
 
 int UPnP_AddPortMapping(UpnpE7C8 *u, int arg, int unused, int cb)
 {
@@ -212,7 +212,7 @@ int UPnP_AddPortMapping(UpnpE7C8 *u, int arg, int unused, int cb)
     if (func_0030ECC0(u) != 0) return 3;
     u->ctx->arg = arg;
     sprintf(u->ctx->buf, "<NewRemoteHost></NewRemoteHost><NewExternalPort>%d</NewExternalPort><NewProtocol>UDP</NewProtocol><NewInternalPort>%d</NewInternalPort><NewInternalClient>%s</NewInternalClient><NewEnabled>1</NewEnabled><NewPortMappingDescription>SCE-RT</NewPortMappingDescription><NewLeaseDuration>0</NewLeaseDuration>", u->extPort, u->port, u->host);
-    r = func_0030C1B8(u, "AddPortMapping", u->ctx->buf);
+    r = UPnP_SendSoapAction(u, "AddPortMapping", u->ctx->buf);
     if (r == 0) {
         u->state = 7;
         func_003060D8((char *)u->ctx + 0x10);
@@ -221,5 +221,5 @@ int UPnP_AddPortMapping(UpnpE7C8 *u, int arg, int unused, int cb)
     return r;
 }
 #undef func_0030ECC0 /* merge_units */
-#undef func_0030C1B8 /* merge_units */
+#undef UPnP_SendSoapAction /* merge_units */
 /* merge_units: end func_0030E7C8 */

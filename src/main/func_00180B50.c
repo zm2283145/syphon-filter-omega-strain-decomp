@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-extern void func_003CDDC0(int);
+extern void cNode_v24(int);
 
 void func_00180B50(int a0) {
-    func_003CDDC0(a0);
+    cNode_v24(a0);
 }

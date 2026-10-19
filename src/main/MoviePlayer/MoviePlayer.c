@@ -26,9 +26,9 @@ extern void func_003F7830(void* device);
 extern void func_003F6030(void* obj);
 extern void TerminateThread(int sema);
 extern void DeleteThread(int sema);
-extern void func_0010DD10(int channel);
-extern void func_0010CE90(int channel, int handler);
-extern void func_00103AC0(int arg);
+extern void DisableDmac(int channel);
+extern void RemoveDmacHandler(int channel, int handler);
+extern void sceGsSyncVCallback(int arg);
 extern void func_003F5D00(void* obj);
 extern void func_003F6EB0(void* obj);
 extern void func_003F78F0(void* part);
@@ -43,9 +43,9 @@ void func_003F8390(Sys3F83* sys) {
     DeleteThread(sys->sema50);
     TerminateThread(sys->sema54);
     DeleteThread(sys->sema54);
-    func_0010DD10(2);
-    func_0010CE90(2, D_0055C530);
-    func_00103AC0(0);
+    DisableDmac(2);
+    RemoveDmacHandler(2, D_0055C530);
+    sceGsSyncVCallback(0);
     func_003F5D00(D_0055C480);
     func_003F6EB0(D_0055C540);
     func_003F78F0(sys->part58);
@@ -125,7 +125,7 @@ extern void func_0036E310(Obj8450* o, char* path, void* p);
 extern void FileMan_Release(Obj8450* o, int f);
 extern void MovieSubtitles_Load(void* a, Obj8450* o, int b);
 extern void Alloc_Lock(int id);
-extern int func_0010D050(void);
+extern int GetThreadId(void);
 extern void ChangeThreadPriority(int tid, int prio);
 extern void func_00103418(void* db, int psm, short w, short h, int ztest, int zpsm, int clear);
 extern void FlushCache(int a);
@@ -138,13 +138,13 @@ extern void func_003F6040(void* a, unsigned int b, int c, int d);
 extern int CreateThread(ThreadParam8450* tp);
 extern void StartThread(int tid, void* arg);
 #if 0 /* merge_units */
-extern void func_00103AC0(void* f);
+extern void sceGsSyncVCallback(void* f);
 #endif /* merge_units */
-#define func_00103AC0(a0) (func_00103AC0((int)(a0))) /* merge_units */
+#define sceGsSyncVCallback(a0) (sceGsSyncVCallback((int)(a0))) /* merge_units */
 
 
-extern int func_0010CE70(int a, void* f, int b);
-extern void func_0010DD78(int a);
+extern int AddDmacHandler(int a, void* f, int b);
+extern void EnableDmac(int a);
 extern int func_003F7950(void* a, void* b);
 extern void func_003F7D90(void);
 extern void func_003F7BD0(void);
@@ -171,7 +171,7 @@ void MoviePlayer_Start(Sys8450* s)
     MovieSubtitles_Load(D_00571CF0, &obj, s->f22C);
     *(volatile int*)0x10003010 = 0;
     Alloc_Lock(5);
-    ChangeThreadPriority(func_0010D050(), 5);
+    ChangeThreadPriority(GetThreadId(), 5);
     if (D_0055C740) {
         func_00103418(D_0055C230, 0, D_00538200, D_00538204, 0, 0, 1);
     } else {
@@ -217,9 +217,9 @@ void MoviePlayer_Start(Sys8450* s)
     tp.option = 0;
     s->f50 = CreateThread(&tp);
     StartThread(s->f50, D_0055C480);
-    func_00103AC0(MoviePlayer_PresentVblank);
-    D_0055C530 = func_0010CE70(2, func_003F7010, 0);
-    func_0010DD78(2);
+    sceGsSyncVCallback(MoviePlayer_PresentVblank);
+    D_0055C530 = AddDmacHandler(2, func_003F7010, 0);
+    EnableDmac(2);
     if (!func_003F7950(s->part58, s->part190)) {
         s->f235 = 1;
     }
@@ -228,7 +228,7 @@ void MoviePlayer_Start(Sys8450* s)
     s->f230 = 0;
     FileMan_Release(&obj, -1);
 }
-#undef func_00103AC0 /* merge_units */
+#undef sceGsSyncVCallback /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003F8450 */
 

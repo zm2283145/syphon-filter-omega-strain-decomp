@@ -14,7 +14,7 @@ extern void func_00442670(char* o, int v);
 extern unsigned char Loc_GetLanguage(void);
 extern void func_00452F60(char* o, void* cb);
 extern void func_002C7FC0(void* self);
-extern int func_002CAA70();
+extern int Sfo_Malloc();
 extern int sfo_malloc_2CA9B0();
 extern int func_002CC200();
 
@@ -62,7 +62,7 @@ int FrontEnd_StartOnline(void* self)
             return 0;
         }
     }
-    func_002EA4F0(func_002CAA70, sfo_malloc_2CA9B0);
+    func_002EA4F0(Sfo_Malloc, sfo_malloc_2CA9B0);
     DME_CreateLobby();
     o = (char*)DME_GetLobby();
     p = ids.v;

@@ -59,7 +59,7 @@ void* Mem_Alloc(int heap, int size, char* file, int line);
 #endif /* merge_units */
 #define Mem_Alloc(a0, a1, a2, a3) (Mem_Alloc((a0), (a1), (a2), (a3))) /* merge_units */
 
-void func_00282160(void* out);
+void NetStream_ReadObject(void* out);
 void* cTank_SetTurret(void* mem, void* a, void* b, void* c, int d, void* t);
 void func_00284870(void* t);
 }
@@ -68,7 +68,7 @@ inline void* operator new(unsigned int, void* p) { return p; }
 struct Seg_002842F0 { void* a; O_002842F0* b; char pad8[0x1C]; float f; unsigned char flag;
     Seg_002842F0(void* a_, O_002842F0* b_) { b = b_; a = a_; f = b->f; flag = 0; } };
 typedef struct { char pad[0x64]; struct Seg_002842F0* s0; Seg_002842F0* s1; void* turret; unsigned char b70; } T_002842F0;
-static inline void* RO_002842F0(void** x) { func_00282160(x); return *x; }
+static inline void* RO_002842F0(void** x) { NetStream_ReadObject(x); return *x; }
 static inline char R8_002842F0(void) { return *D_005061D0++; }
 static inline void* New_002842F0(int size, int line) { AllocGuard g; return Mem_Alloc(0, size, D_004A93D0, line); }
 static inline void Del_002842F0(void* p, int line) { AllocGuard g; Mem_Free(0, p, D_004A93D0, line); }

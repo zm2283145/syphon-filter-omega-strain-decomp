@@ -11,7 +11,7 @@
 #include "ptrvec_insert.h"
 
 extern "C" { char D_004AC640[] = "vector::insert length error\n"; }
-DEFINE_PTRVEC_INSERT(func_002C2770, 0x1800000, 0xC00000, D_004AC640, D_0049AE50, 0x5C, D_0049AF00, 0x64)
+DEFINE_PTRVEC_INSERT(Vector_Insert_2C2770, 0x1800000, 0xC00000, D_004AC640, D_0049AE50, 0x5C, D_0049AF00, 0x64)
 #pragma pop /* merge_units */
 /* merge_units: end func_002C2770 */
 
@@ -21,7 +21,7 @@ DEFINE_PTRVEC_INSERT(func_002C2770, 0x1800000, 0xC00000, D_004AC640, D_0049AE50,
 #include "ptrvec_reserve.h"
 
 extern "C" { char D_004AC660[] = "vector::reserve length error\n"; }
-DEFINE_PTRVEC_RESERVE(func_002C2C40, 0x1800000, D_004AC660, D_0049AE50, 0x5C, D_0049AF00, 0x64)
+DEFINE_PTRVEC_RESERVE(Vector_Reserve_2C2C40, 0x1800000, D_004AC660, D_0049AE50, 0x5C, D_0049AF00, 0x64)
 #pragma pop /* merge_units */
 /* merge_units: end func_002C2C40 */
 
@@ -45,7 +45,7 @@ DEFINE_VECTOR_RESIZE(func_002C2E90, Elem60, AnimChannelVec_Grow, func_001BEB20)
 /* Resize a vector of 8-byte elements. */
 DEFINE_RESIZE_ELEMENT(Elem8, 8)
 #pragma opt_common_subs off
-DEFINE_VECTOR_RESIZE(func_002C2F20, Elem8, func_001BF5A0, func_001BF440)
+DEFINE_VECTOR_RESIZE(func_002C2F20, Elem8, Vector_Insert_1BF5A0, func_001BF440)
 #pragma opt_common_subs reset
 #pragma pop /* merge_units */
 /* merge_units: end func_002C2F20 */

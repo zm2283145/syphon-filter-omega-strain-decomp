@@ -25,8 +25,8 @@ typedef struct {
     EndCb312A90 end;
     TextCb312A90 text;
 } Ctx312A90;
-extern int func_00312858(Ctx312A90 *c, Node312A90 **out);
-extern int func_003127A8(Ctx312A90 *c, void *item);
+extern int RtXml_NodeStackPop(Ctx312A90 *c, Node312A90 **out);
+extern int RtXml_NodeStackPush(Ctx312A90 *c, void *item);
 
 #define CHK(x, line) \
     if ((rc = (x)) != 0) { \
@@ -42,17 +42,17 @@ int func_00312A90(Ctx312A90 *c)
     unsigned int i, j;
     int rc;
 
-    CHK(func_00312858(c, &node), 1019);
+    CHK(RtXml_NodeStackPop(c, &node), 1019);
     while (node) {
-        CHK(func_00312858(c, &node), 1023);
+        CHK(RtXml_NodeStackPop(c, &node), 1023);
     }
     if (!c->doc)
         return 0;
     if (c->start)
         c->start(c->doc->a, c->doc->name, c->user);
-    CHK(func_003127A8(c, c->doc), 1035);
+    CHK(RtXml_NodeStackPush(c, c->doc), 1035);
     do {
-        CHK(func_00312858(c, &node), 1039);
+        CHK(RtXml_NodeStackPop(c, &node), 1039);
         if (!node)
             break;
         j = 0;
@@ -63,12 +63,12 @@ int func_00312A90(Ctx312A90 *c)
             }
         }
         if (j < node->n) {
-            CHK(func_003127A8(c, node), 1054);
+            CHK(RtXml_NodeStackPush(c, node), 1054);
             if (((Node312A90 *)node->arr[j])->type == 1 && c->start)
                 c->start(((Node312A90 *)node->arr[j])->a, ((Node312A90 *)node->arr[j])->name, c->user);
             else if (((Node312A90 *)node->arr[j])->type == 2 && c->text)
                 c->text(((Node312A90 *)node->arr[j])->a, ((Node312A90 *)node->arr[j])->b, c->user);
-            CHK(func_003127A8(c, node->arr[j]), 1070);
+            CHK(RtXml_NodeStackPush(c, node->arr[j]), 1070);
         } else if (j == node->n) {
             if (node->type == 1 && c->end)
                 c->end(node->a, c->user);
@@ -87,14 +87,14 @@ int func_00312A90(Ctx312A90 *c)
 typedef struct { char pad[0x10C]; void **arr; unsigned int n; } Node312E28;
 typedef struct { char pad0[0x8008]; Node312E28 *doc; } Ctx312E28;
 #if 0 /* merge_units */
-extern int func_00312858(Ctx312E28 *c, Node312E28 **out);
+extern int RtXml_NodeStackPop(Ctx312E28 *c, Node312E28 **out);
 #endif /* merge_units */
-#define func_00312858(a0, a1) (func_00312858((Ctx312A90 *)(a0), (Node312A90 * *)(a1))) /* merge_units */
+#define RtXml_NodeStackPop(a0, a1) (RtXml_NodeStackPop((Ctx312A90 *)(a0), (Node312A90 * *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int func_003127A8(Ctx312E28 *c, void *item);
+extern int RtXml_NodeStackPush(Ctx312E28 *c, void *item);
 #endif /* merge_units */
-#define func_003127A8(a0, a1) (func_003127A8((Ctx312A90 *)(a0), (a1))) /* merge_units */
+#define RtXml_NodeStackPush(a0, a1) (RtXml_NodeStackPush((Ctx312A90 *)(a0), (a1))) /* merge_units */
 
 extern int func_00313150(Ctx312E28 *c);
 int func_00312E28(Ctx312E28 *c)
@@ -104,15 +104,15 @@ int func_00312E28(Ctx312E28 *c)
     unsigned int i, j;
     int rc;
 
-    CHK(func_00312858(c, &node), 1108);
+    CHK(RtXml_NodeStackPop(c, &node), 1108);
     while (node) {
-        CHK(func_00312858(c, &node), 1112);
+        CHK(RtXml_NodeStackPop(c, &node), 1112);
     }
     if (!c->doc)
         return 0;
-    CHK(func_003127A8(c, c->doc), 1118);
+    CHK(RtXml_NodeStackPush(c, c->doc), 1118);
     do {
-        CHK(func_00312858(c, &node), 1122);
+        CHK(RtXml_NodeStackPop(c, &node), 1122);
         if (!node)
             break;
         for (i = 0, j = 0; i < node->n; i++) {
@@ -122,8 +122,8 @@ int func_00312E28(Ctx312E28 *c)
             }
         }
         if (j < node->n) {
-            CHK(func_003127A8(c, node), 1137);
-            CHK(func_003127A8(c, node->arr[j]), 1139);
+            CHK(RtXml_NodeStackPush(c, node), 1137);
+            CHK(RtXml_NodeStackPush(c, node->arr[j]), 1139);
         } else if (j == node->n) {
             if ((rc = func_00313150(c)) != 0)
                 printf(D_004B0DE0, D_004B0E18, 1144, D_004B0F38);
@@ -136,6 +136,6 @@ int func_00312E28(Ctx312E28 *c)
     } while (node);
     return 0;
 }
-#undef func_00312858 /* merge_units */
-#undef func_003127A8 /* merge_units */
+#undef RtXml_NodeStackPop /* merge_units */
+#undef RtXml_NodeStackPush /* merge_units */
 /* merge_units: end func_00312E28 */

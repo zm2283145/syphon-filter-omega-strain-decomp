@@ -4,6 +4,6 @@
 #pragma mpwc_relax on
 extern char *D_00582740;
 
-void func_004D75C0(void) {
+void StaticInit_NetPlayGameMsgName(void) {
     D_00582740 = "NetPlayGameMsg";
 }

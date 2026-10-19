@@ -45,7 +45,7 @@ extern "C" {
 void* String_CtorCStr_13B480(void* str, const char* cstr);      /* ctor from C string */
 void* String_Dtor(void* str, int flags);                      /* dtor (frees long data) */
 char* String_CStr(void* str);                                 /* data() / c_str() */
-void* func_0013D680(void* dst, const void* src);                /* operator= */
+void* String_AssignString(void* dst, const void* src);                /* operator= */
 void String_Reserve(void* str, unsigned int n);                 /* 0x0013B970 */
 #ifdef __cplusplus
 }

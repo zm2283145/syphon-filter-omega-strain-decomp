@@ -12,12 +12,12 @@ int Mem_Free(...);
 int func_0037B2C0(...);                        
 int func_0037B2D0(...);                          
 char * func_0037B2E0(...);                        
-int func_0037FBA0(...);              
+int List_Erase_37FBA0(...);              
 extern unsigned char g_ProfileLockEnabled;
 }
 #pragma inline_depth(10)
 static inline int ite0(char *l) { int r; func_0037B2C0(&r, func_0037B2D0(l)); return r; }
-static inline void er0(char *l, char *n) { int sp84; char *sp80; sp80 = n; func_0037FBA0(&sp84, l, &sp80); }
+static inline void er0(char *l, char *n) { int sp84; char *sp80; sp80 = n; List_Erase_37FBA0(&sp84, l, &sp80); }
 static inline void er1(char *l, char *n) { er0(l, n); }
 static inline int ite1(char *l) { return ite0(l); }
 extern "C" void Video_FreeDeferredBuffers(char * arg0, int arg1) {

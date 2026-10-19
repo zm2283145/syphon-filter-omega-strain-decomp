@@ -2,7 +2,7 @@ extern short D_00497CC0;
 extern int D_00497CC4;
 extern int D_00598668;
 unsigned int D_00497D98[1] = { 0x0 };
-extern int func_004700F8(char *, int);
+extern int Medius_TerminateString(char *, int);
 extern int Net_SendLocked(int, int, int, int, int, int, void *);
 int func_00468860(char *a, int b)
 {

@@ -12,7 +12,7 @@
  *   NETREG_END(typeSym, factory)
  */
 extern int func_002E9A10(void* reg);
-extern int func_003C9C30(void* desc);
+extern int Event_UnpackHeader(void* desc);
 extern int func_002E9A98(void* desc, void* field, int size, int count);
 extern int NetMsg_RegisterType(void* type, int version, void* factory);
 
@@ -21,7 +21,7 @@ extern int NetMsg_RegisterType(void* type, int version, void* factory);
     {                                                                         \
         struct { long long file; Proto p; } L;                                \
         unsigned char ok = 0;                                                 \
-        if (func_002E9A10(reg) == 0 && func_003C9C30(&L.file) != 0
+        if (func_002E9A10(reg) == 0 && Event_UnpackHeader(&L.file) != 0
 
 #define NETREG_BEGIN_KEEP(name, Proto)                                        \
     unsigned char name(void* reg)                                             \
@@ -30,7 +30,7 @@ extern int NetMsg_RegisterType(void* type, int version, void* factory);
         int base;                                                             \
         unsigned char ok = 0;                                                 \
         base = func_002E9A10(reg);                                            \
-        if (base == 0 && func_003C9C30(&L.file) != 0 && base == 0
+        if (base == 0 && Event_UnpackHeader(&L.file) != 0 && base == 0
 
 #define NETREG_FIELD(member, size, count)                                     \
         && func_002E9A98(&L.file, &L.p.member, (size), (count)) == 0

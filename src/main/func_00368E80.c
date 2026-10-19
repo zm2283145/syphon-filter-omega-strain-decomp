@@ -13,7 +13,7 @@ struct O368E80 {
     void* vtable; char pad4[0x54]; int a58; int a5C; char pad60[0x18];
     int a78; int a7C; int pad80; int a84; unsigned char a88; unsigned char a89;
 };
-extern "C" O368E80* func_00368E80(void)
+extern "C" O368E80* GuiObjectives_Create(void)
 {
     O368E80* p;
     {

@@ -3,7 +3,7 @@
  * (emulated by `.set nomove`: gas then skips delay-slot swapping).
  * Retail is a ~1.9.0 snapshot: plain `double _double` (no union init), no `expsize = 0`,
  * no `xdigs = NULL`, but already has the 1.10.0 `if (expt || ndig)` fix. */
-__asm__(".set nomove\n __umoddi3 = func_0011B278\n __udivdi3 = func_0011ACF8\n dpcmp = SoftFloat_UnpackAndCompare\n");
+__asm__(".set nomove\n __umoddi3 = Libgcc_Umoddi3\n __udivdi3 = Libgcc_Udivdi3\n dpcmp = SoftFloat_UnpackAndCompare\n");
 typedef unsigned int size_t;
 typedef int wchar_t;
 typedef __builtin_va_list va_list;
@@ -50,8 +50,8 @@ extern size_t strlen(const char *);
 #define fflush fflush
 #define __sinit __sinit
 #define __sfvwrite __sfvwrite
-#define __sprint func_0012C290
-#define __sbprintf func_0012C2D8
+#define __sprint Newlib_Sprint
+#define __sbprintf Newlib_Sbprintf
 #define vfprintf vfprintf
 #define __swsetup __swsetup
 #define _mbtowc_r _mbtowc_r
@@ -72,14 +72,14 @@ struct lconv { char *decimal_point; };
 extern struct lconv *localeconv(void);                    /* localeconv */
 extern int func_00120F38(double);                            /* isinf */
 extern int Double_IsNaN(double);                             /* isnan */
-extern double func_0011C200(double, double);                 /* __subdf3 */
+extern double SoftFloat_DoubleSub(double, double);                 /* __subdf3 */
 extern int SoftFloat_UnpackAndCompare(double, double);       /* __cmpdf2 (dpcmp) */
 extern char *_dtoa_r(struct _reent *, double, int, int, int *, int *, char **); /* _dtoa_r */
 #define localeconv localeconv
 #define isinf func_00120F38
 #define isnan Double_IsNaN
-#define cvt func_0012DA78
-#define exponent func_0012DC38
+#define cvt Newlib_Cvt
+#define exponent Newlib_Exponent
 char *cvt(struct _reent *, double, int, int, char *, int *, int, int *);
 int exponent(char *, int, int);
 
@@ -627,7 +627,7 @@ cvt(struct _reent *data, double value, int ndigits, int flags, char *sign, int *
 
 	tmp.d = value;
 	if (word0(tmp) & Sign_bit) { /* this will check for < 0 and -0.0 */
-		value = func_0011C200(0, value);
+		value = SoftFloat_DoubleSub(0, value);
 		*sign = '-';
 	} else
 		*sign = '\000';

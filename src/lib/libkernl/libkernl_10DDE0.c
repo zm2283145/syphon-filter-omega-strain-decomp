@@ -5,37 +5,37 @@
  */
 
 /* merge_units: begin func_0010DDE0 */
-extern void func_0010CF00(void);
-void func_0010DDE0(void)
+extern void _iEnableIntc(void);
+void iEnableIntc(void)
 {
-    func_0010CF00();
+    _iEnableIntc();
     __asm__ __volatile__("sync");
 }
 /* merge_units: end func_0010DDE0 */
 
 /* merge_units: begin func_0010DE00 */
-extern void func_0010CF10(void);
-void func_0010DE00(void)
+extern void _iDisableIntc(void);
+void iDisableIntc(void)
 {
-    func_0010CF10();
+    _iDisableIntc();
     __asm__ __volatile__("sync");
 }
 /* merge_units: end func_0010DE00 */
 
 /* merge_units: begin func_0010DE20 */
-extern void func_0010CF20(void);
-void func_0010DE20(void)
+extern void _iEnableDmac(void);
+void iEnableDmac(void)
 {
-    func_0010CF20();
+    _iEnableDmac();
     __asm__ __volatile__("sync");
 }
 /* merge_units: end func_0010DE20 */
 
 /* merge_units: begin func_0010DE40 */
-extern void func_0010CF30(void);
-void func_0010DE40(void)
+extern void _iDisableDmac(void);
+void iDisableDmac(void)
 {
-    func_0010CF30();
+    _iDisableDmac();
     __asm__ __volatile__("sync");
 }
 /* merge_units: end func_0010DE40 */

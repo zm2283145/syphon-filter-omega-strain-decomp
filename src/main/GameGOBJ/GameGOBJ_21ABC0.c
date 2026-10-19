@@ -28,7 +28,7 @@ extern "C" void Object_Deactivate(cPathedGOBJ* self, void* arg);
 extern "C" void TargetVis_Unregister(void* list, cPathedGOBJ* obj);
 
 /* Notifies the path (virtual +0x60), runs the base handler, then TargetVis_Unregister(g_TargetVisMgr, self). */
-extern "C" void func_0021ABC0(cPathedGOBJ* self, void* arg)
+extern "C" void cGameGOBJ_v16(cPathedGOBJ* self, void* arg)
 {
     if (self->path)
         self->path->Method60();
@@ -70,7 +70,7 @@ struct cGameGOBJ {
 extern "C" void Object_Activate(cGameGOBJ* self, void* arg);
 
 /* Notifies the door object (+0x64, virtual +0x5C), runs Object_Activate and virtual +0xC4. */
-extern "C" void func_0021AC20(cGameGOBJ* self, void* arg)
+extern "C" void cGameGOBJ_v15(cGameGOBJ* self, void* arg)
 {
     if (self->door)
     self->door->Method5C();

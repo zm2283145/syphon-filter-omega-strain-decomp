@@ -20,7 +20,7 @@
 #pragma cplusplus on
 extern "C" char D_004E0EE0[];
 extern "C" char D_004DFD80[];
-MSG_CLONE_BEGIN(func_00431960, 0x30, "NetSetGobjMsg.hh", 0x1A)
+MSG_CLONE_BEGIN(cNetSetGobjMsg_v01, 0x30, "NetSetGobjMsg.hh", 0x1A)
     p->vt = D_004DFD80;
     F(int, 0x4) = S(int, 0x4);
     F(int, 0x8) = S(int, 0x8);
@@ -49,7 +49,7 @@ void Actor_SetHealth(void*, int, int);
 typedef struct { char pad[8]; char done; char p1[3]; int id; int arg; } T431A70;
 #pragma push
 #pragma opt_propagation off
-extern "C" int func_00431A70(int a0, int a1, int a2, T431A70* m) {
+extern "C" int cNetSetGobjMsg_NetReceive(int a0, int a1, int a2, T431A70* m) {
     NetRecvGuard g;
     if (D_005721D0) {
         T431A70* s = m;

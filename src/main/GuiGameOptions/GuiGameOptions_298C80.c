@@ -13,7 +13,7 @@
 
 /* String compare of a substring against a buffer. */
 extern "C" { char D_004AA540[] = "string compare: pos > len"; }
-DEFINE_STRING_COMPARE_RANGE(func_00298C80, D_004AA540)
+DEFINE_STRING_COMPARE_RANGE(String_Compare_298C80, D_004AA540)
 #pragma pop /* merge_units */
 /* merge_units: end func_00298C80 */
 

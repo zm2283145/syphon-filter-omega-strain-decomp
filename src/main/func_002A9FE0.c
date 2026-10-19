@@ -44,7 +44,7 @@ static inline Obj9FE0* AsB9FE0(Obj9FE0* obj)
 }
 
 /* Screen init: base init, looks up the named child widgets and links the extra one to the second. */
-extern "C" void func_002A9FE0(Screen9FE0* self)
+extern "C" void GuiOnlineOptions_Init(Screen9FE0* self)
 {
     GuiScreen_Init(self);
     self->item0 = AsA9FE0(GuiWidget_FindChildByName(self, *(const char**)dat_0048BC00));

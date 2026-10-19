@@ -5,7 +5,7 @@ extern char func_00267360[];
 extern signed char D_004EA0C8;
 extern char* g_LosCheckService;
 extern void func_002674C0(void* p);
-extern void func_002674B0(void* p, int n);
+extern void PtrVec_Reserve_Thunk_2674B0(void* p, int n);
 extern int func_001361D0(int* n);
 extern void __register_global_object(void* obj, void* dtor, void* link);
 void func_004D0910(void)
@@ -15,7 +15,7 @@ void func_004D0910(void)
         Obj_4D0910* o = (Obj_4D0910*)D_004F8350;
         n[0] = 4;
         func_002674C0(o);
-        func_002674B0(o, func_001361D0(n));
+        PtrVec_Reserve_Thunk_2674B0(o, func_001361D0(n));
         o->ready = 1;
         __register_global_object(o, func_00267360, D_004F8338);
     }

@@ -2,8 +2,8 @@
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int func_00443EA0(int);                               
-int func_00443F40(int);                             
+int SFOLobby_Free(int);                               
+int SFOLobby_AllocZeroed(int);                             
 int memcpy(int, int, int);                            
 extern int D_00585E58;
 
@@ -22,11 +22,11 @@ void func_0044F700(PS0_0044F700 *arg0) {
         if (var_s1 <= 0) {
             var_s1 = 1;
         }
-        temp_s0 = func_00443F40(var_s1 * arg0->f10);
+        temp_s0 = SFOLobby_AllocZeroed(var_s1 * arg0->f10);
         D_00585E58 += var_s1 * arg0->f10;
         if (temp_s0 != 0) {
             memcpy(temp_s0, arg0->f14, arg0->f4 * arg0->f10);
-            func_00443EA0(arg0->f14);
+            SFOLobby_Free(arg0->f14);
             D_00585E58 -= arg0->f0 * arg0->f10;
             arg0->f0 = var_s1;
             arg0->f14 = temp_s0;

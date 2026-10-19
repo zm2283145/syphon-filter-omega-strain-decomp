@@ -28,7 +28,7 @@ typedef struct Obj116 {
 
 extern void func_00278440(Sub78*);
 extern int func_001361D0(int*);
-extern void func_00278430(Sub78*, int);
+extern void PtrVec_Reserve_Thunk_278430(Sub78*, int);
 
 /* Constructor body: resets three (0, -2) pairs, sets up the sub-object and clears flags. */
 Obj116* func_002783A0(Obj116* o) {
@@ -43,7 +43,7 @@ Obj116* func_002783A0(Obj116* o) {
     o->unk70 = 0;
     kind = 5;
     func_00278440(sub);
-    func_00278430(sub, func_001361D0(&kind));
+    PtrVec_Reserve_Thunk_278430(sub, func_001361D0(&kind));
     sub->unkC = 0;
     o->unkD0 = 0;
     o->unkD2 = 0;

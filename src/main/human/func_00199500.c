@@ -8,7 +8,7 @@ extern char D_004DA8B0;
 extern signed char *D_005061D0;
 extern char D_004EEE80;
 
-void func_00199500(int arg0) {
+void cEquipGogglesMsg_NetReceive(int arg0) {
     struct { char * f20[8]; signed char f40[4]; signed char f44[12]; } sl;
     signed char* p;
 

@@ -7,6 +7,6 @@
 #include "types.h"
 
 
-char* func_00457240(void) {
+char* GuiEquipmentPane_GetClassName(void) {
     return "GuiEquipmentPane";
 }

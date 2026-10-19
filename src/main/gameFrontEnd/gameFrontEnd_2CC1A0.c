@@ -106,7 +106,7 @@ extern void* g_OptionsRecord;
 extern char D_004ACFA8[];
 extern int D_005383D4;
 extern void Options_Load(void* p);
-extern void func_002CC980(void);
+extern void FrontEnd_InitLevelNameKeys(void);
 extern char* GameIni_GetString(char* key);
 extern void FrontEnd_StartGui(ObjC3E0* o, int a);
 extern HudC3E0* App_GetInstance(void);
@@ -116,7 +116,7 @@ void FrontEnd_FirstEntry(ObjC3E0* o)
         char* s;
         Options_Load(g_OptionsRecord);
         o->b2C = 0;
-        func_002CC980();
+        FrontEnd_InitLevelNameKeys();
         s = GameIni_GetString(D_004ACFA8);
         if (s)
             strncpy(o->name, s, 0x40);

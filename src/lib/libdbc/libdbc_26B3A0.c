@@ -1,7 +1,7 @@
 typedef struct { int f0; int f4; int f8; int fc; char pad[0x334 - 0x10]; } E26B3A0;
 extern E26B3A0 D_004FBB88[];
 extern int sceDbcDeleteSocket(int port);
-int func_0026B3A0(int port)
+int scePad2DeleteSocket(int port)
 {
     int r = sceDbcDeleteSocket(port);
     if (r >= 0) {

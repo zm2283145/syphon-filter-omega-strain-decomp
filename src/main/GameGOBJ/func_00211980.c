@@ -41,7 +41,7 @@ static inline void ReleaseD0_00211980(Self_00211980* self)
         self->pD0 = 0;
     }
 }
-extern "C" void func_00211980(Self_00211980* self)
+extern "C" void Lift_CreateInfoObject(Self_00211980* self)
 {
     int h;
     Seg_00211980* seg;

@@ -205,7 +205,7 @@ void cMessage_dtor(void* e, int f);
 int printf(const char* f, ...);
 void func_00131B70(void* p, int f);
 void func_0013AAE0(void* p);
-void func_00140D40(void* p, int f);
+void cCharActionMsg_dtor(void* p, int f);
 void Mtx_SetRotationTranslation(void* d, void* m, void* p);
 int func_0014D410(int v);
 int func_0014D450(int v);
@@ -214,7 +214,7 @@ void func_0016F7E0(void* d, void* s);
 void func_00189F40(void* p, int f);
 void func_00189FD0(void* p, int f);
 void func_0018A040(void* p, int f);
-void func_0018A260(void* p, int f);
+void AnimEvent_dtor(void* p, int f);
 int MotionRequest_GetMode(void* s);
 void* func_0018A2E0(void* s);
 float func_0018A2D0(void* s);
@@ -228,7 +228,7 @@ void func_0018C620(void* y, int m);
 void* func_0018C6A0(void* s);
 void* func_00190F90(void* x, void* r, int a, char* b);
 void* func_00192750(void* r, float a, float b, int k);
-char* func_001A02B0(char* r, char* n);
+char* RootCollection_FindByKey_Thunk(char* r, char* n);
 void func_001A1500(void* p);
 int func_001A6D00(void* a, void* b);
 void func_001A6D20(void* a);
@@ -343,8 +343,8 @@ static inline void PlaySlotI(char* a, XS* xp, V4* rp, int mode)
     c = (char*)func_0018C6A0(a);
     id = func_001AE270(s);
     AnimCtl_InstallMotion(c, id, mode, rp, func_001AE260(s), &e1, &e2, xp, -1.0f, 0.0f);
-    func_0018A260(&e2, -1);
-    func_0018A260(&e1, -1);
+    AnimEvent_dtor(&e2, -1);
+    AnimEvent_dtor(&e1, -1);
 }
 #define PlaySlot(a, mode) PST(a, RT(g_DefaultMotionTransition), XT(), mode)
 static inline void PlayNamed(char* a, void* x, void* name, V4* r, int mode)
@@ -360,8 +360,8 @@ static inline void PlayNamed(char* a, void* x, void* name, V4* r, int mode)
         c = (char*)func_0018C6A0(c);
         func_0018C620(&y, id);
         AnimCtl_InstallMotion(c, id, mode, r, &y, &e1, &e2, x, -1.0f, 0.0f);
-        func_0018A260(&e2, -1);
-        func_0018A260(&e1, -1);
+        AnimEvent_dtor(&e2, -1);
+        AnimEvent_dtor(&e1, -1);
     }
 }
 static inline void PlayNamedL(char* a, void* x, void* name, V4* r, int mode)
@@ -377,8 +377,8 @@ static inline void PlayNamedL(char* a, void* x, void* name, V4* r, int mode)
         a = (char*)func_0018C6A0(c);
         func_0018C620(&y, id);
         AnimCtl_InstallMotion(a, id, mode, r, &y, &e1, &e2, x, -1.0f, 0.0f);
-        func_0018A260(&e2, -1);
-        func_0018A260(&e1, -1);
+        AnimEvent_dtor(&e2, -1);
+        AnimEvent_dtor(&e1, -1);
     }
 }
 static inline unsigned char IsDown(char* a)
@@ -441,8 +441,8 @@ static inline void PlaySlotBI(char* a, XS* xp, V4* rp, int mode)
     c = (char*)func_0018C6A0(a);
     id = func_001AE270(s);
     AnimCtl_InstallMotion(c, id, mode, rp, func_001AE260(s), &e1, &e2, xp, -1.0f, 0.0f);
-    func_0018A260(&e2, -1);
-    func_0018A260(&e1, -1);
+    AnimEvent_dtor(&e2, -1);
+    AnimEvent_dtor(&e1, -1);
 }
 #define PlaySlotB(a, mode) PSBT(a, RT2(g_DefaultMotionTransition), XT(), mode)
 static inline void SelCtor(char* p, int id, unsigned char f, void* xp)
@@ -480,8 +480,8 @@ inline void CtlS::Sel(Buf_A0* selp, V4* rtp)
         pp = func_0018A2E0(selp);
         g0 = func_0018A2D0(selp);
         AnimCtl_InstallMotion(s, out, md, &rr, &y, &e1, &e2, pp, g0, func_0018A2C0(selp));
-        func_0018A260(&e2, -1);
-        func_0018A260(&e1, -1);
+        AnimEvent_dtor(&e2, -1);
+        AnimEvent_dtor(&e1, -1);
     }
 }
 inline void CtlS::Sel2(Buf_A0* rsel, Buf_A0* selp, V4* rtp)
@@ -509,8 +509,8 @@ inline void CtlS::Sel2(Buf_A0* rsel, Buf_A0* selp, V4* rtp)
         pp = func_0018A2E0(selp);
         g0 = func_0018A2D0(selp);
         AnimCtl_InstallMotion(s, out, md, &rr, &y, &e1, &e2, pp, g0, func_0018A2C0(selp));
-        func_0018A260(&e2, -1);
-        func_0018A260(&e1, -1);
+        AnimEvent_dtor(&e2, -1);
+        AnimEvent_dtor(&e1, -1);
     }
 }
 struct SelT {
@@ -579,9 +579,9 @@ static inline void AttachAll(char* a)
     char* r;
     func_001A77C0(&it, func_001A77D0(b + 0x100));
     func_001A77A0(&end, func_001A77D0(b + 0x100));
-    r = func_001A02B0(b, D_0049D048);
+    r = RootCollection_FindByKey_Thunk(b, D_0049D048);
     while (func_001A6D00(&it, &end)) {
-        Root_Attach(r, func_001A02B0(*Ptr_IdentityCast(*func_001A7790(&it)), D_0049D048), 1);
+        Root_Attach(r, RootCollection_FindByKey_Thunk(*Ptr_IdentityCast(*func_001A7790(&it)), D_0049D048), 1);
         func_001A6D20(&it);
     }
 }
@@ -613,7 +613,7 @@ static inline void PlayMR(char* a, const MRT& mr)
         func_001ADC80(&y, &mc);
         AnimCtl_InstallMotion(c, id, 1, rg, &y, func_001ADC70(&mc), &e1, &e2, -1.0f, 0.0f);
         func_00189F40(&e2, -1);
-        func_0018A260(&e1, -1);
+        AnimEvent_dtor(&e1, -1);
     }
     {
         Ev40 e3, e5;
@@ -640,8 +640,8 @@ static inline void PlayMR(char* a, const MRT& mr)
         id = func_001AE270(s4);
         AnimCtl_InstallMotion(s5, id, md, rg, func_001AE260(s4), &e3, m2, &e4, -1.0f, 0.0f);
         func_00189F40(&e4, -1);
-        if (got) func_0018A260(&e5, -1);
-        func_0018A260(&e3, -1);
+        if (got) AnimEvent_dtor(&e5, -1);
+        AnimEvent_dtor(&e3, -1);
     }
     func_001ADBE0(&mc, -1);
 }
@@ -691,8 +691,8 @@ static inline void PNT(char* a, const KT& name, const RT& r, void* x, int mode)
         c = (char*)func_0018C6A0(c);
         func_0018C620(&y, id);
         AnimCtl_InstallMotion(c, id, mode, (V4*)&r, &y, &e1, &e2, x, -1.0f, 0.0f);
-        func_0018A260(&e2, -1);
-        func_0018A260(&e1, -1);
+        AnimEvent_dtor(&e2, -1);
+        AnimEvent_dtor(&e1, -1);
     }
 }
 static inline void PNLT(char* a, const KT& name, const RT& r, void* x, int mode)
@@ -708,8 +708,8 @@ static inline void PNLT(char* a, const KT& name, const RT& r, void* x, int mode)
         a = (char*)func_0018C6A0(c);
         func_0018C620(&y, id);
         AnimCtl_InstallMotion(a, id, mode, (V4*)&r, &y, &e1, &e2, x, -1.0f, 0.0f);
-        func_0018A260(&e2, -1);
-        func_0018A260(&e1, -1);
+        AnimEvent_dtor(&e2, -1);
+        AnimEvent_dtor(&e1, -1);
     }
 }
 static inline void PNLTr(char* a, char*& c, const KT& name, const RT& r, void* x, int mode)
@@ -725,8 +725,8 @@ static inline void PNLTr(char* a, char*& c, const KT& name, const RT& r, void* x
         a = (char*)func_0018C6A0(c);
         func_0018C620(&y, id);
         AnimCtl_InstallMotion(a, id, mode, (V4*)&r, &y, &e1, &e2, x, -1.0f, 0.0f);
-        func_0018A260(&e2, -1);
-        func_0018A260(&e1, -1);
+        AnimEvent_dtor(&e2, -1);
+        AnimEvent_dtor(&e1, -1);
     }
 }
 static inline void PNLT2(char* a, const KT& name, const RT2& r, void* x, int mode)
@@ -742,8 +742,8 @@ static inline void PNLT2(char* a, const KT& name, const RT2& r, void* x, int mod
         a = (char*)func_0018C6A0(c);
         func_0018C620(&y, id);
         AnimCtl_InstallMotion(a, id, mode, (V4*)&r, &y, &e1, &e2, x, -1.0f, 0.0f);
-        func_0018A260(&e2, -1);
-        func_0018A260(&e1, -1);
+        AnimEvent_dtor(&e2, -1);
+        AnimEvent_dtor(&e1, -1);
     }
 }
 static inline void PNLT3(char* a, const KT& name, const RT& r, const XT& x, int mode)
@@ -759,8 +759,8 @@ static inline void PNLT3(char* a, const KT& name, const RT& r, const XT& x, int 
         a = (char*)func_0018C6A0(c);
         func_0018C620(&y, id);
         AnimCtl_InstallMotion(a, id, mode, (V4*)&r, &y, &e1, &e2, (void*)&x, -1.0f, 0.0f);
-        func_0018A260(&e2, -1);
-        func_0018A260(&e1, -1);
+        AnimEvent_dtor(&e2, -1);
+        AnimEvent_dtor(&e1, -1);
     }
 }
 static inline void PNLT4(char* a, const KT& name, const RT2& r, const XT& x, int mode)
@@ -776,8 +776,8 @@ static inline void PNLT4(char* a, const KT& name, const RT2& r, const XT& x, int
         a = (char*)func_0018C6A0(c);
         func_0018C620(&y, id);
         AnimCtl_InstallMotion(a, id, mode, (V4*)&r, &y, &e1, &e2, (void*)&x, -1.0f, 0.0f);
-        func_0018A260(&e2, -1);
-        func_0018A260(&e1, -1);
+        AnimEvent_dtor(&e2, -1);
+        AnimEvent_dtor(&e1, -1);
     }
 }
 static inline void PST(char* a, const RT& r, const XT& x, int mode)
@@ -793,8 +793,8 @@ static inline void PST(char* a, const RT& r, const XT& x, int mode)
     c = (char*)func_0018C6A0(a);
     id = func_001AE270(s);
     AnimCtl_InstallMotion(c, id, mode, (V4*)&r, func_001AE260(s), &e1, &e2, (void*)&x, -1.0f, 0.0f);
-    func_0018A260(&e2, -1);
-    func_0018A260(&e1, -1);
+    AnimEvent_dtor(&e2, -1);
+    AnimEvent_dtor(&e1, -1);
 }
 static inline void PSBT(char* a, const RT2& r, const XT& x, int mode)
 {
@@ -809,8 +809,8 @@ static inline void PSBT(char* a, const RT2& r, const XT& x, int mode)
     c = (char*)func_0018C6A0(a);
     id = func_001AE270(s);
     AnimCtl_InstallMotion(c, id, mode, (V4*)&r, func_001AE260(s), &e1, &e2, (void*)&x, -1.0f, 0.0f);
-    func_0018A260(&e2, -1);
-    func_0018A260(&e1, -1);
+    AnimEvent_dtor(&e2, -1);
+    AnimEvent_dtor(&e1, -1);
 }
 struct RTU { float x, y, z, w; RTU() {} } __attribute__((aligned(16)));
 struct ST {
@@ -878,8 +878,8 @@ inline void CtlT::SelX(const RTU& rtr, const ST& sr)
         pp = func_0018A2E0(selp);
         g0 = func_0018A2D0(selp);
         AnimCtl_InstallMotion(s, out, md, &rr, &y, &e1, &e2, pp, g0, func_0018A2C0(selp));
-        func_0018A260(&e2, -1);
-        func_0018A260(&e1, -1);
+        AnimEvent_dtor(&e2, -1);
+        AnimEvent_dtor(&e1, -1);
     }
 }
 inline void CtlT::SelX2(const RTU& rtr, const ST& sr)
@@ -910,8 +910,8 @@ inline void CtlT::SelX2(const RTU& rtr, const ST& sr)
         pp = func_0018A2E0(selp);
         g0 = func_0018A2D0(selp);
         AnimCtl_InstallMotion(s, out, md, &rr, &y, &e1, &e2, pp, g0, func_0018A2C0(selp));
-        func_0018A260(&e2, -1);
-        func_0018A260(&e1, -1);
+        AnimEvent_dtor(&e2, -1);
+        AnimEvent_dtor(&e1, -1);
     }
 }
 #undef selp
@@ -922,7 +922,7 @@ struct OSE0 { char c[0x40];
     __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~OSE0() { PP(this, 0) = D_004DA930; cMessage_dtor(this, 0); } } __attribute__((aligned(16)));
 struct MRT { char c[0xA0];
     MRT(Key30* k, const RT& r2, const RT& r1, const OSE0& ev) { char* mp = c; MotionRequest_Construct(mp, k); func_001ADFE0(mp + 0x30, 0); func_0018A700(mp + 0x34, -1); Vec4_Copy_18A350(mp + 0x3C, (void*)&r2); Vec4_Copy_18A350(mp + 0x4C, (void*)&r1); AnimEvent_Copy(mp + 0x5C, (void*)&ev); }
-    __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~MRT() { func_0018A260(c + 0x5C, -1); func_001ADB90(c + 0x30, -1); }
+    __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~MRT() { AnimEvent_dtor(c + 0x5C, -1); func_001ADB90(c + 0x30, -1); }
     char* q() { return c; } } __attribute__((aligned(16)));
 struct V4T { float x, y, z, w; V4T(float a, float b, float c, float d) { x = a; y = b; z = c; w = d; } } __attribute__((aligned(16)));
 static inline void QCpT(void* d, const V4T& s) { QCp(d, (void*)&s); }
@@ -1542,7 +1542,7 @@ extern "C" unsigned char Actor_HandleActionMessage(char* a, char* m)
                     PI(&c, 0x1C) = 0x40;
                     Event_Send(ep, a, 1);
                     PP(&c, 0) = D_004E01A0;
-                    func_00140D40(ep, 0);
+                    cCharActionMsg_dtor(ep, 0);
                 }
             } }
         }
@@ -1689,7 +1689,7 @@ extern "C" unsigned char Actor_HandleActionMessage(char* a, char* m)
                 PI(&c, 0x1C) = 0x40;
                 Event_Send(ep, a, 0);
                 PP(&c, 0) = D_004E00E0;
-                func_00140D40(ep, 0);
+                cCharActionMsg_dtor(ep, 0);
             }
             Actor_HandleLedgeAction(a, m);
         }

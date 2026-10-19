@@ -4,6 +4,6 @@
 #pragma mpwc_relax on
 extern char *D_0052ACB0;
 
-void func_004D3640(void) {
+void StaticInit_NetScoreMsgName(void) {
     D_0052ACB0 = "NetScoreMsg";
 }

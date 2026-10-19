@@ -6,9 +6,9 @@ extern int printf(const char *, ...);
 extern void *memcpy(void *, const void *, unsigned int);
 typedef struct { char pad[0x10C]; void **arr; int n; } Obj312910;
 /* same-unit callee stubs: weak, in a section the link discards; restore retail delay-slot choices */
-int __attribute__((weak, section(".dtors_drop"))) func_003111E0(void *c, void **pp, unsigned int size) { return 0; }
-int __attribute__((weak, section(".dtors_drop"))) func_00311320(void *c, void *pp) { return 0; }
-int func_00312910(void *c, Obj312910 *o, void *item)
+int __attribute__((weak, section(".dtors_drop"))) RtXml_Alloc(void *c, void **pp, unsigned int size) { return 0; }
+int __attribute__((weak, section(".dtors_drop"))) RtXml_Free(void *c, void *pp) { return 0; }
+int RtXml_AddChild(void *c, Obj312910 *o, void *item)
 {
     void **arr = 0;
     int r;
@@ -24,7 +24,7 @@ int func_00312910(void *c, Obj312910 *o, void *item)
         printf(D_004B0DE0, D_004B0E18, 0x3D8, "NULL != p_new_child");
         return 3;
     }
-    r = func_003111E0(c, (void **)&arr, o->n * 4 + 4);
+    r = RtXml_Alloc(c, (void **)&arr, o->n * 4 + 4);
     if (r) {
         printf(D_004B0DE0, D_004B0E18, 0x3DD, D_004B0F38);
         return r;
@@ -32,7 +32,7 @@ int func_00312910(void *c, Obj312910 *o, void *item)
     memcpy(arr, o->arr, o->n * 4);
     arr[o->n] = item;
     o->n++;
-    if (func_00311320(c, &o->arr))
+    if (RtXml_Free(c, &o->arr))
         printf(D_004B0DE0, D_004B0E18, 0x3E8, D_004B0F38);
     o->arr = arr;
     return 0;

@@ -1,12 +1,12 @@
 typedef struct { int pad[4]; unsigned int rec_id; void *paddr; int pid; } RpcPkt;
 typedef struct { int pid; RpcPkt *table; int len; } RpcData;
-extern int func_001161A0(void);
-extern int func_001161F8(void);
+extern int DIntr(void);
+extern int EIntr(void);
 void *func_002713C0(RpcData *rd)
 {
     RpcPkt *p;
     int i, len, pid;
-    func_001161A0();
+    DIntr();
     len = rd->len;
     p = rd->table;
     for (i = 0; i < len; i++, p = (RpcPkt *)((char *)p + 64)) {
@@ -19,11 +19,11 @@ void *func_002713C0(RpcData *rd)
             } else pid = rd->pid;
             p->paddr = p;
             p->pid = pid;
-            func_001161F8();
+            EIntr();
             return p;
         }
     }
-    func_001161F8();
+    EIntr();
     return 0;
 }
 

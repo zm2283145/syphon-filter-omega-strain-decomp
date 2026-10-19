@@ -45,7 +45,7 @@ static inline void Del002A45A0(V002A45A0* o, int line)
     o->v0(-1);
     Mem_Free(0, o, "GuiEquipmentSetup.cc", line);
 }
-extern "C" O002A45A0* func_002A45A0(O002A45A0* self, short del)
+extern "C" O002A45A0* GuiEquipmentSetup_dtor(O002A45A0* self, short del)
 {
     if (self) {
         int i;

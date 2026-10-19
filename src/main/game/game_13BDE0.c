@@ -15,13 +15,13 @@
 #include "types.h"
 #include "loose00_types.h"
 
-extern int func_0013BCB0(Unk0013BDE0* self, int a1);
+extern int String_CopyCtor(Unk0013BDE0* self, int a1);
 
-/* Base init through func_0013BCB0, then store the word at +0x0C. */
+/* Base init through String_CopyCtor, then store the word at +0x0C. */
 int func_0013BDE0(Unk0013BDE0* self, int a1, int value) {
     int result;
 
-    result = func_0013BCB0(self, a1);
+    result = String_CopyCtor(self, a1);
     self->unk0C = value;
     return result;
 }

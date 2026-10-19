@@ -569,7 +569,7 @@ static inline void merge_flush_func_00447130(void) {}
 
 /* merge_units: begin func_004471B0 */
 #pragma push /* merge_units */
-/* Reply callback (request func_0044CBE0): flags gotReply1A4 and keeps the 0x30-byte
+/* Reply callback (request SFOLobby_BeginSession): flags gotReply1A4 and keeps the 0x30-byte
  * reply in reply350. */
 void func_004471B0(void* a0, void* a1, void* a2, void* data)
 {
@@ -635,7 +635,7 @@ static inline void merge_flush_func_00447270(void) {}
 typedef struct { int x; char s[0x3EC]; } E4472C0;
 char D_004C0CD0[] = "{SFOLOBBY_SETTINGS}"; /* defined here: the unit's data (0x004C0CD0) */
 extern int String_CompareN(const char* a, const char* b, int n);
-extern void func_00443BF0(SFOLobby* g, char* s, int n, int f);
+extern void SFOLobby_ParseSettings(SFOLobby* g, char* s, int n, int f);
 #if 0 /* merge_units */
 extern int LobbyArray_Append(LobbyArray* a, E4472C0* e);
 #endif /* merge_units */
@@ -643,9 +643,9 @@ extern int LobbyArray_Append(LobbyArray* a, E4472C0* e);
 
 #pragma opt_propagation off
 /* Reply callback: flags gotReply1BC. A text record starting with
- * "{SFOLOBBY_SETTINGS}" is handed (without the prefix) to func_00443BF0; any other
+ * "{SFOLOBBY_SETTINGS}" is handed (without the prefix) to SFOLobby_ParseSettings; any other
  * record goes to outList2400. On error the end-of-list byte (+0x408) is forced. */
-void func_004472C0(int d0, int d1, int d2, char* msg)
+void SFOLobby_OnSettings(int d0, int d1, int d2, char* msg)
 {
     if (SFOLobby_NoInstance() == 0) {
         D_00585E60->gotReply1BC = 1;
@@ -660,7 +660,7 @@ void func_004472C0(int d0, int d1, int d2, char* msg)
             pfx = D_004C0CD0;
             n = strlen(pfx);
             if (String_CompareN(e.s, pfx, n) == 0) {
-                func_00443BF0((SFOLobby*)D_00585E60, e.s + n, strlen(e.s) - n, 1);
+                SFOLobby_ParseSettings((SFOLobby*)D_00585E60, e.s + n, strlen(e.s) - n, 1);
             } else {
                 LobbyArray_Append(D_00585E60->outList2400, &e);
             }
@@ -684,7 +684,7 @@ int LobbyArray_Append(LobbyArray *, char * );
 
 /* Reply callback: flags gotReply1B8 and files the record under outUsageList when
  * its first string is "USAGE", else under outList23FC. */
-void func_004473C0(int d0, int d1, int d2, char * arg3) {
+void SFOLobby_OnGetPolicy(int d0, int d1, int d2, char * arg3) {
     if (SFOLobby_NoInstance() == 0) {
         D_00585E60->gotReply1B8 = 1;
         if (F_(arg3, 0x18, int) != 0) {
@@ -705,7 +705,7 @@ static inline void merge_flush_func_004473C0(void) {}
 
 /* merge_units: begin func_00447470 */
 #pragma push /* merge_units */
-/* Reply callback (request func_0044CA90): flags gotReply1A8 and keeps the reply. */
+/* Reply callback (request SFOLobby_EndSession): flags gotReply1A8 and keeps the reply. */
 void func_00447470(void* a0, int a1, int a2, void* src) {
     if (SFOLobby_NoInstance(a0, a1, a2, (int)src) == 0) {
         D_00585E60->gotReply1A8 = 1;
@@ -757,7 +757,7 @@ static inline void merge_flush_func_004474C0(void) {}
 /* Login reply callback: flags gotLogin, maps the Medius status to a lobby error
  * (0x3A bad password, 0x3B unknown account, 0x3C already logged in, else 1),
  * stores the account id and keeps the reply. */
-void func_004475E0(int d0, int d1, int d2, LobbyLoginReply *src) {
+void SFOLobby_OnAccountLogin(int d0, int d1, int d2, LobbyLoginReply *src) {
     if (SFOLobby_NoInstance() == 0) {
         D_00585E60->gotLogin = 1;
         switch (src->statusCode) {

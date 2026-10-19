@@ -9,7 +9,7 @@ typedef struct {
 } MD5_CTX;
 
 /* MD5Init: sets the initial chaining values and clears the bit count. */
-void func_002F2C28(MD5_CTX* context)
+void Md5_Init(MD5_CTX* context)
 {
     context->count[0] = context->count[1] = 0;
     context->state[0] = 0x67452301;

@@ -4,4 +4,4 @@
 
 extern "C" { char D_004BF150[] = "tree::insert length error\n"; }
 extern "C" { char D_004BF170[] = "allocator.hh"; }
-DEFINE_TREE_INSERT_OBJ(func_00419E50, 0x1C, 0x10, D_004BF150, D_004BF170, 0x5C, func_00139BC0, func_00419FC0, func_0013CD40)
+DEFINE_TREE_INSERT_OBJ(func_00419E50, 0x1C, 0x10, D_004BF150, D_004BF170, 0x5C, Mem_PlacementNew, func_00419FC0, func_0013CD40)

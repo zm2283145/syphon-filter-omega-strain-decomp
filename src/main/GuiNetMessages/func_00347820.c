@@ -55,7 +55,7 @@ static inline Obj47820* As47820(Obj47820* obj, const char* type)
 }
 
 /* Screen init: base init, child widget lookups, then sets the two colours of a named sprite. */
-extern "C" void func_00347820(Screen47820* self)
+extern "C" void GuiNetMessages_Init(Screen47820* self)
 {
     Sp47820* sp;
     GuiScreen_Init(self);

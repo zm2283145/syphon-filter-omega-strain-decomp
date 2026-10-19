@@ -44,7 +44,7 @@ extern void MotionNodeWrapper_Dtor(void*, int);
 extern void func_003B43C0(void*, void*, void*, int, int);
 /* Builds and registers one block of motion-graph nodes. */
 #pragma optimization_level 1
-void func_002020E0(void* p0)
+void MotionGraph_BuildLadder(void* p0)
 {
     B4 v20CC;
     B4 v20C8;

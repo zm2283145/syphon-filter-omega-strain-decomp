@@ -8,7 +8,7 @@ extern char D_00497660;
 extern int D_00583918;
 extern int D_00583920;
 
-void func_004D7830(void) {
+void StaticInit_RegisterWeaponDamageEnums(void) {
     D_00583918 = ScriptEnum_Register("eWpnDamageType", &D_004975A0, 0x10);
     D_00583920 = ScriptEnum_Register("eHitLocation", &D_00497660, 5);
 }

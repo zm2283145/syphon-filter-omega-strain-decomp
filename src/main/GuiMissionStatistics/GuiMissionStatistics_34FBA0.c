@@ -108,6 +108,6 @@ DEFINE_BASE_DTOR_CHAIN(func_0034FD80, func_003513B0)
 #include "vtable_base_dtor.h"
 
 /* Derived destructor: restore vtable, run base destructor, optionally delete. */
-DEFINE_VTABLE_BASE_DTOR(func_0034FDE0, D_004DF0B0, GuiWidget_Destroy)
+DEFINE_VTABLE_BASE_DTOR(GuiPersonnelScreen_dtor_34FDE0, D_004DF0B0, GuiWidget_Destroy)
 #pragma pop /* merge_units */
 /* merge_units: end func_0034FDE0 */

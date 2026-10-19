@@ -15,17 +15,17 @@ typedef struct {
     int h;
 } PicC90;
 
-extern int func_001161A0(void);
-extern void func_001161F8(void);
+extern int DIntr(void);
+extern void EIntr(void);
 extern void func_00107718(void *, unsigned int);
 extern void func_0010B488(int, int *);
 extern void func_00109788(void *, unsigned int, int);
 extern void func_001099F8(void *, unsigned int, int);
 extern int func_00109BB8(int, DmaChunk *);
-extern int func_0010CE80(int, int (*)(int, DmaChunk *), int, DmaChunk *);
-extern void func_0010CE90(int, int);
-extern void func_0010DD10(int);
-extern void func_0010DD78(int);
+extern int AddDmacHandler2(int, int (*)(int, DmaChunk *), int, DmaChunk *);
+extern void RemoveDmacHandler(int, int);
+extern void DisableDmac(int);
+extern void EnableDmac(int);
 
 /* IPU input DMA (toIPU, ch4) of a picture buffer; large transfers are chained by the func_00109BB8 handler. */
 
@@ -53,30 +53,30 @@ void func_00109C90(void *m, PicC90 *p)
     s.addr = p->addr & 0x0FFFFFFF;
     s.cnt = n * 0x18;
     if (s.cnt > 0xFFFF) {
-        id = func_0010CE80(4, func_00109BB8, 0, &s);
+        id = AddDmacHandler2(4, func_00109BB8, 0, &s);
         {
             unsigned int base = 0x10000000, v = 0x10; int ch = 4;
             /* Materialize the DMAC base, value and channel before the store. */
             __asm__ volatile("" : "+r"(base), "+r"(v), "+r"(ch));
             *(unsigned int *)(base | 0xE010) = v;
-            func_0010DD78(ch);
+            EnableDmac(ch);
         }
-        old = func_001161A0();
+        old = DIntr();
         REG(0x1000B410) = s.addr;
         REG(0x1000B420) = 0xFFFF;
         REG(0x1000B400) = 0x101;
         if (old)
-            func_001161F8();
+            EIntr();
         s.addr = (s.addr + 0xFFFF0) & 0x0FFFFFFF;
         s.cnt -= 0xFFFF;
         if (n < 0x400)
             func_00109788(m, F(m, 0xF0, unsigned int), n);
         else
             func_001099F8(m, F(m, 0xF0, unsigned int), n);
-        func_0010DD10(4);
-        func_0010CE90(4, id);
+        DisableDmac(4);
+        RemoveDmacHandler(4, id);
     } else {
-        old = func_001161A0();
+        old = DIntr();
         {
             register unsigned int *q asm("$6") = (unsigned int *)0x1000B420;
             register unsigned int a asm("$5") = p->addr & 0x0FFFFFFF;
@@ -97,7 +97,7 @@ void func_00109C90(void *m, PicC90 *p)
             }
         }
         if (old)
-            func_001161F8();
+            EIntr();
         s.cnt = 0;
         if (n < 0x400)
             func_00109788(m, F(m, 0xF0, unsigned int), n);

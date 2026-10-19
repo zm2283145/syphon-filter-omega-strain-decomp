@@ -4,8 +4,8 @@
 int DeleteSema(int);
 int SignalSema(int);
 int func_0010F7C0(int);
-int func_001161A0();
-int func_001161F8();
+int DIntr();
+int EIntr();
 extern int D_00487894;
 extern int D_004878A0;
 extern int D_004878A8;
@@ -26,10 +26,10 @@ void func_001187D0(void) {
     DeleteSema(D_004878AC);
     DeleteSema(D_004878B0);
     DeleteSema(D_004878A0);
-    temp_s0 = func_001161A0();
+    temp_s0 = DIntr();
     func_0010F7C0(0x80000012);
     if (temp_s0 != 0) {
-        func_001161F8();
+        EIntr();
     }
 }
 

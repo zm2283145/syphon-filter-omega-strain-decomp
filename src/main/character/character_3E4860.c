@@ -334,7 +334,7 @@ int func_003E4F70(int a,int b,int c,Packet_003E4F70*p0){
 /* merge_units: begin func_003E5060 */
 #pragma push /* merge_units */
 extern int func_002E9A10(void* reg);
-extern int func_003C9C30(void* desc);
+extern int Event_UnpackHeader(void* desc);
 extern int func_003FF2C0(void);
 extern int func_002E9A98(void* desc, void* field, int size, int count);
 extern int func_002E9F08(void* t, void* fn);

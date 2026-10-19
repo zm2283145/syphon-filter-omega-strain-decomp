@@ -14,7 +14,7 @@ extern void func_001BFEB0(It_50A0* a);
 extern int func_003B7100(Str_50A0* s, Str_50A0* t, int n);
 extern void func_003B52B0(Str_50A0* out, Str_50A0* s, int a, int b);
 extern int String_Length(Str_50A0* s);
-extern char* func_002071A0(Str_50A0* s);
+extern char* String_CStr_Thunk(Str_50A0* s);
 extern void Skas_RegisterClip(int* out, void* self, char* name, int clip);
 extern char D_004BCD78[];
 
@@ -47,7 +47,7 @@ void func_003B50A0(void* self, Obj_50A0* o)
                 int j;
                 func_003B52B0(&u, &s, 0, idx);
                 for (j = 0; j < 47; j++) {
-                    name[j] = (j < String_Length(&u)) ? func_002071A0(&u)[j] : 0;
+                    name[j] = (j < String_Length(&u)) ? String_CStr_Thunk(&u)[j] : 0;
                 }
                 name[j] = 0;
                 String_Dtor(&u, 0);

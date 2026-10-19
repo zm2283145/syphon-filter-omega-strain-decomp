@@ -145,7 +145,7 @@ int func_0018A2E0(Req_D430* r);
 float func_0018A2D0(Req_D430* r);
 float func_0018A2C0(Req_D430* r);
 void AnimCtl_InstallMotion(Anim_D430* a, int sel, int b, Rate_D430* r, Word_D430* w, Ev_D430* e0, Ev_D430* e1, int c, float f0, float f1);
-void func_0018A260(Ev_D430* e, int f);
+void AnimEvent_dtor(Ev_D430* e, int f);
 void Model_HardMeshAttachPoints(Man_D430* m);
 void func_0038E030(Man_D430* m);
 void ActorModel_Setup(Man_D430* m, int flag);
@@ -190,8 +190,8 @@ static inline void Install_D430(Anim_D430* an, int* selp, Req_D430* rq, Word_D43
                 AnimEvent_Construct(&e0);
                 AnimEvent_Construct(&e1);
                 AnimCtl_InstallMotion(an, *selp, MotionRequest_GetMode(rq), &rate, wp, &e0, &e1, func_0018A2E0(rq), func_0018A2D0(rq), func_0018A2C0(rq));
-                func_0018A260(&e1, -1);
-                func_0018A260(&e0, -1);
+                AnimEvent_dtor(&e1, -1);
+                AnimEvent_dtor(&e0, -1);
 }
 static inline void FindAnim_D430(Self_D430* self, int i, int kind)
 {

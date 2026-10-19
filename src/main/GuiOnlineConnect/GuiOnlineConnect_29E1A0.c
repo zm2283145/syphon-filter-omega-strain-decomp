@@ -30,9 +30,9 @@ void String_Dtor(Str_0029E1A0* s, int flags);
 void GuiOnlineConnect_ListConfigs(S_0029E1A0* self);
 void GuiOnlineConnect_Back(S_0029E1A0* self, int a);
 void FrontEnd_DownloadPolicies(void* ui);
-void func_00445570(void* g);
-int func_004456D0(void* g);
-void func_004456C0(void* g);
+void SFOLobby_RequestSettings(void* g);
+int SFOLobby_GetUsagePolicy(void* g);
+void SFOLobby_GetPrivacyPolicy(void* g);
 void GuiOnlineConnect_Advance(S_0029E1A0* self);
 }
 extern "C" void GuiOnlineConnect_Update(S_0029E1A0* self)
@@ -80,9 +80,9 @@ extern "C" void GuiOnlineConnect_Update(S_0029E1A0* self)
             if (self->f120 != -1)
                 FrontEnd_ClosePopup(D_004FFC04, self->f120);
             FrontEnd_DownloadPolicies(D_004FFC04);
-            func_00445570(g);
-            if (func_004456D0(g))
-                func_004456C0(g);
+            SFOLobby_RequestSettings(g);
+            if (SFOLobby_GetUsagePolicy(g))
+                SFOLobby_GetPrivacyPolicy(g);
             FrontEnd_ClosePopup(D_004FFC04, h);
             done = 1;
         }
@@ -144,7 +144,7 @@ void SoundMgr_UnloadLevel(void* svc);
 void func_002B4FA8(int id);
 void func_002B4E50(void);
 void* String_CStr_189540(void* p);
-void func_0044B970(void* a, char* b);
+void SFOLobby_LaunchNetGui(void* a, char* b);
 #if 0 /* merge_units */
 void GuiOnlineConnect_Back(S_0029E440* self, int a);
 #endif /* merge_units */
@@ -218,7 +218,7 @@ extern "C" int GuiOnlineConnect_HandleEvent(S_0029E440* self, void* w, int msg, 
                 if (id != -1)
                     func_002B4FA8(id);
                 func_002B4E50();
-                func_0044B970(String_CStr_189540(D_004FFBA4), (*(char**)dat_0048B988));
+                SFOLobby_LaunchNetGui(String_CStr_189540(D_004FFBA4), (*(char**)dat_0048B988));
             } else if (sub == 0x1F) {
                 self->f88 = 5;
             } else {

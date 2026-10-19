@@ -21,7 +21,7 @@ extern "C" void func_003527F0(V3527F0* v, char* first, char* last)
 {
     v->count = v->cap = last - first;
     if (v->count > 0x6000000) {
-        func_00123BE8(D_00489738->stream, D_004BABF0);
+        Libc_Fprintf(D_00489738->stream, D_004BABF0);
         Libc_Abort();
     }
     if (v->count) {
@@ -48,7 +48,7 @@ extern "C" void func_00352910(V352910* v, char* first, char* last)
     unsigned int n = last - first;
     if (v->cap < n) {
         if (n > 0x6000000) {
-            func_00123BE8(D_00489738->stream, D_004BAC10);
+            Libc_Fprintf(D_00489738->stream, D_004BAC10);
             Libc_Abort();
         }
         v->count = 0;

@@ -13,7 +13,7 @@ extern int printf(const char *, ...);
 extern int Net_AllocZeroed(void **pp, unsigned long size);
 typedef struct { void *ptr; unsigned int size; } Slot3111E0;
 typedef struct { Slot3111E0 slot[0x1000]; unsigned int limit; unsigned int used; } Ctx3111E0;
-int func_003111E0(Ctx3111E0 *c, void **pp, unsigned int size)
+int RtXml_Alloc(Ctx3111E0 *c, void **pp, unsigned int size)
 {
     unsigned int i;
     int r;
@@ -44,7 +44,7 @@ int func_003111E0(Ctx3111E0 *c, void **pp, unsigned int size)
 extern int func_002FB3C0(void *p);
 typedef struct { void *ptr; int size; } Slot311320;
 typedef struct { Slot311320 slot[0x1000]; int count; int used; } Ctx311320;
-int func_00311320(Ctx311320 *c, void **pp)
+int RtXml_Free(Ctx311320 *c, void **pp)
 {
     unsigned int i;
     for (i = 0; i < 0x1000; i++) {
@@ -81,12 +81,12 @@ typedef struct {
     char pad2[5];
     unsigned char flag;
 } Ctx311418;
-extern int func_00312858(Ctx311418 *c, Node311418 **pnode);
+extern int RtXml_NodeStackPop(Ctx311418 *c, Node311418 **pnode);
 extern int func_003130F8(Ctx311418 *c, Node311418 **pnode);
 extern int func_00313200(Ctx311418 *c, Node311418 *n);
 extern int func_003132E0(Ctx311418 *c, Node311418 *n);
-extern int func_00312910(Ctx311418 *c, Node311418 *parent, Node311418 *n);
-extern int func_003127A8(Ctx311418 *c, Node311418 *n);
+extern int RtXml_AddChild(Ctx311418 *c, Node311418 *parent, Node311418 *n);
+extern int RtXml_NodeStackPush(Ctx311418 *c, Node311418 *n);
 extern int func_003133C0(Ctx311418 *c, Node311418 *n);
 
 #define CHK(x, line) \
@@ -161,12 +161,12 @@ int func_00311418(Ctx311418 *c, char *buf, unsigned int len)
         switch (c->state) {
         case 0:
             if (c->len) {
-                CHK(func_00312858(c, &node), 0x25C);
+                CHK(RtXml_NodeStackPop(c, &node), 0x25C);
                 if (node) {
                     CHK(func_003130F8(c, &n4), 0x260);
                     CHK(func_00313200(c, n4), 0x263);
-                    CHK(func_00312910(c, node, n4), 0x266);
-                    CHK(func_003127A8(c, node), 0x269);
+                    CHK(RtXml_AddChild(c, node, n4), 0x266);
+                    CHK(RtXml_NodeStackPush(c, node), 0x269);
                 } else {
                     c->buf[c->len] = 0;
                     TOSS(0x26E);
@@ -181,7 +181,7 @@ int func_00311418(Ctx311418 *c, char *buf, unsigned int len)
         case 15:
         case 23:
             if (c->len) {
-                CHK(func_00312858(c, &node), 0x283);
+                CHK(RtXml_NodeStackPop(c, &node), 0x283);
                 if (node) {
                     if (String_CompareN(c->buf, node->str, node->len) == 0 && node->len == c->len) {
                         c->buf[c->len] = 0;
@@ -190,13 +190,13 @@ int func_00311418(Ctx311418 *c, char *buf, unsigned int len)
                     } else if (c->flag) {
                         c->flag = 0;
                         CHK(func_003133C0(c, node), 0x298);
-                        CHK(func_003127A8(c, node), 0x29B);
+                        CHK(RtXml_NodeStackPush(c, node), 0x29B);
                     } else {
                         CHK(func_003130F8(c, &n4), 0x2A1);
                         CHK(func_003132E0(c, n4), 0x2A4);
-                        CHK(func_00312910(c, node, n4), 0x2A7);
-                        CHK(func_003127A8(c, node), 0x2AA);
-                        CHK(func_003127A8(c, n4), 0x2AD);
+                        CHK(RtXml_AddChild(c, node, n4), 0x2A7);
+                        CHK(RtXml_NodeStackPush(c, node), 0x2AA);
+                        CHK(RtXml_NodeStackPush(c, n4), 0x2AD);
                     }
                 } else {
                     CHK(func_003130F8(c, &n4), 0x2B4);
@@ -204,7 +204,7 @@ int func_00311418(Ctx311418 *c, char *buf, unsigned int len)
                     if (!(0 == c->doc))
                         printf(D_004B0DE0, D_004B0E18, 0x2B9, "NULL == p_iparser->doc");
                     c->doc = n4;
-                    CHK(func_003127A8(c, n4), 0x2BD);
+                    CHK(RtXml_NodeStackPush(c, n4), 0x2BD);
                 }
             }
             if (c->state == 3) {
@@ -220,9 +220,9 @@ int func_00311418(Ctx311418 *c, char *buf, unsigned int len)
         case 4:
         case 7:
             if (c->len) {
-                CHK(func_00312858(c, &node), 0x2D9);
+                CHK(RtXml_NodeStackPop(c, &node), 0x2D9);
                 CHK(func_003133C0(c, node), 0x2DC);
-                CHK(func_003127A8(c, node), 0x2DF);
+                CHK(RtXml_NodeStackPush(c, node), 0x2DF);
             }
             if (c->state == 4) c->state = 5;
             else if (c->state == 7) c->state = 8;
@@ -232,13 +232,13 @@ int func_00311418(Ctx311418 *c, char *buf, unsigned int len)
             break;
         case 10:
             if (c->len) {
-                CHK(func_00312858(c, &node), 0x2F9);
+                CHK(RtXml_NodeStackPop(c, &node), 0x2F9);
                 if (node) {
                     if (!c->flag) {
                         CHK(func_003130F8(c, &n4), 0x2FF);
                         CHK(func_003132E0(c, n4), 0x302);
-                        CHK(func_00312910(c, node, n4), 0x305);
-                        CHK(func_003127A8(c, node), 0x308);
+                        CHK(RtXml_AddChild(c, node, n4), 0x305);
+                        CHK(RtXml_NodeStackPush(c, node), 0x308);
                     } else {
                         c->flag = 0;
                         if (c->len) {
@@ -251,18 +251,18 @@ int func_00311418(Ctx311418 *c, char *buf, unsigned int len)
                     c->len = 0;
                 }
             } else {
-                CHK(func_00312858(c, &node), 0x320);
+                CHK(RtXml_NodeStackPop(c, &node), 0x320);
             }
             c->state = 0x18;
             break;
         case 11:
             if (c->len) {
-                CHK(func_00312858(c, &node), 0x329);
+                CHK(RtXml_NodeStackPop(c, &node), 0x329);
                 if (node) {
                     CHK(func_003130F8(c, &n4), 0x32D);
                     CHK(func_00313200(c, n4), 0x330);
-                    CHK(func_00312910(c, node, n4), 0x333);
-                    CHK(func_003127A8(c, node), 0x336);
+                    CHK(RtXml_AddChild(c, node, n4), 0x333);
+                    CHK(RtXml_NodeStackPush(c, node), 0x336);
                 } else {
                     c->buf[c->len] = 0;
                     TOSS(0x33B);
@@ -274,12 +274,12 @@ int func_00311418(Ctx311418 *c, char *buf, unsigned int len)
             break;
         case 12:
             if (c->len) {
-                CHK(func_00312858(c, &node), 0x34D);
+                CHK(RtXml_NodeStackPop(c, &node), 0x34D);
                 if (node) {
                     CHK(func_003130F8(c, &n4), 0x351);
                     CHK(func_00313200(c, n4), 0x354);
-                    CHK(func_00312910(c, node, n4), 0x357);
-                    CHK(func_003127A8(c, node), 0x35A);
+                    CHK(RtXml_AddChild(c, node, n4), 0x357);
+                    CHK(RtXml_NodeStackPush(c, node), 0x35A);
                 } else {
                     c->buf[c->len] = 0;
                     TOSS(0x35F);
@@ -290,12 +290,12 @@ int func_00311418(Ctx311418 *c, char *buf, unsigned int len)
             break;
         case 16:
             if (c->len) {
-                CHK(func_00312858(c, &node), 0x36F);
+                CHK(RtXml_NodeStackPop(c, &node), 0x36F);
                 if (node) {
                     CHK(func_003130F8(c, &n4), 0x373);
                     CHK(func_00313200(c, n4), 0x376);
-                    CHK(func_00312910(c, node, n4), 0x379);
-                    CHK(func_003127A8(c, node), 0x37C);
+                    CHK(RtXml_AddChild(c, node, n4), 0x379);
+                    CHK(RtXml_NodeStackPush(c, node), 0x37C);
                 } else {
                     c->buf[c->len] = 0;
                     TOSS(0x381);

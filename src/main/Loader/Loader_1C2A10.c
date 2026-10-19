@@ -18,7 +18,7 @@ int sprintf(void *, const void *, ...);
 #pragma push /* merge_units */
 typedef struct { int unk0; int size; unsigned int base; char* cur; } PopReader_1C2A10;
 extern int Pop_FindTag(PopReader_1C2A10* r, int tag);
-extern void func_00165E60(void* a, char* name, int x);
+extern void Loader_UpdateLoadingScreen(void* a, char* name, int x);
 extern void* App_GetInstance(void);
 extern void Backpack_CreateFromRecord(PopReader_1C2A10* r);
 void Loader_LoadInventoryDefs(void* a0, PopReader_1C2A10* r)
@@ -29,7 +29,7 @@ void Loader_LoadInventoryDefs(void* a0, PopReader_1C2A10* r)
         int mis;
         n = *(int*)r->cur;
         r->cur += 4;
-        func_00165E60(App_GetInstance(), "Loading Inventory defs...", 0);
+        Loader_UpdateLoadingScreen(App_GetInstance(), "Loading Inventory defs...", 0);
         for (i = 0; i < n; i++)
             Backpack_CreateFromRecord(r);
         mis = (int)((unsigned long long)(unsigned int)r->cur & 3);
@@ -77,7 +77,7 @@ int Pop_FindTag(PopReader_1C2AE0* r, int tag);
 #define Pop_FindTag(a0, a1) (Pop_FindTag((PopReader_1C2A10 *)(a0), (a1))) /* merge_units */
 
 Gen_1C2AE0* cGenerator_ctor(void* p, PopReader_1C2AE0* r);
-void func_00165E60(void* a, char* name, int x);
+void Loader_UpdateLoadingScreen(void* a, char* name, int x);
 void* App_GetInstance(void);
 void* LosRegion_FindGlobal(void* region);
 void ZoneMgr_Associate(void* reg, Gen_1C2AE0* g, int a, int b);
@@ -90,7 +90,7 @@ extern "C" void Loader_LoadGeneratorDefs(void* a0, PopReader_1C2AE0* r)
         int mis;
         n = *(int*)r->cur;
         r->cur += 4;
-        func_00165E60(App_GetInstance(), "Loading Generator defs...", 0);
+        Loader_UpdateLoadingScreen(App_GetInstance(), "Loading Generator defs...", 0);
         for (i = 0; i < n; i++) {
             Gen_1C2AE0* p;
             {
@@ -158,7 +158,7 @@ extern "C" void Pop_LoadTER(Level_1C2CB0* l, void* a1, PopReader_1C2CB0* r, void
         int mis;
         n = *(int*)r->cur;
         r->cur += 4;
-        func_00165E60(App_GetInstance(), "Initializing Terrain Data...", 0);
+        Loader_UpdateLoadingScreen(App_GetInstance(), "Initializing Terrain Data...", 0);
         sprintf(name, D_0049F018, D_0048B2F8, g_LevelDirName, g_LevelDirName);
         h = Archive_Open(arc, name, 0, 0);
         {

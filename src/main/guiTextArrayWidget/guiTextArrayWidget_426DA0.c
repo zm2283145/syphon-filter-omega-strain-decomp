@@ -29,7 +29,7 @@ DEFINE_BUF_HOLDER_DTOR_SHALLOW(func_00426DA0)
 #pragma cplusplus on
 
 /* Derived destructor: member, then base, optionally delete. */
-DEFINE_VTABLE_MEMBER_BASE_DTOR(func_00426E90, D_004E0D20, 0x60, func_0013A040, GuiWidget_Destroy)
+DEFINE_VTABLE_MEMBER_BASE_DTOR(GuiArrayWidget_dtor_426E90, D_004E0D20, 0x60, func_0013A040, GuiWidget_Destroy)
 #pragma pop /* merge_units */
 /* merge_units: end func_00426E90 */
 

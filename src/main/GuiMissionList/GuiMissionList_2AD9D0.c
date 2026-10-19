@@ -17,7 +17,7 @@
 char D_004ABBD8[] = "GuiNetContacts";   /* "GuiNetContacts" */
 
 /* Class name getter: "GuiNetContacts". */
-char* func_002AD9D0(void) {
+char* GuiNetContacts_GetClassName(void) {
     return D_004ABBD8;
 }
 #pragma pop /* merge_units */
@@ -28,7 +28,7 @@ char* func_002AD9D0(void) {
 extern int strcmp(const char* a, const char* b); /* strcmp */
 
 /* Returns 1 if name equals the string "GuiNetContacts". */
-int func_002AD9E0(void* self, const char* name)
+int GuiNetContacts_IsType(void* self, const char* name)
 {
     return strcmp("GuiNetContacts", name) == 0;
 }

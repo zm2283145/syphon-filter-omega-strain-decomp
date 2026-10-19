@@ -4,14 +4,14 @@
 /*
  * Deleting destructor of the class with vtable D_004DE8A0 (one clone per
  * translation unit): member at +0x104 (String_Dtor), three members at
- * +0xE4/+0xC8/+0xAC (func_0044F970), base func_0033D430, then delete when
+ * +0xE4/+0xC8/+0xAC (LobbyArray_dtor), base GuiScreen_dtor, then delete when
  * deleteFlag > 0. C++ only (#pragma cplusplus on before including).
  */
 extern "C" {
 extern char D_004DE8A0[];
 void* String_Dtor(void* self, short flags);
-void* func_0044F970(void* self, short flags);
-void* func_0033D430(void* self, short flags);
+void* LobbyArray_dtor(void* self, short flags);
+void* GuiScreen_dtor(void* self, short flags);
 void operator_delete(void* allocation);
 }
 
@@ -28,10 +28,10 @@ struct TripleMemberObject {
             char* m = (char*)self + 0x104;                                    \
             if (m)                                                            \
                 String_Dtor(m, 0);                                          \
-            func_0044F970((char*)self + 0xE4, -1);                            \
-            func_0044F970((char*)self + 0xC8, -1);                            \
-            func_0044F970((char*)self + 0xAC, -1);                            \
-            func_0033D430(self, 0);                                           \
+            LobbyArray_dtor((char*)self + 0xE4, -1);                            \
+            LobbyArray_dtor((char*)self + 0xC8, -1);                            \
+            LobbyArray_dtor((char*)self + 0xAC, -1);                            \
+            GuiScreen_dtor(self, 0);                                           \
             if (deleteFlag > 0)                                               \
                 operator_delete(self);                                        \
         }                                                                     \

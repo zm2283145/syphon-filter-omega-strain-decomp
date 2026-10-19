@@ -6,6 +6,6 @@
 
 extern void Actor_BaseLogicUpdate(cVUM_GOBJ* self);
 
-void func_00392B40(cVUM_GOBJ* self) {
+void Actor_LogicUpdate(cVUM_GOBJ* self) {
     Actor_BaseLogicUpdate(self);
 }

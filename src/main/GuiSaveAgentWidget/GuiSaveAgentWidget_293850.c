@@ -28,7 +28,7 @@ char* GuiAgentLoad_GetClassName(void) {
 extern void* strcmp(void* key);
 
 /* Returns whether the lookup of "GuiAgentLoad" yields null. */
-int func_00293860(void) {
+int GuiAgentLoad_IsType(void) {
     return strcmp("GuiAgentLoad") == 0;
 }
 #pragma pop /* merge_units */
@@ -56,7 +56,7 @@ DEFINE_VTABLE2_BASE_DTOR(func_002938A0, D_004DD460, D_004E1220, GuiWidget_Destro
 char D_004A9E70[] = "GuiSaveAgentWidget";   /* "GuiSaveAgentWidget" */
 
 /* Class name getter: "GuiSaveAgentWidget". */
-char* func_00293910(void) {
+char* GuiSaveAgentWidget_GetClassName(void) {
     return D_004A9E70;
 }
 #pragma pop /* merge_units */

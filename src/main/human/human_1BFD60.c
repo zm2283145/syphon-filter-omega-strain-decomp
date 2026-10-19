@@ -2,7 +2,7 @@
 typedef struct { unsigned int word; unsigned int length; char* data; } Str_1BFD60;
 typedef struct { char* p; } It_1BFD60;
 extern void String_CtorCStr_13B480(Str_1BFD60* s, char* c);
-extern void func_0013D680(Str_1BFD60* d, Str_1BFD60* s);
+extern void String_AssignString(Str_1BFD60* d, Str_1BFD60* s);
 extern void String_Dtor(Str_1BFD60* s, int f);
 extern void func_001BFF20(It_1BFD60* out, Str_1BFD60* s);
 extern void func_001BFEE0(It_1BFD60* out, Str_1BFD60* s);
@@ -24,7 +24,7 @@ void Global_LoadAnimation(char* name)
     if (name[0]) {
         Str_1BFD60 t;
         String_CtorCStr_13B480(&t, name);
-        func_0013D680(&s, &t);
+        String_AssignString(&s, &t);
         String_Dtor(&t, 0);
         func_001BFF20(&it, &s);
         func_001BFEE0(&end, &s);
@@ -35,7 +35,7 @@ void Global_LoadAnimation(char* name)
     } else {
         Str_1BFD60 t2;
         String_CtorCStr_13B480(&t2, name);
-        func_0013D680(&s, &t2);
+        String_AssignString(&s, &t2);
         String_Dtor(&t2, 0);
     }
     SkaRegistry_LoadAnimation(D_004FFBD8, String_CStr(&s));

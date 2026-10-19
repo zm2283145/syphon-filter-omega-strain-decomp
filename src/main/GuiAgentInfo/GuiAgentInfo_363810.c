@@ -14,7 +14,7 @@ struct Crv_3810b { Key_3810b k[2]; float dur; float inv; };
 /* constant curve: both keys = (*a, *b * dur), store duration and its inverse */
 #pragma push
 #pragma opt_unroll_loops off
-extern "C" Crv_3810b* func_00363810(Crv_3810b* c, float* a, float* b, float dur)
+extern "C" Crv_3810b* Curve_InitConstant_363810(Crv_3810b* c, float* a, float* b, float dur)
 {
     float va = *a; float vs = *b * dur;
     { Key_3810b* e = c->k; do { new (e) Key_3810b; } while (++e != c->k + 2); }

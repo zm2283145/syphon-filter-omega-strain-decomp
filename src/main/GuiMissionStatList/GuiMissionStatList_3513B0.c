@@ -25,7 +25,7 @@ DEFINE_VECTOR_RELEASE_DTOR(func_003513B0, func_00351320, func_00351430, D_004BAC
 extern "C" {
 void Mem_Free(int pool, void* allocation, char* file, int line);
 void* func_0034F7A0(void* self, short flags);
-void* func_00138350(void* self, short flags);
+void* String_Dtor_138350(void* self, short flags);
 void func_00351430(void* allocation, int pool, int destroy, char* file, int line);
 }
 void func_00351430(void* allocation, int pool, int destroy, char* file, int line)
@@ -34,7 +34,7 @@ void func_00351430(void* allocation, int pool, int destroy, char* file, int line
     if (destroy) {
         if (allocation) {
             func_0034F7A0((char*)allocation + 0x4C, -1);
-            func_00138350(allocation, -1);
+            String_Dtor_138350(allocation, -1);
         }
     }
     Mem_Free(pool, allocation, file, line);

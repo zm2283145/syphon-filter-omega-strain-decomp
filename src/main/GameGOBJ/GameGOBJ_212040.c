@@ -55,7 +55,7 @@ extern unsigned char func_002129A0(Rec_002120D0* r);
 extern void func_00211DE0(void);
 extern void func_00211DB0(void);
 extern void func_00212040(void);
-void func_002120D0(void)
+void NetElevatorInfo_NetRegister(void)
 {
     int db;
     int handle;

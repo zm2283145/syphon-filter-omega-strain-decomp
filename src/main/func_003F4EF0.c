@@ -27,8 +27,8 @@ typedef struct {
     int active;
 } IpuState;
 
-extern void func_001161A0(void);
-extern void func_001161F8(void);
+extern void DIntr(void);
+extern void EIntr(void);
 extern void WaitSema(int sema);
 extern void SignalSema(int sema);
 
@@ -36,22 +36,22 @@ int func_003F4EF0(IpuState* s)
 {
     WaitSema(s->sema);
     s->active = 0;
-    func_001161A0();
+    DIntr();
     DMAC_ENABLEW = DMAC_ENABLER | 0x10000;
     D4_CHCR = 5;
     DMAC_ENABLEW = DMAC_ENABLER & ~0x10000;
-    func_001161F8();
+    EIntr();
     s->d4madr = D4_MADR;
     s->d4tadr = D4_TADR;
     s->d4qwc = D4_QWC;
     s->d4chcr = D4_CHCR;
     while (IPU_CTRL & 0xF0)
         ;
-    func_001161A0();
+    DIntr();
     DMAC_ENABLEW = DMAC_ENABLER | 0x10000;
     D3_CHCR = 0;
     DMAC_ENABLEW = DMAC_ENABLER & ~0x10000;
-    func_001161F8();
+    EIntr();
     s->d3madr = D3_MADR;
     s->d3qwc = D3_QWC;
     s->d3chcr = D3_CHCR;

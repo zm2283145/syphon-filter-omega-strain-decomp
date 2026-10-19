@@ -4,8 +4,18 @@ extern void GuiArrayWidget_Draw();
 extern void GuiArrayWidget_OnGainFocus();
 extern void GuiArrayWidget_OnInput();
 extern void GuiArrayWidget_OnLoseFocus();
+extern void GuiArrayWidget_SendEvent20();
+extern void GuiArrayWidget_SendEvent21();
 extern void GuiArrayWidget_SetDims();
+extern void GuiNetMessageArray_Create();
+extern void GuiNetMessageArray_GetClassName();
+extern void GuiNetMessageArray_Init();
 extern void GuiNetMessageArray_IsType();
+extern void GuiNetMessageArray_Sleep();
+extern void GuiNetMessageArray_Update();
+extern void GuiNetMessageArray_Wake();
+extern void GuiNetMessageArray_dtor();
+extern void GuiNetMessages_Create();
 extern void GuiWidget_BubbleActivate();
 extern void GuiWidget_ClearFlag4();
 extern void GuiWidget_Deinit();
@@ -13,38 +23,28 @@ extern void GuiWidget_FocusFirst();
 extern void GuiWidget_FocusLast();
 extern void GuiWidget_FocusNext();
 extern void GuiWidget_FocusPrev();
+extern void GuiWidget_Load();
 extern void GuiWidget_OnEvent();
 extern void GuiWidget_SetFlag4();
 extern void func_00347B40();
 extern void func_00348530();
-extern void func_00348A00();
-extern void func_00348AD0();
-extern void func_00348B90();
-extern void func_00348D90();
-extern void func_003490F0();
-extern void func_00349180();
-extern void func_00349CA0();
-extern void func_00349D70();
-extern void func_0041F210();
-extern void func_004235C0();
-extern void func_004235E0();
 extern void func_00423660();
 
 void *D_004DEB80[30] = {
-    0, 0, &func_003490F0, &func_00348D90,
-    &GuiWidget_Deinit, &GuiWidget_SetFlag4, &GuiWidget_ClearFlag4, &func_00348B90,
-    &func_00348AD0, &GuiArrayWidget_OnGainFocus, &GuiArrayWidget_OnLoseFocus, &GuiArrayWidget_OnInput,
-    &GuiArrayWidget_Draw, &GuiWidget_BubbleActivate, &func_00348A00, &GuiWidget_OnEvent,
-    &func_0041F210, &GuiWidget_FocusFirst, &GuiWidget_FocusLast, &GuiWidget_FocusNext,
-    &GuiWidget_FocusPrev, &func_00349180, &GuiNetMessageArray_IsType, &GuiArrayWidget_SetDims,
-    &func_00423660, &func_00347B40, &func_00348530, &func_004235E0,
-    &func_004235C0, 0,
+    0, 0, &GuiNetMessageArray_dtor, &GuiNetMessageArray_Init,
+    &GuiWidget_Deinit, &GuiWidget_SetFlag4, &GuiWidget_ClearFlag4, &GuiNetMessageArray_Wake,
+    &GuiNetMessageArray_Sleep, &GuiArrayWidget_OnGainFocus, &GuiArrayWidget_OnLoseFocus, &GuiArrayWidget_OnInput,
+    &GuiArrayWidget_Draw, &GuiWidget_BubbleActivate, &GuiNetMessageArray_Update, &GuiWidget_OnEvent,
+    &GuiWidget_Load, &GuiWidget_FocusFirst, &GuiWidget_FocusLast, &GuiWidget_FocusNext,
+    &GuiWidget_FocusPrev, &GuiNetMessageArray_GetClassName, &GuiNetMessageArray_IsType, &GuiArrayWidget_SetDims,
+    &func_00423660, &func_00347B40, &func_00348530, &GuiArrayWidget_SendEvent20,
+    &GuiArrayWidget_SendEvent21, 0,
 };
 
-void *D_004DEBF8[4] __attribute__((aligned(8))) = { 0, 0, &func_00349CA0, 0 };
+void *D_004DEBF8[4] __attribute__((aligned(8))) = { 0, 0, &GuiNetMessages_Create, 0 };
 
 void *D_004DEC08[10] __attribute__((aligned(8))) = {
-    0, 0, &func_00349D70, 0,
+    0, 0, &GuiNetMessageArray_Create, 0,
     0, 0, 0, 0,
     0, 0,
 };

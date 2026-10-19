@@ -4,7 +4,7 @@ extern char* D_00587FC0;
 extern int D_00587FD0, D_00588000;
 extern char D_00587FC8[], D_00587FF0[], D_00587FD8[], D_00493880[], D_00493898[], D_004938A0[];
 extern char func_00470B20[], func_00471AA0[], Script_cInventory__RegisterItem[];
-extern int func_002824D0(void* fn, void* a, void* b);
+extern int NetMsgTable_Add(void* fn, void* a, void* b);
 extern void func_00471C00(void* p);
 extern void func_00471BF0(void* p, int n);
 extern int func_001361D0(int* n);
@@ -13,7 +13,7 @@ extern int Script_RegisterNative_2(void* fn, void* name, void* desc, int n, ...)
 void StaticInit_RegisterInventory(void)
 {
     D_00587FC0 = "cNetInventoryMsg";
-    D_00587FD0 = func_002824D0(func_00470B20, D_00587FC8, "cNetInventoryMsg");
+    D_00587FD0 = NetMsgTable_Add(func_00470B20, D_00587FC8, "cNetInventoryMsg");
     {
         int n[1];
         Obj_4D8B40* o = (Obj_4D8B40*)D_00587FF0;

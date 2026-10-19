@@ -24,7 +24,7 @@ DEFINE_VTABLE_BASE_DTOR(func_001576F0, D_004E0F00, cMessage_dtor)
 #pragma push /* merge_units */
 #pragma cplusplus on
 
-DEFINE_VTABLE_BASE_DTOR(func_00157750, D_004E0E80, cMessage_dtor)
+DEFINE_VTABLE_BASE_DTOR(cDeactivateMsg_dtor, D_004E0E80, cMessage_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00157750 */
 
@@ -38,7 +38,7 @@ public:
 };
 extern "C" void NpcAi_GetPlayerRecord(NPC_77B0* self, int a, int b);
 extern "C" int func_0015B060(NPC_77B0* self, int a);
-extern "C" void func_001577B0(NPC_77B0* self, int a)
+extern "C" void cNPC_v2F(NPC_77B0* self, int a)
 {
     NpcAi_GetPlayerRecord(self, a, 0);
     if (!func_0015B060(self, -1))

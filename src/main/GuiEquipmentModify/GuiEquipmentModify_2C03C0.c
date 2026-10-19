@@ -73,7 +73,7 @@ extern void GuiTextWidget_SetText(Hud*, char*, int);
 extern void DME_SendPlayGameMsg(void);
 }
 /* Per-frame update: polls the four player slots, tracks the slot-0 state-3 countdown and plays each slot's join sound once. */
-extern "C" void func_002C03C0(Self* self, float dt) {
+extern "C" void GuiEquipmentModify_Update(Self* self, float dt) {
     SoundRequest req;
     SoundMsg msg;
     char buf[0x40];

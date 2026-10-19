@@ -101,7 +101,7 @@ extern int D_0051EE80;
 extern void func_002C7BA0(void);
 extern void func_002C7B30(void);
 extern void func_002C7B20(void);
-unsigned char func_002C7A00(void)
+unsigned char NetGenerator_NetRegister(void)
 {
     int db;
     int table;

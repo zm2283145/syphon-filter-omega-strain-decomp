@@ -60,9 +60,9 @@ T3F80* func_003E3F80(T3F80* t, short del)
 #pragma push /* merge_units */
 extern void func_003E2A40(void* self, short del);
 extern void func_003E2B30(void* self, short del);
-extern void func_003E2C20(void* self, short del);
+extern void ReceiverList_Dtor_3E2C20(void* self, short del);
 extern void func_003E2CA0(void* self, short del);
-void* func_003E3FF0(void* self, short del)
+void* ScriptInterpreter_dtor(void* self, short del)
 {
     if (self) {
         void* a = (char*)self + 0x4E4C;
@@ -75,7 +75,7 @@ void* func_003E3FF0(void* self, short del)
             func_003E2B30(b, -1);
         c = (char*)self + 0xC;
         if (c)
-            func_003E2C20(c, 0);
+            ReceiverList_Dtor_3E2C20(c, 0);
         if (self)
             func_003E2CA0(self, 0);
         if (del > 0)

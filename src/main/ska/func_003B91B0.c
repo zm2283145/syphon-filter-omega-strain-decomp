@@ -11,7 +11,7 @@ extern "C" {
 /*fc*/
 int *Mem_Alloc(...);                     
 int Libc_Abort(...);                                  
-int func_00123BE8(...);                          
+int Libc_Fprintf(...);                          
 unsigned int func_003B9BD0(...);                                
 extern char * D_00489738;
 extern char D_0049AE50;
@@ -25,7 +25,7 @@ extern "C" void func_003B91B0(char * arg0, unsigned int arg1, int *arg2) {
     var_s2 = arg1;
     if (var_s2 != 0) {
         if (func_003B9BD0() < var_s2) {
-            func_00123BE8(F_(D_00489738, 0xC, int), "cdeque::construction length error");
+            Libc_Fprintf(F_(D_00489738, 0xC, int), "cdeque::construction length error");
             Libc_Abort();
         }
         {

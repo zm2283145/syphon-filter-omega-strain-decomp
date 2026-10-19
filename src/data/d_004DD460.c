@@ -3,6 +3,7 @@
 extern void GuiAgentLoad_Create();
 extern void GuiAgentLoad_Update();
 extern void GuiAgentSave_ctor();
+extern void GuiSaveAgentWidget_GetClassName();
 extern void GuiSaveAgentWidget_IsType();
 extern void GuiSaveAgentWidget_OnEvent();
 extern void GuiWidget_BaseSleep();
@@ -17,21 +18,20 @@ extern void GuiWidget_FocusLast();
 extern void GuiWidget_FocusNext();
 extern void GuiWidget_FocusPrev();
 extern void GuiWidget_Init();
+extern void GuiWidget_Load();
 extern void GuiWidget_SetFlag4();
 extern void func_002936E0();
 extern void func_00293890();
 extern void func_002938A0();
-extern void func_00293910();
 extern void func_00293950();
-extern void func_0041F210();
 
 void *D_004DD460[24] = {
     0, 0, &func_002938A0, &GuiWidget_Init,
     &GuiWidget_Deinit, &GuiWidget_SetFlag4, &GuiWidget_ClearFlag4, &func_002936E0,
     &GuiWidget_BaseSleep, &GuiWidget_BubbleType0, &GuiWidget_BubbleType1, &func_00293950,
     &GuiWidget_Draw, &GuiWidget_BubbleActivate, &GuiAgentLoad_Update, &GuiSaveAgentWidget_OnEvent,
-    &func_0041F210, &GuiWidget_FocusFirst, &GuiWidget_FocusLast, &GuiWidget_FocusNext,
-    &GuiWidget_FocusPrev, &func_00293910, &GuiSaveAgentWidget_IsType, &func_00293890,
+    &GuiWidget_Load, &GuiWidget_FocusFirst, &GuiWidget_FocusLast, &GuiWidget_FocusNext,
+    &GuiWidget_FocusPrev, &GuiSaveAgentWidget_GetClassName, &GuiSaveAgentWidget_IsType, &func_00293890,
 };
 
 void *D_004DD4C0[4] = { 0, 0, &GuiAgentSave_ctor, 0 };

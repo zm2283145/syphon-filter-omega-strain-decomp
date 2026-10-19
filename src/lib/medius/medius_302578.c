@@ -6,7 +6,7 @@
 
 /* merge_units: begin func_00302578 */
 typedef struct { unsigned char ok; int f4; int f8; int sema; } ScfSem_578;
-extern int func_0010D1B0(int s);
+extern int PollSema(int s);
 int func_00302578(ScfSem_578 *o, unsigned char *out)
 {
     unsigned char ok;
@@ -16,7 +16,7 @@ int func_00302578(ScfSem_578 *o, unsigned char *out)
     if (ok != 1) return ret;
     if (out == 0) return ret;
     *out = 0;
-    if (func_0010D1B0(o->sema) != -1) *out = ok;
+    if (PollSema(o->sema) != -1) *out = ok;
     return 0;
 }
 /* merge_units: end func_00302578 */
@@ -33,12 +33,12 @@ int func_003025E0(ScfObj_5E0 *o)
 /* merge_units: end func_003025E0 */
 
 /* merge_units: begin func_00302610 */
-extern int func_0010D050(void);
+extern int GetThreadId(void);
 int func_00302610(int *out)
 {
     int ret = 2;
     if (out == 0) return ret;
-    *out = func_0010D050();
+    *out = GetThreadId();
     return 0;
 }
 /* merge_units: end func_00302610 */

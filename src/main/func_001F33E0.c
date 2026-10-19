@@ -6,8 +6,8 @@
 
 #include "types.h"
 
-extern void func_001F33F0(void);
+extern void ListIter_NotEqual_Thunk_1F33F0(void);
 
-void func_001F33E0(void) {
-    func_001F33F0();
+void ListIter_NotEqual_Thunk_1F33E0(void) {
+    ListIter_NotEqual_Thunk_1F33F0();
 }

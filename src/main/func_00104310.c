@@ -6,13 +6,13 @@
 
 #include "types.h"
 
-extern int func_00103BE8(unsigned int*);
+extern int sceDmaSync(unsigned int*);
 
-/* mode 1: return bit 8 of the first word; otherwise call func_00103BE8 and return 0. */
+/* mode 1: return bit 8 of the first word; otherwise call sceDmaSync and return 0. */
 int func_00104310(unsigned int* a0, int mode) {
     if (mode == 1) {
         return (*a0 >> 8) & 1;
     }
-    func_00103BE8(a0);
+    sceDmaSync(a0);
     return 0;
 }

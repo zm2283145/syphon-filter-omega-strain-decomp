@@ -9,6 +9,6 @@
 char D_004ABF40[] = "GuiQuickChat";   /* "GuiQuickChat" */
 
 /* Class name getter: "GuiQuickChat". */
-char* func_002B0E80(void) {
+char* GuiQuickChat_GetClassName(void) {
     return D_004ABF40;
 }

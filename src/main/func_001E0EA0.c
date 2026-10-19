@@ -29,7 +29,7 @@ Elem60* func_001E0ED0(Vec60Array* v) {
     return v->data;
 }
 
-int func_001E0EE0(Vec16Array* v) {
+int Vec16Array_PopBack_Thunk(Vec16Array* v) {
     return Vec16Array_PopBack(v);
 }
 

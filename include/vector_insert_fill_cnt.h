@@ -29,7 +29,7 @@ extern "C" void name(name##_V* v, T* pos, unsigned int n, const T* value)     \
     if (n == 0)                                                               \
         return;                                                               \
     if (n > (maxN) || v->count > (maxN) - n) {                                \
-        func_00123BE8(D_00489738->stream, errSym);                            \
+        Libc_Fprintf(D_00489738->stream, errSym);                            \
         Libc_Abort();                                                      \
     }                                                                         \
     unsigned int cnt_ = v->count;                                             \

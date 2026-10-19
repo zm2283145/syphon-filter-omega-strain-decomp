@@ -64,7 +64,7 @@ typedef struct { char f0[21]; char f15[64]; char f55[256]; char f155[35]; int f1
 typedef struct { char f0[24]; int f18; int f1C; int f20; char f24[16]; int f34; int f38; char f3C[16]; int f4C; } Msg20;
 typedef struct { char f0[21]; char f15[3]; int f18; } Msg21;
 
-int func_002CF648(InitParams *p, int *err)
+int Medius_InitCommLib(InitParams *p, int *err)
 {
     Msg00 m00;
     Msg01 m01;

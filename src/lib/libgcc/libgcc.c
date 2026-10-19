@@ -9,7 +9,7 @@
    `.set nomove` reproduces that. The EE soft-float libcalls are aliased to their retail functions. */
 __asm__(".set nomove\n"
         "dpcmp = SoftFloat_UnpackAndCompare\n"
-        "dpsub = func_0011C200");
+        "dpsub = SoftFloat_DoubleSub");
 
 typedef int SItype;
 typedef unsigned int USItype;
@@ -39,9 +39,9 @@ __asm__(".set nomove\n"
         "dpcmp = SoftFloat_UnpackAndCompare\n"
         "dpmul = SoftFloat_DoubleMultiply\n"
         "dptoul = func_0011C980\n"
-        "__floatdidf = func_0011B7E0\n"
+        "__floatdidf = Libgcc_Floatdidf\n"
         "dpadd = SoftFloat_DoubleAdd\n"
-        "dpsub = func_0011C200");UDItype func_0011BB00(SFtype original_a)
+        "dpsub = SoftFloat_DoubleSub");UDItype func_0011BB00(SFtype original_a)
 {
   DFtype a = original_a;
   DFtype b;
@@ -67,7 +67,7 @@ typedef union { float value; unsigned int value_raw; struct { unsigned int fract
 typedef struct { int class; unsigned int sign; int normal_exp; union { unsigned int ll; } fraction; } fpn_0011BC28;
 static __inline__ int fp_iszero(fpn_0011BC28 *x) { return x->class == 2; }
 /* fp-bit pack_f (no NaN/Inf/denormal variant) */
-float func_0011BC28(fpn_0011BC28 *src)
+float SoftFloat_PackFloat(fpn_0011BC28 *src)
 {
     FLO_0011BC28 dst;
     unsigned int fraction = src->fraction.ll;
@@ -102,7 +102,7 @@ float func_0011BC28(fpn_0011BC28 *src)
 /* merge_units: begin func_0011BCE0 */
 typedef union { float value; unsigned int value_raw; struct { unsigned int fraction:23; unsigned int exp:8; unsigned int sign:1; } bits; } FLO_0011BCE0;
 typedef struct { int class; unsigned int sign; int normal_exp; union { unsigned int ll; } fraction; } fpn_0011BCE0;
-void func_0011BCE0(FLO_0011BCE0 *src, fpn_0011BCE0 *dst)
+void SoftFloat_UnpackFloat(FLO_0011BCE0 *src, fpn_0011BCE0 *dst)
 {
   unsigned int fraction = src->bits.fraction;
   int exp = src->bits.exp;
@@ -126,42 +126,42 @@ void func_0011BCE0(FLO_0011BCE0 *src, fpn_0011BCE0 *dst)
 #include "types.h"
 typedef struct { int a; int b; int c; int d; } ReqBD40;
 #if 0 /* merge_units */
-extern void func_0011BC28(ReqBD40* req);
+extern void SoftFloat_PackFloat(ReqBD40* req);
 #endif /* merge_units */
-#define func_0011BC28(a0) ((void)func_0011BC28((fpn_0011BC28 *)(a0))) /* merge_units */
+#define SoftFloat_PackFloat(a0) ((void)SoftFloat_PackFloat((fpn_0011BC28 *)(a0))) /* merge_units */
 
-void func_0011BD40(int a, int b, int c, int d)
+void SoftFloat_MakeFloat(int a, int b, int c, int d)
 {
     ReqBD40 req;
     req.a = a;
     req.b = b;
     req.c = c;
     req.d = d;
-    func_0011BC28(&req);
+    SoftFloat_PackFloat(&req);
 }
-#undef func_0011BC28 /* merge_units */
+#undef SoftFloat_PackFloat /* merge_units */
 /* merge_units: end libgcc_11BD40 */
 
 /* merge_units: begin func_0011BD70 */
 typedef union { float value; unsigned int value_raw; } FLO_0011BD70;
 typedef struct { int class; unsigned int sign; int normal_exp; union { unsigned int ll; } fraction; } fpn_0011BD70;
 #if 0 /* merge_units */
-extern void func_0011BCE0(FLO_0011BD70 *src, fpn_0011BD70 *dst);
+extern void SoftFloat_UnpackFloat(FLO_0011BD70 *src, fpn_0011BD70 *dst);
 #endif /* merge_units */
-#define func_0011BCE0(a0, a1) (func_0011BCE0((FLO_0011BCE0 *)(a0), (fpn_0011BCE0 *)(a1))) /* merge_units */
+#define SoftFloat_UnpackFloat(a0, a1) (SoftFloat_UnpackFloat((FLO_0011BCE0 *)(a0), (fpn_0011BCE0 *)(a1))) /* merge_units */
 
-extern double func_0011C8F8(int class, unsigned int sign, int exp, unsigned long long frac);
+extern double SoftFloat_MakeDouble(int class, unsigned int sign, int exp, unsigned long long frac);
 double SoftFloat_FloatToDouble(float arg_a)
 {
   fpn_0011BD70 in;
   FLO_0011BD70 au;
 
   au.value = arg_a;
-  func_0011BCE0 (&au, &in);
-  return func_0011C8F8 (in.class, in.sign, in.normal_exp,
+  SoftFloat_UnpackFloat (&au, &in);
+  return SoftFloat_MakeDouble (in.class, in.sign, in.normal_exp,
 		    ((unsigned long long) in.fraction.ll) << 30);
 }
-#undef func_0011BCE0 /* merge_units */
+#undef SoftFloat_UnpackFloat /* merge_units */
 /* merge_units: end func_0011BD70 */
 
 /* merge_units: begin func_0011BDB0 */
@@ -185,7 +185,7 @@ typedef union {
 } FLO_union_type;
 static __inline__ int isinf_(fp_number_type *x) { return x->class == CLASS_INFINITY; }
 static __inline__ int iszero_(fp_number_type *x) { return x->class == CLASS_ZERO; }
-DFtype func_0011BDB0(fp_number_type *src)
+DFtype SoftFloat_PackDouble(fp_number_type *src)
 {
     FLO_union_type dst;
     fractype fraction = src->fraction.ll;
@@ -221,7 +221,7 @@ DFtype func_0011BDB0(fp_number_type *src)
 /* merge_units: end func_0011BDB0 */
 
 /* merge_units: begin func_0011BE88 */
-void func_0011BE88(FLO_union_type *src, fp_number_type *dst)
+void SoftFloat_UnpackDouble(FLO_union_type *src, fp_number_type *dst)
 {
     fractype fraction = src->bits.fraction;
     int exp = src->bits.exp;
@@ -256,7 +256,7 @@ extern fp_number_type D_00499270;
 static __inline__ int fp_isinf(fp_number_type *x) { return x->class == CLASS_INFINITY; }
 static __inline__ int fp_iszero_0011BF48(fp_number_type *x) { return x->class == CLASS_ZERO; }
 #define LSHIFT(X) X = ((X) & 1) | ((X) >> 1)
-fp_number_type *func_0011BF48(fp_number_type *a, fp_number_type *b, fp_number_type *tmp)
+fp_number_type *SoftFloat_AddParts(fp_number_type *a, fp_number_type *b, fp_number_type *tmp)
 {
     intfrac tfraction;
     int a_normal_exp;
@@ -340,13 +340,13 @@ fp_number_type *func_0011BF48(fp_number_type *a, fp_number_type *b, fp_number_ty
 /* merge_units: begin func_0011C1A8 */
 typedef union { DFtype value; fractype value_raw; } FLO_union_type_0011C1A8;
 #if 0 /* merge_units */
-extern void func_0011BE88(FLO_union_type_0011C1A8* src, fp_number_type* dst);
+extern void SoftFloat_UnpackDouble(FLO_union_type_0011C1A8* src, fp_number_type* dst);
 #endif /* merge_units */
-#define func_0011BE88(a0, a1) (func_0011BE88((FLO_union_type *)(a0), (a1))) /* merge_units */
+#define SoftFloat_UnpackDouble(a0, a1) (SoftFloat_UnpackDouble((FLO_union_type *)(a0), (a1))) /* merge_units */
 
 
-extern DFtype func_0011BDB0(fp_number_type* src);
-extern fp_number_type* func_0011BF48(fp_number_type* a, fp_number_type* b, fp_number_type* tmp);
+extern DFtype SoftFloat_PackDouble(fp_number_type* src);
+extern fp_number_type* SoftFloat_AddParts(fp_number_type* a, fp_number_type* b, fp_number_type* tmp);
 DFtype SoftFloat_DoubleAdd(DFtype arg_a, DFtype arg_b)
 {
     fp_number_type a;
@@ -356,23 +356,23 @@ DFtype SoftFloat_DoubleAdd(DFtype arg_a, DFtype arg_b)
     FLO_union_type_0011C1A8 au, bu;
     au.value = arg_a;
     bu.value = arg_b;
-    func_0011BE88(&au, &a);
-    func_0011BE88(&bu, &b);
-    res = func_0011BF48(&a, &b, &tmp);
-    return func_0011BDB0(res);
+    SoftFloat_UnpackDouble(&au, &a);
+    SoftFloat_UnpackDouble(&bu, &b);
+    res = SoftFloat_AddParts(&a, &b, &tmp);
+    return SoftFloat_PackDouble(res);
 }
-#undef func_0011BE88 /* merge_units */
+#undef SoftFloat_UnpackDouble /* merge_units */
 /* merge_units: end func_0011C1A8 */
 
 /* merge_units: begin func_0011C200 */
 typedef union { DFtype value; fractype value_raw; } FLO_union_type_0011C200;
 #if 0 /* merge_units */
-extern void func_0011BE88(FLO_union_type_0011C200* src, fp_number_type* dst);
+extern void SoftFloat_UnpackDouble(FLO_union_type_0011C200* src, fp_number_type* dst);
 #endif /* merge_units */
-#define func_0011BE88(a0, a1) (func_0011BE88((FLO_union_type *)(a0), (a1))) /* merge_units */
+#define SoftFloat_UnpackDouble(a0, a1) (SoftFloat_UnpackDouble((FLO_union_type *)(a0), (a1))) /* merge_units */
 
 
-DFtype func_0011C200(DFtype arg_a, DFtype arg_b)
+DFtype SoftFloat_DoubleSub(DFtype arg_a, DFtype arg_b)
 {
     fp_number_type a;
     fp_number_type b;
@@ -381,11 +381,11 @@ DFtype func_0011C200(DFtype arg_a, DFtype arg_b)
     FLO_union_type_0011C200 au, bu;
     au.value = arg_a;
     bu.value = arg_b;
-    func_0011BE88(&au, &a);
-    func_0011BE88(&bu, &b);
+    SoftFloat_UnpackDouble(&au, &a);
+    SoftFloat_UnpackDouble(&bu, &b);
     b.sign ^= 1;
-    res = func_0011BF48(&a, &b, &tmp);
-    return func_0011BDB0(res);
+    res = SoftFloat_AddParts(&a, &b, &tmp);
+    return SoftFloat_PackDouble(res);
 }
-#undef func_0011BE88 /* merge_units */
+#undef SoftFloat_UnpackDouble /* merge_units */
 /* merge_units: end func_0011C200 */

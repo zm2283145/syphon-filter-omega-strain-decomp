@@ -9,7 +9,7 @@ extern RpcCd D_00488A50;
 extern char D_00498CD0[];
 extern char D_00498CF8[];
 extern void func_00118718(void);
-extern int func_0010D1B0(int);
+extern int PollSema(int);
 extern int SignalSema(int);
 extern int ReferThreadStatus(int, void *);
 extern int sceCdSync(int);
@@ -21,7 +21,7 @@ int func_00118CF8(int cmd)
 {
     int i;
     func_00118718();
-    if (D_004878A8 != func_0010D1B0(D_004878A8)) {
+    if (D_004878A8 != PollSema(D_004878A8)) {
         if (D_00487890 > 0) scePrintf(D_00498CD0, cmd, D_0048789C);
         return 0;
     }

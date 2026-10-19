@@ -74,7 +74,7 @@ void* func_0018A2E0(Sel_L* s);
 float func_0018A2D0(Sel_L* s);
 float func_0018A2C0(Sel_L* s);
 void AnimCtl_InstallMotion(void* ctl, int id, signed char mode, void* range, void* pair, void* m1, void* m2, void* x, float f0, float f1);
-void func_0018A260(void* p, int f);
+void AnimEvent_dtor(void* p, int f);
 void func_001BE5A0(void* p, int f);
 void __destroy_array(void* p, void* dtor, int size, int n);
 void func_0018A210(void* p, int f);
@@ -237,8 +237,8 @@ static inline void Install_L(Act_L* a, Sel_L* sel, Rate_L* r)
         AnimEvent_Construct(&e1);
         AnimEvent_Construct(&e2);
         AnimCtl_InstallMotion(an, out, MotionRequest_GetMode(sel), &vec, &y, &e1, &e2, func_0018A2E0(sel), func_0018A2D0(sel), func_0018A2C0(sel));
-        func_0018A260(&e2, -1);
-        func_0018A260(&e1, -1);
+        AnimEvent_dtor(&e2, -1);
+        AnimEvent_dtor(&e1, -1);
     }
     func_00189F40(&sel->x, -1);
 }
@@ -254,8 +254,8 @@ static inline void Play_L(Sys_L* sys, int m, int mode, Rate_L* r, X_L* px)
         ctl = func_0018C6A0(sys);
         func_0018C620(&y, m);
         AnimCtl_InstallMotion(ctl, m, mode, r, &y, &e1, &e2, px, -1.0f, 0.0f);
-        func_0018A260(&e2, -1);
-        func_0018A260(&e1, -1);
+        AnimEvent_dtor(&e2, -1);
+        AnimEvent_dtor(&e1, -1);
     }
 }
 static inline void Direct_L(Act_L* a, char* name, int mode, int i0, int i1, int i3, int i5, int i6)

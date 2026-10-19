@@ -92,13 +92,13 @@ int func_00468EF0(void)
 /* merge_units: end func_00468EF0 */
 
 /* merge_units: begin func_00468F78 */
-extern int func_004700F8(char *, int);
+extern int Medius_TerminateString(char *, int);
 extern int Net_SendLocked(int, int, int, int, int, int, void *);extern int D_00598638;
 int func_00468F78(char *a)
 {
     if (D_00497CC0 != 1) return -0xF;
     if (D_00497CC4 < 0) return -0x10;
-    func_004700F8(a, 0x11);
+    Medius_TerminateString(a, 0x11);
     return Net_SendLocked(0x40, D_00497CC4, 0xFFFF, 1, D_00598638, 0x18, a) ? -5 : 0;
 }
 /* merge_units: end func_00468F78 */

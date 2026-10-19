@@ -272,7 +272,7 @@ static inline void merge_flush_func_0041C3E0(void) {}
 
 /* merge_units: begin func_0041C560 */
 #pragma push /* merge_units */
-extern int func_0041F210(GuiWidgetStreamRecord* self, char** cursor);
+extern int GuiWidget_Load(GuiWidgetStreamRecord* self, char** cursor);
 extern void GuiTextWidget_SetText(GuiTextStreamRecord* self, const char* text, int localized);
 extern void* Gui_GetScreenList(void);
 extern int GuiFont_Find(void* manager, const char* name);
@@ -286,10 +286,10 @@ static inline const char* read_string(char** cursor)
 }
 
 /* Load two strings, align the stream, and read the text widget's numeric fields. */
-int func_0041C560(GuiTextStreamRecord* self, char** cursor)
+int GuiTextWidget_Load(GuiTextStreamRecord* self, char** cursor)
 {
     const char* resource;
-    if (!func_0041F210(&self->base, cursor))
+    if (!GuiWidget_Load(&self->base, cursor))
         return 0;
     GuiTextWidget_SetText(self, read_string(cursor), 1);
     resource = read_string(cursor);

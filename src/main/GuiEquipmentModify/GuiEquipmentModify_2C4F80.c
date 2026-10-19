@@ -16,7 +16,7 @@ extern void* Mem_Alloc(int, int, char*, int);
 extern char D_004DFD80[];
 extern char D_004DE0F0[];
 }
-extern "C" M2C4* func_002C4F80(M2C4* src) {
+extern "C" M2C4* cNetCalloutMsg_Clone(M2C4* src) {
     M2C4* m;
     {
         AllocGuard g;
@@ -66,7 +66,7 @@ extern void cMessage_dtor(Msg2C50E0*, int);
 }
 #pragma push
 #pragma opt_propagation off
-extern "C" int func_002C50E0(int a0, int a1, int a2, Pk2C50E0* arg) {
+extern "C" int cNetCalloutMsg_NetReceive(int a0, int a1, int a2, Pk2C50E0* arg) {
     NetRecvGuard g;
     if (D_005721D0) {
         Msg2C50E0 msg;

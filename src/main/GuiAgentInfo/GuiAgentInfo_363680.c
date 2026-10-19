@@ -24,7 +24,7 @@ struct Curve {
 };
 
 /* Sets start/current/target to v, re-evaluates the value (virtual +0x14) and returns self. */
-extern "C" Curve* func_00363680(Curve* self, float v)
+extern "C" Curve* AnimChannels_ClearCount_363680(Curve* self, float v)
 {
     self->target = v;
     self->current = v;

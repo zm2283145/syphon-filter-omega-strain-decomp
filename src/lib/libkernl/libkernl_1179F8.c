@@ -5,14 +5,14 @@
  */
 
 /* merge_units: begin func_001179F8 */
-extern int func_001161A0(void);
-extern int func_001161F8(void);
+extern int DIntr(void);
+extern int EIntr(void);
 extern int func_00117988(int);
 int func_001179F8(int a)
 {
-    int s = func_001161A0();
+    int s = DIntr();
     int r = func_00117988(a);
-    if (s) func_001161F8();
+    if (s) EIntr();
     return r;
 }
 /* merge_units: end func_001179F8 */
@@ -50,14 +50,14 @@ int func_00117A48(int id, long long t, void *h, void *arg)
 /* merge_units: begin func_00117B40 */
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #if 0 /* merge_units */
-int func_001161A0();
+int DIntr();
 #endif /* merge_units */
-#define func_001161A0() (func_001161A0()) /* merge_units */
+#define DIntr() (DIntr()) /* merge_units */
                                 
 #if 0 /* merge_units */
-int func_001161F8();
+int EIntr();
 #endif /* merge_units */
-#define func_001161F8() (func_001161F8()) /* merge_units */
+#define EIntr() (EIntr()) /* merge_units */
                                   
 #if 0 /* merge_units */
 int func_00117A48(int, int, int, int);
@@ -69,26 +69,26 @@ int func_00117B40(int arg0, int arg1, int arg2, int arg3) {
     int temp_s0;
     int temp_s4;
 
-    temp_s4 = func_001161A0();
+    temp_s4 = DIntr();
     temp_s0 = func_00117A48(arg0, arg1, arg2, arg3);
     if (temp_s4 != 0) {
-        func_001161F8();
+        EIntr();
     }
     return temp_s0;
 }
-#undef func_001161A0 /* merge_units */
-#undef func_001161F8 /* merge_units */
+#undef DIntr /* merge_units */
+#undef EIntr /* merge_units */
 #undef func_00117A48 /* merge_units */
 /* merge_units: end func_00117B40 */
 
 /* merge_units: begin func_00117BC0 */
-extern long func_0011ACF8(long, long);
+extern long Libgcc_Udivdi3(long, long);
 
 void func_00117BC0(long t, int *sec, int *usec)
 {
-    int q = func_0011ACF8(t, 0x8CA0000);
+    int q = Libgcc_Udivdi3(t, 0x8CA0000);
     if (sec) *sec = q;
-    if (usec) *usec = func_0011ACF8((t - (unsigned long)(unsigned int)q * 0x8CA0000u) * 1000000, 0x8CA0000);
+    if (usec) *usec = Libgcc_Udivdi3((t - (unsigned long)(unsigned int)q * 0x8CA0000u) * 1000000, 0x8CA0000);
 }
 /* merge_units: end func_00117BC0 */
 
@@ -96,7 +96,7 @@ void func_00117BC0(long t, int *sec, int *usec)
 long func_00117C68(unsigned int sec, unsigned int usec)
 {
     unsigned long t = (unsigned long)sec * 0x8CA0000u;
-    return t + func_0011ACF8((unsigned long)usec * 0x8CA0000u, 1000000);
+    return t + Libgcc_Udivdi3((unsigned long)usec * 0x8CA0000u, 1000000);
 }
 /* merge_units: end func_00117C68 */
 

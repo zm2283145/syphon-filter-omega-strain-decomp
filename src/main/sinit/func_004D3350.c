@@ -9,7 +9,7 @@ extern char D_004DDEC0;
 extern void* D_00506608;
 extern void* D_00506610;
 extern int D_00506618;
-void func_004D3350(void) {
+void StaticInit_GuiQuickChat(void) {
     D_00506610 = &D_004DDEC0;
     D_00506608 = "GuiQuickChat";
     FreeList_Push(&D_00506608);

@@ -72,7 +72,7 @@ extern void cMessage_dtor(Msg_3E6910* m, int f);
 #define cMessage_dtor(a0, a1) (cMessage_dtor((Msg_3E67C0 *)(a0), (a1))) /* merge_units */
 
 extern void String_CtorCStr_13B480(Str_3E6910* s, const char* c);
-extern void func_0013D680(Str_3E6910* d, Str_3E6910* s);
+extern void String_AssignString(Str_3E6910* d, Str_3E6910* s);
 extern void String_Dtor(Str_3E6910* s, int f);
 extern void func_001BFF20(It_3E6910* out, Str_3E6910* s);
 extern void func_001BFEE0(It_3E6910* out, Str_3E6910* s);
@@ -147,7 +147,7 @@ void Global_PerformAction_WithObject(Pt2_Tgt* t, char cat, Pt2_Hd* h, const char
         Str_3E6910 t1;
         cat = 0x25;
         String_CtorCStr_13B480(&t1, name);
-        func_0013D680(&s, &t1);
+        String_AssignString(&s, &t1);
         String_Dtor(&t1, 0);
         func_001BFF20(&it, &s);
         func_001BFEE0(&end, &s);
@@ -158,7 +158,7 @@ void Global_PerformAction_WithObject(Pt2_Tgt* t, char cat, Pt2_Hd* h, const char
     } else {
         Str_3E6910 t2;
         String_CtorCStr_13B480(&t2, name);
-        func_0013D680(&s, &t2);
+        String_AssignString(&s, &t2);
         String_Dtor(&t2, 0);
     }
     {

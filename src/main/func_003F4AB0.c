@@ -11,18 +11,18 @@
 #define D4_TADR      (*(volatile unsigned int*)0x1000B430)
 
 typedef struct { char pad[0x40]; int sema; } Dev40;
-extern void func_001161A0(void); /* DI */
-extern void func_001161F8(void); /* EI */
+extern void DIntr(void); /* DI */
+extern void EIntr(void); /* EI */
 extern void DeleteSema(int sema);
 
 /* Stops DMA channel 4 (with the DMAC suspended), clears its registers and signals the semaphore. */
 int Dma4_Stop(Dev40* self)
 {
-    func_001161A0();
+    DIntr();
     DMAC_ENABLEW = DMAC_ENABLER | 0x10000;
     D4_CHCR = 5;
     DMAC_ENABLEW = DMAC_ENABLER & ~0x10000;
-    func_001161F8();
+    EIntr();
     D4_QWC = 0;
     D4_MADR = 0;
     D4_TADR = 0;

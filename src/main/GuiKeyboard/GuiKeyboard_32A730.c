@@ -65,7 +65,7 @@ extern char D_004B88C0[];
 char D_004B8850[] = "vector::assign length error\n";
 void func_00329930(TStr* d, const TStr* s);
 void func_003282A0(E2A870* p, int f);
-void* func_00139BC0(unsigned int size, void* p);
+void* Mem_PlacementNew(unsigned int size, void* p);
 #if 0 /* merge_units */
 void func_0032A730(void* d, const E2A870* s);
 #endif /* merge_units */
@@ -100,7 +100,7 @@ extern "C" void func_0032A870(V2A870* v, const E2A870* first, const E2A870* last
             v->count = n;
         } else if (v->count < n) {
             for (; first != last; first++, p++) {
-                void* m = func_00139BC0(sizeof(E2A870), p);
+                void* m = Mem_PlacementNew(sizeof(E2A870), p);
                 if (m)
                     func_0032A730(m, first);
                 v->count++;
@@ -108,7 +108,7 @@ extern "C" void func_0032A870(V2A870* v, const E2A870* first, const E2A870* last
         }
     } else {
         if (n > 0x22E8BA) {
-            func_00123BE8(D_00489738->stream, D_004B8850);
+            Libc_Fprintf(D_00489738->stream, D_004B8850);
             Libc_Abort();
         }
         func_0032AB90(v);
@@ -126,7 +126,7 @@ extern "C" void func_0032A870(V2A870* v, const E2A870* first, const E2A870* last
         {
             E2A870* p = v->data;
             for (; first != last; first++, p++) {
-                void* m = func_00139BC0(sizeof(E2A870), p);
+                void* m = Mem_PlacementNew(sizeof(E2A870), p);
                 if (m)
                     func_0032A730(m, first);
                 v->count++;

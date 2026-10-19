@@ -28,7 +28,7 @@ extern void func_003B41E0(void*, void*, void*, int, int, void*, void*, int, floa
 extern void* Str_CopyKey47(void*, void*);
 extern void MotionSlider_RegisterNode(void*, void*, void*, void*);
 extern void func_003B28F0(void*, int);
-extern void func_00138350(void*, int);
+extern void String_Dtor_138350(void*, int);
 extern void func_003B3CC0(void*, void*, void*, int);
 extern void func_0018A890(void*);
 extern void func_00209510(void*, void*);
@@ -291,67 +291,67 @@ int func_00207340(void* p0, void* p1, void* p2, void* p3, void* p4, void* p5, vo
     func_003B41E0(&v1120, p3, p1, 0, 0, Camera_ShakeMatrix(&v1170, 0.0f, 0.0f, 0.0f), p7, 2, 0.0f, 1.0f, 0);
     MotionSlider_RegisterNode(&v198C, p1, Str_CopyKey47(&v1180, &v1910), &v1120);
     func_003B28F0(&v1120, -1);
-    func_00138350(&v1910, -1);
+    String_Dtor_138350(&v1910, -1);
     func_001C00D0(&v1900, &v1930, "Base_Flipped");
     func_001C00D0(&v18F0, &v1930, "Base_NotFlipped");
     func_003B3CC0(&v1070, Str_CopyKey47(&v10C0, &v18F0), p1, 3);
     MotionSlider_RegisterNode(&v1988, p1, Str_CopyKey47(&v10F0, &v1900), &v1070);
     func_003B28F0(&v1070, -1);
-    func_00138350(&v18F0, -1);
-    func_00138350(&v1900, -1);
+    String_Dtor_138350(&v18F0, -1);
+    String_Dtor_138350(&v1900, -1);
     func_0018A890(&v11E0);
     func_0018A890(&v11B0);
     if (p4) {
         func_001C00D0(&v18E0, &v1930, "Base_NotFlipped");
         func_00209510(&v11E0, Str_CopyKey47(&v1040, &v18E0));
-        func_00138350(&v18E0, -1);
+        String_Dtor_138350(&v18E0, -1);
         if (p5) {
             func_001C00D0(&v18D0, &v1930, "Base_Flipped");
             func_00209510(&v11B0, Str_CopyKey47(&v1010, &v18D0));
-            func_00138350(&v18D0, -1);
+            String_Dtor_138350(&v18D0, -1);
         } else {
             func_001C00D0(&v18C0, &v1930, "Base_NotFlipped");
             func_00209510(&v11B0, Str_CopyKey47(&vFE0, &v18C0));
-            func_00138350(&v18C0, -1);
+            String_Dtor_138350(&v18C0, -1);
         }
     } else {
         if (p5) {
             func_001C00D0(&v18B0, &v1930, "Base_Flipped");
             func_00209510(&v11E0, Str_CopyKey47(&vFB0, &v18B0));
-            func_00138350(&v18B0, -1);
+            String_Dtor_138350(&v18B0, -1);
         } else {
             func_001C00D0(&v18A0, &v1930, "Base_NotFlipped");
             func_00209510(&v11E0, Str_CopyKey47(&vF80, &v18A0));
-            func_00138350(&v18A0, -1);
+            String_Dtor_138350(&v18A0, -1);
         }
         func_001C00D0(&v1890, &v1930, "Base_NotFlipped");
         func_00209510(&v11B0, Str_CopyKey47(&vF50, &v1890));
-        func_00138350(&v1890, -1);
+        String_Dtor_138350(&v1890, -1);
     }
     func_001C00D0(&v1880, &v1930, "FaceLeft");
     func_003B3B20(&vEC0, &v11E0, p1, 4, Camera_ShakeMatrix(&vF10, 0.0f, 0.0f, fp0), 1);
     MotionSlider_RegisterNode(&v1984, p1, Str_CopyKey47(&vF20, &v1880), &vEC0);
     func_003B28F0(&vEC0, -1);
-    func_00138350(&v1880, -1);
+    String_Dtor_138350(&v1880, -1);
     func_001C00D0(&v1870, &v1930, "FaceRght");
     func_003B3B20(&vE30, &v11B0, p1, 4, Camera_ShakeMatrix(&vE80, 0.0f, 0.0f, -fp1), 1);
     MotionSlider_RegisterNode(&v1980, p1, Str_CopyKey47(&vE90, &v1870), &vE30);
     func_003B28F0(&vE30, -1);
-    func_00138350(&v1870, -1);
+    String_Dtor_138350(&v1870, -1);
     func_001C00D0(&v1860, &v1930, "FaceBack_LeftHemisphere");
     func_001C00D0(&v1850, &v1930, "FaceLeft");
     func_003B3B20(&vD70, Str_CopyKey47(&vDD0, &v1850), p1, 4, Camera_ShakeMatrix(&vDC0, 0.0f, 0.0f, Math_DegToRad(9e+01f)), 2);
     MotionSlider_RegisterNode(&v197C, p1, Str_CopyKey47(&vE00, &v1860), &vD70);
     func_003B28F0(&vD70, -1);
-    func_00138350(&v1850, -1);
-    func_00138350(&v1860, -1);
+    String_Dtor_138350(&v1850, -1);
+    String_Dtor_138350(&v1860, -1);
     func_001C00D0(&v1840, &v1930, "FaceBack_RghtHemisphere");
     func_001C00D0(&v1830, &v1930, "FaceRght");
     func_003B3B20(&vCB0, Str_CopyKey47(&vD10, &v1830), p1, 4, Camera_ShakeMatrix(&vD00, 0.0f, 0.0f, Math_DegToRad(-9e+01f)), 2);
     MotionSlider_RegisterNode(&v1978, p1, Str_CopyKey47(&vD40, &v1840), &vCB0);
     func_003B28F0(&vCB0, -1);
-    func_00138350(&v1830, -1);
-    func_00138350(&v1840, -1);
+    String_Dtor_138350(&v1830, -1);
+    String_Dtor_138350(&v1840, -1);
     if (p6) {
         func_001C00D0(&v1820, &v1920, "MoveBack_LeftHemisphere");
         func_001F4470(&v1810);
@@ -368,11 +368,11 @@ int func_00207340(void* p0, void* p1, void* p2, void* p3, void* p4, void* p5, vo
         MotionSlider_Dtor(&vC00, -1);
         func_001F3E10(&v17D0, -1);
         func_001F3DC0(&s17E0.m17E0, -1);
-        func_00138350(&s17E0.m17E8, -1);
+        String_Dtor_138350(&s17E0.m17E8, -1);
         func_001F3E10(&s17E0.m17F8, -1);
         func_001F3DC0(&s17E0.m1808, -1);
         func_001F3C70(&v1810, -1);
-        func_00138350(&v1820, -1);
+        String_Dtor_138350(&v1820, -1);
         func_001C00D0(&v17C0, &v1920, "MoveBack_RghtHemisphere");
         func_001F4470(&v17B0);
         func_001F4460(&s1780.m17A8, 0.0f, 0.0f);
@@ -388,11 +388,11 @@ int func_00207340(void* p0, void* p1, void* p2, void* p3, void* p4, void* p5, vo
         MotionSlider_Dtor(&vB50, -1);
         func_001F3E10(&v1770, -1);
         func_001F3DC0(&s1780.m1780, -1);
-        func_00138350(&s1780.m1788, -1);
+        String_Dtor_138350(&s1780.m1788, -1);
         func_001F3E10(&s1780.m1798, -1);
         func_001F3DC0(&s1780.m17A8, -1);
         func_001F3C70(&v17B0, -1);
-        func_00138350(&v17C0, -1);
+        String_Dtor_138350(&v17C0, -1);
         func_001C00D0(&v1760, &v1920, "NonStrafing_LeftHemisphere");
         func_001F4470(&v1750);
         func_001C00D0(&v1740, &v1920, "MoveBack_LeftHemisphere");
@@ -410,9 +410,9 @@ int func_00207340(void* p0, void* p1, void* p2, void* p3, void* p4, void* p5, vo
         func_001F3DC0(&s1720.m1720, -1);
         func_001F3E10(&s1720.m1728, -1);
         func_001F3DC0(&s1720.m1738, -1);
-        func_00138350(&v1740, -1);
+        String_Dtor_138350(&v1740, -1);
         func_001F3C70(&v1750, -1);
-        func_00138350(&v1760, -1);
+        String_Dtor_138350(&v1760, -1);
         func_001C00D0(&v1700, &v1920, "NonStrafing_RghtHemisphere");
         func_001F4470(&v16F0);
         func_001C00D0(&v16E0, &v1920, "MoveBack_RghtHemisphere");
@@ -430,9 +430,9 @@ int func_00207340(void* p0, void* p1, void* p2, void* p3, void* p4, void* p5, vo
         func_001F3DC0(&s16C0.m16C0, -1);
         func_001F3E10(&s16C0.m16C8, -1);
         func_001F3DC0(&s16C0.m16D8, -1);
-        func_00138350(&v16E0, -1);
+        String_Dtor_138350(&v16E0, -1);
         func_001F3C70(&v16F0, -1);
-        func_00138350(&v1700, -1);
+        String_Dtor_138350(&v1700, -1);
     } else {
         func_001C00D0(&v16A0, &v1920, "NonStrafing_LeftHemisphere");
         func_001F4470(&v1690);
@@ -451,9 +451,9 @@ int func_00207340(void* p0, void* p1, void* p2, void* p3, void* p4, void* p5, vo
         func_001F3DC0(&s1660.m1660, -1);
         func_001F3E10(&s1660.m1668, -1);
         func_001F3DC0(&s1660.m1678, -1);
-        func_00138350(&v1680, -1);
+        String_Dtor_138350(&v1680, -1);
         func_001F3C70(&v1690, -1);
-        func_00138350(&v16A0, -1);
+        String_Dtor_138350(&v16A0, -1);
         func_001C00D0(&v1640, &v1920, "NonStrafing_RghtHemisphere");
         func_001F4470(&v1630);
         func_001C00D0(&v1620, &v1930, "FaceBack_RghtHemisphere");
@@ -471,9 +471,9 @@ int func_00207340(void* p0, void* p1, void* p2, void* p3, void* p4, void* p5, vo
         func_001F3DC0(&s1600.m1600, -1);
         func_001F3E10(&s1600.m1608, -1);
         func_001F3DC0(&s1600.m1618, -1);
-        func_00138350(&v1620, -1);
+        String_Dtor_138350(&v1620, -1);
         func_001F3C70(&v1630, -1);
-        func_00138350(&v1640, -1);
+        String_Dtor_138350(&v1640, -1);
     }
     if (p6) {
         func_001C00D0(&v15E0, &v1920, "MoveLeft_BackHemisphere");
@@ -492,12 +492,12 @@ int func_00207340(void* p0, void* p1, void* p2, void* p3, void* p4, void* p5, vo
         MotionSlider_Dtor(&v7B0, -1);
         func_001F3E10(&v1580, -1);
         func_001F3DC0(&s1590.m1590, -1);
-        func_00138350(&s1590.m1598, -1);
+        String_Dtor_138350(&s1590.m1598, -1);
         func_001F3E10(&s1590.m15A8, -1);
         func_001F3DC0(&s1590.m15B8, -1);
-        func_00138350(&v15C0, -1);
+        String_Dtor_138350(&v15C0, -1);
         func_001F3C70(&v15D0, -1);
-        func_00138350(&v15E0, -1);
+        String_Dtor_138350(&v15E0, -1);
         func_001C00D0(&v1570, &v1920, "MoveRght_BackHemisphere");
         func_001F4470(&v1560);
         func_001C00D0(&v1550, &v1930, "FaceLeft");
@@ -514,12 +514,12 @@ int func_00207340(void* p0, void* p1, void* p2, void* p3, void* p4, void* p5, vo
         MotionSlider_Dtor(&v6D0, -1);
         func_001F3E10(&v1510, -1);
         func_001F3DC0(&s1520.m1520, -1);
-        func_00138350(&s1520.m1528, -1);
+        String_Dtor_138350(&s1520.m1528, -1);
         func_001F3E10(&s1520.m1538, -1);
         func_001F3DC0(&s1520.m1548, -1);
-        func_00138350(&v1550, -1);
+        String_Dtor_138350(&v1550, -1);
         func_001F3C70(&v1560, -1);
-        func_00138350(&v1570, -1);
+        String_Dtor_138350(&v1570, -1);
         func_001C00D0(&v1500, &v1920, "StrafeLeft");
         func_001F4470(&v14F0);
         func_001C00D0(&v14E0, &v1920, "MoveLeft_BackHemisphere");
@@ -536,12 +536,12 @@ int func_00207340(void* p0, void* p1, void* p2, void* p3, void* p4, void* p5, vo
         MotionSlider_Dtor(&v5F0, -1);
         func_001F3E10(&v14A0, -1);
         func_001F3DC0(&s14B0.m14B0, -1);
-        func_00138350(&s14B0.m14B8, -1);
+        String_Dtor_138350(&s14B0.m14B8, -1);
         func_001F3E10(&s14B0.m14C8, -1);
         func_001F3DC0(&s14B0.m14D8, -1);
-        func_00138350(&v14E0, -1);
+        String_Dtor_138350(&v14E0, -1);
         func_001F3C70(&v14F0, -1);
-        func_00138350(&v1500, -1);
+        String_Dtor_138350(&v1500, -1);
         func_001C00D0(&v1490, &v1920, "StrafeRght");
         func_001F4470(&v1480);
         func_001C00D0(&v1470, &v1920, "MoveRght_BackHemisphere");
@@ -558,12 +558,12 @@ int func_00207340(void* p0, void* p1, void* p2, void* p3, void* p4, void* p5, vo
         MotionSlider_Dtor(&v510, -1);
         func_001F3E10(&v1430, -1);
         func_001F3DC0(&s1440.m1440, -1);
-        func_00138350(&s1440.m1448, -1);
+        String_Dtor_138350(&s1440.m1448, -1);
         func_001F3E10(&s1440.m1458, -1);
         func_001F3DC0(&s1440.m1468, -1);
-        func_00138350(&v1470, -1);
+        String_Dtor_138350(&v1470, -1);
         func_001F3C70(&v1480, -1);
-        func_00138350(&v1490, -1);
+        String_Dtor_138350(&v1490, -1);
     }
     if (p6) {
         func_001C00D0(&v1420, &v1920, "LeftHemisphere");
@@ -582,12 +582,12 @@ int func_00207340(void* p0, void* p1, void* p2, void* p3, void* p4, void* p5, vo
         MotionSlider_Dtor(&v430, -1);
         func_001F3E10(&v13C0, -1);
         func_001F3DC0(&s13D0.m13D0, -1);
-        func_00138350(&s13D0.m13D8, -1);
+        String_Dtor_138350(&s13D0.m13D8, -1);
         func_001F3E10(&s13D0.m13E8, -1);
         func_001F3DC0(&s13D0.m13F8, -1);
-        func_00138350(&v1400, -1);
+        String_Dtor_138350(&v1400, -1);
         func_001F3C70(&v1410, -1);
-        func_00138350(&v1420, -1);
+        String_Dtor_138350(&v1420, -1);
         func_001C00D0(&v13B0, &v1920, "RghtHemisphere");
         func_001F4470(&v13A0);
         func_001C00D0(&v1390, &v1920, "NonStrafing_RghtHemisphere");
@@ -604,12 +604,12 @@ int func_00207340(void* p0, void* p1, void* p2, void* p3, void* p4, void* p5, vo
         MotionSlider_Dtor(&v350, -1);
         func_001F3E10(&v1350, -1);
         func_001F3DC0(&s1360.m1360, -1);
-        func_00138350(&s1360.m1368, -1);
+        String_Dtor_138350(&s1360.m1368, -1);
         func_001F3E10(&s1360.m1378, -1);
         func_001F3DC0(&s1360.m1388, -1);
-        func_00138350(&v1390, -1);
+        String_Dtor_138350(&v1390, -1);
         func_001F3C70(&v13A0, -1);
-        func_00138350(&v13B0, -1);
+        String_Dtor_138350(&v13B0, -1);
     } else {
         func_001C00D0(&v1340, &v1920, "LeftHemisphere");
         func_001F4470(&v1330);
@@ -627,12 +627,12 @@ int func_00207340(void* p0, void* p1, void* p2, void* p3, void* p4, void* p5, vo
         MotionSlider_Dtor(&v270, -1);
         func_001F3E10(&v12E0, -1);
         func_001F3DC0(&s12F0.m12F0, -1);
-        func_00138350(&s12F0.m12F8, -1);
+        String_Dtor_138350(&s12F0.m12F8, -1);
         func_001F3E10(&s12F0.m1308, -1);
         func_001F3DC0(&s12F0.m1318, -1);
-        func_00138350(&v1320, -1);
+        String_Dtor_138350(&v1320, -1);
         func_001F3C70(&v1330, -1);
-        func_00138350(&v1340, -1);
+        String_Dtor_138350(&v1340, -1);
         func_001C00D0(&v12D0, &v1920, "RghtHemisphere");
         func_001F4470(&v12C0);
         func_001C00D0(&v12B0, &v1920, "NonStrafing_RghtHemisphere");
@@ -649,12 +649,12 @@ int func_00207340(void* p0, void* p1, void* p2, void* p3, void* p4, void* p5, vo
         MotionSlider_Dtor(&v190, -1);
         func_001F3E10(&v1270, -1);
         func_001F3DC0(&s1280.m1280, -1);
-        func_00138350(&s1280.m1288, -1);
+        String_Dtor_138350(&s1280.m1288, -1);
         func_001F3E10(&s1280.m1298, -1);
         func_001F3DC0(&s1280.m12A8, -1);
-        func_00138350(&v12B0, -1);
+        String_Dtor_138350(&v12B0, -1);
         func_001F3C70(&v12C0, -1);
-        func_00138350(&v12D0, -1);
+        String_Dtor_138350(&v12D0, -1);
     }
     func_001F4470(&v1260);
     func_001C00D0(&v1250, &v1920, "LeftHemisphere");
@@ -671,14 +671,14 @@ int func_00207340(void* p0, void* p1, void* p2, void* p3, void* p4, void* p5, vo
     MotionSlider_Dtor(&vB0, -1);
     func_001F3E10(&v1210, -1);
     func_001F3DC0(&s1220.m1220, -1);
-    func_00138350(&s1220.m1228, -1);
+    String_Dtor_138350(&s1220.m1228, -1);
     func_001F3E10(&s1220.m1238, -1);
     func_001F3DC0(&s1220.m1248, -1);
-    func_00138350(&v1250, -1);
+    String_Dtor_138350(&v1250, -1);
     func_001F3C70(&v1260, -1);
     Str_CopyKey47(p0, &v1920);
-    func_00138350(&v1920, -1);
-    func_00138350(&v1930, -1);
+    String_Dtor_138350(&v1920, -1);
+    String_Dtor_138350(&v1930, -1);
     return 0;
 }
 #pragma optimization_level reset

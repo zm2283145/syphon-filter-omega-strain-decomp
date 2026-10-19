@@ -11,7 +11,7 @@
 #include "obj_list_dtor.h"
 
 /* Destroy an object list: erase all nodes, optionally delete. */
-DEFINE_OBJ_LIST_DTOR(func_0041F7A0)
+DEFINE_OBJ_LIST_DTOR(ReceiverList_Dtor_41F7A0)
 #pragma pop /* merge_units */
 /* merge_units: end func_0041F7A0 */
 
@@ -113,7 +113,7 @@ extern void String_Reserve(SsoString* s, int capacity);
 extern void* String_Replace(SsoString* s, int pos, int count, const char* first, const char* last, Allocator alloc);
 
 /* String constructor from a C string. */
-SsoString* func_0041FA00(SsoString* self, const char* text)
+SsoString* String_CtorCStr_41FA00(SsoString* self, const char* text)
 {
     Allocator alloc;
     int len;
@@ -162,6 +162,6 @@ int String_CompareCStr(SsoString_0041FA80* self, const char* text)
 
 extern "C" { char D_004BF3E0[] = "basic_string: out_of_range"; }
 extern "C" { char D_004BF400[] = "basic_string: length_error"; }
-DEFINE_STRING_REPLACE_RANGE(func_0041FAF0, D_004BF3E0, D_004BF400, D_0049ADE0, 0x5C, D_0049AE90, 0x64, D_00494120, D_00494128, func_00125FE8, String_Assign)
+DEFINE_STRING_REPLACE_RANGE(func_0041FAF0, D_004BF3E0, D_004BF400, D_0049ADE0, 0x5C, D_0049AE90, 0x64, D_00494120, D_00494128, Libc_Memmove, String_Assign)
 #pragma pop /* merge_units */
 /* merge_units: end func_0041FAF0 */

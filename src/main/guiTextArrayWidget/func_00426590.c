@@ -8,7 +8,7 @@ extern char D_004BF790[];
 void func_004263C0(guiTextArrayWidget* self);
 void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
 void func_004268C0(TextArrayRow* row);
-void func_00298690(void* string);
+void String_CtorEmpty(void* string);
 void func_004268B0(Vec4* color);
 Vec4* func_00426890(Vec4* color, float x, float y, float z, float w);
 void SubtitleTrack_LoadCue(Vec4* destination, const Vec4* source);
@@ -56,7 +56,7 @@ extern "C" void TextArrayCell_InitDefaults(guiTextArrayWidget* self, unsigned in
         TextArrayCell cell;
         Vec4 white;
         row = create_row();
-        func_00298690(cell.string);
+        String_CtorEmpty(cell.string);
         func_004268B0(&cell.color);
         cell.flags = 0;
         cell.attribute = 0;

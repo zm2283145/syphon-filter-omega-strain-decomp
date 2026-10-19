@@ -73,7 +73,7 @@ extern void* DME_GetLobby(void);
 
 extern void func_00442E90(void* p);
 extern void LobbyArray_Free(M2A9B50* m);
-void func_002A9B50(S2A9B50* s)
+void GuiOnlineOptions_Deactivate(S2A9B50* s)
 {
     if (s->active) {
         void* p = DME_GetLobby();
@@ -171,7 +171,7 @@ static inline W_002A9BA0* FindAs_002A9BA0(S_002A9BA0* self, char* name, char* ty
     W_002A9BA0* w = (W_002A9BA0*)GuiWidget_FindChildByName(self, name);
     return (w && w->IsA(type)) ? w : 0;
 }
-extern "C" void func_002A9BA0(S_002A9BA0* self)
+extern "C" void GuiOnlineOptions_Activate(S_002A9BA0* self)
 {
     G_002A9BA0* g;
     W_002A9BA0* w;

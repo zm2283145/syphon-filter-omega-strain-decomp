@@ -13,7 +13,7 @@ extern char *D_00543650;
 extern char cSystem_ScriptFactory;
 extern char func_003CB5C0;
 
-void func_004D5960(void) {
+void StaticInit_RegisterSystem(void) {
     int sp1C;
     int sp18;
 

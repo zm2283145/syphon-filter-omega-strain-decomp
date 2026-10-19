@@ -4,6 +4,6 @@
 #pragma mpwc_relax on
 extern char *D_0051F0C0;
 
-void func_004D3620(void) {
+void StaticInit_NetPathMsgName(void) {
     D_0051F0C0 = "MSGGAME_NET_PATH_REQUEST";
 }

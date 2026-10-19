@@ -8,9 +8,9 @@ extern void _free_r(reent_X* r, void* p);
 #define HASUB(fp) ((fp)->_ub_base != 0)
 #define FREEUB(fp) { if ((fp)->_ub_base != (fp)->_ubuf) _free_r((fp)->_data, (char *)(fp)->_ub_base); (fp)->_ub_base = 0; }
 extern int fflush(FILE_X* fp);
-extern void func_00124FE0(FILE_X* fp);
-extern int func_00124BC0(reent_X* r, int (*f)(FILE_X*));
-int func_001284A0(FILE_X *fp)   /* lflush */
+extern void Newlib_Smakebuf(FILE_X* fp);
+extern int Newlib_Fwalk(reent_X* r, int (*f)(FILE_X*));
+int Newlib_Lflush(FILE_X *fp)   /* lflush */
 {
   if ((fp->_flags & (0x0001 | 0x0008)) == (0x0001 | 0x0008))
     return fflush (fp);
@@ -53,10 +53,10 @@ int __srefill(register FILE_X * fp)
     }
 
   if (fp->_bf_base == 0)
-    func_00124FE0 (fp);
+    Newlib_Smakebuf (fp);
 
   if (fp->_flags & (0x0001 | 0x0002))
-    (void) func_00124BC0 (fp->_data, func_001284A0);
+    (void) Newlib_Fwalk (fp->_data, Newlib_Lflush);
   fp->_p = fp->_bf_base;
   fp->_r = (*fp->_read) (fp->_cookie, (char *) fp->_p, fp->_bf_size);
   fp->_flags &= ~0x2000;

@@ -111,7 +111,7 @@ void Mtx44_SetRotation(Mtx* m, float a, float b, float c, float d, float e, floa
 void Projectile_QueryCandidates(Query* q);
 int Actor_IsInvulnerable(Tgt* t);
 void Hud_ShowCallout(float a, float b, int c, void* pos, void* name, int d, int e, int f);
-void func_00266BA0(void* a, Mtx* m, int n, Seg* s);
+void Vector_Insert_266BA0(void* a, Mtx* m, int n, Seg* s);
 void ParticleInst_Update(float dt, int a, Mtx* m, int b);
 void func_00264BB0(HeldItem* h, Tgt* t, int part);
 void func_00265790(float a, HeldItem* h, int b);
@@ -162,7 +162,7 @@ static inline void Emit(HeldItem* self, const V4& p) {
     s.a.x = 0.0f; s.a.y = 0.0f; s.a.z = 0.0f; s.a.w = 0.0f;
     s.b.x = 0.65f; s.b.y = 0.65f; s.b.z = 1.0f; s.b.w = 1.0f;
     s.pos = p;
-    func_00266BA0(self->x10, self->Segs() + self->idx, 1, &s);
+    Vector_Insert_266BA0(self->x10, self->Segs() + self->idx, 1, &s);
 }
 extern "C" void HeldItem_UpdateFlight(HeldItem* self, float dt) {
     unsigned char live = self->ctl->b14;

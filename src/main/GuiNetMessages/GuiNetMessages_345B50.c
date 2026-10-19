@@ -90,7 +90,7 @@ Float6* func_00345C80(Float6* dst, Float6* src) {
 #pragma cplusplus on
 #include "vector_insert_fill_obj.h"
 
-DEFINE_VECTOR_INSERT_FILL_OBJ(func_00345CC0, 0x3C, 0x199999, 0xCCCCC, D_004BA0E0, D_0049ECF8, 0x5C, func_00139BC0, AnimChannel_CopyCtor, func_001BF2E0, func_001BF280, func_001BF240, func_001BFA50)
+DEFINE_VECTOR_INSERT_FILL_OBJ(Vector_Insert_345CC0, 0x3C, 0x199999, 0xCCCCC, D_004BA0E0, D_0049ECF8, 0x5C, Mem_PlacementNew, AnimChannel_CopyCtor, func_001BF2E0, func_001BF280, func_001BF240, func_001BFA50)
 #pragma pop /* merge_units */
 /* merge_units: end func_00345CC0 */
 

@@ -145,7 +145,7 @@ typedef struct {
 
 typedef struct { short sceGsInterMode; short sceGsOutMode; short sceGsFFMode; short sceGsVersion; } sceGsGParam;
 
-extern sceGsGParam *func_00102A18(void);
+extern sceGsGParam *sceGsGetGParam(void);
 extern void sceGsSetDefDispEnv(sceGsDispEnv *disp, short psm, short w, short h, short dx, short dy);
 extern int func_00103040(sceGsDrawEnv1 *draw, short psm, short w, short h, short ztest, short zpsm);
 #if 0 /* merge_units */
@@ -158,7 +158,7 @@ extern int func_00102F78(short psm, short w, short h);
 
 void func_00103418(sceGsDBuffDc *db, short psm, short w, short h, short ztest, short zpsm, short clear)
 {
-    sceGsGParam *gp = func_00102A18();
+    sceGsGParam *gp = sceGsGetGParam();
         int zbp;
     short half;
 
@@ -212,16 +212,16 @@ int func_001036B0(char *db, int field)
 /* merge_units: begin func_00103710 */
 typedef struct { short x0; short x2; int x4; int x8; } GsInfo3710;
 #if 0 /* merge_units */
-extern GsInfo3710 *func_00102A18(void);
+extern GsInfo3710 *sceGsGetGParam(void);
 #endif /* merge_units */
-#define func_00102A18() ((GsInfo3710 *)func_00102A18()) /* merge_units */
+#define sceGsGetGParam() ((GsInfo3710 *)sceGsGetGParam()) /* merge_units */
 
 extern void func_0010D5F0(void);
 extern long func_0010D680(void);
 
 int sceGsSyncV(void)
 {
-    GsInfo3710 *g = func_00102A18();
+    GsInfo3710 *g = sceGsGetGParam();
     long v;
     if (g->x8 == 0) {
         func_0010D5F0();
@@ -232,5 +232,5 @@ int sceGsSyncV(void)
     if (g->x0 != 1) return 1;
     return (int)v;
 }
-#undef func_00102A18 /* merge_units */
+#undef sceGsGetGParam /* merge_units */
 /* merge_units: end func_00103710 */

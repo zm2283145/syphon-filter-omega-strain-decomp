@@ -9,7 +9,7 @@
 extern "C" {
 int Mem_Alloc(...);                        
 int Mem_Free(...);                         
-int func_002458E0(...);                            
+int HudObject_dtor(...);                            
 int HudObject_ctor(...);           
 extern char D_0049A890;
 extern unsigned char g_ProfileLockEnabled;
@@ -23,7 +23,7 @@ extern "C" int Game_CreateHud(char * arg0) {
     if (temp_s1 != 0) {
         {
             AllocGuard g;
-        func_002458E0(temp_s1, -1);
+        HudObject_dtor(temp_s1, -1);
         Mem_Free(0, temp_s1, &D_0049A890, 0x97D);
         }
     }

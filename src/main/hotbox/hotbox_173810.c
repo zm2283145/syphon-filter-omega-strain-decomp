@@ -29,7 +29,7 @@ DEFINE_BUF_HOLDER_DTOR_SHALLOW(func_00173810)
 extern int PtrVec_Reserve(int, int);
 extern int func_00173970(LinkList* list);
 
-int func_00173900(int a0, int a1) {
+int PtrVec_Reserve_Thunk_173900(int a0, int a1) {
     return PtrVec_Reserve(a0, a1);
 }
 

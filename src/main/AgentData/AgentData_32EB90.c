@@ -159,7 +159,7 @@ typedef union { int i; void* p; } ScriptArg_0032ED90;
 typedef struct { char data[0x24]; } BonusReq;
 
 extern char D_00532AA0[];
-extern void* func_0032FFD0(BonusReq* req, int level, int a, int b, int c, int d);
+extern void* AwardRow_Construct(BonusReq* req, int level, int a, int b, int c, int d);
 extern void func_00147600(void* list, void* item);
 
 /* Script native: registers a bonus level requirement with the agent data. */
@@ -172,7 +172,7 @@ int Script_cAgentData__RegisterBonusLevel(ScriptArg_0032ED90* args)
     c[0] = args[2].i;
     b[0] = args[1].i;
     level[0] = args[0].i;
-    func_00147600(D_00532AA0, func_0032FFD0(&req, *(int*)level, 0, *(int*)b, *(int*)c, 0));
+    func_00147600(D_00532AA0, AwardRow_Construct(&req, *(int*)level, 0, *(int*)b, *(int*)c, 0));
     return 0;
 }
 #pragma pop /* merge_units */

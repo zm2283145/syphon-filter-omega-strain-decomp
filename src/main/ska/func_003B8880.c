@@ -13,7 +13,7 @@ BaDeq* func_003B9170(BaDeq* self, unsigned int n, char** value, void* alloc);
 BaDeq* func_003B9070(BaDeq* self, const BaDeq* x);
 void func_003B9E70(BaDeq* self, unsigned int n);
 void func_003B9C20(BaDeq* self, char** value);
-void* func_00139BC0(unsigned int size, void* p);
+void* Mem_PlacementNew(unsigned int size, void* p);
 void BlendRecord_CopyConstruct(void* self, const void* src);
 void func_003B9B80(BaDeq* x, BaDeq* y);
 void func_00393DD0(BaDeq* self, short flag);
@@ -32,7 +32,7 @@ extern "C" void BlockArray_Append(BlockArray* self, const void* src)
             D_00542C88 = 1;
         }
         if (self->count == D_004BCDF0) {
-            func_00123BE8(D_00489738->stream, "deque::push_back length error");
+            Libc_Fprintf(D_00489738->stream, "deque::push_back length error");
             Libc_Abort();
         }
         if (self->blocks.size == (self->blocks.cap == 0 ? 0 : self->blocks.cap - 1)) {
@@ -61,7 +61,7 @@ extern "C" void BlockArray_Append(BlockArray* self, const void* src)
                 func_003B9C20(&tmp, &z);
             }
             {
-                void* o = func_00139BC0(0xF8, nb);
+                void* o = Mem_PlacementNew(0xF8, nb);
                 if (o)
                     BlendRecord_CopyConstruct(o, src);
             }
@@ -84,7 +84,7 @@ extern "C" void BlockArray_Append(BlockArray* self, const void* src)
     {
         BaDeq* d = func_003B8C40(self);
         char* blk = self->blocks.data[(self->blocks.start + (idx >> 3)) % d->cap];
-        void* o = func_00139BC0(0xF8, blk + (idx & 7) * 0xF8);
+        void* o = Mem_PlacementNew(0xF8, blk + (idx & 7) * 0xF8);
         if (o)
             BlendRecord_CopyConstruct(o, src);
         self->count++;

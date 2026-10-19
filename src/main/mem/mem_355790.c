@@ -40,7 +40,7 @@ struct VC003557D0 { virtual int v0(); virtual int v1(); virtual int v2(); virtua
 extern "C" {
 int String_CtorCStr_13B480(...);                 
 int String_Dtor(...);                            
-int func_0013D680(...);                          
+int String_AssignString(...);                          
 int GuiPersonnelMenu_ToggleDetail(...);                         
 int GuiPersonnelScreen_Init(...);                                  
 void **GuiWidget_FindChildByName(...);                  
@@ -65,10 +65,10 @@ extern "C" void GuiPersonnelMenu_Init(char * arg0) {
 
     GuiPersonnelScreen_Init();
     String_CtorCStr_13B480(sp40, &D_004BB0F8);
-    func_0013D680(arg0 + 0x6C, sp40);
+    String_AssignString(arg0 + 0x6C, sp40);
     String_Dtor(sp40, 0);
     String_CtorCStr_13B480(sp30, &D_004BB0F8);
-    func_0013D680(arg0 + 0x78, sp30);
+    String_AssignString(arg0 + 0x78, sp30);
     String_Dtor(sp30, 0);
     F_(arg0, 0x84, signed char) = 0;
     F_(arg0, 0x88, int) = -1;
@@ -99,7 +99,7 @@ extern int strlen(const char* s);
 extern void String_Reserve(Str003491C0* str, int n);
 extern void String_Replace(Str003491C0* str, int pos, int count, const char* first, const char* last, Alloc003491C0 alloc);
 /* Construct a string from a C string. */
-Str003491C0* func_00355920(Str003491C0* str, const char* s)
+Str003491C0* String_CtorCStr_355920(Str003491C0* str, const char* s)
 {
     Alloc003491C0 alloc;
     int n;

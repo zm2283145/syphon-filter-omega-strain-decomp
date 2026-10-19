@@ -25,7 +25,7 @@ struct ConnReq {
     char name[0x40];
 };
 
-extern "C" int func_00443100(char* self, char* name, int port) {
+extern "C" int SFOLobby_CheckText(char* self, char* name, int port) {
     ConnReq req;
     int st;
 

@@ -66,7 +66,7 @@ public:
     float f34;
 };
 extern "C" void func_0017CA90(void*, int);
-extern "C" void* func_00139BC0(int, void*);
+extern "C" void* Mem_PlacementNew(int, void*);
 extern "C" void func_0017CA00(float, void*, float*, float*, float*, float*);
 static inline bool b4NonZero(float x) { return !(0.0f == x); }
 extern "C" void Curve_Retarget(B4Curve* p) {
@@ -77,7 +77,7 @@ extern "C" void Curve_Retarget(B4Curve* p) {
         void* n;
         s[0] = p->GetSpeed();
         func_0017CA90(p->f18, -1);
-        n = func_00139BC0(0x18, p->f18);
+        n = Mem_PlacementNew(0x18, p->f18);
         if (n) func_0017CA00(p->f28, n, &p->f8, &p->fC, &p->f10, s);
     } else if (b4NonZero(p->f34)) {
         float s = p->GetSpeed();

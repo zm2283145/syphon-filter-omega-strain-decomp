@@ -28,7 +28,7 @@ char* GuiCommandCenter_GetClassName(void) {
 extern int strcmp(const char* a, const char* b);
 
 /* Returns whether name equals the string "GuiCommandCenter". */
-int func_00294220(void* self, const char* name)
+int GuiCommandCenter_IsType(void* self, const char* name)
 {
     return strcmp("GuiCommandCenter", name) == 0;
 }

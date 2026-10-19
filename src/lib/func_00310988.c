@@ -1,6 +1,6 @@
 typedef struct { char *ctx; int type; char pad8[0x208]; void *data; char pad214[0]; } P310988;
 extern int Net_AllocZeroed(void **pp, unsigned long size);
-extern int func_00310D40(char **out, int flags, unsigned int size);
+extern int RtXml_CreateParser(char **out, int flags, unsigned int size);
 extern int func_00311018(char *ctx, int v);
 extern int func_00311070(char *ctx, int v);
 extern int func_003110C8(char *ctx, int v);
@@ -85,7 +85,7 @@ body:
     return 0;
 init:
     if (!Net_AllocZeroed((void **)&p, 532)) {
-        e = func_00310D40(&p->ctx, 0, size);
+        e = RtXml_CreateParser(&p->ctx, 0, size);
         if (!p->ctx) {
             r = 3;
             goto fail;

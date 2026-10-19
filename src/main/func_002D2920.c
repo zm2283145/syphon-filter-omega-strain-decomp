@@ -3,7 +3,7 @@ typedef struct { char pad[0x1C]; int flags; char pad2[4]; int a; signed char b; 
 typedef struct { char pad[8]; signed char b; char pad2[3]; int a; int c; int d; } Buf2920;
 extern int D_0051F090;
 extern void Event_PackHeader(Ev2920* e, int a1, int* type, int a3, int a4, unsigned int size, void* buf);
-int func_002D2920(Ev2920* e, int a1, int* type, int a3, int a4, unsigned int size, void* buf)
+int cNetLabelMsg_Serialize(Ev2920* e, int a1, int* type, int a3, int a4, unsigned int size, void* buf)
 {
     int r = -1;
     if (size >= 0x18 && buf) {

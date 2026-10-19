@@ -5,7 +5,7 @@
  */
 
 /* merge_units: begin func_00326230 */
-extern void func_0010D210(void *);
+extern void GetOsdConfigParam(void *);
 extern int func_003260F0(void);
 extern short D_004914A0;
 int func_00326230(void)
@@ -15,7 +15,7 @@ int func_00326230(void)
     if (func_003260F0()) {
         r = D_004914A0;
     } else {
-        func_0010D210(&c);
+        GetOsdConfigParam(&c);
         r = c >> 21; if (!(((unsigned int)c >> 13) & 7)) r = 0x21C;
     }
     return r;
@@ -23,7 +23,7 @@ int func_00326230(void)
 /* merge_units: end func_00326230 */
 
 /* merge_units: begin func_00326280 */
-extern int func_0010D470(void *, int, int);
+extern int GetOsdConfigParam2(void *, int, int);
 typedef struct { unsigned char lo:4; unsigned char b4:1; unsigned char b5:1; unsigned char top:2; } Cfg6280;
 extern unsigned char D_004914A3;
 int func_00326280(void)
@@ -33,10 +33,10 @@ int func_00326280(void)
     if (func_003260F0()) {
         r = D_004914A3;
     } else {
-        func_0010D210(&s.c);
+        GetOsdConfigParam(&s.c);
         if (((s.c >> 13) & 7) == 0) r = 0;
         else {
-            func_0010D470(s.b, 1, 1);
+            GetOsdConfigParam2(s.b, 1, 1);
             r = ((Cfg6280 *)s.b)->top;
         }
     }
@@ -53,10 +53,10 @@ int func_003262E8(void)
     if (func_003260F0()) {
         r = D_004914A6;
     } else {
-        func_0010D210(&s.c);
+        GetOsdConfigParam(&s.c);
         if (((s.c >> 13) & 7) == 0) r = 0;
         else {
-            func_0010D470(s.b, 1, 1);
+            GetOsdConfigParam2(s.b, 1, 1);
             r = ((Cfg6280 *)s.b)->b4;
         }
     }
@@ -73,10 +73,10 @@ int func_00326350(void)
     if (func_003260F0()) {
         r = D_004914A7;
     } else {
-        func_0010D210(&s.c);
+        GetOsdConfigParam(&s.c);
         if (((s.c >> 13) & 7) == 0) r = 0;
         else {
-            func_0010D470(s.b, 1, 1);
+            GetOsdConfigParam2(s.b, 1, 1);
             r = ((Cfg6280 *)s.b)->b5;
         }
     }

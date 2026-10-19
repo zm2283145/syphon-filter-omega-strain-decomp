@@ -119,7 +119,7 @@ extern void func_00437830();
 extern void func_00437640();
 extern void func_004375D0();
 
-unsigned char func_004378A0(void)
+unsigned char Voice_RegisterHeadsetSemaphore(void)
 {
     int db;
     Prm78A0 prm;

@@ -7,11 +7,11 @@ extern int D_00497CE4;
 int D_00497DE4 = 0;
 int D_00497DE8 = 0;
 extern int D_005988D4;
-extern int func_004700F8(P *, int);
+extern int Medius_TerminateString(P *, int);
 extern int Net_SendLocked(int, int, int, int, int, int, P *);
 int func_0046BFF0(P *p, int b, int c)
 {
-    func_004700F8(p, 0x15);
+    Medius_TerminateString(p, 0x15);
     if (D_00497CC0 != 1) return -0xF;
     if (D_00497CC4 < 0) return -0x10;
     D_00497CE8 = 0;

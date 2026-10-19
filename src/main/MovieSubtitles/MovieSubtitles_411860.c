@@ -90,8 +90,8 @@ extern void SubtitleOverlay_MeasureLine(Font_18E0* f, const char* s, const char*
 extern u64_18E0* SubtitleOverlay_BuildGlyphs(Font_18E0* f, u64_18E0* pkt, float x, const char* s, float y, Vec_18E0* color, void* p, const char* end);
 extern float Math_FMod(float a, float b);
 extern void FlushCache(int mode);
-extern void func_001161A0(void);
-extern void func_001161F8(void);
+extern void DIntr(void);
+extern void EIntr(void);
 }
 
 #pragma opt_dead_assignments off
@@ -164,11 +164,11 @@ extern "C" void MovieSubtitles_SetupPackets(Sub_18E0* self)
         FlushCache(0);
         *self->pkt++ = 0x70000000;
         *self->pkt++ = 0;
-        func_001161A0();
+        DIntr();
         self->current ^= 1;
         self->base = self->bufs[self->current].packet;
         self->pkt = (u64_18E0*)((unsigned int)self->base | 0x20000000);
-        func_001161F8();
+        EIntr();
     }
 }
 /* merge_units: generate this block's code under its own pragmas */

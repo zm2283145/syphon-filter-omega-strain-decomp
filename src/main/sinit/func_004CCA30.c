@@ -3,7 +3,7 @@ extern char g_PlaySndMsgClass[];
 extern char D_004F53C8[];
 extern char D_004F53D8[];
 extern char D_004F53E8[];
-void func_004CCA30(void)
+void StaticInit_GameSoundMsgNames(void)
 {
     *(int*)g_PlaySndMsgClass = (int)"MSGGAME_PLAYSND";
     *(int*)D_004F53C8 = (int)"MSGGAME_PLAYVAG";

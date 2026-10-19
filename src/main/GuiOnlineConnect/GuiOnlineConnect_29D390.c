@@ -33,7 +33,7 @@ void GuiOnlineConnect_Advance(O_D390* o);
 void GuiScreen_Navigate(O_D390* o, int a);
 void SFOLobby_LeaveNetworkState(int n);
 void LobbyArray_ctor(List_D390* l);
-void func_0044F970(List_D390* l, int flags);
+void LobbyArray_dtor(List_D390* l, int flags);
 void* LobbyArray_At(List_D390* l, int i);
 int func_00442F40(int n, int (*cb)(void), List_D390* l);
 char* GameIni_GetString(char* key);
@@ -45,9 +45,9 @@ int SFOLobby_ConnectUniverse(int n, int i);
 void func_00442E90(int n);
 int SFOLobby_JoinLobby(int n, int i);
 int SFOLobby_AutoJoin(int n);
-void func_00445570(int n);
-int func_004456D0(int n);
-void func_004456C0(int n);
+void SFOLobby_RequestSettings(int n);
+int SFOLobby_GetUsagePolicy(int n);
+void SFOLobby_GetPrivacyPolicy(int n);
 Agent_D390* Agent_GetSelected(char* a, int b);
 void String_CtorCStr_13B480(Str_D390* s, char* text);
 char* String_CStr(Str_D390* s);
@@ -69,8 +69,8 @@ static inline bool Start_D390(O_D390* o)
     old = o->x120;
     if (old != -1) FrontEnd_ClosePopup(D_004FFC04, old);
     FrontEnd_DownloadPolicies(D_004FFC04);
-    func_00445570(n);
-    if (func_004456D0(n)) func_004456C0(n);
+    SFOLobby_RequestSettings(n);
+    if (SFOLobby_GetUsagePolicy(n)) SFOLobby_GetPrivacyPolicy(n);
     FrontEnd_ClosePopup(D_004FFC04, p);
     return true;
 }
@@ -149,7 +149,7 @@ extern "C" void GuiOnlineConnect_DnasRetry(O_D390* o)
             FrontEnd_ClosePopup(D_004FFC04, o->x120);
             String_Dtor(&t2, 0);
             String_Dtor(&s2, 0);
-            func_0044F970(&lst, -1);
+            LobbyArray_dtor(&lst, -1);
             return;
         }
         if (!SFOLobby_ConnectUniverse(n, found)) {
@@ -163,7 +163,7 @@ extern "C" void GuiOnlineConnect_DnasRetry(O_D390* o)
             func_00442E90(n);
             String_Dtor(&t1, 0);
             String_Dtor(&s1, 0);
-            func_0044F970(&lst, -1);
+            LobbyArray_dtor(&lst, -1);
             return;
         }
         ok = Find_D390(n, &lst, any);
@@ -172,7 +172,7 @@ extern "C" void GuiOnlineConnect_DnasRetry(O_D390* o)
     } else {
         FrontEnd_ClosePopup(D_004FFC04, o->x120);
         GuiOnlineConnect_Back(o, 1);
-        func_0044F970(&lst, -1);
+        LobbyArray_dtor(&lst, -1);
         return;
     }
     if (D_004FFC04->b265 || fail) {
@@ -184,7 +184,7 @@ extern "C" void GuiOnlineConnect_DnasRetry(O_D390* o)
         if (Start_D390(o)) GuiOnlineConnect_Advance(o);
     }
     FrontEnd_ClosePopup(D_004FFC04, o->x120);
-    func_0044F970(&lst, -1);
+    LobbyArray_dtor(&lst, -1);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0029D390 */
@@ -321,7 +321,7 @@ void FrontEnd_StopMusic(int);
 void FrontEnd_SetMusic(int, int);
 int SFOLobby_StartNetwork(void*, void*, int);
 void* SFOLobby_GetDnasResult(void*);
-int func_00452FF0(void*, char*);
+int SFOLobby_FormatError(void*, char*);
 #if 0 /* merge_units */
 void GuiOnlineConnect_ShowDnasPopup(O_DAF0*, void*);
 #endif /* merge_units */
@@ -337,7 +337,7 @@ void String_CtorCStr_13B480(Str_DAF0*, char*);
 #endif /* merge_units */
 #define String_CtorCStr_13B480(a0, a1) (String_CtorCStr_13B480((Str_D390 *)(a0), (a1))) /* merge_units */
 
-void func_0013D680(Str_DAF0*, Str_DAF0*);
+void String_AssignString(Str_DAF0*, Str_DAF0*);
 #if 0 /* merge_units */
 void String_Dtor(Str_DAF0*, int);
 #endif /* merge_units */
@@ -397,21 +397,21 @@ extern "C" void GuiOnlineConnect_Connect(O_DAF0* o, void* arg) {
     o->x88 = 4;
     StrInit(&msg);
     StrInit(&title);
-    switch ((unsigned char)func_00452FF0(net, buf)) {
+    switch ((unsigned char)SFOLobby_FormatError(net, buf)) {
     case 6:
         GuiOnlineConnect_ShowDnasPopup(o, SFOLobby_GetDnasResult(net));
         break;
     case 0x3E:
         String_CtorCStr_13B480(&t1, GuiScreen_GetLobbyString(o, 0xC, 0, 0, 0, 0));
-        func_0013D680(&msg, &t1);
+        String_AssignString(&msg, &t1);
         String_Dtor(&t1, 0);
         break;
     default:
         String_CtorCStr_13B480(&t2, GuiScreen_GetLobbyString(o, 0xB, 0, 0, 0, 0));
-        func_0013D680(&title, &t2);
+        String_AssignString(&title, &t2);
         String_Dtor(&t2, 0);
         String_CtorCStr_13B480(&t3, GuiScreen_GetLobbyString(o, 0x84, 0, 0, 0, 0));
-        func_0013D680(&msg, &t3);
+        String_AssignString(&msg, &t3);
         String_Dtor(&t3, 0);
         break;
     }

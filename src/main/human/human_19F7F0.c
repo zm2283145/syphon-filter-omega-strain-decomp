@@ -131,7 +131,7 @@ struct ActMsg : CMsg {
 };
 
 extern "C" {
-void* func_001A02B0(void* root, void* key);
+void* RootCollection_FindByKey_Thunk(void* root, void* key);
 void Actor_UnlinkAll(Actor9F* a);
 void Root_ClearChildren(void* r);
 void WeaponInv_RestoreHiddenItem(int item);
@@ -153,8 +153,8 @@ static inline bool IsBusy9F(Actor9F* a) { unsigned char st = a->State(); return 
 extern "C" void Actor_ReactToActionChanges(Actor9F* a)
 {
     if (ActTriggered(a, 21)) {
-        Root_ClearChildren(func_001A02B0(a->root2EC0, D_0049D040));
-        Root_ClearChildren(func_001A02B0(a->root2EC0, D_0049D048));
+        Root_ClearChildren(RootCollection_FindByKey_Thunk(a->root2EC0, D_0049D040));
+        Root_ClearChildren(RootCollection_FindByKey_Thunk(a->root2EC0, D_0049D048));
         WeaponInv_RestoreHiddenItem(a->item3524);
         Actor_UnlinkAll(a);
     }

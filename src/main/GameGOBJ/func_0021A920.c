@@ -7,7 +7,7 @@
 extern void Actor_BaseLogicUpdate(void* self);
 extern int Object_HandleMessage(void* self, int a1);
 
-void func_0021A920(void* self) {
+void cGameGOBJ_v10(void* self) {
     Actor_BaseLogicUpdate(self);
 }
 

@@ -64,16 +64,16 @@ extern "C" void GuiWidget_OnEvent();
 extern "C" void GuiWidget_ClearFlag4();
 extern "C" void GuiWidget_SetFlag4();
 extern "C" void GuiWidget_Deinit();
-extern "C" void func_0041F210();
-extern "C" void func_004235C0();
-extern "C" void func_004235E0();
+extern "C" void GuiWidget_Load();
+extern "C" void GuiArrayWidget_SendEvent21();
+extern "C" void GuiArrayWidget_SendEvent20();
 extern "C" void func_00423610();
 extern "C" void func_00423660();
 extern "C" void GuiArrayWidget_Draw();
 extern "C" void GuiArrayWidget_OnInput();
 extern "C" void GuiArrayWidget_OnLoseFocus();
 extern "C" void GuiArrayWidget_OnGainFocus();
-extern "C" void func_00425BB0();
+extern "C" void GuiTextArrayWidget_GetClassName();
 extern "C" void GuiTextArrayWidget_DrawCell();
 extern "C" void GuiTextArrayWidget_Sleep();
 extern "C" void GuiTextArrayWidget_Wake();
@@ -138,7 +138,7 @@ static inline void destroy_widget_base(guiTextArrayWidget* self)
 }
 
 /* Destroy rows, the rendering child and pointer storage before the grid base. */
-extern "C" guiTextArrayWidget* func_00426940(guiTextArrayWidget* self, short deleteFlag)
+extern "C" guiTextArrayWidget* GuiTextArrayWidget_dtor(guiTextArrayWidget* self, short deleteFlag)
 {
     if (self) {
         self->vtable = ((char*)D_004E0DC0);
@@ -215,7 +215,7 @@ extern "C" TextArrayStore* func_00426BD0(TextArrayStore* self, short deleteFlag)
     }
     return self;
 }
-void * const D_004E0DC0[30] = { (void*)0x0, (void*)0x0, (void*)func_00426940, (void*)GuiTextArrayWidget_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiTextArrayWidget_Wake, (void*)GuiTextArrayWidget_Sleep, (void*)GuiArrayWidget_OnGainFocus, (void*)GuiArrayWidget_OnLoseFocus, (void*)GuiArrayWidget_OnInput, (void*)GuiArrayWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiWidget_OnEvent, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)func_00425BB0, (void*)GuiTextArrayWidget_IsType, (void*)GuiTextArrayWidget_SetDims, (void*)func_00423660, (void*)func_00423610, (void*)GuiTextArrayWidget_DrawCell, (void*)func_004235E0, (void*)func_004235C0, (void*)0x0 };
+void * const D_004E0DC0[30] = { (void*)0x0, (void*)0x0, (void*)GuiTextArrayWidget_dtor, (void*)GuiTextArrayWidget_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiTextArrayWidget_Wake, (void*)GuiTextArrayWidget_Sleep, (void*)GuiArrayWidget_OnGainFocus, (void*)GuiArrayWidget_OnLoseFocus, (void*)GuiArrayWidget_OnInput, (void*)GuiArrayWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiWidget_OnEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiTextArrayWidget_GetClassName, (void*)GuiTextArrayWidget_IsType, (void*)GuiTextArrayWidget_SetDims, (void*)func_00423660, (void*)func_00423610, (void*)GuiTextArrayWidget_DrawCell, (void*)GuiArrayWidget_SendEvent20, (void*)GuiArrayWidget_SendEvent21, (void*)0x0 };
 #pragma pop /* merge_units */
 /* merge_units: end func_004268E0 */
 

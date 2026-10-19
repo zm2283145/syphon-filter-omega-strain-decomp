@@ -25,7 +25,7 @@ DEFINE_VTABLE_BASE_DTOR(cStartLevelMsg_dtor, D_004DADD0, cMessage_dtor)
 #pragma cplusplus on
 
 /* Message destructor: restore vtable, run cMessage base, optionally delete. */
-DEFINE_VTABLE_BASE_DTOR(func_00169270, D_004D97F0, cMessage_dtor)
+DEFINE_VTABLE_BASE_DTOR(SoundPauseMsg_dtor, D_004D97F0, cMessage_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00169270 */
 

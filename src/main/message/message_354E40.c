@@ -31,7 +31,7 @@ extern char D_004A7520[];
 extern char g_Game[];
 extern const char* D_0048C160[];
 void String_CtorCStr_13B480(Str4E40* s, const char* text);
-void func_0013D680(void* dst, Str4E40* s);
+void String_AssignString(void* dst, Str4E40* s);
 void String_Dtor(Str4E40* s, int flags);
 W4E40* GuiWidget_FindChildByName(void* o, char* name);
 void* Agent_GetSelected(void* p, int i);
@@ -55,13 +55,13 @@ void GuiPersonnelMenu_Setup(O4E40* self, const char* a, const char* b, unsigned 
     {
         Str4E40 s;
         String_CtorCStr_13B480(&s, a);
-        func_0013D680(self->s6C, &s);
+        String_AssignString(self->s6C, &s);
         String_Dtor(&s, 0);
     }
     {
         Str4E40 s;
         String_CtorCStr_13B480(&s, b);
-        func_0013D680(self->s78, &s);
+        String_AssignString(self->s78, &s);
         String_Dtor(&s, 0);
     }
     self->kind = kind;

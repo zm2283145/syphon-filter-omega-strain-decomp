@@ -27,7 +27,7 @@ E351 *func_00351DA0(E351 *first, E351 *last, E351 *dest) {
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int func_0013BCB0();                                  
+int String_CopyCtor();                                  
 int func_00351EE0(char * , char * );                    
 
 char * func_00351E50(char * arg0, char * arg1) {
@@ -35,7 +35,7 @@ char * func_00351E50(char * arg0, char * arg1) {
     char * var_v1;
     char * temp_s2;
 
-    func_0013BCB0();
+    String_CopyCtor();
     var_a0 = arg0 + 0x10;
     var_v1 = arg1 + 0x10;
     F_(arg0, 0xC, unsigned char) = F_(arg1, 0xC, unsigned char);

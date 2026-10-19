@@ -55,7 +55,7 @@ struct N_3CD420 {
 struct X_3CD420 { char pad[0x50]; N_3CD420* n; };
 #pragma push
 #pragma opt_common_subs off
-extern "C" void func_003CD090(V4* out, X_3CD420* x) {
+extern "C" void cNode_v3A(V4* out, X_3CD420* x) {
     N_3CD420* n = x->n;
     if (n) {
         if (n->dirty) n->Update();
@@ -74,7 +74,7 @@ extern "C" void func_003CD090(V4* out, X_3CD420* x) {
 #pragma push /* merge_units */
 #pragma cplusplus on
 
-extern "C" MtxQ4 func_003CD110(OwnerQ4* o, int* flag)
+extern "C" MtxQ4 cGOBJ_v39(OwnerQ4* o, int* flag)
 {
     *flag = 0;
     NODE_WORLD_Q4_BODY(o, g_IdentityMatrix)

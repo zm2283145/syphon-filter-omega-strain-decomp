@@ -7,7 +7,7 @@ extern void String_Reserve(SsoString* s, int capacity);
 extern void* String_Replace(SsoString* s, int pos, int count, const char* first, const char* last, Allocator alloc);
 
 /* String constructor from a C string. */
-SsoString* func_00365300(SsoString* self, const char* text)
+SsoString* String_CtorCStr_365300(SsoString* self, const char* text)
 {
     Allocator alloc;
     int len;

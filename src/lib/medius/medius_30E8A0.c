@@ -10,7 +10,7 @@ typedef struct { char pad[0x24]; unsigned short port; unsigned short extPort; ch
 extern char D_004B02F0[];
 extern int sprintf(char *buf, const char *fmt, ...);
 extern int func_0030ECC0(UpnpE8A0 *u);
-extern int func_0030C1B8(UpnpE8A0 *u, char *a, char *b);
+extern int UPnP_SendSoapAction(UpnpE8A0 *u, char *a, char *b);
 extern int func_003060D8(void *p);
 int UPnP_GetSpecificPortMappingEntry(UpnpE8A0 *u, int arg, int cb)
 {
@@ -21,7 +21,7 @@ int UPnP_GetSpecificPortMappingEntry(UpnpE8A0 *u, int arg, int cb)
     if (func_0030ECC0(u) != 0) return 3;
     u->ctx->arg = arg;
     sprintf(u->ctx->buf, D_004B02F0, u->extPort);
-    r = func_0030C1B8(u, "GetSpecificPortMappingEntry", u->ctx->buf);
+    r = UPnP_SendSoapAction(u, "GetSpecificPortMappingEntry", u->ctx->buf);
     if (r == 0) {
         u->state = 8;
         func_003060D8((char *)u->ctx + 0x10);
@@ -40,9 +40,9 @@ extern int func_0030ECC0(UpnpE968 *u);
 #define func_0030ECC0(a0) (func_0030ECC0((UpnpE8A0 *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int func_0030C1B8(UpnpE968 *u, char *a, char *b);
+extern int UPnP_SendSoapAction(UpnpE968 *u, char *a, char *b);
 #endif /* merge_units */
-#define func_0030C1B8(a0, a1, a2) (func_0030C1B8((UpnpE8A0 *)(a0), (a1), (a2))) /* merge_units */
+#define UPnP_SendSoapAction(a0, a1, a2) (UPnP_SendSoapAction((UpnpE8A0 *)(a0), (a1), (a2))) /* merge_units */
 
 int UPnP_DeletePortMapping(UpnpE968 *u, int arg, int cb)
 {
@@ -54,7 +54,7 @@ int UPnP_DeletePortMapping(UpnpE968 *u, int arg, int cb)
     if (u->enabled == 0) goto ok;
     u->ctx->arg = arg;
     sprintf(u->ctx->buf, D_004B02F0, u->extPort);
-    r = func_0030C1B8(u, "DeletePortMapping", u->ctx->buf);
+    r = UPnP_SendSoapAction(u, "DeletePortMapping", u->ctx->buf);
     /* no-op: extra references raise cb's register-allocation priority (retail: cb=s1, r=s2, arg=s3) */
     cb++;
     cb--;
@@ -67,7 +67,7 @@ ok:
     return r;
 }
 #undef func_0030ECC0 /* merge_units */
-#undef func_0030C1B8 /* merge_units */
+#undef UPnP_SendSoapAction /* merge_units */
 /* merge_units: end func_0030E968 */
 
 /* merge_units: begin func_0030EA40 */

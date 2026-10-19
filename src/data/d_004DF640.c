@@ -7,11 +7,14 @@ extern void Light_GetCoronaFlag();
 extern void Light_GetCoronaSize();
 extern void Light_SetPosition();
 extern void Mtx44_SetRows123FromMtx34();
+extern void Mtx44_SetRows123FromMtx34_370000();
 extern void PntLight_Disable();
 extern void PntLight_Enable();
 extern void PointLightComp_Start();
 extern void TransformNode_ClearDirty();
 extern void TransformNode_SetMatrix();
+extern void TransformNode_SetMatrix_36FFD0();
+extern void TransformNode_dtor();
 extern void Xform_AddChild();
 extern void Xform_Attach();
 extern void Xform_Detach();
@@ -21,6 +24,7 @@ extern void Xform_SetTranslation();
 extern void Xform_SetWorld();
 extern void Xform_Translate();
 extern void Xform_Translate_1BC330();
+extern void Xform_dtor();
 extern void func_001479A0();
 extern void func_00147A00();
 extern void func_00147A10();
@@ -28,7 +32,6 @@ extern void func_001CF1F0();
 extern void func_001CF3F0();
 extern void func_001E2100();
 extern void func_00218E30();
-extern void func_0036E600();
 extern void func_0036E7D0();
 extern void func_0036E8F0();
 extern void func_0036EA70();
@@ -38,13 +41,10 @@ extern void func_0036ECD0();
 extern void func_0036ECE0();
 extern void func_0036F110();
 extern void func_0036F190();
-extern void func_0036FC80();
 extern void func_0036FE60();
 extern void func_0036FF40();
 extern void func_0036FFB0();
 extern void func_0036FFC0();
-extern void func_0036FFD0();
-extern void func_00370000();
 extern void func_00370070();
 extern void func_00370080();
 extern void func_00370090();
@@ -54,7 +54,7 @@ extern void func_003700C0();
 extern void func_003718B0();
 
 void *D_004DF640[24] = {
-    0, 0, &func_0036E600, &Xform_SetWorld,
+    0, 0, &Xform_dtor, &Xform_SetWorld,
     &Xform_SetRotation, &Xform_SetTranslation, &func_0036E7D0, &func_0036EA70,
     &func_0036E8F0, &Xform_Translate, &func_0036EC10, &func_001CF1F0,
     &func_001CF3F0, &func_0036EC20, &Bone_SetLocalBasis, &Bone_SetLocalTranslation,
@@ -63,10 +63,10 @@ void *D_004DF640[24] = {
 };
 
 void *D_004DF6A0[24] = {
-    0, 0, &func_0036FC80, &TransformNode_SetMatrix,
+    0, 0, &TransformNode_dtor, &TransformNode_SetMatrix,
     &Mtx44_SetRows123FromMtx34, &ActorNode_SetPosition, &func_001E2100, &func_0036FF40,
     &func_0036FE60, &Xform_Translate_1BC330, &func_0036FFB0, &func_00218E30,
-    &func_0036FFC0, &func_0036FFD0, &func_00370000, &func_00370070,
+    &func_0036FFC0, &TransformNode_SetMatrix_36FFD0, &Mtx44_SetRows123FromMtx34_370000, &func_00370070,
     &func_00370080, &func_0036F190, &func_00370090, &func_003700A0,
     &func_003700B0, &func_003700C0, &TransformNode_ClearDirty, 0,
 };

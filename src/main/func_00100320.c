@@ -5,10 +5,10 @@ typedef struct Overlay {
     void *ctorEnd;
 } Overlay;
 
-extern int func_001115B0(const char *path, int mode);
-extern int func_001119B8(int fd, int offset, int whence);
-extern int func_00111BF0(int fd, void *buf, int size);
-extern int func_00111838(int fd);
+extern int sceOpen(const char *path, int mode);
+extern int sceLseek(int fd, int offset, int whence);
+extern int sceRead(int fd, void *buf, int size);
+extern int sceClose(int fd);
 extern void FlushCache(int mode);
 extern void *memset(void *, int, unsigned int);
 extern void FunctionList_CallEach(void *start, void *end, int a, int b);
@@ -21,15 +21,15 @@ int func_00100320(const char *path, char *buf)
     Overlay *ovl;
     int bss;
 
-    fd = func_001115B0(path, 1);
+    fd = sceOpen(path, 1);
     if (fd >= 0) {
-        size = func_001119B8(fd, 0, 2);
-        func_001119B8(fd, 0, 0);
+        size = sceLseek(fd, 0, 2);
+        sceLseek(fd, 0, 0);
     }
     if (size > 0)
-        size = func_00111BF0(fd, buf, size);
+        size = sceRead(fd, buf, size);
     if (fd >= 0)
-        func_00111838(fd);
+        sceClose(fd);
     if (size > 0) {
         bss = ((Overlay *)buf)->bssSize;
         ovl = (Overlay *)buf;

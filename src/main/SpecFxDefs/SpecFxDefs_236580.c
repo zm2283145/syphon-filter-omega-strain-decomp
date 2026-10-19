@@ -31,7 +31,7 @@ struct S_00236580 {
     char pad4[0x28]; unsigned char b2C; unsigned char b2D; unsigned char b2E; char pad2f[0x7C - 0x2F]; E_00236580** arr; int pad80; int n;
 };
 static inline void Free_00236580(void* p, int line) { AllocGuard g; Mem_Free(0, p, D_004A6E38, line); }
-extern "C" S_00236580* func_00236580(S_00236580* self, short flag)
+extern "C" S_00236580* FireEffectObj_dtor(S_00236580* self, short flag)
 {
     if (self) {
         int i;

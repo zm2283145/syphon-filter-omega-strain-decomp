@@ -3,11 +3,11 @@ extern char Script_CreateTank[];
 extern int D_00506278;
 extern int D_00506240;
 extern char* g_NetCreateTankMsgKey;
-extern char func_00283DA0[];
+extern char cNetCreateTankMsg_NetReceive[];
 extern char D_00506250[];
 extern int D_00506258;
 extern char* D_00506260;
-extern char func_002838B0[];
+extern char cNetUpdateTankMsg_NetReceive[];
 extern char D_00506268[];
 extern int D_00506270;
 extern char ScriptType_cTank_Init[];
@@ -55,17 +55,17 @@ extern char Script_cTank_GetHitpoints[];
 extern int D_00506318;
 extern int func_002379E0();
 extern int Script_RegisterNative_2();
-extern int func_002824D0();
+extern int NetMsgTable_Add();
 extern int Script_RegisterType();
 extern int Script_RegisterNative();
 extern int cGOBJ_GetScriptTypeKeyPtr();
-void func_004D28B0(void)
+void StaticInit_RegisterTank(void)
 {
     D_00506240 = Script_RegisterNative_2(Script_CreateTank, &D_00506278, "CreateTank", 1, func_002379E0());
     g_NetCreateTankMsgKey = "cNetCreateTankMsg";
-    D_00506258 = func_002824D0(func_00283DA0, D_00506250, "cNetCreateTankMsg");
+    D_00506258 = NetMsgTable_Add(cNetCreateTankMsg_NetReceive, D_00506250, "cNetCreateTankMsg");
     D_00506260 = "cNetUpdateTankMsg";
-    D_00506270 = func_002824D0(func_002838B0, D_00506268, "cNetUpdateTankMsg");
+    D_00506270 = NetMsgTable_Add(cNetUpdateTankMsg_NetReceive, D_00506268, "cNetUpdateTankMsg");
     D_00506278 = Script_RegisterType("cTank", ScriptType_cTank_Init, 0, 1);
     D_00506280 = D_00506278;
     D_00506288 = Script_RegisterNative(D_00506278, Script_cTank_SetTurret, D_00493880, "SetTurret", 5, &D_00506278, func_002379E0(), func_002379E0(), func_002379E0(), func_002379E0());

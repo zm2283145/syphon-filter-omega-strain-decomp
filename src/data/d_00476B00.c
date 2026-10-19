@@ -3,7 +3,7 @@
 extern char D_00490000[];
 extern char D_0049B5AC[];
 extern char D_004C0300[];
-extern void func_00206B50();
+extern void MotionGraph_BuildRunRollForward();
 extern void func_00344E80();
 
 int D_00476B00[532] = {
@@ -1695,7 +1695,7 @@ void *D_0047BA70[2084] = {
     (void *)0x8000033c, (void *)0x2071fe, (void *)0x3fc00000, (void *)0x8028734e,
     (void *)0x3b7f9724, (void *)0x800002ff, (void *)0x8000033c, (void *)0x200a5e,
     (void *)0x3fc00000, (void *)0x80296b5b, (void *)0x8000033c, (void *)0x160ef66,
-    (void *)0x8000033c, &func_00206B50, (void *)0x8000033c, (void *)0x2052be,
+    (void *)0x8000033c, &MotionGraph_BuildRunRollForward, (void *)0x8000033c, (void *)0x2052be,
     (void *)0x8000033c, (void *)0x2852ad, (void *)0x8000033c, (void *)0x105e9bd,
     (void *)0x8000033c, (void *)0x1ed697c, (void *)0x8000033c, (void *)0x1f45298,
     (void *)0x8000033c, (void *)0x1002d4b, (void *)0x81e3537d, (void *)0x1e0e707,

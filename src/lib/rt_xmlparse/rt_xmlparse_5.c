@@ -12,10 +12,10 @@ extern int printf(const char *, ...);
 extern void *memcpy(void *, const void *, unsigned int);
 typedef struct { char pad[0x8414]; char buf[0x800]; int len; } Ctx313200;
 typedef struct { int type; char *str; int len; } Node313200;
-extern int func_003111E0(Ctx313200 *c, char **pstr, int size);
+extern int RtXml_Alloc(Ctx313200 *c, char **pstr, int size);
 int func_00313200(Ctx313200 *c, Node313200 *n)
 {
-    int r = func_003111E0(c, &n->str, c->len + 1);
+    int r = RtXml_Alloc(c, &n->str, c->len + 1);
     if (r) {
         printf(D_004B0DE0, D_004B0E18, 0x4C2, D_004B0F38);
         return r;
@@ -32,7 +32,7 @@ int func_00313200(Ctx313200 *c, Node313200 *n)
 /* merge_units: begin func_003132E0 */
 int func_003132E0(Ctx313200 *c, Node313200 *n)
 {
-    int r = func_003111E0(c, &n->str, c->len + 1);
+    int r = RtXml_Alloc(c, &n->str, c->len + 1);
     if (r) {
         printf(D_004B0DE0, D_004B0E18, 0x4D8, D_004B0F38);
         return r;
@@ -54,9 +54,9 @@ extern char *String_Copy(char *, const char *);
 typedef struct { char pad[0x8414]; char buf[0x800]; int len; } Ctx3133C0;
 typedef struct { int type; char *str; int len; char *attr[64]; } Node3133C0;
 #if 0 /* merge_units */
-extern int func_003111E0(Ctx3133C0 *c, char **pstr, int size);
+extern int RtXml_Alloc(Ctx3133C0 *c, char **pstr, int size);
 #endif /* merge_units */
-#define func_003111E0(a0, a1, a2) (func_003111E0((Ctx313200 *)(a0), (a1), (a2))) /* merge_units */
+#define RtXml_Alloc(a0, a1, a2) (RtXml_Alloc((Ctx313200 *)(a0), (a1), (a2))) /* merge_units */
 
 static inline int IsWs(char ch) { return ch == ' ' || ch == '\t' || ch == '\r' || ch == '\n'; }
 int func_003133C0(Ctx3133C0 *c, Node3133C0 *n)
@@ -92,7 +92,7 @@ done1:
 done2:
     for (i = 0; i < 64; i++) {
         if (n->attr[i] == 0) {
-            r = func_003111E0(c, &n->attr[i], strlen(s) + 1);
+            r = RtXml_Alloc(c, &n->attr[i], strlen(s) + 1);
             if (r) {
                 printf(D_004B0DE0, D_004B0E18, 0x510, D_004B0F38);
                 return r;
@@ -105,5 +105,5 @@ done2:
     c->len = 0;
     return 0;
 }
-#undef func_003111E0 /* merge_units */
+#undef RtXml_Alloc /* merge_units */
 /* merge_units: end func_003133C0 */

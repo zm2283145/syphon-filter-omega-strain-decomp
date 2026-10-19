@@ -365,10 +365,10 @@ void* Mem_Alloc(int pool, int size, char* file, int line);
 extern char D_0049B670[];
 extern char D_0051EE58[];
 extern "C" void Message_GetScriptTypeKey();
-extern "C" void func_002C5460();
-extern "C" void func_002C54C0();
-extern "C" void func_002C5C80();
-void * const D_004DE110[8] = { (void*)0x0, (void*)0x0, (void*)func_002C5460, (void*)func_002C54C0, (void*)func_002C5C80, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
+extern "C" void cNetCopyMsg_dtor();
+extern "C" void cNetCopyMsg_Clone();
+extern "C" void cNetCopyMsg_Serialize();
+void * const D_004DE110[8] = { (void*)0x0, (void*)0x0, (void*)cNetCopyMsg_dtor, (void*)cNetCopyMsg_Clone, (void*)cNetCopyMsg_Serialize, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
 #if 0 /* merge_units */
 void Event_Construct(void* p, char* name);
 #endif /* merge_units */
@@ -392,7 +392,7 @@ static inline void Ev_Init(Ev_8350* p, Ctl_8350* c)
     func_001584B0((char*)p + 0x30);
     p->x24 = func_001584A0(func_0012F2B0(c));
 }
-extern "C" Ev_8350* func_00158350(NPC_8350* self)
+extern "C" Ev_8350* cNPC_v22(NPC_8350* self)
 {
     Snd_8350* s = self->ctl->snd;
     if (s)

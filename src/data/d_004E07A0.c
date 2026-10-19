@@ -4,7 +4,8 @@ extern void IeDiffuseTrack_Construct();
 extern void IeScalarTrack_Construct();
 extern void IeTrack_EvaluateGroup();
 extern void Message_GetScriptTypeKey();
-extern void func_00140D40();
+extern void cCharActionMsg_dtor();
+extern void cCharActionMsg_v01();
 extern void func_003E9390();
 extern void func_003F1E40();
 extern void func_003F1ED0();
@@ -16,7 +17,6 @@ extern void func_003F4360();
 extern void func_003F43C0();
 extern void func_003FCFB0();
 extern void func_003FD0F0();
-extern void func_003FF030();
 extern void func_003FF330();
 
 void *D_004E07A0[8] = {
@@ -45,6 +45,6 @@ void *D_004E0820[8] = {
 };
 
 void *D_004E0840[8] = {
-    0, 0, &func_00140D40, &func_003FF030,
+    0, 0, &cCharActionMsg_dtor, &cCharActionMsg_v01,
     &func_003FF330, &Message_GetScriptTypeKey, 0, 0,
 };

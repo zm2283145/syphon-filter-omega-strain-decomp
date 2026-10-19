@@ -7,13 +7,13 @@
 /* merge_units: begin func_001108C8 */
 typedef struct N08C8 { char pad[0x38]; struct N08C8 *next; } N08C8;
 typedef struct { char pad[0x8]; struct N08C8 *head; } L08C8;
-extern int func_001161A0(void);
-extern int func_001161F8(void);
+extern int DIntr(void);
+extern int EIntr(void);
 
 N08C8 *func_001108C8(N08C8 *it, L08C8 *l)
 {
     N08C8 *p, *n;
-    func_001161A0();
+    DIntr();
     p = l->head;
     if (p == it) {
         l->head = p->next;
@@ -25,7 +25,7 @@ N08C8 *func_001108C8(N08C8 *it, L08C8 *l)
         p->next = it->next;
     }
 out:
-    func_001161F8();
+    EIntr();
     return p;
 }
 /* merge_units: end func_001108C8 */
@@ -38,7 +38,7 @@ extern L0960 D_004E4780;
 N0960 *func_00110960(N0960 *it)
 {
     N0960 *p, *n;
-    func_001161A0();
+    DIntr();
     p = D_004E4780.head;
     if (p == it) {
         D_004E4780.head = p->next;
@@ -50,7 +50,7 @@ N0960 *func_00110960(N0960 *it)
         p->next = it->next;
     }
 out:
-    func_001161F8();
+    EIntr();
     return p;
 }
 /* merge_units: end func_00110960 */
@@ -62,7 +62,7 @@ typedef struct { int x0; int busy; int x8; N09F0 *head; } Q09F0;
 N09F0 *func_001109F0(Q09F0 *q)
 {
     N09F0 *n;
-    func_001161A0();
+    DIntr();
     n = q->head;
     if (n == 0) {
         q->busy = 0;
@@ -70,7 +70,7 @@ N09F0 *func_001109F0(Q09F0 *q)
         q->busy = 1;
         q->head = n->next;
     }
-    func_001161F8();
+    EIntr();
     return n;
 }
 /* merge_units: end func_001109F0 */
@@ -103,12 +103,12 @@ void func_00110A48(Srv *sd)
         func_0010FB10(sd->buf, sd->size);
     if (sz > 0)
         func_0010FB10(rec, sz);
-    func_001161A0();
+    DIntr();
     if (sd->rid & 4)
         rend = func_0010FE80(D_004E4780, sd->rid >> 16);
     else
         rend = func_0010FE50(D_004E4780);
-    func_001161F8();
+    EIntr();
     rend->cid = 0x8000000A;
     rend->client = sd->client;
     if (sd->rmode) {

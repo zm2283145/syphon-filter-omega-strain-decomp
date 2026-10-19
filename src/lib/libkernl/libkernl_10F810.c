@@ -10,7 +10,7 @@ typedef struct { unsigned int src; unsigned int dest; unsigned int size; unsigne
 extern void *D_004E2D60;
 extern void func_0010FB10(void *, int);
 extern unsigned int sceSifSetDma(DmaT *, int);
-extern unsigned int func_0010D530(DmaT *, int);
+extern unsigned int isceSifSetDma(DmaT *, int);
 unsigned int func_0010F810(int cid, int mode, CmdHdr *pkt, int pktsize, void *src, void *dest, int size)
 {
     DmaT dmat[2];
@@ -41,7 +41,7 @@ unsigned int func_0010F810(int cid, int mode, CmdHdr *pkt, int pktsize, void *sr
     func_0010FB10(pkt, pktsize);
     count++;
     if (mode & 1)
-        return func_0010D530(dmat, count);
+        return isceSifSetDma(dmat, count);
     else
         return sceSifSetDma(dmat, count);
 }

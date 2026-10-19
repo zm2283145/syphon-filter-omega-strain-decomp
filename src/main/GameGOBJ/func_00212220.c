@@ -25,7 +25,7 @@ static inline void* New_00212220(int size, int line)
     AllocGuard g;
     return Mem_Alloc(0, size, D_004A4550, line);
 }
-extern "C" void func_00212220(Self_00212220* self)
+extern "C" void PathObj_CreateInfoObject(Self_00212220* self)
 {
     int ok;
     if (g_IsMultiplayer)

@@ -3,7 +3,7 @@
 
 /*
  * Virtual method 7 shared by pathed GOBJ classes: notify the attached
- * object at +0x64 (its int slot 22 with 1), run func_003CE7D0 on self,
+ * object at +0x64 (its int slot 22 with 1), run cNode_v07 on self,
  * then register self with TargetVis_Unregister(g_TargetVisMgr, self).
  * C++ only (#pragma cplusplus on before including).
  */
@@ -27,7 +27,7 @@ struct GobjV07 {
 
 extern "C" {
 extern char g_TargetVisMgr[];
-void func_003CE7D0(GobjV07* self);
+void cNode_v07(GobjV07* self);
 void TargetVis_Unregister(void* list, GobjV07* self);
 }
 
@@ -37,7 +37,7 @@ void TargetVis_Unregister(void* list, GobjV07* self);
         VSlotsInt23* a = self->attached;                                      \
         if (a)                                                                \
             a->slot22(1);                                                     \
-        func_003CE7D0(self);                                                  \
+        cNode_v07(self);                                                  \
         TargetVis_Unregister(g_TargetVisMgr, self);                                      \
     }
 

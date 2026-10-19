@@ -26,7 +26,7 @@ typedef struct {
 
 extern "C" {
 extern char D_004BC2B8[], D_004BC300[];
-void func_00383560(It_380DB0* result, void* list, It_380DB0* pos);
+void List_Erase_383560(It_380DB0* result, void* list, It_380DB0* pos);
 int func_00380360(void* t);
 void Tex_DestroyRecord(void* t, int a, int b, char* file, int line);
 void func_003801A0(Obj_380DB0* o, int v);
@@ -35,7 +35,7 @@ void* func_003BBC90(void* t);
 void func_003BB6D0(void* t, int a, int b, int c, int d, int e);
 }
 
-static inline void Erase(It_380DB0* out, List_380DB0* l, It_380DB0* b) { It_380DB0 result; It_380DB0 value; value = *b; func_00383560(&result, l, &value); *out = result; }
+static inline void Erase(It_380DB0* out, List_380DB0* l, It_380DB0* b) { It_380DB0 result; It_380DB0 value; value = *b; List_Erase_383560(&result, l, &value); *out = result; }
 
 extern "C" int func_00380DB0(Obj_380DB0* o, int a, int b, int c, int d)
 {

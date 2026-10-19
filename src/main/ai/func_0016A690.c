@@ -11,7 +11,7 @@ extern void func_0016A550(void);
 extern void func_0016A450(void);
 
 /* Initialises the service: creates its worker and handle and installs the callbacks; returns 1 on success. */
-unsigned char func_0016A690(int a)
+unsigned char cTeamDataStruct_NetRegister(int a)
 {
     unsigned char result;
     ThreadParams params;

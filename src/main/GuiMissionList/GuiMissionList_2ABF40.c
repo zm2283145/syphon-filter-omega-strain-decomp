@@ -98,7 +98,7 @@ int func_002AC470(S_002AC070* self, E_002AC070* e);
 #endif /* merge_units */
 #define func_002AC470(a0, a1) (func_002AC470((S_002AC470 *)(a0), (E_002AC470 *)(a1))) /* merge_units */
 
-void func_002AD1F0(Vec_002AC070* v, It_002AC070* pos, int n, It_002AC070* it);
+void Vector_Insert_2AD1F0(Vec_002AC070* v, It_002AC070* pos, int n, It_002AC070* it);
 #if 0 /* merge_units */
 void func_002AC6F0(S_002AC070* self);
 #endif /* merge_units */
@@ -134,7 +134,7 @@ extern "C" void func_002AC070(S_002AC070* self)
                 it.id = e->id;
                 it.idx = i;
                 it.fl = fl;
-                func_002AD1F0(&self->list, &self->list.data[self->list.count], 1, &it);
+                Vector_Insert_2AD1F0(&self->list, &self->list.data[self->list.count], 1, &it);
             }
         }
     }
@@ -201,12 +201,12 @@ typedef struct {
     int count;
     I2AC300* items;
 } S2AC300;
-extern void func_004235E0(S2AC300* s, int a, int b);
+extern void GuiArrayWidget_SendEvent20(S2AC300* s, int a, int b);
 extern void* DME_GetLobby(void);
 extern void func_00450590(void* p, int a, int b);
 void func_002AC300(S2AC300* s, int a, int sel)
 {
-    func_004235E0(s, a, sel);
+    GuiArrayWidget_SendEvent20(s, a, sel);
     s->xCC = sel;
     if (s->xCC >= 0 && s->xCC < s->count)
     {

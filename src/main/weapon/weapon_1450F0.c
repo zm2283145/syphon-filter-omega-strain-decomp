@@ -34,7 +34,7 @@ extern void WeaponDb_LoadResources(S_HOG* self);
 
 extern void ArchiveList_CloseNamed(char* a, char* b);
 extern void func_0036DEC0(void* p);
-void func_001450F0(S_HOG* self)
+void WeaponDb_UnloadWpnHog(S_HOG* self)
 {
     if (self->loaded) {
         char buf[0x80];
@@ -57,7 +57,7 @@ extern char D_0049B210[];
 extern void* Archive_Open(char* a, char* b, int c, int d);
 extern void Hog_Register(void* hog, char* name, void* arc, int z);
 extern void WeaponDb_LoadShellsArchive(S_HOG* self, void* arc);
-void func_00145160(S_HOG* self)
+void WeaponDb_LoadWpnHog(S_HOG* self)
 {
     if (!self->loaded) {
         char buf[0x80];

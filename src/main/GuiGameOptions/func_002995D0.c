@@ -2,7 +2,7 @@
 typedef struct { char pad[0x48]; char m48[0x9C]; char mE4[4]; } M2995D0;
 typedef struct { void* vt; char pad[0xDC]; M2995D0 mE0; char pad2[0x270 - 0xE0 - sizeof(M2995D0)]; M2995D0 m270; } O2995D0;
 extern void GuiGameOptions_GetClassName();
-extern void func_002996A0();
+extern void GuiGameOptions_IsType();
 extern void GuiGameOptions_HandleInput();
 extern void GuiGameOptions_HandleEvent();
 extern void GuiGameOptions_OnSaveDone();
@@ -21,7 +21,7 @@ extern void GuiWidget_Draw();
 extern void GuiWidget_ClearFlag4();
 extern void GuiWidget_SetFlag4();
 extern void GuiWidget_Deinit();
-extern void func_0041F210();
+extern void GuiWidget_Load();
 extern void * const D_004DD580[];
 extern char D_004E1220[];
 extern void FileMan_Release(void* p, int f);
@@ -41,7 +41,7 @@ static inline void Base2995D0(O2995D0* p)
         GuiWidget_Destroy(p, 0);
     }
 }
-O2995D0* func_002995D0(O2995D0* self, short del)
+O2995D0* GuiGameOptions_dtor(O2995D0* self, short del)
 {
     if (self) {
         self->vt = ((char*)D_004DD580);
@@ -53,4 +53,4 @@ O2995D0* func_002995D0(O2995D0* self, short del)
     }
     return self;
 }
-void * const D_004DD580[24] = { (void*)0x0, (void*)0x0, (void*)func_002995D0, (void*)GuiGameOptions_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiGameOptions_Wake, (void*)GuiGameOptions_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiGameOptions_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiGameOptions_Update, (void*)GuiGameOptions_HandleEvent, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiGameOptions_GetClassName, (void*)func_002996A0, (void*)GuiGameOptions_OnSaveDone };
+void * const D_004DD580[24] = { (void*)0x0, (void*)0x0, (void*)GuiGameOptions_dtor, (void*)GuiGameOptions_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiGameOptions_Wake, (void*)GuiGameOptions_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiGameOptions_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiGameOptions_Update, (void*)GuiGameOptions_HandleEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiGameOptions_GetClassName, (void*)GuiGameOptions_IsType, (void*)GuiGameOptions_OnSaveDone };

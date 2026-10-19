@@ -19,7 +19,7 @@ extern int DeleteSema(int);
 extern int WaitSema(int);
 extern int SignalSema(int);
 extern int sceSifCallRpc(void *, int, int, void *, int, void *, int, void *, void *);
-int func_001115B0(const char *name, int flags, ...)
+int sceOpen(const char *name, int flags, ...)
 {
     va_list ap;
     Sema sema;

@@ -123,15 +123,15 @@ extern "C" void GuiWidget_OnEvent();
 extern "C" void GuiWidget_ClearFlag4();
 extern "C" void GuiWidget_SetFlag4();
 extern "C" void GuiWidget_Deinit();
-extern "C" void func_0041F210();
+extern "C" void GuiWidget_Load();
 extern "C" void GuiScrollBarWidget_GetClassName();
-extern "C" void func_0043BB90();
+extern "C" void GuiScrollBarWidget_IsType();
 extern "C" void GuiScrollBarWidget_Wake();
 extern "C" void GuiScrollBarWidget_Init();
 extern void * const D_004E0F40[];
 void* GuiWidget_Destroy(void* self, short deleteFlag);
 }
-extern "C" VtableObject* func_0043BB20(VtableObject* self, short deleteFlag)
+extern "C" VtableObject* GuiScrollBarWidget_dtor(VtableObject* self, short deleteFlag)
 {
     if (self) {
         self->vtable = ((char*)D_004E0F40);
@@ -141,6 +141,6 @@ extern "C" VtableObject* func_0043BB20(VtableObject* self, short deleteFlag)
     }
     return self;
 }
-void * const D_004E0F40[24] = { (void*)0x0, (void*)0x0, (void*)func_0043BB20, (void*)GuiScrollBarWidget_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiScrollBarWidget_Wake, (void*)GuiWidget_BaseSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)func_00293950, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiWidget_OnEvent, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiScrollBarWidget_GetClassName, (void*)func_0043BB90, (void*)0x0 };
+void * const D_004E0F40[24] = { (void*)0x0, (void*)0x0, (void*)GuiScrollBarWidget_dtor, (void*)GuiScrollBarWidget_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiScrollBarWidget_Wake, (void*)GuiWidget_BaseSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)func_00293950, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiWidget_OnEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiScrollBarWidget_GetClassName, (void*)GuiScrollBarWidget_IsType, (void*)0x0 };
 #pragma pop /* merge_units */
 /* merge_units: end func_0043BB20 */

@@ -10,7 +10,7 @@ void* Mem_Alloc(int pool, int size, char* file, int line);
 void GuiScreen_ctor(void* self);
 }
 struct O349CA0 { void* vtable; char pad[0x80]; int a84; int a88; char pad8C[0x10]; int a9C; };
-extern "C" O349CA0* func_00349CA0(void)
+extern "C" O349CA0* GuiNetMessages_Create(void)
 {
     O349CA0* p;
     {

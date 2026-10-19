@@ -13,8 +13,8 @@ typedef struct lgAudSemaParam {
 
 extern void func_0010FBC0(int mode);
 extern int sceSifBindRpc(void* cd, unsigned int id, int mode);
-extern void* func_00125368(int size);
-extern void func_001253C0(void* p);
+extern void* Libc_Malloc(int size);
+extern void Libc_Free(void* p);
 extern void* memset(void* d, int c, unsigned int n);
 extern int CreateSema(lgAudSemaParam* p);
 extern void InvalidDCache(void* start, void* end);
@@ -85,9 +85,9 @@ int lgAudInit(void* (*allocFunc)(int), void (*freeFunc)(void*))
         printf(D_004B7E80);
     }
     if (allocFunc == 0)
-        allocFunc = func_00125368;
+        allocFunc = Libc_Malloc;
     if (freeFunc == 0)
-        freeFunc = func_001253C0;
+        freeFunc = Libc_Free;
     D_00491480[0] = allocFunc;
     lgAud_freeFunc = (void (*)(int))freeFunc;
     if (lgAud_heapBuf != 0 && D_00491468[0] != PKT->u.size) {

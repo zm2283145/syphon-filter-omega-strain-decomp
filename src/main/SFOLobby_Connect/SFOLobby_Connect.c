@@ -140,7 +140,7 @@ extern char D_004C0E80;             /* "SFOLobby_Connect.cc" */
 
 #pragma opt_common_subs off
 /* Sends the session key with flag (func_00468F78). */
-int func_0044C940(SFOLobby * self, int flag) {
+int SFOLobby_UpdateClientState(SFOLobby * self, int flag) {
     struct { int sessionKey[5]; int flag[3]; } sl;
     memset(sl.sessionKey, 0, 0x18);
     String_Copy(sl.sessionKey, self->sessionKey);
@@ -162,7 +162,7 @@ int func_0044C940(SFOLobby * self, int flag) {
 int SFOLobby_SetError(SFOLobby * , int, char *, int);
 int func_00468CD0();
 /* Disconnects (func_00468CD0) and forgets the connection. */
-int func_0044C9D0(SFOLobby *self) {
+int SFOLobby_DisconnectLobbyServer(SFOLobby *self) {
     self->requestResult = func_00468CD0();
     if (self->requestResult != 0) {
         SFOLobby_SetError(self, 0x2B, &D_004C0E80, 0x2A0);
@@ -180,7 +180,7 @@ int func_0044C9D0(SFOLobby *self) {
 #pragma mpwc_relax on
 
 /* Disconnects (func_00468CD0) and forgets the connection. */
-int func_0044CA30(SFOLobby *self) {
+int SFOLobby_DisconnectAuthServer(SFOLobby *self) {
     self->requestResult = func_00468CD0();
     if (self->requestResult != 0) {
         SFOLobby_SetError(self, 0x2C, &D_004C0E80, 0x288);
@@ -201,7 +201,7 @@ extern char func_00447470[];
 #pragma opt_common_subs off
 #pragma opt_loop_invariants off
 /* Request answered into reply380 (callback func_00447470); fails on a negative status. */
-int func_0044CA90(SFOLobby* s)
+int SFOLobby_EndSession(SFOLobby* s)
 {
     struct { char messageId[0x15]; char sessionKey[0x11]; } req;
     memset(&req, 0, sizeof(req));
@@ -240,7 +240,7 @@ extern char func_004471B0[];
 #pragma push
 #pragma opt_common_subs off
 /* Request answered into reply350 (callback func_004471B0); fails unless MediusSuccess. */
-int func_0044CBE0(SFOLobby* s)
+int SFOLobby_BeginSession(SFOLobby* s)
 {
     struct { char messageId[0x18]; int flag; } req;
     memset(&req, 0, sizeof(req));
@@ -331,7 +331,7 @@ void func_00447220(); /* gsynth: address taken */
 #define func_00447220 ((char *)func_00447220) /* merge_units */
 extern char func_00447D80[];
 extern char func_00447D70[];
-/* Sends the session key (same request as func_0044C940 with flag 1). */
+/* Sends the session key (same request as SFOLobby_UpdateClientState with flag 1). */
 static inline unsigned char Login_CE60(SFOLobby* s)
 {
     struct { char sessionKey[0x14]; int flag; } req;
@@ -526,9 +526,9 @@ extern int SFOLobby_ConnectAuth(SFOLobby*);
 
 
 #if 0 /* merge_units */
-extern int func_0044CBE0(SFOLobby*);
+extern int SFOLobby_BeginSession(SFOLobby*);
 #endif /* merge_units */
-#define func_0044CBE0(a0) (func_0044CBE0((a0))) /* merge_units */
+#define SFOLobby_BeginSession(a0) (SFOLobby_BeginSession((a0))) /* merge_units */
 
 extern int func_004688D8(char*);
 
@@ -553,7 +553,7 @@ int SFOLobby_Authenticate(SFOLobby* o) {
     LobbyArray_Clear(&o->accountCache);
     LobbyArray_Clear(&o->pool118);
     if (!SFOLobby_ConnectAuth(o)) return 0;
-    if (!func_0044CBE0(o)) return 0;
+    if (!SFOLobby_BeginSession(o)) return 0;
     o->requestResult = func_004688D8(o->sessionKey);
     if (o->requestResult) {
         SFOLobby_SetError(o, 0x13, D_004C0E80, 0x25);
@@ -577,7 +577,7 @@ int SFOLobby_Authenticate(SFOLobby* o) {
     return 1;
 }
 #undef SFOLobby_ConnectAuth /* merge_units */
-#undef func_0044CBE0 /* merge_units */
+#undef SFOLobby_BeginSession /* merge_units */
 #undef SFOLobby_RequestMyIp /* merge_units */
 #undef func_0044D3D0 /* merge_units */
 #pragma pop /* merge_units */

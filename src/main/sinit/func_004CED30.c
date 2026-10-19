@@ -17,7 +17,7 @@ extern int* func_0022DE60(void);
 extern int* func_0022DE00(void);
 extern int* func_0022DDA0(void);
 extern int* Checkpoint_GetScriptTypeKeyPtr(void);
-void func_004CED30(void)
+void StaticInit_RegisterCheckpoint(void)
 {
     D_004F7930 = "MSGGAME_ADD_CHECKPOINT";
     g_NotifyCheckpointMsgClass = "MSGGAME_NOTIFY_CHECKPOINT";

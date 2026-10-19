@@ -159,7 +159,7 @@ extern void GameFlow_StartMovie(Obj12FF80 *, char *, int);
 #define GameFlow_StartMovie(a0, a1, a2) (GameFlow_StartMovie((void *)(a0), (void *)(a1), (a2))) /* merge_units */
 
 extern void GameFlow_QueueMovie(Obj12FF80 *, char *);
-extern void func_002C9420(void *);
+extern void Game_GetEolMovieName(void *);
 extern void AgentData_AddLevelProgress(void *, int, int, int);
 extern void AgentData_SetLevelFlag(void *, int, int, int, int);
 extern void *D_004FFC04;
@@ -207,13 +207,13 @@ void Game_RequestEolMovie(Obj12FF80 *o)
                 AgentData_SetLevelFlag(Agent_GetSelected(o, -1), sub->id + 1, 5, 1, 1);
             }
             if (String_CompareNoCase(a, "UKRAINE") == 0) {
-                func_002C9420(o->info);
+                Game_GetEolMovieName(o->info);
                 o->prev = *(signed char *)&o->state;
                 o->state = 8;
                 Game_RequestEolMovie(o);
                 return;
             }
-            func_002C9420(D_004FFC04);
+            Game_GetEolMovieName(D_004FFC04);
             b = "_EOL";
             g_PrevGameState = g_GameState;
             g_GameState = 8;

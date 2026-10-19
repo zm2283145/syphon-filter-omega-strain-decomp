@@ -17,8 +17,8 @@ typedef struct {
     union { fractype ll; halffractype l[2]; } fraction;
 } fp_number_type;
 typedef union { DFtype value; fractype value_raw; } FLO_union_type;
-extern void func_0011BE88(FLO_union_type* src, fp_number_type* dst);
-extern DFtype func_0011BDB0(fp_number_type* src);
+extern void SoftFloat_UnpackDouble(FLO_union_type* src, fp_number_type* dst);
+extern DFtype SoftFloat_PackDouble(fp_number_type* src);
 static __inline__ int isnan_(fp_number_type* x) { return x->class == CLASS_SNAN || x->class == CLASS_QNAN; }
 static __inline__ int isinf_(fp_number_type* x) { return x->class == CLASS_INFINITY; }
 static __inline__ int iszero_(fp_number_type* x) { return x->class == CLASS_ZERO; }
@@ -88,10 +88,10 @@ DFtype SoftFloat_DoubleMultiply(DFtype arg_a, DFtype arg_b)
     FLO_union_type au, bu;
     au.value = arg_a;
     bu.value = arg_b;
-    func_0011BE88(&au, &a);
-    func_0011BE88(&bu, &b);
+    SoftFloat_UnpackDouble(&au, &a);
+    SoftFloat_UnpackDouble(&bu, &b);
     res = _fpmul_parts(&a, &b, &tmp);
-    return func_0011BDB0(res);
+    return SoftFloat_PackDouble(res);
 }
 /* merge_units: end func_0011C268 */
 
@@ -141,15 +141,15 @@ static __inline__ fp_number_type* _fpdiv_parts(fp_number_type* a, fp_number_type
         return (a);
     }
 }
-DFtype func_0011C4F0(DFtype arg_a, DFtype arg_b)
+DFtype SoftFloat_DoubleDivide(DFtype arg_a, DFtype arg_b)
 {
     fp_number_type a;
     fp_number_type b;
     fp_number_type* res;
-    func_0011BE88((FLO_union_type*)&arg_a, &a);
-    func_0011BE88((FLO_union_type*)&arg_b, &b);
+    SoftFloat_UnpackDouble((FLO_union_type*)&arg_a, &a);
+    SoftFloat_UnpackDouble((FLO_union_type*)&arg_b, &b);
     res = _fpdiv_parts(&a, &b);
-    return func_0011BDB0(res);
+    return SoftFloat_PackDouble(res);
 }
 /* merge_units: end func_0011C4F0 */
 
@@ -207,15 +207,15 @@ int SoftFloat_UnpackAndCompare(DFtype arg_a, DFtype arg_b)
     FLO_union_type au, bu;
     au.value = arg_a;
     bu.value = arg_b;
-    func_0011BE88(&au, &a);
-    func_0011BE88(&bu, &b);
+    SoftFloat_UnpackDouble(&au, &a);
+    SoftFloat_UnpackDouble(&bu, &b);
     return SoftFloat_DoubleCompare(&a, &b);
 }
 #undef SoftFloat_DoubleCompare /* merge_units */
 /* merge_units: end func_0011C750 */
 
 /* merge_units: begin func_0011C7A0 */
-DFtype func_0011C7A0(int arg_a)
+DFtype SoftFloat_IntToDouble(int arg_a)
 {
     fp_number_type in;
     in.class = CLASS_NUMBER;
@@ -236,18 +236,18 @@ DFtype func_0011C7A0(int arg_a)
             in.normal_exp -= 1;
         }
     }
-    return func_0011BDB0(&in);
+    return SoftFloat_PackDouble(&in);
 }
 /* merge_units: end func_0011C7A0 */
 
 /* merge_units: begin func_0011C858 */
-int func_0011C858(DFtype arg_a)
+int SoftFloat_DoubleToInt(DFtype arg_a)
 {
     fp_number_type a;
     int tmp;
     FLO_union_type au;
     au.value = arg_a;
-    func_0011BE88(&au, &a);
+    SoftFloat_UnpackDouble(&au, &a);
     if (iszero_(&a)) return 0;
     if (isnan_(&a)) return 0;
     if (isinf_(&a)) return a.sign ? (-0x7fffffff) - 1 : 0x7fffffff;
@@ -259,30 +259,30 @@ int func_0011C858(DFtype arg_a)
 /* merge_units: end func_0011C858 */
 
 /* merge_units: begin func_0011C8F8 */
-DFtype func_0011C8F8(fp_class_type class, unsigned int sign, int exp, fractype frac)
+DFtype SoftFloat_MakeDouble(fp_class_type class, unsigned int sign, int exp, fractype frac)
 {
     fp_number_type in;
     in.class = class;
     in.sign = sign;
     in.normal_exp = exp;
     in.fraction.ll = frac;
-    return func_0011BDB0(&in);
+    return SoftFloat_PackDouble(&in);
 }
 /* merge_units: end func_0011C8F8 */
 
 /* merge_units: begin func_0011C928 */
-extern float func_0011BD40(fp_class_type class, unsigned int sign, int exp, unsigned int frac);
+extern float SoftFloat_MakeFloat(fp_class_type class, unsigned int sign, int exp, unsigned int frac);
 float SoftFloat_DoubleToFloat(DFtype arg_a)
 {
     fp_number_type in;
     unsigned int sffrac;
     FLO_union_type au;
     au.value = arg_a;
-    func_0011BE88(&au, &in);
+    SoftFloat_UnpackDouble(&au, &in);
     sffrac = in.fraction.ll >> 30;
     if ((in.fraction.ll & (((unsigned int)1 << 30) - 1)) != 0)
         sffrac |= 1;
-    return func_0011BD40(in.class, in.sign, in.normal_exp, sffrac);
+    return SoftFloat_MakeFloat(in.class, in.sign, in.normal_exp, sffrac);
 }
 /* merge_units: end func_0011C928 */
 
@@ -292,7 +292,7 @@ unsigned int func_0011C980(DFtype arg_a)
     fp_number_type a;
     FLO_union_type au;
     au.value = arg_a;
-    func_0011BE88(&au, &a);
+    SoftFloat_UnpackDouble(&au, &a);
     if (iszero_(&a)) return 0;
     if (isnan_(&a)) return 0;
     if (a.sign) return 0;
@@ -310,10 +310,10 @@ unsigned int func_0011C980(DFtype arg_a)
 /* __ieee754_rem_pio2 (newlib e_rem_pio2.c); retail newlib was built with -g. */
 __asm__(".set nomove\n"
         "dpadd = SoftFloat_DoubleAdd\n"
-        "dpsub = func_0011C200\n"
+        "dpsub = SoftFloat_DoubleSub\n"
         "dpmul = SoftFloat_DoubleMultiply\n"
-        "litodp = func_0011C7A0\n"
-        "dptoli = func_0011C858\n"
+        "litodp = SoftFloat_IntToDouble\n"
+        "dptoli = SoftFloat_DoubleToInt\n"
         "dpcmp = SoftFloat_UnpackAndCompare\n");
 typedef int __int32_t;
 typedef unsigned int __uint32_t;

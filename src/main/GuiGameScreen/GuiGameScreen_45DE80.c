@@ -30,7 +30,7 @@ int ActorModel_Release(int);
 int GuiWidget_Deinit();                                  
 extern unsigned char g_ProfileLockEnabled;
 }
-extern "C" void func_0045DE80(char * arg0) {
+extern "C" void GuiGameScreen_Deinit(char * arg0) {
     int temp_a0;
     int temp_a0_2;
     int temp_s1;

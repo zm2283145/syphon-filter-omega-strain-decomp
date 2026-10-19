@@ -9,10 +9,10 @@ struct malloc_chunk {
 typedef struct malloc_chunk* mchunkptr;
 struct _reent;
 extern void* _malloc_r(struct _reent*, size_t);
-extern void func_001261B0(struct _reent*);
-extern void func_00126230(struct _reent*);
+extern void Newlib_MallocLock(struct _reent*);
+extern void Newlib_MallocUnlock(struct _reent*);
 extern void _free_r(struct _reent*, void*);
-extern unsigned long func_0011B278(unsigned long, unsigned long);
+extern unsigned long Libgcc_Umoddi3(unsigned long, unsigned long);
 
 #define SIZE_SZ (sizeof(INTERNAL_SIZE_T))
 #define MALLOC_ALIGNMENT (SIZE_SZ + SIZE_SZ + SIZE_SZ + SIZE_SZ)
@@ -56,11 +56,11 @@ void* func_001251A0(struct _reent* reent_ptr, size_t alignment, size_t bytes)
 
     if (m == 0) return 0;
 
-    func_001261B0(reent_ptr);
+    Newlib_MallocLock(reent_ptr);
 
     p = mem2chunk(m);
 
-    if (func_0011B278((unsigned long)(m), alignment) != 0)
+    if (Libgcc_Umoddi3((unsigned long)(m), alignment) != 0)
     {
         brk = (char*)mem2chunk(((unsigned long)(m + alignment - 1)) & -((signed) alignment));
         if ((long)(brk - (char*)(p)) < (long)MINSIZE) brk = brk + alignment;
@@ -86,6 +86,6 @@ void* func_001251A0(struct _reent* reent_ptr, size_t alignment, size_t bytes)
         _free_r(reent_ptr, chunk2mem(remainder));
     }
 
-    func_00126230(reent_ptr);
+    Newlib_MallocUnlock(reent_ptr);
     return chunk2mem(p);
 }

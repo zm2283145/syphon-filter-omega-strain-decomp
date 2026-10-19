@@ -17,15 +17,29 @@ extern void Curve_VirtualNop();
 extern void GObj_GetID();
 extern void GObj_GetLifeState();
 extern void GObj_GetWorldMatrix();
+extern void GuiAgentModify_Create();
 extern void GuiAgentModify_Deinit();
 extern void GuiAgentModify_Draw();
 extern void GuiAgentModify_GetClassName();
 extern void GuiAgentModify_HandleEvent();
 extern void GuiAgentModify_HandleInput();
 extern void GuiAgentModify_Init();
+extern void GuiAgentModify_IsType();
+extern void GuiAgentModify_ReturnToCommandCenter();
 extern void GuiAgentModify_Sleep();
 extern void GuiAgentModify_Update();
 extern void GuiAgentModify_Wake();
+extern void GuiAgentModify_dtor();
+extern void GuiMenuScreen_HandleEvent();
+extern void GuiMenuScreen_HandleInput();
+extern void GuiMenuScreen_Init();
+extern void GuiMenuScreen_JoinGame();
+extern void GuiMenuScreen_OpenAgentInfo();
+extern void GuiMenuScreen_OpenKeyboard();
+extern void GuiMenuScreen_Sleep();
+extern void GuiMenuScreen_Update();
+extern void GuiMenuScreen_Wake();
+extern void GuiSaveAgentWidget_GetClassName();
 extern void GuiSaveAgentWidget_IsType();
 extern void GuiScreen_HandleEvent();
 extern void GuiScreen_HandleInput();
@@ -34,6 +48,7 @@ extern void GuiScreen_PollLobby();
 extern void GuiScreen_Sleep();
 extern void GuiScreen_Update();
 extern void GuiScreen_Wake();
+extern void GuiScreen_dtor();
 extern void GuiWidget_BubbleActivate();
 extern void GuiWidget_BubbleType0();
 extern void GuiWidget_BubbleType1();
@@ -44,6 +59,7 @@ extern void GuiWidget_FocusFirst();
 extern void GuiWidget_FocusLast();
 extern void GuiWidget_FocusNext();
 extern void GuiWidget_FocusPrev();
+extern void GuiWidget_Load();
 extern void GuiWidget_SetFlag4();
 extern void Node_ClearFlag2C();
 extern void Node_GetComponentMatrix();
@@ -61,6 +77,21 @@ extern void PathObj_GetPosition();
 extern void Player_GetActiveWeapon();
 extern void cGOBJ_v0B();
 extern void cGOBJ_v0C();
+extern void cGOBJ_v35();
+extern void cGOBJ_v39();
+extern void cNode_v06();
+extern void cNode_v07();
+extern void cNode_v0D();
+extern void cNode_v14();
+extern void cNode_v24();
+extern void cNode_v25();
+extern void cNode_v26();
+extern void cNode_v27();
+extern void cNode_v28();
+extern void cNode_v29();
+extern void cNode_v2A();
+extern void cNode_v2B();
+extern void cNode_v3A();
 extern void func_0012ED00();
 extern void func_0012ED30();
 extern void func_0012ED40();
@@ -92,71 +123,40 @@ extern void func_00180790();
 extern void func_001807A0();
 extern void func_001AEFE0();
 extern void func_00293890();
-extern void func_00293910();
 extern void func_0029CB90();
 extern void func_0029CBA0();
 extern void func_002A8B50();
 extern void func_002A9390();
-extern void func_0033D430();
-extern void func_0033DA00();
-extern void func_0033DE00();
-extern void func_0033DF00();
-extern void func_0033E410();
-extern void func_0033E5B0();
-extern void func_0033EE40();
-extern void func_0033F050();
 extern void func_0033F0C0();
-extern void func_0033F110();
-extern void func_0033F250();
-extern void func_0033F9D0();
-extern void func_0033FA00();
-extern void func_00343BF0();
-extern void func_00346C10();
-extern void func_003CD090();
-extern void func_003CD110();
-extern void func_003CD4A0();
-extern void func_003CD7A0();
-extern void func_003CD920();
-extern void func_003CDA60();
-extern void func_003CDBE0();
-extern void func_003CDC20();
-extern void func_003CDD40();
-extern void func_003CDD80();
-extern void func_003CDDC0();
-extern void func_003CE7D0();
-extern void func_003CE810();
-extern void func_003CE9D0();
-extern void func_003CEA00();
-extern void func_0041F210();
 
 void *D_004DE830[28] = {
-    0, 0, &func_0033D430, &GuiScreen_Init,
+    0, 0, &GuiScreen_dtor, &GuiScreen_Init,
     &GuiWidget_Deinit, &GuiWidget_SetFlag4, &GuiWidget_ClearFlag4, &GuiScreen_Wake,
     &GuiScreen_Sleep, &GuiWidget_BubbleType0, &GuiWidget_BubbleType1, &GuiScreen_HandleInput,
     &GuiWidget_Draw, &GuiWidget_BubbleActivate, &GuiScreen_Update, &GuiScreen_HandleEvent,
-    &func_0041F210, &GuiWidget_FocusFirst, &GuiWidget_FocusLast, &GuiWidget_FocusNext,
-    &GuiWidget_FocusPrev, &func_00293910, &GuiSaveAgentWidget_IsType, &func_00293890,
+    &GuiWidget_Load, &GuiWidget_FocusFirst, &GuiWidget_FocusLast, &GuiWidget_FocusNext,
+    &GuiWidget_FocusPrev, &GuiSaveAgentWidget_GetClassName, &GuiSaveAgentWidget_IsType, &func_00293890,
     &GuiScreen_PollLobby, &func_0029CB90, &func_0029CBA0, 0,
 };
 
 void *D_004DE8A0[32] = {
-    0, 0, &func_002A9390, &func_0033F250,
-    &GuiWidget_Deinit, &GuiWidget_SetFlag4, &GuiWidget_ClearFlag4, &func_0033F110,
-    &func_0033F050, &GuiWidget_BubbleType0, &GuiWidget_BubbleType1, &func_0033DA00,
-    &GuiWidget_Draw, &GuiWidget_BubbleActivate, &func_0033DE00, &func_0033DF00,
-    &func_0041F210, &GuiWidget_FocusFirst, &GuiWidget_FocusLast, &GuiWidget_FocusNext,
-    &GuiWidget_FocusPrev, &func_00293910, &GuiSaveAgentWidget_IsType, &func_00293890,
-    &GuiScreen_PollLobby, &func_0029CB90, &func_0033F0C0, &func_0033EE40,
-    &func_0033E410, &func_0033E5B0, &func_002A8B50, 0,
+    0, 0, &func_002A9390, &GuiMenuScreen_Init,
+    &GuiWidget_Deinit, &GuiWidget_SetFlag4, &GuiWidget_ClearFlag4, &GuiMenuScreen_Wake,
+    &GuiMenuScreen_Sleep, &GuiWidget_BubbleType0, &GuiWidget_BubbleType1, &GuiMenuScreen_HandleInput,
+    &GuiWidget_Draw, &GuiWidget_BubbleActivate, &GuiMenuScreen_Update, &GuiMenuScreen_HandleEvent,
+    &GuiWidget_Load, &GuiWidget_FocusFirst, &GuiWidget_FocusLast, &GuiWidget_FocusNext,
+    &GuiWidget_FocusPrev, &GuiSaveAgentWidget_GetClassName, &GuiSaveAgentWidget_IsType, &func_00293890,
+    &GuiScreen_PollLobby, &func_0029CB90, &func_0033F0C0, &GuiMenuScreen_OpenKeyboard,
+    &GuiMenuScreen_OpenAgentInfo, &GuiMenuScreen_JoinGame, &func_002A8B50, 0,
 };
 
 void *D_004DE920[116] = {
-    0, 0, &func_00343BF0, &GuiAgentModify_Init,
+    0, 0, &GuiAgentModify_dtor, &GuiAgentModify_Init,
     &GuiAgentModify_Deinit, &GuiWidget_SetFlag4, &GuiWidget_ClearFlag4, &GuiAgentModify_Wake,
     &GuiAgentModify_Sleep, &GuiWidget_BubbleType0, &GuiWidget_BubbleType1, &GuiAgentModify_HandleInput,
     &GuiAgentModify_Draw, &GuiWidget_BubbleActivate, &GuiAgentModify_Update, &GuiAgentModify_HandleEvent,
-    &func_0041F210, &GuiWidget_FocusFirst, &GuiWidget_FocusLast, &GuiWidget_FocusNext,
-    &GuiWidget_FocusPrev, &GuiAgentModify_GetClassName, &func_0033F9D0, &func_0033FA00,
+    &GuiWidget_Load, &GuiWidget_FocusFirst, &GuiWidget_FocusLast, &GuiWidget_FocusNext,
+    &GuiWidget_FocusPrev, &GuiAgentModify_GetClassName, &GuiAgentModify_IsType, &GuiAgentModify_ReturnToCommandCenter,
     0, 0, &func_0017ECD0, &func_00180020,
     0, 0, &Curve_Retarget, &Curve_VirtualNop,
     &Curve_SetVelocity, 0, 0, 0,
@@ -165,24 +165,24 @@ void *D_004DE920[116] = {
     &AnimChannel_UpdateRate, 0, 0, 0,
     0, 0, &func_0017F080, &Object_HandleMessage,
     &GObj_GetID, &Object_GetAttachedOrSelf, &func_0015C090, &func_0012ED00,
-    &func_003CE810, &func_003CE7D0, &func_0012ED30, &func_0012ED40,
-    &func_0012ED50, &cGOBJ_v0B, &cGOBJ_v0C, &func_003CEA00,
+    &cNode_v06, &cNode_v07, &func_0012ED30, &func_0012ED40,
+    &func_0012ED50, &cGOBJ_v0B, &cGOBJ_v0C, &cNode_v0D,
     &func_00180780, &func_00180790, &func_001807A0, &Actor_BasePreLogic,
-    &Actor_BaseWorldUpdate, &Actor_VirtualNop, &func_003CE9D0, &Object_Activate,
+    &Actor_BaseWorldUpdate, &Actor_VirtualNop, &cNode_v14, &Object_Activate,
     &Object_Deactivate, &Node_SetFlag2C, &Node_ClearFlag2C, &Node_GetFlag2C,
     &func_0015BFB0, &func_0015BFC0, &func_0015BFD0, &func_00148870,
     &func_0015BFF0, &func_0015BFE0, &func_0013EE60, &func_0015C000,
-    &Object_AttachTransform, &Player_GetActiveWeapon, &func_003CDDC0, &func_003CDD80,
-    &func_003CDD40, &func_003CDC20, &func_003CDBE0, &func_003CDA60,
-    &func_003CD920, &func_003CD7A0, &func_0015C010, &func_00153860,
+    &Object_AttachTransform, &Player_GetActiveWeapon, &cNode_v24, &cNode_v25,
+    &cNode_v26, &cNode_v27, &cNode_v28, &cNode_v29,
+    &cNode_v2A, &cNode_v2B, &func_0015C010, &func_00153860,
     &Object_GetEye, &func_0015C020, &func_00140E90, &func_0015C030,
-    &func_0015C040, &func_0015C050, &Node_GetWorldMatrix, &func_003CD4A0,
-    &Node_GetLightRefPoint, &PathObj_GetPosition, &Node_GetComponentMatrix, &func_003CD110,
-    &func_003CD090, &GObj_GetWorldMatrix, &func_0013E060, &func_0015C080,
+    &func_0015C040, &func_0015C050, &Node_GetWorldMatrix, &cGOBJ_v35,
+    &Node_GetLightRefPoint, &PathObj_GetPosition, &Node_GetComponentMatrix, &cGOBJ_v39,
+    &cNode_v3A, &GObj_GetWorldMatrix, &func_0013E060, &func_0015C080,
     &Actor_ApplyContactDamage, &func_0015C0A0, &GObj_GetLifeState, &Controller_DeathNotice,
 };
 
 void *D_004DEAF0[8] = {
-    0, 0, &func_00346C10, 0,
+    0, 0, &GuiAgentModify_Create, 0,
     0, 0, 0, 0,
 };

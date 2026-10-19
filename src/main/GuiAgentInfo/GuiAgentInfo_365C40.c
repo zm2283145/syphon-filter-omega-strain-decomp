@@ -11,7 +11,7 @@
 #include "stream_string_dtor.h"
 
 /* Destroy a string holder: free heap storage, optionally delete. */
-DEFINE_STREAM_STRING_DTOR(func_00365C40)
+DEFINE_STREAM_STRING_DTOR(String_Dtor_365C40)
 #pragma pop /* merge_units */
 /* merge_units: end func_00365C40 */
 
@@ -22,7 +22,7 @@ DEFINE_STREAM_STRING_DTOR(func_00365C40)
 #include "ptrvec_insert.h"
 
 extern "C" { char D_004BBAA0[] = "vector::insert length error\n"; }
-DEFINE_PTRVEC_INSERT(func_00365D30, 0x1800000, 0xC00000, D_004BBAA0, D_0049AE50, 0x5C, D_0049AF00, 0x64)
+DEFINE_PTRVEC_INSERT(Vector_Insert_365D30, 0x1800000, 0xC00000, D_004BBAA0, D_0049AE50, 0x5C, D_0049AF00, 0x64)
 #pragma pop /* merge_units */
 /* merge_units: end func_00365D30 */
 
@@ -32,7 +32,7 @@ DEFINE_PTRVEC_INSERT(func_00365D30, 0x1800000, 0xC00000, D_004BBAA0, D_0049AE50,
 #include "ptrvec_reserve.h"
 
 extern "C" { char D_004BBAC0[] = "vector::reserve length error\n"; }
-DEFINE_PTRVEC_RESERVE(func_00366200, 0x1800000, D_004BBAC0, D_0049AE50, 0x5C, D_0049AF00, 0x64)
+DEFINE_PTRVEC_RESERVE(Vector_Reserve_366200, 0x1800000, D_004BBAC0, D_0049AE50, 0x5C, D_0049AF00, 0x64)
 #pragma pop /* merge_units */
 /* merge_units: end func_00366200 */
 
@@ -44,7 +44,7 @@ DEFINE_PTRVEC_RESERVE(func_00366200, 0x1800000, D_004BBAC0, D_0049AE50, 0x5C, D_
 /* Resize a vector of 60-byte elements. */
 DEFINE_RESIZE_ELEMENT(Elem60, 60)
 #pragma opt_common_subs off
-DEFINE_VECTOR_RESIZE(func_00366450, Elem60, AnimChannelVec_Grow, func_001BEB20)
+DEFINE_VECTOR_RESIZE(ChannelVector_Resize_366450, Elem60, AnimChannelVec_Grow, func_001BEB20)
 #pragma opt_common_subs reset
 #pragma pop /* merge_units */
 /* merge_units: end func_00366450 */
@@ -56,7 +56,7 @@ DEFINE_VECTOR_RESIZE(func_00366450, Elem60, AnimChannelVec_Grow, func_001BEB20)
 /* Resize a vector of 8-byte elements. */
 DEFINE_RESIZE_ELEMENT(Elem8, 8)
 #pragma opt_common_subs off
-DEFINE_VECTOR_RESIZE(func_003664E0, Elem8, func_001BF5A0, func_001BF440)
+DEFINE_VECTOR_RESIZE(func_003664E0, Elem8, Vector_Insert_1BF5A0, func_001BF440)
 #pragma opt_common_subs reset
 #pragma pop /* merge_units */
 /* merge_units: end func_003664E0 */

@@ -15,7 +15,7 @@ extern char D_004E1490[];
 void GuiWidget_ctor(void* self);
 }
 struct GN457510 { void* vtable; char pad[0x10]; unsigned short flags; };
-extern "C" GN457510* func_00457510(void)
+extern "C" GN457510* GuiStartMenuBackdrop_Create(void)
 {
     GN457510* p;
     {
@@ -52,7 +52,7 @@ extern char D_004C1CA0;
 extern char D_004E1430;
 extern unsigned char g_ProfileLockEnabled;
 }
-extern "C" char * func_004575D0(void) {
+extern "C" char * GuiStartMenu_Create(void) {
     char * temp_s0;
 
     {
@@ -93,7 +93,7 @@ DEFINE_GUARDED_NEW_VT(GuiBriefingPane_Create, 0x4C, D_004C1CB0, GuiWidget_ctor, 
 #pragma cplusplus on
 
 extern "C" { char D_004C1CC0[] = "guiWidget.hh"; }
-DEFINE_GUARDED_NEW_VT(func_00457780, 0xC0, D_004C1CC0, guiTextArrayWidget_ctor, D_004E1350)
+DEFINE_GUARDED_NEW_VT(GuiWeaponStats_Create, 0xC0, D_004C1CC0, guiTextArrayWidget_ctor, D_004E1350)
 #pragma pop /* merge_units */
 /* merge_units: end func_00457780 */
 
@@ -102,7 +102,7 @@ DEFINE_GUARDED_NEW_VT(func_00457780, 0xC0, D_004C1CC0, guiTextArrayWidget_ctor, 
 #pragma cplusplus on
 
 extern "C" { char D_004C1CD0[] = "guiWidget.hh"; }
-DEFINE_GUARDED_NEW_VT(func_00457840, 0x58, D_004C1CD0, GuiWidget_ctor, D_004E12F0)
+DEFINE_GUARDED_NEW_VT(GuiEquipmentPane_Create, 0x58, D_004C1CD0, GuiWidget_ctor, D_004E12F0)
 #pragma pop /* merge_units */
 /* merge_units: end func_00457840 */
 
@@ -167,7 +167,7 @@ static inline void SndReq_Ctor(SndReq* p, void* voice) {
     p->x186 = 0;
 }
 #pragma opt_dead_code off
-extern "C" W57900* func_00457900(void) {
+extern "C" W57900* GuiRadioLog_Create(void) {
     W57900* p;
     {
         AllocGuard g;

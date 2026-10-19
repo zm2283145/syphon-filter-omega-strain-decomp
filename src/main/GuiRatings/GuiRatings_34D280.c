@@ -13,7 +13,7 @@ int strcmp(const void *, const void *);
 /* merge_units: begin func_0034D280 */
 #pragma push /* merge_units */
 /* Returns whether name equals the string "GuiRatings". */
-int func_0034D280(void* self, const char* name)
+int GuiRatings_IsType(void* self, const char* name)
 {
     return strcmp("GuiRatings", name) == 0;
 }

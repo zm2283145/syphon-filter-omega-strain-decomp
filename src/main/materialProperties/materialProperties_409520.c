@@ -47,7 +47,7 @@ typedef struct { int a[4]; } S409;
 typedef struct { int f0, f4, f8, fc, f10, f14, f18, f1c, f20, f24, f28, f2c; float f30; unsigned char b34; } O409;
 extern int String_CompareNoCase(char*, char*);
 extern void String_CtorCStr_13B480(S409*, char*);
-extern void func_0013D680(void*, S409*);
+extern void String_AssignString(void*, S409*);
 extern void String_Dtor(S409*, int);
 O409* MaterialProp_Build(O409* o, char* a, int b, char* c, char* d, float f, unsigned char g) {
     S409 s1;
@@ -68,7 +68,7 @@ O409* MaterialProp_Build(O409* o, char* a, int b, char* c, char* d, float f, uns
         o->fc = -2;
     } else {
         String_CtorCStr_13B480(&s1, a);
-        func_0013D680(o, &s1);
+        String_AssignString(o, &s1);
         String_Dtor(&s1, 0);
         o->fc = -1;
     }
@@ -79,14 +79,14 @@ O409* MaterialProp_Build(O409* o, char* a, int b, char* c, char* d, float f, uns
     } else {
         o->f10 = b;
         String_CtorCStr_13B480(&s2, c);
-        func_0013D680(&o->f14, &s2);
+        String_AssignString(&o->f14, &s2);
         String_Dtor(&s2, 0);
     }
     if (d && !String_CompareNoCase(d, "none")) {
         o->f2c = -2;
     } else {
         String_CtorCStr_13B480(&s3, d);
-        func_0013D680(&o->f20, &s3);
+        String_AssignString(&o->f20, &s3);
         String_Dtor(&s3, 0);
         o->f2c = -1;
     }
@@ -142,6 +142,6 @@ DEFINE_TREE_FIND(func_00409870, func_0013C310)
 #include "vector_insert_fill_obj.h"
 
 extern "C" { char D_004BEBB0[] = "vector::insert length error\n"; }
-DEFINE_VECTOR_INSERT_FILL_OBJ(func_00409940, 0x124, 0x542A1, 0x2A150, D_004BEBB0, D_004BEC98, 0x5C, func_00139BC0, func_0040A110, func_0040A070, func_00409E30, func_00409DF0, func_0040A210)
+DEFINE_VECTOR_INSERT_FILL_OBJ(func_00409940, 0x124, 0x542A1, 0x2A150, D_004BEBB0, D_004BEC98, 0x5C, Mem_PlacementNew, func_0040A110, func_0040A070, func_00409E30, func_00409DF0, func_0040A210)
 #pragma pop /* merge_units */
 /* merge_units: end func_00409940 */

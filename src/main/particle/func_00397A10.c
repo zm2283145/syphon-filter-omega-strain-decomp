@@ -12,7 +12,7 @@ extern "C" void PhysEmitter_Update();
 extern void * const D_004DFA80[];
 extern "C" char D_004DFB50[];
 extern "C" char D_004DFAD8[];
-extern "C" VtableChainObject* func_00397A10(VtableChainObject* self,
+extern "C" VtableChainObject* PhysEmitter_dtor(VtableChainObject* self,
                                    short deleteFlag)
 {
     if (self) {
@@ -27,4 +27,4 @@ extern "C" VtableChainObject* func_00397A10(VtableChainObject* self,
     }
     return self;
 }
-void * const D_004DFA80[8] = { (void*)0x0, (void*)0x0, (void*)func_00397A10, (void*)PhysEmitter_Draw, (void*)PhysEmitter_Update, (void*)func_00397A80, (void*)ParticleEmitter_IsDead, (void*)func_00397A90 };
+void * const D_004DFA80[8] = { (void*)0x0, (void*)0x0, (void*)PhysEmitter_dtor, (void*)PhysEmitter_Draw, (void*)PhysEmitter_Update, (void*)func_00397A80, (void*)ParticleEmitter_IsDead, (void*)func_00397A90 };

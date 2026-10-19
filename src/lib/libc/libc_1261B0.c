@@ -8,11 +8,11 @@
 int D_00489BA0 = -1;
 int D_00489BA4 = 0;
 extern int D_004868D0;
-extern int func_0010D050(void);
+extern int GetThreadId(void);
 extern void WaitSema(int);
-void func_001261B0(void)
+void Newlib_MallocLock(void)
 {
-    int self = func_0010D050();
+    int self = GetThreadId();
     if (D_00489BA0 == self) {
         D_00489BA4++;
         return;
@@ -27,7 +27,7 @@ void func_001261B0(void)
 extern int D_00489BA4;
 extern int D_00489BA0;
 extern void SignalSema(int);
-void func_00126230(void)
+void Newlib_MallocUnlock(void)
 {
     if (--D_00489BA4 == 0) {
         D_00489BA0 = -1;
@@ -40,7 +40,7 @@ void func_00126230(void)
 typedef struct B00126280 { struct B00126280 *_next; int _k, _maxwds, _sign, _wds; unsigned int _x[1]; } B00126280;
 typedef struct { char p[0x4C]; B00126280 **_freelist; } R00126280;
 extern void *Newlib_CallocR(R00126280 *, int, int);
-B00126280 *func_00126280(R00126280 *ptr, int k)
+B00126280 *Newlib_Balloc(R00126280 *ptr, int k)
 {
     int x;
     B00126280 *rv;

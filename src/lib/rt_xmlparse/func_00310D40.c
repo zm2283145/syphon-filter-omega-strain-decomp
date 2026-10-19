@@ -3,7 +3,7 @@ extern int Net_AllocZeroed(void **pp, unsigned long size);
 extern int func_002FB2D8(void **pp, unsigned long size);
 extern void func_002FB3C0(void *pp);
 typedef struct { char pad[0x8000]; unsigned int size; char pad2[0x8410 - 0x8004]; int x8410; } Ctx310D40;
-int func_00310D40(Ctx310D40 **out, int flags, unsigned int size)
+int RtXml_CreateParser(Ctx310D40 **out, int flags, unsigned int size)
 {
     Ctx310D40 *c = 0;
     void *h = 0;

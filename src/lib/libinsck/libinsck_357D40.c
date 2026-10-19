@@ -8,7 +8,7 @@
 
 extern char D_00492CE0[];
 extern char D_005335D8[];
-extern int func_00125368(int);
+extern int Libc_Malloc(int);
 
 int func_00357D40(void) {
     int tmp0;
@@ -27,7 +27,7 @@ int func_00357D50(void) {
     v0 = ((int (*)(void))v0)();
     goto L00357D80;
 L00357D74:;
-    v0 = func_00125368(a0);
+    v0 = Libc_Malloc(a0);
 L00357D80:;
     goto ret;
 ret:

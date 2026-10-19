@@ -84,11 +84,11 @@ void ScriptType_cSKYBOX_GOBJ_Init(void) {
     ScriptType_SetParent(D_00542CA0, *parent);
 }
 
-int func_003BBD90(void) {
+int cSKYBOX_GOBJ_v0B(void) {
     return D_00542C98;
 }
 
-int func_003BBDA0(int a0, int a1) {
+int cSKYBOX_GOBJ_v0C(int a0, int a1) {
     return ScriptFilter_Dispatch(D_00555070, a0, a1);
 }
 /* merge_units: generate this block's code under its own pragmas */

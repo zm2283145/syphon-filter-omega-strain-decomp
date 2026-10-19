@@ -9,6 +9,6 @@
 char D_004ABC60[] = "GuiChatWindow";   /* "GuiChatWindow" */
 
 /* Class name getter: "GuiChatWindow". */
-char* func_002AEF00(void) {
+char* GuiChatWindow_GetClassName(void) {
     return D_004ABC60;
 }

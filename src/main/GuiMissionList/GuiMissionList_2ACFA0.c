@@ -22,7 +22,7 @@ DEFINE_NESTED_NULL_DTOR2(func_002ACFA0, func_002AD780)
 #include "vtable_member_base_dtor.h"
 
 /* Derived destructor: member, then base, optionally delete. */
-DEFINE_VTABLE_MEMBER_BASE_DTOR(func_002AD000, D_004E0D20, 0x60, func_0013A040, GuiWidget_Destroy)
+DEFINE_VTABLE_MEMBER_BASE_DTOR(GuiArrayWidget_dtor, D_004E0D20, 0x60, func_0013A040, GuiWidget_Destroy)
 #pragma pop /* merge_units */
 /* merge_units: end func_002AD000 */
 

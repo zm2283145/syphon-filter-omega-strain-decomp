@@ -20,7 +20,7 @@ extern "C" {
 extern char* D_0048BCF8;
 extern char D_004A9870[];
 extern char D_004A7520[];
-void func_0033F250(S_002AFDC0* self);
+void GuiMenuScreen_Init(S_002AFDC0* self);
 void* GuiWidget_FindChildByName(S_002AFDC0* self, char* name);
 void func_0041C0D0(W_002AFDC0* w, int a);
 }
@@ -29,9 +29,9 @@ static inline W_002AFDC0* FindAs_002AFDC0(S_002AFDC0* self, char* name, char* ty
     W_002AFDC0* w = (W_002AFDC0*)GuiWidget_FindChildByName(self, name);
     return (w && w->IsA(type)) ? w : 0;
 }
-extern "C" void func_002AFDC0(S_002AFDC0* self)
+extern "C" void GuiNetAgencyCell_Init(S_002AFDC0* self)
 {
-    func_0033F250(self);
+    GuiMenuScreen_Init(self);
     self->p164 = FindAs_002AFDC0(self, *(char**)dat_0048BCD8, D_004A9870);
     self->p168 = FindAs_002AFDC0(self, *(char**)dat_0048BCE0, D_004A9870);
     self->p16C = FindAs_002AFDC0(self, *(char**)dat_0048BCE8, D_004A9870);

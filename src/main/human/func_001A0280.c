@@ -18,6 +18,6 @@ int* PtrVec_Back(PtrVec* v) {
 }
 
 /* Find in the root collection at +0xB0. */
-void* func_001A02B0(char* self, int key) {
+void* RootCollection_FindByKey_Thunk(char* self, int key) {
     return RootCollection_FindByKey(self + 176, key);
 }

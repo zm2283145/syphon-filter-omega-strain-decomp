@@ -28,7 +28,7 @@ extern signed char* D_005061D0;
 extern void Event_Construct(Msg_185630* msg, void* name);
 extern void cMessage_dtor(Msg_185630* msg, int flags);
 extern void Global_ForceHolster(void* w);
-void func_00185630(G_185630* g)
+void cNetForceHolsterMsg_NetReceive(G_185630* g)
 {
     Msg_185630 msg;
     Event_Construct(&msg, D_004EF030);

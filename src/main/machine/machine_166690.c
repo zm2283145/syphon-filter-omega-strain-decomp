@@ -16,7 +16,7 @@ int Mem_Alloc(int, int, char *, int);
 int CreateThread(void *);
 int StartThread(int, int);
 int ChangeThreadPriority(int, int);
-int func_0010D050(void);
+int GetThreadId(void);
 extern int D_0048A030;
 extern int D_0048A040;
 extern int D_0048A048;
@@ -66,7 +66,7 @@ void LoadingScreen_StartThread(void *fn) {
     tp.initPriority = 5;
     tp.waitType = 0;
     tp.wakeupCount = 0;
-    D_0048A048 = func_0010D050();
+    D_0048A048 = GetThreadId();
     ChangeThreadPriority(D_0048A048, 0xA);
     D_0048A030 = CreateThread(&tp);
     StartThread(D_0048A030, 0);

@@ -27,7 +27,7 @@ void String_Dtor(void* p, int f);
 void GuiWidget_Destroy(void* p, int f);
 void operator_delete(void* p);
 }
-extern "C" O33D430* func_0033D430(O33D430* self, short del)
+extern "C" O33D430* GuiScreen_dtor(O33D430* self, short del)
 {
     if (self) {
         self->vt = D_004DE830;

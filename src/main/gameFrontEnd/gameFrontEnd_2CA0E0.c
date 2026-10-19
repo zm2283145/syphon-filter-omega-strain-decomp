@@ -65,12 +65,12 @@ extern "C" {
 extern char D_004ACF10[];
 void* DME_GetLobby(void);
 void func_00445DC0(void* p);
-void func_0044F970(void* p, int f);
+void LobbyArray_dtor(void* p, int f);
 }
 static inline void Del2CA160(void* p, int line)
 {
     AllocGuard g;
-    func_0044F970(p, -1);
+    LobbyArray_dtor(p, -1);
     Mem_Free(0, p, D_004ACF10, line);
 }
 extern "C" int FrontEnd_FreePolicyLists(S2CA160* s)

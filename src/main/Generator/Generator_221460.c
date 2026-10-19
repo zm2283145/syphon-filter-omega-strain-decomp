@@ -35,7 +35,7 @@ static inline void merge_flush_func_00221460(void) {}
 extern "C" {}
 typedef struct { char pad[0xC]; char key[0x20]; unsigned char b2C; unsigned char b2D; unsigned char b2E; char pad2F[0x9D]; unsigned int maskCC; } Gen_12D0;
 extern "C" {
-void func_003CE810(void);
+void cNode_v06(void);
 void Object_Activate(void* o, int on);
 #if 0 /* merge_units */
 void func_0043B190(void* ctx);

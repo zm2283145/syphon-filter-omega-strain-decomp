@@ -8,8 +8,8 @@ struct malloc_chunk {
 typedef struct malloc_chunk *mchunkptr;
 typedef struct malloc_chunk *mbinptr;
 extern mbinptr D_00489748[];
-extern void func_001261B0(void *);
-extern void func_00126230(void *);
+extern void Newlib_MallocLock(void *);
+extern void Newlib_MallocUnlock(void *);
 #define av_ D_00489748
 #define SIZE_SZ 4
 #define PREV_INUSE 0x1
@@ -72,7 +72,7 @@ extern struct mallinfo D_00489B78;
 extern unsigned long D_00489B58;
 extern char *D_00489B60;
 extern unsigned long D_00489B68, D_00489B70;
-extern char *func_00128658(void *, int);
+extern char *Newlib_SbrkR(void *, int);
 extern void _free_r(void *, void *);
 #define sbrked_mem (D_00489B78.arena)
 #define initial_top ((mchunkptr)(bin_at(0)))
@@ -81,7 +81,7 @@ extern void _free_r(void *, void *);
 #define MALLOC_ALIGN_MASK (MALLOC_ALIGNMENT - 1)
 #define chunk2mem(p) ((void *)((char *)(p) + 2 * SIZE_SZ))
 #define set_head_size(p, s) ((p)->size = (((p)->size & PREV_INUSE) | (s)))
-extern void func_00125408(void *, INTERNAL_SIZE_T);
+extern void Newlib_MallocExtendTop(void *, INTERNAL_SIZE_T);
 #define last(b) ((b)->bk)
 #define first(b) ((b)->fd)
 #define next_bin(b) ((mbinptr)((char *)(b) + 2 * sizeof(mbinptr)))
@@ -140,7 +140,7 @@ void *_realloc_r(void *reent_ptr, void *oldmem, unsigned int bytes)
 
     if (oldmem == 0) return mALLOc(reent_ptr, bytes);
 
-    func_001261B0(reent_ptr);
+    Newlib_MallocLock(reent_ptr);
 
     newp = oldp = mem2chunk(oldmem);
     newsize = oldsize = chunksize(oldp);
@@ -157,7 +157,7 @@ void *_realloc_r(void *reent_ptr, void *oldmem, unsigned int bytes)
                     top = chunk_at_offset(oldp, nb);
                     set_head(top, (newsize - nb) | PREV_INUSE);
                     set_head_size(oldp, nb);
-                    func_00126230(reent_ptr);
+                    Newlib_MallocUnlock(reent_ptr);
                     return chunk2mem(oldp);
                 }
             } else if (((long)(nextsize + newsize) >= (long)(nb))) {
@@ -184,7 +184,7 @@ void *_realloc_r(void *reent_ptr, void *oldmem, unsigned int bytes)
                         top = chunk_at_offset(newp, nb);
                         set_head(top, (newsize - nb) | PREV_INUSE);
                         set_head_size(newp, nb);
-                        func_00126230(reent_ptr);
+                        Newlib_MallocUnlock(reent_ptr);
                         return newmem;
                     }
                 } else if (((long)(nextsize + prevsize + newsize) >= (long)(nb))) {
@@ -209,7 +209,7 @@ void *_realloc_r(void *reent_ptr, void *oldmem, unsigned int bytes)
 
         newmem = mALLOc(reent_ptr, bytes);
         if (newmem == 0) {
-            func_00126230(reent_ptr);
+            Newlib_MallocUnlock(reent_ptr);
             return 0;
         }
         if ((newp = mem2chunk(newmem)) == next_chunk(oldp)) {
@@ -219,7 +219,7 @@ void *_realloc_r(void *reent_ptr, void *oldmem, unsigned int bytes)
         }
         MALLOC_COPY(newmem, oldmem, oldsize - SIZE_SZ);
         fREe(reent_ptr, oldmem);
-        func_00126230(reent_ptr);
+        Newlib_MallocUnlock(reent_ptr);
         return newmem;
     }
 
@@ -235,6 +235,6 @@ split:
         set_head_size(newp, newsize);
         set_inuse_bit_at_offset(newp, newsize);
     }
-    func_00126230(reent_ptr);
+    Newlib_MallocUnlock(reent_ptr);
     return chunk2mem(newp);
 }

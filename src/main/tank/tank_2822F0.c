@@ -104,7 +104,7 @@ extern PtrVec* func_00282550(void);
 
 
 /* Appends a value to the list from func_00282550 and hands out the next id from D_005061D8. */
-int func_002824D0(int value, int* outId) {
+int NetMsgTable_Add(int value, int* outId) {
     int tmp;
 
     tmp = value;

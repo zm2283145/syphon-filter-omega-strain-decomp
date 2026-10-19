@@ -29,7 +29,7 @@ extern "C" int Curve_HasRemaining(Ch364D20*);
 extern "C" void AnimChannel_RebuildSegment(void*, float*, float*, float*, float*);
 extern "C" void AnimChannel_UpdateEndpoint(void*, int, float*, float*);
 extern "C" void func_0017CA90(void* p, float d, int n);
-extern "C" void* func_00139BC0(int kind, void* p);
+extern "C" void* Mem_PlacementNew(int kind, void* p);
 extern "C" void func_0017CA00(void* p, float s, void* a, void* b, void* c, float* r);
 extern float D_00492ED0;
 extern float D_00492ED8;
@@ -69,7 +69,7 @@ extern "C" void func_00364D20(Ch364D20* o)
             float d = Wrap_364D20(o, o->b10 - o->b8);
             o->b10 = o->b8 + d;
             func_0017CA90(&o->b18, d, -1);
-            p = func_00139BC0(0x18, &o->b18);
+            p = Mem_PlacementNew(0x18, &o->b18);
             if (p) {
                 func_0017CA00(p, o->scale, &o->b8, &o->bc, &o->b10, &D_00492ED0);
             }

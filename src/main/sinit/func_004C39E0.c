@@ -15,7 +15,7 @@ extern int Script_RegisterType();
 extern int ScriptEnum_Register();
 extern int* func_001450C0(void);
 
-void func_004C39E0(void)
+void StaticInit_RegisterWeapon(void)
 {
     D_004EA128 = Script_RegisterVariable("dmgAdjust", (int)&D_00489C10, D_00493890);
     D_004EA130 = Script_RegisterVariable("MinNpcAmmoPct", (int)&MaxNpcAmmoPct, D_00493890);

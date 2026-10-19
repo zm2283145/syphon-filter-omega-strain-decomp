@@ -1,5 +1,5 @@
 #include "types.h"
-/* VU0 identity-matrix store (vf0/qmfc2/pexcw): no C equivalent; gcc-style asm as in func_004411F0.c. */
+/* VU0 identity-matrix store (vf0/qmfc2/pexcw): no C equivalent; gcc-style asm as in GuiWeaponDisplay_ctor.c. */
 static inline void VU0_UnitMatrix(void* p) { int t; __asm__ volatile("sqc2 $vf0, 0x30(%1); qmfc2.ni %0, $vf0; pcpyud %0, %0, $zero; sq %0, 0x10(%1); pexcw %0, %0; sq %0, 0x20(%1); pcpyud %0, %0, $zero; sq %0, 0x0(%1)" : "=&r"(t) : "r"(p) : "memory"); }
 
 typedef struct Mtx { float m[4][4]; } __attribute__((aligned(16))) Mtx;

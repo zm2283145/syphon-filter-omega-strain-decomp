@@ -7,6 +7,6 @@
 #include "types.h"
 
 
-int func_0034D270(void) {
+int GuiRatings_GetClassName(void) {
     return (int)"GuiRatings";
 }

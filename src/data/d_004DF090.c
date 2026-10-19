@@ -10,6 +10,8 @@ extern void AnimChannel_DirectDerivedZero();
 extern void AnimChannel_DirectValueZero();
 extern void AnimChannel_PreUpdate();
 extern void AnimChannel_UpdateRate();
+extern void AnimEvent_Clone();
+extern void AnimEvent_dtor();
 extern void Controller_DeathNotice();
 extern void Curve_Retarget();
 extern void Curve_SetVelocity();
@@ -18,18 +20,26 @@ extern void Event_PackHeader();
 extern void GObj_GetID();
 extern void GObj_GetLifeState();
 extern void GObj_GetWorldMatrix();
+extern void GuiPersonnelMenu_Create();
 extern void GuiPersonnelScreen_Back();
+extern void GuiPersonnelScreen_Create();
 extern void GuiPersonnelScreen_GetClassName();
 extern void GuiPersonnelScreen_HandleEvent();
 extern void GuiPersonnelScreen_HandleInput();
 extern void GuiPersonnelScreen_Init();
+extern void GuiPersonnelScreen_IsType();
 extern void GuiPersonnelScreen_Wake();
+extern void GuiPersonnelScreen_dtor();
+extern void GuiScoresEquip_Create();
 extern void GuiScoresEquip_Draw();
+extern void GuiScoresEquip_GetClassName();
 extern void GuiScoresEquip_HandleEvent();
 extern void GuiScoresEquip_HandleInput();
 extern void GuiScoresEquip_Init();
+extern void GuiScoresEquip_IsType();
 extern void GuiScoresEquip_Update();
 extern void GuiScoresEquip_Wake();
+extern void GuiScoresEquip_dtor();
 extern void GuiWidget_BaseSleep();
 extern void GuiWidget_BubbleActivate();
 extern void GuiWidget_BubbleType0();
@@ -41,6 +51,7 @@ extern void GuiWidget_FocusFirst();
 extern void GuiWidget_FocusLast();
 extern void GuiWidget_FocusNext();
 extern void GuiWidget_FocusPrev();
+extern void GuiWidget_Load();
 extern void GuiWidget_SetFlag4();
 extern void GuiWidget_Update();
 extern void Message_GetScriptTypeKey();
@@ -60,6 +71,21 @@ extern void PathObj_GetPosition();
 extern void Player_GetActiveWeapon();
 extern void cGOBJ_v0B();
 extern void cGOBJ_v0C();
+extern void cGOBJ_v35();
+extern void cGOBJ_v39();
+extern void cNode_v06();
+extern void cNode_v07();
+extern void cNode_v0D();
+extern void cNode_v14();
+extern void cNode_v24();
+extern void cNode_v25();
+extern void cNode_v26();
+extern void cNode_v27();
+extern void cNode_v28();
+extern void cNode_v29();
+extern void cNode_v2A();
+extern void cNode_v2B();
+extern void cNode_v3A();
 extern void func_0012ED00();
 extern void func_0012ED30();
 extern void func_0012ED40();
@@ -89,92 +115,66 @@ extern void func_00180020();
 extern void func_00180780();
 extern void func_00180790();
 extern void func_001807A0();
-extern void func_0018A260();
 extern void func_001AEFE0();
-extern void func_001B9EA0();
 extern void func_00349ED0();
-extern void func_0034A300();
 extern void func_0034D2B0();
 extern void func_0034D2C0();
-extern void func_00356600();
-extern void func_00356820();
-extern void func_00357050();
-extern void func_0035AE80();
-extern void func_0035AE90();
-extern void func_0035D1F0();
-extern void func_0035F990();
-extern void func_003CD090();
-extern void func_003CD110();
-extern void func_003CD4A0();
-extern void func_003CD7A0();
-extern void func_003CD920();
-extern void func_003CDA60();
-extern void func_003CDBE0();
-extern void func_003CDC20();
-extern void func_003CDD40();
-extern void func_003CDD80();
-extern void func_003CDDC0();
-extern void func_003CE7D0();
-extern void func_003CE810();
-extern void func_003CE9D0();
-extern void func_003CEA00();
-extern void func_0041F210();
 
 void *D_004DF090[8] = {
-    0, 0, &func_00356600, 0,
+    0, 0, &GuiPersonnelMenu_Create, 0,
     0, 0, 0, 0,
 };
 
 void *D_004DF0B0[28] = {
-    0, 0, &func_0034A300, &GuiPersonnelScreen_Init,
+    0, 0, &GuiPersonnelScreen_dtor, &GuiPersonnelScreen_Init,
     &GuiWidget_Deinit, &GuiWidget_SetFlag4, &GuiWidget_ClearFlag4, &GuiPersonnelScreen_Wake,
     &GuiWidget_BaseSleep, &GuiWidget_BubbleType0, &GuiWidget_BubbleType1, &GuiPersonnelScreen_HandleInput,
     &GuiWidget_Draw, &GuiWidget_BubbleActivate, &GuiWidget_Update, &GuiPersonnelScreen_HandleEvent,
-    &func_0041F210, &GuiWidget_FocusFirst, &GuiWidget_FocusLast, &GuiWidget_FocusNext,
-    &GuiWidget_FocusPrev, &GuiPersonnelScreen_GetClassName, &func_00356820, &func_0034D2B0,
+    &GuiWidget_Load, &GuiWidget_FocusFirst, &GuiWidget_FocusLast, &GuiWidget_FocusNext,
+    &GuiWidget_FocusPrev, &GuiPersonnelScreen_GetClassName, &GuiPersonnelScreen_IsType, &func_0034D2B0,
     &func_00349ED0, &func_0034D2C0, &GuiPersonnelScreen_Back, 0,
 };
 
 void *D_004DF120[8] = {
-    0, 0, &func_00357050, 0,
+    0, 0, &GuiPersonnelScreen_Create, 0,
     0, 0, 0, 0,
 };
 
 void *D_004DF140[124] = {
-    0, 0, &func_0035D1F0, &GuiScoresEquip_Init,
+    0, 0, &GuiScoresEquip_dtor, &GuiScoresEquip_Init,
     &GuiWidget_Deinit, &GuiWidget_SetFlag4, &GuiWidget_ClearFlag4, &GuiScoresEquip_Wake,
     &GuiWidget_BaseSleep, &GuiWidget_BubbleType0, &GuiWidget_BubbleType1, &GuiScoresEquip_HandleInput,
     &GuiScoresEquip_Draw, &GuiWidget_BubbleActivate, &GuiScoresEquip_Update, &GuiScoresEquip_HandleEvent,
-    &func_0041F210, &GuiWidget_FocusFirst, &GuiWidget_FocusLast, &GuiWidget_FocusNext,
-    &GuiWidget_FocusPrev, &func_0035AE80, &func_0035AE90, 0,
+    &GuiWidget_Load, &GuiWidget_FocusFirst, &GuiWidget_FocusLast, &GuiWidget_FocusNext,
+    &GuiWidget_FocusPrev, &GuiScoresEquip_GetClassName, &GuiScoresEquip_IsType, 0,
     0, 0, &func_0017ECD0, &func_00180020,
     0, 0, &Curve_Retarget, &Curve_VirtualNop,
     &Curve_SetVelocity, 0, 0, 0,
     0, 0, &func_001AEFE0, &AnimChannel_AddOffset,
     &AnimChannel_DirectValueZero, &AnimChannel_DirectDerivedZero, &AnimChannel_PreUpdate, &AnimChannel_ClampValue,
     &AnimChannel_UpdateRate, 0, 0, 0,
-    0, 0, &func_0018A260, &func_001B9EA0,
+    0, 0, &AnimEvent_dtor, &AnimEvent_Clone,
     &Event_PackHeader, &Message_GetScriptTypeKey, 0, 0,
     0, 0, &func_0017F080, &Object_HandleMessage,
     &GObj_GetID, &Object_GetAttachedOrSelf, &func_0015C090, &func_0012ED00,
-    &func_003CE810, &func_003CE7D0, &func_0012ED30, &func_0012ED40,
-    &func_0012ED50, &cGOBJ_v0B, &cGOBJ_v0C, &func_003CEA00,
+    &cNode_v06, &cNode_v07, &func_0012ED30, &func_0012ED40,
+    &func_0012ED50, &cGOBJ_v0B, &cGOBJ_v0C, &cNode_v0D,
     &func_00180780, &func_00180790, &func_001807A0, &Actor_BasePreLogic,
-    &Actor_BaseWorldUpdate, &Actor_VirtualNop, &func_003CE9D0, &Object_Activate,
+    &Actor_BaseWorldUpdate, &Actor_VirtualNop, &cNode_v14, &Object_Activate,
     &Object_Deactivate, &Node_SetFlag2C, &Node_ClearFlag2C, &Node_GetFlag2C,
     &func_0015BFB0, &func_0015BFC0, &func_0015BFD0, &func_00148870,
     &func_0015BFF0, &func_0015BFE0, &func_0013EE60, &func_0015C000,
-    &Object_AttachTransform, &Player_GetActiveWeapon, &func_003CDDC0, &func_003CDD80,
-    &func_003CDD40, &func_003CDC20, &func_003CDBE0, &func_003CDA60,
-    &func_003CD920, &func_003CD7A0, &func_0015C010, &func_00153860,
+    &Object_AttachTransform, &Player_GetActiveWeapon, &cNode_v24, &cNode_v25,
+    &cNode_v26, &cNode_v27, &cNode_v28, &cNode_v29,
+    &cNode_v2A, &cNode_v2B, &func_0015C010, &func_00153860,
     &Object_GetEye, &func_0015C020, &func_00140E90, &func_0015C030,
-    &func_0015C040, &func_0015C050, &Node_GetWorldMatrix, &func_003CD4A0,
-    &Node_GetLightRefPoint, &PathObj_GetPosition, &Node_GetComponentMatrix, &func_003CD110,
-    &func_003CD090, &GObj_GetWorldMatrix, &func_0013E060, &func_0015C080,
+    &func_0015C040, &func_0015C050, &Node_GetWorldMatrix, &cGOBJ_v35,
+    &Node_GetLightRefPoint, &PathObj_GetPosition, &Node_GetComponentMatrix, &cGOBJ_v39,
+    &cNode_v3A, &GObj_GetWorldMatrix, &func_0013E060, &func_0015C080,
     &Actor_ApplyContactDamage, &func_0015C0A0, &GObj_GetLifeState, &Controller_DeathNotice,
 };
 
 void *D_004DF330[8] = {
-    0, 0, &func_0035F990, 0,
+    0, 0, &GuiScoresEquip_Create, 0,
     0, 0, 0, 0,
 };

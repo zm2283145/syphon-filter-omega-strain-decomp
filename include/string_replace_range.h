@@ -68,14 +68,14 @@ static inline const unsigned int& TSR_Min(const unsigned int& a, const unsigned 
             size = self->u.l.length;                                          \
         }                                                                     \
         if (size < pos) {                                                     \
-            func_00123BE8(D_00489738->stream, oorSym);                        \
+            Libc_Fprintf(D_00489738->stream, oorSym);                        \
             Libc_Abort();                                                  \
         }                                                                     \
         rem = size - pos;                                                     \
         rlen = TSR_Min(n, rem);                                               \
         ins = TSR_Dist(first, last);                                          \
         if (ins > 0x2FFFFFF || size - rlen > 0x2FFFFFF - ins) {               \
-            func_00123BE8(D_00489738->stream, lenSym);                        \
+            Libc_Fprintf(D_00489738->stream, lenSym);                        \
             Libc_Abort();                                                  \
         }                                                                     \
         newSize = ins + (size - rlen);                                        \

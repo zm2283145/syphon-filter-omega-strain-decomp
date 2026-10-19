@@ -11,7 +11,7 @@ extern void Mtx_SetRotationTranslation(void* data, void* obj, Vec4* v);
 extern void Event_Send(Msg* m, void* target, int immediate);
 extern void cMessage_dtor(Msg* m, int flags);
 /* Sends a kind-3 message with a position to target. */
-void func_00184720(void* target, void* pos)
+void Npc_v28(void* target, void* pos)
 {
     Vec4 b;
     Vec4 a;

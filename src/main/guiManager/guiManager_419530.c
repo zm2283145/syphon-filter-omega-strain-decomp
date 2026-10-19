@@ -40,7 +40,7 @@ extern void String_Dtor(void* p, int f);
 extern void func_002CCD80(void* p, int f);
 extern void func_00419660(Obj419590* p, int f);
 extern void operator_delete(void* p);
-Obj419590* func_00419590(Obj419590* self, short del)
+Obj419590* GuiManager_dtor(Obj419590* self, short del)
 {
     if (self) {
         while (self->a.size) GuiManager_UnloadRoot(self, self->a.first->item, 1);

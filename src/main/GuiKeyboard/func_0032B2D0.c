@@ -5,7 +5,7 @@ extern "C" {
 typedef struct { char pad[0x4C]; char* x4C; char pad50[4]; void* x54; int x58; } KB_2B2D0;
 extern char D_004B8CF0[];
 extern char D_004B8CF8[];
-extern void* func_0032D750(void*);
+extern void* GuiMessageBox_ValidateTarget_32D750(void*);
 extern int Gui_GetScreenStack(void);
 extern void GuiStack_SwapScreens(int, KB_2B2D0*, void*);
 extern char* String_CStr(void*);
@@ -18,7 +18,7 @@ void GuiKeyboard_Close(KB_2B2D0* k, int accept);
 }
 void GuiKeyboard_Close(KB_2B2D0* k, int accept)
 {
-    k->x54 = func_0032D750(k->x54);
+    k->x54 = GuiMessageBox_ValidateTarget_32D750(k->x54);
     GuiStack_SwapScreens(Gui_GetScreenStack(), k, 0);
     if (accept) {
         char* src;

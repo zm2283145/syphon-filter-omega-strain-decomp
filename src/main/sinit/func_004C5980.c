@@ -10,7 +10,7 @@ extern int D_004EE538;
 extern int D_004EE540;
 extern char Script_SetInterfaceFont;
 
-void func_004C5980(void) {
+void StaticInit_RegisterInterfaceFont(void) {
     D_004EE538 = ScriptEnum_Register("eFontType", &D_0048A070, 2);
     D_004EE540 = Script_RegisterNative_2(&Script_SetInterfaceFont, &D_00493880, "SetInterfaceFont", 1, &D_004EE538);
 }

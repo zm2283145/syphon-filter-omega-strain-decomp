@@ -9,7 +9,7 @@ extern unsigned char D_005723C8;
 
 #pragma push
 #pragma opt_common_subs off
-int func_003167C0(int d0, int d1, int d2, char * arg3) {
+int cNetShatterMsg_NetReceive(int d0, int d1, int d2, char * arg3) {
     struct { char pad20[4]; int f24; int f28[2]; } sl;
     int temp_v0;
     int temp_s0;

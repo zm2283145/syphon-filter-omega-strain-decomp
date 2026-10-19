@@ -71,7 +71,7 @@ void* func_0018A2E0(Sel_L* s);
 float func_0018A2D0(Sel_L* s);
 float func_0018A2C0(Sel_L* s);
 void AnimCtl_InstallMotion(void* ctl, int id, signed char mode, void* range, void* pair, void* m1, void* m2, void* x, float f0, float f1);
-void func_0018A260(void* p, int f);
+void AnimEvent_dtor(void* p, int f);
 void func_001BE5A0(void* p, int f);
 void __destroy_array(void* p, void* dtor, int size, int n);
 void func_0018A210(void* p, int f);
@@ -237,8 +237,8 @@ static inline void Install_L(Npc* a, Sel_L* sel)
         AnimEvent_Construct(&e1);
         AnimEvent_Construct(&e2);
         AnimCtl_InstallMotion(an, out, MotionRequest_GetMode(sel), &vec, &y, &e1, &e2, func_0018A2E0(sel), func_0018A2D0(sel), func_0018A2C0(sel));
-        func_0018A260(&e2, -1);
-        func_0018A260(&e1, -1);
+        AnimEvent_dtor(&e2, -1);
+        AnimEvent_dtor(&e1, -1);
     }
 }
 extern "C" void Npc_InitModel(Npc* a, int* desc)

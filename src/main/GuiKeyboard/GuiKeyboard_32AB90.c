@@ -28,6 +28,6 @@ void func_0032AB90(V2AB90* v)
 #include "guarded_new.h"
 
 extern "C" { char D_004B8880[] = "guiWidget.hh"; }
-DEFINE_GUARDED_NEW_CTOR(func_0032AC20, 0x220, D_004B8880, GuiSlideShow_ctor)
+DEFINE_GUARDED_NEW_CTOR(GuiSlideShow_Create, 0x220, D_004B8880, GuiSlideShow_ctor)
 #pragma pop /* merge_units */
 /* merge_units: end func_0032AC20 */

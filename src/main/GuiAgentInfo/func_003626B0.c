@@ -53,7 +53,7 @@ void func_001912E0(Nd* n);
 void func_001912C0(It* it);
 }
 static inline void Cp(Plc* d, Plc* s) { QC(&d->rot, &s->rot); QC(&d->pos, &s->pos); }
-extern "C" void func_003626B0(Nd* self, Plc* src)
+extern "C" void Root_SetWorldPlacement_3626B0(Nd* self, Plc* src)
 {
     { Plc* d = &self->p; QC(&d->rot, &src->rot); QC(&d->pos, &src->pos); }
     if (self->bB0) {

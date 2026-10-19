@@ -7,13 +7,13 @@
 /* merge_units: begin func_00128658 */
 #include "types.h"
 extern int D_0058805C;
-extern int func_0010D860(int fd);
+extern int Newlib_SysSbrk(int fd);
 struct reent_00121E20 { int _errno; };
-int func_00128658(struct reent_00121E20* ptr, int fd)
+int Newlib_SbrkR(struct reent_00121E20* ptr, int fd)
 {
     int ret;
     D_0058805C = 0;
-    if ((ret = func_0010D860(fd)) == -1 && D_0058805C != 0)
+    if ((ret = Newlib_SysSbrk(fd)) == -1 && D_0058805C != 0)
         ptr->_errno = D_0058805C;
     return ret;
 }
@@ -23,7 +23,7 @@ int func_00128658(struct reent_00121E20* ptr, int fd)
 typedef void (*_sig_func_ptr)(int);
 struct _reent { char p[0x1D4]; _sig_func_ptr *_sig_func; };
 extern void *_malloc_r(struct _reent *, unsigned int);
-int func_001286B0(struct _reent *ptr)
+int Newlib_InitSignalR(struct _reent *ptr)
 {
     int i;
 
@@ -44,44 +44,44 @@ int func_001286B0(struct _reent *ptr)
 typedef void (*sigf_t)(int);
 typedef struct { int _errno; char p[0x1D0]; sigf_t *_sig_func; } R00128720;
 #if 0 /* merge_units */
-extern int func_001286B0(R00128720 *);
+extern int Newlib_InitSignalR(R00128720 *);
 #endif /* merge_units */
-#define func_001286B0(a0) (func_001286B0((struct _reent *)(a0))) /* merge_units */
+#define Newlib_InitSignalR(a0) (Newlib_InitSignalR((struct _reent *)(a0))) /* merge_units */
 
-sigf_t func_00128720(R00128720 *ptr, int sig, sigf_t func)
+sigf_t Newlib_SignalR(R00128720 *ptr, int sig, sigf_t func)
 {
     sigf_t old;
     if (sig < 0 || sig >= 32) {
         ptr->_errno = 0x16;
         return (sigf_t)-1;
     }
-    if (ptr->_sig_func == 0 && func_001286B0(ptr) != 0) return (sigf_t)-1;
+    if (ptr->_sig_func == 0 && Newlib_InitSignalR(ptr) != 0) return (sigf_t)-1;
     old = ptr->_sig_func[sig];
     ptr->_sig_func[sig] = func;
     return old;
 }
-#undef func_001286B0 /* merge_units */
+#undef Newlib_InitSignalR /* merge_units */
 /* merge_units: end func_00128720 */
 
 /* merge_units: begin func_001287A0 */
 typedef struct { int _errno; char p[0x1D0]; sigf_t *_sig_func; } R001287A0;
 #if 0 /* merge_units */
-extern int func_001286B0(R001287A0 *);
+extern int Newlib_InitSignalR(R001287A0 *);
 #endif /* merge_units */
-#define func_001286B0(a0) (func_001286B0((struct _reent *)(a0))) /* merge_units */
+#define Newlib_InitSignalR(a0) (Newlib_InitSignalR((struct _reent *)(a0))) /* merge_units */
 
-extern int func_001289F8(R001287A0 *);
-extern int func_00128998(R001287A0 *, int, int);
-int func_001287A0(R001287A0 *ptr, int sig)
+extern int Newlib_GetpidR(R001287A0 *);
+extern int Newlib_KillR(R001287A0 *, int, int);
+int Newlib_RaiseR(R001287A0 *ptr, int sig)
 {
     sigf_t func;
     if (sig < 0 || sig >= 32) {
         ptr->_errno = 0x16;
         return -1;
     }
-    if (ptr->_sig_func == 0 && func_001286B0(ptr) != 0) return -1;
+    if (ptr->_sig_func == 0 && Newlib_InitSignalR(ptr) != 0) return -1;
     func = ptr->_sig_func[sig];
-    if (func == (sigf_t)0) return func_00128998(ptr, func_001289F8(ptr), sig);
+    if (func == (sigf_t)0) return Newlib_KillR(ptr, Newlib_GetpidR(ptr), sig);
     else if (func == (sigf_t)1) return 0;
     else if (func == (sigf_t)-1) {
         ptr->_errno = 0x16;
@@ -92,5 +92,5 @@ int func_001287A0(R001287A0 *ptr, int sig)
         return 0;
     }
 }
-#undef func_001286B0 /* merge_units */
+#undef Newlib_InitSignalR /* merge_units */
 /* merge_units: end func_001287A0 */

@@ -3,7 +3,7 @@
 extern int func_002ACB70(int);
 extern int GuiWidget_Update(int, float);
 
-void func_002ACCA0(int a0) {
+void GuiMissionList_Update(int a0) {
     int s0, v0, v1;
     float f12;
     int cond;

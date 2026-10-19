@@ -12,7 +12,7 @@ extern void* func_00393F10(AnimRange* r);
 extern void func_0018C620(AnimRef* r, void* anim);
 extern void AnimCtl_InstallMotion(void* inst, void* anim, int mode, void* range, float speed, float start, AnimRef* ref, AnimList* a, AnimList* b, AnimSet* s);
 extern void func_00189F40(AnimSet* s, int flags);
-extern void func_0018A260(AnimList* l, int flags);
+extern void AnimEvent_dtor(AnimList* l, int flags);
 /* Starts the model's default animation. */
 void AnimModel_InitAnim(AnimModel* m)
 {
@@ -34,7 +34,7 @@ void AnimModel_InitAnim(AnimModel* m)
         func_0018C620(&ref, anim);
         AnimCtl_InstallMotion(inst, anim, 3, r, -1.0f, 0.0f, &ref, &a, &b, &set);
         func_00189F40(&set, -1);
-        func_0018A260(&b, -1);
-        func_0018A260(&a, -1);
+        AnimEvent_dtor(&b, -1);
+        AnimEvent_dtor(&a, -1);
     }
 }

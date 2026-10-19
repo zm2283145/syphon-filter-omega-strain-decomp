@@ -38,7 +38,7 @@ void GuiGameCanvas_PushScreen(W465570* w, void* x)
 
 extern int GuiCanvas_Navigate(int, int);
 
-int func_00465600(int a0, int a1) {
+int GuiFrontendCanvas_HandleInput(int a0, int a1) {
     return GuiCanvas_Navigate(a0, a1);
 }
 #pragma pop /* merge_units */

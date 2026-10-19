@@ -42,7 +42,7 @@ typedef struct { char pad[0xC0]; T34FEC0* tab; } S34FEC0;
 extern char D_00587BA0[];
 extern char D_00587BB0[];
 extern char D_00587BC0[];
-extern void func_00425DB0(S34FEC0*, char*);
+extern void TextArrayCell_SetColour(S34FEC0*, char*);
 extern void GuiTextArrayWidget_DrawCell(S34FEC0*, unsigned int, unsigned int, int);
 void GuiMissionStatList_Draw(S34FEC0* self, unsigned int kind, unsigned int idx, int arg) {
     T34FEC0* t = self->tab;
@@ -73,7 +73,7 @@ void GuiMissionStatList_Draw(S34FEC0* self, unsigned int kind, unsigned int idx,
         if (e->b40) s = D_00587BA0;
         break;
     }
-    func_00425DB0(self, s);
+    TextArrayCell_SetColour(self, s);
     GuiTextArrayWidget_DrawCell(self, kind, idx, arg);
 }
 #pragma pop /* merge_units */

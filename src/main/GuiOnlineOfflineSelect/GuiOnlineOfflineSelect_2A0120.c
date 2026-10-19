@@ -24,11 +24,11 @@ extern "C" void GuiWidget_BaseSleep();
 extern "C" void GuiWidget_ClearFlag4();
 extern "C" void GuiWidget_SetFlag4();
 extern "C" void GuiWidget_Deinit();
-extern "C" void func_0041F210();
+extern "C" void GuiWidget_Load();
 extern void * const D_004DD6B0[];
 void* GuiWidget_Destroy(void* self, short deleteFlag);
 }
-extern "C" VtableObject* func_002A0120(VtableObject* self, short deleteFlag)
+extern "C" VtableObject* GuiOnlineOfflineSelect_dtor(VtableObject* self, short deleteFlag)
 {
     if (self) {
         self->vtable = ((char*)D_004DD6B0);
@@ -38,4 +38,4 @@ extern "C" VtableObject* func_002A0120(VtableObject* self, short deleteFlag)
     }
     return self;
 }
-void * const D_004DD6B0[24] = { (void*)0x0, (void*)0x0, (void*)func_002A0120, (void*)GuiOnlineOfflineSelect_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiOnlineOfflineSelect_Wake, (void*)GuiWidget_BaseSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiOnlineOfflineSelect_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiOnlineOfflineSelect_Update, (void*)GuiOnlineOfflineSelect_HandleEvent, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiOnlineOfflineSelect_GetClassName, (void*)GuiOnlineOfflineSelect_IsType, (void*)0x0 };
+void * const D_004DD6B0[24] = { (void*)0x0, (void*)0x0, (void*)GuiOnlineOfflineSelect_dtor, (void*)GuiOnlineOfflineSelect_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiOnlineOfflineSelect_Wake, (void*)GuiWidget_BaseSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiOnlineOfflineSelect_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiOnlineOfflineSelect_Update, (void*)GuiOnlineOfflineSelect_HandleEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiOnlineOfflineSelect_GetClassName, (void*)GuiOnlineOfflineSelect_IsType, (void*)0x0 };

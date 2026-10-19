@@ -16,7 +16,7 @@ extern int D_004F8250;
 extern int __construct_array();
 extern int Script_RegisterVariable();
 extern int Script_RegisterNative_2();
-void func_004D05E0(void)
+void StaticInit_RegisterLockColours(void)
 {
     __construct_array(D_004F80F0, func_00261080, 0, 0x10, 0xa);
     __construct_array(D_004F8190, func_00261080, 0, 0x10, 0xa);

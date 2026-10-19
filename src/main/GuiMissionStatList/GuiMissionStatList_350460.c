@@ -8,8 +8,8 @@
 /* GuiMissionStatList vtable */
 extern void GuiMissionStatList_GetClassName();
 extern void GuiMissionStatList_Draw();
-extern void func_00350500();
-extern void func_00350570();
+extern void GuiMissionStatList_dtor();
+extern void GuiMissionStatList_IsType();
 extern void GuiWidget_FocusPrev();
 extern void GuiWidget_FocusNext();
 extern void GuiWidget_FocusLast();
@@ -20,9 +20,9 @@ extern void GuiWidget_OnEvent();
 extern void GuiWidget_ClearFlag4();
 extern void GuiWidget_SetFlag4();
 extern void GuiWidget_Deinit();
-extern void func_0041F210();
-extern void func_004235C0();
-extern void func_004235E0();
+extern void GuiWidget_Load();
+extern void GuiArrayWidget_SendEvent21();
+extern void GuiArrayWidget_SendEvent20();
 extern void func_00423610();
 extern void func_00423660();
 extern void GuiArrayWidget_Draw();
@@ -33,7 +33,7 @@ extern void GuiTextArrayWidget_Sleep();
 extern void GuiTextArrayWidget_Wake();
 extern void GuiTextArrayWidget_Init();
 extern void GuiTextArrayWidget_SetDims();
-void * const D_004DEEE0[30] = { (void*)0x0, (void*)0x0, (void*)func_00350500, (void*)GuiTextArrayWidget_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiTextArrayWidget_Wake, (void*)GuiTextArrayWidget_Sleep, (void*)GuiArrayWidget_OnGainFocus, (void*)GuiArrayWidget_OnLoseFocus, (void*)GuiArrayWidget_OnInput, (void*)GuiArrayWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiWidget_OnEvent, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiMissionStatList_GetClassName, (void*)func_00350570, (void*)GuiTextArrayWidget_SetDims, (void*)func_00423660, (void*)func_00423610, (void*)GuiMissionStatList_Draw, (void*)func_004235E0, (void*)func_004235C0, (void*)0x0 };
+void * const D_004DEEE0[30] = { (void*)0x0, (void*)0x0, (void*)GuiMissionStatList_dtor, (void*)GuiTextArrayWidget_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiTextArrayWidget_Wake, (void*)GuiTextArrayWidget_Sleep, (void*)GuiArrayWidget_OnGainFocus, (void*)GuiArrayWidget_OnLoseFocus, (void*)GuiArrayWidget_OnInput, (void*)GuiArrayWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiWidget_OnEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiMissionStatList_GetClassName, (void*)GuiMissionStatList_IsType, (void*)GuiTextArrayWidget_SetDims, (void*)func_00423660, (void*)func_00423610, (void*)GuiMissionStatList_Draw, (void*)GuiArrayWidget_SendEvent20, (void*)GuiArrayWidget_SendEvent21, (void*)0x0 };
 extern int guiTextArrayWidget_ctor(GuiMissionStatList*);
 
 /* GuiMissionStatList constructor: default layout values. */

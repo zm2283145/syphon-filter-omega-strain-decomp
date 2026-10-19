@@ -6,7 +6,7 @@ typedef struct { int y; int uv; } Frame;
 extern "C" {
 int func_0010B378(MovieCtx*);
 void func_0010B398(MovieCtx*);
-void func_0010B250(MovieCtx*, int, int);
+void sceMpegGetPicture(MovieCtx*, int, int);
 void printf(char*);
 int func_003F5F20(MovieBufs*);
 void func_003F5F70(MovieBufs*);
@@ -35,7 +35,7 @@ extern "C" int Movie_DecodeThread(MovieCtx* self)
         }
         while (!(buf = func_003F5F20(&D_0055C460)))
             func_003F7FF0();
-        func_0010B250(self, buf, 0x654);
+        sceMpegGetPicture(self, buf, 0x654);
         if (self->stopped == 0) {
             int a = self->a;
             int b = self->b;

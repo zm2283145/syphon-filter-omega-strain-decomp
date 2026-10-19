@@ -31,7 +31,7 @@ DEFINE_BUF_HOLDER_DTOR(func_003E2B30)
 #include "obj_list_dtor.h"
 
 /* Destroy an object list: erase all nodes, optionally delete. */
-DEFINE_OBJ_LIST_DTOR(func_003E2C20)
+DEFINE_OBJ_LIST_DTOR(ReceiverList_Dtor_3E2C20)
 #pragma pop /* merge_units */
 /* merge_units: end func_003E2C20 */
 
@@ -39,7 +39,7 @@ DEFINE_OBJ_LIST_DTOR(func_003E2C20)
 #pragma push /* merge_units */
 #include "types.h"
 typedef struct { int m0; int m4; int m8; } T2CA0;
-extern void func_003E3320(int* out, T2CA0* self, int* first, int* last);
+extern void ObjectList_EraseRange_3E3320(int* out, T2CA0* self, int* first, int* last);
 extern void operator_delete(void* p);
 T2CA0* func_003E2CA0(T2CA0* self, short del)
 {
@@ -51,7 +51,7 @@ T2CA0* func_003E2CA0(T2CA0* self, short del)
                 int last;
                 last = (int)&self->m4;
                 first = self->m8;
-                func_003E3320(&r, self, &first, &last);
+                ObjectList_EraseRange_3E3320(&r, self, &first, &last);
             }
         }
         if (del > 0)
@@ -153,7 +153,7 @@ DEFINE_VECTOR_RESIZE(func_003E2F60, Elem12_2F60, func_003E3660, func_003E3480)
 #pragma cplusplus on
 DEFINE_RESIZE_ELEMENT(Elem4_2FF0, 4)
 #pragma opt_common_subs off
-DEFINE_VECTOR_RESIZE(func_003E2FF0, Elem4_2FF0, KeyVector_PushBack, func_003E3B60)
+DEFINE_VECTOR_RESIZE(func_003E2FF0, Elem4_2FF0, KeyVector_PushBack, PtrVector_Erase_3E3B60)
 #pragma opt_common_subs reset
 #pragma pop /* merge_units */
 /* merge_units: end func_003E2FF0 */

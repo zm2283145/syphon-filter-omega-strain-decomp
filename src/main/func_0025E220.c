@@ -20,7 +20,7 @@ static inline int Eq0025E220(Node0025E220* a, Node0025E220* b) { return a == b; 
 #pragma push
 #pragma bool off
 #pragma opt_propagation off
-extern "C" int func_0025E220(int a0, int a1, int a2, Arg0025E220* arg) {
+extern "C" int cSwitchBodiesMsg_NetReceive(int a0, int a1, int a2, Arg0025E220* arg) {
     NetRecvGuard g;
     if (D_005721D0) {
         Evt0025E220 e;

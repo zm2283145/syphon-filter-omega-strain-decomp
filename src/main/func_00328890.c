@@ -14,7 +14,7 @@ extern void String_Reserve(String*, int);
 extern void String_Replace(String*, int, int, const char*, const char*, Tag);
 
 /* Constructs a string from a C string. */
-String* func_00328890(String* self, const char* text) {
+String* String_CtorCStr_328890(String* self, const char* text) {
     Tag tag;
     int len;
     self->a = 0;

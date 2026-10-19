@@ -4,4 +4,4 @@
 
 /* Factory: allocate and construct. */
 extern "C" { char D_004C2420[] = "guiWidget.hh"; }
-DEFINE_GUARDED_NEW_CTOR(func_0045F1A0, 0x130, D_004C2420, GuiGameScreen_ctor)
+DEFINE_GUARDED_NEW_CTOR(GuiGameScreen_Create, 0x130, D_004C2420, GuiGameScreen_ctor)

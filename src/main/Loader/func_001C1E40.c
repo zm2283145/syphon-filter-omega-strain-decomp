@@ -11,7 +11,7 @@ extern int EffectTable_Load(char* root, int a1);
 extern int VisionFx_LoadFlareTextures(int a0);
 
 /* Call EffectTable_Load with the game data root and a2, then VisionFx_LoadFlareTextures on g_VisionFxMan. */
-int func_001C1E40(int a0, int a1, int a2) {
+int Loader_LoadEffects(int a0, int a1, int a2) {
     EffectTable_Load(D_0048B2F8, a2);
     return VisionFx_LoadFlareTextures(g_VisionFxMan);
 }

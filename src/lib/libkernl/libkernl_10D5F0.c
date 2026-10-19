@@ -6,42 +6,42 @@
 
 /* merge_units: begin func_0010D5F0 */
 #define R(a) (*(volatile unsigned int *)(a))
-extern int func_001161A0(void);
-extern void func_001161F8(void);
+extern int DIntr(void);
+extern void EIntr(void);
 void func_0010D5F0(void)
 {
-    int s = func_001161A0();
+    int s = DIntr();
     R(0x1000F000) = 4;
     __asm__ __volatile__("sync");
-    if (s) func_001161F8();
+    if (s) EIntr();
     while (!(R(0x1000F000) & 4))
         ;
-    s = func_001161A0();
+    s = DIntr();
     R(0x1000F000) = 4;
     __asm__ __volatile__("sync");
-    if (s) func_001161F8();
+    if (s) EIntr();
 }
 /* merge_units: end func_0010D5F0 */
 
 /* merge_units: begin func_0010D680 */
-extern void func_0010D4D0(volatile int *, volatile long *);
+extern void SetVSyncFlag(volatile int *, volatile long *);
 long func_0010D680(void)
 {
     volatile int flag;
     volatile long ret;
     int s;
     flag = 0;
-    func_0010D4D0(&flag, &ret);
-    s = func_001161A0();
+    SetVSyncFlag(&flag, &ret);
+    s = DIntr();
     R(0x1000F000) = 4;
     __asm__ __volatile__("sync");
-    if (s) func_001161F8();
+    if (s) EIntr();
     while (!(R(0x1000F000) & 4) && !flag)
         ;
-    s = func_001161A0();
+    s = DIntr();
     R(0x1000F000) = 4;
     __asm__ __volatile__("sync");
-    if (s) func_001161F8();
+    if (s) EIntr();
     return ret;
 }
 /* merge_units: end func_0010D680 */
@@ -50,7 +50,7 @@ long func_0010D680(void)
 extern int D_00486190;
 extern int func_0010E970(void);
 extern int func_0010E728(int, int);
-int func_0010D728(int mode, int a, int b)
+int Newlib_SysWrite(int mode, int a, int b)
 {
     if (mode == 1 || mode == 2) {
         if (!D_00486190) {
@@ -66,7 +66,7 @@ int func_0010D728(int mode, int a, int b)
 
 /* merge_units: begin func_0010D7A8 */
 extern int func_0010E8A0(int, int);
-int func_0010D7A8(int mode, int a, int b)
+int Newlib_SysRead(int mode, int a, int b)
 {
     if (mode == 0) {
         if (!D_00486190) {

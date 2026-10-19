@@ -43,8 +43,8 @@ void** func_003E2510(PV_E2150*, int);
 void func_00175240(void*, int);
 void ScriptStr_Release(Mgr_E2150*, void*);
 void PtrVec_Reserve(PV_E2150*, int);
-void func_003D7960(void);
-void func_003E3320(int*, Mgr_E2150*, int*, int*);
+void Script_TrimSymbolsToMarks(void);
+void ObjectList_EraseRange_3E3320(int*, Mgr_E2150*, int*, int*);
 }
 struct G_E2150 { char c; G_E2150() { func_00136DA0(this); } __declspec(weak) __declspec(ALLOC_GUARD_DTOR) ~G_E2150() { func_0012F530(this, -1); } };
 static inline int PNe_E2150(Node_E2150* a, Node_E2150* b) { return (a == b) ^ 1; }
@@ -70,7 +70,7 @@ static inline void ListClear_E2150(Mgr_E2150* m)
     int last;
     last = (int)&m->x4;
     first = m->x8;
-    func_003E3320(&r, m, &first, &last);
+    ObjectList_EraseRange_3E3320(&r, m, &first, &last);
 }
 
 extern "C" void Script_Cleanup(Mgr_E2150* m)
@@ -138,13 +138,13 @@ extern "C" void Script_Cleanup(Mgr_E2150* m)
     m->x4EA0 = 0;
     m->x4E84 = 0;
     m->x4E80 = 0;
-    func_003D7960();
+    Script_TrimSymbolsToMarks();
     {
         int r;
         int first;
         int last;
         last = (int)&m->x4;
         first = m->x8;
-        func_003E3320(&r, m, &first, &last);
+        ObjectList_EraseRange_3E3320(&r, m, &first, &last);
     }
 }

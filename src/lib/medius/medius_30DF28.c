@@ -33,7 +33,7 @@ extern int Socket_WriteAddressed(int sock, char *addr, unsigned short port, char
 extern void func_002F5DB0(int sock);
 extern int func_003060D8(int *timer);
 
-int func_0030DF28(UpnpDF28 *u, unsigned int type, int arg)
+int UPnP_SendSsdpSearch(UpnpDF28 *u, unsigned int type, int arg)
 {
     OptsDF28 opts;
     unsigned short sent = 0;

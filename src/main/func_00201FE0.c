@@ -8,7 +8,7 @@ extern void MotionSlider_RegisterNode(Handle* h, void* obj, Name* n, Binding* b)
 extern void func_003B28F0(Binding* b, int flags);
 /* Registers two named bindings on the object. */
 #pragma optimization_level 1
-void func_00201FE0(void* obj)
+void MotionGraph_BuildClimbDown(void* obj)
 {
     Binding bindY;
     Name nameC;

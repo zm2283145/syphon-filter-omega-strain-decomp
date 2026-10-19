@@ -25,7 +25,7 @@ extern void* ScriptArray_Cast(void* obj);
 #define ScriptArray_Cast(a0) (ScriptArray_Cast((a0))) /* merge_units */
 
 
-void func_00269070(void) {
+void ScriptType_Array_Init(void) {
 }
 
 int func_00269080(int value) {
@@ -38,7 +38,7 @@ int func_00269090(int value) {
     return v;
 }
 
-void* func_002690B0(void* obj) {
+void* ScriptArray_Cast_Thunk(void* obj) {
     return ScriptArray_Cast(obj);
 }
 #undef ScriptArray_Cast /* merge_units */

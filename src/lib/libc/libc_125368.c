@@ -6,26 +6,26 @@
 
 /* merge_units: begin func_00125368 */
 extern int D_00489738;
-extern void func_001261B0(int);
+extern void Newlib_MallocLock(int);
 extern int _malloc_r(int, int);
-extern void func_00126230(int);
-int func_00125368(int a)
+extern void Newlib_MallocUnlock(int);
+int Libc_Malloc(int a)
 {
     int r;
-    func_001261B0(D_00489738);
+    Newlib_MallocLock(D_00489738);
     r = _malloc_r(D_00489738, a);
-    func_00126230(D_00489738);
+    Newlib_MallocUnlock(D_00489738);
     return r;
 }
 /* merge_units: end func_00125368 */
 
 /* merge_units: begin func_001253C0 */
 extern void _free_r(int, int);
-void func_001253C0(int a)
+void Libc_Free(int a)
 {
-    func_001261B0(D_00489738);
+    Newlib_MallocLock(D_00489738);
     _free_r(D_00489738, a);
-    func_00126230(D_00489738);
+    Newlib_MallocUnlock(D_00489738);
 }
 /* merge_units: end func_001253C0 */
 
@@ -41,14 +41,14 @@ typedef struct malloc_chunk *mchunkptr;
 typedef struct malloc_chunk *mbinptr;
 extern mbinptr D_00489748[];
 #if 0 /* merge_units */
-extern void func_001261B0(void *);
+extern void Newlib_MallocLock(void *);
 #endif /* merge_units */
-#define func_001261B0(a0) (func_001261B0((int)(a0))) /* merge_units */
+#define Newlib_MallocLock(a0) (Newlib_MallocLock((int)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_00126230(void *);
+extern void Newlib_MallocUnlock(void *);
 #endif /* merge_units */
-#define func_00126230(a0) (func_00126230((int)(a0))) /* merge_units */
+#define Newlib_MallocUnlock(a0) (Newlib_MallocUnlock((int)(a0))) /* merge_units */
 
 #define av_ D_00489748
 #define SIZE_SZ 4
@@ -113,7 +113,7 @@ extern unsigned long D_00489B58;
 extern char *D_00489B60;
 unsigned long D_00489B68 = 0;
 unsigned long D_00489B70 = 0;
-extern char *func_00128658(void *, int);
+extern char *Newlib_SbrkR(void *, int);
 #if 0 /* merge_units */
 extern void _free_r(void *, void *);
 #endif /* merge_units */
@@ -126,7 +126,7 @@ extern void _free_r(void *, void *);
 #define MALLOC_ALIGN_MASK (MALLOC_ALIGNMENT - 1)
 #define chunk2mem(p) ((void *)((char *)(p) + 2 * SIZE_SZ))
 #define set_head_size(p, s) ((p)->size = (((p)->size & PREV_INUSE) | (s)))
-void func_00125408(void *reent_ptr, INTERNAL_SIZE_T nb)
+void Newlib_MallocExtendTop(void *reent_ptr, INTERNAL_SIZE_T nb)
 {
     char *brk;
     INTERNAL_SIZE_T front_misalign;
@@ -144,7 +144,7 @@ void func_00125408(void *reent_ptr, INTERNAL_SIZE_T nb)
     if (D_00489B60 != (char *)(-1))
         sbrk_size = (sbrk_size + (pagesz - 1)) & ~(pagesz - 1);
 
-    brk = (char *)(func_00128658(reent_ptr, sbrk_size));
+    brk = (char *)(Newlib_SbrkR(reent_ptr, sbrk_size));
 
     if (brk == (char *)(-1) ||
         (brk < old_end && old_top != initial_top))
@@ -170,7 +170,7 @@ void func_00125408(void *reent_ptr, INTERNAL_SIZE_T nb)
 
         correction += pagesz - ((unsigned long)(brk + sbrk_size) & (pagesz - 1));
 
-        new_brk = (char *)(func_00128658(reent_ptr, correction));
+        new_brk = (char *)(Newlib_SbrkR(reent_ptr, correction));
         if (new_brk == (char *)(-1)) return;
 
         sbrked_mem += correction;
@@ -198,7 +198,7 @@ void func_00125408(void *reent_ptr, INTERNAL_SIZE_T nb)
     if ((unsigned long)(sbrked_mem) > (unsigned long)D_00489B70)
         D_00489B70 = sbrked_mem;
 }
-#undef func_001261B0 /* merge_units */
-#undef func_00126230 /* merge_units */
+#undef Newlib_MallocLock /* merge_units */
+#undef Newlib_MallocUnlock /* merge_units */
 #undef _free_r /* merge_units */
 /* merge_units: end func_00125408 */

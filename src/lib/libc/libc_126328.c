@@ -6,7 +6,7 @@ typedef struct BNode { struct BNode* next; int bucket; } BNode;
 typedef struct { char pad[0x4C]; BNode** buckets; } Table;
 
 /* Pushes a node onto the head of its bucket list. */
-void func_00126328(Table* table, BNode* node)
+void Newlib_Bfree(Table* table, BNode* node)
 {
     if (node != 0) {
         BNode** buckets = table->buckets;

@@ -33,7 +33,7 @@ extern "C" char D_004AB668[];
 static void * const dat_0048BBB0[2] = { (void*)D_004AB648, (void*)0x0 };
 static void * const dat_0048BBB8[2] = { (void*)D_004AB658, (void*)0x0 };
 static void * const dat_0048BBC0[2] = { (void*)D_004AB668, (void*)0x0 };
-extern "C" void func_0033F250(Screen* self);
+extern "C" void GuiMenuScreen_Init(Screen* self);
 extern "C" Obj* GuiWidget_FindChildByName(Screen* self, const char* name);
 
 /* Returns obj when it is a D_004A9870-type widget, else 0. */
@@ -47,7 +47,7 @@ static inline Obj* AsLabel(Obj* obj)
 /* Screen init: base init, then looks up the three named child widgets (kept only if D_004A9870-type). */
 extern "C" void GuiNetJoinMission_Init(Screen* self)
 {
-    func_0033F250(self);
+    GuiMenuScreen_Init(self);
     self->item0 = AsLabel(GuiWidget_FindChildByName(self, (*(const char**)dat_0048BBB0)));
     self->item1 = AsLabel(GuiWidget_FindChildByName(self, (*(const char**)dat_0048BBB8)));
     self->item2 = AsLabel(GuiWidget_FindChildByName(self, (*(const char**)dat_0048BBC0)));

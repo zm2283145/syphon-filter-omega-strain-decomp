@@ -53,7 +53,7 @@ extern signed char D_005724B0;
 #endif /* merge_units */
 #define D_005724B0 (*(signed char*)&D_005724B0) /* merge_units */
 
-extern char func_002CAA70;
+extern char Sfo_Malloc;
 extern char sfo_malloc_2CA9B0;
 
 void func_0042AF00(void) {
@@ -66,7 +66,7 @@ void func_0042AF00(void) {
     D_00572419 = 0;
     D_0057241A = 0;
     D_0057241B = 0;
-    temp_v0 = func_002EA4F0(&func_002CAA70, &sfo_malloc_2CA9B0);
+    temp_v0 = func_002EA4F0(&Sfo_Malloc, &sfo_malloc_2CA9B0);
     if (temp_v0 == 0) {
         if (temp_v0 == 0) {
             func_002E9480(sp40);

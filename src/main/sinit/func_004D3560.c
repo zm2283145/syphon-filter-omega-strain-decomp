@@ -4,6 +4,6 @@
 #pragma mpwc_relax on
 extern char *D_0051EE98;
 
-void func_004D3560(void) {
+void StaticInit_GameFrontendMsgName(void) {
     D_0051EE98 = "GAME_FRONTEND";
 }

@@ -34,7 +34,7 @@ static inline Crv_5010b* Init_5010b(Crv_5010b* c, float* v0, float* s0, float* v
     c->inv = (dur != 0.0f) ? 1.0f / dur : 0.0f;
     return c;
 }
-extern "C" void func_00365010(Crv_5010b* c, float* v0, float* s0, float* v1, float* s1)
+extern "C" void AnimChannel_RebuildSegment_365010(Crv_5010b* c, float* v0, float* s0, float* v1, float* s1)
 {
     if (c) Init_5010b(c, v0, s0, v1, s1, c->dur);
 }
@@ -46,7 +46,7 @@ extern "C" void func_00365010(Crv_5010b* c, float* v0, float* s0, float* v1, flo
 #pragma push /* merge_units */
 typedef struct { char pad[0x10]; float f10; } A5_003650B0_B;
 typedef struct { char pad[0x28]; float f28; char pad2[4]; A5_003650B0_B* b; float f34; } A5_003650B0;
-int func_003650B0(A5_003650B0* p) {
+int AnimChannel_IsFreshSegment_3650B0(A5_003650B0* p) {
     return p->f34 == p->b->f10 && p->f28 > 0.0f;
 }
 #pragma pop /* merge_units */
@@ -57,7 +57,7 @@ int func_003650B0(A5_003650B0* p) {
 typedef struct { char pad0[8]; float t; char pad1[0x38 - 0xC]; unsigned char wrap; } B4Obj3;
 extern float Math_FMod(float, float);
 static inline float b4clamp(float x, float lo, float hi) { float r; asm { max.s r, x, lo; min.s r, r, hi } return r; }
-void func_00365100(B4Obj3* p) {
+void AnimChannel_ClampValue_365100(B4Obj3* p) {
     float t = p->t;
     float r;
     if (!p->wrap) {
@@ -98,7 +98,7 @@ static inline float B7_Wrap(B7_AnimCh* p, float d)
     }
     return r;
 }
-void func_00365180(B7_AnimCh* p, float dt, float speed)
+void AnimChannel_UpdateRate_365180(B7_AnimCh* p, float dt, float speed)
 {
     float d = B7_Wrap(p, p->f8 - p->f4);
     p->fC = speed * d;
@@ -112,6 +112,6 @@ void func_00365180(B7_AnimCh* p, float dt, float speed)
 #pragma cplusplus on
 #include "vtable_base_dtor.h"
 
-DEFINE_VTABLE_BASE_DTOR(func_00365260, GuiAgentDisplay_vtable, GuiWidget_Destroy)
+DEFINE_VTABLE_BASE_DTOR(GuiAgentDisplay_dtor, GuiAgentDisplay_vtable, GuiWidget_Destroy)
 #pragma pop /* merge_units */
 /* merge_units: end func_00365260 */

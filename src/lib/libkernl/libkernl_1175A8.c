@@ -6,18 +6,18 @@
 
 /* merge_units: begin func_001175A8 */
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
-int func_001161A0();                                
-int func_001161F8();                                  
+int DIntr();                                
+int EIntr();                                  
 int func_00117558(int, int);                          
 
 int func_001175A8(int arg0, int arg1) {
     int temp_s0;
     int temp_s2;
 
-    temp_s2 = func_001161A0();
+    temp_s2 = DIntr();
     temp_s0 = func_00117558(arg0, arg1);
     if (temp_s2 != 0) {
-        func_001161F8();
+        EIntr();
     }
     return temp_s0;
 }
@@ -51,14 +51,14 @@ int func_00117608(int id)
 
 /* merge_units: begin func_001176B8 */
 #if 0 /* merge_units */
-extern int func_001161A0(void);
+extern int DIntr(void);
 #endif /* merge_units */
-#define func_001161A0() (func_001161A0()) /* merge_units */
+#define DIntr() (DIntr()) /* merge_units */
 
 #if 0 /* merge_units */
-extern int func_001161F8(void);
+extern int EIntr(void);
 #endif /* merge_units */
-#define func_001161F8() (func_001161F8()) /* merge_units */
+#define EIntr() (EIntr()) /* merge_units */
 
 #if 0 /* merge_units */
 extern int func_00117608(int);
@@ -67,13 +67,13 @@ extern int func_00117608(int);
 
 int func_001176B8(int a)
 {
-    int s = func_001161A0();
+    int s = DIntr();
     int r = func_00117608(a);
-    if (s) func_001161F8();
+    if (s) EIntr();
     return r;
 }
-#undef func_001161A0 /* merge_units */
-#undef func_001161F8 /* merge_units */
+#undef DIntr /* merge_units */
+#undef EIntr /* merge_units */
 #undef func_00117608 /* merge_units */
 /* merge_units: end func_001176B8 */
 
@@ -101,14 +101,14 @@ extern void func_00116DF0(long long);
 #define func_00116DF0(a0) (func_00116DF0((unsigned long long)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int func_001161A0(void);
+extern int DIntr(void);
 #endif /* merge_units */
-#define func_001161A0() (func_001161A0()) /* merge_units */
+#define DIntr() (DIntr()) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_001161F8(void);
+extern void EIntr(void);
 #endif /* merge_units */
-#define func_001161F8() ((void)func_001161F8()) /* merge_units */
+#define EIntr() ((void)EIntr()) /* merge_units */
 
 int func_00117708(int id)
 {
@@ -132,20 +132,20 @@ int func_00117708(int id)
 #undef func_00117008 /* merge_units */
 #undef func_001172E0 /* merge_units */
 #undef func_00116DF0 /* merge_units */
-#undef func_001161A0 /* merge_units */
-#undef func_001161F8 /* merge_units */
+#undef DIntr /* merge_units */
+#undef EIntr /* merge_units */
 /* merge_units: end func_00117708 */
 
 /* merge_units: begin func_001177D0 */
 #if 0 /* merge_units */
-extern int func_001161A0(void);
+extern int DIntr(void);
 #endif /* merge_units */
-#define func_001161A0() (func_001161A0()) /* merge_units */
+#define DIntr() (DIntr()) /* merge_units */
 
 #if 0 /* merge_units */
-extern int func_001161F8(void);
+extern int EIntr(void);
 #endif /* merge_units */
-#define func_001161F8() (func_001161F8()) /* merge_units */
+#define EIntr() (EIntr()) /* merge_units */
 
 #if 0 /* merge_units */
 extern int func_00117708(int);
@@ -154,13 +154,13 @@ extern int func_00117708(int);
 
 int func_001177D0(int a)
 {
-    int s = func_001161A0();
+    int s = DIntr();
     int r = func_00117708(a);
-    if (s) func_001161F8();
+    if (s) EIntr();
     return r;
 }
-#undef func_001161A0 /* merge_units */
-#undef func_001161F8 /* merge_units */
+#undef DIntr /* merge_units */
+#undef EIntr /* merge_units */
 #undef func_00117708 /* merge_units */
 /* merge_units: end func_001177D0 */
 
@@ -188,22 +188,22 @@ extern void func_00116DF0(long long);
 #define func_00116DF0(a0) (func_00116DF0((unsigned long long)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int func_001161A0(void);
+extern int DIntr(void);
 #endif /* merge_units */
-#define func_001161A0() (func_001161A0()) /* merge_units */
+#define DIntr() (DIntr()) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_001161F8(void);
+extern void EIntr(void);
 #endif /* merge_units */
-#define func_001161F8() ((void)func_001161F8()) /* merge_units */
+#define EIntr() ((void)EIntr()) /* merge_units */
 
 long long func_00117820(int id, long long val)
 {
     Alarm_00117820 *a = (Alarm_00117820 *)(((unsigned int)id >> 10) << 6);
-    int s = func_001161A0();
+    int s = DIntr();
     long long old, t;
     if (id < 0 || (id & 0x3FF) != a->id || D_00487848.cur == id) {
-        if (s) func_001161F8();
+        if (s) EIntr();
         return -1;
     }
     old = a->x18;
@@ -217,15 +217,15 @@ long long func_00117820(int id, long long val)
     } else {
         a->x18 = val;
     }
-    if (s) func_001161F8();
+    if (s) EIntr();
     return old;
 }
 #undef D_00487848 /* merge_units */
 #undef func_00117008 /* merge_units */
 #undef func_001172E0 /* merge_units */
 #undef func_00116DF0 /* merge_units */
-#undef func_001161A0 /* merge_units */
-#undef func_001161F8 /* merge_units */
+#undef DIntr /* merge_units */
+#undef EIntr /* merge_units */
 /* merge_units: end func_00117820 */
 
 /* merge_units: begin func_001178F0 */
@@ -252,14 +252,14 @@ extern void func_00116DF0(long long);
 #define func_00116DF0(a0) (func_00116DF0((unsigned long long)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int func_001161A0(void);
+extern int DIntr(void);
 #endif /* merge_units */
-#define func_001161A0() (func_001161A0()) /* merge_units */
+#define DIntr() (DIntr()) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_001161F8(void);
+extern void EIntr(void);
 #endif /* merge_units */
-#define func_001161F8() ((void)func_001161F8()) /* merge_units */
+#define EIntr() ((void)EIntr()) /* merge_units */
 
 long long func_001178F0(int id)
 {
@@ -272,6 +272,6 @@ long long func_001178F0(int id)
 #undef func_00117008 /* merge_units */
 #undef func_001172E0 /* merge_units */
 #undef func_00116DF0 /* merge_units */
-#undef func_001161A0 /* merge_units */
-#undef func_001161F8 /* merge_units */
+#undef DIntr /* merge_units */
+#undef EIntr /* merge_units */
 /* merge_units: end func_001178F0 */

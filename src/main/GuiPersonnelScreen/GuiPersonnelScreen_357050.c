@@ -13,7 +13,7 @@ struct O357050 {
     void* vtable; char pad4[0x44]; int a48; int a4C; int a50; int a54; int a58;
     int a5C; int a60; int pad64; int a68;
 };
-extern "C" O357050* func_00357050(void)
+extern "C" O357050* GuiPersonnelScreen_Create(void)
 {
     O357050* p;
     {

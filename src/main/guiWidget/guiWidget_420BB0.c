@@ -11,7 +11,7 @@
 extern int strcmp(void*);
 
 /* Returns whether strcmp(((int*)"GuiButtonWidget")) returned 0. */
-int func_00420BB0(void) {
+int GuiButtonWidget_IsType(void) {
     return strcmp(((int*)"GuiButtonWidget")) == 0;
 }
 #pragma pop /* merge_units */

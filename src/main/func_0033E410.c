@@ -19,7 +19,7 @@ extern void func_00360610(W33E4*, I33E4*, char*);
 extern V33E4* Gui_GetScreenStack(void);
 extern void FrontEnd_ClosePopup(int, int);
 }
-extern "C" void func_0033E410(O33E4* o, I33E4* info) {
+extern "C" void GuiMenuScreen_OpenAgentInfo(O33E4* o, I33E4* info) {
     char buf[0x100];
     if (!o->fa8 || !DME_GetLobby()) return;
     if (func_00450C60(DME_GetLobby(), info->f0, buf)) {

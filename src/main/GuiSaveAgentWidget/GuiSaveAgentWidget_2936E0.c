@@ -62,7 +62,7 @@ extern "C" void GuiAgentLoad_HandleEvent();
 extern "C" void GuiAgentLoad_Wake();
 extern "C" void GuiAgentLoad_Update();
 extern "C" void GuiAgentLoad_GetClassName();
-extern "C" void func_00293860();
+extern "C" void GuiAgentLoad_IsType();
 extern "C" void func_00293890();
 extern "C" void GuiWidget_FocusPrev();
 extern "C" void GuiWidget_FocusNext();
@@ -77,11 +77,11 @@ extern "C" void GuiWidget_ClearFlag4();
 extern "C" void GuiWidget_SetFlag4();
 extern "C" void GuiWidget_Deinit();
 extern "C" void GuiWidget_Init();
-extern "C" void func_0041F210();
+extern "C" void GuiWidget_Load();
 extern void * const D_004DD400[];
 void* GuiWidget_Destroy(void* self, short deleteFlag);
 }
-extern "C" Vtable3Object* func_002937D0(Vtable3Object* self, short deleteFlag)
+extern "C" Vtable3Object* GuiAgentLoad_dtor(Vtable3Object* self, short deleteFlag)
 {
     if (self) {
         self->vtable = ((char*)D_004DD400);
@@ -97,6 +97,6 @@ extern "C" Vtable3Object* func_002937D0(Vtable3Object* self, short deleteFlag)
     }
     return self;
 }
-void * const D_004DD400[24] = { (void*)0x0, (void*)0x0, (void*)func_002937D0, (void*)GuiWidget_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiAgentLoad_Wake, (void*)GuiWidget_BaseSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiAgentLoad_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiAgentLoad_Update, (void*)GuiAgentLoad_HandleEvent, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiAgentLoad_GetClassName, (void*)func_00293860, (void*)func_00293890 };
+void * const D_004DD400[24] = { (void*)0x0, (void*)0x0, (void*)GuiAgentLoad_dtor, (void*)GuiWidget_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiAgentLoad_Wake, (void*)GuiWidget_BaseSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiAgentLoad_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiAgentLoad_Update, (void*)GuiAgentLoad_HandleEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiAgentLoad_GetClassName, (void*)GuiAgentLoad_IsType, (void*)func_00293890 };
 #pragma pop /* merge_units */
 /* merge_units: end func_002937D0 */

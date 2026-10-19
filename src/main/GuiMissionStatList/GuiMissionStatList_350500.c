@@ -11,7 +11,7 @@
 #include "types.h"
 #include "vtable_base_dtor.h"
 
-DEFINE_VTABLE_BASE_DTOR(func_00350500, D_004DEEE0, func_00426940)
+DEFINE_VTABLE_BASE_DTOR(GuiMissionStatList_dtor, D_004DEEE0, GuiTextArrayWidget_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00350500 */
 
@@ -37,7 +37,7 @@ const char* GuiMissionStatList_GetClassName(void) {
 #pragma push /* merge_units */
 extern int strcmp(void* obj);
 /* True when strcmp returns 0 for the global object "GuiMissionStatList". */
-int func_00350570(void)
+int GuiMissionStatList_IsType(void)
 {
     return strcmp("GuiMissionStatList") == 0;
 }
@@ -57,7 +57,7 @@ extern void String_Reserve(String3* str, int len);
 extern void String_Replace(String3* str, int a, int b, const char* first, const char* last, signed char tag);
 
 /* String constructor from a C string. */
-String3* func_003505A0(String3* str, const char* s) {
+String3* String_CtorCStr_3505A0(String3* str, const char* s) {
     volatile signed char tag[4]; /* empty tag argument, never initialized */
     int len;
     str->begin = 0;

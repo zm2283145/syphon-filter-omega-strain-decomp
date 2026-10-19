@@ -45,7 +45,7 @@ void GuiPersonnelMenu_ctor(void* m);
 }
 #pragma opt_propagation off
 #pragma opt_unroll_loops off
-extern "C" W_60CF0* func_00460CF0(W_60CF0* self)
+extern "C" W_60CF0* GuiEndGameAwards_ctor(W_60CF0* self)
 {
     Req_60CF0* p;
     Sub_60CF0* s;

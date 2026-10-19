@@ -438,7 +438,7 @@ extern char D_00571C10[]; /* global id -> object map (GobjMap) */
 GobjIterB PtrVec_Begin(int v);
 void PtrVec_End(GobjIter* out, int v);
 int func_001339A0(void* p);
-void func_00134E80(void* p, int f);
+void PtrVec_Dtor_134E80(void* p, int f);
 #if 0 /* merge_units */
 void GobjScope_Dtor(void* p, int f);
 #endif /* merge_units */
@@ -449,7 +449,7 @@ void func_0040CAC0(void* p);
 static inline void DeleteObject(GobjVirt_0040C5D0* o) { AllocGuard g; o->Dtor(-1); Mem_Free(0, o, D_004BECA8, 0x9B); }
 static inline bool IterNe(const GobjIter& a, const GobjIter& b) { return !(a.p == b.p); }
 static inline void DeleteScope(void* p, int line) { AllocGuardCall g; GobjScope_Dtor(p, -1); Mem_Free(0, p, D_004BECA8, line); }
-static inline void DeletePool(void* p, int line) { AllocGuardCall g; func_00134E80(p, -1); Mem_Free(0, p, D_004BECA8, line); }
+static inline void DeletePool(void* p, int line) { AllocGuardCall g; PtrVec_Dtor_134E80(p, -1); Mem_Free(0, p, D_004BECA8, line); }
 
 /*
  * Tears the object manager down: deletes every live object registered in the

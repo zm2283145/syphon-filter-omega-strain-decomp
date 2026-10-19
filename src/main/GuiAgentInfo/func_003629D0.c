@@ -16,7 +16,7 @@ static inline void F8PlcCopy(F8Plc* d, F8Plc* s)
     Quat_Assign(&d->q, &s->q);
     Vec4_Copy(&d->pos, &s->pos);
 }
-F8RootW* func_003629D0(F8Root* r)
+F8RootW* Root_GetWorldPlacement_3629D0(F8Root* r)
 {
     F8Root* p = r->parent;
     if (p != 0) {

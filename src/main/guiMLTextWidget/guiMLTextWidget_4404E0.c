@@ -16,16 +16,16 @@ extern "C" void GuiWidget_BaseWake();
 extern "C" void GuiWidget_ClearFlag4();
 extern "C" void GuiWidget_SetFlag4();
 extern "C" void GuiWidget_Deinit();
-extern "C" void func_0041F210();
-extern "C" void func_00440540();
-extern "C" void func_00440550();
+extern "C" void GuiWidget_Load();
+extern "C" void GuiWeaponDisplay_GetClassName();
+extern "C" void GuiWeaponDisplay_IsType();
 extern "C" void GuiWeaponDisplay_Draw();
 extern "C" void GuiWeaponDisplay_Update();
 extern "C" void GuiWeaponDisplay_Init();
 extern void * const D_004E11A0[];
 void* GuiWidget_Destroy(void* self, short deleteFlag);
 }
-extern "C" VtableObject* func_004404E0(VtableObject* self, short deleteFlag)
+extern "C" VtableObject* GuiWeaponDisplay_dtor(VtableObject* self, short deleteFlag)
 {
     if (self) {
         self->vtable = ((char*)D_004E11A0);
@@ -35,4 +35,4 @@ extern "C" VtableObject* func_004404E0(VtableObject* self, short deleteFlag)
     }
     return self;
 }
-void * const D_004E11A0[24] = { (void*)0x0, (void*)0x0, (void*)func_004404E0, (void*)GuiWeaponDisplay_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiWidget_BaseWake, (void*)GuiWidget_BaseSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)func_00293950, (void*)GuiWeaponDisplay_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWeaponDisplay_Update, (void*)GuiWidget_OnEvent, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)func_00440540, (void*)func_00440550, (void*)0x0 };
+void * const D_004E11A0[24] = { (void*)0x0, (void*)0x0, (void*)GuiWeaponDisplay_dtor, (void*)GuiWeaponDisplay_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiWidget_BaseWake, (void*)GuiWidget_BaseSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)func_00293950, (void*)GuiWeaponDisplay_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWeaponDisplay_Update, (void*)GuiWidget_OnEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiWeaponDisplay_GetClassName, (void*)GuiWeaponDisplay_IsType, (void*)0x0 };

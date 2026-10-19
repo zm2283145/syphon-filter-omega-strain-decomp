@@ -23,9 +23,9 @@ extern char D_004BA338[];
 extern void GuiArrayWidget_ctor(S348FC0* self);
 extern char* Loc_LookupText(char* key);
 extern void String_CtorCStr_13B480(Str348FC0* s, char* text);
-extern void func_0013D680(Str348FC0* dst, Str348FC0* src);
+extern void String_AssignString(Str348FC0* dst, Str348FC0* src);
 extern void String_Dtor(Str348FC0* s, int flags);
-S348FC0* func_00348FC0(S348FC0* self)
+S348FC0* GuiNetMessageArray_ctor(S348FC0* self)
 {
     Str348FC0 tmp;
     char* t;
@@ -42,7 +42,7 @@ S348FC0* func_00348FC0(S348FC0* self)
     self->aA4 = 0;
     t = Loc_LookupText("TOSSystem");
     { Str348FC0* p = &tmp; String_CtorCStr_13B480(p, t ? t : D_004BA338); }
-    func_0013D680(&self->sA8, &tmp);
+    String_AssignString(&self->sA8, &tmp);
     String_Dtor(&tmp, 0);
     return self;
 }
@@ -56,7 +56,7 @@ static inline void merge_flush_func_00348FC0(void) {}
 #pragma cplusplus on
 
 /* Derived destructor: member, then base, optionally delete. */
-DEFINE_VTABLE_MEMBER_BASE_DTOR(func_00349070, D_004E0D20, 0x60, func_0013A040, GuiWidget_Destroy)
+DEFINE_VTABLE_MEMBER_BASE_DTOR(GuiArrayWidget_dtor_349070, D_004E0D20, 0x60, func_0013A040, GuiWidget_Destroy)
 #pragma pop /* merge_units */
 /* merge_units: end func_00349070 */
 
@@ -81,7 +81,7 @@ void* func_0013B2E0(void* self, short deleteFlag);
 void* GuiWidget_Destroy(void* self, short deleteFlag);
 }
 struct O3490F0 { void* vtable; };
-extern "C" O3490F0* func_003490F0(O3490F0* self, short deleteFlag)
+extern "C" O3490F0* GuiNetMessageArray_dtor(O3490F0* self, short deleteFlag)
 {
     if (self) {
         self->vtable = D_004DEB80;

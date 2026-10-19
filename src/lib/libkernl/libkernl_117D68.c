@@ -54,8 +54,8 @@ extern N7E18 *volatile D_004E9AC0;
 #endif /* merge_units */
 #define D_004E9AC0 (*(N7E18 * volatile*)&D_004E9AC0) /* merge_units */
 
-extern int func_001161A0(void);
-extern void func_001161F8(void);
+extern int DIntr(void);
+extern void EIntr(void);
 extern int func_00117DB8();
 static inline N7E18 *node_alloc(void) { N7E18 *n = D_004E9AC0; if (n) D_004E9AC0 = n->next; return n; }
 extern int func_00117420(void);
@@ -67,10 +67,10 @@ int func_00117E18(long t, void *h, void *arg)
     int s, id;
     N7E18 *n;
     if (h == 0) return 0x80000016;
-    s = func_001161A0();
+    s = DIntr();
     n = node_alloc();
     if (n == 0) {
-        if (s) func_001161F8();
+        if (s) EIntr();
         return 0x80008005;
     }
     id = func_00117420();
@@ -78,7 +78,7 @@ int func_00117E18(long t, void *h, void *arg)
         n->next = D_004E9AC0;
         D_004E9AC0 = n;
         n->id = 0;
-        if (s) func_001161F8();
+        if (s) EIntr();
         return id;
     }
     n->func = h;
@@ -86,7 +86,7 @@ int func_00117E18(long t, void *h, void *arg)
     n->id = id;
     func_00117B40(id, t, func_00117DB8, n);
     func_001176B8(id);
-    if (s) func_001161F8();
+    if (s) EIntr();
     return ((int)n << 4) | (id & 0xFE) | 1;
 }
 #undef D_004E9AC0 /* merge_units */
@@ -137,16 +137,16 @@ extern int func_00117508(int);
 int func_00118038(int id)
 {
     N7E18 *n = (N7E18 *)(((unsigned int)id >> 8) << 4);
-    int s = func_001161A0();
+    int s = DIntr();
     if (id < 0 || ((id ^ n->id) & 0xFF)) {
-        if (s) func_001161F8();
+        if (s) EIntr();
         return 0x80008002;
     }
     func_00117508(n->id);
     n->next = D_004E9AC0;
     D_004E9AC0 = n;
     n->id = 0;
-    if (s) func_001161F8();
+    if (s) EIntr();
     return 0;
 }
 #undef D_004E9AC0 /* merge_units */

@@ -10,5 +10,5 @@ int* func_00172990(PtrVec* v, int i) {
     return v->data + i;
 }
 
-void func_001729A0(void) {
+void cHotbox_v14(void) {
 }

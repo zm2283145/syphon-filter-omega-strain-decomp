@@ -41,7 +41,7 @@ typedef struct GuiWidget {
     struct GuiWidget* self;        /* 0x44 */
 } GuiWidget;
 
-/* Widget subclass built by func_004160A0 (>= 0x6C bytes). */
+/* Widget subclass built by GuiCanvas_ctor (>= 0x6C bytes). */
 typedef struct GuiWidget4160A0 {
     GuiWidget base;                /* 0x00 */
     int unk48;                     /* 0x48 */
@@ -259,7 +259,7 @@ typedef struct Msg3E43D0Src {
     unsigned char unk09;           /* 0x09 */
 } Msg3E43D0Src;
 
-/* Widget-like object built by func_0041ADC0 on top of GuiTextWidget_ctor (>= 0x90 bytes). */
+/* Widget-like object built by GuiTextEditWidget_Construct on top of GuiTextWidget_ctor (>= 0x90 bytes). */
 typedef struct Unk41ADC0 {
     void* vtable;                  /* 0x00 */
     char pad04[0x10];

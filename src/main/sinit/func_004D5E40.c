@@ -1,6 +1,6 @@
 #include "types.h"
 extern char D_00555070[];
-extern char func_003E3FF0[];
+extern char ScriptInterpreter_dtor[];
 extern char D_00555060[];
 extern char func_003E1510[];
 extern int D_00559FA0;
@@ -54,7 +54,7 @@ extern char Script_cGroup_GetSize[];
 extern int D_0055A170;
 extern char Script_cGroup_Get[];
 extern int D_0055A178;
-extern int func_003E28E0();
+extern int ScriptInterpreter_ctor();
 extern int __register_global_object();
 extern int Script_RegisterType();
 extern int func_003E1530();
@@ -64,12 +64,12 @@ extern int func_003E3F60();
 extern int Script_RegisterNative_2();
 extern int cGroup_GetScriptTypeKeyPtr();
 extern int cSystem_GetScriptTypeKeyPtr();
-void func_004D5E40(void)
+void StaticInit_RegisterScriptInterpreter(void)
 {
     char sp3C[4];
     char sp38[4];
-    func_003E28E0(D_00555070, 0x3e8);
-    __register_global_object(D_00555070, func_003E3FF0, D_00555060);
+    ScriptInterpreter_ctor(D_00555070, 0x3e8);
+    __register_global_object(D_00555070, ScriptInterpreter_dtor, D_00555060);
     D_00559FA0 = Script_RegisterType("cScriptInterpreter", func_003E1510, 0, 0);
     D_00559FA8 = *(int*)func_003E1530();
     D_00559FB0 = Script_RegisterNative(*(int*)func_003E1530(), Script_cScriptInterp_ExecuteInitCode, D_00493880, "ExecuteInitCode", 1, func_003E1530());

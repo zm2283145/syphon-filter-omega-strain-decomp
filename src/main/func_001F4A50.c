@@ -25,7 +25,7 @@ extern void MotionSlider_Dtor(void*, int);
 extern void func_001F3E10(void*, int);
 extern void func_001F3DC0(void*, int);
 extern void func_001F3C70(void*, int);
-extern void func_002006B0(void*);
+extern void MotionGraph_BuildHeavyWeaponWalk(void*);
 extern void* func_0018A700(void*, int);
 extern void MotionSelNode_Ctor(void*, void*, void*, void*);
 extern void* MotionRegistry_MakeKey(void*, void*);
@@ -3363,7 +3363,7 @@ void MotionGraph_BuildCore(void* p0)
     func_001F3E10(&v1230, -1);
     func_001F3DC0(&vD8, -1);
     func_001F3C70(&v1270, -1);
-    func_002006B0(p0);
+    MotionGraph_BuildHeavyWeaponWalk(p0);
     func_001F4470(&v1120);
     func_001F4460(&vC0, 0.0f, 0.0f);
     MotionSliderChild_Resolve(&v10E0, CanonicalKey_Construct(&v10F0, "sliderMoveUpright"), p0, &vC0);

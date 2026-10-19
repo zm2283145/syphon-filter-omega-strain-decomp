@@ -21,7 +21,7 @@ typedef struct C8Node { struct C8Node* prev; struct C8Node* next; int key; C8Obj
 extern "C" {
 extern struct C8Node D_005435C4;
 extern C8Node* D_005435C8;
-void func_003C9EA0(int* out, int* self, int* first, int* last);
+void ObjectList_EraseRange_3C9EA0(int* out, int* self, int* first, int* last);
 }
 extern "C" void MsgQueue_ClearPending(void)
 {
@@ -50,7 +50,7 @@ extern "C" void MsgQueue_ClearPending(void)
         int last;
         last = (int)&D_005435C4;
         first = (int)D_005435C8;
-        func_003C9EA0(&r, &D_005435C0, &first, &last);
+        ObjectList_EraseRange_3C9EA0(&r, &D_005435C0, &first, &last);
     }
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -110,9 +110,9 @@ void func_003C9340(QNode**,int*);
 #define func_003C9340(a0, a1) (func_003C9340((Iter *)(a0), (PtrVec *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
-void func_003C9EA0(int*,int*,int*,int*);
+void ObjectList_EraseRange_3C9EA0(int*,int*,int*,int*);
 #endif /* merge_units */
-#define func_003C9EA0(a0, a1, a2, a3) (func_003C9EA0((a0), (a1), (a2), (a3))) /* merge_units */
+#define ObjectList_EraseRange_3C9EA0(a0, a1, a2, a3) (ObjectList_EraseRange_3C9EA0((a0), (a1), (a2), (a3))) /* merge_units */
 
 }
 static inline QEntry* PendAt2(int i) { QNode* it; func_003C9340(&it, &D_005435C0); func_003C92E0(&it, i); return func_003C92D0(&it); }
@@ -127,8 +127,8 @@ static inline void PushActive(QEntry* e, TargetV* dst) {
  pos = (int)&D_005435E4;
  MsgQueue_Insert(&result, &D_005435E0, &pos, e);
 }
-static inline void ClearPend() { int r; int first; int last; last = (int)&D_005435C4; first = (int)D_005435C8; func_003C9EA0(&r, &D_005435C0, &first, &last); }
-static inline void ClearActive() { int r; int first; int last; last = (int)&D_005435E4; first = (int)D_005435E8; func_003C9EA0(&r, &D_005435E0, &first, &last); }
+static inline void ClearPend() { int r; int first; int last; last = (int)&D_005435C4; first = (int)D_005435C8; ObjectList_EraseRange_3C9EA0(&r, &D_005435C0, &first, &last); }
+static inline void ClearActive() { int r; int first; int last; last = (int)&D_005435E4; first = (int)D_005435E8; ObjectList_EraseRange_3C9EA0(&r, &D_005435E0, &first, &last); }
 
 extern "C" int MsgQueue_Pump(void) {
  int i;
@@ -178,7 +178,7 @@ extern "C" int MsgQueue_Pump(void) {
 #undef func_003C92D0 /* merge_units */
 #undef func_003C92E0 /* merge_units */
 #undef func_003C9340 /* merge_units */
-#undef func_003C9EA0 /* merge_units */
+#undef ObjectList_EraseRange_3C9EA0 /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003C8DE0(void) {}
 #pragma pop /* merge_units */
@@ -475,7 +475,7 @@ extern "C" {
 int func_003C9B20(...);
 int func_003C9B30(...);
 char *func_003C9B40(...);
-int func_003C9FE0(...);
+int List_Erase_3C9FE0(...);
 #if 0 /* merge_units */
 extern char D_004BD118;
 #endif /* merge_units */
@@ -500,7 +500,7 @@ typedef struct { int first; void **second; } Pr3C;
 typedef struct { int r; char *n; int ret[2]; } SL3C;
 static inline int ite0(SL3C *s) { func_003C9B20(&s->r, func_003C9B30(&D_005435C0)); return s->r; }
 static inline void er1(char *n);
-static inline void er0(SL3C *s, char *n) { s->n = n; func_003C9FE0(s->ret, &D_005435C0, &s->n); }
+static inline void er0(SL3C *s, char *n) { s->n = n; List_Erase_3C9FE0(s->ret, &D_005435C0, &s->n); }
 extern "C" int MsgQueue_EraseFirstPending(int *arg0) {
     char *var_s0;
     char *temp_a0;

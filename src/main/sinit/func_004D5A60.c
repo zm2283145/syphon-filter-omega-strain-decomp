@@ -4,6 +4,6 @@
 #pragma mpwc_relax on
 extern char *D_005436B0;
 
-void func_004D5A60(void) {
+void StaticInit_NextFrameMsgName(void) {
     D_005436B0 = "MSGLIB_NEXTFRAME";
 }

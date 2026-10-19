@@ -5,23 +5,23 @@
  */
 
 /* merge_units: begin func_00116CE0 */
-extern int func_001161A0(void);
-extern void func_001161F8(void);
+extern int DIntr(void);
+extern void EIntr(void);
 extern void func_00116A80(unsigned int);
 extern int func_001172E0(void);
 extern void func_00116DF0(int);
 
 int func_00116CE0(void)
 {
-    int s = func_001161A0();
+    int s = DIntr();
     unsigned int v = *(volatile unsigned int *)0x10001010;
     if (v & 0x80) {
-        if (s) func_001161F8();
+        if (s) EIntr();
         return 1;
     }
     func_00116A80((v & ~0xC00) | 0x80);
     func_00116DF0(func_001172E0());
-    if (s) func_001161F8();
+    if (s) EIntr();
     return 0;
 }
 /* merge_units: end func_00116CE0 */
@@ -29,14 +29,14 @@ int func_00116CE0(void)
 /* merge_units: begin func_00116D70 */
 int func_00116D70(void)
 {
-    int s = func_001161A0();
+    int s = DIntr();
     unsigned int v = *(volatile unsigned int *)0x10001010;
     if (!(v & 0x80)) {
-        if (s) func_001161F8();
+        if (s) EIntr();
         return 0;
     }
     func_00116A80(v & ~0xC80);
-    if (s) func_001161F8();
+    if (s) EIntr();
     return 1;
 }
 /* merge_units: end func_00116D70 */

@@ -82,7 +82,7 @@ static inline Plc* World(Nd* n)
     }
     return &n->local;
 }
-extern "C" void func_00362AF0(Nd* self)
+extern "C" void Root_RefreshWorldCache_362AF0(Nd* self)
 {
     Nd* par = self->parent;
     if (par && self->dirty) {

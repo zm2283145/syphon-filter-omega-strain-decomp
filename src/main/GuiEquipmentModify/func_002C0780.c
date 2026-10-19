@@ -8,6 +8,6 @@
 
 extern int GuiWidget_BaseWake(void* self);
 
-int func_002C0780(void* self) {
+int GuiEquipmentModify_Wake(void* self) {
     return GuiWidget_BaseWake(self);
 }

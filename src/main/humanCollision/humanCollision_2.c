@@ -15,7 +15,7 @@
 #include "types.h"
 #include "humanCollision_types.h"
 
-extern int func_001EF6C0(int, int);  /* vector reserve (buffer B) */
+extern int Vector_Reserve_1EF6C0(int, int);  /* vector reserve (buffer B) */
 
 /* Empty vector (buffer A). */
 HumanColVec* HumanColBufA_Init(HumanColVec* v) {
@@ -26,7 +26,7 @@ HumanColVec* HumanColBufA_Init(HumanColVec* v) {
 }
 
 int HumanColBufB_Reserve(int v, int n) {
-    return func_001EF6C0(v, n);
+    return Vector_Reserve_1EF6C0(v, n);
 }
 
 /* Empty vector (buffer B). */

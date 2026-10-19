@@ -16,7 +16,7 @@ extern int Script_RegisterNative_2();
 extern int cGOBJ_GetScriptTypeKeyPtr();
 extern int cSystem_GetScriptTypeKeyPtr();
 
-void func_004D63D0(void)
+void StaticInit_RegisterCasActions(void)
 {
     *(int*)D_0055A180 = ScriptEnum_Register("nCAS::eAction", D_00493910, 3);
     D_0055A188 = Script_RegisterVariable("PerformActionOnceThrough", (int)&D_00493938, D_00493890);

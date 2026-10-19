@@ -15,13 +15,13 @@
 #include "types.h"
 #include "loose00_types.h"
 
-extern void func_003CE7D0(cGOBJ* obj);
-extern void func_003CE810(cGOBJ* obj);
+extern void cNode_v07(cGOBJ* obj);
+extern void cNode_v06(cGOBJ* obj);
 
-void func_00173640(void) {
+void cHotbox_v0E(void) {
 }
 
-void func_00173650(void) {
+void cHotbox_v0F(void) {
 }
 
 void* Hotbox_GetBounds(char* self) {
@@ -34,21 +34,21 @@ void Hotbox_Enable_173670(cGOBJ* obj) {
 }
 
 /* Clear the object's +0x2C flag. */
-void func_00173680(cGOBJ* obj) {
+void cHotbox_v09(cGOBJ* obj) {
     obj->unk2C = 0;
 }
 
-void func_00173690(cGOBJ* obj) {
+void cHotbox_v06(cGOBJ* obj) {
     obj->unk2C = 1;
-    func_003CE810(obj);
+    cNode_v06(obj);
 }
 
-void func_001736A0(cGOBJ* obj) {
+void cHotbox_v07(cGOBJ* obj) {
     obj->unk2C = 0;
-    func_003CE7D0(obj);
+    cNode_v07(obj);
 }
 
-int func_001736B0(void) {
+int cHotbox_v04(void) {
     return 1;
 }
 #pragma pop /* merge_units */

@@ -8,9 +8,9 @@ extern int D_004F8020, D_004F8028;
 extern signed char D_004EA0C8;
 extern char* g_LosCheckService;
 extern void func_00219DF0(void* p);
-extern void func_0025DBC0(void* p, int n);
+extern void Vector_Reserve_25DBD0_Thunk(void* p, int n);
 extern void func_0025DBA0(void* p);
-extern void func_0025DB90(void* p, int n);
+extern void PtrVec_Reserve_Thunk_25DB90(void* p, int n);
 extern int func_001361D0(int* n);
 extern int Script_RegisterVariable();
 extern void __register_global_object(void* obj, void* dtor, void* link);
@@ -21,7 +21,7 @@ void func_004D0190(void)
         Obj_4D0190* o = (Obj_4D0190*)D_004F8000;
         n[0] = 0x40;
         func_00219DF0(o);
-        func_0025DBC0(o, func_001361D0(n));
+        Vector_Reserve_25DBD0_Thunk(o, func_001361D0(n));
         o->ready = 0;
         __register_global_object(o, func_0017EFC0, D_004F7FF0);
     }
@@ -32,7 +32,7 @@ void func_004D0190(void)
         Obj_4D0190* o = (Obj_4D0190*)D_004F8040;
         n[0] = 0x80;
         func_0025DBA0(o);
-        func_0025DB90(o, func_001361D0(n));
+        PtrVec_Reserve_Thunk_25DB90(o, func_001361D0(n));
         o->ready = 0;
         __register_global_object(o, func_0025DA40, D_004F8030);
     }

@@ -13,7 +13,7 @@
 
 /* String compare of a substring against a buffer. */
 extern "C" { char D_004B8D10[] = "string compare: pos > len"; }
-DEFINE_STRING_COMPARE_RANGE(func_0032D950, D_004B8D10)
+DEFINE_STRING_COMPARE_RANGE(String_Compare_32D950, D_004B8D10)
 #pragma pop /* merge_units */
 /* merge_units: end func_0032D950 */
 
@@ -22,6 +22,6 @@ DEFINE_STRING_COMPARE_RANGE(func_0032D950, D_004B8D10)
 #include "word_vector_erase.h"
 
 /* Erase a range from a vector of 4-byte elements. */
-DEFINE_WORD_VECTOR_ERASE(func_0032DA80)
+DEFINE_WORD_VECTOR_ERASE(PtrVector_Erase_32DA80)
 #pragma pop /* merge_units */
 /* merge_units: end func_0032DA80 */

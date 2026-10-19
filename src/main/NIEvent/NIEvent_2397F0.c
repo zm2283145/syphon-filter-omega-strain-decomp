@@ -119,7 +119,7 @@ void Event_Construct(void* m, void* type);
 void Event_Send(void* m, void* target, int immediate);
 void cMessage_dtor(void* m, int flags);
 }
-extern "C" void func_002399A0(Ev2399A0* ev, Obj2399A0* o) {
+extern "C" void cNINotice_Send(Ev2399A0* ev, Obj2399A0* o) {
     switch (ev->kind) {
     case 0: {
         Msg2399A0 m;

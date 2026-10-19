@@ -13,7 +13,7 @@ int Mem_Free(...);
 int List_Begin(...);                          
 int func_001BFA50(...);                            
 int func_001BFBB0(...);                            
-int func_00392F50(...);                            
+int ReceiverList_Dtor_392F50(...);                            
 int func_00392FD0(...);                        
 int func_00392FE0(...);                          
 int func_00392FF0(...);                      
@@ -64,7 +64,7 @@ extern "C" int func_00392D10(char *arg0, long long arg1) {
         }
         temp_a0_4 = (int)(arg0 + 0x6C);
         if (temp_a0_4 != 0) {
-            func_00392F50(temp_a0_4, 0);
+            ReceiverList_Dtor_392F50(temp_a0_4, 0);
         }
         temp_a0_5 = (int)(arg0 + 0x54);
         if ((arg0 + 0x24) != 0) {

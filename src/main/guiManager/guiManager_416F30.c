@@ -42,11 +42,11 @@ typedef struct {
 void* Gui_GetScreenList(void);
 char* String_CStr(void* s);
 void String_CtorCStr_13B480(Str_416F70* s, char* c);
-void func_0013D680(Str_416F70* d, Str_416F70* s);
+void String_AssignString(Str_416F70* d, Str_416F70* s);
 void String_Dtor(void* s, int f);
 void Mtx_SetBasis(void* m, V4_416F70* a, V4_416F70* b, V4_416F70* c);
 void Mtx_SetTranslation(void* m, V4_416F70* t);
-void func_00298690(E_416F70* e);
+void String_CtorEmpty(E_416F70* e);
 void func_00417C60(void* v, E_416F70* pos, int n, E_416F70* e);
 
 static inline float RdF_416F70(char** c) { float* p = (float*)*c; *c = (char*)(p + 1); return *p; }
@@ -77,13 +77,13 @@ int GuiInterfaceDecorator_Load(O_416F70* o, char** cur)
     if (s == 0 || *s == 0) s = String_CStr((char*)Gui_GetScreenList() + 0x2C);
     else o->b28 = 1;
     String_CtorCStr_13B480(&t1, s);
-    func_0013D680(&o->s8, &t1);
+    String_AssignString(&o->s8, &t1);
     String_Dtor(&t1, 0);
     s = *cur;
     while (*(*cur)++ != 0);
     if (s != 0 && *s != 0) {
         String_CtorCStr_13B480(&t2, s);
-        func_0013D680(&o->s14, &t2);
+        String_AssignString(&o->s14, &t2);
         String_Dtor(&t2, 0);
     }
     *cur = (char*)(((int)*cur + 3) & ~3);
@@ -95,11 +95,11 @@ int GuiInterfaceDecorator_Load(O_416F70* o, char** cur)
     Mtx_SetTranslation(o->m30, &d);
     n = Rd16_416F70(cur);
     for (i = 0; i < n; i++) {
-        func_00298690(&e);
+        String_CtorEmpty(&e);
         s = *cur;
         while (*(*cur)++ != 0);
         String_CtorCStr_13B480(&t3, s);
-        func_0013D680(&e.name, &t3);
+        String_AssignString(&e.name, &t3);
         String_Dtor(&t3, 0);
         *cur = (char*)(((int)*cur + 3) & ~3);
         e.b = Rd16_416F70(cur);

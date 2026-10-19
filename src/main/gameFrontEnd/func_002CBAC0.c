@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_002CBAC0(void) {
+int FrontEnd_v01(void) {
     return 0;
 }

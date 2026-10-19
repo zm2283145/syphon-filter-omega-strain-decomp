@@ -44,7 +44,7 @@ int operator_delete(char * );
 extern char D_004BC2B8;
 extern unsigned char g_ProfileLockEnabled;
 }
-extern "C" char * func_00383020(char * arg0, long long arg1) {
+extern "C" char * TexMan_Destroy(char * arg0, long long arg1) {
     int temp_s2;
     char * temp_a0;
     char * temp_a0_2;
@@ -92,7 +92,7 @@ static inline void merge_flush_func_00383020(void) {}
 
 
 extern "C" {
-void func_00383420(ListNode_383150** result, List_383150* list,
+void ObjectList_EraseRange_383420(ListNode_383150** result, List_383150* list,
                    ListNode_383150** first, ListNode_383150** last);
 #if 0 /* merge_units */
 int operator_delete(void* allocation);
@@ -111,7 +111,7 @@ extern "C" List_383150* func_00383150(List_383150* self, short deleteFlag)
                 ListNode_383150* last;
                 last = (ListNode_383150*)&self->sentinelPrev;
                 first = self->first;
-                func_00383420(&result, self, &first, &last);
+                ObjectList_EraseRange_383420(&result, self, &first, &last);
             }
         }
         if (deleteFlag > 0)

@@ -44,6 +44,16 @@ extern void cNPC_SetUnconscious();
 extern void cNPC_SetWeaponPreference();
 extern void cNPC_SetWeaponPreferenceDistance();
 extern void cNPC_StopAndLookAround();
+extern void cNPC_v0B();
+extern void cNPC_v22();
+extern void cNPC_v24();
+extern void cNPC_v2F();
+extern void cNetLabelMsg_Clone();
+extern void cNetLabelMsg_Serialize();
+extern void cNetLabelMsg_dtor();
+extern void cNetPathMsg_Clone();
+extern void cNetPathMsg_Serialize();
+extern void cNetPathMsg_dtor();
 extern void func_0012ECF0();
 extern void func_0012ED00();
 extern void func_0012ED10();
@@ -52,14 +62,8 @@ extern void func_0012ED30();
 extern void func_0012ED40();
 extern void func_0012ED50();
 extern void func_001383D0();
-extern void func_0014A6B0();
-extern void func_001577B0();
-extern void func_00158350();
-extern void func_0015B810();
 extern void func_0015B820();
 extern void func_0015B830();
-extern void func_001606C0();
-extern void func_001C6350();
 extern void func_0021DF80();
 extern void func_00220350();
 extern void func_002C97A0();
@@ -70,8 +74,6 @@ extern void func_002D0EE0();
 extern void func_002D1100();
 extern void func_002D15C0();
 extern void func_002D1790();
-extern void func_002D2530();
-extern void func_002D2920();
 extern void func_002D29C0();
 extern void func_002D2A80();
 extern void func_002D2A90();
@@ -158,8 +160,6 @@ extern void func_002D5FA0();
 extern void func_002D6250();
 extern void func_002D6380();
 extern void func_002D7100();
-extern void func_002D7780();
-extern void func_002D79D0();
 
 void *D_004DE200[8] = {
     0, 0, &func_002C97A0, &func_002CCF30,
@@ -182,24 +182,24 @@ void *D_004DE260[8] = {
 };
 
 void *D_004DE280[8] = {
-    0, 0, &func_001C6350, &func_002D2530,
-    &func_002D2920, &Message_GetScriptTypeKey, 0, 0,
+    0, 0, &cNetLabelMsg_dtor, &cNetLabelMsg_Clone,
+    &cNetLabelMsg_Serialize, &Message_GetScriptTypeKey, 0, 0,
 };
 
 void *D_004DE2A0[140] = {
     0, 0, &func_002D5FA0, &func_002D4FF0,
     &Component_GetOwnerId, &func_0012ECF0, &func_001383D0, &func_0012ED00,
     &func_0012ED10, &func_0012ED20, &func_0012ED30, &func_0012ED40,
-    &func_0012ED50, &func_0014A6B0, &AiComponent_ScriptFilter, &cNPC_CriticalNextFrame,
+    &func_0012ED50, &cNPC_v0B, &AiComponent_ScriptFilter, &cNPC_CriticalNextFrame,
     &func_002D5160, &NpcAi_IsAliveOrEligible, &func_002D40A0, &func_002D4460,
     &func_0015B820, &func_002D2A90, &func_002D2AA0, &func_002D2B20,
     &Controller_ToHit, &func_002D46E0, &func_002D5EA0, &Controller_IsEnemyTeam,
     &Controller_IsEnemy, &Controller_GetShooterMotion, &func_002D3FA0, &func_002D4640,
     &func_0015B830, &func_002D2B30, &func_002D2A80, &Component_AttachOwner,
-    &func_00158350, &func_002D2AB0, &func_0015B810, &func_002D29C0,
+    &cNPC_v22, &func_002D2AB0, &cNPC_v24, &func_002D29C0,
     &func_002D3F20, &func_002D2BD0, &func_002D2B50, &func_002D4030,
     &func_002D2B60, &func_002D3FF0, &func_002D3FB0, &NpcAi_RequestWeaponDraw,
-    &NpcAi_DeactivateAnon, &func_001577B0, &NpcAi_ActivateMultiplayer, &NpcAttack_FireNotice,
+    &NpcAi_DeactivateAnon, &cNPC_v2F, &NpcAi_ActivateMultiplayer, &NpcAttack_FireNotice,
     &func_002D4680, &func_002D2B40, &func_002D3480, &func_002D3760,
     &func_002D3EB0, &func_002D3E20, &func_002D3DA0, &func_002D3D30,
     &cNPC_GetClosestPlayer, &func_002D3D00, &func_002D3CE0, &func_002D2D50,
@@ -235,6 +235,6 @@ void *D_004DE4F0[8] = {
 };
 
 void *D_004DE510[8] = {
-    0, 0, &func_001606C0, &func_002D7780,
-    &func_002D79D0, &Message_GetScriptTypeKey, 0, 0,
+    0, 0, &cNetPathMsg_dtor, &cNetPathMsg_Clone,
+    &cNetPathMsg_Serialize, &Message_GetScriptTypeKey, 0, 0,
 };

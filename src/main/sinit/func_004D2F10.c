@@ -6,7 +6,7 @@ extern void* D_00506398;
 extern void* D_005063A0;
 extern void* D_005063A8;
 extern void* D_005063B0;
-void func_004D2F10(void) {
+void StaticInit_GuiAgentSaveLoadFactories(void) {
     D_005063A0 = &D_004DD4D0;
     D_00506398 = "GuiAgentLoad";
     FreeList_Push(&D_00506398);

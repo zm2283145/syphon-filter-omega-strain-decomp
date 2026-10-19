@@ -4,7 +4,7 @@ typedef struct { int w[4]; } Sub34F670;
 typedef struct { int base[4]; Ent34F670 ents[5]; Sub34F670 sub; } T34F670;
 typedef struct { char pad[0x70]; int v70[3]; } S34F670;
 extern void func_00351320(void* v);
-extern void func_00298690(T34F670* t);
+extern void String_CtorEmpty(T34F670* t);
 extern void func_0034F920(Ent34F670* e);
 extern void func_0034F810(Sub34F670* s);
 extern void func_00350FD0(void* v, int n, T34F670* value);
@@ -18,7 +18,7 @@ void GuiMissionStatistics_BuildRows(S34F670* o)
     Sub34F670* m;
     func_00351320(o->v70);
     tp = &t;
-    func_00298690(tp);
+    String_CtorEmpty(tp);
     p = tp->ents;
     do {
         func_0034F920(p);

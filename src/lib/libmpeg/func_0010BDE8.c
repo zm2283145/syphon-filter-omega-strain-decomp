@@ -4,8 +4,8 @@ typedef unsigned int u_int;
 #define REG(a) (*(volatile unsigned int *)(a))
 
 extern void FlushCache(int);
-extern int func_001161A0(void);
-extern void func_001161F8(void);
+extern int DIntr(void);
+extern void EIntr(void);
 
 typedef struct {
     u_long tag;
@@ -34,12 +34,12 @@ void func_0010BDE8(char *mp, int addr, int size)
         t++;
     }
     FlushCache(0);
-    oldintr = func_001161A0();
+    oldintr = DIntr();
     REG(0x1000B430) = (u_int)base & 0xFFFFFFF;
     REG(0x1000B420) = 0;
     REG(0x1000B400) = 0x105;
     if (oldintr)
-        func_001161F8();
+        EIntr();
 }
 
 

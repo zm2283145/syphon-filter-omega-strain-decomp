@@ -57,7 +57,7 @@ typedef struct {
 struct __siov { const void *iov_base; unsigned int iov_len; };
 struct __suio { struct __siov *uio_iov; int uio_iovcnt; int uio_resid; };
 extern int __swsetup(FILE *);
-extern void *func_00125FE8(void *, const void *, unsigned int);
+extern void *Libc_Memmove(void *, const void *, unsigned int);
 extern void *func_00125DC0(const void *, int, unsigned int);
 #if 0 /* merge_units */
 extern int fflush(FILE *);
@@ -65,7 +65,7 @@ extern int fflush(FILE *);
 #define fflush(a0) (fflush((FILE_X *)(a0))) /* merge_units */
 
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
-#define COPY(n) (void) func_00125FE8((void *) fp->_p, (void *) p, (unsigned int) (n))
+#define COPY(n) (void) Libc_Memmove((void *) fp->_p, (void *) p, (unsigned int) (n))
 #define GETIOV(extra_work) \
   while (len == 0) \
     { \
@@ -175,7 +175,7 @@ err:
 /* merge_units: begin func_00124BC0 */
 typedef struct { char p[0xC]; short _flags; char q[0x4A]; } F00124BC0;
 typedef struct G00124BC0 { struct G00124BC0 *_next; int _niobs; F00124BC0 *_iobs; } G00124BC0;
-int func_00124BC0(char *ptr, int (*function)(F00124BC0 *))
+int Newlib_Fwalk(char *ptr, int (*function)(F00124BC0 *))
 {
     F00124BC0 *fp;
     int n, ret = 0;

@@ -10,7 +10,7 @@ extern int D_004FFB18;
 extern int D_004FFB20;
 extern int D_004FFB28;
 extern int D_004FFB30;
-void func_004D1E20(void) {
+void StaticInit_RegisterTremorVars(void) {
     D_004FFB18 = Script_RegisterVariable("TremorCamFactor", (int)&D_0048B2D0, &D_00493890);
     D_004FFB20 = Script_RegisterVariable("TremorMinRumble", (int)&D_0048B2D8, &D_00493888);
     D_004FFB28 = Script_RegisterVariable("TremorMaxRumble", (int)&D_0048B2E0, &D_00493888);

@@ -1,7 +1,7 @@
 #pragma cplusplus on
 struct O_47F0 { void* vt; char pad[0x1F0]; char m1F4[0x10]; char m204[0x10]; char m214[4]; };
 extern "C" { extern char D_004D9BE0[]; void func_00175240(void* m, short f); void func_001363C0(void* m, short f); void cVUM_GOBJ_dtor(void* p, short f); void operator_delete(void* p); }
-extern "C" O_47F0* func_001747F0(O_47F0* self, short del)
+extern "C" O_47F0* Terrain_dtor(O_47F0* self, short del)
 {
     if (self) {
         self->vt = D_004D9BE0;

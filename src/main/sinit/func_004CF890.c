@@ -13,12 +13,12 @@ extern char Script_SetNVInterfaceTextColor[];
 extern int D_004F7D88;
 extern int D_004F7DB8;
 extern char* D_004F7DC0;
-extern char func_00245750[];
+extern char cNetTimerMsg_NetReceive[];
 extern char D_004F7DC8[];
 extern int D_004F7DD0;
 extern int Script_RegisterNative_2();
 extern int Script_RegisterVariable();
-extern int func_002824D0();
+extern int NetMsgTable_Add();
 void StaticInit_RegisterHudTextNatives(void)
 {
     D_004F7D48 = Script_RegisterNative_2(Script_SetInfoBarFont, D_00493880, "SetInfoBarFont", 1, D_004EE538);
@@ -27,5 +27,5 @@ void StaticInit_RegisterHudTextNatives(void)
     D_004F7D88 = Script_RegisterNative_2(Script_SetNVInterfaceTextColor, D_00493880, "SetNVInterfaceTextColor", 4, D_00493888, D_00493888, D_00493888, D_00493890);
     D_004F7DB8 = -1;
     D_004F7DC0 = "cNetTimerMsg";
-    D_004F7DD0 = func_002824D0(func_00245750, D_004F7DC8, "cNetTimerMsg");
+    D_004F7DD0 = NetMsgTable_Add(cNetTimerMsg_NetReceive, D_004F7DC8, "cNetTimerMsg");
 }

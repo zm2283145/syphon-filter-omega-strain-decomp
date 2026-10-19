@@ -105,7 +105,7 @@ struct Cam310 {
 
 extern "C" {
 void func_0017D7F0(void* p, int f);
-void* func_00139BC0(int size, void* p);
+void* Mem_PlacementNew(int size, void* p);
 void func_0017D700(void* p, V* a, V* b, V* c, V* d, float t);
 }
 
@@ -120,7 +120,7 @@ extern "C" void QuatCurve_PreUpdate(Cam310* c)
         }
         VX z = ZeroX();
         func_0017D7F0(&c->sp, -1);
-        void* p = func_00139BC0(0x50, &c->sp);
+        void* p = Mem_PlacementNew(0x50, &c->sp);
         if (p)
             func_0017D700(p, &c->p20, &c->p30, &c->p40, &z, c->sp.t);
     } else {

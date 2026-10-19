@@ -11,7 +11,7 @@ typedef struct { unsigned int word; unsigned int length; char* data; } Str_43C89
 typedef struct { char* p; } It_43C890;
 typedef struct { char pad[0x14]; unsigned short flags; char pad16[0x32]; int h48; int f4C; Str_43C890 name; } O_43C890;
 extern void String_CtorCStr_13B480(Str_43C890* s, char* c);
-extern void func_0013D680(Str_43C890* d, Str_43C890* s);
+extern void String_AssignString(Str_43C890* d, Str_43C890* s);
 extern void String_Dtor(Str_43C890* s, int f);
 extern void func_001BFF20(It_43C890* out, Str_43C890* s);
 extern void func_001BFEE0(It_43C890* out, Str_43C890* s);
@@ -34,7 +34,7 @@ int GuiBitmapWidget_SetImage(O_43C890* o, char* name, int arg)
     o->f4C = 0;
     {
         String_CtorCStr_13B480(&t, D_004C0018);
-        func_0013D680(&o->name, &t);
+        String_AssignString(&o->name, &t);
         String_Dtor(&t, 0);
     }
     if (name == 0 || *name == 0) return 1;
@@ -43,7 +43,7 @@ int GuiBitmapWidget_SetImage(O_43C890* o, char* name, int arg)
         It_43C890 it;
         It_43C890 end;
         String_CtorCStr_13B480(&t2, name);
-        func_0013D680(&o->name, &t2);
+        String_AssignString(&o->name, &t2);
         String_Dtor(&t2, 0);
         func_001BFF20(&it, &o->name);
         func_001BFEE0(&end, &o->name);
@@ -79,9 +79,9 @@ extern void String_CtorCStr_13B480(String* s, const char* text);
 #define String_CtorCStr_13B480(a0, a1) (String_CtorCStr_13B480((Str_43C890 *)(a0), (char *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_0013D680(String* dst, String* src);
+extern void String_AssignString(String* dst, String* src);
 #endif /* merge_units */
-#define func_0013D680(a0, a1) (func_0013D680((Str_43C890 *)(a0), (Str_43C890 *)(a1))) /* merge_units */
+#define String_AssignString(a0, a1) (String_AssignString((Str_43C890 *)(a0), (Str_43C890 *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void String_Dtor(String* s, int flags);
@@ -100,13 +100,13 @@ void GuiBitmapWidget_Deinit(Obj* self)
     }
     self->unk4C = 0;
     String_CtorCStr_13B480(&tmp, D_004C0018);
-    func_0013D680(&self->name, &tmp);
+    String_AssignString(&self->name, &tmp);
     String_Dtor(&tmp, 0);
 }
 #undef g_TextureMgr /* merge_units */
 #undef Tex_Release /* merge_units */
 #undef String_CtorCStr_13B480 /* merge_units */
-#undef func_0013D680 /* merge_units */
+#undef String_AssignString /* merge_units */
 #undef String_Dtor /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0043CA20 */

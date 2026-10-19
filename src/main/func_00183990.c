@@ -7,7 +7,7 @@
 #include "types.h"
 #include "loose00_types.h"
 
-extern int func_00139920(int, int);
+extern int Vector_Reserve_139920(int, int);
 extern int func_00183B70(int, int, int);
 
 /* Last element of an array of 0x70-byte records. */
@@ -19,8 +19,8 @@ int func_001839B0(int a0, int a1, int a2) {
     return func_00183B70(a0, a1, a2);
 }
 
-int func_001839C0(int a0, int a1) {
-    return func_00139920(a0, a1);
+int Vector_Reserve_139920_Thunk_1839C0(int a0, int a1) {
+    return Vector_Reserve_139920(a0, a1);
 }
 
 int func_001839D0(IntPair* p) {

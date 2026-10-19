@@ -5,63 +5,63 @@
  */
 
 /* merge_units: begin func_0010DC40 */
-extern int func_001161A0(void);
-extern int func_001161F8(void);
-extern int func_0010CEB0(int);
+extern int DIntr(void);
+extern int EIntr(void);
+extern int _DisableIntc(int);
 int Alloc_Lock(int a)
 {
     int s, r;
     __asm__ volatile("mfc0 %0, $12" : "=r"(s));
     s &= 0x10000;
-    if (s) func_001161A0();
-    r = func_0010CEB0(a);
+    if (s) DIntr();
+    r = _DisableIntc(a);
     __asm__ volatile("sync");
-    if (s) func_001161F8();
+    if (s) EIntr();
     return r;
 }
 /* merge_units: end func_0010DC40 */
 
 /* merge_units: begin func_0010DCA8 */
-extern int func_0010CEA0(int);
+extern int _EnableIntc(int);
 int Alloc_Unlock(int a)
 {
     int s, r;
     __asm__ volatile("mfc0 %0, $12" : "=r"(s));
     s &= 0x10000;
-    if (s) func_001161A0();
-    r = func_0010CEA0(a);
+    if (s) DIntr();
+    r = _EnableIntc(a);
     __asm__ volatile("sync");
-    if (s) func_001161F8();
+    if (s) EIntr();
     return r;
 }
 /* merge_units: end func_0010DCA8 */
 
 /* merge_units: begin func_0010DD10 */
-extern int func_0010CED0(int);
-int func_0010DD10(int a)
+extern int _DisableDmac(int);
+int DisableDmac(int a)
 {
     int s, r;
     __asm__ volatile("mfc0 %0, $12" : "=r"(s));
     s &= 0x10000;
-    if (s) func_001161A0();
-    r = func_0010CED0(a);
+    if (s) DIntr();
+    r = _DisableDmac(a);
     __asm__ volatile("sync");
-    if (s) func_001161F8();
+    if (s) EIntr();
     return r;
 }
 /* merge_units: end func_0010DD10 */
 
 /* merge_units: begin func_0010DD78 */
-extern int func_0010CEC0(int);
-int func_0010DD78(int a)
+extern int _EnableDmac(int);
+int EnableDmac(int a)
 {
     int s, r;
     __asm__ volatile("mfc0 %0, $12" : "=r"(s));
     s &= 0x10000;
-    if (s) func_001161A0();
-    r = func_0010CEC0(a);
+    if (s) DIntr();
+    r = _EnableDmac(a);
     __asm__ volatile("sync");
-    if (s) func_001161F8();
+    if (s) EIntr();
     return r;
 }
 /* merge_units: end func_0010DD78 */

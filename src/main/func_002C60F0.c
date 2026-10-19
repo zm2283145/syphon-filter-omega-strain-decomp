@@ -45,7 +45,7 @@ extern void func_002C5E50(void*, void*);
 extern void func_002C5E20(void*, void*);
 extern void func_002C5D90(void*, void*);
 
-Msg* func_002C60F0(Msg* m, Src* s) {
+Msg* cNetCopyMsg_Apply(Msg* m, Src* s) {
     char* p;
     char* q;
     Event_Construct(m, D_0051EE58);

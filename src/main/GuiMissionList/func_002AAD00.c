@@ -7,6 +7,6 @@
 #include "types.h"
 
 
-int func_002AAD00(void) {
+int GuiMissionList_GetClassName(void) {
     return (int)"GuiMissionList";
 }

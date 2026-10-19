@@ -9,7 +9,7 @@
 #include "types.h"
 extern int strcmp(void* obj);
 /* True when strcmp returns 0 for the global object "GuiTextListWidget". */
-int func_00420E20(void)
+int GuiTextListWidget_IsType(void)
 {
     return strcmp("GuiTextListWidget") == 0;
 }
@@ -24,7 +24,7 @@ extern void TextObj_SetColour(TextRenderChild* child, const TextRenderStyle* sty
 extern const char* String_CStr(const void* string);
 extern void TextObj_SetText(TextRenderChild* child, const char* text);
 extern void TextObj_Draw(TextRenderChild* child);
-extern void func_00423600(TextRenderWidget* self, void* context, unsigned int index,
+extern void GuiArrayWidget_DrawCell(TextRenderWidget* self, void* context, unsigned int index,
                           const TextRenderRect* rect);
 
 static inline TextListEntry* entry_at(TextRenderWidget* self, unsigned int index)
@@ -49,7 +49,7 @@ static inline void set_size(TextRenderChild* child, float width, float height)
 }
 
 /* Render an existing text row with its selected or per-entry style, then its base. */
-void func_00420E50(TextRenderWidget* self, void* context, unsigned int index,
+void GuiTextListWidget_DrawCell(TextRenderWidget* self, void* context, unsigned int index,
                    const TextRenderRect* rect)
 {
     if (self->child && index < (unsigned int)self->entries.count) {
@@ -63,7 +63,7 @@ void func_00420E50(TextRenderWidget* self, void* context, unsigned int index,
         TextObj_SetText(self->child, String_CStr(entry_at(self, index)));
         TextObj_Draw(self->child);
     }
-    func_00423600(self, context, index, rect);
+    GuiArrayWidget_DrawCell(self, context, index, rect);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_00420E50 */

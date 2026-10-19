@@ -16,7 +16,7 @@ extern int D_0055A258;
 extern int D_0055A260;
 extern int D_0055A268;
 extern int D_0055A270;
-void func_004D6750(void) {
+void StaticInit_RegisterCursorVars(void) {
     D_004BDF10 = 1060320051;
     D_004BDF14 = 1045220557;
     D_004BDF18 = 1060320051;

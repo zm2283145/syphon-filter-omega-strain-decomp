@@ -15,12 +15,12 @@ extern char D_0049CEA8[];
 void func_00181080(V25DBD0* a, V25DBD0* b);
 }
 static inline void Construct25DBD0(E25DBD0* p, const E25DBD0* s) { if (p) *p = *s; }
-extern "C" void func_0025DBD0(V25DBD0* v, unsigned int n)
+extern "C" void Vector_Reserve_25DBD0(V25DBD0* v, unsigned int n)
 {
     if (v->cap < n) {
         unsigned int max = 0x600000;
         if (n > max) {
-            func_00123BE8(D_00489738->stream, D_004A7D10);
+            Libc_Fprintf(D_00489738->stream, D_004A7D10);
             Libc_Abort();
         }
         V25DBD0 tmp;

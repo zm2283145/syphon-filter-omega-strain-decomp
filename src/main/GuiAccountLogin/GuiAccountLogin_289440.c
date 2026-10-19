@@ -35,10 +35,10 @@ char* AgentData_GetName(Ag_00289440* ag);
 void SaveAgentWidget_Rename(S_00289440* self, char* n);
 void GuiSaveAgentWidget_HandleEvent(S_00289440* self);
 void String_CtorCStr_13B480(Str_00289440* s, const char* c);
-void func_0013D680(Str_00289440* d, Str_00289440* s);
+void String_AssignString(Str_00289440* d, Str_00289440* s);
 void String_Dtor(Str_00289440* s, int flags);
-int func_00452FF0(void* g, int a);
-int func_002CA070(void* ui);
+int SFOLobby_FormatError(void* g, int a);
+int FrontEnd_IsRegisterEnabled(void* ui);
 void FrontEnd_ClosePopup(void* ui, int id);
 }
 static inline int StrNe_00289440(const char* a, const char* b) { return strcmp(a, b); }
@@ -46,7 +46,7 @@ static inline void Assign_00289440(S_00289440* self, Str_00289440* d, int id)
 {
     Str_00289440 t;
     String_CtorCStr_13B480(&t, GuiScreen_GetLobbyString(self, id, 0, 0, 0, 0));
-    func_0013D680(d, &t);
+    String_AssignString(d, &t);
     String_Dtor(&t, 0);
 }
 extern "C" void func_00289440(S_00289440* self)
@@ -95,14 +95,14 @@ extern "C" void func_00289440(S_00289440* self)
         int cb;
         String_CtorCStr_13B480(&a, D_004A9730);
         String_CtorCStr_13B480(&b, D_004A9730);
-        switch ((unsigned char)func_00452FF0(g, 0)) {
+        switch ((unsigned char)SFOLobby_FormatError(g, 0)) {
         case 0x3C:
             Assign_00289440(self, &a, 0x1E);
             Assign_00289440(self, &b, 0x80);
             kind = 2;
             break;
         case 0x3B:
-            if (func_002CA070(D_004FFC04)) {
+            if (FrontEnd_IsRegisterEnabled(D_004FFC04)) {
                 Assign_00289440(self, &a, 0x1D);
                 Assign_00289440(self, &b, 0x1C);
                 kind = 4;
@@ -198,7 +198,7 @@ static inline unsigned char Press_00289990(Ev_00289990* e, unsigned int b)
         r = 1;
     return r;
 }
-extern "C" int func_00289990(S_00289990* self, Ev_00289990* ev)
+extern "C" int GuiAccountLogin_HandleInput(S_00289990* self, Ev_00289990* ev)
 {
     if (Press_00289990(ev, 0x10)) {
         void* ui = D_004FFC04;
@@ -322,7 +322,7 @@ void* GuiManager_FindOrLoad(void* a, char* b, char* c);
 void GuiStack_SwapScreens(void* ui, S_00289C80* self, void* pg);
 }
 static inline int StrNe_00289C80(const char* a, const char* b) { return strcmp(a, b); }
-extern "C" int func_00289C80(S_00289C80* self, void* w, int msg, int sub, char* text)
+extern "C" int GuiAccountLogin_HandleEvent(S_00289C80* self, void* w, int msg, int sub, char* text)
 {
     unsigned short m;
     if (D_00506378)

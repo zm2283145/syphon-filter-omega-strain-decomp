@@ -28,8 +28,8 @@ typedef struct IpuFeed {
     int unk5C;
 } IpuFeed;
 
-extern void func_001161A0(void);
-extern void func_001161F8(void);
+extern void DIntr(void);
+extern void EIntr(void);
 
 #define PADDR(p) ((u64)(p) & 0x0FFFFFFF)
 
@@ -54,10 +54,10 @@ int func_003F54B0(IpuFeed* f) {
     D4_QWC = 0;
     D4_MADR = (unsigned int)f->buf & 0x0FFFFFFF;
     D4_TADR = (unsigned int)f->tags & 0x0FFFFFFF;
-    func_001161A0();
+    DIntr();
     DMAC_ENABLEW = DMAC_ENABLER | 0x10000;
     D4_CHCR = 5;
     DMAC_ENABLEW = DMAC_ENABLER & ~0x10000;
-    func_001161F8();
+    EIntr();
     return 1;
 }

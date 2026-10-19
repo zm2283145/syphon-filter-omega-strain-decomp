@@ -2,7 +2,7 @@ extern short D_0048C414;
 extern int D_0048C3D8;
 extern int func_002EC738(int);
 extern void printf(char *, int);
-int func_002CF5E0(void)
+int Medius_DisconnectServer(void)
 {
     int r;
     if (D_0048C414 != 1) return -0xC;

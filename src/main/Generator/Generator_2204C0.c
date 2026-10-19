@@ -375,7 +375,7 @@ static inline void merge_flush_func_00220D70(void) {}
 extern "C" {}
 typedef struct { char pad[0xC]; char key[0x20]; unsigned char b2C; unsigned char b2D; unsigned char b2E; char pad2F[0x9D]; unsigned int maskCC; } Gen_12D0;
 extern "C" {
-void func_003CE810(void);
+void cNode_v06(void);
 #if 0 /* merge_units */
 void func_0043B190(void* ctx);
 #endif /* merge_units */
@@ -506,7 +506,7 @@ void func_0043B190(void* ctx);
 extern "C" void cGenerator_v06(Gen_12D0* g)
 {
     char ctx[4];
-    func_003CE810();
+    cNode_v06();
     int ok = g->b2D != 0;
     ok = ok ? g->b2C != 0 : ok;
     ok = ok ? (g->b2E != 0) ^ 1 : ok;

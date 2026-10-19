@@ -7,7 +7,7 @@ extern void* D_00586230;
 extern void* D_00586238;
 extern void* D_00586240;
 extern void* D_00586248;
-void func_004D8080(void) {
+void StaticInit_GuiEndGameAwardsFactories(void) {
     D_00586238 = &D_004E17A0;
     D_00586230 = "GuiEndGameAwards";
     FreeList_Push(&D_00586230);

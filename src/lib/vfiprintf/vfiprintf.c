@@ -3,7 +3,7 @@
  * printf core): __sprint, __sbprintf, vfiprintf and _vfiprintf_r.
  * Compiler: EE-GCC 2.96 -O2 -G0 (retail newlib was built with -g).
  */
-__asm__(".set nomove\n __umoddi3 = func_0011B278\n __udivdi3 = func_0011ACF8\n");
+__asm__(".set nomove\n __umoddi3 = Libgcc_Umoddi3\n __udivdi3 = Libgcc_Udivdi3\n");
 typedef unsigned int size_t;
 typedef int wchar_t;
 typedef __builtin_va_list va_list;
@@ -50,7 +50,7 @@ extern size_t strlen(const char *);
 #define fflush fflush
 #define __sinit __sinit
 #define __sfvwrite __sfvwrite
-#define __sprint func_0012B520
+#define __sprint Newlib_SprintI
 #define __swsetup __swsetup
 #define _mbtowc_r _mbtowc_r
 #define memchr func_00125DC0

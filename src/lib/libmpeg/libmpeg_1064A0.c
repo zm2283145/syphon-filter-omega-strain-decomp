@@ -3,8 +3,8 @@
 typedef struct { int type; int pad; long a; long b; } CbData;
 extern void func_00107748(void *);
 extern int func_0010B488(void *, CbData *);
-extern int func_001161A0(void);
-extern void func_001161F8(void);
+extern int DIntr(void);
+extern void EIntr(void);
 extern void func_0010BD90(void *, const char *);
 
 int func_001064A0(void *m)
@@ -24,13 +24,13 @@ int func_001064A0(void *m)
             func_0010B488(F(m, 0x870, void *), &cb);
         }
         if (F(m, 0x10A0, int)) {
-            oldintr = func_001161A0();
+            oldintr = DIntr();
             REG(0x1000F590) = REG(0x1000F520) | 0x10000;
             REG(0x1000B400) = 0;
             REG(0x1000B000) = 0;
             *(unsigned int *)0x1000F590 = REG(0x1000F520) & ~0x10000;
             if (oldintr)
-                func_001161F8();
+                EIntr();
             REG(0x1000B020) = 0;
             REG(0x1000B420) = 0;
             REG(0x10002010) = 0x40000000;
@@ -56,12 +56,12 @@ int func_001064A0(void *m)
         *(unsigned int *)0x10002010 = 0x40000000;
         cb2.type = 3;
         func_0010B488(F(m, 0x870, void *), &cb2);
-        oldintr = func_001161A0();
+        oldintr = DIntr();
         REG(0x1000F590) = REG(0x1000F520) | 0x10000;
         REG(0x1000B000) = 0;
         REG(0x1000F590) = REG(0x1000F520) & ~0x10000;
         if (oldintr)
-            func_001161F8();
+            EIntr();
         ret = 0;
         REG(0x1000B020) = 0;
     }

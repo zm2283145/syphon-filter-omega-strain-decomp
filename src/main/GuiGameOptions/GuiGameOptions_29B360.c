@@ -267,7 +267,7 @@ extern char g_Game[];
 extern char D_004AA960[];
 extern char D_004AA970[];
 
-void func_0029BBA0(void) {
+void cNetKickMsg_NetReceive(void) {
     Msg_BBA0 m;
     Name_BBA0 nm;
     char buf[0x80];

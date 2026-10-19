@@ -69,8 +69,8 @@ extern volatile unsigned char D_0055C740;
 extern char D_00571CF0[];
 extern int sceGsSyncPath(int, int);
 extern void func_00103B60(unsigned long draw, short cx, short cy, short half);
-extern void* func_00103D40(int);
-extern void func_00104070(void* d, void* tag);
+extern void* sceDmaGetChan(int);
+extern void sceDmaSend(void* d, void* tag);
 extern int* func_003F5EA0(T5EA0* q);
 extern void MovieSubtitles_PatchVblank(void* db, int i, int j);
 extern void func_001036B0(void* p, int);
@@ -110,20 +110,20 @@ int MoviePlayer_PresentVblank(void)
             }
             if (!D_0055C740)
                 func_00103B60(dma, 0x800, 0x800, field ^ 1);
-            d = func_00103D40(2);
+            d = sceDmaGetChan(2);
             q = &D_0055C460;
             { int h = q->head; idx = (q->size + (h - q->count)) % q->size; }
             if (field == 0 && *buf == 2) {
                 MovieSubtitles_PatchVblank(D_00571CF0, idx, 0);
                 func_001036B0(D_0055C230, 0);
                 sceGsSyncPath(0, 0);
-                func_00104070(d, (char*)buf + 0x40);
+                sceDmaSend(d, (char*)buf + 0x40);
                 *buf = 1;
             } else if (field == 1 && *buf == 1) {
                 MovieSubtitles_PatchVblank(D_00571CF0, idx, 1);
                 func_001036B0(D_0055C230, 1);
                 sceGsSyncPath(0, 0);
-                func_00104070(d, (char*)buf + 0x26740);
+                sceDmaSend(d, (char*)buf + 0x26740);
                 *buf = 0;
                 D_0055C220 = 1;
             }
@@ -569,12 +569,12 @@ int func_003F7D90(void* self, Pkt_7D90* p, Ring_7D90* r)
 
 /* merge_units: begin func_003F7F80 */
 #pragma push /* merge_units */
-extern void func_0010D010(int code);
+extern void RotateThreadReadyQueue(int code);
 
-/* Never returns: repeatedly calls func_0010D010(5) (halt/exit loop). */
+/* Never returns: repeatedly calls RotateThreadReadyQueue(5) (halt/exit loop). */
 void func_003F7F80(void) {
     for (;;) {
-        func_0010D010(5);
+        RotateThreadReadyQueue(5);
     }
 }
 #pragma pop /* merge_units */
@@ -619,10 +619,10 @@ void func_003F7FD0(int a, int b) {
 
 /* merge_units: begin func_003F7FF0 */
 #pragma push /* merge_units */
-extern void func_0010D010();
+extern void RotateThreadReadyQueue();
 void func_003F7FF0(void)
 {
-    func_0010D010(5);
+    RotateThreadReadyQueue(5);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003F7FF0 */
@@ -651,9 +651,9 @@ extern char D_0055C540[];
 
 int func_0010A3B0(Hdr3F8000* h, int p, int n, Buf3F8000* b, int x);
 #if 0 /* merge_units */
-void func_0010D010(int n);
+void RotateThreadReadyQueue(int n);
 #endif /* merge_units */
-#define func_0010D010(a0) (func_0010D010((a0))) /* merge_units */
+#define RotateThreadReadyQueue(a0) (RotateThreadReadyQueue((a0))) /* merge_units */
 
 void func_003F5CD0(char* p, int n);
 void func_003F5CF0(char* p);
@@ -721,7 +721,7 @@ void func_003F8000(Ply3F8000* self, Hdr3F8000* hdr, Buf3F8000* buf, void* strm)
             func_003F7770(buf, n);
             self->f188 -= n;
         }
-        func_0010D010(5);
+        RotateThreadReadyQueue(5);
         n = func_003F7710(buf, &p2);
         if (n > 0) {
             n = func_0010A3B0(hdr, p2, n, buf, buf->f50008);
@@ -742,7 +742,7 @@ void func_003F8000(Ply3F8000* self, Hdr3F8000* hdr, Buf3F8000* buf, void* strm)
     }
 }
 #undef D_0055C540 /* merge_units */
-#undef func_0010D010 /* merge_units */
+#undef RotateThreadReadyQueue /* merge_units */
 #undef func_003F6FA0 /* merge_units */
 #undef func_003F76C0 /* merge_units */
 #undef func_003F7710 /* merge_units */
@@ -782,9 +782,9 @@ extern void func_003F8000(Sys3F82* s, void* r, int a, void* b);
 extern bool func_003F5AE0(void* p);
 extern bool func_003F5A80(void* p);
 #if 0 /* merge_units */
-extern void func_0010D010(int n);
+extern void RotateThreadReadyQueue(int n);
 #endif /* merge_units */
-#define func_0010D010(a0) (func_0010D010((a0))) /* merge_units */
+#define RotateThreadReadyQueue(a0) (RotateThreadReadyQueue((a0))) /* merge_units */
 
 extern void func_003F6F90(void);
 extern void func_003F6CD0(void* p);
@@ -807,10 +807,10 @@ bool MoviePlayer_Update(Sys3F82* s)
         }
         if (s->done) {
             while (!func_003F5AE0(D_0055C480)) {
-                func_0010D010(5);
+                RotateThreadReadyQueue(5);
             }
             while (!func_003F5A80(D_0055C480) && func_003F5CE0(D_0055C480) != 3) {
-                func_0010D010(5);
+                RotateThreadReadyQueue(5);
             }
             func_003F6F90();
             if (s->f236) {
@@ -828,6 +828,6 @@ bool MoviePlayer_Update(Sys3F82* s)
 }
 #undef D_0055C540 /* merge_units */
 #undef func_003F8000 /* merge_units */
-#undef func_0010D010 /* merge_units */
+#undef RotateThreadReadyQueue /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_003F8220 */

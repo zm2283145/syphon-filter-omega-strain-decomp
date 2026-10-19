@@ -15,10 +15,10 @@ int atol(int a0) {
 /* merge_units: end func_00121BF0 */
 
 /* merge_units: begin func_00121C10 */
-extern int func_00125FE8(int, int, int);
+extern int Libc_Memmove(int, int, int);
 
 int func_00121C10(int a0, int a1, int a2) {
-    return func_00125FE8(a1, a0, a2);
+    return Libc_Memmove(a1, a0, a2);
 }
 /* merge_units: end func_00121C10 */
 
@@ -49,15 +49,15 @@ void* func_00121C30(const void* key, const void* base, unsigned int nmemb, unsig
 
 /* merge_units: begin func_00121D00 */
 extern void* D_00489738;
-extern void func_001261B0(void* r);
-extern void func_00126230(void* r);
+extern void Newlib_MallocLock(void* r);
+extern void Newlib_MallocUnlock(void* r);
 extern void* Newlib_CallocR(void* reent, unsigned int n, unsigned int elem_size);
-void* func_00121D00(unsigned int n, unsigned int size)
+void* Libc_Calloc(unsigned int n, unsigned int size)
 {
     void* r;
-    func_001261B0(D_00489738);
+    Newlib_MallocLock(D_00489738);
     r = Newlib_CallocR(D_00489738, n, size);
-    func_00126230(D_00489738);
+    Newlib_MallocUnlock(D_00489738);
     return r;
 }
 /* merge_units: end func_00121D00 */
@@ -97,13 +97,13 @@ void* Newlib_CallocR(void* reent, unsigned int n, unsigned int elem_size)
 
 /* merge_units: begin func_00121E20 */
 extern int D_0058805C;
-extern int func_0010D848(int fd);
+extern int Newlib_SysClose(int fd);
 struct reent_00121E20 { int _errno; };
-int func_00121E20(struct reent_00121E20* ptr, int fd)
+int Newlib_CloseR(struct reent_00121E20* ptr, int fd)
 {
     int ret;
     D_0058805C = 0;
-    if ((ret = func_0010D848(fd)) == -1 && D_0058805C != 0)
+    if ((ret = Newlib_SysClose(fd)) == -1 && D_0058805C != 0)
         ptr->_errno = D_0058805C;
     return ret;
 }
@@ -117,11 +117,11 @@ typedef struct _Bigint {
     int _k, _maxwds, _sign, _wds;
     __ULong _x[1];
 } _Bigint;
-extern int func_00126B70(_Bigint *a, _Bigint *b);
+extern int Newlib_Mcmp(_Bigint *a, _Bigint *b);
 #define Storeinc(a,b,c) (((unsigned short *)a)[0] = (unsigned short)c, ((unsigned short *)a)[1] = (unsigned short)b, a++)
 #define Sign_Extend(a,b)
 
-int func_00121E78(_Bigint *b, _Bigint *S)
+int Newlib_Quorem(_Bigint *b, _Bigint *S)
 {
     int n;
     __Long borrow, y;
@@ -161,7 +161,7 @@ int func_00121E78(_Bigint *b, _Bigint *S)
             b->_wds = n;
         }
     }
-    if (func_00126B70 (b, S) >= 0) {
+    if (Newlib_Mcmp (b, S) >= 0) {
         q++;
         borrow = 0;
         carry = 0;

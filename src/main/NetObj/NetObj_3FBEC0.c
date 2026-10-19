@@ -55,7 +55,7 @@ static inline void merge_flush_func_003FBEC0(void) {}
 #pragma push /* merge_units */
 /* map<int, {int, int}>::operator[] with value {0, -2} */
 typedef struct { int key; int a; int b; } PBF40;
-DEFINE_INT_MAP_SUBSCRIPT(func_003FBF40, PBF40, func_003FC520, (v.a = 0, v.b = -2))
+DEFINE_INT_MAP_SUBSCRIPT(func_003FBF40, PBF40, FrameTree_Insert_3FC520, (v.a = 0, v.b = -2))
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003FBF40(void) {}
 #pragma pop /* merge_units */

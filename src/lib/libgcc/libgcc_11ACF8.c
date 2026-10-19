@@ -262,7 +262,7 @@ __udivmoddi4 (UDItype n, UDItype d, UDItype *rp)
 }
 
 UDItype
-func_0011ACF8 (UDItype n, UDItype d)
+Libgcc_Udivdi3 (UDItype n, UDItype d)
 {
   return __udivmoddi4 (n, d, (UDItype *) 0);
 }
@@ -509,7 +509,7 @@ __udivmoddi4_0011B278 (UDWtype n, UDWtype d, UDWtype *rp)
 }
 
 UDWtype
-func_0011B278 (UDWtype u, UDWtype v)
+Libgcc_Umoddi3 (UDWtype u, UDWtype v)
 {
   UDWtype w;
 
@@ -523,7 +523,7 @@ func_0011B278 (UDWtype u, UDWtype v)
 /* libgcc2 __floatdidf. Retail libgcc was assembled without delay-slot swapping (as with gas -g);
    `.set nomove` reproduces that. The EE soft-float libcalls are aliased to their retail functions. */
 __asm__(".set nomove\n"
-        "litodp = func_0011C7A0\n"
+        "litodp = SoftFloat_IntToDouble\n"
         "dpmul = SoftFloat_DoubleMultiply\n"
         "dpadd = SoftFloat_DoubleAdd");
 typedef float SFtype;
@@ -532,7 +532,7 @@ typedef double DFtype;
 #define WORD_SIZE (sizeof (SItype) * 8)
 #define HIGH_HALFWORD_COEFF (((UDItype) 1) << (WORD_SIZE / 2))
 #define HIGH_WORD_COEFF (((UDItype) 1) << WORD_SIZE)
-DFtype func_0011B7E0(DItype u)
+DFtype Libgcc_Floatdidf(DItype u)
 {
   DFtype d;
 

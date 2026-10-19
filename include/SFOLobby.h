@@ -211,7 +211,7 @@ typedef struct LobbyConnectParams {
     void* unkFC;                    /* 0xFC */
 } LobbyConnectParams;
 
-/* Login reply (callback func_004475E0), Medius AccountLoginResponse layout. */
+/* Login reply (callback SFOLobby_OnAccountLogin), Medius AccountLoginResponse layout. */
 typedef struct LobbyLoginReply {
     char messageId[0x15];           /* 0x00 */
     char pad15[3];
@@ -257,7 +257,7 @@ typedef struct SFOLobby {
     int connHandle;                         /* 0x180 connection handle from the connect callback func_00447220; -1 = none */
     int gotConnect;                         /* 0x184 set when func_00447220 fires */
     int gotReply188;                        /* 0x188 func_00445F40 */
-    int gotLogin;                           /* 0x18C login reply func_004475E0 */
+    int gotLogin;                           /* 0x18C login reply SFOLobby_OnAccountLogin */
     int gotReply190;                        /* 0x190 func_004474C0 */
     int gotReply194;                        /* 0x194 */
     int gotReply198;                        /* 0x198 func_00447270 (reply314) */
@@ -268,8 +268,8 @@ typedef struct SFOLobby {
     int gotReply1AC;                        /* 0x1AC func_00446EA0 (reply39C) */
     int gotReply1B0;                        /* 0x1B0 func_00446E50 (reply400) */
     int gotReply1B4;                        /* 0x1B4 */
-    int gotReply1B8;                        /* 0x1B8 func_004473C0 (reply484) */
-    int gotReply1BC;                        /* 0x1BC func_004472C0 (reply5A4) */
+    int gotReply1B8;                        /* 0x1B8 SFOLobby_OnGetPolicy (reply484) */
+    int gotReply1BC;                        /* 0x1BC SFOLobby_OnSettings (reply5A4) */
     int gotReply1C0;                        /* 0x1C0 func_00446FD0 (reply9B0) */
     int gotAccountId;                       /* 0x1C4 func_00446E00 (accountIdReply) */
     int gotAccountInfo;                     /* 0x1C8 func_00446DB0 (accountInfoReply) */
@@ -382,9 +382,9 @@ typedef struct SFOLobby {
     LobbyArray* outList23EC;                /* 0x23EC */
     LobbyArray* outList23F0;                /* 0x23F0 */
     LobbyArray* outList23F4;                /* 0x23F4 */
-    LobbyArray* outUsageList;               /* 0x23F8 "USAGE" entries (func_004473C0) */
-    LobbyArray* outList23FC;                /* 0x23FC other entries (func_004473C0) */
-    LobbyArray* outList2400;                /* 0x2400 func_004472C0 */
+    LobbyArray* outUsageList;               /* 0x23F8 "USAGE" entries (SFOLobby_OnGetPolicy) */
+    LobbyArray* outList23FC;                /* 0x23FC other entries (SFOLobby_OnGetPolicy) */
+    LobbyArray* outList2400;                /* 0x2400 SFOLobby_OnSettings */
     LobbyArray* outList2404;                /* 0x2404 func_00447130 */
     char busy;                              /* 0x2408 */
     unsigned char inUpdateHook;             /* 0x2409 set while the update hook runs (SFOLobby_CallUpdateHook) */

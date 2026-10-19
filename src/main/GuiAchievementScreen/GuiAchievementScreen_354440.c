@@ -48,10 +48,10 @@ extern char D_004DEF90[];
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void GuiPersonnelScreen_ctor(void* self);
 void func_00354710(void* m);
-void func_00298690(void* str);
+void String_CtorEmpty(void* str);
 }
 struct O354490 { void* vtable; char pad4[0x68]; char m6C[0x14]; char s80[0xC]; };
-extern "C" O354490* func_00354490(void)
+extern "C" O354490* GuiAchievementScreen_Create(void)
 {
     O354490* p;
     {
@@ -62,7 +62,7 @@ extern "C" O354490* func_00354490(void)
         GuiPersonnelScreen_ctor(p);
         p->vtable = D_004DEF90;
         func_00354710(p->m6C);
-        func_00298690(p->s80);
+        String_CtorEmpty(p->s80);
     }
     return p;
 }
@@ -112,6 +112,6 @@ extern "C" OwnedBuffer8* func_003545C0(OwnedBuffer8* self, short deleteFlag)
 #include "vtable_base_dtor.h"
 
 /* Derived destructor: restore vtable, run base destructor, optionally delete. */
-DEFINE_VTABLE_BASE_DTOR(func_003546B0, D_004DF0B0, GuiWidget_Destroy)
+DEFINE_VTABLE_BASE_DTOR(GuiPersonnelScreen_dtor_3546B0, D_004DF0B0, GuiWidget_Destroy)
 #pragma pop /* merge_units */
 /* merge_units: end func_003546B0 */

@@ -7,7 +7,7 @@ extern int D_004C039C;
 extern char D_004E1200;
 extern void* D_005839A8;
 extern void* D_005839B0;
-void func_004D7A40(void) {
+void StaticInit_GuiWeaponDisplayFactory(void) {
     D_004C0390 = 0;
     D_004C0398 = 0;
     D_004C0394 = 1065353216;

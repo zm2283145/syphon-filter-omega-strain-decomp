@@ -7,8 +7,8 @@
 /* merge_units: begin func_00107748 */
 #define F(p, o, T) (*(T *)((char *)(p) + (o)))
 #define REG(a) (*(volatile unsigned int *)(a))
-extern int func_001161A0(void);
-extern void func_001161F8(void);
+extern int DIntr(void);
+extern void EIntr(void);
 extern void func_0010B500(int);
 
 void func_00107748(void *m)
@@ -18,13 +18,13 @@ void func_00107748(void *m)
 
     while ((REG(0x10002010) & 0x80004000) == 0x80000000) {
         if (F(m, 0x10A0, int)) {
-            oldintr = func_001161A0();
+            oldintr = DIntr();
             REG(0x1000F590) = REG(0x1000F520) | 0x10000;
             REG(0x1000B400) = 0;
             REG(0x1000B000) = 0;
             *(unsigned int *)0x1000F590 = REG(0x1000F520) & ~0x10000;
             if (oldintr)
-                func_001161F8();
+                EIntr();
             REG(0x1000B020) = 0;
             REG(0x1000B420) = 0;
             REG(0x10002010) = 0x40000000;
@@ -47,13 +47,13 @@ long func_001078B0(void *m)
 
     while ((cmd = *(volatile long *)0x10002000) < 0 && !(REG(0x10002010) & 0x4000)) {
         if (F(m, 0x10A0, int)) {
-            oldintr = func_001161A0();
+            oldintr = DIntr();
             REG(0x1000F590) = REG(0x1000F520) | 0x10000;
             REG(0x1000B400) = 0;
             REG(0x1000B000) = 0;
             *(unsigned int *)0x1000F590 = REG(0x1000F520) & ~0x10000;
             if (oldintr)
-                func_001161F8();
+                EIntr();
             REG(0x1000B020) = 0;
             REG(0x1000B420) = 0;
             REG(0x10002010) = 0x40000000;
@@ -92,13 +92,13 @@ int func_00107A38(void *m, int type)
     F(m, 0x830, int) = D_00485F48[value >> 28];
     while ((cmd = *(volatile long *)0x10002000) < 0) {
         if (F(m, 0x10A0, int)) {
-            oldintr = func_001161A0();
+            oldintr = DIntr();
             REG(0x1000F590) = REG(0x1000F520) | 0x10000;
             REG(0x1000B400) = 0;
             REG(0x1000B000) = 0;
             *(unsigned int *)0x1000F590 = REG(0x1000F520) & ~0x10000;
             if (oldintr)
-                func_001161F8();
+                EIntr();
             REG(0x1000B020) = 0;
             REG(0x1000B420) = 0;
             REG(0x10002010) = 0x40000000;

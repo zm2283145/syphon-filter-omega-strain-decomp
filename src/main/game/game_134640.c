@@ -82,7 +82,7 @@ void* Service_Lookup(void* a, void* b);
 void TeamRelations_Teardown(void);
 void WaterFx_Clear(void* p);
 void WeaponDb_LoadResources(void* p);
-void func_00130950(World_134640* w);
+void World_UnloadSkelHog(World_134640* w);
 void func_001309A0(World_134640* w);
 void func_00130B10(World_134640* w);
 void func_00132A40(World_134640* w);
@@ -97,24 +97,24 @@ void func_00170D30(void* p);
 void func_001784B0(void* p);
 void func_001AF7A0(void);
 void func_001C3B00(void* p);
-void func_001C9680(void* p);
+void Snd_StopAndFlushAll(void* p);
 void SoundMgr_UnloadLevel(void* p);
 void func_00224140(void* p);
 void func_002261C0(void* p);
 void func_0022D3C0(void* p);
 void func_00236F80(void);
 void func_00238F20(void);
-void func_002458E0(void* p, int f);
+void HudObject_dtor(void* p, int f);
 void func_002569C0(void);
 void func_00257150(void);
 void VisionFx_Prepare(void* p);
 void VisionMgr_SetPendingMode(void* p, int a, int b);
-void func_002683F0(void);
+void ScriptUtils_ReleaseAll(void);
 void PadRumble_Stop(void);
 void Pad_EnableVibration(int a);
 void TremorList_Free(void* p, int f);
 void func_00275550(void);
-void func_00279D80(void* p, int f);
+void DecalMgr_dtor(void* p, int f);
 void func_003A3670(void* p);
 void func_003C2A80(void);
 VDel_134640* func_003CAB50(World_134640* w, void* s);
@@ -180,7 +180,7 @@ extern "C" void World_Teardown(World_134640* w)
     bool had;
     func_002569C0();
     svc = Service_Lookup(w, D_004F2CC0);
-    if (svc) func_001C9680(svc);
+    if (svc) Snd_StopAndFlushAll(svc);
     {
         void* om = ObjMan_GetService();
         if (om) func_002261C0(om);
@@ -188,7 +188,7 @@ extern "C" void World_Teardown(World_134640* w)
     {
         void* p = w->fEC;
         AllocGuard g;
-        func_00279D80(p, -1);
+        DecalMgr_dtor(p, -1);
         Mem_Free(0, p, D_0049A890, 0x2CF);
     }
     w->fEC = 0;
@@ -210,7 +210,7 @@ extern "C" void World_Teardown(World_134640* w)
     func_00275550();
     func_00238F20();
     Script_Cleanup(D_00555070);
-    func_002683F0();
+    ScriptUtils_ReleaseAll();
     TeamRelations_Teardown();
     func_003FDBB0();
     func_00136BD0(w);
@@ -281,12 +281,12 @@ extern "C" void World_Teardown(World_134640* w)
     {
         void* p = w->fDC;
         AllocGuard g;
-        func_002458E0(p, -1);
+        HudObject_dtor(p, -1);
         Mem_Free(0, p, D_0049A890, 0x35C);
     }
     w->fDC = 0;
     func_001309A0(w);
-    func_00130950(w);
+    World_UnloadSkelHog(w);
     {
         VDel_134640* p = func_003CAB50(w, Service_Lookup(w, g_LosCheckService));
         AllocGuard g;
@@ -329,7 +329,7 @@ extern "C" void func_00138590();
 extern "C" void func_001385A0();
 void * const D_004D9140[8] = { (void*)0x0, (void*)0x0, (void*)func_00136350, (void*)func_00138580, (void*)func_00138590, (void*)func_001385A0, (void*)0x0, (void*)0x0 };
 void func_00134FD0(void* m, short f);
-void func_00134E80(void* m, short f);
+void PtrVec_Dtor_134E80(void* m, short f);
 void operator_delete(void* p);
 }
 extern "C" O_00134E00* func_00134E00(O_00134E00* self, short del)
@@ -339,7 +339,7 @@ extern "C" O_00134E00* func_00134E00(O_00134E00* self, short del)
         if (self) {
             self->vt = ((char*)D_004D9140);
             func_00134FD0(self->m14, -1);
-            func_00134E80(self->m4, -1);
+            PtrVec_Dtor_134E80(self->m4, -1);
         }
         if (del > 0) operator_delete(self);
     }

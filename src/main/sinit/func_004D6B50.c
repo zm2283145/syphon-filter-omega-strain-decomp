@@ -12,7 +12,7 @@ extern int func_001361D0(int* n);
 extern void func_0043FDD0(void* p);
 extern void __register_global_object(void* obj, void* dtor, void* link);
 extern int Script_RegisterNative_2(void* fn, void* name, void* desc, int n, ...);
-void func_004D6B50(void)
+void StaticInit_RegisterGlobalization(void)
 {
     {
         int n[1];

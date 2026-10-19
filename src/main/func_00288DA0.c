@@ -7,6 +7,6 @@
 #include "types.h"
 
 
-int func_00288DA0(void) {
+int GuiAccountLogin_GetClassName(void) {
     return (int)"GuiAccountLogin";
 }

@@ -13,7 +13,7 @@ extern int String_CompareNoCase(String* a, char* b);
 extern int GuiScreen_GetLobbyString(S_002AF040* it, int id, String* a, String* b, int c, int d);
 extern void FrontEnd_OpenPopup(void* mgr, int a, char* fmt, int v, S_002AF040* it, int b);
 extern void GuiScreen_PollLobby(S_002AF040* self);
-void func_002AF040(S_002AF040* self)
+void GuiNetAgencyCell_PollLobby(S_002AF040* self)
 {
     G_002AF040* g;
     int i;

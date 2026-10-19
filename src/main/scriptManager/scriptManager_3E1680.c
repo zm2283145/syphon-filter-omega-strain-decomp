@@ -14,7 +14,7 @@
 #pragma mpwc_relax on
 int Script_Load(int, int, int);                       
 int Script_PrintWarning(char *, int);                          
-int func_003E11C0(char *, int, char *, int);                          
+int ScriptMgr_BuildScriptPath(char *, int, char *, int);                          
 int func_003E12D0(char * , int);                     
 
 int ScriptMgr_ReloadScript(char * arg0, int arg1) {
@@ -22,7 +22,7 @@ int ScriptMgr_ReloadScript(char * arg0, int arg1) {
     int temp_v0_2;
     int var_s0;
 
-    temp_v0 = func_003E11C0(arg0, arg1, "so", 0);
+    temp_v0 = ScriptMgr_BuildScriptPath(arg0, arg1, "so", 0);
     Script_PrintWarning("reloading %s...", temp_v0);
     var_s0 = 0;
     temp_v0_2 = func_003E12D0(arg0, temp_v0);
@@ -71,7 +71,7 @@ int ScriptMgr_LoadScript(char * arg0, int arg1, int arg2) {
 
     var_s2 = 1;
     if (func_003E12D0() == 0) {
-        temp_s0 = func_003E11C0(arg0, arg1, &D_004BD890, arg2);
+        temp_s0 = ScriptMgr_BuildScriptPath(arg0, arg1, &D_004BD890, arg2);
         if (g_ProfileLockEnabled != 0) {
             Alloc_Lock(9);
         }

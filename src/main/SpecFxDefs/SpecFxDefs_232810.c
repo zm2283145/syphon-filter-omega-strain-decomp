@@ -112,7 +112,7 @@ extern void Global_RainTokyo(void);
 extern void Global_RainLorelei(void);
 extern void Global_SnowBelarus2(void);
 extern void Global_FogMyanmar(void);
-void func_00232B50(unsigned char weather)
+void cAtmosphericEffectMsg_Apply(unsigned char weather)
 {
     switch (weather) {
     case 0:

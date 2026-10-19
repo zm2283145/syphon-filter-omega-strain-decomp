@@ -85,7 +85,7 @@ static inline void* nm_alloc(unsigned int size, int line)
 }
 
 /* Initialise the Nellymoser codec wrapper once: hooks, buffers and streams. */
-void func_0042C1E0(void)
+void NellyWrap_Init(void)
 {
     NellyInfo info;
     int n;

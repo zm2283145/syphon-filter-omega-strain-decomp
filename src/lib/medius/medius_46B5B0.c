@@ -1,5 +1,5 @@
 /* MediusCallbackStatus -> name */
-const char* func_0046B5B0(int status)
+const char* Medius_CallbackStatusToString(int status)
 {
     switch (status) {
     case -1000: return "MediusBeginSessionFailed";

@@ -19,7 +19,7 @@ extern char D_004DE610[];
 void Event_Construct(Ev_2620* e, void* type);
 void Event_Send(Ev_2620* e, void* target, int a);
 void cMessage_dtor(Ev_2620* e, int f);
-int func_00142620(S_2620* self, int slot, int amount, int remote)
+int cNetWeaponMsg_Send(S_2620* self, int slot, int amount, int remote)
 {
     unsigned char dbl;
     Slot_2620* s;

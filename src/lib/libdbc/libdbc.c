@@ -39,8 +39,8 @@ extern Blk64 D_004FBB40;                /* socket states (copy) */
 extern int D_004FBB80;                  /* semaphore id */
 
 extern void func_0010FBC0(int);
-extern int func_001161A0(void);         /* DI */
-extern int func_001161F8(void);         /* EI */
+extern int DIntr(void);         /* DI */
+extern int EIntr(void);         /* EI */
 extern void SyncDCache(void *, void *);
 extern int sceSifBindRpc(SifRpcClientData *, unsigned int, int);
 extern int sceSifCallRpc(void *cd, unsigned int fno, int mode, void *send, int ssize, void *recv, int rsize, void *endf, void *endp);
@@ -165,9 +165,9 @@ int sceDbcDeleteSocket(int a)
 int sceDbcGetDepNumber(int sock)
 {
     SyncDCache(&D_004FBAC0, (char *)&D_004FBAC0 + 0x80);
-    func_001161A0();
+    DIntr();
     D_004FBB40 = D_004FBAC0;
-    func_001161F8();
+    EIntr();
     if (((int *)&D_004FBB40)[sock] != 1) return -12;
     D_004F8640[0] = sock;
     if (sceSifCallRpc(&D_004F85C8, 0x80001303, 0, D_004F8640, DBC_RPC_SIZE, D_004F8640, DBC_RPC_SIZE, 0, 0) < 0) {
@@ -181,9 +181,9 @@ int sceDbcGetDepNumber(int sock)
 int func_0026A8C8(int sock)
 {
     SyncDCache(&D_004FBAC0, (char *)&D_004FBAC0 + 0x80);
-    func_001161A0();
+    DIntr();
     D_004FBB40 = D_004FBAC0;
-    func_001161F8();
+    EIntr();
     return ((int *)&D_004FBB40)[sock] == 1 ? 1 : 3;
 }
 

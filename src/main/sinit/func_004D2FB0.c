@@ -6,10 +6,10 @@ extern int D_00506450;
 extern char* D_00506458;
 extern char* D_00506460;
 extern char D_00506448[], D_004DD600[];
-extern char func_0029BBA0[];
-extern int func_002824D0(void* fn, void* a, void* b);
+extern char cNetKickMsg_NetReceive[];
+extern int NetMsgTable_Add(void* fn, void* a, void* b);
 extern void FreeList_Push(void* p);
-void func_004D2FB0(void)
+void StaticInit_GuiGameOptions(void)
 {
     D_00506420 = D_0048B8B0;
     D_00506424 = D_0048B8B8;
@@ -20,7 +20,7 @@ void func_004D2FB0(void)
     D_00506438 = D_0048B8E8;
     D_0050643C = D_0048B8F0;
     D_00506440 = "cNetKickMsg";
-    D_00506450 = func_002824D0(func_0029BBA0, D_00506448, "cNetKickMsg");
+    D_00506450 = NetMsgTable_Add(cNetKickMsg_NetReceive, D_00506448, "cNetKickMsg");
     D_00506460 = D_004DD600;
     D_00506458 = "GuiGameOptions";
     FreeList_Push(&D_00506458);

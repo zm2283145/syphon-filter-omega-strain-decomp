@@ -4,7 +4,7 @@ typedef struct { char pad[0x8C]; Widget* a; Widget* b; Widget* c; char pad2[0xC]
 extern void GuiScreen_Wake(Screen* s);
 /* Hides three widgets, shows the fourth, then refreshes. */
 #pragma opt_common_subs off
-void func_003477D0(Screen* s)
+void GuiNetMessages_Wake(Screen* s)
 {
     s->a->flags &= ~2;
     s->b->flags &= ~2;

@@ -16,7 +16,7 @@
 #pragma cplusplus on
 
 /* Deleting destructor that runs the base destructor. */
-DEFINE_BASE_DTOR_CHAIN(func_00171740, func_00135C90)
+DEFINE_BASE_DTOR_CHAIN(LinkList_Dtor, func_00135C90)
 #pragma pop /* merge_units */
 /* merge_units: end func_00171740 */
 

@@ -8,7 +8,7 @@
 
 extern int func_003583F0(void);
 extern int func_00358438(void);
-extern int func_00358A10(int, int);
+extern int Insck_Shutdown(int, int);
 
 int func_0045A908(void) {
     int tmp0;
@@ -27,6 +27,6 @@ int func_0045A928(void) {
 int func_0045A948(int a0) {
     int tmp0;
 
-    tmp0 = func_00358A10(a0, 0);
+    tmp0 = Insck_Shutdown(a0, 0);
     return tmp0;
 }

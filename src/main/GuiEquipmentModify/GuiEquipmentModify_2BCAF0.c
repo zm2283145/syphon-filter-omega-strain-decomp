@@ -23,7 +23,7 @@ int func_002BCAF0(void) {
 }
 
 /* Class name getter: "GuiEquipmentModify". */
-char* func_002BCB10(void) {
+char* GuiEquipmentModify_GetClassName(void) {
     return D_004AC7F0;
 }
 #pragma pop /* merge_units */

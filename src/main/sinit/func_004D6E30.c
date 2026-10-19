@@ -17,7 +17,7 @@ extern int D_00571720;
 extern int D_00571728;
 extern char D_00583918;
 extern char D_00583920;
-void func_004D6E30(void) {
+void StaticInit_RegisterDamageMsg(void) {
     g_MsgLibDamageRequestKey = "MSGLIB_DAMAGE_REQUEST";
     D_00571700 = Script_RegisterType("cDamageMsg", ScriptType_cDamageMsg_Init, 1, 0);
     D_00571708 = D_00571700;

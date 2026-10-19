@@ -3,7 +3,7 @@
 struct V2CAA0 { union { struct { unsigned int a, b; char* c; } l; struct { unsigned char f : 1; unsigned char n : 7; char buf[11]; } s; } u; };
 extern "C" char D_004DFD80[];
 extern "C" char D_004DC7D0[];
-MSG_CLONE_BEGIN(func_0025DDE0, 0x30, "RestoreBodyMsg.hh", 0x19)
+MSG_CLONE_BEGIN(cRestoreBodyMsg_Clone, 0x30, "RestoreBodyMsg.hh", 0x19)
     p->vt = D_004DFD80;
     F(int, 0x4) = S(int, 0x4);
     F(int, 0x8) = S(int, 0x8);

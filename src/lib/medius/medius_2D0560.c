@@ -5,7 +5,7 @@ extern char D_004AD398[];
 extern void func_002CEC00(char *);
 extern void printf(char *, ...);
 extern int Net_SendLocked(int, int, int, int, int, int, void *);
-int func_002D0560(char *a)
+int Medius_SendServerReport(char *a)
 {
     int r;
     if (*(short *)(a + 0x16) < 0) return -0xC;

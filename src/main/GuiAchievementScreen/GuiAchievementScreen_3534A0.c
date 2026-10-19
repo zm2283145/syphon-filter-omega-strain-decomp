@@ -11,7 +11,7 @@ typedef struct { char d[12]; } Str3534A0;
 extern void *Gui_GetScreenList(void);
 extern O3534A0 *GuiManager_FindOrLoad(void *mgr, char *type, char *name);
 extern void String_CtorCStr_13B480(Str3534A0 *s, char *c);
-extern void func_0013D680(void *dst, Str3534A0 *s);
+extern void String_AssignString(void *dst, Str3534A0 *s);
 extern void String_Dtor(Str3534A0 *s, int flags);
 O3534A0 *GuiPersonnel_OpenAchievement(unsigned char kind)
 {
@@ -46,7 +46,7 @@ O3534A0 *GuiPersonnel_OpenAchievement(unsigned char kind)
     {
         Str3534A0 s;
         String_CtorCStr_13B480(&s, text);
-        func_0013D680(o->text, &s);
+        String_AssignString(o->text, &s);
         String_Dtor(&s, 0);
     }
     o->a = a;
@@ -139,9 +139,9 @@ extern void String_CtorCStr_13B480(String* s, const char* text);
 #define String_CtorCStr_13B480(a0, a1) (String_CtorCStr_13B480((Str3534A0 *)(a0), (char *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_0013D680(String* dst, String* src);
+extern void String_AssignString(String* dst, String* src);
 #endif /* merge_units */
-#define func_0013D680(a0, a1) (func_0013D680((void *)(a0), (Str3534A0 *)(a1))) /* merge_units */
+#define String_AssignString(a0, a1) (String_AssignString((void *)(a0), (Str3534A0 *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void String_Dtor(String* s, int flag);
@@ -155,13 +155,13 @@ void func_00353790(Obj353* o, char kind, const char* name, int a, int b)
     String tmp;
     o->kind = kind;
     String_CtorCStr_13B480(&tmp, name);
-    func_0013D680(&o->name, &tmp);
+    String_AssignString(&o->name, &tmp);
     String_Dtor(&tmp, 0);
     o->unk64 = a;
     o->unk68 = b;
 }
 #undef String_CtorCStr_13B480 /* merge_units */
-#undef func_0013D680 /* merge_units */
+#undef String_AssignString /* merge_units */
 #undef String_Dtor /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00353790 */
@@ -202,9 +202,9 @@ extern void String_CtorCStr_13B480(String_00353850* s, const char* text);   /* S
 #define String_CtorCStr_13B480(a0, a1) (String_CtorCStr_13B480((Str3534A0 *)(a0), (char *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_0013D680(String_00353850* dst, String_00353850* src);       /* String::operator= */
+extern void String_AssignString(String_00353850* dst, String_00353850* src);       /* String::operator= */
 #endif /* merge_units */
-#define func_0013D680(a0, a1) (func_0013D680((void *)(a0), (Str3534A0 *)(a1))) /* merge_units */
+#define String_AssignString(a0, a1) (String_AssignString((void *)(a0), (Str3534A0 *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void String_Dtor(String_00353850* s, int flags);           /* ~String */
@@ -219,13 +219,13 @@ void GuiAchievementScreen_Init(Obj80* self)
     GuiPersonnelScreen_Init(self);
     self->unk7C = 0;
     String_CtorCStr_13B480(&tmp, ((char*)dat_004BAF98));
-    func_0013D680(&self->name, &tmp);
+    String_AssignString(&self->name, &tmp);
     String_Dtor(&tmp, 0);
     self->unk64 = 0;
     self->unk68 = 0;
 }
 #undef String_CtorCStr_13B480 /* merge_units */
-#undef func_0013D680 /* merge_units */
+#undef String_AssignString /* merge_units */
 #undef String_Dtor /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00353850 */
@@ -240,7 +240,7 @@ extern void String_Reserve(String_003538B0* self, int n);
 extern void String_Replace(String_003538B0* self, char* at, int unused, const char* first, const char* last, Alloc alloc);
 
 /* Constructs a string from a C string; returns self. */
-String_003538B0* func_003538B0(String_003538B0* self, const char* s)
+String_003538B0* String_CtorCStr_3538B0(String_003538B0* self, const char* s)
 {
     int len;
     Alloc alloc;
@@ -262,7 +262,7 @@ String_003538B0* func_003538B0(String_003538B0* self, const char* s)
 
 extern "C" { char D_004BAFA0[] = "basic_string: out_of_range"; }
 extern "C" { char D_004BAFC0[] = "basic_string: length_error"; }
-DEFINE_STRING_REPLACE_RANGE(func_00353930, D_004BAFA0, D_004BAFC0, D_0049ADE0, 0x5C, D_0049AE90, 0x64, D_00492C38, D_00492C40, func_00125FE8, String_Assign)
+DEFINE_STRING_REPLACE_RANGE(func_00353930, D_004BAFA0, D_004BAFC0, D_0049ADE0, 0x5C, D_0049AE90, 0x64, D_00492C38, D_00492C40, Libc_Memmove, String_Assign)
 #pragma pop /* merge_units */
 /* merge_units: end func_00353930 */
 
@@ -282,7 +282,7 @@ DEFINE_SHORT_STRING_ASSIGN(func_00353E20)
 #include "string_reserve.h"
 
 extern "C" { char D_004BAFE0[] = "basic_string::reserve length_error"; }
-DEFINE_STRING_RESERVE(func_00353EB0, D_004BAFE0, D_0049ADE0, 0x5C, D_0049AE90, 0x64)
+DEFINE_STRING_RESERVE(String_Reserve_353EB0, D_004BAFE0, D_0049ADE0, 0x5C, D_0049AE90, 0x64)
 #pragma pop /* merge_units */
 /* merge_units: end func_00353EB0 */
 
@@ -293,7 +293,7 @@ DEFINE_STRING_RESERVE(func_00353EB0, D_004BAFE0, D_0049ADE0, 0x5C, D_0049AE90, 0
 #include "stream_string_dtor.h"
 
 /* Destroy a string holder: free heap storage, optionally delete. */
-DEFINE_STREAM_STRING_DTOR(func_003541F0)
+DEFINE_STREAM_STRING_DTOR(String_Dtor_3541F0)
 #pragma pop /* merge_units */
 /* merge_units: end func_003541F0 */
 

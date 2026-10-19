@@ -802,20 +802,20 @@ int func_0012EB00(reent_X *ptr, char *str, const char *fmt, va_list ap)
 
 /* merge_units: begin func_0012EB58 */
 extern int D_0058805C;
-extern int func_0010D728(int fd, void* buf, unsigned int cnt);
+extern int Newlib_SysWrite(int fd, void* buf, unsigned int cnt);
 struct reent_0012EB58 { int _errno; };
-long func_0012EB58(struct reent_0012EB58* ptr, int fd, void* buf, unsigned int cnt)
+long Newlib_WriteR(struct reent_0012EB58* ptr, int fd, void* buf, unsigned int cnt)
 {
     long ret;
     D_0058805C = 0;
-    if ((ret = func_0010D728(fd, buf, cnt)) == -1 && D_0058805C != 0)
+    if ((ret = Newlib_SysWrite(fd, buf, cnt)) == -1 && D_0058805C != 0)
         ptr->_errno = D_0058805C;
     return ret;
 }
 /* merge_units: end func_0012EB58 */
 
 /* merge_units: begin func_0012EBB8 */
-extern void func_00124FE0(FILE_X* fp);
+extern void Newlib_Smakebuf(FILE_X* fp);
 int __swsetup(register FILE_X * fp)
 {
   CHECK_INIT (fp);
@@ -834,7 +834,7 @@ int __swsetup(register FILE_X * fp)
       fp->_flags |= 0x0008;
     }
   if (fp->_bf_base == 0)
-    func_00124FE0 (fp);
+    Newlib_Smakebuf (fp);
   if (fp->_flags & 0x0001)
     {
       fp->_w = 0;

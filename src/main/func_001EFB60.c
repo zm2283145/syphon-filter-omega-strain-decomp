@@ -1,43 +1,43 @@
 #include "types.h"
 
-extern void func_00206B50(void* self);
-extern void func_00206830(void* self);
-extern void func_002064D0(void* self);
-extern void func_002060A0(void* self);
-extern void func_00205C30(void* self);
-extern void func_002057F0(void* self);
-extern void func_00204FC0(void* self);
-extern void func_00204C90(void* self);
-extern void func_00203DD0(void* self);
-extern void func_002020E0(void* self);
-extern void func_00201FE0(void* self);
+extern void MotionGraph_BuildRunRollForward(void* self);
+extern void MotionGraph_BuildRunRollBackLeft(void* self);
+extern void MotionGraph_BuildRunRollBackRight(void* self);
+extern void MotionGraph_BuildRunRollLeft(void* self);
+extern void MotionGraph_BuildRunRollRight(void* self);
+extern void MotionGraph_BuildRollBack(void* self);
+extern void MotionGraph_BuildLyingDown(void* self);
+extern void MotionGraph_BuildHang(void* self);
+extern void MotionGraph_BuildLadderAim(void* self);
+extern void MotionGraph_BuildLadder(void* self);
+extern void MotionGraph_BuildClimbDown(void* self);
 extern void MotionGraph_BuildCore(void* self);
 extern void MotionGraph_InstallBuddyClimb(void* self);
-extern void func_001F1360(void* self);
-extern void func_001F05F0(void* self);
-extern void func_001EFE70(void* self);
-extern void func_001EFC50(void* self);
+extern void MotionGraph_BuildCarryBody(void* self);
+extern void MotionGraph_BuildJumpFall(void* self);
+extern void MotionGraph_BuildDeathLanding(void* self);
+extern void MotionGraph_BuildStealthKills(void* self);
 
 /* Runs every registration step on self in order. */
 #pragma optimization_level 1
 void MotionGraph_RunBuilders(void* self)
 {
-    func_00206B50(self);
-    func_00206830(self);
-    func_002064D0(self);
-    func_002060A0(self);
-    func_00205C30(self);
-    func_002057F0(self);
-    func_00204FC0(self);
-    func_00204C90(self);
-    func_00203DD0(self);
-    func_002020E0(self);
-    func_00201FE0(self);
+    MotionGraph_BuildRunRollForward(self);
+    MotionGraph_BuildRunRollBackLeft(self);
+    MotionGraph_BuildRunRollBackRight(self);
+    MotionGraph_BuildRunRollLeft(self);
+    MotionGraph_BuildRunRollRight(self);
+    MotionGraph_BuildRollBack(self);
+    MotionGraph_BuildLyingDown(self);
+    MotionGraph_BuildHang(self);
+    MotionGraph_BuildLadderAim(self);
+    MotionGraph_BuildLadder(self);
+    MotionGraph_BuildClimbDown(self);
     MotionGraph_BuildCore(self);
     MotionGraph_InstallBuddyClimb(self);
-    func_001F1360(self);
-    func_001F05F0(self);
-    func_001EFE70(self);
-    func_001EFC50(self);
+    MotionGraph_BuildCarryBody(self);
+    MotionGraph_BuildJumpFall(self);
+    MotionGraph_BuildDeathLanding(self);
+    MotionGraph_BuildStealthKills(self);
 }
 #pragma optimization_level reset

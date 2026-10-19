@@ -6,7 +6,7 @@ extern int sprintf(char* buf, const char* fmt, ...);
 extern void String_Copy(char* dst, const char* src);
 extern void* Agent_GetSelected(char* name, int index);
 extern int AgentData_HasZeus(void* agent, int a, int b, int i);
-void func_002C9420(Menu9420* m)
+void Game_GetEolMovieName(Menu9420* m)
 {
     char num[8];
     char buf[0x28];

@@ -71,7 +71,7 @@ int Gui_GetScreenStack(void) {
 
 struct VC004147B0 { virtual int v0(...); };
 extern "C" {                     
-int func_00419590(...);
+int GuiManager_dtor(...);
 #if 0 /* merge_units */
 extern void **D_00571FB0;
 #endif /* merge_units */
@@ -99,7 +99,7 @@ extern "C" void GuiCanvas_Destroy(void) {
         temp_s0_2 = D_00571FB8;
         {
             AllocGuard g;
-        func_00419590(temp_s0_2, -1);
+        GuiManager_dtor(temp_s0_2, -1);
         Mem_Free(0, temp_s0_2, "gui.cc", 0x2A);
         }
         D_00571FB8 = NULL;

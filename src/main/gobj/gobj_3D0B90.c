@@ -7,7 +7,7 @@
 /* merge_units: begin func_003D0B90 */
 #pragma push /* merge_units */
 #include "types.h"
-extern void func_003D0A90(void* self, short del);
+extern void ReceiverList_Dtor_3D0A90(void* self, short del);
 extern void func_003D0B10(void* self, short del);
 extern void operator_delete(void* p);
 void* TextManager_Destroy(void* self, short del)
@@ -16,7 +16,7 @@ void* TextManager_Destroy(void* self, short del)
         void* a = (char*)self + 0x10;
         void* b;
         if (a)
-            func_003D0A90(a, 0);
+            ReceiverList_Dtor_3D0A90(a, 0);
         b = (char*)self + 4;
         if (b)
             func_003D0B10(b, 0);

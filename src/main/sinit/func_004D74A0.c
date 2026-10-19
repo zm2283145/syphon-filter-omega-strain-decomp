@@ -25,7 +25,7 @@ extern char func_00431600;
 extern char func_00431660;
 extern char func_004316F0;
 
-void func_004D74A0(void) {
+void StaticInit_RegisterSwitchControllersMsg(void) {
     int sp3C;
     int sp38;
     int sp34;

@@ -16,9 +16,9 @@ extern int func_00357640(void);
 extern int func_00357680(int);
 extern int func_00357840(int);
 extern int func_00358C30(int);
-extern int func_00358E60(int, int, int);
-extern int func_00358F58(int, int, int);
-extern int func_00359430(int, int, int);
+extern int Insck_Bind(int, int, int);
+extern int Insck_Connect(int, int, int);
+extern int Insck_Accept(int, int, int);
 extern int func_0035AA60(int);
 extern int func_0035ABE0(int, int, int);
 
@@ -127,20 +127,20 @@ int func_0045AB40(int a0) {
 int func_0045AB60(int a0, int a1, int a2) {
     int tmp0;
 
-    tmp0 = func_00359430(a0, a1, a2);
+    tmp0 = Insck_Accept(a0, a1, a2);
     return tmp0;
 }
 
 int func_0045AB80(int a0, int a1, int a2) {
     int tmp0;
 
-    tmp0 = func_00358E60(a0, a1, a2);
+    tmp0 = Insck_Bind(a0, a1, a2);
     return tmp0;
 }
 
 int func_0045ABA0(int a0, int a1, int a2) {
     int tmp0;
 
-    tmp0 = func_00358F58(a0, a1, a2);
+    tmp0 = Insck_Connect(a0, a1, a2);
     return tmp0;
 }

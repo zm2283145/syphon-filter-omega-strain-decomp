@@ -8,7 +8,7 @@
 #include "GuiAgentInfo_types.h"
 
 /* Copies a 3x4 block into the matrix at +0x10 (xyz of each row, then w). */
-void func_00364150(MtxHolder* self, Mtx34* src) {
+void Mtx44_SetRows123FromMtx34_364150(MtxHolder* self, Mtx34* src) {
     self->m[0][0] = src->m[0][0];
     self->m[0][1] = src->m[0][1];
     self->m[0][2] = src->m[0][2];

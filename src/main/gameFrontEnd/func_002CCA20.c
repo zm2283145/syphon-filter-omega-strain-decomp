@@ -15,6 +15,6 @@ void FrontEnd_SetOnlineMode(FeItem* item, int value) {
     item->unk30 = value;
 }
 
-int func_002CCA30(void) {
+int Loc_GetCurrentLanguageName_Thunk(void) {
     return Loc_GetCurrentLanguageName();
 }

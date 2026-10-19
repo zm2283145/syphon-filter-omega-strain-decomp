@@ -6,11 +6,11 @@
 
 /* merge_units: begin func_00102EB8 */
 typedef struct { char pad[6]; short x6; } GsInfo2EB8;
-extern GsInfo2EB8 *func_00102A18(void);
+extern GsInfo2EB8 *sceGsGetGParam(void);
 
 void func_00102EB8(unsigned long *db)
 {
-    if (func_00102A18()->x6 == 1) {
+    if (sceGsGetGParam()->x6 == 1) {
         *(volatile unsigned long *)0x12000000 = db[0];
         *(volatile unsigned long *)0x12000070 = db[2];
         *(volatile unsigned long *)0x12000080 = db[3];
@@ -27,13 +27,13 @@ void func_00102EB8(unsigned long *db)
 
 /* merge_units: begin func_00102F78 */
 #if 0 /* merge_units */
-extern unsigned long long *func_00102A18(void);
+extern unsigned long long *sceGsGetGParam(void);
 #endif /* merge_units */
-#define func_00102A18() ((unsigned long long *)func_00102A18()) /* merge_units */
+#define sceGsGetGParam() ((unsigned long long *)sceGsGetGParam()) /* merge_units */
 
 int func_00102F78(short mode, short width, short height)
 {
-    unsigned long long *p=func_00102A18();
+    unsigned long long *p=sceGsGetGParam();
     int x=(width+63)/64;
     int y;
     short count;
@@ -43,7 +43,7 @@ int func_00102F78(short mode, short width, short height)
     else count=x*y*2;
     return count;
 }
-#undef func_00102A18 /* merge_units */
+#undef sceGsGetGParam /* merge_units */
 /* merge_units: end func_00102F78 */
 
 /* merge_units: begin func_00103040 */

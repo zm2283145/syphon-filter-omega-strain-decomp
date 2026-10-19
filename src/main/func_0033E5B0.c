@@ -40,7 +40,7 @@ extern int strlen(const char*);
 extern Ent5B0* SFOLobby_GetGameInfo(Lobby5B0*, int);
 extern int SFOLobby_JoinGame(Lobby5B0*, int);
 extern void func_0044E340(Lobby5B0*);
-extern unsigned char func_00452FF0(Lobby5B0*, int);
+extern unsigned char SFOLobby_FormatError(Lobby5B0*, int);
 extern void SFOLobby_Update(Lobby5B0*);
 extern void Game_ClearOtherAgentsB70(char*);
 extern void App_GetInstance(void);
@@ -51,7 +51,7 @@ extern void App_CardWaitPoll(int, int);
 extern char* Loc_LookupText(char*);
 extern void Net_CleanupGame(void);
 }
-extern "C" void func_0033E5B0(O5B0* o, Info5B0* info, int arg2) {
+extern "C" void GuiMenuScreen_JoinGame(O5B0* o, Info5B0* info, int arg2) {
     Str5B0 a1;
     Str5B0 b1;
     Str5B0 a2;
@@ -202,7 +202,7 @@ extern "C" void func_0033E5B0(O5B0* o, Info5B0* info, int arg2) {
             }
         } else {
             int code;
-            switch (func_00452FF0(lobby, 0)) {
+            switch (SFOLobby_FormatError(lobby, 0)) {
             case 2: code = 0x6A; break;
             case 0x33: code = 0x6E; break;
             case 0x35: code = 0x6B; break;

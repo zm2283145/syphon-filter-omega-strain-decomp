@@ -9,7 +9,7 @@ extern int func_002F7CE8(char *);
 extern int func_002F7D68(int);
 extern char *func_002F7ED8(int, int);
 extern int func_002F7D28(int);
-extern void func_002F7FB0(int, int, int *, int);
+extern void Sha1_Digest(int, int, int *, int);
 extern void func_002F4CD0(char *, int, int *, int);
 int func_002F9368(int a, int b, char *c, int d)
 {
@@ -28,7 +28,7 @@ int func_002F9368(int a, int b, char *c, int d)
 fail:
         return -1;
     }
-    func_002F7FB0(*(int *)(s + 0x18), 4, buf, 0x40);
+    Sha1_Digest(*(int *)(s + 0x18), 4, buf, 0x40);
     func_002F4CD0(c, d, buf2, 0x40);
     i = 0;
     do {

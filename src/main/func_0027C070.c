@@ -12,7 +12,7 @@ extern int g_HumanActorClassKey;
 extern void Script_ReadU32(int* p);
 extern float Script_ReadFloat(void);
 extern void Actor_StartGrenadeThrow(float f, T_0027C070* t, int* id, float* pos);
-void func_0027C070(M_0027C070* m, T_0027C070* t) {
+void cNetGrenadeMsg_Apply(M_0027C070* m, T_0027C070* t) {
     Script_ReadU32(&m->id);
     m->pos[0] = Script_ReadFloat();
     m->pos[1] = Script_ReadFloat();

@@ -22,12 +22,12 @@ static inline void PRVec_1C50F0_Free(int* p)
         TStr_Free((char*)p, D_0049AF00, 0x64);
 }
 #pragma opt_common_subs off
-extern "C" void func_001C50F0(PRVec_1C50F0* v, int* first, int* last)
+extern "C" void Vector_Assign_1C50F0(PRVec_1C50F0* v, int* first, int* last)
 {
     unsigned int n = last - first;
     if (v->cap < n) {
         if (n > 0x1800000) {
-            func_00123BE8(D_00489738->stream, D_0049F300);
+            Libc_Fprintf(D_00489738->stream, D_0049F300);
             Libc_Abort();
         }
         v->count = 0;

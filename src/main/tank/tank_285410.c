@@ -22,7 +22,7 @@ void Event_Send(void* m, void* target, int immediate);
 void cMessage_dtor(void* m, int flags);
 }
 static inline int IsAuth285410(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
-extern "C" void func_00285410(Tank285410* self) {
+extern "C" void cNetUpdateTankMsg_Send(Tank285410* self) {
     if (self->sub) self->sub->b54 = 1;
     if (g_IsMultiplayer && IsAuth285410()) {
         Msg285410 m;
@@ -50,7 +50,7 @@ struct Msg2854D0 { void* vtable; char base[0x18]; int f1C; unsigned char b20; ch
 extern "C" {
 }
 static inline int IsAuth2854D0(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
-extern "C" void func_002854D0(Tank2854D0* self) {
+extern "C" void cNetUpdateTankMsg_Send_2854D0(Tank2854D0* self) {
     if (self->sub) self->sub->b54 = 0;
     self->b70 = 1;
     if (g_IsMultiplayer && IsAuth2854D0()) {

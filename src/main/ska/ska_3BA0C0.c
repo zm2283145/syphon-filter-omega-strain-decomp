@@ -8,7 +8,7 @@
 #pragma push /* merge_units */
 typedef struct Deq { unsigned int cap; unsigned int size; unsigned int start; int* data; } Deq;
 
-extern void func_00123BE8(int, const char*);
+extern void Libc_Fprintf(int, const char*);
 extern void Libc_Abort(void);
 extern char* D_00489738;
 extern unsigned int D_004BCEE8[2];
@@ -32,7 +32,7 @@ unsigned int func_003BA0C0(Deq* self, unsigned int n)
     unsigned int m = MaxSize();
     unsigned int c;
     if (m < n) {
-        func_00123BE8(*(int*)(D_00489738 + 0xC), "cdeque max_size error");
+        Libc_Fprintf(*(int*)(D_00489738 + 0xC), "cdeque max_size error");
         Libc_Abort();
     }
     c = self->cap ? self->cap - 1 : 1;

@@ -5,13 +5,13 @@ extern char D_004F7548[];
 extern char D_004F7538[];
 extern void ScalarCollection_Init(void* obj);
 extern void __register_global_object(void* obj, void* dtor, void* link);
-extern void func_00224590(void);
+extern void ScalarCollection_Dtor_224590(void);
 
 /* Returns the lazily constructed static collection. */
 void* ActivationMgr_Get(void) {
     if (!D_004F7530) {
         ScalarCollection_Init(D_004F7548);
-        __register_global_object(D_004F7548, func_00224590, D_004F7538);
+        __register_global_object(D_004F7548, ScalarCollection_Dtor_224590, D_004F7538);
         D_004F7530 = 1;
     }
     return D_004F7548;

@@ -158,7 +158,7 @@ extern "C" {
 void Hog_Unload(void* p);
 void func_0036D5D0(void* p, short f);
 }
-extern "C" void func_002C9E20(S2C9E20* s)
+extern "C" void FrontEnd_UnloadZeusHog(S2C9E20* s)
 {
     if (s->p25C) {
         Hog_Unload(s->p25C);
@@ -181,7 +181,7 @@ static inline void merge_flush_func_002C9E20(void) {}
 #pragma cplusplus on
 extern "C" {
 extern char D_0048B2F8[];
-char* func_002CCA30(void);
+char* Loc_GetCurrentLanguageName_Thunk(void);
 void* func_0036D630(void* p);
 #if 0 /* merge_units */
 void func_0036D5D0(void* p, int flags);
@@ -191,12 +191,12 @@ void func_0036D5D0(void* p, int flags);
 int Hog_Load(void* hog, char* path, int mode, int flags);
 }
 struct Obj9EE0 { char pad[0x25C]; void* hog; };
-extern "C" bool func_002C9EE0(Obj9EE0* o)
+extern "C" bool FrontEnd_LoadZeusHog(Obj9EE0* o)
 {
     if (!o->hog) {
         char path[0x100];
         void* p;
-        sprintf(path, "%s\\FRONTEND\\LANG\\%s\\ZEUS.HOG", D_0048B2F8, func_002CCA30());
+        sprintf(path, "%s\\FRONTEND\\LANG\\%s\\ZEUS.HOG", D_0048B2F8, Loc_GetCurrentLanguageName_Thunk());
         {
             AllocGuard guard;
             p = Mem_Alloc(0, 0x16C, D_004ACF10, 0x628);
@@ -231,7 +231,7 @@ extern bool D_0051EF58;
 char* GameIni_GetString(char* s);
 int String_CompareNoCase(char* a, char* b);
 }
-extern "C" bool func_002CA070(void)
+extern "C" bool FrontEnd_IsRegisterEnabled(void)
 {
     if (!D_0051EF60) {
         bool eq = String_CompareNoCase(GameIni_GetString("LOBBY_DISABLE_REGISTER"), "1") == 0;

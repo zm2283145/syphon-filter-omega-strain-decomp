@@ -36,7 +36,7 @@ int Alloc_Unlock(int);
                                   
 int Mem_Alloc(int, int, int *, int);                      
 int func_001361D0(int *);                           
-int func_00257450(int , int);                       
+int PtrVec_Reserve_Thunk_257450(int , int);                       
 int func_00257460(int );                            
 extern int D_004A7B50;
 extern int g_BackpackList;
@@ -59,7 +59,7 @@ void func_00257380(void) {
     if (temp_s0 != NULL) {
         sp2C = 0x14;
         func_00257460(temp_s0);
-        func_00257450(temp_s0, func_001361D0(&sp2C));
+        PtrVec_Reserve_Thunk_257450(temp_s0, func_001361D0(&sp2C));
         F_(temp_s0, 0xC, signed char) = 1;
     }
     g_BackpackList = temp_s0;

@@ -16,7 +16,7 @@ int Alloc_Unlock(int);
 int Mem_Alloc(int, int, int *, int);                      
 int func_001361D0(int *);                           
 int func_00219DF0(int );                            
-int func_0025DBC0(int , int);                       
+int Vector_Reserve_25DBD0_Thunk(int , int);                       
 extern unsigned char g_ProfileLockEnabled;
 extern int g_ProfileLockDepth;
 extern int D_00542D00;
@@ -38,7 +38,7 @@ void func_003C06B0(int arg0) {
         if (temp_s1 != NULL) {
             sp3C = arg0;
             func_00219DF0(temp_s1);
-            func_0025DBC0(temp_s1, func_001361D0(&sp3C));
+            Vector_Reserve_25DBD0_Thunk(temp_s1, func_001361D0(&sp3C));
             F_(temp_s1, 0xC, signed char) = 1;
         }
         D_00542D00 = temp_s1;
@@ -123,7 +123,7 @@ unsigned char* ColTri_GetEdgeFlags(void*);
 GElem** func_003C0F50(GVec*);
 int ColEdge_IsDuplicate(EdgeRef*, GKey*, void*);
 int func_003C0DF0(GVec*);
-void func_001EF6C0(GVec*, int);
+void Vector_Reserve_1EF6C0(GVec*, int);
 void func_003C3190(GVec*, int, GElem*);
 void ColTri_GetVertices(void*, GV4**, GV4**, GV4**, GKey*);
 void Vec4_Copy(GV4*, GV4*);
@@ -171,7 +171,7 @@ extern "C" void Col_GatherTriangleEdges(GObj* obj, GVec* vec, GTri* tri)
         if (dup)
             continue;
         if (vec->n >= vec->cap)
-            func_001EF6C0(vec, func_003C0DF0(vec) * 3 / 2);
+            Vector_Reserve_1EF6C0(vec, func_003C0DF0(vec) * 3 / 2);
         GElem def;
         func_003C3190(vec, vec->n + 1, &def);
         e = vec->data + vec->n - 1;

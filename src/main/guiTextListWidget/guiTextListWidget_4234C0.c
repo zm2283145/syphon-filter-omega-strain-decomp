@@ -7,6 +7,6 @@
 #include "types.h"
 
 
-int func_004234C0(void) {
+int GuiArrayWidget_GetClassName(void) {
     return (int)"GuiArrayWidget";
 }

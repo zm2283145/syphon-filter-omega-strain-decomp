@@ -27,7 +27,7 @@ struct _glue { struct _glue *_next; int _niobs; FILE *_iobs; };
 struct _reent { int _errno; char p0[0x34]; int __sdidinit; char p1[0x1D8 - 0x3C]; struct _glue __sglue; };extern unsigned char *_malloc_r(struct _reent *, int);
 extern unsigned char *_realloc_r(struct _reent *, unsigned char *, int);
 extern void *memcpy(void *, const void *, unsigned int);
-int func_0012B2B0(FILE *fp)
+int Newlib_Submore(FILE *fp)
 {
     int i;
     unsigned char *p;
@@ -61,9 +61,9 @@ extern int fflush(FILE_X* fp);
 #define CHECK_INIT(fp) do { if ((fp)->_data == 0) (fp)->_data = D_00489738; if (!(fp)->_data->__sdidinit) __sinit ((fp)->_data); } while (0)
 #define HASUB(fp) ((fp)->_ub_base != 0)
 #if 0 /* merge_units */
-extern int func_0012B2B0(FILE_X* fp);
+extern int Newlib_Submore(FILE_X* fp);
 #endif /* merge_units */
-#define func_0012B2B0(a0) (func_0012B2B0((FILE *)(a0))) /* merge_units */
+#define Newlib_Submore(a0) (Newlib_Submore((FILE *)(a0))) /* merge_units */
 
 int ungetc(int c, register FILE_X *fp)
 {
@@ -92,7 +92,7 @@ int ungetc(int c, register FILE_X *fp)
 
   if (HASUB (fp))
     {
-      if (fp->_r >= fp->_ub_size && func_0012B2B0 (fp))
+      if (fp->_r >= fp->_ub_size && Newlib_Submore (fp))
 	return -1;
       *--fp->_p = c;
       fp->_r++;
@@ -115,5 +115,5 @@ int ungetc(int c, register FILE_X *fp)
   fp->_r = 1;
   return c;
 }
-#undef func_0012B2B0 /* merge_units */
+#undef Newlib_Submore /* merge_units */
 /* merge_units: end func_0012B398 */

@@ -11,7 +11,7 @@
 #include "string_reserve.h"
 
 extern "C" { char D_004BF440[] = "basic_string::reserve length_error"; }
-DEFINE_STRING_RESERVE(func_004201A0, D_004BF440, D_0049ADE0, 0x5C, D_0049AE90, 0x64)
+DEFINE_STRING_RESERVE(String_Reserve_4201A0, D_004BF440, D_0049ADE0, 0x5C, D_0049AE90, 0x64)
 #pragma pop /* merge_units */
 /* merge_units: end func_004201A0 */
 
@@ -22,7 +22,7 @@ DEFINE_STRING_RESERVE(func_004201A0, D_004BF440, D_0049ADE0, 0x5C, D_0049AE90, 0
 #include "stream_string_dtor.h"
 
 /* Destroy a string holder: free heap storage, optionally delete. */
-DEFINE_STREAM_STRING_DTOR(func_004204E0)
+DEFINE_STREAM_STRING_DTOR(String_Dtor_4204E0)
 #pragma pop /* merge_units */
 /* merge_units: end func_004204E0 */
 
@@ -32,7 +32,7 @@ DEFINE_STREAM_STRING_DTOR(func_004204E0)
 #include "object_list_erase_range.h"
 
 /* Erase a range of nodes from a linked list. */
-DEFINE_OBJECT_LIST_ERASE_RANGE(func_004205D0)
+DEFINE_OBJECT_LIST_ERASE_RANGE(ObjectList_EraseRange_4205D0)
 #pragma pop /* merge_units */
 /* merge_units: end func_004205D0 */
 
@@ -42,7 +42,7 @@ DEFINE_OBJECT_LIST_ERASE_RANGE(func_004205D0)
 #include "list_insert_before.h"
 
 /* Insert an int value before a list position. */
-DEFINE_LIST_INSERT_BEFORE(func_00420710)
+DEFINE_LIST_INSERT_BEFORE(List_InsertBefore_420710)
 #pragma pop /* merge_units */
 /* merge_units: end func_00420710 */
 

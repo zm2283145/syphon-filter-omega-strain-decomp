@@ -11,7 +11,7 @@ extern char D_004DEB10[];   /* GuiNetMessages vtable */
 extern void* GuiScreen_ctor(void* self);
 
 /* Constructor. */
-GuiNetMessages* func_00347A40(GuiNetMessages* self) {
+GuiNetMessages* GuiNetMessages_ctor(GuiNetMessages* self) {
     GuiScreen_ctor(self);
     self->vtable = D_004DEB10;
     self->unk84 = 9;

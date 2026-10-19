@@ -122,7 +122,7 @@ static inline W_2A2F00* FindAs(void* self, char* n, char* t)
 }
 #define FIND(n, t) FindAs(self, n, t)
 
-extern "C" void func_002A2F00(S_2A2F00* self, float dt)
+extern "C" void GuiEquipmentSetup_Update(S_2A2F00* self, float dt)
 {
     char name[17] = "1value_agentname";
     char rank[12] = "1value_rank";

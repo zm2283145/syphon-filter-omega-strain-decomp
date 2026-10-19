@@ -77,7 +77,7 @@ extern "C" TextArrayCell* func_004283C0(TextArrayCell* first, TextArrayCell* las
 #include "tstr_types.h"
 
 extern "C" {
-void func_0013BCB0(void* d, const void* s);
+void String_CopyCtor(void* d, const void* s);
 extern char D_004BF830[];
 extern char D_004BF878[];
 void func_00428A00(TextArrayCell* d, unsigned int n, const TextArrayCell* v);
@@ -98,7 +98,7 @@ void func_00428090(CellVec* v, int flag);
 static inline void construct(TextArrayCell* p, const TextArrayCell* v)
 {
     if (p) {
-        func_0013BCB0(p, v);
+        String_CopyCtor(p, v);
         p->flags = v->flags;
         p->attribute = *(const signed char*)&v->attribute;
         p->text = v->text;
@@ -116,7 +116,7 @@ extern "C" void func_00428450(CellVec* v, T* pos, unsigned int n, const T* value
     if (n == 0)
         return;
     if (n > 0x200000 || v->count > 0x200000 - n) {
-        func_00123BE8(D_00489738->stream, D_004BF830);
+        Libc_Fprintf(D_00489738->stream, D_004BF830);
         Libc_Abort();
     }
     if (v->count + n <= v->cap) {

@@ -15,7 +15,7 @@ extern "C" {
 extern int D_004F53C0;
 void Event_PackHeader(Ev_EF50* e, int a1, int* type, int a3, int a4, unsigned int size, void* buf);
 }
-extern "C" int func_0020F620(Ev_EF50* e, int a1, int* type, int a3, int a4, unsigned int size, void* buf) {
+extern "C" int SoundPosRequest_Serialize(Ev_EF50* e, int a1, int* type, int a3, int a4, unsigned int size, void* buf) {
     int r = -1;
     if (size >= 0x30 && buf) {
         Out_EF50* o = (Out_EF50*)buf;

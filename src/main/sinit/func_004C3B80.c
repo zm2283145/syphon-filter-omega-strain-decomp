@@ -1,9 +1,9 @@
 #include "types.h"
 extern char g_NpcThinkList[];
-extern char func_0015BE20[];
+extern char ScalarCollection_Dtor_15BE20[];
 extern char D_004EA180[];
 extern char D_004EA1B0[];
-extern char func_0015BDC0[];
+extern char ScalarCollection_Dtor_15BDC0[];
 extern char D_004EA1A0[];
 extern char D_004EA1D0[];
 extern char func_00158B10[];
@@ -11,7 +11,7 @@ extern char func_0015BD60[];
 extern char func_0015BD40[];
 extern char D_004EA1C0[];
 extern char g_NpcDeadList[];
-extern char func_0015BCE0[];
+extern char ScalarCollection_Dtor_15BCE0[];
 extern char D_004EA360[];
 extern char WorthShootingThreshold;
 extern char D_00493890[];
@@ -19,7 +19,7 @@ extern int D_004EA390;
 extern char Script_LosCam[];
 extern char D_00493880[];
 extern int D_004EA398;
-extern char func_0014A6F0[];
+extern char ScriptType_cAIModeChangeMsg_Init[];
 extern int D_004EA3D0;
 extern int D_004EA3D8;
 extern char Script_cAIModeChangeMsg_GetAiMode[];
@@ -261,19 +261,19 @@ extern int Script_RegisterNative();
 extern int ScriptEnum_Register();
 extern int func_0015C130();
 extern int func_0016FE40();
-void func_004C3B80(void)
+void StaticInit_RegisterNpc(void)
 {
     ScalarCollection_Init(g_NpcThinkList);
-    __register_global_object(g_NpcThinkList, func_0015BE20, D_004EA180);
+    __register_global_object(g_NpcThinkList, ScalarCollection_Dtor_15BE20, D_004EA180);
     ScalarCollection_Init(D_004EA1B0);
-    __register_global_object(D_004EA1B0, func_0015BDC0, D_004EA1A0);
+    __register_global_object(D_004EA1B0, ScalarCollection_Dtor_15BDC0, D_004EA1A0);
     __construct_array(D_004EA1D0, func_00158B10, func_0015BD60, 0x18, 0x10);
     __register_global_object(0, func_0015BD40, D_004EA1C0);
     ScalarCollection_Init(g_NpcDeadList);
-    __register_global_object(g_NpcDeadList, func_0015BCE0, D_004EA360);
+    __register_global_object(g_NpcDeadList, ScalarCollection_Dtor_15BCE0, D_004EA360);
     D_004EA390 = Script_RegisterVariable("WorthShootingThreshold", (int)&WorthShootingThreshold, D_00493890);
     D_004EA398 = Script_RegisterNative_2(Script_LosCam, D_00493880, "LosCam", 3, cGOBJ_GetScriptTypeKeyPtr(), cGOBJ_GetScriptTypeKeyPtr(), D_00493890);
-    D_004EA3D0 = Script_RegisterType("cAIModeChangeMsg", func_0014A6F0, 1, 0);
+    D_004EA3D0 = Script_RegisterType("cAIModeChangeMsg", ScriptType_cAIModeChangeMsg_Init, 1, 0);
     D_004EA3D8 = D_004EA3D0;
     D_004EA3E0 = Script_RegisterNative(D_004EA3D0, Script_cAIModeChangeMsg_GetAiMode, &D_004EA400, "GetAiMode", 1, &D_004EA3D0);
     D_004EA3E8 = "Script AI Mode Change Message";

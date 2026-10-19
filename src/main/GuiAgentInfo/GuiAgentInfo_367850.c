@@ -52,7 +52,7 @@ void GuiWidget_ctor(S364590* self);
 void* Mem_Alloc(int pool, int size, char* file, int line);
 }
 #pragma opt_propagation off
-extern "C" S364590* func_003678E0(void) {
+extern "C" S364590* GuiAgentDisplay_Create(void) {
     S364590* p;
     {
         AllocGuard guard;
@@ -83,7 +83,7 @@ extern "C" S364590* func_003678E0(void) {
 #pragma cplusplus on
 #include "guarded_new.h"
 
-DEFINE_GUARDED_NEW_CTOR(func_003679D0, 0x124, D_004BBB00, GuiAgentInfo_ctor)
+DEFINE_GUARDED_NEW_CTOR(GuiAgentInfo_Create, 0x124, D_004BBB00, GuiAgentInfo_ctor)
 #pragma pop /* merge_units */
 /* merge_units: end func_003679D0 */
 
@@ -95,7 +95,7 @@ DEFINE_GUARDED_NEW_CTOR(func_003679D0, 0x124, D_004BBB00, GuiAgentInfo_ctor)
 /* Derived destructor: restore vtable, run base destructor, optionally delete. */
 extern "C" {
 extern "C" void GuiObjectives_GetClassName();
-extern "C" void func_00367AF0();
+extern "C" void GuiObjectives_IsType();
 extern "C" void GuiObjectives_HandleEvent();
 extern "C" void GuiObjectives_HandleInput();
 extern "C" void GuiObjectives_Update();
@@ -113,11 +113,11 @@ extern "C" void GuiWidget_BaseSleep();
 extern "C" void GuiWidget_ClearFlag4();
 extern "C" void GuiWidget_SetFlag4();
 extern "C" void GuiWidget_Deinit();
-extern "C" void func_0041F210();
+extern "C" void GuiWidget_Load();
 extern void * const D_004DF5C0[];
 void* GuiWidget_Destroy(void* self, short deleteFlag);
 }
-extern "C" VtableObject* func_00367A80(VtableObject* self, short deleteFlag)
+extern "C" VtableObject* GuiObjectives_dtor(VtableObject* self, short deleteFlag)
 {
     if (self) {
         self->vtable = ((char*)D_004DF5C0);
@@ -127,6 +127,6 @@ extern "C" VtableObject* func_00367A80(VtableObject* self, short deleteFlag)
     }
     return self;
 }
-void * const D_004DF5C0[24] = { (void*)0x0, (void*)0x0, (void*)func_00367A80, (void*)GuiObjectives_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiObjectives_Wake, (void*)GuiWidget_BaseSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiObjectives_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiObjectives_Update, (void*)GuiObjectives_HandleEvent, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiObjectives_GetClassName, (void*)func_00367AF0, (void*)0x0 };
+void * const D_004DF5C0[24] = { (void*)0x0, (void*)0x0, (void*)GuiObjectives_dtor, (void*)GuiObjectives_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiObjectives_Wake, (void*)GuiWidget_BaseSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiObjectives_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiObjectives_Update, (void*)GuiObjectives_HandleEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiObjectives_GetClassName, (void*)GuiObjectives_IsType, (void*)0x0 };
 #pragma pop /* merge_units */
 /* merge_units: end func_00367A80 */

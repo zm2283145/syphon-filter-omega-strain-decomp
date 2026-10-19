@@ -14,9 +14,9 @@ extern "C" void GuiWidget_OnEvent();
 extern "C" void GuiWidget_ClearFlag4();
 extern "C" void GuiWidget_SetFlag4();
 extern "C" void GuiWidget_Init();
-extern "C" void func_0041F210();
+extern "C" void GuiWidget_Load();
 extern "C" void GuiBitmapWidget_GetClassName();
-extern "C" void func_0043C0C0();
+extern "C" void GuiBitmapWidget_IsType();
 extern "C" void GuiBitmapWidget_Draw();
 extern "C" void GuiBitmapWidget_Deinit();
 extern "C" void GuiBitmapWidget_Sleep();
@@ -26,7 +26,7 @@ void String_Dtor(void* m, short f);
 void GuiWidget_Destroy(void* p, short f);
 void operator_delete(void* p);
 }
-extern "C" O_001379A0* func_0043C030(O_001379A0* self, short del)
+extern "C" O_001379A0* GuiBitmapWidget_dtor(O_001379A0* self, short del)
 {
     if (self) {
         self->vt = ((char*)D_004E0FC0);
@@ -36,4 +36,4 @@ extern "C" O_001379A0* func_0043C030(O_001379A0* self, short del)
     }
     return self;
 }
-void * const D_004E0FC0[24] = { (void*)0x0, (void*)0x0, (void*)func_0043C030, (void*)GuiWidget_Init, (void*)GuiBitmapWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiBitmapWidget_Wake, (void*)GuiBitmapWidget_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)func_00293950, (void*)GuiBitmapWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiWidget_OnEvent, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiBitmapWidget_GetClassName, (void*)func_0043C0C0, (void*)0x0 };
+void * const D_004E0FC0[24] = { (void*)0x0, (void*)0x0, (void*)GuiBitmapWidget_dtor, (void*)GuiWidget_Init, (void*)GuiBitmapWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiBitmapWidget_Wake, (void*)GuiBitmapWidget_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)func_00293950, (void*)GuiBitmapWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiWidget_OnEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiBitmapWidget_GetClassName, (void*)GuiBitmapWidget_IsType, (void*)0x0 };

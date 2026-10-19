@@ -53,7 +53,7 @@ struct TIValueII { int a; int b; };
                                  int left, int first, const VT* src)          \
     {                                                                         \
         if (tree->count > 0xFFFFFFFFU - 1) {                                  \
-            func_00123BE8(D_00489738->stream, errSym);                        \
+            Libc_Fprintf(D_00489738->stream, errSym);                        \
             Libc_Abort();                                                  \
         }                                                                     \
         name##_Node* node = (name##_Node*)TStr_Alloc(sizeof(name##_Node), allocFile, (allocLine)); \
@@ -83,7 +83,7 @@ char D_004BE370[] = "tree::insert length error\n";
 extern "C" {
 char D_004BE390[] = "allocator.hh";
 }
-DEFINE_TREE_INSERT_V8X(func_003FC520, TIV_003FC520, D_004BE370, D_004BE390, 0x5C, func_0013CD40)
+DEFINE_TREE_INSERT_V8X(FrameTree_Insert_3FC520, TIV_003FC520, D_004BE370, D_004BE390, 0x5C, func_0013CD40)
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003FC520(void) {}
 #pragma pop /* merge_units */

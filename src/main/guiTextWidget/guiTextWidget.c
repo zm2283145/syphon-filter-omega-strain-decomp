@@ -15,7 +15,7 @@ extern void String_Reserve(String* str, int capacity);
 extern void String_Replace(String* str, int pos, int n, const char* first, const char* last, Alloc alloc);
 
 /* String constructor from a C string. */
-String* func_0041C870(String* self, const char* cstr)
+String* String_CtorCStr_41C870(String* self, const char* cstr)
 {
     Alloc alloc;
     int len;
@@ -37,6 +37,6 @@ String* func_0041C870(String* self, const char* cstr)
 
 extern "C" { char D_004BF2F0[] = "basic_string: out_of_range"; }
 extern "C" { char D_004BF310[] = "basic_string: length_error"; }
-DEFINE_STRING_REPLACE_RANGE(func_0041C8F0, D_004BF2F0, D_004BF310, D_0049ADE0, 0x5C, D_0049AE90, 0x64, D_00494110, D_00494118, func_00125FE8, String_Assign)
+DEFINE_STRING_REPLACE_RANGE(func_0041C8F0, D_004BF2F0, D_004BF310, D_0049ADE0, 0x5C, D_0049AE90, 0x64, D_00494110, D_00494118, Libc_Memmove, String_Assign)
 #pragma pop /* merge_units */
 /* merge_units: end func_0041C8F0 */

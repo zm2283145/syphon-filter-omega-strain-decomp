@@ -7,6 +7,6 @@
 #include "types.h"
 
 
-int func_0035AE80(void) {
+int GuiScoresEquip_GetClassName(void) {
     return (int)"GuiScoresEquip";
 }

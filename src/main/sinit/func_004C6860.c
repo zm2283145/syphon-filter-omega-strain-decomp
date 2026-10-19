@@ -27,7 +27,7 @@ extern int D_004EE8D8;
 extern int D_004EE8E0;
 extern int D_004EE8E8;
 extern int D_004EE8F0;
-void func_004C6860(void) {
+void StaticInit_RegisterGameLight(void) {
     D_004EE890 = "LIGHT";
     __register_global_object(&D_004EE890, func_00144930, &D_004EE880);
     D_004EE898 = Script_RegisterType("cGameLight", ScriptType_cGameLight_Init, 0, 1);

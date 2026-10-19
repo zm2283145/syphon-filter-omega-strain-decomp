@@ -8,7 +8,7 @@
 #include "human_types.h"
 
 extern void NamedRootMap_Find(int*, int, int);
-extern int func_001BDA10(PtrVec*, char*, int, int);
+extern int Vector_Insert_1BDA10(PtrVec*, char*, int, int);
 
 /* Tree iterator dereference: value stored at node +0x30. */
 char* NamedRoot_GetRegistry(Iter* it) {
@@ -29,7 +29,7 @@ int func_00192700(PtrVec* v, int value) {
     char* data = (char*)v->data;
     int count = v->count;
 
-    return func_001BDA10(v, data + count * 20, 1, value);
+    return Vector_Insert_1BDA10(v, data + count * 20, 1, value);
 }
 
 int* func_00192730(int* pair, int first, int second) {

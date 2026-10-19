@@ -81,7 +81,7 @@ char* GuiScreen_GetLobbyString(S_2958B0* self, int id, int a, char* s, int b, in
 void GuiKeyboard_Open(void* scr, char* text, char* title, S_2958B0* owner, int a, int b, int c);
 int DME_GetLobby(void);
 int func_0044AF60(int lobby, char* s);
-int func_00452FF0(int lobby, int a);
+int SFOLobby_FormatError(int lobby, int a);
 int GuiScreen_Navigate(S_2958B0* self, int a);
 void String_CtorCStr_13B480(Str_2958B0* s, char* c);
 char* String_CStr(Str_2958B0* s);
@@ -134,7 +134,7 @@ extern "C" int GuiCommandCenter_HandleEvent(S_2958B0* self, Msg_2958B0* msg, uns
                     GuiScreen_Navigate(self, 3);
                 } else {
                     int id;
-                    switch ((unsigned char)func_00452FF0(lobby, 0)) {
+                    switch ((unsigned char)SFOLobby_FormatError(lobby, 0)) {
                     case 0x1B: id = 0x5F; break;
                     case 0x1A: id = 0x60; break;
                     case 3: id = 0x61; break;

@@ -3,7 +3,7 @@
 #define NULL 0
 #define VC_(p) ((int (*)())(p))
 #pragma mpwc_relax on
-int func_00443BF0();                   
+int SFOLobby_ParseSettings();                   
 int LobbyArray_Clear();                               
 int LobbyArray_Init();                      
 int func_004537D0(char * );                            
@@ -32,7 +32,7 @@ void func_00453C70(char * arg0, int arg1, int arg2, int arg3, char * arg4, char 
     F_(arg0, 0x1EB0, int) = -1;
     F_(arg0, 0x2564, signed char) = 0;
     F_(arg0, 0x2660, int) = 0;
-    func_00443BF0(arg0, arg3, arg4, 0);
+    SFOLobby_ParseSettings(arg0, arg3, arg4, 0);
     D_00585E60 = arg0;
     if (arg2 != 0) {
         memcpy(arg0 + 0x2488, arg2, 0xC4);

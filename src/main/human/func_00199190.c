@@ -7,7 +7,7 @@ extern void Event_Construct(Msg_199190* msg, void* name);
 extern void cMessage_dtor(Msg_199190* msg, int flags);
 extern signed char NetStream_ReadS8(void);
 extern void Stream_ReadByte(signed char* out);
-extern void func_001990F0(void* self, unsigned char v, int silent);
+extern void cNetSetFlagMsg_Send(void* self, unsigned char v, int silent);
 extern void Actor_SetStunImmune(void* self, unsigned char v, int silent);
 extern void Actor_SetNotGasable(void* self, unsigned char v, int silent);
 void Actor_HandleNetSetFlag(void* self)
@@ -23,7 +23,7 @@ void Actor_HandleNetSetFlag(void* self)
     Stream_ReadByte(vp);
     if (self) {
         signed char w = *wp;
-        if (w == 0) func_001990F0(self, *vp != 0, 1);
+        if (w == 0) cNetSetFlagMsg_Send(self, *vp != 0, 1);
         else if (w == 2) Actor_SetStunImmune(self, *vp != 0, 1);
         else if (w == 1) Actor_SetNotGasable(self, *vp != 0, 1);
     }

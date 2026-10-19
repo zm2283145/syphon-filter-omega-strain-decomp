@@ -1,8 +1,8 @@
 #define F(p, o, T) (*(T *)((char *)(p) + (o)))
 #define REG(a) (*(volatile unsigned int *)(a))
 #define REGI(a) (*(volatile int *)(a))
-extern int func_001161A0(void);
-extern void func_001161F8(void);
+extern int DIntr(void);
+extern void EIntr(void);
 extern void func_00107718(void *, unsigned int);
 extern void func_0010B488(int, int *);
 
@@ -13,12 +13,12 @@ void func_00109788(void *m, unsigned int addr, int n)
 
     while (REGI(0x10002010) < 0)
         ;
-    old = func_001161A0();
+    old = DIntr();
     REG(0x1000B010) = addr & 0x0FFFFFFF;
     REG(0x1000B020) = n << 6;
     REG(0x1000B000) = 0x100;
     if (old)
-        func_001161F8();
+        EIntr();
     func_00107718(m, n | 0x70000000);
     buf[0] = 4;
     func_0010B488(F(m, 0x870, int), buf);

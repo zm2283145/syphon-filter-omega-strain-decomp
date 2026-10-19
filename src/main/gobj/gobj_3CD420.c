@@ -45,7 +45,7 @@ static inline void merge_flush_func_003CD420(void) {}
 
 #pragma push
 #pragma opt_common_subs off
-extern "C" void func_003CD4A0(V4* out, X_3CD420* x) {
+extern "C" void cGOBJ_v35(V4* out, X_3CD420* x) {
     N_3CD420* n = x->n;
     if (n) {
         if (n->dirty) n->Update();

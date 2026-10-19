@@ -18,7 +18,7 @@ extern char D_004E1730;
 
 #pragma push
 #pragma opt_common_subs off
-char **func_00460F40(char **arg0, short arg1) {
+char **GuiEndGameAwards_dtor(char **arg0, short arg1) {
     char * temp_a0;
 
     if (arg0 != NULL) {
@@ -52,6 +52,6 @@ char **func_00460F40(char **arg0, short arg1) {
 #pragma push /* merge_units */
 #include "fam5_timed_retry.h"
 extern void GuiWidget_Update(char*, float);
-DEFINE_TIMED_RETRY(func_00461020, 0x500, 0x350, GuiWidget_Update)
+DEFINE_TIMED_RETRY(GuiEndGameAwards_Update, 0x500, 0x350, GuiWidget_Update)
 #pragma pop /* merge_units */
 /* merge_units: end func_00461020 */

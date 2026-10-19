@@ -33,7 +33,7 @@ extern void Hud_ShowCallout(int, char*, char*, int, int, int, float, float);
 extern float func_0012F290(char*);
 extern void func_0012F280(char*, float);
 
-void func_0012F0D0(void)
+void cNetAgentUpdateMsg_NetReceive(void)
 {
     Msg_12F0D0 m;
     char buf[0x90];

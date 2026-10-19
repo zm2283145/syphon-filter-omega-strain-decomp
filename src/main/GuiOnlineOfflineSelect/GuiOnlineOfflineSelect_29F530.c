@@ -66,6 +66,6 @@ void func_0029F5B0(String* str, int arg) {
 
 extern "C" { char D_004AAD00[] = "basic_string: out_of_range"; }
 extern "C" { char D_004AAD20[] = "basic_string: length_error"; }
-DEFINE_STRING_REPLACE_RANGE(func_0029F5E0, D_004AAD00, D_004AAD20, D_0049ADE0, 0x5C, D_0049AE90, 0x64, D_0048BA18, D_0048BA20, func_00125FE8, String_Assign)
+DEFINE_STRING_REPLACE_RANGE(func_0029F5E0, D_004AAD00, D_004AAD20, D_0049ADE0, 0x5C, D_0049AE90, 0x64, D_0048BA18, D_0048BA20, Libc_Memmove, String_Assign)
 #pragma pop /* merge_units */
 /* merge_units: end func_0029F5E0 */

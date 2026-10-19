@@ -4,6 +4,6 @@
 #pragma mpwc_relax on
 extern char *D_00582760;
 
-void func_004D7600(void) {
+void StaticInit_NetTerrainActivationMsgName(void) {
     D_00582760 = "NetTerrainActivationMsg";
 }

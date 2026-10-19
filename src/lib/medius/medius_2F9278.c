@@ -3,7 +3,7 @@ int __attribute__((weak, section(".dtors_drop"))) func_002F7CE8(char * a0) { ret
 extern int func_002F7D68(int);
 extern char *func_002F7ED8(int, int);
 extern int func_002F7D28(int);
-extern void func_002F7FB0(int, int, int, int);
+extern void Sha1_Digest(int, int, int, int);
 extern int func_002F4D00(char *, char *, int, int, int);
 int func_002F9278(int a, int b, char *c, char *d, int e)
 {
@@ -21,7 +21,7 @@ int func_002F9278(int a, int b, char *c, char *d, int e)
     }
     return -1;
 ok:
-    func_002F7FB0(*(int *)(s + 0x18), 4, e, 0x40);
+    Sha1_Digest(*(int *)(s + 0x18), 4, e, 0x40);
     func_002F4D00(c, d, e, e, 0x40);
     return 0;
 }

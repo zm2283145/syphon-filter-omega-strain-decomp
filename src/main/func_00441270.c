@@ -40,7 +40,7 @@ char D_004C03D8[];
 void* Mem_Alloc(int pool, int size, char* file, int line);
 }
 
-extern "C" Obj4411F0* func_00441270(void) {
+extern "C" Obj4411F0* GuiWeaponDisplay_Create(void) {
     Obj4411F0* self;
     {
         AllocGuard guard;

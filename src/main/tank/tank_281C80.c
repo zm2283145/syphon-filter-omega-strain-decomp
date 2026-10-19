@@ -51,7 +51,7 @@ void func_00282020(O_00282020* o) {
 extern void Script_ReadU32(int* handle);
 extern int Object_LookupById(int* handle);
 /* Look up a handle and store the result in *out. */
-void func_00282160(int* out)
+void NetStream_ReadObject(int* out)
 {
     int handle = -1;
     Script_ReadU32(&handle);

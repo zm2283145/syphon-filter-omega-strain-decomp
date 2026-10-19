@@ -1,7 +1,7 @@
 extern int SoftFloat_UnpackAndCompare(double, double);
-extern double func_0011C200(double, double);
+extern double SoftFloat_DoubleSub(double, double);
 extern double SoftFloat_DoubleMultiply(double, double);
-extern double func_0011C4F0(double, double);
+extern double SoftFloat_DoubleDivide(double, double);
 extern unsigned long func_0011B970(double);
 extern int func_0010EB58(unsigned long);
 extern int func_0010F350(const char *, ...);
@@ -11,7 +11,7 @@ void func_0010EBF0(double x)
     int e = 0;
     int n;
     if (SoftFloat_UnpackAndCompare(x, 0.0) < 0) {
-        x = func_0011C200(0.0, x);
+        x = SoftFloat_DoubleSub(0.0, x);
         D_004861A4('-');
     }
     if (SoftFloat_UnpackAndCompare(x, 0.1) < 0) {
@@ -21,7 +21,7 @@ void func_0010EBF0(double x)
         }
     } else if (SoftFloat_UnpackAndCompare(x, 1.0) >= 0) {
         while (SoftFloat_UnpackAndCompare(x, 1.0) >= 0) {
-            x = func_0011C4F0(x, 10.0);
+            x = SoftFloat_DoubleDivide(x, 10.0);
             e++;
         }
     }

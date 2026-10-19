@@ -18,7 +18,7 @@ void FileMan_Release(void* member, int flags);
 void operator_delete(void* p);
 }
 struct P1C9F10 { char pad[0x20]; char payload[0x48]; char memberA[0x9C]; char memberB[4]; };
-extern "C" P1C9F10* func_001C9F10(P1C9F10* self, short deleteFlag)
+extern "C" P1C9F10* SoundSlot_Dtor(P1C9F10* self, short deleteFlag)
 {
     if (self) {
         if (self->payload) {

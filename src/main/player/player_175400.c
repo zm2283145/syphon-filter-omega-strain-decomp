@@ -69,10 +69,10 @@ typedef struct {
 typedef struct { char pad[0xC]; int id; char pad2[0x4C - 0x10]; int kind; } Plr_RB;
 extern char D_004F80A8[];
 extern void Message_GetScriptTypeKey();
-extern void func_001755D0();
-extern void func_0025DDE0();
-extern void func_0025E080();
-void * const D_004DC7D0[8] = { (void*)0x0, (void*)0x0, (void*)func_001755D0, (void*)func_0025DDE0, (void*)func_0025E080, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
+extern void cRestoreBodyMsg_dtor();
+extern void cRestoreBodyMsg_Clone();
+extern void cRestoreBodyMsg_Serialize();
+void * const D_004DC7D0[8] = { (void*)0x0, (void*)0x0, (void*)cRestoreBodyMsg_dtor, (void*)cRestoreBodyMsg_Clone, (void*)cRestoreBodyMsg_Serialize, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
 extern void Event_Construct(Msg_RB* msg, void* name);
 extern void Event_Send(Msg_RB* msg, void* target, int flags);
 extern void cMessage_dtor(Msg_RB* msg, int flags);

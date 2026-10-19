@@ -19,19 +19,19 @@ union double_union {
 #define Frac_mask 0xfffff
 #define Bias 1023
 #define P 53
-extern _Bigint *func_00126280(struct _reent *ptr, int k);
-extern int func_00126610(__ULong *y);
-extern int func_00126590(__ULong x);
-extern double func_00126E38(_Bigint *a, int *e);
-extern double func_0011C4F0(double a, double b);
+extern _Bigint *Newlib_Balloc(struct _reent *ptr, int k);
+extern int Newlib_Lo0bits(__ULong *y);
+extern int Newlib_Hi0bits(__ULong x);
+extern double Newlib_B2d(_Bigint *a, int *e);
+extern double SoftFloat_DoubleDivide(double a, double b);
 
-double func_00127158(_Bigint *a, _Bigint *b)
+double Newlib_Ratio(_Bigint *a, _Bigint *b)
 {
     union double_union da, db;
     int k, ka, kb;
 
-    da.d = func_00126E38(a, &ka);
-    db.d = func_00126E38(b, &kb);
+    da.d = Newlib_B2d(a, &ka);
+    db.d = Newlib_B2d(b, &kb);
     k = ka - kb + 32 * (a->_wds - b->_wds);
     if (k > 0)
         word0(da) += k * Exp_msk1;
@@ -39,5 +39,5 @@ double func_00127158(_Bigint *a, _Bigint *b)
         k = -k;
         word0(db) += k * Exp_msk1;
     }
-    return func_0011C4F0(da.d, db.d);
+    return SoftFloat_DoubleDivide(da.d, db.d);
 }

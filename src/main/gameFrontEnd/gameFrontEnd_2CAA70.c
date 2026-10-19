@@ -17,7 +17,7 @@
 extern "C" {
 void* Mem_Alloc(int pool, void* p, char* file, int line);
 }
-extern "C" void* func_002CAA70(void* p)
+extern "C" void* Sfo_Malloc(void* p)
 {
     AllocGuard g;
     char f[] = "sfo_malloc: should only be used in rtime lib";

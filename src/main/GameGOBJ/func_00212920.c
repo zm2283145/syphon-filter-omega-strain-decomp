@@ -12,7 +12,7 @@ extern void func_00212540();
 extern void func_002128A0();
 
 /* Initializes the network service, opens the named handle and registers its callbacks. */
-void func_00212920(void)
+void NetPathedGobj_NetRegister(void)
 {
     NetInit init;
     int handle;

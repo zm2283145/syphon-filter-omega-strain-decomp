@@ -9,7 +9,7 @@ extern char D_004DE510[];
 union V4_E100 { struct { float x, y, z, w; } f; struct { char c[16]; } s; };
 union V2_6250 { struct { float x, y; } f; struct { char c[8]; } s; };
 struct Msg2530 { void* vtable; int a, b, c, d, e, f, g; char h; char p1[3]; V2_6250 v; V2_6250 w; unsigned char k; char p2[3]; float x, y, z; };
-extern "C" Msg2530* func_002D7780(Msg2530* src)
+extern "C" Msg2530* cNetPathMsg_Clone(Msg2530* src)
 {
     Msg2530* p;
     {

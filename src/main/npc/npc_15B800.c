@@ -11,7 +11,7 @@ int NpcAi_GetTeam(Unk001827A0* self) {
     return self->unk54;
 }
 
-void func_0015B810(Unk001827A0* self, char value) {
+void cNPC_v24(Unk001827A0* self, char value) {
     self->unk5D = value;
 }
 

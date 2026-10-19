@@ -253,7 +253,7 @@ extern char D_004D9140[];
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void func_001361E0(void* p);
 int func_001361D0(int* n);
-void func_001361C0(void* p, int n);
+void Vector_Reserve_139920_Thunk(void* p, int n);
 void HumanColBufB_Init(void* p);
 void HumanColBufB_Reserve(void* p, int n);
 void func_003C3120(void* p, int* n, int k);
@@ -292,7 +292,7 @@ extern "C" void ColScratch_Init(int a0, int a1, int a2, int a3) {
         if (p) {
             int n = a0;
             func_001361E0(p);
-            func_001361C0(p, func_001361D0(&n));
+            Vector_Reserve_139920_Thunk(p, func_001361D0(&n));
             p->bC = 1;
         }
         D_00542CC8 = p;
@@ -302,7 +302,7 @@ extern "C" void ColScratch_Init(int a0, int a1, int a2, int a3) {
         if (p) {
             int n = a0;
             func_001361E0(p);
-            func_001361C0(p, func_001361D0(&n));
+            Vector_Reserve_139920_Thunk(p, func_001361D0(&n));
             p->bC = 1;
         }
         D_00542CD0 = p;

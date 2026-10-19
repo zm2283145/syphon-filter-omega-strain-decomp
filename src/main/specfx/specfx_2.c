@@ -82,6 +82,6 @@ SpecFx* SpecFx_Construct(SpecFx* self) {
 #include "obj_list_dtor.h"
 
 /* Destroy an object list: erase all nodes, optionally delete. */
-DEFINE_OBJ_LIST_DTOR(func_003EC220)
+DEFINE_OBJ_LIST_DTOR(ReceiverList_Dtor_3EC220)
 #pragma pop /* merge_units */
 /* merge_units: end func_003EC220 */

@@ -56,7 +56,7 @@ extern void cMessage_dtor(Msg_1C6200* m, int f);
 /* add a PDA quip (name, text); broadcast it unless silent */
 
 #pragma opt_propagation off
-void func_001C6200(char* name, char* text0, int silent)
+void cNetLabelMsg_Apply(char* name, char* text0, int silent)
 {
     
     if (name) {

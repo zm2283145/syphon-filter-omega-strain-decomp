@@ -52,7 +52,7 @@ extern void func_003C1790(void* c);
 static inline void LoadCol(void* c, Hog394EE0* h) { if (c) Col_Load(c, h); }
 static inline unsigned char Model_IsLoaded(Model394EE0* m) { return m->loaded != 0; }
 
-void func_00394EE0(Obj394EE0* o, int arg)
+void cVUM_GOBJ_Deactivate(Obj394EE0* o, int arg)
 {
     Res394EE0* r = o->res;
     if (r->flags & 4) {
@@ -138,7 +138,7 @@ extern void Object_Activate(Obj395050* o, int arg);
 static inline void LoadCol_00395050(void* c, Hog395050* h) { if (c) Col_Load(c, h); }
 static inline unsigned char Model_IsLoaded_00395050(Model395050* m) { return m->loaded != 0; }
 
-void func_00395050(Obj395050* o, int arg)
+void cVUM_GOBJ_Activate(Obj395050* o, int arg)
 {
     Res395050* r = o->res;
     if (r->flags & 4) {

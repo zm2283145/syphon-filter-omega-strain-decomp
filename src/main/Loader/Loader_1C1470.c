@@ -145,14 +145,14 @@ int Pop_FindTag(PopReader_1C1770* r, int tag);
 void* cGameSceneLight_ctor(void* p, PopReader_1C1770* r);
 void* cGameDirectionalLight_ctor(void* p, PopReader_1C1770* r);
 void cGameLight_dtor(void* p, int f);
-void func_00165E60(void* a, char* name, int x);
+void Loader_UpdateLoadingScreen(void* a, char* name, int x);
 void* App_GetInstance(void);
 }
 extern "C" void Loader_InitLights(void* a0, PopReader_1C1770* r)
 {
     if (r->cur) {
         int mis;
-        func_00165E60(App_GetInstance(), "Initializing Lights...", 0);
+        Loader_UpdateLoadingScreen(App_GetInstance(), "Initializing Lights...", 0);
         mis = (int)((unsigned long long)(unsigned int)r->cur & 3);
         if (mis)
             r->cur += 4 - mis;
@@ -219,9 +219,9 @@ typedef struct G4PopReader {
 extern char g_LightMgr[];
 extern void* App_GetInstance(void);
 #if 0 /* merge_units */
-extern void func_00165E60(void* h, void* s, int f);
+extern void Loader_UpdateLoadingScreen(void* h, void* s, int f);
 #endif /* merge_units */
-#define func_00165E60(a0, a1, a2) (func_00165E60((a0), (void *)(a1), (a2))) /* merge_units */
+#define Loader_UpdateLoadingScreen(a0, a1, a2) (Loader_UpdateLoadingScreen((a0), (void *)(a1), (a2))) /* merge_units */
 
 #if 0 /* merge_units */
 extern int Pop_FindTag(G4PopReader* r, int tag);
@@ -242,7 +242,7 @@ void Loader_AllocateLights(void* level, G4PopReader* r)
     if (r->cur == 0) {
         return;
     }
-    func_00165E60(App_GetInstance(), "Allocating Lights...", 0);
+    Loader_UpdateLoadingScreen(App_GetInstance(), "Allocating Lights...", 0);
     G4_Align(r);
     if (!(unsigned char)Pop_FindTag(r, 0x3A544E50)) {
         return;
@@ -260,7 +260,7 @@ void Loader_AllocateLights(void* level, G4PopReader* r)
     LightMgr_AllocPool(g_LightMgr, 4, 0x18);
     LightMgr_AllocPool(g_LightMgr, 1, 1);
 }
-#undef func_00165E60 /* merge_units */
+#undef Loader_UpdateLoadingScreen /* merge_units */
 #undef Pop_FindTag /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001C1A20(void) {}
@@ -289,7 +289,7 @@ extern "C" void Loader_InitSkybox(void* a0, void* a1, PopReader_1C1B60* r, void*
         char name[128];
         int h;
         int n;
-        func_00165E60(App_GetInstance(), "Initializing Skybox...", 0);
+        Loader_UpdateLoadingScreen(App_GetInstance(), "Initializing Skybox...", 0);
         sprintf(name, "%s\\%s\\TEX.HOG", D_0048B2F8, g_LevelDirName, g_LevelDirName);
         h = Archive_Open(arc, name, 0, 0);
         n = *(int*)r->cur;
@@ -327,7 +327,7 @@ void* Loader_ReadParticleRecord(void* p, PopReader_1C1CE0* r);
 }
 extern "C" void Loader_LoadParticles(void* a0, PopReader_1C1CE0* r)
 {
-    func_00165E60(App_GetInstance(), "Loading Particles...", 0);
+    Loader_UpdateLoadingScreen(App_GetInstance(), "Loading Particles...", 0);
     if ((unsigned char)Pop_FindTag(r, 0x3A524C50)) {
         int mis;
         mis = (int)((unsigned long long)(unsigned int)r->cur & 3);

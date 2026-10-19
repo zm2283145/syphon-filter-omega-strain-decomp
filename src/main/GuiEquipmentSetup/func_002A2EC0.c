@@ -11,7 +11,7 @@ extern char g_LightMgr[];
 extern int LightMgr_RebuildTable(void* p);
 extern int GuiWidget_Draw(GuiEquipmentSetup* self);
 
-int func_002A2EC0(GuiEquipmentSetup* self) {
+int GuiEquipmentSetup_Draw(GuiEquipmentSetup* self) {
     LightMgr_RebuildTable(g_LightMgr);
     return GuiWidget_Draw(self);
 }

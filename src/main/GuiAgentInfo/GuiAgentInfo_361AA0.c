@@ -69,7 +69,7 @@ void GuiAgentInfo_Init(O_361AA0* o)
 #include "loose03_types.h"
 
 extern char GuiAgentInfo_vtable[];       /* GuiAgentInfo vtable */
-extern int func_00298690(void*);
+extern int String_CtorEmpty(void*);
 extern int GuiScreen_ctor(GuiAgentInfo*);
 
 /* GuiAgentInfo constructor. */
@@ -79,8 +79,8 @@ GuiAgentInfo* GuiAgentInfo_ctor(GuiAgentInfo* self) {
     GuiScreen_ctor(self);
     member = &self->unk88;
     self->base.vtable = GuiAgentInfo_vtable;
-    func_00298690(member->unk30);
-    func_00298690(member->unk3C);
+    String_CtorEmpty(member->unk30);
+    String_CtorEmpty(member->unk3C);
     self->base.screenId = 8;
     self->unkFC = 0;
     return self;

@@ -142,14 +142,14 @@ int String_CtorCStr_13B480();
 typedef struct { char c; } Tag_08B0;
 int String_Replace(void*, int, int, int, int, Tag_08B0);                  
 int String_Dtor();                            
-int func_0013D680();                          
+int String_AssignString();                          
 
 void TextObj_SetText(char * arg0, int arg1) {
     int sp20[3];
 
     if (arg1 != 0) {
         String_CtorCStr_13B480(sp20);
-        func_0013D680(arg0 + 0x14, sp20);
+        String_AssignString(arg0 + 0x14, sp20);
         String_Dtor(sp20, 0);
         F_(arg0, 0x44, int) = 0;
         F_(arg0, 0x40, float) = (float) -F_(arg0, 0x8, int);
@@ -246,7 +246,7 @@ S3D0940* TextObj_Construct(S3D0940* s, int a, int b, int c, int d, int e, V4_940
 #include "obj_list_dtor.h"
 
 /* Destroy an object list: erase all nodes, optionally delete. */
-DEFINE_OBJ_LIST_DTOR(func_003D0A90)
+DEFINE_OBJ_LIST_DTOR(ReceiverList_Dtor_3D0A90)
 #pragma pop /* merge_units */
 /* merge_units: end func_003D0A90 */
 

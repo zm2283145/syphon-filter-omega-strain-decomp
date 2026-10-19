@@ -22,9 +22,9 @@ void func_004515F0(void* g, int a);
 char* Loc_LookupText(char* key);
 void GuiTextWidget_SetText(void* w, char* s, int a);
 void func_0033D800(S_002A8D60* self);
-int func_0033DF00(S_002A8D60* self, void* w, int msg, int sub, char* text);
+int GuiMenuScreen_HandleEvent(S_002A8D60* self, void* w, int msg, int sub, char* text);
 }
-extern "C" int func_002A8D60(S_002A8D60* self, void* w, int msg, int sub, char* text)
+extern "C" int GuiNetJoinMission_HandleEvent(S_002A8D60* self, void* w, int msg, int sub, char* text)
 {
     unsigned short m = msg;
     if (m == 0x1A && sub == 0xB) {
@@ -74,7 +74,7 @@ extern "C" int func_002A8D60(S_002A8D60* self, void* w, int msg, int sub, char* 
         else if (w == self->p168)
             func_0033D8E0(self, 0);
     }
-    return func_0033DF00(self, w, msg, sub, text);
+    return GuiMenuScreen_HandleEvent(self, w, msg, sub, text);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_002A8D60 */
@@ -84,7 +84,7 @@ extern "C" int func_002A8D60(S_002A8D60* self, void* w, int msg, int sub, char* 
 #include "active_flag_release.h"
 
 /* Stop and release when active. */
-DEFINE_ACTIVE_FLAG_RELEASE(func_002A8FD0, SFOLobby_LeaveRoom)
+DEFINE_ACTIVE_FLAG_RELEASE(GuiNetJoinMission_Deactivate, SFOLobby_LeaveRoom)
 #pragma pop /* merge_units */
 /* merge_units: end func_002A8FD0 */
 
@@ -141,7 +141,7 @@ char* Loc_LookupText(char*);
 }
 
 
-extern "C" void func_002A9030(W2A9030* self)
+extern "C" void GuiNetJoinMission_Activate(W2A9030* self)
 {
     if (!self->done) {
         Lobby2A* l = DME_GetLobby();

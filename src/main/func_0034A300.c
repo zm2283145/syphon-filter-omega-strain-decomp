@@ -4,4 +4,4 @@
 #include "vtable_base_dtor.h"
 
 /* Derived destructor: restore vtable, run base destructor, optionally delete. */
-DEFINE_VTABLE_BASE_DTOR(func_0034A300, D_004DF0B0, GuiWidget_Destroy)
+DEFINE_VTABLE_BASE_DTOR(GuiPersonnelScreen_dtor, D_004DF0B0, GuiWidget_Destroy)

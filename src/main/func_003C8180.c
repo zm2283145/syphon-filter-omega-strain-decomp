@@ -17,14 +17,14 @@ extern Err8180* D_00489738;
 extern char D_004BD0D0[];
 extern char D_0049AE20[];
 extern char D_0049AE40[];
-void func_00123BE8(int stream, const char* msg);
+void Libc_Fprintf(int stream, const char* msg);
 void Libc_Abort(void);
 void* Mem_Alloc(int pool, int size, char* file, int line);
 void Mem_Free(int pool, void* p, char* file, int line);
 void Vec4_Copy(Q8180* d, Q8180* s);
 void func_00139BB0(void* d, void* s);
 void func_00139BA0(void* d, void* s);
-void* func_00139BC0(int size, void* p);
+void* Mem_PlacementNew(int size, void* p);
 void func_00139B00(void* d, void* s);
 }
 struct CandVec8180 { unsigned int cap; unsigned int count; Cand8180* data; };
@@ -40,7 +40,7 @@ static inline void Assign8180(Cand8180* d, Cand8180* s) {
     d->flag52 = s->flag52;
 }
 static inline void Construct8180(Cand8180* d, Cand8180* s) {
-    void* p = func_00139BC0(0x70, d);
+    void* p = Mem_PlacementNew(0x70, d);
     if (p) func_00139B00(p, s);
 }
 static inline const unsigned int& Min8180(const unsigned int& a, const unsigned int& b) {
@@ -76,7 +76,7 @@ extern "C" void ColQuery_CopyCandidates(CandVec8180* v, Cand8180* first, Cand818
         }
     } else {
         if (n > 0xDB6DB) {
-            func_00123BE8(D_00489738->stream, D_004BD0D0);
+            Libc_Fprintf(D_00489738->stream, D_004BD0D0);
             Libc_Abort();
         }
         v->count = 0;

@@ -6,7 +6,7 @@ typedef struct { char pad[0x100]; int id; String name; } Obj2AD;
 extern void* D_004FFC04;
 const unsigned int D_004ABB08[2] = { 0x0, 0x0 };
 extern void String_CtorCStr_13B480(String* s, const char* text);
-extern void func_0013D680(String* dst, String* src);
+extern void String_AssignString(String* dst, String* src);
 extern void String_Dtor(String* s, int flag);
 extern int String_CStr(String* s);
 extern int GuiScreen_GetLobbyString(Obj2AD* o, int type, int a, int b, int c, int d);
@@ -20,7 +20,7 @@ void func_002ADA10(Obj2AD* o, NameRec* rec)
     int h;
     o->id = rec->id;
     String_CtorCStr_13B480(&tmp, rec->name);
-    func_0013D680(&o->name, &tmp);
+    String_AssignString(&o->name, &tmp);
     String_Dtor(&tmp, 0);
     h = String_CStr(&o->name);
     mgr = D_004FFC04;

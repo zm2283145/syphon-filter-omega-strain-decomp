@@ -29,10 +29,10 @@ void GuiArrayWidget_ColumnWidth(void* a, int col, int w);
 int sprintf(char*, const char*, ...);
 char* Loc_LookupText(char* key);
 void GuiTextArrayWidget_SetCellText(W_48D90* a, int col, int row, char* text);
-void func_00348D90(Arr_48D90* self);
+void GuiNetMessageArray_Init(Arr_48D90* self);
 }
 static inline W_48D90* cast_48D90(W_48D90* w, char* type) { return (w && w->IsA(type)) ? w : 0; }
-void func_00348D90(Arr_48D90* self)
+void GuiNetMessageArray_Init(Arr_48D90* self)
 {
     int i;
     int j;

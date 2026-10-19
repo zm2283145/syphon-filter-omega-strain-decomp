@@ -197,25 +197,25 @@ template <class Node> static inline void find_id(Node** result, RbTree* tree,
 }
 
 /* Find an exact object-map ID, returning the map's sentinel when absent. */
-extern "C" void func_0042EDF0(TransferObjectIterator* result, RbTree* tree, const GobjId* id)
+extern "C" void ObjMap_Find_42EDF0(TransferObjectIterator* result, RbTree* tree, const GobjId* id)
 {
     find_id(&result->node, tree, id);
 }
 
 /* Find an exact pending-message ID, returning the map's sentinel when absent. */
-extern "C" void func_0042EE70(PendingTransferIterator* result, RbTree* tree, const GobjId* id)
+extern "C" void ObjMap_Find_42EE70(PendingTransferIterator* result, RbTree* tree, const GobjId* id)
 {
     find_id(&result->node, tree, id);
 }
 
 /* Find an exact registered-reference ID, returning the map's sentinel when absent. */
-extern "C" void func_0042EEF0(TransferReferenceIterator* result, RbTree* tree, const GobjId* id)
+extern "C" void ObjMap_Find_42EEF0(TransferReferenceIterator* result, RbTree* tree, const GobjId* id)
 {
     find_id(&result->node, tree, id);
 }
 
 /* Find an exact timer ID, returning the map's sentinel when absent. */
-extern "C" void func_0042EF70(TransferTimerIterator* result, RbTree* tree, const GobjId* id)
+extern "C" void ObjMap_Find_42EF70(TransferTimerIterator* result, RbTree* tree, const GobjId* id)
 {
     find_id(&result->node, tree, id);
 }

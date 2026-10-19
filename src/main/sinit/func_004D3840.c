@@ -191,7 +191,7 @@ extern char Script_cAgentData__RegisterOmegaReq_2[];
 extern int D_00532DB8;
 extern char Game_AddObjective[];
 extern int D_00532DC0;
-extern int func_002824D0();
+extern int NetMsgTable_Add();
 extern int func_0033C300();
 extern int __register_global_object();
 extern int __construct_array();
@@ -208,7 +208,7 @@ extern int Script_RegisterNative_2();
 void StaticInit_RegisterAgentData(void)
 {
     D_005329C0 = "cNetAddObjectiveMsg";
-    D_005329D0 = func_002824D0(func_00333D60, D_005329C8, "cNetAddObjectiveMsg");
+    D_005329D0 = NetMsgTable_Add(func_00333D60, D_005329C8, "cNetAddObjectiveMsg");
     func_0033C300(D_005329F0);
     D_005329FC = 1;
     __register_global_object(D_005329F0, func_0033C2A0, D_005329D8);

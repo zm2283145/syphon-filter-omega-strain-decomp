@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_0010D930(void) {
+int Newlib_SysGetpid(void) {
     return 1;
 }

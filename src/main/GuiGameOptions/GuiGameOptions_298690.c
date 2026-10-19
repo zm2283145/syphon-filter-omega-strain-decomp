@@ -14,7 +14,7 @@
 
 #include "types.h"
 
-Rel* func_00298690(Rel* r) {
+Rel* String_CtorEmpty(Rel* r) {
     r->a = 0;
     r->b = 0;
     r->c = 0;

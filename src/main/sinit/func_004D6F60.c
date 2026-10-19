@@ -8,7 +8,7 @@ extern char D_00493BE0;
 extern int D_00571730;
 extern int D_00571738;
 
-void func_004D6F60(void) {
+void StaticInit_RegisterMaterialPropertyEnums(void) {
     D_00571730 = ScriptEnum_Register("cMaterialProperties::eMatPropName", &D_00493BA0, 5);
     D_00571738 = ScriptEnum_Register("cMaterialProperties::eDecalBlendMode", &D_00493BE0, 3);
 }

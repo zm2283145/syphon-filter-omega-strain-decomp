@@ -363,17 +363,17 @@ void FileHal_CdCallback(int reason) {
 /* merge_units: begin func_003698B0 */
 #pragma push /* merge_units */
 long long SoftFloat_FloatToDouble(float f);
-int func_0011C200(int a, long long b);
+int SoftFloat_DoubleSub(int a, long long b);
 long long SoftFloat_DoubleMultiply(long long a, long long b);
-int func_0011C7A0(int v);
-long long func_0011C858(int v);
+int SoftFloat_IntToDouble(int v);
+long long SoftFloat_DoubleToInt(int v);
 extern int D_00572538;
 
 /* Soft-float double helper chain on D_00572538 (constant 0x3FB0000000000000 = 0.0625). */
 long long Time_GetMilliseconds(void) {
     int v = D_00572538;
-    int n = func_0011C7A0(v);
-    return (long long)(func_0011C858(func_0011C200(n, SoftFloat_DoubleMultiply((long long)0x3FB00000 << 0x20, SoftFloat_FloatToDouble((float)v)))) << 0x20) >> 0x20;
+    int n = SoftFloat_IntToDouble(v);
+    return (long long)(SoftFloat_DoubleToInt(SoftFloat_DoubleSub(n, SoftFloat_DoubleMultiply((long long)0x3FB00000 << 0x20, SoftFloat_FloatToDouble((float)v)))) << 0x20) >> 0x20;
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_003698B0 */

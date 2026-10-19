@@ -9,8 +9,8 @@ typedef struct { void *fn; void *arg; int gp; int pad; } HEnt;
 extern HEnt *D_00487868;
 extern int D_0048786C;
 extern HEnt D_004E9AC8[];
-extern int func_001161A0(void);
-extern void func_001161F8(void);
+extern int DIntr(void);
+extern void EIntr(void);
 extern void *memset(void *, int, unsigned int);
 int func_00118310(int which, int arg)
 {
@@ -47,11 +47,11 @@ void *sceCdCallback(void *fn)
     int s;
     void *old;
     if (sceCdSync(1)) return 0;
-    s = func_001161A0();
+    s = DIntr();
     old = D_004E9D00;
     D_004E9D00 = fn;
     D_004E9D04 = gp;
-    if (s) func_001161F8();
+    if (s) EIntr();
     return old;
 }
 /* merge_units: end func_001183B8 */

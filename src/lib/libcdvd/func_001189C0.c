@@ -16,7 +16,7 @@ extern char D_00498C98[];
 extern char D_00498CA8[];
 extern char D_00498CB8[];
 extern void func_00118718(void);
-extern int func_0010D1B0(int);
+extern int PollSema(int);
 extern int SignalSema(int);
 extern int ReferThreadStatus(int, void *);
 extern int sceCdSync(int);
@@ -34,7 +34,7 @@ int sceCdSearchFile(sceCdlFILE *fp, const char *name, int layer)
     int i;
     int ret;
     func_00118718();
-    if (D_004878A8 != func_0010D1B0(D_004878A8)) return 0;
+    if (D_004878A8 != PollSema(D_004878A8)) return 0;
     D_0048789C = 1;
     ReferThreadStatus(D_004E9D18, &D_004E9D20);
     if (sceCdSync(1)) {

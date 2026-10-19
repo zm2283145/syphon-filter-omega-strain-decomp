@@ -10,7 +10,7 @@ extern void ChannelVector_Resize(void*, int, Tmp*);
 extern void func_001AEFE0(Tmp*, int);
 extern void func_001BE020(void*, int, Pair*);
 /* Binds a definition: copies its name and fills both lists with default entries. */
-void func_003634D0(S* s, Def* def)
+void Model_Attach_3634D0(S* s, Def* def)
 {
     Tmp tmp;
     Pair p;

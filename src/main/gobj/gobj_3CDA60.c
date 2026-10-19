@@ -78,7 +78,7 @@ struct Mover_A60 {
 typedef struct Node_3CDA60 { unsigned char flag; char pad[15]; M44 m; M44 xf; __int128 v90; __int128 vA0; } Node_3CDA60;
 struct Obj_3CDA60 { char pad[0x50]; Xf_A60* xf; Node_3CDA60* node; Mover_A60* mover; };
 
-extern "C" void func_003CDA60(Obj_3CDA60* o, M44* mtx)
+extern "C" void cNode_v29(Obj_3CDA60* o, M44* mtx)
 {
     Xf_A60* xf = o->xf;
     if (xf) {
@@ -135,7 +135,7 @@ static inline void merge_flush_func_003CDA60(void) {}
 #pragma cplusplus on
 class C003CDBE0 { public: VPAD4(p0) VPAD2(p1) VPAD1(p2)  virtual void f(); };
 struct O003CDBE0 { char pad[0x50]; C003CDBE0* m; };
-extern "C" void func_003CDBE0(O003CDBE0* self)
+extern "C" void cNode_v28(O003CDBE0* self)
 {
     C003CDBE0* m = self->m;
     if (m)
@@ -175,7 +175,7 @@ static inline void MulRot_3CDC20(MQ* d, MQ* s, MQ* r)
     __asm__ volatile("lqc2 vf8, 0x0(%2); lqc2 vf9, 0x10(%2); lqc2 vf10, 0x20(%2); lqc2 vf4, 0x0(%1); lqc2 vf5, 0x10(%1); lqc2 vf6, 0x20(%1); lqc2 vf7, 0x30(%1); vmulax.xyzw ACC, vf4, vf8x; vmadday.xyzw ACC, vf5, vf8y; vmaddz.xyzw vf12, vf6, vf8z; vmulax.xyzw ACC, vf4, vf9x; vmadday.xyzw ACC, vf5, vf9y; vmaddz.xyzw vf13, vf6, vf9z; vmulax.xyzw ACC, vf4, vf10x; vmadday.xyzw ACC, vf5, vf10y; vmaddz.xyzw vf14, vf6, vf10z; vmove.xyzw vf15, vf7; sqc2 vf12, 0x0(%0); sqc2 vf13, 0x10(%0); sqc2 vf14, 0x20(%0); sqc2 vf15, 0x30(%0)" : : "r"(d), "r"(s), "r"(r) : "memory");
 }
 static inline MQ World_3CDC20(NodeQ* n) { if (n->dirty) ((NodeQV*)n)->v20(); return n->world; }
-extern "C" void func_003CDC20(OwnQ* o, MQ* rot) { NodeQ* n = o->node; if (n) { MQ b; MQ a = World_3CDC20(n); b = a.RotR(rot); void* xx = &b; /* dead on purpose: retail keeps this addiu */ ((XfP*)o->node)->SetMtxP(&b); } }
+extern "C" void cNode_v27(OwnQ* o, MQ* rot) { NodeQ* n = o->node; if (n) { MQ b; MQ a = World_3CDC20(n); b = a.RotR(rot); void* xx = &b; /* dead on purpose: retail keeps this addiu */ ((XfP*)o->node)->SetMtxP(&b); } }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003CDC20(void) {}
 #pragma pop /* merge_units */
@@ -186,7 +186,7 @@ static inline void merge_flush_func_003CDC20(void) {}
 #pragma cplusplus on
 class C3CDD40 { public: VPAD4(a) virtual void f18(); };
 struct O3CDD40 { char pad[0x50]; C3CDD40* m; };
-extern "C" void func_003CDD40(O3CDD40* self)
+extern "C" void cNode_v26(O3CDD40* self)
 {
     C3CDD40* m = self->m;
     if (m)
@@ -202,7 +202,7 @@ static inline void merge_flush_func_003CDD40(void) {}
 #pragma cplusplus on
 class C003CDD80 { public: VPAD2(p0) VPAD1(p1)  virtual void f(); };
 struct O003CDD80 { char pad[0x50]; C003CDD80* m; };
-extern "C" void func_003CDD80(O003CDD80* self)
+extern "C" void cNode_v25(O003CDD80* self)
 {
     C003CDD80* m = self->m;
     if (m)
@@ -218,7 +218,7 @@ static inline void merge_flush_func_003CDD80(void) {}
 #pragma cplusplus on
 class C003CDDC0 { public: VPAD2(p0)  virtual void f(); };
 struct O003CDDC0 { char pad[0x50]; C003CDDC0* m; };
-extern "C" void func_003CDDC0(O003CDDC0* self)
+extern "C" void cNode_v24(O003CDDC0* self)
 {
     C003CDDC0* m = self->m;
     if (m)

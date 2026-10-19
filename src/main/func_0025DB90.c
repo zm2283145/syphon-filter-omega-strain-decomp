@@ -7,9 +7,9 @@
 #include "types.h"
 
 extern int PtrVec_Reserve(int, int);
-extern int func_0025DBD0(int, int);
+extern int Vector_Reserve_25DBD0(int, int);
 
-int func_0025DB90(int a0, int a1) {
+int PtrVec_Reserve_Thunk_25DB90(int a0, int a1) {
     return PtrVec_Reserve(a0, a1);
 }
 
@@ -20,6 +20,6 @@ Rel* func_0025DBA0(Rel* r) {
     return r;
 }
 
-int func_0025DBC0(int a0, int a1) {
-    return func_0025DBD0(a0, a1);
+int Vector_Reserve_25DBD0_Thunk(int a0, int a1) {
+    return Vector_Reserve_25DBD0(a0, a1);
 }

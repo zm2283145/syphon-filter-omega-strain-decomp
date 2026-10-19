@@ -15,13 +15,13 @@ extern "C" {
 extern unsigned char D_005723C8;
 extern unsigned char D_005721D0;
 extern char D_004DE110[];
-void func_002C60F0(Msg5B80* m, Src5B80* src);
+void cNetCopyMsg_Apply(Msg5B80* m, Src5B80* src);
 Obj5B80* Object_LookupById(int* id);
 void func_002D5EE0(Ctl5B80* c, void* payload);
 void func_0042CE10(int* id);
 void cMessage_dtor(void* self, int flags);
 }
-extern "C" int func_002C5B80(int a, int b, int c, Src5B80* src)
+extern "C" int cNetCopyMsg_NetReceive(int a, int b, int c, Src5B80* src)
 {
     if (!D_005723C8)
         D_005723C8 = 1;
@@ -30,7 +30,7 @@ extern "C" int func_002C5B80(int a, int b, int c, Src5B80* src)
         int id[2];
         Obj5B80* o;
         id[0] = src->id;
-        func_002C60F0(&m, src);
+        cNetCopyMsg_Apply(&m, src);
         o = Object_LookupById(id);
         if (o && o->ctl && o->ctl->isActive() && o->ctl->kind() == 2)
             func_002D5EE0(o->ctl, m.payload);

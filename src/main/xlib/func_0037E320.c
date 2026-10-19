@@ -8,7 +8,7 @@ void Mem_Free(int heap, void* p, char* file, int line);
 void func_00375CD0(void* p);
 void Video_FreeDeferredBuffers(void* p, int a);
 void Tex_Release(void* p, int id, int a);
-void func_00383020(void* p, int flag);
+void TexMan_Destroy(void* p, int flag);
 }
 struct VO_0037E320 { int pad[4]; virtual void Destroy(int flag); };
 struct E1_0037E320 { int id; int pad[3]; unsigned char flag; char pad11[3]; };
@@ -19,7 +19,7 @@ struct S_0037E320 {
     E1_0037E320 e1[6];
 };
 static inline void Free_0037E320(void* p, int line) { AllocGuard g; Mem_Free(0, p, D_004BC200, line); }
-static inline void DelA_0037E320(void* p, int line) { AllocGuard g; func_00383020(p, -1); Mem_Free(0, p, D_004BC200, line); }
+static inline void DelA_0037E320(void* p, int line) { AllocGuard g; TexMan_Destroy(p, -1); Mem_Free(0, p, D_004BC200, line); }
 static inline void DelV_0037E320(VO_0037E320* p, int line) { AllocGuard g; p->Destroy(-1); Mem_Free(0, p, D_004BC200, line); }
 extern "C" void Renderer_Teardown(S_0037E320* self)
 {

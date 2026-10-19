@@ -10,11 +10,11 @@ extern char *D_00489748[];
 struct mallinfo { int arena; int ordblks; };
 extern struct mallinfo D_00489B78;
 const unsigned int D_00489B60[2] = { 0xFFFFFFFF, 0x0 };
-extern void func_001261B0(void *);
-extern void func_00126230(void *);
-extern char *func_00128658(void *, int);
+extern void Newlib_MallocLock(void *);
+extern void Newlib_MallocUnlock(void *);
+extern char *Newlib_SbrkR(void *, int);
 #define top ((mchunkptr)(D_00489748[2]))
-int func_00124058(void *ptr, unsigned int pad)
+int Newlib_MallocTrimR(void *ptr, unsigned int pad)
 {
     long top_size;
     long extra;
@@ -22,32 +22,32 @@ int func_00124058(void *ptr, unsigned int pad)
     char *new_brk;
     unsigned long pagesz = 4096;
 
-    func_001261B0(ptr);
+    Newlib_MallocLock(ptr);
     top_size = top->size & ~3;
     extra = ((top_size - pad - 16 + (pagesz - 1)) / pagesz - 1) * pagesz;
     if (extra < (long)pagesz) {
-        func_00126230(ptr);
+        Newlib_MallocUnlock(ptr);
         return 0;
     } else {
-        current_brk = (char *)(func_00128658(ptr, 0));
+        current_brk = (char *)(Newlib_SbrkR(ptr, 0));
         if (current_brk != (char *)(top) + top_size) {
-            func_00126230(ptr);
+            Newlib_MallocUnlock(ptr);
             return 0;
         } else {
-            new_brk = (char *)(func_00128658(ptr, -extra));
+            new_brk = (char *)(Newlib_SbrkR(ptr, -extra));
             if (new_brk == (char *)(-1)) {
-                current_brk = (char *)(func_00128658(ptr, 0));
+                current_brk = (char *)(Newlib_SbrkR(ptr, 0));
                 top_size = current_brk - (char *)top;
                 if (top_size >= (long)16) {
                     D_00489B78.arena = current_brk - (*(char **)D_00489B60);
                     top->size = top_size | 1;
                 }
-                func_00126230(ptr);
+                Newlib_MallocUnlock(ptr);
                 return 0;
             } else {
                 top->size = (top_size - extra) | 1;
                 D_00489B78.arena -= extra;
-                func_00126230(ptr);
+                Newlib_MallocUnlock(ptr);
                 return 1;
             }
         }
@@ -69,11 +69,11 @@ struct stat { int st_dev; unsigned int st_mode; int a, b; long st_size; char res
 extern struct _reent *D_00489738;
 extern void __sinit(struct _reent *);
 extern int fflush(FILE *);
-extern void func_00124FE0(FILE *);
+extern void Newlib_Smakebuf(FILE *);
 extern int func_00124678(struct _reent *, int, struct stat *);
 extern void _free_r(struct _reent *, void *);
 extern int __srefill(FILE *);
-extern fpos_t func_00128DF8(void *, fpos_t, int);
+extern fpos_t Newlib_Sseek(void *, fpos_t, int);
 #define POS_ERR (-(fpos_t)1)
 #define CHECK_INIT(fp) do { if ((fp)->_data == 0) (fp)->_data = D_00489738; if (!(fp)->_data->__sdidinit) __sinit((fp)->_data); } while (0)
 #define HASUB(fp) ((fp)->_ub._base != 0)
@@ -125,11 +125,11 @@ int func_001241C8(register FILE *fp, long offset, int whence)
     }
 
     if (fp->_bf._base == 0)
-        func_00124FE0(fp);
+        Newlib_Smakebuf(fp);
     if (fp->_flags & (0x8 | 0x10 | 0x2 | 0x800))
         goto dumb;
     if ((fp->_flags & 0x400) == 0) {
-        if (seekfn != func_00128DF8
+        if (seekfn != Newlib_Sseek
             || fp->_file < 0
             || func_00124678(ptr, fp->_file, &st)
             || (st.st_mode & 0170000) != 0100000) {

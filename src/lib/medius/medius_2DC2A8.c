@@ -14,7 +14,7 @@ typedef struct Codec {
 } Codec;
 
 extern void *memcpy(void *, const void *, unsigned int);
-extern void func_00125FE8(void *, const void *, int);
+extern void Libc_Memmove(void *, const void *, int);
 extern void func_002D8678(void);
 extern int func_002D86A0(void);
 extern void func_002D86C8(int, int, int);
@@ -42,7 +42,7 @@ int func_002DC2A8(Codec *s, char *in, int inlen, char *out, int outcap)
                     out += n;
                     outcap -= n;
                     total += n;
-                    if (s->inLen > 0) func_00125FE8(s->in, s->in + n, s->inLen);
+                    if (s->inLen > 0) Libc_Memmove(s->in, s->in + n, s->inLen);
                 } else {
                     if (inlen <= 0) return total;
                     n = outcap < inlen ? outcap : inlen;
@@ -73,7 +73,7 @@ int func_002DC2A8(Codec *s, char *in, int inlen, char *out, int outcap)
             out += n;
             outcap -= n;
             total += n;
-            if (s->outLen > 0) func_00125FE8(s->out, s->out + n, s->outLen);
+            if (s->outLen > 0) Libc_Memmove(s->out, s->out + n, s->outLen);
         } else {
             int done = 0;
             while (s->inLen - done >= s->inBlk && s->outLen + s->outBlk <= 0x1E0) {
@@ -85,7 +85,7 @@ int func_002DC2A8(Codec *s, char *in, int inlen, char *out, int outcap)
             }
             if (done <= 0) break;
             s->inLen -= done;
-            if (s->inLen > 0) func_00125FE8(s->in, s->in + done, s->inLen);
+            if (s->inLen > 0) Libc_Memmove(s->in, s->in + done, s->inLen);
         }
     }
     return total;

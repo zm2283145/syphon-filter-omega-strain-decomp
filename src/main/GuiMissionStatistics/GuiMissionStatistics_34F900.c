@@ -113,7 +113,7 @@ bool GuiMissionStatistics_HandleInput(void* self, E34FA80* e)
 
 extern int GuiWidget_BaseSleep(GuiMissionStatistics*);   /* GuiWidget implementation */
 
-int func_0034FB40(GuiMissionStatistics* self) {
+int GuiMissionStatistics_Sleep(GuiMissionStatistics* self) {
     return GuiWidget_BaseSleep(self);
 }
 #pragma pop /* merge_units */

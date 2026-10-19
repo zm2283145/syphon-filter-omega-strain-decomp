@@ -38,7 +38,7 @@ extern void MotionRegistry_Register(void* obj, RegKey* k, SelNode* s);
 extern void MotionNodeWrapper_Dtor(SelNode* s, int flags);
 /* Registers the turn bindings and the turn slider of a motion graph. */
 #pragma optimization_level 1
-void func_00205C30(void* obj)
+void MotionGraph_BuildRunRollRight(void* obj)
 {
     Handle h1; Handle h2; Handle h3; Handle h4;
     SliderParts s;

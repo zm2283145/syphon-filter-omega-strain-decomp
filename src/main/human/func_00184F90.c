@@ -3,7 +3,7 @@ typedef struct { void* vt; char pad[0x20]; unsigned char on; char pad25[3]; floa
 void Event_Construct(Msg_4F90*, void*);
 void Stream_ReadBool(unsigned char*);
 void NetRead_Float(float*);
-int func_00185080(void);
+int Actor_GetHumanClassKeyPtr(void);
 int func_00185060(void*, int);
 void Global_ShockToDeath(void*, unsigned char, float, float, int);
 void cMessage_dtor(Msg_4F90*, int);
@@ -19,7 +19,7 @@ void Actor_OnShockMessage(void* target)
     Stream_ReadBool(&m.on);
     NetRead_Float(&m.a);
     NetRead_Float(&m.b);
-    if (target && func_00185060(target, func_00185080())) Global_ShockToDeath(target, m.on, m.a, m.b, 0);
+    if (target && func_00185060(target, Actor_GetHumanClassKeyPtr())) Global_ShockToDeath(target, m.on, m.a, m.b, 0);
     m.vt = D_004DCF10;
     cMessage_dtor(&m, 0);
 }

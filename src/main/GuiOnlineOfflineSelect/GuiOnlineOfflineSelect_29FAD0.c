@@ -32,7 +32,7 @@ DEFINE_SHORT_STRING_ASSIGN_INL(func_0029FB30)
 #include "string_reserve.h"
 
 extern "C" { char D_004AAD40[] = "basic_string::reserve length_error"; }
-DEFINE_STRING_RESERVE(func_0029FBF0, D_004AAD40, D_0049ADE0, 0x5C, D_0049AE90, 0x64)
+DEFINE_STRING_RESERVE(String_Reserve_29FBF0, D_004AAD40, D_0049ADE0, 0x5C, D_0049AE90, 0x64)
 #pragma pop /* merge_units */
 /* merge_units: end func_0029FBF0 */
 

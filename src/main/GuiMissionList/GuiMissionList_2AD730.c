@@ -54,6 +54,6 @@ DEFINE_CLEAR_BUFFER_DTOR(func_002AD780, D_004ABA60)
 
 /* Factory: allocate and construct. */
 extern "C" { char D_004ABA50[] = "guiWidget.hh"; }
-DEFINE_GUARDED_NEW_CTOR(func_002AD870, 0x124, D_004ABA50, GuiMissionList_ctor)
+DEFINE_GUARDED_NEW_CTOR(GuiMissionList_Create, 0x124, D_004ABA50, GuiMissionList_ctor)
 #pragma pop /* merge_units */
 /* merge_units: end func_002AD870 */

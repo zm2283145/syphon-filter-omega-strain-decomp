@@ -26,7 +26,7 @@ TargetSlot* func_0022D630(TargetSlot* self);
 
 #pragma opt_strength_reduction off
 
-extern "C" M22D4F0* func_0022D4F0(M22D4F0* m) {
+extern "C" M22D4F0* TargetVisMgr_ctor(M22D4F0* m) {
     int i;
     int n;
     int off;

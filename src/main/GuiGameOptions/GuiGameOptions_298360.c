@@ -113,15 +113,15 @@ typedef struct {
 extern char D_004DD4F0[];
 extern void GuiScreen_ctor(Scr_2984D0* s);
 extern void __construct_array(void* arr, void (*ctor)(void*), void (*dtor)(void*), int size, int count);
-extern void func_00298690(void*);
-extern void func_00138350(void*);
+extern void String_CtorEmpty(void*);
+extern void String_Dtor_138350(void*);
 
 Scr_2984D0* GuiCommandCenter_ctor(Scr_2984D0* s)
 {
     int i;
     GuiScreen_ctor(s);
     s->vtbl = D_004DD4F0;
-    __construct_array(s->f204, func_00298690, func_00138350, 0xC, 0x11);
+    __construct_array(s->f204, String_CtorEmpty, String_Dtor_138350, 0xC, 0x11);
     s->f84 = 1;
     s->f1D4 = 0;
     for (i = 0; i < 3; i++) s->f98[i] = 0;

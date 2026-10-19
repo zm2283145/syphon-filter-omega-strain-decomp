@@ -15,8 +15,8 @@ extern const char D_00499C70[];
 #define LONG_MIN (-LONG_MAX - 1L)
 #define ERANGE 34
 #define ULONG_MAX 0xffffffffffffffffUL
-extern unsigned long func_0011B278(unsigned long a, unsigned long b) __attribute__((const));
-extern unsigned long func_0011ACF8(unsigned long a, unsigned long b) __attribute__((const));
+extern unsigned long Libgcc_Umoddi3(unsigned long a, unsigned long b) __attribute__((const));
+extern unsigned long Libgcc_Udivdi3(unsigned long a, unsigned long b) __attribute__((const));
 extern unsigned long UInt64_Multiply(unsigned long a, unsigned long b) __attribute__((const));
 
 unsigned long _strtoul_r(struct _reent *rptr, const char *nptr, char **endptr, int base)
@@ -44,8 +44,8 @@ unsigned long _strtoul_r(struct _reent *rptr, const char *nptr, char **endptr, i
     if (base == 0)
         base = c == '0' ? 8 : 10;
 
-    cutoff = func_0011ACF8((unsigned long)ULONG_MAX, (unsigned long)base);
-    cutlim = func_0011B278((unsigned long)ULONG_MAX, (unsigned long)base);
+    cutoff = Libgcc_Udivdi3((unsigned long)ULONG_MAX, (unsigned long)base);
+    cutlim = Libgcc_Umoddi3((unsigned long)ULONG_MAX, (unsigned long)base);
     for (acc = 0, any = 0;; c = *s++) {
         if (isdigit(c))
             c -= '0';

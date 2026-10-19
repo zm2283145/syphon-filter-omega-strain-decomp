@@ -5,14 +5,14 @@
  */
 
 /* merge_units: begin func_00117938 */
-extern int func_001161A0(void);
-extern int func_001161F8(void);
+extern int DIntr(void);
+extern int EIntr(void);
 extern int func_001178F0(int);
 int func_00117938(int a)
 {
-    int s = func_001161A0();
+    int s = DIntr();
     int r = func_001178F0(a);
-    if (s) func_001161F8();
+    if (s) EIntr();
     return r;
 }
 /* merge_units: end func_00117938 */
@@ -25,9 +25,9 @@ extern void func_00117008(Alarm *);
 extern long long func_001172E0(void);
 extern void func_00116DF0(long long);
 #if 0 /* merge_units */
-extern void func_001161F8(void);
+extern void EIntr(void);
 #endif /* merge_units */
-#define func_001161F8() ((void)func_001161F8()) /* merge_units */
+#define EIntr() ((void)EIntr()) /* merge_units */
 
 long long func_00117988(int id)
 {
@@ -38,5 +38,5 @@ long long func_00117988(int id)
     if (a->flags & 1) r += func_001172E0() - a->x10;
     return r;
 }
-#undef func_001161F8 /* merge_units */
+#undef EIntr /* merge_units */
 /* merge_units: end func_00117988 */

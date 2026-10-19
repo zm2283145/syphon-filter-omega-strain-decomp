@@ -7,6 +7,6 @@
 #include "types.h"
 
 
-int func_0045BCC0(void) {
+int GuiGameScreen_GetClassName(void) {
     return (int)"GuiGameScreen";
 }

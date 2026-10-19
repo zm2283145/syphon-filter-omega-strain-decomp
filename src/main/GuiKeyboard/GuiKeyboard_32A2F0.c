@@ -25,7 +25,7 @@ DEFINE_RELEASE_BUFFER_CALL_DTOR(func_0032A2F0, func_0032A280,func_0032A370,D_004
 extern "C" {
 void Mem_Free(int pool, void* allocation, char* file, int line);
 void* func_0034F7A0(void* self, short flags);
-void* func_00138350(void* self, short flags);
+void* String_Dtor_138350(void* self, short flags);
 void* func_00328470(void* self, short flags);
 void func_0032A370(void* allocation, int pool, int destroy, char* file, int line);
 }
@@ -35,7 +35,7 @@ void func_0032A370(void* allocation, int pool, int destroy, char* file, int line
     if (destroy) {
         if (allocation) {
             func_00328470((char*)allocation + 0xC, -1);
-            func_00138350(allocation, -1);
+            String_Dtor_138350(allocation, -1);
         }
     }
     Mem_Free(pool, allocation, file, line);

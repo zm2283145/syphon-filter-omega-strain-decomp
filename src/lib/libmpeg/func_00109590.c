@@ -18,8 +18,8 @@ typedef struct {
 } Mpeg9590;
 
 extern char D_004E1E00[];
-extern int func_001161A0(void);
-extern void func_001161F8(void);
+extern int DIntr(void);
+extern void EIntr(void);
 
 #define D9_CHCR ((volatile unsigned int *)0x1000D400)
 #define D9_QWC  ((volatile unsigned int *)0x1000D420)
@@ -44,11 +44,11 @@ void func_00109590(Mpeg9590 *mp)
         tag[2] = b | ((long)id << 28) | 0x30;
         tag += 4;
     }
-    s = func_001161A0();
+    s = DIntr();
     asm volatile("sync");
     *D9_SADR = mp->rec[mp->cur].refBuf;
     *D9_TADR = (unsigned int)D_004E1E00;
     *D9_QWC = 0;
     *D9_CHCR = 0x105;
-    if (s) func_001161F8();
+    if (s) EIntr();
 }

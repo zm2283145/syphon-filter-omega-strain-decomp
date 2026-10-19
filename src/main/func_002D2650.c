@@ -14,7 +14,7 @@ extern void* ObjMan_GetService(void);
 extern void ObjMan_SetDisplayLabel(void* mgr, char* key, void* obj, int quiet);
 extern void* Object_LookupById(int* id);
 extern void Hud_AddObjective(void* obj, char* a, char* b, int c);
-extern void func_001C6200(char* name, char* text0, int silent);
+extern void cNetLabelMsg_Apply(char* name, char* text0, int silent);
 }
 /* scoped re-entrancy flag; the out-of-line dtor copy is dropped like AllocGuard's (see alloc_guard.h) */
 #pragma define_section GUARD_2D2650_DTOR ".dtors_drop" far_absolute RX
@@ -24,7 +24,7 @@ struct Guard_2D2650 {
 };
 static inline char* Name_2D2650(int id) { return id != -1 ? Loc_GetStoredKey(id) : 0; }
 
-extern "C" int func_002D2650(void* a0, void* a1, void* a2, void* data)
+extern "C" int cNetLabelMsg_NetReceive(void* a0, void* a1, void* a2, void* data)
 {
     Guard_2D2650 g;
     if (D_005721D0) {
@@ -49,7 +49,7 @@ extern "C" int func_002D2650(void* a0, void* a1, void* a2, void* data)
             break;
         }
         case 2:
-            func_001C6200(Name_2D2650(m.key0), Name_2D2650(m.key1), 1);
+            cNetLabelMsg_Apply(Name_2D2650(m.key0), Name_2D2650(m.key1), 1);
             break;
         }
         m.vt = D_004DE280;

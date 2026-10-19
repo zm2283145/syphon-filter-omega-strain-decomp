@@ -19,7 +19,7 @@ extern int g_Hud;
 extern char D_0052ACF8;
 extern unsigned char g_IsMultiplayer;
 
-void func_00275030(char * arg0, int arg1) {
+void cNetRemoveHudObjectiveMsg_Send(char * arg0, int arg1) {
     struct { char * f30[8]; signed char f50[4]; int f54[3]; } sl;
     int temp_s0;
 

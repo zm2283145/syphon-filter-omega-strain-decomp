@@ -24,7 +24,7 @@ extern unsigned int D_005983DC;
 extern int func_002E52D8(unsigned int, int, void **);
 extern int func_002DDB08(void *);
 extern int func_002DDAC8(int *);
-extern int func_002DD440(void *, void *);
+extern int Net_IpToString(void *, void *);
 extern int Net_SendTyped(signed char, int, int, int, unsigned int, int, void *);
 int func_002E7118(unsigned int slot, int unused, int id, P2E7118 *p)
 {
@@ -53,8 +53,8 @@ int func_002E7118(unsigned int slot, int unused, int id, P2E7118 *p)
     if (cb == 0) goto done;
     func_002DDAC8(&t);
     dt = t - D_0058D188[p->b4].f10;
-    func_002DD440(buf, &D_0058D188[p->b4]);
-    func_002DD440(D_005880A0, &D_0058D188[p->b4]);
+    Net_IpToString(buf, &D_0058D188[p->b4]);
+    Net_IpToString(D_005880A0, &D_0058D188[p->b4]);
     D_0058D178 = D_0058D188[p->b4].f4;
     if (D_0058D188[p->b4].f8 == 1)
         cb(0, buf, dt, p->f0, D_0058D188[p->b4].f14, D_0058D188[p->b4].f18);

@@ -3,6 +3,6 @@
 extern void* strcmp(void* key);
 
 /* Returns whether the lookup of "GuiNetMessages" yields null. */
-int func_00346D30(void) {
+int GuiNetMessages_IsType(void) {
     return strcmp("GuiNetMessages") == 0;
 }

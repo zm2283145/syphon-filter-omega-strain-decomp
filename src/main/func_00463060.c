@@ -2,7 +2,7 @@
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #define NULL 0
 #pragma mpwc_relax on
-int func_0035D1F0(char **, int);                           
+int GuiScoresEquip_dtor(char **, int);                           
 int FileMan_Release(char * , int);                         
 int func_00461DC0(char * , int);                         
 int operator_delete(char **);                            
@@ -18,9 +18,9 @@ extern void GuiWidget_BaseSleep();
 extern void GuiWidget_ClearFlag4();
 extern void GuiWidget_SetFlag4();
 extern void GuiWidget_Deinit();
-extern void func_0041F210();
+extern void GuiWidget_Load();
 extern void GuiEndGameStatistics_GetClassName();
-extern void func_00463130();
+extern void GuiEndGameStatistics_IsType();
 extern void GuiEndGameStatistics_HandleInput();
 extern void GuiEndGameStatistics_Update();
 extern void GuiEndGameStatistics_First();
@@ -30,7 +30,7 @@ extern void * const D_004E1840[];
 
 #pragma push
 #pragma opt_common_subs off
-char **func_00463060(char **arg0, long long arg1) {
+char **GuiEndGameStatistics_dtor(char **arg0, long long arg1) {
     char * temp_a0;
 
     if (arg0 != NULL) {
@@ -45,7 +45,7 @@ char **func_00463060(char **arg0, long long arg1) {
                 func_00461DC0(temp_a0, 0);
             }
         }
-        func_0035D1F0(arg0, 0);
+        GuiScoresEquip_dtor(arg0, 0);
         if (((long long) (arg1 << 0x30) >> 0x30) > 0) {
             operator_delete(arg0);
         }
@@ -54,4 +54,4 @@ char **func_00463060(char **arg0, long long arg1) {
 }
 
 #pragma pop
-void * const D_004E1840[24] = { (void*)0x0, (void*)0x0, (void*)func_00463060, (void*)GuiScoresEquip_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiEndGameStatistics_Wake, (void*)GuiWidget_BaseSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiEndGameStatistics_HandleInput, (void*)GuiScoresEquip_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiEndGameStatistics_Update, (void*)GuiEndGameStatistics_HandleEvent, (void*)func_0041F210, (void*)GuiEndGameStatistics_First, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiEndGameStatistics_GetClassName, (void*)func_00463130, (void*)0x0 };
+void * const D_004E1840[24] = { (void*)0x0, (void*)0x0, (void*)GuiEndGameStatistics_dtor, (void*)GuiScoresEquip_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiEndGameStatistics_Wake, (void*)GuiWidget_BaseSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiEndGameStatistics_HandleInput, (void*)GuiScoresEquip_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiEndGameStatistics_Update, (void*)GuiEndGameStatistics_HandleEvent, (void*)GuiWidget_Load, (void*)GuiEndGameStatistics_First, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiEndGameStatistics_GetClassName, (void*)GuiEndGameStatistics_IsType, (void*)0x0 };

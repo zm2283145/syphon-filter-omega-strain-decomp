@@ -71,7 +71,7 @@ static inline void merge_flush_func_0015C880(void) {}
 
 DEFINE_RESIZE_ELEMENT(Elem8, 8)
 #pragma opt_common_subs off
-DEFINE_VECTOR_RESIZE(func_0015C9A0, Elem8, func_0015CC70, func_0015CB10)
+DEFINE_VECTOR_RESIZE(func_0015C9A0, Elem8, Vector_Insert_15CC70, func_0015CB10)
 #pragma opt_common_subs reset
 #pragma pop /* merge_units */
 /* merge_units: end func_0015C9A0 */

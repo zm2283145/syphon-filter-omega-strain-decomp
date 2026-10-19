@@ -12,7 +12,7 @@ extern int DME_GetLobby(void);
 extern E3DE00* LobbyArray_At(void* list, int i);
 extern void func_002AEC90(void* p, char* a, char* b, unsigned char c);
 extern void LobbyArray_Clear(void* list);
-void func_0033DE00(T3DE00* self)
+void GuiMenuScreen_Update(T3DE00* self)
 {
     G3DE00* g;
     int on;

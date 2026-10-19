@@ -98,7 +98,7 @@ extern void Event_Send(NotifyMsg*, void*, int);
 extern void cMessage_dtor(NotifyMsg*, int);
 
 /* Sends a notification message (kind 4) about this object to its target. */
-void func_00283820(Obj60* o) {
+void cNetCreateTankMsg_Send(Obj60* o) {
     NotifyMsg msg;
     int* idField;
     Event_Construct(&msg, &g_NetCreateTankMsgKey);
@@ -133,19 +133,19 @@ extern void Event_Construct(Msg* m, void* type);
 #endif /* merge_units */
 #define Event_Construct(a0, a1) (Event_Construct((void *)(a0), (a1))) /* merge_units */
 
-extern void func_00283910(Msg* m, void* target);
+extern void cNetUpdateTankMsg_Apply(Msg* m, void* target);
 #if 0 /* merge_units */
 extern void cMessage_dtor(Msg* m, int flags);
 #endif /* merge_units */
 #define cMessage_dtor(a0, a1) (cMessage_dtor((void *)(a0), (a1))) /* merge_units */
 
 /* Builds a temporary message, sends it to target, then destroys it. */
-void func_002838B0(void* target)
+void cNetUpdateTankMsg_NetReceive(void* target)
 {
     Msg msg;
     Event_Construct(&msg, D_00506260);
     msg.vtable = D_004DCF50;
-    func_00283910(&msg, target);
+    cNetUpdateTankMsg_Apply(&msg, target);
     msg.vtable = D_004DCF10;
     cMessage_dtor(&msg, 0);
 }

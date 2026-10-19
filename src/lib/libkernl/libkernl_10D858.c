@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_0010D858(void) {
+int Newlib_SysLseek(void) {
     return -1;
 }

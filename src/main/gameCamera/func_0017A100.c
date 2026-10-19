@@ -33,7 +33,7 @@ int Script_cGameCamera_PushCurrent(int* args) {
     return 0;
 }
 
-void func_0017A190(void) {
+void ScriptType_cGameCamera_Init(void) {
 }
 
 /* Returns the value of global D_004EE908. */

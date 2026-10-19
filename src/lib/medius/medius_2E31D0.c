@@ -193,7 +193,7 @@ int func_002E3718(unsigned int id, void *data, int len)
 __asm__("dpcmp = SoftFloat_UnpackAndCompare\n"
         "dpmul = SoftFloat_DoubleMultiply\n"
         "dpadd = SoftFloat_DoubleAdd\n"
-        "dpsub = func_0011C200\n"
+        "dpsub = SoftFloat_DoubleSub\n"
         "fptodp = SoftFloat_FloatToDouble");
 
 typedef struct {

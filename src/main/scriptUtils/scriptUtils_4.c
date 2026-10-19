@@ -23,7 +23,7 @@ void Global_SetCallout(char* obj, int id, int delay, int extra)
 #pragma push /* merge_units */
 #pragma cplusplus on
 #include "alloc_guard.h"
-/* func_002683F0: release every scripted object and every script array, then empty both global lists */
+/* ScriptUtils_ReleaseAll: release every scripted object and every script array, then empty both global lists */
 extern "C" {
 void Mem_Free(int pool, void* p, char* file, int line);
 extern char D_004A82B8[];
@@ -49,7 +49,7 @@ SgIt* func_00268680(SgIt* dst, SgIt* src);
 void ObjectList_EraseRange(SgIt* out, SgList* l, SgIt* first, SgIt* last);
 void Object_Unregister(void* o);
 void Object_DeleteLater(void* o, float t);
-void func_002683F0(void);
+void ScriptUtils_ReleaseAll(void);
 }
 static inline void Begin1(SgIt* out, SgList* l) { SgIt b; List_Begin(&b, l); func_002686D0(out, &b); }
 static inline void End1(SgIt* out, SgList* l) { SgIt t; func_002686C0(&t, l); func_002686B0(out, &t); }
@@ -59,7 +59,7 @@ static inline void Begin1x(SgIt* out, SgList* l) { Begin1(out, l); }
 static inline void End1x(SgIt* out, SgList* l) { End1(out, l); }
 static inline void Begin2x(SgIt* out, SgList* l) { Begin2(out, l); }
 static inline void End2x(SgIt* out, SgList* l) { End2(out, l); }
-void func_002683F0(void)
+void ScriptUtils_ReleaseAll(void)
 {
     SgIt end;
     SgIt end2;

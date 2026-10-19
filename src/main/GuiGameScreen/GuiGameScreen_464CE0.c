@@ -7,6 +7,6 @@
 #include "types.h"
 
 
-char* func_00464CE0(void) {
+char* GuiGameCanvas_GetClassName(void) {
     return "GuiGameCanvas";
 }

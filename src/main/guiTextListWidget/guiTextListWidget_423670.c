@@ -11,7 +11,7 @@
 #include "gui_grid_types.h"
 
 extern "C" {
-int func_00423BE0(GuiGridWidget* self, unsigned int visibleRow);
+int GuiArrayWidget_VisibleRowToRow(GuiGridWidget* self, unsigned int visibleRow);
 void GuiWidget_Draw(GuiGridWidget* self);
 }
 
@@ -46,7 +46,7 @@ extern "C" void GuiArrayWidget_Draw(GuiGridWidget* self)
         rowRect.width = width;
         rowRect.height = (float)self->rowHeight;
         if (self->fixedViewport) {
-            int mappedRow = func_00423BE0(self, row);
+            int mappedRow = GuiArrayWidget_VisibleRowToRow(self, row);
             if (mappedRow >= 0)
                 self->draw_row(mappedRow, &rowRect);
         } else {
@@ -67,7 +67,7 @@ extern "C" void GuiArrayWidget_Draw(GuiGridWidget* self)
                 (float)(int)self->columnWidths[column + self->firstColumn];
             cellRect.height = (float)self->rowHeight;
             if (self->fixedViewport) {
-                int mappedRow = func_00423BE0(self, row);
+                int mappedRow = GuiArrayWidget_VisibleRowToRow(self, row);
                 if (mappedRow >= 0)
                     self->draw_cell(column + self->firstColumn, mappedRow, &cellRect);
             } else {
@@ -86,7 +86,7 @@ static inline int magnitude(int value)
 }
 
 /* Map a fixed-viewport row around the selection, wrapping only when it fits. */
-extern "C" int func_00423BE0(GuiGridWidget* self, unsigned int visibleRow)
+extern "C" int GuiArrayWidget_VisibleRowToRow(GuiGridWidget* self, unsigned int visibleRow)
 {
     int offset = visibleRow - self->centerRow;
     int row = offset + self->selectedRow;
@@ -463,7 +463,7 @@ extern "C" void GuiArrayWidget_OnGainFocus(Widget_00424A10* self)
 extern "C" void GuiWidget_BaseSleep(Widget* self);
 
 /* Runs GuiWidget_BaseSleep, then virtual +0x70 with the words at +0x50/+0x54. */
-extern "C" void func_00424A50(Widget* self)
+extern "C" void GuiArrayWidget_Sleep(Widget* self)
 {
     GuiWidget_BaseSleep(self);
     self->Method70(self->unk50, self->unk54);

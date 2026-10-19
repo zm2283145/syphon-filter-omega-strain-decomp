@@ -68,7 +68,7 @@ void func_0036E6E0(void* p, int f);
 void operator_delete(void* p);
 }
 static inline void Base36E600(Obj36E600* p) { if (p) *(void**)p = D_004DF6A0; }
-extern "C" Obj36E600* func_0036E600(Obj36E600* self, short del)
+extern "C" Obj36E600* Xform_dtor(Obj36E600* self, short del)
 {
     if (self) {
         *(void**)self = D_004DF640;

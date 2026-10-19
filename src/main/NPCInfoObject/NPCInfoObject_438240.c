@@ -54,7 +54,7 @@ extern unsigned char D_00497568;
 extern int D_00497548;
 extern unsigned char D_00582B90;
 extern char sfo_malloc_2CA9B0;
-extern char func_002CAA70;
+extern char Sfo_Malloc;
 int func_002EAF28(int* key, int a, int b, int c, int d, int e, int f, int g, char* h, int i);
 int func_002EB650(P_438340** out, int key);
 int lgAudInit(void* a, void* b);
@@ -83,7 +83,7 @@ unsigned char func_00438340(void)
         D_00497568 = 0;
         D_00497548 = -1;
         D_00582B88 = 0;
-        if (!lgAudInit(&func_002CAA70, &sfo_malloc_2CA9B0)) D_00582B90 = 1;
+        if (!lgAudInit(&Sfo_Malloc, &sfo_malloc_2CA9B0)) D_00582B90 = 1;
     }
     if (D_00582B90) {
         lgAudEnumHint(&hint);
@@ -135,7 +135,7 @@ int lgAudEnumerate(int a, char* b);
 int lgAudOpen(int a, Cfg_4384C0* c, int* h);
 void lgAudSetLevel0D(int h, int a, int b);
 void lgAudSetLevel0E(int h, int a, int b);
-void func_0042C1E0(void);
+void NellyWrap_Init(void);
 void lgAudStartPlayback(int h);
 void lgAudStopPlayback(int h);
 void lgAudClose(int h);
@@ -185,7 +185,7 @@ unsigned char func_004384C0(void)
         if (lgAudOpen(0, &c, &D_00497548) == 0) {
             lgAudSetLevel0D(D_00497548, 0, 0x58);
             lgAudSetLevel0E(D_00497548, 0, 0x15);
-            func_0042C1E0();
+            NellyWrap_Init();
             if (D_00582B88) lgAudStartPlayback(D_00497548);
             D_00582B88 = 1;
             ok = 1;

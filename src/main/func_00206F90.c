@@ -11,7 +11,7 @@ extern void MotionSelNode_Ctor(void*, void*, void*, void*);
 extern void* func_002070F0(void*, void*);
 extern void MotionRegistry_Register(void*, void*, void*);
 extern void MotionNodeWrapper_Dtor(void*, int);
-extern void func_00138350(void*, int);
+extern void String_Dtor_138350(void*, int);
 /* Builds the "blend" selector node over the graph made by func_00207340 and registers it. */
 #pragma optimization_level 1
 int func_00206F90(void* p0, void* p1, void* p2, void* p3, void* p4, void* p5, void* p6, float f0, float f1, void* p7)
@@ -30,13 +30,13 @@ int func_00206F90(void* p0, void* p1, void* p2, void* p3, void* p4, void* p5, vo
     MotionSelNode_Ctor(&vC8, &v70, p1, func_0018A700(&vD8, p7));
     MotionRegistry_Register(p1, func_002070F0(&v50, &vE0), &vC8);
     MotionNodeWrapper_Dtor(&vC8, -1);
-    func_00138350(&vE0, -1);
-    func_00138350(&vF0, -1);
+    String_Dtor_138350(&vE0, -1);
+    String_Dtor_138350(&vF0, -1);
     func_001F12D0(&vB8, "blend");
     func_002072B0(&vA8, &vB8, p2);
     func_002070F0(p0, &vA8);
-    func_00138350(&vA8, -1);
-    func_00138350(&vB8, -1);
+    String_Dtor_138350(&vA8, -1);
+    String_Dtor_138350(&vB8, -1);
     return 0;
 }
 #pragma optimization_level reset

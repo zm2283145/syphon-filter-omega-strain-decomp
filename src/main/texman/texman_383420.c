@@ -15,7 +15,7 @@
 #pragma push /* merge_units */
 #pragma cplusplus on
 
-DEFINE_OBJECT_LIST_ERASE_RANGE_FILE(func_00383420, D_0049C220)
+DEFINE_OBJECT_LIST_ERASE_RANGE_FILE(ObjectList_EraseRange_383420, D_0049C220)
 #pragma pop /* merge_units */
 /* merge_units: end func_00383420 */
 
@@ -23,6 +23,6 @@ DEFINE_OBJECT_LIST_ERASE_RANGE_FILE(func_00383420, D_0049C220)
 #pragma push /* merge_units */
 #pragma cplusplus on
 
-DEFINE_OBJECT_LIST_ERASE_ONE_FILE(func_00383560, D_0049C220)
+DEFINE_OBJECT_LIST_ERASE_ONE_FILE(List_Erase_383560, D_0049C220)
 #pragma pop /* merge_units */
 /* merge_units: end func_00383560 */

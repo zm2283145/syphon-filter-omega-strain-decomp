@@ -91,13 +91,13 @@ extern TimCtl_00117330 D_00487848;
 #endif /* merge_units */
 #define D_00487848 (*(TimCtl_00117330*)&D_00487848) /* merge_units */
 
-extern int func_001161A0(void);
-extern int func_001161F8(void);
+extern int DIntr(void);
+extern int EIntr(void);
 
 unsigned long func_00117330(void)
 {
     unsigned long t;
-    int s = func_001161A0();
+    int s = DIntr();
     /* SDK inline asm: read T1 count and overflow atomically with fixed t0-t2 scratch */
     __asm__ volatile(
         ".set push\n\t.set noreorder\n\t"
@@ -118,7 +118,7 @@ unsigned long func_00117330(void)
         "dsllv %0, %0, $9\n\t"
         ".set pop"
         : "=&r"(t) : "r"(0x10001000), "m"(D_00487848.a) : "$8", "$9", "$10");
-    if (s) func_001161F8();
+    if (s) EIntr();
     return t;
 }
 #undef D_00487848 /* merge_units */
@@ -152,14 +152,14 @@ int func_001173B0(void)
 /* merge_units: begin func_00117420 */
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
 #if 0 /* merge_units */
-int func_001161A0();
+int DIntr();
 #endif /* merge_units */
-#define func_001161A0() (func_001161A0()) /* merge_units */
+#define DIntr() (DIntr()) /* merge_units */
                                 
 #if 0 /* merge_units */
-int func_001161F8();
+int EIntr();
 #endif /* merge_units */
-#define func_001161F8() (func_001161F8()) /* merge_units */
+#define EIntr() (EIntr()) /* merge_units */
                                   
 #if 0 /* merge_units */
 int func_001173B0();
@@ -171,15 +171,15 @@ int func_00117420(void) {
     int temp_s0;
     int temp_s1;
 
-    temp_s0 = func_001161A0();
+    temp_s0 = DIntr();
     temp_s1 = func_001173B0();
     if (temp_s0 != 0) {
-        func_001161F8();
+        EIntr();
     }
     return temp_s1;
 }
-#undef func_001161A0 /* merge_units */
-#undef func_001161F8 /* merge_units */
+#undef DIntr /* merge_units */
+#undef EIntr /* merge_units */
 #undef func_001173B0 /* merge_units */
 /* merge_units: end func_00117420 */
 
@@ -239,9 +239,9 @@ extern int func_00117468(int);
 
 int func_00117508(int a)
 {
-    int s = func_001161A0();
+    int s = DIntr();
     int r = func_00117468(a);
-    if (s) func_001161F8();
+    if (s) EIntr();
     return r;
 }
 #undef func_00117468 /* merge_units */

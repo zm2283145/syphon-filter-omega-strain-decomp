@@ -17,10 +17,10 @@ typedef struct { C16 a; __int128 b; C16 c; C16 d; Q64 e; } Blk;
 extern void func_00360510(char*);
 extern int String_CtorCStr_13B480(char*, char*);
 extern int String_Dtor(char*, int);
-extern int func_0013D680(char*, char*);
+extern int String_AssignString(char*, char*);
 extern char* DME_GetLobby(void);
 extern int func_0044A1D0(char*);
-extern int func_00452FF0(char*, int);
+extern int SFOLobby_FormatError(char*, int);
 extern char* func_0044A070(char*);
 extern char* func_00448FF0(char*, int);
 extern void* memset(void*, int, int);
@@ -53,27 +53,27 @@ void func_00360610(char* self, int* arg1, Msg* arg2) {
     func_00360510(self + 0x88);
     F_(self, 0xD0, int) = arg2->b1;
     String_CtorCStr_13B480(s1, (char*)(arg1 + 1));
-    func_0013D680(self + 0xB8, s1);
+    String_AssignString(self + 0xB8, s1);
     String_Dtor(s1, 0);
     o = DME_GetLobby();
     if (o) {
         F_(self, 0xF4, char) = func_0044A1D0(o);
-        if (!(unsigned char)func_00452FF0(o, 0)) {
+        if (!(unsigned char)SFOLobby_FormatError(o, 0)) {
             if (arg1[0] == F_(o, 0x2480, int)) {
                 F_(self, 0xF8, int) = -1;
                 String_CtorCStr_13B480(s2, func_0044A070(o));
-                func_0013D680(self + 0xC4, s2);
+                String_AssignString(self + 0xC4, s2);
                 String_Dtor(s2, 0);
             } else {
                 F_(self, 0xF8, int) = arg1[0];
                 String_CtorCStr_13B480(s3, D_004BB868);
-                func_0013D680(self + 0xC4, s3);
+                String_AssignString(self + 0xC4, s3);
                 String_Dtor(s3, 0);
                 if (arg2->xE8 != -1) {
                     r = func_00448FF0(o, arg2->xE8);
                     if (r) {
                         String_CtorCStr_13B480(s4, r);
-                        func_0013D680(self + 0xC4, s4);
+                        String_AssignString(self + 0xC4, s4);
                         String_Dtor(s4, 0);
                     }
                 }
@@ -185,9 +185,9 @@ void String_CtorCStr_13B480(Str_09F0* s, const char* c);
 #define String_CtorCStr_13B480(a0, a1) ((void)String_CtorCStr_13B480((char *)(a0), (char *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
-void func_0013D680(void* dst, Str_09F0* s);
+void String_AssignString(void* dst, Str_09F0* s);
 #endif /* merge_units */
-#define func_0013D680(a0, a1) ((void)func_0013D680((char *)(a0), (char *)(a1))) /* merge_units */
+#define String_AssignString(a0, a1) ((void)String_AssignString((char *)(a0), (char *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
 void String_Dtor(Str_09F0* s, short f);
@@ -226,12 +226,12 @@ extern "C" void GuiAgentInfo_Fill(Panel_09F0* p)
     func_00360510(&p->s88);
     a = Agent_GetSelected(&g_Game, -1);
     String_CtorCStr_13B480(&s1, AgentData_GetName(a));
-    func_0013D680(p->strB8, &s1);
+    String_AssignString(p->strB8, &s1);
     String_Dtor(&s1, 0);
     g = DME_GetLobby();
     if (g) String_Copy(a->name, g + 0xE8C);
     String_CtorCStr_13B480(&s2, a->name);
-    func_0013D680(p->strC4, &s2);
+    String_AssignString(p->strC4, &s2);
     String_Dtor(&s2, 0);
     p->team = a->team[1];
     p->s88 = cAgentData_GetStat(a, 0xD);
@@ -276,7 +276,7 @@ extern "C" void GuiAgentInfo_Fill(Panel_09F0* p)
 #undef g_Game /* merge_units */
 #undef Agent_GetSelected /* merge_units */
 #undef String_CtorCStr_13B480 /* merge_units */
-#undef func_0013D680 /* merge_units */
+#undef String_AssignString /* merge_units */
 #undef String_Dtor /* merge_units */
 #undef func_00360510 /* merge_units */
 #undef GuiAgentInfo_Refresh /* merge_units */

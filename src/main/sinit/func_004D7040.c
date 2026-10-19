@@ -10,7 +10,7 @@ extern int D_00571FA0;
 extern int D_00571FA4;
 extern int D_00571FA8;
 extern int D_00571FAC;
-extern char func_00413E30;
+extern char InterfaceMgr_dtor;
 extern char func_00413EA0;
 extern char func_00413F00;
 
@@ -39,5 +39,5 @@ void func_004D7040(void) {
         F_(var_s0, 0x70, int) = 0;
         var_s0 += 0x78;
     } while (var_v1 < 0x14);
-    __register_global_object(&D_00571DC0, &func_00413E30, &D_00571DB0);
+    __register_global_object(&D_00571DC0, &InterfaceMgr_dtor, &D_00571DB0);
 }

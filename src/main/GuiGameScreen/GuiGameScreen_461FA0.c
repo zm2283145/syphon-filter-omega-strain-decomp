@@ -32,7 +32,7 @@ void func_00461FB0(Word4* self) {
 
 /* Factory: allocate and construct. */
 extern "C" { char D_004C2538[] = "guiWidget.hh"; }
-DEFINE_GUARDED_NEW_CTOR(func_00461FC0, 0x510, D_004C2538, func_00460CF0)
+DEFINE_GUARDED_NEW_CTOR(GuiEndGameAwards_Create, 0x510, D_004C2538, GuiEndGameAwards_ctor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00461FC0 */
 
@@ -48,7 +48,7 @@ void GuiWidget_ctor(void* self);
 struct G00462070 { void* vtable; };
 #define GW(off) (*(int*)((char*)p + (off)))
 #define GB(off) (*(char*)((char*)p + (off)))
-extern "C" G00462070* func_00462070(void)
+extern "C" G00462070* GuiAutoSaver_Create(void)
 {
     G00462070* p;
     {

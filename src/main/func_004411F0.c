@@ -24,7 +24,7 @@ extern "C" {
 void GuiWidget_ctor(void*);
 extern void* const D_004E11A0[];
 }
-extern "C" Obj4411F0* func_004411F0(Obj4411F0* self) {
+extern "C" Obj4411F0* GuiWeaponDisplay_ctor(Obj4411F0* self) {
     GuiWidget_ctor(self);
     self->vtable = (void*)D_004E11A0;
     self->unk48 = -1;

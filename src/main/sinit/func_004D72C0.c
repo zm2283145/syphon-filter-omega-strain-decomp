@@ -15,7 +15,7 @@ extern int D_004BF6DC;
 extern char D_004E0D98;
 extern void* D_00572168;
 extern void* D_00572170;
-void func_004D72C0(void) {
+void StaticInit_GuiArrayWidgetFactory(void) {
     D_004BF6B4 = 0;
     D_004BF6B8 = 0;
     D_004BF6B0 = 1065353216;

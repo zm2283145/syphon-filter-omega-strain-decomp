@@ -59,7 +59,7 @@ extern char D_0048B2F8[];
 extern char g_LevelDirName[];
 extern char D_004FFB8C[];
 extern char g_AgentPartCache[];
-extern void func_003A64F0(void);
+extern void Iop_LoadMcUsbModules(void);
 extern void func_00165DC0(O169*);
 extern int ScriptMgr_ExportSymbols(char*, char*, char*);
 extern int Archive_Open(char*, char*, int, int);
@@ -69,13 +69,13 @@ extern void PartsTable_Load(int);
 extern void ArchiveList_CloseNamed(char*, char*);
 extern void ManUtils_LoadSKL(char*);
 extern void Heap_AllocSlot(int, int, int);
-extern void func_0042C1E0(void);
+extern void NellyWrap_Init(void);
 #pragma opt_propagation off
 void App_BindIopRpc(O169* o) {
     char buf[0x40];
     if (!D_0048A010) return;
     D_0048A010 = 0;
-    func_003A64F0();
+    Iop_LoadMcUsbModules();
     func_00165DC0(o);
     if (ScriptMgr_ExportSymbols(D_00555070, D_0048B2F8, g_LevelDirName)) {
         char* arc;
@@ -90,7 +90,7 @@ void App_BindIopRpc(O169* o) {
     }
     ManUtils_LoadSKL(g_AgentPartCache);
     Heap_AllocSlot(2, 0xC1C00, 16);
-    func_0042C1E0();
+    NellyWrap_Init();
     o->b278 = 1;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -109,13 +109,13 @@ extern int D_005383D4;
 extern int D_005383C0;
 extern void* D_004FFC04;
 extern char g_Video[];
-extern void* func_0010D050(void);
+extern void* GetThreadId(void);
 extern void ChangeThreadPriority(void* p, int n);
 extern void func_003A65F0(int n);
 extern void func_00165E40(F1Game1695* g);
 extern void Game_LoadIni(F1Game1695* g);
 extern void Loc_LoadCommonPool(char* name);
-extern void func_003A6560(void);
+extern void Iop_LoadPadSoundModules(void);
 extern void func_00165DD0(F1Game1695* g);
 extern void Renderer_Init(void* p, int a, int b, int c, int d, int e, int f, int g);
 extern void Boot_LoadFonts(F1Game1695* g);
@@ -123,12 +123,12 @@ extern void FrontEnd_CreateCanvas(void* p, int n);
 extern void FrontEnd_SetLoadingScreen(void* p, int a, void* b, int c);
 void StringPool_Load(F1Game1695* g)
 {
-    ChangeThreadPriority(func_0010D050(), 10);
+    ChangeThreadPriority(GetThreadId(), 10);
     func_003A65F0(1);
     func_00165E40(g);
     Game_LoadIni(g);
     Loc_LoadCommonPool(D_0048B2F8);
-    func_003A6560();
+    Iop_LoadPadSoundModules();
     func_00165DD0(g);
     if (g_GameState == 9) {
         Renderer_Init(g_Video, g->x254, g->x258, 0x20, 0x10, g->b250, 4000, 500);

@@ -31,7 +31,7 @@ DEFINE_SHORT_STRING_ASSIGN(func_00349730)
 extern "C" {
 char D_004BA450[] = "basic_string::reserve length_error";
 }
-DEFINE_STRING_RESERVE(func_003497C0, D_004BA450, D_0049ADE0, 0x5C, D_0049AE90, 0x64)
+DEFINE_STRING_RESERVE(String_Reserve_3497C0, D_004BA450, D_0049ADE0, 0x5C, D_0049AE90, 0x64)
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003497C0(void) {}
 #pragma pop /* merge_units */

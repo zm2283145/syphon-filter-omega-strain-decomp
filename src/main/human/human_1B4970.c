@@ -27,20 +27,20 @@ void Alloc_Lock(int);
 void Alloc_Unlock(int);
 void ActorModel_Deactivate(void*);
 void TargetVis_Unregister(void*, void*);
-void func_003928A0(void*);
+void Actor_v07(void*);
 void func_00436C00(int*);
 void func_00433CE0(int*, void*);
 void func_00436BA0(int*, int);
 void ActorPhys_ReleaseWaterEffect(VObj*);
 }
 
-extern "C" void func_001B4970(Act* a)
+extern "C" void Npc_v07(Act* a)
 {
     int loc;
     VObj* o;
     ActorModel_Deactivate(a->a60);
     TargetVis_Unregister(&g_TargetVisMgr, a);
-    func_003928A0(a);
+    Actor_v07(a);
     func_00436C00(&loc);
     func_00433CE0(&loc, a->a0C);
     if (a->w3310) ActorPhys_ReleaseWaterEffect(a->w3310);
@@ -75,7 +75,7 @@ static inline void merge_flush_func_001B4970(void) {}
 #pragma push /* merge_units */
 #pragma cplusplus on
 extern "C" { void operator_delete(void* p); void cMessage_dtor(void* m, int f); void __destroy_array(void* p, void* dtor, int size, int n);
-void func_001B4D50(void); void func_001906B0(void); void func_001B4C70(void);
+void func_001B4D50(void); void Secondary_MotionRecordDtor(void); void func_001B4C70(void);
 extern char D_004DACF0[];
 extern char D_004DA930[];
 extern char D_004DA440[];
@@ -99,7 +99,7 @@ extern "C" void* func_001B4B10(O_1B4B10* self, short deleteFlag)
         Msg_1B4B10(&self->m32C);
         D2_1B4B10(&self->m230);
         D2_1B4B10(&self->m160);
-        __destroy_array(self->aE0, (void*)func_001906B0, 0x30, 2);
+        __destroy_array(self->aE0, (void*)Secondary_MotionRecordDtor, 0x30, 2);
         if (self->a14) Arr_1B4B10(self->a14, (void*)func_001B4C70, 8, 0x19);
         if (self) self->vt.vt = ((char*)D_004DA830);
         if (deleteFlag > 0) operator_delete(self);

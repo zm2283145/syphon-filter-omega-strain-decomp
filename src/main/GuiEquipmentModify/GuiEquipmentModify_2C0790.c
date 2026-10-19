@@ -461,7 +461,7 @@ int func_0018A2E0(Req_1100* r);
 float func_0018A2D0(Req_1100* r);
 float func_0018A2C0(Req_1100* r);
 void AnimCtl_InstallMotion(Anim_1100* a, int sel, int b, Rate_1100* r, Word_1100* w, Ev_1100* e0, Ev_1100* e1, int c, float f0, float f1);
-void func_0018A260(Ev_1100* e, int f);
+void AnimEvent_dtor(Ev_1100* e, int f);
 void Model_HardMeshAttachPoints(Man_1100* m);
 void func_0038E030(Man_1100* m);
 void ActorModel_Setup(Man_1100* m, int flag);
@@ -550,8 +550,8 @@ static inline void Install_1100(Anim_1100* an, int* selp, Req_1100* rq, Word_110
                 AnimEvent_Construct(&e0);
                 AnimEvent_Construct(&e1);
                 AnimCtl_InstallMotion(an, *selp, MotionRequest_GetMode(rq), &rate, wp, &e0, &e1, func_0018A2E0(rq), func_0018A2D0(rq), func_0018A2C0(rq));
-                func_0018A260(&e1, -1);
-                func_0018A260(&e0, -1);
+                AnimEvent_dtor(&e1, -1);
+                AnimEvent_dtor(&e0, -1);
 }
 static inline void FindAnim_1100(Self_1100* self, int kind)
 {

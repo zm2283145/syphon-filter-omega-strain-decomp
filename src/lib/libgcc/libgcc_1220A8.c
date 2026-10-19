@@ -1,5 +1,5 @@
-/* newlib 1.9.0 stdlib/dtoa.c: _dtoa_r (quorem = func_00121E78 is its own matched unit). Retail newlib was built with -g. */
-__asm__(".set nomove\n dpadd = SoftFloat_DoubleAdd\n dpsub = func_0011C200\n dpmul = SoftFloat_DoubleMultiply\n dpdiv = func_0011C4F0\n litodp = func_0011C7A0\n dptoli = func_0011C858\n dpcmp = SoftFloat_UnpackAndCompare\n");
+/* newlib 1.9.0 stdlib/dtoa.c: _dtoa_r (quorem = Newlib_Quorem is its own matched unit). Retail newlib was built with -g. */
+__asm__(".set nomove\n dpadd = SoftFloat_DoubleAdd\n dpsub = SoftFloat_DoubleSub\n dpmul = SoftFloat_DoubleMultiply\n dpdiv = SoftFloat_DoubleDivide\n litodp = SoftFloat_IntToDouble\n dptoli = SoftFloat_DoubleToInt\n dpcmp = SoftFloat_UnpackAndCompare\n");
 typedef unsigned int size_t;
 typedef unsigned int __uint32_t;
 typedef int __int32_t;
@@ -217,19 +217,19 @@ extern double rnd_prod(double, double), rnd_quot(double, double);
 
 
 typedef struct _Bigint _Bigint;
-#define Balloc	func_00126280
-#define Bfree	func_00126328
-#define multadd func_00126358
-#define hi0bits func_00126590
-#define lo0bits func_00126610
-#define i2b	func_001266D0
-#define mult	func_00126708
-#define pow5mult	func_00126918
-#define lshift	func_00126A18
-#define cmp	func_00126B70
-#define diff	func_00126BD8
-#define d2b	func_00126FD0
-#define quorem	func_00121E78
+#define Balloc	Newlib_Balloc
+#define Bfree	Newlib_Bfree
+#define multadd Newlib_Multadd
+#define hi0bits Newlib_Hi0bits
+#define lo0bits Newlib_Lo0bits
+#define i2b	Newlib_I2b
+#define mult	Newlib_Multiply
+#define pow5mult	Newlib_Pow5mult
+#define lshift	Newlib_Lshift
+#define cmp	Newlib_Mcmp
+#define diff	Newlib_Mdiff
+#define d2b	Newlib_D2b
+#define quorem	Newlib_Quorem
 #define tens D_00499E38
 #define bigtens D_00499F00
 #define tinytens D_00499F28

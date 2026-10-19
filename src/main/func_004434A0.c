@@ -104,7 +104,7 @@ extern int D_00585FB0;
 
 /* Applies one "{SFOLOBBY_SETTINGS}" key/value pair: the value is parsed with
  * atoi and stored only if it lies within the setting's [min, max]. */
-void func_004434A0(void* self, char* key, char* value) {
+void SFOLobby_ParseIntSetting(void* self, char* key, char* value) {
     int n;
 
     if (value != 0) {

@@ -109,7 +109,7 @@ static inline void merge_flush_func_003B5310(void) {}
 /* merge_units: begin func_003B54C0 */
 #pragma push /* merge_units */
 extern int String_Length(void* s);
-extern char* func_002071A0(void* s);
+extern char* String_CStr_Thunk(void* s);
 extern void Skas_RegisterClip(int* out, int a, char* name, unsigned int* desc);
 
 void Skas_AppendAnimation(int a, void* str, unsigned int* desc)
@@ -120,7 +120,7 @@ void Skas_AppendAnimation(int a, void* str, unsigned int* desc)
         int i;
         for (i = 0; i < 0x2F; i++) {
             char c;
-            if (i < String_Length(str)) c = func_002071A0(str)[i]; else c = 0;
+            if (i < String_Length(str)) c = String_CStr_Thunk(str)[i]; else c = 0;
             buf[i] = c;
         }
         buf[i] = 0;
@@ -151,7 +151,7 @@ extern void String_CtorCStr_13B480(StrP_5580* s, char* c);
 #endif /* merge_units */
 #define String_CtorCStr_13B480(a0, a1) (String_CtorCStr_13B480((Str_5310 *)(a0), (a1))) /* merge_units */
 
-extern void func_0013D680(StrP_5580* d, StrP_5580* s);
+extern void String_AssignString(StrP_5580* d, StrP_5580* s);
 #if 0 /* merge_units */
 extern void String_Dtor(StrP_5580* s, int f);
 #endif /* merge_units */
@@ -159,8 +159,8 @@ extern void String_Dtor(StrP_5580* s, int f);
 
 extern void String_PushBack(StrP_5580* s, char c);
 extern int String_AssignCStr_1C43A0(StrP_5580* s, char* c);
-extern void func_00298690(Str2_5580* s);
-extern void func_00138350(Str2_5580* s, int f);
+extern void String_CtorEmpty(Str2_5580* s);
+extern void String_Dtor_138350(Str2_5580* s, int f);
 #if 0 /* merge_units */
 extern Tok_5580* func_003B6150(Tok_5580* self, Str2_5580* out);
 #endif /* merge_units */
@@ -176,11 +176,11 @@ extern int String_Length(StrP_5580* s);
 #define String_Length(a0) (String_Length((void *)(a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern char* func_002071A0(StrP_5580* s);
+extern char* String_CStr_Thunk(StrP_5580* s);
 #endif /* merge_units */
-#define func_002071A0(a0) (func_002071A0((void *)(a0))) /* merge_units */
+#define String_CStr_Thunk(a0) (String_CStr_Thunk((void *)(a0))) /* merge_units */
 
-extern int func_0022A360(Vec_5580* v, int* pos, int n, char* value);
+extern int Vector_Insert_22A360(Vec_5580* v, int* pos, int n, char* value);
 extern void func_001C00D0(StrP_5580* out, StrP_5580* a, char* b);
 extern char* String_CStr(StrP_5580* s);
 extern unsigned int* func_0036D3C0(void* o, char* name, int n);
@@ -211,7 +211,7 @@ static inline void ReadToken(Tok_5580* self, StrP_5580* out)
     {
         StrP_5580 t;
         String_CtorCStr_13B480(&t, D_004BD008);
-        func_0013D680(out, &t);
+        String_AssignString(out, &t);
         String_Dtor(&t, 0);
     }
     started = 0;
@@ -233,20 +233,20 @@ static inline int ReadInt0(Tok_5580* tok)
 {
     int r;
     Str2_5580 t;
-    func_00298690(&t);
+    String_CtorEmpty(&t);
     func_003B6150(tok, &t);
     r = atoi(String_CStr_189540(&t));
-    func_00138350(&t, -1);
+    String_Dtor_138350(&t, -1);
     return r;
 }
 
 static inline void ReadFloat0(Tok_5580* tok, float* out)
 {
     Str2_5580 t;
-    func_00298690(&t);
+    String_CtorEmpty(&t);
     func_003B6150(tok, &t);
     *out = SoftFloat_DoubleToFloat(atof(String_CStr_189540(&t)));
-    func_00138350(&t, -1);
+    String_Dtor_138350(&t, -1);
 }
 
 static inline int ReadInt(Tok_5580* tok) { return ReadInt0(tok); }
@@ -318,8 +318,8 @@ extern "C" void Skas_Load(Skas_5580* self, Tok_5580* tok, void* list)
                             case 1: {
                                 int i;
                                 for (i = 0; i < sizeof(key); i++)
-                                    key[i] = (i < String_Length(&a)) ? func_002071A0(&a)[i] : 0;
-                                func_0022A360(&self->keys, self->keys.data + self->keys.count, 1, key);
+                                    key[i] = (i < String_Length(&a)) ? String_CStr_Thunk(&a)[i] : 0;
+                                Vector_Insert_22A360(&self->keys, self->keys.data + self->keys.count, 1, key);
                                 break;
                             }
                             }
@@ -334,11 +334,11 @@ extern "C" void Skas_Load(Skas_5580* self, Tok_5580* tok, void* list)
                             case 1: {
                                 unsigned int* clip;
                                 if (count > 0) {
-                                    func_0013D680(&c, &a);
+                                    String_AssignString(&c, &a);
                                     ReadToken(tok, &a);
                                 }
                                 func_001C00D0(&tmp, &a, D_004BCD78);
-                                func_0013D680(&b, &tmp);
+                                String_AssignString(&b, &tmp);
                                 String_Dtor(&tmp, 0);
                                 clip = func_0036D3C0(list, String_CStr(&b), 0);
                                 if (!clip) RET;
@@ -347,7 +347,7 @@ extern "C" void Skas_Load(Skas_5580* self, Tok_5580* tok, void* list)
                                     char name[0x30];
                                     int i;
                                     for (i = 0; i < 0x2F; i++)
-                                        name[i] = (i < String_Length(&c)) ? func_002071A0(&c)[i] : 0;
+                                        name[i] = (i < String_Length(&c)) ? String_CStr_Thunk(&c)[i] : 0;
                                     name[i] = 0;
                                     Skas_RegisterClip(&clipRes, self, name, clip);
                                 }
@@ -374,7 +374,7 @@ extern "C" void Skas_Load(Skas_5580* self, Tok_5580* tok, void* list)
 #undef String_Dtor /* merge_units */
 #undef func_003B6150 /* merge_units */
 #undef String_Length /* merge_units */
-#undef func_002071A0 /* merge_units */
+#undef String_CStr_Thunk /* merge_units */
 #undef Skas_RegisterClip /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003B5580(void) {}
@@ -389,9 +389,9 @@ extern void String_CtorCStr_13B480(Str_6150* s, char* c);
 #define String_CtorCStr_13B480(a0, a1) (String_CtorCStr_13B480((void *)(a0), (a1))) /* merge_units */
 
 #if 0 /* merge_units */
-extern void func_0013D680(Str_6150* d, Str_6150* s);
+extern void String_AssignString(Str_6150* d, Str_6150* s);
 #endif /* merge_units */
-#define func_0013D680(a0, a1) (func_0013D680((void *)(a0), (void *)(a1))) /* merge_units */
+#define String_AssignString(a0, a1) (String_AssignString((void *)(a0), (void *)(a1))) /* merge_units */
 
 #if 0 /* merge_units */
 extern void String_Dtor(Str_6150* s, int f);
@@ -409,7 +409,7 @@ Tok_6150* func_003B6150(Tok_6150* self, Str_6150* out)
     {
         Str_6150 t;
         String_CtorCStr_13B480(&t, D_004BD008);
-        func_0013D680(out, &t);
+        String_AssignString(out, &t);
         String_Dtor(&t, 0);
     }
     started = 0;
@@ -428,7 +428,7 @@ Tok_6150* func_003B6150(Tok_6150* self, Str_6150* out)
     return self;
 }
 #undef String_CtorCStr_13B480 /* merge_units */
-#undef func_0013D680 /* merge_units */
+#undef String_AssignString /* merge_units */
 #undef String_Dtor /* merge_units */
 #undef String_PushBack /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */

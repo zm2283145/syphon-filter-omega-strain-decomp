@@ -65,7 +65,7 @@ typedef struct Vec24 {
     Elem24* data;                   /* 0x08 */
 } Vec24;
 
-/* 3x4 float matrix rows (func_00370000 copies a 3x4 into +0x10). */
+/* 3x4 float matrix rows (Mtx44_SetRows123FromMtx34_370000 copies a 3x4 into +0x10). */
 typedef struct Mtx34 {
     float m[3][4];
 } Mtx34;
@@ -228,7 +228,7 @@ typedef struct GuiAgentInfoTarget {
     int unk4E0;                     /* 0x4E0 */
 } GuiAgentInfoTarget;
 
-/* Embedded member at +0x88 of GuiAgentInfo (two func_00298690 sub-objects). */
+/* Embedded member at +0x88 of GuiAgentInfo (two String_CtorEmpty sub-objects). */
 typedef struct GuiAgentInfoMember88 {
     char pad00[0x30];
     char unk30[0xC];                /* 0x30 */
@@ -286,7 +286,7 @@ typedef struct Rec377C30 {
 } Rec377C30;
 
 /* Object (vtable D_004DF6A0) holding a 3x4 matrix at +0x10: slot 8 (func_0036FFB0)
- * returns its address, slot 12 (func_00370000) sets it. */
+ * returns its address, slot 12 (Mtx44_SetRows123FromMtx34_370000) sets it. */
 typedef struct Obj370000 {
     char pad00[0x10];
     Mtx34 mtx;                      /* 0x10 */

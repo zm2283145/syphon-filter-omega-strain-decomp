@@ -22,13 +22,13 @@ void *memset(void *, int, int);
 /* Release the owned record at +0xA0 (string member at +0x14) under the allocator guard, clear +0xA0/+0xA4. */
 extern "C" {
 void* String_Dtor(void* self, short flags);
-void func_00424A50(void* self);
+void GuiArrayWidget_Sleep(void* self);
 }
 struct O2ABC90 { char pad[0xA8]; char* aA0; int aA4; };
-extern "C" void func_002ABC90(O2ABC90* o)
+extern "C" void GuiMissionList_Sleep(O2ABC90* o)
 {
     char* p;
-    func_00424A50(o);
+    GuiArrayWidget_Sleep(o);
     p = o->aA0;
     {
         AllocGuard guard;
@@ -66,7 +66,7 @@ extern void TextObj_SetText(C2AB*, char*);
 extern L2AB* DME_GetLobby(void);
 extern int func_0044FA40(L2AB*);
 }
-extern "C" void func_002ABD50(W2AB* w) {
+extern "C" void GuiMissionList_Wake(W2AB* w) {
     char buf[0x50];
     C2AB* c;
     L2AB* l;

@@ -9,8 +9,8 @@
 #include "types.h"
 int String_Copy(char*, char*);
 int Lobby_GetTime(void);
-int* func_00443F40(int);
-void func_00443EA0(int*);
+int* SFOLobby_AllocZeroed(int);
+void SFOLobby_Free(int*);
 int func_0046A2D0(void*, void*);
 void func_00454010(char*);
 int sprintf(char*, const char*, ...);
@@ -64,7 +64,7 @@ static inline void SetErr_4526D0(Lobby_4526D0* self, unsigned char code, char* f
 
 static inline void Free_4526D0(Lobby_4526D0* self)
 {
-    func_00443EA0(self->f248);
+    SFOLobby_Free(self->f248);
     self->f248 = 0;
 }
 
@@ -85,7 +85,7 @@ int func_004526D0(Lobby_4526D0* self, char* room)
     req.f68 = 1;
     self->f244 = 0;
     self->f2410 = Lobby_GetTime();
-    self->f248 = func_00443F40(D_00585F90 * 4);
+    self->f248 = SFOLobby_AllocZeroed(D_00585F90 * 4);
     for (i = 0; i < D_00585F90; i++)
         self->f248[i] = -1;
     self->f24C = func_0046A2D0(&req, &func_00452A70);

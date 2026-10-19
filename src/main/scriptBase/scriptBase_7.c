@@ -51,7 +51,7 @@ static inline void DelB_3D7960(void* b) { DelB2_3D7960(b); }
 static inline void DelD1_3D7960(void* d) { DelD0_3D7960(d); }
 static inline void DelD2_3D7960(void* d) { DelD1_3D7960(d); }
 static inline void DelD_3D7960(void* d) { DelD2_3D7960(d); }
-extern "C" void func_003D7960(void)
+extern "C" void Script_TrimSymbolsToMarks(void)
 {
     while (D_00554F30->count > D_00554F50) {
         Pool_3D7960* p = D_00554F30; A_3D7960* a = (A_3D7960*)p->data[p->count - 1];
@@ -106,7 +106,7 @@ extern Node4* D_00554F30;
 
 
 /* Caches the second word of four list heads. */
-void func_003D7E30(void) {
+void Script_SaveSymbolMarks(void) {
     D_00554F48 = D_00554F28->next;
     D_00554F50 = D_00554F30->next;
     D_00554F40 = D_00554F20->next;

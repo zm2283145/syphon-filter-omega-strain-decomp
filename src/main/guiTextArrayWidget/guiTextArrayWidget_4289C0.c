@@ -94,6 +94,6 @@ DEFINE_SHORT_STRING_COPY_CTOR(func_00428B90)
 
 /* Factory: allocate and construct. */
 extern "C" { char D_004BF868[] = "guiWidget.hh"; }
-DEFINE_GUARDED_NEW_CTOR(func_00428C20, 0xC0, D_004BF868, guiTextArrayWidget_ctor)
+DEFINE_GUARDED_NEW_CTOR(GuiTextArrayWidget_Create, 0xC0, D_004BF868, guiTextArrayWidget_ctor)
 #pragma pop /* merge_units */
 /* merge_units: end func_00428C20 */

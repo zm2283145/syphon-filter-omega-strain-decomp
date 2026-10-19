@@ -7,6 +7,6 @@
 #include "types.h"
 
 
-char* func_0043D720(void) {
+char* MLTextWidget_GetClassName(void) {
     return "GuiMLTextWidget";
 }

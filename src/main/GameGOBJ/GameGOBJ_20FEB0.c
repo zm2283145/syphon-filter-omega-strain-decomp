@@ -51,14 +51,14 @@ extern char D_004F5410[];
 extern char D_004DAE50[];
 extern char D_004DCF10[];
 extern void Event_Construct(M_20FFD0* m, void* type);
-extern void func_00232B50(int b);
+extern void cAtmosphericEffectMsg_Apply(int b);
 extern void cMessage_dtor(M_20FFD0* m, int flags);
-void func_0020FFD0(void) {
+void cAtmosphericEffectMsg_NetReceive(void) {
     M_20FFD0 m;
     Event_Construct(&m, D_004F5410);
     m.vtable = D_004DAE50;
     m.b = R32_20FFD0();
-    func_00232B50(m.b);
+    cAtmosphericEffectMsg_Apply(m.b);
     m.vtable = D_004DCF10;
     cMessage_dtor(&m, 0);
 }

@@ -31,7 +31,7 @@ static inline void VI_Construct(VIElem* p, const VIElem* src)
         if (n == 0)                                                             \
             return;                                                             \
         if (n > 0xC00000 || v->count > 0xC00000 - n) {                          \
-            func_00123BE8(D_00489738->stream, errSym);                          \
+            Libc_Fprintf(D_00489738->stream, errSym);                          \
             Libc_Abort();                                                    \
         }                                                                       \
         if (v->count + n <= v->cap) {                                           \

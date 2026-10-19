@@ -30,7 +30,7 @@ static const Ids_5A D_0048A2F8 = { { -1, -1, -1, -1 }, -1 };
 static inline bool Ready_5A(O_5A* o) { return o->b2D && o->b2C && !o->b2E; }
 extern "C" void func_002C72A0(int a, int b, int c, void* d, void* e, Ids_5A* ids, int f);
 extern "C" void func_002C7110(int a, int b, int c, void* d, void* e, Ids_5A* ids, unsigned char r, unsigned char g, int f);
-extern "C" int func_00185A30(O_5A* o, int a)
+extern "C" int Npc_v05(O_5A* o, int a)
 {
     if (Ready_5A(o)) {
         Ids_5A ids = D_0048A2F8;

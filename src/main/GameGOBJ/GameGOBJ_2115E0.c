@@ -67,7 +67,7 @@ void cMessage_dtor(Msg211700*, int);
 #pragma push
 #pragma opt_propagation off
 #pragma opt_common_subs off
-extern "C" int func_00211700(int a0, int a1, int a2, Pk211700* arg) {
+extern "C" int cGOBJTriggerEventMsg_NetReceive(int a0, int a1, int a2, Pk211700* arg) {
     NetRecvGuard g;
     Pk211700* p;
     p = arg;

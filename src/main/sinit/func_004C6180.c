@@ -65,7 +65,7 @@ extern int D_004EE840;
 extern int D_004EE848;
 extern int D_004EE850;
 extern int D_004EE858;
-void func_004C6180(void) {
+void StaticInit_RegisterPlayer(void) {
     D_004EE788 = Script_RegisterType("cPlayer", ScriptType_cPlayer_Init, 0, 1);
     D_004EE790 = D_004EE788;
     D_004EE798 = Script_RegisterNative(D_004EE788, Script_cPlayer_GetPlayerObject, cGOBJ_GetScriptTypeKeyPtr(), "GetPlayerObject", 1, &D_004EE788);

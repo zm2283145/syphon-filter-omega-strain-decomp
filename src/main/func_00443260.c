@@ -6,7 +6,7 @@ int String_Copy(char * , int);
 int atoi(int);
 int String_CompareNoCase(int, char *);
 
-void func_00443260(char * arg0, int arg1, int arg2) {
+void SFOLobby_ParseServerSetting(char * arg0, int arg1, int arg2) {
     signed char temp_s1;
     int var_v0;
 

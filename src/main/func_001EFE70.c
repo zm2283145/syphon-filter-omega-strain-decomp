@@ -20,7 +20,7 @@ extern void func_001F0540(void*, int, void*, float, float, void*, int);
 extern void func_001F04E0(void*, int);
 /* Builds and registers one block of motion-graph nodes. */
 #pragma optimization_level 1
-void func_001EFE70(void* p0)
+void MotionGraph_BuildDeathLanding(void* p0)
 {
     B4 v70C;
     B4 v708;

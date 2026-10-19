@@ -34,6 +34,6 @@ void func_002A0020(StrHdr* str, const char* first, const char* last)
 
 /* Factory: allocate and construct. */
 extern "C" { char D_004AAD88[] = "guiWidget.hh"; }
-DEFINE_GUARDED_NEW_CTOR(func_002A0070, 0x124, D_004AAD88, GuiOnlineConnect_ctor)
+DEFINE_GUARDED_NEW_CTOR(GuiOnlineConnect_Create, 0x124, D_004AAD88, GuiOnlineConnect_ctor)
 #pragma pop /* merge_units */
 /* merge_units: end func_002A0070 */

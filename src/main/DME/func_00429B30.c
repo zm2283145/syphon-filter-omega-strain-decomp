@@ -11,9 +11,9 @@ extern char D_00582740[]; /* message type key "NetPlayGameMsg" */
 /* NetPlayGameMsg vtable */
 extern void Message_GetScriptTypeKey();
 extern void cNetPlayGameMsg_dtor();
-extern void func_00431750();
-extern void func_00431900();
-void * const D_004E0EC0[8] = { (void*)0x0, (void*)0x0, (void*)cNetPlayGameMsg_dtor, (void*)func_00431750, (void*)func_00431900, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
+extern void cNetPlayGameMsg_v01();
+extern void cNetPlayGameMsg_v02();
+void * const D_004E0EC0[8] = { (void*)0x0, (void*)0x0, (void*)cNetPlayGameMsg_dtor, (void*)cNetPlayGameMsg_v01, (void*)cNetPlayGameMsg_v02, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
 extern void Event_Construct(Msg* msg, void* name);
 extern void Transport_Send(int target, Msg* msg, int a, int b);
 extern void cMessage_dtor(Msg* msg, int flags);

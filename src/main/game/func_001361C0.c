@@ -6,10 +6,10 @@
 
 #include "types.h"
 
-extern int func_00139920(int, int);
+extern int Vector_Reserve_139920(int, int);
 
-int func_001361C0(int a0, int a1) {
-    return func_00139920(a0, a1);
+int Vector_Reserve_139920_Thunk(int a0, int a1) {
+    return Vector_Reserve_139920(a0, a1);
 }
 
 int func_001361D0(char* self) {

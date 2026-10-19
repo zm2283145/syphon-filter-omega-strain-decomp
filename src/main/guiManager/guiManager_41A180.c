@@ -72,7 +72,7 @@ void String_CtorCStr_13B480(Str_41A2C0* s, char* c);
 void String_Dtor(Str_41A2C0* s, int f);
 void func_003B52B0(Str_41A2C0* out, Str_41A2C0* s, int a, int b);
 void func_002072B0(Str_41A2C0* out, Str_41A2C0* a, Str_41A2C0* b);
-void func_0013D680(Str_41A2C0* d, Str_41A2C0* s);
+void String_AssignString(Str_41A2C0* d, Str_41A2C0* s);
 #if 0 /* merge_units */
 void GuiTextEditWidget_ClampCursor(O_41A2C0* o, int c);
 #endif /* merge_units */
@@ -97,7 +97,7 @@ extern "C" int GuiTextEditWidget_Insert(O_41A2C0* o, char* text)
         Str_41A2C0 t2;
         func_002072B0(&t1, &left, &s);
         func_002072B0(&t2, &t1, &right);
-        func_0013D680(&o->str, &t2);
+        String_AssignString(&o->str, &t2);
         String_Dtor(&t2, 0);
         String_Dtor(&t1, 0);
     }

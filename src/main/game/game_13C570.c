@@ -11,19 +11,19 @@
 #include "tree_insert_obj.h"
 struct Val_1C4F20 { int a, b, c; int d; };
 extern "C" {
-void func_0013BCB0(void* d, const void* s);
+void String_CopyCtor(void* d, const void* s);
 void func_0013CD40(void* node, void* root);
 }
-extern "C" TONode* func_0013C570(TOTree* tree, TONode* parent, int left, int first, const Val_1C4F20* src)
+extern "C" TONode* Tree_Insert_13C570(TOTree* tree, TONode* parent, int left, int first, const Val_1C4F20* src)
 {
     if (tree->count > 0xFFFFFFFFU - 1) {
-        func_00123BE8(D_00489738->stream, "tree::insert length error\n");
+        Libc_Fprintf(D_00489738->stream, "tree::insert length error\n");
         Libc_Abort();
     }
     TONode* node = (TONode*)TStr_Alloc(0x1C, "allocator.hh", 0x5C);
     Val_1C4F20* v = (Val_1C4F20*)node->value;
     if (v) {
-        func_0013BCB0(v, src);
+        String_CopyCtor(v, src);
         v->d = src->d;
     }
     node->right = 0;

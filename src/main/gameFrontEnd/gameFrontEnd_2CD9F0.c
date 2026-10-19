@@ -161,7 +161,7 @@ void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
 }
 
 struct Str_CE1A0 { int w[3]; };
-extern "C" Str_CE1A0* func_0013BCB0(Str_CE1A0* self, const Str_CE1A0* src);
+extern "C" Str_CE1A0* String_CopyCtor(Str_CE1A0* self, const Str_CE1A0* src);
 
 struct Val_CE1A0 {
     int a;
@@ -225,8 +225,8 @@ extern "C" int func_002CE1A0(Node_CE1A0** result, List_CE1A0* list, Node_CE1A0**
     if (v) {
         v->a = value->a;
         v->b = value->b;
-        func_0013BCB0(&v->s8, &value->s8);
-        func_0013BCB0(&v->s14, &value->s14);
+        String_CopyCtor(&v->s8, &value->s8);
+        String_CopyCtor(&v->s14, &value->s14);
         v->f20 = value->f20;
         v->f24 = value->f24;
     }

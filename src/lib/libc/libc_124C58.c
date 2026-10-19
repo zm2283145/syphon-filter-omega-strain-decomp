@@ -1,7 +1,7 @@
 struct siov_00124C58 { const void* iov_base; unsigned int iov_len; };
 struct suio_00124C58 { struct siov_00124C58* uio_iov; int uio_iovcnt; int uio_resid; };
 extern int __sfvwrite(void* fp, struct suio_00124C58* uio);
-unsigned int func_00124C58(const void* buf, unsigned int size, unsigned int count, void* fp)
+unsigned int Libc_Fwrite(const void* buf, unsigned int size, unsigned int count, void* fp)
 {
   unsigned int n;
   struct suio_00124C58 uio;

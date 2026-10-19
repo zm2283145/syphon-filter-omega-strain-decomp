@@ -14,7 +14,7 @@ int Script_cHumanSeenMsg_Who(char** args) {
     return GObj_IdentityA(*(int*)(args[0] + 0x24));
 }
 
-void func_0017A060(void) {
+void ScriptType_cHumanSeenMsg_Init(void) {
 }
 
 /* Returns the value of global D_004EE948. */

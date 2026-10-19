@@ -13,7 +13,7 @@ extern int D_004F8310;
 extern int D_004F8318;
 extern int D_004F8320;
 extern int D_004F8328;
-void func_004D0830(void) {
+void StaticInit_RegisterFireObj(void) {
     D_004F8308 = "FIRE";
     __register_global_object(&D_004F8308, func_00144930, &D_004F82F8);
     D_004F8310 = Script_RegisterType("cFireObj", ScriptType_cFireObj_Init, 0, 1);

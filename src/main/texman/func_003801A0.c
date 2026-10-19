@@ -11,7 +11,7 @@ extern "C" {
 Node_3801A0* func_00380270(void* header);
 void* func_00380260(void* list);
 void func_00380250(It_3801A0* out, void* node);
-void func_00383560(It_3801A0* result, void* list, It_3801A0* pos);
+void List_Erase_383560(It_3801A0* result, void* list, It_3801A0* pos);
 }
 
 extern "C" void func_003801A0(Obj_3801A0* o, int v)
@@ -23,7 +23,7 @@ extern "C" void func_003801A0(Obj_3801A0* o, int v)
     for (n = func_00380270(&o->header)->next; (func_00380250(&end, func_00380260(&o->list)), n != end.p); n = n->next) {
         if (v == n->value) {
             pos.p = n;
-            func_00383560(&result, &o->list, &pos);
+            List_Erase_383560(&result, &o->list, &pos);
             return;
         }
     }

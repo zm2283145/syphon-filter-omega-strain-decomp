@@ -6,9 +6,9 @@
 
 #include "types.h"
 
-extern int func_0013BCB0(int, int);
+extern int String_CopyCtor(int, int);
 
 int func_00207310(int a0, int a1) {
-    func_0013BCB0(a0, a1);
+    String_CopyCtor(a0, a1);
     return a0;
 }

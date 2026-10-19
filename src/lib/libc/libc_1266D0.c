@@ -7,12 +7,12 @@
 /* merge_units: begin func_001266D0 */
 #include "types.h"
 
-extern int func_00126280(int, int);
+extern int Newlib_Balloc(int, int);
 
-int func_001266D0(int a0, int a1) {
+int Newlib_I2b(int a0, int a1) {
     int tmp0;
 
-    tmp0 = func_00126280(a0, 1);
+    tmp0 = Newlib_Balloc(a0, 1);
     *(int*)((char*)tmp0 + 20) = a1;
     *(int*)((char*)tmp0 + 16) = 1;
     return tmp0;
@@ -29,13 +29,13 @@ typedef struct _Bigint {
 } _Bigint;
 struct _reent;
 #if 0 /* merge_units */
-extern _Bigint *func_00126280(struct _reent *ptr, int k);
+extern _Bigint *Newlib_Balloc(struct _reent *ptr, int k);
 #endif /* merge_units */
-#define func_00126280(a0, a1) ((_Bigint *)func_00126280((int)(a0), (a1))) /* merge_units */
+#define Newlib_Balloc(a0, a1) ((_Bigint *)Newlib_Balloc((int)(a0), (a1))) /* merge_units */
 
 #define Storeinc(a,b,c) (((unsigned short *)a)[0] = (unsigned short)c, ((unsigned short *)a)[1] = (unsigned short)b, a++)
 
-_Bigint *func_00126708(struct _reent *ptr, _Bigint *a, _Bigint *b)
+_Bigint *Newlib_Multiply(struct _reent *ptr, _Bigint *a, _Bigint *b)
 {
     _Bigint *c;
     int k, wa, wb, wc;
@@ -54,7 +54,7 @@ _Bigint *func_00126708(struct _reent *ptr, _Bigint *a, _Bigint *b)
     wc = wa + wb;
     if (wc > a->_maxwds)
         k++;
-    c = func_00126280(ptr, k);
+    c = Newlib_Balloc(ptr, k);
     for (x = c->_x, xa = x + wc; x < xa; x++)
         *x = 0;
     xa = a->_x;
@@ -95,5 +95,5 @@ _Bigint *func_00126708(struct _reent *ptr, _Bigint *a, _Bigint *b)
     c->_wds = wc;
     return c;
 }
-#undef func_00126280 /* merge_units */
+#undef Newlib_Balloc /* merge_units */
 /* merge_units: end func_00126708 */

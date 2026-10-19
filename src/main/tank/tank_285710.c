@@ -34,7 +34,7 @@ void Event_Send(void* m, void* target, int immediate);
 void cMessage_dtor(void* m, int flags);
 }
 static inline int IsAuth285710(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
-extern "C" void func_00285710(Tank285710* self, float v) {
+extern "C" void cNetUpdateTankMsg_Send_285710(Tank285710* self, float v) {
     Gun285710* t = self->turret;
     cNIEventOBJ_SetSpeedRecursive(t);
     t->Fire();

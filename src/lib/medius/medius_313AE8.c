@@ -6,9 +6,9 @@ typedef struct {
     unsigned int bitsHi;
 } Ctx3AE8;
 extern void *memcpy(void *d, const void *s, unsigned int n);
-extern void func_004B3320(Ctx3AE8 *c, int n, int order);
-extern void func_004B13D0(Ctx3AE8 *c);
-void func_00313AE8(Ctx3AE8 *c, unsigned char *data, unsigned int len)
+extern void Sha1_ByteSwapWords(Ctx3AE8 *c, int n, int order);
+extern void Sha1_Transform(Ctx3AE8 *c);
+void Sha1_Update(Ctx3AE8 *c, unsigned char *data, unsigned int len)
 {
     unsigned int tmp;
     unsigned int n;
@@ -25,15 +25,15 @@ void func_00313AE8(Ctx3AE8 *c, unsigned char *data, unsigned int len)
             return;
         }
         memcpy(p, data, n);
-        func_004B3320(c, 0x40, c->order);
-        func_004B13D0(c);
+        Sha1_ByteSwapWords(c, 0x40, c->order);
+        Sha1_Transform(c);
         data += n;
         len -= n;
     }
     while (len >= 0x40) {
         memcpy(c->buf, data, 0x40);
-        func_004B3320(c, 0x40, c->order);
-        func_004B13D0(c);
+        Sha1_ByteSwapWords(c, 0x40, c->order);
+        Sha1_Transform(c);
         data += 0x40;
         len -= 0x40;
     }

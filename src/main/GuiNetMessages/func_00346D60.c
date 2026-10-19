@@ -19,7 +19,7 @@ extern void func_00346FB0(S_46D60* s, int x);
 extern void func_00450F30(void* l, int id, int ok);
 extern void LobbyArray_SetDirty(void* l, int a);
 extern int GuiScreen_HandleEvent(S_46D60* s, void* from, unsigned short ev, int kind, int data);
-int func_00346D60(S_46D60* self, void* from, unsigned short ev, int kind, int data)
+int GuiNetMessages_HandleEvent(S_46D60* self, void* from, unsigned short ev, int kind, int data)
 {
     if (kind == 0x19 && ev == 0x1A) {
         void* scr = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004BA310, D_004BA328);

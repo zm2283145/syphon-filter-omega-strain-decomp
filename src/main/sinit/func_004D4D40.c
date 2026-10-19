@@ -12,14 +12,14 @@ extern char *D_00533750;
 extern char *D_00533758;
 extern char D_00533768;
 extern char D_00533778;
-extern char func_00138350;
+extern char String_Dtor_138350;
 
-void func_004D4D40(void) {
+void StaticInit_GuiScoresEquip(void) {
     D_00533758 = &D_004DF330;
     D_00533750 = "GuiScoresEquip";
     FreeList_Push(&D_00533750);
     String_CtorCStr_13B480(&D_004BB4B8, "FEMALE.SKAS");
-    __register_global_object(&D_004BB4B8, &func_00138350, &D_00533768);
+    __register_global_object(&D_004BB4B8, &String_Dtor_138350, &D_00533768);
     String_CtorCStr_13B480(&D_004BB4C8, "MALE.SKAS");
-    __register_global_object(&D_004BB4C8, &func_00138350, &D_00533778);
+    __register_global_object(&D_004BB4C8, &String_Dtor_138350, &D_00533778);
 }

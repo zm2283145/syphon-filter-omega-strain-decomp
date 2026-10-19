@@ -35,12 +35,12 @@ static inline void Construct1EF6C0(E1EF6C0* p, const E1EF6C0* s)
 {
     new (p) E1EF6C0(*s);
 }
-extern "C" void func_001EF6C0(V1EF6C0* v, unsigned int n)
+extern "C" void Vector_Reserve_1EF6C0(V1EF6C0* v, unsigned int n)
 {
     if (v->cap < n) {
         unsigned int mx = 0x100000;
         if (n > mx) {
-            func_00123BE8(D_00489738->stream, D_004A04E0);
+            Libc_Fprintf(D_00489738->stream, D_004A04E0);
             Libc_Abort();
         }
         V1EF6C0 tmp;

@@ -14,14 +14,14 @@ typedef struct Ring {
     int size;
 } Ring;
 
-extern void func_001161A0(void); /* lock */
-extern void func_001161F8(void); /* unlock */
+extern void DIntr(void); /* lock */
+extern void EIntr(void); /* unlock */
 
 /* Marks the head slot ready (state 2) and advances the ring under the lock. */
 void func_003F5F70(Ring* ring) {
-    func_001161A0();
+    DIntr();
     ring->slots[ring->head].state = 2;
     ring->count++;
     ring->head = (ring->head + 1) % ring->size;
-    func_001161F8();
+    EIntr();
 }

@@ -30,7 +30,7 @@ int func_0044B420(G_002AFA80* g, void* cb, void* a, void* b);
 Ag_002AFA80* Agent_GetSelected(void* a, int b);
 void String_Copy(char* d, const char* s);
 void String_CtorCStr_13B480(Str_002AFA80* s, const char* c);
-void func_0013D680(Str_002AFA80* d, Str_002AFA80* s);
+void String_AssignString(Str_002AFA80* d, Str_002AFA80* s);
 void String_Dtor(Str_002AFA80* s, int flags);
 char* func_0044A060(G_002AFA80* g);
 void GuiTextWidget_SetText(W_002AFA80* w, char* s, int a);
@@ -54,7 +54,7 @@ static inline void SetVis_002AFA80(Self_002AFA80* self, W_002AFA80* w)
             w->flags &= ~4;
     }
 }
-extern "C" void func_002AFA80(Self_002AFA80* self)
+extern "C" void GuiNetAgencyCell_Activate(Self_002AFA80* self)
 {
     G_002AFA80* g;
     W_002AFA80* w;
@@ -71,12 +71,12 @@ extern "C" void func_002AFA80(Self_002AFA80* self)
                 Str_002AFA80 s;
                 String_Copy(Agent_GetSelected(g_Game, -1)->name, n);
                 String_CtorCStr_13B480(&s, n);
-                func_0013D680(&self->s174, &s);
+                String_AssignString(&self->s174, &s);
                 String_Dtor(&s, 0);
             } else {
                 Str_002AFA80 s2;
                 String_CtorCStr_13B480(&s2, D_004ABCD0);
-                func_0013D680(&self->s174, &s2);
+                String_AssignString(&self->s174, &s2);
                 String_Dtor(&s2, 0);
             }
             g2 = DME_GetLobby();

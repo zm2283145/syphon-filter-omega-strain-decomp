@@ -60,7 +60,7 @@ void* Mem_Alloc(int, int, char*, int);
 void* func_002D6030(void*, void*, Act*);
 void Npc_CreatePhysical(Act*);
 void Actor_InitComponents(Act*, int, int, void*);
-void func_00392900(Act*);
+void Actor_v06(Act*);
 void Human_ApplyBoundSpheres(Act*);
 void Human_ApplyCentroidWeights(Act*);
 void TargetVis_Register(char*, Act*);
@@ -113,7 +113,7 @@ extern "C" void Npc_Enable(Act* a)
             }
         }
     }
-    func_00392900(a);
+    Actor_v06(a);
     Human_ApplyBoundSpheres(a);
     Human_ApplyCentroidWeights(a);
     TargetVis_Register(&g_TargetVisMgr, a);

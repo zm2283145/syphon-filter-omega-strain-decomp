@@ -100,11 +100,11 @@ extern Hook_00322438 D_004E1D34;
 #endif /* merge_units */
 #define D_004E1D34 (*(Hook_00322438*)&D_004E1D34) /* merge_units */
 
-extern void func_00121D00(void);
+extern void Libc_Calloc(void);
 int func_00322438(Hook_00322438 fn)
 {
     if (D_004E1D4C) return 0x184C;
-    if (!fn) fn = (Hook_00322438)func_00121D00;
+    if (!fn) fn = (Hook_00322438)Libc_Calloc;
     D_004E1D34 = fn;
     return 0;
 }

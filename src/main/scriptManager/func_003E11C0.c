@@ -8,7 +8,7 @@ char D_004BD888[] __attribute__((aligned(8))) = "."; /* 8-aligned in the origina
 
 char*strrchr(char*,int);int sprintf(char*,char*,...);
 void String_Copy(char*,char*);void Libc_Strcat(char*,char*);
-char*func_003E11C0(struct Script*self,char*name,char*extension,int moduleOnly){
+char*ScriptMgr_BuildScriptPath(struct Script*self,char*name,char*extension,int moduleOnly){
  char*last;
  last=strrchr(name,'\\');if(last)name=last+1;
  if(moduleOnly)sprintf(D_00559FE0,D_004BD868,self->module,name);

@@ -1,4 +1,4 @@
-#define ObjectList_EraseRange func_00459780
+#define ObjectList_EraseRange ObjectList_EraseRange_459780
 #pragma cplusplus on
 
 #include "types.h"

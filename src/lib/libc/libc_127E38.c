@@ -6,13 +6,13 @@
 
 /* merge_units: begin func_00127E38 */
 extern int D_0058805C;
-extern int func_0010D7A8(int fd, void* buf, unsigned int cnt);
+extern int Newlib_SysRead(int fd, void* buf, unsigned int cnt);
 struct reent_00127E38 { int _errno; };
-long func_00127E38(struct reent_00127E38* ptr, int fd, void* buf, unsigned int cnt)
+long Newlib_ReadR(struct reent_00127E38* ptr, int fd, void* buf, unsigned int cnt)
 {
     long ret;
     D_0058805C = 0;
-    if ((ret = func_0010D7A8(fd, buf, cnt)) == -1 && D_0058805C != 0)
+    if ((ret = Newlib_SysRead(fd, buf, cnt)) == -1 && D_0058805C != 0)
         ptr->_errno = D_0058805C;
     return ret;
 }
@@ -21,15 +21,15 @@ long func_00127E38(struct reent_00127E38* ptr, int fd, void* buf, unsigned int c
 /* merge_units: begin func_00127E98 */
 #include "types.h"
 extern void* D_00489738;
-extern void func_001261B0(void* r);
-extern void func_00126230(void* r);
+extern void Newlib_MallocLock(void* r);
+extern void Newlib_MallocUnlock(void* r);
 extern void* _realloc_r(void* reent, unsigned int n, unsigned int elem_size);
-void* func_00127E98(unsigned int n, unsigned int size)
+void* Libc_Realloc(unsigned int n, unsigned int size)
 {
     void* r;
-    func_001261B0(D_00489738);
+    Newlib_MallocLock(D_00489738);
     r = _realloc_r(D_00489738, n, size);
-    func_00126230(D_00489738);
+    Newlib_MallocUnlock(D_00489738);
     return r;
 }
 /* merge_units: end func_00127E98 */

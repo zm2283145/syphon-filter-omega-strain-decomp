@@ -49,7 +49,7 @@ void String_PushBack_41B5F0(String* str, char c) {
 #include "string_reserve.h"
 
 extern "C" { char D_004BF210[] = "basic_string::reserve length_error"; }
-DEFINE_STRING_RESERVE(func_0041B650, D_004BF210, D_0049ADE0, 0x5C, D_0049AE90, 0x64)
+DEFINE_STRING_RESERVE(String_Reserve_41B650, D_004BF210, D_0049ADE0, 0x5C, D_0049AE90, 0x64)
 #pragma pop /* merge_units */
 /* merge_units: end func_0041B650 */
 
@@ -60,6 +60,6 @@ DEFINE_STRING_RESERVE(func_0041B650, D_004BF210, D_0049ADE0, 0x5C, D_0049AE90, 0
 #include "stream_string_dtor.h"
 
 /* Destroy a string holder: free heap storage, optionally delete. */
-DEFINE_STREAM_STRING_DTOR(func_0041B990)
+DEFINE_STREAM_STRING_DTOR(String_Dtor_41B990)
 #pragma pop /* merge_units */
 /* merge_units: end func_0041B990 */

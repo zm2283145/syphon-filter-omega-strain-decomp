@@ -70,7 +70,7 @@ extern "C" {
 extern char g_Video[];
 extern int D_00538C64;
 extern char D_00538C68;
-void func_00423600(Self* self, int a, int b, float* r);
+void GuiArrayWidget_DrawCell(Self* self, int a, int b, float* r);
 Item* GuiTextArrayWidget_GetCell(Self* self, int a, int b);
 void TextObj_SetColour(Child* c, void* p);
 char* String_CStr(void* s);
@@ -89,7 +89,7 @@ static inline void UM(void* p) { int t; __asm__ volatile("sqc2 $vf0, 0x30(%1); q
 extern "C" void GuiTextArrayWidget_DrawCell(Self* self, int a, int b, float* r)
 {
     Item* it;
-    func_00423600(self, a, b, r);
+    GuiArrayWidget_DrawCell(self, a, b, r);
     if (self->child == 0) return;
     it = GuiTextArrayWidget_GetCell(self, a, b);
     if (it == 0) return;
@@ -121,7 +121,7 @@ static inline void merge_flush_func_00425EA0(void) {}
 
 extern "C" {
 extern char D_004BF790[];
-void func_00424A50(guiTextArrayWidget* self);
+void GuiArrayWidget_Sleep(guiTextArrayWidget* self);
 void GuiArrayWidget_OnWake(guiTextArrayWidget* self);
 void GuiArrayWidget_Init(guiTextArrayWidget* self);
 void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
@@ -161,7 +161,7 @@ static inline void destroy_child(TextArrayWidgetChild* child)
 /* Deactivate the grid base and release the optional text-rendering child. */
 extern "C" void GuiTextArrayWidget_Sleep(guiTextArrayWidget* self)
 {
-    func_00424A50(self);
+    GuiArrayWidget_Sleep(self);
     TextArrayWidgetChild* child = self->unk90;
     if (child) {
         {

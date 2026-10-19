@@ -145,7 +145,7 @@ static inline void destroy_state(void* state)
 }
 
 /* Restore the base vtable and destroy layout state before the widget base. */
-extern "C" TextRenderWidget* func_00421DA0(TextRenderWidget* self, short deleteFlag)
+extern "C" TextRenderWidget* GuiArrayWidget_dtor_421DA0(TextRenderWidget* self, short deleteFlag)
 {
     if (self) {
         self->vtable = D_004E0D20;

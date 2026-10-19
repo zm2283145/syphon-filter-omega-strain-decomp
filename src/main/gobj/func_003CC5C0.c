@@ -5,10 +5,10 @@ typedef struct { char pad[0xC]; int id; char pad10[0x30]; float hp; } Obj_3CC5C0
 extern unsigned char g_IsMultiplayer;
 extern char D_00582750[];
 extern void Message_GetScriptTypeKey();
-extern void func_003CC670();
-extern void func_00431960();
-extern void func_00431BC0();
-void * const D_004E0EE0[8] = { (void*)0x0, (void*)0x0, (void*)func_003CC670, (void*)func_00431960, (void*)func_00431BC0, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
+extern void cNetSetGobjMsg_dtor();
+extern void cNetSetGobjMsg_v01();
+extern void cNetSetGobjMsg_v02();
+void * const D_004E0EE0[8] = { (void*)0x0, (void*)0x0, (void*)cNetSetGobjMsg_dtor, (void*)cNetSetGobjMsg_v01, (void*)cNetSetGobjMsg_v02, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
 extern void Event_Construct(Msg_3CC5C0* m, void* type);
 extern void Event_Send(Msg_3CC5C0* m, void* target, int x);
 extern void cMessage_dtor(Msg_3CC5C0* m, int f);

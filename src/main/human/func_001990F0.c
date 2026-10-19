@@ -26,7 +26,7 @@ extern void Event_Send(HumanMsg* msg, void* target, int flags);
 extern void cMessage_dtor(HumanMsg* msg, int flags);
 
 /* Stores the byte at +0x346C and, when g_IsMultiplayer is set and not silent, broadcasts it. */
-void func_001990F0(Human346C* self, unsigned char value, int silent) {
+void cNetSetFlagMsg_Send(Human346C* self, unsigned char value, int silent) {
     HumanMsg msg;
     self->value = value;
     if (g_IsMultiplayer && !silent) {

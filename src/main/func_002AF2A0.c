@@ -2,16 +2,16 @@
 
 typedef struct { char pad[0x160]; void* target; } Obj2AF;
 extern char D_004ABCD0[];
-extern void func_0033DE00(Obj2AF* o);
+extern void GuiMenuScreen_Update(Obj2AF* o);
 extern void* DME_GetLobby(void);
 extern char* func_0044A060(void* p);
 extern void GuiTextWidget_SetText(void* target, const char* text, int zero);
 
 /* Refreshes the object and forwards the current text (or a default) to its target. */
-void func_002AF2A0(Obj2AF* o)
+void GuiNetAgencyCell_Update(Obj2AF* o)
 {
     void* p;
-    func_0033DE00(o);
+    GuiMenuScreen_Update(o);
     p = DME_GetLobby();
     if (p) {
         char* text = func_0044A060(p);

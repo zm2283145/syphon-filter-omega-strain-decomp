@@ -51,7 +51,7 @@ Rel* func_002888C0(Rel* r) {
 }
 
 /* Base update, then record whether an agent is selected. */
-int func_002888E0(Unk288A80* self) {
+int GuiTitleScreen_Init(Unk288A80* self) {
     int selected;
 
     GuiWidget_Init(self);
@@ -167,6 +167,6 @@ void String_AssignCStr(StrHdr* str, const char* cstr) {
 
 /* String compare of a substring against a buffer. */
 extern "C" { char D_004A9630[] = "string compare: pos > len"; }
-DEFINE_STRING_COMPARE_RANGE(func_00288B40, D_004A9630)
+DEFINE_STRING_COMPARE_RANGE(String_Compare_288B40, D_004A9630)
 #pragma pop /* merge_units */
 /* merge_units: end func_00288B40 */

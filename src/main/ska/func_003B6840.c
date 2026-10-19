@@ -11,8 +11,8 @@ extern char D_004BC4E0[];
 extern char D_004BCFB8[];
 void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
 void Libc_Abort(void);
-void func_00123BE8(void* s, char* msg);
-void* func_00139BC0(unsigned int size, void* p);
+void Libc_Fprintf(void* s, char* msg);
+void* Mem_PlacementNew(unsigned int size, void* p);
 void func_003B6B20(void* d, E_6840* s);
 void func_003B6F70(void* d, E_6840* s);
 void func_003B6DC0(void* d, void* s);
@@ -40,14 +40,14 @@ extern "C" void func_003B6840(V_6840* v, E_6840* first, E_6840* last)
             v->count = n;
         } else if (v->count < n) {
             for (; first != last; first++, p++) {
-                void* o = func_00139BC0(sizeof(E_6840), p);
+                void* o = Mem_PlacementNew(sizeof(E_6840), p);
                 if (o) func_003B6B20(o, first);
                 v->count++;
             }
         }
     } else {
         if (n > 0x40000) {
-            func_00123BE8(D_00489738->stream, "vector::assign length error\n");
+            Libc_Fprintf(D_00489738->stream, "vector::assign length error\n");
             Libc_Abort();
         }
         func_00396D00(v);
@@ -64,7 +64,7 @@ extern "C" void func_003B6840(V_6840* v, E_6840* first, E_6840* last)
         {
             E_6840* p = v->data;
             for (; first != last; first++, p++) {
-                void* o = func_00139BC0(sizeof(E_6840), p);
+                void* o = Mem_PlacementNew(sizeof(E_6840), p);
                 if (o) func_003B6B20(o, first);
                 v->count++;
             }

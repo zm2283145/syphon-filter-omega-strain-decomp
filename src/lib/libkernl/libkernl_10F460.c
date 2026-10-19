@@ -10,14 +10,14 @@ extern int D_004E2D54;
 extern CmdData D_004E2D58;
 extern SysH D_004E2D80[32];
 extern int D_004E2F00[32];
-extern int func_001161A0(void);
-extern int func_001161F8(void);
+extern int DIntr(void);
+extern int EIntr(void);
 extern void FlushCache(int);
-extern void func_0010D540(void);
-extern int func_0010D560(unsigned int, unsigned int);
-extern unsigned int func_0010D570(unsigned int);
-extern int func_0010CE70(int, void *, int);
-extern int func_0010DD78(int);
+extern void sceSifSetDChain(void);
+extern int sceSifSetReg(unsigned int, unsigned int);
+extern unsigned int sceSifGetReg(unsigned int);
+extern int AddDmacHandler(int, void *, int);
+extern int EnableDmac(int);
 extern int func_0010F948(unsigned int, void *, int, void *, void *, int);
 extern void func_0010F408(void *, void *);
 extern void func_0010F3E8(void *, void *);
@@ -26,9 +26,9 @@ void func_0010F460(void)
 {
     int i;
     unsigned int v;
-    func_001161A0();
+    DIntr();
     if (D_004861A8) {
-        func_001161F8();
+        EIntr();
         return;
     }
     D_004861A8 = 1;
@@ -50,27 +50,27 @@ void func_0010F460(void)
     D_004E2D80[0].data = &D_004E2D58;
     D_004E2D80[1].func = func_0010F3E8;
     D_004E2D80[1].data = &D_004E2D58;
-    func_001161F8();
+    EIntr();
     FlushCache(0);
     if (R(0x1000E010) & 0x20)
         R(0x1000E010) = 0x20;
     if (!(R(0x1000C000) & 0x100))
-        func_0010D540();
-    D_004E2D54 = func_0010CE70(5, func_0010F9C8, 0);
-    func_0010DD78(5);
-    v = func_0010D570(0x80000000);
+        sceSifSetDChain();
+    D_004E2D54 = AddDmacHandler(5, func_0010F9C8, 0);
+    EnableDmac(5);
+    v = sceSifGetReg(0x80000000);
     D_004E2D58.iop = v;
     if (v) {
         D_004E2D40.x10 = D_004E2C80;
         func_0010F948(0x80000000, &D_004E2D40, 0x14, 0, 0, 0);
         return;
     }
-    while (!(func_0010D570(4) & 0x20000))
+    while (!(sceSifGetReg(4) & 0x20000))
         ;
-    v = func_0010D570(2);
+    v = sceSifGetReg(2);
     D_004E2D58.iop = v;
-    func_0010D560(0x80000000, v);
-    func_0010D560(0x80000001, (unsigned int)&D_004E2D58);
+    sceSifSetReg(0x80000000, v);
+    sceSifSetReg(0x80000001, (unsigned int)&D_004E2D58);
     D_004E2D40.x10 = D_004E2C80;
     D_004E2D40.xC = 0;
     func_0010F948(0x80000002, &D_004E2D40, 0x14, 0, 0, 0);

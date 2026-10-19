@@ -35,7 +35,7 @@ static inline void End1(It_345D0* out, List_345D0* l) { It_345D0 t; func_00232EE
 static inline void Beg2(It_345D0* out, List_345D0* l) { Beg1(out, l); }
 static inline void End2(It_345D0* out, List_345D0* l) { End1(out, l); }
 static inline void Kill2(E_345D0* e) { void* q = e->a; if (q) { AllocGuard g2; ParticleInst_Kill(q, -1); Mem_Free(0, q, D_004A6F38, 0x14F); } }
-extern "C" S_345D0* func_002345D0(S_345D0* self, short flag)
+extern "C" S_345D0* SnowField_dtor(S_345D0* self, short flag)
 {
     if (self) {
         *(char**)self = SnowField_vtable;

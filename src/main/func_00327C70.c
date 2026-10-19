@@ -12,7 +12,7 @@ typedef struct Obj84 {
 } Obj84;
 
 extern void String_CtorCStr_13B480(String*, const char*);
-extern void func_0013D680(String*, String*);
+extern void String_AssignString(String*, String*);
 extern void String_Dtor(String*, int);
 
 /* Sets two string fields and an int. */
@@ -20,10 +20,10 @@ void GuiSlideShow_SetReturn(Obj84* o, const char* name, const char* desc, int va
     String tmp2;
     String tmp1;
     String_CtorCStr_13B480(&tmp1, name);
-    func_0013D680(&o->name, &tmp1);
+    String_AssignString(&o->name, &tmp1);
     String_Dtor(&tmp1, 0);
     String_CtorCStr_13B480(&tmp2, desc);
-    func_0013D680(&o->desc, &tmp2);
+    String_AssignString(&o->desc, &tmp2);
     String_Dtor(&tmp2, 0);
     o->value = value;
 }

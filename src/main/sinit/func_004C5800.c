@@ -15,7 +15,7 @@ extern void func_00163970(void* p);
 extern void func_00163810(void* p);
 extern void Ptr_Identity(void* p);
 extern void cNode_ctor2(void* p, int a, int b, int c, float x, float y, float z);
-void func_004C5800(void)
+void StaticInit_PathSystem(void)
 {
     char* s;
     __construct_array(D_004EA7B0, func_001652E0, func_00165270, 0x20, 0x190);

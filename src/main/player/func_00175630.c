@@ -12,10 +12,10 @@ typedef struct { char pad[0xC]; int id; char pad2[0x4C - 0x10]; int kind; } Plr_
 typedef struct { char pad[0xC]; int id; char pad2[0x30 - 0x10]; Plr_SB* ctl; } GObj_SB;
 extern char D_004F80B8[];
 extern void Message_GetScriptTypeKey();
-extern void func_00175700();
-extern void func_0025E100();
-extern void func_0025E3E0();
-void * const D_004DC7F0[8] = { (void*)0x0, (void*)0x0, (void*)func_00175700, (void*)func_0025E100, (void*)func_0025E3E0, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
+extern void cSwitchBodiesMsg_dtor();
+extern void cSwitchBodiesMsg_Clone();
+extern void cSwitchBodiesMsg_Serialize();
+void * const D_004DC7F0[8] = { (void*)0x0, (void*)0x0, (void*)cSwitchBodiesMsg_dtor, (void*)cSwitchBodiesMsg_Clone, (void*)cSwitchBodiesMsg_Serialize, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
 extern int g_HumanActorClassKey;
 extern void Event_Construct(Msg_SB* msg, void* name);
 extern void Event_Send(Msg_SB* msg, void* target, int flags);

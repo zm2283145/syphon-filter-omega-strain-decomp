@@ -155,7 +155,7 @@ void Actor_SendSoundImmediate(Act_L* a);
 void Root_SetWorldPlacement(Root_L* r, Plc_L* p);
 Plc_L* Root_ResolveWorldPlacement(Root_L* r);
 void AnimChannel_SetDirect(float f, void* ch, int k);
-void* func_001A02B0(void* sys, int* key);
+void* RootCollection_FindByKey_Thunk(void* sys, int* key);
 void Root_ClearChildren(void* r);
 void Root_Attach(void* a, void* b, int f);
 int func_001A77D0(void* p);
@@ -1029,7 +1029,7 @@ extern "C" int AnimToken_Handle(Act_L* a, Ev_L* e)
     case 0x75:
         a->f324C &= ~2;
         a->f324C &= ~4;
-        Root_ClearChildren(func_001A02B0(a->sys, &D_0049D048));
+        Root_ClearChildren(RootCollection_FindByKey_Thunk(a->sys, &D_0049D048));
         break;
     case 0x77: {
         Prio_L(a->prio, 0x15, 1);
@@ -1039,9 +1039,9 @@ extern "C" int AnimToken_Handle(Act_L* a, Ev_L* e)
         int end;
         func_001A77C0(&it, func_001A77D0(sys + 0x100));
         func_001A77A0(&end, func_001A77D0(sys + 0x100));
-        void* root = func_001A02B0(sys, &D_0049D040);
+        void* root = RootCollection_FindByKey_Thunk(sys, &D_0049D040);
         while (func_001A6D00(&it, &end)) {
-            Root_Attach(root, func_001A02B0(*Ptr_IdentityCast(*func_001A7790(&it)), &D_0049D040), 1);
+            Root_Attach(root, RootCollection_FindByKey_Thunk(*Ptr_IdentityCast(*func_001A7790(&it)), &D_0049D040), 1);
             func_001A6D20(&it);
         }
         break;
@@ -1063,7 +1063,7 @@ extern "C" int AnimToken_Handle(Act_L* a, Ev_L* e)
         break;
     case 0x7D:
         Prio_L(a->prio, 0x15, 1);
-        Root_ClearChildren(func_001A02B0(a->sys, &D_0049D040));
+        Root_ClearChildren(RootCollection_FindByKey_Thunk(a->sys, &D_0049D040));
         break;
     case 0x7E:
     case 0x80:
@@ -1072,7 +1072,7 @@ extern "C" int AnimToken_Handle(Act_L* a, Ev_L* e)
     case 0x7F:
         Prio_L(a->prio, 0x15, 0);
         a->f324C &= ~0x10;
-        Root_ClearChildren(func_001A02B0(a->sys, &D_0049D048));
+        Root_ClearChildren(RootCollection_FindByKey_Thunk(a->sys, &D_0049D048));
         break;
     case 0x81:
         Prio_L(a->prio, 0x16, 1);

@@ -16,7 +16,7 @@ void func_0036DEC0(void*);
 void FileMan_Release(void*,int);
 void Resource_Construct(void*);
 void Script_PrintWarning(char*,...);
-void func_003D7E30();
+void Script_SaveSymbolMarks();
 void FileMan_Open(void*,char*,int);
 void func_003DDC30(void*,void*);
 }
@@ -38,7 +38,7 @@ struct Stream {
 };
 extern "C" int ScriptMgr_ExportSymbols(Self* self,int one,int two) {
  self->contextA=two; self->contextB=one;
- func_003D7E30();
+ Script_SaveSymbolMarks();
  int count=D_00554F28->count;
  for(int i=0;i<count;i++) D_00554F28->data[i]->init(0);
  if(D_004938D0 || D_00559F18) {

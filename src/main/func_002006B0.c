@@ -40,7 +40,7 @@ extern void* func_00201EF0(void*, void*);
 extern void func_002019D0(void*, void*, void*, void*);
 /* Builds and registers one block of motion-graph nodes. */
 #pragma optimization_level 1
-void func_002006B0(void* p0)
+void MotionGraph_BuildHeavyWeaponWalk(void* p0)
 {
     B4 v10CC;
     B4 v10C8;

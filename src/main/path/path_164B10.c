@@ -106,7 +106,7 @@ void func_001651B0(V_00164CA0* a, V_00164CA0* b);
 #pragma opt_common_subs off
 #pragma opt_dead_code off
 #pragma opt_loop_invariants off
-extern "C" void func_00164CA0(V_00164CA0* v, T* pos, unsigned int n, const T* value)
+extern "C" void Vector_Insert_164CA0(V_00164CA0* v, T* pos, unsigned int n, const T* value)
 {
     /* declared before vb so pb colours above vb (retail a3/a2) */
     Q_00164CA0* pb; const Q_00164CA0* vb;
@@ -114,7 +114,7 @@ extern "C" void func_00164CA0(V_00164CA0* v, T* pos, unsigned int n, const T* va
         return;
     unsigned int max = 0x300000;
     if (n > max || v->count > max - n) {
-        func_00123BE8(D_00489738->stream, D_0049C1C0);
+        Libc_Fprintf(D_00489738->stream, D_0049C1C0);
         Libc_Abort();
     }
     unsigned int cap = v->cap; unsigned int cnt = v->count;

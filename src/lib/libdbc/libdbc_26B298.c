@@ -6,7 +6,7 @@ extern E26B298 D_004FBB88[];
 extern int sceDbcCreateSocket(S26B298* p, void* rbuf, void* sbuf);
 extern int scePrintf(const char* fmt, ...);
 extern void func_0026B7C0(int i);
-int func_0026B298(P26B298* p, void* buf)
+int scePad2CreateSocket(P26B298* p, void* buf)
 {
     S26B298 s;
     int r;

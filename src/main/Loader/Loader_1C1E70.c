@@ -63,7 +63,7 @@ extern int D_0055DE94;
 extern BodyTbl g_AgentPartCache;
 extern void* g_ActorList;
 void* Mem_Alloc(int pool, int size, char* file, int line);
-void func_00165E60(void* a, char* name, int x);
+void Loader_UpdateLoadingScreen(void* a, char* name, int x);
 void* App_GetInstance(void);
 int Archive_Open(void* a, char* name, int b, int c);
 void Hog_Register(void* hog, char* name, int h, int b);
@@ -110,7 +110,7 @@ extern "C" void Pop_LoadNPC(void* unused, PopReader* r, void* arc)
     char name[128];
     FileManEntry e;
     Resource_Construct(&e);
-    func_00165E60(App_GetInstance(), D_0049F050, 0);
+    Loader_UpdateLoadingScreen(App_GetInstance(), D_0049F050, 0);
     sprintf(thermal, D_0049F070, D_0048B2F8);
     sprintf(name, D_0049F090, D_0048B2F8);
     Hog_Register(D_0057124C, D_0049F0A8, Archive_Open(arc, name, 1, 0), 1);
@@ -222,9 +222,9 @@ void* App_GetInstance();
 #define App_GetInstance() (App_GetInstance()) /* merge_units */
 
 #if 0 /* merge_units */
-void func_00165E60(void*, const char*, int);
+void Loader_UpdateLoadingScreen(void*, const char*, int);
 #endif /* merge_units */
-#define func_00165E60(a0, a1, a2) (func_00165E60((a0), (char *)(a1), (a2))) /* merge_units */
+#define Loader_UpdateLoadingScreen(a0, a1, a2) (Loader_UpdateLoadingScreen((a0), (char *)(a1), (a2))) /* merge_units */
 
 #if 0 /* merge_units */
 void* Mem_Alloc(int, int, const char*, int);
@@ -273,7 +273,7 @@ static inline void Push(LoaderOwnedVec* v, int* k)
 extern "C" void Loader_InitActivationMap(void* unused, PopReader* r)
 {
     int key;
-    func_00165E60(App_GetInstance(), D_0049F0D0, 0);
+    Loader_UpdateLoadingScreen(App_GetInstance(), D_0049F0D0, 0);
     int mis = (int)((unsigned long long)(unsigned int)r->cur & 3);
     if (mis)
         r->cur += 4 - mis;
@@ -337,7 +337,7 @@ extern "C" void Loader_InitActivationMap(void* unused, PopReader* r)
     }
 }
 #undef App_GetInstance /* merge_units */
-#undef func_00165E60 /* merge_units */
+#undef Loader_UpdateLoadingScreen /* merge_units */
 #undef Mem_Alloc /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_001C24D0(void) {}

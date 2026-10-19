@@ -12,12 +12,12 @@ typedef struct {
 } DmaState;
 
 extern int func_001098B0(int, DmaState *);
-extern int func_0010CE80(int, int (*)(int, DmaState *), int, DmaState *);
-extern int func_0010CE90(int, int);
-extern int func_0010DD78(int);
-extern int func_0010DD10(int);
-extern int func_001161A0(void);
-extern void func_001161F8(void);
+extern int AddDmacHandler2(int, int (*)(int, DmaState *), int, DmaState *);
+extern int RemoveDmacHandler(int, int);
+extern int EnableDmac(int);
+extern int DisableDmac(int);
+extern int DIntr(void);
+extern void EIntr(void);
 extern void func_0010B488(void*, int *);
 extern void func_0010BD90(void *, const char *);
 
@@ -36,15 +36,15 @@ void func_001099F8(void *m, unsigned int addr, int n)
     s.cnt = 0;
     while (REGI(0x10002010) < 0)
         ;
-    id = func_0010CE80(3, func_001098B0, 0, &s);
+    id = AddDmacHandler2(3, func_001098B0, 0, &s);
     REG(0x1000E010) = 8;
-    func_0010DD78(3);
-    old = func_001161A0();
+    EnableDmac(3);
+    old = DIntr();
     REG(0x1000B010) = addr & 0x0FFFFFFF;
     REG(0x1000B020) = qwc;
     REG(0x1000B000) = 0x100;
     if (old)
-        func_001161F8();
+        EIntr();
     REG(0x10002000) = 0x700003FF;
     buf[0] = 4;
     func_0010B488(F(m, 0x870, void*), buf);
@@ -54,6 +54,6 @@ void func_001099F8(void *m, unsigned int addr, int n)
         func_0010BD90(m, "CSC handler error\n");
     while (REGI(0x10002010) < 0)
         ;
-    func_0010DD10(3);
-    func_0010CE90(3, id);
+    DisableDmac(3);
+    RemoveDmacHandler(3, id);
 }

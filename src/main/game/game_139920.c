@@ -6,16 +6,16 @@ struct E00139920 { int w[28]; };
 struct V00139920 { unsigned int cap; unsigned int count; E00139920* data; };
 extern "C" {
 extern char D_0049AB90[];
-void* func_00139BC0(unsigned int size, void* p);
+void* Mem_PlacementNew(unsigned int size, void* p);
 void func_00139B00(void* dst, const E00139920* src);
 void func_00139AC0(V00139920* a, V00139920* b);
 void func_00139DF0(V00139920* a, int f);
 }
-extern "C" void func_00139920(V00139920* v, unsigned int n)
+extern "C" void Vector_Reserve_139920(V00139920* v, unsigned int n)
 {
     if (v->cap < n) {
         if (n > 0xDB6DB) {
-            func_00123BE8(D_00489738->stream, D_0049AB90);
+            Libc_Fprintf(D_00489738->stream, D_0049AB90);
             Libc_Abort();
         }
         V00139920 tmp;
@@ -28,7 +28,7 @@ extern "C" void func_00139920(V00139920* v, unsigned int n)
         E00139920* s = v->data;
         E00139920* e = s + v->count;
         for (; s < e; s++, d++) {
-            void* o = func_00139BC0(sizeof(E00139920), d);
+            void* o = Mem_PlacementNew(sizeof(E00139920), d);
             if (o) func_00139B00(o, s);
             tmp.count++;
         }

@@ -5,7 +5,7 @@
 /* Deleting destructor: string at +0x80, nested member at +0x6C, base GuiWidget_Destroy. */
 extern "C" {
 extern "C" void GuiAchievementScreen_GetClassName();
-extern "C" void func_00353470();
+extern "C" void GuiAchievementScreen_IsType();
 extern "C" void GuiAchievementScreen_Select();
 extern "C" void GuiAchievementScreen_Show();
 extern "C" void GuiAchievementScreen_Fill();
@@ -27,7 +27,7 @@ extern "C" void GuiWidget_BaseSleep();
 extern "C" void GuiWidget_ClearFlag4();
 extern "C" void GuiWidget_SetFlag4();
 extern "C" void GuiWidget_Deinit();
-extern "C" void func_0041F210();
+extern "C" void GuiWidget_Load();
 extern void * const D_004DEF90[];
 extern char D_004DF0B0[];
 void operator_delete(void* allocation);
@@ -36,7 +36,7 @@ void* func_00299360(void* self, short deleteFlag);
 void* GuiWidget_Destroy(void* self, short deleteFlag);
 }
 struct O3533B0 { void* vtable; };
-extern "C" O3533B0* func_003533B0(O3533B0* self, short deleteFlag)
+extern "C" O3533B0* GuiAchievementScreen_dtor(O3533B0* self, short deleteFlag)
 {
     if (self) {
         self->vtable = ((char*)D_004DEF90);
@@ -59,4 +59,4 @@ extern "C" O3533B0* func_003533B0(O3533B0* self, short deleteFlag)
     }
     return self;
 }
-void * const D_004DEF90[28] = { (void*)0x0, (void*)0x0, (void*)func_003533B0, (void*)GuiAchievementScreen_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiAchievementScreen_Wake, (void*)GuiWidget_BaseSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiPersonnelScreen_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiPersonnelScreen_HandleEvent, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiAchievementScreen_GetClassName, (void*)func_00353470, (void*)GuiAchievementScreen_Fill, (void*)GuiAchievementScreen_Show, (void*)GuiAchievementScreen_Select, (void*)GuiPersonnelScreen_Back, (void*)0x0 };
+void * const D_004DEF90[28] = { (void*)0x0, (void*)0x0, (void*)GuiAchievementScreen_dtor, (void*)GuiAchievementScreen_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiAchievementScreen_Wake, (void*)GuiWidget_BaseSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiPersonnelScreen_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiPersonnelScreen_HandleEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiAchievementScreen_GetClassName, (void*)GuiAchievementScreen_IsType, (void*)GuiAchievementScreen_Fill, (void*)GuiAchievementScreen_Show, (void*)GuiAchievementScreen_Select, (void*)GuiPersonnelScreen_Back, (void*)0x0 };

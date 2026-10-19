@@ -15,11 +15,11 @@ extern "C" {
 extern RbTree D_005826A0;
 extern RbTree D_00582700;
 extern char D_004BFB00[];
-void func_0042EDF0(TransferObjectIterator* result, RbTree* tree, const GobjId* id);
+void ObjMap_Find_42EDF0(TransferObjectIterator* result, RbTree* tree, const GobjId* id);
 TransferObjectIterator func_0042DF10(RbTree* tree);
 void func_0042DF00(TransferObjectIterator* result, const TransferObjectIterator& source);
 void func_0042F030(RbTree* tree, TransferObjectIterator* position);
-void func_0042EEF0(TransferReferenceIterator* result, RbTree* tree, const GobjId* id);
+void ObjMap_Find_42EEF0(TransferReferenceIterator* result, RbTree* tree, const GobjId* id);
 TransferReferenceIterator func_0042DA20(RbTree* tree);
 void func_0042DA10(TransferReferenceIterator* result, const TransferReferenceIterator& source);
 void func_0042F510(RbTree* tree, TransferReferenceIterator* position);
@@ -69,7 +69,7 @@ extern "C" void NetObjectMgr_Erase(const GobjId* id)
     TransferReferenceIterator referenceEnd;
     TransferObjectIterator found;
     key.word = id->word;
-    func_0042EDF0(&found, &D_005826A0, &key);
+    ObjMap_Find_42EDF0(&found, &D_005826A0, &key);
     TransferObjectNode* node = found.node;
     object_end(&end);
     if ((node == end.node) ^ 1) {
@@ -86,7 +86,7 @@ extern "C" void NetObjectMgr_Erase(const GobjId* id)
         }
         TransferReferenceIterator referenceFound;
         referenceKey.word = id->word;
-        func_0042EEF0(&referenceFound, &D_00582700, &referenceKey);
+        ObjMap_Find_42EEF0(&referenceFound, &D_00582700, &referenceKey);
         TransferReferenceNode* referenceNode = referenceFound.node;
         reference_end(&referenceEnd);
         if ((referenceNode == referenceEnd.node) ^ 1) {
@@ -259,7 +259,7 @@ extern "C" void func_0042E180(cGOBJ* object, int peer)
     if (!controller || !controller->can_create_message())
         return;
     key.word = object_id(object)->word;
-    func_0042EDF0(&found, &D_005826A0, &key);
+    ObjMap_Find_42EDF0(&found, &D_005826A0, &key);
     TransferObjectNode* node = found.node;
     func_00436C00(&shared);
     func_0042DF00(&end, func_0042DF10(&D_005826A0));

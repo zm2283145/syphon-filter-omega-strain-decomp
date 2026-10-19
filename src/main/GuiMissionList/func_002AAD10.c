@@ -1,4 +1,4 @@
 #include "types.h"
 extern int strcmp(void* p);
 /* Returns whether the test on the global object fails. */
-int func_002AAD10(void) { return strcmp("GuiMissionList") == 0; }
+int GuiMissionList_IsType(void) { return strcmp("GuiMissionList") == 0; }

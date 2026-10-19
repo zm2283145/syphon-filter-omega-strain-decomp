@@ -13,18 +13,18 @@ extern int D_004F7F80;
 extern char D_00555070[];
 extern int ScriptFilter_Dispatch(void* filter, int a0, int a1);
 extern int cBackpack_StealPlayerWeapons(cBackpack* backpack, int a1, int a2, int a3);
-extern int func_00253C80(void);
+extern int Backpack_RemoveAll_Thunk(void);
 extern int Backpack_RemoveAll(void);
 extern int* cGOBJ_GetScriptTypeKeyPtr(void);
 extern int ScriptType_AddAccepted(int type, int msgType);
 extern void ScriptType_SetParent(int type, int baseType);
 
 int Script_RemoveAllBackpacks(void) {
-    func_00253C80();
+    Backpack_RemoveAll_Thunk();
     return 0;
 }
 
-int func_00253C80(void) {
+int Backpack_RemoveAll_Thunk(void) {
     return Backpack_RemoveAll();
 }
 

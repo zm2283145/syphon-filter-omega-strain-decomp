@@ -37,7 +37,7 @@ void String_Replace(Str_BEB0* s, int pos, int n, const char* first, const char* 
 #define strlen(a0) ((unsigned int)strlen((a0))) /* merge_units */
 char* Loc_LookupText(const char* key);
 void String_CtorCStr_13B480(Str_BEB0* s, const char* c);
-void func_0013D680(Str_BEB0* d, Str_BEB0* s);
+void String_AssignString(Str_BEB0* d, Str_BEB0* s);
 void String_Dtor(Str_BEB0* s, int flags);
 }
 class W_BEB0 {
@@ -62,19 +62,19 @@ extern "C" void GuiTextWidget_SetText(W_BEB0* self, const char* text, unsigned c
             Str_BEB0 s;
             Str_BEB0* ps = &s;
             String_CtorCStr_13B480(ps, t ? t : D_004BF2C8);
-            func_0013D680(&self->text, &s);
+            String_AssignString(&self->text, &s);
             String_Dtor(&s, 0);
             return;
         } else {
             Str_BEB0 s;
             String_CtorCStr_13B480(&s, text + 1);
-            func_0013D680(&self->text, &s);
+            String_AssignString(&self->text, &s);
             String_Dtor(&s, 0);
         }
     } else {
         Str_BEB0 s;
         String_CtorCStr_13B480(&s, text);
-        func_0013D680(&self->text, &s);
+        String_AssignString(&self->text, &s);
         String_Dtor(&s, 0);
     }
     self->Refresh();

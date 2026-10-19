@@ -33,10 +33,10 @@ public:
     float cur;
 };
 extern "C" void func_0017CA90(void* p, int n);
-extern "C" void* func_00139BC0(int kind, void* p);
+extern "C" void* Mem_PlacementNew(int kind, void* p);
 extern "C" void func_0017CA00(void* p, float s, void* a, void* b, void* c, float* r);
 static inline int B5kIsZero(float f) { return 0.0f == f; }
-extern "C" void func_00364920(B5kObj* o) {
+extern "C" void Curve_Retarget_364920(B5kObj* o) {
     unsigned char flag = 0;
     if (o->cur == o->ref->end && !(o->scale <= 0.0f)) {
         flag = 1;
@@ -45,7 +45,7 @@ extern "C" void func_00364920(B5kObj* o) {
         float r = o->GetRate();
         void* p;
         func_0017CA90(&o->b18, -1);
-        p = func_00139BC0(0x18, &o->b18);
+        p = Mem_PlacementNew(0x18, &o->b18);
         if (p) {
             func_0017CA00(p, o->scale, &o->b8, &o->bc, &o->b10, &r);
         }

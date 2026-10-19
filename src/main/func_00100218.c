@@ -1,7 +1,7 @@
 #include "types.h"
 
-extern void func_00116848(int);
+extern void Newlib_SysExit(int);
 
-void func_00100218(int a0) {
-    func_00116848(a0);
+void Newlib_SysExit_Thunk(int a0) {
+    Newlib_SysExit(a0);
 }

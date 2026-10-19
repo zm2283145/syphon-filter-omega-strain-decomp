@@ -18,7 +18,7 @@
     extern "C" void name(TStr* self, unsigned int n)                          \
     {                                                                         \
         if (n > 0x2FFFFFF) {                                                  \
-            func_00123BE8(D_00489738->stream, errSym);                        \
+            Libc_Fprintf(D_00489738->stream, errSym);                        \
             Libc_Abort();                                                  \
         }                                                                     \
         unsigned int len;                                                     \

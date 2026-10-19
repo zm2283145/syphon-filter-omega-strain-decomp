@@ -14,7 +14,7 @@ extern void Event_Send(FlagMsg* msg, void* target, int flags);
 extern void cMessage_dtor(FlagMsg* msg, int flags);
 
 /* Broadcasts a flagged message. */
-void func_002C99F0(void) {
+void SoundPauseMsg_Send(void) {
     FlagMsg msg;
     SoundPauseMsg_Ctor(&msg);
     msg.flag = 1;

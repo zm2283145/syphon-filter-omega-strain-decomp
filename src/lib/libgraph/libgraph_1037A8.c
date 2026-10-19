@@ -111,15 +111,15 @@ int sceGsSyncPath(int mode)
 #pragma mpwc_relax on
 int Alloc_Lock(int);
 int Alloc_Unlock(int);
-int func_00102A18();
+int sceGsGetGParam();
 int AddIntcHandler(int, int, int);
 int RemoveIntcHandler(int, int);
 
-int func_00103AC0(int arg0) {
+int sceGsSyncVCallback(int arg0) {
     int temp_s2;
     int temp_s0;
 
-    temp_s0 = func_00102A18();
+    temp_s0 = sceGsGetGParam();
     temp_s2 = F_(temp_s0, 0x8, int);
     if (arg0 == 0) {
         Alloc_Lock(2);
@@ -173,7 +173,7 @@ typedef struct { volatile int chcr; } DmaChan3BE8;
 extern int scePrintf(const char *, ...);
 extern unsigned int func_00104380(DmaChan3BE8 *);
 
-void func_00103BE8(DmaChan3BE8 *d)
+void sceDmaSync(DmaChan3BE8 *d)
 {
     int cnt = 0x1000000;
     while (d->chcr & 0x100) {

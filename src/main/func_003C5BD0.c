@@ -16,7 +16,7 @@ extern int ColTri_FilterStub(void* f, unsigned char mask);
 extern int Surface_TestMask(int s, unsigned char mask);
 extern int func_001839E0(int v);
 extern int func_001839D0(int v);
-extern void func_001839C0(int v, int n);
+extern void Vector_Reserve_139920_Thunk_1839C0(int v, int n);
 extern void func_001839B0(int v, int n, Rec5BD0* r);
 extern int func_00183990(int v);
 extern void func_0013AAE0(Rec5BD0* r);
@@ -97,7 +97,7 @@ void func_003C5BD0(Mesh5BD0* m, Out5BD0* out, Node5BD0* node)
                 if (!(ColTri_FilterStub(t->flags, out->mask) & 0xFF) && !(Surface_TestMask(surf, out->mask) & 0xFF)) {
                     sz = func_001839E0(out->vec);
                     if (sz >= func_001839D0(out->vec)) {
-                        func_001839C0(out->vec, func_001839D0(out->vec) * 3 / 2);
+                        Vector_Reserve_139920_Thunk_1839C0(out->vec, func_001839D0(out->vec) * 3 / 2);
                     }
                     func_0013AAE0(&rec);
                     func_001839B0(out->vec, func_001839E0(out->vec) + 1, &rec);

@@ -15,7 +15,7 @@ extern int D_0053B508;
 extern int D_0053B510;
 extern int D_0053B518;
 extern int D_0053B520;
-void func_004D5390(void) {
+void StaticInit_RegisterParticleGobj(void) {
     D_0053B4F0 = Script_RegisterType("cVUM_GOBJ", ScriptType_cVUM_GOBJ_Init, 0, 1);
     D_0053B4F8 = D_0053B4F0;
     D_0053B500 = Script_RegisterType("cPARTICLE_GOBJ", ScriptType_cPARTICLE_GOBJ_Init, 0, 1);

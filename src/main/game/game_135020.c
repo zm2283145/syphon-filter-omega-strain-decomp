@@ -143,7 +143,7 @@ void SoundRequest_Ctor(Req_1350E0* r, int kind, char* name, int a, int b);
 void* World_GetActorArray(void);
 void World_SetupView(World_1350E0* w);
 void World_UpdateZoneTrackers(void* z);
-void func_0012F630(World_1350E0* w);
+void Game_AllocStreamBuffer(World_1350E0* w);
 void Game_CreateHud(World_1350E0* w);
 void func_001360D0(int n);
 void func_001365E0(void* p);
@@ -191,7 +191,7 @@ extern "C" void World_Setup(World_1350E0* w)
         Cfg_1350E0* c = &w->fB4->f188;
         if (c->fC4 == -1) LevelSelect_FindByName(c, w->f140);
     }
-    func_0012F630(w);
+    Game_AllocStreamBuffer(w);
     func_003E2140(D_00555070, IArcade_Init(w->f3C));
     Awards_Init(w);
     for (i = 0; i < 4; i++) {

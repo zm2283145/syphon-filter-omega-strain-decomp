@@ -27,7 +27,7 @@ DEFINE_BUF_HOLDER_DTOR_SHALLOW(func_002673C0)
 
 extern int PtrVec_Reserve(int, int);
 
-int func_002674B0(int a0, int a1) {
+int PtrVec_Reserve_Thunk_2674B0(int a0, int a1) {
     return PtrVec_Reserve(a0, a1);
 }
 

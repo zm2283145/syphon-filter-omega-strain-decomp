@@ -4,6 +4,6 @@
 #pragma mpwc_relax on
 extern char *D_0051F098;
 
-void func_004D35C0(void) {
+void StaticInit_NetLabelMsgName(void) {
     D_0051F098 = "NetLabelMsg";
 }

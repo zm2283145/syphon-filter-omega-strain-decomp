@@ -96,8 +96,8 @@ static inline void merge_flush_func_0039B210(void) {}
 #pragma mpwc_relax on
 int operator_delete(char **);                            
 extern char D_004DFAD8;
-extern void func_00399080();
-extern void func_0039A000();
+extern void WeatherEmitter_Draw();
+extern void WeatherEmitter_Update();
 extern void func_003A23F0();
 extern void func_003A6070();
 extern void func_003A6080();
@@ -110,7 +110,7 @@ extern char D_0053B560;
 
 extern char D_0053B564;
 
-char **func_0039B2F0(char **arg0, long long arg1) {
+char **WeatherEmitter_dtor(char **arg0, long long arg1) {
     int var_a0;
     char *var_v1;
 
@@ -140,7 +140,7 @@ loop_2:
     }
     return arg0;
 }
-void * const D_004DFAF0[8] = { (void*)0x0, (void*)0x0, (void*)func_0039B2F0, (void*)func_00399080, (void*)func_0039A000, (void*)func_003A6080, (void*)func_003A6070, (void*)func_003A23F0 };
+void * const D_004DFAF0[8] = { (void*)0x0, (void*)0x0, (void*)WeatherEmitter_dtor, (void*)WeatherEmitter_Draw, (void*)WeatherEmitter_Update, (void*)func_003A6080, (void*)func_003A6070, (void*)func_003A23F0 };
 #undef D_0053B560 /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0039B2F0(void) {}

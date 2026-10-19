@@ -34,7 +34,7 @@ struct PRVec {
     {                                                                         \
         if (v->cap < n) {                                                     \
             if (n > (maxN)) {                                                 \
-                func_00123BE8(D_00489738->stream, errSym);                    \
+                Libc_Fprintf(D_00489738->stream, errSym);                    \
                 Libc_Abort();                                              \
             }                                                                 \
             int* old = v->data;                                               \

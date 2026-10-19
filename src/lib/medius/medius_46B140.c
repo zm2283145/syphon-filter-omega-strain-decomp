@@ -2,12 +2,12 @@ extern short D_00497CC0;
 extern int D_00497CC4;
 extern int D_00598508;
 unsigned int D_00497D00[1] = { 0x0 };
-extern int func_004700F8(char *, int);
+extern int Medius_TerminateString(char *, int);
 extern int Net_SendLocked(int, int, int, int, int, int, void *);
 int func_0046B140(char *a, int b)
 {
-    func_004700F8(a, 0x15);
-    func_004700F8(a + 0x15, 0x11);
+    Medius_TerminateString(a, 0x15);
+    Medius_TerminateString(a + 0x15, 0x11);
     if (D_00497CC0 != 1) return -0xF;
     if (D_00497CC4 < 0) return -0x10;
     (*(int*)D_00497D00) = b;

@@ -51,7 +51,7 @@ extern int Script_RegisterNative();
 extern int cGOBJ_GetScriptTypeKeyPtr();
 extern int Script_RegisterNative_2();
 extern int func_0014A6A0();
-void func_004C59F0(void)
+void StaticInit_RegisterAi(void)
 {
     D_004EE548 = D_0049C670;
     D_004EE550 = D_0049C680;

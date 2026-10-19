@@ -22,14 +22,14 @@ extern "C" char D_004ABAF8[];
 static void * const dat_0048BCB8[2] = { (void*)D_004ABAE8, (void*)0x0 };
 static void * const dat_0048BCC0[2] = { (void*)D_004ABAF8, (void*)0x0 };
 extern char D_004A9870[];
-extern "C" void func_0033F250(Screen* self);
+extern "C" void GuiMenuScreen_Init(Screen* self);
 extern "C" Widget* GuiWidget_FindChildByName(Screen* self, int id);
 
-/* Base init (func_0033F250), then caches the (*(int*)dat_0048BCB8) / (*(int*)dat_0048BCC0) children (+0x160/+0x164) when they are of type D_004A9870, and clears +0x94. */
-extern "C" void func_002ADF00(Screen* self)
+/* Base init (GuiMenuScreen_Init), then caches the (*(int*)dat_0048BCB8) / (*(int*)dat_0048BCC0) children (+0x160/+0x164) when they are of type D_004A9870, and clears +0x94. */
+extern "C" void GuiNetContacts_Init(Screen* self)
 {
     Widget* child;
-    func_0033F250(self);
+    GuiMenuScreen_Init(self);
     child = GuiWidget_FindChildByName(self, (*(int*)dat_0048BCB8));
     if (!child || !child->IsA(D_004A9870))
     child = 0;

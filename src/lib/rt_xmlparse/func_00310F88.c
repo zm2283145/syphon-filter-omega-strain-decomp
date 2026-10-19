@@ -7,7 +7,7 @@ extern int printf(int, int, int, int, int, int, int, int, float, float, float, f
 extern int func_00311418(int, int, int);
 extern int func_00312A90(int);
 
-int func_00310F88(int a0, int a1, int a2, int a3) {
+int RtXml_Parse(int a0, int a1, int a2, int a3) {
     int s0, s1, t0, t1, t2, t3, v0, v1;
     float f12, f13, f14, f15, f16, f17, f18, f19;
     int cond;

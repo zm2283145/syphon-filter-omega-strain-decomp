@@ -500,7 +500,7 @@ typedef struct Obj328630 {
 
 /* Copyable record (func_0032A050): base part, owning vector at +0x0C, word at +0x1C. */
 typedef struct Rec32A050 {
-    char pad00[0x0C];               /* 0x00: copied by func_0013BCB0 */
+    char pad00[0x0C];               /* 0x00: copied by String_CopyCtor */
     OwnedRel vec;                   /* 0x0C */
     int unk1C;                      /* 0x1C */
 } Rec32A050;

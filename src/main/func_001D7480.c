@@ -50,7 +50,7 @@ int NodeNameMap_Find(Owner* m, Key* k);
 Item** Registry_At(int* reg, int idx);
 void Secondary_MakeMotionSlot(Slot* s, int clip, int owner);
 void func_001D7840(Slot* d, Slot* s);
-void func_001906B0(Slot* s, int f);
+void Secondary_MotionRecordDtor(Slot* s, int f);
 }
 
 static inline void QZero_7480(void* dd, int nn)
@@ -131,7 +131,7 @@ static inline void Load1(Slot* cur, int clip, int owner)
     SlotBuf s;
     Secondary_MakeMotionSlot((Slot*)&s, clip, owner);
     func_001D7840(cur, (Slot*)&s);
-    func_001906B0((Slot*)&s, -1);
+    Secondary_MotionRecordDtor((Slot*)&s, -1);
 }
 static inline void Load2(Slot* cur, int clip, int owner) { Load1(cur, clip, owner); }
 

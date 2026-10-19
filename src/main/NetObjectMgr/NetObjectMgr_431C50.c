@@ -31,7 +31,7 @@ struct Msg_0021C830 : ClonedMessageBase {
 extern "C" {
 char D_004BFC50[] = "NetTerrainActivation.hh";
 }
-DEFINE_MESSAGE_CLONE(func_00431C50, Msg_0021C830, 0x2C, D_004BFC50, 0x17, CLONE_BODY)
+DEFINE_MESSAGE_CLONE(cNetTerrainActivationMsg_v01, Msg_0021C830, 0x2C, D_004BFC50, 0x17, CLONE_BODY)
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00431C50(void) {}
 #pragma pop /* merge_units */
@@ -49,7 +49,7 @@ void NetObjectMgr_Remove(void*);
 }
 #pragma push
 #pragma opt_propagation off
-extern "C" int func_00431D60(int a0, int a1, int a2, Pk431D60* arg) {
+extern "C" int cNetTerrainActivationMsg_NetReceive(int a0, int a1, int a2, Pk431D60* arg) {
     NetRecvGuard g;
     if (D_005721D0) {
         Pk431D60* p = arg;

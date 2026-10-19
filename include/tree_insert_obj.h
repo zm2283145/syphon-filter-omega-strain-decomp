@@ -26,7 +26,7 @@ struct TOTree { unsigned int count; TONode* root; int pad; TONode* leftmost; };
                             const void* src)                                  \
     {                                                                         \
         if (tree->count > 0xFFFFFFFFU - 1) {                                  \
-            func_00123BE8(D_00489738->stream, errSym);                        \
+            Libc_Fprintf(D_00489738->stream, errSym);                        \
             Libc_Abort();                                                  \
         }                                                                     \
         TONode* node = (TONode*)TStr_Alloc((nodeSize), allocFile, (allocLine)); \

@@ -27,7 +27,7 @@ char* GuiAgentSave_GetClassName(void) {
 #pragma push /* merge_units */
 extern int strcmp(void* obj);
 /* True when strcmp returns 0 for the global object "GuiAgentSave". */
-int func_002927F0(void)
+int GuiAgentSave_IsType(void)
 {
     return strcmp("GuiAgentSave") == 0;
 }

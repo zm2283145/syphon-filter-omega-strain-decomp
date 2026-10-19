@@ -16,7 +16,7 @@ public:
     float fA0;
 };
 extern "C" void func_0017CC60(void*, int);
-extern "C" void* func_00139BC0(int, void*);
+extern "C" void* Mem_PlacementNew(int, void*);
 extern "C" void Curve_SetTangents(void*, V4c*, V4c*, V4c*, V4c*, float);
 extern "C" void VecCurve_RebaseCurrent(CamCAE0* c, V4c* a, V4c* b)
 {
@@ -27,7 +27,7 @@ extern "C" void VecCurve_RebaseCurrent(CamCAE0* c, V4c* a, V4c* b)
     c->p30 = *b;
     t = c->GetTangent();
     func_0017CC60(c->sp60, -1);
-    n = func_00139BC0(0x50, c->sp60);
+    n = Mem_PlacementNew(0x50, c->sp60);
     if (n) Curve_SetTangents(n, &c->p20, &c->p30, &c->p40, &t, c->fA0);
 }
 

@@ -113,7 +113,7 @@ void* memset(void* d, int c, unsigned int n);
 int sprintf(char* d, const char* fmt, ...);
 int strlen(const char* s);
 
-int func_0030BFE8(Conn_30BFE8* c, int flags, char* body)
+int UPnP_SendQueryStateVariable(Conn_30BFE8* c, int flags, char* body)
 {
     Opt_30BFE8 o;
     char addr[16];
@@ -195,7 +195,7 @@ int func_002F5C98(void* p, char* addr, unsigned short port, Opt_30C1B8* o);
 
 char* strncpy(char* d, const char* s, unsigned int n);
 
-int func_0030C1B8(Conn_30C1B8* c, char* action, char* args)
+int UPnP_SendSoapAction(Conn_30C1B8* c, char* action, char* args)
 {
     Opt_30C1B8 o;
     char addr[16];

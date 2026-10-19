@@ -41,7 +41,7 @@ struct Guard_70200 {
 };
 #pragma opt_propagation off
 #pragma opt_common_subs off
-extern "C" int func_00170200(int a0, int a1, int a2, Pk70200* arg) {
+extern "C" int cHotboxMsg_NetReceive(int a0, int a1, int a2, Pk70200* arg) {
     Guard_70200 g;
     if (D_005721D0) {
         Msg70200 msg;

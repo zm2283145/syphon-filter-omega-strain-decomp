@@ -32,7 +32,7 @@ static inline void merge_flush_func_002156C0(void) {}
 /* merge_units: begin func_00215700 */
 #pragma push /* merge_units */
 // Lift_Ctor (cElevatorGOBJ ctor): PathObj base, 4 SoundActions, collision/voice list, name list.
-// Siblings: src/main/GameGOBJ/cSoundGOBJ_ctor.c (Act init idiom), func_00211980.c (state alloc/release).
+// Siblings: src/main/GameGOBJ/cSoundGOBJ_ctor.c (Act init idiom), Lift_CreateInfoObject.c (state alloc/release).
 #pragma cplusplus on
 #pragma exceptions off
 #pragma opt_prelinearize off
@@ -97,7 +97,7 @@ void func_00146020(void* v);
 void func_001C10A0(void* v);
 void func_00173910(void* v);
 void Resource_Construct(void* m);
-void func_00211980(Lift_215700* self);
+void Lift_CreateInfoObject(Lift_215700* self);
 int func_00211DA0(void);
 void func_002EC2A8(int a);
 void* Mem_Alloc(int heap, int size, char* file, int line);
@@ -174,7 +174,7 @@ extern "C" Lift_215700* Lift_Ctor(Lift_215700* self, int a, Reader_215700* r)
     D_004F54A0 = 0;
     self->f68 = 3;
     if (g_IsMultiplayer) {
-        func_00211980(self);
+        Lift_CreateInfoObject(self);
     } else {
         State_215700* p;
         { AllocGuard g; p = (State_215700*)Mem_Alloc(0, 0x30, D_004A4550, 0x5EE); }

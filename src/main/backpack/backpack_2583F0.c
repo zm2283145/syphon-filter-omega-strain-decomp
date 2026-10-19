@@ -68,13 +68,13 @@ static inline int read32(void)
 }
 
 typedef struct { char pad[0x20]; unsigned char received; char pad21[3]; int a; int b; char item[1]; } cInventoryMsg;
-extern void func_00282160(void* item);
+extern void NetStream_ReadObject(void* item);
 extern void Event_Send(cInventoryMsg* msg, void* target, int flags);
 
 /* cInventoryMsg receive: reads the item and two 32-bit values, then dispatches to target. */
-void func_00258480(cInventoryMsg* self, void* target)
+void cInventoryMsg_Apply(cInventoryMsg* self, void* target)
 {
-    func_00282160(self->item);
+    NetStream_ReadObject(self->item);
     self->a = read32();
     self->b = read32();
     self->received = 1;
@@ -123,23 +123,23 @@ extern char D_004DC460[]; /* visitor vtable */
 extern char D_004DCF10[]; /* base vtable */
 extern void Event_Construct(Visitor* v, const char* name);
 #if 0 /* merge_units */
-extern void func_00258480(Visitor* v, void* target);
+extern void cInventoryMsg_Apply(Visitor* v, void* target);
 #endif /* merge_units */
-#define func_00258480(a0, a1) (func_00258480((void *)(a0), (a1))) /* merge_units */
+#define cInventoryMsg_Apply(a0, a1) (cInventoryMsg_Apply((void *)(a0), (a1))) /* merge_units */
 
 extern void cMessage_dtor(Visitor* v, int flags);
 
 /* Runs a temporary visitor object over target. */
-void func_00258770(void* target)
+void cInventoryMsg_NetReceive(void* target)
 {
     Visitor v;
     Event_Construct(&v, D_004F7EE0);
     v.vtable = D_004DC460;
-    func_00258480(&v, target);
+    cInventoryMsg_Apply(&v, target);
     v.vtable = D_004DCF10;
     cMessage_dtor(&v, 0);
 }
-#undef func_00258480 /* merge_units */
+#undef cInventoryMsg_Apply /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00258770(void) {}
 #pragma pop /* merge_units */

@@ -13,15 +13,15 @@ typedef struct {
     char sub[0xC];          /* +0xB4 */
     unsigned char flag;     /* +0xC0 */
 } RecC0;
-extern void func_003B6F10(Part50* dst, Part50* src);
+extern void AnimRoot_CopyRegion_3B6F10(Part50* dst, Part50* src);
 extern void func_001C50A0(void* dst, void* src);
 
 /* Copy: both parts, three bytes, a word, the sub-object and the flag; returns dst. */
 RecC0* func_003B6E90(RecC0* dst, RecC0* src)
 {
     unsigned char c0, c1, c2;
-    func_003B6F10(&dst->a, &src->a);
-    func_003B6F10(&dst->b, &src->b);
+    AnimRoot_CopyRegion_3B6F10(&dst->a, &src->a);
+    AnimRoot_CopyRegion_3B6F10(&dst->b, &src->b);
     c0 = src->c[0];
     c1 = src->c[1];
     c2 = src->c[2];

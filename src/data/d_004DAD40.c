@@ -7,29 +7,29 @@ extern void Camera_ZoomSweep();
 extern void Edge_FilterTriangle();
 extern void Event_PackHeader();
 extern void Message_GetScriptTypeKey();
+extern void SoundPosRequest_Clone();
+extern void SoundPosRequest_Serialize();
+extern void SoundPosRequest_dtor();
 extern void cEndLevelMsg_dtor();
 extern void cEndLevelMsg_v01();
 extern void cEndLevelMsg_v02();
 extern void cEndLevelMsg_v03();
+extern void cFoundLedgeMsg_Clone();
+extern void cFoundLedgeMsg_dtor();
 extern void cStartLevelMsg_dtor();
 extern void cStartLevelMsg_v01();
 extern void cStartLevelMsg_v03();
-extern void func_001359D0();
 extern void func_001432E0();
 extern void func_0017EE80();
 extern void func_0017EF30();
 extern void func_0018C940();
-extern void func_001E1990();
-extern void func_001EEDC0();
 extern void func_0020E660();
 extern void func_0020EA20();
 extern void func_0020EF50();
-extern void func_0020F620();
 extern void func_0020FCA0();
-extern void func_0020FD70();
 
 void *D_004DAD40[6] = {
-    0, 0, &func_001E1990, &func_001EEDC0,
+    0, 0, &cFoundLedgeMsg_dtor, &cFoundLedgeMsg_Clone,
     &Event_PackHeader, &Message_GetScriptTypeKey,
 };
 
@@ -69,6 +69,6 @@ void *D_004DAE10[8] = {
 };
 
 void *D_004DAE30[8] = {
-    0, 0, &func_001359D0, &func_0020FD70,
-    &func_0020F620, &Message_GetScriptTypeKey, 0, 0,
+    0, 0, &SoundPosRequest_dtor, &SoundPosRequest_Clone,
+    &SoundPosRequest_Serialize, &Message_GetScriptTypeKey, 0, 0,
 };

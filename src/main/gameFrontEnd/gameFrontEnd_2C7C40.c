@@ -16,7 +16,7 @@ int sprintf(void *, const void *, ...);
 extern long long Time_GetMilliseconds(void);
 extern int D_0048C368;
 extern int D_0051EF98;
-extern char* func_002CCA30(void);
+extern char* Loc_GetCurrentLanguageName_Thunk(void);
 extern void func_002C8840(char* s);
 void func_002C7C40(int a, int b)
 {
@@ -26,7 +26,7 @@ void func_002C7C40(int a, int b)
     D_0048C368 = b;
     D_0051EF98 = t;
     fmt = "gamedata\\frontend\\lang\\%s\\%s.tdx";
-    sprintf(buf, fmt, func_002CCA30(), a);
+    sprintf(buf, fmt, Loc_GetCurrentLanguageName_Thunk(), a);
     func_002C8840(buf);
 }
 /* merge_units: generate this block's code under its own pragmas */

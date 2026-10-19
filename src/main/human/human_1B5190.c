@@ -40,7 +40,7 @@ void Alloc_Unlock(int);
 void ActorModel_Deactivate(void*);
 void TargetVis_Unregister(void*, void*);
 void Actor_ShockReaction(Act*, unsigned char, int, float);
-void func_003928D0(Act*, int);
+void Actor_Deactivate(Act*, int);
 int func_00436C00(int*);
 void func_00433CE0(int*, void*);
 int func_00436BA0(int*, int);
@@ -56,7 +56,7 @@ extern "C" void Npc_Deactivate(Act* a, int arg)
     ActorModel_Deactivate(a->a60);
     TargetVis_Unregister(&g_TargetVisMgr, a);
     for (i = 0; i < 3; i++) Actor_ShockReaction(a, i, 0, 1.0f);
-    func_003928D0(a, arg);
+    Actor_Deactivate(a, arg);
     if (g_IsMultiplayer) {
         func_00436C00(&loc);
         func_00433CE0(&loc, a->a0C);

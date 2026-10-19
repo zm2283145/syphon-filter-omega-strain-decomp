@@ -19,7 +19,7 @@ void func_0013A130(void* m, short f);
 void Receiver_Destruct(void* p, short f);
 void operator_delete(void* p);
 }
-extern "C" O_00135AD0* func_00135AD0(O_00135AD0* self, short del)
+extern "C" O_00135AD0* LosReceiver_dtor(O_00135AD0* self, short del)
 {
     if (self) {
         self->vt = ((char*)D_004D90A0);
@@ -31,4 +31,4 @@ extern "C" O_00135AD0* func_00135AD0(O_00135AD0* self, short del)
     }
     return self;
 }
-void * const D_004D90A0[16] = { (void*)0x0, (void*)0x0, (void*)func_00135AD0, (void*)LosReceiver_HandleEvent, (void*)GObj_GetID, (void*)func_0012ECF0, (void*)func_001383D0, (void*)func_0012ED00, (void*)func_0012ED10, (void*)func_0012ED20, (void*)func_0012ED30, (void*)func_0012ED40, (void*)func_0012ED50, (void*)Receiver_GetScriptTypeKey, (void*)Receiver_ScriptDispatch, (void*)0x0 };
+void * const D_004D90A0[16] = { (void*)0x0, (void*)0x0, (void*)LosReceiver_dtor, (void*)LosReceiver_HandleEvent, (void*)GObj_GetID, (void*)func_0012ECF0, (void*)func_001383D0, (void*)func_0012ED00, (void*)func_0012ED10, (void*)func_0012ED20, (void*)func_0012ED30, (void*)func_0012ED40, (void*)func_0012ED50, (void*)Receiver_GetScriptTypeKey, (void*)Receiver_ScriptDispatch, (void*)0x0 };

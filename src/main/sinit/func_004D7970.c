@@ -12,7 +12,7 @@ extern int D_00583980;
 extern char ScriptType_cWeaponVisChangeMsg_Init;
 extern char Script_cWeaponVisChangeMsg_Visibility;
 
-void func_004D7970(void) {
+void StaticInit_RegisterWeaponVisChangeMsg(void) {
     D_00583968 = "Weapon Vis Change";
     D_00583970 = Script_RegisterType("cWeaponVisChangeMsg", &ScriptType_cWeaponVisChangeMsg_Init, 1, 0);
     D_00583978 = D_00583970;

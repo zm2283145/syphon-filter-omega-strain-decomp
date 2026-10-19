@@ -15,11 +15,11 @@
 #include "types.h"
 #include "frontCharacter_types.h"
 
-extern int func_0022A360(FcVec* v, int* pos, int n, int value);  /* vector insert */
+extern int Vector_Insert_22A360(FcVec* v, int* pos, int n, int value);  /* vector insert */
 
 /* push_back(v, value) */
 int func_0022A200(FcVec* v, int value) {
-    return func_0022A360(v, v->data + v->count, 1, value);
+    return Vector_Insert_22A360(v, v->data + v->count, 1, value);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0022A200 */

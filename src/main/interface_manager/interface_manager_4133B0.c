@@ -90,7 +90,7 @@ void func_0036E140(Hog4134B0* h, char* name, int a, int b);
 void Hog_Register(Hog4134B0* h, char* name, int arc, int z);
 int FileMan_FindMember(Hog4134B0* h);
 void String_CtorCStr_13B480(Str4134B0* s, char* src);
-void func_0013D680(Str4134B0* dst, Str4134B0* src);
+void String_AssignString(Str4134B0* dst, Str4134B0* src);
 #if 0 /* merge_units */
 void String_Dtor(Str4134B0* s, int flags);
 #endif /* merge_units */
@@ -127,7 +127,7 @@ extern "C" bool func_004134B0(Self4134B0* self, Str4134B0* out, const char* name
         }
         {
             String_CtorCStr_13B480(&tmp, buf);
-            func_0013D680(out, &tmp);
+            String_AssignString(out, &tmp);
             String_Dtor(&tmp, 0);
         }
         if (isPak)
@@ -145,7 +145,7 @@ extern "C" bool func_004134B0(Self4134B0* self, Str4134B0* out, const char* name
         }
         {
             String_CtorCStr_13B480(&tmp2, buf2);
-            func_0013D680(out, &tmp2);
+            String_AssignString(out, &tmp2);
             String_Dtor(&tmp2, 0);
         }
         if (isPak)

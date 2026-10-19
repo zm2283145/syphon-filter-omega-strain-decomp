@@ -10,7 +10,7 @@
 extern int func_00173970(List*);
 
 /* Constructs an empty list (sentinel at +4). */
-List* func_003ECAF0(List* l) {
+List* LinkList_Ctor_3ECAF0(List* l) {
     l->count = 0;
     func_00173970(l);
     l->last = &l->first;

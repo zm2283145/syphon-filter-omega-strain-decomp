@@ -31,7 +31,7 @@ extern void Blast_Prepare(int obj, int a, float x, float y, float z, int b, int 
 extern void cMessage_dtor(Msg2530* m, int flags);
 
 #pragma opt_propagation off
-int func_002C6370(int a0, int a1, int a2, Pkt* pkt) {
+int cNetCreateBlastMsg_NetReceive(int a0, int a1, int a2, Pkt* pkt) {
     if (!D_005723C8) {
         D_005723C8 = 1;
     }

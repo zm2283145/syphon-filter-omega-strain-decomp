@@ -31,9 +31,9 @@ void* func_002CAC60(void* p);
 void func_002CAC50(void** it, void* n);
 int String_CStr(Str* p);
 void GuiMessageBox_Setup(void* o, int a, int b, int c, int d, int e);
-void func_00298690(Str* s);
+void String_CtorEmpty(Str* s);
 void String_CtorCStr_13B480(Str* s, const char* c);
-void func_0013D680(Str* d, Str* s);
+void String_AssignString(Str* d, Str* s);
 void String_Dtor(Str* s, int f);
 void func_002CE1A0(void* ret, void* list, void** it, void* ent);
 void GuiWidget_SendEvent(Mgr* a, Mgr* b, int c, int d, int e);
@@ -46,10 +46,10 @@ struct Str {
     int w;
     int l;
     char* d;
-    Str() { func_00298690(this); }
+    Str() { String_CtorEmpty(this); }
     Str(const char* s) { Str* p = this; String_CtorCStr_13B480(p, s ? s : D_004ACFE0); }
     __declspec(weak) __declspec(DROPDTOR) ~Str() { String_Dtor(this, 0); }
-    Str& operator=(const Str& o) { func_0013D680(this, (Str*)&o); return *this; }
+    Str& operator=(const Str& o) { String_AssignString(this, (Str*)&o); return *this; }
 };
 
 struct Ent {

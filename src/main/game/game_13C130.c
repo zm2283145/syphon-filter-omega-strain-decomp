@@ -16,7 +16,7 @@ extern "C" {
 static const unsigned int dat_00489BF8[2] = { 0x1, 0x0 };
 static const unsigned int dat_00489C00[2] = { 0 };
 int func_0013C310(const K1C4770* a, const K1C4770* b);
-N1C4770* func_0013C570(T1C4770* t, N1C4770* parent, bool left, bool leftmost, const K1C4770* k); }
+N1C4770* Tree_Insert_13C570(T1C4770* t, N1C4770* parent, bool left, bool leftmost, const K1C4770* k); }
 static inline int K1C4770_less(const K1C4770* a, const K1C4770* b) { int r = func_0013C310(a, b) < 0; return r; }
 extern "C" void func_0013C130(R1C4770* out, T1C4770* t, const K1C4770* k)
 {
@@ -44,7 +44,7 @@ extern "C" void func_0013C130(R1C4770* out, T1C4770* t, const K1C4770* k)
         }
     }
     if (j == 0 || K1C4770_less(&j->key, k)) {
-        out->node = func_0013C570(t, y, left, leftmost, k);
+        out->node = Tree_Insert_13C570(t, y, left, leftmost, k);
         out->inserted = (*(unsigned char*)dat_00489BF8);
     } else {
         out->node = j;

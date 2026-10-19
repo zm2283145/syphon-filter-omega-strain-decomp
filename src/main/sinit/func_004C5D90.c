@@ -9,7 +9,7 @@ extern char D_0049C9A8[], D_0049C9B0[], D_0049C9B8[], D_0049C9C0[], D_0049C9D0[]
 extern char D_0049C9F0[], D_0049C9F8[], D_0049CA00[], D_0049CA20[], D_0049CA38[];
 extern char D_0048A110[];
 extern char D_00493880[], D_00493878[], D_004938A0[];
-extern char func_00171740[], func_00144930[], func_001737B0[];
+extern char LinkList_Dtor[], func_00144930[], func_001737B0[];
 extern char Script_MakeGOBJInteractable[], Script_MakeNPCInteractable[];
 extern char ScriptType_cHotboxMsg_Init[], ScriptType_cHotbox_Init[];
 extern char Script_cHotboxMsg_Action[], Script_cHotboxMsg_Who[], Script_cHotboxMsg_WhoNPC[], Script_cHotboxMsg_WhoPlayer[];
@@ -19,7 +19,7 @@ extern int D_004EE6F0, D_004EE6F8, D_004EE700, D_004EE708, D_004EE710, D_004EE71
 extern int D_004EE730, D_004EE738, D_004EE740, D_004EE748, D_004EE750, D_004EE758, D_004EE760, D_004EE768;
 extern void LinkList_Ctor(void* p);
 extern void func_00173910(void* p);
-extern void func_00173900(void* p, int n);
+extern void PtrVec_Reserve_Thunk_173900(void* p, int n);
 extern int func_001361D0(int* n);
 extern void __register_global_object(void* obj, void* dtor, void* link);
 extern int ScriptEnum_Register();
@@ -29,10 +29,10 @@ extern int cGOBJ_GetScriptTypeKeyPtr();
 extern int Script_RegisterNative_2();
 extern int func_0014A6A0();
 extern int func_00175FB0();
-void func_004C5D90(void)
+void StaticInit_RegisterHotbox(void)
 {
     LinkList_Ctor(g_HotboxList);
-    __register_global_object(g_HotboxList, func_00171740, D_004EE678);
+    __register_global_object(g_HotboxList, LinkList_Dtor, D_004EE678);
     D_004EE698 = D_0049C930;
     D_004EE6B8 = D_0049C940;
     __register_global_object(&D_004EE6B8, func_00144930, D_004EE6A8);
@@ -43,7 +43,7 @@ void func_004C5D90(void)
         n[0] = 0x14;
         o = (Obj_4C5D90*)g_RuntimeHotboxes;
         func_00173910(o);
-        func_00173900(o, func_001361D0(n));
+        PtrVec_Reserve_Thunk_173900(o, func_001361D0(n));
         o->ready = 0;
         __register_global_object(o, func_001737B0, D_004EE6C8);
     }

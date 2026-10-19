@@ -46,10 +46,30 @@ extern void Npc_Activate();
 extern void Npc_Deactivate();
 extern void Npc_Dtor();
 extern void Npc_Enable();
+extern void Npc_GetActiveWeapon();
 extern void Npc_HandleMessage();
 extern void Npc_InitModel();
 extern void Npc_PreUpdate();
+extern void Npc_ResetTime();
 extern void Npc_Update();
+extern void Npc_v04();
+extern void Npc_v05();
+extern void Npc_v07();
+extern void Npc_v08();
+extern void Npc_v09();
+extern void Npc_v1A();
+extern void Npc_v1B();
+extern void Npc_v1C();
+extern void Npc_v24();
+extern void Npc_v25();
+extern void Npc_v26();
+extern void Npc_v27();
+extern void Npc_v28();
+extern void Npc_v29();
+extern void Npc_v2A();
+extern void Npc_v2B();
+extern void Npc_v2D();
+extern void Npc_v33();
 extern void Object_Activate();
 extern void Object_AttachTransform();
 extern void Object_Deactivate();
@@ -64,8 +84,23 @@ extern void QuatCurve_PreUpdate();
 extern void VecCurve_ZeroDerivative();
 extern void cGOBJ_v0B();
 extern void cGOBJ_v0C();
+extern void cGOBJ_v35();
+extern void cGOBJ_v39();
 extern void cGameCamera_dtor();
 extern void cGameCamera_v10();
+extern void cNode_v06();
+extern void cNode_v07();
+extern void cNode_v0D();
+extern void cNode_v14();
+extern void cNode_v24();
+extern void cNode_v25();
+extern void cNode_v26();
+extern void cNode_v27();
+extern void cNode_v28();
+extern void cNode_v29();
+extern void cNode_v2A();
+extern void cNode_v2B();
+extern void cNode_v3A();
 extern void func_0012ED00();
 extern void func_0012ED30();
 extern void func_0012ED40();
@@ -105,44 +140,9 @@ extern void func_00180780();
 extern void func_00180790();
 extern void func_001807A0();
 extern void func_00180B50();
-extern void func_00184390();
-extern void func_00184480();
-extern void func_00184560();
-extern void func_00184630();
-extern void func_00184640();
-extern void func_00184720();
-extern void func_001847F0();
-extern void func_001848D0();
-extern void func_001849B0();
-extern void func_00184AF0();
-extern void func_00184BF0();
-extern void func_00184C60();
-extern void func_00184C80();
-extern void func_00184CA0();
-extern void func_00184CC0();
 extern void func_001856D0();
-extern void func_00185A30();
 extern void func_001B0F20();
-extern void func_001B3950();
-extern void func_001B3960();
-extern void func_001B3A60();
-extern void func_001B4970();
 extern void func_001B8790();
-extern void func_003CD090();
-extern void func_003CD110();
-extern void func_003CD4A0();
-extern void func_003CD7A0();
-extern void func_003CD920();
-extern void func_003CDA60();
-extern void func_003CDBE0();
-extern void func_003CDC20();
-extern void func_003CDD40();
-extern void func_003CDD80();
-extern void func_003CDDC0();
-extern void func_003CE7D0();
-extern void func_003CE810();
-extern void func_003CE9D0();
-extern void func_003CEA00();
 
 void *D_004DA3E0[12] = {
     0, 0, &func_0017EC70, &func_00180020,
@@ -165,58 +165,58 @@ void *D_004DA440[12] = {
 void *D_004DA470[68] = {
     0, 0, &func_0017F080, &Object_HandleMessage,
     &GObj_GetID, &Object_GetAttachedOrSelf, &func_0015C090, &func_0012ED00,
-    &func_003CE810, &func_003CE7D0, &func_0012ED30, &func_0012ED40,
-    &func_0012ED50, &cGOBJ_v0B, &cGOBJ_v0C, &func_003CEA00,
+    &cNode_v06, &cNode_v07, &func_0012ED30, &func_0012ED40,
+    &func_0012ED50, &cGOBJ_v0B, &cGOBJ_v0C, &cNode_v0D,
     &func_00180780, &func_00180790, &func_001807A0, &Actor_BasePreLogic,
-    &Actor_BaseWorldUpdate, &Actor_VirtualNop, &func_003CE9D0, &Object_Activate,
+    &Actor_BaseWorldUpdate, &Actor_VirtualNop, &cNode_v14, &Object_Activate,
     &Object_Deactivate, &Node_SetFlag2C, &Node_ClearFlag2C, &Node_GetFlag2C,
     &func_0015BFB0, &func_0015BFC0, &func_0015BFD0, &func_00148870,
     &func_0015BFF0, &func_0015BFE0, &func_0013EE60, &func_0015C000,
-    &Object_AttachTransform, &Player_GetActiveWeapon, &func_003CDDC0, &func_003CDD80,
-    &func_003CDD40, &func_003CDC20, &func_003CDBE0, &func_003CDA60,
-    &func_003CD920, &func_003CD7A0, &func_0015C010, &func_00153860,
+    &Object_AttachTransform, &Player_GetActiveWeapon, &cNode_v24, &cNode_v25,
+    &cNode_v26, &cNode_v27, &cNode_v28, &cNode_v29,
+    &cNode_v2A, &cNode_v2B, &func_0015C010, &func_00153860,
     &Object_GetEye, &func_0015C020, &func_00140E90, &func_0015C030,
-    &func_0015C040, &func_0015C050, &Node_GetWorldMatrix, &func_003CD4A0,
-    &Node_GetLightRefPoint, &PathObj_GetPosition, &Node_GetComponentMatrix, &func_003CD110,
-    &func_003CD090, &GObj_GetWorldMatrix, &func_0013E060, &func_0015C080,
+    &func_0015C040, &func_0015C050, &Node_GetWorldMatrix, &cGOBJ_v35,
+    &Node_GetLightRefPoint, &PathObj_GetPosition, &Node_GetComponentMatrix, &cGOBJ_v39,
+    &cNode_v3A, &GObj_GetWorldMatrix, &func_0013E060, &func_0015C080,
     &Actor_ApplyContactDamage, &func_0015C0A0, &GObj_GetLifeState, &Controller_DeathNotice,
 };
 
 void *D_004DA580[68] = {
     0, 0, &cGameCamera_dtor, &Object_HandleMessage,
     &GObj_GetID, &Object_GetAttachedOrSelf, &func_0015C090, &func_0012ED00,
-    &func_003CE810, &func_003CE7D0, &func_0012ED30, &func_0012ED40,
-    &func_0012ED50, &func_0017A1A0, &func_0017A1B0, &func_003CEA00,
+    &cNode_v06, &cNode_v07, &func_0012ED30, &func_0012ED40,
+    &func_0012ED50, &func_0017A1A0, &func_0017A1B0, &cNode_v0D,
     &func_00180780, &func_00180790, &cGameCamera_v10, &Actor_BasePreLogic,
-    &CameraRig_BaseUpdate, &Actor_VirtualNop, &func_003CE9D0, &Object_Activate,
+    &CameraRig_BaseUpdate, &Actor_VirtualNop, &cNode_v14, &Object_Activate,
     &Object_Deactivate, &Node_SetFlag2C, &Node_ClearFlag2C, &Node_GetFlag2C,
     &func_0015BFB0, &func_0015BFC0, &func_0015BFD0, &func_00148870,
     &func_0015BFF0, &func_0015BFE0, &func_0013EE60, &func_0015C000,
-    &Object_AttachTransform, &Player_GetActiveWeapon, &func_00180B50, &func_003CDD80,
-    &func_003CDD40, &func_003CDC20, &func_003CDBE0, &func_003CDA60,
-    &func_003CD920, &func_003CD7A0, &func_0015C010, &func_00153860,
+    &Object_AttachTransform, &Player_GetActiveWeapon, &func_00180B50, &cNode_v25,
+    &cNode_v26, &cNode_v27, &cNode_v28, &cNode_v29,
+    &cNode_v2A, &cNode_v2B, &func_0015C010, &func_00153860,
     &Object_GetEye, &func_0015C020, &func_00140E90, &func_0015C030,
-    &func_0015C040, &func_0015C050, &Node_GetWorldMatrix, &func_003CD4A0,
-    &Node_GetLightRefPoint, &PathObj_GetPosition, &Node_GetComponentMatrix, &func_003CD110,
-    &func_003CD090, &GObj_GetWorldMatrix, &func_0013E060, &func_0015C080,
+    &func_0015C040, &func_0015C050, &Node_GetWorldMatrix, &cGOBJ_v35,
+    &Node_GetLightRefPoint, &PathObj_GetPosition, &Node_GetComponentMatrix, &cGOBJ_v39,
+    &cNode_v3A, &GObj_GetWorldMatrix, &func_0013E060, &func_0015C080,
     &Actor_ApplyContactDamage, &func_0015C0A0, &GObj_GetLifeState, &Controller_DeathNotice,
 };
 
 void *D_004DA690[70] = {
     0, 0, &Npc_Dtor, &Npc_HandleMessage,
-    &GObj_GetID, &Object_GetAttachedOrSelf, &func_00184CC0, &func_00185A30,
-    &Npc_Enable, &func_001B4970, &func_001B3A60, &func_001B3960,
-    &func_0012ED50, &cGOBJ_v0B, &cGOBJ_v0C, &func_003CEA00,
-    &func_001B3950, &Npc_InitModel, &Npc_Update, &Npc_PreUpdate,
+    &GObj_GetID, &Object_GetAttachedOrSelf, &Npc_v04, &Npc_v05,
+    &Npc_Enable, &Npc_v07, &Npc_v08, &Npc_v09,
+    &func_0012ED50, &cGOBJ_v0B, &cGOBJ_v0C, &cNode_v0D,
+    &Npc_ResetTime, &Npc_InitModel, &Npc_Update, &Npc_PreUpdate,
     &Actor_WorldUpdate, &Actor_VirtualNop, &Actor_Draw, &Npc_Activate,
     &Npc_Deactivate, &Node_SetFlag2C, &Node_ClearFlag2C, &Node_GetFlag2C,
-    &func_00184CA0, &func_00184C60, &func_00184C80, &Actor_IsReplica,
+    &Npc_v1A, &Npc_v1B, &Npc_v1C, &Actor_IsReplica,
     &func_0015BFF0, &func_0015BFE0, &Actor_GetBounds, &func_0015C000,
-    &Object_AttachTransform, &func_00184390, &func_00184480, &func_00184560,
-    &func_00184630, &func_00184640, &func_00184720, &func_001847F0,
-    &func_001848D0, &func_001849B0, &func_0015C010, &func_00184AF0,
+    &Object_AttachTransform, &Npc_GetActiveWeapon, &Npc_v24, &Npc_v25,
+    &Npc_v26, &Npc_v27, &Npc_v28, &Npc_v29,
+    &Npc_v2A, &Npc_v2B, &func_0015C010, &Npc_v2D,
     &Actor_GetEyeNode, &Actor_GetTargetCategory, &Actor_GetStance, &Actor_GetTargetSizeFactor,
-    &Actor_GetSubtargetCount, &func_00184BF0, &Node_GetWorldMatrix, &func_003CD4A0,
+    &Actor_GetSubtargetCount, &Npc_v33, &Node_GetWorldMatrix, &cGOBJ_v35,
     &Actor_GetBodyCenter, &Actor_GetPosition, &Actor_GetRootPosition, (void *)0x1b0f30,
     &func_001B0F20, &Actor_GetRootWorldMatrix, &Actor_GetFloorContactPos, &func_001856D0,
     &Actor_HandleCombatEvent, &Bullet_ApplyHit, &Actor_GetLifeState, &Actor_Kill,

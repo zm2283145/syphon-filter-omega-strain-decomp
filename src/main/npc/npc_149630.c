@@ -2506,7 +2506,7 @@ extern int ScriptFilter_Dispatch(void* filter, int a1, int a2);
 extern int* func_0016AD70(void);
 extern int Actor_SetStunImmune(NpcActor* actor, int on, int a2);
 extern int Actor_SetNotGasable(NpcActor* actor, int on, int a2);
-extern int func_001990F0(NpcActor* actor, int on, int a2);
+extern int cNetSetFlagMsg_Send(NpcActor* actor, int on, int a2);
 extern int* cGOBJTriggerEventMsg_GetScriptTypeKeyPtr(void);
 extern int ScriptType_AddAccepted(int type, int iface);
 extern void ScriptType_SetParent(int type, int base);
@@ -2542,7 +2542,7 @@ int* func_0014A6A0(void) {
 }
 
 /* vtable slot 0x0B. */
-int func_0014A6B0(void) {
+int cNPC_v0B(void) {
     return D_004EA3F0;
 }
 
@@ -2556,7 +2556,7 @@ int Script_cAIModeChangeMsg_GetAiMode(NpcAiMsg** args) {
     return args[0]->aiMode;
 }
 
-void func_0014A6F0(void) {
+void ScriptType_cAIModeChangeMsg_Init(void) {
 }
 
 /* Returns the cAIModeChangeMsg script type. */
@@ -2590,7 +2590,7 @@ void cNPC_AddItem(cNPC* self, int item, int count) {
 
 /* vtable slot 0x83: SetNotTargetable. */
 int cNPC_SetNotTargetable(cNPC* self, int on) {
-    return func_001990F0(self->actor, on, 0);
+    return cNetSetFlagMsg_Send(self->actor, on, 0);
 }
 
 /* vtable slot 0x82: SetNotGasable. */

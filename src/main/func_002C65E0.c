@@ -4,7 +4,7 @@ typedef struct { int h0, h1; int a; int b; float x; float y; float z; int c; int
 extern int D_0051EE60;
 extern int Event_PackHeader(Msg* m, int p1, int* type, int p3, int p4, unsigned int size, void* buf);
 /* Serialises the message's fields into buf; returns the size written (0x24) or -1. */
-int func_002C65E0(Msg* m, int p1, int* type, int p3, int p4, unsigned int size, void* buf)
+int cNetCreateBlastMsg_Serialize(Msg* m, int p1, int* type, int p3, int p4, unsigned int size, void* buf)
 {
     Buf* out;
     int result = -1;

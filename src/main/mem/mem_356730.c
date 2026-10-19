@@ -56,6 +56,6 @@ extern "C" P356730* GuiPersonnelMenu_ctor(P356730* p)
 #include "vtable_base_dtor.h"
 
 /* Derived destructor: restore vtable, run base destructor, optionally delete. */
-DEFINE_VTABLE_BASE_DTOR(func_003567B0, D_004DF0B0, GuiWidget_Destroy)
+DEFINE_VTABLE_BASE_DTOR(GuiPersonnelScreen_dtor_3567B0, D_004DF0B0, GuiWidget_Destroy)
 #pragma pop /* merge_units */
 /* merge_units: end func_003567B0 */

@@ -16,7 +16,7 @@ void SoundMgr_SetOutputMode(int unused, int a1) {
 }
 
 /* Calls two library routines, then polls snd_FlushSoundCommands until it returns 0. */
-void func_001C9680(void) {
+void Snd_StopAndFlushAll(void) {
     snd_StopAllSounds();
     snd_FreeVAGStreamChannels();
     while (snd_FlushSoundCommands() != 0) {

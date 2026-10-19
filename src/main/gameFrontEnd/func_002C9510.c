@@ -34,8 +34,8 @@ void cMessage_dtor(void* m, int flags);
 void FrontEnd_SetMusic(Self_002C9510* self, int v);
 void DME_StopThread(void);
 void Boot_LoadFonts(W_002C9510* w);
-void func_002C9EE0(Self_002C9510* self);
-void func_00145160(int a);
+void FrontEnd_LoadZeusHog(Self_002C9510* self);
+void WeaponDb_LoadWpnHog(int a);
 void App_Broadcast(int a, int b, int c);
 void Video_BeginFrame(void* p);
 void FrontEnd_ResumeGui(Self_002C9510* self)
@@ -102,8 +102,8 @@ void FrontEnd_ResumeGui(Self_002C9510* self)
             Boot_LoadFonts(App_GetInstance());
             break;
         }
-        func_002C9EE0(self);
-        func_00145160(g_WeaponDatabase);
+        FrontEnd_LoadZeusHog(self);
+        WeaponDb_LoadWpnHog(g_WeaponDatabase);
         App_Broadcast(0x2003, 0, 0);
         self->b37 = 0;
         self->b28 = 1;

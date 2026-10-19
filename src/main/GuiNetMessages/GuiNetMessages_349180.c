@@ -21,7 +21,7 @@ int strlen(const char *);
 
 
 
-int func_00349180(void) {
+int GuiNetMessageArray_GetClassName(void) {
     return (int)"GuiNetMessageArray";
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -50,7 +50,7 @@ typedef struct { int w0, w4, w8; } Str003491C0;
 extern void String_Reserve(Str003491C0* str, int n);
 extern void String_Replace(Str003491C0* str, int pos, int count, const char* first, const char* last, Alloc003491C0 alloc);
 /* Construct a string from a C string. */
-Str003491C0* func_003491C0(Str003491C0* str, const char* s)
+Str003491C0* String_CtorCStr_3491C0(Str003491C0* str, const char* s)
 {
     Alloc003491C0 alloc;
     int n;

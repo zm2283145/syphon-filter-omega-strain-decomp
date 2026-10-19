@@ -129,7 +129,7 @@ typedef struct Node_3CD7A0 { unsigned char flag; char pad[15]; M44 m; M44 xf; __
 struct Obj_3CD7A0 { char pad[0x50]; Xf_7A0* xf; Node_3CD7A0* node; Mover_7A0* mover; };
 
 static inline void Copy_7A0(M44* d, M44* s) { PP_COPY4(d, s) }
-extern "C" void func_003CD7A0(Obj_3CD7A0* o, V4_7A0* pos)
+extern "C" void cNode_v2B(Obj_3CD7A0* o, V4_7A0* pos)
 {
     Xf_7A0* xf = o->xf;
     if (xf) {

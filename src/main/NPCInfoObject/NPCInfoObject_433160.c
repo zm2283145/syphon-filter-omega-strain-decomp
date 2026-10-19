@@ -128,7 +128,7 @@ static inline void Reset_335F0(NpcInfoRec* r)
     for (j = 0; j < 4; j++) { r->a6[j] = 0; r->aA[j] = 1; }
 }
 
-unsigned char func_004335F0(void)
+unsigned char NpcInfo_RegisterNetType(void)
 {
     int db;
     Prm_335F0 prm;

@@ -7,9 +7,9 @@
 /* merge_units: begin func_0011EDD0 */
 __asm__(".set nomove\n"
         "dpadd = SoftFloat_DoubleAdd\n"
-        "dpsub = func_0011C200\n"
+        "dpsub = SoftFloat_DoubleSub\n"
         "dpmul = SoftFloat_DoubleMultiply\n"
-        "dptoli = func_0011C858\n");
+        "dptoli = SoftFloat_DoubleToInt\n");
 typedef union { double value; struct { unsigned int lsw; unsigned int msw; } parts; } ieee_double_shape_type;
 #define GET_HIGH_WORD(i,d) do { ieee_double_shape_type gh_u; gh_u.value = (d); (i) = gh_u.parts.msw; } while (0)
 #define INSERT_WORDS(d,ix0,ix1) do { ieee_double_shape_type iw_u; iw_u.parts.msw = (ix0); iw_u.parts.lsw = (ix1); (d) = iw_u.value; } while (0)
@@ -52,10 +52,10 @@ double func_0011EDD0(double x, double y)
 /* __kernel_rem_pio2 (newlib/fdlibm k_rem_pio2.c); retail newlib was built with -g. */
 __asm__(".set nomove\n"
         "dpadd = SoftFloat_DoubleAdd\n"
-        "dpsub = func_0011C200\n"
+        "dpsub = SoftFloat_DoubleSub\n"
         "dpmul = SoftFloat_DoubleMultiply\n"
-        "litodp = func_0011C7A0\n"
-        "dptoli = func_0011C858\n"
+        "litodp = SoftFloat_IntToDouble\n"
+        "dptoli = SoftFloat_DoubleToInt\n"
         "dpcmp = SoftFloat_UnpackAndCompare\n");
 typedef int __int32_t;
 

@@ -12,7 +12,7 @@
 extern "C" {
 void Mem_Free(int pool, void* p, char* file, int line);
 }
-extern "C" void func_00443EA0(void* node)
+extern "C" void SFOLobby_Free(void* node)
 {
     if (node) {
         AllocGuard guard;
@@ -36,7 +36,7 @@ int memset(int, int, int);
 extern char D_004C0B20;
 extern unsigned char g_ProfileLockEnabled;
 }
-extern "C" int func_00443F40(int arg0) {
+extern "C" int SFOLobby_AllocZeroed(int arg0) {
     int temp_s1;
 
     if (arg0 <= 0) {
@@ -103,7 +103,7 @@ void* memset(void*, int, unsigned int);
 
 void String_Copy(char*, const char*);
 int func_002CF2C0(char*, void*);
-int func_002CF5E0(void);
+int Medius_DisconnectServer(void);
 #if 0 /* merge_units */
 void func_002EBC48(int*);
 #endif /* merge_units */
@@ -129,7 +129,7 @@ static inline bool Poll(void) {
 }
 
 static inline int Busy(void) {
-    int r = func_002CF5E0();
+    int r = Medius_DisconnectServer();
     if (r) return r;
     return 0;
 }
@@ -188,11 +188,11 @@ extern short D_00584390;
 extern char D_00584378[];
 int func_00444FF0(int, int, int, int);
 int func_00444EC0(void);
-int func_002D0850(void*);
+int Medius_GetLibVersion(void*);
 int func_004449C0(int, int, int, int);
-int func_002CF420(Req*, int*);
+int Medius_ConnectServer(Req*, int*);
 void func_002EBCE0(void*);
-void func_002D0560(void*);
+void Medius_SendServerReport(void*);
 int MGCLUpdate(void);
 #if 0 /* merge_units */
 void memset(void*, int, int);
@@ -214,12 +214,12 @@ static inline int Inner_4441D0(Req* req, int* out, char* buf138) {
     } else {
         return -12;
     }
-    ret = func_002CF420(req, out);
+    ret = Medius_ConnectServer(req, out);
     if (ret != 0) return ret;
     D_00584390 = 0;
     D_0058438E = 1;
     func_002EBCE0(buf138);
-    func_002D0560(D_00584378);
+    Medius_SendServerReport(D_00584378);
     ret = MGCLUpdate();
     if (ret != 0) return ret;
     return 0;
@@ -233,7 +233,7 @@ int func_004441D0(int a0, int a1, int a2, int a3) {
 
     if (!(unsigned char)func_00444FF0(1, 4, 1, 0)) return -12;
     if (func_00444EC0() != 0) return -12;
-    if (func_002D0850(bufF0) != 0) return -12;
+    if (Medius_GetLibVersion(bufF0) != 0) return -12;
     if (func_004449C0(a0, a1, a2, a3) != 0) return -12;
     memset(&req, 0, sizeof(req));
     memset(&out, 0, 4);

@@ -48,7 +48,7 @@ extern float Math_DegToRad(float);
 extern void func_001F23C0(void*, int);
 /* Builds and registers one block of motion-graph nodes. */
 #pragma optimization_level 1
-void func_001F1360(void* p0)
+void MotionGraph_BuildCarryBody(void* p0)
 {
     B4 v112C;
     B4 v1128;

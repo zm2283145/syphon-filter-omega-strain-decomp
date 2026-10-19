@@ -8,7 +8,7 @@
 
 extern int PtrVec_Reserve(int, int);
 
-int func_00257450(int a0, int a1) {
+int PtrVec_Reserve_Thunk_257450(int a0, int a1) {
     return PtrVec_Reserve(a0, a1);
 }
 

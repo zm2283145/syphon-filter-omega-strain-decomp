@@ -22,7 +22,7 @@ void cNPC_Deactivate(void* npc, P_1B3960* p);
 }
 static inline int Net_1B3960(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
 static inline void Deact_1B3960(void* npc, P_1B3960* f) { if (f && Net_1B3960()) cNPC_Deactivate(npc, f); }
-extern "C" void func_001B3960(O_1B3960* self, int id)
+extern "C" void Npc_v09(O_1B3960* self, int id)
 {
     P_1B3960* found = 0;
     if (id >= 0) {
@@ -60,7 +60,7 @@ void NpcAi_ActivateForPlayer(N_1B3A60* npc, P_1B3A60* p);
 }
 static inline int Net_1B3A60(void) { return g_IsMultiplayer ? D_005721C0 : 1; }
 static inline void Act_1B3A60(N_1B3A60* npc, P_1B3A60* f) { if (f && Net_1B3A60()) NpcAi_ActivateForPlayer(npc, f); }
-extern "C" void func_001B3A60(O_1B3A60* self, int id)
+extern "C" void Npc_v08(O_1B3A60* self, int id)
 {
     P_1B3A60* found = 0;
     if (id >= 0 && Net_1B3A60()) {

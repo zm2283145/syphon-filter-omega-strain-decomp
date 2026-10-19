@@ -17,18 +17,18 @@ extern void GuiWidget_BaseSleep();
 extern void GuiWidget_BaseWake();
 extern void GuiWidget_ClearFlag4();
 extern void GuiWidget_SetFlag4();
-extern void func_0041F210();
-extern void func_0045BCC0();
-extern void func_0045BCD0();
+extern void GuiWidget_Load();
+extern void GuiGameScreen_GetClassName();
+extern void GuiGameScreen_IsType();
 extern void GuiGameScreen_OnEvent();
 extern void GuiGameScreen_OnInput();
 extern void GuiGameScreen_Draw();
 extern void GuiGameScreen_Update();
-extern void func_0045DE80();
+extern void GuiGameScreen_Deinit();
 extern void GuiGameScreen_Init();
 extern void * const D_004E1620[];
 
-char **func_0045BC10(char **arg0, long long arg1) {
+char **GuiGameScreen_dtor(char **arg0, long long arg1) {
     char * temp_a0;
     char * temp_a0_2;
     char * temp_a0_3;
@@ -54,4 +54,4 @@ char **func_0045BC10(char **arg0, long long arg1) {
     }
     return arg0;
 }
-void * const D_004E1620[24] = { (void*)0x0, (void*)0x0, (void*)func_0045BC10, (void*)GuiGameScreen_Init, (void*)func_0045DE80, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiWidget_BaseWake, (void*)GuiWidget_BaseSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiGameScreen_OnInput, (void*)GuiGameScreen_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiGameScreen_Update, (void*)GuiGameScreen_OnEvent, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)func_0045BCC0, (void*)func_0045BCD0, (void*)0x0 };
+void * const D_004E1620[24] = { (void*)0x0, (void*)0x0, (void*)GuiGameScreen_dtor, (void*)GuiGameScreen_Init, (void*)GuiGameScreen_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiWidget_BaseWake, (void*)GuiWidget_BaseSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiGameScreen_OnInput, (void*)GuiGameScreen_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiGameScreen_Update, (void*)GuiGameScreen_OnEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiGameScreen_GetClassName, (void*)GuiGameScreen_IsType, (void*)0x0 };

@@ -16,7 +16,7 @@ typedef struct {
 typedef struct { char pad[4]; int count; char pad8[0x38]; Pad pads[1]; } PadMgr;
 typedef struct { int type; int analog; int flags; int reserved[2]; } PadDesc;
 extern void Pad_ClearMaskedButtons(Pad* pad, int port);
-extern int func_0026B298(PadDesc* desc, Pad* pad);
+extern int scePad2CreateSocket(PadDesc* desc, Pad* pad);
 
 /* Adds a pad to the manager with the given analog dead zone. */
 void Pad_Construct(PadMgr* mgr, int analog, int unused, int deadzone)
@@ -33,6 +33,6 @@ void Pad_Construct(PadMgr* mgr, int analog, int unused, int deadzone)
     desc.flags = 0;
     pad->state = 3;
     pad->active = 0;
-    pad->handle = func_0026B298(&desc, pad);
+    pad->handle = scePad2CreateSocket(&desc, pad);
     mgr->count++;
 }

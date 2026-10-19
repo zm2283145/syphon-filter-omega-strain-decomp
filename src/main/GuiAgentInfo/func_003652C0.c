@@ -7,6 +7,6 @@
 #include "types.h"
 
 
-int func_003652C0(void) {
+int GuiAgentDisplay_GetClassName(void) {
     return (int)"GuiAgentDisplay";
 }

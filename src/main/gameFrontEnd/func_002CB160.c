@@ -27,8 +27,8 @@ void Video_BeginFrame(void* p);
 void Mem_Free(int heap, void* p, char* file, int line);
 W_002CB160* App_GetInstance(void);
 void func_003D1700(void* p);
-void func_002C9E20(Self_002CB160* self);
-void func_001450F0(int a);
+void FrontEnd_UnloadZeusHog(Self_002CB160* self);
+void WeaponDb_UnloadWpnHog(int a);
 void func_002C9C80(Self_002CB160* self, int a);
 void* Service_Lookup(void* a, void* b);
 char* strncpy(char* d, const char* s, int n);
@@ -60,8 +60,8 @@ extern "C" void FrontEnd_TeardownGui(Self_002CB160* self)
             self->p260 = 0;
             { W_002CB160* w = App_GetInstance(); w->b278 = 1; }
             func_003D1700(D_0055A700);
-            func_002C9E20(self);
-            func_001450F0(g_WeaponDatabase);
+            FrontEnd_UnloadZeusHog(self);
+            WeaponDb_UnloadWpnHog(g_WeaponDatabase);
             func_002C9C80(self, 1);
             svc = Service_Lookup(g_Game, D_004F2CC0);
             if (svc) {

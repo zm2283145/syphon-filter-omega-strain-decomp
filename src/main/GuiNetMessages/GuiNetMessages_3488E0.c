@@ -87,7 +87,7 @@ extern void GuiWidget_Update(S348A00*);
 extern void func_00424410(S348A00*, int*, unsigned int*);
 extern void GuiArrayWidget_Select(S348A00*, int, unsigned int);
 extern void LobbyArray_SetDirty(C348A00*, int);
-void func_00348A00(S348A00* o);
+void GuiNetMessageArray_Update(S348A00* o);
 }
 static inline void inl_348A00(S348A00* o)
 {
@@ -100,7 +100,7 @@ static inline void inl_348A00(S348A00* o)
     o->a54 = 100000;
     GuiArrayWidget_Select(o, a, b);
 }
-void func_00348A00(S348A00* o)
+void GuiNetMessageArray_Update(S348A00* o)
 {
     GuiWidget_Update(o);
     if (o->aA4 && o->aA4->a18) {
@@ -121,13 +121,13 @@ static inline void merge_flush_func_00348A00(void) {}
 /* Release the owned record at +0xA0 (string member at +0x14) under the allocator guard, clear +0xA0/+0xA4. */
 extern "C" {
 void* String_Dtor(void* self, short flags);
-void func_00424A50(void* self);
+void GuiArrayWidget_Sleep(void* self);
 }
 struct O348AD0 { char pad[0xA0]; char* aA0; int aA4; };
-extern "C" void func_00348AD0(O348AD0* o)
+extern "C" void GuiNetMessageArray_Sleep(O348AD0* o)
 {
     char* p;
-    func_00424A50(o);
+    GuiArrayWidget_Sleep(o);
     p = o->aA0;
     {
         AllocGuard guard;
@@ -180,7 +180,7 @@ extern void GuiArrayWidget_Select(W48B90*, int, unsigned int);
 
 }
 /* List screen init: creates the callout, binds the lobby list and clamps the restored selection. */
-extern "C" void func_00348B90(W48B90* w) {
+extern "C" void GuiNetMessageArray_Wake(W48B90* w) {
     C48B90* c;
     GuiArrayWidget_OnWake(w);
     {

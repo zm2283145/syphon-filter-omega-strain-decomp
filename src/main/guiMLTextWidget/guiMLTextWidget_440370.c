@@ -19,7 +19,7 @@ extern int D_00494198;
 extern int Gui_GetScreenStack(void);
 extern void GuiWidget_SendEvent(int, int, int, int, int);
 }
-extern "C" int func_00440370(int a0, int a1, int a2, E440* ev) {
+extern "C" int cNetLevelInfoMsg_NetReceive(int a0, int a1, int a2, E440* ev) {
     ReentGuard g;
     if (ev->f8 == D_00494198) {
         if (Gui_GetScreenStack()) GuiWidget_SendEvent(Gui_GetScreenStack(), Gui_GetScreenStack(), 0x1E, 1, 0);

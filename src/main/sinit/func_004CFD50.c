@@ -1,6 +1,6 @@
 #include "types.h"
 extern char* D_004F7EA0;
-extern char func_00258B50[];
+extern char cCrateInteractMsg_NetReceive[];
 extern char D_004F7EA8[];
 extern int D_004F7EB0;
 extern char ScriptType_cCrateInteractMsg_Init[];
@@ -14,7 +14,7 @@ extern int D_004F7ED0;
 extern char Script_cCrateInteractMsg_Who[];
 extern int D_004F7ED8;
 extern char* D_004F7EE0;
-extern char func_00258770[];
+extern char cInventoryMsg_NetReceive[];
 extern char D_004F7EE8[];
 extern int D_004F7EF0;
 extern char ScriptType_cInventoryMsg_Init[];
@@ -32,7 +32,7 @@ extern char D_0048AF18;
 extern char D_00493890[];
 extern int D_004F7F28;
 extern char D_004F7F48[];
-extern char func_00259290[];
+extern char ScalarCollection_Dtor_259290[];
 extern char D_004F7F38[];
 extern char* D_004F7F68;
 extern char func_00144930[];
@@ -55,7 +55,7 @@ extern char Script_RemoveAllBackpacks[];
 extern int D_004F7FA8;
 extern signed char D_004EA0C8;
 extern char* g_LosCheckService;
-extern int func_002824D0();
+extern int NetMsgTable_Add();
 extern int Script_RegisterType();
 extern int Script_RegisterNative();
 extern int cGOBJ_GetScriptTypeKeyPtr();
@@ -63,17 +63,17 @@ extern int Script_RegisterVariable();
 extern int ScalarCollection_Init();
 extern int __register_global_object();
 extern int Script_RegisterNative_2();
-void func_004CFD50(void)
+void StaticInit_RegisterBackpack(void)
 {
     D_004F7EA0 = "cCrateInteractMsg";
-    D_004F7EB0 = func_002824D0(func_00258B50, D_004F7EA8, "cCrateInteractMsg");
+    D_004F7EB0 = NetMsgTable_Add(cCrateInteractMsg_NetReceive, D_004F7EA8, "cCrateInteractMsg");
     D_004F7EB8 = Script_RegisterType("cCrateInteractMsg", ScriptType_cCrateInteractMsg_Init, 1, 0);
     D_004F7EC0 = D_004F7EB8;
     D_004F7EC8 = Script_RegisterNative(D_004F7EB8, Script_cCrateInteractMsg_Given, D_00493888, "Given", 1, &D_004F7EB8);
     D_004F7ED0 = Script_RegisterNative(D_004F7EB8, Script_cCrateInteractMsg_Taken, D_00493888, "Taken", 1, &D_004F7EB8);
     D_004F7ED8 = Script_RegisterNative(D_004F7EB8, Script_cCrateInteractMsg_Who, cGOBJ_GetScriptTypeKeyPtr(), "Who", 1, &D_004F7EB8);
     D_004F7EE0 = "cInventoryMsg";
-    D_004F7EF0 = func_002824D0(func_00258770, D_004F7EE8, "cInventoryMsg");
+    D_004F7EF0 = NetMsgTable_Add(cInventoryMsg_NetReceive, D_004F7EE8, "cInventoryMsg");
     D_004F7EF8 = Script_RegisterType("cInventoryMsg", ScriptType_cInventoryMsg_Init, 1, 0);
     D_004F7F00 = D_004F7EF8;
     D_004F7F08 = Script_RegisterNative(D_004F7EF8, Script_cInventoryMsg_Taken, D_00493888, "Taken", 1, &D_004F7EF8);
@@ -82,7 +82,7 @@ void func_004CFD50(void)
     D_004F7F20 = Script_RegisterVariable("MaxPacks", (int)&D_0048AF10, D_00493888);
     D_004F7F28 = Script_RegisterVariable("PackFadeTime", (int)&D_0048AF18, D_00493890);
     ScalarCollection_Init(D_004F7F48);
-    __register_global_object(D_004F7F48, func_00259290, D_004F7F38);
+    __register_global_object(D_004F7F48, ScalarCollection_Dtor_259290, D_004F7F38);
     D_004F7F68 = "BPCK";
     __register_global_object(&D_004F7F68, func_00144930, D_004F7F58);
     D_004F7F78 = Script_RegisterType("cBackpack", ScriptType_cBackpack_Init, 0, 1);

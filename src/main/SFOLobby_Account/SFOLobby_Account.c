@@ -35,7 +35,7 @@ typedef struct {
     char a[0x15];
     char b[0x11];
 } Msg_4452F0;
-int func_004452F0(char* s)
+int SFOLobby_AccountLogout(char* s)
 {
     Msg_4452F0 m;
     SFOLobby_CallUpdateHook(s, 2, 1);
@@ -67,7 +67,7 @@ int func_004452F0(char* s)
 
 /* merge_units: begin func_00445420 */
 #pragma push /* merge_units */
-extern void func_004475E0(void);
+extern void SFOLobby_OnAccountLogin(void);
 extern int func_00469260(void*, void*);
 typedef struct {
     char a[0x15];
@@ -75,7 +75,7 @@ typedef struct {
     char c[0x20];
     char d[0x20];
 } Msg_445420;
-int func_00445420(char* s)
+int SFOLobby_AccountLogin(char* s)
 {
     Msg_445420 m;
     SFOLobby_CallUpdateHook(s, 2, 1);
@@ -86,7 +86,7 @@ int func_00445420(char* s)
     String_Copy(m.d, s + 0x245D);
     *(int*)(s + 0x18C) = 0;
     *(int*)(s + 0x2410) = Lobby_GetTime();
-    *(int*)(s + 0x24C) = func_00469260(&m, func_004475E0);
+    *(int*)(s + 0x24C) = func_00469260(&m, SFOLobby_OnAccountLogin);
     if (*(int*)(s + 0x24C)) {
         SFOLobby_SetError(s, 10, D_004C0B60, 0x2B0);
         return 0;
@@ -110,14 +110,14 @@ int func_00445420(char* s)
 /* merge_units: begin func_00445570 */
 #pragma push /* merge_units */
 extern int func_00476998(void);
-extern void func_004472C0(void);
+extern void SFOLobby_OnSettings(void);
 extern int func_0046AB38(void*, void*);
 typedef struct {
     char a[0x15];
     char b[0x11];
     int t;
 } Msg_445570;
-int func_00445570(char* s)
+int SFOLobby_RequestSettings(char* s)
 {
     Msg_445570 m;
     SFOLobby_CallUpdateHook(s, 2, 6);
@@ -128,7 +128,7 @@ int func_00445570(char* s)
     m.t = func_00476998();
     *(int*)(s + 0x1BC) = 0;
     *(int*)(s + 0x2410) = Lobby_GetTime();
-    *(int*)(s + 0x24C) = func_0046AB38(&m, func_004472C0);
+    *(int*)(s + 0x24C) = func_0046AB38(&m, SFOLobby_OnSettings);
     while (*(signed char*)(s + 0x9AC) != 1) {
         SFOLobby_CallUpdateHook(s, 0, 0);
         if (*(int*)(s + 0x24C) != 0) {
@@ -149,7 +149,7 @@ int func_00445570(char* s)
 /* merge_units: begin func_004456C0 */
 #pragma push /* merge_units */
 typedef struct { char pad[0x1B8]; int f1b8; char pad2[0x90]; int f24c; char pad3[0x234]; char f484[0x11C]; signed char c5a0; char pad4[0x1E6F]; int f2410; char p2414[4]; char f2418[0x20]; } O445;
-int func_004456E0(O445* o, int mode); /* gsynth: defined below */
+int SFOLobby_GetPolicy(O445* o, int mode); /* gsynth: defined below */
 /*
  * Matched functions (byte-identical with the retail executable).
  * Original translation unit not identified yet; functions are named by address
@@ -158,22 +158,22 @@ int func_004456E0(O445* o, int mode); /* gsynth: defined below */
 
 
 #if 0 /* merge_units */
-extern int func_004456E0(void* self, int enable);
+extern int SFOLobby_GetPolicy(void* self, int enable);
 #endif /* merge_units */
-#define func_004456E0(a0, a1) (func_004456E0((O445 *)(a0), (a1))) /* merge_units */
+#define SFOLobby_GetPolicy(a0, a1) (SFOLobby_GetPolicy((O445 *)(a0), (a1))) /* merge_units */
 
 
 
-/* func_004456E0(self, 1). */
-int func_004456C0(void* self) {
-    return func_004456E0(self, 1);
+/* SFOLobby_GetPolicy(self, 1). */
+int SFOLobby_GetPrivacyPolicy(void* self) {
+    return SFOLobby_GetPolicy(self, 1);
 }
 
-/* func_004456E0(self, 0). */
-int func_004456D0(void* self) {
-    return func_004456E0(self, 0);
+/* SFOLobby_GetPolicy(self, 0). */
+int SFOLobby_GetUsagePolicy(void* self) {
+    return SFOLobby_GetPolicy(self, 0);
 }
-#undef func_004456E0 /* merge_units */
+#undef SFOLobby_GetPolicy /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_004456C0 */
 
@@ -182,9 +182,9 @@ int func_004456D0(void* self) {
 typedef struct { char name[0x15]; char id[0x13]; int mode; } R445;
 
 extern int func_0046A8F8(R445*, void*);
-extern void func_004473C0();
+extern void SFOLobby_OnGetPolicy();
 extern char D_004C0B60[];
-int func_004456E0(O445* o, int mode) {
+int SFOLobby_GetPolicy(O445* o, int mode) {
     R445 rec;
     char* s;
     SFOLobby_CallUpdateHook(o, 2, 5);
@@ -197,7 +197,7 @@ int func_004456E0(O445* o, int mode) {
     rec.mode = mode;
     o->f1b8 = 0;
     o->f2410 = Lobby_GetTime();
-    o->f24c = func_0046A8F8(&rec, func_004473C0);
+    o->f24c = func_0046A8F8(&rec, SFOLobby_OnGetPolicy);
     while (o->c5a0 != 1) {
         SFOLobby_CallUpdateHook(o, 0, 0);
         if (o->f24c != 0) {
@@ -219,7 +219,7 @@ int func_004456E0(O445* o, int mode) {
 #pragma push /* merge_units */
 extern void func_00447470(void);
 extern int func_004690A0(void*, void*);
-extern int func_0044C9D0(void*);
+extern int SFOLobby_DisconnectLobbyServer(void*);
 extern void func_004537D0(void*);
 typedef struct {
     char a[0x15];
@@ -251,7 +251,7 @@ int func_00445850(char* s)
             return 0;
         }
     }
-    if (!func_0044C9D0(s)) return 0;
+    if (!SFOLobby_DisconnectLobbyServer(s)) return 0;
     func_004537D0(s);
     SFOLobby_SetError(s, 0, D_004C0B60, 0x208);
     return 1;
@@ -264,15 +264,15 @@ int func_00445850(char* s)
 #include "SFOLobby_Account_types.h"
 
 #if 0 /* merge_units */
-extern int func_00445420(LobbyAccount* self);
+extern int SFOLobby_AccountLogin(LobbyAccount* self);
 #endif /* merge_units */
-#define func_00445420(a0) (func_00445420((char *)(a0))) /* merge_units */
+#define SFOLobby_AccountLogin(a0) (SFOLobby_AccountLogin((char *)(a0))) /* merge_units */
 
 
 #if 0 /* merge_units */
-extern int func_004452F0(LobbyAccount* self);
+extern int SFOLobby_AccountLogout(LobbyAccount* self);
 #endif /* merge_units */
-#define func_004452F0(a0) (func_004452F0((char *)(a0))) /* merge_units */
+#define SFOLobby_AccountLogout(a0) (SFOLobby_AccountLogout((char *)(a0))) /* merge_units */
 
 
 
@@ -282,46 +282,46 @@ unsigned char func_004459D0(LobbyAccount* self, const char* first, const char* s
     unsigned char result;
     strncpy(self->first, first, 32);
     strncpy(self->second, second, 32);
-    result = func_00445420(self);
+    result = SFOLobby_AccountLogin(self);
     if (result)
-        func_004452F0(self);
+        SFOLobby_AccountLogout(self);
     self->first[0] = 0;
     self->second[0] = 0;
     return result;
 }
-#undef func_00445420 /* merge_units */
-#undef func_004452F0 /* merge_units */
+#undef SFOLobby_AccountLogin /* merge_units */
+#undef SFOLobby_AccountLogout /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_004459D0 */
 
 /* merge_units: begin func_00445A40 */
 #pragma push /* merge_units */
 #if 0 /* merge_units */
-extern int func_00445420(char*);
+extern int SFOLobby_AccountLogin(char*);
 #endif /* merge_units */
-#define func_00445420(a0) (func_00445420((a0))) /* merge_units */
+#define SFOLobby_AccountLogin(a0) (SFOLobby_AccountLogin((a0))) /* merge_units */
 
 
 #if 0 /* merge_units */
-extern int func_004452F0(char*);
+extern int SFOLobby_AccountLogout(char*);
 #endif /* merge_units */
-#define func_004452F0(a0) (func_004452F0((a0))) /* merge_units */
+#define SFOLobby_AccountLogout(a0) (SFOLobby_AccountLogout((a0))) /* merge_units */
 
 
-extern int func_0044CA30(void*);
+extern int SFOLobby_DisconnectAuthServer(void*);
 extern int SFOLobby_ConnectLobby(void*);
 int func_00445A40(char* s, const char* a, const char* b)
 {
     strncpy(s + 0x243D, a, 0x20);
     strncpy(s + 0x245D, b, 0x20);
-    if (!func_00445420(s)) {
+    if (!SFOLobby_AccountLogin(s)) {
         if (*(int*)(s + 0x268) == -0x3DF) {
-            func_004452F0(s);
+            SFOLobby_AccountLogout(s);
             SFOLobby_SetError(s, 1, D_004C0B60, 0x187);
             return 0;
         } else if (*(int*)(s + 0x268) == -0x3E5) {
-            if (func_004452F0(s)) {
-                if (!func_00445420(s)) return 0;
+            if (SFOLobby_AccountLogout(s)) {
+                if (!SFOLobby_AccountLogin(s)) return 0;
             } else {
                 SFOLobby_SetError(s, 1, D_004C0B60, 0x194);
                 return 0;
@@ -330,33 +330,33 @@ int func_00445A40(char* s, const char* a, const char* b)
             return 0;
         }
     }
-    if (!func_0044CA30(s)) return 0;
+    if (!SFOLobby_DisconnectAuthServer(s)) return 0;
     if (!SFOLobby_ConnectLobby(s)) return 0;
     SFOLobby_SetError(s, 0, D_004C0B60, 0x1AB);
     return 1;
 }
-#undef func_00445420 /* merge_units */
-#undef func_004452F0 /* merge_units */
+#undef SFOLobby_AccountLogin /* merge_units */
+#undef SFOLobby_AccountLogout /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_00445A40 */
 
 /* merge_units: begin func_00445B90 */
 #pragma push /* merge_units */
 typedef struct { char p0[0x198]; int done; char p19C[0xB0]; int f24C; char p250[0xDC]; int f32C; char p330[0x20E0]; int f2410; char p2414[4]; char name[0x14C]; } S445B90;
-extern int func_00443100(S445B90*, char*, int);
+extern int SFOLobby_CheckText(S445B90*, char*, int);
 extern int func_00469458(void*, void*);
 extern char D_004C0B50[];
 extern char func_00447270[];
-int func_00445B90(S445B90* s, char* arg1, char* arg2)
+int SFOLobby_CreateAccount(S445B90* s, char* arg1, char* arg2)
 {
     struct { char f40[0x15]; char f55[0x13]; int f68; char f6C[0x20]; char f8C[0x20]; } req;
 
     SFOLobby_CallUpdateHook(s, 2, 1);
-    if (func_00443100(s, arg1, 0) == 0) {
+    if (SFOLobby_CheckText(s, arg1, 0) == 0) {
         SFOLobby_SetError(s, 3, D_004C0B60, 0xD5);
         return 0;
     }
-    if (func_00443100(s, arg2, 0) == 0) {
+    if (SFOLobby_CheckText(s, arg2, 0) == 0) {
         SFOLobby_SetError(s, 3, D_004C0B60, 0xDA);
         return 0;
     }

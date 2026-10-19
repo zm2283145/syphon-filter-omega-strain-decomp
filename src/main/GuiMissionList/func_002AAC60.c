@@ -1,14 +1,14 @@
 #include "types.h"
 typedef struct { void* vt; char pad[0x5C]; char m60[0xAC]; char m10C[4]; } O2AAC60;
-extern void func_002AAD00();
-extern void func_002AAD10();
+extern void GuiMissionList_GetClassName();
+extern void GuiMissionList_IsType();
 extern void func_002AAD40();
 extern void func_002AB2A0();
-extern void func_002ABC90();
-extern void func_002ABD50();
+extern void GuiMissionList_Sleep();
+extern void GuiMissionList_Wake();
 extern void func_002AC300();
-extern void func_002ACCA0();
-extern void func_002ACCF0();
+extern void GuiMissionList_Update();
+extern void GuiMissionList_Init();
 extern void GuiWidget_FocusPrev();
 extern void GuiWidget_FocusNext();
 extern void GuiWidget_FocusLast();
@@ -18,8 +18,8 @@ extern void GuiWidget_OnEvent();
 extern void GuiWidget_ClearFlag4();
 extern void GuiWidget_SetFlag4();
 extern void GuiWidget_Deinit();
-extern void func_0041F210();
-extern void func_004235C0();
+extern void GuiWidget_Load();
+extern void GuiArrayWidget_SendEvent21();
 extern void func_00423660();
 extern void GuiArrayWidget_Draw();
 extern void GuiArrayWidget_OnInput();
@@ -43,7 +43,7 @@ static inline void Base2AAC60(O2AAC60* p)
         GuiWidget_Destroy(p, 0);
     }
 }
-O2AAC60* func_002AAC60(O2AAC60* self, short del)
+O2AAC60* GuiMissionList_dtor(O2AAC60* self, short del)
 {
     if (self) {
         self->vt = ((char*)D_004DDB80);
@@ -54,4 +54,4 @@ O2AAC60* func_002AAC60(O2AAC60* self, short del)
     }
     return self;
 }
-void * const D_004DDB80[30] = { (void*)0x0, (void*)0x0, (void*)func_002AAC60, (void*)func_002ACCF0, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)func_002ABD50, (void*)func_002ABC90, (void*)GuiArrayWidget_OnGainFocus, (void*)GuiArrayWidget_OnLoseFocus, (void*)GuiArrayWidget_OnInput, (void*)GuiArrayWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)func_002ACCA0, (void*)GuiWidget_OnEvent, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)func_002AAD00, (void*)func_002AAD10, (void*)GuiArrayWidget_SetDims, (void*)func_00423660, (void*)func_002AB2A0, (void*)func_002AAD40, (void*)func_002AC300, (void*)func_004235C0, (void*)0x0 };
+void * const D_004DDB80[30] = { (void*)0x0, (void*)0x0, (void*)GuiMissionList_dtor, (void*)GuiMissionList_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiMissionList_Wake, (void*)GuiMissionList_Sleep, (void*)GuiArrayWidget_OnGainFocus, (void*)GuiArrayWidget_OnLoseFocus, (void*)GuiArrayWidget_OnInput, (void*)GuiArrayWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiMissionList_Update, (void*)GuiWidget_OnEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiMissionList_GetClassName, (void*)GuiMissionList_IsType, (void*)GuiArrayWidget_SetDims, (void*)func_00423660, (void*)func_002AB2A0, (void*)func_002AAD40, (void*)func_002AC300, (void*)GuiArrayWidget_SendEvent21, (void*)0x0 };

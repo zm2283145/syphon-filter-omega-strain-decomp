@@ -4,7 +4,7 @@ extern short D_00497CC0;
 extern int D_00497CC4;
 int D_00497D34 = 0;
 extern int D_00598564;
-extern int func_004700F8(void *, int);
+extern int Medius_TerminateString(void *, int);
 extern int func_002EA8C8(S *);
 extern void func_00467D90(void *);
 extern void func_00467F38(void);
@@ -16,10 +16,10 @@ int func_00469A38(P *p, int b)
 {
     S s;
     int x[4];
-    func_004700F8(p, 0x15);
-    func_004700F8((char *)p + 0x15, 0x11);
-    func_004700F8((char *)p + 0x40, 0x40);
-    func_004700F8((char *)p + 0x80, 0x20);
+    Medius_TerminateString(p, 0x15);
+    Medius_TerminateString((char *)p + 0x15, 0x11);
+    Medius_TerminateString((char *)p + 0x40, 0x40);
+    Medius_TerminateString((char *)p + 0x80, 0x20);
     if (D_00497CC0 != 1) return -0xF;
     if (D_00497CC4 < 0) return -0x10;
     D_00497D34 = b;

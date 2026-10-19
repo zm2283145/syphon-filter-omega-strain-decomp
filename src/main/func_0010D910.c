@@ -6,6 +6,6 @@
 
 #include "types.h"
 
-int func_0010D910(void) {
+int Newlib_SysIsatty(void) {
     return 1;
 }

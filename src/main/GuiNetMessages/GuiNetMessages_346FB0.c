@@ -127,7 +127,7 @@ extern "C" {
 extern int D_00532FD0;
 int GuiScreen_Navigate(S_3473E0* o, int v);
 int GuiScreen_HandleInput(S_3473E0* o);
-int func_003473E0(S_3473E0* o, Ev_3473E0* ev);
+int GuiNetMessages_HandleInput(S_3473E0* o, Ev_3473E0* ev);
 }
 static inline unsigned char Down_3473E0(Ev_3473E0* e) { unsigned char r = 0; if (e->type == 1 && e->b2 == 0) r = 1; return r; }
 static inline unsigned char Btn_3473E0(Ev_3473E0* e, int b) { unsigned char r = 0; if (Down_3473E0(e) && e->btn == b) r = 1; return r; }
@@ -136,7 +136,7 @@ static inline bool Down2_3473E0(Ev_3473E0* e) { return e->type == 1 && e->b2 == 
 static inline bool Btn2_3473E0(Ev_3473E0* e, int b) { return Down2_3473E0(e) && e->btn == b; }
 static inline bool Plain2_3473E0(Ev_3473E0* e, int b) { return Btn2_3473E0(e, b) && e->b6 == 0; }
 
-int func_003473E0(S_3473E0* o, Ev_3473E0* ev)
+int GuiNetMessages_HandleInput(S_3473E0* o, Ev_3473E0* ev)
 {
     if (Plain_3473E0(ev, 0x10)) {
         if (!GuiScreen_Navigate(o, D_00532FD0)) GuiScreen_Navigate(o, 1);

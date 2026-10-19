@@ -11,7 +11,7 @@ extern "C" {
     void func_0033C9E0(Screen*,int,char*);
     int GuiScreen_GetLobbyString(Screen*,int,char*,char*,int = 0,int = 0);
     void func_0033D8E0(Screen*,int);
-    int func_0033DF00(Screen*,int,int,int,char*);
+    int GuiMenuScreen_HandleEvent(Screen*,int,int,int,char*);
     int GuiManager_FindOrLoad(int,char*,char*);
     void GuiTextWidget_SetText(int,char*,int);
     int DME_GetLobby();
@@ -20,11 +20,11 @@ extern "C" {
     int func_0044A800(int);
     int func_0044A810(int,int);
     int SFOLobby_LookupAccountId(int,char*);
-    unsigned char func_00452FF0(int,int);
+    unsigned char SFOLobby_FormatError(int,int);
     extern char D_004ABCD0[],D_004ABCD8[],D_004ABCE8[],g_Game[];
     extern int D_004FFC04;
 }
-extern "C" int func_002AF310(Screen* arg0, int arg1, int arg2, int arg3, char* arg4) {
+extern "C" int GuiNetAgencyCell_HandleEvent(Screen* arg0, int arg1, int arg2, int arg3, char* arg4) {
     Screen* temp_s4;
     Screen* var_a0;
     int temp_v1;
@@ -108,7 +108,7 @@ extern "C" int func_002AF310(Screen* arg0, int arg1, int arg2, int arg3, char* a
                 int temp_v0_6 = DME_GetLobby();
                 if (temp_v0_6 != 0) {
                     int temp_s1_4 = SFOLobby_LookupAccountId(temp_v0_6, var_s0);
-                    if (func_00452FF0(temp_v0_6, 0) & 0xFF) {
+                    if (SFOLobby_FormatError(temp_v0_6, 0) & 0xFF) {
                         int temp_s0_5 = D_004FFC04;
                         FrontEnd_OpenPopup(temp_s0_5, 2, D_004ABCD0, GuiScreen_GetLobbyString(temp_s4, 0x17, var_s0, 0));
                     } else {
@@ -155,5 +155,5 @@ extern "C" int func_002AF310(Screen* arg0, int arg1, int arg2, int arg3, char* a
         }
 
     }
-    return func_0033DF00(temp_s4, arg1, arg2, arg3, arg4);
+    return GuiMenuScreen_HandleEvent(temp_s4, arg1, arg2, arg3, arg4);
 }

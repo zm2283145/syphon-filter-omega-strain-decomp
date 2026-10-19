@@ -18,10 +18,10 @@ extern char D_004DCF10[];
 extern signed char* D_005061D0;
 extern void Event_Construct(Msg_197380* msg, void* name);
 extern void cMessage_dtor(Msg_197380* msg, int flags);
-extern void func_00282160(int* out);
+extern void NetStream_ReadObject(int* out);
 extern void Melee_StartAttack(G_197380* g, int id, int b);
 static inline void ReadS8_197380(signed char* out) { signed char v = *D_005061D0; D_005061D0++; *out = v; }
-static inline void ReadI_197380(int* out) { int t; func_00282160(&t); *out = t; }
+static inline void ReadI_197380(int* out) { int t; NetStream_ReadObject(&t); *out = t; }
 void MeleeMsg_CreateFromNet(G_197380* g)
 {
     Msg_197380 msg;
@@ -31,7 +31,7 @@ void MeleeMsg_CreateFromNet(G_197380* g)
     msg.vtable = D_004DA8F0;
     {
         int t;
-        func_00282160(&t);
+        NetStream_ReadObject(&t);
         bp = &msg.b;
         ip = &msg.id;
         ReadS8_197380(bp);
@@ -63,7 +63,7 @@ extern void cMessage_dtor(Msg_197440* msg, int flags);
 
 extern void Script_ReadU32(int* out);
 extern void func_00197500(Q* out);
-extern void* func_00185080(void);
+extern void* Actor_GetHumanClassKeyPtr(void);
 extern int func_00185060(void* self, void* key);
 extern void Actor_StartStarThrow(void* self, int* id, Q* pos);
 void StarThrowMsg_CreateFromNet(void* self)
@@ -78,7 +78,7 @@ void StarThrowMsg_CreateFromNet(void* self)
     Script_ReadU32(ip);
     qp = &msg.pos;
     func_00197500(qp);
-    if (self && func_00185060(self, func_00185080())) Actor_StartStarThrow(self, ip, qp);
+    if (self && func_00185060(self, Actor_GetHumanClassKeyPtr())) Actor_StartStarThrow(self, ip, qp);
     msg.vtable = D_004DCF10;
     cMessage_dtor(&msg, 0);
 }

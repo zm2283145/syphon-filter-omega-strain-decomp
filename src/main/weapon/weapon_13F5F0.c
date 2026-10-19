@@ -55,10 +55,10 @@ void* func_0013F760(void* self) {
 
 /* merge_units: begin func_0013F770 */
 #pragma push /* merge_units */
-/* float-keyed tree: find insert position, then insert via func_0013F820 */
+/* float-keyed tree: find insert position, then insert via Tree_Insert_13F820 */
 typedef struct C3FtNode { struct C3FtNode* left; struct C3FtNode* right; int pad; float key; } C3FtNode;
 typedef struct { int pad; C3FtNode* root; } C3FtTree;
-extern C3FtNode* func_0013F820(C3FtTree* t, C3FtNode* parent, unsigned char left, unsigned char leftmost, float* key);
+extern C3FtNode* Tree_Insert_13F820(C3FtTree* t, C3FtNode* parent, unsigned char left, unsigned char leftmost, float* key);
 void SceneDrawMap_Insert(C3FtNode** out, C3FtTree* t, float* key)
 {
     C3FtNode* parent = (C3FtNode*)&t->root;
@@ -76,7 +76,7 @@ void SceneDrawMap_Insert(C3FtNode** out, C3FtTree* t, float* key)
             leftmost = 0;
         }
     }
-    *out = func_0013F820(t, parent, left, leftmost, key);
+    *out = Tree_Insert_13F820(t, parent, left, leftmost, key);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_0013F770 */

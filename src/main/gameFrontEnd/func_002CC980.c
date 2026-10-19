@@ -4,7 +4,7 @@ extern int D_0051EEC0[];
 extern int D_0051EF10[];
 extern int Loc_FindKeyThunk(const char* key);
 extern int sprintf(char* buf, const char* fmt, ...);
-void func_002CC980(void)
+void FrontEnd_InitLevelNameKeys(void)
 {
     char buf[0x10];
     int i;

@@ -42,14 +42,14 @@ static inline void merge_flush_func_00380C90(void) {}
 
 /* merge_units: begin func_00380CE0 */
 #pragma push /* merge_units */
-extern void func_00383560(int* out, void* a, int* b);
+extern void List_Erase_383560(int* out, void* a, int* b);
 
-/* Calls func_00383560 with a copy of *b and stores the produced word in *out. */
+/* Calls List_Erase_383560 with a copy of *b and stores the produced word in *out. */
 void func_00380CE0(int* out, void* a, int* b) {
     int value;
     int result;
     value = *b;
-    func_00383560(&result, a, &value);
+    List_Erase_383560(&result, a, &value);
     *out = result;
 }
 /* merge_units: generate this block's code under its own pragmas */

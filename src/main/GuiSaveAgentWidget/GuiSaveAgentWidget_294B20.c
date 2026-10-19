@@ -85,7 +85,7 @@ void GuiTextWidget_SetText(void* w, char* s, int a);
 char* strncpy(char* d, const char* s, int n);
 char* Loc_LookupText(char* key);
 void String_CtorCStr_13B480(Str_00294C60* s, const char* c);
-void func_0013D680(Str12_00294C60* d, Str_00294C60* s);
+void String_AssignString(Str12_00294C60* d, Str_00294C60* s);
 void String_Dtor(Str_00294C60* s, int flags);
 int String_Length(Str12_00294C60* s);
 char* String_CStr(Str12_00294C60* s);
@@ -125,7 +125,7 @@ extern "C" void GuiCommandCenter_SetTexts(S_00294C60* self)
                 if (t) {
                     Str_00294C60 s;
                     String_CtorCStr_13B480(&s, t);
-                    func_0013D680(&self->s204[i], &s);
+                    String_AssignString(&self->s204[i], &s);
                     String_Dtor(&s, 0);
                 }
                 self->b1F0[i] = 1;

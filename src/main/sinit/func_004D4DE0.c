@@ -6,7 +6,7 @@ extern void* D_00533830;
 extern void* D_00533838;
 extern void* D_00533840;
 extern void* D_00533848;
-void func_004D4DE0(void) {
+void StaticInit_GuiAgentInfoFactories(void) {
     D_00533838 = &D_004DF5A0;
     D_00533830 = "GuiAgentDisplay";
     FreeList_Push(&D_00533830);

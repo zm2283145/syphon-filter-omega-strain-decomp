@@ -20,7 +20,7 @@ extern char D_004C0D88[]; /* DNAS done message */
 extern unsigned char D_00585E68;
 void func_00443E60(char*);
 int func_003A6670(int);
-int func_0010D050(void);
+int GetThreadId(void);
 int ChangeThreadPriority(int, int);
 int func_1E68080(int, char*, unsigned short, int, unsigned char, char*, int*);
 void DecodeKey_XorB3(char*, int);
@@ -41,7 +41,7 @@ int SFOLobby_DnasAuth(SFOLobby* self)
         SFOLobby_SetError(self, 5, D_004C0D70, 0x27A);
         return 0;
     }
-    old = ChangeThreadPriority(func_0010D050(), 0x7F);
+    old = ChangeThreadPriority(GetThreadId(), 0x7F);
     if (old < 0)
         old = 2;
     memset(self->password, 0, 0x20);
@@ -49,7 +49,7 @@ int SFOLobby_DnasAuth(SFOLobby* self)
     self->dnasResult = func_1E68080(self->dnasArg, self->dnasData, self->dnasDataLen, 0, D_00585E68, self->password, &self->passwordLen);
     if (self->dnasResult != 0) {
         SFOLobby_SetError(self, 6, D_004C0D70, 0x289);
-        ChangeThreadPriority(func_0010D050(), old);
+        ChangeThreadPriority(GetThreadId(), old);
         if (func_003A6670(1) == 0) {
             SFOLobby_SetError(self, 5, D_004C0D70, 0x28E);
             return 0;
@@ -58,7 +58,7 @@ int SFOLobby_DnasAuth(SFOLobby* self)
         SFOLobby_CallUpdateHook(self, 3, (int)&r);
         return r == 1;
     }
-    ChangeThreadPriority(func_0010D050(), old);
+    ChangeThreadPriority(GetThreadId(), old);
     if (func_003A6670(1) == 0) {
         SFOLobby_SetError(self, 5, D_004C0D70, 0x29B);
         return 0;
@@ -82,7 +82,7 @@ extern void sceCdInit(int);
 extern void func_0010F6E0(void);
 extern int func_00169920(void);
 extern void func_00116800(char*, int, char**);
-void func_0044B970(char* name, char* arg) {
+void SFOLobby_LaunchNetGui(char* name, char* arg) {
     char buf[0x100];
     char* argv[2];
     int argc;
@@ -503,7 +503,7 @@ static inline void merge_flush_func_0044C420(void) {}
 /* merge_units: begin func_0044C440 */
 #pragma push /* merge_units */
 #pragma mpwc_relax on
-int func_003A6680(int);
+int Iop_LoadEzNetModules(int);
 #if 0 /* merge_units */
 int SFOLobby_NetDown(SFOLobby *);
 #endif /* merge_units */
@@ -514,7 +514,7 @@ int SFOLobby_ListNetConfigs(SFOLobby *, int);
 #endif /* merge_units */
 #define SFOLobby_ListNetConfigs(a0, a1) (SFOLobby_ListNetConfigs((void *)(a0), (a1))) /* merge_units */
 
-int func_0044CA30(SFOLobby *);
+int SFOLobby_DisconnectAuthServer(SFOLobby *);
 #if 0 /* merge_units */
 int LobbyArray_Free(LobbyArray *);
 #endif /* merge_units */
@@ -542,11 +542,11 @@ int SFOLobby_EnterNetworkState(SFOLobby *self, int arg1, LobbyArray *netConfigs,
     self->unk2578 = 0;
     if (self->unk1EA8 > 0) {
         if (self->connHandle > 0) {
-            func_0044CA30(self);
+            SFOLobby_DisconnectAuthServer(self);
         }
         func_00452C70(self, 1);
         SFOLobby_NetDown(self);
-        func_003A6680(0);
+        Iop_LoadEzNetModules(0);
         a = self->outList2404;
         if (a != 0) {
             LobbyArray_Free(a);
@@ -558,7 +558,7 @@ int SFOLobby_EnterNetworkState(SFOLobby *self, int arg1, LobbyArray *netConfigs,
         }
         self->universeList = 0;
     }
-    if (func_003A6680(1) == 0) {
+    if (Iop_LoadEzNetModules(1) == 0) {
         SFOLobby_SetError(self, 0x2E, &D_004C0D70, 0x44);
         return 0;
     }

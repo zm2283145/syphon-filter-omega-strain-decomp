@@ -8,7 +8,7 @@
 
 extern int D_004F53A8;
 
-void func_0020E330(void) {
+void ScriptType_cEndLevelMsg_Init(void) {
 }
 
 int cEndLevelMsg_v03(void) {

@@ -45,7 +45,7 @@ static inline Obj3F250* As3F250(Obj3F250* obj, const char* type)
 }
 
 /* Screen init: base init, then looks up the child widgets and sets up the list. */
-extern "C" void func_0033F250(Screen3F250* self)
+extern "C" void GuiMenuScreen_Init(Screen3F250* self)
 {
     GuiScreen_Init(self);
     self->f88 = As3F250(GuiWidget_FindChildByName(self, D_004928B0), D_004B9CF0);

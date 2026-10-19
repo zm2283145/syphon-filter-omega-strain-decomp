@@ -83,8 +83,8 @@ void Event_Send(void* m, void* target, int immediate);
 void cMessage_dtor(void* m, int flags);
 void GuiWidget_SendEvent(Stk3D0* a, Stk3D0* b, int c, int d, int e);
 void FrontEnd_GetCharacterData(Self3D0* self);
-void func_002C9EE0(Self3D0* self);
-void func_00145160(int a);
+void FrontEnd_LoadZeusHog(Self3D0* self);
+void WeaponDb_LoadWpnHog(int a);
 void DME_StopThread(void);
 void func_002CA6F0(Self3D0* self);
 void DME_SetLobbyActive(int a);
@@ -181,8 +181,8 @@ extern "C" void FrontEnd_StartGui(Self3D0* self, unsigned char flag)
         } else {
             next = GuiManager_FindOrLoad(Gui_GetScreenList(), D_004AD000, D_004AD010);
         }
-        func_002C9EE0(self);
-        func_00145160(g_WeaponDatabase);
+        FrontEnd_LoadZeusHog(self);
+        WeaponDb_LoadWpnHog(g_WeaponDatabase);
         FrontEnd_SetLoadingScreen(self, 0, 0, 0);
         if (had) DME_StopThread();
         Gui_GetScreenStack()->Push(next, 0);

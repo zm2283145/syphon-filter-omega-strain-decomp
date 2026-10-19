@@ -20,7 +20,7 @@ extern char D_004DCB90;
 extern char D_004DCF10;
 extern char D_004F8580;
 
-void func_002679F0(int arg0) {
+void cNetLocalTimerMsg_NetReceive(int arg0) {
     struct { char * f40[9]; float f64; int f68[2]; } sl;
 
     Event_Construct(sl.f40, &D_004F8580);

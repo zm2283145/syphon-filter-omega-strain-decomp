@@ -1,7 +1,7 @@
 /*
  * Awards_FindRequirementRow: finds the range definition of table D_00532A70[type] that
  * contains the localised key and returns the matching byte of the agent's
- * per-type record (used by func_00333130 to set a flag byte).
+ * per-type record (used by AgentData_UnlockRequirement to set a flag byte).
  */
 
 /* Range definition (24 bytes). */

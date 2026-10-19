@@ -49,7 +49,7 @@ void GuiCharacterDisplay_Draw(GuiCharacterDisplay* self) {
 }
 
 /* GuiCharacterDisplay vtable slot 5: forwards to the base widget. */
-int func_00326850(GuiWidget* self) {
+int GuiCharacterDisplay_Wake(GuiWidget* self) {
     return GuiWidget_BaseWake(self);
 }
 

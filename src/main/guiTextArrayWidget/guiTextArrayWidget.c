@@ -14,7 +14,7 @@
 
 
 
-int func_00425BB0(void) {
+int GuiTextArrayWidget_GetClassName(void) {
     return (int)"GuiTextArrayWidget";
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -159,7 +159,7 @@ typedef struct { char pad[0x90]; void* target; char pad2[0xC]; Vec4f color; } Ob
 extern void TextObj_SetColour(void* target, Vec4f* color);
 
 /* Stores a colour and pushes it to the attached target. */
-void func_00425DB0(Obj* self, Vec4f* color)
+void TextArrayCell_SetColour(Obj* self, Vec4f* color)
 {
     self->color.x = color->x;
     self->color.y = color->y;

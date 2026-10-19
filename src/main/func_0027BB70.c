@@ -16,7 +16,7 @@ typedef struct {
 typedef struct { char pad[0x4C]; int kind; char pad2[0x3524 - 0x50]; int* held; } T_0027BB70;
 extern signed char* D_005061D0;
 extern int g_HumanActorClassKey[];
-extern "C" void func_00282160(int* out);
+extern "C" void NetStream_ReadObject(int* out);
 extern "C" float Script_ReadFloat(void);
 extern "C" void HeldItem_Release(int h);
 extern "C" void func_00264980(int h, int target, int a, Vec4_27BB70 v);
@@ -31,12 +31,12 @@ static inline signed char ReadS8(void)
     return v;
 }
 
-extern "C" void func_0027BB70(cNetTaserMsg* self, T_0027BB70* t);
-void func_0027BB70(cNetTaserMsg* self, T_0027BB70* t)
+extern "C" void cNetTaserMsg_Apply(cNetTaserMsg* self, T_0027BB70* t);
+void cNetTaserMsg_Apply(cNetTaserMsg* self, T_0027BB70* t)
 {
     self->mode = ReadS8();
     if (self->mode != 2) {
-        func_00282160(&self->target);
+        NetStream_ReadObject(&self->target);
         self->pos.x = Script_ReadFloat();
         self->pos.y = Script_ReadFloat();
         self->pos.z = Script_ReadFloat();

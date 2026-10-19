@@ -7,12 +7,12 @@ extern void func_00357D88(void *);
 extern void *func_00357D50(int);
 extern int func_003581C0(void);
 extern int func_00358158(void);
-extern int func_0010D050(void);
+extern int GetThreadId(void);
 extern int sceLibnetInitialize(void *, unsigned int, int, int);
 
-N81E0 *func_003581E0(int flag)
+N81E0 *Insck_GetThreadContext(int flag)
 {
-    int tid = func_0010D050();
+    int tid = GetThreadId();
     N81E0 *n;
     if (func_00358158() < 0) return 0;
     for (n = D_00492CD0; n; n = n->next) {

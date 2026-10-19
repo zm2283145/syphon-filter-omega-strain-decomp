@@ -32,7 +32,7 @@ extern void MotionRegistry_Register(void*, void*, void*);
 extern void MotionNodeWrapper_Dtor(void*, int);
 /* Builds and registers the run-roll-back-left motion nodes. */
 #pragma optimization_level 1
-void func_00206830(void* p0)
+void MotionGraph_BuildRunRollBackLeft(void* p0)
 {
     B4 v32C;
     B4 v328;

@@ -23,7 +23,7 @@ DEFINE_VECTOR_RELEASE_DTOR(func_00428090, func_00428B10, func_00428110, D_004BF8
 #include "guarded_destroy_release.h"
 
 /* Destroy and free an allocation under the allocator guard. */
-DEFINE_GUARDED_DESTROY_RELEASE(func_00428110, func_00138350)
+DEFINE_GUARDED_DESTROY_RELEASE(func_00428110, String_Dtor_138350)
 #pragma pop /* merge_units */
 /* merge_units: end func_00428110 */
 

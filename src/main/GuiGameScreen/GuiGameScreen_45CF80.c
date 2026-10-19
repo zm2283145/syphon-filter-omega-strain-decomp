@@ -63,7 +63,7 @@ struct W45D070 { char p[0x50]; L45D070* label; unsigned char b54, b55; char p56[
 extern "C" {
 void String_CtorCStr_13B480(void* s);
 void String_Dtor(void* s, int z);
-void func_0013D680(void* d, void* s);
+void String_AssignString(void* d, void* s);
 int Font_GetStringWidth(int font, const char* s, int n);
 void IeElement_SetMatrix(O45D070* o, M4* m);
 void IeNode_GetRect(V4* out, float f, int x);
@@ -113,7 +113,7 @@ extern "C" void GuiGameScreen_ShowInteract(W45D070* w, const char* text, unsigne
             char str[0xC];
             w->b55 = 1;
             String_CtorCStr_13B480(str);
-            func_0013D680(w->m58, str);
+            String_AssignString(w->m58, str);
             String_Dtor(str, 0);
             w->b64 = color;
         } else {

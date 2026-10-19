@@ -3,7 +3,7 @@
 struct V2CAA0 { union { struct { unsigned int a, b; char* c; } l; struct { unsigned char f : 1; unsigned char n : 7; char buf[11]; } s; } u; };
 extern "C" char D_004DFD80[];
 extern "C" char D_004E0EA0[];
-MSG_CLONE_BEGIN(func_0042CAA0, 0x30, "NetActivateAndControlMsg.hh", 0x1C)
+MSG_CLONE_BEGIN(cNetActivateAndControlMsg_v01, 0x30, "NetActivateAndControlMsg.hh", 0x1C)
     p->vt = D_004DFD80;
     F(int, 0x4) = S(int, 0x4);
     F(int, 0x8) = S(int, 0x8);

@@ -12,7 +12,7 @@ void func_00123318(void) {
 
 }
 
-int func_00123320(void) {
+int Newlib_Errno(void) {
     int tmp0;
 
     tmp0 = *(int*)D_00489738;

@@ -1,6 +1,6 @@
 #include "types.h"
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
-int func_002CF3A8();                                
+int Medius_CloseReportLib();                                
 extern unsigned char D_00584518;
 
 int func_00444E70(void) {
@@ -9,7 +9,7 @@ int func_00444E70(void) {
     if (D_00584518 == 0) {
         return 0;
     }
-    temp_v0 = func_002CF3A8();
+    temp_v0 = Medius_CloseReportLib();
     if (temp_v0 == 0) {
         D_00584518 = 0;
     }

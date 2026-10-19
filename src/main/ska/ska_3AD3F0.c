@@ -24,7 +24,7 @@ typedef struct {
     char trans[0x10];
 } F6Sel;
 typedef struct { char pad[0x18]; char a18[0x14]; int n2C; char a30[0x14]; int n44; } F6Ctl;
-extern F6Sel* func_003AD3A0(void* arr);
+extern F6Sel* Array_GetLast_3AD3A0(void* arr);
 extern signed char D_00542B70;
 extern char D_00542B78[];
 extern F6Sel D_00542B90;
@@ -39,10 +39,10 @@ extern void func_00397400(void);
 F6Sel* AnimCtl_GetSelected(F6Ctl* c)
 {
     if (c->n44) {
-        return func_003AD3A0(c->a30);
+        return Array_GetLast_3AD3A0(c->a30);
     }
     if (c->n2C) {
-        return func_003AD3A0(c->a18);
+        return Array_GetLast_3AD3A0(c->a18);
     }
     if (!D_00542B70) {
         F6Sel* s = &D_00542B90;
@@ -97,7 +97,7 @@ extern void TransitionReq_Construct(void* self, float t);
 extern void AnimCtl_Install(void* c, D5Sel* r, unsigned char mode);
 extern void func_00396910(void* p, int f);
 extern void func_00189F40(void* p, int f);
-extern void func_0018A260(void* p, int f);
+extern void AnimEvent_dtor(void* p, int f);
 #pragma opt_propagation off
 void AnimCtl_InstallMotion(void* ctl, int id, unsigned char mode, D5F4* range, void* pair, void* m1, void* m2, void* x, float f0, float f1)
 {
@@ -123,8 +123,8 @@ void AnimCtl_InstallMotion(void* ctl, int id, unsigned char mode, D5F4* range, v
     AnimCtl_Install(ctl, &s, mode);
     func_00396910(s.trans, -1);
     func_00189F40(s.x94, -1);
-    func_0018A260(s.ev2, -1);
-    func_0018A260(s.ev1, -1);
+    AnimEvent_dtor(s.ev2, -1);
+    AnimEvent_dtor(s.ev1, -1);
 }
 #undef TransitionReq_Construct /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */

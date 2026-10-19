@@ -7,6 +7,6 @@
 #include "types.h"
 
 
-int func_00346D20(void) {
+int GuiNetMessages_GetClassName(void) {
     return (int)"GuiNetMessages";
 }

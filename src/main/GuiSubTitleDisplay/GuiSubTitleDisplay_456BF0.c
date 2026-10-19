@@ -92,17 +92,17 @@ extern void GuiWidget_Draw();
 extern void GuiWidget_ClearFlag4();
 extern void GuiWidget_SetFlag4();
 extern void GuiWidget_Deinit();
-extern void func_0041F210();
+extern void GuiWidget_Load();
 extern void GuiStartMenu_OnInput();
 extern void GuiStartMenu_OnEvent();
 extern void GuiStartMenu_OnSleep();
 extern void GuiStartMenu_First();
 extern void GuiStartMenu_OnWake();
 extern void GuiStartMenu_Init();
-extern void func_004573C0();
+extern void GuiStartMenu_dtor();
 extern void GuiStartMenu_GetClassName();
-extern void func_00457440();
-void * const D_004E1430[24] = { (void*)0x0, (void*)0x0, (void*)func_004573C0, (void*)GuiStartMenu_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiStartMenu_OnWake, (void*)GuiStartMenu_OnSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiStartMenu_OnInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiObjectives_Update, (void*)GuiStartMenu_OnEvent, (void*)func_0041F210, (void*)GuiStartMenu_First, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiStartMenu_GetClassName, (void*)func_00457440, (void*)0x0 };
+extern void GuiStartMenu_IsType();
+void * const D_004E1430[24] = { (void*)0x0, (void*)0x0, (void*)GuiStartMenu_dtor, (void*)GuiStartMenu_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiStartMenu_OnWake, (void*)GuiStartMenu_OnSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiStartMenu_OnInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiObjectives_Update, (void*)GuiStartMenu_OnEvent, (void*)GuiWidget_Load, (void*)GuiStartMenu_First, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiStartMenu_GetClassName, (void*)GuiStartMenu_IsType, (void*)0x0 };
 extern int GuiObjectives_ctor(void* self, int a1, int a2);
 
 /* Constructor: base built by GuiObjectives_ctor, fields cleared, flag bit 5 cleared. */
@@ -128,7 +128,7 @@ GuiWidget456D90* GuiStartMenu_ctor(GuiWidget456D90* self) {
 #include "vtable_base_dtor.h"
 
 /* Derived destructor: restore vtable, run base destructor, optionally delete. */
-DEFINE_VTABLE_BASE_DTOR(func_00456E00, D_004DF5C0, GuiWidget_Destroy)
+DEFINE_VTABLE_BASE_DTOR(GuiObjectives_dtor_456E00, D_004DF5C0, GuiWidget_Destroy)
 #pragma pop /* merge_units */
 /* merge_units: end func_00456E00 */
 

@@ -50,7 +50,7 @@ DEFINE_GUARDED_ALLOCATE(func_0013D5C0)
 #include "short_string_assign.h"
 
 /* Assign one string to another. */
-DEFINE_SHORT_STRING_ASSIGN(func_0013D680)
+DEFINE_SHORT_STRING_ASSIGN(String_AssignString)
 #pragma pop /* merge_units */
 /* merge_units: end func_0013D680 */
 

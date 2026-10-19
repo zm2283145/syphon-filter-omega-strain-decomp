@@ -26,7 +26,7 @@ static inline void Req_Default(SoundRequest* p) {
 }
 typedef struct { int pad[2]; int type; int pad0c; __int128 name; int x180; int id; unsigned char x186; } Preset_F060;
 extern Voice_F190* Object_LookupById(int* id);
-SoundEvent* func_0020F730(SoundEvent* ev, Preset_F060* pr) {
+SoundEvent* SoundPosRequest_Apply(SoundEvent* ev, Preset_F060* pr) {
     SoundRequest* p;
     Voice_F190* voice;
     int id;

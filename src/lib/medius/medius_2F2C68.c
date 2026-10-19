@@ -8,8 +8,8 @@
 typedef struct { unsigned char b[64]; } B2F2C68;
 typedef struct { int st[4]; unsigned int lo, hi; unsigned char buf[64]; } C2F2C68;
 extern void *memcpy(void *, const void *, unsigned int);
-extern void func_004AE1C0(C2F2C68 *);
-void func_002F2C68(C2F2C68 *c, const unsigned char *in, unsigned int len)
+extern void Md5_Transform(C2F2C68 *);
+void Md5_Update(C2F2C68 *c, const unsigned char *in, unsigned int len)
 {
     unsigned int idx, part;
     idx = c->lo & 0x3F;
@@ -18,14 +18,14 @@ void func_002F2C68(C2F2C68 *c, const unsigned char *in, unsigned int len)
     if (len >= part) {
         memcpy(&c->buf[idx], in, part);
         idx = 0;
-        func_004AE1C0(c);
+        Md5_Transform(c);
         in += part;
         len -= part;
         while (len >= 64) {
             *(B2F2C68 *)c->buf = *(const B2F2C68 *)in;
             len -= 64;
             in += 64;
-            func_004AE1C0(c);
+            Md5_Transform(c);
         }
     }
     memcpy(&c->buf[idx], in, len);
@@ -36,12 +36,12 @@ void func_002F2C68(C2F2C68 *c, const unsigned char *in, unsigned int len)
 extern void *memset(void *, int, unsigned int);
 static const unsigned int dat_0048C740[16] = { 0x80, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 };
 #if 0 /* merge_units */
-extern void func_002F2C68(unsigned int *, unsigned char *, unsigned int);
+extern void Md5_Update(unsigned int *, unsigned char *, unsigned int);
 #endif /* merge_units */
-#define func_002F2C68(a0, a1, a2) (func_002F2C68((C2F2C68 *)(a0), (const unsigned char *)(a1), (a2))) /* merge_units */
+#define Md5_Update(a0, a1, a2) (Md5_Update((C2F2C68 *)(a0), (const unsigned char *)(a1), (a2))) /* merge_units */
 
 extern void func_004AEF70(void *, void *, int);
-void func_002F2DC8(unsigned char *digest, unsigned int *ctx)
+void Md5_Final(unsigned char *digest, unsigned int *ctx)
 {
     unsigned char bits[8];
     unsigned int cnt[2];
@@ -50,17 +50,17 @@ void func_002F2DC8(unsigned char *digest, unsigned int *ctx)
     cnt[1] = ctx[5];
     idx = cnt[0] & 0x3F;
     pad = (idx < 0x38) ? (0x38 - idx) : (0x78 - idx);
-    func_002F2C68(ctx, ((unsigned char*)dat_0048C740), pad);
+    Md5_Update(ctx, ((unsigned char*)dat_0048C740), pad);
     t0 = cnt[0];
     t1 = cnt[1];
     cnt[0] = t0 << 3;
     cnt[1] = (t1 << 3) + (t0 >> 29);
     func_004AEF70(bits, cnt, 8);
-    func_002F2C68(ctx, bits, 8);
+    Md5_Update(ctx, bits, 8);
     func_004AEF70(digest, ctx, 0x10);
     memset(ctx, 0, 0x58);
 }
-#undef func_002F2C68 /* merge_units */
+#undef Md5_Update /* merge_units */
 /* merge_units: end func_002F2DC8 */
 
 /* merge_units: begin func_002F2E90 */

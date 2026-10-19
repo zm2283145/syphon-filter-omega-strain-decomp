@@ -9,7 +9,7 @@ typedef __builtin_va_list va_list;
 #define va_start(v,l) __builtin_stdarg_start((v),l)
 #define va_end(v) __builtin_va_end(v)
 extern int vfprintf(void* p, const char* fmt, va_list ap);
-int func_00123BE8(void* p, const char* fmt, ...)
+int Libc_Fprintf(void* p, const char* fmt, ...)
 {
   int ret;
   va_list ap;
@@ -69,9 +69,9 @@ typedef struct malloc_chunk *mbinptr;
 extern mbinptr D_00489748[];
 unsigned long D_00489B50 = 0x20000;
 unsigned long D_00489B58 = 0;
-extern void func_001261B0(void *);
-extern void func_00126230(void *);
-extern int func_00124058(void *, unsigned int);
+extern void Newlib_MallocLock(void *);
+extern void Newlib_MallocUnlock(void *);
+extern int Newlib_MallocTrimR(void *, unsigned int);
 #define av_ D_00489748
 #define SIZE_SZ 4
 #define PREV_INUSE 0x1
@@ -145,7 +145,7 @@ void _free_r(void *reent_ptr, void *mem)
     if (mem == 0)
         return;
 
-    func_001261B0(reent_ptr);
+    Newlib_MallocLock(reent_ptr);
 
     p = mem2chunk(mem);
     hd = p->size;
@@ -165,8 +165,8 @@ void _free_r(void *reent_ptr, void *mem)
         set_head(p, sz | PREV_INUSE);
         top = p;
         if ((unsigned long)(sz) >= (unsigned long)D_00489B50)
-            func_00124058(reent_ptr, D_00489B58);
-        func_00126230(reent_ptr);
+            Newlib_MallocTrimR(reent_ptr, D_00489B58);
+        Newlib_MallocUnlock(reent_ptr);
         return;
     }
 
@@ -198,6 +198,6 @@ void _free_r(void *reent_ptr, void *mem)
     if (!islr)
         frontlink(p, sz, idx, bck, fwd);
 
-    func_00126230(reent_ptr);
+    Newlib_MallocUnlock(reent_ptr);
 }
 /* merge_units: end func_00123D60 */

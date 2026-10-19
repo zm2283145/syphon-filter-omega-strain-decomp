@@ -10,7 +10,7 @@
 extern int func_001F40C0(ObjVec*, int);
 extern char* func_001F4110(ObjVec*);
 extern char** func_001F4150(ObjVec*);
-extern int func_0020A080(ObjVec*, char*, int, int);
+extern int Vector_Insert_20A080(ObjVec*, char*, int, int);
 
 void func_001F40B0(ObjVec* v, int value) {
     func_001F40C0(v, value);
@@ -18,7 +18,7 @@ void func_001F40B0(ObjVec* v, int value) {
 
 /* Append one element at the end. */
 int func_001F40C0(ObjVec* v, int value) {
-    return func_0020A080(v, func_001F4110(v), 1, value);
+    return Vector_Insert_20A080(v, func_001F4110(v), 1, value);
 }
 
 /* End pointer for 12-byte elements. */

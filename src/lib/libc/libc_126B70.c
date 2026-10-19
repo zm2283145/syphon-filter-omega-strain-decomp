@@ -1,6 +1,6 @@
 #include "types.h"
 typedef struct G6Big { struct G6Big* next; int k, maxwds, sign, wds; unsigned int x[1]; } G6Big;
-int func_00126B70(G6Big* a, G6Big* b)
+int Newlib_Mcmp(G6Big* a, G6Big* b)
 {
     unsigned int *xa, *xa0, *xb, *xb0;
     int i, j;

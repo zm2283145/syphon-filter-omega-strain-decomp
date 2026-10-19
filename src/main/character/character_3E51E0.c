@@ -31,7 +31,7 @@ unsigned char func_003E51E0(void* reg)
 
 /* merge_units: begin func_003E52A0 */
 #pragma push /* merge_units */
-extern int func_003C9C30(void* desc);
+extern int Event_UnpackHeader(void* desc);
 extern int func_002E9F08(void* t, void* fn);
 extern int D_0055A200;
 extern void func_003E4AF0(void);

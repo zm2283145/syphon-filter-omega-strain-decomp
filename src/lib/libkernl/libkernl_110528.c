@@ -103,13 +103,13 @@ extern L0760 D_004E4780;
 #endif /* merge_units */
 #define D_004E4780 (*(L0760*)&D_004E4780) /* merge_units */
 
-extern int func_001161A0(void);
-extern void func_001161F8(void);
+extern int DIntr(void);
+extern void EIntr(void);
 
 void func_00110760(N0760 *n, int x)
 {
     N0760 *p;
-    func_001161A0();
+    DIntr();
     n->x0 = x;
     n->x4 = 0;
     n->x8 = 0;
@@ -123,7 +123,7 @@ void func_00110760(N0760 *n, int x)
         while (p->next) p = p->next;
         p->next = n;
     }
-    func_001161F8();
+    EIntr();
 }
 #undef D_004E4780 /* merge_units */
 /* merge_units: end func_00110760 */
@@ -135,7 +135,7 @@ typedef struct { int x0; int x4; SifServe07F8 *link; } SifQueue07F8;
 void func_001107F8(SifServe07F8 *sd, int id, void *func, void *buf, void *cfunc, void *cbuf, SifQueue07F8 *qd)
 {
     SifServe07F8 *p;
-    func_001161A0();
+    DIntr();
     sd->link = 0;
     sd->next = 0;
     /* Keep link clearing ahead of command publication. */
@@ -155,6 +155,6 @@ void func_001107F8(SifServe07F8 *sd, int id, void *func, void *buf, void *cfunc,
         while (p->next) p = p->next;
         p->next = sd;
     }
-    func_001161F8();
+    EIntr();
 }
 /* merge_units: end func_001107F8 */

@@ -4,6 +4,6 @@
 #pragma mpwc_relax on
 extern char *D_0052ACC8;
 
-void func_004D3680(void) {
+void StaticInit_NetWeaponMsgName(void) {
     D_0052ACC8 = "MSGGAME_NET_WEAPON_MESSAGE";
 }

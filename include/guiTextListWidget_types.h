@@ -6,7 +6,7 @@
 #include "types.h"
 
 /* One text list entry (0x14 bytes); the first 0xC bytes are a string object
- * copied by func_0013D680. */
+ * copied by String_AssignString. */
 typedef struct TextListEntry {
     char text[0xC];         /* +0x00 */
     int unk0C;              /* +0x0C */

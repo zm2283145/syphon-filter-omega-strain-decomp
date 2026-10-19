@@ -110,7 +110,7 @@ static inline void Del0035D1F0(V0035D1F0* o, int line)
     o->v0(-1);
     Mem_Free(0, o, "GuiScoresEquip.cc", line);
 }
-extern "C" O0035D1F0* func_0035D1F0(O0035D1F0* self, short del)
+extern "C" O0035D1F0* GuiScoresEquip_dtor(O0035D1F0* self, short del)
 {
     if (self) {
         int i;

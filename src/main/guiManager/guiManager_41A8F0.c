@@ -138,13 +138,13 @@ extern "C" int GuiTextEditWidget_OnInput(O_AA80* self, Ev_AA80* e)
 #pragma push /* merge_units */
 #include "loose04_types.h"
 
-extern int func_0041C560(Unk41ADC0* self, char** cursor);
+extern int GuiTextWidget_Load(Unk41ADC0* self, char** cursor);
 
 /* Read the widget's trailing word and flag after its base fields. */
 int GuiTextEditWidget_Load(Unk41ADC0* self, char** cursor)
 {
     unsigned short enabled;
-    if (!func_0041C560(self, cursor))
+    if (!GuiTextWidget_Load(self, cursor))
         return 0;
     self->unk84 = *(int*)*cursor;
     *cursor += 4;
@@ -188,7 +188,7 @@ extern char D_004E0A40[];         /* Unk41ADC0 vtable */
 extern Unk41ADC0* GuiTextWidget_ctor(Unk41ADC0*);
 
 /* Constructor: runs the parent constructor, then sets flag bit 7. */
-Unk41ADC0* func_0041ADC0(Unk41ADC0* self) {
+Unk41ADC0* GuiTextEditWidget_Construct(Unk41ADC0* self) {
     unsigned int flags;
 
     GuiTextWidget_ctor(self);

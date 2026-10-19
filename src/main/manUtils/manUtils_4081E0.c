@@ -26,7 +26,7 @@ void cMessage_dtor(Evt4081E0*, int);
 }
 #pragma push
 #pragma opt_propagation off
-extern "C" int func_004081E0(int a0, int a1, int a2, Pk4081E0* arg) {
+extern "C" int cDamageMsg_NetReceive(int a0, int a1, int a2, Pk4081E0* arg) {
     NetRecvGuard g;
     if (D_005721D0) {
         Evt4081E0 e;

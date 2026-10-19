@@ -345,14 +345,14 @@ int func_002EB500(void *a, void *b)
 /* merge_units: end func_002EB500 */
 
 /* merge_units: begin func_002EB5A8 */
-extern int func_002DD440(void *, void *);
+extern int Net_IpToString(void *, void *);
 int func_002EB5A8(void *a, void *b)
 {
     int r;
     if (D_0048C4D7 != 1) return 0x11;
     if (D_0048C4DC != D_0048C4D7) return 0x2B;
     if (RecursiveLock_Acquire(D_005253F0, 0)) return 0x2B;
-    r = func_002DD440(a, b);
+    r = Net_IpToString(a, b);
     if (RecursiveLock_Release(D_005253F0, 0)) return 0x2B;
     return r;
 }

@@ -15,7 +15,7 @@ extern char D_004DFD80[];
 extern char D_004E1160[];
 }
 struct M1EEDC0 { void* vtable; int w4, w8, wC, w10, w14, w18, w1C; char b20; int w24; };
-extern "C" M1EEDC0* func_0043FF70(M1EEDC0* self)
+extern "C" M1EEDC0* cNetTransferRecvMsg_v01(M1EEDC0* self)
 {
     M1EEDC0* p;
     {
@@ -43,18 +43,18 @@ extern "C" M1EEDC0* func_0043FF70(M1EEDC0* self)
 /* merge_units: begin func_00440070 */
 #pragma push /* merge_units */
 extern int func_002E9A10(void);
-extern int func_003C9C30(void* p);
+extern int Event_UnpackHeader(void* p);
 extern int func_002E9A98(void* a, void* b, int c, int d);
 extern int NetMsg_RegisterType(void* t, int id, void* fn);
 extern int D_00583988;
-extern int func_00440100();
-unsigned char func_00440070(void) {
+extern int cNetTransferRecvMsg_NetReceive();
+unsigned char cNetTransferRecvMsg_NetRegister(void) {
     int a[2];
     int buf[2];
     int busy;
     unsigned char r = 0;
     busy = func_002E9A10();
-    if (!busy && func_003C9C30(buf) && !busy && func_002E9A98(buf, a, 4, 1) == 0 && NetMsg_RegisterType(&D_00583988, 2, func_00440100) == 0) {
+    if (!busy && Event_UnpackHeader(buf) && !busy && func_002E9A98(buf, a, 4, 1) == 0 && NetMsg_RegisterType(&D_00583988, 2, cNetTransferRecvMsg_NetReceive) == 0) {
         r = 1;
     }
     return r;
@@ -71,7 +71,7 @@ int func_0042D300(int *);
 extern unsigned char D_005721D0;
 extern unsigned char D_005723C8;
 
-int func_00440100(int d0, int d1, int d2, char * arg3) {
+int cNetTransferRecvMsg_NetReceive(int d0, int d1, int d2, char * arg3) {
     int sp18[2];
 
     if (D_005723C8 == 0) {
@@ -94,6 +94,6 @@ int func_00440100(int d0, int d1, int d2, char * arg3) {
 #define PACK_PRE(e)
 #define PACK_BODY(e, b) MP_I(b, 8) = MP_I(e, 0x24);
 
-DEFINE_MESSAGE_PACK_PRE(func_00440160, 12, D_00583988, PACK_PRE, PACK_BODY)
+DEFINE_MESSAGE_PACK_PRE(cNetTransferRecvMsg_v02, 12, D_00583988, PACK_PRE, PACK_BODY)
 #pragma pop /* merge_units */
 /* merge_units: end func_00440160 */

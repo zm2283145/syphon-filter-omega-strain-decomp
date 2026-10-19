@@ -178,7 +178,7 @@ typedef struct {
     unsigned char err;
 } S453B00;
 extern void func_00444070(int);
-extern void func_0044CA30(S453B00*);
+extern void SFOLobby_DisconnectAuthServer(S453B00*);
 extern void func_004689B0(void);
 extern void func_002E9648(void);
 extern void func_00444E70(void);
@@ -188,7 +188,7 @@ extern void LobbyArray_Free(void*);
 #define LobbyArray_Free(a0) (LobbyArray_Free((int)(a0))) /* merge_units */
 
 extern void SFOLobby_NetDown(S453B00*);
-extern void func_003A6680(int);
+extern void Iop_LoadEzNetModules(int);
 #if 0 /* merge_units */
 extern void func_004538D0(S453B00*);
 #endif /* merge_units */
@@ -201,9 +201,9 @@ void func_00453B00(S453B00* s, int full)
     if (s->f1EA8 > 0) {
         func_00444070(0);
         if (s->f180 > 0)
-            func_0044CA30(s);
+            SFOLobby_DisconnectAuthServer(s);
         if (s->f180 > 0)
-            func_0044CA30(s);
+            SFOLobby_DisconnectAuthServer(s);
         if (full) {
             func_004689B0();
             func_002E9648();
@@ -229,7 +229,7 @@ void func_00453B00(S453B00* s, int full)
             SFOLobby_NetDown(s);
             s->f1EA8 = 0;
         }
-        func_003A6680(0);
+        Iop_LoadEzNetModules(0);
     }
     s->f180 = -1;
     func_004538D0(s);

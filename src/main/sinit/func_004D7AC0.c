@@ -27,7 +27,7 @@ extern char *D_00586098;
 extern char *D_005860A0;
 extern char *D_005860A8;
 
-void func_004D7AC0(void) {
+void StaticInit_GuiStartMenuFactories(void) {
     D_00586018 = &D_004E1540;
     D_00586010 = &D_004C1B00;
     FreeList_Push(&D_00586010);

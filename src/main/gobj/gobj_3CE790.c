@@ -46,7 +46,7 @@ static inline void merge_flush_func_003CE790(void) {}
 
 
 /* Clears the active flag and calls its virtual at vtable+0x4C, if any. */
-extern "C" void func_003CE7D0(Owner* self)
+extern "C" void cNode_v07(Owner* self)
 {
     self->active = 0;
     if (self->attachment)

@@ -3,4 +3,4 @@
 #include "string_reserve.h"
 
 extern "C" { char D_004ABB70[] = "basic_string::reserve length_error"; }
-DEFINE_STRING_RESERVE(func_002AE6B0, D_004ABB70, D_0049ADE0, 0x5C, D_0049AE90, 0x64)
+DEFINE_STRING_RESERVE(String_Reserve_2AE6B0, D_004ABB70, D_0049ADE0, 0x5C, D_0049AE90, 0x64)

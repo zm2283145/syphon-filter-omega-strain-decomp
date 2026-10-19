@@ -39,8 +39,8 @@ public:
 typedef struct { char pad[8]; int arg; } N415F00;
 typedef struct { void* vt; char p0[0x24]; int count; N415F00* head; char p1[0x54 - 0x30]; char sub[4]; } T415F00;
 extern "C" {
-extern "C" void func_0029B350();
-extern "C" void func_00414A50();
+extern "C" void GuiCanvas_GetClassName();
+extern "C" void GuiCanvas_IsType();
 extern "C" void GuiCanvas_FinishDeferredPop();
 extern "C" void GuiCanvas_PopScreen();
 extern "C" void GuiCanvas_PushScreen();
@@ -63,7 +63,7 @@ extern "C" void GuiWidget_ClearFlag4();
 extern "C" void GuiWidget_SetFlag4();
 extern "C" void GuiWidget_Deinit();
 extern "C" void GuiWidget_Init();
-extern "C" void func_0041F210();
+extern "C" void GuiWidget_Load();
 extern void * const D_004E08D0[];
 void func_002CCD80(void* p, int f);
 void GuiWidget_Destroy(T415F00* p, int f);
@@ -79,7 +79,7 @@ extern "C" T415F00* GuiCanvas_PopAll(T415F00* self, short flag) {
     }
     return self;
 }
-void * const D_004E08D0[28] = { (void*)0x0, (void*)0x0, (void*)GuiCanvas_PopAll, (void*)GuiWidget_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiWidget_BaseWake, (void*)GuiWidget_BaseSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiCanvas_Navigate, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiCanvas_FinishDeferredPop, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)func_0029B350, (void*)func_00414A50, (void*)GuiFrontendCanvas_Draw, (void*)GuiCanvas_UpdateStack, (void*)GuiCanvas_PushScreen, (void*)GuiCanvas_PopScreen, (void*)GuiCanvas_DispatchInput };
+void * const D_004E08D0[28] = { (void*)0x0, (void*)0x0, (void*)GuiCanvas_PopAll, (void*)GuiWidget_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiWidget_BaseWake, (void*)GuiWidget_BaseSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiCanvas_Navigate, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiCanvas_FinishDeferredPop, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiCanvas_GetClassName, (void*)GuiCanvas_IsType, (void*)GuiFrontendCanvas_Draw, (void*)GuiCanvas_UpdateStack, (void*)GuiCanvas_PushScreen, (void*)GuiCanvas_PopScreen, (void*)GuiCanvas_DispatchInput };
 #pragma pop /* merge_units */
 /* merge_units: end func_00415F00 */
 
@@ -122,7 +122,7 @@ extern int ScalarCollection_Init(L4ScalarCollection*);
 extern GuiWidget* GuiWidget_ctor(GuiWidget*);
 
 /* Constructor of a GuiWidget subclass; clears flag bit 2 of the base. */
-GuiWidget4160A0* func_004160A0(GuiWidget4160A0* self) {
+GuiWidget4160A0* GuiCanvas_ctor(GuiWidget4160A0* self) {
     unsigned int flags;
 
     GuiWidget_ctor(&self->base);
@@ -160,7 +160,7 @@ DEFINE_BASE_DTOR_CHAIN(func_00416110, func_002CCD00)
 #include "obj_list_dtor.h"
 
 /* Destroy an object list: erase all nodes, optionally delete. */
-DEFINE_OBJ_LIST_DTOR(func_00416170)
+DEFINE_OBJ_LIST_DTOR(ReceiverList_Dtor_416170)
 #pragma pop /* merge_units */
 /* merge_units: end func_00416170 */
 
@@ -180,7 +180,7 @@ DEFINE_OBJ_LIST_DTOR_SHALLOW(func_004161F0)
 #include "object_list_erase_range.h"
 
 /* Erase a range of nodes from a linked list. */
-DEFINE_OBJECT_LIST_ERASE_RANGE(func_00416260)
+DEFINE_OBJECT_LIST_ERASE_RANGE(ObjectList_EraseRange_416260)
 #pragma pop /* merge_units */
 /* merge_units: end func_00416260 */
 
@@ -190,7 +190,7 @@ DEFINE_OBJECT_LIST_ERASE_RANGE(func_00416260)
 #include "object_list_erase_one.h"
 
 /* Erase one node from a linked list. */
-DEFINE_OBJECT_LIST_ERASE_ONE(func_004163A0)
+DEFINE_OBJECT_LIST_ERASE_ONE(List_Erase_4163A0)
 #pragma pop /* merge_units */
 /* merge_units: end func_004163A0 */
 
@@ -200,7 +200,7 @@ DEFINE_OBJECT_LIST_ERASE_ONE(func_004163A0)
 #include "list_insert_before.h"
 
 /* Insert an int value before a list position. */
-DEFINE_LIST_INSERT_BEFORE(func_004164A0)
+DEFINE_LIST_INSERT_BEFORE(List_InsertBefore_4164A0)
 #pragma pop /* merge_units */
 /* merge_units: end func_004164A0 */
 

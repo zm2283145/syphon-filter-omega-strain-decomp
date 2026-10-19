@@ -33,7 +33,7 @@ struct V7C60 { unsigned int cap; unsigned int count; E7C60* data; };
 extern "C" {
 extern char D_004BF080[];
 extern char D_004BF0B0[];
-void func_0013BCB0(void* d, const void* s);
+void String_CopyCtor(void* d, const void* s);
 E7C60* func_004181C0(E7C60* first, E7C60* last, E7C60* result);
 void func_00418150(E7C60* p, unsigned int n, const E7C60* v);
 void func_00418110(V7C60* a, V7C60* b);
@@ -43,7 +43,7 @@ void func_00418240(V7C60* v, int f);
 static inline void construct(E7C60* p, const E7C60* s)
 {
     if (p) {
-        func_0013BCB0(p, s);
+        String_CopyCtor(p, s);
         p->c = s->c;
         p->a = s->a;
         p->b = s->b;
@@ -56,7 +56,7 @@ extern "C" void func_00417C60(V7C60* v, T* pos, unsigned int n, const T* value)
     if (n == 0)
         return;
     if (n > 0x400000 || v->count > 0x400000 - n) {
-        func_00123BE8(D_00489738->stream, D_004BF080);
+        Libc_Fprintf(D_00489738->stream, D_004BF080);
         Libc_Abort();
     }
     if (v->count + n <= v->cap) {

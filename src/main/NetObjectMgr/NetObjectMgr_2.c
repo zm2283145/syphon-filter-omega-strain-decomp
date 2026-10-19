@@ -46,7 +46,7 @@ void func_0042F650(TransferReferenceInsertResult* result, RbTree* tree,
 void Event_Construct(TransferNotice* event, const void* descriptor);
 void Event_Send(TransferNotice* event, cGOBJ* object, int flags);
 void cMessage_dtor(TransferNotice* event, int flags);
-void func_0042EEF0(TransferReferenceIterator* result, RbTree* tree, const GobjId* id);
+void ObjMap_Find_42EEF0(TransferReferenceIterator* result, RbTree* tree, const GobjId* id);
 TransferReferenceIterator func_0042DA20(RbTree* tree);
 void func_0042DA10(TransferReferenceIterator* result, const TransferReferenceIterator& source);
 void func_0042F510(RbTree* tree, TransferReferenceIterator* position);
@@ -103,7 +103,7 @@ extern "C" void NetObjectMgr_Remove(cGOBJ* object)
     TransferReferenceIterator end;
     TransferReferenceIterator found;
     key.word = ((GobjEntry*)object)->id.word;
-    func_0042EEF0(&found, &D_00582700, &key);
+    ObjMap_Find_42EEF0(&found, &D_00582700, &key);
     TransferReferenceNode* node = found.node;
     func_0042DA10(&end, func_0042DA20(&D_00582700));
     if ((node == end.node) ^ 1) {

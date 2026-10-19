@@ -9,7 +9,7 @@ extern void MsgQueue_QueueClone(Msg316480*, void*, int, int);
 extern void cMessage_dtor(Msg316480*, int);
 #pragma push
 #pragma opt_propagation off
-int func_00316480(int a0, int a1, int a2, Pk316480* arg) {
+int cNetScoreMsg_NetReceive(int a0, int a1, int a2, Pk316480* arg) {
     if (!D_005723C8) D_005723C8 = 1;
     if (D_005721D0) {
         Msg316480 msg;

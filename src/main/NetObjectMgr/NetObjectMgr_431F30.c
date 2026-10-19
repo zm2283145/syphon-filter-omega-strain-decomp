@@ -17,7 +17,7 @@
 #pragma cplusplus on
 extern "C" char D_004E0F20[];
 extern "C" char D_004DFD80[];
-MSG_CLONE_BEGIN(func_00431F30, 0x2C, "NetTransferMsg.hh", 0x19)
+MSG_CLONE_BEGIN(cNetTransferMsg_v01, 0x2C, "NetTransferMsg.hh", 0x19)
     p->vt = D_004DFD80;
     F(int, 0x4) = S(int, 0x4);
     F(int, 0x8) = S(int, 0x8);
@@ -36,21 +36,21 @@ MSG_CLONE_END
 
 /* merge_units: begin func_00432040 */
 #pragma push /* merge_units */
-int func_004320F0(int unused0, int unused1, int unused2, const NetObjectUpdate* update); /* gsynth: defined below */extern int func_002E9A10(void);
-extern int func_003C9C30(void* p);
+int cNetTransferMsg_NetReceive(int unused0, int unused1, int unused2, const NetObjectUpdate* update); /* gsynth: defined below */extern int func_002E9A10(void);
+extern int Event_UnpackHeader(void* p);
 extern int func_002E9A98(void* a, void* b, int c, int d);
 extern int NetMsg_RegisterType(void* t, int id, void* fn);
 extern int D_00582768;
-extern int func_004320F0();
-unsigned char func_00432040(void) {
+extern int cNetTransferMsg_NetReceive();
+unsigned char cNetTransferMsg_NetRegister(void) {
     int buf[2];
     int b[1];
     int a[1];
     int busy;
     unsigned char r = 0;
     busy = func_002E9A10();
-    if (!busy && func_003C9C30(buf) && !busy && func_002E9A98(buf, a, 4, 1) == 0 &&
-        func_002E9A98(buf, b, 2, 1) == 0 && NetMsg_RegisterType(&D_00582768, 2, func_004320F0) == 0) {
+    if (!busy && Event_UnpackHeader(buf) && !busy && func_002E9A98(buf, a, 4, 1) == 0 &&
+        func_002E9A98(buf, b, 2, 1) == 0 && NetMsg_RegisterType(&D_00582768, 2, cNetTransferMsg_NetReceive) == 0) {
         r = 1;
     }
     return r;
@@ -67,7 +67,7 @@ extern unsigned char D_005721D0;
 extern void func_0042D360(const GobjId* id, int value);
 
 /* Forward a received object update while the network session is active. */
-int func_004320F0(int unused0, int unused1, int unused2, const NetObjectUpdate* update)
+int cNetTransferMsg_NetReceive(int unused0, int unused1, int unused2, const NetObjectUpdate* update)
 {
     GobjId staged[2];
     if (!D_005723C8)
@@ -89,7 +89,7 @@ static inline void merge_flush_func_004320F0(void) {}
 typedef struct { char pad[0x24]; int a; short b; } Ev1790;
 typedef struct { char pad[8]; int a; short b; } Buf1790;
 extern void Event_PackHeader(Ev1790* e, int a1, int* type, int a3, int a4, unsigned int size, void* buf);
-int func_00432150(Ev1790* e, int a1, int* type, int a3, int a4, unsigned int size, void* buf)
+int cNetTransferMsg_v02(Ev1790* e, int a1, int* type, int a3, int a4, unsigned int size, void* buf)
 {
     int r = -1;
     if (size >= 0x10 && buf) {

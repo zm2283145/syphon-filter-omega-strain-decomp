@@ -12,17 +12,17 @@ typedef struct __sFILE {
 #define __SOFF 0x1000
 #define SEEK_END 2
 
-extern long func_00127E38(struct _reent *, int, void *, int);         /* _read_r */
-extern long func_0012EB58(struct _reent *, int, const void *, int);   /* _write_r */
-extern long func_00124F80(struct _reent *, int, long, int);           /* _lseek_r */
-extern int func_00121E20(struct _reent *, int);                       /* _close_r */
+extern long Newlib_ReadR(struct _reent *, int, void *, int);         /* _read_r */
+extern long Newlib_WriteR(struct _reent *, int, const void *, int);   /* _write_r */
+extern long Newlib_LseekR(struct _reent *, int, long, int);           /* _lseek_r */
+extern int Newlib_CloseR(struct _reent *, int);                       /* _close_r */
 
-int func_00128D10(void *cookie, char *buf, int n)   /* __sread */
+int Newlib_Sread(void *cookie, char *buf, int n)   /* __sread */
 {
   register FILE *fp = (FILE *) cookie;
   register int ret;
 
-  ret = func_00127E38 (fp->_data, fp->_file, buf, n);
+  ret = Newlib_ReadR (fp->_data, fp->_file, buf, n);
 
   /* If the read succeeded, update the current offset.  */
   if (ret >= 0)
@@ -32,22 +32,22 @@ int func_00128D10(void *cookie, char *buf, int n)   /* __sread */
   return ret;
 }
 
-int func_00128D78(void *cookie, char const *buf, int n)   /* __swrite */
+int Newlib_Swrite(void *cookie, char const *buf, int n)   /* __swrite */
 {
   register FILE *fp = (FILE *) cookie;
 
   if (fp->_flags & __SAPP)
-    (void) func_00124F80 (fp->_data, fp->_file, (long) 0, SEEK_END);
+    (void) Newlib_LseekR (fp->_data, fp->_file, (long) 0, SEEK_END);
   fp->_flags &= ~__SOFF;	/* in case O_APPEND mode is set */
-  return func_0012EB58 (fp->_data, fp->_file, buf, n);
+  return Newlib_WriteR (fp->_data, fp->_file, buf, n);
 }
 
-long func_00128DF8(void *cookie, long offset, int whence)   /* __sseek */
+long Newlib_Sseek(void *cookie, long offset, int whence)   /* __sseek */
 {
   register FILE *fp = (FILE *) cookie;
   register long ret;
 
-  ret = func_00124F80 (fp->_data, fp->_file, (long) offset, whence);
+  ret = Newlib_LseekR (fp->_data, fp->_file, (long) offset, whence);
   if (ret == -1L)
     fp->_flags &= ~__SOFF;
   else
@@ -58,9 +58,9 @@ long func_00128DF8(void *cookie, long offset, int whence)   /* __sseek */
   return ret;
 }
 
-int func_00128E60(void *cookie)   /* __sclose */
+int Newlib_Sclose(void *cookie)   /* __sclose */
 {
   FILE *fp = (FILE *) cookie;
 
-  return func_00121E20 (fp->_data, fp->_file);
+  return Newlib_CloseR (fp->_data, fp->_file);
 }

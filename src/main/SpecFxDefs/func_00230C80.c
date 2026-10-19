@@ -10,7 +10,7 @@ extern void cNetSpawnParticleMsg_Receive(Visitor* v, void* target);
 extern void cMessage_dtor(Visitor* v, int flags);
 
 /* Constructs a temporary visitor on the stack, applies it to self and destroys it. */
-void func_00230C80(void* self)
+void cNetSpawnParticleMsg_NetReceive(void* self)
 {
     Visitor v;
     Event_Construct(&v, D_004F7BE8);

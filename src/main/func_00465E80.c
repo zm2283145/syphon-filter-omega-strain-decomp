@@ -7,6 +7,6 @@
 #include "types.h"
 
 
-char* func_00465E80(void) {
+char* GuiFrontendCanvas_GetClassName(void) {
     return "GuiFrontendCanvas";
 }

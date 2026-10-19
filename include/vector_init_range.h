@@ -19,7 +19,7 @@
     {                                                                         \
         unsigned int n = last - first;                                        \
         if (v->count > (maxN)) {                                              \
-            func_00123BE8(D_00489738->stream, errSym);                        \
+            Libc_Fprintf(D_00489738->stream, errSym);                        \
             Libc_Abort();                                                  \
         }                                                                     \
         if (n) {                                                              \

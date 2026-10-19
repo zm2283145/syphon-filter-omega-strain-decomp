@@ -32,7 +32,7 @@ extern "C" int sprintf(char* buf, const char* fmt, ...);
 extern "C" const char* Loc_LookupText(const char* key);
 
 /* Screen init: base init, caches the D_0048BC28 child (type D_004ABAB0) at +0xB0 and looks up the localized text tables (+0xD0/+0xE0/+0xF4/+0x90) from formatted keys. */
-extern "C" void func_002ACCF0(Screen* self)
+extern "C" void GuiMissionList_Init(Screen* self)
 {
     char key4[0x10];
     char key3[0x20];

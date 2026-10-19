@@ -60,7 +60,7 @@ extern "C" void Event_Send(ElevatorMsg* msg, void* queue, int flag);
 extern "C" void FileMan_Release(void* member, int flag);
 extern "C" void cMessage_dtor(ElevatorMsg* msg, int flag);
 extern "C" void TargetVis_Unregister(void* list, cElevatorGOBJ_002151C0* obj);
-extern "C" void func_003CE7D0(cElevatorGOBJ_002151C0* self);
+extern "C" void cNode_v07(cElevatorGOBJ_002151C0* self);
 
 /* Lift virtual 0x07: posts an elevator message, notifies the door (virtual +0x60), runs the base handler and unregisters. */
 extern "C" void cElevatorGOBJ_v07(cElevatorGOBJ_002151C0* self)
@@ -75,7 +75,7 @@ extern "C" void cElevatorGOBJ_v07(cElevatorGOBJ_002151C0* self)
     cMessage_dtor(&msg, 0);
     if (self->door)
         self->door->Method60(1);
-    func_003CE7D0(self);
+    cNode_v07(self);
     TargetVis_Unregister(g_TargetVisMgr, self);
 }
 /* merge_units: generate this block's code under its own pragmas */

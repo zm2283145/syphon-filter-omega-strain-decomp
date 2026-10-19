@@ -8,15 +8,15 @@ extern void ParticleEmitterBase_Update();
 extern void ParticleEmitter_Draw();
 extern void ParticleEmitter_IsDead();
 extern void ParticleEmitter_Update();
+extern void ParticleEmitter_dtor();
 extern void func_003A1930();
 extern void func_003A23F0();
-extern void func_003A60A0();
 extern void func_003A6110();
 extern void func_003A6120();
 extern void func_003A6180();
 
 void *D_004DFB30[8] = {
-    0, 0, &func_003A60A0, &ParticleEmitter_Draw,
+    0, 0, &ParticleEmitter_dtor, &ParticleEmitter_Draw,
     &ParticleEmitter_Update, &func_003A6110, &ParticleEmitter_IsDead, &func_003A23F0,
 };
 

@@ -11,7 +11,7 @@
 extern int strcmp(const char* a, const char* b);
 
 /* Returns whether name equals the string "GuiBriefingPane". */
-int func_00457390(void* self, const char* name)
+int GuiBriefingPane_IsType(void* self, const char* name)
 {
     return strcmp("GuiBriefingPane", name) == 0;
 }
@@ -24,6 +24,6 @@ int func_00457390(void* self, const char* name)
 #include "vtable2_base_dtor.h"
 
 /* Two-level destructor: restore vtables, run base destructor, optionally delete. */
-DEFINE_VTABLE2_BASE_DTOR(func_004573C0, D_004E1430, D_004DF5C0, GuiWidget_Destroy)
+DEFINE_VTABLE2_BASE_DTOR(GuiStartMenu_dtor, D_004E1430, D_004DF5C0, GuiWidget_Destroy)
 #pragma pop /* merge_units */
 /* merge_units: end func_004573C0 */

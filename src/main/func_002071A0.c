@@ -8,7 +8,7 @@
 
 extern int String_CStr(int);
 
-int func_002071A0(int a0) {
+int String_CStr_Thunk(int a0) {
     return String_CStr(a0);
 }
 

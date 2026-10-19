@@ -19,13 +19,13 @@ extern void GuiWidget_Draw();
 extern void GuiWidget_ClearFlag4();
 extern void GuiWidget_SetFlag4();
 extern void GuiWidget_Deinit();
-extern void func_0041F210();
+extern void GuiWidget_Load();
 extern void * const D_004DE790[];
 extern void func_0013A040(void* p, int f);
 extern void GuiKeyboard_dtor(void* p, int f);
 extern void GuiWidget_Destroy(void* p, int f);
 extern void operator_delete(void* p);
-O32ACD0* func_0032ACD0(O32ACD0* self, short del)
+O32ACD0* GuiKeyboard_VirtualDtor(O32ACD0* self, short del)
 {
     if (self) {
         self->vt = ((char*)D_004DE790);
@@ -49,4 +49,4 @@ O32ACD0* func_0032ACD0(O32ACD0* self, short del)
     }
     return self;
 }
-void * const D_004DE790[24] = { (void*)0x0, (void*)0x0, (void*)func_0032ACD0, (void*)GuiKeyboard_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiKeyboard_Wake, (void*)GuiKeyboard_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiKeyboard_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiKeyboard_Update, (void*)GuiKeyboard_HandleEvent, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiKeyboard_GetClassName, (void*)GuiKeyboard_IsType, (void*)0x0 };
+void * const D_004DE790[24] = { (void*)0x0, (void*)0x0, (void*)GuiKeyboard_VirtualDtor, (void*)GuiKeyboard_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiKeyboard_Wake, (void*)GuiKeyboard_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiKeyboard_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiKeyboard_Update, (void*)GuiKeyboard_HandleEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiKeyboard_GetClassName, (void*)GuiKeyboard_IsType, (void*)0x0 };

@@ -10,7 +10,7 @@
 #include "guarded_new.h"
 
 extern "C" { char D_004B8D60[] = "guiWidget.hh"; }
-DEFINE_GUARDED_NEW_CTOR(func_0032E070, 0xEC, D_004B8D60, GuiKeyboard_ctor)
+DEFINE_GUARDED_NEW_CTOR(GuiKeyboard_Create, 0xEC, D_004B8D60, GuiKeyboard_ctor)
 #pragma pop /* merge_units */
 /* merge_units: end func_0032E070 */
 

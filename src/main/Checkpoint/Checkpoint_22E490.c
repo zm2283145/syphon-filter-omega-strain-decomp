@@ -42,7 +42,7 @@ static inline int Eq0022E4F0(Node0022E4F0* a, Node0022E4F0* b) { return a == b; 
 #pragma push
 #pragma bool off
 #pragma opt_propagation off
-extern "C" int func_0022E4F0(int a0, int a1, int a2, Arg0022E4F0* arg) {
+extern "C" int cNotifyCheckpointMsg_NetReceive(int a0, int a1, int a2, Arg0022E4F0* arg) {
     Arg0022E4F0* a = arg;
     NetRecvGuard g;
     if (D_005721D0) {
@@ -75,19 +75,19 @@ static inline void merge_flush_func_0022E4F0(void) {}
 #pragma push /* merge_units */
 typedef struct { int a; char name[0x40]; } Proto0022E5E0;
 extern int func_002E9A10(void* reg);
-extern int func_003C9C30(void* d);
+extern int Event_UnpackHeader(void* d);
 extern int func_002E9A98(void* d, void* field, int size, int count);
 extern int NetMsg_RegisterType(void* type, int version, void* factory);
 extern char D_004F7948[];
-extern void func_0022E710(void);
-unsigned char func_0022E5E0(void* reg)
+extern void cAddCheckpointMsg_NetReceive(void);
+unsigned char cAddCheckpointMsg_NetRegister(void* reg)
 {
     struct { long long file; Proto0022E5E0 p; } L;
     unsigned char ok = 0;
-    if (func_002E9A10(reg) == 0 && func_003C9C30(&L.file) != 0 &&
+    if (func_002E9A10(reg) == 0 && Event_UnpackHeader(&L.file) != 0 &&
         func_002E9A98(&L.file, &L.p.a, 4, 1) == 0 &&
         func_002E9A98(&L.file, L.p.name, 0x40, 0x40) == 0 &&
-        NetMsg_RegisterType(D_004F7948, 2, func_0022E710) == 0)
+        NetMsg_RegisterType(D_004F7948, 2, cAddCheckpointMsg_NetReceive) == 0)
         ok = 1;
     return ok;
 }

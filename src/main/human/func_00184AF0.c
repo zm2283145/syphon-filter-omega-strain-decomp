@@ -11,7 +11,7 @@ extern signed char D_0049D023;
 int Actor_GetSkeleton(H_4AF0* h);
 V_4AF0 Model_GetSkeletonNodePos(int skel, int node);
 }static inline bool Use_4AF0(H_4AF0* h) { return h->b2D && h->b2C && !h->b2E; }
-extern "C" V_4AF0 func_00184AF0(H_4AF0* h)
+extern "C" V_4AF0 Npc_v2D(H_4AF0* h)
 {
     return Use_4AF0(h) ? Model_GetSkeletonNodePos(Actor_GetSkeleton(h), D_0049D023) : h->GetPos();
 }

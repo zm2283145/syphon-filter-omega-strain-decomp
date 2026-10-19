@@ -54,7 +54,7 @@ extern char D_004DF640[];
 int func_003BAA80(void* l);
 void** func_003BAA90(void* l);
 void func_0036FB30(void* p, int f);
-void func_0036FC80(void* p, int f);
+void TransformNode_dtor(void* p, int f);
 void operator_delete(void* p);
 }
 static inline bool Empty3BA9A0(void* l) { return func_003BAA80(l); }
@@ -65,7 +65,7 @@ static inline void Base3BA9A0(Obj3BA9A0* self)
         self->Clear(1);
         while (!Empty3BA9A0(self->mA4)) self->Remove(*func_003BAA90(self->mA4), 1);
         func_0036FB30(self->mA4, -1);
-        func_0036FC80(self, 0);
+        TransformNode_dtor(self, 0);
     }
 }
 extern "C" Obj3BA9A0* func_003BA9A0(Obj3BA9A0* self, short del)

@@ -6,7 +6,7 @@
 
 /* merge_units: begin func_00120BC0 */
 __asm__(".set nomove\n"
-        "dpsub = func_0011C200\n");
+        "dpsub = SoftFloat_DoubleSub\n");
 typedef union { double value; struct { unsigned int lsw; unsigned int msw; } parts; } ieee_double_shape_type;
 #define GET_HIGH_WORD(i,d) do { ieee_double_shape_type gh_u; gh_u.value = (d); (i) = gh_u.parts.msw; } while (0)
 extern double func_0011EDD0(double x, double y);
@@ -171,7 +171,7 @@ double scalbn(double x, int n)
 
 /* merge_units: begin func_001211A8 */
 __asm__(".set nomove\n"
-        "dpsub = func_0011C200\n");
+        "dpsub = SoftFloat_DoubleSub\n");
 
 double Math_SinDouble(double x)
 {

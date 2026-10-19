@@ -26,7 +26,7 @@ int func_002731D0(...);
 int func_002731E0(...);
 int func_002731F0(...);
 int List_Begin(...);
-int func_0013D680(...);
+int String_AssignString(...);
 int IeElement_SetColour(...);
 int String_CtorCStr_13B480(...);
 int ObjMarker_ConstructIcon(...);
@@ -92,7 +92,7 @@ extern "C" int HudMarkers_SetMapObject(char* mgr, int* id, char* obj, char* text
             Str s;
             Str* ps = &s;
             String_CtorCStr_13B480(ps, text ? text : (text = &D_004A8F70));
-            func_0013D680((char*)rec + 0x28, &s);
+            String_AssignString((char*)rec + 0x28, &s);
             String_Dtor(&s, 0);
         }
         {

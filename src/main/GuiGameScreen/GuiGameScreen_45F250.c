@@ -20,17 +20,17 @@ extern "C" void GuiWidget_ClearFlag4();
 extern "C" void GuiWidget_SetFlag4();
 extern "C" void GuiWidget_Deinit();
 extern "C" void GuiWidget_Init();
-extern "C" void func_0041F210();
+extern "C" void GuiWidget_Load();
 extern "C" void GuiSaveAgentWidget_OnEvent();
 extern "C" void GuiAutoSaver_GetClassName();
-extern "C" void func_0045F2D0();
+extern "C" void GuiAutoSaver_IsType();
 extern "C" void GuiAutoSaver_SaveDone();
 extern "C" void GuiAutoSaver_Wake();
 extern void * const D_004E16D0[];
 extern char D_004E1220[];
 void* GuiWidget_Destroy(void* self, short deleteFlag);
 }
-extern "C" Vtable2Object* func_0045F250(Vtable2Object* self, short deleteFlag)
+extern "C" Vtable2Object* GuiAutoSaver_dtor(Vtable2Object* self, short deleteFlag)
 {
     if (self) {
         self->vtable = ((char*)D_004E16D0);
@@ -43,4 +43,4 @@ extern "C" Vtable2Object* func_0045F250(Vtable2Object* self, short deleteFlag)
     }
     return self;
 }
-void * const D_004E16D0[24] = { (void*)0x0, (void*)0x0, (void*)func_0045F250, (void*)GuiWidget_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiAutoSaver_Wake, (void*)GuiWidget_BaseSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)func_00293950, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiSaveAgentWidget_OnEvent, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiAutoSaver_GetClassName, (void*)func_0045F2D0, (void*)GuiAutoSaver_SaveDone };
+void * const D_004E16D0[24] = { (void*)0x0, (void*)0x0, (void*)GuiAutoSaver_dtor, (void*)GuiWidget_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiAutoSaver_Wake, (void*)GuiWidget_BaseSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)func_00293950, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiSaveAgentWidget_OnEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiAutoSaver_GetClassName, (void*)GuiAutoSaver_IsType, (void*)GuiAutoSaver_SaveDone };

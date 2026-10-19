@@ -54,7 +54,7 @@ extern void LibInit_LoadIrxModule(void* a, int b, void* c, int d);
 extern void func_002B4D08(int a);
 extern void func_002B5070(int a);
 /* Startup sequence. */
-void func_003A64F0(void)
+void Iop_LoadMcUsbModules(void)
 {
     LibInit_LoadIrxModule("MC2_S1.IRX", 0, 0, 1);
     func_002B4D08(0);
@@ -73,7 +73,7 @@ extern void func_003A8A90(int flag);
 extern const unsigned int D_004BC700[];
 
 /* Initializes four subsystems in order, then calls func_003A8A90(1). */
-void func_003A6560(void) {
+void Iop_LoadPadSoundModules(void) {
     LibInit_LoadIrxModule("DS2U_S1.IRX", 0, 0, 1);
     sceDbcInit();
     LibInit_LoadIrxModule("LIBSD.IRX", 0, 0, 1);
@@ -99,11 +99,11 @@ extern char D_00537F80[];       /* DMA manager instance */
 extern unsigned char D_0053BBB0;
 extern int LibInitModules(int);
 extern int Overlay_Load(int);
-extern int func_0036B630(void);
+extern int Mem_Init(void);
 extern int func_00375E50(void* mgr, int a1, int a2, int a3);
 
 int func_003A65F0(int a0) {
-    func_0036B630();
+    Mem_Init();
     LibInitModules(a0);
     func_00375E50(D_00537F80, 13312, 1075200, 204800);
     return Overlay_Load(1);

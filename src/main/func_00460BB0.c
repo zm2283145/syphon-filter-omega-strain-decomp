@@ -13,7 +13,7 @@ extern char D_004C24E8[];
 extern char D_004C24F8[];
 extern char D_004B88F0[];
 void GuiWidget_Init(S460BB0*);
-int func_002C9EE0(void*);
+int FrontEnd_LoadZeusHog(void*);
 TraversalWidget* GuiWidget_FindChildByName(void*, const char*);
 void List_Begin(ChildIterator* result, ChildList* list);
 void func_0028C0B0(ChildIterator* result, const ChildIterator* source);
@@ -27,7 +27,7 @@ void GuiEndGameAwards_Init(S460BB0* self)
     W460BB0* w;
     ChildNode* node;
     GuiWidget_Init(self);
-    if (func_002C9EE0(D_004FFC04)) {
+    if (FrontEnd_LoadZeusHog(D_004FFC04)) {
         TraversalWidget* grp = GuiWidget_FindChildByName(self, D_004C24E8);
         if (grp) {
             ChildList* list = &grp->children;

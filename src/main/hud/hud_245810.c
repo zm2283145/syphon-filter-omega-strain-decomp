@@ -97,7 +97,7 @@ static inline void End_(It_2458E0* out, char* l) { EndI_(out, l); }
 static inline void DelEnt_(Ent_2458E0* e) { AllocGuard g; if (e) { if (e->c) IeElement_SetText(e->c, 0); if (e->d) HudTracker_Kill(e->d); } Mem_Free(0, e, D_004A7210, 0x1A9); }
 static inline void DelV_(V6A0_2458E0* v) { AllocGuard g; v->Destroy(-1); Mem_Free(0, v, D_004A7210, 0x1B7); }
 static inline void Del54_(void* p) { AllocGuard g; Interface_Dtor(p, -1); Mem_Free(0, p, D_004A7210, 0x1B9); }
-extern "C" Self_2458E0* func_002458E0(Self_2458E0* self, short flag)
+extern "C" Self_2458E0* HudObject_dtor(Self_2458E0* self, short flag)
 {
     if (self) {
         It_2458E0 it;

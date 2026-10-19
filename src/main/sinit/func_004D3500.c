@@ -4,6 +4,6 @@
 #pragma mpwc_relax on
 extern char *D_0051EE48;
 
-void func_004D3500(void) {
+void StaticInit_NetCalloutMsgName(void) {
     D_0051EE48 = "NetCalloutMsg";
 }

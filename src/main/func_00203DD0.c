@@ -30,7 +30,7 @@ extern void func_001F3DC0(void*, int);
 extern void func_001F3C70(void*, int);
 /* Builds and registers one block of motion-graph nodes. */
 #pragma optimization_level 1
-void func_00203DD0(void* p0)
+void MotionGraph_BuildLadderAim(void* p0)
 {
     B4 vCBC;
     B4 vCB8;

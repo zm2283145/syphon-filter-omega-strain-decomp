@@ -6,19 +6,19 @@
 
 /* merge_units: begin func_00326080 */
 #define F_(b, o, T) (*(T*)((char*)(b) + (o)))
-int func_001115B0(int *, int);                          
-int func_00111838(int);                               
-int func_00111BF0(int, signed char *, int);                      
+int sceOpen(int *, int);                          
+int sceClose(int);                               
+int sceRead(int, signed char *, int);                      
 extern signed char D_004914A8;
 
 signed char *func_00326080(void) {
     int temp_v0;
 
     if (D_004914A8 == 0) {
-        temp_v0 = func_001115B0(((int*)"rom0:ROMVER"), 1);
+        temp_v0 = sceOpen(((int*)"rom0:ROMVER"), 1);
         if (temp_v0 >= 0) {
-            func_00111BF0(temp_v0, &D_004914A8, 0xE);
-            func_00111838(temp_v0);
+            sceRead(temp_v0, &D_004914A8, 0xE);
+            sceClose(temp_v0);
         }
     }
     return &D_004914A8;
@@ -44,18 +44,18 @@ int func_003260F0(void) {
 /* merge_units: end func_003260F0 */
 
 /* merge_units: begin func_00326130 */
-extern void func_0010D210(void *);
+extern void GetOsdConfigParam(void *);
 extern int func_003260F0(void);
 extern unsigned char D_004914A4;
 int func_00326130(void)
 {
     unsigned int c;
     int r;
-    func_0010D210(&c);
+    GetOsdConfigParam(&c);
     if (func_003260F0()) {
         r = D_004914A4;
     } else {
-        func_0010D210(&c);
+        GetOsdConfigParam(&c);
         if (((c >> 13) & 7) == 0) r = (c >> 4) & 1;
         else r = (c >> 16) & 0x1F;
     }

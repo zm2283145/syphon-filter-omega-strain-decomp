@@ -70,7 +70,7 @@ typedef struct { char pad[0x400]; int f400; } Ctx;
 extern char D_00588074[];
 extern unsigned short D_0058D178, D_0058C0B0;
 extern int func_002E51B8(int, Ctx **);
-extern int func_002DD440(char *, char *);
+extern int Net_IpToString(char *, char *);
 extern int strcmp(const char *, const char *);
 extern int func_002DCD00(int);
 extern int func_002F84D0(int, int, char *);
@@ -83,7 +83,7 @@ int func_002E6AA8(int h, int b, int c, Q *q)
     ctx[0] = 0;
     if (q == 0) return -1;
     if (func_002E51B8(h, ctx) || ctx[0] == 0) return -1;
-    func_002DD440(name, q->name);
+    Net_IpToString(name, q->name);
     if (q->f0 == 0) h2 = 0;
     if (strcmp(name, D_00588074) != 0 || q->f1 != ctx[0]->f400) {
         if (h == 0xFFFF) func_002F84D0(-1, q->f1, q->f8);
@@ -208,7 +208,7 @@ int func_002E6DC8(int a, int b, int c, int *id)
     if (id == 0) return -1;
     if (func_002E56D0(flag)) return 4;
     func_002EBA60(b2);
-    func_002DD440(b1, b2);
+    Net_IpToString(b1, b2);
     g = D_0058D17C;
     if (g != 0 || flag[0] != 0) {
         if (*id != D_0058D180) return 4;
@@ -225,9 +225,9 @@ int func_002E6DC8(int a, int b, int c, int *id)
 /* merge_units: begin func_002E6ED8 */
 extern void (*D_0058DF84)(char *, int);
 #if 0 /* merge_units */
-extern void func_002DD440(char *, int *);
+extern void Net_IpToString(char *, int *);
 #endif /* merge_units */
-#define func_002DD440(a0, a1) ((void)func_002DD440((a0), (char *)(a1))) /* merge_units */
+#define Net_IpToString(a0, a1) ((void)Net_IpToString((a0), (char *)(a1))) /* merge_units */
 
 int func_002E6ED8(int a, int b, int c, int *k)
 {
@@ -236,11 +236,11 @@ int func_002E6ED8(int a, int b, int c, int *k)
     {
         void (**pf)(char *, int) = &D_0058DF84;
         if (*pf != 0) {
-            func_002DD440(buf, k + 1);
+            Net_IpToString(buf, k + 1);
             (*pf)(buf, k[0]);
         }
     }
     return 8;
 }
-#undef func_002DD440 /* merge_units */
+#undef Net_IpToString /* merge_units */
 /* merge_units: end func_002E6ED8 */

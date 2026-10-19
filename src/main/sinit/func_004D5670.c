@@ -38,7 +38,7 @@ static inline float Sqrt_4D5670(float x)
     return r;
 }
 
-void func_004D5670(void)
+void StaticInit_SkaAnimMsgNames(void)
 {
     char tmp[16];
     O_4D5670* p;

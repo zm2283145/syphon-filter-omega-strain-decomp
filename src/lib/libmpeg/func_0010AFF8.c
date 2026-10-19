@@ -11,7 +11,7 @@ extern void func_0010B5E8(void *);
 extern int func_0010C698();
 extern int func_0010C6C0();
 
-int func_0010AFF8(char *mp, char *work, int size)
+int sceMpegCreate(char *mp, char *work, int size)
 {
     char *p;
     unsigned int rem;

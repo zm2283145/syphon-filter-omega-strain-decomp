@@ -3182,8 +3182,8 @@ typedef struct {
 } ObjActMsg_e8;
 extern unsigned char D_005721D0;
 extern char D_00572188[];
-extern void func_00428CD0();
-extern void func_00428E70();
+extern void cActivateMsg_v01();
+extern void cActivateMsg_v02();
 extern char D_004E0E60[];
 #if 0 /* merge_units */
 extern int Event_Construct(ObjActMsg_e8* msg, void* name);
@@ -3222,7 +3222,7 @@ static inline void merge_flush_func_00229000(void) {}
 #pragma push /* merge_units */
 #pragma cplusplus on
 
-extern "C" VtableObject* func_002290A0(VtableObject* self, short deleteFlag)
+extern "C" VtableObject* cActivateMsg_dtor(VtableObject* self, short deleteFlag)
 {
     if (self) {
         self->vtable = D_004E0E60;

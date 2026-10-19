@@ -43,7 +43,7 @@ static inline void Init_00281680(M_00281680* m, O_00281680* o, int v, int sub) {
     m->vtable = D_004DCEF0;
     m->obj = o; m->sub = sub; m->val = v; m->cls = 4;
 }
-extern "C" void func_00281680(S_00281680* p, T_00281680* t) {
+extern "C" void cNetBackpackMsg_Apply(S_00281680* p, T_00281680* t) {
     int id = -1;
     p->type = R8_00281680();
     p->owner = R8_00281680();

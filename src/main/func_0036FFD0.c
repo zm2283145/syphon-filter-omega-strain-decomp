@@ -2,7 +2,7 @@
 typedef struct { __int128 q[4]; } M36FFD0;
 typedef struct { char pad[0x10]; M36FFD0 m; } S36FFD0;
 #pragma peephole off
-void func_0036FFD0(S36FFD0* dst, M36FFD0* src)
+void TransformNode_SetMatrix_36FFD0(S36FFD0* dst, M36FFD0* src)
 {
     M36FFD0* d = &dst->m;
     __int128 qa, qb;

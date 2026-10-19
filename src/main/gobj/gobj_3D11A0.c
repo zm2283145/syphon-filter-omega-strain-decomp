@@ -35,7 +35,7 @@ void func_003D11A0(void* allocation, int pool, int destroy, char* file, int line
 extern "C" {
 extern char D_004BD318[];
 void* Mem_Alloc(int pool, unsigned int size, char* file, int line);
-void* func_00139BC0(int size, void* p);
+void* Mem_PlacementNew(int size, void* p);
 }
 struct Node1280 {
     Node1280* prev;
@@ -81,7 +81,7 @@ extern "C" int func_003D1280(Node1280** result, List1280* list, Node1280** pos, 
     Holder1280 h;
     h.alloc = alloc;
     h.node = n;
-    void* v = func_00139BC0(0x30, h.node->value);
+    void* v = Mem_PlacementNew(0x30, h.node->value);
     if (v)
         func_003D1490(v, value);
     Node1280* p;

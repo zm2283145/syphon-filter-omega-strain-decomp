@@ -116,8 +116,8 @@ int sceUsbKbInit(int *max_connect)
 /* merge_units: end func_00222B78 */
 
 /* merge_units: begin func_00222D70 */
-extern int func_001161A0(void);
-extern void func_001161F8(void);
+extern int DIntr(void);
+extern void EIntr(void);
 extern int RemoveIntcHandler(int, int);
 extern int Alloc_Lock(int);
 extern int DeleteSema(int);
@@ -126,10 +126,10 @@ extern int D_004F581C;
 int sceUsbKbEnd(void)
 {
     int err = 0;
-    int s = func_001161A0();
+    int s = DIntr();
     int r = RemoveIntcHandler(3, D_004F581C);
     if (r == 0) Alloc_Lock(3);
-    if (s) func_001161F8();
+    if (s) EIntr();
     if (r < 0) {
         err = 1;
         scePrintf("libusbkb.a : RemoveIntcHandler() --> error

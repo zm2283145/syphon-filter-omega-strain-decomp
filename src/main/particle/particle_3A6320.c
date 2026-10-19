@@ -13,14 +13,14 @@
 /* Deleting destructor: own cleanup, then the base destructor. */
 extern "C" void operator_delete(void* allocation);
 extern "C" void Skel_FreeAll(void* self);
-extern "C" void* func_003A62A0(void* self, short deleteFlag);
+extern "C" void* ReceiverList_Dtor_3A62A0(void* self, short deleteFlag);
 
 extern "C" void* func_003A6320(void* self, short deleteFlag)
 {
     if (self) {
         Skel_FreeAll(self);
         if (self)
-            func_003A62A0(self, 0);
+            ReceiverList_Dtor_3A62A0(self, 0);
         if (deleteFlag > 0)
             operator_delete(self);
     }
@@ -37,7 +37,7 @@ extern "C" void* func_003A6320(void* self, short deleteFlag)
 int CreateSema(char *);
 int CreateThread(char *);
 int StartThread(int, int);
-int func_0010D050();
+int GetThreadId();
 int sceSifSearchModuleByName(char *);
 int func_00118870(char *, int);
 extern int D_004934C8;
@@ -55,7 +55,7 @@ void func_003A6390(void) {
         sl.f18[0] = 0;
         sl.f24[0] = 0;
         D_004934D8 = CreateSema(&sl.f10);
-        D_004934C8 = func_0010D050();
+        D_004934C8 = GetThreadId();
         sl.f40 = 0;
         sl.f3C = 0x2000;
         sl.f34 = &func_003A6460;

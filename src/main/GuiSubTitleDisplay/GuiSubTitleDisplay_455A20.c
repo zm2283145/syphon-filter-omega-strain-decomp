@@ -38,12 +38,12 @@ void func_00455A20(int arg0, int arg1) {
 #pragma push /* merge_units */
 extern char D_00587D50[];
 extern char D_00587D60[];
-extern void func_00425DB0(void* self, const char* name);
+extern void TextArrayCell_SetColour(void* self, const char* name);
 extern void GuiTextArrayWidget_DrawCell(void* self, void* data, int a, int b);
 /* Sets the name (depending on whether data is given), then initialises with data. */
 void GuiWeaponStats_CellColour(void* self, void* data, int a, int b)
 {
-    func_00425DB0(self, data == 0 ? D_00587D50 : D_00587D60);
+    TextArrayCell_SetColour(self, data == 0 ? D_00587D50 : D_00587D60);
     GuiTextArrayWidget_DrawCell(self, data, a, b);
 }
 #pragma pop /* merge_units */
@@ -111,7 +111,7 @@ extern char* D_004EE620; /* table of 16-byte rows of flag bytes */
 
 
 /* Sets flag bit 0 of byte `col` in row `row` of the D_004EE620 table. */
-void func_00455C20(int row, int col) {
+void TeamTable_SetBit0_455C20(int row, int col) {
     SlotFlags* flags = (SlotFlags*)(D_004EE620 + row * 16 + col);
     flags->set = 1;
 }

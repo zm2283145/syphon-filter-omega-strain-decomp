@@ -6,16 +6,16 @@
 
 #include "types.h"
 
-extern int func_00123320(void);
+extern int Newlib_Errno(void);
 
-int func_0010D820(void) {
+int Newlib_SysOpen(void) {
     int tmp0;
 
-    tmp0 = func_00123320();
+    tmp0 = Newlib_Errno();
     *(int*)((char*)tmp0) = 5;
     return -1;
 }
 
-int func_0010D848(void) {
+int Newlib_SysClose(void) {
     return -1;
 }

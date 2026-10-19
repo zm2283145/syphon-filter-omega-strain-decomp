@@ -8,7 +8,7 @@ void func_002C5590(void* dst, void* src);
 extern char D_004DE110[];
 }
 struct Msg54C0 { void* vtable; char pad[0x20]; int value; char pad2[8]; char payload[0x10]; };
-extern "C" Msg54C0* func_002C54C0(Msg54C0* src)
+extern "C" Msg54C0* cNetCopyMsg_Clone(Msg54C0* src)
 {
     Msg54C0* p;
     {

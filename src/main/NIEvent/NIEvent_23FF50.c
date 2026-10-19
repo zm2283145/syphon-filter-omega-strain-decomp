@@ -39,7 +39,7 @@ DEFINE_MSG_CLONE_INLINE28(func_00240050, 0x28, D_004A71C8, 0x47, D_004DFD80, D_0
 #include "vector_resize.h"
 DEFINE_RESIZE_ELEMENT(Elem16_0150, 16)
 #pragma opt_common_subs off
-DEFINE_VECTOR_RESIZE(func_00240150, Elem16_0150, func_00240760, func_00240570)
+DEFINE_VECTOR_RESIZE(func_00240150, Elem16_0150, Vector_Insert_240760, func_00240570)
 #pragma opt_common_subs reset
 #pragma pop /* merge_units */
 /* merge_units: end func_00240150 */
@@ -49,7 +49,7 @@ DEFINE_VECTOR_RESIZE(func_00240150, Elem16_0150, func_00240760, func_00240570)
 #pragma cplusplus on
 DEFINE_RESIZE_ELEMENT(Elem64_01C0, 64)
 #pragma opt_common_subs off
-DEFINE_VECTOR_RESIZE(func_002401C0, Elem64_01C0, func_00240DE0, func_00240CE0)
+DEFINE_VECTOR_RESIZE(func_002401C0, Elem64_01C0, Vector_Insert_240DE0, func_00240CE0)
 #pragma opt_common_subs reset
 #pragma pop /* merge_units */
 /* merge_units: end func_002401C0 */
@@ -59,7 +59,7 @@ DEFINE_VECTOR_RESIZE(func_002401C0, Elem64_01C0, func_00240DE0, func_00240CE0)
 #pragma cplusplus on
 DEFINE_RESIZE_ELEMENT(Elem8_0230, 8)
 #pragma opt_common_subs off
-DEFINE_VECTOR_RESIZE(func_00240230, Elem8_0230, func_00241590, func_00241430)
+DEFINE_VECTOR_RESIZE(func_00240230, Elem8_0230, Vector_Insert_241590, func_00241430)
 #pragma opt_common_subs reset
 #pragma pop /* merge_units */
 /* merge_units: end func_00240230 */

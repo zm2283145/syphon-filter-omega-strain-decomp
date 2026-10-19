@@ -71,7 +71,7 @@ int Event_GetType(Word* self) {
 /* merge_units: begin func_003C9C30 */
 #pragma push /* merge_units */
 extern int func_002E9A98(void* hdr, void* dst, int size, int count);
-unsigned char func_003C9C30(char* s) {
+unsigned char Event_UnpackHeader(char* s) {
     unsigned char ok = 0;
     if (func_002E9A98(s, s, 4, 1) != 0) goto out;
     if (func_002E9A98(s, s + 4, 4, 1) != 0) goto out;
@@ -219,7 +219,7 @@ ret:
 #include "object_list_erase_file.h"
 
 extern "C" { char D_004BD198[] = "allocator.hh"; }
-DEFINE_OBJECT_LIST_ERASE_RANGE_FILE(func_003C9EA0, D_004BD198)
+DEFINE_OBJECT_LIST_ERASE_RANGE_FILE(ObjectList_EraseRange_3C9EA0, D_004BD198)
 #pragma pop /* merge_units */
 /* merge_units: end func_003C9EA0 */
 
@@ -227,6 +227,6 @@ DEFINE_OBJECT_LIST_ERASE_RANGE_FILE(func_003C9EA0, D_004BD198)
 #pragma push /* merge_units */
 #pragma cplusplus on
 
-DEFINE_OBJECT_LIST_ERASE_ONE_FILE(func_003C9FE0, D_004BD198)
+DEFINE_OBJECT_LIST_ERASE_ONE_FILE(List_Erase_3C9FE0, D_004BD198)
 #pragma pop /* merge_units */
 /* merge_units: end func_003C9FE0 */

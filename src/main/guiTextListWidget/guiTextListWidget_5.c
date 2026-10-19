@@ -42,7 +42,7 @@ void func_00422ED0(PtrVec* a, PtrVec* b) {
 extern "C" {
 void func_00329930(void* destination, const void* source);
 void func_00421F90(TextListEntryVec* entries);
-void func_00138350(TextListEntry* entries, int flags);
+void String_Dtor_138350(TextListEntry* entries, int flags);
 void Mem_Free(int pool, void* allocation, char* file, int line);
 void operator_delete(void* allocation);
 void func_00423080(TextListEntry* allocation, int pool, int destroy,
@@ -105,7 +105,7 @@ extern "C" void func_00423080(TextListEntry* allocation, int pool, int destroy,
 {
     AllocGuard guard;
     if (destroy && allocation)
-        func_00138350(allocation, -1);
+        String_Dtor_138350(allocation, -1);
     Mem_Free(pool, allocation, file, line);
 }
 #pragma pop /* merge_units */

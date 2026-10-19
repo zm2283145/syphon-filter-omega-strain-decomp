@@ -278,6 +278,6 @@ static inline void merge_flush_func_00245F00(void) {}
 #pragma push /* merge_units */
 #pragma cplusplus on
 
-DEFINE_VTABLE_BASE_DTOR(func_002464B0, D_004DC4A0, cGOBJ_dtor)
+DEFINE_VTABLE_BASE_DTOR(WeaponPreview_dtor, D_004DC4A0, cGOBJ_dtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_002464B0 */

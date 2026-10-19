@@ -52,7 +52,7 @@ static inline unsigned char Press_002A1D20(Ev_002A1D20* e, unsigned int b)
         r = 1;
     return r;
 }
-extern "C" int func_002A1D20(S_002A1D20* self, Ev_002A1D20* ev)
+extern "C" int GuiEquipmentSetup_HandleInput(S_002A1D20* self, Ev_002A1D20* ev)
 {
     if (Press_002A1D20(ev, 0x1000))
         return 1;
@@ -171,7 +171,7 @@ void* GuiManager_FindOrLoad(void* a, char* b, char* c);
 void Game_EndLevel(void* a, int b);
 int GuiWidget_OnEvent(S_002A2170* self, W_002A2170* w, int msg, int sub, char* text);
 }
-extern "C" int func_002A2170(S_002A2170* self, W_002A2170* w, int msg, int sub, char* text)
+extern "C" int GuiEquipmentSetup_HandleEvent(S_002A2170* self, W_002A2170* w, int msg, int sub, char* text)
 {
     unsigned short m;
     func_002A3A10(self);

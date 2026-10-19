@@ -38,10 +38,10 @@ extern char D_0049A890[];
 extern char D_004D9060[];
 void Mem_Free(int pool, void* p, char* file, int line);
 VObj_36DF0** PtrVec_At(PtrVec_36DF0* v, int i);
-void func_002458E0(void* p, int f);
+void HudObject_dtor(void* p, int f);
 void func_00260B40(void* p, int f);
 void WaterFx_Destroy(void* p, int f);
-void func_00279D80(void* p, int f);
+void DecalMgr_dtor(void* p, int f);
 void func_001C3B00(void* p);
 void func_00136DA0(Guard_36DF0* g);
 void func_001378C0(void* p, int f);
@@ -52,7 +52,7 @@ void func_00336460(void* p, int f);
 void func_00136CD0(World_36DF0* w);
 void func_00136BD0(World_36DF0* w);
 void func_001309A0(World_36DF0* w);
-void func_00130950(World_36DF0* w);
+void World_UnloadSkelHog(World_36DF0* w);
 void func_00132A40(World_36DF0* w);
 void func_00137840(void* p, int f);
 void func_001377C0(void* p, int f);
@@ -74,14 +74,14 @@ extern "C" World_36DF0* World_Destruct(World_36DF0* self, short del)
 {
     if (self) {
         self->vt = D_004D9060;
-        DELETE_36DF0(self->pDC, func_002458E0, 0xCA)
+        DELETE_36DF0(self->pDC, HudObject_dtor, 0xCA)
         DELETE_36DF0(self->pE0, func_00260B40, 0xCD)
         DELETE_36DF0(self->pE4, WaterFx_Destroy, 0xCF)
         {
             void* q = self->pE8;
             if (q) { AllocGuard g; Mem_Free(0, q, D_0049A890, 0xD1); }
         }
-        DELETE_36DF0(self->pEC, func_00279D80, 0xD3)
+        DELETE_36DF0(self->pEC, DecalMgr_dtor, 0xD3)
         if (self->objs) {
             int i;
             for (i = self->objs->count - 1; i >= 0; i--) {
@@ -132,7 +132,7 @@ extern "C" World_36DF0* World_Destruct(World_36DF0* self, short del)
         func_00136CD0(self);
         func_00136BD0(self);
         func_001309A0(self);
-        func_00130950(self);
+        World_UnloadSkelHog(self);
         func_00132A40(self);
         /* member destructors (the null tests are the compiler's this-checks) */
         if (self->mC4) func_00137840(self->mC4, 0);

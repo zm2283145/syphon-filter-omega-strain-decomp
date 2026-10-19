@@ -10,6 +10,8 @@ extern void AnimChannel_DirectDerivedZero();
 extern void AnimChannel_DirectValueZero();
 extern void AnimChannel_PreUpdate();
 extern void AnimChannel_UpdateRate();
+extern void AnimEvent_Clone();
+extern void AnimEvent_dtor();
 extern void Controller_DeathNotice();
 extern void Curve_Retarget();
 extern void Curve_SetVelocity();
@@ -18,6 +20,16 @@ extern void Event_PackHeader();
 extern void GObj_GetID();
 extern void GObj_GetLifeState();
 extern void GObj_GetWorldMatrix();
+extern void GuiEquipmentSetup_Draw();
+extern void GuiEquipmentSetup_GetClassName();
+extern void GuiEquipmentSetup_HandleEvent();
+extern void GuiEquipmentSetup_HandleInput();
+extern void GuiEquipmentSetup_Init();
+extern void GuiEquipmentSetup_IsType();
+extern void GuiEquipmentSetup_Update();
+extern void GuiEquipmentSetup_Wake();
+extern void GuiEquipmentSetup_dtor();
+extern void GuiMissionSetup_Create();
 extern void GuiWidget_BaseSleep();
 extern void GuiWidget_BubbleActivate();
 extern void GuiWidget_BubbleType0();
@@ -28,6 +40,7 @@ extern void GuiWidget_FocusFirst();
 extern void GuiWidget_FocusLast();
 extern void GuiWidget_FocusNext();
 extern void GuiWidget_FocusPrev();
+extern void GuiWidget_Load();
 extern void GuiWidget_SetFlag4();
 extern void Message_GetScriptTypeKey();
 extern void Node_ClearFlag2C();
@@ -46,6 +59,21 @@ extern void PathObj_GetPosition();
 extern void Player_GetActiveWeapon();
 extern void cGOBJ_v0B();
 extern void cGOBJ_v0C();
+extern void cGOBJ_v35();
+extern void cGOBJ_v39();
+extern void cNode_v06();
+extern void cNode_v07();
+extern void cNode_v0D();
+extern void cNode_v14();
+extern void cNode_v24();
+extern void cNode_v25();
+extern void cNode_v26();
+extern void cNode_v27();
+extern void cNode_v28();
+extern void cNode_v29();
+extern void cNode_v2A();
+extern void cNode_v2B();
+extern void cNode_v3A();
 extern void func_0012ED00();
 extern void func_0012ED30();
 extern void func_0012ED40();
@@ -75,73 +103,45 @@ extern void func_00180020();
 extern void func_00180780();
 extern void func_00180790();
 extern void func_001807A0();
-extern void func_0018A260();
 extern void func_001AEFE0();
-extern void func_001B9EA0();
-extern void func_002A1C30();
-extern void func_002A1CE0();
-extern void func_002A1CF0();
-extern void func_002A1D20();
-extern void func_002A2170();
-extern void func_002A2EC0();
-extern void func_002A2F00();
-extern void func_002A3BB0();
-extern void func_002A3BF0();
-extern void func_002A45A0();
 extern void func_002A6FC0();
-extern void func_003CD090();
-extern void func_003CD110();
-extern void func_003CD4A0();
-extern void func_003CD7A0();
-extern void func_003CD920();
-extern void func_003CDA60();
-extern void func_003CDBE0();
-extern void func_003CDC20();
-extern void func_003CDD40();
-extern void func_003CDD80();
-extern void func_003CDDC0();
-extern void func_003CE7D0();
-extern void func_003CE810();
-extern void func_003CE9D0();
-extern void func_003CEA00();
-extern void func_0041F210();
 
 void *D_004DD7A0[8] = {
-    0, 0, &func_002A1C30, 0,
+    0, 0, &GuiMissionSetup_Create, 0,
     0, 0, 0, 0,
 };
 
 void *D_004DD7C0[124] = {
-    0, 0, &func_002A45A0, &func_002A3BF0,
-    &GuiWidget_Deinit, &GuiWidget_SetFlag4, &GuiWidget_ClearFlag4, &func_002A3BB0,
-    &GuiWidget_BaseSleep, &GuiWidget_BubbleType0, &GuiWidget_BubbleType1, &func_002A1D20,
-    &func_002A2EC0, &GuiWidget_BubbleActivate, &func_002A2F00, &func_002A2170,
-    &func_0041F210, &GuiWidget_FocusFirst, &GuiWidget_FocusLast, &GuiWidget_FocusNext,
-    &GuiWidget_FocusPrev, &func_002A1CE0, &func_002A1CF0, 0,
+    0, 0, &GuiEquipmentSetup_dtor, &GuiEquipmentSetup_Init,
+    &GuiWidget_Deinit, &GuiWidget_SetFlag4, &GuiWidget_ClearFlag4, &GuiEquipmentSetup_Wake,
+    &GuiWidget_BaseSleep, &GuiWidget_BubbleType0, &GuiWidget_BubbleType1, &GuiEquipmentSetup_HandleInput,
+    &GuiEquipmentSetup_Draw, &GuiWidget_BubbleActivate, &GuiEquipmentSetup_Update, &GuiEquipmentSetup_HandleEvent,
+    &GuiWidget_Load, &GuiWidget_FocusFirst, &GuiWidget_FocusLast, &GuiWidget_FocusNext,
+    &GuiWidget_FocusPrev, &GuiEquipmentSetup_GetClassName, &GuiEquipmentSetup_IsType, 0,
     0, 0, &func_0017ECD0, &func_00180020,
     0, 0, &Curve_Retarget, &Curve_VirtualNop,
     &Curve_SetVelocity, 0, 0, 0,
     0, 0, &func_001AEFE0, &AnimChannel_AddOffset,
     &AnimChannel_DirectValueZero, &AnimChannel_DirectDerivedZero, &AnimChannel_PreUpdate, &AnimChannel_ClampValue,
     &AnimChannel_UpdateRate, 0, 0, 0,
-    0, 0, &func_0018A260, &func_001B9EA0,
+    0, 0, &AnimEvent_dtor, &AnimEvent_Clone,
     &Event_PackHeader, &Message_GetScriptTypeKey, 0, 0,
     0, 0, &func_0017F080, &Object_HandleMessage,
     &GObj_GetID, &Object_GetAttachedOrSelf, &func_0015C090, &func_0012ED00,
-    &func_003CE810, &func_003CE7D0, &func_0012ED30, &func_0012ED40,
-    &func_0012ED50, &cGOBJ_v0B, &cGOBJ_v0C, &func_003CEA00,
+    &cNode_v06, &cNode_v07, &func_0012ED30, &func_0012ED40,
+    &func_0012ED50, &cGOBJ_v0B, &cGOBJ_v0C, &cNode_v0D,
     &func_00180780, &func_00180790, &func_001807A0, &Actor_BasePreLogic,
-    &Actor_BaseWorldUpdate, &Actor_VirtualNop, &func_003CE9D0, &Object_Activate,
+    &Actor_BaseWorldUpdate, &Actor_VirtualNop, &cNode_v14, &Object_Activate,
     &Object_Deactivate, &Node_SetFlag2C, &Node_ClearFlag2C, &Node_GetFlag2C,
     &func_0015BFB0, &func_0015BFC0, &func_0015BFD0, &func_00148870,
     &func_0015BFF0, &func_0015BFE0, &func_0013EE60, &func_0015C000,
-    &Object_AttachTransform, &Player_GetActiveWeapon, &func_003CDDC0, &func_003CDD80,
-    &func_003CDD40, &func_003CDC20, &func_003CDBE0, &func_003CDA60,
-    &func_003CD920, &func_003CD7A0, &func_0015C010, &func_00153860,
+    &Object_AttachTransform, &Player_GetActiveWeapon, &cNode_v24, &cNode_v25,
+    &cNode_v26, &cNode_v27, &cNode_v28, &cNode_v29,
+    &cNode_v2A, &cNode_v2B, &func_0015C010, &func_00153860,
     &Object_GetEye, &func_0015C020, &func_00140E90, &func_0015C030,
-    &func_0015C040, &func_0015C050, &Node_GetWorldMatrix, &func_003CD4A0,
-    &Node_GetLightRefPoint, &PathObj_GetPosition, &Node_GetComponentMatrix, &func_003CD110,
-    &func_003CD090, &GObj_GetWorldMatrix, &func_0013E060, &func_0015C080,
+    &func_0015C040, &func_0015C050, &Node_GetWorldMatrix, &cGOBJ_v35,
+    &Node_GetLightRefPoint, &PathObj_GetPosition, &Node_GetComponentMatrix, &cGOBJ_v39,
+    &cNode_v3A, &GObj_GetWorldMatrix, &func_0013E060, &func_0015C080,
     &Actor_ApplyContactDamage, &func_0015C0A0, &GObj_GetLifeState, &Controller_DeathNotice,
 };
 

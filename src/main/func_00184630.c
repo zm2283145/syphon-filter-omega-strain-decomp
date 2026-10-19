@@ -6,5 +6,5 @@
 
 #include "types.h"
 
-void func_00184630(void) {
+void Npc_v26(void) {
 }

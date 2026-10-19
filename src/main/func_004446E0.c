@@ -27,7 +27,7 @@ extern int D_00585E80;
 extern char D_00585E90[];
 int MGCLUpdate(void);
 void String_Copy(char*, char*);
-int func_002D0560(char*);
+int Medius_SendServerReport(char*);
 void func_002EBC48(int*);
 void func_002EBCE0(int*);
 int func_002EBEC8(int*, int);
@@ -69,7 +69,7 @@ int func_004446E0(int update)
             D_00584390 = status;
             D_0058438E = 1;
             func_002EBCE0(&tmp);
-            ret = func_002D0560(D_00584378);
+            ret = Medius_SendServerReport(D_00584378);
             if (ret) {
                 return ret;
             }

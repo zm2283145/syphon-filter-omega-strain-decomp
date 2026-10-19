@@ -7,7 +7,7 @@ extern char D_004DFD80[];
 extern char D_004DE280[];
 }
 struct Msg2530 { void* vtable; int a, b, c, d, e, f, g; char h; char p1[3]; int i; signed char j; char p2[3]; int k; int l; };
-extern "C" Msg2530* func_002D2530(Msg2530* src)
+extern "C" Msg2530* cNetLabelMsg_Clone(Msg2530* src)
 {
     Msg2530* p;
     {

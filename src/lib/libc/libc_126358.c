@@ -1,9 +1,9 @@
 /* same-unit callee stub: weak, in a section the link discards (the real function is defined elsewhere); restores retail delay-slot choices */
 typedef struct _Bigint { struct _Bigint *_next; int _k, _maxwds, _sign, _wds; unsigned int _x[1]; } _Bigint;
-_Bigint * __attribute__((weak, section(".dtors_drop"))) func_00126280(void * a0, int a1) { return 0; }
-extern void func_00126328(void *, _Bigint *);
+_Bigint * __attribute__((weak, section(".dtors_drop"))) Newlib_Balloc(void * a0, int a1) { return 0; }
+extern void Newlib_Bfree(void *, _Bigint *);
 extern void *memcpy(void *, const void *, unsigned int);
-_Bigint *func_00126358(void *ptr, _Bigint *b, int m, int a)
+_Bigint *Newlib_Multadd(void *ptr, _Bigint *b, int m, int a)
 {
     int i, wds;
     unsigned int *x, y;
@@ -21,9 +21,9 @@ _Bigint *func_00126358(void *ptr, _Bigint *b, int m, int a)
     } while (++i < wds);
     if (a) {
         if (wds >= b->_maxwds) {
-            b1 = func_00126280(ptr, b->_k + 1);
+            b1 = Newlib_Balloc(ptr, b->_k + 1);
             memcpy(&b1->_sign, &b->_sign, b->_wds * sizeof(int) + 2 * sizeof(int));
-            func_00126328(ptr, b);
+            Newlib_Bfree(ptr, b);
             b = b1;
         }
         b->_x[wds++] = a;

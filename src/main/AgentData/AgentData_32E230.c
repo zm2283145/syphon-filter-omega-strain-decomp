@@ -60,7 +60,7 @@ static inline int Find_32E260(const char* key)
     }
     return -1;
 }
-extern "C" O_32E260* func_0032E260(O_32E260* self, int id, char flag, const char* key, int a, int b, int c)
+extern "C" O_32E260* OmegaReqRow_Construct(O_32E260* self, int id, char flag, const char* key, int a, int b, int c)
 {
     self->text = Loc_LookupText(id);
     self->id = id;

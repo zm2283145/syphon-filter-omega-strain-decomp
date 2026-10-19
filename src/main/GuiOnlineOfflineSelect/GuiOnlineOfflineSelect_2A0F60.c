@@ -17,7 +17,7 @@ int FrontEnd_OpenPopup(void* ui, int a, char* b, char* c, void* d, int e);
 void App_GetInstance(void);
 void App_InitSystemsOnce(void);
 unsigned char SFOLobby_CreateGame(void* g, int a, int b, int c);
-unsigned char func_00452FF0(void* g, int a);
+unsigned char SFOLobby_FormatError(void* g, int a);
 void GuiMissionSetup_OnGameCreateFailed(void* self, int builtin);
 void FrontEnd_ClosePopup(void* ui, int id);
 void App_CardWaitPoll(int a, int b);
@@ -42,7 +42,7 @@ extern "C" void GuiMissionSetup_BeginMission(S_002A0F60* self)
             D_005064B0 = 0;
             D_005064B8 = 0;
             res = SFOLobby_CreateGame(g, k, self->pF4->f40, self->pF4->b45);
-            if (res == 0 && func_00452FF0(g, 0) == 0x31) {
+            if (res == 0 && SFOLobby_FormatError(g, 0) == 0x31) {
                 GuiMissionSetup_OnGameCreateFailed(self, 1);
                 FrontEnd_ClosePopup(D_004FFC04, h);
                 return;

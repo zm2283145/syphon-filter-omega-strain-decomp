@@ -7,9 +7,9 @@ extern int GuiScreen_GetLobbyString(Self*, int, int, int, int, int);
 extern int FrontEnd_OpenPopup(void*, int, char*, int, int, int);
 extern void FrontEnd_ClosePopup(void*, int);
 extern void FrontEnd_DownloadPolicies(void*);
-extern void func_00445570(void*);
-extern int func_004456D0(void*);
-extern void func_004456C0(void*);
+extern void SFOLobby_RequestSettings(void*);
+extern int SFOLobby_GetUsagePolicy(void*);
+extern void SFOLobby_GetPrivacyPolicy(void*);
 int GuiOnlineConnect_Retry(Self* self)
 {
     void* r = DME_GetLobby(self);
@@ -23,8 +23,8 @@ int GuiOnlineConnect_Retry(Self* self)
     h = FrontEnd_OpenPopup(g, 0, D_004AABF0, GuiScreen_GetLobbyString(self, 0xD, 0, 0, 0, 0), 0, 0);
     if (self->handle != -1) FrontEnd_ClosePopup(D_004FFC04, self->handle);
     FrontEnd_DownloadPolicies(D_004FFC04);
-    func_00445570(r);
-    if (func_004456D0(r)) func_004456C0(r);
+    SFOLobby_RequestSettings(r);
+    if (SFOLobby_GetUsagePolicy(r)) SFOLobby_GetPrivacyPolicy(r);
     FrontEnd_ClosePopup(D_004FFC04, h);
     return 1;
 }

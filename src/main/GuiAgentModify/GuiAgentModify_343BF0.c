@@ -45,7 +45,7 @@ static inline void Del00343BF0(V00343BF0* o, int line)
     o->v0(-1);
     Mem_Free(0, o, "GuiAgentModify.cc", line);
 }
-extern "C" O00343BF0* func_00343BF0(O00343BF0* self, short del)
+extern "C" O00343BF0* GuiAgentModify_dtor(O00343BF0* self, short del)
 {
     if (self) {
         int i;

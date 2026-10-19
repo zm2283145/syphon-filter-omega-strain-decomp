@@ -8,7 +8,7 @@
 
 extern int sprintf(int, int, int, int, int, int, int, int, float, float, float, float, float, float, float, float);
 
-int func_002DD440(int a0, int a1) {
+int Net_IpToString(int a0, int a1) {
     int a2, a3, t0, t1, t2, t3, v0;
     float f12, f13, f14, f15, f16, f17, f18, f19;
     int cond;

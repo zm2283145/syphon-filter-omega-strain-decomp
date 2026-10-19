@@ -11,14 +11,14 @@ extern void* GObj_IdentityB(void* obj);
 extern int Global_Shatter(void* a, void* b, int c);
 extern int Global_SpawnParticle(int particle, int target, int c);
 extern void func_00282020(int handle);    /* writes an object handle to the stream */
-extern int func_00282160(int* handle);    /* reads an object handle from the stream */
+extern int NetStream_ReadObject(int* handle);    /* reads an object handle from the stream */
 
 /* Reads the message from the network stream and spawns the particle. */
 int cNetSpawnParticleMsg_Receive(cNetSpawnParticleMsg* msg) {
     signed char* cursor;
     signed char particle;
 
-    func_00282160(&msg->target);
+    NetStream_ReadObject(&msg->target);
     cursor = D_005061D0;
     particle = *cursor;
     D_005061D0 = cursor + 1;

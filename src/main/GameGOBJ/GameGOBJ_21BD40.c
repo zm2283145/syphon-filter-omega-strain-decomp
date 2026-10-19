@@ -26,11 +26,11 @@ int cElevatorGOBJ_v04(void) {
 }
 
 /* Set / clear the cGOBJ byte at +0x2C (1 after construction). */
-void func_0021BD70(cGOBJ* self) {
+void cGameGOBJ_v08(cGOBJ* self) {
     self->unk2C = 1;
 }
 
-void func_0021BD80(cGOBJ* self) {
+void cGameGOBJ_v09(cGOBJ* self) {
     self->unk2C = 0;
 }
 /* merge_units: generate this block's code under its own pragmas */

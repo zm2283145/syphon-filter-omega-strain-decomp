@@ -14,15 +14,15 @@ extern void func_0034B7E8(void *);
 extern void func_00357D88(void *);
 extern int func_003581C0(void);
 extern int func_00358158(void);
-extern int func_0010D050(void);
+extern int GetThreadId(void);
 extern int DeleteSema(int);
 extern int D_00492CE0;
-extern int *func_00123320(void);
+extern int *Newlib_Errno(void);
 
-int func_003583A0(N81E0 *n, int err)
+int Insck_SetErrno(N81E0 *n, int err)
 {
     n->err = err;
-    if (D_00492CE0) *func_00123320() = err;
+    if (D_00492CE0) *Newlib_Errno() = err;
     func_003581C0();
     return err ? -1 : 0;
 }
@@ -33,13 +33,13 @@ int func_003583A0(N81E0 *n, int err)
 #define NULL 0
 #pragma mpwc_relax on
 int func_003581C0();                                  
-int func_003581E0(int);                               
+int Insck_GetThreadContext(int);                               
 int D_00492CE4 = 12;
 
 int func_003583F0(void) {
     int temp_v0;
 
-    temp_v0 = func_003581E0(1);
+    temp_v0 = Insck_GetThreadContext(1);
     if (temp_v0 == 0) {
         return &D_00492CE4;
     }
@@ -56,7 +56,7 @@ static const unsigned int dat_00492CE8[2] = { 0xFFFFFFFF, 0x0 };
 int func_00358438(void) {
     int temp_v0;
 
-    temp_v0 = func_003581E0(1);
+    temp_v0 = Insck_GetThreadContext(1);
     if (temp_v0 == 0) {
         return &(*(int*)dat_00492CE8);
     }

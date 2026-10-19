@@ -4,6 +4,6 @@
 
 #include "gobj_types.h"
 
-int func_0021BE50(void) {
+int cGameGOBJ_v04(void) {
     return 1;
 }

@@ -12,7 +12,7 @@ extern unsigned short D_0058C0B0;
 extern P2DDFF8 D_0051F0D8;
 extern int func_002DF708(void);
 extern void *memcpy(void *, const void *, unsigned int);
-extern int func_002DD440(char *, int);
+extern int Net_IpToString(char *, int);
 extern int func_00303930(int, char *, unsigned short, P2DDFF8 *, unsigned short);
 int func_002DDFF8(int a, int b, unsigned int c, unsigned int d, int len, void *data)
 {
@@ -31,7 +31,7 @@ int func_002DDFF8(int a, int b, unsigned int c, unsigned int d, int len, void *d
     D_0051F0D8.c = c;
     D_0051F0D8.d = d;
     memcpy(D_0051F0D8.data, data, len);
-    func_002DD440(buf, b);
+    Net_IpToString(buf, b);
     return func_00303930(D_0048C4B0, buf, D_0058C0B0, &D_0051F0D8, len + 2) ? 0x25 : 0;
 }
 /* merge_units: end func_002DDFF8 */

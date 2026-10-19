@@ -9,6 +9,6 @@
 char D_004ABDE0[] = "GuiNetAgencyCell";   /* "GuiNetAgencyCell" */
 
 /* Class name getter: "GuiNetAgencyCell". */
-char* func_002AF000(void) {
+char* GuiNetAgencyCell_GetClassName(void) {
     return D_004ABDE0;
 }

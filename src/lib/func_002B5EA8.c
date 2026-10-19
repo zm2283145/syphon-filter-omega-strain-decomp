@@ -3,7 +3,7 @@ typedef struct { int a; int op; int x8; } RQ;
 extern RQ D_00506640;
 extern int D_00506B68;
 extern int WaitSema(int);
-extern int func_0010D1B0(int);
+extern int PollSema(int);
 
 int func_002B5EA8(int poll, int *op, int *res)
 {
@@ -14,7 +14,7 @@ int func_002B5EA8(int poll, int *op, int *res)
         WaitSema(D_00506B68);
         if (res) *res = r->x8;
     } else {
-        if (func_0010D1B0(D_00506B68) < 0) return 0;
+        if (PollSema(D_00506B68) < 0) return 0;
         if (res) *res = r->x8;
     }
     if (op) *op = r->op;

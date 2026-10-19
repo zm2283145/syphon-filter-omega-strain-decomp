@@ -24,7 +24,7 @@ extern void func_001F3DC0(void*, int);
 extern void func_001F3C70(void*, int);
 /* Builds and registers the hang-from-edge motion nodes. */
 #pragma optimization_level 1
-void func_00204C90(void* p0)
+void MotionGraph_BuildHang(void* p0)
 {
     B4 v31C;
     B4 v318;

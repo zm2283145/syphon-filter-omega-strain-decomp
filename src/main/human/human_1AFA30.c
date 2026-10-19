@@ -40,9 +40,9 @@ int HumanCol_Init();
 char * Mem_Alloc(int, int, char *, int);                      
 int func_001360D0(int);                                 
 int func_001361D0(int *);                           
-int func_001AFCF0(char * , int);                       
+int PtrVec_Reserve_Thunk_1AFCF0(char * , int);                       
 int func_001AFD00(char * );                            
-int func_001AFD20(char * , int);                       
+int PtrVec_Reserve_Thunk_1AFD20(char * , int);                       
 int func_001AFD30(char * );                            
 int HumanBounds_BuildTable(char * );                            
 int HumanCentroid_GetTable(char * );                            
@@ -75,7 +75,7 @@ void Human_InitStatics(void) {
         g_ProfileLockDepth -= 1;
         if (temp_s0 != NULL) {
             func_001AFD30(temp_s0);
-            func_001AFD20(temp_s0, func_001361D0(&sp2C));
+            PtrVec_Reserve_Thunk_1AFD20(temp_s0, func_001361D0(&sp2C));
             F_(temp_s0, 0xC, signed char) = 1;
         }
         D_004EE9D0 = temp_s0;
@@ -93,7 +93,7 @@ void Human_InitStatics(void) {
         g_ProfileLockDepth -= 1;
         if (temp_s0_2 != NULL) {
             func_001AFD00(temp_s0_2);
-            func_001AFCF0(temp_s0_2, func_001361D0(&sp2C));
+            PtrVec_Reserve_Thunk_1AFCF0(temp_s0_2, func_001361D0(&sp2C));
             F_(temp_s0_2, 0xC, signed char) = 1;
         }
         D_004EE9D8 = temp_s0_2;

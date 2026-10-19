@@ -53,7 +53,7 @@ extern void Event_Construct(M_002101D0* m, void* type);
 
 extern void Event_Send(M_002101D0* m, void* target, int flags);
 extern void cMessage_dtor(M_002101D0* m, int flags);
-void func_002101D0(void* target) {
+void cMaxActiveNpcCountMsg_NetReceive(void* target) {
     M_002101D0 m;
     Event_Construct(&m, D_004F53F8);
     m.vtable = D_004DAE70;

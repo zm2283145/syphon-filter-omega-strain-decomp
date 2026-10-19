@@ -26,7 +26,7 @@
         if (n == 0)                                                             \
             return;                                                             \
         if (n > (maxN) || v->count > (maxN) - n) {                          \
-            func_00123BE8(D_00489738->stream, errSym);                          \
+            Libc_Fprintf(D_00489738->stream, errSym);                          \
             Libc_Abort();                                                    \
         }                                                                       \
         if (v->count + n <= v->cap) {                                           \

@@ -63,7 +63,7 @@ extern int strlen(const char* s);
 extern void String_Reserve(Str0043CB90* str, int n);
 extern void String_Replace(Str0043CB90* str, int pos, int count, const char* first, const char* last, Alloc0043CB90 alloc);
 /* Construct a string from a C string. */
-Str0043CB90* func_0043CB90(Str0043CB90* str, const char* s)
+Str0043CB90* String_CtorCStr_43CB90(Str0043CB90* str, const char* s)
 {
     Alloc0043CB90 alloc;
     int n;
@@ -84,7 +84,7 @@ Str0043CB90* func_0043CB90(Str0043CB90* str, const char* s)
 #include "string_replace_range.h"
 
 extern "C" { char D_004C0020[] = "basic_string: out_of_range"; char D_004C0040[] = "basic_string: length_error"; }
-DEFINE_STRING_REPLACE_RANGE(func_0043CC10, D_004C0020, D_004C0040, D_0049ADE0, 0x5C, D_0049AE90, 0x64, D_004976A8, D_004976B0, func_00125FE8, String_Assign)
+DEFINE_STRING_REPLACE_RANGE(func_0043CC10, D_004C0020, D_004C0040, D_0049ADE0, 0x5C, D_0049AE90, 0x64, D_004976A8, D_004976B0, Libc_Memmove, String_Assign)
 #pragma pop /* merge_units */
 /* merge_units: end func_0043CC10 */
 
@@ -104,7 +104,7 @@ DEFINE_SHORT_STRING_ASSIGN(func_0043D100)
 #include "string_reserve.h"
 
 extern "C" { char D_004C0060[] = "basic_string::reserve length_error"; }
-DEFINE_STRING_RESERVE(func_0043D190, D_004C0060, D_0049ADE0, 0x5C, D_0049AE90, 0x64)
+DEFINE_STRING_RESERVE(String_Reserve_43D190, D_004C0060, D_0049ADE0, 0x5C, D_0049AE90, 0x64)
 #pragma pop /* merge_units */
 /* merge_units: end func_0043D190 */
 
@@ -115,6 +115,6 @@ DEFINE_STRING_RESERVE(func_0043D190, D_004C0060, D_0049ADE0, 0x5C, D_0049AE90, 0
 #include "stream_string_dtor.h"
 
 /* Destroy a string holder: free heap storage, optionally delete. */
-DEFINE_STREAM_STRING_DTOR(func_0043D4D0)
+DEFINE_STREAM_STRING_DTOR(String_Dtor_43D4D0)
 #pragma pop /* merge_units */
 /* merge_units: end func_0043D4D0 */

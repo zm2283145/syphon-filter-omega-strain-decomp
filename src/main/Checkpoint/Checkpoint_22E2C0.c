@@ -42,7 +42,7 @@ static inline int Eq22E320(Node22E320* a, Node22E320* b) { return a == b; }
 #pragma push
 #pragma bool off
 #pragma opt_propagation off
-extern "C" int func_0022E320(int a0, int a1, int a2, Arg22E320* arg) {
+extern "C" int cRespawnMsg_NetReceive(int a0, int a1, int a2, Arg22E320* arg) {
     NetRecvGuard g;
     if (D_005721D0) {
         Evt22E320 e;
@@ -75,16 +75,16 @@ static inline void merge_flush_func_0022E320(void) {}
 /* merge_units: begin func_0022E420 */
 #pragma push /* merge_units */
 extern int func_002E9A10(void* reg);
-extern int func_003C9C30(void* desc);
+extern int Event_UnpackHeader(void* desc);
 extern int NetMsg_RegisterType(void* type, int version, void* factory);
 extern char D_004F7950[];
-extern void func_0022E4F0(void);
-unsigned char func_0022E420(void* reg)
+extern void cNotifyCheckpointMsg_NetReceive(void);
+unsigned char cNotifyCheckpointMsg_NetRegister(void* reg)
 {
     long long file;
     unsigned char ok = 0;
-    if (func_002E9A10(reg) == 0 && func_003C9C30(&file) != 0 &&
-        NetMsg_RegisterType(D_004F7950, 2, func_0022E4F0) == 0)
+    if (func_002E9A10(reg) == 0 && Event_UnpackHeader(&file) != 0 &&
+        NetMsg_RegisterType(D_004F7950, 2, cNotifyCheckpointMsg_NetReceive) == 0)
         ok = 1;
     return ok;
 }

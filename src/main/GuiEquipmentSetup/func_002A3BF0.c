@@ -63,7 +63,7 @@ static inline W_002A3BF0* FindAs(void* self, char* n, char* t)
     return ok ? w : 0;
 }
 #define FIND(n, t) FindAs(self, n, t)
-extern "C" void func_002A3BF0(S_002A3BF0* self0)
+extern "C" void GuiEquipmentSetup_Init(S_002A3BF0* self0)
 {
     char* t;
     int n;

@@ -297,7 +297,7 @@ static inline Elem* At(Self* s, int i)
     return e;
 }
 
-extern "C" void func_00399080(Self* self)
+extern "C" void WeatherEmitter_Draw(Self* self)
 {
     V4 col;
     V4 c2;

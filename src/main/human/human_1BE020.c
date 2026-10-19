@@ -14,7 +14,7 @@
 /* Resize a vector of 8-byte elements. */
 DEFINE_RESIZE_ELEMENT(Elem8, 8)
 #pragma opt_common_subs off
-DEFINE_VECTOR_RESIZE(func_001BE020, Elem8, func_001BF5A0, func_001BF440)
+DEFINE_VECTOR_RESIZE(func_001BE020, Elem8, Vector_Insert_1BF5A0, func_001BF440)
 #pragma opt_common_subs reset
 #pragma pop /* merge_units */
 /* merge_units: end func_001BE020 */
@@ -28,6 +28,6 @@ DEFINE_VECTOR_RESIZE(func_001BE020, Elem8, func_001BF5A0, func_001BF440)
 
 static char D_0049ED48[] = "allocator.hh";
 struct E_001BE090 { unsigned char m0; float m1; };
-DEFINE_VECTOR_INSERT_FILL_CNT(func_001BE090, E_001BE090, 0xC00000, 0x600000, D_0049E980, D_0049ED48, 0x5C, func_001BE560, extern char D_0049ED28[]; void func_001BFA30(func_001BE090_V* v);, func_001BFA30(&tmp); { E_001BE090* fp_ = tmp.data; if (fp_) { if (fp_) TStr_Free((char*)fp_, D_0049ED28, 0x64); } }, VIFC_ASSIGN, VIFC_COPY)
+DEFINE_VECTOR_INSERT_FILL_CNT(Vector_Insert_1BE090, E_001BE090, 0xC00000, 0x600000, D_0049E980, D_0049ED48, 0x5C, func_001BE560, extern char D_0049ED28[]; void func_001BFA30(Vector_Insert_1BE090_V* v);, func_001BFA30(&tmp); { E_001BE090* fp_ = tmp.data; if (fp_) { if (fp_) TStr_Free((char*)fp_, D_0049ED28, 0x64); } }, VIFC_ASSIGN, VIFC_COPY)
 #pragma pop /* merge_units */
 /* merge_units: end func_001BE090 */

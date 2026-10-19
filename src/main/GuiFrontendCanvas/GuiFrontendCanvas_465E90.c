@@ -38,7 +38,7 @@ extern void String_Reserve(String* self, int n);
 extern void String_Replace(String* self, char* at, int unused, const char* first, const char* last, Alloc alloc);
 
 /* Constructs a string from a C string; returns self. */
-String* func_00465F20(String* self, const char* s)
+String* String_CtorCStr_465F20(String* self, const char* s)
 {
     int len;
     Alloc alloc;

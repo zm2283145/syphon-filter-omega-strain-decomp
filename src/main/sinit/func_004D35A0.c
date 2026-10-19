@@ -4,6 +4,6 @@
 #pragma mpwc_relax on
 extern char *D_0051F068;
 
-void func_004D35A0(void) {
+void StaticInit_NetGeneratorDeleteMsgName(void) {
     D_0051F068 = "MSGGAME_NET_GENERATORDELETE_REQUEST";
 }

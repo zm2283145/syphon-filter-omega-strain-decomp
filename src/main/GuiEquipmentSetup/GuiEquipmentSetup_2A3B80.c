@@ -42,7 +42,7 @@ int func_002A3BA0(char* self) {
 }
 
 /* Calls the base handler, then resets +0xDC and the view angle to pi. */
-int func_002A3BB0(GuiEquipmentSetup* self) {
+int GuiEquipmentSetup_Wake(GuiEquipmentSetup* self) {
     int result = GuiWidget_BaseWake(self);
 
     self->unkDC = 0;

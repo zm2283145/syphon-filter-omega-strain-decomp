@@ -230,7 +230,7 @@ typedef struct Unk288A80 {
     int unk50;             /* 0x50, -2 */
 } Unk288A80;
 
-/* Object with a "pending" flag at +0x80 (func_0028A430). */
+/* Object with a "pending" flag at +0x80 (GuiAccountLogin_Deactivate). */
 typedef struct Unk28A430 {
     char pad00[0x80];
     unsigned char pending; /* 0x80 */

@@ -2,7 +2,7 @@
 typedef struct { char pad[0x48]; char m48[0x9C]; char mE4[4]; } M326CC0;
 typedef struct { void* vt; char pad[0x44]; char m48[0x24]; char m6C[0xC]; char m78[0x18]; M326CC0 m90; } O326CC0;
 extern void GuiSlideShow_GetClassName();
-extern void func_00326DB0();
+extern void GuiSlideShow_IsType();
 extern void GuiSlideShow_Draw();
 extern void GuiSlideShow_HandleInput();
 extern void GuiSlideShow_Sleep();
@@ -20,7 +20,7 @@ extern void GuiWidget_OnEvent();
 extern void GuiWidget_ClearFlag4();
 extern void GuiWidget_SetFlag4();
 extern void GuiWidget_Deinit();
-extern void func_0041F210();
+extern void GuiWidget_Load();
 extern void * const D_004DE710[];
 extern void FileMan_Release(void* p, int f);
 extern void String_Dtor(void* p, int f);
@@ -37,7 +37,7 @@ static inline void M326CC0_dtor(M326CC0* m)
 static inline void C326CC0(void* p) { if (p) func_0032A2F0(p, 0); }
 static inline void B326CC0(void* p) { if (p) C326CC0(p); }
 static inline void A326CC0(void* p) { if (p) B326CC0(p); }
-O326CC0* func_00326CC0(O326CC0* self, short del)
+O326CC0* GuiSlideShow_dtor(O326CC0* self, short del)
 {
     if (self) {
         self->vt = ((char*)D_004DE710);
@@ -53,4 +53,4 @@ O326CC0* func_00326CC0(O326CC0* self, short del)
     }
     return self;
 }
-void * const D_004DE710[24] = { (void*)0x0, (void*)0x0, (void*)func_00326CC0, (void*)GuiSlideShow_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiSlideShow_Wake, (void*)GuiSlideShow_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiSlideShow_HandleInput, (void*)GuiSlideShow_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiWidget_OnEvent, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiSlideShow_GetClassName, (void*)func_00326DB0, (void*)0x0 };
+void * const D_004DE710[24] = { (void*)0x0, (void*)0x0, (void*)GuiSlideShow_dtor, (void*)GuiSlideShow_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiSlideShow_Wake, (void*)GuiSlideShow_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiSlideShow_HandleInput, (void*)GuiSlideShow_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiWidget_OnEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiSlideShow_GetClassName, (void*)GuiSlideShow_IsType, (void*)0x0 };

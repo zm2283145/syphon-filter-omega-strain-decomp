@@ -11,7 +11,7 @@ extern void Mtx_SetRotationTranslation(void* data, void* obj, Vec4* v);
 extern void Event_Send(Msg* m, void* target, int immediate);
 extern void cMessage_dtor(Msg* m, int flags);
 /* Sends a kind-2 message describing obj's position to target. */
-void func_00184390(void* target, void* obj)
+void Npc_GetActiveWeapon(void* target, void* obj)
 {
     Vec4 b;
     Vec4 a;

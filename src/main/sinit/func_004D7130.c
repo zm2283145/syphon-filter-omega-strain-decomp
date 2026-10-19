@@ -4,7 +4,7 @@ extern char* D_005720F0;
 extern char* D_005720F8;
 extern char D_004E0AA0[];
 extern void FreeList_Push(void* p);
-void func_004D7130(void)
+void StaticInit_GuiTextEditWidgetFactory(void)
 {
     D_004BF1A0 = 96.0f / 255.0f;
     D_004BF1A4 = 126.0f / 255.0f;

@@ -44,11 +44,11 @@ extern int D_00494178;
 extern char D_00582770[];
 extern char D_00572198[];
 extern "C" void Message_GetScriptTypeKey();
-extern "C" void func_00431F30();
-extern "C" void func_00432150();
+extern "C" void cNetTransferMsg_v01();
+extern "C" void cNetTransferMsg_v02();
 extern void * const D_004E0F20[];
 extern char D_004E0E80[];
-void func_0042EDF0(TransferObjectIterator* result, RbTree* tree, const GobjId* id);
+void ObjMap_Find_42EDF0(TransferObjectIterator* result, RbTree* tree, const GobjId* id);
 void func_0042DF10(TransferObjectIterator* result, RbTree* tree);
 TransferObjectIterator* func_0042DF00(TransferObjectIterator* result,
                                     const TransferObjectIterator* source);
@@ -123,7 +123,7 @@ extern "C" void func_0042DA30(cGOBJ* object, int previousPeer, int nextPeer)
     TransferObjectIterator found;
     TransferObjectIterator rawEnd;
     key.word = object_id(object)->word;
-    func_0042EDF0(&found, &D_005826A0, &key);
+    ObjMap_Find_42EDF0(&found, &D_005826A0, &key);
     TransferObjectNode* node = found.node;
     func_00436C00(&shared);
     func_0042DF10(&rawEnd, &D_005826A0);
@@ -172,7 +172,7 @@ extern "C" void func_0042DA30(cGOBJ* object, int previousPeer, int nextPeer)
 #pragma opt_common_subs on
 
 /* Destroy a transfer request and optionally release its allocation. */
-extern "C" TransferRequestNotice* func_0042DEA0(TransferRequestNotice* notice, int flags)
+extern "C" TransferRequestNotice* cNetTransferMsg_dtor(TransferRequestNotice* notice, int flags)
 {
     if (notice) {
         notice->vtable = ((char*)D_004E0F20);
@@ -182,6 +182,6 @@ extern "C" TransferRequestNotice* func_0042DEA0(TransferRequestNotice* notice, i
     }
     return notice;
 }
-void * const D_004E0F20[8] = { (void*)0x0, (void*)0x0, (void*)func_0042DEA0, (void*)func_00431F30, (void*)func_00432150, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
+void * const D_004E0F20[8] = { (void*)0x0, (void*)0x0, (void*)cNetTransferMsg_dtor, (void*)cNetTransferMsg_v01, (void*)cNetTransferMsg_v02, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
 #pragma pop /* merge_units */
 /* merge_units: end func_0042DA30 */

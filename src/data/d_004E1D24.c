@@ -2,10 +2,10 @@
 
 extern char D_004B51B8[];
 extern char D_004B7770[];
+extern void Libc_Calloc();
+extern void Libc_Free();
 extern void Math_Cos();
 extern void Math_Sin();
-extern void func_00121D00();
-extern void func_001253C0();
 extern void memcpy();
 extern void memset();
 
@@ -17,9 +17,9 @@ float D_004E1D2C[1] = { -3.4028233e+38f };
 
 int D_004E1D30[1] = { 0x4b57e8 };
 
-void *D_004E1D34[1] = { &func_00121D00 };
+void *D_004E1D34[1] = { &Libc_Calloc };
 
-void *D_004E1D38[1] = { &func_001253C0 };
+void *D_004E1D38[1] = { &Libc_Free };
 
 void *D_004E1D3C[1] = { &memset };
 

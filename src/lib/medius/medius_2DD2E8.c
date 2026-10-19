@@ -7,7 +7,7 @@
 /* merge_units: begin func_002DD2E8 */
 extern int Net_AllocZeroed(int* out, unsigned long n);
 extern void printf(const char* msg);
-int func_002DD2E8(unsigned int n)
+int Rt_MemoryAllocate(unsigned int n)
 {
     int p = 0;
     if (Net_AllocZeroed(&p, n))

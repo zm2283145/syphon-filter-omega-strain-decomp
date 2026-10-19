@@ -2,10 +2,10 @@
 
 extern void Event_PackHeader();
 extern void Message_GetScriptTypeKey();
-extern void func_00169270();
-extern void func_00169960();
+extern void SoundPauseMsg_Clone();
+extern void SoundPauseMsg_dtor();
 
 void *D_004D97F0[8] = {
-    0, 0, &func_00169270, &func_00169960,
+    0, 0, &SoundPauseMsg_dtor, &SoundPauseMsg_Clone,
     &Event_PackHeader, &Message_GetScriptTypeKey, 0, 0,
 };

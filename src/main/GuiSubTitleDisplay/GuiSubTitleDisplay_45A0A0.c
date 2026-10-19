@@ -12,7 +12,7 @@
 
 /* Factory: allocate and construct. */
 extern "C" { char D_004C1F28[] = "guiWidget.hh"; }
-DEFINE_GUARDED_NEW_CTOR(func_0045A0A0, 0x7C, D_004C1F28, GuiSubTitleDisplay_ctor)
+DEFINE_GUARDED_NEW_CTOR(GuiSubTitleDisplay_Create, 0x7C, D_004C1F28, GuiSubTitleDisplay_ctor)
 #pragma pop /* merge_units */
 /* merge_units: end func_0045A0A0 */
 

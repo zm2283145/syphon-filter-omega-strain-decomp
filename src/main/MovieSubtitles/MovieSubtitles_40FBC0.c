@@ -26,14 +26,14 @@ static char D_004BEEF8[] = "FEED";
 static char D_004BEF00[] = "INIT";
 static char D_004BEF08[] = "END";
 extern void String_PushBack(Str40FBC0* s, int c);
-extern char* func_002071A0(Str40FBC0* s);
+extern char* String_CStr_Thunk(Str40FBC0* s);
 extern void func_001F12D0(Str40FBC0* s, char* cs);
 #if 0 /* merge_units */
 extern int func_0040FE50(Str40FBC0* s, Str40FBC0* key);
 #endif /* merge_units */
 #define func_0040FE50(a0, a1) ((int)func_0040FE50((void *)(a0), (void *)(a1))) /* merge_units */
 
-extern void func_00138350(Str40FBC0* s, int flags);
+extern void String_Dtor_138350(Str40FBC0* s, int flags);
 extern void String_Dtor(Str40FBC0* s, int flags);
 extern int func_00412C40(Str40FBC0* s);
 extern void func_00410630(Subs40FBC0* self, Str40FBC0* s);
@@ -58,27 +58,27 @@ void func_0040FBC0(Subs40FBC0* self, const char* s, const char* end)
             }
         }
         if (p < end && *p == '\n') p++;
-        if (*func_002071A0(&line) != 0 && *func_002071A0(&line) != '#') {
-            if (*func_002071A0(&line) == '%') {
+        if (*String_CStr_Thunk(&line) != 0 && *String_CStr_Thunk(&line) != '#') {
+            if (*String_CStr_Thunk(&line) == '%') {
                 int r;
                 Str40FBC0 k1;
                 Str40FBC0 k2;
                 Str40FBC0 k3;
                 func_001F12D0(&k1, D_004BEF08);
                 r = func_0040FE50(&line, &k1);
-                func_00138350(&k1, -1);
+                String_Dtor_138350(&k1, -1);
                 if (r) {
                     self->mode = 0;
                 } else {
                     func_001F12D0(&k2, D_004BEF00);
                     r = func_0040FE50(&line, &k2);
-                    func_00138350(&k2, -1);
+                    String_Dtor_138350(&k2, -1);
                     if (r) {
                         self->mode = 1;
                     } else {
                         func_001F12D0(&k3, D_004BEEF8);
                         r = func_0040FE50(&line, &k3);
-                        func_00138350(&k3, -1);
+                        String_Dtor_138350(&k3, -1);
                         if (r) self->mode = 2;
                     }
                 }

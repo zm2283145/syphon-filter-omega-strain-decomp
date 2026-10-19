@@ -49,7 +49,7 @@ extern void String_Reserve(String*, int);
 extern void String_Replace(String*, int, int, const char*, const char*, Tag);
 
 /* Constructs a string from a C string. */
-String* func_00427100(String* self, const char* text) {
+String* String_CtorCStr_427100(String* self, const char* text) {
     Tag tag;
     int len;
     self->a = 0;
@@ -70,6 +70,6 @@ String* func_00427100(String* self, const char* text) {
 
 extern "C" { char D_004BF7C0[] = "basic_string: out_of_range"; }
 extern "C" { char D_004BF7E0[] = "basic_string: length_error"; }
-DEFINE_STRING_REPLACE_RANGE(func_00427180, D_004BF7C0, D_004BF7E0, D_0049ADE0, 0x5C, D_0049AE90, 0x64, D_00494160, D_00494168, func_00125FE8, String_Assign)
+DEFINE_STRING_REPLACE_RANGE(func_00427180, D_004BF7C0, D_004BF7E0, D_0049ADE0, 0x5C, D_0049AE90, 0x64, D_00494160, D_00494168, Libc_Memmove, String_Assign)
 #pragma pop /* merge_units */
 /* merge_units: end func_00427180 */

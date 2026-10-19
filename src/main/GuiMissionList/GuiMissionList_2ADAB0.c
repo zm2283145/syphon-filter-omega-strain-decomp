@@ -24,12 +24,12 @@ int FrontEnd_OpenPopup(void* ui, int a, char* b, int c, S_002ADAB0* d, int e);
 int func_0044D9C0(void* g, int a);
 void FrontEnd_ClosePopup(void* ui, int id);
 int SFOLobby_LookupAccountId(void* g, char* t);
-int func_00452FF0(void* g, int a);
+int SFOLobby_FormatError(void* g, int a);
 void func_0033C7C0(S_002ADAB0* self, int r, char* t);
 void func_0033D8E0(S_002ADAB0* self, int a);
-int func_0033DF00(S_002ADAB0* self, void* w, int msg, int sub, char* text);
+int GuiMenuScreen_HandleEvent(S_002ADAB0* self, void* w, int msg, int sub, char* text);
 }
-extern "C" int func_002ADAB0(S_002ADAB0* self, void* w, int msg, int sub, char* text)
+extern "C" int GuiNetContacts_HandleEvent(S_002ADAB0* self, void* w, int msg, int sub, char* text)
 {
     unsigned short m = msg;
     if (m == 2 && w == self->p160) {
@@ -64,7 +64,7 @@ extern "C" int func_002ADAB0(S_002ADAB0* self, void* w, int msg, int sub, char* 
                 void* g = DME_GetLobby();
                 if (g) {
                     int r = SFOLobby_LookupAccountId(g, text);
-                    if ((unsigned char)func_00452FF0(g, 0)) {
+                    if ((unsigned char)SFOLobby_FormatError(g, 0)) {
                         void* ui = D_004FFC04;
                         FrontEnd_OpenPopup(ui, 2, D_004ABB08, GuiScreen_GetLobbyString(self, 0x17, text, 0, 0, 0), 0, 0);
                     } else {
@@ -83,7 +83,7 @@ extern "C" int func_002ADAB0(S_002ADAB0* self, void* w, int msg, int sub, char* 
         else
             func_0033D8E0(self, 1);
     }
-    return func_0033DF00(self, w, msg, sub, text);
+    return GuiMenuScreen_HandleEvent(self, w, msg, sub, text);
 }
 #pragma pop /* merge_units */
 /* merge_units: end func_002ADAB0 */
@@ -93,7 +93,7 @@ extern "C" int func_002ADAB0(S_002ADAB0* self, void* w, int msg, int sub, char* 
 #include "active_flag_release.h"
 
 /* Stop and release when active. */
-DEFINE_ACTIVE_FLAG_RELEASE(func_002ADE00, SFOLobby_LeaveContactsState)
+DEFINE_ACTIVE_FLAG_RELEASE(GuiNetContacts_Deactivate, SFOLobby_LeaveContactsState)
 #pragma pop /* merge_units */
 /* merge_units: end func_002ADE00 */
 
@@ -110,7 +110,7 @@ extern G2ADE60* DME_GetLobby(void);
 extern void func_004426B0(G2ADE60* g);
 extern void App_CardWaitPoll(void);
 extern void SFOLobby_EnterContactsState(G2ADE60* g, void* cb, void* a, void* b);
-void func_002ADE60(S2ADE60* s)
+void GuiNetContacts_Activate(S2ADE60* s)
 {
     if (!s->shown) {
         G2ADE60* g = DME_GetLobby();

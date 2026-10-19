@@ -19,7 +19,7 @@ extern void Event_Send(PosMsg* msg, void* target, int flags);
 extern void cMessage_dtor(PosMsg* msg, int flags);
 
 /* Sends target a transform message built from xform (translation as a direction or a point). */
-void func_00184480(void* target, void* xform)
+void Npc_v24(void* target, void* xform)
 {
     Vec4 point;
     Vec4 dir;

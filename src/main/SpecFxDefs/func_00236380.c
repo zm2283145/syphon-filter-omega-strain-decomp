@@ -16,10 +16,10 @@ struct Self236380 {
 };
 extern "C" {
 void ParticleInst_Draw(void* obj, int a, M4* m);
-void func_00236380(Self236380* self);
+void FireEffectObj_Draw(Self236380* self);
 }
 static inline void UM(void* m) { void* p = m; int t; __asm__ volatile("sqc2 $vf0, 0x30(%1); qmfc2.ni %0, $vf0; pcpyud %0, %0, $zero; sq %0, 0x10(%1); pexcw %0, %0; sq %0, 0x20(%1); pcpyud %0, %0, $zero; sq %0, 0x0(%1)" : "=&r"(t) : "r"(p) : "memory"); }
-extern "C" void func_00236380(Self236380* self) {
+extern "C" void FireEffectObj_Draw(Self236380* self) {
     int i;
     for (i = 0; i < self->x84; i++) {
         if (self->x7C[i]->obj) {

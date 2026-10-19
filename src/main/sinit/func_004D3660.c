@@ -4,6 +4,6 @@
 #pragma mpwc_relax on
 extern char *D_0052ACC0;
 
-void func_004D3660(void) {
+void StaticInit_NetShatterMsgName(void) {
     D_0052ACC0 = "NetShatterMsg";
 }

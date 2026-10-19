@@ -14,7 +14,7 @@ extern "C" void func_0033B980(V33B980* v, char* first, char* last)
     unsigned int n = last - first;
     if (v->cap < n) {
         if (n > 0x6000000) {
-            func_00123BE8(D_00489738->stream, "vector::assign length error\n");
+            Libc_Fprintf(D_00489738->stream, "vector::assign length error\n");
             Libc_Abort();
         }
         v->count = 0;

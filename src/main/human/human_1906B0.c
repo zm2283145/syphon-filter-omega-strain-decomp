@@ -16,7 +16,7 @@
 #pragma cplusplus on
 
 /* Deleting destructor with nothing to destroy. */
-DEFINE_TRIVIAL_DTOR(func_001906B0)
+DEFINE_TRIVIAL_DTOR(Secondary_MotionRecordDtor)
 #pragma pop /* merge_units */
 /* merge_units: end func_001906B0 */
 

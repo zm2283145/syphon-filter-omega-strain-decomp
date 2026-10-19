@@ -9,17 +9,17 @@ typedef struct { void *fn; void *arg; int gp; int pad; } HEnt;
 extern HEnt *D_00487868;
 extern int D_0048786C;
 extern HEnt D_004E9AC8[];
-extern int func_001161A0(void);
-extern void func_001161F8(void);
+extern int DIntr(void);
+extern void EIntr(void);
 extern void *memset(void *, int, unsigned int);
 HEnt *func_00118180(HEnt *buf, int n)
 {
-    int s = func_001161A0();
+    int s = DIntr();
     HEnt *old = D_00487868;
     D_00487868 = buf;
     D_0048786C = n;
     memset(buf, 0, n * 16);
-    if (s) func_001161F8();
+    if (s) EIntr();
     return old;
 }
 /* merge_units: end func_00118180 */
@@ -39,12 +39,12 @@ int func_00118200(unsigned int idx, void *fn, void *arg)
         max = D_0048786C;
     }
     if (idx >= max) return 0x80000069;
-    s = func_001161A0();
+    s = DIntr();
     tbl[idx].fn = fn;
     tbl[idx].arg = arg;
     __asm__ volatile ("move %0, $gp" : "=r" (gp));
     tbl[idx].gp = gp;
-    if (s) func_001161F8();
+    if (s) EIntr();
     return 0;
 }
 /* merge_units: end func_00118200 */

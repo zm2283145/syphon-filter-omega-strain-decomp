@@ -34,7 +34,7 @@ typedef struct { void* it; unsigned char ok; } Res_4185A0;
 typedef struct { char pad[0x10]; int def; } O_4185A0;
 extern void String_CtorCStr_13B480(Str_4185A0* s, char* c);
 extern void String_Dtor(Str_4185A0* s, int f);
-extern void func_0013BCB0(Str_4185A0* d, Str_4185A0* s);
+extern void String_CopyCtor(Str_4185A0* d, Str_4185A0* s);
 extern void func_001BFF20(It_4185A0* out, Str_4185A0* s);
 extern void func_001BFEE0(It_4185A0* out, Str_4185A0* s);
 extern int func_001BFE90(It_4185A0* a, It_4185A0* b);
@@ -63,9 +63,9 @@ unsigned char GuiFont_Register(O_4185A0* o, char* name, int w, int force)
             if (*func_001BFED0(&it) >= 'A' && *func_001BFED0(&it) <= 'Z') *func_001BFED0(&it) += 0x20;
             func_001BFEB0(&it);
         }
-        func_0013BCB0(&k, &s);
+        String_CopyCtor(&k, &s);
         func_00418780(&p, &k, w);
-        func_0013BCB0(&q.first, &p.first);
+        String_CopyCtor(&q.first, &p.first);
         q.second = p.second;
         func_00419D10(&r, o, &q);
         ok = r.ok;

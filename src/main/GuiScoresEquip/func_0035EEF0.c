@@ -5,7 +5,7 @@
 #pragma mpwc_relax on
 extern int D_004DA380;
 
-int func_0035EEF0(int arg0, int arg1) {
+int AnimChannelBase_CopyCtor_35EEF0(int arg0, int arg1) {
     int temp_a2;
     int var_v1;
 

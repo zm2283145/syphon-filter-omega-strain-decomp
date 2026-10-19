@@ -14,7 +14,7 @@ extern "C" void func_003D9470(Vec_9470* v, unsigned int n, const V3_9470* val)
 {
     if (n) {
         if (n > 0x800000) {
-            func_00123BE8(D_00489738->stream, D_004BD3E0);
+            Libc_Fprintf(D_00489738->stream, D_004BD3E0);
             Libc_Abort();
         }
         V3_9470** pdata = &v->data;

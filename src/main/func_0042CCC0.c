@@ -22,7 +22,7 @@ static inline int Eq0042CCC0(Node0042CCC0* a, Node0042CCC0* b) { return a == b; 
 #pragma push
 #pragma bool off
 #pragma opt_propagation off
-extern "C" int func_0042CCC0(int a0, int a1, int a2, Arg0042CCC0* arg) {
+extern "C" int cNetActivateAndControlMsg_NetReceive(int a0, int a1, int a2, Arg0042CCC0* arg) {
     NetRecvGuard g;
     if (D_005721D0) {
         Evt0042CCC0 e;

@@ -6,7 +6,7 @@ void Mem_Free(int pool, void* allocation, char* file, int line);
 void operator_delete(void* allocation);
 }
 struct P3EA340 { void* allocation; };
-extern "C" P3EA340* func_003EA340(P3EA340* self, short deleteFlag)
+extern "C" P3EA340* MemCard_dtor(P3EA340* self, short deleteFlag)
 {
     if (self) {
         void* p = self->allocation;

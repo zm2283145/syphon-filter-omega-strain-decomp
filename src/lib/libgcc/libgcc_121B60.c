@@ -1,7 +1,7 @@
 #include "types.h"
-extern void func_00128910(int code);
-extern void func_00100218(int code) __attribute__((noreturn));
+extern void Libc_Raise(int code);
+extern void Newlib_SysExit_Thunk(int code) __attribute__((noreturn));
 void Libc_Abort(void) {
-    func_00128910(6);
-    func_00100218(1);
+    Libc_Raise(6);
+    Newlib_SysExit_Thunk(1);
 }

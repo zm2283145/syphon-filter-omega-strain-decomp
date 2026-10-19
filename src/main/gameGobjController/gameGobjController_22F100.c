@@ -45,11 +45,11 @@ int* func_0022F170(void) {
     return &D_004F7A38;
 }
 
-int func_0022F180(void) {
+int cGameGobjController_v0B(void) {
     return D_004F7A38;
 }
 
-int func_0022F190(int a0, int a1) {
+int cGameGobjController_v0C(int a0, int a1) {
     return ScriptFilter_Dispatch(D_00555070, a0, a1);
 }
 
@@ -97,7 +97,7 @@ extern void Event_Send(Msg* msg, void* target, int flags);
 extern void cMessage_dtor(Msg* msg, int flags);
 
 /* Sends target a message carrying the next byte read from the D_005061D0 cursor. */
-void func_0022F210(void* target) {
+void cTimerExpiredMsg_NetReceive(void* target) {
     Msg msg;
     Event_Construct(&msg, D_004F7A08);
     msg.vtable = D_004DBA00;

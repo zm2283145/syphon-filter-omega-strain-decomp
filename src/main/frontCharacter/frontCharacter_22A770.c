@@ -52,7 +52,7 @@ extern void func_0022A840(void* p, int flag);
 extern void Receiver_Destruct(void* self, int flag);
 extern void operator_delete(void* p);
 typedef struct { void* vt; } S_D170;
-S_D170* func_0022A7B0(S_D170* self, short flag)
+S_D170* TargetVisMgr_dtor(S_D170* self, short flag)
 {
     if (self) {
         void* m;
@@ -69,6 +69,6 @@ S_D170* func_0022A7B0(S_D170* self, short flag)
     }
     return self;
 }
-void * const D_004DB850[16] = { (void*)0x0, (void*)0x0, (void*)func_0022A7B0, (void*)TargetVis_HandleResult, (void*)GObj_GetID, (void*)func_0012ECF0, (void*)func_001383D0, (void*)func_0012ED00, (void*)func_0012ED10, (void*)func_0012ED20, (void*)func_0012ED30, (void*)func_0012ED40, (void*)func_0012ED50, (void*)Receiver_GetScriptTypeKey, (void*)Receiver_ScriptDispatch, (void*)0x0 };
+void * const D_004DB850[16] = { (void*)0x0, (void*)0x0, (void*)TargetVisMgr_dtor, (void*)TargetVis_HandleResult, (void*)GObj_GetID, (void*)func_0012ECF0, (void*)func_001383D0, (void*)func_0012ED00, (void*)func_0012ED10, (void*)func_0012ED20, (void*)func_0012ED30, (void*)func_0012ED40, (void*)func_0012ED50, (void*)Receiver_GetScriptTypeKey, (void*)Receiver_ScriptDispatch, (void*)0x0 };
 #pragma pop /* merge_units */
 /* merge_units: end func_0022A7B0 */

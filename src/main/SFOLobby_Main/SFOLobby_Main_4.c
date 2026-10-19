@@ -97,7 +97,7 @@ int func_00452B40(S452B40* s, char* name)
 #pragma push /* merge_units */
 #include "SFOLobby_Main_types.h"
 
-extern void func_0044CA30(void);
+extern void SFOLobby_DisconnectAuthServer(void);
 extern void func_004689B0(void);
 extern void func_002E9648(void);
 
@@ -105,7 +105,7 @@ extern void func_002E9648(void);
 int func_00452C70(LobbyMain* self, int notify)
 {
     if (self->unk180 > 0)
-        func_0044CA30();
+        SFOLobby_DisconnectAuthServer();
     if (notify) {
         func_004689B0();
         func_002E9648();
@@ -181,11 +181,11 @@ extern void func_00446640(void);
 extern void func_00447B90(void);
 extern void func_00447200(void);
 extern int D_00572538;
-extern double func_0011C7A0(int);
+extern double SoftFloat_IntToDouble(int);
 extern double SoftFloat_FloatToDouble(float);
 extern double SoftFloat_DoubleMultiply(double, double);
-extern double func_0011C200(double, double);
-extern int func_0011C858(double);
+extern double SoftFloat_DoubleSub(double, double);
+extern int SoftFloat_DoubleToInt(double);
 
 int func_00452CD0(Net* s)
 {
@@ -212,7 +212,7 @@ int func_00452CD0(Net* s)
     req.f4 = func_00476998();
     req.f8 = s->b23D6 ? 0 : &buf;
     x = D_00572538;
-    srand(func_0011C858(func_0011C200(func_0011C7A0(x), SoftFloat_DoubleMultiply(0.0625, SoftFloat_FloatToDouble((float)x)))));
+    srand(SoftFloat_DoubleToInt(SoftFloat_DoubleSub(SoftFloat_IntToDouble(x), SoftFloat_DoubleMultiply(0.0625, SoftFloat_FloatToDouble((float)x)))));
     req.fC = Random_Next() % 1000 + 6000;
     req.f14 = func_00445F90;
     req.f10 = 1;
@@ -315,7 +315,7 @@ int SFOLobby_GetDnasResult(LobbyMain* self) {
 #pragma push /* merge_units */
 typedef struct { char pad[0x2564]; signed char code; char pad2[3]; char* file; int line; } E452;
 extern int sprintf(char*, const char*, ...);
-signed char func_00452FF0(E452* e, char* buf) {
+signed char SFOLobby_FormatError(E452* e, char* buf) {
     signed char r = e->code;
     if (buf) {
         char* s;

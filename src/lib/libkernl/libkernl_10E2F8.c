@@ -10,14 +10,14 @@
 /* Library code: matches with EE-GCC 2.95 -O2 (check.py --gcc). */
 
 typedef struct { int value; int pad; } Request;
-extern void func_0010D590(int kind, Request* req);
+extern void Deci2Call(int kind, Request* req);
 
 /* Sends request kind 2 carrying one value. */
 void func_0010E2F8(int value)
 {
     Request req;
     req.value = value;
-    func_0010D590(2, &req);
+    Deci2Call(2, &req);
 }
 /* merge_units: end func_0010E2F8 */
 
@@ -26,9 +26,9 @@ void func_0010E2F8(int value)
 
 typedef struct { int value; int code; } Request_0010E320;
 #if 0 /* merge_units */
-extern void func_0010D590(int kind, Request_0010E320* req);
+extern void Deci2Call(int kind, Request_0010E320* req);
 #endif /* merge_units */
-#define func_0010D590(a0, a1) (func_0010D590((a0), (Request *)(a1))) /* merge_units */
+#define Deci2Call(a0, a1) (Deci2Call((a0), (Request *)(a1))) /* merge_units */
 
 
 /* Sends request kind 3 with (value, sign-extended byte code). */
@@ -37,19 +37,19 @@ void func_0010E320(int value, char code)
     Request_0010E320 req;
     req.value = value;
     req.code = code;
-    func_0010D590(3, &req);
+    Deci2Call(3, &req);
 }
-#undef func_0010D590 /* merge_units */
+#undef Deci2Call /* merge_units */
 /* merge_units: end func_0010E320 */
 
 /* merge_units: begin func_0010E350 */
 #if 0 /* merge_units */
-extern void func_0010D590(int kind, void* req);
+extern void Deci2Call(int kind, void* req);
 #endif /* merge_units */
-#define func_0010D590(a0, a1) (func_0010D590((a0), (Request *)(a1))) /* merge_units */
+#define Deci2Call(a0, a1) (Deci2Call((a0), (Request *)(a1))) /* merge_units */
 
-void func_0010E350(int a) { int r[4]; r[0] = a; func_0010D590(4, r); }
-#undef func_0010D590 /* merge_units */
+void func_0010E350(int a) { int r[4]; r[0] = a; Deci2Call(4, r); }
+#undef Deci2Call /* merge_units */
 /* merge_units: end func_0010E350 */
 
 /* merge_units: begin func_0010E378 */
@@ -57,9 +57,9 @@ void func_0010E350(int a) { int r[4]; r[0] = a; func_0010D590(4, r); }
 
 typedef struct { int code; int a; int b; char pad[0x14]; } Request_0010E378;
 #if 0 /* merge_units */
-extern void func_0010D590(int kind, Request_0010E378* req);
+extern void Deci2Call(int kind, Request_0010E378* req);
 #endif /* merge_units */
-#define func_0010D590(a0, a1) (func_0010D590((a0), (Request *)(a1))) /* merge_units */
+#define Deci2Call(a0, a1) (Deci2Call((a0), (Request *)(a1))) /* merge_units */
 
 
 /* Sends request kind 0x20 with (byte code, a, b). */
@@ -69,7 +69,7 @@ void func_0010E378(unsigned char code, int a, int b)
     req.a = a;
     req.code = code;
     req.b = b;
-    func_0010D590(0x20, &req);
+    Deci2Call(0x20, &req);
 }
-#undef func_0010D590 /* merge_units */
+#undef Deci2Call /* merge_units */
 /* merge_units: end func_0010E378 */

@@ -21,7 +21,7 @@ typedef struct {
 
 extern float Math_FMod(float, float);
 extern void func_0017CA90(float* p, int a);
-extern void* func_00139BC0(int type, float* p);
+extern void* Mem_PlacementNew(int type, float* p);
 extern void func_0017CA00(void* r, float* a, float* b, float* c, void* d, float e);
 extern char D_00492EE0[];
 
@@ -71,7 +71,7 @@ void func_00364B10(A364B10* p, float* dt)
     p->f10 = p->f8 + d;
     func_0017CA90(&p->f18, -1);
     {
-        void* r = func_00139BC0(0x18, &p->f18);
+        void* r = Mem_PlacementNew(0x18, &p->f18);
         if (r) func_0017CA00(r, &p->f8, &p->fC, &p->f10, D_00492EE0, p->f28);
     }
 }

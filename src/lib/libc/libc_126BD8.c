@@ -6,11 +6,11 @@
 
 /* merge_units: begin func_00126BD8 */
 typedef struct _Bigint { struct _Bigint *_next; int _k, _maxwds, _sign, _wds; unsigned int _x[1]; } _Bigint;
-extern int func_00126B70(_Bigint *, _Bigint *);
-extern _Bigint *func_00126280(void *, int);
+extern int Newlib_Mcmp(_Bigint *, _Bigint *);
+extern _Bigint *Newlib_Balloc(void *, int);
 #define Sign_Extend(a,b) /*no-op*/
 #define Storeinc(a,b,c) (((unsigned short *)a)[1] = (unsigned short)b, ((unsigned short *)a)[0] = (unsigned short)c, a++)
-_Bigint *func_00126BD8(void *ptr, _Bigint *a, _Bigint *b)
+_Bigint *Newlib_Mdiff(void *ptr, _Bigint *a, _Bigint *b)
 {
     _Bigint *c;
     int i, wa, wb;
@@ -18,9 +18,9 @@ _Bigint *func_00126BD8(void *ptr, _Bigint *a, _Bigint *b)
     unsigned int *xa, *xae, *xb, *xbe, *xc;
     int z;
 
-    i = func_00126B70(a, b);
+    i = Newlib_Mcmp(a, b);
     if (!i) {
-        c = func_00126280(ptr, 0);
+        c = Newlib_Balloc(ptr, 0);
         c->_wds = 1;
         c->_x[0] = 0;
         return c;
@@ -32,7 +32,7 @@ _Bigint *func_00126BD8(void *ptr, _Bigint *a, _Bigint *b)
         i = 1;
     } else
         i = 0;
-    c = func_00126280(ptr, a->_k);
+    c = Newlib_Balloc(ptr, a->_k);
     c->_sign = i;
     wa = a->_wds;
     xa = a->_x;
@@ -71,7 +71,7 @@ _Bigint *func_00126BD8(void *ptr, _Bigint *a, _Bigint *b)
 union double_union { double d; unsigned int i[2]; };
 #define word0(x) (x.i[1])
 #define word1(x) (x.i[0])
-double func_00126D68(double _x)
+double Newlib_Ulp(double _x)
 {
     int L;
     union double_union x, a;
@@ -102,10 +102,10 @@ double func_00126D68(double _x)
 
 /* merge_units: begin func_00126E38 */
 typedef union { double d; unsigned int i[2]; } DU;
-extern int func_00126590(unsigned int);
+extern int Newlib_Hi0bits(unsigned int);
 #define Ebits 11
 #define Exp_1 0x3ff00000
-double func_00126E38(_Bigint *a, int *e)
+double Newlib_B2d(_Bigint *a, int *e)
 {
     unsigned int *xa, *xa0, w, y, z;
     int k;
@@ -115,7 +115,7 @@ double func_00126E38(_Bigint *a, int *e)
     xa0 = a->_x;
     xa = xa0 + a->_wds;
     y = *--xa;
-    k = func_00126590(y);
+    k = Newlib_Hi0bits(y);
     *e = 32 - k;
     if (k < Ebits) {
         d0 = Exp_1 | y >> (Ebits - k);

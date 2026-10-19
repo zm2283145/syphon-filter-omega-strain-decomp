@@ -20,7 +20,7 @@ extern void String_Reserve(StrObj* str, int capacity);
 extern void String_Replace(StrObj* str, int pos, int count, const char* first, const char* last, char alloc);
 
 /* String constructor from a C string. */
-StrObj* func_00422020(StrObj* self, const char* cstr) {
+StrObj* String_CtorCStr_422020(StrObj* self, const char* cstr) {
     volatile char alloc[4];
     int len;
     self->w0 = 0;
@@ -41,7 +41,7 @@ StrObj* func_00422020(StrObj* self, const char* cstr) {
 
 extern "C" { char D_004BF550[] = "basic_string: out_of_range"; }
 extern "C" { char D_004BF570[] = "basic_string: length_error"; }
-DEFINE_STRING_REPLACE_RANGE(func_004220A0, D_004BF550, D_004BF570, D_0049ADE0, 0x5C, D_0049AE90, 0x64, D_00494130, D_00494138, func_00125FE8, String_Assign)
+DEFINE_STRING_REPLACE_RANGE(func_004220A0, D_004BF550, D_004BF570, D_0049ADE0, 0x5C, D_0049AE90, 0x64, D_00494130, D_00494138, Libc_Memmove, String_Assign)
 #pragma pop /* merge_units */
 /* merge_units: end func_004220A0 */
 
@@ -61,7 +61,7 @@ DEFINE_SHORT_STRING_ASSIGN(func_00422590)
 #include "string_reserve.h"
 
 extern "C" { char D_004BF590[] = "basic_string::reserve length_error"; }
-DEFINE_STRING_RESERVE(func_00422620, D_004BF590, D_0049ADE0, 0x5C, D_0049AE90, 0x64)
+DEFINE_STRING_RESERVE(String_Reserve_422620, D_004BF590, D_0049ADE0, 0x5C, D_0049AE90, 0x64)
 #pragma pop /* merge_units */
 /* merge_units: end func_00422620 */
 
@@ -72,7 +72,7 @@ DEFINE_STRING_RESERVE(func_00422620, D_004BF590, D_0049ADE0, 0x5C, D_0049AE90, 0
 #include "stream_string_dtor.h"
 
 /* Destroy a string holder: free heap storage, optionally delete. */
-DEFINE_STREAM_STRING_DTOR(func_00422960)
+DEFINE_STREAM_STRING_DTOR(String_Dtor_422960)
 #pragma pop /* merge_units */
 /* merge_units: end func_00422960 */
 
@@ -84,7 +84,7 @@ DEFINE_STREAM_STRING_DTOR(func_00422960)
 #include "tstr_types.h"
 
 extern "C" {
-void func_0013BCB0(void* d, const void* s);
+void String_CopyCtor(void* d, const void* s);
 extern char D_004BF5C0[];
 extern char D_004BF618[];
 void func_00422F10(TextListEntry* d, unsigned int n, const TextListEntry* v);
@@ -105,7 +105,7 @@ void func_00423000(Vec22* v, int flag);
 static inline void construct(TextListEntry* p, const TextListEntry* v)
 {
     if (p) {
-        func_0013BCB0(p, v);
+        String_CopyCtor(p, v);
         p->unk0C = v->unk0C;
         p->unk10 = v->unk10;
     }
@@ -117,7 +117,7 @@ extern "C" void func_00422A50(Vec22* v, T* pos, unsigned int n, const T* value)
     if (n == 0)
         return;
     if (n > 0x4CCCCC || v->count > 0x4CCCCC - n) {
-        func_00123BE8(D_00489738->stream, D_004BF5C0);
+        Libc_Fprintf(D_00489738->stream, D_004BF5C0);
         Libc_Abort();
     }
     if (v->count + n <= v->cap) {

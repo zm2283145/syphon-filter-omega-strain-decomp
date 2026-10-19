@@ -9,7 +9,7 @@ extern void MsgQueue_QueueClone(Msg316D10*, void*, int, int);
 extern void cMessage_dtor(Msg316D10*, int);
 #pragma push
 #pragma opt_propagation off
-int func_00316D10(int a0, int a1, int a2, Pk316D10* arg) {
+int cNetWeaponMsg_NetReceive(int a0, int a1, int a2, Pk316D10* arg) {
     if (!D_005723C8) D_005723C8 = 1;
     if (D_005721D0) {
         Msg316D10 msg;

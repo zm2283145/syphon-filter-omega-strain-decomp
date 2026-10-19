@@ -225,7 +225,7 @@ int Script_cAINodeMsg_GetNode(cAINodeMsg** msg) {
     return cNode_Identity((*msg)->node);
 }
 
-void func_0026EFC0(void) {
+void ScriptType_cAINodeMsg_Init(void) {
 }
 
 int cAINodeMsg_v03(void) {
@@ -240,14 +240,14 @@ int Script_cAIGOBJMsg_GetGOBJ(cAIGOBJMsg** msg) {
     return GObj_IdentityA((*msg)->who);
 }
 
-void func_0026F000(void) {
+void ScriptType_cAIGOBJMsg_Init(void) {
 }
 
 int cAIGOBJMsg_v03(void) {
     return D_004FF178;
 }
 
-void func_0026F020(void) {
+void ScriptType_cAITimeElapsedMsg_Init(void) {
 }
 
 int func_0026F030(void) {
@@ -266,7 +266,7 @@ int Script_cAIDeadMsg_Attacker(cAIDeadMsg** msg) {
     return GObj_IdentityA((*msg)->gobj.who);
 }
 
-void func_0026F070(void) {
+void ScriptType_cAIDeadMsg_Init(void) {
 }
 
 int func_0026F080(void) {
@@ -277,7 +277,7 @@ int cAIDeadMsg_v03(void) {
     return D_004FF148;
 }
 
-void func_0026F0A0(void) {
+void ScriptType_cAIDeactivatedMsg_Init(void) {
 }
 
 int func_0026F0B0(void) {
@@ -394,7 +394,7 @@ static inline void merge_flush_func_0026F1D0(void) {}
 /* merge_units: begin func_0026F2B0 */
 #pragma push /* merge_units */
 extern int func_002E9A10(void);
-extern int func_003C9C30(void* p);
+extern int Event_UnpackHeader(void* p);
 extern int func_002E9A98(void* a, void* b, int c, int d);
 extern int NetMsg_RegisterType(void* t, int id, void* fn);
 extern int D_004FF120;
@@ -407,7 +407,7 @@ unsigned char cAIUnconsciousMsg_NetRegister(void) {
     unsigned char r = 0;
     unsigned char ok;
     busy = func_002E9A10();
-    if (!busy) { ok = 0; do { if (!func_003C9C30(&L.buf)) break; if (func_002E9A98(&L.buf, L.a, 4, 1) != 0) break; ok = 1; } while (0); if (ok && !busy && NetMsg_RegisterType(&D_004FF120, 2, cAIUnconsciousMsg_NetReceive) == 0) r = 1; }
+    if (!busy) { ok = 0; do { if (!Event_UnpackHeader(&L.buf)) break; if (func_002E9A98(&L.buf, L.a, 4, 1) != 0) break; ok = 1; } while (0); if (ok && !busy && NetMsg_RegisterType(&D_004FF120, 2, cAIUnconsciousMsg_NetReceive) == 0) r = 1; }
     return r;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -488,7 +488,7 @@ unsigned char cAIDisguiseTakenMsg_NetRegister(void) {
     L4E0 L;
     unsigned char r = 0;
     unsigned char ok;
-    if (!func_002E9A10()) { ok = 0; do { if (!func_003C9C30(&L.buf)) break; if (func_002E9A98(&L.buf, L.a, 4, 1) != 0) break; ok = 1; } while (0); if (ok && NetMsg_RegisterType(&D_004FF118, 2, cAIDisguiseTakenMsg_NetReceive) == 0) r = 1; }
+    if (!func_002E9A10()) { ok = 0; do { if (!Event_UnpackHeader(&L.buf)) break; if (func_002E9A98(&L.buf, L.a, 4, 1) != 0) break; ok = 1; } while (0); if (ok && NetMsg_RegisterType(&D_004FF118, 2, cAIDisguiseTakenMsg_NetReceive) == 0) r = 1; }
     return r;
 }
 /* merge_units: generate this block's code under its own pragmas */
@@ -572,7 +572,7 @@ unsigned char cAIBodyMovedMsg_NetRegister(void) {
     if (!func_002E9A10()) {
         ok = 0;
         do {
-            if (!func_003C9C30(&L.buf)) break;
+            if (!Event_UnpackHeader(&L.buf)) break;
             if (func_002E9A98(&L.buf, &L.a, 4, 1) != 0) break;
             ok = 1;
         } while (0);
@@ -662,7 +662,7 @@ unsigned char cAINewAwarenessMsg_NetRegister(void) {
     if (!func_002E9A10()) {
         ok = 0;
         do {
-            if (!func_003C9C30(&L.buf)) break;
+            if (!Event_UnpackHeader(&L.buf)) break;
             if (func_002E9A98(&L.buf, &L.a, 4, 1) != 0) break;
             ok = 1;
         } while (0);
@@ -765,7 +765,7 @@ unsigned char cAIDestinationReachedMsg_NetRegister(void) {
     if (!func_002E9A10()) {
         ok = 0;
         do {
-            if (!func_003C9C30(&L.buf)) break;
+            if (!Event_UnpackHeader(&L.buf)) break;
             if (func_002E9A98(&L.buf, &L.a, 4, 1) != 0) break;
             ok = 1;
         } while (0);
@@ -887,7 +887,7 @@ unsigned char cAIWaypointReachedMsg_NetRegister(void) {
     if (!func_002E9A10()) {
         ok = 0;
         do {
-            if (!func_003C9C30(&L.buf)) break;
+            if (!Event_UnpackHeader(&L.buf)) break;
             if (func_002E9A98(&L.buf, &L.a, 4, 1) != 0) break;
             ok = 1;
         } while (0);
@@ -993,7 +993,7 @@ unsigned char cAIDeadMsg_NetRegister(void) {
     int ok[2];
     int buf[2];
     unsigned char r = 0;
-    if (func_002E9A10() == 0 && func_003C9C30(buf) != 0 && func_002E9A98(buf, ok, 4, 1) == 0 &&
+    if (func_002E9A10() == 0 && Event_UnpackHeader(buf) != 0 && func_002E9A98(buf, ok, 4, 1) == 0 &&
         NetMsg_RegisterType(&D_004FF0F0, 2, cAIDeadMsg_NetReceive) == 0) {
         r = 1;
     }
@@ -1092,7 +1092,7 @@ extern int cAIDeactivatedMsg_NetReceive();
 unsigned char cAIDeactivatedMsg_NetRegister(void) {
     int buf[4];
     unsigned char r = 0;
-    if (func_002E9A10() == 0 && func_003C9C30(buf + 2) != 0 &&
+    if (func_002E9A10() == 0 && Event_UnpackHeader(buf + 2) != 0 &&
         NetMsg_RegisterType(&D_004FF0E8, 2, cAIDeactivatedMsg_NetReceive) == 0) {
         r = 1;
     }
@@ -1181,7 +1181,7 @@ unsigned char cAIActivatedMsg_NetRegister(void) {
     if (!func_002E9A10()) {
         ok = 0;
         do {
-            if (!func_003C9C30(&L.buf)) break;
+            if (!Event_UnpackHeader(&L.buf)) break;
             if (func_002E9A98(&L.buf, &L.a, 4, 1) != 0) break;
             ok = 1;
         } while (0);

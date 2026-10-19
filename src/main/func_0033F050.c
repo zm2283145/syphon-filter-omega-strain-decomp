@@ -9,7 +9,7 @@ extern void GuiScreen_Sleep(T3F050* self);
 extern void func_002ACC80(void* p, int f);
 extern void LobbyArray_Free(L3F050* l);
 extern G3F050* Gui_GetScreenStack(void);
-void func_0033F050(T3F050* self)
+void GuiMenuScreen_Sleep(T3F050* self)
 {
     GuiScreen_Sleep(self);
     self->fA8 = 0;

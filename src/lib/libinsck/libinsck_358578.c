@@ -5,7 +5,7 @@
  */
 
 /* merge_units: begin func_00358578 */
-int func_00358578(int e)
+int Insck_MapLibnetError(int e)
 {
     switch (e) {
     case 0: return 0;
@@ -63,13 +63,13 @@ extern N81E0 *D_00492CD4;
 extern void func_0034B7E8(void *);
 extern void func_00357D88(void *);
 extern void *func_00357D50(int);
-extern N81E0 *func_003581E0(int);
-extern int func_003583A0(N81E0 *, int);
+extern N81E0 *Insck_GetThreadContext(int);
+extern int Insck_SetErrno(N81E0 *, int);
 extern int sceLibnetInitialize(void *, unsigned int, int, int);
 
 int func_003586F0(unsigned int a, int b, int c)
 {
-    N81E0 *n = func_003581E0(0);
+    N81E0 *n = Insck_GetThreadContext(0);
     unsigned int mask;
     int err;
     if (n == 0) return -1;
@@ -88,7 +88,7 @@ int func_003586F0(unsigned int a, int b, int c)
         else D_00492CD4 = n->prev;
         func_00357D88(n);
         D_00492CCC--;
-        return func_003583A0(n, 0xC);
+        return Insck_SetErrno(n, 0xC);
     } else {
         n->x54 = (int)(n->x50 + 0x3F) & -0x40;
         if (sceLibnetInitialize(n->x14, (n->x58 + 0x63) & mask, n->x5C, n->x60) < 0) {
@@ -99,9 +99,9 @@ int func_003586F0(unsigned int a, int b, int c)
             else D_00492CD4 = n->prev;
             func_00357D88(n);
             D_00492CCC--;
-            return func_003583A0(n, 0x16);
+            return Insck_SetErrno(n, 0x16);
         } else {
-            return func_003583A0(n, 0);
+            return Insck_SetErrno(n, 0);
         }
     }
 }
@@ -110,93 +110,93 @@ int func_003586F0(unsigned int a, int b, int c)
 /* merge_units: begin func_00358890 */
 typedef struct { char pad[0x60]; int f60; } E358890;
 #if 0 /* merge_units */
-extern int func_003581E0(int x);
+extern int Insck_GetThreadContext(int x);
 #endif /* merge_units */
-#define func_003581E0(a0) ((int)func_003581E0((a0))) /* merge_units */
+#define Insck_GetThreadContext(a0) ((int)Insck_GetThreadContext((a0))) /* merge_units */
 
-extern E358890* func_00358480(int a);
+extern E358890* Insck_FindSocket(int a);
 #if 0 /* merge_units */
-extern int func_003583A0(int h, int c);
+extern int Insck_SetErrno(int h, int c);
 #endif /* merge_units */
-#define func_003583A0(a0, a1) (func_003583A0((N81E0 *)(a0), (a1))) /* merge_units */
+#define Insck_SetErrno(a0, a1) (Insck_SetErrno((N81E0 *)(a0), (a1))) /* merge_units */
 
 int func_00358890(int a, int b)
 {
-    int h = func_003581E0(0);
+    int h = Insck_GetThreadContext(0);
     E358890* e;
     if (h == 0) return -1;
-    e = func_00358480(a);
-    if (e == 0) return func_003583A0(h, 9);
+    e = Insck_FindSocket(a);
+    if (e == 0) return Insck_SetErrno(h, 9);
     e->f60 = b;
-    func_003583A0(h, 0);
+    Insck_SetErrno(h, 0);
     return 0;
 }
-#undef func_003581E0 /* merge_units */
-#undef func_003583A0 /* merge_units */
+#undef Insck_GetThreadContext /* merge_units */
+#undef Insck_SetErrno /* merge_units */
 /* merge_units: end func_00358890 */
 
 /* merge_units: begin func_00358910 */
 typedef struct { char pad[0x64]; int f60; } E358910;
 #if 0 /* merge_units */
-extern int func_003581E0(int x);
+extern int Insck_GetThreadContext(int x);
 #endif /* merge_units */
-#define func_003581E0(a0) ((int)func_003581E0((a0))) /* merge_units */
+#define Insck_GetThreadContext(a0) ((int)Insck_GetThreadContext((a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern E358910* func_00358480(int a);
+extern E358910* Insck_FindSocket(int a);
 #endif /* merge_units */
-#define func_00358480(a0) ((E358910 *)func_00358480((a0))) /* merge_units */
+#define Insck_FindSocket(a0) ((E358910 *)Insck_FindSocket((a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int func_003583A0(int h, int c);
+extern int Insck_SetErrno(int h, int c);
 #endif /* merge_units */
-#define func_003583A0(a0, a1) (func_003583A0((N81E0 *)(a0), (a1))) /* merge_units */
+#define Insck_SetErrno(a0, a1) (Insck_SetErrno((N81E0 *)(a0), (a1))) /* merge_units */
 
 int func_00358910(int a, int b)
 {
-    int h = func_003581E0(0);
+    int h = Insck_GetThreadContext(0);
     E358910* e;
     if (h == 0) return -1;
-    e = func_00358480(a);
-    if (e == 0) return func_003583A0(h, 9);
+    e = Insck_FindSocket(a);
+    if (e == 0) return Insck_SetErrno(h, 9);
     e->f60 = b;
-    func_003583A0(h, 0);
+    Insck_SetErrno(h, 0);
     return 0;
 }
-#undef func_003581E0 /* merge_units */
-#undef func_00358480 /* merge_units */
-#undef func_003583A0 /* merge_units */
+#undef Insck_GetThreadContext /* merge_units */
+#undef Insck_FindSocket /* merge_units */
+#undef Insck_SetErrno /* merge_units */
 /* merge_units: end func_00358910 */
 
 /* merge_units: begin func_00358990 */
 typedef struct { char pad[0x68]; int f60; } E358990;
 #if 0 /* merge_units */
-extern int func_003581E0(int x);
+extern int Insck_GetThreadContext(int x);
 #endif /* merge_units */
-#define func_003581E0(a0) ((int)func_003581E0((a0))) /* merge_units */
+#define Insck_GetThreadContext(a0) ((int)Insck_GetThreadContext((a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern E358990* func_00358480(int a);
+extern E358990* Insck_FindSocket(int a);
 #endif /* merge_units */
-#define func_00358480(a0) ((E358990 *)func_00358480((a0))) /* merge_units */
+#define Insck_FindSocket(a0) ((E358990 *)Insck_FindSocket((a0))) /* merge_units */
 
 #if 0 /* merge_units */
-extern int func_003583A0(int h, int c);
+extern int Insck_SetErrno(int h, int c);
 #endif /* merge_units */
-#define func_003583A0(a0, a1) (func_003583A0((N81E0 *)(a0), (a1))) /* merge_units */
+#define Insck_SetErrno(a0, a1) (Insck_SetErrno((N81E0 *)(a0), (a1))) /* merge_units */
 
 int func_00358990(int a, int b)
 {
-    int h = func_003581E0(0);
+    int h = Insck_GetThreadContext(0);
     E358990* e;
     if (h == 0) return -1;
-    e = func_00358480(a);
-    if (e == 0) return func_003583A0(h, 9);
+    e = Insck_FindSocket(a);
+    if (e == 0) return Insck_SetErrno(h, 9);
     e->f60 = b;
-    func_003583A0(h, 0);
+    Insck_SetErrno(h, 0);
     return 0;
 }
-#undef func_003581E0 /* merge_units */
-#undef func_00358480 /* merge_units */
-#undef func_003583A0 /* merge_units */
+#undef Insck_GetThreadContext /* merge_units */
+#undef Insck_FindSocket /* merge_units */
+#undef Insck_SetErrno /* merge_units */
 /* merge_units: end func_00358990 */

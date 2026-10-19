@@ -4,4 +4,4 @@
 #include "short_string_copy_ctor.h"
 
 /* Copy-construct a string. */
-DEFINE_SHORT_STRING_COPY_CTOR(func_0013BCB0)
+DEFINE_SHORT_STRING_COPY_CTOR(String_CopyCtor)

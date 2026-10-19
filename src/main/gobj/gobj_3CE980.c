@@ -49,7 +49,7 @@ static inline void merge_flush_func_003CE980(void) {}
  */
 
 
-void func_003CE9D0(void) {
+void cNode_v14(void) {
 }
 
 void func_003CE9E0(void) {
@@ -58,7 +58,7 @@ void func_003CE9E0(void) {
 void func_003CE9F0(void) {
 }
 
-void func_003CEA00(void) {
+void cNode_v0D(void) {
 }
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_003CE9D0(void) {}

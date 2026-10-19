@@ -4,6 +4,6 @@
 #pragma mpwc_relax on
 extern char *D_005839A0;
 
-void func_004D7A20(void) {
+void StaticInit_NetLevelInfoMsgName(void) {
     D_005839A0 = "NetLevelInfoMsg";
 }

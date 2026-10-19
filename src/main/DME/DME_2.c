@@ -46,8 +46,8 @@ extern "C" void DME_CreateLobby(void) {
 extern "C" {
 void ExitDeleteThread(void);
 void SleepThread(void);
-void func_001161A0(void);
-void func_001161F8(void);
+void DIntr(void);
+void EIntr(void);
 void DME_Update(void);
 extern signed char g_DmeThreadExited;
 extern unsigned char g_DmeThreadStopRequest;
@@ -58,11 +58,11 @@ static inline int StopRequested() { return g_DmeThreadStopRequest != 0; }
 extern "C" void DME_ThreadMain(void) {
     while (StopRequested() ^ 1) {
         DME_Update();
-        func_001161F8();
+        EIntr();
         SleepThread();
-        func_001161A0();
+        DIntr();
     }
-    func_001161F8();
+    EIntr();
     g_DmeThreadExited = 1;
     ExitDeleteThread();
 }

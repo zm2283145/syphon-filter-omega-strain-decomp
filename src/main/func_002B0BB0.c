@@ -5,10 +5,10 @@
 
 /* Derived destructor: restore vtable, run base destructor, optionally delete. */
 extern "C" {
-extern "C" void func_002B0C10();
-extern "C" void func_002B0C20();
-extern "C" void func_002B0C50();
-extern "C" void func_002B0D10();
+extern "C" void GuiZeusShell_GetClassName();
+extern "C" void GuiZeusShell_IsType();
+extern "C" void GuiZeusShell_HandleInput();
+extern "C" void GuiZeusShell_Wake();
 extern "C" void GuiWidget_FocusPrev();
 extern "C" void GuiWidget_FocusNext();
 extern "C" void GuiWidget_FocusLast();
@@ -24,11 +24,11 @@ extern "C" void GuiWidget_ClearFlag4();
 extern "C" void GuiWidget_SetFlag4();
 extern "C" void GuiWidget_Deinit();
 extern "C" void GuiWidget_Init();
-extern "C" void func_0041F210();
+extern "C" void GuiWidget_Load();
 extern void * const D_004DDDE0[];
 void* GuiWidget_Destroy(void* self, short deleteFlag);
 }
-extern "C" VtableObject* func_002B0BB0(VtableObject* self, short deleteFlag)
+extern "C" VtableObject* GuiZeusShell_dtor(VtableObject* self, short deleteFlag)
 {
     if (self) {
         self->vtable = ((char*)D_004DDDE0);
@@ -38,4 +38,4 @@ extern "C" VtableObject* func_002B0BB0(VtableObject* self, short deleteFlag)
     }
     return self;
 }
-void * const D_004DDDE0[24] = { (void*)0x0, (void*)0x0, (void*)func_002B0BB0, (void*)GuiWidget_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)func_002B0D10, (void*)GuiWidget_BaseSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)func_002B0C50, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiWidget_OnEvent, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)func_002B0C10, (void*)func_002B0C20, (void*)0x0 };
+void * const D_004DDDE0[24] = { (void*)0x0, (void*)0x0, (void*)GuiZeusShell_dtor, (void*)GuiWidget_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiZeusShell_Wake, (void*)GuiWidget_BaseSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiZeusShell_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiWidget_Update, (void*)GuiWidget_OnEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiZeusShell_GetClassName, (void*)GuiZeusShell_IsType, (void*)0x0 };

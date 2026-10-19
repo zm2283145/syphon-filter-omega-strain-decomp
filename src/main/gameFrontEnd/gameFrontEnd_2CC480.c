@@ -30,9 +30,9 @@ extern "C" void func_0012ED50();
 extern "C" void func_00133900();
 extern "C" void func_001383D0();
 extern "C" void func_001385B0();
-extern "C" void func_00169270();
-extern "C" void func_00169960();
-extern "C" void func_002CBAC0();
+extern "C" void SoundPauseMsg_dtor();
+extern "C" void SoundPauseMsg_Clone();
+extern "C" void FrontEnd_v01();
 extern "C" void Receiver_GetScriptTypeKey();
 extern "C" void Receiver_ScriptDispatch();
 extern void * const D_004DE180[];
@@ -50,7 +50,7 @@ void operator_delete(void* p);
 
 }
 struct ObjC480 { void* vtable; char pad[0x24]; unsigned char active; char pad2[0x2FC - 0x29]; char member[4]; };
-extern "C" ObjC480* func_002CC480(ObjC480* self, short deleteFlag)
+extern "C" ObjC480* FrontEnd_dtor(ObjC480* self, short deleteFlag)
 {
     if (self) {
         void* m;
@@ -66,7 +66,7 @@ extern "C" ObjC480* func_002CC480(ObjC480* self, short deleteFlag)
     }
     return self;
 }
-void * const D_004DE180[32] = { (void*)0x0, (void*)0x0, (void*)func_002CC480, (void*)func_002CBAC0, (void*)GObj_GetID, (void*)func_0012ECF0, (void*)func_001383D0, (void*)func_0012ED00, (void*)func_0012ED10, (void*)func_0012ED20, (void*)func_0012ED30, (void*)func_0012ED40, (void*)func_0012ED50, (void*)Receiver_GetScriptTypeKey, (void*)Receiver_ScriptDispatch, (void*)0x0, (void*)0x0, (void*)0x0, (void*)func_00133900, (void*)func_001385B0, (void*)Event_PackHeader, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0, (void*)0x0, (void*)0x0, (void*)func_00169270, (void*)func_00169960, (void*)Event_PackHeader, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
+void * const D_004DE180[32] = { (void*)0x0, (void*)0x0, (void*)FrontEnd_dtor, (void*)FrontEnd_v01, (void*)GObj_GetID, (void*)func_0012ECF0, (void*)func_001383D0, (void*)func_0012ED00, (void*)func_0012ED10, (void*)func_0012ED20, (void*)func_0012ED30, (void*)func_0012ED40, (void*)func_0012ED50, (void*)Receiver_GetScriptTypeKey, (void*)Receiver_ScriptDispatch, (void*)0x0, (void*)0x0, (void*)0x0, (void*)func_00133900, (void*)func_001385B0, (void*)Event_PackHeader, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0, (void*)0x0, (void*)0x0, (void*)SoundPauseMsg_dtor, (void*)SoundPauseMsg_Clone, (void*)Event_PackHeader, (void*)Message_GetScriptTypeKey, (void*)0x0, (void*)0x0 };
 #undef func_002CC520 /* merge_units */
 #undef operator_delete /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */

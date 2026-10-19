@@ -6,7 +6,9 @@ extern void Actor_BaseWorldUpdate();
 extern void Actor_VirtualNop();
 extern void Controller_DeathNotice();
 extern void Event_PackHeader();
+extern void FireEffectObj_Draw();
 extern void FireEffectObj_Update();
+extern void FireEffectObj_dtor();
 extern void GObj_GetID();
 extern void GObj_GetLifeState();
 extern void GObj_GetWorldMatrix();
@@ -47,6 +49,9 @@ extern void SmokeField_Update();
 extern void SmokeField_dtor();
 extern void SnowField_Draw();
 extern void SnowField_Update();
+extern void SnowField_dtor();
+extern void cGOBJ_v35();
+extern void cGOBJ_v39();
 extern void cNIEventLight_dtor();
 extern void cNIEventLight_v01();
 extern void cNIEventLight_v0B();
@@ -63,6 +68,19 @@ extern void cNetSpawnParticleMsg_dtor();
 extern void cNetSpawnParticleMsg_v01();
 extern void cNetSpawnParticleMsg_v04();
 extern void cNetSpawnParticleMsg_v05();
+extern void cNode_v06();
+extern void cNode_v07();
+extern void cNode_v0D();
+extern void cNode_v14();
+extern void cNode_v24();
+extern void cNode_v25();
+extern void cNode_v26();
+extern void cNode_v27();
+extern void cNode_v28();
+extern void cNode_v29();
+extern void cNode_v2A();
+extern void cNode_v2B();
+extern void cNode_v3A();
 extern void func_0012ED00();
 extern void func_0012ED30();
 extern void func_0012ED40();
@@ -86,9 +104,6 @@ extern void func_0015C050();
 extern void func_0015C080();
 extern void func_0015C090();
 extern void func_0015C0A0();
-extern void func_002345D0();
-extern void func_00236380();
-extern void func_00236580();
 extern void func_0023EE90();
 extern void func_0023FCD0();
 extern void func_0023FCE0();
@@ -96,23 +111,8 @@ extern void func_0023FCF0();
 extern void func_002823E0();
 extern void func_003926A0();
 extern void func_003926B0();
-extern void func_003CD090();
-extern void func_003CD110();
-extern void func_003CD4A0();
-extern void func_003CD7A0();
-extern void func_003CD920();
-extern void func_003CDA60();
-extern void func_003CDBE0();
-extern void func_003CDC20();
-extern void func_003CDD40();
-extern void func_003CDD80();
-extern void func_003CDDC0();
-extern void func_003CE7D0();
-extern void func_003CE810();
-extern void func_003CE9D0();
 extern void func_003CE9E0();
 extern void func_003CE9F0();
-extern void func_003CEA00();
 
 void *D_004DBB40[8] = {
     0, 0, &cNetSpawnParticleMsg_dtor, &cNetSpawnParticleMsg_v01,
@@ -120,62 +120,62 @@ void *D_004DBB40[8] = {
 };
 
 void *SnowField_vtable[68] = {
-    0, 0, &func_002345D0, &Object_HandleMessage,
+    0, 0, &SnowField_dtor, &Object_HandleMessage,
     &GObj_GetID, &Object_GetAttachedOrSelf, &func_0015C090, &func_0012ED00,
-    &func_003CE810, &func_003CE7D0, &func_0012ED30, &func_0012ED40,
-    &func_0012ED50, &func_003926A0, &func_003926B0, &func_003CEA00,
+    &cNode_v06, &cNode_v07, &func_0012ED30, &func_0012ED40,
+    &func_0012ED50, &func_003926A0, &func_003926B0, &cNode_v0D,
     &ParticleGob_ResetTime, &ParticleGob_RequestPar, &SnowField_Update, &Actor_BasePreLogic,
     &Actor_BaseWorldUpdate, &Actor_VirtualNop, &SnowField_Draw, &ParticleGob_OnPresent,
     &ParticleGob_OnAbsent, &Node_SetFlag2C, &Node_ClearFlag2C, &Node_GetFlag2C,
     &func_0015BFB0, &func_0015BFC0, &func_0015BFD0, &func_00148870,
     &func_0015BFF0, &func_0015BFE0, &ParticleGob_GetBounds, &ParticleGob_ScaleBBox,
-    &Object_AttachTransform, &Player_GetActiveWeapon, &func_003CDDC0, &func_003CDD80,
-    &func_003CDD40, &func_003CDC20, &func_003CDBE0, &func_003CDA60,
-    &func_003CD920, &func_003CD7A0, &func_0015C010, &func_00153860,
+    &Object_AttachTransform, &Player_GetActiveWeapon, &cNode_v24, &cNode_v25,
+    &cNode_v26, &cNode_v27, &cNode_v28, &cNode_v29,
+    &cNode_v2A, &cNode_v2B, &func_0015C010, &func_00153860,
     &Object_GetEye, &func_0015C020, &func_00140E90, &func_0015C030,
-    &func_0015C040, &func_0015C050, &Node_GetWorldMatrix, &func_003CD4A0,
-    &Node_GetLightRefPoint, &PathObj_GetPosition, &Node_GetComponentMatrix, &func_003CD110,
-    &func_003CD090, &GObj_GetWorldMatrix, &func_0013E060, &func_0015C080,
+    &func_0015C040, &func_0015C050, &Node_GetWorldMatrix, &cGOBJ_v35,
+    &Node_GetLightRefPoint, &PathObj_GetPosition, &Node_GetComponentMatrix, &cGOBJ_v39,
+    &cNode_v3A, &GObj_GetWorldMatrix, &func_0013E060, &func_0015C080,
     &Actor_ApplyContactDamage, &func_0015C0A0, &GObj_GetLifeState, &Controller_DeathNotice,
 };
 
 void *D_004DBC70[68] = {
     0, 0, &SmokeField_dtor, &Object_HandleMessage,
     &GObj_GetID, &Object_GetAttachedOrSelf, &func_0015C090, &func_0012ED00,
-    &func_003CE810, &func_003CE7D0, &func_0012ED30, &func_0012ED40,
-    &func_0012ED50, &func_003926A0, &func_003926B0, &func_003CEA00,
+    &cNode_v06, &cNode_v07, &func_0012ED30, &func_0012ED40,
+    &func_0012ED50, &func_003926A0, &func_003926B0, &cNode_v0D,
     &ParticleGob_ResetTime, &ParticleGob_RequestPar, &SmokeField_Update, &Actor_BasePreLogic,
     &Actor_BaseWorldUpdate, &Actor_VirtualNop, &SmokeField_Draw, &ParticleGob_OnPresent,
     &ParticleGob_OnAbsent, &Node_SetFlag2C, &Node_ClearFlag2C, &Node_GetFlag2C,
     &func_0015BFB0, &func_0015BFC0, &func_0015BFD0, &func_00148870,
     &func_0015BFF0, &func_0015BFE0, &ParticleGob_GetBounds, &ParticleGob_ScaleBBox,
-    &Object_AttachTransform, &Player_GetActiveWeapon, &func_003CDDC0, &func_003CDD80,
-    &func_003CDD40, &func_003CDC20, &func_003CDBE0, &func_003CDA60,
-    &func_003CD920, &func_003CD7A0, &func_0015C010, &func_00153860,
+    &Object_AttachTransform, &Player_GetActiveWeapon, &cNode_v24, &cNode_v25,
+    &cNode_v26, &cNode_v27, &cNode_v28, &cNode_v29,
+    &cNode_v2A, &cNode_v2B, &func_0015C010, &func_00153860,
     &Object_GetEye, &func_0015C020, &func_00140E90, &func_0015C030,
-    &func_0015C040, &func_0015C050, &Node_GetWorldMatrix, &func_003CD4A0,
-    &Node_GetLightRefPoint, &PathObj_GetPosition, &Node_GetComponentMatrix, &func_003CD110,
-    &func_003CD090, &GObj_GetWorldMatrix, &func_0013E060, &func_0015C080,
+    &func_0015C040, &func_0015C050, &Node_GetWorldMatrix, &cGOBJ_v35,
+    &Node_GetLightRefPoint, &PathObj_GetPosition, &Node_GetComponentMatrix, &cGOBJ_v39,
+    &cNode_v3A, &GObj_GetWorldMatrix, &func_0013E060, &func_0015C080,
     &Actor_ApplyContactDamage, &func_0015C0A0, &GObj_GetLifeState, &Controller_DeathNotice,
 };
 
 void *D_004DBD80[68] = {
-    0, 0, &func_00236580, &Object_HandleMessage,
+    0, 0, &FireEffectObj_dtor, &Object_HandleMessage,
     &GObj_GetID, &Object_GetAttachedOrSelf, &func_0015C090, &func_0012ED00,
-    &func_003CE810, &func_003CE7D0, &func_0012ED30, &func_0012ED40,
-    &func_0012ED50, &func_003926A0, &func_003926B0, &func_003CEA00,
+    &cNode_v06, &cNode_v07, &func_0012ED30, &func_0012ED40,
+    &func_0012ED50, &func_003926A0, &func_003926B0, &cNode_v0D,
     &ParticleGob_ResetTime, &ParticleGob_RequestPar, &FireEffectObj_Update, &Actor_BasePreLogic,
-    &Actor_BaseWorldUpdate, &Actor_VirtualNop, &func_00236380, &ParticleGob_OnPresent,
+    &Actor_BaseWorldUpdate, &Actor_VirtualNop, &FireEffectObj_Draw, &ParticleGob_OnPresent,
     &ParticleGob_OnAbsent, &Node_SetFlag2C, &Node_ClearFlag2C, &Node_GetFlag2C,
     &func_0015BFB0, &func_0015BFC0, &func_0015BFD0, &func_00148870,
     &func_0015BFF0, &func_0015BFE0, &ParticleGob_GetBounds, &ParticleGob_ScaleBBox,
-    &Object_AttachTransform, &Player_GetActiveWeapon, &func_003CDDC0, &func_003CDD80,
-    &func_003CDD40, &func_003CDC20, &func_003CDBE0, &func_003CDA60,
-    &func_003CD920, &func_003CD7A0, &func_0015C010, &func_00153860,
+    &Object_AttachTransform, &Player_GetActiveWeapon, &cNode_v24, &cNode_v25,
+    &cNode_v26, &cNode_v27, &cNode_v28, &cNode_v29,
+    &cNode_v2A, &cNode_v2B, &func_0015C010, &func_00153860,
     &Object_GetEye, &func_0015C020, &func_00140E90, &func_0015C030,
-    &func_0015C040, &func_0015C050, &Node_GetWorldMatrix, &func_003CD4A0,
-    &Node_GetLightRefPoint, &PathObj_GetPosition, &Node_GetComponentMatrix, &func_003CD110,
-    &func_003CD090, &GObj_GetWorldMatrix, &func_0013E060, &func_0015C080,
+    &func_0015C040, &func_0015C050, &Node_GetWorldMatrix, &cGOBJ_v35,
+    &Node_GetLightRefPoint, &PathObj_GetPosition, &Node_GetComponentMatrix, &cGOBJ_v39,
+    &cNode_v3A, &GObj_GetWorldMatrix, &func_0013E060, &func_0015C080,
     &Actor_ApplyContactDamage, &func_0015C0A0, &GObj_GetLifeState, &Controller_DeathNotice,
 };
 
@@ -192,20 +192,20 @@ void *D_004DBEB0[8] = {
 void *D_004DBED0[78] = {
     0, 0, &cNIEventLight_dtor, &cNIEventLight_v01,
     &GObj_GetID, &Object_GetAttachedOrSelf, &func_0023FCF0, &func_0012ED00,
-    &func_003CE810, &func_003CE7D0, &func_0012ED30, &func_0012ED40,
-    &func_0012ED50, &cNIEventLight_v0B, &cNIEventLight_v0C, &func_003CEA00,
+    &cNode_v06, &cNode_v07, &func_0012ED30, &func_0012ED40,
+    &func_0012ED50, &cNIEventLight_v0B, &cNIEventLight_v0C, &cNode_v0D,
     &func_003CE9F0, &func_003CE9E0, &cNIEventLight_v10, &NiEvent_PreLogic,
-    &Actor_BaseWorldUpdate, &Actor_VirtualNop, &func_003CE9D0, &cNIEventLight_v15,
+    &Actor_BaseWorldUpdate, &Actor_VirtualNop, &cNode_v14, &cNIEventLight_v15,
     &cNIEventLight_v16, &Node_SetFlag2C, &Node_ClearFlag2C, &Node_GetFlag2C,
     &func_0015BFB0, &func_0015BFC0, &func_0015BFD0, &func_00148870,
     &func_0023FCE0, &func_0023FCD0, &func_0013EE60, &func_0015C000,
-    &Object_AttachTransform, &Player_GetActiveWeapon, &func_003CDDC0, &func_003CDD80,
-    &func_003CDD40, &func_003CDC20, &func_003CDBE0, &func_003CDA60,
-    &func_003CD920, &func_003CD7A0, &func_0015C010, &func_00153860,
+    &Object_AttachTransform, &Player_GetActiveWeapon, &cNode_v24, &cNode_v25,
+    &cNode_v26, &cNode_v27, &cNode_v28, &cNode_v29,
+    &cNode_v2A, &cNode_v2B, &func_0015C010, &func_00153860,
     &Object_GetEye, &func_0015C020, &func_00140E90, &func_0015C030,
-    &func_0015C040, &func_0015C050, &Node_GetWorldMatrix, &func_003CD4A0,
-    &Node_GetLightRefPoint, &PathObj_GetPosition, &Node_GetComponentMatrix, &func_003CD110,
-    &func_003CD090, &GObj_GetWorldMatrix, &func_0013E060, &func_0015C080,
+    &func_0015C040, &func_0015C050, &Node_GetWorldMatrix, &cGOBJ_v35,
+    &Node_GetLightRefPoint, &PathObj_GetPosition, &Node_GetComponentMatrix, &cGOBJ_v39,
+    &cNode_v3A, &GObj_GetWorldMatrix, &func_0013E060, &func_0015C080,
     &Actor_ApplyContactDamage, &func_0015C0A0, &GObj_GetLifeState, &Controller_DeathNotice,
     &cNIEventLight_v42, &NiEvent_Play, &NiEvent_Stop, &NiEvent_Reset,
     &NiEvent_UpdateNode, &func_0023EE90, &cNIEventLight_v48, &NiPositionTrack_Update,

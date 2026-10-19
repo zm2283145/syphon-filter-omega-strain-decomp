@@ -53,7 +53,7 @@ static inline int Eq0022E710(Node0022E710* a, Node0022E710* b) { return a == b; 
 #pragma push
 #pragma bool off
 #pragma opt_propagation off
-extern "C" int func_0022E710(int a0, int a1, int a2, Arg0022E710* arg) {
+extern "C" int cAddCheckpointMsg_NetReceive(int a0, int a1, int a2, Arg0022E710* arg) {
     NetRecvGuard g;
     Arg0022E710* a; a = arg;
     if (D_005721D0) {

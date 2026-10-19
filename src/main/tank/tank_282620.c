@@ -63,7 +63,7 @@ int Script_cBeamMsg_Who(ScriptArg* args) {
     return GObj_IdentityA(((PtrMsg*)args[0].p)->who);
 }
 
-void func_00282860(void) {
+void ScriptType_cBeamMsg_Init(void) {
 }
 
 int cBeamMsg_v03(void) {
@@ -79,15 +79,15 @@ extern char D_00506210[];
 extern char D_004DCF30[];
 extern char D_004DCF10[];
 void Event_Construct(Ev_A080* e, void* type);
-void func_00282160(void* p);
+void NetStream_ReadObject(void* p);
 void Event_Send(Ev_A080* e, void* target, int a);
 void cMessage_dtor(Ev_A080* e, int f);
-void func_00282880(void* target)
+void cBeamMsg_NetReceive(void* target)
 {
     Ev_A080 e;
     Event_Construct(&e, D_00506210);
     e.vt = D_004DCF30;
-    func_00282160(e.m24);
+    NetStream_ReadObject(e.m24);
     e.flag = 1;
     if (target)
         Event_Send(&e, target, 0);

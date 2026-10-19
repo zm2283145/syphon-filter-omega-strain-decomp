@@ -110,19 +110,19 @@ extern "C" void GuiWidget_Draw();
 extern "C" void GuiWidget_BaseWake();
 extern "C" void GuiWidget_SetFlag4();
 extern "C" void GuiWidget_Deinit();
-extern "C" void func_0041F210();
+extern "C" void GuiWidget_Load();
 extern "C" void GuiRadioLog_GetClassName();
-extern "C" void func_00454120();
+extern "C" void GuiRadioLog_IsType();
 extern "C" void GuiRadioLog_HandleInput();
 extern "C" void GuiRadioLog_Update();
 extern "C" void GuiRadioLog_HandleEvent();
-extern "C" void func_00454880();
+extern "C" void GuiRadioLog_ClearFlag4();
 extern "C" void GuiRadioLog_Init();
 extern "C" void GuiRadioLog_Sleep();
 extern void * const D_004E1290[];
 }
 struct TM454080 { void* vtable; char base[0x4C]; char payload[0x48]; char memberA[0x9C]; char memberB[4]; };
-extern "C" TM454080* func_00454080(TM454080* self, short deleteFlag)
+extern "C" TM454080* GuiRadioLog_dtor(TM454080* self, short deleteFlag)
 {
     if (self) {
         self->vtable = ((char*)D_004E1290);
@@ -136,6 +136,6 @@ extern "C" TM454080* func_00454080(TM454080* self, short deleteFlag)
     }
     return self;
 }
-void * const D_004E1290[24] = { (void*)0x0, (void*)0x0, (void*)func_00454080, (void*)GuiRadioLog_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)func_00454880, (void*)GuiWidget_BaseWake, (void*)GuiRadioLog_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiRadioLog_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiRadioLog_Update, (void*)GuiRadioLog_HandleEvent, (void*)func_0041F210, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiRadioLog_GetClassName, (void*)func_00454120, (void*)0x0 };
+void * const D_004E1290[24] = { (void*)0x0, (void*)0x0, (void*)GuiRadioLog_dtor, (void*)GuiRadioLog_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiRadioLog_ClearFlag4, (void*)GuiWidget_BaseWake, (void*)GuiRadioLog_Sleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiRadioLog_HandleInput, (void*)GuiWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiRadioLog_Update, (void*)GuiRadioLog_HandleEvent, (void*)GuiWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiRadioLog_GetClassName, (void*)GuiRadioLog_IsType, (void*)0x0 };
 #pragma pop /* merge_units */
 /* merge_units: end func_00454080 */

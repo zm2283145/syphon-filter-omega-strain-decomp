@@ -22,7 +22,7 @@ DEFINE_STRING_INT_PAIR_COPY_CTOR(func_00419FC0)
 
 extern "C" {
 extern "C" void GuiTextEditWidget_GetClassName();
-extern "C" void func_0041A0D0();
+extern "C" void GuiTextEditWidget_IsType();
 extern "C" void GuiTextEditWidget_Draw();
 extern "C" void GuiTextEditWidget_Update();
 extern "C" void func_0041AA10();
@@ -43,18 +43,18 @@ extern "C" void GuiWidget_SetFlag4();
 extern "C" void GuiWidget_Deinit();
 extern "C" void GuiWidget_Init();
 extern void * const D_004E0A40[];
-void* func_0041C6A0(void* self, short deleteFlag);
+void* GuiTextWidget_dtor(void* self, short deleteFlag);
 }
-extern "C" VtableObject* func_0041A060(VtableObject* self, short deleteFlag)
+extern "C" VtableObject* GuiTextEditWidget_dtor(VtableObject* self, short deleteFlag)
 {
     if (self) {
         self->vtable = ((char*)D_004E0A40);
-        func_0041C6A0(self, 0);
+        GuiTextWidget_dtor(self, 0);
         if (deleteFlag > 0)
             operator_delete(self);
     }
     return self;
 }
-void * const D_004E0A40[24] = { (void*)0x0, (void*)0x0, (void*)func_0041A060, (void*)GuiWidget_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiTextEditWidget_OnWake, (void*)GuiTextWidget_OnSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiTextEditWidget_OnInput, (void*)GuiTextEditWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiTextEditWidget_Update, (void*)GuiWidget_OnEvent, (void*)GuiTextEditWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiTextEditWidget_GetClassName, (void*)func_0041A0D0, (void*)func_0041AA10 };
+void * const D_004E0A40[24] = { (void*)0x0, (void*)0x0, (void*)GuiTextEditWidget_dtor, (void*)GuiWidget_Init, (void*)GuiWidget_Deinit, (void*)GuiWidget_SetFlag4, (void*)GuiWidget_ClearFlag4, (void*)GuiTextEditWidget_OnWake, (void*)GuiTextWidget_OnSleep, (void*)GuiWidget_BubbleType0, (void*)GuiWidget_BubbleType1, (void*)GuiTextEditWidget_OnInput, (void*)GuiTextEditWidget_Draw, (void*)GuiWidget_BubbleActivate, (void*)GuiTextEditWidget_Update, (void*)GuiWidget_OnEvent, (void*)GuiTextEditWidget_Load, (void*)GuiWidget_FocusFirst, (void*)GuiWidget_FocusLast, (void*)GuiWidget_FocusNext, (void*)GuiWidget_FocusPrev, (void*)GuiTextEditWidget_GetClassName, (void*)GuiTextEditWidget_IsType, (void*)func_0041AA10 };
 #pragma pop /* merge_units */
 /* merge_units: end func_0041A060 */

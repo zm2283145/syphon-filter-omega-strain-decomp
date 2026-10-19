@@ -67,8 +67,8 @@ int SFOLobby_JoinLobby(SFOLobby* self, int index) {
 
 extern "C" {
 int strcmp(const char*, const char*);
-int func_0044CA30(SFOLobby*);
-int func_0044CA90(SFOLobby*);
+int SFOLobby_DisconnectAuthServer(SFOLobby*);
+int SFOLobby_EndSession(SFOLobby*);
 int SFOLobby_Authenticate(SFOLobby*);
 #if 0 /* merge_units */
 char* LobbyArray_At(LobbyArray*, int);
@@ -87,8 +87,8 @@ int SFOLobby_JoinLobby(SFOLobby*, int);
 /* Same as SFOLobby_ConnectUniverse. */
 static inline bool Connect(SFOLobby* self, int idx) {
     if (self->connHandle > 0) {
-        if (!func_0044CA90(self)) return false;
-        if (!func_0044CA30(self)) return false;
+        if (!SFOLobby_EndSession(self)) return false;
+        if (!SFOLobby_DisconnectAuthServer(self)) return false;
     }
     if (!self->directAuth) {
         LobbyUniverseEntry* e = (LobbyUniverseEntry*)LobbyArray_At(self->universeList, idx);
@@ -137,8 +137,8 @@ extern "C" int SFOLobby_AutoJoin(SFOLobby* self) {
 /*fc*/
 int SFOLobby_ResolveHost();
 int SFOLobby_RequestLobbyList();
-int func_0044CA30();
-int func_0044CA90();
+int SFOLobby_DisconnectAuthServer();
+int SFOLobby_EndSession();
 int SFOLobby_Authenticate();
 #if 0 /* merge_units */
 LobbyUniverseEntry * LobbyArray_At(LobbyArray *, int);
@@ -153,10 +153,10 @@ int SFOLobby_ConnectUniverse(SFOLobby * arg0, int arg1) {
     LobbyUniverseEntry * temp_v0;
 
     if (arg0->connHandle > 0) {
-        if (func_0044CA90() == 0) {
+        if (SFOLobby_EndSession() == 0) {
             return 0;
         }
-        if (func_0044CA30(arg0) == 0) {
+        if (SFOLobby_DisconnectAuthServer(arg0) == 0) {
             return 0;
         }
         goto block_5;

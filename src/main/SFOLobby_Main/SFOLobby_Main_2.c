@@ -205,8 +205,8 @@ int SFOLobby_Poll(Lobby_452050*, int, int, int);
 #endif /* merge_units */
 #define SFOLobby_Poll(a0, a1, a2, a3) (SFOLobby_Poll((Lobby_451D70 *)(a0), (a1), (a2), (a3))) /* merge_units */
 
-int func_0044CA30(Lobby_452050*);
-int func_0044C940(Lobby_452050*, int);
+int SFOLobby_DisconnectAuthServer(Lobby_452050*);
+int SFOLobby_UpdateClientState(Lobby_452050*, int);
 #if 0 /* merge_units */
 int func_00451D70(Lobby_452050*, int);
 #endif /* merge_units */
@@ -269,7 +269,7 @@ int func_00452050(Lobby_452050* self, int id, int unused)
         SetErr_452050(self, 0x16, D_004C0FB0, 0x594);
         return 0;
     }
-    if (!func_0044CA30(self))
+    if (!SFOLobby_DisconnectAuthServer(self))
         return 0;
     memcpy(&buf, self->f9CC, 0x9C);
     buf.fA0 = 0;
@@ -300,7 +300,7 @@ int func_00452050(Lobby_452050* self, int id, int unused)
         return 0;
     }
     self->f1EAC = id;
-    if (!func_0044C940(self, 1))
+    if (!SFOLobby_UpdateClientState(self, 1))
         return 0;
     if (!func_00451D70(self, self->f1EAC))
         return 0;

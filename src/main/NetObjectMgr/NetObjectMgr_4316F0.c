@@ -48,7 +48,7 @@ struct Msg_0020E560 : ClonedMessageBase {
 extern "C" {
 char D_004BFBE0[] = "NetPlayGameMsg.hh";
 }
-DEFINE_MESSAGE_CLONE(func_00431750, Msg_0020E560, 0x24, D_004BFBE0, 0x10, CLONE_BODY)
+DEFINE_MESSAGE_CLONE(cNetPlayGameMsg_v01, Msg_0020E560, 0x24, D_004BFBE0, 0x10, CLONE_BODY)
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00431750(void) {}
 #pragma pop /* merge_units */
@@ -61,7 +61,7 @@ extern unsigned char D_005721D0;
 extern unsigned char D_00572400;
 
 /* Set the network state flag while holding the shared operation guard. */
-int func_00431850(void)
+int cNetPlayGameMsg_NetReceive(void)
 {
     if (D_005723C8 == 0)
         D_005723C8 = 1;
@@ -78,24 +78,24 @@ static inline void merge_flush_func_00431850(void) {}
 /* merge_units: begin func_00431890 */
 #pragma push /* merge_units */
 extern int func_002E9A10(void);
-extern int func_003C9C30(void* p);
+extern int Event_UnpackHeader(void* p);
 extern int NetMsg_RegisterType(void* t, int id, void* fn);
 extern int D_00582738;
 #if 0 /* merge_units */
-extern int func_00431850();
+extern int cNetPlayGameMsg_NetReceive();
 #endif /* merge_units */
-#define func_00431850() (func_00431850()) /* merge_units */
+#define cNetPlayGameMsg_NetReceive() (cNetPlayGameMsg_NetReceive()) /* merge_units */
 
-unsigned char func_00431890(void) {
+unsigned char cNetPlayGameMsg_NetRegister(void) {
     int buf[4];
     unsigned char r = 0;
-    if (func_002E9A10() == 0 && func_003C9C30(buf + 2) != 0 &&
-        NetMsg_RegisterType(&D_00582738, 2, func_00431850) == 0) {
+    if (func_002E9A10() == 0 && Event_UnpackHeader(buf + 2) != 0 &&
+        NetMsg_RegisterType(&D_00582738, 2, cNetPlayGameMsg_NetReceive) == 0) {
         r = 1;
     }
     return r;
 }
-#undef func_00431850 /* merge_units */
+#undef cNetPlayGameMsg_NetReceive /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_00431890(void) {}
 #pragma pop /* merge_units */
@@ -106,6 +106,6 @@ static inline void merge_flush_func_00431890(void) {}
 #define PACK_PRE(e) MP_I(e, 0x1C) = 0x40;
 #define PACK_BODY(e, b)
 
-DEFINE_MESSAGE_PACK_PRE(func_00431900, 8, D_00582738, PACK_PRE, PACK_BODY)
+DEFINE_MESSAGE_PACK_PRE(cNetPlayGameMsg_v02, 8, D_00582738, PACK_PRE, PACK_BODY)
 #pragma pop /* merge_units */
 /* merge_units: end func_00431900 */

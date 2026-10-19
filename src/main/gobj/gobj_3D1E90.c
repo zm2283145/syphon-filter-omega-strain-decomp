@@ -28,8 +28,8 @@ struct Obj : ObjBase {
 extern char D_004E0080[];
 extern "C" void UvScrollAnim_Update();
 extern "C" void UvScrollAnim_Init();
-extern "C" void func_003D2910();
-void * const D_004E0090[6] = { (void*)0x0, (void*)0x0, (void*)UvScrollAnim_Update, (void*)UvScrollAnim_Init, (void*)func_003D2910, (void*)0x0 };
+extern "C" void UvScrollAnim_dtor();
+void * const D_004E0090[6] = { (void*)0x0, (void*)0x0, (void*)UvScrollAnim_Update, (void*)UvScrollAnim_Init, (void*)UvScrollAnim_dtor, (void*)0x0 };
 
 /* Constructor: installs the base vtable D_004E0080, stores the leading fields, installs vtable ((char*)D_004E0090), copies pos[0..1] and calls virtual +0xC. */
 extern "C" Obj* UvScrollAnim_Construct(Obj* self, float* pos, int a2, int a3, int a0)

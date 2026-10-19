@@ -18,8 +18,8 @@ typedef struct DblBuf {
     unsigned char ready;   /* 0x34 */
 } DblBuf;
 
-extern void func_001161A0(void);
-extern void func_001161F8(void);
+extern void DIntr(void);
+extern void EIntr(void);
 
 /* Initializes a double-buffered DMA packet chain when all four parameters are set. */
 void MovieSubtitles_SetBuffers(DblBuf* db, int a, int b, int c, int d) {
@@ -33,11 +33,11 @@ void MovieSubtitles_SetBuffers(DblBuf* db, int a, int b, int c, int d) {
         db->bufs[1].packet[0] = 0x70000000;
         db->bufs[1].packet[1] = 0;
         db->current = 1;
-        func_001161A0();
+        DIntr();
         db->current ^= 1;
         db->cur = (unsigned int)db->bufs[db->current].packet;
         db->tag = db->cur | 0x20000000;
-        func_001161F8();
+        EIntr();
         db->ready = 1;
     }
 }

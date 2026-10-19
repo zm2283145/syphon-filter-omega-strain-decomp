@@ -23,7 +23,7 @@ extern "C" void func_003B7A50(V3B7A50* v, unsigned int n)
     if (v->cap < n) {
         unsigned int max = 0x300000;
         if (n > max) {
-            func_00123BE8(D_00489738->stream, D_004BCE80);
+            Libc_Fprintf(D_00489738->stream, D_004BCE80);
             Libc_Abort();
         }
         V3B7A50 tmp;

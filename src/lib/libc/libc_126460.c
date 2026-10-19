@@ -6,9 +6,9 @@
 
 /* merge_units: begin func_00126460 */
 typedef struct _Bigint { struct _Bigint *_next; int _k, _maxwds, _sign, _wds; unsigned int _x[1]; } _Bigint;
-extern _Bigint *func_00126280(void *, int);
-extern _Bigint *func_00126358(void *, _Bigint *, int, int);
-_Bigint *func_00126460(void *ptr, const char *s, int nd0, int nd, unsigned int y9)
+extern _Bigint *Newlib_Balloc(void *, int);
+extern _Bigint *Newlib_Multadd(void *, _Bigint *, int, int);
+_Bigint *Newlib_S2b(void *ptr, const char *s, int nd0, int nd, unsigned int y9)
 {
     _Bigint *b;
     int i, k;
@@ -16,7 +16,7 @@ _Bigint *func_00126460(void *ptr, const char *s, int nd0, int nd, unsigned int y
 
     x = (nd + 8) / 9;
     for (k = 0, y = 1; x > y; y <<= 1, k++);
-    b = func_00126280(ptr, k);
+    b = Newlib_Balloc(ptr, k);
     b->_x[0] = y9;
     b->_wds = 1;
 
@@ -24,19 +24,19 @@ _Bigint *func_00126460(void *ptr, const char *s, int nd0, int nd, unsigned int y
     if (9 < nd0) {
         s += 9;
         do
-            b = func_00126358(ptr, b, 10, *s++ - '0');
+            b = Newlib_Multadd(ptr, b, 10, *s++ - '0');
         while (++i < nd0);
         s++;
     } else
         s += 10;
     for (; i < nd; i++)
-        b = func_00126358(ptr, b, 10, *s++ - '0');
+        b = Newlib_Multadd(ptr, b, 10, *s++ - '0');
     return b;
 }
 /* merge_units: end func_00126460 */
 
 /* merge_units: begin func_00126590 */
-int func_00126590(register unsigned int x)
+int Newlib_Hi0bits(register unsigned int x)
 {
   register int k = 0;
 
@@ -71,7 +71,7 @@ int func_00126590(register unsigned int x)
 /* merge_units: end func_00126590 */
 
 /* merge_units: begin func_00126610 */
-int func_00126610(unsigned int *y)
+int Newlib_Lo0bits(unsigned int *y)
 {
   register int k;
   register unsigned int x = *y;

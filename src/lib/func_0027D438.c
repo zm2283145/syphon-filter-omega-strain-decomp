@@ -1,6 +1,6 @@
 extern volatile int D_0048B378;
 extern int WaitSema(int);
-extern int func_0010D1B0(int);
+extern int PollSema(int);
 extern int func_0027D350(void);
 
 int func_0027D438(int mode)
@@ -14,7 +14,7 @@ int func_0027D438(int mode)
         func_0027D350();
         break;
     case 1:
-        if (func_0010D1B0(D_0048B378) == -1) break;
+        if (PollSema(D_0048B378) == -1) break;
         r = 0;
         func_0027D350();
         break;

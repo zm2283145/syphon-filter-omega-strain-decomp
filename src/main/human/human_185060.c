@@ -22,7 +22,7 @@ int func_00185060(char* self, int* key) {
     return *(int*)(self + 76) == *key;
 }
 
-void* func_00185080(void) {
+void* Actor_GetHumanClassKeyPtr(void) {
     return g_HumanActorClassKey;
 }
 /* merge_units: generate this block's code under its own pragmas */

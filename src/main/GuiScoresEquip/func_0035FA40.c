@@ -5,7 +5,7 @@ extern int strlen(const char* s);
 extern void String_Reserve(String* str, int n);
 extern void String_Replace(String* str, int pos, int count, const char* first, const char* last, Alloc alloc);
 /* Construct a string from a C string. */
-String* func_0035FA40(String* str, const char* s)
+String* String_CtorCStr_35FA40(String* str, const char* s)
 {
     Alloc alloc;
     int n;

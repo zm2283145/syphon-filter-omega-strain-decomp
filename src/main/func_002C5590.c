@@ -1,6 +1,6 @@
 /*
  * func_002C5590: member-wise copy-assignment of the 0x2E0-byte message payload
- * copied by func_002C54C0 (field types follow the retail loads).
+ * copied by cNetCopyMsg_Clone (field types follow the retail loads).
  */
 #include "types.h"
 #include "loose02_types.h"

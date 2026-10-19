@@ -4874,5 +4874,11 @@
   "main/taser/func_00265910": "cwps2-3.0b38",
   "main/func_0027A370": "cwps2-3.0b38",
   "main/GuiScoresEquip/func_0035B390": "cwps2-3.0b38",
-  "main/human/func_001B7B00": "cwps2-3.0b38"
+  "main/human/func_001B7B00": "cwps2-3.0b38",
+  "main/gameLight/func_00179240": "cwps2-3.0b38",
+  "main/gameLight/func_00179540": "cwps2-3.0b38",
+  "main/func_00261360": "cwps2-3.0b38",
+  "main/func_00261690": "cwps2-3.0b38",
+  "main/func_003A9090": "cwps2-3.0b38",
+  "main/ska/func_003B1290": "cwps2-3.0b38"
 }

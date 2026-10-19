@@ -1197,7 +1197,7 @@ segments:
       - [0x07F480, c, main/gameCamera/func_0017F480]
       - [0x07F520, asm]
       - [0x07F5E0, c, main/gameCamera/gameCamera_17F5E0]
-      - [0x07F6A0, asm]
+      - [0x07F6A0, c, main/gameCamera/func_0017F6A0]
       - [0x07F760, c, main/gameCamera/gameCamera_17F760]
       - [0x07F860, c, main/gameCamera/func_0017F860]
       - [0x07F8B0, c, main/gameCamera/gameCamera_17F8B0]

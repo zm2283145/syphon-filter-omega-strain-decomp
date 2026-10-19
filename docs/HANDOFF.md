@@ -9,8 +9,8 @@ This is the working state and the routine for whoever continues this project
 
 | | |
 |---|---|
-| Functions matched | 13,576 of 14,331 |
-| Code matched | 80.20% |
+| Functions matched | 13,583 of 14,331 |
+| Code matched | 80.33% |
 | Data matched | 99.92% |
 | Full build | reproduces the retail executable byte for byte |
 
@@ -123,6 +123,12 @@ existing ones: what was matched, the OK line, and the new totals.
 into translation units. Run it occasionally; see [merge_units.md](merge_units.md).
 
 ## Pitfalls already hit
+
+- `tools/data_obj.py` used to pad an odd-sized data block with `objcopy --update-section`,
+  which silently dropped the block's relocations (jump tables then scored < 100% in the
+  report while the executable still matched). It now pads inside the `ld -r` link script
+  (`tests/test_data_obj_pad.py`). If a unit's data section scores below 100% with the build
+  matching, check its relocations first.
 
 - Never give a function a C library or compiler-runtime name (`abort`, `sscanf`, `strncat`,
   `toupper`, `__moddi3`, `_calloc_r`, `memcpy`, `sqrtf`, ...) in `config/symbol_addrs.txt`.
@@ -334,10 +340,8 @@ into one translation unit per original source file (`src/main/<mod>/<mod>.c`), c
 byte for byte over the whole unit's code and data. Merge batches are prepared in
 `build/cleanup/` (not committed) with an apply script that refuses a changed tree and a
 revert list. On 2026-10-19 `merge_units.py --all-complete` merged 284 units of 61 complete
-modules into 110; run it again whenever modules become complete. The merge of
-`main/guiTextListWidget/guiTextListWidget_6` costs 20 bytes of reported data match
-(the executable still matches), and `--unmerge` cannot split it because its blocks
-are themselves earlier merged units. Gotchas: every merged block ends with an empty `static inline` function so
+modules into 110; run it again whenever modules become complete. `--unmerge` cannot split
+`main/guiTextListWidget/guiTextListWidget_6`, whose blocks are themselves earlier merged units. Gotchas: every merged block ends with an empty `static inline` function so
 the compiler emits each function in the right C/C++ mode; MW 3.0.3 and 3.0b38 order
 locals differently; a shared helper prototype that callers use inconsistently is declared
 K&R in a shared header (for example `include/SFOLobby_helpers.h`).

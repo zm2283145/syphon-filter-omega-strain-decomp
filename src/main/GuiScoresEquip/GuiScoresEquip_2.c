@@ -1,11 +1,20 @@
 /*
- * main/GuiScoresEquip: range (3 files, 0035DF30-0035DF70)
+ * main/GuiScoresEquip: 4 files, 0035DE90-0035DF30
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
 
-/* headers shared by the blocks below */
+/* merge_units: begin func_0035DE90 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+
 #include "types.h"
+#include "vector_array_member_dtor.h"
+
+/* Destructor: vector and array members, optionally delete. */
+DEFINE_VECTOR_ARRAY_MEMBER_DTOR(func_0035DE90)
+#pragma pop /* merge_units */
+/* merge_units: end func_0035DE90 */
 
 /* merge_units: begin func_0035DF30 */
 #pragma push /* merge_units */
@@ -56,13 +65,14 @@ extern char* D_004EE620; /* table of 16-byte rows of flag bytes */
 #define D_004EE620 (*(char **)&D_004EE620) /* merge_units */
 
 
+
 /* Sets flag bit 0 of byte `col` in row `row` of the D_004EE620 table. */
 void TeamTable_SetBit0(int row, int col) {
     SlotFlags* flags = (SlotFlags*)(D_004EE620 + row * 16 + col);
     flags->set = 1;
 }
-#undef D_004EE620 /* merge_units */
 /* merge_units: generate this block's code under its own pragmas */
 static inline void merge_flush_func_0035DF70(void) {}
+#undef D_004EE620 /* merge_units */
 #pragma pop /* merge_units */
 /* merge_units: end func_0035DF70 */

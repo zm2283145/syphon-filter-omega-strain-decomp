@@ -1,5 +1,5 @@
 /*
- * main/GuiScoresEquip: range (4 files, 0035F580-0035F810)
+ * main/GuiScoresEquip: 5 files, 0035F580-0035F900
  * One translation unit merged from per-function files by tools/merge_units.py
  * (docs/merge_units.md); each `merge_units: begin` block is one original file.
  */
@@ -46,3 +46,18 @@ DEFINE_GUARDED_DESTROY_RELEASE(func_0035F730, func_001AEFE0)
 DEFINE_VECTOR_DESTROY_DTOR(func_0035F810, func_001BFCA0)
 #pragma pop /* merge_units */
 /* merge_units: end func_0035F810 */
+
+/* merge_units: begin func_0035F900 */
+#pragma push /* merge_units */
+/*
+ * Matched functions (byte-identical with the retail executable).
+ * Original translation unit: GuiScoresEquip.cc. Functions are named by address
+ * until real names are known.
+ */
+
+
+void func_0035F900(char* self) {
+    *(int*)(self + 4) = 0;
+}
+#pragma pop /* merge_units */
+/* merge_units: end func_0035F900 */

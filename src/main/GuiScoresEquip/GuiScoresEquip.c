@@ -1,8 +1,279 @@
+/*
+ * main/GuiScoresEquip: 6 files, 0035CD00-0035D430
+ * One translation unit merged from per-function files by tools/merge_units.py
+ * (docs/merge_units.md); each `merge_units: begin` block is one original file.
+ */
+
+/* merge_units: begin func_0035CD00 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+#include "types.h"
+#include "vslot_pad.h"
+
+/* GuiScoresEquip_Init: bind the scores/equipment screen widgets: the figure view (render callback),
+ * the 4x20 equipment grid, the optional player tabs (with the multiplayer stats query) and the
+ * 4 pairs of row labels. */
+
+class W {
+public:
+    VPAD16(a) VPAD4(b)
+    virtual int IsA(char* type);
+    char pad4[0x10];
+    unsigned short flags;
+    char pad16[0x48 - 0x16];
+    void* cb;
+};
+
+struct Stats { char pad[0x10]; int a; int b; };
+
+struct Screen {
+    char pad0[0x48];
+    W* tab[4];
+    int x58;
+    int x5C;
+    unsigned char hasTabs;
+    char pad61[3];
+    W* grid[4][20];
+    char pad1A4[0x230 - 0x1A4];
+    struct { W* a; W* b; } rows[4];
+};
+
+extern "C" {
+extern char D_004BB590[];
+extern char D_004A9BF0[];
+extern char D_004A7520[];
+extern char D_004BB5A0[];
+extern char D_004BB5B8[];
+extern char D_004BB5C0[];
+extern char D_004BB5E0[];
+extern char D_00492D10[20][20];
+extern Screen* D_00533760;
+extern unsigned char g_IsMultiplayer;
+void GuiWidget_Init(Screen* s);
+W* GuiWidget_FindChildByName(void* self, char* name);
+void GuiScoresEquip_FigureCallback(void);
+void func_0041C0D0(W* w, int on);
+void func_0041C0F0(W* w, int on);
+int sprintf(char* buf, const char* fmt, ...);
+void GuiWidget_SendEvent(Screen* s, W* to, int ev, int name, int data);
+void GuiScoresEquip_Init(Screen* s);
+}
+
+static inline W* FindAs(void* self, char* name, char* type)
+{
+    W* w = GuiWidget_FindChildByName(self, name);
+    return (w && w->IsA(type)) ? w : 0;
+}
+
+void GuiScoresEquip_Init(Screen* s)
+{
+    int i;
+    int j;
+    GuiWidget_Init(s);
+    {
+        W* f = FindAs(s, D_004BB590, D_004A9BF0);
+        if (f) {
+            D_00533760 = s;
+            f->cb = (void*)GuiScoresEquip_FigureCallback;
+        }
+    }
+    for (i = 0; i < 4; i++) {
+        for (j = 0; j < 20; j++) {
+            *((char*)D_00492D10 + j * 20) = '1' + i;
+            s->grid[i][j] = FindAs(s, D_00492D10[j], D_004A7520);
+            if (s->grid[i][j]) {
+                func_0041C0D0(s->grid[i][j], 1);
+                func_0041C0F0(s->grid[i][j], 1);
+            }
+        }
+    }
+    if (s->hasTabs) {
+        for (i = 0; i < 4; i++) {
+            char buf[0x1C];
+            sprintf(buf, D_004BB5A0, i + 1);
+            s->tab[i] = GuiWidget_FindChildByName(s, buf);
+            if (s->tab[i]) s->tab[i]->flags &= ~2;
+        }
+        if (g_IsMultiplayer && s->tab[0]) {
+            Stats* r = 0;
+            GuiWidget_SendEvent(s, s->tab[0], 4, (int)D_004BB5B8, (int)&r);
+            if (r) {
+                s->x58 = r->a;
+                s->x5C = r->b;
+            }
+        }
+    }
+    /* row labels: retail places the loop setup after the body (entry jumps to it, then to the test) */
+    {
+        int k;
+        char* a;
+        char* b;
+        k = 0;
+        goto init;
+    loop:
+        a[0] = '1' + k;
+        b[0] = '1' + k;
+        s->rows[k].a = GuiWidget_FindChildByName(s, a);
+        s->rows[k].b = GuiWidget_FindChildByName(s, b);
+        k++;
+    test:
+        if (k < 4) goto loop;
+        return;
+    init:
+        a = D_004BB5C0;
+        b = D_004BB5E0;
+        goto test;
+    }
+}
+#pragma pop /* merge_units */
+/* merge_units: end func_0035CD00 */
+
+/* merge_units: begin func_0035CFB0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+#include "child_list_iter.h"
+
+/* Set or clear flag 2 on every other child. */
+extern "C" void func_0035CFB0(ChildWidget* o, int on);
+void func_0035CFB0(ChildWidget* o, int on)
+{
+    ChildIter e;
+    void* l;
+    ChildNode* n;
+    if (o == 0) return;
+    n = ChildList_Begin(CHILD_LIST(o));
+    l = CHILD_LIST(o);
+    for (; ChildList_End(&e, l), n != e.p; n = n->next) {
+        ChildWidget* c = n->obj;
+        if (c != o) {
+            if (on) c->flags |= 2;
+            else c->flags &= ~2;
+        }
+    }
+}
+#pragma pop /* merge_units */
+/* merge_units: end func_0035CFB0 */
+
+/* merge_units: begin func_0035D0A0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+class W35D0A0 {
+public:
+    VPAD16(a) VPAD4(b)
+    virtual bool IsA(void* type);
+    char pad[0x10]; unsigned short a14;
+};
+struct S35D0A0 { char pad[0x224]; int a224; };
+extern "C" {
+extern char D_004BB4D8[];
+extern char D_004BB4E8[];
+extern char D_004BB500[];
+extern char D_004BB520[];
+extern char D_004BB530[];
+extern char D_004BB540[];
+extern char D_004A9870[];
+#if 0 /* merge_units */
+W35D0A0* GuiWidget_FindChildByName(void* self, char* name);
+#endif /* merge_units */
+#define GuiWidget_FindChildByName(a0, a1) ((W35D0A0 *)GuiWidget_FindChildByName((a0), (a1))) /* merge_units */
+
+char* Loc_LookupText(char* key);
+void GuiTextWidget_SetText(W35D0A0* w, char* text, int flags);
+void func_0035D0A0(S35D0A0* o, int mode);
+}
+static inline W35D0A0* cast35D0A0(W35D0A0* w)
+{
+    return (w && w->IsA(D_004A9870)) ? w : 0;
+}
+/* Switches the screen between its two modes: toggles two widgets and relabels a third. */
+void func_0035D0A0(S35D0A0* o, int mode)
+{
+    W35D0A0* a;
+    W35D0A0* b;
+    W35D0A0* c;
+    o->a224 = mode;
+    a = GuiWidget_FindChildByName(o, D_004BB4D8);
+    b = GuiWidget_FindChildByName(o, D_004BB4E8);
+    if (a) {
+        if (!mode) a->a14 |= 2;
+        else a->a14 &= ~2;
+    }
+    if (b) {
+        if (mode) b->a14 |= 2;
+        else b->a14 &= ~2;
+    }
+    c = cast35D0A0(GuiWidget_FindChildByName(o, D_004BB500));
+    if (c) {
+        char* t = Loc_LookupText(mode == 0 ? D_004BB520 : D_004BB540);
+        GuiTextWidget_SetText(c, t ? t : D_004BB530, 0);
+    }
+}
+#undef GuiWidget_FindChildByName /* merge_units */
+#pragma pop /* merge_units */
+/* merge_units: end func_0035D0A0 */
+
+/* merge_units: begin func_0035D1F0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+#include "alloc_guard.h"
+struct V0035D1F0 { virtual void v0(int f); virtual int v1(); virtual int v2(); virtual int v3(); virtual int v4(); virtual int v5(); virtual int v6(); virtual int v7(); virtual int v8(); virtual int v9(); virtual int v10(); virtual int v11(); virtual int v12(); virtual int v13(); virtual int v14(); virtual int v15(); virtual int v16(); virtual int v17(); virtual int v18(); virtual int v19(); virtual int v20(); virtual int v21(); virtual void v22(int f); char pad4[0x2420 - 4]; short h2420; char pad2422[0x2C74 - 0x2422]; int x2C74; };
+struct O0035D1F0 { void* vt; char pad[0x1A0]; V0035D1F0* items[4]; V0035D1F0* p1B4; };
+extern "C" {
+
+extern char g_AgentPartCache[];
+extern char D_004DF140[];
+extern char D_004E1220[];
+extern int D_00506500;
+void Mem_Free(int pool, void* p, char* file, int line);
+void AgentPartCache_Unlock(void* p);
+void World_ClearPendingIfLoaded(void);
+void GuiEquipmentModify_RingRelease(void* p);
+void GuiWidget_Destroy(void* p, int f);
+void operator_delete(void* p);
+}
+static inline void Del0035D1F0(V0035D1F0* o, int line)
+{
+    AllocGuard g;
+    o->v0(-1);
+    Mem_Free(0, o, "GuiScoresEquip.cc", line);
+}
+extern "C" O0035D1F0* GuiScoresEquip_dtor(O0035D1F0* self, short del)
+{
+    if (self) {
+        int i;
+        self->vt = D_004DF140;
+        Del0035D1F0(self->p1B4, 0xB9);
+        for (i = 0; i < 4; i++) {
+            self->items[i]->h2420 = 0;
+            self->items[i]->x2C74 = 0;
+            self->items[i]->v22(1);
+            Del0035D1F0(self->items[i], 0xBF);
+        }
+        World_ClearPendingIfLoaded();
+        GuiWidget_Destroy(self, 0);
+        if (del > 0)
+            operator_delete(self);
+    }
+    return self;
+}
+#pragma pop /* merge_units */
+/* merge_units: end func_0035D1F0 */
+
+/* merge_units: begin func_0035D3D0 */
+#pragma push /* merge_units */
+#pragma cplusplus on
+#include "vtable_base_dtor.h"
+
+/* Derived destructor: restore vtable, run cGOBJ base destructor, optionally delete. */
+DEFINE_VTABLE_BASE_DTOR(func_0035D3D0, D_004DA470, cGOBJ_dtor)
+#pragma pop /* merge_units */
+/* merge_units: end func_0035D3D0 */
+
+/* merge_units: begin func_0035D430 */
+#pragma push /* merge_units */
 /* Empty 'asm { .set reorder }' blocks below are scheduling barriers only (emit no instructions). */
 #pragma cplusplus on
 #include "SFOLobby_helpers.h"
-#include "alloc_guard.h"
-#include "vslot_pad.h"
 #pragma inline_depth(10)
 #pragma opt_loop_invariants off
 #pragma opt_propagation off
@@ -93,7 +364,6 @@ struct Rate_D430 { char d[0x10]; };
 
 extern "C" {
 extern char D_004DA470[];
-extern char D_004DF140[];
 extern signed char D_00493A60;
 extern char D_004BB600[];
 extern char D_004BB618[];
@@ -108,7 +378,6 @@ extern V4_D430 D_00492EA0;
 extern unsigned char g_GameState;
 extern void* D_004FFC04;
 extern void* D_004F77A0;
-extern unsigned char g_IsMultiplayer;
 void FrontEnd_GetCharacterData(void* p);
 void GuiWidget_ctor(Self_D430* self);
 void* Mem_Alloc(int pool, int size, char* file, int line);
@@ -393,9 +662,5 @@ extern "C" Self_D430* GuiScoresEquip_BuildActor(Self_D430* p0)
     self->b22C = 1;
     return self;
 }
-
-
-
-
-
-
+#pragma pop /* merge_units */
+/* merge_units: end func_0035D430 */

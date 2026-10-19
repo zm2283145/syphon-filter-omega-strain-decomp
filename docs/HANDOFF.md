@@ -9,8 +9,8 @@ This is the working state and the routine for whoever continues this project
 
 | | |
 |---|---|
-| Functions matched | 13,583 of 14,331 |
-| Code matched | 80.33% |
+| Functions matched | 13,595 of 14,331 |
+| Code matched | 80.56% |
 | Data matched | 99.92% |
 | Full build | reproduces the retail executable byte for byte |
 
@@ -160,6 +160,19 @@ into translation units. Run it occasionally; see [merge_units.md](merge_units.md
   generation. Rebuild after each batch.
 
 ## Near-miss techniques (newest)
+
+- **gcc 2.96 calls are cross-jumped too:** jump2 merges a call into a shared `jalr` when at
+  least two trailing instructions match, so write each arm as its own call followed by its
+  own copy of the cleanup tail to get retail's single shared call (unit 0x30C780).
+- **gcc 2.96 delay slots and calls:** the delay-slot pass stops its liveness scan at any call
+  that might throw; a call counts as non-throwing only if the callee was defined earlier in
+  the same source file. A weak `.dtors_drop` stub of that callee (commented) reproduces it
+  and fixes wrongly annulled `beqzl`/`bnezl` slots (RtUdp_SendPump, RtUdp_UpdateTransport,
+  RtUdp_ParsePacket).
+- **gcc 2.96 `return 0`:** directly after `if (r) return r;` it is deleted (v0 known zero),
+  which shifts later registers; route it through one shared final `return 0`. Nested ifs keep
+  `k < 8 && k >= 0` as two branches instead of one unsigned compare. Units with short
+  literals that would go to `.sdata` under -G8 are -G0 (`gcc296g0`).
 
 - **mw38 stack slots of memory-resident locals:** MW splits a local that must stay in memory
   into one live range per reassignment; every live range after the first gets its own

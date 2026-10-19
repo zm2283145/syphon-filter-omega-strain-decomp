@@ -4816,5 +4816,10 @@
   "main/npc/func_00148600": "cwps2-3.0b38",
   "main/func_001EDA40": "cwps2-3.0b38",
   "main/backpack/func_00256B40": "cwps2-3.0b38",
-  "main/backpack/func_00256D90": "cwps2-3.0b38"
+  "main/backpack/func_00256D90": "cwps2-3.0b38",
+  "lib/func_003191F8": "ee-gcc2.96",
+  "main/hotbox/func_00170E20": "cwps2-3.0b38",
+  "main/GuiScoresEquip/func_0035CD00": "cwps2-3.0b38",
+  "main/ska/func_003B62E0": "cwps2-3.0b38",
+  "main/materialProperties/func_00409020": "cwps2-3.0b38"
 }

@@ -4843,5 +4843,10 @@
   "main/func_00373670": "cwps2-3.0b38",
   "main/man/func_0038C920": "cwps2-3.0b38",
   "main/gameobj/func_00393380": "cwps2-3.0b38",
-  "main/func_003E4430": "cwps2-3.0b38"
+  "main/func_003E4430": "cwps2-3.0b38",
+  "main/func_001CAB60": "cwps2-3.0b38",
+  "main/func_001D0DF0": "cwps2-3.0b38",
+  "main/NIEvent/func_00239FF0": "cwps2-3.0b38",
+  "main/playerControls/func_002504E0": "cwps2-3.0b38",
+  "main/gameFrontEnd/func_002CCA40": "cwps2-3.0b38"
 }

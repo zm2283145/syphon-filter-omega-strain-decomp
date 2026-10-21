@@ -4869,5 +4869,9 @@
   "main/func_0013A480": "cwps2-3.0b38",
   "main/hud/func_00242330": "cwps2-3.0b38",
   "main/collision/func_003C1020": "cwps2-3.0b38",
-  "main/sinit/func_004D2300": "cwps2-3.0b38"
+  "main/sinit/func_004D2300": "cwps2-3.0b38",
+  "main/hudTargets/func_00273B40": "cwps2-3.0b38",
+  "main/GuiAgentModify/func_00340850": "cwps2-3.0b38",
+  "main/skybox/func_003BC7F0": "cwps2-3.0b38",
+  "main/manUtils/func_00407830": "cwps2-3.0b38"
 }

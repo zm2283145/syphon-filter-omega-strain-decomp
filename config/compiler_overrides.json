@@ -4860,5 +4860,9 @@
   "main/player/func_001770F0": "cwps2-3.0b38",
   "main/bullet/func_00277E20": "cwps2-3.0b38",
   "main/func_00327960": "cwps2-3.0b38",
-  "main/func_003C58A0": "cwps2-3.0b38"
+  "main/func_003C58A0": "cwps2-3.0b38",
+  "lib/func_00300528": "ee-gcc2.96-G0",
+  "main/func_00224AC0": "cwps2-3.0b38",
+  "main/GuiAgentModify/func_00340320": "cwps2-3.0b38",
+  "main/sinit/func_004D1F10": "cwps2-3.0b38"
 }

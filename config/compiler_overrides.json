@@ -4848,5 +4848,13 @@
   "main/func_001D0DF0": "cwps2-3.0b38",
   "main/NIEvent/func_00239FF0": "cwps2-3.0b38",
   "main/playerControls/func_002504E0": "cwps2-3.0b38",
-  "main/gameFrontEnd/func_002CCA40": "cwps2-3.0b38"
+  "main/gameFrontEnd/func_002CCA40": "cwps2-3.0b38",
+  "lib/func_0031D2A8": "ee-gcc2.96",
+  "main/path/func_00160720": "cwps2-3.0b38",
+  "main/func_0020D130": "cwps2-3.0b38",
+  "main/func_0020DF80": "cwps2-3.0b38",
+  "main/GameGOBJ/func_002111C0": "cwps2-3.0b38",
+  "main/SpecFxDefs/func_00232180": "cwps2-3.0b38",
+  "main/SpecFxDefs/func_002348E0": "cwps2-3.0b38",
+  "main/taser/func_00264BB0": "cwps2-3.0b38"
 }

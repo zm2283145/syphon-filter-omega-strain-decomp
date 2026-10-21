@@ -4873,5 +4873,8 @@
   "main/hudTargets/func_00273B40": "cwps2-3.0b38",
   "main/GuiAgentModify/func_00340850": "cwps2-3.0b38",
   "main/skybox/func_003BC7F0": "cwps2-3.0b38",
-  "main/manUtils/func_00407830": "cwps2-3.0b38"
+  "main/manUtils/func_00407830": "cwps2-3.0b38",
+  "main/SpecFxDefs/func_00235F60": "cwps2-3.0b38",
+  "main/func_00416830": "cwps2-3.0b38",
+  "main/guiManager/func_00418B10": "cwps2-3.0b38"
 }

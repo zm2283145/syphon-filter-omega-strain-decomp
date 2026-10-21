@@ -9,10 +9,21 @@ This is the working state and the routine for whoever continues this project
 
 | | |
 |---|---|
-| Functions matched | 13,620 of 14,331 |
-| Code matched | 81.05% |
-| Data matched | 99.92% |
+| Functions matched | 13,667 of 14,331 |
+| Code matched | 81.74% |
+| Data matched | 99.85% |
 | Full build | reproduces the retail executable byte for byte |
+
+Data dropped from 99.92% to 99.85% in R138 (`5b9cc4c4`), the round that split the
+`0x416830` thunk unit with new `symbol_addrs` entries. The build still matches retail,
+so this is most likely a reporting change from the re-split; worth checking.
+
+**Staged but not yet built:** `build/pending/r139/` (gitignored, so it exists only on the
+local Windows checkout) holds 10 matches from the last lanes
+(0x001D81A0, 0x003B36C0, 0x003C0280, 0x00141E20, 0x0015DDF0, 0x00457AE0, 0x002FF4D8
+gcc296g0, 0x003E9000, 0x0022C720 mw50, 0x0019D950). Each passed `check_match` during the
+lane, but the final re-checks stalled on an overloaded machine. Re-verify, then run it as
+the next round.
 
 
 The objdiff report undercounts `func_0038A800`: its full 2,328-byte body and the
@@ -24,10 +35,10 @@ What is left (from `progress/report.json`):
 
 | Function size | Unmatched | Bytes |
 |---|---|---|
-| under 100 bytes | 182 | 3 KB |
-| 100–1,200 bytes | 536 | 316 KB |
-| 1,200–3,000 bytes | 149 | 254 KB |
-| over 3,000 bytes | 51 | 263 KB |
+| under 100 bytes | 180 | 3 KB |
+| 100–1,200 bytes | 342 | 212 KB |
+| 1,200–3,000 bytes | 107 | 195 KB |
+| over 3,000 bytes | 48 | 258 KB |
 
 Almost every remaining function under 1,200 bytes has been attempted at least once,
 most of them by several workers. Code percentage is by bytes, so the large functions
@@ -160,6 +171,24 @@ into translation units. Run it occasionally; see [merge_units.md](merge_units.md
   generation. Rebuild after each batch.
 
 ## Near-miss techniques (newest)
+
+- **Splitting a packed asm unit (2026-10-21):** when one splat unit holds several functions
+  (thunk tables, for example `0x416830`), add each unnamed function to
+  `config/symbol_addrs.txt` as `func_XXXXXXXX = 0xXXXXXXXX; // type:func` and write all of them
+  in one file in retail order. Any `symbol_addrs` change invalidates `check_match`'s symbol
+  cache, so the next run rescans every asm file (10+ minutes on Windows).
+- **mw38 argument scheduling:** where a float parameter sits among the int parameters of a
+  callee's prototype changes which instruction fills the call's delay slot (0x19D950).
+- **mw50 stack slots** appear to be ordered by size rather than declaration order; a named
+  handle local or moving an `int` into a nested inline can fix slot offsets (0x22C720).
+- **mw38 stack slots:** function locals, then temps, then inline locals, then nested-inline
+  locals. Plain `asm { sq zero, 0(d) }` blocks keep retail's unfolded `addiu` + `sq`. An
+  `asm { .set reorder }` changes how later asm blocks in the same function compile.
+- **Open near misses** (drafts under `build/agents/<lane>/work/best_*.c`): 0x0026C570 (3 diffs,
+  f2 zero-load placement around an asm block), 0x00143DF0 (3, delay-slot source),
+  0x00234110 (4), 0x003C5EA0 (3), 0x00476998 (3, `lui; jr; lw %lo` form), 0x0015C390
+  (23, s0/s1 swap), 0x00190060 (28, lq/sq temp registers), 0x00179620 (41), 0x003ADA60 (42),
+  0x001B0A50 (61), 0x001D3AD0 (85).
 
 - **mw38 value-returning vector operators:** write `operator-` etc. as `V r; SubV(&r, this, &o); return r;`
   with the VU0 asm in its own inline one level deeper; this removes an extra return-slot
@@ -379,13 +408,14 @@ K&R in a shared header (for example `include/SFOLobby_helpers.h`).
 - `Mem_Init` (0x36B630) references `D_01FF0000`, `D_0059A980`, `D_0059C980`, which have
   no symbol entries.
 - Some functions reference `.lit4` float literals that the current linking cannot place.
-- `0x286570`: both function bodies match, but the unit needs a splat split at `0x286590`.
+- `0x286570`: both function bodies match, but the unit needs a split at `0x286590` (see below).
 - Hand-written assembly functions stay as assembly.
-- `0x2B69A0` (gcc 2.96 -G0, owns the `"/"` string at `0x4AC1C8`) and `0x31D558`
-  (gcc 2.96, six `.lit4` constants) both match in `check_match`, but integrating them
-  together deleted the data units `d_00476B00`–`d_00497CC8` and configure failed. They
-  need their rodata split by hand before they can go in. (`0x31A630`, which owns the
-  `.lit4` constant at `0x4E1BB4`, has since been integrated without trouble.)
+- `0x2B69A0` (gcc 2.96 -G0) matches in `check_match`, but the `"/"` string it owns at
+  `0x4AC1C8` lies inside `lib/func_002B6808`'s `.rodata`, so integration skips it. The
+  draft is `build/pending/hold/gcc296g0_002B69A0.c`; that rodata needs splitting by hand.
+  (`0x31D558` went in with `0x31D2A8` in R133, and `0x31A630` was integrated earlier.)
+- `0x286570` may now be fixable the same way as the `0x416830` thunk unit: add a
+  `// type:func` symbol at `0x286590` and integrate both functions in one file.
 - `0x17D700` is a C++ constructor; a match compiles to
   `__ct__10Curve_d700FRC2V4RC2V4RC2V4RC2V4f`, so `config/symbol_addrs.txt` needs that
   mangled name (or the real class name) at that address first.

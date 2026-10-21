@@ -4856,5 +4856,9 @@
   "main/GameGOBJ/func_002111C0": "cwps2-3.0b38",
   "main/SpecFxDefs/func_00232180": "cwps2-3.0b38",
   "main/SpecFxDefs/func_002348E0": "cwps2-3.0b38",
-  "main/taser/func_00264BB0": "cwps2-3.0b38"
+  "main/taser/func_00264BB0": "cwps2-3.0b38",
+  "main/player/func_001770F0": "cwps2-3.0b38",
+  "main/bullet/func_00277E20": "cwps2-3.0b38",
+  "main/func_00327960": "cwps2-3.0b38",
+  "main/func_003C58A0": "cwps2-3.0b38"
 }

@@ -4957,5 +4957,15 @@
   "main/func_00338B60": "cwps2-3.0b38",
   "main/collision/func_003C3C40": "cwps2-3.0b38",
   "main/collision/func_003C45B0": "cwps2-3.0b38",
-  "main/func_003C79F0": "cwps2-3.0b38"
+  "main/func_003C79F0": "cwps2-3.0b38",
+  "main/npc/func_00153150": "cwps2-3.0b38",
+  "main/npc/func_001548F0": "cwps2-3.0b38",
+  "main/npc/func_00155350": "cwps2-3.0b38",
+  "main/npc/func_00155BA0": "cwps2-3.0b38",
+  "main/npc/func_001564C0": "cwps2-3.0b38",
+  "main/func_002D7ED0": "cwps2-3.0b38",
+  "main/AgentData/func_00333260": "cwps2-3.0b38",
+  "main/func_00401FF0": "cwps2-3.0b38",
+  "main/manUtils/func_004061B0": "cwps2-3.0b38",
+  "main/player/func_00177380": "cwps2-3.0b50"
 }

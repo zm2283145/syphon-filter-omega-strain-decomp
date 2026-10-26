@@ -9,8 +9,8 @@ This is the working state and the routine for whoever continues this project
 
 | | |
 |---|---|
-| Functions matched | 13,671 of 14,344 |
-| Code matched | 81.84% |
+| Functions matched | 13,681 of 14,344 |
+| Code matched | 82.09% |
 | Data matched | 99.92% |
 | Full build | reproduces the retail executable byte for byte |
 
@@ -20,12 +20,7 @@ briefly cost 224 bytes of data credit: the vtables in `func_00416A00.c` and
 target now has relocations to `func_00416850` etc. Naming them restored 99.92% (`aa3e99f`).
 **After adding `// type:func` symbols, grep `src/` for `(void*)0x<addr>` table entries and name them.**
 
-**Staged but not yet built:** `build/pending/r139/` (gitignored, so it exists only on the
-local Windows checkout) holds 10 matches from the last lanes
-(0x001D81A0, 0x003B36C0, 0x003C0280, 0x00141E20, 0x0015DDF0, 0x00457AE0, 0x002FF4D8
-gcc296g0, 0x003E9000, 0x0022C720 mw50, 0x0019D950). Each passed `check_match` during the
-lane, but the final re-checks stalled on an overloaded machine. Re-verify, then run it as
-the next round.
+The ten r139 matches staged on the Windows checkout were verified and integrated in R139 (`6fabca5`).
 
 
 The objdiff report undercounts `func_0038A800`: its full 2,328-byte body and the

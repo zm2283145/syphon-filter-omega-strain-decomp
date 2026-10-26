@@ -4903,5 +4903,19 @@
   "main/func_003C5EA0": "cwps2-3.0b38",
   "main/interface_model/func_003F0770": "cwps2-3.0b38",
   "main/func_003F6180": "cwps2-3.0b38",
-  "main/func_004089F0": "cwps2-3.0b38"
+  "main/func_004089F0": "cwps2-3.0b38",
+  "main/game/func_00133AB0": "cwps2-3.0b38",
+  "main/path/func_0015D790": "cwps2-3.0b38",
+  "main/path/func_0015DA70": "cwps2-3.0b38",
+  "main/path/func_0015E110": "cwps2-3.0b38",
+  "main/path/func_0015E830": "cwps2-3.0b38",
+  "main/ai/func_0016C9D0": "cwps2-3.0b38",
+  "main/human/func_001960C0": "cwps2-3.0b38",
+  "main/gameSound/func_001C75C0": "cwps2-3.0b38",
+  "main/gameSound/func_001C78E0": "cwps2-3.0b38",
+  "main/func_001EC580": "cwps2-3.0b38",
+  "main/func_0022B660": "cwps2-3.0b38",
+  "main/func_002D48F0": "cwps2-3.0b38",
+  "main/ska/func_003AD7A0": "cwps2-3.0b38",
+  "main/man/func_00391B30": "cwps2-3.0b50"
 }

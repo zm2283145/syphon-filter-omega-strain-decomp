@@ -4890,5 +4890,18 @@
   "main/collision/func_003C0280": "cwps2-3.0b38",
   "main/interface_element/func_003E9000": "cwps2-3.0b38",
   "main/GuiSubTitleDisplay/func_00457AE0": "cwps2-3.0b38",
-  "main/func_0022C720": "cwps2-3.0b50"
+  "main/func_0022C720": "cwps2-3.0b50",
+  "main/func_001CF660": "cwps2-3.0b38",
+  "main/func_001EA240": "cwps2-3.0b38",
+  "main/func_0020CF90": "cwps2-3.0b38",
+  "main/SpecFxDefs/func_00234110": "cwps2-3.0b38",
+  "main/hud/func_00244580": "cwps2-3.0b38",
+  "main/bullet/func_00277AA0": "cwps2-3.0b38",
+  "main/989snd/func_003A85E0": "cwps2-3.0b38",
+  "main/ska/func_003B2E10": "cwps2-3.0b38",
+  "main/collision/func_003C55C0": "cwps2-3.0b38",
+  "main/func_003C5EA0": "cwps2-3.0b38",
+  "main/interface_model/func_003F0770": "cwps2-3.0b38",
+  "main/func_003F6180": "cwps2-3.0b38",
+  "main/func_004089F0": "cwps2-3.0b38"
 }

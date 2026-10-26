@@ -9,8 +9,8 @@ This is the working state and the routine for whoever continues this project
 
 | | |
 |---|---|
-| Functions matched | 13,681 of 14,344 |
-| Code matched | 82.09% |
+| Functions matched | 13,719 of 14,344 |
+| Code matched | 83.05% |
 | Data matched | 99.92% |
 | Full build | reproduces the retail executable byte for byte |
 
@@ -168,6 +168,28 @@ into translation units. Run it occasionally; see [merge_units.md](merge_units.md
   generation. Rebuild after each batch.
 
 ## Near-miss techniques (newest)
+
+- **MW `asm volatile {}` and float constants (2026-10-26):** after a volatile asm block (MW or
+  gcc `__asm__ volatile`), float constants later in the same basic block are stored from FPRs
+  (`mtc1` + `swc1`) instead of as integer stores (`sw zero`). Non-volatile MW asm does not do this.
+  MW asm blocks are scheduled with the surrounding code, so an `sq` can land in a call delay slot.
+- **A non-empty GCC-style `__asm__` switches MW to a less-optimised mode for the whole function:**
+  bool temporaries stay as `move/daddiu` pairs, pointer ternaries stay as branches (no `movz`),
+  and `x == a || x == b` stays a compare chain. If retail shows these, write the quad copies with
+  gcc asm. An empty `__asm__("")`, MW `asm {}` blocks and pragmas do not trigger it.
+- **mw38 frame layout:** named function locals first (first declared at the highest address),
+  then function temporaries, then inline locals by nesting depth. Moving an object between those
+  classes is the main lever. By-value inline parameters are built straight into the parameter's
+  slot; a conversion constructor `V(M m)` builds its result in place.
+- **Small levers:** an empty weak destructor on a stack object (in `.dtors_drop`) reproduces a
+  branch to the end of the block; a `volatile` cast on one read reproduces one retail reload;
+  a float constant held in a local keeps `mul.s` operand order; `if (f && ...)` gives
+  `c.eq.s f,zero` while `f != 0.0f` swaps the operands; MW's small-set bit test is
+  `(unsigned)(c - 3) < 8 && ((1 << (c - 3)) & mask)`.
+- **Whole-function `asm void` is not accepted:** hand-written functions (e.g. 0x3020A8, which
+  keeps a total in `$at`, and Sha1_ByteSwapWords 0x4B3320) stay as assembly; drafts are held in
+  `build/agents/held/`. Sha1_StoreDigest 0x4B3350 is instruction-identical, but check_match sizes it
+  up to the next function start past the island's trailing data (0x74 vs 0x160).
 
 - **Splitting a packed asm unit (2026-10-21):** when one splat unit holds several functions
   (thunk tables, for example `0x416830`), add each unnamed function to
